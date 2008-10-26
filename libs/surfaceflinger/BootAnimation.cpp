@@ -219,24 +219,28 @@ bool BootAnimation::android()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glTexEnvx(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     const int steps = 8;
+    int x = (mWidth - mAndroid[0].w)/2;
+    int y = (mHeight - mAndroid[0].h)/2;
+    x = (x < 0) ? 0 : x;
+    y = (y < 0) ? 0 : y;
     for (int i=1 ; i<steps ; i++) {
         float fade = i / float(steps);
         glColor4f(1, 1, 1, fade*fade);
         glClear(GL_COLOR_BUFFER_BIT);
-        glDrawTexiOES(0, 0, 0, mAndroid[0].w, mAndroid[0].h);
+        glDrawTexiOES(x, y, 0, mAndroid[0].w, mAndroid[0].h);
         eglSwapBuffers(mDisplay, mSurface);
     }
 
     // draw last frame
     glTexEnvx(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
     glDisable(GL_BLEND);
-    glDrawTexiOES(0, 0, 0, mAndroid[0].w, mAndroid[0].h);
+    glDrawTexiOES(x, y, 0, mAndroid[0].w, mAndroid[0].h);
     eglSwapBuffers(mDisplay, mSurface);
     
     
     // update rect for the robot
-    const int x = mWidth - mAndroid[1].w - 33;
-    const int y = (mHeight - mAndroid[1].h)/2 - 1;
+    x = mWidth - (mWidth - mAndroid[0].w)/2 - mAndroid[1].w - 33;
+    y = (mHeight - mAndroid[1].h)/2 - 1;
     const Rect updateRect(x, y, x+mAndroid[1].w, y+mAndroid[1].h);
 
     // draw and update only what we need
