@@ -755,8 +755,9 @@ public class StatusBarPolicy {
     private final void updateBluetooth(Intent intent) {
         boolean visible;
         if (intent == null) {  // Initialize
-            visible = ((BluetoothDevice)
-                mContext.getSystemService(Context.BLUETOOTH_SERVICE)).isEnabled();
+            BluetoothDevice dev = (BluetoothDevice)
+                    mContext.getSystemService(Context.BLUETOOTH_SERVICE);
+            visible = dev != null && dev.isEnabled();
             mService.setIconVisibility(mBluetoothIcon, visible);
             return;
         }
