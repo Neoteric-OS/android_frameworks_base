@@ -20,11 +20,12 @@
 #include <limits.h>
 #include <stdio.h>
 
-void executablepath(char exe[PATH_MAX])
+void
+executablepath(char exe[PATH_MAX])
 {
     char proc[100] = {0};
-    snprintf(proc, 100, "/proc/%d/exe", getpid());
-    
+    snprintf(proc, 100, "/proc/%d/file", getpid());
+
     int err = readlink(proc, exe, PATH_MAX - 1);
 
     exe[err > 0 ? err : 0] = '\0';
