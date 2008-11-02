@@ -61,11 +61,19 @@ enum {
     JPARKS_BROKE_IT     = -EPIPE,
 #if !defined(HAVE_MS_C_RUNTIME)
     BAD_INDEX           = -EOVERFLOW,
-    NOT_ENOUGH_DATA     = -ENODATA,
     WOULD_BLOCK         = -EWOULDBLOCK, 
+#if defined(HAVE_ETIMEDOUT)
+    TIMED_OUT           = -ETIMEDOUT,
+#else /* not HAVE_ETIMEDOUT */
     TIMED_OUT           = -ETIME,
+#endif 
+#if !defined(HAVE_NO_ENODATA)
+    NOT_ENOUGH_DATA     = -ENODATA,
+#else /* HAVE_NO_ENODATA */
+    NOT_ENOUGH_DATA     = 0x80000003,
+#endif 
     UNKNOWN_TRANSACTION = -EBADMSG,
-#else    
+#else /* HAVE_MS_C_RUNTIME */
     BAD_INDEX           = -E2BIG,
     NOT_ENOUGH_DATA     = 0x80000003,
     WOULD_BLOCK         = 0x80000004,

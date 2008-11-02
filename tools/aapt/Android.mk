@@ -46,6 +46,10 @@ LOCAL_LDLIBS += -lws2_32
 endif
 endif
 
+ifeq ($(HOST_OS),freebsd)
+	LOCAL_LDLIBS += -lpthread
+endif
+
 LOCAL_MODULE := aapt
 
 include $(BUILD_HOST_EXECUTABLE)
