@@ -56,6 +56,7 @@ public class KeyCharacterMap
     private static Object sLock = new Object();
     private static SparseArray<WeakReference<KeyCharacterMap>> sInstances 
         = new SparseArray<WeakReference<KeyCharacterMap>>();
+    private static String sQwertyLang;
 
     public static KeyCharacterMap load(int keyboard)
     {
@@ -78,6 +79,18 @@ public class KeyCharacterMap
     {
         mKeyboardDevice = keyboardDevice;
         mPointer = ctor_native(keyboardDevice);
+    }
+
+    public static void ClearnCharacterMap()
+    {
+	sInstances.clear();
+    }
+
+    public static void SetQwertyLang(String str)
+    {
+	setQwertyLang_native(str);
+	sQwertyLang = str;
+	ClearnCharacterMap();
     }
 
     /**
@@ -353,6 +366,7 @@ public class KeyCharacterMap
     private int mPointer;
     private int mKeyboardDevice;
 
+    private static native void setQwertyLang_native(String lang);
     private static native int ctor_native(int id);
     private static native void dtor_native(int ptr);
     private static native char get_native(int ptr, int keycode,

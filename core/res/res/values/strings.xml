@@ -1747,6 +1747,9 @@
     <!-- Character picker strings -->
     <string name="select_character">Select character to insert</string>
 
+    <!-- Language picker strings -->
+    <string name="select_language">Select language</string>
+
     <!-- SMS per-application rate control Dialog -->
     <string name="sms_control_default_app_name">Unknown application</string>
     <string name="sms_control_title">Sending SMS messages</string>

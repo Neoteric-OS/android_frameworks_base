@@ -42,6 +42,10 @@ public:
 
     static KeyCharacterMap* load(int id);
 
+    static void SetQwertyLanguage(const char* aLang);
+
+    static char* QwertyLang();
+
     enum {
         NUMERIC = 1,
         Q14 = 2,

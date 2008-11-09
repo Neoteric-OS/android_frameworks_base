@@ -336,6 +336,8 @@ bool EventHub::getEvent(int32_t* outDeviceId, int32_t* outType,
                             err = mDevices[i]->layoutMap->map(iev.code, outKeycode, outFlags);
                             LOGV("iev.code=%d outKeycode=%d outFlags=0x%08x err=%d\n",
                                 iev.code, *outKeycode, *outFlags, err);
+                            LOGW("iev.code=%d outKeycode=%d outFlags=0x%08x err=%d\n",
+                                iev.code, *outKeycode, *outFlags, err);
                             if (err != 0) {
                                 *outKeycode = 0;
                                 *outFlags = 0;
@@ -343,6 +345,12 @@ bool EventHub::getEvent(int32_t* outDeviceId, int32_t* outType,
                         } else {
                             *outKeycode = iev.code;
                         }
+                        //if (*outKeycode == 29)
+                        //    {
+                        //    iev.code = 48;
+                        //    *outScancode = 48;
+                        //    *outKeycode = 30;
+                        //    }
                         *outValue = iev.value;
                         *outWhen = s2ns(iev.time.tv_sec) + us2ns(iev.time.tv_usec);
                         return true;

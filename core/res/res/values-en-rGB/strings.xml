@@ -692,6 +692,7 @@
   <string name="selectAll">Select all</string>
   <string name="selectMenuLabel">Select</string>
   <string name="select_character">Select character to insert</string>
+  <string name="select_language">Select language</string>
   <string name="sendText">Select an action for text</string>
   <string name="serviceClassData">Data</string>
   <string name="serviceClassDataAsync">Async</string>

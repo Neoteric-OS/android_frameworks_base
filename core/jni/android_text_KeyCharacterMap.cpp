@@ -22,6 +22,16 @@
 
 namespace android {
 
+static void
+setQwertyLang(JNIEnv *env, jobject clazz, jstring lang)
+{
+    const char* ch = env->GetStringUTFChars(lang, NULL);
+
+    KeyCharacterMap::SetQwertyLanguage(ch);
+
+    env->ReleaseStringUTFChars(lang, ch);
+}
+
 static jint
 ctor(JNIEnv *env, jobject clazz, jint id)
 {
@@ -137,6 +147,7 @@ getEvents(JNIEnv *env, jobject clazz, jint ptr, jcharArray jchars)
 
 static JNINativeMethod g_methods[] = {
     /* name, signature, funcPtr */
+    { "setQwertyLang_native",    "(Ljava/lang/String;)V", (void*)setQwertyLang },
     { "ctor_native",             "(I)I",    (void*)ctor },
     { "dtor_native",             "(I)V",    (void*)dtor },
     { "get_native",              "(III)C", (void*)get },

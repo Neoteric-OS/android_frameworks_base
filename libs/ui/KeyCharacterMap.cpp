@@ -153,6 +153,22 @@ KeyCharacterMap::find_key(int keycode)
     return NULL;
 }
 
+char*
+KeyCharacterMap::QwertyLang()
+{
+    static char qwertyLang[100];
+    return qwertyLang;
+}
+
+void
+KeyCharacterMap::SetQwertyLanguage(const char* aLang)
+{
+    if (aLang == NULL)
+	strcpy(QwertyLang(), "");
+    else 
+	strcpy(QwertyLang(), aLang);
+}
+
 KeyCharacterMap*
 KeyCharacterMap::load(int id)
 {
@@ -171,7 +187,7 @@ KeyCharacterMap::load(int id)
         strcpy(tmpfn, dev);
         for (char *p = strchr(tmpfn, ' '); p && *p; p = strchr(tmpfn, ' '))
             *p = '_';
-        snprintf(path, sizeof(path), "%s/usr/keychars/%s.kcm.bin", root, tmpfn);
+        snprintf(path, sizeof(path), "%s/usr/keychars/%s%s.kcm.bin", root, tmpfn, QwertyLang());
         //LOGD("load: dev='%s' path='%s'\n", dev, path);
         rv = try_file(path);
         if (rv != NULL) {
@@ -182,11 +198,16 @@ KeyCharacterMap::load(int id)
         LOGW("No keyboard for id %d", id);
     }
 
-    snprintf(path, sizeof(path), "%s/usr/keychars/qwerty.kcm.bin", root);
+    snprintf(path, sizeof(path), "%s/usr/keychars/qwerty%s.kcm.bin", root, QwertyLang());
     rv = try_file(path);
-    if (rv == NULL) {
-        LOGE("Can't find any keycharmaps (also tried %s)", path);
-        return NULL;
+    if (rv == NULL)
+    {
+        snprintf(path, sizeof(path), "%s/usr/keychars/qwerty.kcm.bin", root);
+        rv = try_file(path);
+        if (rv == NULL) {
+            LOGE("Can't find any keycharmaps (also tried %s)", path);
+            return NULL;
+        }
     }
     LOGW("Using default keymap: %s", path);
 

@@ -88,7 +88,8 @@ public class QwertyKeyListener extends BaseKeyListener {
         int i = event.getUnicodeChar(getMetaState(content));
 
         int count = event.getRepeatCount();
-        if (count > 0 && selStart == selEnd && selStart > 0) {
+	if (count > 0 && selStart == selEnd && selStart > 0)
+	{
             char c = content.charAt(selStart - 1);
 
             if (c == i || c == Character.toUpperCase(i) && view != null) {
@@ -99,6 +100,15 @@ public class QwertyKeyListener extends BaseKeyListener {
             }
         }
 
+        if (i == '\uEF00') {
+	    String[] tLangs = {"English", "Thai"};
+            if (view != null) {
+                new LanguagePickerDialog(view.getContext(),
+                                         view, content, tLangs, false).show();
+	    }
+            resetMetaState(content);
+            return true;
+	}
         if (i == KeyCharacterMap.PICKER_DIALOG_INPUT) {
             if (view != null) {
                 showCharacterPicker(view, content,

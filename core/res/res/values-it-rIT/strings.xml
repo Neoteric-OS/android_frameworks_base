@@ -744,6 +744,7 @@
   <string name="selectAll">Seleziona tutto</string>
   <string name="selectMenuLabel">Seleziona</string>
   <string name="select_character">Selezionare il carattere da inserire</string>
+  <string name="select_language">Select language</string>
   <string name="sendText">Selezionare un'azione per il testo</string>
   <string name="serviceClassData">Dati</string>
   <string name="serviceClassDataAsync">Asinc</string>
