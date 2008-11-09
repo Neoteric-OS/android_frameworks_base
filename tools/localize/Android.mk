@@ -37,6 +37,9 @@ ifeq ($(HOST_OS),linux)
 LOCAL_LDLIBS += -lrt
 endif
 
+ifeq ($(HOST_OS),freebsd)
+LOCAL_LDLIBS += -lpthread
+endif
 
 LOCAL_MODULE := localize
 
