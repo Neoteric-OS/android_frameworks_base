@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "z8570da76e23bf28320aedb15325e0a4f",
+        "filename": "core/java/android/hardware/SensorManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2008-12-03T16:11:31Z",
+      "side": 1,
+      "message": "This is a bug fix which has nothing to do with \"Android on Freerunner support\". It should be done in a separate change list.",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z5315b337014619b4228196d9974f9e6d",
         "filename": "core/java/android/view/OrientationListener.java",
         "patchSetId": 1
