@@ -291,6 +291,23 @@
     },
     {
       "key": {
+        "uuid": "zb98dd70cd35dc9dc6c09ef98e471f669",
+        "filename": "services/java/com/android/server/InputDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000717
+      },
+      "writtenOn": "2008-12-03T16:11:34Z",
+      "side": 1,
+      "message": "Also, do not line up the assignments.",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z48b72113d629d532f45de1c183c3210a",
         "filename": "services/java/com/android/server/InputDevice.java",
         "patchSetId": 1
