@@ -16,6 +16,23 @@
       "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z50e503f8726d86e6d257e3e928ca5608",
+        "filename": "core/jni/server/com_android_server_BatteryService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001286
+      },
+      "writtenOn": "2008-12-03T16:11:31Z",
+      "side": 1,
+      "message": "This will break the battery panel on dream.",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
