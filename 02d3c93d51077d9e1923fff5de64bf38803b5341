@@ -169,6 +169,23 @@
       "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z81262cd185b9da1e7a0f0fa28bf05600",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1287,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:33Z",
+      "side": 1,
+      "message": "Don\u0027t automatically provision the device, this is going to have a lot of impact on applications. This should be done by very specific modules, like the SdkSetup included in the source tree.",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
