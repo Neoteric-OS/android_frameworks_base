@@ -172,6 +172,23 @@
     },
     {
       "key": {
+        "uuid": "za59b21111ebca61ebba536e581be118b",
+        "filename": "opengl/libGLES_CM/gl_wrapper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2008-12-03T16:11:34Z",
+      "side": 1,
+      "message": "Ugh. This is a *very* crucial optimization. Please reenable.",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "zb35b93579ca6f1ee059f4222c191991f",
         "filename": "services/java/com/android/server/HeadsetObserver.java",
         "patchSetId": 1
