@@ -172,6 +172,23 @@
     },
     {
       "key": {
+        "uuid": "zb35b93579ca6f1ee059f4222c191991f",
+        "filename": "services/java/com/android/server/HeadsetObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:34Z",
+      "side": 1,
+      "message": "Import the class, do not use fully qualified name",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z1116e2e7aa9eee36099dd826c2dd28fe",
         "filename": "services/java/com/android/server/InputDevice.java",
         "patchSetId": 1
@@ -206,6 +223,23 @@
     },
     {
       "key": {
+        "uuid": "zbec08bc8516d8956865ad99824aaade6",
+        "filename": "services/java/com/android/server/InputDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:34Z",
+      "side": 1,
+      "message": "Curly braces",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "zb8543b422387bcd6bcbb97c306e0f3fe",
         "filename": "services/java/com/android/server/InputDevice.java",
         "patchSetId": 1
@@ -217,6 +251,23 @@
       "writtenOn": "2008-12-03T16:11:34Z",
       "side": 1,
       "message": "Where does this number come from? At least use a constant",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zecce990c80a0a7bf4190ce4aeef142a8",
+        "filename": "services/java/com/android/server/InputDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:34Z",
+      "side": 1,
+      "message": "The stream should be closed in a finally {} clause, you can leave the stream opened with this code",
       "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -308,6 +359,23 @@
     },
     {
       "key": {
+        "uuid": "ze5ba8c7a93780d8de21cbbce13301086",
+        "filename": "services/java/com/android/server/InputDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:34Z",
+      "side": 1,
+      "message": "Do not use fully qualified names, import the classes",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z48b72113d629d532f45de1c183c3210a",
         "filename": "services/java/com/android/server/InputDevice.java",
         "patchSetId": 1
@@ -319,6 +387,23 @@
       "writtenOn": "2008-12-03T16:11:34Z",
       "side": 1,
       "message": "Same thing",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z6beada2dc329f714922effc582f63f32",
+        "filename": "services/java/com/android/server/WifiService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:34Z",
+      "side": 1,
+      "message": "Can you explain why you removed all this code?",
       "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
