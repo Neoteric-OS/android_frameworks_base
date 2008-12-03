@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "za8127e58afd1dc11e631bde300d2c536",
+        "filename": "core/java/android/view/OrientationListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:31Z",
+      "side": 1,
+      "message": "Where does this number come from? Use a constant and explain the value",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z7626e7fae12572e4f2685914ba7dd114",
         "filename": "core/java/android/view/WindowManagerImpl.java",
         "patchSetId": 1
