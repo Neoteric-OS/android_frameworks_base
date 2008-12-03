@@ -104,6 +104,23 @@
     },
     {
       "key": {
+        "uuid": "zea5f50dae0e1d032549f6090c9e0fe04",
+        "filename": "libs/ui/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001286
+      },
+      "writtenOn": "2008-12-03T16:11:34Z",
+      "side": 1,
+      "message": "board specific build config stuff should be in the BOARD_* namespace",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z4ce01287d19349875b81b092eaf25941",
         "filename": "libs/ui/EGLDisplaySurface.cpp",
         "patchSetId": 1
