@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "z5315b337014619b4228196d9974f9e6d",
+        "filename": "core/java/android/view/OrientationListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2008-12-03T16:11:31Z",
+      "side": 1,
+      "message": "No. We don\u0027t want to filter the angle here. Subclasses can do it if they wish. Such clamping would prevent a subclass to perform more advanced filtering/smoothing and could have disastrous side effects.\nAdditionally, this change has nothing to do with adding \"Freerunner support\".\n",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z7626e7fae12572e4f2685914ba7dd114",
         "filename": "core/java/android/view/WindowManagerImpl.java",
         "patchSetId": 1
