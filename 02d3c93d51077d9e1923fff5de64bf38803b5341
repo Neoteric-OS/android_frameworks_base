@@ -172,6 +172,142 @@
     },
     {
       "key": {
+        "uuid": "z1116e2e7aa9eee36099dd826c2dd28fe",
+        "filename": "services/java/com/android/server/InputDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:33Z",
+      "side": 1,
+      "message": "Use a full name like \"transformInfo\"",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z5a41266313b1261835a74d1aeb41c139",
+        "filename": "services/java/com/android/server/InputDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:34Z",
+      "side": 1,
+      "message": "Use curly braces:\n\nif {\n} else {\n}",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zb8543b422387bcd6bcbb97c306e0f3fe",
+        "filename": "services/java/com/android/server/InputDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:34Z",
+      "side": 1,
+      "message": "Where does this number come from? At least use a constant",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z3d1b8034572ac34ed6df17ed0672e9c9",
+        "filename": "services/java/com/android/server/InputDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:33Z",
+      "side": 1,
+      "message": "use for (int i \u003d 0; ...)",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "zb1b3c5e9f0303c37851a6cc5dcebdaf8",
+        "filename": "services/java/com/android/server/InputDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:34Z",
+      "side": 1,
+      "message": "no spaces after or before parenthesis",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z07a6e6c5316a248c89abe4b949fa06d3",
+        "filename": "services/java/com/android/server/InputDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:33Z",
+      "side": 1,
+      "message": "No space before parenthesis",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z251aab99a76fc28e6332efe3abea82ff",
+        "filename": "services/java/com/android/server/InputDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:33Z",
+      "side": 1,
+      "message": "remove all the spaces before the parenthesis",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z48b72113d629d532f45de1c183c3210a",
+        "filename": "services/java/com/android/server/InputDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2008-12-03T16:11:34Z",
+      "side": 1,
+      "message": "Same thing",
+      "revId": "02d3c93d51077d9e1923fff5de64bf38803b5341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "z19cab5057f63fa77e3d1c39bca0fa990",
         "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
         "patchSetId": 1
