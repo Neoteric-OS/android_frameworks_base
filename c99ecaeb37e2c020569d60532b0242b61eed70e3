@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "z5545d9890eb9bdee621d89493dbbd685",
+        "filename": "core/java/android/webkit/FrameLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2008-12-08T04:58:40Z",
+      "side": 1,
+      "message": "No need to mention this in the code, that information is available through git.",
+      "revId": "c99ecaeb37e2c020569d60532b0242b61eed70e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
