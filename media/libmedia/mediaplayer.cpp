@@ -466,6 +466,7 @@ void MediaPlayer::notify(int msg, int ext1, int ext2)
     mLock.lock();
     if (mPlayer == 0) {
         LOGV("notify(%d, %d, %d) callback on disconnected mediaplayer", msg, ext1, ext2);
+	 mLock.unlock();
         return;
     }
 
