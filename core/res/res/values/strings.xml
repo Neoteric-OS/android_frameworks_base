@@ -1505,7 +1505,7 @@
          or make other punctuation changes appropriate for your locale.
          If you need to add letters, put apostrophes around them to keep
          them from being interpreted as format characters. -->
-    <string name="full_date_month_first"><xliff:g id="month" example="December">MMMM</xliff:g> <xliff:g id="day" example="31">dd</xliff:g>, <xliff:g id="year" example="1972">yyyy</xliff:g></string>
+    <string name="full_date_month_first"><xliff:g id="month" example="December">MMMM</xliff:g> <xliff:g id="day" example="31">d</xliff:g>, <xliff:g id="year" example="1972">yyyy</xliff:g></string>
 
     <!-- Date format string used in contexts where the user has said they
          want the day of the month first, as used in Europe, with the month
@@ -1513,7 +1513,7 @@
          or make other punctuation changes appropriate for your locale.
          If you need to add letters, put apostrophes around them to keep
          them from being interpreted as format characters. -->
-    <string name="full_date_day_first"><xliff:g id="day" example="31">dd</xliff:g> <xliff:g id="month" example="December">MMMM</xliff:g>, <xliff:g id="year" example="1972">yyyy</xliff:g></string>
+    <string name="full_date_day_first"><xliff:g id="day" example="31">d</xliff:g> <xliff:g id="month" example="December">MMMM</xliff:g>, <xliff:g id="year" example="1972">yyyy</xliff:g></string>
 
     <!-- Date format string used in contexts where the user has said they
          want the month first, as used in the USA, with the month
@@ -1521,7 +1521,7 @@
          or make other punctuation changes appropriate for your locale.
          If you need to add letters, put apostrophes around them to keep
          them from being interpreted as format characters. -->
-    <string name="medium_date_month_first"><xliff:g id="month" example="Dec.">MMM</xliff:g> <xliff:g id="day" example="31">dd</xliff:g>, <xliff:g id="year" example="1972">yyyy</xliff:g></string>
+    <string name="medium_date_month_first"><xliff:g id="month" example="Dec.">MMM</xliff:g> <xliff:g id="day" example="31">d</xliff:g>, <xliff:g id="year" example="1972">yyyy</xliff:g></string>
 
     <!-- Date format string used in contexts where the user has said they
          want the day of the month first, as used in Europe, with the month
@@ -1529,7 +1529,7 @@
          or make other punctuation changes appropriate for your locale.
          If you need to add letters, put apostrophes around them to keep
          them from being interpreted as format characters. -->
-    <string name="medium_date_day_first"><xliff:g id="day" example="31">dd</xliff:g> <xliff:g id="month" example="December">MMM</xliff:g>, <xliff:g id="year" example="1972">yyyy</xliff:g></string>
+    <string name="medium_date_day_first"><xliff:g id="day" example="31">d</xliff:g> <xliff:g id="month" example="December">MMM</xliff:g>, <xliff:g id="year" example="1972">yyyy</xliff:g></string>
 
     <!-- Time format string used in the status bar when the user has said they
          want a 12-hour clock with AM and PM.
