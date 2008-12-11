@@ -61,6 +61,7 @@ private:
                 PAGE_FLIP = 0x00000001
             };
     GGLSurface          mFb[2];
+    bool                mUsePanIoctl;
     int                 mIndex;
     uint32_t            mFlags;
     size_t              mSize;

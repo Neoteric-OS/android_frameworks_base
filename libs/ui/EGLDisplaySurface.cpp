@@ -147,9 +147,6 @@ void EGLDisplaySurface::setSwapRectangle(int l, int t, int w, int h)
 
 uint32_t EGLDisplaySurface::swapBuffers()
 {
-    if (!(mFlags & PAGE_FLIP))
-        return 0;
-
 #define SHOW_FPS 0
 #if SHOW_FPS
     nsecs_t now = systemTime();
@@ -172,13 +169,44 @@ uint32_t EGLDisplaySurface::swapBuffers()
     }
 #endif
 
+    /* beware the flicker monster */
+    if (!(mFlags & PAGE_FLIP)) {
+       //
+       //  In common case, the horizontal resolution will match the line length.
+       //  Here, we can memcpy one big block.
+       //  In the less common case (e.g., eee-pc with DVI video), there is 
+       //  extra buffer at the end of each row.
+       //  In this case, we copy only the "interesting" part of each line.
+
+       const size_t bpr = mInfo.xres * (mInfo.bits_per_pixel >> 3);
+
+       if(mFinfo.line_length==bpr) {
+         memcpy(mFb[0].data, mFb[1].data, mInfo.yres*bpr);
+       } else {
+          for (unsigned int i=0 ; i<mInfo.yres ; i++) {
+            memcpy(&(mFb[0].data[i*mFinfo.line_length]), 
+                   &(mFb[1].data[i*mFinfo.line_length]), bpr);
+          }
+       }
+       return 0;
+    }
+
     // do the actual flip
     mIndex = 1 - mIndex;
     mInfo.activate = FB_ACTIVATE_VBL;
     mInfo.yoffset = mIndex ? mInfo.yres : 0;
-    if (ioctl(egl_native_window_t::fd, FBIOPUT_VSCREENINFO, &mInfo) == -1) {
+
+    // Use PAN if we can or SCREENINFO if we cant
+    if(mUsePanIoctl) {
+      if (ioctl(egl_native_window_t::fd, FBIOPAN_DISPLAY, &mInfo) == -1 ) {
+        LOGE("FBIOPAN_DISPLAY failed.");
+        return 0;
+      }
+    } else {
+      if (ioctl(egl_native_window_t::fd, FBIOPUT_VSCREENINFO, &mInfo) == -1) {
         LOGE("FBIOPUT_VSCREENINFO failed");
         return 0;
+      }
     }
 
     /*
@@ -273,6 +301,11 @@ void EGLDisplaySurface::copyFrontToBack(const Region& copyback)
     } else
 #endif
     {
+        /* no extra copy since we copied back to front instead of flipping */
+        if (!(mFlags & PAGE_FLIP)) {
+            return;
+        }
+
         Region::iterator iterator(copyback);
         if (iterator) {
             Rect r;
@@ -311,6 +344,7 @@ status_t EGLDisplaySurface::mapFrameBuffer()
     int fd = -1;
     int i=0;
     char name[64];
+
     while ((fd==-1) && device_template[i]) {
         snprintf(name, 64, device_template[i], 0);
         fd = open(name, O_RDWR, 0);
@@ -346,6 +380,14 @@ status_t EGLDisplaySurface::mapFrameBuffer()
     info.activate = FB_ACTIVATE_NOW;
 
     uint32_t flags = PAGE_FLIP;
+    mUsePanIoctl=true;
+
+    // Determine if the PAN IOCTL will work for us
+    if (ioctl(fd, FBIOPAN_DISPLAY, &info) == -1) {
+        mUsePanIoctl=false;
+        LOGW("FBIOPAN_DISPLAY failed.  Switching to FBIOPUT_VSCREENINFO mode");
+    }
+
     if (ioctl(fd, FBIOPUT_VSCREENINFO, &info) == -1) {
         info.yres_virtual = info.yres;
         flags &= ~PAGE_FLIP;
@@ -391,20 +433,25 @@ status_t EGLDisplaySurface::mapFrameBuffer()
             "yres         = %d px\n"
             "xres_virtual = %d px\n"
             "yres_virtual = %d px\n"
+            "smem_len     = %d b\n"
             "bpp          = %d\n"
             "r            = %2u:%u\n"
             "g            = %2u:%u\n"
-            "b            = %2u:%u\n",
+            "b            = %2u:%u\n"
+            "PAGE_FLIP    = %d\n"
+            "IOCTL_PAN    = %d\n",
             fd,
             finfo.id,
             info.xres,
             info.yres,
             info.xres_virtual,
             info.yres_virtual,
+            finfo.smem_len,
             info.bits_per_pixel,
             info.red.offset, info.red.length,
             info.green.offset, info.green.length,
-            info.blue.offset, info.blue.length
+            info.blue.offset, info.blue.length,
+            (flags & PAGE_FLIP)!=0, mUsePanIoctl==true
     );
 
     LOGI(   "width        = %d mm (%f dpi)\n"
