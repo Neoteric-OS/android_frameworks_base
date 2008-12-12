@@ -176,6 +176,9 @@ public class GSMPhone extends PhoneBase {
         mSIMFileHandler = new SIMFileHandler(this);
         mSIMRecords = new SIMRecords(this);
         mDataConnection = new DataConnectionTracker (this);
+	//TI WORKAROUND
+	mDataConnection.createAllPdpList();
+
         mSimCard = new GsmSimCard(this);
         if (!unitTestMode) {
             mSimPhoneBookIntManager = new SimPhoneBookInterfaceManager(this);

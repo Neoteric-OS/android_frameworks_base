@@ -406,7 +406,17 @@ public class PdpConnection extends Handler {
                     } else {
                         String[] response = ((String[]) ar.result);
                         cid = Integer.parseInt(response[0]);
-                        
+
+			// TI WORKAROUND
+			interfaceName = response[1];
+			{                                                           
+			    String prefix = "net." + interfaceName + ".";
+			    ipAddress = SystemProperties.get(prefix + "local-ip");
+			    gatewayAddress = SystemProperties.get(prefix + "gw");
+			    dnsServers[0] = SystemProperties.get(prefix + "dns1");
+			    dnsServers[1] = SystemProperties.get(prefix + "dns2");
+			}
+			
                         if (response.length > 2) {
                             interfaceName = response[1];
                             ipAddress = response[2];

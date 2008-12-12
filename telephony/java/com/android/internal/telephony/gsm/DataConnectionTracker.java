@@ -339,7 +339,8 @@ final class DataConnectionTracker extends Handler
         phone.getContext().getContentResolver().registerContentObserver(
                 Telephony.Carriers.CONTENT_URI, true, apnObserver);
 
-        createAllPdpList();
+	//TI WORKAROUND
+        //createAllPdpList();
 
         // This preference tells us 1) initial condition for "dataEnabled",
         // and 2) whether the RIL will setup the baseband to auto-PS attach.
@@ -1593,7 +1594,8 @@ final class DataConnectionTracker extends Handler
         }
     }
 
-    private void createAllPdpList() {
+    //TI WORKAROUND
+    public void createAllPdpList() {
         pdpList = new ArrayList<PdpConnection>();
         PdpConnection pdp;
 

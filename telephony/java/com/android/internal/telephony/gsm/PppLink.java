@@ -82,6 +82,8 @@ final class PppLink extends DataLink implements DataLinkInterface {
         SystemService.start(SERVICE_PPPD_GPRS);
         removeMessages(EVENT_POLL_DATA_CONNECTION);
         Message poll = obtainMessage();
+	//TI WORKAROUND
+	dataConnection.state = State.CONNECTING;
         poll.what = EVENT_POLL_DATA_CONNECTION;
         sendMessageDelayed(poll, POLL_SYSFS_MILLIS);
     }
