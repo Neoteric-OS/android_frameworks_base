@@ -86,6 +86,10 @@ final class SMSDispatcher extends Handler {
     private static final byte WAP_CO_MIME_PORT = (byte)0xb2;
 
     private static final String WAP_CO_MIME_TYPE = "application/vnd.wap.coc";
+ 
+    private static final byte WAP_CON_WBXML_MIME_PORT = (byte)0xb6;
+    
+    private static final String WAP_CON_WBXML_MIME_TYPE = "application/vnd.wap.connectivity-wbxml";
 
     private static final int WAP_PDU_SHORT_LENGTH_MAX = 30;
 
@@ -652,6 +656,7 @@ final class SMSDispatcher extends Handler {
         int transactionId = pdu[index++] & 0xFF;
         int pduType = pdu[index++] & 0xFF;
         int headerLength = 0;
+        int contentTypeLength = 0;
 
         if ((pduType != WAP_PDU_TYPE_PUSH) &&
                 (pduType != WAP_PDU_TYPE_CONFIRMED_PUSH)) {
@@ -685,20 +690,33 @@ final class SMSDispatcher extends Handler {
          * Short-length = <Any octet 0-30>   (octet <= WAP_PDU_SHORT_LENGTH_MAX)
          * Length-quote = <Octet 31>         (WAP_PDU_LENGTH_QUOTE)
          * Length = Uintvar-integer
+         * Constrained-media = Constrained-encoding
+         * Constrained-encoding = Extension-Media | Short-integer
+         * Extension-media = *TEXT End-of-string
          */
-        // Parse Value-length.
-        if ((pdu[index] & 0xff) <= WAP_PDU_SHORT_LENGTH_MAX) {
-            // Short-length.
-            index++;
-        } else if (pdu[index] == WAP_PDU_LENGTH_QUOTE) {
-            // Skip Length-quote.
-            index++;
-            // Skip Length.
-            // Now we assume 8bit is enough to store the content-type length.
-            index++;
+        //Is the Content-type-value a Constrained-media or Content-general-form
+        if((pdu[index] & 0x80) == 0){
+        
+	        // Parse Value-length.
+	        if ((pdu[index] & 0xff) <= WAP_PDU_SHORT_LENGTH_MAX) {
+	            // Short-length.
+	        	contentTypeLength = pdu[index];
+	            index++;
+	        } else if (pdu[index] == WAP_PDU_LENGTH_QUOTE) {
+	            // Skip Length-quote.
+	            index++;
+	            // we have an uintvar again
+	            temp = 0;
+	            do {
+	                temp = pdu[index++];
+	                contentTypeLength = contentTypeLength << 7;
+	                contentTypeLength |= temp & 0x7F;
+	            } while ((temp & 0x80) != 0);
+	        }
         }
+        int contentType = index;
         String mimeType;
-        switch (pdu[headerStartIndex])
+        switch (pdu[contentType])
         {
         case DRM_RIGHTS_XML:
             mimeType = DRM_RIGHTS_XML_MIME_TYPE;
@@ -716,6 +734,9 @@ final class SMSDispatcher extends Handler {
         case WAP_CO_MIME_PORT:
             mimeType = WAP_CO_MIME_TYPE;
             break;
+        case WAP_CON_WBXML_MIME_PORT:
+        	mimeType = WAP_CON_WBXML_MIME_TYPE;
+        	break;
         default:
             int start = index;
 
@@ -731,7 +752,7 @@ final class SMSDispatcher extends Handler {
         // XXX Skip the remainder of the header for now
         int dataIndex = headerStartIndex + headerLength;
         byte[] data;
-        if (pdu[headerStartIndex] == WAP_CO_MIME_PORT)
+        if (pdu[contentType] == WAP_CO_MIME_PORT)
         {
             // because SMSDispatcher can't parse push headers "Content-Location" and
             // X-Wap-Content-URI, so pass the whole push to CO application.
