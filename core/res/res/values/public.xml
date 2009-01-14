@@ -924,6 +924,8 @@
   <public type="anim" name="accelerate_decelerate_interpolator" id="0x010a0004" />
   <public type="anim" name="accelerate_interpolator" id="0x010a0005" />
   <public type="anim" name="decelerate_interpolator" id="0x010a0006" />
+  <public type="anim" name="slide_in_right" id="0x010a0007" />
+  <public type="anim" name="slide_out_left" id="0x010a0008" />
 
 <!-- ===============================================================
      Resources added in version 2 of the platform.
