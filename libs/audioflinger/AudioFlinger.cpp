@@ -776,13 +776,18 @@ status_t AudioFlinger::setStreamVolume(int stream, float value)
         return BAD_VALUE;
     }
 
-    mStreamTypes[stream].volume = value;
     status_t ret = NO_ERROR;
     if (stream == AudioTrack::VOICE_CALL) {
         AutoMutex lock(mHardwareLock);
         mHardwareStatus = AUDIO_SET_VOICE_VOLUME;
         ret = mAudioHardware->setVoiceVolume(value);
         mHardwareStatus = AUDIO_HW_IDLE;
+ 	// Re-base the internally generated in-call audio so that
+	// it is never muted, which is already the case for the
+	// hardware routed in-call audio.  Fixes #1324
+	mStreamTypes[stream].volume = value*(1.0-1.0/6.0)+(1.0/6.0);
+    } else {
+        mStreamTypes[stream].volume = value;
     }
     return ret;
 }
@@ -805,6 +810,11 @@ float AudioFlinger::streamVolume(int stream) const
 {
     if (uint32_t(stream) >= AudioTrack::NUM_STREAM_TYPES) {
         return 0.0f;
+    }
+    if (stream == AudioTrack::VOICE_CALL) {
+        // Re-base internally generated in-call audio,
+        // reverse of above in setStreamVolume.
+        return (mStreamTypes[stream].volume-(1.0/6.0))/(1.0-1.0/6.0);
     }
     return mStreamTypes[stream].volume;
 }
