@@ -133149,6 +133149,17 @@
  visibility="public"
 >
 </method>
+<method name="getLowBandwidthDisplayMode"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
 <method name="getMinimumFontSize"
  return="int"
  abstract="false"
@@ -133277,7 +133288,7 @@
  synchronized="true"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 </method>
@@ -133496,6 +133507,19 @@
 <parameter name="flag" type="boolean">
 </parameter>
 </method>
+<method name="setLowBandwidthDisplayMode"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="use" type="boolean">
+</parameter>
+</method>
 <method name="setMinimumFontSize"
  return="void"
  abstract="false"
@@ -133698,7 +133722,7 @@
  synchronized="true"
  static="false"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
 <parameter name="use" type="boolean">
