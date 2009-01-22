@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "zb4b40026c6a3a120b8f93eabbfd09182",
+        "filename": "libs/audioflinger/AudioFlinger.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2009-01-22T01:46:33Z",
+      "side": 1,
+      "message": "Do not use tabs",
+      "revId": "ae943dd6d2148c185a76b135887a16f9529366a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "za661df245e9ae8f32eee77b9f835b55e",
+        "filename": "libs/audioflinger/AudioFlinger.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2009-01-22T01:46:33Z",
+      "side": 1,
+      "message": "Please use spaces around operators",
+      "revId": "ae943dd6d2148c185a76b135887a16f9529366a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "z688d9865d332be05cc64e470eb355a00",
+        "filename": "libs/audioflinger/AudioFlinger.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2009-01-22T01:46:33Z",
+      "side": 1,
+      "message": "Please use spaces around operators",
+      "revId": "ae943dd6d2148c185a76b135887a16f9529366a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
