@@ -30,8 +30,8 @@ import android.graphics.drawable.Drawable;
 
 import com.android.internal.telephony.IccUtils;
 import com.android.internal.telephony.CommandsInterface;
-import com.android.internal.telephony.gsm.EncodeException;
-import com.android.internal.telephony.gsm.GsmAlphabet;
+import com.android.internal.telephony.EncodeException;
+import com.android.internal.telephony.GsmAlphabet;
 import com.android.internal.telephony.gsm.SimCard;
 import com.android.internal.telephony.gsm.SIMFileHandler;
 import com.android.internal.telephony.gsm.SIMRecords;
@@ -156,9 +156,9 @@ public class Service extends Handler implements AppInterface {
     // Service members.
     private static Service sInstance;
     private CommandsInterface mCmdIf;
-    private SIMRecords mSimRecords;
+    private static SIMRecords mSimRecords;
     private Context mContext;
-    private SimCard mSimCard;
+    private static SimCard mSimCard;
     private CommandListener mCmdListener;
     private Object mCmdListenerLock = new Object();
     private CommandParams mCmdParams = null;
@@ -281,6 +281,19 @@ public class Service extends Handler implements AppInterface {
         mSimRecords.registerForRecordsLoaded(this, EVENT_SIM_LOADED, null);
         mSimCard.registerForAbsent(this, EVENT_SIM_ABSENT, null);
     }
+    public void dispose() {
+        mSimRecords.unregisterForRecordsLoaded(this);
+        mSimCard.unregisterForAbsent(this);
+        mCmdIf.unSetOnStkSessionEnd(this);
+        mCmdIf.unSetOnStkProactiveCmd(this);
+        mCmdIf.unSetOnStkEvent(this);
+        mCmdIf.unSetOnStkCallSetUp(this);
+
+        this.removeCallbacksAndMessages(null);
+
+        mSimRecords = null;
+        mSimCard = null;
+    }
 
     /**
      * Used for retrieving the only Service object in the system. There is only
@@ -298,6 +311,14 @@ public class Service extends Handler implements AppInterface {
                 return null;
             }
             sInstance = new Service(ci, sr, context, fh, sc);
+        } else if(mSimCard != sc && mSimRecords != sr) {
+            Log.d(TAG, "Reinitialize the Service with SimCard and SIMRecords.");
+            mSimCard = sc;
+            mSimRecords = sr;
+
+            // re-Register for SIM ready event.
+            mSimRecords.registerForRecordsLoaded(sInstance, EVENT_SIM_LOADED, null);
+            mSimCard.registerForAbsent(sInstance, EVENT_SIM_ABSENT, null);
         }
         return sInstance;
     }

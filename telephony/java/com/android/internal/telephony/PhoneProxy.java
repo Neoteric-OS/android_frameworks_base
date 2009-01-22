@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 The Android Open Source Project
+ * Copyright (C) 2008 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,53 +16,106 @@
  
 package com.android.internal.telephony;
 
-/*
-import android.util.Log;
-import com.android.internal.telephony.test.ModelInterpreter;
-import com.android.internal.telephony.test.SimulatedCommands;
-import android.os.Looper;
-import android.os.SystemProperties;
+
+import android.app.ActivityManagerNative;
 import android.content.Context;
 import android.content.Intent;
-import android.net.LocalServerSocket;
-import android.app.ActivityManagerNative;
-*/
-import android.content.*;
-import android.os.*;
-
-import com.android.internal.telephony.*;
-import com.android.internal.telephony.test.SimulatedRadioControl;
-import com.android.internal.telephony.gsm.NetworkInfo;
-import com.android.internal.telephony.gsm.PdpConnection;
-import com.android.internal.telephony.gsm.GSMPhone;
-import com.android.internal.telephony.cdma.CDMAPhone;
+import android.os.Handler;
+import android.os.Message;
 import android.telephony.CellLocation;
 import android.telephony.ServiceState;
+import android.util.Log;
 
-/*
-import java.util.ArrayList;
+import com.android.internal.telephony.cdma.CDMAPhone;
+import com.android.internal.telephony.gsm.GSMPhone;
+import com.android.internal.telephony.gsm.NetworkInfo;
+import com.android.internal.telephony.gsm.PdpConnection;
+import com.android.internal.telephony.test.SimulatedRadioControl;
+
 import java.util.List;
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.util.Collections;
-*/
-import java.util.*;
 
-public class PhoneProxy implements Phone {
+public class PhoneProxy extends Handler implements Phone{
+    public final static Object lockForRadioTechnologyChange = new Object();
+//    private static boolean radioTechnologyChangeGsmToCdma = false;
+//    private static boolean radioTechnologyChangeCdmaToGsm = false;
+
     private Phone mActivePhone;
-    private Phone mCdmaPhone;
-    private Phone mGsmPhone;
+    private String mOutgoingPhone;
+    private CommandsInterface mCommandsInterface;
     private IccSmsInterfaceManagerProxy mIccSmsInterfaceManagerProxy;
     private IccPhoneBookInterfaceManagerProxy mIccPhoneBookInterfaceManagerProxy;
     private PhoneSubInfoProxy mPhoneSubInfoProxy;
 
+    private static final int EVENT_RADIO_TECHNOLOGY_CHANGED = 1;
+    private static final String LOG_TAG = "PHONE";
+
     //***** Class Methods
     public PhoneProxy(Phone phone) {
         mActivePhone = phone;
-        mIccSmsInterfaceManagerProxy = new IccSmsInterfaceManagerProxy(phone.getIccSmsInterfaceManager());
-        mIccPhoneBookInterfaceManagerProxy = 
-                new IccPhoneBookInterfaceManagerProxy(phone.getIccPhoneBookInterfaceManager());
+        mIccSmsInterfaceManagerProxy = new IccSmsInterfaceManagerProxy(
+                phone.getIccSmsInterfaceManager());
+        mIccPhoneBookInterfaceManagerProxy = new IccPhoneBookInterfaceManagerProxy(
+                phone.getIccPhoneBookInterfaceManager());
         mPhoneSubInfoProxy = new PhoneSubInfoProxy(phone.getPhoneSubInfo());
+        mCommandsInterface = ((PhoneBase)mActivePhone).mCM;
+        mCommandsInterface.registerForRadioTechnologyChanged(
+                this, EVENT_RADIO_TECHNOLOGY_CHANGED, null);
+    }
+
+    @Override
+    public void handleMessage(Message msg) {
+        switch(msg.what) {
+        case EVENT_RADIO_TECHNOLOGY_CHANGED:
+            //switch Phone from CDMA to GSM or vice versa
+            mOutgoingPhone = ((PhoneBase)mActivePhone).getPhoneName();
+            Log.d(LOG_TAG, "Switching phone from " + mOutgoingPhone + "Phone to " +
+                    (mOutgoingPhone.equals("GSM") ? "CDMAPhone" : "GSMPhone") );
+            if(mOutgoingPhone.equals("GSM")) {
+                Log.d(LOG_TAG, "Make a new CDMAPhone and destroy the old GSMPhone.");
+
+                ((GSMPhone)mActivePhone).dispose();
+                mActivePhone = null;
+
+                //Give the garbage collector a hint to start the garbage collection asap
+                System.gc();
+
+                mActivePhone = PhoneFactory.getCdmaPhone();
+            } else {
+                Log.d(LOG_TAG, "Make a new GSMPhone and destroy the old CDMAPhone.");
+
+                ((CDMAPhone)mActivePhone).dispose();
+                mActivePhone = null;
+
+                //Give the garbage collector a hint to start the garbage collection asap
+                System.gc();
+
+                mActivePhone = PhoneFactory.getGsmPhone();
+            }
+
+            //Set the new interfaces in the proxy's
+            mIccSmsInterfaceManagerProxy.setmIccSmsInterfaceManager(
+                    mActivePhone.getIccSmsInterfaceManager());
+            mIccPhoneBookInterfaceManagerProxy.setmIccPhoneBookInterfaceManager(
+                    mActivePhone.getIccPhoneBookInterfaceManager());
+            mPhoneSubInfoProxy.setmPhoneSubInfo(this.mActivePhone.getPhoneSubInfo());
+            mCommandsInterface = ((PhoneBase)mActivePhone).mCM;
+
+            //Give the garbage collector again a hint to start the 
+            //garbage collection after setting the new interfaces
+            System.gc();
+
+            //Send an Intent to the PhoneApp that we had a radio technology change
+            Intent intent = new Intent(TelephonyIntents.ACTION_RADIO_TECHNOLOGY_CHANGED);
+            intent.putExtra(Phone.PHONE_NAME_KEY, mActivePhone.getPhoneName());
+            ActivityManagerNative.broadcastStickyIntent(intent, null);
+
+            break;
+        default:
+            Log.e(LOG_TAG, "Error! This handler was not registered for this message type. Message: "
+                    + msg.what);
+        break;
+        }
+        super.handleMessage(msg);
     }
 
     public ServiceState getServiceState() {
@@ -77,7 +130,7 @@ public class PhoneProxy implements Phone {
         return mActivePhone.getDataConnectionState(); 
     }
 
-    public DataActivityState getDataActivityState() {      
+    public DataActivityState getDataActivityState() {
         return mActivePhone.getDataActivityState(); 
     }
 
@@ -193,8 +246,24 @@ public class PhoneProxy implements Phone {
         mActivePhone.unregisterForSuppServiceFailed(h);
     }
 
-    public boolean getSimRecordsLoaded() {
-        return mActivePhone.getSimRecordsLoaded();
+    public void registerForInCallVoicePrivacyOn(Handler h, int what, Object obj){
+        mActivePhone.registerForInCallVoicePrivacyOn(h,what,obj);
+    }
+
+    public void unregisterForInCallVoicePrivacyOn(Handler h){
+        mActivePhone.unregisterForInCallVoicePrivacyOn(h);
+    }
+
+    public void registerForInCallVoicePrivacyOff(Handler h, int what, Object obj){
+        mActivePhone.registerForInCallVoicePrivacyOff(h,what,obj);    
+    }
+
+    public void unregisterForInCallVoicePrivacyOff(Handler h){
+        mActivePhone.unregisterForInCallVoicePrivacyOff(h);    
+    }
+
+    public boolean getIccRecordsLoaded() {
+        return mActivePhone.getIccRecordsLoaded();
     }
 
     public IccCard getIccCard() {
@@ -389,12 +458,26 @@ public class PhoneProxy implements Phone {
         mActivePhone.invokeOemRilRequestStrings(strings, response);
     }
 
+    /**
+     * @deprecated
+     */
     public void getPdpContextList(Message response) {
         mActivePhone.getPdpContextList(response);
     }
 
-    public List<PdpConnection> getCurrentPdpList () {
-        return mActivePhone.getCurrentPdpList ();
+    public void getDataCallList(Message response) {
+        mActivePhone.getDataCallList(response);
+    }
+
+    /**
+     * @deprecated
+     */
+    public List<PdpConnection> getCurrentPdpList() {
+        return mActivePhone.getCurrentPdpList();
+    }
+
+    public List<DataConnection> getCurrentDataConnectionList() {
+        return mActivePhone.getCurrentDataConnectionList();
     }
 
     public void updateServiceLocation(Message response) {
@@ -436,11 +519,11 @@ public class PhoneProxy implements Phone {
     public void queryCdmaRoamingPreference(Message response) {
         mActivePhone.queryCdmaRoamingPreference(response);
     }
-    
+
     public void setCdmaRoamingPreference(int cdmaRoamingType, Message response) {
         mActivePhone.setCdmaRoamingPreference(cdmaRoamingType, response);
     }
-    
+
     public void setCdmaSubscription(int cdmaSubscriptionType, Message response) {
         mActivePhone.setCdmaSubscription(cdmaSubscriptionType, response);
     }
@@ -510,25 +593,39 @@ public class PhoneProxy implements Phone {
     }
 
     public PhoneSubInfo getPhoneSubInfo(){
-        return null; //mActivePhone.getPhoneSubInfo();
+        return mActivePhone.getPhoneSubInfo();
     }
-
 
     public IccSmsInterfaceManager getIccSmsInterfaceManager(){
-        return null; //mActivePhone.getIccSmsInterfaceManager();
+        return mActivePhone.getIccSmsInterfaceManager();
     }
 
-
     public IccPhoneBookInterfaceManager getIccPhoneBookInterfaceManager(){
-        return null; //mActivePhone.getIccPhoneBookInterfaceManager();
+        return mActivePhone.getIccPhoneBookInterfaceManager(); 
     }
 
     public void setTTYModeEnabled(boolean enable, Message onComplete) {
         mActivePhone.setTTYModeEnabled(enable, onComplete);
     }
-    
+
     public void queryTTYModeEnabled(Message onComplete) {
         mActivePhone.queryTTYModeEnabled(onComplete);
+    }
+    
+    public void activateCellBroadcastSms(int activate, Message response) {
+        mActivePhone.activateCellBroadcastSms(activate, response);
+    }
+    
+    public void getCellBroadcastSmsConfig(Message response) {
+        mActivePhone.getCellBroadcastSmsConfig(response);
+    }
+    
+    public void setCellBroadcastSmsConfig(int[] configValuesArray, Message response) {
+        mActivePhone.setCellBroadcastSmsConfig(configValuesArray, response);
+    }
+
+    public void notifyDataActivity() {
+         mActivePhone.notifyDataActivity();
     }
 }
 

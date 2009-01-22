@@ -37,19 +37,19 @@ import com.android.internal.telephony.*;
  * {@hide}
  */
 public final class CdmaCallTracker extends CallTracker {
-    static final String LOG_TAG = "CDMA";    
-    
+    static final String LOG_TAG = "CDMA";
+
     private static final boolean REPEAT_POLLING = false;
 
     private static final boolean DBG_POLL = false;
 
     //***** Constants
 
-    static final int MAX_CONNECTIONS = 7;   // only 7 connections allowed in GSM
-    static final int MAX_CONNECTIONS_PER_CALL = 5; // only 5 connections allowed per call
+    static final int MAX_CONNECTIONS = 1;   // only 1 connection allowed in CDMA
+    static final int MAX_CONNECTIONS_PER_CALL = 1; // only 1 connection allowed per call
 
     //***** Instance Variables
-    
+
     CdmaConnection connections[] = new CdmaConnection[MAX_CONNECTIONS];
     RegistrantList voiceCallEndedRegistrants = new RegistrantList();
     RegistrantList voiceCallStartedRegistrants = new RegistrantList();
@@ -66,13 +66,13 @@ public final class CdmaCallTracker extends CallTracker {
 
     CdmaConnection pendingMO;
     boolean hangupPendingMO;
-    
+
     CDMAPhone phone;
-    
+
     boolean desiredMute = false;    // false = mute off
 
     Phone.State state = Phone.State.IDLE;
-    
+
 
 //    boolean needsPoll;
 
@@ -88,7 +88,26 @@ public final class CdmaCallTracker extends CallTracker {
         cm.registerForOn(this, EVENT_RADIO_AVAILABLE, null);
         cm.registerForNotAvailable(this, EVENT_RADIO_NOT_AVAILABLE, null);
     }
-        
+
+    public void dispose() {
+        cm.unregisterForCallStateChanged(this);
+        cm.unregisterForOn(this);
+        cm.unregisterForNotAvailable(this);
+
+        //Remove messages in the queue
+        this.removeCallbacksAndMessages(null);
+
+        for(CdmaConnection c : connections) {
+            if(c != null) {
+                c.dispose();
+                c = null;
+            } else {
+                continue;
+            }
+        }
+        this.phone = null;
+    }
+
     //***** Instance Methods
 
     //***** Public Methods
@@ -96,10 +115,17 @@ public final class CdmaCallTracker extends CallTracker {
         Registrant r = new Registrant(h, what, obj);
         voiceCallStartedRegistrants.add(r);
     }
+    public void unregisterForVoiceCallStarted(Handler h) {
+        voiceCallStartedRegistrants.remove(h);
+    }
 
     public void registerForVoiceCallEnded(Handler h, int what, Object obj) {
         Registrant r = new Registrant(h, what, obj);
         voiceCallEndedRegistrants.add(r);
+    }
+
+    public void unregisterForVoiceCallEnded(Handler h) {
+        voiceCallEndedRegistrants.remove(h);
     }
 
     private void
@@ -116,7 +142,7 @@ public final class CdmaCallTracker extends CallTracker {
             conn.fakeHoldBeforeDial();
         }
     }
-    
+
     /**
      * clirMode is one of the CLIR_ constants
      */
@@ -176,7 +202,7 @@ public final class CdmaCallTracker extends CallTracker {
         return pendingMO;
     }
 
-    
+
     Connection
     dial (String dialString) throws CallStateException {
         return dial(dialString, CommandsInterface.CLIR_DEFAULT);
@@ -218,14 +244,14 @@ public final class CdmaCallTracker extends CallTracker {
         if (ringingCall.getState() == CdmaCall.State.INCOMING) {
             throw new CallStateException("cannot be in the incoming state");
         } else {
-            cm.switchWaitingOrHoldingAndActive(
-                    obtainCompleteMessage(EVENT_SWITCH_RESULT));
+            cm.sendCDMAFeatureCode("", obtainCompleteMessage(EVENT_SWITCH_RESULT));
         }
     }
 
     void
     conference() throws CallStateException {
-        cm.conference(obtainCompleteMessage(EVENT_CONFERENCE_RESULT));
+        // three way calls in CDMA will be handled by feature codes
+        Log.e(LOG_TAG, "conference: not possible in CDMA");
     }
 
     void
@@ -265,21 +291,19 @@ public final class CdmaCallTracker extends CallTracker {
 
     boolean
     canTransfer() {
-        return foregroundCall.getState() == CdmaCall.State.ACTIVE
-                && backgroundCall.getState() == CdmaCall.State.HOLDING;
+        Log.e(LOG_TAG, "canTransfer: not possible in CDMA");
+        return false;
     }
     
     //***** Private Instance Methods
-    
+
     private void
     internalClearDisconnected() {
         ringingCall.clearDisconnected();
         foregroundCall.clearDisconnected();
         backgroundCall.clearDisconnected();    
     }
-    
-    
-    
+
     /**
      * Obtain a message to use for signalling "invoke getCurrentCalls() when
      * this operation and all other pending operations are complete
@@ -349,13 +373,13 @@ public final class CdmaCallTracker extends CallTracker {
             phone.notifyPhoneStateChanged();
         }
     }
-    
+
     // ***** Overwritten from CallTracker
-    
+
     protected void
     handlePollCalls(AsyncResult ar) {
         List polledCalls;
-        
+
         if (ar.exception == null) {
             polledCalls = (List)ar.result;
         } else if (isCommandExceptionRadioNotAvailable(ar.exception)) {
@@ -532,8 +556,7 @@ public final class CdmaCallTracker extends CallTracker {
                 // Local hangup
                 droppedDuringPoll.remove(i);
                 conn.onDisconnect(Connection.DisconnectCause.LOCAL);
-            } else if (conn.cause ==
-                Connection.DisconnectCause.INVALID_NUMBER) {
+            } else if (conn.cause == Connection.DisconnectCause.INVALID_NUMBER) {
                 droppedDuringPoll.remove(i);
                 conn.onDisconnect(Connection.DisconnectCause.INVALID_NUMBER);
             }
@@ -587,7 +610,7 @@ public final class CdmaCallTracker extends CallTracker {
             hangupPendingMO = true;           
         } else {
             try {            
-                cm.hangupConnection (conn.getGSMIndex(), obtainCompleteMessage());
+                cm.hangupConnection (conn.getCDMAIndex(), obtainCompleteMessage());
             } catch (CallStateException ex) {
                 // Ignore "connection not found"
                 // Call may have hung up already
@@ -606,7 +629,7 @@ public final class CdmaCallTracker extends CallTracker {
                                     + "does not belong to CdmaCallTracker " + this);
         }
         try {
-            cm.separateConnection (conn.getGSMIndex(), 
+            cm.separateConnection (conn.getCDMAIndex(), 
                 obtainCompleteMessage(EVENT_SEPARATE_RESULT));
         } catch (CallStateException ex) {
             // Ignore "connection not found"
@@ -615,7 +638,7 @@ public final class CdmaCallTracker extends CallTracker {
                           + conn);
         }
     }    
-    
+
     //***** Called from CDMAPhone
 
     /*package*/ void
@@ -623,13 +646,13 @@ public final class CdmaCallTracker extends CallTracker {
         desiredMute = mute;
         cm.setMute(desiredMute, null);
     }
-        
+
     /*package*/ boolean
     getMute() {
         return desiredMute;
     }    
 
-    
+
     //***** Called from CdmaCall
 
     /* package */ void
@@ -684,7 +707,7 @@ public final class CdmaCallTracker extends CallTracker {
         int count = call.connections.size();
         for (int i = 0; i < count; i++) {
             CdmaConnection cn = (CdmaConnection)call.connections.get(i);
-            if (cn.getGSMIndex() == index) {
+            if (cn.getCDMAIndex() == index) {
                 cm.hangupConnection(index, obtainCompleteMessage());
                 return;
             }
@@ -698,27 +721,27 @@ public final class CdmaCallTracker extends CallTracker {
             int count = call.connections.size();
             for (int i = 0; i < count; i++) {
                 CdmaConnection cn = (CdmaConnection)call.connections.get(i);
-                cm.hangupConnection(cn.getGSMIndex(), obtainCompleteMessage());
+                cm.hangupConnection(cn.getCDMAIndex(), obtainCompleteMessage());
             }
         } catch (CallStateException ex) {
             Log.e(LOG_TAG, "hangupConnectionByIndex caught " + ex);
         }
     }
-        
+
     /* package */
     CdmaConnection getConnectionByIndex(CdmaCall call, int index)
             throws CallStateException {
         int count = call.connections.size();
         for (int i = 0; i < count; i++) {
             CdmaConnection cn = (CdmaConnection)call.connections.get(i);
-            if (cn.getGSMIndex() == index) {
+            if (cn.getCDMAIndex() == index) {
                 return cn;
             }
         }
 
         return null;
     }
-        
+
     private Phone.SuppService getFailedService(int what) {
         switch (what) {
             case EVENT_SWITCH_RESULT:
@@ -733,15 +756,34 @@ public final class CdmaCallTracker extends CallTracker {
         return Phone.SuppService.UNKNOWN;
     }
 
+    private void handleRadioNotAvailable() {
+        // handlePollCalls will clear out its
+        // call list when it gets the CommandException
+        // error result from this
+        pollCallsWhenSafe();
+    }
+
     //****** Overridden from Handler
 
     public void 
     handleMessage (Message msg) {
         AsyncResult ar;
+
+        try {
+            if(phone.isRadioTechnologyChangeOngoing()) {
+                //return without doing anything, because we are in the middle of a radio technology
+                //change and maybe some references are already set to null
+                log("RadioTechnologyChangeOngoing...ignoring message: " + msg.what);
+                return;
+            }
+        } catch (NullPointerException ex) {
+                log("Phone already destroyed: " + ex);
+                log("RadioTechnologyChangeOngoing...ignoring message: " + msg.what);
+                return;
+        }
         
         switch (msg.what) {
             case EVENT_POLL_CALLS_RESULT:{
-                //TODO Remove
                 Log.d(LOG_TAG, "Event EVENT_POLL_CALLS_RESULT Received"); 
                 ar = (AsyncResult)msg.obj;
 
@@ -759,20 +801,12 @@ public final class CdmaCallTracker extends CallTracker {
                 ar = (AsyncResult)msg.obj;
                 operationComplete();
             break;
-            
-// TODO
-            case EVENT_SWITCH_RESULT:
-//            case EVENT_CONFERENCE_RESULT:
-//            case EVENT_SEPARATE_RESULT:
-//            case EVENT_ECT_RESULT:
-                ar = (AsyncResult)msg.obj;
-                if (ar.exception != null) {
-                    // TODO: will be handles by InCall Supp. Service use case
-                    //phone.notifySuppServiceFailed(getFailedService(msg.what));
-                }
-                operationComplete();
-            break;
 
+            case EVENT_SWITCH_RESULT:
+                  ar = (AsyncResult)msg.obj;
+                  operationComplete();
+            break;
+              
             case EVENT_GET_LAST_CALL_FAIL_CAUSE:
                 int causeCode;
                 ar = (AsyncResult)msg.obj;
@@ -803,30 +837,25 @@ public final class CdmaCallTracker extends CallTracker {
                 droppedDuringPoll.clear();
             break;
             
-// TODO: check if needed
-//            case EVENT_REPOLL_AFTER_DELAY:
             case EVENT_CALL_STATE_CHANGE:
-                Log.d(LOG_TAG, "Event EVENT_CALL_STATE_CHANGE Received"); //TODO Remove 
                 pollCallsWhenSafe();
             break;
 
-            case EVENT_RADIO_AVAILABLE:{
-                Log.d(LOG_TAG, "Event EVENT_RADIO_AVAILABLE Received"); //TODO Remove 
+            case EVENT_RADIO_AVAILABLE:
                 handleRadioAvailable();
-            }
             break;
             
             case EVENT_RADIO_NOT_AVAILABLE:
-                Log.d(LOG_TAG, "Event EVENT_RADIO_NOT_AVAILABLE Received"); //TODO Remove 
-                //handleRadioNotAvailable(); //TODO
+                handleRadioNotAvailable();
             break;
+
             default:{
-                throw new RuntimeException("unexpected event not handled");
+             throw new RuntimeException("unexpected event not handled");
             }
         }
     }
-    
-    private void log(String msg) {
+
+    protected void log(String msg) {
         Log.d(LOG_TAG, "[CdmaCallTracker] " + msg);
     }
 

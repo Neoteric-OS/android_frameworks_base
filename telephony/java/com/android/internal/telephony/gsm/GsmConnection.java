@@ -16,17 +16,18 @@
 
 package com.android.internal.telephony.gsm;
 
-import com.android.internal.telephony.*;
+import android.os.AsyncResult;
 import android.os.Handler;
-import android.os.Registrant;
 import android.os.Looper;
 import android.os.Message;
-import android.os.AsyncResult;
+import android.os.Registrant;
 import android.os.SystemClock;
-import android.util.Log;
 import android.util.Config;
+import android.util.Log;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.ServiceState;
+
+import com.android.internal.telephony.*;
 
 /**
  * {@hide}
@@ -91,6 +92,19 @@ public class GsmConnection extends Connection {
 
         public void
         handleMessage(Message msg) {
+            try {
+                if(owner.phone.isRadioTechnologyChangeOngoing()) {
+                    //return without doing anything, because we are in the middle of a radio technology
+                    //change and maybe some references are already set to null
+                    log("RadioTechnologyChangeOngoing...ignoring message: " + msg.what);
+                    return;
+                }
+            } catch (NullPointerException ex) {
+                    log("Phone already destroyed: " + ex);
+                    log("RadioTechnologyChangeOngoing...ignoring message: " + msg.what);
+                    return;
+            }
+        
             switch (msg.what) {
                 case EVENT_NEXT_POST_DIAL:
                 case EVENT_DTMF_DONE:
@@ -140,7 +154,17 @@ public class GsmConnection extends Connection {
         this.parent = parent;
         parent.attachFake(this, GsmCall.State.DIALING);
     }
-    
+
+    public void dispose() {
+        //Remove all message from the queue
+        this.h.removeCallbacksAndMessages(null);
+        
+        this.parent.dispose();
+        this.h = null;
+        this.owner = null;
+        this.parent = null;
+    }
+
     static boolean
     equalsHandlesNulls (Object a, Object b) {
         return (a == null) ? (b == null) : a.equals (b);
@@ -170,7 +194,6 @@ public class GsmConnection extends Connection {
     public String getAddress() {
         return address; 
     }
-
 
     public GsmCall getCall() {
         return parent;
@@ -254,7 +277,7 @@ public class GsmConnection extends Connection {
 
         processNextPostDialChar();
     }
-    
+
     public void proceedAfterWildChar(String str) {
         if (postDialState != PostDialState.WILD) {
             Log.w(LOG_TAG, "GsmConnection.proceedAfterWaitChar(): Expected " 
@@ -301,7 +324,7 @@ public class GsmConnection extends Connection {
             processNextPostDialChar();
         }
     }
-    
+
     public void cancelPostDial() {
         postDialState = PostDialState.CANCELLED;
     }
@@ -322,7 +345,7 @@ public class GsmConnection extends Connection {
          * See 22.001 Annex F.4 for mapping of cause codes
          * to local tones
          */
-    
+
         switch (causeCode) {
             case CallFailCause.USER_BUSY:
                 return DisconnectCause.BUSY;
@@ -355,7 +378,7 @@ public class GsmConnection extends Connection {
                         || serviceState == ServiceState.STATE_EMERGENCY_ONLY ) {
                     return DisconnectCause.OUT_OF_SERVICE;
                 } else if (phone.getIccCard().getState() != SimCard.State.READY) {
-                    return DisconnectCause.SIM_ERROR;
+                    return DisconnectCause.ICC_ERROR;
                 } else {
                     return DisconnectCause.NORMAL;
                 }
@@ -546,7 +569,7 @@ public class GsmConnection extends Connection {
 
         return postDialString.substring(nextPostDialChar);
     }
-    
+
     private void
     processNextPostDialChar() {
         char c = 0;
@@ -565,7 +588,7 @@ public class GsmConnection extends Connection {
             c = 0;
         } else {
             boolean isValid;
-            
+
             postDialState = PostDialState.STARTED;
 
             c = postDialString.charAt(nextPostDialChar++);
@@ -585,7 +608,8 @@ public class GsmConnection extends Connection {
 
         Message notifyMessage;
 
-        if (postDialHandler != null && (notifyMessage = postDialHandler.messageForRegistrant()) != null) {
+        if (postDialHandler != null 
+                && (notifyMessage = postDialHandler.messageForRegistrant()) != null) {
             // The AsyncResult.result is the Connection object
             PostDialState state = postDialState;
             AsyncResult ar = AsyncResult.forMessage(notifyMessage);

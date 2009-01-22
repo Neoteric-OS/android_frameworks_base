@@ -16,6 +16,9 @@
 
 package com.android.internal.telephony.gsm;
 
+import android.app.ActivityManagerNative;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncResult;
 import android.os.RemoteException;
 import android.os.Handler;
@@ -26,21 +29,21 @@ import android.util.Log;
 
 import com.android.internal.telephony.CommandsInterface;
 import com.android.internal.telephony.IccCard;
-import com.android.internal.telephony.TelephonyProperties;
 import com.android.internal.telephony.Phone;
+import com.android.internal.telephony.PhoneProxy;
 import com.android.internal.telephony.TelephonyIntents;
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.app.ActivityManagerNative;
+import com.android.internal.telephony.TelephonyProperties;
 
 import static android.Manifest.permission.READ_PHONE_STATE;
 
 /**
+ * Note: this class shares common code with RuimCard, consider a base class to minimize code 
+ * duplication.
  * {@hide}
  */
 public final class SimCard extends Handler implements IccCard {
     static final String LOG_TAG="GSM";
-    
+
     //***** Instance Variables
     private static final boolean DBG = true;
 
@@ -88,7 +91,23 @@ public final class SimCard extends Handler implements IccCard {
 
         updateStateProperty();
     }
-    
+
+    public void dispose() {
+        //Unregister for all events
+        phone.mCM.unregisterForSIMLockedOrAbsent(this);
+        phone.mCM.unregisterForOffOrNotAvailable(this);
+        phone.mCM.unregisterForSIMReady(this);
+
+        //Remove all messages from the queue
+        this.removeCallbacksAndMessages(null);
+
+        this.absentRegistrants = null;
+        this.pinLockedRegistrants = null;
+        this.networkLockedRegistrants = null;
+        this.status = null;
+        this.phone = null;
+    }
+
     //***** SimCard implementation
 
     public State
@@ -250,7 +269,7 @@ public final class SimCard extends Handler implements IccCard {
     }
 
     public String getServiceProviderName () {
-        return phone.mSIMRecords.getServiceProvideName();
+        return phone.mSIMRecords.getServiceProviderName();
     }
 
     //***** Handler implementation
@@ -262,6 +281,19 @@ public final class SimCard extends Handler implements IccCard {
         serviceClassX = CommandsInterface.SERVICE_CLASS_VOICE +
                         CommandsInterface.SERVICE_CLASS_DATA +
                         CommandsInterface.SERVICE_CLASS_FAX;
+
+        try {
+            if(phone.isRadioTechnologyChangeOngoing()) {
+                //return without doing anything, because we are in the middle of a radio technology
+                //change and maybe some references are already set to null
+                log("RadioTechnologyChangeOngoing...ignoring message: " + msg.what);
+                return;
+            }
+        } catch (NullPointerException ex) {
+                log("Phone already destroyed: " + ex);
+                log("RadioTechnologyChangeOngoing...ignoring message: " + msg.what);
+                return;
+        }
 
         switch (msg.what) {
             case EVENT_RADIO_OFF_OR_NOT_AVAILABLE:

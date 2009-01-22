@@ -35,7 +35,7 @@ import android.util.Log;
  */
 public class ServiceState implements Parcelable {
 
-    static final String LOG_TAG = "ServiceState";
+    static final String LOG_TAG = "PHONE";
 
     /**
      * Normal operation condition, the phone is registered

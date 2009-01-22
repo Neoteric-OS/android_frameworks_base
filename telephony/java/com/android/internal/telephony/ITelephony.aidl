@@ -160,4 +160,12 @@ interface ITelephony {
      int getCallState();
      int getDataActivity();
      int getDataState();
+
+    /**
+     * Returns the current active phone type as integer.
+     * Returns TelephonyManager.PHONE_TYPE_CDMA if RILConstants.CDMA_PHONE
+     * and TelephonyManager.PHONE_TYPE_GSM if RILConstants.GSM_PHONE
+     */
+    int getActivePhoneType();
+
 }

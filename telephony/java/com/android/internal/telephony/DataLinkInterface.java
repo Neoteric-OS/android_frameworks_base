@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.telephony.gsm;
+package com.android.internal.telephony;
 
 import android.database.Cursor;
 import android.os.Handler;
@@ -24,7 +24,7 @@ import android.os.Handler;
  *
  * {@hide}
  */
-interface DataLinkInterface {
+public interface DataLinkInterface {
     /**
      * Link state enumeration.
      *
@@ -35,12 +35,12 @@ interface DataLinkInterface {
         LINK_DOWN,
         LINK_EXITED
     }
-    
+
     /** Normal exit */
     final static int EXIT_OK = 0;
     /** Open failed */
     final static int EXIT_OPEN_FAILED = 7;
-    
+
     /**
      * Sets the handler for link state change events.
      * 
@@ -49,7 +49,7 @@ interface DataLinkInterface {
      * @param obj User object
      */
     void setOnLinkChange(Handler h, int what, Object obj);
-    
+
     /**
      * Sets up the data link.
      */
@@ -59,14 +59,14 @@ interface DataLinkInterface {
      * Tears down the data link.
      */
     void disconnect();
-    
+
     /**
      * Returns the exit code for a data link failure. 
      *
      * @return exit code
      */
     int getLastLinkExitCode();
-    
+
     /**
      * Sets password information that may be required by the data link
      * (eg, PAP secrets).

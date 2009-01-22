@@ -34,7 +34,7 @@ public abstract class Connection {
         INCOMING_REJECTED,  /* an incoming call that was rejected */
         POWER_OFF,          /* radio is turned off explicitly */
         OUT_OF_SERVICE,     /* out of service */
-        SIM_ERROR,          /* No SIM, SIM locked, or other SIM error */
+        ICC_ERROR,          /* No ICC, ICC locked, or other ICC error */
         CALL_BARRED,        /* call was blocked by call barrring */
         FDN_BLOCKED         /* call was blocked by fixed dial number */
     }

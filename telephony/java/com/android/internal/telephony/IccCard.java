@@ -23,7 +23,6 @@ import android.os.Handler;
  * {@hide}
  */
 public interface IccCard {
-    // TODO: check intent filters in apps
     /* The extra data for broacasting intent INTENT_ICC_STATE_CHANGE */
     static public final String INTENT_KEY_ICC_STATE = "ss";
     /* NOT_READY means the ICC interface is not ready (eg, radio is off or powering on) */

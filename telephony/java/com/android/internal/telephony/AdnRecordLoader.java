@@ -25,7 +25,7 @@ import android.util.Log;
 
 
 public class AdnRecordLoader extends Handler {
-    static final String LOG_TAG = "AdnRecordLoader";
+    static String LOG_TAG;
 
     //***** Instance Variables
 
@@ -59,9 +59,10 @@ public class AdnRecordLoader extends Handler {
     public AdnRecordLoader(PhoneBase phone) {
         // The telephony unit-test cases may create AdnRecords
         // in secondary threads
-        super(phone.h.getLooper());
+        super(phone.getHandler().getLooper());
 
         this.phone = phone;
+        LOG_TAG = phone.getPhoneName();
     }
 
     /**

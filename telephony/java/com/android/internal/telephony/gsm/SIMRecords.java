@@ -17,23 +17,25 @@
 package com.android.internal.telephony.gsm;
 
 import android.os.AsyncResult;
-import android.os.RegistrantList;
-import android.os.Registrant;
 import android.os.Handler;
 import android.os.Message;
-import android.telephony.gsm.SmsMessage;
+import android.os.Registrant;
 import android.util.Log;
-import java.util.ArrayList;
 
-import com.android.internal.telephony.IccUtils;
+import static com.android.internal.telephony.TelephonyProperties.*;
+
 import com.android.internal.telephony.AdnRecord;
 import com.android.internal.telephony.AdnRecordCache;
 import com.android.internal.telephony.AdnRecordLoader;
 import com.android.internal.telephony.CommandsInterface;
+import com.android.internal.telephony.gsm.SimCard;
+import com.android.internal.telephony.gsm.SmsMessage;
 import com.android.internal.telephony.IccException;
 import com.android.internal.telephony.IccRecords;
-import static com.android.internal.telephony.TelephonyProperties.*;
-import com.android.internal.telephony.gsm.SimCard;
+import com.android.internal.telephony.IccUtils;
+import com.android.internal.telephony.PhoneProxy;
+
+import java.util.ArrayList;
 
 /**
  * {@hide}
@@ -47,36 +49,16 @@ public final class SIMRecords extends IccRecords {
 
     //***** Instance Variables
 
-    GSMPhone phone;
-    RegistrantList recordsLoadedRegistrants = new RegistrantList();
-
-    int recordsToLoad;  // number of pending load requests
-
-    AdnRecordCache adnCache;
-
     VoiceMailConstants mVmConfig;
-    
+
     //***** Cached SIM State; cleared on channel close
 
-    boolean recordsRequested = false; // true if we've made requests for the sim records
-
     String imsi;
-    String iccid;
-    String msisdn = null;  // My mobile number
-    String msisdnTag = null;
-    String voiceMailNum = null;
-    String voiceMailTag = null;
-    String newVoiceMailNum = null;
-    String newVoiceMailTag = null;
-    boolean isVoiceMailFixed = false;
-    int countVoiceMessages = 0;
     boolean callForwardingEnabled;
-    int mncLength = 0;   // 0 is used to indicate that the value
-                         // is not initialized
-    int mailboxIndex = 0; // 0 is no mailbox dailing number associated
+
 
     /**
-     * Sates only used by getSpnFsm FSM
+     * States only used by getSpnFsm FSM
      */
     private Get_Spn_Fsm_State spnState;
 
@@ -157,9 +139,8 @@ public final class SIMRecords extends IccRecords {
 
     //***** Constructor
 
-    SIMRecords(GSMPhone phone) {
-        super(phone);
-        this.phone = phone;
+    SIMRecords(GSMPhone p) {
+        super(p);
 
         adnCache = new AdnRecordCache(phone);
 
@@ -171,19 +152,37 @@ public final class SIMRecords extends IccRecords {
         recordsToLoad = 0;
 
 
-        phone.mCM.registerForSIMReady(this, EVENT_SIM_READY, null);
-        phone.mCM.registerForOffOrNotAvailable(
+        p.mCM.registerForSIMReady(this, EVENT_SIM_READY, null);
+        p.mCM.registerForOffOrNotAvailable(
                         this, EVENT_RADIO_OFF_OR_NOT_AVAILABLE, null);
-        phone.mCM.setOnSmsOnSim(this, EVENT_SMS_ON_SIM, null);
-        phone.mCM.setOnIccRefresh(this, EVENT_SIM_REFRESH, null);
+        p.mCM.setOnSmsOnSim(this, EVENT_SMS_ON_SIM, null);
+        p.mCM.setOnIccRefresh(this, EVENT_SIM_REFRESH, null);
 
         // Start off by setting empty state
         onRadioOffOrNotAvailable();        
 
     }
 
-    protected AdnRecordCache getAdnCache() {
-        return adnCache;
+    public void dispose() {
+        //Unregister for all events
+        phone.mCM.unregisterForSIMReady(this);
+        phone.mCM.unregisterForOffOrNotAvailable( this);
+        phone.mCM.unSetOnIccRefresh(this);
+
+        //Remove all messages from the queue
+        this.removeCallbacksAndMessages(null);
+
+        this.recordsLoadedRegistrants = null;
+        this.mCphsInfo = null;
+        this.efMWIS = null;
+        this.efCPHS_MWI =null;
+        this.mEfCff = null;
+        this.mEfCfis = null;
+        this.spnState = null;
+        this.adnCache = null;
+        this.mVmConfig = null;
+        this.spdiNetworks = null;
+        this.phone = null;
     }
 
     protected void onRadioOffOrNotAvailable() {
@@ -205,9 +204,9 @@ public final class SIMRecords extends IccRecords {
         adnCache.reset();
 
         phone.setSystemProperty(PROPERTY_LINE1_VOICE_MAIL_WAITING, null);
-        phone.setSystemProperty(PROPERTY_SIM_OPERATOR_NUMERIC, null);
-        phone.setSystemProperty(PROPERTY_SIM_OPERATOR_ALPHA, null);
-        phone.setSystemProperty(PROPERTY_SIM_OPERATOR_ISO_COUNTRY, null);
+        phone.setSystemProperty(PROPERTY_ICC_OPERATOR_NUMERIC, null);
+        phone.setSystemProperty(PROPERTY_ICC_OPERATOR_ALPHA, null);
+        phone.setSystemProperty(PROPERTY_ICC_OPERATOR_ISO_COUNTRY, null);
 
         // recordsRequested is set to false indicating that the SIM
         // read requests made so far are not valid. This is set to
@@ -217,14 +216,6 @@ public final class SIMRecords extends IccRecords {
 
 
     //***** Public Methods
-    public void registerForRecordsLoaded(Handler h, int what, Object obj) {
-        Registrant r = new Registrant(h, what, obj);
-        recordsLoadedRegistrants.add(r);
-
-        if (recordsToLoad == 0 && recordsRequested == true) {
-            r.notifyRegistrant(new AsyncResult(null, null, null));
-        }
-    }
 
     /** Returns null if SIM is not yet ready */
     public String getIMSI() {
@@ -271,14 +262,6 @@ public final class SIMRecords extends IccRecords {
 
     public String getVoiceMailNumber() {
         return voiceMailNum;
-    }
-
-    /**
-     * Return Service Provider Name stored in SIM
-     * @return null if SIM is not yet ready
-     */
-    public String getServiceProvideName() {
-        return spn;
     }
 
     /**
@@ -370,7 +353,7 @@ public final class SIMRecords extends IccRecords {
         phone.setSystemProperty(PROPERTY_LINE1_VOICE_MAIL_WAITING, 
                                 (countVoiceMessages != 0) ? "true" : "false");
 
-        phone.notifyMessageWaitingIndicator();
+        ((GSMPhone) phone).notifyMessageWaitingIndicator();
 
         try {
             if (efMWIS != null) {
@@ -409,20 +392,6 @@ public final class SIMRecords extends IccRecords {
         }
     }
 
-    /** @return  true if there are messages waiting, false otherwise. */
-    public boolean getVoiceMessageWaiting() {
-        return countVoiceMessages != 0;
-    }
-
-    /**
-     * Returns number of voice messages waiting, if available
-     * If not available (eg, on an older CPHS SIM) -1 is returned if 
-     * getVoiceMessageWaiting() is true
-     */
-    public int getCountVoiceMessages() {
-        return countVoiceMessages;
-    }
-
     public boolean getVoiceCallForwardingFlag() {
         return callForwardingEnabled;
     }
@@ -436,7 +405,7 @@ public final class SIMRecords extends IccRecords {
         phone.setSystemProperty(PROPERTY_LINE1_VOICE_CALL_FORWARDING,
                 (callForwardingEnabled ? "true" : "false"));
 
-        phone.notifyCallForwardingIndicator();
+        ((GSMPhone) phone).notifyCallForwardingIndicator();
 
         try {
             if (mEfCfis != null) {
@@ -523,6 +492,19 @@ public final class SIMRecords extends IccRecords {
 
         boolean isRecordLoadResponse = false;
 
+        try {
+            if(phone.isRadioTechnologyChangeOngoing()) {
+                //return without doing anything, because we are in the middle of a radio technology
+                //change and maybe some references are already set to null
+                log("RadioTechnologyChangeOngoing...ignoring message: " + msg.what);
+                return;
+            }
+        } catch (NullPointerException ex) {
+                log("Phone already destroyed: " + ex);
+                log("RadioTechnologyChangeOngoing...ignoring message: " + msg.what);
+                return;
+        }
+
         try { switch (msg.what) {
             case EVENT_SIM_READY:
                 onSimReady();
@@ -553,8 +535,8 @@ public final class SIMRecords extends IccRecords {
                 }
                 
                 Log.d(LOG_TAG, "IMSI: " + imsi.substring(0, 6) + "xxxxxxxxx");
-                phone.mSimCard.updateImsiConfiguration(imsi);
-                phone.mSimCard.broadcastSimStateChangedIntent(
+                ((GSMPhone) phone).mSimCard.updateImsiConfiguration(imsi);
+                ((GSMPhone) phone).mSimCard.broadcastSimStateChangedIntent(
                         SimCard.INTENT_VALUE_ICC_IMSI, null);
             break;
 
@@ -625,7 +607,8 @@ public final class SIMRecords extends IccRecords {
 
                 adn = (AdnRecord)ar.result;
 
-                Log.d(LOG_TAG, "VM: " + adn + ((msg.what == EVENT_GET_CPHS_MAILBOX_DONE) ? " EF[MAILBOX]" : " EF[MBDN]"));
+                Log.d(LOG_TAG, "VM: " + adn +
+                        ((msg.what == EVENT_GET_CPHS_MAILBOX_DONE) ? " EF[MAILBOX]" : " EF[MBDN]"));
 
                 if (adn.isEmpty() && msg.what == EVENT_GET_MBDN_DONE) {
                     // Bug #645770 fall back to CPHS
@@ -703,7 +686,7 @@ public final class SIMRecords extends IccRecords {
 
                 phone.setSystemProperty(PROPERTY_LINE1_VOICE_MAIL_WAITING, 
                                         voiceMailWaiting ? "true" : "false");
-                phone.notifyMessageWaitingIndicator();
+                ((GSMPhone) phone).notifyMessageWaitingIndicator();
             break;
 
             case EVENT_GET_VOICE_MAIL_INDICATOR_CPHS_DONE:
@@ -735,7 +718,7 @@ public final class SIMRecords extends IccRecords {
                     phone.setSystemProperty(PROPERTY_LINE1_VOICE_MAIL_WAITING, 
                                             countVoiceMessages != 0 
                                                 ? "true" : "false");
-                    phone.notifyMessageWaitingIndicator();
+                    ((GSMPhone) phone).notifyMessageWaitingIndicator();
                 }
             break;
 
@@ -819,7 +802,7 @@ public final class SIMRecords extends IccRecords {
                     phone.setSystemProperty(PROPERTY_LINE1_VOICE_CALL_FORWARDING,
                             (callForwardingEnabled ? "true" : "false"));
 
-                    phone.notifyCallForwardingIndicator();
+                    ((GSMPhone) phone).notifyCallForwardingIndicator();
                 }
                 break;
 
@@ -892,7 +875,8 @@ public final class SIMRecords extends IccRecords {
                             + ar.exception + " length " + index.length);
                 } else {
                     Log.d(LOG_TAG, "READ EF_SMS RECORD index=" + index[0]);
-                    ((SIMFileHandler)phone.getIccFileHandler()).loadEFLinearFixed(EF_SMS,index[0],obtainMessage(EVENT_GET_SMS_DONE));
+                    ((SIMFileHandler)phone.getIccFileHandler()).loadEFLinearFixed(EF_SMS,index[0],
+                            obtainMessage(EVENT_GET_SMS_DONE));
                 }
                 break;
 
@@ -1020,7 +1004,7 @@ public final class SIMRecords extends IccRecords {
                 phone.setSystemProperty(PROPERTY_LINE1_VOICE_CALL_FORWARDING,
                         (callForwardingEnabled ? "true" : "false"));
 
-                phone.notifyCallForwardingIndicator();
+                ((GSMPhone) phone).notifyCallForwardingIndicator();
                 break;
 
         }}catch (RuntimeException exc) {
@@ -1111,7 +1095,7 @@ public final class SIMRecords extends IccRecords {
             Log.i("ENF", "message text " +
                 message.getMessageBody());
 
-            phone.mSMS.dispatchMessage(message);
+            ((GSMPhone) phone).mSMS.dispatchMessage(message);
         }
     }
 
@@ -1146,7 +1130,7 @@ public final class SIMRecords extends IccRecords {
                 Log.i("ENF", "message text " +
                     message.getMessageBody());
 
-                phone.mSMS.dispatchMessage(message);
+                ((GSMPhone) phone).mSMS.dispatchMessage(message);
 
                 // 3GPP TS 51.011 v5.0.0 (20011-12)  10.5.3
                 // 1 == "received by MS from network; message read"
@@ -1154,8 +1138,8 @@ public final class SIMRecords extends IccRecords {
                 ba[0] = 1;
 
                 if (false) { // XXX writing seems to crash RdoServD
-                    ((SIMFileHandler)phone.getIccFileHandler()).updateEFLinearFixed(EF_SMS, i, ba, null,
-                                    obtainMessage(EVENT_MARK_SMS_READ_DONE, i));
+                    ((SIMFileHandler)phone.getIccFileHandler()).updateEFLinearFixed(EF_SMS,
+                            i, ba, null, obtainMessage(EVENT_MARK_SMS_READ_DONE, i));
                 }
             }
         }
@@ -1179,13 +1163,11 @@ public final class SIMRecords extends IccRecords {
 
         // Some fields require more than one SIM record to set
 
-        phone.setSystemProperty(PROPERTY_SIM_OPERATOR_NUMERIC, 
-                                getSIMOperatorNumeric());
+        phone.setSystemProperty(PROPERTY_ICC_OPERATOR_NUMERIC, getSIMOperatorNumeric());
 
         if (imsi != null) {
-            phone.setSystemProperty(PROPERTY_SIM_OPERATOR_ISO_COUNTRY,
-                                        MccTable.countryCodeForMcc(
-                                            Integer.parseInt(imsi.substring(0,3))));
+            phone.setSystemProperty(PROPERTY_ICC_OPERATOR_ISO_COUNTRY, 
+                    MccTable.countryCodeForMcc(Integer.parseInt(imsi.substring(0,3))));
         }
         else {
             Log.e("SIM", "[SIMRecords] onAllRecordsLoaded: imsi is NULL!");
@@ -1195,13 +1177,13 @@ public final class SIMRecords extends IccRecords {
 
         recordsLoadedRegistrants.notifyRegistrants(
             new AsyncResult(null, null, null));
-        phone.mSimCard.broadcastSimStateChangedIntent(
+        ((GSMPhone) phone).mSimCard.broadcastSimStateChangedIntent(
                 SimCard.INTENT_VALUE_ICC_LOADED, null);
     }
 
-    
+
     //***** Private Methods
-    
+
     private void setVoiceMailByCountry (String spn) {
         if (mVmConfig.containsCarrier(spn)) {
             isVoiceMailFixed = true;
@@ -1214,7 +1196,7 @@ public final class SIMRecords extends IccRecords {
         /* broadcast intent SIM_READY here so that we can make sure
           READY is sent before IMSI ready
         */
-        phone.mSimCard.broadcastSimStateChangedIntent(
+        ((GSMPhone) phone).mSimCard.broadcastSimStateChangedIntent(
                 SimCard.INTENT_VALUE_ICC_READY, null);
 
         fetchSimRecords();
@@ -1223,7 +1205,7 @@ public final class SIMRecords extends IccRecords {
     private void fetchSimRecords() {
         recordsRequested = true;
 
-    Log.v(LOG_TAG, "SIMRecords:fetchSimRecords " + recordsToLoad);
+        Log.v(LOG_TAG, "SIMRecords:fetchSimRecords " + recordsToLoad);
 
         phone.mCM.getIMSI(obtainMessage(EVENT_GET_IMSI_DONE));
         recordsToLoad++;
@@ -1264,7 +1246,8 @@ public final class SIMRecords extends IccRecords {
 
         // Same goes for Call Forward Status indicator: fetch both
         // EF[CFIS] and CPHS-EF, with EF[CFIS] preferred.
-        ((SIMFileHandler)phone.getIccFileHandler()).loadEFLinearFixed(EF_CFIS, 1, obtainMessage(EVENT_GET_CFIS_DONE));
+        ((SIMFileHandler)phone.getIccFileHandler()).loadEFLinearFixed(EF_CFIS, 1, 
+                obtainMessage(EVENT_GET_CFIS_DONE));
         recordsToLoad++;
         ((SIMFileHandler)phone.getIccFileHandler()).loadEFTransparent(EF_CFF_CPHS,
                 obtainMessage(EVENT_GET_CFF_DONE));
@@ -1297,7 +1280,12 @@ public final class SIMRecords extends IccRecords {
         }
 
         if (CRASH_RIL) {
-            String sms = "0107912160130310f20404d0110041007030208054832b0120ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
+            String sms = "0107912160130310f20404d0110041007030208054832b0120"
+                         + "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+                         + "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+                         + "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+                         + "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+                         + "ffffffffffffffffffffffffffffff";
             byte[] ba = IccUtils.hexStringToBytes(sms);
 
             ((SIMFileHandler)phone.getIccFileHandler()).updateEFLinearFixed(EF_SMS, 1, ba, null,
@@ -1401,7 +1389,7 @@ public final class SIMRecords extends IccRecords {
 
                     if (DBG) log("Load EF_SPN: " + spn
                             + " spnDisplayCondition: " + spnDisplayCondition);
-                    phone.setSystemProperty(PROPERTY_SIM_OPERATOR_ALPHA, spn);
+                    phone.setSystemProperty(PROPERTY_ICC_OPERATOR_ALPHA, spn);
 
                     spnState = Get_Spn_Fsm_State.IDLE;
                 } else {
@@ -1423,12 +1411,12 @@ public final class SIMRecords extends IccRecords {
                             data, 0, data.length - 1 );
 
                     if (DBG) log("Load EF_SPN_CPHS: " + spn);
-                    phone.setSystemProperty(PROPERTY_SIM_OPERATOR_ALPHA, spn);
+                    phone.setSystemProperty(PROPERTY_ICC_OPERATOR_ALPHA, spn);
 
                     spnState = Get_Spn_Fsm_State.IDLE;
                 } else {
-                    ((SIMFileHandler)phone.getIccFileHandler()).loadEFTransparent( EF_SPN_SHORT_CPHS,
-                            obtainMessage(EVENT_GET_SPN_DONE));
+                    ((SIMFileHandler)phone.getIccFileHandler()).loadEFTransparent(
+                            EF_SPN_SHORT_CPHS, obtainMessage(EVENT_GET_SPN_DONE));
                     recordsToLoad++;
 
                     spnState = Get_Spn_Fsm_State.READ_SPN_SHORT_CPHS;
@@ -1441,7 +1429,7 @@ public final class SIMRecords extends IccRecords {
                             data, 0, data.length - 1);
 
                     if (DBG) log("Load EF_SPN_SHORT_CPHS: " + spn);
-                    phone.setSystemProperty(PROPERTY_SIM_OPERATOR_ALPHA, spn);
+                    phone.setSystemProperty(PROPERTY_ICC_OPERATOR_ALPHA, spn);
                 }else {
                     if (DBG) log("No SPN loaded in either CHPS or 3GPP");
                 }
@@ -1498,7 +1486,9 @@ public final class SIMRecords extends IccRecords {
         return ((mCphsInfo[1] & CPHS_SST_MBN_MASK) == CPHS_SST_MBN_ENABLED );
     }
 
-    private void log(String s) {
+    protected void log(String s) {
         Log.d(LOG_TAG, "[SIMRecords] " + s);
     }
+
 }
+

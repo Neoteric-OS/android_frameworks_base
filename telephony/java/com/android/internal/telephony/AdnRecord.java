@@ -16,17 +16,12 @@
 
 package com.android.internal.telephony;
 
-import com.android.internal.telephony.*;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Message;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.AsyncResult;
-import android.util.Log;
 import android.telephony.PhoneNumberUtils;
-import java.util.ArrayList;
-import com.android.internal.telephony.gsm.GsmAlphabet;
+import android.util.Log;
+
+import com.android.internal.telephony.GsmAlphabet;
 
 
 /**

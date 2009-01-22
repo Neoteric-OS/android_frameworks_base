@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.android.internal.telephony.gsm;
+package com.android.internal.telephony;
 
-import android.telephony.gsm.SmsMessage;
+import android.telephony.SmsMessage;
 import android.util.SparseIntArray;
 
 import android.util.Log;
@@ -28,8 +28,7 @@ import android.util.Log;
  *
  * {@hide}
  */
-public class GsmAlphabet
-{
+public class GsmAlphabet {
     static final String LOG_TAG = "GSM";
     
 
@@ -55,8 +54,7 @@ public class GsmAlphabet
      * should follow GSM_EXTENDED_ESCAPE in the GSM alphabet string
      */
     public static int
-    charToGsm(char c)
-    {
+    charToGsm(char c) {
         try {
             return charToGsm(c, false);
         } catch (EncodeException ex) {
@@ -76,8 +74,7 @@ public class GsmAlphabet
      */
 
     public static int
-    charToGsm(char c, boolean throwException) throws EncodeException
-    {
+    charToGsm(char c, boolean throwException) throws EncodeException {
         int ret;
         
         ret = charToGsm.get(c, -1);
@@ -110,8 +107,7 @@ public class GsmAlphabet
      *
      */
     public static int
-    charToGsmExtended(char c)
-    {
+    charToGsmExtended(char c) {
         int ret;
         
         ret = charToGsmExtended.get(c, -1);
@@ -134,11 +130,10 @@ public class GsmAlphabet
      */
 
     public static char
-    gsmToChar(int gsmChar)
-    {
+    gsmToChar(int gsmChar) {
         return (char)gsmToChar.get(gsmChar, ' ');
     }
-    
+
     /**
      * Converts a character in the extended GSM alphabet into a char 
      *
@@ -150,8 +145,7 @@ public class GsmAlphabet
      */
 
     public static char
-    gsmExtendedToChar(int gsmChar)
-    {
+    gsmExtendedToChar(int gsmChar) {
         int ret;
 
         ret = gsmExtendedToChar.get(gsmChar, -1);
@@ -295,16 +289,15 @@ public class GsmAlphabet
      *                  (septet index * 7)
      */
     private static void 
-    packSmsChar(byte[] packedChars, int bitOffset, int value)
-    {
+    packSmsChar(byte[] packedChars, int bitOffset, int value) {
         int byteOffset = bitOffset / 8;
         int shift = bitOffset % 8;
 
         packedChars[++byteOffset] |= value << shift;
 
         if (shift > 1) {
-        	packedChars[++byteOffset] = (byte)(value >> (8 - shift));
-        }    	
+            packedChars[++byteOffset] = (byte)(value >> (8 - shift));
+        }        
     }
 
     /**
@@ -337,8 +330,7 @@ public class GsmAlphabet
      * @return String representation or null on decoding exception
      */
     public static String gsm7BitPackedToString(byte[] pdu, int offset,
-            int lengthSeptets, int numPaddingBits)
-    {
+            int lengthSeptets, int numPaddingBits) {
         StringBuilder ret = new StringBuilder(lengthSeptets);
         boolean prevCharWasEscape;
         
@@ -388,8 +380,7 @@ public class GsmAlphabet
      * at the first 0xff encountered.
      */
     public static String
-    gsm8BitUnpackedToString(byte[] data, int offset, int length)
-    {
+    gsm8BitUnpackedToString(byte[] data, int offset, int length) {
         boolean prevWasEscape;
         StringBuilder ret = new StringBuilder(length);
 
@@ -429,8 +420,7 @@ public class GsmAlphabet
      * array
      */
     public static byte[]
-    stringToGsm8BitPacked(String s)
-    {
+    stringToGsm8BitPacked(String s) {
         byte[] ret;
 
         int septets = 0;
@@ -454,8 +444,7 @@ public class GsmAlphabet
      */
      
     public static void
-    stringToGsm8BitUnpackedField(String s, byte dest[], int offset, int length)
-    {
+    stringToGsm8BitUnpackedField(String s, byte dest[], int offset, int length) {
         int outByteIndex = offset;
 
         // Septets are stored in byte-aligned octets
@@ -475,7 +464,7 @@ public class GsmAlphabet
 
                 dest[outByteIndex++] = GSM_EXTENDED_ESCAPE;
 
-        		v = GsmAlphabet.charToGsmExtended(c);
+                v = GsmAlphabet.charToGsmExtended(c);
             }
 
             dest[outByteIndex++] = (byte)v;
@@ -492,8 +481,7 @@ public class GsmAlphabet
      * needed to represent this character. Counts unencodable char as 1 septet.
      */
     public static int
-    countGsmSeptets(char c)
-    {
+    countGsmSeptets(char c) {
         try {
             return countGsmSeptets(c, true);
         } catch (EncodeException ex) {
@@ -509,21 +497,20 @@ public class GsmAlphabet
      * char. Otherwise, counts invalid char as 1 septet
      */
     public static int
-    countGsmSeptets(char c, boolean throwsException) throws EncodeException
-    {
-    	if (charToGsm.get(c, -1) != -1) {
-    		return 1;
-    	}
-    	
-    	if (charToGsmExtended.get(c, -1) != -1) {
-    		return 2;
-    	}
+    countGsmSeptets(char c, boolean throwsException) throws EncodeException {
+        if (charToGsm.get(c, -1) != -1) {
+            return 1;
+        }
+        
+        if (charToGsmExtended.get(c, -1) != -1) {
+            return 2;
+        }
 
         if (throwsException) {
             throw new EncodeException(c);
         } else {    
-        	// count as a space char
-        	return 1;
+            // count as a space char
+            return 1;
         }
     }
 
@@ -532,8 +519,7 @@ public class GsmAlphabet
      * needed to represent this string. Counts unencodable char as 1 septet.
      */
     public static int
-    countGsmSeptets(String s)
-    {
+    countGsmSeptets(String s) {
         try {
             return countGsmSeptets(s, true);
         } catch (EncodeException ex) {
@@ -549,8 +535,7 @@ public class GsmAlphabet
      * char. Otherwise, counts invalid char as 1 septet
      */
     public static int
-    countGsmSeptets(String s, boolean throwsException) throws EncodeException
-    {
+    countGsmSeptets(String s, boolean throwsException) throws EncodeException {
         int charIndex = 0;
         int sz = s.length();
         int count = 0;
@@ -794,7 +779,7 @@ public class GsmAlphabet
         charToGsmExtended.put(']', 62);
         charToGsmExtended.put('|', 64);
         charToGsmExtended.put('\u20ac', 101);
-                
+
         int size = charToGsm.size();
         for (int j=0; j<size; j++) {
             gsmToChar.put(charToGsm.valueAt(j), charToGsm.keyAt(j));
@@ -808,6 +793,6 @@ public class GsmAlphabet
 
         sGsmSpaceChar = charToGsm.get(' ');
     }
-    
+
 
 }
