@@ -16,7 +16,12 @@
 
 package com.android.internal.telephony.gsm;
 
-import com.android.internal.telephony.*;
+import com.android.internal.telephony.Call;
+import com.android.internal.telephony.CallStateException;
+import com.android.internal.telephony.Connection;
+import com.android.internal.telephony.DriverCall;
+import com.android.internal.telephony.Phone;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +55,10 @@ class GsmCall extends Call {
     /*package*/
     GsmCall (GsmCallTracker owner) {
         this.owner = owner;
+    }
+
+    public void dispose() {
+        this.owner = null;
     }
 
     /************************** Overridden from Call *************************/

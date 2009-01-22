@@ -16,23 +16,22 @@
 
 package com.android.internal.telephony.gsm;
 
+import android.os.*;
+import android.telephony.PhoneNumberUtils;
+import android.telephony.ServiceState;
+import android.util.Log;
+
 import com.android.internal.telephony.CallStateException;
 import com.android.internal.telephony.CallTracker;
 import com.android.internal.telephony.Connection;
-import com.android.internal.telephony.Phone;
-import com.android.internal.telephony.gsm.CallFailCause;
-import com.android.internal.telephony.gsm.CommandException;
 import com.android.internal.telephony.DriverCall;
+import com.android.internal.telephony.gsm.CallFailCause;
 import com.android.internal.telephony.gsm.GsmCall;
 import com.android.internal.telephony.gsm.GsmConnection;
 import com.android.internal.telephony.gsm.GSMPhone;
+import com.android.internal.telephony.Phone;
 
 import com.android.internal.telephony.*;
-
-import android.os.*;
-import android.util.Log;
-import android.telephony.PhoneNumberUtils;
-import android.telephony.ServiceState;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public final class GsmCallTracker extends CallTracker {
     private static final boolean REPEAT_POLLING = false;
 
     private static final boolean DBG_POLL = false;
-    
+
     //***** Constants
 
     static final int MAX_CONNECTIONS = 7;   // only 7 connections allowed in GSM
@@ -93,6 +92,35 @@ public final class GsmCallTracker extends CallTracker {
         cm.registerForNotAvailable(this, EVENT_RADIO_NOT_AVAILABLE, null);
     }
 
+    public void dispose() {
+        //Unregister for all events
+        cm.unregisterForCallStateChanged(this);
+        cm.unregisterForOn(this);
+        cm.unregisterForNotAvailable(this);
+
+        //Remove all messages in the queue
+        this.removeMessages(EVENT_POLL_CALLS_RESULT);
+        this.removeMessages(EVENT_OPERATION_COMPLETE);
+        this.removeMessages(EVENT_SWITCH_RESULT);
+        this.removeMessages(EVENT_CONFERENCE_RESULT);
+        this.removeMessages(EVENT_SEPARATE_RESULT);
+        this.removeMessages(EVENT_ECT_RESULT);
+        this.removeMessages(EVENT_GET_LAST_CALL_FAIL_CAUSE);
+        this.removeMessages(EVENT_REPOLL_AFTER_DELAY);
+        this.removeMessages(EVENT_CALL_STATE_CHANGE);
+        this.removeMessages(EVENT_RADIO_AVAILABLE);
+        this.removeMessages(EVENT_RADIO_NOT_AVAILABLE);
+
+        for(GsmConnection c : connections) {
+            if(c != null) {
+                c.dispose();
+                c = null;
+            } else {
+                continue;
+            }
+        }
+        this.phone = null;
+    }
     //***** Instance Methods
 
     //***** Public Methods
@@ -101,9 +129,17 @@ public final class GsmCallTracker extends CallTracker {
         voiceCallStartedRegistrants.add(r);
     }
 
+    public void unregisterForVoiceCallStarted(Handler h) {
+        voiceCallStartedRegistrants.remove(h);
+    }
+
     public void registerForVoiceCallEnded(Handler h, int what, Object obj) {
         Registrant r = new Registrant(h, what, obj);
         voiceCallEndedRegistrants.add(r);
+    }
+
+    public void unregisterForVoiceCallEnded(Handler h) {
+        voiceCallEndedRegistrants.remove(h);
     }
 
     private void
@@ -149,7 +185,7 @@ public final class GsmCallTracker extends CallTracker {
             // next poll, so that we don't clear a failed dialing call
             fakeHoldForegroundBeforeDial();
         } 
-        
+
         if (foregroundCall.getState() != GsmCall.State.IDLE) {
             //we should have failed in !canDial() above before we get here
             throw new CallStateException("cannot dial in current state");
@@ -180,7 +216,7 @@ public final class GsmCallTracker extends CallTracker {
         return pendingMO;
     }
 
-    
+
     Connection
     dial (String dialString) throws CallStateException {
         return dial(dialString, CommandsInterface.CLIR_DEFAULT);
@@ -236,7 +272,7 @@ public final class GsmCallTracker extends CallTracker {
     explicitCallTransfer() throws CallStateException {
         cm.explicitCallTransfer(obtainCompleteMessage(EVENT_ECT_RESULT));
     }
-    
+
     void
     clearDisconnected() {
         internalClearDisconnected();
@@ -274,15 +310,13 @@ public final class GsmCallTracker extends CallTracker {
     }
 
     //***** Private Instance Methods
-    
+
     private void
     internalClearDisconnected() {
         ringingCall.clearDisconnected();
         foregroundCall.clearDisconnected();
         backgroundCall.clearDisconnected();    
     }
-
-
 
     /**
      * Obtain a message to use for signalling "invoke getCurrentCalls() when
@@ -325,8 +359,6 @@ public final class GsmCallTracker extends CallTracker {
             pendingOperations = 0;
         }
     }
-    
-
 
     private void
     updatePhoneState() {
@@ -339,7 +371,7 @@ public final class GsmCallTracker extends CallTracker {
             state = Phone.State.OFFHOOK;
         } else {
             state = Phone.State.IDLE;
-        }        
+        }
 
         if (state == Phone.State.IDLE && oldState != state) {
             voiceCallEndedRegistrants.notifyRegistrants(
@@ -434,7 +466,7 @@ public final class GsmCallTracker extends CallTracker {
                         // which is neither a ringing call or one we created.
                         // Either we've crashed and re-attached to an existing
                         // call, or something else (eg, SIM) initiated the call.
-                
+
                         Log.i(LOG_TAG,"Phantom call appeared " + dc);
 
                         // If it's a connected call, set the connect time so that
@@ -521,7 +553,7 @@ public final class GsmCallTracker extends CallTracker {
                 if (conn.cause == Connection.DisconnectCause.LOCAL) {
                     cause = Connection.DisconnectCause.INCOMING_REJECTED;
                 } else {
-                    cause = Connection.DisconnectCause.INCOMING_MISSED;                    
+                    cause = Connection.DisconnectCause.INCOMING_MISSED;
                 }
 
                 if (Phone.DEBUG_PHONE) {
@@ -663,13 +695,13 @@ public final class GsmCallTracker extends CallTracker {
         desiredMute = mute;
         cm.setMute(desiredMute, null);
     }
-        
+
     /*package*/ boolean
     getMute() {
         return desiredMute;
     }
 
-    
+
     //***** Called from GsmCall
 
     /* package */ void
@@ -779,6 +811,12 @@ public final class GsmCallTracker extends CallTracker {
     handleMessage (Message msg) {
         AsyncResult ar;
         
+        if(PhoneProxy.getRadioTechnologyChangeGsmToCdma()) {
+            //return without doing anything, because we are in the middle of a radio technology
+            //change and maybe some references are already set to null
+            return;
+        }
+        
         switch (msg.what) {
             case EVENT_POLL_CALLS_RESULT:
                 ar = (AsyncResult)msg.obj;
@@ -823,7 +861,7 @@ public final class GsmCallTracker extends CallTracker {
                 } else {
                     causeCode = ((int[])ar.result)[0];
                 }
-                
+
                 for (int i = 0, s =  droppedDuringPoll.size()
                         ; i < s ; i++
                 ) {

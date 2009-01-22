@@ -16,16 +16,6 @@
 
 package com.android.internal.telephony;
 
-import static com.android.internal.telephony.CommandsInterface.CF_ACTION_DISABLE;
-import static com.android.internal.telephony.CommandsInterface.CF_ACTION_ENABLE;
-import static com.android.internal.telephony.CommandsInterface.CF_ACTION_ERASURE;
-import static com.android.internal.telephony.CommandsInterface.CF_ACTION_REGISTRATION;
-import static com.android.internal.telephony.CommandsInterface.CF_REASON_ALL;
-import static com.android.internal.telephony.CommandsInterface.CF_REASON_ALL_CONDITIONAL;
-import static com.android.internal.telephony.CommandsInterface.CF_REASON_BUSY;
-import static com.android.internal.telephony.CommandsInterface.CF_REASON_NOT_REACHABLE;
-import static com.android.internal.telephony.CommandsInterface.CF_REASON_NO_REPLY;
-import static com.android.internal.telephony.CommandsInterface.CF_REASON_UNCONDITIONAL;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncResult;
@@ -39,7 +29,11 @@ import android.telephony.ServiceState;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.android.internal.telephony.gsm.PdpConnection;
 import com.android.internal.telephony.test.SimulatedRadioControl;
+
+import java.util.List;
+
 
 /**
  * (<em>Not for SDK use</em>) 
@@ -56,11 +50,13 @@ import com.android.internal.telephony.test.SimulatedRadioControl;
 public abstract class PhoneBase implements Phone {
     private static final String LOG_TAG = "PhoneBase";
     private static final boolean LOCAL_DEBUG = false;
-    
+
     // Key used to read and write the saved network selection value
     public static final String NETWORK_SELECTION_KEY = "network_selection_key";
 
- 
+ // Key used to read/write "disable data connection on boot" pref (used for testing)
+    public static final String DATA_DISABLED_ON_BOOT_KEY = "disabled_on_boot_key";
+
     //***** Event Constants
     protected static final int EVENT_RADIO_AVAILABLE             = 1;
     /** Supplementary Service Notification received. */
@@ -84,11 +80,11 @@ public abstract class PhoneBase implements Phone {
     protected static final int EVENT_SET_CLIR_COMPLETE              = 17;
     protected static final int EVENT_REGISTERED_TO_NETWORK          = 18;
     // Events for CDMA support
-    protected static final int EVENT_GET_DEVICE_IDENTITY_DONE     = 19;
-    protected static final int EVENT_RUIM_RECORDS_LOADED          = 3;    
-    protected static final int EVENT_NV_READY                      = 20;        
+    protected static final int EVENT_GET_DEVICE_IDENTITY_DONE       = 19;
+    protected static final int EVENT_RUIM_RECORDS_LOADED            = 3;
+    protected static final int EVENT_NV_READY                       = 20;
     protected static final int EVENT_SET_ENHANCED_VP = 21;
-    
+
     // Key used to read/write current CLIR setting
     public static final String CLIR_KEY = "clir_key";
 
@@ -98,7 +94,7 @@ public abstract class PhoneBase implements Phone {
     protected IccFileHandler mIccFileHandler;
     // TODO T: should be protected but GsmMmiCode and DataConnectionTracker still refer to it directly  
     public Handler h;
-    
+
     /**
      * Set a system property, unless we're in unit test mode
      */
@@ -109,7 +105,7 @@ public abstract class PhoneBase implements Phone {
         }
         SystemProperties.set(property, value);
     }
-    
+
 
     protected final RegistrantList mPhoneStateRegistrants 
             = new RegistrantList();
@@ -119,13 +115,13 @@ public abstract class PhoneBase implements Phone {
 
     protected final RegistrantList mIncomingRingRegistrants 
             = new RegistrantList();
-    
+
     protected final RegistrantList mDisconnectRegistrants 
             = new RegistrantList();
 
     protected final RegistrantList mServiceStateRegistrants 
             = new RegistrantList();
-    
+
     protected final RegistrantList mMmiCompleteRegistrants 
             = new RegistrantList();
 
@@ -134,10 +130,10 @@ public abstract class PhoneBase implements Phone {
 
     protected final RegistrantList mUnknownConnectionRegistrants 
             = new RegistrantList();
-    
+
     protected final RegistrantList mSuppServiceFailedRegistrants 
             = new RegistrantList();
-    
+
     protected Looper mLooper; /* to insure registrants are in correct thread*/
 
     protected Context mContext;
@@ -174,7 +170,7 @@ public abstract class PhoneBase implements Phone {
      * of state change events
      */
     protected PhoneBase(PhoneNotifier notifier, Context context, 
-                         boolean unitTestMode) {
+            boolean unitTestMode) {
         this.mNotifier = notifier;
         this.mContext = context;
         mLooper = Looper.myLooper();
@@ -198,7 +194,7 @@ public abstract class PhoneBase implements Phone {
     public void unregisterForPhoneStateChanged(Handler h) {
         mPhoneStateRegistrants.remove(h);
     }
-    
+
     /**
      * Notify registrants of a PhoneStateChanged.
      * Subclasses of Phone probably want to replace this with a 
@@ -208,19 +204,19 @@ public abstract class PhoneBase implements Phone {
         AsyncResult ar = new AsyncResult(null, this, null);
         mPhoneStateRegistrants.notifyRegistrants(ar);
     }
-     
+
     // Inherited documentation suffices.
     public void registerForUnknownConnection(Handler h, int what, Object obj) {
         checkCorrectThread(h);
-        
+
         mUnknownConnectionRegistrants.addUnique(h, what, obj);
     }
-    
+
     // Inherited documentation suffices.
     public void unregisterForUnknownConnection(Handler h) {
         mUnknownConnectionRegistrants.remove(h);
     }
-    
+
     // Inherited documentation suffices.
     public void registerForNewRingingConnection(
             Handler h, int what, Object obj) {
@@ -233,6 +229,27 @@ public abstract class PhoneBase implements Phone {
     public void unregisterForNewRingingConnection(Handler h) {
         mNewRingingConnectionRegistrants.remove(h);
     }
+
+    // Inherited documentation suffices.
+    public void registerForInCallVoicePrivacyOn(Handler h, int what, Object obj){
+        mCM.registerForInCallVoicePrivacyOn(h,what,obj);
+    }
+
+    // Inherited documentation suffices.
+    public void unregisterForInCallVoicePrivacyOn(Handler h){
+        mCM.unregisterForInCallVoicePrivacyOn(h);
+    }
+
+    // Inherited documentation suffices.
+    public void registerForInCallVoicePrivacyOff(Handler h, int what, Object obj){
+        mCM.registerForInCallVoicePrivacyOff(h,what,obj);    
+    }
+
+    // Inherited documentation suffices.
+    public void unregisterForInCallVoicePrivacyOff(Handler h){
+        mCM.unregisterForInCallVoicePrivacyOff(h);    
+    }
+
 
     /**
      * Notifiy registrants of a new ringing Connection.
@@ -251,12 +268,12 @@ public abstract class PhoneBase implements Phone {
         
         mIncomingRingRegistrants.addUnique(h, what, obj);
     }
-    
+
     // Inherited documentation suffices.
     public void unregisterForIncomingRing(Handler h) {
         mIncomingRingRegistrants.remove(h);
     }
-    
+
     // Inherited documentation suffices.
     public void registerForDisconnect(Handler h, int what, Object obj) {
         checkCorrectThread(h);
@@ -275,12 +292,12 @@ public abstract class PhoneBase implements Phone {
         
         mSuppServiceFailedRegistrants.addUnique(h, what, obj);
     }
-    
+
     // Inherited documentation suffices.
     public void unregisterForSuppServiceFailed(Handler h) {
         mSuppServiceFailedRegistrants.remove(h);
     }
-    
+
     // Inherited documentation suffices.
     public void registerForMmiInitiate(Handler h, int what, Object obj) {
         checkCorrectThread(h);
@@ -292,7 +309,7 @@ public abstract class PhoneBase implements Phone {
     public void unregisterForMmiInitiate(Handler h) {
         mMmiRegistrants.remove(h);
     }
-    
+
     // Inherited documentation suffices.
     public void registerForMmiComplete(Handler h, int what, Object obj) {
         checkCorrectThread(h);
@@ -333,10 +350,6 @@ public abstract class PhoneBase implements Phone {
         }
     }
 
-
-    /**
-     * Subclasses should override this. See documentation in superclass.
-     */
     // Inherited documentation suffices.
     public void setUnitTestMode(boolean f) {
         mUnitTestMode = f;
@@ -346,7 +359,7 @@ public abstract class PhoneBase implements Phone {
     public boolean getUnitTestMode() {
         return mUnitTestMode;
     }
-    
+
     /**
      * To be invoked when a voice call Connection disconnects.
      *
@@ -398,7 +411,7 @@ public abstract class PhoneBase implements Phone {
     private void checkCorrectThread(Handler h) {
         if (h.getLooper() != mLooper) {
             throw new RuntimeException(
-                "com.android.internal.telephony.Phone must be used from within one thread");
+                    "com.android.internal.telephony.Phone must be used from within one thread");
         }
     }
 
@@ -412,28 +425,28 @@ public abstract class PhoneBase implements Phone {
      */        
     protected abstract IccFileHandler getIccFileHandler();
 
-    
+
     /**
      *  Query the status of the CDMA roaming preference
      */
     public void queryCdmaRoamingPreference(Message response) {
         mCM.queryCdmaRoamingPreference(response);
     }
-    
+
     /**
      *  Set the status of the CDMA roaming preference
      */
     public void setCdmaRoamingPreference(int cdmaRoamingType, Message response) {
         mCM.setCdmaRoamingPreference(cdmaRoamingType, response);
     }
-    
+
     /**
      *  Set the status of the CDMA subscription mode
      */
     public void setCdmaSubscription(int cdmaSubscriptionType, Message response) {
         mCM.setCdmaSubscription(cdmaSubscriptionType, response);
     }
-    
+
     /**
      *  Set the preferred Network Type: Global, CDMA only or GSM/UMTS only
      */
@@ -447,134 +460,50 @@ public abstract class PhoneBase implements Phone {
     public void getPreferredNetworkType(Message response) {
         mCM.getPreferredNetworkType(response);
     }
-    
+
     public void setTTYModeEnabled(boolean enable, Message onComplete) {
-        // This function should be overridden by the class CDMAPhone. 
-        // It is not implemented in the class GSMPhone.
-        Log.e(LOG_TAG, "Error! This function should never be executed, because we have an " +
-                "inactive CDMAPhone then.");
+        // This function should be overridden by the class CDMAPhone. Not implemented in GSMPhone.
+        Log.e(LOG_TAG, "Error! This function should never be executed, inactive CDMAPhone.");
     }
-    
+
     public void queryTTYModeEnabled(Message onComplete) {
-        // This function should be overridden by the class CDMAPhone.
-        // It is not implemented in the class GSMPhone.
-        Log.e(LOG_TAG, "Error! This function should never be executed, because we have an " +
-                "inactive CDMAPhone then.");
+        // This function should be overridden by the class CDMAPhone. Not implemented in GSMPhone.
+        Log.e(LOG_TAG, "Error! This function should never be executed, inactive CDMAPhone.");
     }
 
-    // TODO: might not be used in CDMA any longer, move this to GSMPhone
-    protected  boolean isValidCommandInterfaceCFReason (int commandInterfaceCFReason) {
-        switch (commandInterfaceCFReason) {
-        case CF_REASON_UNCONDITIONAL:
-        case CF_REASON_BUSY:
-        case CF_REASON_NO_REPLY:
-        case CF_REASON_NOT_REACHABLE:
-        case CF_REASON_ALL:
-        case CF_REASON_ALL_CONDITIONAL:
-            return true;
-        default:
-            return false;
-        }
-    }
-
-    // TODO: might not be used in CDMA any longer, move this to GSMPhone
-    protected  boolean isValidCommandInterfaceCFAction (int commandInterfaceCFAction) {
-        switch (commandInterfaceCFAction) {
-        case CF_ACTION_DISABLE:
-        case CF_ACTION_ENABLE:
-        case CF_ACTION_REGISTRATION:
-        case CF_ACTION_ERASURE:
-            return true;
-        default:
-            return false;
-        }
-    }
-
-    // TODO: might not be used in CDMA any longer, move this to GSMPhone
-    protected  boolean isCfEnable(int action) {
-        return (action == CF_ACTION_ENABLE) || (action == CF_ACTION_REGISTRATION);
-    }
-    
     /**
-     * Make sure the network knows our preferred setting.
+     * This should only be called in GSM mode.
+     * Only here for some backward compatibility
+     * issues concerning the GSMPhone class.
+     * @deprecated
      */
-    // TODO: might not be used in CDMA any longer, move this to GSMPhone
-    protected  void syncClirSetting() {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-        int clirSetting = sp.getInt(CLIR_KEY, -1);
-        if (clirSetting >= 0) {
-            mCM.setCLIR(clirSetting, null);
-        }
+    public List<PdpConnection> getCurrentPdpList() {
+        return null;
     }
 
-    // TODO: might not be used in CDMA any longer, move this to GSMPhone
-    public void getCallForwardingOption(int commandInterfaceCFReason, Message onComplete) {
-        if (isValidCommandInterfaceCFReason(commandInterfaceCFReason)) {
-            if (LOCAL_DEBUG) Log.d(LOG_TAG, "requesting call forwarding query.");
-            Message resp;
-            if (commandInterfaceCFReason == CF_REASON_UNCONDITIONAL) {
-                resp = h.obtainMessage(EVENT_GET_CALL_FORWARD_DONE, onComplete);
-            } else {
-                resp = onComplete;
-            }
-            mCM.queryCallForwardStatus(commandInterfaceCFReason,0,null,resp);
-        }
-    }
-    
-    /**
-     * Saves CLIR setting so that we can re-apply it as necessary
-     * (in case the RIL resets it across reboots).
-     */
-    // TODO: might not be used in CDMA any longer, move this to GSMPhone
-     public  void saveClirSetting(int commandInterfaceCLIRMode) {
-        // open the shared preferences editor, and write the value.
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putInt(CLIR_KEY, commandInterfaceCLIRMode);
-        
-        // commit and log the result.
-        if (! editor.commit()) {
-            Log.e(LOG_TAG, "failed to commit CLIR preference");
-        }
-    }
-    
-     // TODO: might not be used in CDMA any longer, move this to GSMPhone
-    public void setCallForwardingOption(int commandInterfaceCFAction,
-             int commandInterfaceCFReason,
-             String dialingNumber,
-             int timerSeconds,
-             Message onComplete) {
-         if ((isValidCommandInterfaceCFAction(commandInterfaceCFAction)) && 
-                 (isValidCommandInterfaceCFReason(commandInterfaceCFReason))) {
-
-             Message resp;
-             if (commandInterfaceCFReason == CF_REASON_UNCONDITIONAL) {
-                 resp = h.obtainMessage(EVENT_SET_CALL_FORWARD_DONE,
-                         isCfEnable(commandInterfaceCFAction) ? 1 : 0, 0, onComplete);
-             } else {
-                 resp = onComplete;
-             }
-             mCM.setCallForward(commandInterfaceCFAction,
-                     commandInterfaceCFReason,
-                     CommandsInterface.SERVICE_CLASS_VOICE,
-                     dialingNumber,
-                     timerSeconds,
-                     resp);
-         }
-     }
-    
     public void enableEnhancedVoicePrivacy(boolean enable, Message onComplete) {
-        // This function should be overridden by the class CDMAPhone. 
-        // It is not implemented in the class GSMPhone.
-        Log.e(LOG_TAG, "Error! This function should never be executed, because we have an" +
-                "inactive CDMAPhone then.");
+        // This function should be overridden by the class CDMAPhone. Not implemented in GSMPhone.
+        Log.e(LOG_TAG, "Error! This function should never be executed, inactive CDMAPhone.");
     }
 
     public void getEnhancedVoicePrivacy(Message onComplete) {
-        // This function should be overridden by the class CDMAPhone.
-        // It is not implemented in the class GSMPhone.
-        Log.e(LOG_TAG, "Error! This function should never be executed, because we have an " +
-                "inactive CDMAPhone then.");
+        // This function should be overridden by the class CDMAPhone. Not implemented in GSMPhone.
+        Log.e(LOG_TAG, "Error! This function should never be executed, inactive CDMAPhone.");
     }
 
+    public void setBandMode(int bandMode, Message response) {
+        mCM.setBandMode(bandMode, response);
+    }
+
+    public void queryAvailableBandMode(Message response) {
+        mCM.queryAvailableBandMode(response);
+    }
+
+    public void invokeOemRilRequestRaw(byte[] data, Message response) {
+        mCM.invokeOemRilRequestRaw(data, response);
+    }
+
+    public void invokeOemRilRequestStrings(String[] strings, Message response) {
+        mCM.invokeOemRilRequestStrings(strings, response);
+    }
 }

@@ -25,11 +25,13 @@ import android.os.ServiceManager;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.android.internal.telephony.IccPhoneBookInterfaceManager;
 import com.android.internal.telephony.AdnRecord;
 import com.android.internal.telephony.AdnRecordCache;
+import com.android.internal.telephony.PhoneProxy;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * SimPhoneBookInterfaceManager to provide an inter-process communication to
@@ -41,7 +43,7 @@ public class SimPhoneBookInterfaceManager extends IccPhoneBookInterfaceManager {
 
     private GSMPhone phone;
     private AdnRecordCache adnCache;
-    private final Object mLock = new Object();
+    private Object mLock = new Object();
     private int recordSize[];
     private boolean success;
     private List<AdnRecord> records;
@@ -56,6 +58,12 @@ public class SimPhoneBookInterfaceManager extends IccPhoneBookInterfaceManager {
         @Override
         public void handleMessage(Message msg) {
             AsyncResult ar;
+
+            if(PhoneProxy.getRadioTechnologyChangeGsmToCdma()) {
+                //return without doing anything, because we are in the middle of a radio technology
+                //change and maybe some references are already set to null
+                return;
+            }
 
             switch (msg.what) {
                 case EVENT_GET_SIZE_DONE:
@@ -102,14 +110,22 @@ public class SimPhoneBookInterfaceManager extends IccPhoneBookInterfaceManager {
     public SimPhoneBookInterfaceManager(GSMPhone phone) {
         this.phone = phone;
         adnCache = phone.mSIMRecords.getAdnCache();
-        //publish(); //TODO REMOVE
     }
 
-    private void publish() {
-        // TODO T: Do we have to change the service 
-        //         as well to "iccphonebook"?
-        //         defined in: device/commands/binder/Service_info.c
-        ServiceManager.addService("simphonebook", this);
+    public void dispose() {
+        //Remove all messages from the queue
+        mHandler.removeMessages(EVENT_UPDATE_DONE);
+        mHandler.removeMessages(EVENT_GET_SIZE_DONE);
+        mHandler.removeMessages(EVENT_LOAD_DONE);
+
+        if(this.records != null) {
+            this.records.removeAll(this.records);
+        }
+        this.records = null;
+        this.mLock = null;
+        this.adnCache = null;
+        this.mHandler = null;
+        this.phone = null;
     }
 
     /**

@@ -16,9 +16,9 @@
 
 package com.android.internal.telephony;
 
-//import com.android.internal.telephony.*;
 import android.os.Message;
 import android.os.Handler;
+
 
 /**
  * {@hide}
@@ -65,16 +65,12 @@ public interface CommandsInterface {
             return this == NV_READY;
         }
         boolean isGsm() {
-            return this == RADIO_OFF 
-                    || this == RADIO_UNAVAILABLE
-                    || this == SIM_NOT_READY
+            return this == SIM_NOT_READY
                     || this == SIM_LOCKED_OR_ABSENT
                     || this == SIM_READY;
         }
         boolean isCdma() {
-            return this ==  RADIO_OFF 
-                    || this == RADIO_UNAVAILABLE
-                    || this == RUIM_NOT_READY
+            return this ==  RUIM_NOT_READY
                     || this == RUIM_READY
                     || this == RUIM_LOCKED_OR_ABSENT
                     || this == NV_NOT_READY
@@ -162,6 +158,7 @@ public interface CommandsInterface {
      * registration methods
      */
     void registerForRadioStateChanged(Handler h, int what, Object obj);
+    void unregisterForRadioStateChanged(Handler h);
 
     /** 
      * Fires on any transition into RadioState.isOn() 
@@ -170,6 +167,7 @@ public interface CommandsInterface {
      * before event is received.
      */
     void registerForOn(Handler h, int what, Object obj);
+    void unregisterForOn(Handler h);
 
     /** 
      * Fires on any transition out of RadioState.isAvailable() 
@@ -178,7 +176,8 @@ public interface CommandsInterface {
      * before event is received.
      */
     void registerForAvailable(Handler h, int what, Object obj);
-    //void unregisterForAvailable(Handler h);
+    void unregisterForAvailable(Handler h);
+
     /** 
      * Fires on any transition into !RadioState.isAvailable()
      * Fires immediately if currently in that state
@@ -186,7 +185,8 @@ public interface CommandsInterface {
      * before event is received.
      */
     void registerForNotAvailable(Handler h, int what, Object obj);
-    //void unregisterForNotAvailable(Handler h);
+    void unregisterForNotAvailable(Handler h);
+
     /** 
      * Fires on any transition into RADIO_OFF or !RadioState.isAvailable()
      * Fires immediately if currently in that state
@@ -194,7 +194,7 @@ public interface CommandsInterface {
      * before event is received.
      */
     void registerForOffOrNotAvailable(Handler h, int what, Object obj);
-    //void unregisterForNotAvailable(Handler h);
+    void unregisterForOffOrNotAvailable(Handler h);
 
     /** 
      * Fires on any transition into SIM_READY
@@ -203,27 +203,41 @@ public interface CommandsInterface {
      * before event is received.
      */
     void registerForSIMReady(Handler h, int what, Object obj);
-    //void unregisterForSIMReady(Handler h);
+    void unregisterForSIMReady(Handler h);
+
     /** Any transition into SIM_LOCKED_OR_ABSENT */
     void registerForSIMLockedOrAbsent(Handler h, int what, Object obj);
-    //void unregisterForSIMLockedOrAbsent(Handler h);
+    void unregisterForSIMLockedOrAbsent(Handler h);
 
     void registerForCallStateChanged(Handler h, int what, Object obj);
-    //void unregisterForCallStateChanged(Handler h);
+    void unregisterForCallStateChanged(Handler h);
     void registerForNetworkStateChanged(Handler h, int what, Object obj);
-    //void unregisterForNetworkStateChanged(Handler h);
-    void registerForPDPStateChanged(Handler h, int what, Object obj);
-    //void unregisterForPDPStateChanged(Handler h);
+    void unregisterForNetworkStateChanged(Handler h);
+    void registerForDataStateChanged(Handler h, int what, Object obj);
+    void unregisterForDataStateChanged(Handler h);
 
     void registerForRadioTechnologyChanged(Handler h, int what, Object obj);
-    //void unregisterForRadioTechnologyChanged(Handler h);
+    void unregisterForRadioTechnologyChanged(Handler h);
     void registerForNVReady(Handler h, int what, Object obj);
-    //void unregisterForNVReady(Handler h, int what, Object obj);
+    void unregisterForNVReady(Handler h);
     void registerForRUIMLockedOrAbsent(Handler h, int what, Object obj);
-    //void unregisterForRUIMLockedOrAbsent(Handler h, int what, Object obj);
+    void unregisterForRUIMLockedOrAbsent(Handler h);
+
+    /** InCall voice privacy notifications */
+    void registerForInCallVoicePrivacyOn(Handler h, int what, Object obj);
+    void unregisterForInCallVoicePrivacyOn(Handler h);
+    void registerForInCallVoicePrivacyOff(Handler h, int what, Object obj);
+    void unregisterForInCallVoicePrivacyOff(Handler h);
+
+    /** 
+     * Fires on any transition into RUIM_READY
+     * Fires immediately if if currently in that state
+     * In general, actions should be idempotent. State may change
+     * before event is received.
+     */
     void registerForRUIMReady(Handler h, int what, Object obj);
-    //void unregisterForRUIMReady(Handler h, int what, Object obj);
-    
+    void unregisterForRUIMReady(Handler h);
+
     /**
      * unlike the register* methods, there's only one new SMS handler
      * if you need to unregister, you should also tell the radio to stop
@@ -246,7 +260,7 @@ public interface CommandsInterface {
      * AsyncResult.result is a String containing the status report PDU
      */
     void setOnSmsStatus(Handler h, int what, Object obj);
-    
+
     /**
      * unlike the register* methods, there's only one NITZ time handler
      *
@@ -293,14 +307,14 @@ public interface CommandsInterface {
     void setOnSignalStrengthUpdate(Handler h, int what, Object obj);
 
     /**
-     * Sets the handler for SIM SMS storage full unsolicited message.
+     * Sets the handler for SIM/RUIM SMS storage full unsolicited message.
      * Unlike the register* methods, there's only one notification handler
      *
      * @param h Handler for notification message.
      * @param what User-defined message code.
      * @param obj User object.
      */
-    void setOnSimSmsFull(Handler h, int what, Object obj);
+    void setOnIccSmsFull(Handler h, int what, Object obj);
 
     /**
      * Sets the handler for SIM Refresh notifications.
@@ -473,8 +487,18 @@ public interface CommandsInterface {
      *  ar.exception carries exception on failure
      *  ar.userObject contains the orignal value of result.obj
      *  ar.result contains a List of PDPContextState
+     *  @deprecated
      */
     void getPDPContextList(Message result);
+
+    /** 
+     *  returned message
+     *  retMsg.obj = AsyncResult ar
+     *  ar.exception carries exception on failure
+     *  ar.userObject contains the orignal value of result.obj
+     *  ar.result contains a List of PDPContextState
+     */
+    void getDataCallList(Message result);
 
     /** 
      *  returned message
@@ -635,8 +659,15 @@ public interface CommandsInterface {
      * cause code returned as int[0] in Message.obj.response
      * returns an integer cause code defined in TS 24.008
      * section 6.1.3.1.3 or close approximation
+     * @deprecated
      */
     void getLastPdpFailCause (Message result);
+
+    /** 
+     * The preferred new alternative to getLastPdpFailCause
+     * that is also CDMA-compatible.
+     */
+    void getLastDataCallFailCause (Message result);
 
     void setMute (boolean enableMute, Message response);
 
@@ -663,7 +694,7 @@ public interface CommandsInterface {
      * as "out of service" above
      */
     void getRegistrationState (Message response);
-    
+
     /**
      * response.obj.result is an int[3]
      * response.obj.result[0] is registration state 0-5 from TS 27.007 7.2
@@ -716,21 +747,35 @@ public interface CommandsInterface {
     void sendSMS (String smscPDU, String pdu, Message response);
 
     /**
+     * @param pdu is CDMA-SMS in internal pseudo-PDU format
+     * @param response sent when operation completes
+     */
+    void sendCdmaSms(byte[] pdu, Message response);
+
+    /**
      * Deletes the specified SMS record from SIM memory (EF_SMS).
      * 
      * @param index index of the SMS record to delete
      * @param response sent when operation completes
      */
     void deleteSmsOnSim(int index, Message response);
+    
+    /**
+     * Deletes the specified SMS record from RUIM memory (EF_SMS in DF_CDMA).
+     * 
+     * @param index index of the SMS record to delete
+     * @param response sent when operation completes
+     */
+    void deleteSmsOnRuim(int index, Message response);
 
     /**
      * Writes an SMS message to SIM memory (EF_SMS).
      * 
      * @param status status of message on SIM.  One of:
-     *                  SmsManger.STATUS_ON_SIM_READ
-     *                  SmsManger.STATUS_ON_SIM_UNREAD
-     *                  SmsManger.STATUS_ON_SIM_SENT
-     *                  SmsManger.STATUS_ON_SIM_UNSENT
+     *                  SmsManger.STATUS_ON_ICC_READ
+     *                  SmsManger.STATUS_ON_ICC_UNREAD
+     *                  SmsManger.STATUS_ON_ICC_SENT
+     *                  SmsManger.STATUS_ON_ICC_UNSENT
      * @param pdu message PDU, as hex string
      * @param response sent when operation completes.
      *                  response.obj will be an AsyncResult, and will indicate
@@ -738,13 +783,29 @@ public interface CommandsInterface {
      */
     void writeSmsToSim(int status, String smsc, String pdu, Message response);
 
+    void writeSmsToRuim(int status, String pdu, Message response);
+
+    /**
+     * @deprecated
+     * @param apn
+     * @param user
+     * @param password
+     * @param response
+     */
     void setupDefaultPDP(String apn, String user, String password, Message response);
 
+    /**
+     * @deprecated
+     * @param cid
+     * @param response
+     */
     void deactivateDefaultPDP(int cid, Message response);
 
     void setRadioPower(boolean on, Message response);
 
     void acknowledgeLastIncomingSMS(boolean success, Message response);
+
+    void acknowledgeLastIncomingCdmaSms(boolean success, Message response);
 
     /** 
      * parameters equivilient to 27.007 AT+CRSM command 
@@ -990,14 +1051,13 @@ public interface CommandsInterface {
      *   [4] is H_NID (Home SID) if CDMA subscription is available
      */   
     public void getCDMASubscription(Message response);
-    
+
     /** 
-     * Fires on any transition into RUIM_READY
-     * Fires immediately if if currently in that state
-     * In general, actions should be idempotent. State may change
-     * before event is received.
-     */
-    //void registerForRUIMReady(Handler h, int what, Object obj); //TODO check moved above
+     * Send Flash Code.
+     * "response" is is NULL
+     *   [0] is a FLASH string
+     */  
+    public void sendCDMAFeatureCode(String FeatureCode, Message response);
 
     /** Set the Phone type created */
     void setPhoneType(int phoneType);
@@ -1039,4 +1099,65 @@ public interface CommandsInterface {
      */
     void queryTTYModeEnabled(Message response);
 
+    /**
+     * Setup a packet data connection On successful completion, the result
+     * message will return the following: [0] indicating PDP CID, which is
+     * generated by RIL. This Connection ID is used in both GSM/UMTS and CDMA
+     * modes [1] indicating the network interface name for GSM/UMTS or CDMA [2]
+     * indicating the IP address for this interface for GSM/UMTS and NULL in the
+     * case of CDMA
+     * 
+     * @param radioTechnology
+     *            indicates whether to setup connection on radio technology CDMA
+     *            (0) or GSM/UMTS (1)
+     * @param profile
+     *            Profile Number or NULL to indicate default profile
+     * @param apn
+     *            the APN to connect to if radio technology is GSM/UMTS.
+     *            Otherwise null for CDMA.
+     * @param user
+     *            the username for APN, or NULL
+     * @param password
+     *            the password for APN, or NULL
+     * @param result
+     *            Callback message
+     */
+    public void setupDataCall(String radioTechnology, String profile, String apn,
+            String user, String password, Message result);
+
+    /**
+     * Deactivate packet data connection
+     * 
+     * @param cid
+     *            The connection ID
+     * @param result
+     *            Callback message is empty on completion
+     */
+    public void deactivateDataCall(int cid, Message result);
+    
+    /**
+     * Activate or deactivate cell broadcast SMS.
+     * 
+     * @param activate
+     *            0 = activate, 1 = deactivate
+     * @param result
+     *            Callback message is empty on completion
+     */
+    public void activateBroadcastSms(int activate, Message result);
+    
+    /**
+     * Configure cdma cell broadcast SMS.
+     * 
+     * @param result
+     *            Callback message is empty on completion
+     */
+    public void setCdmaBroadcastConfig(int[] configValuesArray, Message result);
+    
+    /**
+     * Query the current configuration of cdma cell broadcast SMS.
+     * 
+     * @param result
+     *            Callback message is empty on completion
+     */
+    public void getCdmaBroadcastConfig(Message result);
 }

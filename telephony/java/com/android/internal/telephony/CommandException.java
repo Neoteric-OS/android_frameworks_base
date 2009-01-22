@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.telephony.gsm;
+package com.android.internal.telephony;
 
 import com.android.internal.telephony.RILConstants;
 

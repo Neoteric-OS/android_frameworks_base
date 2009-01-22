@@ -28,6 +28,12 @@ public class PhoneSubInfo extends IPhoneSubInfo.Stub {
         mPhone = phone;
         mContext = phone.getContext();
     }
+
+    public void dispose() {
+        this.mPhone = null;
+        this.mContext = null;
+    }
+
     /**
      * Retrieves the unique device ID, e.g., IMEI for GSM phones.
      */

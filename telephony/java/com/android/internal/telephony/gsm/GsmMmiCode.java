@@ -20,13 +20,15 @@ import android.content.Context;
 import com.android.internal.telephony.*;
 
 import android.os.*;
-import android.util.Log;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
+import android.telephony.PhoneNumberUtils;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.telephony.PhoneNumberUtils;
+import android.util.Log;
+
 import static com.android.internal.telephony.CommandsInterface.*;
+
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
  * The motto for this file is:
@@ -41,14 +43,14 @@ public final class GsmMmiCode  extends Handler implements MmiCode {
     static final String LOG_TAG = "GSM";
 
     //***** Constants
-    
+
     // From TS 22.030 6.5.2
     static final String ACTION_ACTIVATE = "*";
     static final String ACTION_DEACTIVATE = "#";
     static final String ACTION_INTERROGATE = "*#";
     static final String ACTION_REGISTER = "**";
     static final String ACTION_ERASURE = "##";
-    
+
     // Supp Service cocdes from TS 22.030 Annex B 
 
     //Called line presentation
@@ -101,14 +103,13 @@ public final class GsmMmiCode  extends Handler implements MmiCode {
 
     GSMPhone phone;
     Context context;
-    
+
     String action;              // One of ACTION_*
     String sc;                  // Service Code
     String sia, sib, sic;       // Service Info a,b,c
     String poundString;         // Entire MMI string up to and including #
     String dialingNumber;
     String pwd;                 // For password registration
-    
 
     /** Set to true in processCode, not at newFromDialString time */ 
     private boolean isPendingUSSD;
@@ -117,9 +118,9 @@ public final class GsmMmiCode  extends Handler implements MmiCode {
 
     State state = State.PENDING;    
     CharSequence message;
-    
+
     //***** Class Variables
-    
+
 
     // See TS 22.030 6.5.2 "Structure of the MMI"
 
@@ -150,7 +151,7 @@ public final class GsmMmiCode  extends Handler implements MmiCode {
 
 
     //***** Public Class methods
-    
+
     /**
      * Some dial strings in GSM are defined to do non-call setup
      * things, such as modify or query supplementry service settings (eg, call
@@ -254,7 +255,7 @@ public final class GsmMmiCode  extends Handler implements MmiCode {
         if (sc == null) { 
             throw new RuntimeException ("invalid call forward sc");
         }
-   
+
         if (sc.equals(SC_CF_All)) {
            return CommandsInterface.CF_REASON_ALL;
         } else if (sc.equals(SC_CFU)) {
@@ -408,7 +409,7 @@ public final class GsmMmiCode  extends Handler implements MmiCode {
              * cancel it.
              */
             phone.mCM.cancelPendingUssd(obtainMessage(EVENT_USSD_CANCEL_COMPLETE, this));
-            
+
             /*
              * Don't call phone.onMMIDone here; wait for CANCEL_COMPLETE notice
              * from RIL.
@@ -421,7 +422,6 @@ public final class GsmMmiCode  extends Handler implements MmiCode {
             phone.onMMIDone (this);
         }
 
-
     }
 
     public boolean isCancelable() {
@@ -430,7 +430,6 @@ public final class GsmMmiCode  extends Handler implements MmiCode {
     }
 
     //***** Instance Methods
-    
 
     /** Does this dial string contain a structured or unstructured MMI code? */
     boolean
@@ -502,7 +501,7 @@ public final class GsmMmiCode  extends Handler implements MmiCode {
         
         return CommandsInterface.CLIR_DEFAULT;
     }
-    
+
     boolean isActivate() {
         return action != null && action.equals(ACTION_ACTIVATE);
     }
@@ -510,7 +509,7 @@ public final class GsmMmiCode  extends Handler implements MmiCode {
     boolean isDeactivate() {
         return action != null && action.equals(ACTION_DEACTIVATE);
     }
-    
+
     boolean isInterrogate() {
         return action != null && action.equals(ACTION_INTERROGATE);
     }
@@ -786,6 +785,12 @@ public final class GsmMmiCode  extends Handler implements MmiCode {
     handleMessage (Message msg) {
         AsyncResult ar;
 
+        if(PhoneProxy.getRadioTechnologyChangeGsmToCdma()) {
+            //return without doing anything, because we are in the middle of a radio technology
+            //change and maybe some references are already set to null
+            return;
+        }
+
         switch (msg.what) {
             case EVENT_SET_COMPLETE:
                 ar = (AsyncResult) (msg.obj);
@@ -1016,7 +1021,7 @@ public final class GsmMmiCode  extends Handler implements MmiCode {
 
                     state = State.COMPLETE;
                 break;
-            }            
+            }
         }
 
         message = sb;
@@ -1161,7 +1166,7 @@ public final class GsmMmiCode  extends Handler implements MmiCode {
 
         message = sb;
         phone.onMMIDone(this);
-    
+
     }
 
     private void
@@ -1197,7 +1202,7 @@ public final class GsmMmiCode  extends Handler implements MmiCode {
         message = sb;
         phone.onMMIDone(this);
     }
-    
+
     private CharSequence
     createQueryCallWaitingResultMessage(int serviceClass) {
         StringBuilder sb = 
@@ -1214,7 +1219,7 @@ public final class GsmMmiCode  extends Handler implements MmiCode {
         }
         return sb;
     }
-    
+
     /***
      * TODO: It would be nice to have a method here that can take in a dialstring and
      * figure out if there is an MMI code embedded within it.  This code would replace

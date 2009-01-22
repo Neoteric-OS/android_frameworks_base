@@ -16,6 +16,9 @@
 
 package com.android.internal.telephony.gsm;
 
+import android.app.ActivityManagerNative;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncResult;
 import android.os.RemoteException;
 import android.os.Handler;
@@ -26,12 +29,10 @@ import android.util.Log;
 
 import com.android.internal.telephony.CommandsInterface;
 import com.android.internal.telephony.IccCard;
-import com.android.internal.telephony.TelephonyProperties;
 import com.android.internal.telephony.Phone;
+import com.android.internal.telephony.PhoneProxy;
 import com.android.internal.telephony.TelephonyIntents;
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.app.ActivityManagerNative;
+import com.android.internal.telephony.TelephonyProperties;
 
 import static android.Manifest.permission.READ_PHONE_STATE;
 
@@ -40,7 +41,7 @@ import static android.Manifest.permission.READ_PHONE_STATE;
  */
 public final class SimCard extends Handler implements IccCard {
     static final String LOG_TAG="GSM";
-    
+
     //***** Instance Variables
     private static final boolean DBG = true;
 
@@ -88,7 +89,33 @@ public final class SimCard extends Handler implements IccCard {
 
         updateStateProperty();
     }
-    
+
+    public void dispose() {
+        //Unregister for all events
+        phone.mCM.unregisterForSIMLockedOrAbsent(this);
+        phone.mCM.unregisterForOffOrNotAvailable(this);
+        phone.mCM.unregisterForSIMReady(this);
+
+        //Remove all messages from the queue
+        this.removeMessages(EVENT_RADIO_OFF_OR_NOT_AVAILABLE);
+        this.removeMessages(EVENT_SIM_READY);
+        this.removeMessages(EVENT_SIM_LOCKED_OR_ABSENT);
+        this.removeMessages(EVENT_GET_SIM_STATUS_DONE);
+        this.removeMessages(EVENT_PINPUK_DONE);
+        this.removeMessages(EVENT_REPOLL_STATUS_DONE);
+        this.removeMessages(EVENT_QUERY_FACILITY_LOCK_DONE);
+        this.removeMessages(EVENT_QUERY_FACILITY_FDN_DONE);
+        this.removeMessages(EVENT_CHANGE_FACILITY_LOCK_DONE);
+        this.removeMessages(EVENT_CHANGE_FACILITY_FDN_DONE);
+        this.removeMessages(EVENT_CHANGE_SIM_PASSWORD_DONE);
+
+        this.absentRegistrants = null;
+        this.pinLockedRegistrants = null;
+        this.networkLockedRegistrants = null;
+        this.status = null;
+        this.phone = null;
+    }
+
     //***** SimCard implementation
 
     public State
@@ -250,7 +277,7 @@ public final class SimCard extends Handler implements IccCard {
     }
 
     public String getServiceProviderName () {
-        return phone.mSIMRecords.getServiceProvideName();
+        return phone.mSIMRecords.getServiceProviderName();
     }
 
     //***** Handler implementation
@@ -262,6 +289,12 @@ public final class SimCard extends Handler implements IccCard {
         serviceClassX = CommandsInterface.SERVICE_CLASS_VOICE +
                         CommandsInterface.SERVICE_CLASS_DATA +
                         CommandsInterface.SERVICE_CLASS_FAX;
+
+        if(PhoneProxy.getRadioTechnologyChangeGsmToCdma()) {
+            //return without doing anything, because we are in the middle of a radio technology
+            //change and maybe some references are already set to null
+            return;
+        }
 
         switch (msg.what) {
             case EVENT_RADIO_OFF_OR_NOT_AVAILABLE:

@@ -33,8 +33,6 @@ IccIoResult {
     }
 
     public IccIoResult(int sw1, int sw2, String hexString) {
-        //TODO T: IccUtils is linked to IccUtils which is stored in telephony package
-        //Maybe in a later version all function calls of IccUtils will be renamed to IccUtils.
         this(sw1, sw2, IccUtils.hexStringToBytes(hexString));
     }
 

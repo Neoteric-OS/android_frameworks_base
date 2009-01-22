@@ -82,15 +82,15 @@ public interface TelephonyProperties
      *  provider of the SIM. 5 or 6 decimal digits.
      *  Availablity: SIM state must be "READY"
      */
-    static String PROPERTY_SIM_OPERATOR_NUMERIC = "gsm.sim.operator.numeric";
+    static String PROPERTY_ICC_OPERATOR_NUMERIC = "gsm.sim.operator.numeric";
 
-    /** PROPERTY_SIM_OPERATOR_ALPHA is also known as the SPN, or Service Provider Name. 
+    /** PROPERTY_ICC_OPERATOR_ALPHA is also known as the SPN, or Service Provider Name. 
      *  Availablity: SIM state must be "READY"
      */
-    static String PROPERTY_SIM_OPERATOR_ALPHA = "gsm.sim.operator.alpha";
+    static String PROPERTY_ICC_OPERATOR_ALPHA = "gsm.sim.operator.alpha";
 
     /** ISO country code equivalent for the SIM provider's country code*/
-    static String PROPERTY_SIM_OPERATOR_ISO_COUNTRY = "gsm.sim.operator.iso-country";
+    static String PROPERTY_ICC_OPERATOR_ISO_COUNTRY = "gsm.sim.operator.iso-country";
 
     /**
      * Indicates the available radio technology.  Values include: <code>"unknown"</code>,

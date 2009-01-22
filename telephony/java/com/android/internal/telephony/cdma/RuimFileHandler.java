@@ -16,15 +16,13 @@
 
 package com.android.internal.telephony.cdma;
 
-import com.android.internal.telephony.*; // TODO: Remove *
+import com.android.internal.telephony.*; 
 import com.android.internal.telephony.IccException;
-import com.android.internal.telephony.IccIoResult;
 import com.android.internal.telephony.IccFileTypeMismatch;
+import com.android.internal.telephony.IccIoResult;
 
 import android.os.*;
 import android.os.AsyncResult;
-import android.os.RegistrantList;
-import android.os.Registrant;
 import android.util.Log;
 import java.util.ArrayList;
 
@@ -34,7 +32,7 @@ import java.util.ArrayList;
 public final class RuimFileHandler extends IccFileHandler {
     static final String LOG_TAG = "CDMA";
 
-    //***** Instance Variables    
+    //***** Instance Variables
     CDMAPhone phone;
 
 
@@ -63,7 +61,7 @@ public final class RuimFileHandler extends IccFileHandler {
             this.loadAll = true;
             this.onLoaded = onLoaded;
         }
- 
+
     }
 
 
@@ -71,6 +69,19 @@ public final class RuimFileHandler extends IccFileHandler {
     RuimFileHandler(CDMAPhone phone) {
         this.phone = phone;
     }    
+
+    public void dispose() {
+        //Remove all messages from the queue
+        this.removeMessages(EVENT_READ_IMG_DONE);
+        this.removeMessages(EVENT_READ_ICON_DONE);
+        this.removeMessages(EVENT_GET_EF_LINEAR_RECORD_SIZE_DONE);
+        this.removeMessages(EVENT_GET_RECORD_SIZE_DONE);
+        this.removeMessages(EVENT_GET_BINARY_SIZE_DONE);
+        this.removeMessages(EVENT_READ_RECORD_DONE);
+        this.removeMessages(EVENT_READ_BINARY_DONE);
+
+        this.phone = null;
+    }
 
     //***** Public Methods
 
@@ -88,7 +99,7 @@ public final class RuimFileHandler extends IccFileHandler {
         Message response 
             = obtainMessage(EVENT_GET_RECORD_SIZE_DONE,
                         new LoadLinearFixedContext(fileid, recordNum, onLoaded));
-        
+
         phone.mCM.iccIO(COMMAND_GET_RESPONSE, fileid, null,
                         0, 0, GET_RESPONSE_EF_SIZE_BYTES, null, null, response);
     }
@@ -106,7 +117,7 @@ public final class RuimFileHandler extends IccFileHandler {
         Message response = obtainMessage(EVENT_READ_IMG_DONE,
                 new LoadLinearFixedContext(IccConstants.EF_IMG, recordNum,
                         onLoaded));
-        
+
         phone.mCM.iccIO(COMMAND_GET_RESPONSE, IccConstants.EF_IMG, "img",
                 recordNum, READ_RECORD_MODE_ABSOLUTE,
                 GET_RESPONSE_EF_IMG_SIZE_BYTES, null, null, response);
@@ -125,7 +136,7 @@ public final class RuimFileHandler extends IccFileHandler {
         Message response
                 = obtainMessage(EVENT_GET_EF_LINEAR_RECORD_SIZE_DONE,
                         new LoadLinearFixedContext(fileid, onLoaded));
-        
+
         phone.mCM.iccIO(COMMAND_GET_RESPONSE, fileid, null,
                     0, 0, GET_RESPONSE_EF_SIZE_BYTES, null, null, response);
     }
@@ -142,7 +153,7 @@ public final class RuimFileHandler extends IccFileHandler {
     protected void loadEFLinearFixedAll(int fileid, Message onLoaded) {
         Message response = obtainMessage(EVENT_GET_RECORD_SIZE_DONE,
                         new LoadLinearFixedContext(fileid,onLoaded));
-        
+
         phone.mCM.iccIO(COMMAND_GET_RESPONSE, fileid, null,
                         0, 0, GET_RESPONSE_EF_SIZE_BYTES, null, null, response);
     }
@@ -160,14 +171,14 @@ public final class RuimFileHandler extends IccFileHandler {
     protected void loadEFTransparent(int fileid, Message onLoaded) {
         Message response = obtainMessage(EVENT_GET_BINARY_SIZE_DONE,
                         fileid, 0, onLoaded);
-        
+
         phone.mCM.iccIO(COMMAND_GET_RESPONSE, fileid, null,
                         0, 0, GET_RESPONSE_EF_SIZE_BYTES, null, null, response);
     }
 
     /**
      * Load a SIM Transparent EF-IMG. Used right after loadEFImgLinearFixed to
-     * retrive STK's icon data.
+     * retrieve STK's icon data.
      * 
      * @param fileid EF id
      * @param onLoaded
@@ -179,7 +190,7 @@ public final class RuimFileHandler extends IccFileHandler {
             int length, Message onLoaded) {
         Message response = obtainMessage(EVENT_READ_ICON_DONE, fileid, 0,
                 onLoaded);
-        
+
         phone.mCM.iccIO(COMMAND_GET_RESPONSE, fileid, "img", 0, 0,
                 GET_RESPONSE_EF_IMG_SIZE_BYTES, null, null, response);
     }
@@ -210,7 +221,7 @@ public final class RuimFileHandler extends IccFileHandler {
                         0, 0, data.length,
                         IccUtils.bytesToHexString(data), null, onComplete);
     }
-    
+
     //***** Overridden from Handler
 
     public void handleMessage(Message msg) {
@@ -227,10 +238,15 @@ public final class RuimFileHandler extends IccFileHandler {
         int recordNum;
         int recordSize[];
 
+        if(PhoneProxy.getRadioTechnologyChangeCdmaToGsm()) {
+            //return without doing anything, because we are in the middle of a radio technology
+            //change and maybe some references are already set to null
+            return;
+        }
+
         try {
             switch (msg.what) {
             case EVENT_READ_IMG_DONE:
-                Log.d(LOG_TAG, "Event EVENT_READ_IMG_DONE Received"); //TODO
                 ar = (AsyncResult) msg.obj;
                 lc = (LoadLinearFixedContext) ar.userObj;
                 result = (IccIoResult) ar.result;
@@ -242,7 +258,6 @@ public final class RuimFileHandler extends IccFileHandler {
                 }
                 break;
             case EVENT_READ_ICON_DONE:
-                Log.d(LOG_TAG, "Event EVENT_READ_ICON_DONE Received"); //TODO
                 ar = (AsyncResult) msg.obj;
                 response = (Message) ar.userObj;
                 result = (IccIoResult) ar.result;
@@ -253,7 +268,6 @@ public final class RuimFileHandler extends IccFileHandler {
                 }
                 break;
             case EVENT_GET_EF_LINEAR_RECORD_SIZE_DONE:
-                Log.d(LOG_TAG, "Event EVENT_GET_EF_LINEAR_RECORD_SIZE_DONE Received"); //TODO
                 ar = (AsyncResult)msg.obj;
                 lc = (LoadLinearFixedContext) ar.userObj;
                 result = (IccIoResult) ar.result;
@@ -286,7 +300,6 @@ public final class RuimFileHandler extends IccFileHandler {
                 sendResult(response, recordSize, null);
                 break;
              case EVENT_GET_RECORD_SIZE_DONE:
-                Log.d(LOG_TAG, "Event EVENT_GET_RECORD_SIZE_DONE Received"); //TODO
                 ar = (AsyncResult)msg.obj;
                 lc = (LoadLinearFixedContext) ar.userObj;
                 result = (IccIoResult) ar.result;
@@ -334,7 +347,6 @@ public final class RuimFileHandler extends IccFileHandler {
                          obtainMessage(EVENT_READ_RECORD_DONE, lc));
                  break;
             case EVENT_GET_BINARY_SIZE_DONE:
-                Log.d(LOG_TAG, "Event EVENT_GET_BINARY_SIZE_DONE Received"); //TODO
                 ar = (AsyncResult)msg.obj;
                 response = (Message) ar.userObj;
                 result = (IccIoResult) ar.result;
@@ -373,7 +385,6 @@ public final class RuimFileHandler extends IccFileHandler {
             break;
 
             case EVENT_READ_RECORD_DONE:
-                Log.d(LOG_TAG, "Event EVENT_READ_RECORD_DONE Received"); //TODO
 
                 ar = (AsyncResult)msg.obj;
                 lc = (LoadLinearFixedContext) ar.userObj;
@@ -413,7 +424,6 @@ public final class RuimFileHandler extends IccFileHandler {
             break;
             
             case EVENT_READ_BINARY_DONE:
-                Log.d(LOG_TAG, "Event EVENT_READ_BINARY_DONE Received"); //TODO
                 ar = (AsyncResult)msg.obj;
                 response = (Message) ar.userObj;
                 result = (IccIoResult) ar.result;
@@ -444,7 +454,6 @@ public final class RuimFileHandler extends IccFileHandler {
 
     //***** Private Methods
 
-    // TODO: check if this is something for the base class
     private void sendResult(Message response, Object result, Throwable ex) {
         if (response == null) {
             return;
@@ -453,5 +462,5 @@ public final class RuimFileHandler extends IccFileHandler {
         AsyncResult.forMessage(response, result, ex);
 
         response.sendToTarget();
-    }    
+    }
 }

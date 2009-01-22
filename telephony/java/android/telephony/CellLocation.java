@@ -62,8 +62,10 @@ public abstract class CellLocation {
      * @hide
      */
     public static CellLocation newFromBundle(Bundle bundle) {
+        // NOTE here TelephonyManager.getDefault().getPhoneType() cannot be used since at startup
+        //      ITelephony have not been created
         if (RILConstants.CDMA_PHONE == 
-          SystemProperties.getInt(Settings.System.CURRENT_ACTIVE_PHONE, 0)) {
+                SystemProperties.getInt(Settings.System.CURRENT_ACTIVE_PHONE, 0)) {
             return new CdmaCellLocation(bundle);
         } else {
             return new GsmCellLocation(bundle);
@@ -80,8 +82,10 @@ public abstract class CellLocation {
      *
      */
     public static CellLocation getEmpty() {
+        // NOTE here TelephonyManager.getDefault().getPhoneType() cannot be used since at startup
+        //      ITelephony have not been created
         if (RILConstants.CDMA_PHONE == 
-          SystemProperties.getInt(Settings.System.CURRENT_ACTIVE_PHONE, 0)) {
+                SystemProperties.getInt(Settings.System.CURRENT_ACTIVE_PHONE, 0)) {
             return new CdmaCellLocation();
         } else {
             return new GsmCellLocation();

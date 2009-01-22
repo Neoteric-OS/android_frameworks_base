@@ -16,12 +16,13 @@
 
 package com.android.internal.telephony;
 
-import java.io.UnsupportedEncodingException;
-
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.Log;
-import com.android.internal.telephony.gsm.GsmAlphabet;
+
+import com.android.internal.telephony.GsmAlphabet;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * Various methods, useful for dealing with SIM data.
@@ -40,21 +41,21 @@ public class IccUtils {
     public static String
     bcdToString(byte[] data, int offset, int length) {
         StringBuilder ret = new StringBuilder(length*2);
- 
+
         for (int i = offset ; i < offset + length ; i++) {
             byte b;
             int v;
-                        
+
             v = data[i] & 0xf;
             if (v > 9)  break;
             ret.append((char)('0' + v));
 
             v = (data[i] >> 4) & 0xf;
             if (v > 9)  break;
-            ret.append((char)('0' + v));        
+            ret.append((char)('0' + v));
         }
-        
-        return ret.toString();    
+
+        return ret.toString();
     }
 
 
@@ -78,7 +79,7 @@ public class IccUtils {
 
         // treat out-of-range BCD values as 0
         if ((b & 0xf0) <= 0x90) {
-            ret = (b >> 4) & 0xf; 
+            ret = (b >> 4) & 0xf;
         }
 
         if ((b & 0x0f) <= 0x09) {
@@ -88,6 +89,24 @@ public class IccUtils {
         return ret;
     }
 
+    /** Decodes BCD byte like {@link bcdByteToInt}, but the most significant BCD
+     *  digit is expected in the most significant nibble.
+     */ 
+    public static int
+    beBcdByteToInt(byte b) {
+        int ret = 0;
+
+        // treat out-of-range BCD values as 0
+        if ((b & 0xf0) <= 0x90) {
+            ret = ((b >> 4) & 0xf) * 10; 
+        }
+
+        if ((b & 0x0f) <= 0x09) {
+            ret +=  (b & 0xf);
+        }
+
+        return ret;
+    }
 
     /**
      * Decodes a string field that's formatted like the EF[ADN] alpha
@@ -288,8 +307,7 @@ public class IccUtils {
                 int countSeptets;
                 int unusedBits = data[offset] & 7;
                 countSeptets = (((length - 1) * 8) - unusedBits) / 7 ;
-                ret =  GsmAlphabet.gsm7BitPackedToString(
-                                data, offset + 1, countSeptets);
+                ret =  GsmAlphabet.gsm7BitPackedToString(data, offset + 1, countSeptets);
             break;
             case 1:
                 // UCS2

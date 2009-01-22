@@ -26,6 +26,7 @@ import android.telephony.CellLocation;
 import com.android.internal.telephony.IPhoneSubInfo;
 import com.android.internal.telephony.ITelephony;
 import com.android.internal.telephony.ITelephonyRegistry;
+import com.android.internal.telephony.RILConstants;
 import com.android.internal.telephony.TelephonyProperties;
 
 /**
@@ -115,8 +116,6 @@ public class TelephonyManager {
     public CellLocation getCellLocation() {
         try {
             Bundle bundle = getITelephony().getCellLocation();
-            // TODO remove cdma and gsmCellLocation make CellLocation 
-            // active and define different impl in the phone
             return CellLocation.newFromBundle(bundle);  
         } catch (RemoteException ex) {
         }
@@ -166,14 +165,27 @@ public class TelephonyManager {
     public static final int PHONE_TYPE_GSM = 1;
 
     /**
+     * CDMA phone
+     */
+    public static final int PHONE_TYPE_CDMA = 2;
+
+    /**
      * Returns a constant indicating the device phone type. 
      * 
      * @see #PHONE_TYPE_NONE
      * @see #PHONE_TYPE_GSM
+     * @see #PHONE_TYPE_CDMA
      */
     public int getPhoneType() {
-        // in the future, we should really check this
-        return PHONE_TYPE_GSM;
+        try{
+            if(getITelephony().getActivePhoneType() == RILConstants.CDMA_PHONE) {
+                return PHONE_TYPE_CDMA;
+            } else {
+                return PHONE_TYPE_GSM;
+            }
+        }catch(RemoteException ex){
+            return PHONE_TYPE_NONE;
+        }
     }
 
     //
@@ -341,7 +353,7 @@ public class TelephonyManager {
      * @see #getSimState
      */
     public String getSimOperator() {
-        return SystemProperties.get(TelephonyProperties.PROPERTY_SIM_OPERATOR_NUMERIC);
+        return SystemProperties.get(TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC);
     }
 
     /** 
@@ -352,14 +364,14 @@ public class TelephonyManager {
      * @see #getSimState
      */
     public String getSimOperatorName() {
-        return SystemProperties.get(TelephonyProperties.PROPERTY_SIM_OPERATOR_ALPHA);
+        return SystemProperties.get(TelephonyProperties.PROPERTY_ICC_OPERATOR_ALPHA);
     }
 
     /** 
      * Returns the ISO country code equivalent for the SIM provider's country code.
      */
     public String getSimCountryIso() {
-        return SystemProperties.get(TelephonyProperties.PROPERTY_SIM_OPERATOR_ISO_COUNTRY);
+        return SystemProperties.get(TelephonyProperties.PROPERTY_ICC_OPERATOR_ISO_COUNTRY);
     }
 
     /**

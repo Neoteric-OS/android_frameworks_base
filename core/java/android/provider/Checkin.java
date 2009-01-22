@@ -131,6 +131,8 @@ public final class Checkin {
             TEST,
             NETWORK_RX_MOBILE,
             NETWORK_TX_MOBILE,
+            PHONE_CDMA_DATA_ATTEMPTED,
+            PHONE_CDMA_DATA_CONNECTED,
         }
     }
 

@@ -22,9 +22,8 @@ import java.util.List;
 import com.android.internal.telephony.Call;
 import com.android.internal.telephony.CallStateException;
 import com.android.internal.telephony.Connection;
-import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.DriverCall;
-
+import com.android.internal.telephony.Phone;
 
 /**
  * {@hide}
@@ -35,7 +34,7 @@ public final class CdmaCall extends Call {
     /*package*/ ArrayList<Connection> connections = new ArrayList<Connection>();
     /*package*/ State state = State.IDLE;
     /*package*/ CdmaCallTracker owner;
-    
+
     /***************************** Class Methods *****************************/
 
     static State
@@ -58,9 +57,10 @@ public final class CdmaCall extends Call {
         this.owner = owner;
     }
     
+    public void dispose() {
+        this.owner = null;
+    }
     /************************** Overridden from Call *************************/
-   // TODO is currently a copy of GSM to build
-    // has to be implemented 
     public List<Connection>
     getConnections() {
         // FIXME should return Collections.unmodifiableList();
@@ -74,7 +74,7 @@ public final class CdmaCall extends Call {
     
     public Phone 
     getPhone() {
-        //TODO
+        //TODO, see GsmCall
         return null;
     }
     
@@ -121,7 +121,7 @@ public final class CdmaCall extends Call {
             /* If only disconnected connections remain, we are disconnected*/
 
             boolean hasOnlyDisconnectedConnections = true;
-    
+
             for (int i = 0, s = connections.size()  ; i < s; i ++) {
                 if (connections.get(i).getState() 
                     != State.DISCONNECTED

@@ -16,13 +16,18 @@
 
 package com.android.internal.telephony.gsm;
 
-import com.android.internal.telephony.*; //TODO Remove *
-import com.android.internal.telephony.gsm.stk.ImageDescriptor;
 import android.os.*;
 import android.os.AsyncResult;
-import android.os.RegistrantList;
-import android.os.Registrant;
 import android.util.Log;
+
+import com.android.internal.telephony.IccConstants;
+import com.android.internal.telephony.IccException;
+import com.android.internal.telephony.IccFileHandler;
+import com.android.internal.telephony.IccFileTypeMismatch;
+import com.android.internal.telephony.IccIoResult;
+import com.android.internal.telephony.IccUtils;
+import com.android.internal.telephony.PhoneProxy;
+
 import java.util.ArrayList;
 
 /**
@@ -33,7 +38,6 @@ public final class SIMFileHandler extends IccFileHandler {
 
     //***** Instance Variables
     GSMPhone phone;
-
 
     //***** Inner Classes
 
@@ -60,7 +64,6 @@ public final class SIMFileHandler extends IccFileHandler {
             this.loadAll = true;
             this.onLoaded = onLoaded;
         }
- 
     }
 
 
@@ -68,6 +71,19 @@ public final class SIMFileHandler extends IccFileHandler {
 
     SIMFileHandler(GSMPhone phone) {
         this.phone = phone;
+    }
+
+    public void dispose() {
+        //Remove all messages from the queue
+        this.removeMessages(EVENT_READ_IMG_DONE);
+        this.removeMessages(EVENT_READ_ICON_DONE);
+        this.removeMessages(EVENT_GET_EF_LINEAR_RECORD_SIZE_DONE);
+        this.removeMessages(EVENT_GET_RECORD_SIZE_DONE);
+        this.removeMessages(EVENT_GET_BINARY_SIZE_DONE);
+        this.removeMessages(EVENT_READ_RECORD_DONE);
+        this.removeMessages(EVENT_READ_BINARY_DONE);
+
+        this.phone = null;
     }
 
     //***** Public Methods
@@ -107,7 +123,7 @@ public final class SIMFileHandler extends IccFileHandler {
 
         phone.mCM.iccIO(COMMAND_GET_RESPONSE, IccConstants.EF_IMG, "img",
                 recordNum, READ_RECORD_MODE_ABSOLUTE,
-                ImageDescriptor.ID_LENGTH, null, null, response);
+                GET_RESPONSE_EF_IMG_SIZE_BYTES, null, null, response);
     }
 
     /**
@@ -223,6 +239,12 @@ public final class SIMFileHandler extends IccFileHandler {
         int fileid;
         int recordNum;
         int recordSize[];
+
+        if(PhoneProxy.getRadioTechnologyChangeGsmToCdma()) {
+            //return without doing anything, because we are in the middle of a radio technology
+            //change and maybe some references are already set to null
+            return;
+        }
 
         try {
             switch (msg.what) {
@@ -399,7 +421,7 @@ public final class SIMFileHandler extends IccFileHandler {
                                     lc.recordSize, null, null,
                                     obtainMessage(EVENT_READ_RECORD_DONE, lc));
                     }
-                }                
+                }
 
             break;
             

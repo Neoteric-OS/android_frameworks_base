@@ -21,6 +21,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.telephony.CellLocation;
 import android.telephony.ServiceState;
+
+import com.android.internal.telephony.DataConnection;
 import com.android.internal.telephony.gsm.NetworkInfo;
 import com.android.internal.telephony.gsm.PdpConnection;
 import com.android.internal.telephony.test.SimulatedRadioControl;
@@ -70,7 +72,7 @@ public interface Phone {
         CONNECTED, CONNECTING, DISCONNECTED, SUSPENDED;
     };
 
-    enum DataActivityState {
+    public enum DataActivityState {
         /**
          * The state of a data activity.
          * <ul>
@@ -131,6 +133,7 @@ public interface Phone {
     static final String REASON_DATA_ENABLED = "dataEnabled";
     static final String REASON_GPRS_ATTACHED = "gprsAttached";
     static final String REASON_GPRS_DETACHED = "gprsDetached";
+    static final String REASON_CDMA_DATA_DETACHED = "cdmaDataDetached";
     static final String REASON_APN_CHANGED = "apnChanged";
     static final String REASON_APN_SWITCHED = "apnSwitched";
     static final String REASON_RESTORE_DEFAULT_APN = "restoreDefaultApn";
@@ -149,14 +152,7 @@ public interface Phone {
     static final int BM_BOUNDARY    = 6; // upper band boundary
 
     // Used for preferred network type
-    static final int NT_AUTO_TYPE           = 0;  // GSM/WCDMA (WCDMA preferred)
-    static final int NT_GSM_TYPE            = 1;  // GSM only
-    static final int NT_WCDMA_TYPE          = 2;  // WCDMA only
-    static final int NT_GSM_UMTS_AUTO_TYPE  = 3;  // GSM/WCDMA (auto mode)
-    static final int NT_CDMA_EVDO_AUTO_TYPE = 4;  // CDMA and EvDo (auto mode, according to PRL)
-    static final int NT_CDMA_TYPE           = 5;  // CDMA only
-    static final int NT_EVDO_TYPE           = 6;  // EvDo only
-    static final int NT_GLOBAL_AUTO_TYPE    = 7;  // GSM/WCDMA, CDMA, EvDo (auto mode, according to PRL)
+    // Note NT_* extended and substituted with RILConstants.NETWORK_MODE_*
 
     // Used for CDMA roaming mode
     static final int CDMA_RM_HOME        = 0;  //Home Networks only, as defined in PRL
@@ -182,7 +178,8 @@ public interface Phone {
     /**
      * Get the current DataState. No change notification exists at this
      * interface -- use 
-     * {@link com.android.internal.telephony.PhoneStateIntentReceiver PhoneStateIntentReceiver} instead.
+     * {@link com.android.internal.telephony.PhoneStateIntentReceiver PhoneStateIntentReceiver}
+     * instead.
      */
     DataState getDataConnectionState();
 
@@ -430,6 +427,38 @@ public interface Phone {
      */
     void unregisterForSuppServiceFailed(Handler h);
 
+    /**
+     * Register for notifications when a sInCall VoicePrivacy is enabled
+     *
+     * @param h Handler that receives the notification message.
+     * @param what User-defined message code.
+     * @param obj User object.
+     */
+    void registerForInCallVoicePrivacyOn(Handler h, int what, Object obj);
+
+    /**
+     * Unegister for notifications when a sInCall VoicePrivacy is enabled
+     * 
+     * @param h Handler to be removed from the registrant list.
+     */
+    void unregisterForInCallVoicePrivacyOn(Handler h);
+
+    /**
+     * Register for notifications when a sInCall VoicePrivacy is disabled
+     *
+     * @param h Handler that receives the notification message.
+     * @param what User-defined message code.
+     * @param obj User object.
+     */
+    void registerForInCallVoicePrivacyOff(Handler h, int what, Object obj);
+
+    /**
+     * Unegister for notifications when a sInCall VoicePrivacy is disabled
+     * 
+     * @param h Handler to be removed from the registrant list.
+     */
+    void unregisterForInCallVoicePrivacyOff(Handler h);
+
     /** 
      * Returns SIM record load state. Use 
      * <code>getSimCard().registerForReady()</code> for change notification.
@@ -438,7 +467,7 @@ public interface Phone {
      * available (if applicable). If not applicable to the underlying
      * technology, returns true as well.
      */
-    boolean getSimRecordsLoaded();
+    boolean getIccRecordsLoaded();
 
     /**
      * Returns the ICC card interface for this phone, or null
@@ -967,6 +996,7 @@ public interface Phone {
     /**
      * Get the current active PDP context list
      *
+     * @deprecated
      * @param response <strong>On success</strong>, "response" bytes is
      * made available as:
      * (String[])(((AsyncResult)response.obj).result).
@@ -978,11 +1008,32 @@ public interface Phone {
     void getPdpContextList(Message response);
 
     /**
+     * Get the current active Data Call list, substitutes getPdpContextList
+     *
+     * @param response <strong>On success</strong>, "response" bytes is
+     * made available as:
+     * (String[])(((AsyncResult)response.obj).result).
+     * <strong>On failure</strong>,
+     * (((AsyncResult)response.obj).result) == null and
+     * (((AsyncResult)response.obj).exception) being an instance of
+     * com.android.internal.telephony.gsm.CommandException
+     */
+    void getDataCallList(Message response);
+
+    /**
      * Get current mutiple PDP link status
      * 
+     * @deprecated
      * @return list of pdp link connections
      */
     List<PdpConnection> getCurrentPdpList ();
+
+    /**
+     * Get current mutiple data connection status
+     * 
+     * @return list of data connections
+     */
+    List<DataConnection> getCurrentDataConnectionList ();
 
     /**
      * Udpate LAC and CID in service state for currnet GSM netowrk registration
@@ -1176,9 +1227,9 @@ public interface Phone {
      * Retrieves the serial number of the ICC, if applicable.
      */
     String getIccSerialNumber();
-    
+
     //***** CDMA support methods
-  
+
 
     /**
      * Retrieves the ESN for CDMA phones.
@@ -1189,7 +1240,7 @@ public interface Phone {
      * Retrieves MEID for CDMA phones.
      */
     String getMeid();
-    
+
     /**
      * Retrieves the PhoneSubInfo of the Phone
      */
@@ -1214,7 +1265,7 @@ public interface Phone {
      * @param onComplete a callback message when the action is completed
      */
     void setTTYModeEnabled(boolean enable, Message onComplete); 
-    
+
     /**
      * queryTTYModeEnabled
      * query the status of the TTY mode 
@@ -1223,4 +1274,29 @@ public interface Phone {
      */
     void queryTTYModeEnabled(Message onComplete);
     
+    /**
+     * Activate or deactivate cell broadcast SMS.
+     * 
+     * @param activate
+     *            0 = activate, 1 = deactivate
+     * @param response
+     *            Callback message is empty on completion
+     */
+    void activateCellBroadcastSms(int activate, Message response);
+    
+    /**
+     * Query the current configuration of cdma cell broadcast SMS.
+     * 
+     * @param response
+     *            Callback message is empty on completion
+     */
+    void getCellBroadcastSmsConfig(Message response);
+    
+    /**
+     * Configure cell broadcast SMS.
+     * 
+     * @param response
+     *            Callback message is empty on completion
+     */
+    public void setCellBroadcastSmsConfig(int[] configValuesArray, Message response);
 }

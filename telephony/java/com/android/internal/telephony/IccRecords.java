@@ -16,10 +16,6 @@
 
 package com.android.internal.telephony;
 
-
-
-import java.util.ArrayList;
-
 import android.os.AsyncResult;
 import android.os.Handler;
 import android.os.Message;
@@ -27,9 +23,7 @@ import android.os.Registrant;
 import android.os.RegistrantList;
 import android.util.Log;
 
-import static com.android.internal.telephony.TelephonyProperties.*;
-
-// TODO: move abstract parts to here
+import java.util.ArrayList;
 
 /**
  * {@hide}
@@ -41,18 +35,18 @@ public abstract class IccRecords extends Handler implements IccConstants {
     //***** Instance Variables
 
     PhoneBase phone;
-    RegistrantList recordsLoadedRegistrants = new RegistrantList();
+    protected RegistrantList recordsLoadedRegistrants = new RegistrantList();
 
-    int recordsToLoad;  // number of pending load requests
+    protected int recordsToLoad;  // number of pending load requests
 
     AdnRecordCache adnCache;
 
     //***** Cached SIM State; cleared on channel close
 
-    boolean recordsRequested = false; // true if we've made requests for the sim records
+    protected boolean recordsRequested = false; // true if we've made requests for the sim records
 
     String imsi;
-    String iccid;
+    public String iccid;
     String msisdn = null;  // My mobile number
     String msisdnTag = null;
     String voiceMailNum = null;
@@ -60,7 +54,7 @@ public abstract class IccRecords extends Handler implements IccConstants {
     String newVoiceMailNum = null;
     String newVoiceMailTag = null;
     boolean isVoiceMailFixed = false;
-    int countVoiceMessages = 0;
+    protected int countVoiceMessages = 0;
     boolean callForwardingEnabled;
     int mncLength = 0;   // 0 is used to indicate that the value
                          // is not initialized
@@ -110,40 +104,11 @@ public abstract class IccRecords extends Handler implements IccConstants {
         this.phone = phone;
     }
 
-// TODO T: check if public can /should be avoided
     protected AdnRecordCache getAdnCache() {
         return adnCache;
     }
 
-    protected void onRadioOffOrNotAvailable() {
-        imsi = null;
-        msisdn = null;
-        voiceMailNum = null;
-        countVoiceMessages = 0;
-        mncLength = 0;
-        iccid = null;
-        spn = null;
-        // -1 means no EF_SPN found; treat accordingly.
-        spnDisplayCondition = -1;
-        efMWIS = null;
-        efCPHS_MWI = null; 
-        spn = null;
-        spdiNetworks = null;
-        pnnHomeName = null;
-
-        adnCache.reset();
-
-        phone.setSystemProperty(PROPERTY_LINE1_VOICE_MAIL_WAITING, null);
-        phone.setSystemProperty(PROPERTY_SIM_OPERATOR_NUMERIC, null);
-        phone.setSystemProperty(PROPERTY_SIM_OPERATOR_ALPHA, null);
-        phone.setSystemProperty(PROPERTY_SIM_OPERATOR_ISO_COUNTRY, null);
-
-        // recordsRequested is set to false indicating that the SIM
-        // read requests made so far are not valid. This is set to
-        // true only when fresh set of read requests are made.
-        recordsRequested = false;
-    }
-
+    protected abstract void onRadioOffOrNotAvailable();
 
     //***** Public Methods
     public void registerForRecordsLoaded(Handler h, int what, Object obj) {
@@ -153,6 +118,10 @@ public abstract class IccRecords extends Handler implements IccConstants {
         if (recordsToLoad == 0 && recordsRequested == true) {
             r.notifyRegistrant(new AsyncResult(null, null, null));
         }
+    }
+
+    public void unregisterForRecordsLoaded(Handler h) {
+        recordsLoadedRegistrants.remove(h);
     }
 
     /** Returns null if SIM is not yet ready */
@@ -203,10 +172,10 @@ public abstract class IccRecords extends Handler implements IccConstants {
     }
 
     /**
-     * Return Service Provider Name stored in SIM
-     * @return null if SIM is not yet ready
+     * Return Service Provider Name stored in SIM (EF_SPN=0x6F46) or in RUIM (EF_RUIM_SPN=0x6F41)
+     * @return null if SIM is not yet ready or no RUIM entry
      */
-    public String getServiceProvideName() {
+    public String getServiceProviderName() {
         return spn;
     }
 
@@ -279,7 +248,6 @@ public abstract class IccRecords extends Handler implements IccConstants {
     public abstract void onRefresh(boolean fileChanged, int[] fileList);
 
 
-// TODO T: check if public can /should be avoided    
     public boolean getRecordsLoaded() {
         if (recordsToLoad == 0 && recordsRequested == true) {
             return true;
@@ -295,7 +263,6 @@ public abstract class IccRecords extends Handler implements IccConstants {
     
     protected abstract void onAllRecordsLoaded();
     
-// TODO T: check if public can /should be avoided
     /**
      * Returns the SpnDisplayRule based on settings on the SIM and the
      * specified plmn (currently-registered PLMN).  See TS 22.101 Annex A
@@ -308,5 +275,5 @@ public abstract class IccRecords extends Handler implements IccConstants {
     private void log(String s) {
         Log.d(LOG_TAG, " " + s);
     }
-    
+
 }

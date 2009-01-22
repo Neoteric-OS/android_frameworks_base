@@ -813,8 +813,8 @@ public final class Settings {
         public static final String WAIT_FOR_DEBUGGER = "wait_for_debugger";
 
         /**
-         * represents current acitve phone class
-         * 0 = GSM-Phone, 1 = CDMA-Phone
+         * represents current active phone class
+         * 1 = GSM-Phone, 0 = CDMA-Phone
          */
         public static final String CURRENT_ACTIVE_PHONE = "current_active_phone";
 
@@ -1104,6 +1104,14 @@ public final class Settings {
          */
         public static final String PREFERRED_NETWORK_MODE = 
                 "preferred_network_mode";
+        
+        /**
+         * CDMA Cell Broadcast SMS
+         *                            0 = CDMA Cell Broadcast SMS disabled
+         *                            1 = CDMA Cell Broadcast SMS enabled
+         */
+        public static final String CDMA_CELL_BROADCAST_SMS = 
+                "cdma_cell_broadcast_sms";
 
         /**
          * The cdma subscription 0 = Subscription from RUIM, when available
