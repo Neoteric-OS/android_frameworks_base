@@ -682,9 +682,9 @@
     <string name="editTextMenuTitle">"编辑文本"</string>
     <string name="low_internal_storage_view_title">"存储空间不足"</string>
     <string name="low_internal_storage_view_text">"手机存储空间在减少。"</string>
-    <string name="ok">"正常"</string>
+    <string name="ok">"确定"</string>
     <string name="cancel">"取消"</string>
-    <string name="yes">"正常"</string>
+    <string name="yes">"确定"</string>
     <string name="no">"取消"</string>
     <string name="capital_on">"开启"</string>
     <string name="capital_off">"关闭"</string>
