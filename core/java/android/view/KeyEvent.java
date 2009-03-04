@@ -117,7 +117,9 @@ public class KeyEvent implements Parcelable {
     public static final int KEYCODE_PREVIOUSSONG    = 88;
     public static final int KEYCODE_REWIND          = 89;
     public static final int KEYCODE_FORWARD         = 90;
-    private static final int LAST_KEYCODE           = KEYCODE_FORWARD;
+    public static final int KEYCODE_RINGER_ON       = 91;
+    public static final int KEYCODE_RINGER_OFF      = 92;
+    private static final int LAST_KEYCODE           = KEYCODE_RINGER_OFF;
 
     // NOTE: If you add a new keycode here you must also add it to:
     //  isSystem()
@@ -483,6 +485,8 @@ public class KeyEvent implements Parcelable {
         case KEYCODE_CAMERA:
         case KEYCODE_FOCUS:
         case KEYCODE_SEARCH:
+        case KEYCODE_RINGER_ON:
+        case KEYCODE_RINGER_OFF:
             return true;
         default:
             return false;
