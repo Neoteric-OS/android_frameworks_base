@@ -216,7 +216,9 @@ typedef enum KeyCode {
     kKeyCodeNextSong = 87,
     kKeyCodePreviousSong = 88,
     kKeyCodeRewind = 89,
-    kKeyCodeForward = 90
+    kKeyCodeForward = 90,
+    kKeyCodeRingerOn = 91,
+    kKeyCodeRingerOff = 92
 } KeyCode;
 
 static const KeycodeLabel FLAGS[] = {
