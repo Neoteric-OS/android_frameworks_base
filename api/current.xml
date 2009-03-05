@@ -114444,6 +114444,28 @@
  visibility="public"
 >
 </field>
+<field name="KEYCODE_RINGER_OFF"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="92"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="KEYCODE_RINGER_ON"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="91"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
 <field name="KEYCODE_S"
  type="int"
  transient="false"

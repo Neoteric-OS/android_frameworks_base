@@ -744,6 +744,8 @@
         <enum name="KEYCODE_PREVIOUSSONG" value="88" />
         <enum name="KEYCODE_REWIND" value="89" />
         <enum name="KEYCODE_FORWARD" value="90" />
+        <enum name="KEYCODE_RINGER_ON" value="91" />
+        <enum name="KEYCODE_RINGER_OFF" value="92" />
     </attr>
 
     <!-- ***************************************************************** -->
