@@ -2425,7 +2425,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
      *
      * @param down true if the scroll is going down, false if it is going up
      */
-    abstract void fillGap(boolean down);
+    abstract protected void fillGap(boolean down);
 
     void hideSelector() {
         if (mSelectedPosition != INVALID_POSITION) {

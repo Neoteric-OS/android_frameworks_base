@@ -169,7 +169,7 @@ public class GridView extends AbsListView {
      * {@inheritDoc}
      */
     @Override
-    void fillGap(boolean down) {
+    protected void fillGap(boolean down) {
         final int numColumns = mNumColumns;
         final int verticalSpacing = mVerticalSpacing;
 

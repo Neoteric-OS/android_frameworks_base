@@ -577,7 +577,7 @@ public class ListView extends AbsListView {
      * {@inheritDoc}
      */
     @Override
-    void fillGap(boolean down) {
+    protected void fillGap(boolean down) {
         final int count = getChildCount();
         if (down) {
             final int startOffset = count > 0 ? getChildAt(count - 1).getBottom() + mDividerHeight :
