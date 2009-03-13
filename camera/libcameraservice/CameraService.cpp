@@ -159,6 +159,7 @@ CameraService::Client::Client(const sp<CameraService>& cameraService,
     mClientPid = clientPid;
     mHardware = openCameraHardware();
     mUseOverlay = mHardware->useOverlay();
+    mOverlay = 0;	
 
     // Callback is disabled by default
     mFrameCallbackFlag = FRAME_CALLBACK_FLAG_NOOP;
@@ -344,6 +345,9 @@ status_t CameraService::Client::startPreview()
 #endif
     status_t ret;
     if (mUseOverlay) {
+
+        if (mOverlay == 0)
+	{		
         const char *format = params.getPreviewFormat();
         int fmt;
         LOGD("Use Overlays");
@@ -356,11 +360,13 @@ status_t CameraService::Client::startPreview()
             return -EINVAL;
         }
         sp<OverlayRef> ref = mSurface->createOverlay(w, h, fmt);
-        ret = mHardware->setOverlay(new Overlay(ref));
+    	mOverlay = new Overlay(ref);
+            ret = mHardware->setOverlay(mOverlay);
         if (ret != NO_ERROR) {
             LOGE("mHardware->setOverlay() failed with status %d\n", ret);
             return ret;
         }
+	}
         ret = mHardware->startPreview(NULL, mCameraService.get());
         if (ret != NO_ERROR)
             LOGE("mHardware->startPreview() failed with status %d\n", ret);
