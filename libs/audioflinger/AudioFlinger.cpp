@@ -1037,7 +1037,7 @@ AudioFlinger::TrackBase::TrackBase(
 {
     mName = audioFlinger->audioMixer()->getTrackName();
     if (mName < 0) {
-        LOGE("no more track names availlable");
+        LOGE("no more track names available");
         return;
     }
 
@@ -1646,7 +1646,9 @@ bool AudioFlinger::AudioRecordThread::threadLoop()
         } else if (mRecordTrack != 0){
 
             buffer.frameCount = inFrameCount;
-            if (LIKELY(mRecordTrack->getNextBuffer(&buffer) == NO_ERROR)) {
+            if (LIKELY(mRecordTrack->getNextBuffer(&buffer) == NO_ERROR &&
+		       buffer.frameCount == inFrameCount)) {
+  	      // Audio driver currently requires reading in chunks of inBufferSize
                 LOGV("AudioRecordThread read: %d frames", buffer.frameCount);
                 if (input->read(buffer.raw, inBufferSize) < 0) {
                     LOGE("Error reading audio input");
