@@ -27,6 +27,9 @@ namespace android {
 /** Callback for startPreview() */
 typedef void (*preview_callback)(const sp<IMemory>& mem, void* user);
 
+/** Callback for startRecord() */
+typedef void (*recording_callback)(const sp<IMemory>& mem, void* user);
+
 /** Callback for takePicture() */
 typedef void (*shutter_callback)(void* user);
 
@@ -84,6 +87,9 @@ public:
     /** Return the IMemoryHeap for the preview image heap */
     virtual sp<IMemoryHeap>         getPreviewHeap() const = 0;
 
+    /** Return the IMemoryHeap for the raw image heap */
+    virtual sp<IMemoryHeap>         getRawHeap() const = 0;
+
     /**
      * Start preview mode. When a preview image is available
      * preview_callback is called with the user parameter. The
@@ -105,6 +111,29 @@ public:
      * Returns true if preview is enabled.
      */
     virtual bool        previewEnabled() = 0;
+
+    /**
+     * Start record mode. When a record image is available recording_callback()
+     * is called with the user parameter.  Every record frame must be released
+     * by calling releaseRecordingFrame().
+     */
+    virtual status_t    startRecording(recording_callback cb, void* user) = 0;
+
+    /**
+     * Stop a previously started recording.
+     */
+    virtual void        stopRecording() = 0;
+
+    /**
+     * Returns true if recording is enabled.
+     */
+    virtual bool        recordingEnabled() = 0;
+    
+    /**
+     * Release a record frame previously returned by the recording_callback()
+     * passed to startRecord().
+     */
+    virtual void        releaseRecordingFrame(const sp<IMemory>& mem) = 0;
 
     /**
      * Start auto focus, the callback routine is called
