@@ -105,7 +105,13 @@ MediaPlayerService::~MediaPlayerService()
 
 sp<IMediaRecorder> MediaPlayerService::createMediaRecorder(pid_t pid)
 {
+#if 0
+#ifndef NO_OPENCORE
     sp<MediaRecorderClient> recorder = new MediaRecorderClient(pid);
+#endif
+#else
+    sp<MediaRecorderClient> recorder = NULL;
+#endif
     LOGV("Create new media recorder client from pid %d", pid);
     return recorder;
 }
@@ -531,10 +537,14 @@ static sp<MediaPlayerBase> createPlayer(player_type playerType, void* cookie,
 {
     sp<MediaPlayerBase> p;
     switch (playerType) {
+#if 0
+#ifndef NO_OPENCORE
         case PV_PLAYER:
             LOGV(" create PVPlayer");
             p = new PVPlayer();
             break;
+#endif
+#endif
         case SONIVOX_PLAYER:
             LOGV(" create MidiFile");
             p = new MidiFile();
