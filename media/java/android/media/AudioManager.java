@@ -778,6 +778,8 @@ public class AudioManager {
             service.setMode(mode);
         } catch (RemoteException e) {
             Log.e(TAG, "Dead object in setMode", e);
+        } catch (NullPointerException e) {
+            Log.e(TAG, "Null pointer in setMode", e);
         }
     }
 
@@ -865,6 +867,8 @@ public class AudioManager {
         IAudioService service = getService();
         try {
             service.setRouting(mode, routes, mask);
+        } catch (NullPointerException e) {
+            Log.e(TAG, "Null pointer in setRouting", e);
         } catch (RemoteException e) {
             Log.e(TAG, "Dead object in setRouting", e);
         }
@@ -883,6 +887,9 @@ public class AudioManager {
             return service.getRouting(mode);
         } catch (RemoteException e) {
             Log.e(TAG, "Dead object in getRouting", e);
+            return -1;
+        } catch (NullPointerException e) {
+            Log.e(TAG, "Null pointer in getRouting", e);
             return -1;
         }
     }
