@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAANH///8U\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 10424,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2009-03-22T18:50:14Z",
+      "side": 1,
+      "message": "This breaks the security system; it removes the check for access to non-exported components.",
+      "revId": "e88c9c9e9cee75952e7af09aa47119a7667f19aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
