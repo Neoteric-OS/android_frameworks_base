@@ -92505,6 +92505,17 @@
  visibility="public"
 >
 </field>
+<field name="TIME_ZONE"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;time_zone&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
 <field name="TRANSITION_ANIMATION_SCALE"
  type="java.lang.String"
  transient="false"

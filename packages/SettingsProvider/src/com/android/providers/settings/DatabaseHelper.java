@@ -598,6 +598,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         loadBooleanSetting(stmt, Settings.System.AUTO_TIME,
                 R.bool.def_auto_time); // Sync time to NITZ
         
+        loadStringSetting(stmt, Settings.System.TIME_ZONE,
+                R.string.def_time_zone);
+
         loadIntegerSetting(stmt, Settings.System.SCREEN_BRIGHTNESS,
                 R.integer.def_screen_brightness);
         

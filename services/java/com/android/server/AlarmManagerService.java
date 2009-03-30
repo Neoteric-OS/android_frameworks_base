@@ -33,6 +33,8 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
+import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
 import android.text.TextUtils;
 import android.text.format.Time;
 import android.util.EventLog;
@@ -135,6 +137,15 @@ class AlarmManagerService extends IAlarmManager.Stub {
         mClockReceiver.scheduleDateChangedEvent();
         mUninstallReceiver = new UninstallReceiver();
         
+        // if auto_time is not set, then use the timezone specified at the initialization
+        if (!getAutoTime()) {
+            String initTimeZone = Settings.System.getString(
+                    mContext.getContentResolver(),
+                    Settings.System.TIME_ZONE);
+
+            setTimeZone(initTimeZone);
+        }
+
         if (mDescriptor != -1) {
             mWaitThread.start();
         } else {
@@ -142,6 +153,15 @@ class AlarmManagerService extends IAlarmManager.Stub {
         }
     }
     
+    private boolean getAutoTime() {
+        try {
+            return Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.AUTO_TIME) > 0;
+        } catch (SettingNotFoundException snfe) {
+            return true;
+        }
+    }
+
     protected void finalize() throws Throwable {
         try {
             close(mDescriptor);

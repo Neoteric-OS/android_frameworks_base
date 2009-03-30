@@ -1470,11 +1470,17 @@ final class ServiceStateTracker extends Handler
 
             TimeZone    zone = null;
 
+            if (!getAutoTime()) { 
+                String zoneStr = Settings.System.getString(
+                    phone.getContext().getContentResolver(),
+                    Settings.System.TIME_ZONE);
+                if (!TextUtils.isEmpty(zoneStr)) 
+                    zone = TimeZone.getTimeZone(zoneStr);
+            } else if (nitzSubs.length >= 9) {
             // As a special extension, the Android emulator appends the name of
             // the host computer's timezone to the nitz string. this is zoneinfo
             // timezone name of the form Area!Location or Area!Location!SubLocation
             // so we need to convert the ! into /
-            if (nitzSubs.length >= 9) {
                 String  tzname = nitzSubs[8].replace('!','/');
                 zone = TimeZone.getTimeZone( tzname );
             }

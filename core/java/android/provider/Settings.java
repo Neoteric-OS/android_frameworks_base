@@ -1217,6 +1217,12 @@ public final class Settings {
         public static final String AUTO_TIME = "auto_time";
 
         /**
+         * Timezone value to specify, if the above auto_time is not set.
+         * Values match the code listed in timezones.xml
+         */
+        public static final String TIME_ZONE = "time_zone";
+
+        /**
          * Display times as 12 or 24 hours
          *   12
          *   24
