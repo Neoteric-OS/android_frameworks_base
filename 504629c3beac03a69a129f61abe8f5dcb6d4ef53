@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAO3///78\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SMSDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2009-04-09T15:43:21Z",
+      "side": 1,
+      "message": "Do not use tabs to indent, there are tabs everywhere in your change.",
+      "revId": "504629c3beac03a69a129f61abe8f5dcb6d4ef53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
