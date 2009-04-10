@@ -37,7 +37,27 @@
 #endif
 
 namespace android {
-
+#if TARGET_PLATFORM == eee_701
+#define AC_ONLINE_PATH "/sys/class/power_supply/AC/online"
+  /*
+    I guess this is for USB power, EeePC does not have this
+    #define USB_ONLINE_PATH "/sys/class/power_supply/usb/online"
+  */
+#define BATTERY_STATUS_PATH "/sys/class/power_supply/BAT0/status"
+  /*
+    I don't think we have this part on EeePC, I could not find this
+    on my Sony either.
+    #define BATTERY_HEALTH_PATH "/sys/class/power_supply/battery/health"
+  */
+#define BATTERY_PRESENT_PATH "/sys/class/power_supply/BAT0/present"
+#define BATTERY_CAPACITY_PATH "/sys/class/power_supply/BAT0/energy_full"
+#define BATTERY_VOLTAGE_PATH "/sys/class/power_supply/BAT0/voltage_now"
+  /*
+   *Did not find this on my EeePC either
+   #define BATTERY_TEMPERATURE_PATH "/sys/class/power_supply/battery/batt_temp"
+  */
+#define BATTERY_TECHNOLOGY_PATH "/sys/class/power_supply/BAT0/technology"
+#else
 #define AC_ONLINE_PATH "/sys/class/power_supply/ac/online"
 #define USB_ONLINE_PATH "/sys/class/power_supply/usb/online"
 #define BATTERY_STATUS_PATH "/sys/class/power_supply/battery/status"
@@ -47,7 +67,7 @@ namespace android {
 #define BATTERY_VOLTAGE_PATH "/sys/class/power_supply/battery/batt_vol"
 #define BATTERY_TEMPERATURE_PATH "/sys/class/power_supply/battery/batt_temp"
 #define BATTERY_TECHNOLOGY_PATH "/sys/class/power_supply/battery/technology"
-
+#endif
 struct FieldIds {
     // members
     jfieldID mAcOnline;
@@ -174,12 +194,21 @@ static void setIntField(JNIEnv* env, jobject obj, const char* path, jfieldID fie
 static void android_server_BatteryService_update(JNIEnv* env, jobject obj)
 {
     setBooleanField(env, obj, AC_ONLINE_PATH, gFieldIds.mAcOnline);
+#if TARGET_PLATFORM == eee_701
+    env->SetBooleanField(obj,gFieldIds.mUsbOnline,false);
+#else
     setBooleanField(env, obj, USB_ONLINE_PATH, gFieldIds.mUsbOnline);
+#endif
     setBooleanField(env, obj, BATTERY_PRESENT_PATH, gFieldIds.mBatteryPresent);
     
     setIntField(env, obj, BATTERY_CAPACITY_PATH, gFieldIds.mBatteryLevel);
     setIntField(env, obj, BATTERY_VOLTAGE_PATH, gFieldIds.mBatteryVoltage);
+#if TARGET_PLATFORM == eee_701
+    /*Zero ;)*/
+    env->SetIntField(obj,gFieldIds.mBatteryTemperature,0);
+#else
     setIntField(env, obj, BATTERY_TEMPERATURE_PATH, gFieldIds.mBatteryTemperature);
+#endif
     
     const int SIZE = 128;
     char buf[SIZE];
@@ -187,9 +216,13 @@ static void android_server_BatteryService_update(JNIEnv* env, jobject obj)
     if (readFromFile(BATTERY_STATUS_PATH, buf, SIZE) > 0)
         env->SetIntField(obj, gFieldIds.mBatteryStatus, getBatteryStatus(buf));
     
+
+#if TARGET_PLATFORM == eee_701
+    env->SetIntField(obj, gFieldIds.mBatteryHealth, 'G');
+#else
     if (readFromFile(BATTERY_HEALTH_PATH, buf, SIZE) > 0)
         env->SetIntField(obj, gFieldIds.mBatteryHealth, getBatteryHealth(buf));
-
+#endif
     if (readFromFile(BATTERY_TECHNOLOGY_PATH, buf, SIZE) > 0)
         env->SetObjectField(obj, gFieldIds.mBatteryTechnology, env->NewStringUTF(buf));
 }
