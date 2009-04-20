@@ -160,6 +160,8 @@ CameraService::Client::Client(const sp<CameraService>& cameraService,
     mClientPid = clientPid;
     mHardware = openCameraHardware();
     mUseOverlay = mHardware->useOverlay();
+    mOverlayW = 0;
+    mOverlayH = 0;
 
     // Callback is disabled by default
     mPreviewCallbackFlag = FRAME_CALLBACK_FLAG_NOOP;
@@ -296,6 +298,11 @@ void CameraService::Client::disconnect()
         mHardware->cancelPicture(true, true, true);
         // Release the hardware resources.
         mHardware->release();
+        // Release the held overlay resources.
+        if (mUseOverlay)
+        {
+            mOverlayRef = 0;
+        }		
     }
     mHardware.clear();
     LOGD("Client X disconnect");
@@ -311,11 +318,22 @@ status_t CameraService::Client::setPreviewDisplay(const sp<ISurface>& surface)
     Mutex::Autolock surfaceLock(mSurfaceLock);
     // asBinder() is safe on NULL (returns NULL)
     if (surface->asBinder() != mSurface->asBinder()) {
-        if (mSurface != 0 && !mUseOverlay) {
+        if ( mSurface != 0 )
+        {
             LOGD("clearing old preview surface %p", mSurface.get());
-            mSurface->unregisterBuffers();
+            if ( !mUseOverlay)
+            {
+                mSurface->unregisterBuffers();
+            }
+            else
+            {
+                // Force the destruction of any previous overlay
+                sp<Overlay> dummy;
+                mHardware->setOverlay( dummy );
+            }
         }
         mSurface = surface;
+        mOverlayRef = 0;		
     }
     return NO_ERROR;
 }
@@ -405,7 +423,7 @@ status_t CameraService::Client::startPreviewMode()
 #if DEBUG_DUMP_PREVIEW_FRAME_TO_FILE
     debug_frame_cnt = 0;
 #endif
-    status_t ret = UNKNOWN_ERROR;
+    status_t ret = NO_ERROR;
     int w, h;
     CameraParameters params(mHardware->getParameters());
     params.getPreviewSize(&w, &h);
@@ -422,8 +440,29 @@ status_t CameraService::Client::startPreviewMode()
             LOGE("Invalid preview format for overlays");
             return -EINVAL;
         }
-        sp<OverlayRef> ref = mSurface->createOverlay(w, h, fmt);
-        ret = mHardware->setOverlay(new Overlay(ref));
+
+        if ( w != mOverlayW || h != mOverlayH )
+        {
+            // Force the destruction of any previous overlay
+            sp<Overlay> dummy;
+            mHardware->setOverlay( dummy );
+            mOverlayRef = 0;
+        }
+        
+        if ( mOverlayRef.get() == NULL )
+        {
+           mOverlayRef = mSurface->createOverlay(w, h, fmt);
+           if ( mOverlayRef.get() == NULL )
+           {
+              LOGE("Overlay Creation Failed!");
+              return -EINVAL;
+           }
+           ret = mHardware->setOverlay(new Overlay(mOverlayRef));
+        }
+
+        mOverlayW = w;
+        mOverlayH = h;
+
         if (ret != NO_ERROR) {
             LOGE("mHardware->setOverlay() failed with status %d\n", ret);
             return ret;
