@@ -22,8 +22,10 @@ import android.os.PowerManager;
 import android.provider.Telephony.Sms.Intents;
 import android.util.Config;
 import android.util.Log;
+
 import com.android.internal.telephony.gsm.SimUtils;
 
+import java.util.HashMap;
 
 /**
  * WAP push handler class.
@@ -102,77 +104,33 @@ public class WapPushOverSms {
             if (Config.LOGD) Log.w(LOG_TAG, "Received PDU. Header Content-Type error.");
             return;
         }
-        int binaryContentType;
+        
         String mimeType = pduDecoder.getValueString();
         if (mimeType == null) {
-            binaryContentType = (int)pduDecoder.getValue32();
-            switch (binaryContentType) {
-                case WspTypeDecoder.CONTENT_TYPE_B_DRM_RIGHTS_XML:
-                    mimeType = WspTypeDecoder.CONTENT_MIME_TYPE_B_DRM_RIGHTS_XML;
-                    break;
-                case WspTypeDecoder.CONTENT_TYPE_B_DRM_RIGHTS_WBXML:
-                    mimeType = WspTypeDecoder.CONTENT_MIME_TYPE_B_DRM_RIGHTS_WBXML;
-                    break;
-                case WspTypeDecoder.CONTENT_TYPE_B_PUSH_SI:
-                    mimeType = WspTypeDecoder.CONTENT_MIME_TYPE_B_PUSH_SI;
-                    break;
-                case WspTypeDecoder.CONTENT_TYPE_B_PUSH_SL:
-                    mimeType = WspTypeDecoder.CONTENT_MIME_TYPE_B_PUSH_SL;
-                    break;
-                case WspTypeDecoder.CONTENT_TYPE_B_PUSH_CO:
-                    mimeType = WspTypeDecoder.CONTENT_MIME_TYPE_B_PUSH_CO;
-                    break;
-                case WspTypeDecoder.CONTENT_TYPE_B_MMS:
-                    mimeType = WspTypeDecoder.CONTENT_MIME_TYPE_B_MMS;
-                    break;
-                default:
-                    if (Config.LOGD) {
-                        Log.w(LOG_TAG,
-                                "Received PDU. Unsupported Content-Type = " + binaryContentType);
-                    }
-                return;
+            if (Config.LOGD) {
+                Log.w(LOG_TAG,
+                        "Received PDU. Unsupported Content-Type = " + pduDecoder.getValue32());
             }
-        } else {
-            if (mimeType.equals(WspTypeDecoder.CONTENT_MIME_TYPE_B_DRM_RIGHTS_XML)) {
-                binaryContentType = WspTypeDecoder.CONTENT_TYPE_B_DRM_RIGHTS_XML;
-            } else if (mimeType.equals(WspTypeDecoder.CONTENT_MIME_TYPE_B_DRM_RIGHTS_WBXML)) {
-                binaryContentType = WspTypeDecoder.CONTENT_TYPE_B_DRM_RIGHTS_WBXML;
-            } else if (mimeType.equals(WspTypeDecoder.CONTENT_MIME_TYPE_B_PUSH_SI)) {
-                binaryContentType = WspTypeDecoder.CONTENT_TYPE_B_PUSH_SI;
-            } else if (mimeType.equals(WspTypeDecoder.CONTENT_MIME_TYPE_B_PUSH_SL)) {
-                binaryContentType = WspTypeDecoder.CONTENT_TYPE_B_PUSH_SL;
-            } else if (mimeType.equals(WspTypeDecoder.CONTENT_MIME_TYPE_B_PUSH_CO)) {
-                binaryContentType = WspTypeDecoder.CONTENT_TYPE_B_PUSH_CO;
-            } else if (mimeType.equals(WspTypeDecoder.CONTENT_MIME_TYPE_B_MMS)) {
-                binaryContentType = WspTypeDecoder.CONTENT_TYPE_B_MMS;
-            } else {
-                if (Config.LOGD) Log.w(LOG_TAG, "Received PDU. Unknown Content-Type = " + mimeType);
-                return;
-            }
+            return;
         }
         index += pduDecoder.getDecodedDataLength();
-
+        
         int dataIndex = headerStartIndex + headerLength;
-        boolean dispatchedByApplication = false;
-        switch (binaryContentType) {
-            case WspTypeDecoder.CONTENT_TYPE_B_PUSH_CO:
-                dispatchWapPdu_PushCO(pdu, transactionId, pduType);
-                dispatchedByApplication = true;
-                break;
-            case WspTypeDecoder.CONTENT_TYPE_B_MMS:
-                dispatchWapPdu_MMS(pdu, transactionId, pduType, dataIndex);
-                dispatchedByApplication = true;
-                break;
-            default:
-                break;
+
+        if (mimeType.equals(WspTypeDecoder.CONTENT_MIME_TYPE_B_PUSH_CO)) {
+            dispatchWapPdu_PushCO(pdu, transactionId, pduType);
+        } else if (mimeType.equals(WspTypeDecoder.CONTENT_MIME_TYPE_B_MMS)) {
+            dispatchWapPdu_MMS(pdu, transactionId, pduType, dataIndex);
+        } else {
+            dispatchWapPdu_default(pdu, transactionId, pduType, mimeType, dataIndex, 
+                    pduDecoder.getContentParameters());
         }
-        if (dispatchedByApplication == false) {
-            dispatchWapPdu_default(pdu, transactionId, pduType, mimeType, dataIndex);
-        }
+        
     }
 
     private void dispatchWapPdu_default(
-            byte[] pdu, int transactionId, int pduType, String mimeType, int dataIndex) {
+            byte[] pdu, int transactionId, int pduType, String mimeType, int dataIndex,
+            HashMap<String, String> contentTypeParameters) {
         byte[] data;
 
         data = new byte[pdu.length - dataIndex];
@@ -183,6 +141,7 @@ public class WapPushOverSms {
         intent.putExtra("transactionId", transactionId);
         intent.putExtra("pduType", pduType);
         intent.putExtra("data", data);
+        intent.putExtra("contentTypeParameters", contentTypeParameters);
 
         sendBroadcast(intent, "android.permission.RECEIVE_WAP_PUSH");
     }

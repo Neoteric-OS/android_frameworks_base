@@ -23,6 +23,7 @@ import com.android.internal.telephony.gsm.SMSDispatcherTest;
 import com.android.internal.telephony.gsm.SimPhoneBookTest;
 import com.android.internal.telephony.gsm.SimSmsTest;
 import com.android.internal.telephony.gsm.SimUtilsTest;
+import com.android.internal.telephony.gsm.Wap230WspContentTypeTest;
 
 import junit.framework.TestSuite;
 
@@ -47,6 +48,7 @@ public class TelephonyTests {
         suite.addTestSuite(SimUtilsTest.class);
         suite.addTestSuite(SimPhoneBookTest.class);
         suite.addTestSuite(SimSmsTest.class);
+        suite.addTestSuite(Wap230WspContentTypeTest.class);
 
         return suite;
     }
