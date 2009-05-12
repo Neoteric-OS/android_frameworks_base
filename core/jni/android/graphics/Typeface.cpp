@@ -31,7 +31,7 @@ static SkTypeface* Typeface_create(JNIEnv* env, jobject, jstring name,
                                    SkTypeface::Style style) {
     SkTypeface* face;
 
-    if (NULL == name) {
+  	if (NULL == name) {
         face = SkTypeface::CreateFromName(NULL, (SkTypeface::Style)style);
     }
     else {
@@ -133,12 +133,9 @@ static SkTypeface* Typeface_createFromAsset(JNIEnv* env, jobject,
     return SkTypeface::CreateFromStream(new AssetStream(asset, true));
 }
 
-static SkTypeface* Typeface_createFromFile(JNIEnv* env, jobject, jstring jpath) {
-    
+static SkTypeface* Typeface_createFromFile(JNIEnv* env, jobject, jstring jpath) {   
     NPE_CHECK_RETURN_ZERO(env, jpath);
-        
-    AutoJavaStringToUTF8    str(env, jpath);
-    
+    AutoJavaStringToUTF8 str(env, jpath);
     return SkTypeface::CreateFromFile(str.c_str());
 }
 
@@ -163,4 +160,3 @@ int register_android_graphics_Typeface(JNIEnv* env)
                                                        gTypefaceMethods,
                                                        SK_ARRAY_COUNT(gTypefaceMethods));
 }
-
