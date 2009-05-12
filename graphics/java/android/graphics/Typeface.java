@@ -119,7 +119,17 @@ public class Typeface {
         return new Typeface(nativeCreateFromAsset(mgr, path));
     }
     
-    // don't allow clients to call this directly
+    /**
+     * Create a new typeface from the specified font file.
+     * @param mgr The application's asset manager
+     * @param path  The file name of the font data in the assets directory
+     * @return The new typeface.
+     */
+    public static Typeface createFromFile(String path) {
+        return new Typeface(nativeCreateFromFile(path));
+    }
+
+	// don't allow clients to call this directly
     private Typeface(int ni) {
         native_instance = ni;
     }
@@ -150,4 +160,5 @@ public class Typeface {
     private static native int  nativeGetStyle(int native_instance);
     private static native int  nativeCreateFromAsset(AssetManager mgr,
                                                      String path);
+    private static native int  nativeCreateFromFile(String path);
 }
