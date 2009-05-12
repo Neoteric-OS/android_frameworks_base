@@ -161,3 +161,4 @@ public class Typeface {
                                                      String path);
     private static native int  nativeCreateFromFile(String path); 
 }
+

@@ -160,3 +160,4 @@ int register_android_graphics_Typeface(JNIEnv* env)
                                                        gTypefaceMethods,
                                                        SK_ARRAY_COUNT(gTypefaceMethods));
 }
+
