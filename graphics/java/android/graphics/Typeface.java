@@ -159,5 +159,5 @@ public class Typeface {
     private static native int  nativeGetStyle(int native_instance);
     private static native int  nativeCreateFromAsset(AssetManager mgr,
                                                      String path);
-    private static native int  nativeCreateFromFile(String path);
+    private static native int  nativeCreateFromFile(String path); 
 }

@@ -151,7 +151,7 @@ static JNINativeMethod gTypefaceMethods[] = {
                                             (void*)Typeface_createFromAsset },
     { "nativeCreateFromFile", "(Ljava/lang/String)I", (void*)Typeface_createFromFile }
 };
-
+ 
 int register_android_graphics_Typeface(JNIEnv* env);
 int register_android_graphics_Typeface(JNIEnv* env)
 {
