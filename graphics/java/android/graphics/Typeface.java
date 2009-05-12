@@ -121,7 +121,6 @@ public class Typeface {
     
     /**
      * Create a new typeface from the specified font file.
-     * @param mgr The application's asset manager
      * @param path  The file name of the font data in the directory
      * @return The new typeface.
      */
