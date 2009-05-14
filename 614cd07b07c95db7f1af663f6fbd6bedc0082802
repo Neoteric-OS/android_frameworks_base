@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAARn////w\u003d",
+        "filename": "camera/libcameraservice/CameraService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2009-05-14T05:37:03Z",
+      "side": 1,
+      "message": "please use\n\nif (mOverlayRef \u003d\u003d 0)\n\nNo need to call \"get()\" -- it\u0027s confusing.",
+      "revId": "614cd07b07c95db7f1af663f6fbd6bedc0082802",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAARn////s\u003d",
+        "filename": "camera/libcameraservice/CameraService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2009-05-14T05:37:03Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "614cd07b07c95db7f1af663f6fbd6bedc0082802",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
