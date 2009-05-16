@@ -31,6 +31,8 @@
 #include <ui/PixelFormat.h>
 #include <ui/EGLDisplaySurface.h>
 
+#include <EGL/eglnatives.h>
+
 #include "LayerBuffer.h"
 #include "SurfaceFlinger.h"
 #include "VRamHeap.h"
@@ -597,6 +599,11 @@ LayerBuffer::OverlaySource::~OverlaySource()
         overlay_control_device_t* overlay_dev = mOverlayDevice;
         overlay_dev->destroyOverlay(overlay_dev, mOverlay);
     }
+}
+
+void LayerBuffer::OverlaySource::onDraw(const Region& clip) const
+{
+   mLayer.clearWithOpenGL(clip);
 }
 
 void LayerBuffer::OverlaySource::onTransaction(uint32_t flags)

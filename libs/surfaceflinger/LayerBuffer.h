@@ -139,6 +139,7 @@ private:
         virtual ~OverlaySource();
         virtual void onTransaction(uint32_t flags);
         virtual void onVisibilityResolved(const Transform& planeTransform);
+	virtual void onDraw(const Region& clip) const ;
     private:
         void serverDestroy(); 
         void destroyOverlay(); 
