@@ -582,7 +582,8 @@ LayerBuffer::OverlaySource::OverlaySource(LayerBuffer& layer,
     mHeightStride = overlay->h_stride;
 
     mOverlayHandle = overlay->getHandleRef(overlay);
-    
+    mVisibilityChanged = true;
+
     // NOTE: here it's okay to acquire a reference to "this"m as long as
     // the reference is not released before we leave the ctor.
     sp<OverlayChannel> channel = new OverlayChannel(this);
