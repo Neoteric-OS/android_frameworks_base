@@ -16,6 +16,7 @@
 
 package android.media;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -27,6 +28,7 @@ import android.provider.DrmStore;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
+import android.widget.VideoView;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -56,9 +58,11 @@ public class Ringtone {
     };
 
     private MediaPlayer mAudio;
+    private VideoView mVideoView;
 
     private Uri mUri;
     private String mTitle;
+    private String mMimeType;
     private FileDescriptor mFileDescriptor;
     private AssetFileDescriptor mAssetFileDescriptor;
 
@@ -157,6 +161,72 @@ public class Ringtone {
         return title;
     }
     
+    /**
+     * Returns the MIME type of this ringtone's media.
+     * 
+     * @param context A context used for querying.
+     * @return MIME type of this ringtone.
+     */
+    public String getMimeType(Context context) {
+        if (mMimeType != null) return mMimeType;
+        return mMimeType = getMimeType(context, mUri, true);
+    }
+
+    /**
+     * Returns the MIME type of a ringtone Uri. If it is a special
+     * settings ringtone (e.g. "default"), then return the type of the
+     * actual ringtone to which it refers.
+     * 
+     * @param context A context used for querying.
+     * @param uri Uri to query.
+     * @return MIME type of this ringtone.
+     */
+    public static String getMimeType(Context context, Uri uri) {
+        return getMimeType(context, uri, true);
+    }
+
+    private static String getMimeType(Context context, Uri uri, boolean followSettingsUri) {
+        if (uri == null) {
+            return null;
+        }
+
+        if (followSettingsUri && Settings.AUTHORITY.equals(uri.getAuthority())) {
+            Uri actualUri = RingtoneManager.getActualDefaultRingtoneUri(context,
+                RingtoneManager.getDefaultType(uri));
+            return getMimeType(context, actualUri, false);
+        }
+        else {
+            ContentResolver res = context.getContentResolver();
+            return res.getType(uri);
+        }
+    }
+
+    /**
+     * Is this ringtone a video clip?
+     * 
+     * @param context A context used for querying.
+     * @return true if this is a video ringtone
+     */
+    public boolean isVideo(Context context) {
+        // It might be more in the spirit of current usage to check
+        // based on the Uri. However, the MIME type is probably a more
+        // robust check, in the face of potential future uses.
+        String mimeType = getMimeType(context);
+        return ((mimeType != null) && (mimeType.startsWith("video")));
+    }
+
+    /**
+     * Is this Uri a video clip?
+     * 
+     * @param context A context used for querying.
+     * @param uri Uri to query.
+     * @return true if this is a video ringtone
+     */
+    public static boolean isVideo(Context context, Uri uri) {
+        String mimeType = getMimeType(context, uri);
+        return ((mimeType != null) && (mimeType.startsWith("video")));
+    }
+
     private void openMediaPlayer() throws IOException {
         mAudio = new MediaPlayer();
         if (mUri != null) {
@@ -171,8 +241,8 @@ public class Ringtone {
                 mAudio.setDataSource(mAssetFileDescriptor.getFileDescriptor());
             } else {
                 mAudio.setDataSource(mAssetFileDescriptor.getFileDescriptor(),
-                        mAssetFileDescriptor.getStartOffset(),
-                        mAssetFileDescriptor.getDeclaredLength());
+                                     mAssetFileDescriptor.getStartOffset(),
+                                     mAssetFileDescriptor.getDeclaredLength());
             }
         } else {
             throw new IOException("No data source set.");
@@ -214,6 +284,34 @@ public class Ringtone {
     }
 
     /**
+     * Play a ringtone, audio or video.
+     * @param activity Activity in which to play video ringtone, or null.
+     * @param videoView VideoView on which to play video ringtone, or null.
+     */
+    public void play(Activity activity, VideoView videoView) {
+        if ((activity == null) || !isVideo(activity) || (videoView == null)) {
+            // Either this is an audio ringtone, or we don't have a
+            // place to show the video (so just play the audio
+            // component of a video ringtone).
+            play();
+        }
+        else {
+            if (mVideoView != null) {
+                // This shouldn't happen
+                Log.e(TAG, "Video player already set.");
+                stop();
+            }
+            mVideoView = videoView;
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
+                    mVideoView.setVideoURI(mUri);
+                    mVideoView.start();
+                }
+            });
+        }
+    }
+
+    /**
      * Stops a playing ringtone.
      */
     public void stop() {
@@ -221,6 +319,10 @@ public class Ringtone {
             mAudio.reset();
             mAudio.release();
             mAudio = null;
+        }
+        if (mVideoView != null) {
+            mVideoView.stopPlayback();
+            mVideoView = null;
         }
     }
 
@@ -230,7 +332,8 @@ public class Ringtone {
      * @return True if playing, false otherwise.
      */
     public boolean isPlaying() {
-        return mAudio != null && mAudio.isPlaying();
+        return ((mAudio != null && mAudio.isPlaying()) ||
+                (mVideoView != null && mVideoView.isPlaying()));
     }
 
     void setTitle(String title) {

@@ -37,12 +37,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * RingtoneManager provides access to ringtones, notification, and other types
- * of sounds. It manages querying the different media providers and combines the
- * results into a single cursor. It also provides a {@link Ringtone} for each
- * ringtone. We generically call these sounds ringtones, however the
- * {@link #TYPE_RINGTONE} refers to the type of sounds that are suitable for the
- * phone ringer.
+ * RingtoneManager provides access to ringtones, notification, and other
+ * types of sounds and ringtone media. It manages querying the different
+ * media providers and combines the results into a single cursor. It
+ * also provides a {@link Ringtone} for each ringtone. We generically
+ * call these sounds ringtones, however the {@link #TYPE_RINGTONE}
+ * refers to the type of sounds that are suitable for the phone ringer.
  * <p>
  * To show a ringtone picker to the user, use the
  * {@link #ACTION_RINGTONE_PICKER} intent to launch the picker as a subactivity.
@@ -70,12 +70,43 @@ public class RingtoneManager {
      * Type that refers to sounds that are used for the alarm.
      */
     public static final int TYPE_ALARM = 4;
+
+    /**
+     * Include video media.
+     */
+    public static final int TYPE_VIDEO = 8;
+
+    /**
+     * All types of ringtone media.
+     * @deprecated 
+     */
+    // Patch reviewer please note:
+    // I believe that it is correct to change TYPE_ALL to be 0xffff. However, the
+    // API consistency tools do not allow this since it is ostensibly an
+    // incompatible change to the published API. Therefore, instead, I've deprecated
+    // this value and created a new one, TYPE_ALL_MEDIA.
+    public static final int TYPE_ALL = 7;
     
     /**
-     * All types of sounds.
+     * All types of ringtone media.
      */
-    public static final int TYPE_ALL = TYPE_RINGTONE | TYPE_NOTIFICATION | TYPE_ALARM;
-    
+    // [NOTE] This value should be wide enough to support future fields too, without
+    // needing to change the API incompatibly again. But, can't go wide enough to
+    // risk aliasing with -1, since -1 is already used by some applications as a
+    // stand-in for the default value. So, choosing a 16-bit field.
+    // But, note that this decision is debatable. There is a good argument that it
+    // might be better for old apps not to include future fields that they don't
+    // know about.
+    // Leaving this as is, for argument/discussion at code review.
+    // If this is changed, remember to fix the corresponding value under
+    // RingtonePreference in frameworks/base/core/res/res/values/attrs.xml.
+    public static final int TYPE_ALL_MEDIA = 0xffff;
+
+    private static enum SearchType {
+        AUDIO,
+        VIDEO;
+    }
+
     // </attr>
     
     /**
@@ -146,7 +177,7 @@ public class RingtoneManager {
     /**
      * Given to the ringtone picker as an int. Specifies which ringtone type(s) should be
      * shown in the picker. One or more of {@link #TYPE_RINGTONE},
-     * {@link #TYPE_NOTIFICATION}, {@link #TYPE_ALARM}, or {@link #TYPE_ALL}
+     * {@link #TYPE_NOTIFICATION}, {@link #TYPE_ALARM}, or {@link #TYPE_ALL_MEDIA}
      * (bitwise-ored together).
      */
     public static final String EXTRA_RINGTONE_TYPE = "android.intent.extra.ringtone.TYPE";
@@ -171,12 +202,17 @@ public class RingtoneManager {
      */
     public static final String EXTRA_RINGTONE_PICKED_URI =
             "android.intent.extra.ringtone.PICKED_URI";
-    
+
     // Make sure the column ordering and then ..._COLUMN_INDEX are in sync
     
-    private static final String[] INTERNAL_COLUMNS = new String[] {
+    private static final String[] INTERNAL_AUDIO_COLUMNS = new String[] {
         MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE,
         "\"" + MediaStore.Audio.Media.INTERNAL_CONTENT_URI + "\""
+    };
+
+    private static final String[] INTERNAL_VIDEO_COLUMNS = new String[] {
+        MediaStore.Video.Media._ID, MediaStore.Video.Media.TITLE,
+        "\"" + MediaStore.Video.Media.INTERNAL_CONTENT_URI + "\""
     };
 
     private static final String[] DRM_COLUMNS = new String[] {
@@ -184,11 +220,16 @@ public class RingtoneManager {
         "\"" + DrmStore.Audio.CONTENT_URI + "\""
     };
 
-    private static final String[] MEDIA_COLUMNS = new String[] {
+    private static final String[] MEDIA_AUDIO_COLUMNS = new String[] {
         MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE,
         "\"" + MediaStore.Audio.Media.EXTERNAL_CONTENT_URI + "\""
     };
     
+    private static final String[] MEDIA_VIDEO_COLUMNS = new String[] {
+        MediaStore.Video.Media._ID, MediaStore.Video.Media.TITLE,
+        "\"" + MediaStore.Video.Media.EXTERNAL_CONTENT_URI + "\""
+    };
+
     /**
      * The column index (in the cursor returned by {@link #getCursor()} for the
      * row ID.
@@ -218,12 +259,15 @@ public class RingtoneManager {
      * If a column (item from this list) exists in the Cursor, its value must
      * be true (value of 1) for the row to be returned.
      */
-    private List<String> mFilterColumns = new ArrayList<String>();
+    private List<String> mAudioFilterColumns = new ArrayList<String>();
+    private List<String> mVideoFilterColumns = new ArrayList<String>();
     
     private boolean mStopPreviousRingtone = true;
     private Ringtone mPreviousRingtone;
 
     private boolean mIncludeDrm;
+
+    private boolean mIncludeVideo;
     
     /**
      * Constructs a RingtoneManager. This constructor is recommended as its
@@ -253,7 +297,7 @@ public class RingtoneManager {
      * 
      * @param type The type(s), one or more of {@link #TYPE_RINGTONE},
      *            {@link #TYPE_NOTIFICATION}, {@link #TYPE_ALARM},
-     *            {@link #TYPE_ALL}.
+     *            {@link #TYPE_ALL_MEDIA}.
      * @see #EXTRA_RINGTONE_TYPE           
      */
     public void setType(int type) {
@@ -264,7 +308,11 @@ public class RingtoneManager {
         }
         
         mType = type;
-        setFilterColumnsList(type);
+        mIncludeVideo = ((type & TYPE_RINGTONE) != 0) && ((type & TYPE_VIDEO) != 0);
+        setAudioFilterColumnsList(type);
+        if (mIncludeVideo) {
+            setVideoFilterColumnsList(type);
+        }
     }
 
     /**
@@ -356,12 +404,19 @@ public class RingtoneManager {
             return mCursor;
         }
         
-        final Cursor internalCursor = getInternalRingtones();
-        final Cursor drmCursor = mIncludeDrm ? getDrmRingtones() : null;
-        final Cursor mediaCursor = getMediaRingtones();
-             
-        return mCursor = new SortCursor(new Cursor[] { internalCursor, drmCursor, mediaCursor },
-                MediaStore.MediaColumns.TITLE);
+        final Cursor internalAudioCursor = getInternalRingtones(SearchType.AUDIO);
+        final Cursor internalVideoCursor
+                = mIncludeVideo? getInternalRingtones(SearchType.VIDEO) : null;
+        final Cursor drmAudioCursor = mIncludeDrm ? getDrmRingtones() : null;
+        // DrmStore does not support video??
+        final Cursor mediaAudioCursor = getMediaRingtones(SearchType.AUDIO);
+        final Cursor mediaVideoCursor = mIncludeVideo? getMediaRingtones(SearchType.VIDEO) : null;
+
+        return mCursor = new SortCursor(new Cursor[] {
+            internalAudioCursor, internalVideoCursor,
+            drmAudioCursor,
+            mediaAudioCursor, mediaVideoCursor },
+            MediaStore.MediaColumns.TITLE);
     }
 
     /**
@@ -450,16 +505,31 @@ public class RingtoneManager {
     public static Uri getValidRingtoneUri(Context context) {
         final RingtoneManager rm = new RingtoneManager(context);
         
-        Uri uri = getValidRingtoneUriFromCursorAndClose(context, rm.getInternalRingtones());
+        Uri uri = getValidRingtoneUriFromCursorAndClose(context,
+            rm.getInternalRingtones(SearchType.AUDIO));
 
         if (uri == null) {
-            uri = getValidRingtoneUriFromCursorAndClose(context, rm.getMediaRingtones());
+            uri = getValidRingtoneUriFromCursorAndClose(context,
+                rm.getMediaRingtones(SearchType.AUDIO));
         }
-        
+
         if (uri == null) {
             uri = getValidRingtoneUriFromCursorAndClose(context, rm.getDrmRingtones());
         }
-        
+
+        // Is this the right order, or should videos come before some audios?
+        // Choosing, at least for now, to keep video at the end, for fullest
+        // compatibility with pre-video code.
+        if (uri == null) {
+            uri = getValidRingtoneUriFromCursorAndClose(context,
+                rm.getInternalRingtones(SearchType.VIDEO));
+        }
+
+        if (uri == null) {
+            uri = getValidRingtoneUriFromCursorAndClose(context,
+                rm.getMediaRingtones(SearchType.VIDEO));
+        }
+
         return uri;
     }
     
@@ -478,13 +548,19 @@ public class RingtoneManager {
         }
     }
 
-    private Cursor getInternalRingtones() {
-        return query(
-                MediaStore.Audio.Media.INTERNAL_CONTENT_URI, INTERNAL_COLUMNS,
-                constructBooleanTrueWhereClause(mFilterColumns),
-                null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
+    private Cursor getInternalRingtones(SearchType searchType) {
+        switch (searchType) {
+            case AUDIO: default:
+                return query(MediaStore.Audio.Media.INTERNAL_CONTENT_URI, INTERNAL_AUDIO_COLUMNS,
+                             constructBooleanTrueWhereClause(mAudioFilterColumns),
+                             null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
+            case VIDEO:
+                return query(MediaStore.Video.Media.INTERNAL_CONTENT_URI, INTERNAL_VIDEO_COLUMNS,
+                             constructBooleanTrueWhereClause(mVideoFilterColumns),
+                             null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
+        }
     }
-    
+
     private Cursor getDrmRingtones() {
         // DRM store does not have any columns to use for filtering 
         return query(
@@ -492,36 +568,49 @@ public class RingtoneManager {
                 null, null, DrmStore.Audio.TITLE);
     }
 
-    private Cursor getMediaRingtones() {
+    private Cursor getMediaRingtones(SearchType searchType) {
          // Get the external media cursor. First check to see if it is mounted.
         final String status = Environment.getExternalStorageState();
-        
-        return (status.equals(Environment.MEDIA_MOUNTED) ||
-                    status.equals(Environment.MEDIA_MOUNTED_READ_ONLY))
-                ? query(
-                    MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, MEDIA_COLUMNS,
-                    constructBooleanTrueWhereClause(mFilterColumns), null,
-                    MediaStore.Audio.Media.DEFAULT_SORT_ORDER)
-                : null;
+        if (!status.equals(Environment.MEDIA_MOUNTED) &&
+            !status.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
+            return null;
+        }
+        switch (searchType) {
+            case AUDIO: default:
+                return query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, MEDIA_AUDIO_COLUMNS,
+                             constructBooleanTrueWhereClause(mAudioFilterColumns), null,
+                             MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
+            case VIDEO:
+                return query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, MEDIA_VIDEO_COLUMNS,
+                             constructBooleanTrueWhereClause(mVideoFilterColumns),
+                             null, MediaStore.Video.Media.DEFAULT_SORT_ORDER);
+        }
     }
-    
-    private void setFilterColumnsList(int type) {
-        List<String> columns = mFilterColumns;
+
+
+    private void setAudioFilterColumnsList(int type) {
+        List<String> columns = mAudioFilterColumns;
         columns.clear();
-        
+
         if ((type & TYPE_RINGTONE) != 0) {
             columns.add(MediaStore.Audio.AudioColumns.IS_RINGTONE);
         }
-        
+
         if ((type & TYPE_NOTIFICATION) != 0) {
             columns.add(MediaStore.Audio.AudioColumns.IS_NOTIFICATION);
         }
-        
+
         if ((type & TYPE_ALARM) != 0) {
             columns.add(MediaStore.Audio.AudioColumns.IS_ALARM);
         }
     }
-    
+
+    private void setVideoFilterColumnsList(int type) {
+        List<String> columns = mVideoFilterColumns;
+        columns.clear();
+        columns.add(MediaStore.Video.VideoColumns.IS_RINGTONE);
+    }
+
     /**
      * Constructs a where clause that consists of at least one column being 1
      * (true). This is used to find all matching sounds for the given sound
@@ -596,7 +685,7 @@ public class RingtoneManager {
             r.open(ringtoneUri);
             return r;
         } catch (Exception ex) {
-            Log.e(TAG, "Failed to open ringtone " + ringtoneUri);
+            Log.e(TAG, "Failed to open ringtone " + ringtoneUri + " because " + ex);
         }
 
         // Ringtone doesn't exist, use the fallback ringtone.

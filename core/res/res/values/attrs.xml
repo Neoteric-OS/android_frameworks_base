@@ -3029,8 +3029,10 @@
             <flag name="notification" value="2" />
             <!-- Alarm sounds. -->
             <flag name="alarm" value="4" />
-            <!-- All available ringtone sounds. -->
-            <flag name="all" value="7" />
+            <!-- All video ringtones too. -->
+            <flag name="video" value="8" />
+            <!-- All available ringtone media. -->
+            <flag name="all" value="0xffff" />
         </attr>
         <!-- Whether to show an item for a default sound. -->
         <attr name="showDefault" format="boolean" />
