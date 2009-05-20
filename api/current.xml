@@ -67289,6 +67289,34 @@
  deprecated="not deprecated"
  visibility="public"
 >
+<method name="getMimeType"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+</method>
+<method name="getMimeType"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+<parameter name="uri" type="android.net.Uri">
+</parameter>
+</method>
 <method name="getStreamType"
  return="int"
  abstract="false"
@@ -67324,6 +67352,34 @@
  visibility="public"
 >
 </method>
+<method name="isVideo"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+</method>
+<method name="isVideo"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+<parameter name="uri" type="android.net.Uri">
+</parameter>
+</method>
 <method name="play"
  return="void"
  abstract="false"
@@ -67334,6 +67390,21 @@
  deprecated="not deprecated"
  visibility="public"
 >
+</method>
+<method name="play"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="activity" type="android.app.Activity">
+</parameter>
+<parameter name="videoView" type="android.widget.VideoView">
+</parameter>
 </method>
 <method name="setStreamType"
  return="void"
@@ -67759,6 +67830,17 @@
  value="7"
  static="true"
  final="true"
+ deprecated="deprecated"
+ visibility="public"
+>
+</field>
+<field name="TYPE_ALL_MEDIA"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="65535"
+ static="true"
+ final="true"
  deprecated="not deprecated"
  visibility="public"
 >
@@ -67779,6 +67861,17 @@
  transient="false"
  volatile="false"
  value="1"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TYPE_VIDEO"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="8"
  static="true"
  final="true"
  deprecated="not deprecated"
@@ -90503,6 +90596,17 @@
  transient="false"
  volatile="false"
  value="&quot;isprivate&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="IS_RINGTONE"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;is_ringtone&quot;"
  static="true"
  final="true"
  deprecated="not deprecated"

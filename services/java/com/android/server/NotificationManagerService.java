@@ -32,7 +32,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.AsyncPlayer;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Binder;

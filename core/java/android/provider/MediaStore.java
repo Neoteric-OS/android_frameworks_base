@@ -1348,6 +1348,12 @@ public final class MediaStore
              * <P>Type: INTEGER</P>
              */
             public static final String BOOKMARK = "bookmark";
+
+            /**
+             * Non-zero id the video file may be a ringtone
+             * <P>Type: INTEGER (boolean)</P>
+             */
+            public static final String IS_RINGTONE = "is_ringtone";
         }
 
         public static final class Media implements VideoColumns {

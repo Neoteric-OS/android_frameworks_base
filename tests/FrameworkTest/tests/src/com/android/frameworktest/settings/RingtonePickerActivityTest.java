@@ -61,7 +61,7 @@ public class RingtonePickerActivityTest extends ActivityInstrumentationTestCase<
     }
     
     public void testDefault() {
-        mActivity.launchRingtonePickerActivity(true, null, RingtoneManager.TYPE_ALL);
+        mActivity.launchRingtonePickerActivity(true, null, RingtoneManager.TYPE_ALL_MEDIA);
         mInstrumentation.waitForIdleSync();
         
         // Go to top
@@ -81,7 +81,7 @@ public class RingtonePickerActivityTest extends ActivityInstrumentationTestCase<
     }
     
     public void testFirst() {
-        mActivity.launchRingtonePickerActivity(true, null, RingtoneManager.TYPE_ALL);
+        mActivity.launchRingtonePickerActivity(true, null, RingtoneManager.TYPE_ALL_MEDIA);
         mInstrumentation.waitForIdleSync();
         
         // Go to top
@@ -107,7 +107,7 @@ public class RingtonePickerActivityTest extends ActivityInstrumentationTestCase<
         testFirst();
         Uri firstUri = mActivity.pickedUri;
         
-        mActivity.launchRingtonePickerActivity(true, firstUri, RingtoneManager.TYPE_ALL);
+        mActivity.launchRingtonePickerActivity(true, firstUri, RingtoneManager.TYPE_ALL_MEDIA);
         mInstrumentation.waitForIdleSync();
 
         //// Hit cancel:
@@ -129,7 +129,7 @@ public class RingtonePickerActivityTest extends ActivityInstrumentationTestCase<
         testFirst();
         Uri firstUri = mActivity.pickedUri;
         
-        mActivity.launchRingtonePickerActivity(true, firstUri, RingtoneManager.TYPE_ALL);
+        mActivity.launchRingtonePickerActivity(true, firstUri, RingtoneManager.TYPE_ALL_MEDIA);
         mInstrumentation.waitForIdleSync();
 
         //// Pick second:
@@ -152,7 +152,7 @@ public class RingtonePickerActivityTest extends ActivityInstrumentationTestCase<
     }
     
     public void testCancel() {
-        mActivity.launchRingtonePickerActivity(true, null, RingtoneManager.TYPE_ALL);
+        mActivity.launchRingtonePickerActivity(true, null, RingtoneManager.TYPE_ALL_MEDIA);
         mInstrumentation.waitForIdleSync();
         
         // Go to bottom
@@ -167,7 +167,7 @@ public class RingtonePickerActivityTest extends ActivityInstrumentationTestCase<
     }
 
     public void testNoDefault() {
-        mActivity.launchRingtonePickerActivity(false, null, RingtoneManager.TYPE_ALL);
+        mActivity.launchRingtonePickerActivity(false, null, RingtoneManager.TYPE_ALL_MEDIA);
         mInstrumentation.waitForIdleSync();
         
         // Go to top
