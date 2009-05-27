@@ -102372,6 +102372,17 @@
  visibility="public"
 >
 </field>
+<field name="EXTRA_WITH_PHONES_ONLY"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;android.intent.extra.withPhones&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
 <field name="PRIMARY_EMAIL_ID"
  type="java.lang.String"
  transient="false"

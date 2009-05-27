@@ -324,6 +324,13 @@ public class Contacts {
         public static final String PRIMARY_ORGANIZATION_ID = "primary_organization";
 
         /**
+         * An Extra to have the picker only display contacts with phone numbers
+         * <P>Used as a boolean extra field to indicate that only contacts with numbers
+         * should be shown</P>
+         */
+         public static final String EXTRA_WITH_PHONES_ONLY = "android.intent.extra.withPhones";
+
+        /**
          * Mark a person as having been contacted.
          *
          * @param resolver the ContentResolver to use
