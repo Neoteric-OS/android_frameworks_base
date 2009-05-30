@@ -12,8 +12,8 @@ LOCAL_SRC_FILES:= \
 	android_media_ResampleInputStream.cpp
 
 LOCAL_SHARED_LIBRARIES := \
-	libopencore_player \
-	libopencore_author \
+	libandroid_opencore_player \
+	libandroid_opencore_author \
 	libandroid_runtime \
 	libnativehelper \
 	libcutils \
