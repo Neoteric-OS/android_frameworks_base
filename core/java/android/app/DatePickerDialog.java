@@ -155,6 +155,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         mInitialMonth = monthOfYear;
         mInitialDay = dayOfMonth;
         mDatePicker.updateDate(year, monthOfYear, dayOfMonth);
+        updateTitle(year, monthOfYear, dayOfMonth);
     }
 
     private void updateTitle(int year, int month, int day) {
