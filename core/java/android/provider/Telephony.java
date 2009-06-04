@@ -546,6 +546,9 @@ public final class Telephony {
              *    ID</li>
              *   <li><em>pduType (Integer)</em> - The WAP PDU type</li>
              *   <li><em>data</em> - The data payload of the message</li>
+             *   <li><em>contentTypeParameters (HashMap&lt;String,String&gt;)</em> 
+	     *   - Any parameters associated with the content type 
+	     *   (decoded from the WSP Content-Type header)</li>
              * </ul>
              *
              * <p>If a BroadcastReceiver encounters an error while processing
