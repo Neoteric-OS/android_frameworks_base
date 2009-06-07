@@ -7720,6 +7720,17 @@
  visibility="public"
 >
 </field>
+<field name="summaryFromEntries"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="16843446"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
 <field name="summaryOff"
  type="int"
  transient="false"
@@ -107927,6 +107938,19 @@
  visibility="public"
 >
 <parameter name="entryValuesResId" type="int">
+</parameter>
+</method>
+<method name="setSummaryFromEntries"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="useSummaryFromEntries" type="boolean">
 </parameter>
 </method>
 <method name="setValue"

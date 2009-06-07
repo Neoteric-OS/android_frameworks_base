@@ -34,12 +34,14 @@ import android.util.AttributeSet;
  * 
  * @attr ref android.R.styleable#ListPreference_entries
  * @attr ref android.R.styleable#ListPreference_entryValues
+ * @attr ref android.R.styleable#ListPreference_summaryFromEntries
  */
 public class ListPreference extends DialogPreference {
     private CharSequence[] mEntries;
     private CharSequence[] mEntryValues;
     private String mValue;
     private int mClickedDialogEntryIndex;
+    private boolean mSummaryFromEntries;
     
     public ListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -48,6 +50,7 @@ public class ListPreference extends DialogPreference {
                 com.android.internal.R.styleable.ListPreference, 0, 0);
         mEntries = a.getTextArray(com.android.internal.R.styleable.ListPreference_entries);
         mEntryValues = a.getTextArray(com.android.internal.R.styleable.ListPreference_entryValues);
+        mSummaryFromEntries = a.getBoolean(com.android.internal.R.styleable.ListPreference_summaryFromEntries, false);
         a.recycle();
     }
     
@@ -123,7 +126,25 @@ public class ListPreference extends DialogPreference {
     public void setValue(String value) {
         mValue = value;
         
+        if (mSummaryFromEntries) {
+            setSummaryFromValue();
+        }
+
         persistString(value);
+    }
+
+    /**
+     * Set the summary from the corresponding human-readable entry.
+     */
+    private void setSummaryFromValue() {
+        if (mEntryValues == null || mEntries == null) {
+            return;
+        }
+
+        int entryIndex = findIndexOfValue(mValue);
+        if (entryIndex >= 0) {
+            setSummary(mEntries[entryIndex]);
+        }
     }
 
     /**
@@ -176,6 +197,28 @@ public class ListPreference extends DialogPreference {
     
     private int getValueIndex() {
         return findIndexOfValue(mValue);
+    }
+
+    /**
+     * Sets whether the summary for the preference will be set from the
+     * human-readable entry description that corresponds to the index
+     * of the entry value when {@link #setValue(String)} is called.
+     * When set to true, the summary will be immediately set if
+     * entries and entryValues are populated. When set to false, the
+     * summary will be immediately set to null.
+     * 
+     * @param useSummaryFromEntries Set true if the human-readable strings
+     *            should be used for summaries.
+     * @attr ref android.R.styleable#ListPreference_summaryFromEntries
+     */
+    public void setSummaryFromEntries(boolean useSummaryFromEntries) {
+        mSummaryFromEntries = useSummaryFromEntries;
+
+        if (useSummaryFromEntries) {
+            setSummaryFromValue();
+        } else {
+            setSummary(null);
+        }
     }
     
     @Override

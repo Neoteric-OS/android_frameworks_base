@@ -3292,6 +3292,9 @@
              entries is selected. If a user clicks on the second item in entries, the
              second item in this array will be saved to the preference. -->
         <attr name="entryValues" format="reference" />
+        <!-- Whether the summary for this preference state should be set using the human-readable
+             string in entries when set to a corresponding value in entryValues. -->
+        <attr name="summaryFromEntries" format="boolean" />
     </declare-styleable>
 
     <!-- Base attributes available to RingtonePreference. -->
