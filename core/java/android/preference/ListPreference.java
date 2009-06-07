@@ -34,12 +34,14 @@ import android.util.AttributeSet;
  * 
  * @attr ref android.R.styleable#ListPreference_entries
  * @attr ref android.R.styleable#ListPreference_entryValues
+ * @attr ref android.R.styleable#ListPreference_summaryFromEntries
  */
 public class ListPreference extends DialogPreference {
     private CharSequence[] mEntries;
     private CharSequence[] mEntryValues;
     private String mValue;
     private int mClickedDialogEntryIndex;
+    private boolean mSummaryFromEntries;
     
     public ListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -48,6 +50,7 @@ public class ListPreference extends DialogPreference {
                 com.android.internal.R.styleable.ListPreference, 0, 0);
         mEntries = a.getTextArray(com.android.internal.R.styleable.ListPreference_entries);
         mEntryValues = a.getTextArray(com.android.internal.R.styleable.ListPreference_entryValues);
+        mSummaryFromEntries = a.getBoolean(com.android.internal.R.styleable.ListPreference_summaryFromEntries, false);
         a.recycle();
     }
     
@@ -123,6 +126,13 @@ public class ListPreference extends DialogPreference {
     public void setValue(String value) {
         mValue = value;
         
+        if (mSummaryFromEntries && mEntryValues != null && mEntries != null) {
+            int entryIndex = findIndexOfValue(value);
+            if (entryIndex >= 0) {
+                setSummary(mEntries[entryIndex]);
+            }
+        }
+
         persistString(value);
     }
 
@@ -176,6 +186,18 @@ public class ListPreference extends DialogPreference {
     
     private int getValueIndex() {
         return findIndexOfValue(mValue);
+    }
+
+    /**
+     * Sets whether the summary for the preference will be set from the
+     * human-readable entry description that corresponds to the index
+     * of the entry value when {@link #setValue(String)} is called.
+     * 
+     * @param useSummaryFromEntries Set true if the human-readable strings
+     *            should be used for summaries.
+     */
+    public void setSummaryFromEntries(boolean useSummaryFromEntries) {
+        mSummaryFromEntries = useSummaryFromEntries;
     }
     
     @Override
