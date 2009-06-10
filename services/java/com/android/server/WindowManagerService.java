@@ -5574,9 +5574,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
         }
 
         public boolean getInTouchMode() {
-            synchronized(mWindowMap) {
                 return mInTouchMode;
-            }
         }
 
         public boolean performHapticFeedback(IWindow window, int effectId,
