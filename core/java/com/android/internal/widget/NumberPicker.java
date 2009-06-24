@@ -244,8 +244,7 @@ public class NumberPicker extends LinearLayout implements OnClickListener,
         int val = getSelectedPos(str.toString());
         if ((val >= mStart) && (val <= mEnd)) {
             mPrevious = mCurrent;
-            mCurrent = val;
-            notifyChange();
+            mCurrent = val;            
         }
         updateView();
     }
