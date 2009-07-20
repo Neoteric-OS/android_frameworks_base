@@ -20,6 +20,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 import android.test.suitebuilder.annotation.Suppress;
 import android.text.format.Time;
 import android.util.Log;
+import android.util.TimeFormatException;
 
 import junit.framework.TestCase;
 
@@ -351,6 +352,39 @@ public class TimeTest extends TestCase {
         Time t = new Time(Time.TIMEZONE_UTC);
         t.parse("12345678T901234");
         // System.out.println("t=" + t);
+    }
+
+    @SmallTest
+    public void testParse33390() throws Exception {
+        Time t = new Time(Time.TIMEZONE_UTC);
+
+        t.parse3339("1980-05-23T09:50:50Z");
+        t.parse3339("1980-05-23T09:50:50.0Z");
+        t.parse3339("1980-05-23T09:50:50.12Z");
+        t.parse3339("1980-05-23T09:50:50.123Z");
+        t.parse3339("1980-05-23T09:50:50-06:00");
+        t.parse3339("1980-05-23T09:50:50.123-06:00");
+
+        try {
+            t.parse3339("1980");
+            fail("Did not throw error on truncated input length");
+        } catch (TimeFormatException e) {
+            // Successful
+        }
+
+        try {
+            t.parse3339("1980-05-23T09:50:50.123+");
+            fail("Did not throw error on truncated timezone offset");
+        } catch (TimeFormatException e1) {
+            // Successful
+        }
+
+        try {
+            t.parse3339("1980-05-23T09:50:50.123+05:0");
+            fail("Did not throw error on truncated timezone offset");
+        } catch (TimeFormatException e1) {
+            // Successful
+        }
     }
 
     @SmallTest
