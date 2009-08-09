@@ -79,8 +79,12 @@ void glVertexPointerBounds(GLint size, GLenum type,
 
     #define CALL_GL_API(_api, ...)                              \
          asm volatile(                                          \
+            "stmdb sp!, {r0, lr}      \n"                       \
             "mov   r12, #0xFFFF0FFF   \n"                       \
-            "ldr   r12, [r12, #-15]   \n"                       \
+            "mov   lr,  pc            \n"                       \
+            "sub   pc,  r12, #31      \n"                       \
+            "mov   r12, r0            \n"                       \
+            "ldmia sp!, {r0, lr}      \n"                       \
             "ldr   r12, [r12, %[tls]] \n"                       \
             "cmp   r12, #0            \n"                       \
             "ldrne pc,  [r12, %[api]] \n"                       \
