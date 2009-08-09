@@ -97,6 +97,9 @@ extern pthread_key_t gGLWrapperKey;
 
 #if USE_FAST_TLS_KEY
 
+typedef void (__mem_barrier_t)(void);
+#define __mem_barrier (*(__mem_barrier_t *)0xffff0fa0)
+
 // We have a dedicated TLS slot in bionic
 static inline gl_hooks_t const * volatile * get_tls_hooks() {
     volatile void *tls_base = __get_tls();
@@ -108,6 +111,7 @@ static inline gl_hooks_t const * volatile * get_tls_hooks() {
 static inline void setGlThreadSpecific(gl_hooks_t const *value) {
     gl_hooks_t const * volatile * tls_hooks = get_tls_hooks();
     tls_hooks[TLS_SLOT_OPENGL_API] = value;
+   __mem_barrier();
 }
 
 static gl_hooks_t const* getGlThreadSpecific() {
