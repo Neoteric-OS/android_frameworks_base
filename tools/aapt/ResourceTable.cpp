@@ -2454,7 +2454,7 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
 
     // Iterate through all data, collecting all values (strings,
     // references, etc).
-    StringPool valueStrings;
+    StringPool valueStrings = StringPool(false, bundle->getUTF8());
     for (pi=0; pi<N; pi++) {
         sp<Package> p = mOrderedPackages.itemAt(pi);
         if (p->getTypes().size() == 0) {
@@ -2462,8 +2462,8 @@ status_t ResourceTable::flatten(Bundle* bundle, const sp<AaptFile>& dest)
             continue;
         }
 
-        StringPool typeStrings;
-        StringPool keyStrings;
+        StringPool typeStrings = StringPool(false, bundle->getUTF8());
+        StringPool keyStrings = StringPool(false, bundle->getUTF8());
 
         const size_t N = p->getOrderedTypes().size();
         for (size_t ti=0; ti<N; ti++) {

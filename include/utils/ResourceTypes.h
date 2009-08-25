@@ -393,7 +393,10 @@ struct ResStringPool_header
     enum {
         // If set, the string index is sorted by the string values (based
         // on strcmp16()).
-        SORTED_FLAG = 1<<0
+        SORTED_FLAG = 1<<0,
+
+        // String pool is encoded in UTF-8
+        UTF8_FLAG = 1<<8
     };
     uint32_t flags;
 
@@ -458,7 +461,8 @@ private:
     size_t                      mSize;
     const uint32_t*             mEntries;
     const uint32_t*             mEntryStyles;
-    const char16_t*             mStrings;
+    const void*                 mStrings;
+    char16_t**                  mCache;
     uint32_t                    mStringPoolSize;    // number of uint16_t
     const uint32_t*             mStyles;
     uint32_t                    mStylePoolSize;    // number of uint32_t
