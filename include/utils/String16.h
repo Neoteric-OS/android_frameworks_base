@@ -55,6 +55,11 @@ int strzcmp16_h_n(const char16_t *s1H, size_t n1, const char16_t *s2N, size_t n2
 
 namespace android {
 
+// Convert UTF-8 to UTF-16 including surrogate pairs
+void utf8_to_utf16(const uint8_t *src, size_t srcLen, char16_t* dst, const size_t dstLen);
+
+// ---------------------------------------------------------------------------
+
 class String8;
 class TextOutput;
 
