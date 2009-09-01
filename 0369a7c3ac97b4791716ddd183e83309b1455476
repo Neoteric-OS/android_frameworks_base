@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAj3///20\u003d",
+        "filename": "tools/aapt/ResourceTable.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2466,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2009-09-01T05:02:29Z",
+      "side": 0,
+      "message": "How about these two string pools?  Also it would be good to use a UTF-8 string pool for compiled XML files.",
+      "revId": "0369a7c3ac97b4791716ddd183e83309b1455476",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

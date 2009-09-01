@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAj3///24\u003d",
+        "filename": "libs/utils/String8.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2009-09-01T05:02:29Z",
+      "side": 1,
+      "message": "Remove ifdefed code.",
+      "revId": "692d42c7c4473cad389c7962d755e0eef7fc9b17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAj3///2w\u003d",
+        "filename": "tools/aapt/StringPool.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2009-09-01T05:02:29Z",
+      "side": 1,
+      "message": "Close brace indentation is wrong.",
+      "revId": "692d42c7c4473cad389c7962d755e0eef7fc9b17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
