@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAm3///ts\u003d",
+        "filename": "opengl/libs/GLES_CM/gl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2009-09-16T17:58:07Z",
+      "side": 1,
+      "message": "no. you can\u0027t define this here. Also __ is reserver for the compiler.\n\nAlso, this code should be used if the TLS register is enabled in the kernel, not based on the SMP-ness of the system.\n\nFor instance, ARMv6 has this register and it should be used in that case.",
+      "revId": "52345e3557abab0fcf1fdae53311816871d294ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
