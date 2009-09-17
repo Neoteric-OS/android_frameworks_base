@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAm3///kc\u003d",
+        "filename": "core/jni/android_text_format_Time.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1001956
+      },
+      "writtenOn": "2009-09-17T20:16:51Z",
+      "side": 1,
+      "message": "This follows the spec for RFC 3339 and is technically correct, but I\u0027m worried that it might break something in the Calendar app because this code now rejects some strings that it used to accept (namely, strings with a time specification that do not include the seconds).  This change may be okay but we would have to test the Calendar app to be sure.  Unfortunately, I don\u0027t have the time to research this right now.",
+      "revId": "c91ca01baffda8b8fd77fd3b9a1f685343a5a986",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAm3///kY\u003d",
+        "filename": "core/jni/android_text_format_Time.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1001956
+      },
+      "writtenOn": "2009-09-17T20:16:51Z",
+      "side": 1,
+      "message": "If there is a period, it must be followed by at least one digit.  You could check for that here.",
+      "revId": "c91ca01baffda8b8fd77fd3b9a1f685343a5a986",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
