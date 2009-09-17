@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAm3///g0\u003d",
+        "filename": "core/jni/android_text_format_Time.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1001956
+      },
+      "writtenOn": "2009-09-17T22:50:41Z",
+      "side": 1,
+      "message": "Yes, I think it is possible that we pass in strings like \"1980-05-23T09:50Z\".  And I\u0027m not saying you should change the code to accept these strings.  Your change makes this code more compliant with RFC 3339, which is good.  But we just need to test this with our Calendar app before checking this in.",
+      "parentUuid": "AAAAm3///kQ\u003d",
+      "revId": "c91ca01baffda8b8fd77fd3b9a1f685343a5a986",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAm3///kY\u003d",
         "filename": "core/jni/android_text_format_Time.cpp",
         "patchSetId": 3
