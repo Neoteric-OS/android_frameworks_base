@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAm3///kQ\u003d",
+        "filename": "core/jni/android_text_format_Time.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000748
+      },
+      "writtenOn": "2009-09-17T20:30:48Z",
+      "side": 1,
+      "message": "So you\u0027re concerned about a string that would, say, be \"1980-05-23T09:50Z\" or \"1980-05-23T09:50-05:00\" and others? I can change it to cover that case easily.\n\nI think I put this in because previously that didn\u0027t appear to pass the test previously. I.e., \"1980-05-23T09:50-05:00\" would return false at line 534 in the previous code since it would encounter \u0027-\u0027 instead of \u0027:\u0027\n\nIf you had \"1980-05-23T09:50:\" it would actually scan two characters past the end of the string and could cause segmentation faults. (Although Google controls the only server-side applications that exercise this code in the applications that ship with the Android base.)",
+      "parentUuid": "AAAAm3///kc\u003d",
+      "revId": "c91ca01baffda8b8fd77fd3b9a1f685343a5a986",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAm3///kY\u003d",
         "filename": "core/jni/android_text_format_Time.cpp",
         "patchSetId": 3
