@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAm3///mI\u003d",
+        "filename": "core/java/android/preference/ListPreference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2009-09-17T01:50:39Z",
+      "side": 1,
+      "message": "Put @attr here so the attribute will be associated with the setting method in the docs.",
+      "revId": "04e724c63e228c1dc9a6aa12991dee946c025fef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAm3///mM\u003d",
+        "filename": "core/res/res/values/public.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2009-09-17T01:50:39Z",
+      "side": 1,
+      "message": "This needs to be added at the end of the file, in a new section for the next version of the platform, without a specific resource ID.  Note that this is going to conflict with API set 4 for Donut (and 5 for Eclair), but keeping it at the end with its own future API section will make integrations easier instead of ending up with the integration possibly succeeding and the build breaking.",
+      "revId": "04e724c63e228c1dc9a6aa12991dee946c025fef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
