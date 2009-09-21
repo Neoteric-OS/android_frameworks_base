@@ -201,7 +201,7 @@ public:
 
     /**
      * isSecure - true if this surface is secure, that is if it prevents
-     * screenshots or vns servers.
+     * screenshots or VNC servers.
      */
     virtual bool isSecure() const       { return false; }
 
