@@ -2391,6 +2391,13 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
                 parent = parent.invalidateChildInParent(location, dirty);
             } while (parent != null);
         }
+
+	      // A child has been invalidated => this ViewGroup is also invalidated => Notify any invalidationObservers that this ViewGroup
+	      // has been invalidated.
+	      if (mInvalidationObservers != null){
+           dispatchViewInvalidation();
+        }
+
     }
 
     /**

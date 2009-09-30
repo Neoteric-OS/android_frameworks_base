@@ -4688,6 +4688,12 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
                 mParent.invalidateChild(this, r);
             }
         }
+	
+	      // Notify any invalidationObservers that this view has been invalidated	
+    	  if (mInvalidationObservers != null) {
+            dispatchViewInvalidation();
+        }
+
     }
 
     /**
@@ -4718,6 +4724,13 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
                 p.invalidateChild(this, tmpr);
             }
         }
+    
+	      // Notify any invalidationObservers that this view has been invalidated	
+      	if (mInvalidationObservers != null){
+            dispatchViewInvalidation();
+        }
+
+	    
     }
 
     /**
@@ -4742,6 +4755,12 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
                 p.invalidateChild(this, r);
             }
         }
+	
+	      // Notify any invalidationObservers that this view has been invalidated	
+        if (mInvalidationObservers != null){
+            dispatchViewInvalidation();
+        }
+
     }
 
     /**
@@ -4919,6 +4938,12 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
             msg.obj = this;
             mAttachInfo.mHandler.sendMessageDelayed(msg, delayMilliseconds);
         }
+    
+    	  // Notify any invalidationObservers that this view will be invalidated
+	      if (mInvalidationObservers != null){
+            postViewInvalidation(delayMilliseconds);
+        }
+
     }
 
     /**
@@ -4950,6 +4975,12 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
             msg.obj = info;
             mAttachInfo.mHandler.sendMessageDelayed(msg, delayMilliseconds);
         }
+	
+	      // Notify any invalidationObservers that this view will be invalidated
+      	if (mInvalidationObservers != null){
+            postViewInvalidation(delayMilliseconds);
+        }
+
     }
 
     /**
@@ -8748,4 +8779,88 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
             }
         }
     }
+   
+      
+    /**
+     * <p>mViewInvalidationObservers holds a list of observers wanting to be
+     * notified when this view is invalidated.</p>
+     *
+     */
+    ArrayList<ViewInvalidationObserver> mInvalidationObservers = null; // package private so viewgroup can access this
+    private Runnable                            mInvalidationRunnable  = null;
+   
+    /**
+     * <p>Notify any invalidationObservers that the view has been invalidated.
+     *
+     */
+    void dispatchViewInvalidation() {
+
+	      if (mInvalidationObservers != null){
+            for (int i=0;i<mInvalidationObservers.size();++i){
+                ViewInvalidationObserver observer = mInvalidationObservers.get(i);
+		            observer.ViewInvalidated(this);		
+            }
+	      }
+
+    }
+
+    /**
+     * <p>Notify any invalidationObservers that the view will be invalidated in delay seconds.
+     *    
+     * @param delay when to notify observers
+     *
+     */
+    void postViewInvalidation(long delay) {
+      getHandler().postDelayed(mInvalidationRunnable, delay);
+    }
+
+    /**
+     * <p>Interface that a invalidationobserver needs to implement.
+     *
+     */
+    public interface ViewInvalidationObserver {
+        public void ViewInvalidated(View view);
+    }
+
+    /**
+     * <p>Add a invalidationObserver to this view.
+     *    
+     */
+    public void addInvalidationObserver(ViewInvalidationObserver observer){
+
+        if (mInvalidationObservers == null){
+	          mInvalidationObservers = new ArrayList<ViewInvalidationObserver>();
+	          mInvalidationRunnable = new Runnable() { 
+	    	        public void run() {
+		                dispatchViewInvalidation();
+	              };
+	          };
+	      }
+	      mInvalidationObservers.add(observer);
+    
+    }
+    
+    /**
+     * <p>Remove a previousle added invalidationObserver from this view.
+     *    
+     */
+    public void removeInvalidationObserver(ViewInvalidationObserver observer) {
+
+	      if (mInvalidationObservers != null){
+
+	          int i = mInvalidationObservers.lastIndexOf(observer);
+	          if (i != -1){
+	              mInvalidationObservers.remove(i);
+	          }
+
+            // remove array if last item was removed
+            if (mInvalidationObservers.isEmpty()){
+                mInvalidationObservers = null;
+                mInvalidationRunnable = null;
+            }
+
+        }
+
+    }
+
 }
