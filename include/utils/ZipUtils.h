@@ -37,6 +37,7 @@ public:
         long compressedLen);
     static bool inflateToBuffer(FILE* fp, void* buf, long uncompressedLen,
         long compressedLen);
+    static bool inflateToFile(FILE* fp, FILE* ofp, long compressedLen);
 
     /*
      * Someday we might want to make this generic and handle bzip2 ".bz2"

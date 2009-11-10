@@ -253,6 +253,131 @@ bail:
 }
 
 /*
+ * Utility function that expands zip/gzip "deflate" compressed data
+ * into another file.
+ *
+ * (This is a clone of the previous function, but it takes a FILE* instead
+ * of an fd.  We could pass fileno(fd) to the above, but we can run into
+ * trouble when "fp" has a different notion of what fd's file position is.)
+ *
+ * "fp" is an open file positioned at the start of the "deflate" data
+ * "ofp" is an open file to save uncompressed bytes.
+ */
+/*static*/ bool ZipUtils::inflateToFile(FILE* fp, FILE* ofp,
+					long compressedLen)
+{
+    bool result = false;
+    const unsigned long kReadBufSize = 32768;
+    const unsigned long kWriteBufSize = 131072;
+    unsigned char* readBuf = NULL;
+    unsigned char* writeBuf = NULL;
+    z_stream zstream;
+    int zerr;
+    int cc;
+    unsigned long compRemaining;
+    unsigned long writeSize;
+
+    assert(compressedLen >= 0);
+
+    readBuf = new unsigned char[kReadBufSize];
+    if (readBuf == NULL)
+        goto bail;
+
+    writeBuf = new unsigned char[kWriteBufSize];
+    if (writeBuf == NULL)
+	goto bail;
+
+    compRemaining = compressedLen;
+    
+    /*
+     * Initialize the zlib stream.
+     */
+	memset(&zstream, 0, sizeof(zstream));
+    zstream.zalloc = Z_NULL;
+    zstream.zfree = Z_NULL;
+    zstream.opaque = Z_NULL;
+    zstream.next_in = NULL;
+    zstream.avail_in = 0;
+    zstream.next_out = (Bytef*) writeBuf;
+    zstream.avail_out = kWriteBufSize;
+    zstream.data_type = Z_UNKNOWN;
+
+	/*
+	 * Use the undocumented "negative window bits" feature to tell zlib
+	 * that there's no zlib header waiting for it.
+	 */
+    zerr = inflateInit2(&zstream, -MAX_WBITS);
+    if (zerr != Z_OK) {
+        if (zerr == Z_VERSION_ERROR) {
+            LOGE("Installed zlib is not compatible with linked version (%s)\n",
+                ZLIB_VERSION);
+        } else {
+            LOGE("Call to inflateInit2 failed (zerr=%d)\n", zerr);
+        }
+        goto bail;
+    }
+
+    /*
+     * Loop while we have data.
+     */
+    do {
+        unsigned long getSize;
+
+        /* read as much as we can */
+        if (zstream.avail_in == 0) {
+            getSize = (compRemaining > kReadBufSize) ?
+                        kReadBufSize : compRemaining;
+            LOGV("+++ reading %ld bytes (%ld left)\n",
+                getSize, compRemaining);
+
+            cc = fread(readBuf, 1, getSize, fp);
+            if (cc != (int) getSize) {
+                LOGD("inflate read failed (%d vs %ld)\n",
+                    cc, getSize);
+                goto z_bail;
+            }
+
+            compRemaining -= getSize;
+
+            zstream.next_in = readBuf;
+            zstream.avail_in = getSize;
+        }
+
+        /* uncompress the data */
+        zerr = inflate(&zstream, Z_NO_FLUSH);
+        if (zerr != Z_OK && zerr != Z_STREAM_END) {
+            LOGD("zlib inflate call failed (zerr=%d)\n", zerr);
+            goto z_bail;
+        }
+
+	/* write out uncompressed data */
+	writeSize = zstream.next_out - (Bytef*)writeBuf;
+	cc = fwrite(writeBuf, writeSize, 1, ofp);
+	if(cc != 1) {
+	    LOGD("inflate write failed\n");
+	    goto z_bail;
+	}
+	zstream.next_out = writeBuf;
+	    zstream.avail_out = kWriteBufSize;
+    } while (zerr == Z_OK);
+
+    assert(zerr == Z_STREAM_END);       /* other errors should've been caught */
+
+    // success!
+    result = true;
+
+z_bail:
+    inflateEnd(&zstream);        /* free up any allocated structures */
+
+bail:
+    if(readBuf)
+	delete[] readBuf;
+    if(writeBuf)
+	delete[] writeBuf;
+    return result;
+}
+
+/*
  * Look at the contents of a gzip archive.  We want to know where the
  * data starts, and how long it will be after it is uncompressed.
  *
