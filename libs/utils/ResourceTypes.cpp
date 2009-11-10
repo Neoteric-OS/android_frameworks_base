@@ -1137,10 +1137,11 @@ status_t ResXMLTree::validateNode(const ResXMLTree_node* node) const
 
 struct ResTable::Header
 {
-    Header(ResTable* _owner) : owner(_owner), ownedData(NULL), header(NULL) { }
+    Header(ResTable* _owner) : owner(_owner), ownedDataLst(NULL),
+			       header(NULL) { }
 
     ResTable* const                 owner;
-    void*                           ownedData;
+    void*                           ownedDataLst;
     const ResTable_header*          header;
     size_t                          size;
     const uint8_t*                  dataEnd;
@@ -1571,10 +1572,8 @@ status_t ResTable::add(const void* data, size_t size, void* cookie, bool copyDat
 status_t ResTable::add(Asset* asset, void* cookie, bool copyData)
 {
     const void* data = asset->getBuffer(true);
-    if (data == NULL) {
-        LOGW("Unable to get buffer of resource asset file");
-        return UNKNOWN_ERROR;
-    }
+    if(data == NULL)
+	return add_partial(asset, cookie);
     size_t size = (size_t)asset->getLength();
     return add(data, size, cookie, asset, copyData);
 }
@@ -1603,15 +1602,133 @@ status_t ResTable::add(ResTable* src)
     return mError;
 }
 
-status_t ResTable::add(const void* data, size_t size, void* cookie,
-                       Asset* asset, bool copyData)
-{
-    if (!data) return NO_ERROR;
-    Header* header = new Header(this);
+#define PARTIAL_BUF_SZ (2 * 1024 * 1024)
+
+/*
+ * Divide content of an asset into parts, and add parts separately.
+ * Every part contain one or more complete chunks.
+ */
+status_t ResTable::add_partial(Asset *asset, void *cookie) {
+    ResTable_header src_hdr;
+    ResTable_header *hdr;
+    Header *header;
+    void *databuf;
+    uint32_t total_pkg;
+    uint32_t hdr_sz;
+    uint32_t remain_dsz;
+    uint32_t pkg, dsz, rdsz;
+    uint32_t all_csz, last_all_csz = 0;
+    uint32_t last_partial_csz = 0;
+    ResChunk_header *chunk;
+    size_t csize;
+    uint16_t ctype;
+    status_t r;
+
+    asset->seek(0, SEEK_SET);
+    asset->read(&src_hdr, sizeof(ResTable_header));
+    src_hdr.header.size = dtohl(src_hdr.header.size);
+    src_hdr.header.headerSize = dtohl(src_hdr.header.headerSize);
+    src_hdr.packageCount = dtohl(src_hdr.packageCount);
+
+    header = new Header(this);
     header->index = mHeaders.size();
     header->cookie = cookie;
     mHeaders.add(header);
+    
+    hdr = (ResTable_header *)malloc(PARTIAL_BUF_SZ +
+				    src_hdr.header.headerSize);
+    if(hdr == NULL) {
+	mError = NO_MEMORY;
+	return NO_MEMORY;
+    }
+    databuf = ((uint8_t *)hdr) + src_hdr.header.headerSize;
 
+    if(sizeof(ResTable_header) > src_hdr.header.headerSize)
+	asset->seek(src_hdr.header.headerSize - sizeof(ResTable_header),
+		    1);
+
+    memcpy(hdr, &src_hdr, src_hdr.header.headerSize);
+    hdr->header.headerSize = htodl(src_hdr.header.headerSize);
+    
+    for(remain_dsz = src_hdr.header.size - src_hdr.header.headerSize;
+	remain_dsz > 0;
+	remain_dsz -= last_all_csz) {
+	rdsz = remain_dsz > PARTIAL_BUF_SZ?
+	    PARTIAL_BUF_SZ - last_partial_csz:
+	    remain_dsz - last_partial_csz;
+	
+	if(last_partial_csz > 0)
+	    memmove(databuf, (uint8_t *)databuf + last_all_csz,
+		    last_partial_csz);
+	rdsz = asset->read((uint8_t *)databuf + last_partial_csz, rdsz);
+	if(rdsz <= 0) {
+	    free(hdr);
+	    mError = UNKNOWN_ERROR;
+	    return UNKNOWN_ERROR;
+	}
+	dsz = rdsz + last_partial_csz;
+
+	/* Collect chunks as many as possible until databuf is full. */
+	pkg = 0;
+	all_csz = 0;
+	chunk = (ResChunk_header *)databuf;
+	while((uint32_t)((uint8_t *)chunk - (uint8_t *)databuf) <=
+	      (dsz - sizeof(ResChunk_header))) {
+	    csize = dtohl(chunk->size);
+	    ctype = dtohs(chunk->type);
+	    chunk = (ResChunk_header *)((uint8_t *)chunk + csize);
+	    if((uint32_t)((uint8_t *)chunk - (uint8_t *)databuf) > dsz)
+		break;
+	    all_csz += csize;
+	    if(ctype == RES_TABLE_PACKAGE_TYPE)
+		pkg++;
+	}
+	
+	hdr->header.size = htodl(all_csz + hdr->header.headerSize);
+	hdr->packageCount = htodl(pkg);
+	r = add(header, (void *)hdr,
+		all_csz + src_hdr.header.headerSize,
+		asset, true);
+	if(r != NO_ERROR) {
+	    free(hdr);
+	    return r;
+	}
+	
+	last_all_csz = all_csz;
+	last_partial_csz = dsz - all_csz;
+    }
+
+    free(hdr);
+    return NO_ERROR;
+}
+
+status_t ResTable::add(const void* data, size_t size, void* cookie,
+                       Asset* asset, bool copyData)
+{
+    Header *header = new Header(this);
+    status_t st;
+    
+    if (!data) return NO_ERROR;
+    
+    header->index = mHeaders.size();
+    header->cookie = cookie;
+    mHeaders.add(header);
+    
+    st = add(header, data, size, asset, copyData);
+
+    return st;
+}
+
+status_t ResTable::add(Header *header, const void* data, size_t size,
+		       Asset* asset, bool copyData)
+{
+    void *cookie;
+    void *owned_data;
+    
+    if (!data) return NO_ERROR;
+
+    cookie = header->cookie;
+    
     const bool notDeviceEndian = htods(0xf0) != 0xf0;
 
     LOAD_TABLE_NOISY(
@@ -1619,12 +1736,14 @@ status_t ResTable::add(const void* data, size_t size, void* cookie,
              data, size, cookie, asset, copyData));
     
     if (copyData || notDeviceEndian) {
-        header->ownedData = malloc(size);
-        if (header->ownedData == NULL) {
+	owned_data = malloc(size + sizeof(void *));
+        if (owned_data == NULL) {
             return (mError=NO_MEMORY);
         }
-        memcpy(header->ownedData, data, size);
-        data = header->ownedData;
+	*(void **)owned_data = header->ownedDataLst;
+        header->ownedDataLst = owned_data;
+        memcpy((uint8_t *)owned_data + sizeof(void *), data, size);
+        data = (uint8_t *)owned_data + sizeof(void *);
     }
 
     header->header = (const ResTable_header*)data;
@@ -1716,6 +1835,8 @@ status_t ResTable::getError() const
 
 void ResTable::uninit()
 {
+    void *owned_data_next;
+    
     mError = NO_INIT;
     size_t N = mPackageGroups.size();
     for (size_t i=0; i<N; i++) {
@@ -1726,8 +1847,10 @@ void ResTable::uninit()
     for (size_t i=0; i<N; i++) {
         Header* header = mHeaders[i];
         if (header->owner == this) {
-            if (header->ownedData) {
-                free(header->ownedData);
+            while (header->ownedDataLst) {
+		owned_data_next = *(void **)header->ownedDataLst;
+                free(header->ownedDataLst);
+		header->ownedDataLst = owned_data_next;
             }
             delete header;
         }

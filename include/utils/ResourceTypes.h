@@ -1896,7 +1896,10 @@ private:
     struct PackageGroup;
     struct bag_set;
 
+    status_t add_partial(Asset *asset, void *cookie);
     status_t add(const void* data, size_t size, void* cookie,
+                 Asset* asset, bool copyData);
+    status_t add(Header *header, const void* data, size_t size,
                  Asset* asset, bool copyData);
 
     ssize_t getResourcePackageIndex(uint32_t resID) const;

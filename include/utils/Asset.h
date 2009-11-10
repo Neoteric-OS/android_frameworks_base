@@ -307,6 +307,11 @@ public:
     virtual off_t getRemainingLength(void) const { return mUncompressedLen-mOffset; }
     virtual int openFileDescriptor(off_t* outStart, off_t* outLength) const { return -1; }
     virtual bool isAllocated(void) const { return mBuf != NULL; }
+    
+    /*
+     * Get a File pointer of uncompressed data.
+     */
+    FILE* getTmp(void);
 
 private:
     off_t       mStart;         // offset to start of compressed data
@@ -318,6 +323,7 @@ private:
     int         mFd;            // for file input
 
     unsigned char*  mBuf;       // for getBuffer()
+    FILE*       tmp;
 };
 
 // need: shared mmap version?

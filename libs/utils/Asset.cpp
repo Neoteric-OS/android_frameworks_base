@@ -659,7 +659,7 @@ const void* _FileAsset::ensureAlignment(FileMap* map)
  */
 _CompressedAsset::_CompressedAsset(void)
     : mStart(0), mCompressedLen(0), mUncompressedLen(0), mOffset(0),
-      mMap(NULL), mFd(-1), mBuf(NULL)
+      mMap(NULL), mFd(-1), mBuf(NULL), tmp(NULL)
 {
 }
 
@@ -668,6 +668,8 @@ _CompressedAsset::_CompressedAsset(void)
  */
 _CompressedAsset::~_CompressedAsset(void)
 {
+    if(tmp)
+	fclose(tmp);
     close();
 }
 
@@ -685,6 +687,7 @@ status_t _CompressedAsset::openChunk(int fd, off_t offset,
     assert(fd >= 0);
     assert(offset >= 0);
     assert(compressedLen > 0);
+    assert(tmp == NULL);
 
     if (compressionMethod != ZipFileRO::kCompressDeflated) {
         assert(false);
@@ -736,14 +739,18 @@ ssize_t _CompressedAsset::read(void* buf, size_t count)
 {
     size_t maxLen;
     size_t actual;
+    int r;
 
     assert(mOffset >= 0 && mOffset <= mUncompressedLen);
 
     // TODO: if mAccessMode == ACCESS_STREAMING, use zlib more cleverly
 
-    if (mBuf == NULL) {
-        if (getBuffer(false) == NULL)
-            return -1;
+    while (mBuf == NULL && tmp == NULL) {
+        if (getBuffer(false) != NULL)
+	    break;
+	if (getTmp() != NULL)
+	    break;
+	return -1;
     }
     assert(mBuf != NULL);
 
@@ -757,7 +764,14 @@ ssize_t _CompressedAsset::read(void* buf, size_t count)
 
     /* copy from buffer */
     //printf("comp buf read\n");
-    memcpy(buf, (char*)mBuf + mOffset, count);
+    if(mBuf)
+	memcpy(buf, (char*)mBuf + mOffset, count);
+    else {
+	fseek(tmp, mOffset, SEEK_SET);
+	r = fread(buf, count, 1, tmp);
+	if(r != 1)
+	    return -1;
+    }
     actual = count;
 
     mOffset += actual;
@@ -801,6 +815,11 @@ void _CompressedAsset::close(void)
     if (mFd > 0) {
         ::close(mFd);
         mFd = -1;
+    }
+
+    if(tmp != NULL) {
+	fclose(tmp);
+	tmp = NULL;
     }
 }
 
@@ -860,5 +879,60 @@ const void* _CompressedAsset::getBuffer(bool wordAligned)
 bail:
     delete[] buf;
     return mBuf;
+}
+
+/*
+ * Get a FILE pointer for uncompressed data.
+ *
+ * The first time this is called, we expand the compressed data into a
+ * tmp file.
+ */
+FILE* _CompressedAsset::getTmp(void)
+{
+    FILE *fp = NULL, *ofp = NULL;
+
+    if(tmp != NULL)
+	return tmp;
+
+    ofp = tmpfile();
+    if(ofp == NULL)
+	goto bail;
+
+    if (mMap != NULL) {
+        if (!ZipFileRO::inflateBuffer(fileno(ofp), mMap->getDataPtr(),
+                mUncompressedLen, mCompressedLen))
+            goto bail;
+    } else {
+	assert(mFd >= 0);
+	
+	fp = fdopen(mFd, "r+");
+	if(fp == NULL)
+	    goto bail;
+	
+	/*
+	 * Seek to the start of the compressed data.
+	 */
+	if (fseek(fp, mStart, SEEK_SET) != mStart)
+	    goto bail;
+	
+	/*
+	 * Expand the data into it.
+	 */
+	if (!ZipUtils::inflateToFile(fp, ofp, mCompressedLen))
+	    goto bail;
+	
+	fclose(fp);
+    }
+
+    /* success! */
+    tmp = ofp;
+    return tmp;
+
+bail:
+    if(fp != NULL)
+	fclose(fp);
+    if(ofp != NULL)
+	fclose(ofp);
+    return NULL;
 }
 
