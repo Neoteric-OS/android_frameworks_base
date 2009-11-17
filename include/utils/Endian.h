@@ -20,11 +20,17 @@
 #ifndef _LIBS_UTILS_ENDIAN_H
 #define _LIBS_UTILS_ENDIAN_H
 
+#if defined(HAVE_ENDIAN_H) || defined(HAVE_SYS_ENDIAN_H)
+
 #if defined(HAVE_ENDIAN_H)
-
 #include <endian.h>
+#endif
 
-#else /*not HAVE_ENDIAN_H*/
+#if defined(HAVE_SYS_ENDIAN_H)
+#include <sys/endian.h>
+#endif
+
+#else /*not HAVE_ENDIAN_H nor HAVE_SYS_ENDIAN_H */
 
 #define __BIG_ENDIAN 0x1000
 #define __LITTLE_ENDIAN 0x0001
