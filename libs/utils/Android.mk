@@ -51,6 +51,12 @@ include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES:= $(commonSources)
 
+ifeq ($(HOST_OS),freebsd)
+# XXX: changing compliler to g++34 in order to compile with <unwind.h>
+#     This must be done somehow in proper way in future, without mixing of compilers
+	LOCAL_CXX = g++34
+endif
+
 LOCAL_MODULE:= libutils
 
 LOCAL_CFLAGS += -DLIBUTILS_NATIVE=1 $(TOOL_CFLAGS)
