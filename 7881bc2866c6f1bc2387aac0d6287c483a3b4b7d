@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAo3///HM\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmServiceStateTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2009-11-24T16:52:07Z",
+      "side": 1,
+      "message": "This comment describes your change, not the code itself. \"more straight-forward and more efficient than what?\"",
+      "revId": "7881bc2866c6f1bc2387aac0d6287c483a3b4b7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
