@@ -16,6 +16,24 @@
       "revId": "7881bc2866c6f1bc2387aac0d6287c483a3b4b7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAo3///HA\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmServiceStateTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1002827
+      },
+      "writtenOn": "2009-11-24T17:03:40Z",
+      "side": 1,
+      "message": "More straight-forward and efficient than checking the alphanumeric strings. Efficient in terms of string length that needs to be compared. More straight-forward in terms of not having to check the alphanumeric identifier AND the country-part of the numeric identifier.",
+      "parentUuid": "AAAAo3///HM\u003d",
+      "revId": "7881bc2866c6f1bc2387aac0d6287c483a3b4b7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
