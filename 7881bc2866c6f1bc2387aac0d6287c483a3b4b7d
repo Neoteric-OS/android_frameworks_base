@@ -34,6 +34,24 @@
       "revId": "7881bc2866c6f1bc2387aac0d6287c483a3b4b7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAo3///Go\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmServiceStateTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2009-11-24T17:34:40Z",
+      "side": 1,
+      "message": "Yup, but people reading the code won\u0027t know that, there\u0027s no hint of strings being compared anywhere in the code.",
+      "parentUuid": "AAAAo3///HA\u003d",
+      "revId": "7881bc2866c6f1bc2387aac0d6287c483a3b4b7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
