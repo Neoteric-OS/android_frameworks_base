@@ -1281,26 +1281,20 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
      * @return true for roaming state set
      */
     private boolean isRoamingBetweenOperators(boolean gsmRoaming, ServiceState s) {
-        String spn = SystemProperties.get(TelephonyProperties.PROPERTY_ICC_OPERATOR_ALPHA, "empty");
-
-        String onsl = s.getOperatorAlphaLong();
-        String onss = s.getOperatorAlphaShort();
-
-        boolean equalsOnsl = onsl != null && spn.equals(onsl);
-        boolean equalsOnss = onss != null && spn.equals(onss);
-
-        String simNumeric = SystemProperties.get(
-                TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC, "");
+	String simNumeric = SystemProperties.get(PROPERTY_ICC_OPERATOR_NUMERIC, "");
         String  operatorNumeric = s.getOperatorNumeric();
+	
+	/* Okay, this should really make things more straight-forward
+         * and more efficient...
+         * The numeric values have always to be present from my understanding,
+         * whilst the alphanumeric value is not present at least on my
+         * SIM card.
+         * Also, the country check can safely be omitted, the numerics match
+         * so the country matches too. -speijnik
+         */
 
-        boolean equalsMcc = true;
-        try {
-            equalsMcc = simNumeric.substring(0, 3).
-                    equals(operatorNumeric.substring(0, 3));
-        } catch (Exception e){
-        }
-
-        return gsmRoaming && !(equalsMcc && (equalsOnsl || equalsOnss));
+	// TODO: what about mobile virtual network operators? -speijnik
+	return gsmRoaming && !simNumeric.equals(operatorNumeric);
     }
 
     private static int twoDigitsAt(String s, int offset) {
