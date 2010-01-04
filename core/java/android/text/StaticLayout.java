@@ -374,7 +374,8 @@ extends Layout
                         d == Character.DIRECTIONALITY_RIGHT_TO_LEFT)
                         cur = d;
 
-                    if (d == Character.DIRECTIONALITY_EUROPEAN_NUMBER)
+                    if (d == Character.DIRECTIONALITY_EUROPEAN_NUMBER  && 
+			cur == Character.DIRECTIONALITY_LEFT_TO_RIGHT)
                         chdirs[j] = cur;
                 }
 
