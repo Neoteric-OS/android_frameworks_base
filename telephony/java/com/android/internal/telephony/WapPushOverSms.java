@@ -24,6 +24,7 @@ import android.provider.Telephony.Sms.Intents;
 import android.util.Config;
 import android.util.Log;
 
+import java.util.HashMap;
 
 /**
  * WAP push handler class.
@@ -59,7 +60,7 @@ public class WapPushOverSms {
      */
     public int dispatchWapPdu(byte[] pdu) {
 
-        if (Config.LOGD) Log.d(LOG_TAG, "Rx: " + IccUtils.bytesToHexString(pdu));
+        if (Config.DEBUG) Log.d(LOG_TAG, "Rx: " + IccUtils.bytesToHexString(pdu));
 
         int index = 0;
         int transactionId = pdu[index++] & 0xFF;
@@ -68,7 +69,7 @@ public class WapPushOverSms {
 
         if ((pduType != WspTypeDecoder.PDU_TYPE_PUSH) &&
                 (pduType != WspTypeDecoder.PDU_TYPE_CONFIRMED_PUSH)) {
-            if (Config.LOGD) Log.w(LOG_TAG, "Received non-PUSH WAP PDU. Type = " + pduType);
+            if (Config.DEBUG) Log.w(LOG_TAG, "Received non-PUSH WAP PDU. Type = " + pduType);
             return Intents.RESULT_SMS_HANDLED;
         }
 
@@ -81,7 +82,7 @@ public class WapPushOverSms {
          * So it will be encoded in no more than 5 octets.
          */
         if (pduDecoder.decodeUintvarInteger(index) == false) {
-            if (Config.LOGD) Log.w(LOG_TAG, "Received PDU. Header Length error.");
+            if (Config.DEBUG) Log.w(LOG_TAG, "Received PDU. Header Length error.");
             return Intents.RESULT_SMS_GENERIC_ERROR;
         }
         headerLength = (int)pduDecoder.getValue32();
@@ -102,10 +103,12 @@ public class WapPushOverSms {
          * Length = Uintvar-integer
          */
         if (pduDecoder.decodeContentType(index) == false) {
-            if (Config.LOGD) Log.w(LOG_TAG, "Received PDU. Header Content-Type error.");
+            if (Config.DEBUG) Log.w(LOG_TAG, "Received PDU. Header Content-Type error.");
             return Intents.RESULT_SMS_GENERIC_ERROR;
         }
+
         int binaryContentType;
+
         String mimeType = pduDecoder.getValueString();
         if (mimeType == null) {
             binaryContentType = (int)pduDecoder.getValue32();
@@ -133,7 +136,7 @@ public class WapPushOverSms {
                     mimeType = WspTypeDecoder.CONTENT_MIME_TYPE_B_VND_DOCOMO_PF;
                     break;
                 default:
-                    if (Config.LOGD) {
+                    if (Config.DEBUG) {
                         Log.w(LOG_TAG,
                                 "Received PDU. Unsupported Content-Type = " + binaryContentType);
                     }
@@ -155,7 +158,9 @@ public class WapPushOverSms {
             } else if (mimeType.equals(WspTypeDecoder.CONTENT_MIME_TYPE_B_VND_DOCOMO_PF)) {
                 binaryContentType = WspTypeDecoder.CONTENT_TYPE_B_VND_DOCOMO_PF;
             } else {
-                if (Config.LOGD) Log.w(LOG_TAG, "Received PDU. Unknown Content-Type = " + mimeType);
+                if (Config.DEBUG) {
+                    Log.w(LOG_TAG, "Received PDU. Unknown Content-Type = " + mimeType);
+                }
                 return Intents.RESULT_SMS_HANDLED;
             }
         }
@@ -176,13 +181,14 @@ public class WapPushOverSms {
         }
         if (dispatchedByApplication == false) {
             dispatchWapPdu_default(pdu, transactionId, pduType, mimeType,
-                                   headerStartIndex, headerLength);
+                                   headerStartIndex, headerLength, pduDecoder.getContentParameters());
         }
         return Activity.RESULT_OK;
     }
 
     private void dispatchWapPdu_default(byte[] pdu, int transactionId, int pduType,
-                                        String mimeType, int headerStartIndex, int headerLength) {
+                                        String mimeType, int headerStartIndex, int headerLength,
+					HashMap<String, String> contentTypeParameters) {
         byte[] header = new byte[headerLength];
         System.arraycopy(pdu, headerStartIndex, header, 0, header.length);
         int dataIndex = headerStartIndex + headerLength;
@@ -197,6 +203,7 @@ public class WapPushOverSms {
         intent.putExtra("pduType", pduType);
         intent.putExtra("header", header);
         intent.putExtra("data", data);
+        intent.putExtra("contentTypeParameters", contentTypeParameters);
 
         mSmsDispatcher.dispatch(intent, "android.permission.RECEIVE_WAP_PUSH");
     }
