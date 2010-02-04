@@ -386,6 +386,10 @@ public class TelephonyManager {
     public static final int NETWORK_TYPE_HSUPA = 9;
     /** Current network is HSPA */
     public static final int NETWORK_TYPE_HSPA = 10;
+    /** Current network is WIMAX */
+    public static final int NETWORK_TYPE_WIMAX = 11;
+    /** Current network is iDen */
+    public static final int NETWORK_TYPE_IDEN = 12;
 
     /**
      * Returns a constant indicating the radio technology (network type)
@@ -451,6 +455,10 @@ public class TelephonyManager {
                 return "CDMA - EvDo rev. A";
             case NETWORK_TYPE_1xRTT:
                 return "CDMA - 1xRTT";
+            case NETWORK_TYPE_WIMAX:
+                return "WiMax";
+            case NETWORK_TYPE_IDEN:
+                return "iDen";
             default:
                 return "UNKNOWN";
         }
