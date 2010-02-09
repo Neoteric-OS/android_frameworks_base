@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAr3//+mk\u003d",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1003302
+      },
+      "writtenOn": "2010-02-09T07:28:49Z",
+      "side": 1,
+      "message": "This comment is now needless thanks to your work, since the name of method should tell everything.",
+      "revId": "5cab830350d785a58367eba79e268d9e8ee16aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAr3//+mo\u003d",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1003302
+      },
+      "writtenOn": "2010-02-09T07:28:49Z",
+      "side": 1,
+      "message": "This is just my preference, but using \"final Editable text\" would let readers understand you don\u0027t want to change the meaning of text, so the code becomes a little more consolidate.",
+      "revId": "5cab830350d785a58367eba79e268d9e8ee16aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAr3//+ms\u003d",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1003302
+      },
+      "writtenOn": "2010-02-09T07:28:49Z",
+      "side": 1,
+      "message": "Calling text.length() every time is not so efficient. How about adding \"final int length \u003d text.length()\" and use it instead?",
+      "revId": "5cab830350d785a58367eba79e268d9e8ee16aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
