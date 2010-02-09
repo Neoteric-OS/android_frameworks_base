@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAr3//+mc\u003d",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1003302
+      },
+      "writtenOn": "2010-02-09T07:35:28Z",
+      "side": 1,
+      "message": "Hmm, on second thought, we should remain as is. Sorry for my first inappropriate suggestion \u003d(",
+      "parentUuid": "AAAAr3//+mk\u003d",
+      "revId": "5cab830350d785a58367eba79e268d9e8ee16aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAr3//+mo\u003d",
         "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
         "patchSetId": 1
