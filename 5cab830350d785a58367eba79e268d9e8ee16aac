@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAr3//+kw\u003d",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1003302
+      },
+      "writtenOn": "2010-02-10T01:11:49Z",
+      "side": 1,
+      "message": "OK. Go on.",
+      "parentUuid": "AAAAr3//+mU\u003d",
+      "revId": "5cab830350d785a58367eba79e268d9e8ee16aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAr3//+ms\u003d",
         "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
         "patchSetId": 1
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "that would break the algorithm. the text length changes when it deletes \u0027-\u0027-characters.",
       "parentUuid": "AAAAr3//+ms\u003d",
+      "revId": "5cab830350d785a58367eba79e268d9e8ee16aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAr3//+k0\u003d",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1003302
+      },
+      "writtenOn": "2010-02-10T01:11:49Z",
+      "side": 1,
+      "message": "Oh, sorry \u003d)",
+      "parentUuid": "AAAAr3//+mQ\u003d",
       "revId": "5cab830350d785a58367eba79e268d9e8ee16aac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
