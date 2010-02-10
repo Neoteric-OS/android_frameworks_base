@@ -4291,7 +4291,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
         switch (result) {
             case INJECT_NO_PERMISSION:
                 throw new SecurityException(
-                        "Injecting to another application requires INJECT_EVENT permission");
+                        "Injecting to another application requires INJECT_EVENTS permission");
             case INJECT_SUCCEEDED:
                 return true;
         }
@@ -4319,7 +4319,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
         switch (result) {
             case INJECT_NO_PERMISSION:
                 throw new SecurityException(
-                        "Injecting to another application requires INJECT_EVENT permission");
+                        "Injecting to another application requires INJECT_EVENTS permission");
             case INJECT_SUCCEEDED:
                 return true;
         }
@@ -4347,7 +4347,7 @@ public class WindowManagerService extends IWindowManager.Stub implements Watchdo
         switch (result) {
             case INJECT_NO_PERMISSION:
                 throw new SecurityException(
-                        "Injecting to another application requires INJECT_EVENT permission");
+                        "Injecting to another application requires INJECT_EVENTS permission");
             case INJECT_SUCCEEDED:
                 return true;
         }
