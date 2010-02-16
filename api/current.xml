@@ -86942,6 +86942,766 @@
 </package>
 <package name="android.opengl"
 >
+<class name="EglHelper"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="EglHelper"
+ type="android.opengl.EglHelper"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="chooser" type="android.opengl.EglHelper.EGLConfigChooser">
+</parameter>
+<parameter name="contextFactory" type="android.opengl.EglHelper.EGLContextFactory">
+</parameter>
+<parameter name="surfaceFactory" type="android.opengl.EglHelper.EGLWindowSurfaceFactory">
+</parameter>
+<parameter name="wrapper" type="android.opengl.EglHelper.GLWrapper">
+</parameter>
+</constructor>
+<method name="createSurface"
+ return="javax.microedition.khronos.opengles.GL"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="holder" type="android.view.SurfaceHolder">
+</parameter>
+</method>
+<method name="destroySurface"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="finish"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getDebugFlags"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getEGLConfig"
+ return="javax.microedition.khronos.egl.EGLConfig"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setDebugFlags"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="debugFlags" type="int">
+</parameter>
+</method>
+<method name="start"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="swap"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<field name="DEBUG_CHECK_GL_ERROR"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="DEBUG_LOG_GL_CALLS"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="2"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="RENDERMODE_CONTINUOUSLY"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="RENDERMODE_WHEN_DIRTY"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="0"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+<class name="EglHelper.BaseConfigChooser"
+ extends="java.lang.Object"
+ abstract="true"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility=""
+>
+<implements name="android.opengl.EglHelper.EGLConfigChooser">
+</implements>
+<constructor name="EglHelper.BaseConfigChooser"
+ type="android.opengl.EglHelper.BaseConfigChooser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="configSpec" type="int[]">
+</parameter>
+</constructor>
+<method name="chooseConfig"
+ return="javax.microedition.khronos.egl.EGLConfig"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="egl" type="javax.microedition.khronos.egl.EGL10">
+</parameter>
+<parameter name="display" type="javax.microedition.khronos.egl.EGLDisplay">
+</parameter>
+</method>
+<field name="mConfigSpec"
+ type="int[]"
+ transient="false"
+ volatile="false"
+ value="null"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+</field>
+</class>
+<class name="EglHelper.ComponentSizeChooser"
+ extends="android.opengl.EglHelper.BaseConfigChooser"
+ abstract="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="EglHelper.ComponentSizeChooser"
+ type="android.opengl.EglHelper.ComponentSizeChooser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="redSize" type="int">
+</parameter>
+<parameter name="greenSize" type="int">
+</parameter>
+<parameter name="blueSize" type="int">
+</parameter>
+<parameter name="alphaSize" type="int">
+</parameter>
+<parameter name="depthSize" type="int">
+</parameter>
+<parameter name="stencilSize" type="int">
+</parameter>
+</constructor>
+<method name="chooseConfig"
+ return="javax.microedition.khronos.egl.EGLConfig"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="egl" type="javax.microedition.khronos.egl.EGL10">
+</parameter>
+<parameter name="display" type="javax.microedition.khronos.egl.EGLDisplay">
+</parameter>
+<parameter name="configs" type="javax.microedition.khronos.egl.EGLConfig[]">
+</parameter>
+</method>
+<field name="mAlphaSize"
+ type="int"
+ transient="false"
+ volatile="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+</field>
+<field name="mBlueSize"
+ type="int"
+ transient="false"
+ volatile="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+</field>
+<field name="mDepthSize"
+ type="int"
+ transient="false"
+ volatile="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+</field>
+<field name="mGreenSize"
+ type="int"
+ transient="false"
+ volatile="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+</field>
+<field name="mRedSize"
+ type="int"
+ transient="false"
+ volatile="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+</field>
+<field name="mStencilSize"
+ type="int"
+ transient="false"
+ volatile="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+</field>
+</class>
+<class name="EglHelper.DefaultContextFactory"
+ extends="java.lang.Object"
+ abstract="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="android.opengl.EglHelper.EGLContextFactory">
+</implements>
+<constructor name="EglHelper.DefaultContextFactory"
+ type="android.opengl.EglHelper.DefaultContextFactory"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="createContext"
+ return="javax.microedition.khronos.egl.EGLContext"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="egl" type="javax.microedition.khronos.egl.EGL10">
+</parameter>
+<parameter name="display" type="javax.microedition.khronos.egl.EGLDisplay">
+</parameter>
+<parameter name="config" type="javax.microedition.khronos.egl.EGLConfig">
+</parameter>
+</method>
+<method name="destroyContext"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="egl" type="javax.microedition.khronos.egl.EGL10">
+</parameter>
+<parameter name="display" type="javax.microedition.khronos.egl.EGLDisplay">
+</parameter>
+<parameter name="context" type="javax.microedition.khronos.egl.EGLContext">
+</parameter>
+</method>
+</class>
+<class name="EglHelper.DefaultWindowSurfaceFactory"
+ extends="java.lang.Object"
+ abstract="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="android.opengl.EglHelper.EGLWindowSurfaceFactory">
+</implements>
+<constructor name="EglHelper.DefaultWindowSurfaceFactory"
+ type="android.opengl.EglHelper.DefaultWindowSurfaceFactory"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="createWindowSurface"
+ return="javax.microedition.khronos.egl.EGLSurface"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="egl" type="javax.microedition.khronos.egl.EGL10">
+</parameter>
+<parameter name="display" type="javax.microedition.khronos.egl.EGLDisplay">
+</parameter>
+<parameter name="config" type="javax.microedition.khronos.egl.EGLConfig">
+</parameter>
+<parameter name="nativeWindow" type="java.lang.Object">
+</parameter>
+</method>
+<method name="destroySurface"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="egl" type="javax.microedition.khronos.egl.EGL10">
+</parameter>
+<parameter name="display" type="javax.microedition.khronos.egl.EGLDisplay">
+</parameter>
+<parameter name="surface" type="javax.microedition.khronos.egl.EGLSurface">
+</parameter>
+</method>
+</class>
+<interface name="EglHelper.EGLConfigChooser"
+ abstract="true"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="chooseConfig"
+ return="javax.microedition.khronos.egl.EGLConfig"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="egl" type="javax.microedition.khronos.egl.EGL10">
+</parameter>
+<parameter name="display" type="javax.microedition.khronos.egl.EGLDisplay">
+</parameter>
+</method>
+</interface>
+<interface name="EglHelper.EGLContextFactory"
+ abstract="true"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="createContext"
+ return="javax.microedition.khronos.egl.EGLContext"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="egl" type="javax.microedition.khronos.egl.EGL10">
+</parameter>
+<parameter name="display" type="javax.microedition.khronos.egl.EGLDisplay">
+</parameter>
+<parameter name="eglConfig" type="javax.microedition.khronos.egl.EGLConfig">
+</parameter>
+</method>
+<method name="destroyContext"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="egl" type="javax.microedition.khronos.egl.EGL10">
+</parameter>
+<parameter name="display" type="javax.microedition.khronos.egl.EGLDisplay">
+</parameter>
+<parameter name="context" type="javax.microedition.khronos.egl.EGLContext">
+</parameter>
+</method>
+</interface>
+<interface name="EglHelper.EGLWindowSurfaceFactory"
+ abstract="true"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="createWindowSurface"
+ return="javax.microedition.khronos.egl.EGLSurface"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="egl" type="javax.microedition.khronos.egl.EGL10">
+</parameter>
+<parameter name="display" type="javax.microedition.khronos.egl.EGLDisplay">
+</parameter>
+<parameter name="config" type="javax.microedition.khronos.egl.EGLConfig">
+</parameter>
+<parameter name="nativeWindow" type="java.lang.Object">
+</parameter>
+</method>
+<method name="destroySurface"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="egl" type="javax.microedition.khronos.egl.EGL10">
+</parameter>
+<parameter name="display" type="javax.microedition.khronos.egl.EGLDisplay">
+</parameter>
+<parameter name="surface" type="javax.microedition.khronos.egl.EGLSurface">
+</parameter>
+</method>
+</interface>
+<class name="EglHelper.GLThread"
+ extends="java.lang.Thread"
+ abstract="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="EglHelper.GLThread"
+ type="android.opengl.EglHelper.GLThread"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="renderer" type="android.opengl.GLRenderer">
+</parameter>
+<parameter name="chooser" type="android.opengl.EglHelper.EGLConfigChooser">
+</parameter>
+<parameter name="contextFactory" type="android.opengl.EglHelper.EGLContextFactory">
+</parameter>
+<parameter name="surfaceFactory" type="android.opengl.EglHelper.EGLWindowSurfaceFactory">
+</parameter>
+<parameter name="wrapper" type="android.opengl.EglHelper.GLWrapper">
+</parameter>
+</constructor>
+<method name="getRenderMode"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="onPause"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="onResume"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="onWindowResize"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="w" type="int">
+</parameter>
+<parameter name="h" type="int">
+</parameter>
+</method>
+<method name="queueEvent"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="r" type="java.lang.Runnable">
+</parameter>
+</method>
+<method name="requestExitAndWait"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="requestRender"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setRenderMode"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="renderMode" type="int">
+</parameter>
+</method>
+<method name="surfaceCreated"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="holder" type="android.view.SurfaceHolder">
+</parameter>
+</method>
+<method name="surfaceDestroyed"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<field name="DEBUG_CHECK_GL_ERROR"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="DEBUG_LOG_GL_CALLS"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="2"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="mDone"
+ type="boolean"
+ transient="false"
+ volatile="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="mHolder"
+ type="android.view.SurfaceHolder"
+ transient="false"
+ volatile="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+<interface name="EglHelper.GLWrapper"
+ abstract="true"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="wrap"
+ return="javax.microedition.khronos.opengles.GL"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="gl" type="javax.microedition.khronos.opengles.GL">
+</parameter>
+</method>
+</interface>
+<class name="EglHelper.SimpleEGLConfigChooser"
+ extends="android.opengl.EglHelper.ComponentSizeChooser"
+ abstract="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="EglHelper.SimpleEGLConfigChooser"
+ type="android.opengl.EglHelper.SimpleEGLConfigChooser"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="withDepthBuffer" type="boolean">
+</parameter>
+</constructor>
+</class>
 <class name="GLDebugHelper"
  extends="java.lang.Object"
  abstract="false"
@@ -97474,6 +98234,59 @@
 </parameter>
 </constructor>
 </class>
+<interface name="GLRenderer"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="onDrawFrame"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="gl" type="javax.microedition.khronos.opengles.GL10">
+</parameter>
+</method>
+<method name="onSurfaceChanged"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="gl" type="javax.microedition.khronos.opengles.GL10">
+</parameter>
+<parameter name="width" type="int">
+</parameter>
+<parameter name="height" type="int">
+</parameter>
+</method>
+<method name="onSurfaceCreated"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="gl" type="javax.microedition.khronos.opengles.GL10">
+</parameter>
+<parameter name="config" type="javax.microedition.khronos.egl.EGLConfig">
+</parameter>
+</method>
+</interface>
 <class name="GLSurfaceView"
  extends="android.view.SurfaceView"
  abstract="false"
@@ -97597,7 +98410,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="configChooser" type="android.opengl.GLSurfaceView.EGLConfigChooser">
+<parameter name="configChooser" type="android.opengl.EglHelper.EGLConfigChooser">
 </parameter>
 </method>
 <method name="setEGLConfigChooser"
@@ -97646,7 +98459,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="factory" type="android.opengl.GLSurfaceView.EGLContextFactory">
+<parameter name="factory" type="android.opengl.EglHelper.EGLContextFactory">
 </parameter>
 </method>
 <method name="setEGLWindowSurfaceFactory"
@@ -97659,7 +98472,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="factory" type="android.opengl.GLSurfaceView.EGLWindowSurfaceFactory">
+<parameter name="factory" type="android.opengl.EglHelper.EGLWindowSurfaceFactory">
 </parameter>
 </method>
 <method name="setGLWrapper"
@@ -97672,7 +98485,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="glWrapper" type="android.opengl.GLSurfaceView.GLWrapper">
+<parameter name="glWrapper" type="android.opengl.EglHelper.GLWrapper">
 </parameter>
 </method>
 <method name="setRenderMode"
@@ -97698,7 +98511,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="renderer" type="android.opengl.GLSurfaceView.Renderer">
+<parameter name="renderer" type="android.opengl.GLRenderer">
 </parameter>
 </method>
 <method name="surfaceChanged"
@@ -97791,156 +98604,15 @@
 >
 </field>
 </class>
-<interface name="GLSurfaceView.EGLConfigChooser"
- abstract="true"
- static="true"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<method name="chooseConfig"
- return="javax.microedition.khronos.egl.EGLConfig"
- abstract="true"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="egl" type="javax.microedition.khronos.egl.EGL10">
-</parameter>
-<parameter name="display" type="javax.microedition.khronos.egl.EGLDisplay">
-</parameter>
-</method>
-</interface>
-<interface name="GLSurfaceView.EGLContextFactory"
- abstract="true"
- static="true"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<method name="createContext"
- return="javax.microedition.khronos.egl.EGLContext"
- abstract="true"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="egl" type="javax.microedition.khronos.egl.EGL10">
-</parameter>
-<parameter name="display" type="javax.microedition.khronos.egl.EGLDisplay">
-</parameter>
-<parameter name="eglConfig" type="javax.microedition.khronos.egl.EGLConfig">
-</parameter>
-</method>
-<method name="destroyContext"
- return="void"
- abstract="true"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="egl" type="javax.microedition.khronos.egl.EGL10">
-</parameter>
-<parameter name="display" type="javax.microedition.khronos.egl.EGLDisplay">
-</parameter>
-<parameter name="context" type="javax.microedition.khronos.egl.EGLContext">
-</parameter>
-</method>
-</interface>
-<interface name="GLSurfaceView.EGLWindowSurfaceFactory"
- abstract="true"
- static="true"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<method name="createWindowSurface"
- return="javax.microedition.khronos.egl.EGLSurface"
- abstract="true"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="egl" type="javax.microedition.khronos.egl.EGL10">
-</parameter>
-<parameter name="display" type="javax.microedition.khronos.egl.EGLDisplay">
-</parameter>
-<parameter name="config" type="javax.microedition.khronos.egl.EGLConfig">
-</parameter>
-<parameter name="nativeWindow" type="java.lang.Object">
-</parameter>
-</method>
-<method name="destroySurface"
- return="void"
- abstract="true"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="egl" type="javax.microedition.khronos.egl.EGL10">
-</parameter>
-<parameter name="display" type="javax.microedition.khronos.egl.EGLDisplay">
-</parameter>
-<parameter name="surface" type="javax.microedition.khronos.egl.EGLSurface">
-</parameter>
-</method>
-</interface>
-<interface name="GLSurfaceView.GLWrapper"
- abstract="true"
- static="true"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<method name="wrap"
- return="javax.microedition.khronos.opengles.GL"
- abstract="true"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="gl" type="javax.microedition.khronos.opengles.GL">
-</parameter>
-</method>
-</interface>
 <interface name="GLSurfaceView.Renderer"
  abstract="true"
  static="true"
  final="false"
- deprecated="not deprecated"
+ deprecated="deprecated"
  visibility="public"
 >
-<method name="onDrawFrame"
- return="void"
- abstract="true"
- native="false"
- synchronized="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="gl" type="javax.microedition.khronos.opengles.GL10">
-</parameter>
-</method>
+<implements name="android.opengl.GLRenderer">
+</implements>
 <method name="onSurfaceChanged"
  return="void"
  abstract="true"
@@ -123480,6 +124152,290 @@
 </package>
 <package name="android.service.wallpaper"
 >
+<class name="GLWallpaperService"
+ extends="android.service.wallpaper.WallpaperService"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="GLWallpaperService"
+ type="android.service.wallpaper.GLWallpaperService"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="onCreateEngine"
+ return="android.service.wallpaper.WallpaperService.Engine"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</class>
+<class name="GLWallpaperService.GLEngine"
+ extends="android.service.wallpaper.WallpaperService.Engine"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="GLWallpaperService.GLEngine"
+ type="android.service.wallpaper.GLWallpaperService.GLEngine"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="getDebugFlags"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getRenderMode"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="onPause"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="onResume"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="queueEvent"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="r" type="java.lang.Runnable">
+</parameter>
+</method>
+<method name="requestRender"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setDebugFlags"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="debugFlags" type="int">
+</parameter>
+</method>
+<method name="setEGLConfigChooser"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="configChooser" type="android.opengl.EglHelper.EGLConfigChooser">
+</parameter>
+</method>
+<method name="setEGLConfigChooser"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="needDepth" type="boolean">
+</parameter>
+</method>
+<method name="setEGLConfigChooser"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="redSize" type="int">
+</parameter>
+<parameter name="greenSize" type="int">
+</parameter>
+<parameter name="blueSize" type="int">
+</parameter>
+<parameter name="alphaSize" type="int">
+</parameter>
+<parameter name="depthSize" type="int">
+</parameter>
+<parameter name="stencilSize" type="int">
+</parameter>
+</method>
+<method name="setEGLContextFactory"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="factory" type="android.opengl.EglHelper.EGLContextFactory">
+</parameter>
+</method>
+<method name="setEGLWindowSurfaceFactory"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="factory" type="android.opengl.EglHelper.EGLWindowSurfaceFactory">
+</parameter>
+</method>
+<method name="setGLWrapper"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="glWrapper" type="android.opengl.EglHelper.GLWrapper">
+</parameter>
+</method>
+<method name="setRenderMode"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="renderMode" type="int">
+</parameter>
+</method>
+<method name="setRenderer"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="renderer" type="android.opengl.GLRenderer">
+</parameter>
+</method>
+<field name="DEBUG_CHECK_GL_ERROR"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="DEBUG_LOG_GL_CALLS"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="2"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="RENDERMODE_CONTINUOUSLY"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="RENDERMODE_WHEN_DIRTY"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="0"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
 <class name="WallpaperService"
  extends="android.app.Service"
  abstract="true"
