@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAuH///+k\u003d",
+        "filename": "services/java/com/android/server/LocationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1209,
+      "author": {
+        "id": 1003384
+      },
+      "writtenOn": "2010-02-28T03:22:10Z",
+      "side": 1,
+      "message": "See http://code.google.com/p/android/issues/detail?id\u003d6900",
+      "revId": "82ac6526f81cc6774493f239bec8fcbce5630402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
