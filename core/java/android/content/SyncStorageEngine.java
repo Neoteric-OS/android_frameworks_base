@@ -952,10 +952,12 @@ public class SyncStorageEngine extends Handler {
             while (i > 0) {
                 i--;
                 SyncStatusInfo stats = mSyncStatus.valueAt(i);
-                AuthorityInfo authority = mAuthorities.get(stats.authorityId);
-                if (authority != null && authority.enabled) {
-                    if (oldest == 0 || stats.initialFailureTime < oldest) {
-                        oldest = stats.initialFailureTime;
+                if (stats != null) {
+                    AuthorityInfo authority = mAuthorities.get(stats.authorityId);
+                    if (authority != null && authority.enabled) {
+                        if (oldest == 0 || stats.initialFailureTime < oldest) {
+                            oldest = stats.initialFailureTime;
+                        }
                     }
                 }
             }
@@ -1285,7 +1287,7 @@ public class SyncStorageEngine extends Handler {
                     while (i > 0) {
                         i--;
                         st = mSyncStatus.valueAt(i);
-                        if (st.authorityId == authority.ident) {
+                        if (st != null && st.authorityId == authority.ident) {
                             found = true;
                             break;
                         }
