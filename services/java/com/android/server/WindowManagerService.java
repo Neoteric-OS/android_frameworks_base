@@ -5128,6 +5128,7 @@ public class WindowManagerService extends IWindowManager.Stub
         } catch (android.os.RemoteException e) {
             Log.i(TAG, "WINDOW DIED during motion dispatch: " + target);
             mKeyWaiter.mMotionTarget = null;
+            mKeyWaiter.forceFinishCurrentKey();
             try {
                 removeWindow(target.mSession, target.mClient);
             } catch (java.util.NoSuchElementException ex) {
@@ -5199,6 +5200,7 @@ public class WindowManagerService extends IWindowManager.Stub
             return INJECT_SUCCEEDED;
         } catch (android.os.RemoteException e) {
             Log.i(TAG, "WINDOW DIED during key dispatch: " + focus);
+            mKeyWaiter.forceFinishCurrentKey();
             try {
                 removeWindow(focus.mSession, focus.mClient);
             } catch (java.util.NoSuchElementException ex) {
@@ -5269,6 +5271,7 @@ public class WindowManagerService extends IWindowManager.Stub
             return INJECT_SUCCEEDED;
         } catch (android.os.RemoteException e) {
             Log.i(TAG, "WINDOW DIED during key dispatch: " + focus);
+            mKeyWaiter.forceFinishCurrentKey();
             try {
                 removeWindow(focus.mSession, focus.mClient);
             } catch (java.util.NoSuchElementException ex) {
@@ -6177,6 +6180,12 @@ public class WindowManagerService extends IWindowManager.Stub
             }
             mFinished = true;
             notifyAll();
+        }
+
+        void forceFinishCurrentKey() {
+            synchronized(this) {
+                doFinishedKeyLocked(false);
+            }
         }
     }
 
