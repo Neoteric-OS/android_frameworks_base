@@ -1,0 +1,14 @@
+LOCAL_PATH:= $(call my-dir)
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES:= \
+	screenshot.cpp
+
+LOCAL_SHARED_LIBRARIES := \
+	libcutils \
+	libutils \
+	libui
+
+LOCAL_MODULE:= screenshot
+
+include $(BUILD_EXECUTABLE)
