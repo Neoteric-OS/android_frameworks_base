@@ -1514,8 +1514,9 @@ class ApplicationContext extends Context {
             if (resolveInfo == null) {
                 return null;
             }
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.setClassName(packageName, resolveInfo.activityInfo.name);
+            Intent intent = new Intent(intentToResolve);
+            intent.setClassName(resolveInfo.activityInfo.applicationInfo.packageName,
+                                resolveInfo.activityInfo.name);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             return intent;
         }
