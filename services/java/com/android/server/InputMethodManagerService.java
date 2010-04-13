@@ -1457,55 +1457,58 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
         
         int N = (immis == null ? 0 : immis.size());
 
-        mItems = new CharSequence[N];
-        mIms = new InputMethodInfo[N];
-
-        for (int i = 0; i < N; ++i) {
-            InputMethodInfo property = immis.get(i);
-            mItems[i] = property.loadLabel(pm);
-            mIms[i] = property;
-        }
-
-        int checkedItem = 0;
-        for (int i = 0; i < N; ++i) {
-            if (mIms[i].getId().equals(lastInputMethodId)) {
-                checkedItem = i;
-                break;
-            }
-        }
-
-        AlertDialog.OnClickListener adocl = new AlertDialog.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                hideInputMethodMenu();
-            }
-        };
-        
-        TypedArray a = context.obtainStyledAttributes(null,
-                com.android.internal.R.styleable.DialogPreference,
-                com.android.internal.R.attr.alertDialogStyle, 0);
-        mDialogBuilder = new AlertDialog.Builder(context)
-                .setTitle(com.android.internal.R.string.select_input_method)
-                .setOnCancelListener(new OnCancelListener() {
-                    public void onCancel(DialogInterface dialog) {
-                        hideInputMethodMenu();
-                    }
-                })
-                .setIcon(a.getDrawable(
-                        com.android.internal.R.styleable.DialogPreference_dialogTitle));
-        a.recycle();
-        
-        mDialogBuilder.setSingleChoiceItems(mItems, checkedItem,
-                new AlertDialog.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        synchronized (mMethodMap) {
-                            InputMethodInfo im = mIms[which];
-                            hideInputMethodMenu();
-                            setInputMethodLocked(im.getId());
-                        }
-                    }
-                });
-
         synchronized (mMethodMap) {
+            // this block must be synchronized because hideInputMethodMenu
+            // could be called at any time during this processing to clear
+            // out the dialog and its associated items
+            mItems = new CharSequence[N];
+            mIms = new InputMethodInfo[N];
+
+            for (int i = 0; i < N; ++i) {
+                InputMethodInfo property = immis.get(i);
+                mItems[i] = property.loadLabel(pm);
+                mIms[i] = property;
+            }
+
+            int checkedItem = 0;
+            for (int i = 0; i < N; ++i) {
+                if (mIms[i].getId().equals(lastInputMethodId)) {
+                    checkedItem = i;
+                    break;
+                }
+            }
+
+            AlertDialog.OnClickListener adocl = new AlertDialog.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    hideInputMethodMenu();
+                }
+            };
+
+            TypedArray a = context.obtainStyledAttributes(null,
+                    com.android.internal.R.styleable.DialogPreference,
+                    com.android.internal.R.attr.alertDialogStyle, 0);
+            mDialogBuilder = new AlertDialog.Builder(context)
+                    .setTitle(com.android.internal.R.string.select_input_method)
+                    .setOnCancelListener(new OnCancelListener() {
+                        public void onCancel(DialogInterface dialog) {
+                            hideInputMethodMenu();
+                        }
+                    })
+                    .setIcon(a.getDrawable(
+                            com.android.internal.R.styleable.DialogPreference_dialogTitle));
+            a.recycle();
+
+            mDialogBuilder.setSingleChoiceItems(mItems, checkedItem,
+                    new AlertDialog.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            synchronized (mMethodMap) {
+                                InputMethodInfo im = mIms[which];
+                                hideInputMethodMenu();
+                                setInputMethodLocked(im.getId());
+                            }
+                        }
+                    });
+
             mSwitchingDialog = mDialogBuilder.create();
             mSwitchingDialog.getWindow().setType(
                     WindowManager.LayoutParams.TYPE_INPUT_METHOD_DIALOG);
