@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAwn///yA\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmDataConnectionTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-04-16T21:58:05Z",
+      "side": 1,
+      "message": "This code is fragile and in Froyo cleanUpConnection is different. In addition a side effect of cleanUpConnection is to set state to DISCONNECTING. So this may fix one problem but break something else.",
+      "revId": "b856693d8ef296a032be599593bc4baea81fb8e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
