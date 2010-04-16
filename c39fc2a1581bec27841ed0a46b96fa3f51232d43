@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAwn///zs\u003d",
+        "filename": "core/res/res/values/public.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-04-16T20:39:42Z",
+      "side": 1,
+      "message": "I don\u0027t think that I like a public attribute without a fixed value",
+      "revId": "c39fc2a1581bec27841ed0a46b96fa3f51232d43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
