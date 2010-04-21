@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAw3///+I\u003d",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2010-04-21T22:31:43Z",
+      "side": 1,
+      "message": "Fix the comment, yo. :)",
+      "revId": "c1e34a1295b4bf1dee7d41c691dd5c7c88e3f3f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
