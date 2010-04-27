@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAx3///3I\u003d",
+        "filename": "core/java/android/content/ContentService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2010-04-27T18:30:00Z",
+      "side": 1,
+      "message": "Instead of logging an error and silently returning, I\u0027d suggest throwing an IllegalArgumentException for invalid Uris.",
+      "revId": "46e47514cbbb2d68c12ffac0a19fea60390b5d34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
