@@ -1495,6 +1495,15 @@
         <!-- Enables the fast scroll thumb that can be dragged to quickly scroll through
              the list. -->
         <attr name="fastScrollEnabled" format="boolean" />
+        <!-- Set which side (or both) to show the fast scroll thumb -->
+        <attr name="fastScrollSide">
+            <!-- Shows the fast scroll thumb on the right side. This is the default value -->
+            <enum name="right" value="0" />
+            <!-- Shows the fast scroll thumb on the left side. -->
+            <enum name="left" value="1" />
+            <!-- Shows the fast scroll thumb both on the left side and the right side. -->
+            <enum name="both" value="2" />
+        </attr>
         <!-- When set to true, the list will use a more refined calculation
              method based on the pixels height of the items visible on screen. This
              property is set to true by default but should be set to false if your adapter

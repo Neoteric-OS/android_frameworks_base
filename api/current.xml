@@ -3573,6 +3573,17 @@
  visibility="public"
 >
 </field>
+<field name="fastScrollSide"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="16843446"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
 <field name="fillAfter"
  type="int"
  transient="false"
@@ -179205,6 +179216,17 @@
  visibility="public"
 >
 </method>
+<method name="getFastScrollSide"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
 <method name="getListPaddingBottom"
  return="int"
  abstract="false"
@@ -179563,6 +179585,19 @@
  visibility="public"
 >
 <parameter name="enabled" type="boolean">
+</parameter>
+</method>
+<method name="setFastScrollSide"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="side" type="int">
 </parameter>
 </method>
 <method name="setFilterText"

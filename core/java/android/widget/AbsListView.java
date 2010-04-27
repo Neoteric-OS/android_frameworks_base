@@ -66,6 +66,7 @@ import java.util.List;
  * @attr ref android.R.styleable#AbsListView_transcriptMode
  * @attr ref android.R.styleable#AbsListView_cacheColorHint
  * @attr ref android.R.styleable#AbsListView_fastScrollEnabled
+ * @attr ref android.R.styleable#AbsListView_fastScrollSide
  * @attr ref android.R.styleable#AbsListView_smoothScrollbar
  */
 public abstract class AbsListView extends AdapterView<ListAdapter> implements TextWatcher,
@@ -93,6 +94,33 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
      * @see #setTranscriptMode(int)
      */
     public static final int TRANSCRIPT_MODE_ALWAYS_SCROLL = 2;
+
+    /**
+     * The fast scroller thumb will be shown on the right
+     * side of the list.
+     *
+     * @see #setFastScrollSide(int)
+     * @see #getFastScrollSide()
+     */
+    public static final int FAST_SCROLL_SIDE_RIGHT = 0;
+
+    /**
+     * The fast scroller thumb will be shown on the left
+     * side of the list.
+     *
+     * @see #setFastScrollSide(int)
+     * @see #getFastScrollSide()
+     */
+
+    public static final int FAST_SCROLL_SIDE_LEFT = 1;
+    /**
+     * The fast scroller thumb will be shown on both sides
+     * of the list.
+     *
+     * @see #setFastScrollSide(int)
+     * @see #getFastScrollSide()
+     */
+    public static final int FAST_SCROLL_SIDE_BOTH = 2;
 
     /**
      * Indicates that we are not in the middle of a touch gesture
@@ -325,6 +353,11 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
     boolean mFastScrollEnabled;
 
     /**
+     * Which side to show the thumb icons when fast scrolling is used.
+     */
+    private int mFastScrollSide = FAST_SCROLL_SIDE_RIGHT;
+
+    /**
      * Optional callback to notify client when scroll position has changed
      */
     private OnScrollListener mOnScrollListener;
@@ -536,6 +569,8 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         setCacheColorHint(color);
 
         boolean enableFastScroll = a.getBoolean(R.styleable.AbsListView_fastScrollEnabled, false);
+        mFastScrollSide = a.getInteger(
+                R.styleable.AbsListView_fastScrollSide, FAST_SCROLL_SIDE_RIGHT);
         setFastScrollEnabled(enableFastScroll);
 
         boolean smoothScrollbar = a.getBoolean(R.styleable.AbsListView_smoothScrollbar, true);
@@ -573,6 +608,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         if (enabled) {
             if (mFastScroller == null) {
                 mFastScroller = new FastScroller(getContext(), this);
+                setFastScrollSide(mFastScrollSide);
             }
         } else {
             if (mFastScroller != null) {
@@ -590,6 +626,36 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
     @ViewDebug.ExportedProperty
     public boolean isFastScrollEnabled() {
         return mFastScrollEnabled;
+    }
+
+    /**
+     * Sets which side to show the fast scroller thumb.
+     *
+     * @param side which side to show
+     * @see #FAST_SCROLL_SIDE_RIGHT
+     * @see #FAST_SCROLL_SIDE_LEFT
+     * @see #FAST_SCROLL_SIDE_BOTH
+     * @attr ref android.R.styleable#AbsListView_fastScrollSide
+     */
+    public void setFastScrollSide(int side) {
+        mFastScrollSide = side;
+        if (mFastScroller != null) {
+            mFastScroller.setThumbSide(side);
+        }
+    }
+
+    /**
+     * Returns on which side the fast scroller thumb is shown.
+     *
+     * @return which side that is shown
+     * @see #FAST_SCROLL_SIDE_RIGHT
+     * @see #FAST_SCROLL_SIDE_LEFT
+     * @see #FAST_SCROLL_SIDE_BOTH
+     * @attr ref android.R.styleable#AbsListView_fastScrollSide
+     */
+    @ViewDebug.ExportedProperty
+    public int getFastScrollSide() {
+        return mFastScrollSide;
     }
 
     /**

@@ -21,6 +21,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -33,7 +34,7 @@ import android.view.MotionEvent;
  * Helper class for AbsListView to draw and control the Fast Scroll thumb
  */
 class FastScroller {
-   
+
     // Minimum number of pages to justify showing a fast scroll thumb
     private static int MIN_PAGES = 4;
     // Scroll thumb not showing
@@ -46,7 +47,12 @@ class FastScroller {
     private static final int STATE_DRAGGING = 3;
     // Scroll thumb fading out due to inactivity timeout
     private static final int STATE_EXIT = 4;
-    
+
+    private Matrix mMirrorMatrix;
+    private boolean mRightHandleUsed;
+    private boolean mLeftHandleUsed;
+    private int mSideToShow = AbsListView.FAST_SCROLL_SIDE_RIGHT;
+
     private Drawable mThumbDrawable;
     private Drawable mOverlayDrawable;
 
@@ -67,6 +73,7 @@ class FastScroller {
     
     private Object [] mSections;
     private String mSectionText;
+    private boolean mValidSectionText;
     private boolean mDrawOverlay;
     private ScrollFade mScrollFade;
     
@@ -82,6 +89,19 @@ class FastScroller {
     public FastScroller(Context context, AbsListView listView) {
         mList = listView;
         init(context);
+    }
+
+    /**
+     * Sets which side to show the fast scroller thumb.
+     *
+     * @param side which side to show
+     * @see AbsListView#FAST_SCROLL_SIDE_RIGHT
+     * @see AbsListView#FAST_SCROLL_SIDE_LEFT
+     * @see AbsListView#FAST_SCROLL_SIDE_BOTH
+     */
+    public void setThumbSide(int side) {
+        mSideToShow = side;
+        mList.invalidate();
     }
 
     public void setState(int state) {
@@ -100,7 +120,18 @@ class FastScroller {
                 break;
             case STATE_EXIT:
                 int viewWidth = mList.getWidth();
-                mList.invalidate(viewWidth - mThumbW, mThumbY, viewWidth, mThumbY + mThumbH);
+                switch (mSideToShow) {
+                    case AbsListView.FAST_SCROLL_SIDE_RIGHT:
+                        mList.invalidate(viewWidth - mThumbW, mThumbY, viewWidth, mThumbY + mThumbH);
+                        break;
+                    case AbsListView.FAST_SCROLL_SIDE_LEFT:
+                        mList.invalidate(0, mThumbY, mThumbW, mThumbY + mThumbH);
+                        break;
+                    case AbsListView.FAST_SCROLL_SIDE_BOTH:
+                        mList.invalidate(0, mThumbY, mThumbW, mThumbY + mThumbH);
+                        mList.invalidate(viewWidth - mThumbW, mThumbY, viewWidth, mThumbY + mThumbH);
+                        break;
+                }
                 break;
         }
         mState = state;
@@ -172,9 +203,27 @@ class FastScroller {
             return;
         }
 
+        if (mMirrorMatrix == null) {
+            int width = canvas.getWidth();
+            int height = canvas.getHeight();
+            float[] src = {0, 0, width, 0, width, height, 0, height};
+            float[] dst = {width, 0, 0, 0, 0, height, width, height};
+            mMirrorMatrix = new Matrix();
+            mMirrorMatrix.setPolyToPoly(src, 0, dst, 0, 4);
+        }
+
         final int y = mThumbY;
         final int viewWidth = mList.getWidth();
         final FastScroller.ScrollFade scrollFade = mScrollFade;
+
+        if (mMirrorMatrix == null) {
+            int width = viewWidth;
+            int height = mList.getHeight();
+            float[] src = { 0, 0, width, 0, width, height, 0, height };
+            float[] dst = { width, 0, 0, 0, 0, height, width, height };
+            mMirrorMatrix = new Matrix();
+            mMirrorMatrix.setPolyToPoly(src, 0, dst, 0, 4);
+        }
 
         int alpha = -1;
         if (mState == STATE_EXIT) {
@@ -187,25 +236,47 @@ class FastScroller {
             mChangedBounds = true;
         }
 
+        canvas.save();
         canvas.translate(0, y);
-        mThumbDrawable.draw(canvas);
-        canvas.translate(0, -y);
+        if ((mSideToShow == AbsListView.FAST_SCROLL_SIDE_RIGHT ||
+             mSideToShow == AbsListView.FAST_SCROLL_SIDE_BOTH) &&
+             (mRightHandleUsed || mState != STATE_DRAGGING)) {
+            mThumbDrawable.draw(canvas);
+        }
+
+        if ((mSideToShow == AbsListView.FAST_SCROLL_SIDE_LEFT ||
+             mSideToShow == AbsListView.FAST_SCROLL_SIDE_BOTH) &&
+             (mLeftHandleUsed || mState != STATE_DRAGGING)) {
+            canvas.concat(mMirrorMatrix);
+            mThumbDrawable.draw(canvas);
+        }
+        canvas.restore();
 
         // If user is dragging the scroll bar, draw the alphabet overlay
-        if (mState == STATE_DRAGGING && mDrawOverlay) {
-            mOverlayDrawable.draw(canvas);
-            final Paint paint = mPaint;
-            float descent = paint.descent();
-            final RectF rectF = mOverlayPos;
-            canvas.drawText(mSectionText, (int) (rectF.left + rectF.right) / 2,
-                    (int) (rectF.bottom + rectF.top) / 2 + mOverlaySize / 4 - descent, paint);
+        if ((mState == STATE_DRAGGING || mState == STATE_VISIBLE) &&
+                mValidSectionText && mDrawOverlay) {
+            drawOverlay(canvas);
         } else if (mState == STATE_EXIT) {
             if (alpha == 0) { // Done with exit
                 setState(STATE_NONE);
+                mDrawOverlay = false;
             } else {
-                mList.invalidate(viewWidth - mThumbW, y, viewWidth, y + mThumbH);            
+                if (mValidSectionText && mDrawOverlay) {
+                    drawOverlay(canvas);
+                }
+                mList.invalidate(viewWidth - mThumbW, y, viewWidth, y + mThumbH);
+                mList.invalidate(0, y, mThumbW, y + mThumbH);
             }
         }
+    }
+
+    private void drawOverlay(Canvas canvas) {
+        mOverlayDrawable.draw(canvas);
+        final Paint paint = mPaint;
+        float descent = paint.descent();
+        final RectF rectF = mOverlayPos;
+        canvas.drawText(mSectionText, (int) (rectF.left + rectF.right) / 2,
+                (int) (rectF.bottom + rectF.top) / 2 + mOverlaySize / 4 - descent, paint);
     }
 
     void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -391,10 +462,10 @@ class FastScroller {
 
         if (sectionIndex >= 0) {
             String text = mSectionText = sections[sectionIndex].toString();
-            mDrawOverlay = (text.length() != 1 || text.charAt(0) != ' ') &&
+            mValidSectionText = (text.length() != 1 || text.charAt(0) != ' ') &&
                     sectionIndex < sections.length;
         } else {
-            mDrawOverlay = false;
+            mValidSectionText = false;
         }
     }
 
@@ -430,7 +501,10 @@ class FastScroller {
                 }
 
                 cancelFling();
+                mDrawOverlay = true;
                 return true;
+            } else {
+                mDrawOverlay = false;
             }
         } else if (action == MotionEvent.ACTION_UP) {
             if (mState == STATE_DRAGGING) {
@@ -438,6 +512,12 @@ class FastScroller {
                 final Handler handler = mHandler;
                 handler.removeCallbacks(mScrollFade);
                 handler.postDelayed(mScrollFade, 1000);
+                int viewWidth = mList.getWidth();
+                // invalidate to get the handle not used back when releasing the other
+                if (mSideToShow == AbsListView.FAST_SCROLL_SIDE_BOTH) {
+                    mList.invalidate(0, mThumbY, mThumbW, mThumbY + mThumbH);
+                    mList.invalidate(viewWidth - mThumbW, mThumbY, viewWidth, mThumbY + mThumbH);
+                }
                 return true;
             }
         } else if (action == MotionEvent.ACTION_MOVE) {
@@ -465,7 +545,20 @@ class FastScroller {
     }
 
     boolean isPointInside(float x, float y) {
-        return x > mList.getWidth() - mThumbW && y >= mThumbY && y <= mThumbY + mThumbH;
+        if (y >= mThumbY && y <= mThumbY + mThumbH) {
+            if (mSideToShow == AbsListView.FAST_SCROLL_SIDE_RIGHT ||
+                mSideToShow == AbsListView.FAST_SCROLL_SIDE_BOTH) {
+                mRightHandleUsed = x > mList.getWidth() - mThumbW;
+            }
+            if (mSideToShow == AbsListView.FAST_SCROLL_SIDE_LEFT ||
+                mSideToShow == AbsListView.FAST_SCROLL_SIDE_BOTH) {
+                mLeftHandleUsed = x < mThumbW;
+            }
+        } else {
+            mRightHandleUsed = false;
+            mLeftHandleUsed = false;
+        }
+        return mRightHandleUsed || mLeftHandleUsed;
     }
 
     public class ScrollFade implements Runnable {
