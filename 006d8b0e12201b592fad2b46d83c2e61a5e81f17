@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAx3///54\u003d",
+        "filename": "core/java/android/widget/FastScroller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-04-27T16:19:19Z",
+      "side": 1,
+      "message": "This should cause an invalidate() or a requestLayout()",
+      "revId": "006d8b0e12201b592fad2b46d83c2e61a5e81f17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAx3///58\u003d",
+        "filename": "core/java/android/widget/FastScroller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-04-27T16:19:19Z",
+      "side": 1,
+      "message": "Do not invalidate the entire view, invalidate only the required portion.",
+      "revId": "006d8b0e12201b592fad2b46d83c2e61a5e81f17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAx3///5s\u003d",
+        "filename": "core/java/android/widget/FastScroller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-04-27T16:19:19Z",
+      "side": 1,
+      "message": "Using the canvas dimension is terribly wrong: this will work only when the ListView is fullscreen.",
+      "revId": "006d8b0e12201b592fad2b46d83c2e61a5e81f17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAx3///50\u003d",
+        "filename": "core/java/android/widget/FastScroller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-04-27T16:19:19Z",
+      "side": 1,
+      "message": "Space after and before the { and }",
+      "revId": "006d8b0e12201b592fad2b46d83c2e61a5e81f17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAx3///5w\u003d",
+        "filename": "core/java/android/widget/FastScroller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-04-27T16:19:19Z",
+      "side": 1,
+      "message": "Same here",
+      "revId": "006d8b0e12201b592fad2b46d83c2e61a5e81f17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAx3///5o\u003d",
+        "filename": "core/java/android/widget/FastScroller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-04-27T16:19:19Z",
+      "side": 1,
+      "message": "Why is now the overlay also drawn in STATE_EXIT?",
+      "revId": "006d8b0e12201b592fad2b46d83c2e61a5e81f17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
