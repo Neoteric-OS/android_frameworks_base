@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAx3///uA\u003d",
+        "filename": "core/java/android/widget/FastScroller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003716
+      },
+      "writtenOn": "2010-04-28T11:10:44Z",
+      "side": 1,
+      "message": "Should probably have a check here for which side that is currently set. If both sides are set, one call to invalidate the whole width should be less expensive than doing two calls to invalidate, which in any case seems to lead to a full-width repaint. But sure, it\u0027s less correct.",
+      "parentUuid": "AAAAx3///58\u003d",
+      "revId": "006d8b0e12201b592fad2b46d83c2e61a5e81f17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAx3///5s\u003d",
         "filename": "core/java/android/widget/FastScroller.java",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2010-04-27T16:19:19Z",
       "side": 1,
       "message": "Using the canvas dimension is terribly wrong: this will work only when the ListView is fullscreen.",
+      "revId": "006d8b0e12201b592fad2b46d83c2e61a5e81f17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAx3///t8\u003d",
+        "filename": "core/java/android/widget/FastScroller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003716
+      },
+      "writtenOn": "2010-04-28T11:10:44Z",
+      "side": 1,
+      "message": "True, we\u0027ll fix it.",
+      "parentUuid": "AAAAx3///5s\u003d",
       "revId": "006d8b0e12201b592fad2b46d83c2e61a5e81f17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -98,6 +134,24 @@
       "writtenOn": "2010-04-27T16:19:19Z",
       "side": 1,
       "message": "Why is now the overlay also drawn in STATE_EXIT?",
+      "revId": "006d8b0e12201b592fad2b46d83c2e61a5e81f17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAx3///ts\u003d",
+        "filename": "core/java/android/widget/FastScroller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1003716
+      },
+      "writtenOn": "2010-04-28T11:10:44Z",
+      "side": 1,
+      "message": "When the thumbs are on both side and when they are animated out, the full width will be repainted and therefore, the overlay will also need to be repainted. Otherwise, the repainted part of the list will be painted on top of the overlay. Might be a good idea to only do this when mSideToShow is set to both.",
+      "parentUuid": "AAAAx3///5o\u003d",
       "revId": "006d8b0e12201b592fad2b46d83c2e61a5e81f17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
