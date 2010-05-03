@@ -286,7 +286,7 @@ static void native_setLocale(JNIEnv* env, jobject object, jstring localeString, 
         goto done;
     }
 
-    err = register_localized_collators(handle, dbLocale ? dbLocale : locale8, UTF16_STORAGE);
+    err = register_localized_collators(handle, locale8, UTF16_STORAGE);
     if (err != SQLITE_OK) {
         LOGE("register_localized_collators() failed setting locale\n");
         throw_sqlite3_exception(env, handle);
