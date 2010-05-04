@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAx3///Kw\u003d",
+        "filename": "core/jni/android_database_SQLiteDatabase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1003771
+      },
+      "writtenOn": "2010-05-04T23:24:35Z",
+      "side": 1,
+      "message": "this fix is already in the version to be released next.",
+      "revId": "6e21ab45a92207690db1ddba94f010c215dcc6a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
