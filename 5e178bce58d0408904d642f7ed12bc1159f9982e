@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAyn///sk\u003d",
+        "filename": "libs/surfaceflinger/DisplayHardware/DisplayHardware.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-05-11T23:23:37Z",
+      "side": 1,
+      "message": "Would prefer \u003c100 columns if possible",
+      "revId": "5e178bce58d0408904d642f7ed12bc1159f9982e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAyn///sg\u003d",
+        "filename": "libs/surfaceflinger/DisplayHardware/DisplayHardware.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-05-11T23:23:37Z",
+      "side": 1,
+      "message": "100 columns",
+      "revId": "5e178bce58d0408904d642f7ed12bc1159f9982e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAyn///sc\u003d",
+        "filename": "libs/surfaceflinger/SurfaceFlinger.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-05-11T23:23:37Z",
+      "side": 1,
+      "message": "Spurious whitespace (and in a few locations below)",
+      "revId": "5e178bce58d0408904d642f7ed12bc1159f9982e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAyn///sY\u003d",
+        "filename": "libs/surfaceflinger/SurfaceFlinger.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-05-11T23:23:37Z",
+      "side": 1,
+      "message": "100 columns",
+      "revId": "5e178bce58d0408904d642f7ed12bc1159f9982e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
