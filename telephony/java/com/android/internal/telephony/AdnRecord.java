@@ -192,10 +192,8 @@ public class AdnRecord implements Parcelable {
         byte[] adnString = null;
         int footerOffset = recordSize - FOOTER_SIZE_BYTES;
 
-        if (number == null || number.equals("") ||
-                alphaTag == null || alphaTag.equals("")) {
-
-            Log.w(LOG_TAG, "[buildAdnString] Empty alpha tag or number");
+        if (number == null || number.equals("")) {
+            Log.w(LOG_TAG, "[buildAdnString] Empty dialing number");
             adnString = new byte[recordSize];
             for (int i = 0; i < recordSize; i++) {
                 adnString[i] = (byte) 0xFF;

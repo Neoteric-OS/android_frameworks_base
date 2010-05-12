@@ -239,7 +239,9 @@ public class IccProvider extends ContentProvider {
         }
 
         // parse where clause
-        String tag = null;
+        // NOTE: initialize tag to "" to avoid NullPointerException in
+        // AdnRecord.isEqual() when deleting record with no alpha tag
+        String tag = "";
         String number = null;
         String[] emails = null;
         String pin2 = null;
@@ -277,7 +279,7 @@ public class IccProvider extends ContentProvider {
             return 0;
         }
 
-        if (efType == FDN && TextUtils.isEmpty(pin2)) {
+        if (efType == IccConstants.EF_FDN && TextUtils.isEmpty(pin2)) {
             return 0;
         }
 
