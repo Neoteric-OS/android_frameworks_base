@@ -16,6 +16,24 @@
       "revId": "c39fc2a1581bec27841ed0a46b96fa3f51232d43",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzH///zc\u003d",
+        "filename": "core/res/res/values/public.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2010-05-14T19:10:19Z",
+      "side": 1,
+      "message": "This is going to have merge conflicts across our trees.  Note that this is being applied to pre-Froyo, and there are already two levels of resource identifiers after that (Froyo, and post-Froyo padding).",
+      "parentUuid": "AAAAwn///zs\u003d",
+      "revId": "c39fc2a1581bec27841ed0a46b96fa3f51232d43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
