@@ -20,6 +20,7 @@ import com.android.server.AttributeCache;
 import com.android.server.am.ActivityManagerService.ActivityState;
 
 import android.app.Activity;
+import android.app.ResultInfo;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -71,9 +72,9 @@ class HistoryRecord extends IApplicationToken.Stub {
     HistoryRecord resultTo; // who started this entry, so will get our reply
     final String resultWho; // additional identifier for use by resultTo.
     final int requestCode;  // code given by requester (resultTo)
-    ArrayList results;      // pending ActivityResult objs we have received
+    ArrayList<ResultInfo> results;      // pending ActivityResult objs we have received
     HashSet<WeakReference<PendingIntentRecord>> pendingResults; // all pending intents for this act
-    ArrayList newIntents;   // any pending new intents for single-top mode
+    ArrayList<Intent> newIntents;   // any pending new intents for single-top mode
     HashSet<ConnectionRecord> connections; // All ConnectionRecord we hold
     HashSet<UriPermission> readUriPermissions; // special access to reading uris.
     HashSet<UriPermission> writeUriPermissions; // special access to writing uris.
@@ -298,7 +299,7 @@ class HistoryRecord extends IApplicationToken.Stub {
         ActivityResult r = new ActivityResult(from, resultWho,
         		requestCode, resultCode, resultData);
         if (results == null) {
-            results = new ArrayList();
+            results = new ArrayList<ResultInfo>();
         }
         results.add(r);
     }
@@ -323,7 +324,7 @@ class HistoryRecord extends IApplicationToken.Stub {
 
     void addNewIntentLocked(Intent intent) {
         if (newIntents == null) {
-            newIntents = new ArrayList();
+            newIntents = new ArrayList<Intent>();
         }
         newIntents.add(intent);
     }
