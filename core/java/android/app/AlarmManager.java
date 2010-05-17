@@ -16,10 +16,8 @@
 
 package android.app;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.RemoteException;
-import android.os.ServiceManager;
 
 /**
  * This class provides access to the system alarm services.  These allow you

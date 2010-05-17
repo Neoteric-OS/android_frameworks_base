@@ -118,11 +118,11 @@ public interface IActivityManager extends IInterface {
     public void activityDestroyed(IBinder token) throws RemoteException;
     public String getCallingPackage(IBinder token) throws RemoteException;
     public ComponentName getCallingActivity(IBinder token) throws RemoteException;
-    public List getTasks(int maxNum, int flags,
+    public List<ActivityManager.RunningTaskInfo> getTasks(int maxNum, int flags,
                          IThumbnailReceiver receiver) throws RemoteException;
     public List<ActivityManager.RecentTaskInfo> getRecentTasks(int maxNum,
             int flags) throws RemoteException;
-    public List getServices(int maxNum, int flags) throws RemoteException;
+    public List<ActivityManager.RunningServiceInfo> getServices(int maxNum, int flags) throws RemoteException;
     public List<ActivityManager.ProcessErrorStateInfo> getProcessesInErrorState()
             throws RemoteException;
     public void moveTaskToFront(int task) throws RemoteException;

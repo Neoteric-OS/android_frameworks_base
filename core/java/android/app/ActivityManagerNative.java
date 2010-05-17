@@ -16,6 +16,7 @@
 
 package android.app;
 
+import android.app.ActivityManager.RunningTaskInfo;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -380,7 +381,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             IThumbnailReceiver receiver = receiverBinder != null
                 ? IThumbnailReceiver.Stub.asInterface(receiverBinder)
                 : null;
-            List list = getTasks(maxNum, fl, receiver);
+            List<ActivityManager.RunningTaskInfo> list = getTasks(maxNum, fl, receiver);
             reply.writeNoException();
             int N = list != null ? list.size() : -1;
             reply.writeInt(N);
@@ -408,7 +409,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
             data.enforceInterface(IActivityManager.descriptor);
             int maxNum = data.readInt();
             int fl = data.readInt();
-            List list = getServices(maxNum, fl);
+            List<ActivityManager.RunningServiceInfo> list = getServices(maxNum, fl);
             reply.writeNoException();
             int N = list != null ? list.size() : -1;
             reply.writeInt(N);
@@ -1486,7 +1487,7 @@ class ActivityManagerProxy implements IActivityManager
         reply.recycle();
         return res;
     }
-    public List getTasks(int maxNum, int flags,
+    public List<ActivityManager.RunningTaskInfo> getTasks(int maxNum, int flags,
             IThumbnailReceiver receiver) throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
@@ -1496,10 +1497,10 @@ class ActivityManagerProxy implements IActivityManager
         data.writeStrongBinder(receiver != null ? receiver.asBinder() : null);
         mRemote.transact(GET_TASKS_TRANSACTION, data, reply, 0);
         reply.readException();
-        ArrayList list = null;
+        ArrayList<RunningTaskInfo> list = null;
         int N = reply.readInt();
         if (N >= 0) {
-            list = new ArrayList();
+            list = new ArrayList<ActivityManager.RunningTaskInfo>();
             while (N > 0) {
                 ActivityManager.RunningTaskInfo info =
                         ActivityManager.RunningTaskInfo.CREATOR
@@ -1527,7 +1528,7 @@ class ActivityManagerProxy implements IActivityManager
         reply.recycle();
         return list;
     }
-    public List getServices(int maxNum, int flags) throws RemoteException {
+    public List<ActivityManager.RunningServiceInfo> getServices(int maxNum, int flags) throws RemoteException {
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
         data.writeInterfaceToken(IActivityManager.descriptor);
@@ -1535,10 +1536,10 @@ class ActivityManagerProxy implements IActivityManager
         data.writeInt(flags);
         mRemote.transact(GET_SERVICES_TRANSACTION, data, reply, 0);
         reply.readException();
-        ArrayList list = null;
+        ArrayList<ActivityManager.RunningServiceInfo> list = null;
         int N = reply.readInt();
         if (N >= 0) {
-            list = new ArrayList();
+            list = new ArrayList<ActivityManager.RunningServiceInfo>();
             while (N > 0) {
                 ActivityManager.RunningServiceInfo info =
                         ActivityManager.RunningServiceInfo.CREATOR

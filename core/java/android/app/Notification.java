@@ -21,7 +21,6 @@ import java.util.Date;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;

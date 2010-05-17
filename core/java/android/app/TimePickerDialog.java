@@ -99,8 +99,8 @@ public class TimePickerDialog extends AlertDialog implements OnClickListener,
         mCalendar = Calendar.getInstance();
         updateTitle(mInitialHourOfDay, mInitialMinute);
         
-        setButton(context.getText(R.string.date_time_set), this);
-        setButton2(context.getText(R.string.cancel), (OnClickListener) null);
+        setButton(DialogInterface.BUTTON_POSITIVE, context.getText(R.string.date_time_set), this);
+        setButton(DialogInterface.BUTTON_NEGATIVE, context.getText(R.string.cancel), (OnClickListener) null);
         setIcon(R.drawable.ic_dialog_time);
         
         LayoutInflater inflater = 

@@ -65,7 +65,7 @@ class ApplicationLoaders
         }
     }
 
-    private final HashMap mLoaders = new HashMap();
+    private final HashMap<String, PathClassLoader> mLoaders = new HashMap<String, PathClassLoader>();
 
     private static final ApplicationLoaders gApplicationLoaders
         = new ApplicationLoaders();

@@ -24,6 +24,7 @@ import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.PerformanceCollector;
 import android.os.RemoteException;
 import android.os.Debug;
@@ -33,7 +34,6 @@ import android.os.Process;
 import android.os.SystemClock;
 import android.os.ServiceManager;
 import android.util.AndroidRuntimeException;
-import android.util.Config;
 import android.util.Log;
 import android.view.IWindowManager;
 import android.view.KeyCharacterMap;
@@ -41,7 +41,6 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.view.Window;
-import android.view.inputmethod.InputMethodManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -384,7 +383,7 @@ public class Instrumentation {
             final ActivityWaiter aw = new ActivityWaiter(intent);
 
             if (mWaitingActivities == null) {
-                mWaitingActivities = new ArrayList();
+                mWaitingActivities = new ArrayList<ActivityWaiter>();
             }
             mWaitingActivities.add(aw);
 
@@ -594,7 +593,7 @@ public class Instrumentation {
     public void addMonitor(ActivityMonitor monitor) {
         synchronized (mSync) {
             if (mActivityMonitors == null) {
-                mActivityMonitors = new ArrayList();
+                mActivityMonitors = new ArrayList<ActivityMonitor>();
             }
             mActivityMonitors.add(monitor);
         }
@@ -1385,7 +1384,8 @@ public class Instrumentation {
             Context instrContext, Context appContext, ComponentName component, 
             IInstrumentationWatcher watcher) {
         mThread = thread;
-        mMessageQueue = mThread.getLooper().myQueue();
+        mThread.getLooper();
+        mMessageQueue = Looper.myQueue();
         mInstrContext = instrContext;
         mAppContext = appContext;
         mComponent = component;

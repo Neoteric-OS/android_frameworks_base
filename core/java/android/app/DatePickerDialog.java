@@ -21,7 +21,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.text.TextUtils.TruncateAt;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -112,8 +111,8 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         mCalendar = Calendar.getInstance();
         updateTitle(mInitialYear, mInitialMonth, mInitialDay);
         
-        setButton(context.getText(R.string.date_time_set), this);
-        setButton2(context.getText(R.string.cancel), (OnClickListener) null);
+        setButton(DialogInterface.BUTTON_POSITIVE, context.getText(R.string.date_time_set), this);
+        setButton(DialogInterface.BUTTON_NEGATIVE, context.getText(R.string.cancel), (OnClickListener) null);
         setIcon(R.drawable.ic_dialog_time);
         
         LayoutInflater inflater = 
