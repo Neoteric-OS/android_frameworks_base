@@ -1239,4 +1239,11 @@
     
   <public type="anim" name="cycle_interpolator" id="0x010a000c" />
 
+  <public type="attr" name="fastScrollOverlay" id="0x010102be" />
+  <public type="attr" name="fastScrollOverlayWidth" id="0x010102bf" />
+  <public type="attr" name="fastScrollOverlayHeight" id="0x010102c0" />
+  <public type="attr" name="fastScrollThumb" id="0x010102c1" />
+  <public type="attr" name="fastScrollThumbWidth" id="0x010102c2" />
+  <public type="attr" name="fastScrollThumbHeight" id="0x010102c3" />
+  <public type="attr" name="fastScrollTextSize" id="0x010102c4" />
 </resources>

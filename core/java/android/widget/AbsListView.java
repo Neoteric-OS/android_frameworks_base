@@ -68,6 +68,13 @@ import java.util.List;
  * @attr ref android.R.styleable#AbsListView_cacheColorHint
  * @attr ref android.R.styleable#AbsListView_fastScrollEnabled
  * @attr ref android.R.styleable#AbsListView_smoothScrollbar
+ * @attr ref android.R.styleable#AbsListView_fastScrollOverlay
+ * @attr ref android.R.styleable#AbsListView_fastScrollOverlayWidth
+ * @attr ref android.R.styleable#AbsListView_fastScrollOverlayHeight
+ * @attr ref android.R.styleable#AbsListView_fastScrollThumb
+ * @attr ref android.R.styleable#AbsListView_fastScrollThumbWidth
+ * @attr ref android.R.styleable#AbsListView_fastScrollThumbHeight
+ * @attr ref android.R.styleable#AbsListView_fastScrollTextSize
  */
 public abstract class AbsListView extends AdapterView<ListAdapter> implements TextWatcher,
         ViewTreeObserver.OnGlobalLayoutListener, Filter.FilterListener,
@@ -460,6 +467,8 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
      */
     private static final int INVALID_POINTER = -1;
 
+    private TypedArray mTypedArray;
+
     /**
      * Interface definition for a callback to be invoked when the list or grid
      * has been scrolled.
@@ -529,6 +538,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
 
         TypedArray a = context.obtainStyledAttributes(attrs,
                 com.android.internal.R.styleable.AbsListView, defStyle, 0);
+        mTypedArray = a;
 
         Drawable d = a.getDrawable(com.android.internal.R.styleable.AbsListView_listSelector);
         if (d != null) {
@@ -559,8 +569,10 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
 
         boolean smoothScrollbar = a.getBoolean(R.styleable.AbsListView_smoothScrollbar, true);
         setSmoothScrollbarEnabled(smoothScrollbar);
+    }
 
-        a.recycle();
+    protected void finalize() throws Throwable {
+        mTypedArray.recycle();
     }
 
     private void initAbsListView() {
@@ -591,7 +603,22 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         mFastScrollEnabled = enabled;
         if (enabled) {
             if (mFastScroller == null) {
+                // Get settings for the fast scroller.
+                TypedArray a = mTypedArray;
+                Drawable overlay = a.getDrawable(R.styleable.AbsListView_fastScrollOverlay);
+                int overlayWidth = a.getDimensionPixelSize(R.styleable.AbsListView_fastScrollOverlayWidth, 0);
+                int overlayHeight = a.getDimensionPixelSize(R.styleable.AbsListView_fastScrollOverlayHeight, 0);
+
+                Drawable thumb = a.getDrawable(R.styleable.AbsListView_fastScrollThumb);
+                int thumbWidth = a.getDimensionPixelSize(R.styleable.AbsListView_fastScrollThumbWidth, 0);
+                int thumbHeight = a.getDimensionPixelSize(R.styleable.AbsListView_fastScrollThumbHeight, 0);
+
+                int textSize = a.getDimensionPixelSize(R.styleable.AbsListView_fastScrollTextSize, 0);
+
                 mFastScroller = new FastScroller(getContext(), this);
+                mFastScroller.setOverlay(overlay, overlayWidth, overlayHeight);
+                mFastScroller.setThumb(thumb, thumbWidth, thumbHeight);
+                mFastScroller.setTextSize(textSize);
             }
         } else {
             if (mFastScroller != null) {
@@ -609,6 +636,88 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
     @ViewDebug.ExportedProperty
     public boolean isFastScrollEnabled() {
         return mFastScrollEnabled;
+    }
+
+    /**
+     * Set the drawable that will be used as the background of the hint letter.
+     *
+     * @param overlay the drawable that will be used as background for
+     *        the hint letter
+     * @param width the width of the background
+     * @param height the height of the background
+     */
+    public void setFastScrollOverlay(Drawable overlay, int width, int height) {
+        if (mFastScroller == null) {
+            throw new IllegalStateException("Fast scroll is disabled");
+        }
+        mFastScroller.setOverlay(overlay, width, height);
+    }
+
+    /**
+     * Returns the drawable that will be used as background of the index letter
+     * when fast scrolling is used.
+     *
+     * @return The drawable used as background for the fast scroll index letter.
+     */
+    public Drawable getFastScrollOverlay() {
+        if (mFastScroller == null) {
+            throw new IllegalStateException("Fast scroll is disabled");
+        }
+        return mFastScroller.getOverlay();
+    }
+
+    /**
+     * Set the drawable that will be used as thumbs when fast scrolling is
+     * active and its size.
+     *
+     * @param thumb the drawable that will be used as background for
+     *        the section text
+     * @param width the width of the thumb drawable
+     * @param height the height of the thumb drawable
+     */
+    public void setFastScrollThumb(Drawable thumb, int width, int height) {
+        if (mFastScroller == null) {
+            throw new IllegalStateException("Fast scroll is disabled");
+        }
+        mFastScroller.setThumb(thumb, width, height);
+    }
+
+    /**
+     * Returns the drawable that will be used as thumbs when fast
+     * scrolling is used.
+     *
+     * @return The drawable used as thumbs for fast scrolling.
+     */
+    public Drawable getFastScrollThumb() {
+        if (mFastScroller == null) {
+            throw new IllegalStateException("Fast scroll is disabled");
+        }
+        return mFastScroller.getThumb();
+    }
+
+    /**
+     * Sets the size of the text used for the index text when fast scrolling
+     * is used.
+     *
+     * @param size the size of the text
+     */
+    public void setFastScrollTextSize(int size) {
+        if (mFastScroller == null) {
+            throw new IllegalStateException("Fast scroll is disabled");
+        }
+        mFastScroller.setTextSize(size);
+    }
+
+    /**
+     * Returns the size the text used for the index text in the fast scroller.
+     *
+     * @return the size of the text used for the index text in the fast scroller.
+     */
+    public int getFastScrollTextSize() {
+        if (mFastScroller == null) {
+            throw new IllegalStateException("Fast scroll is disabled");
+        }
+        return mFastScroller.getTextSize();
     }
 
     /**
@@ -1520,8 +1629,15 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
+        int[] state = getDrawableState();
         if (mSelector != null) {
-            mSelector.setState(getDrawableState());
+            mSelector.setState(state);
+        }
+        if (mFastScroller != null) {
+            Drawable overlay = mFastScroller.getOverlay();
+            Drawable thumb = mFastScroller.getThumb();
+            if (overlay != null) overlay.setState(state);
+            if (thumb != null) thumb.setState(state);
         }
     }
 
