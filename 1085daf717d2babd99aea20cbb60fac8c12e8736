@@ -16,6 +16,23 @@
       "revId": "1085daf717d2babd99aea20cbb60fac8c12e8736",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzH///io\u003d",
+        "filename": "core/java/android/app/Instrumentation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2010-05-17T18:49:26Z",
+      "side": 1,
+      "message": "Your change here is semantically different from what was original there -- you are now getting the message queue for the current, thread, instead of the given one.  If this is actually an intended change/bug fix, then this should be done as its own change with a clear explanation about the bug being fixed.",
+      "revId": "1085daf717d2babd99aea20cbb60fac8c12e8736",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
