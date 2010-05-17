@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAzH///k0\u003d",
+        "filename": "core/java/android/app/Instrumentation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-05-17T17:28:15Z",
+      "side": 1,
+      "message": "This line is not necessary.",
+      "revId": "1085daf717d2babd99aea20cbb60fac8c12e8736",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
