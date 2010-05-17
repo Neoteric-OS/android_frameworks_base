@@ -1276,4 +1276,11 @@
   <public type="style" name="TextAppearance.StatusBar.EventContent" id="0x01030067" />
   <public type="style" name="TextAppearance.StatusBar.EventContent.Title" id="0x01030068" />
   
+  <public type="attr" name="fastScrollOverlay" id="0x010102cc" />
+  <public type="attr" name="fastScrollOverlayWidth" id="0x010102cd" />
+  <public type="attr" name="fastScrollOverlayHeight" id="0x010102ce" />
+  <public type="attr" name="fastScrollThumb" id="0x010102cf" />
+  <public type="attr" name="fastScrollThumbWidth" id="0x010102d0" />
+  <public type="attr" name="fastScrollThumbHeight" id="0x010102d1" />
+  <public type="attr" name="fastScrollTextSize" id="0x010102d2" />
 </resources>
