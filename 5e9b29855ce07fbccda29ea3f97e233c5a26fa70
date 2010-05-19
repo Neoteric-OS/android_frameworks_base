@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAzH///SQ\u003d",
+        "filename": "core/java/android/content/ContentService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-05-19T07:02:44Z",
+      "side": 1,
+      "message": "Please use segment \u003d\u003d null",
+      "revId": "5e9b29855ce07fbccda29ea3f97e233c5a26fa70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
