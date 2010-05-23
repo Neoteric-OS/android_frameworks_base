@@ -296,4 +296,9 @@ interface IPackageManager {
      * in the special development "no pre-dexopt" mode.
      */
     boolean performDexOpt(String packageName);
+
+    /**
+     * Checks if a package is currently installed.
+     */
+    boolean isPackageInstalled(String packageName);
 }

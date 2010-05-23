@@ -438,4 +438,9 @@ public class MockPackageManager extends PackageManager {
     public boolean isSafeMode() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public boolean isPackageInstalled(String packageName) {
+        throw new UnsupportedOperationException();
+    }
 }

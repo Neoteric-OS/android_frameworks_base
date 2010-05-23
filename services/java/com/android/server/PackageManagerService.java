@@ -7411,4 +7411,10 @@ class PackageManagerService extends IPackageManager.Stub {
                        || packageSettings.enabledComponents.contains(componentInfo.name));
         }
     }
+
+    public boolean isPackageInstalled(String packageName) {
+        synchronized (mPackages) {
+            return mPackages.containsKey(packageName);
+        }
+    }
 }

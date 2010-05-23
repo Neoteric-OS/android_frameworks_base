@@ -2491,6 +2491,15 @@ class ApplicationContext extends Context {
             return PackageManager.COMPONENT_ENABLED_STATE_DEFAULT;
         }
 
+        @Override
+        public boolean isPackageInstalled(String packageName) {
+            try {
+                return mPM.isPackageInstalled(packageName);
+            } catch (RemoteException e) {
+                throw new RuntimeException("Package manager has died", e);
+            }
+        }
+
         private final ApplicationContext mContext;
         private final IPackageManager mPM;
 
