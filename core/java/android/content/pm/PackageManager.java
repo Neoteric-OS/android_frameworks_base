@@ -1861,4 +1861,9 @@ public abstract class PackageManager {
      * Return whether the device has been booted into safe mode.
      */
     public abstract boolean isSafeMode();
+
+    /**
+     * Checks if a package is currently installed.
+     */
+    public abstract boolean isPackageInstalled(String packageName);
 }

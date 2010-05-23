@@ -2491,6 +2491,16 @@ class ApplicationContext extends Context {
             return PackageManager.COMPONENT_ENABLED_STATE_DEFAULT;
         }
 
+        @Override
+        public boolean isPackageInstalled(String packageName) {
+            try {
+                return mPM.isPackageInstalled(packageName);
+            } catch (RemoteException e) {
+                // Should never happen!
+            }
+            return false;
+        }
+
         private final ApplicationContext mContext;
         private final IPackageManager mPM;
 
