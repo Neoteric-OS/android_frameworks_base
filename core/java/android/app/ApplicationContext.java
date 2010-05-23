@@ -2496,8 +2496,9 @@ class ApplicationContext extends Context {
             try {
                 return mPM.isPackageInstalled(packageName);
             } catch (RemoteException e) {
-                throw new RuntimeException("Package manager has died", e);
+                // Should never happen!
             }
+            return false;
         }
 
         private final ApplicationContext mContext;
