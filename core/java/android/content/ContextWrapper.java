@@ -16,6 +16,7 @@
 
 package android.content;
 
+import android.app.WallpaperManager;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
@@ -43,9 +44,11 @@ import java.io.InputStream;
  */
 public class ContextWrapper extends Context {
     Context mBase;
+    WallpaperManager mWallpaperManager;
 
     public ContextWrapper(Context base) {
         mBase = base;
+        mWallpaperManager = WallpaperManager.getInstance(mBase);
     }
     
     /**
@@ -60,6 +63,7 @@ public class ContextWrapper extends Context {
             throw new IllegalStateException("Base context already set");
         }
         mBase = base;
+        mWallpaperManager = WallpaperManager.getInstance(mBase);
     }
 
     /**
@@ -210,37 +214,37 @@ public class ContextWrapper extends Context {
 
     @Override
     public Drawable getWallpaper() {
-        return mBase.getWallpaper();
+        return mWallpaperManager.getDrawable();
     }
 
     @Override
     public Drawable peekWallpaper() {
-        return mBase.peekWallpaper();
+        return mWallpaperManager.peekDrawable();
     }
 
     @Override
     public int getWallpaperDesiredMinimumWidth() {
-        return mBase.getWallpaperDesiredMinimumWidth();
+        return mWallpaperManager.getDesiredMinimumWidth();
     }
 
     @Override
     public int getWallpaperDesiredMinimumHeight() {
-        return mBase.getWallpaperDesiredMinimumHeight();
+        return mWallpaperManager.getDesiredMinimumHeight();
     }
 
     @Override
     public void setWallpaper(Bitmap bitmap) throws IOException {
-        mBase.setWallpaper(bitmap);
+        mWallpaperManager.setBitmap(bitmap);
     }
 
     @Override
     public void setWallpaper(InputStream data) throws IOException {
-        mBase.setWallpaper(data);
+        mWallpaperManager.setStream(data);
     }
 
     @Override
     public void clearWallpaper() throws IOException {
-        mBase.clearWallpaper();
+        mWallpaperManager.clear();
     }
 
     @Override
