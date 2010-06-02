@@ -830,12 +830,13 @@ public final class BatteryStatsImpl extends BatteryStats {
     
     private final Map<String, KernelWakelockStats> readKernelWakelockStats() {
         
-        byte[] buffer = new byte[4096];
+        byte[] buffer = new byte[4096 * 2];
         int len;
-        
+
         try {
             FileInputStream is = new FileInputStream("/proc/wakelocks");
-            len = is.read(buffer);
+            // Process.parseProcLine needs one extra byte
+            len = is.read(buffer, 0, buffer.length - 1);
             is.close();
 
             if (len > 0) {
@@ -846,6 +847,12 @@ public final class BatteryStatsImpl extends BatteryStats {
                         break;
                     }
                 }
+            }
+
+            if(len >= (buffer.length - 1)) {
+                // We did not get the entire buffer, let skip it since it will
+                // be misleading to return just some of the wake locks.
+                return null;
             }
         } catch (java.io.FileNotFoundException e) {
             return null;
