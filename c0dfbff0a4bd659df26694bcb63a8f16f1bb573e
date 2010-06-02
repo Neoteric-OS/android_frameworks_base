@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAzX///qo\u003d",
+        "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-06-02T14:09:14Z",
+      "side": 1,
+      "message": "is the 4096 or the 2 signifigant?  Is this 4k * 2 bytes of storage each, or were you simply doubling this number?  If the latter, just change it to 8192?",
+      "revId": "c0dfbff0a4bd659df26694bcb63a8f16f1bb573e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzX///qs\u003d",
+        "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-06-02T14:09:14Z",
+      "side": 1,
+      "message": "oh?  I see no documentation of that.  one extra byte for what?  could you expand this comment a bit (trailing \\n or trailing \\0 assumed or added?) and update the Process.parseProcLine docs too with this warning to callers?",
+      "revId": "c0dfbff0a4bd659df26694bcb63a8f16f1bb573e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzX///q4\u003d",
+        "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-06-02T14:09:14Z",
+      "side": 1,
+      "message": "space after the \"if\"",
+      "revId": "c0dfbff0a4bd659df26694bcb63a8f16f1bb573e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzX///q0\u003d",
+        "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-06-02T14:09:14Z",
+      "side": 1,
+      "message": "let\u0027s skip it",
+      "revId": "c0dfbff0a4bd659df26694bcb63a8f16f1bb573e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzX///qw\u003d",
+        "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-06-02T14:09:14Z",
+      "side": 1,
+      "message": "perhaps a Log.v(...) here then?\n\nI\u0027m not sure which is worse:  some data or no data.  Certainly having a ton of outstanding wakelocks would be interesting to see, even in the overflowed case.",
+      "revId": "c0dfbff0a4bd659df26694bcb63a8f16f1bb573e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
