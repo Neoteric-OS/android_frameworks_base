@@ -185346,6 +185346,17 @@
 <parameter name="defStyle" type="int">
 </parameter>
 </constructor>
+<method name="getOrientation"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
 <method name="onDown"
  return="boolean"
  abstract="false"
@@ -185475,6 +185486,19 @@
 <parameter name="gravity" type="int">
 </parameter>
 </method>
+<method name="setOrientation"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="orientation" type="int">
+</parameter>
+</method>
 <method name="setSpacing"
  return="void"
  abstract="false"
@@ -185501,6 +185525,28 @@
 <parameter name="unselectedAlpha" type="float">
 </parameter>
 </method>
+<field name="HORIZONTAL"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="0"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="VERTICAL"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
 </class>
 <class name="Gallery.LayoutParams"
  extends="android.view.ViewGroup.LayoutParams"

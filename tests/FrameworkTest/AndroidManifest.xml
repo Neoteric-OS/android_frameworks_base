@@ -950,6 +950,19 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".gallery.GalleryInVertical" android:label="GalleryInVertical">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.FRAMEWORK_INSTRUMENTATION_TEST" />
+            </intent-filter>
+        </activity>
+	
+        <activity android:name=".gallery.GalleryInHorizontal" android:label="GalleryInHorizontal">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.FRAMEWORK_INSTRUMENTATION_TEST" />
+            </intent-filter>
+        </activity>
         <service android:name=".accessibility.AccessibilityTestService">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />

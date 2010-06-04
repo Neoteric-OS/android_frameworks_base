@@ -1615,6 +1615,7 @@
         <attr name="spacing" format="dimension" />
         <!-- Sets the alpha on the items that are not selected. -->
         <attr name="unselectedAlpha" format="float" />
+        <attr name="orientation" />
     </declare-styleable>
     <declare-styleable name="GridView">
         <attr name="horizontalSpacing" format="dimension" />
