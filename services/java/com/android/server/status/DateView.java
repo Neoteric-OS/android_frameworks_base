@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
 import android.view.MotionEvent;
+import android.text.format.DateFormat;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -51,7 +52,8 @@ public final class DateView extends TextView {
 
     private final void updateClock() {
         Date now = new Date();
-        setText(DateFormat.getDateInstance(DateFormat.LONG).format(now));
+        java.text.DateFormat shortDateFormat = DateFormat.getDateFormat(getContext());
+        setText(shortDateFormat.format(now));
     }
 
     void setUpdates(boolean update) {
