@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAzX///Wo\u003d",
+        "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1003450
+      },
+      "writtenOn": "2010-06-07T09:07:02Z",
+      "side": 1,
+      "message": "I agree. The reason for 2* was simply to make it bigger.",
+      "parentUuid": "AAAAzX///qo\u003d",
+      "revId": "c0dfbff0a4bd659df26694bcb63a8f16f1bb573e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAzX///qs\u003d",
         "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2010-06-02T14:09:14Z",
       "side": 1,
       "message": "oh?  I see no documentation of that.  one extra byte for what?  could you expand this comment a bit (trailing \\n or trailing \\0 assumed or added?) and update the Process.parseProcLine docs too with this warning to callers?",
+      "revId": "c0dfbff0a4bd659df26694bcb63a8f16f1bb573e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzX///WU\u003d",
+        "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1003450
+      },
+      "writtenOn": "2010-06-07T09:07:02Z",
+      "side": 1,
+      "message": "When looking into the code I see that I have missed one more byte, but as long as we have a check that we read the entire output from /proc/wakelocks it will still work. \n\nAnyway here is the problem:\n\nThe parseProcWakelocks has a for loop around line 877. This loop will break if a new line is found, if the buffer is null terminated or when endIndex\u003d\u003dlen.\n\nAt line 880 endIndex is then increased with 1 which means that in worst case endIndex will now be len+1. The comment \"endIndex is an exclusive upper bound\" makes you think that it is not accessed.\n\nProcess.parseProcLine will then be called with this endIndex. At line 695 in android_util_Process.cpp there is a while loop that searches for term, but if that is not found the while loop will exit when i\u003d\u003dendIndex. At line 699 the end variable is then assigned to endIndex and at line 715 the string is terminated (buffer[end] \u003d 0; where end now is len + 1) and the the NewStringUTF at line 725 sometimes asserts.",
+      "parentUuid": "AAAAzX///qs\u003d",
       "revId": "c0dfbff0a4bd659df26694bcb63a8f16f1bb573e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -81,6 +117,24 @@
       "writtenOn": "2010-06-02T14:09:14Z",
       "side": 1,
       "message": "perhaps a Log.v(...) here then?\n\nI\u0027m not sure which is worse:  some data or no data.  Certainly having a ton of outstanding wakelocks would be interesting to see, even in the overflowed case.",
+      "revId": "c0dfbff0a4bd659df26694bcb63a8f16f1bb573e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzX///Wk\u003d",
+        "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1003450
+      },
+      "writtenOn": "2010-06-07T09:07:02Z",
+      "side": 1,
+      "message": "I agree that there should be a print in that case. 8k buffer should be able to handle quite a few wake locks. Should I remove this check and parse as much as possible or should I keep it and change to save 2 extra bytes in the buffer?",
+      "parentUuid": "AAAAzX///qw\u003d",
       "revId": "c0dfbff0a4bd659df26694bcb63a8f16f1bb573e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
