@@ -416,7 +416,7 @@ class ApplicationContext extends Context {
             }
             if (!mFilesDir.exists()) {
                 if(!mFilesDir.mkdirs()) {
-                    Log.w(TAG, "Unable to create files directory");
+                    Log.w(TAG, "Unable to create files directory " + mFilesDir.getPath());
                     return null;
                 }
                 FileUtils.setPermissions(
