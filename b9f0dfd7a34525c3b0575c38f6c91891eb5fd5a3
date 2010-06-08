@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAAzX///Mo\u003d",
+        "filename": "core/java/android/database/CursorJoiner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1003771
+      },
+      "writtenOn": "2010-06-08T20:37:34Z",
+      "side": 1,
+      "message": "not feeling comfortable with this statement. you should explain what the flaws are.",
+      "revId": "b9f0dfd7a34525c3b0575c38f6c91891eb5fd5a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAzX///Ro\u003d",
         "filename": "core/java/android/database/CursorJoiner.java",
         "patchSetId": 1
