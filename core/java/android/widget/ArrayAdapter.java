@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Comparator;
 import java.util.Collections;
@@ -83,7 +84,7 @@ public class ArrayAdapter<T> extends BaseAdapter implements Filterable {
      */
     private boolean mNotifyOnChange = true;
 
-    private Context mContext;    
+    private Context mContext;
 
     private ArrayList<T> mOriginalValues;
     private ArrayFilter mFilter;
@@ -181,6 +182,23 @@ public class ArrayAdapter<T> extends BaseAdapter implements Filterable {
     }
 
     /**
+     * Adds the specified Collection at the end of the array.
+     *
+     * @param collection The Collection to add at the end of the array.
+     */
+    public void addAll(Collection<? extends T> collection) {
+        if (mOriginalValues != null) {
+            synchronized (mLock) {
+                mOriginalValues.addAll(collection);
+                if (mNotifyOnChange) notifyDataSetChanged();
+            }
+        } else {
+            mObjects.addAll(collection);
+            if (mNotifyOnChange) notifyDataSetChanged();
+        }
+    }
+
+    /**
      * Inserts the specified object at the specified index in the array.
      *
      * @param object The object to insert into the array.
@@ -236,7 +254,7 @@ public class ArrayAdapter<T> extends BaseAdapter implements Filterable {
      */
     public void sort(Comparator<? super T> comparator) {
         Collections.sort(mObjects, comparator);
-        if (mNotifyOnChange) notifyDataSetChanged();        
+        if (mNotifyOnChange) notifyDataSetChanged();
     }
 
     /**
