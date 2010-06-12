@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAzX//+l0\u003d",
+        "filename": "core/java/android/widget/ArrayAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-06-12T07:54:52Z",
+      "side": 1,
+      "message": "Don\u0027t use the this prefix and don\u0027t create a Collection. This is unnecessary. Either use Collections.addAll(mObjects, items) or even better, do a simple loop: for (T item : items) mObjects.add(item)",
+      "revId": "215199fc9f927f949fbc1de6dab71266500372f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
