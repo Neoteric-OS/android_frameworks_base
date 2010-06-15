@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAzX//+V8\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-06-15T14:55:38Z",
+      "side": 1,
+      "message": "indentation wrong.",
+      "revId": "f5dedb25f37613333ddcd748b7c3ec82f6379652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzX//+WE\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-06-15T14:55:38Z",
+      "side": 1,
+      "message": "indentation wrong.",
+      "revId": "f5dedb25f37613333ddcd748b7c3ec82f6379652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzX//+V4\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-06-15T14:55:38Z",
+      "side": 1,
+      "message": "indentation wrong.",
+      "revId": "f5dedb25f37613333ddcd748b7c3ec82f6379652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAzX//+WA\u003d",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-06-15T14:55:38Z",
+      "side": 1,
+      "message": "indentation wrong.",
+      "revId": "f5dedb25f37613333ddcd748b7c3ec82f6379652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
