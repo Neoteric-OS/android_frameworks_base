@@ -85,6 +85,20 @@ public final class BluetoothHeadset {
             "android.bluetooth.headset.extra.DISCONNECT_INITIATOR";
 
     /**
+     * VIRTUALCALL_STATE_CHANGED
+     *
+     * Intent broadcast whenever the virtual call state changes. The new state is
+     * set in EXTRA_VIRTUAL_CALL_STATE. The new state could be one of
+     * VIRTUAL_CALL_STATE_CONNECTED, VIRTUAL_CALL_STATE_DISCONNECTED or
+     * VIRTUAL_CALL_STATE_TRANSFERRED.
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_VIRTUAL_CALL_STATE_CHANGED =
+            "android.bluetooth.headset.action.VIRTUAL_CALL_STATE_CHANGED";
+    public static final String EXTRA_VIRTUAL_CALL_STATE =
+            "android.bluetooth.headset.extra.VIRTUAL_CALL_STATE";
+
+    /**
      * TODO(API release): Consider incorporating as new state in
      * HEADSET_STATE_CHANGED
      */
@@ -103,8 +117,15 @@ public final class BluetoothHeadset {
 
     /** A SCO audio channel is not established */
     public static final int AUDIO_STATE_DISCONNECTED = 0;
-    /** A SCO audio channel is established */
+    /** A SCO audio channel is established for cellular call */
     public static final int AUDIO_STATE_CONNECTED = 1;
+
+    /** A Virtual Call audio channel is not established */
+    public static final int VIRTUAL_CALL_STATE_DISCONNECTED = 0;
+    /** A Virtual Call audio channel is established */
+    public static final int VIRTUAL_CALL_STATE_CONNECTED = 1;
+    /** A Virtual Call audio channel is transferred to phone */
+    public static final int VIRTUAL_CALL_STATE_TRANSFERRED = 2;
 
     public static final int RESULT_FAILURE = 0;
     public static final int RESULT_SUCCESS = 1;
@@ -404,6 +425,45 @@ public final class BluetoothHeadset {
     public static boolean isBluetoothVoiceDialingEnabled(Context context) {
         return context.getResources().getBoolean(
                 com.android.internal.R.bool.config_bluetooth_sco_off_call);
+    }
+
+    /**
+     * startVirtualVoiceCall
+     * Initiates a Virtual Voice Call to the handsfree device (if connected).
+     * Allows the handsfree device to be used for routing non-cellular call audio
+     * @return true if successful, false if there was some error.
+     *
+     */
+    public boolean startVirtualVoiceCall() {
+        if (DBG) log("startVirtualVoiceCall()");
+        if (mService != null) {
+            try {
+                return mService.startVirtualVoiceCall();
+            } catch (RemoteException e) {Log.e(TAG, e.toString());}
+        } else {
+            Log.w(TAG, "Proxy not attached to service");
+            if (DBG) Log.d(TAG, Log.getStackTraceString(new Throwable()));
+        }
+        return false;
+    }
+
+    /**
+     * stopVirtualVoiceCall
+     * Terminates an ongoing Virtual Voice Call to the handsfree device (if connected).
+     * @return true if successful, false if there was some error.
+     *
+     */
+    public boolean stopVirtualVoiceCall() {
+        if (DBG) log("stopVirtualVoiceCall()");
+        if (mService != null) {
+            try {
+                return mService.stopVirtualVoiceCall();
+            } catch (RemoteException e) {Log.e(TAG, e.toString());}
+        } else {
+            Log.w(TAG, "Proxy not attached to service");
+            if (DBG) Log.d(TAG, Log.getStackTraceString(new Throwable()));
+        }
+        return false;
     }
 
     private ServiceConnection mConnection = new ServiceConnection() {

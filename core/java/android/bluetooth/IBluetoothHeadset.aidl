@@ -34,4 +34,6 @@ interface IBluetoothHeadset {
     boolean setPriority(in BluetoothDevice device, int priority);
     int getPriority(in BluetoothDevice device);
     int getBatteryUsageHint();
+    boolean startVirtualVoiceCall();
+    boolean stopVirtualVoiceCall();
 }
