@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA0X///48\u003d",
+        "filename": "core/java/android/net/WebAddress.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001047
+      },
+      "writtenOn": "2010-06-18T20:43:22Z",
+      "side": 1,
+      "message": "Please remove tabs",
+      "revId": "244471a5913d0bd8ad308beae4b2011af2cbd10b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
