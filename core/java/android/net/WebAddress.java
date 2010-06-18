@@ -91,6 +91,11 @@ public class WebAddress {
             }
             t = m.group(MATCH_GROUP_PATH);
             if (t != null && t.length() > 0) {
+            	/* handle bug 2337042 where a leading '.' is not properly
+            	   cleared.*/
+            	if (t.charAt(0) == '.') {
+            		t = t.substring(1);
+            	}
                 /* handle busted myspace frontpage redirect with
                    missing initial "/" */
                 if (t.charAt(0) == '/') {
