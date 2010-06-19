@@ -91,6 +91,11 @@ public class WebAddress {
             }
             t = m.group(MATCH_GROUP_PATH);
             if (t != null && t.length() > 0) {
+                /* handle bug 2337042 extra '.' at the beginning of
+                <img> url path when joined with a <base> tag */
+                if (t.startsWith("./")) {
+                    t = t.substring(2);
+                }
                 /* handle busted myspace frontpage redirect with
                    missing initial "/" */
                 if (t.charAt(0) == '/') {
