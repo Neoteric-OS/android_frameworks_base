@@ -38,6 +38,9 @@ public:
 
     virtual sp<MetaData> getMetaData();
 
+    // for DRM
+    virtual char* getDrmInfo(size_t trackID, int *len);
+
 protected:
     virtual ~MPEG4Extractor();
 
@@ -70,6 +73,16 @@ private:
 
     static status_t verifyTrack(Track *track);
 
+    struct SINF {
+        SINF *next;
+        uint16_t trackID;
+        uint8_t IPMPDescriptorID;
+        uint32_t len;
+        char *IPMPData;
+    };
+
+    SINF *mFirstSINF;
+ 
     MPEG4Extractor(const MPEG4Extractor &);
     MPEG4Extractor &operator=(const MPEG4Extractor &);
 };
