@@ -618,6 +618,7 @@ status_t MPEG4Extractor::parseChunk(off_t *offset, int depth) {
                 height = U32_AT(&buffer[80]);
             }
 
+            mLastTrack->meta->setInt32(kKeyTrackID, id);
             *offset += chunk_size;
             break;
         }
@@ -1576,9 +1577,14 @@ status_t MPEG4Source::read(
     } else {
         // Whole NAL units are returned but each fragment is prefixed by
         // the start code (0x00 00 00 01).
-
-        ssize_t num_bytes_read =
-            mDataSource->readAt(offset, mSrcBuffer, size);
+        ssize_t num_bytes_read = 0;
+        int32_t drm = 0;
+        if (mFormat->findInt32(kKeyIsDRM, &drm)) {
+            num_bytes_read =
+                mDataSource->readAt(offset, (uint8_t*)mBuffer->data(), size);
+        } else {
+            num_bytes_read = mDataSource->readAt(offset, mSrcBuffer, size);
+        }
 
         if (num_bytes_read < (ssize_t)size) {
             mBuffer->release();
@@ -1587,40 +1593,45 @@ status_t MPEG4Source::read(
             return ERROR_IO;
         }
 
-        uint8_t *dstData = (uint8_t *)mBuffer->data();
-        size_t srcOffset = 0;
-        size_t dstOffset = 0;
+        if (!mFormat->findInt32(kKeyIsDRM, &drm)) {
+            uint8_t *dstData = (uint8_t *)mBuffer->data();
+            size_t srcOffset = 0;
+            size_t dstOffset = 0;
 
-        while (srcOffset < size) {
-            CHECK(srcOffset + mNALLengthSize <= size);
-            size_t nalLength = parseNALSize(&mSrcBuffer[srcOffset]);
-            srcOffset += mNALLengthSize;
+            while (srcOffset < size) {
+                CHECK(srcOffset + mNALLengthSize <= size);
+                size_t nalLength = parseNALSize(&mSrcBuffer[srcOffset]);
+                srcOffset += mNALLengthSize;
 
-            if (srcOffset + nalLength > size) {
-                mBuffer->release();
-                mBuffer = NULL;
+                if (srcOffset + nalLength > size) {
+                    mBuffer->release();
+                    mBuffer = NULL;
 
-                return ERROR_MALFORMED;
+                    return ERROR_MALFORMED;
+                }
+
+                if (nalLength == 0) {
+                    continue;
+                }
+
+                CHECK(dstOffset + 4 <= mBuffer->size());
+
+                dstData[dstOffset++] = 0;
+                dstData[dstOffset++] = 0;
+                dstData[dstOffset++] = 0;
+                dstData[dstOffset++] = 1;
+                memcpy(&dstData[dstOffset], &mSrcBuffer[srcOffset], nalLength);
+                srcOffset += nalLength;
+                dstOffset += nalLength;
             }
-
-            if (nalLength == 0) {
-                continue;
-            }
-
-            CHECK(dstOffset + 4 <= mBuffer->size());
-
-            dstData[dstOffset++] = 0;
-            dstData[dstOffset++] = 0;
-            dstData[dstOffset++] = 0;
-            dstData[dstOffset++] = 1;
-            memcpy(&dstData[dstOffset], &mSrcBuffer[srcOffset], nalLength);
-            srcOffset += nalLength;
-            dstOffset += nalLength;
+            CHECK_EQ(srcOffset, size);
+            CHECK(mBuffer != NULL);
+            mBuffer->set_range(0, dstOffset);
+        } else {
+            CHECK(mBuffer != NULL);
+            mBuffer->set_range(0, size);
         }
-        CHECK_EQ(srcOffset, size);
 
-        CHECK(mBuffer != NULL);
-        mBuffer->set_range(0, dstOffset);
         mBuffer->meta_data()->clear();
         mBuffer->meta_data()->setInt64(
                 kKeyTime, ((int64_t)dts * 1000000) / mTimescale);

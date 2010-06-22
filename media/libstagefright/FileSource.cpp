@@ -21,14 +21,20 @@ namespace android {
 
 FileSource::FileSource(const char *filename)
     : mFile(fopen(filename, "rb")),
+      mFd(fileno(mFile)),
       mOffset(0),
-      mLength(-1) {
+      mLength(-1),
+      mDecryptHandle(NULL),
+      mDrmManagerClient(NULL) {
 }
 
 FileSource::FileSource(int fd, int64_t offset, int64_t length)
     : mFile(fdopen(fd, "rb")),
+      mFd(fd),
       mOffset(offset),
-      mLength(length) {
+      mLength(length),
+      mDecryptHandle(NULL),
+      mDrmManagerClient(NULL){
     CHECK(offset >= 0);
     CHECK(length >= 0);
 }
@@ -57,13 +63,18 @@ ssize_t FileSource::readAt(off_t offset, void *data, size_t size) {
         }
     }
 
-    int err = fseeko(mFile, offset + mOffset, SEEK_SET);
-    if (err < 0) {
-        LOGE("seek to %lld failed", offset + mOffset);
-        return UNKNOWN_ERROR;
-    }
+    if (mDecryptHandle != NULL && DecryptApiType::CONTAINER_BASED
+            == mDecryptHandle->decryptApiType) {
+        return mDrmManagerClient->pread(mDecryptHandle, data, size, offset + mOffset);
+    } else {
+        int err = fseeko(mFile, offset + mOffset, SEEK_SET);
+        if (err < 0) {
+            LOGE("seek to %lld failed", offset + mOffset);
+            return UNKNOWN_ERROR;
+        }
 
-    return fread(data, 1, size, mFile);
+        return fread(data, 1, size, mFile);
+    }
 }
 
 status_t FileSource::getSize(off_t *size) {
@@ -79,4 +90,23 @@ status_t FileSource::getSize(off_t *size) {
     return OK;
 }
 
+DecryptHandle* FileSource::DrmInitialization(DrmManagerClient* client) {
+    mDrmManagerClient = client;
+    if (mDecryptHandle == NULL) {
+        mDecryptHandle = mDrmManagerClient->openDecryptSession(
+                mFd, mOffset, mLength);
+    }
+
+    if (mDecryptHandle == NULL) {
+        mDrmManagerClient = NULL;
+    }
+
+    return mDecryptHandle;
+}
+
+void FileSource::getDrmInfo(DecryptHandle **handle, DrmManagerClient **client) {
+    *handle = mDecryptHandle;
+
+    *client = mDrmManagerClient;
+}
 }  // namespace android
