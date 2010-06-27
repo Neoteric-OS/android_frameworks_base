@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA0n///gI\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-06-27T14:11:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///gY\u003d",
+      "revId": "aafaebdba391afda77ced04bdd0e734be5973acf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///gU\u003d",
         "filename": "telephony/java/com/android/internal/telephony/IccProvider.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2010-06-27T12:58:05Z",
       "side": 1,
       "message": "No need for a private variable here. Just make it local.",
+      "revId": "aafaebdba391afda77ced04bdd0e734be5973acf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///gE\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-06-27T14:11:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///gU\u003d",
       "revId": "aafaebdba391afda77ced04bdd0e734be5973acf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA0n///gA\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-06-27T14:11:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///go\u003d",
+      "revId": "aafaebdba391afda77ced04bdd0e734be5973acf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///gk\u003d",
         "filename": "telephony/java/com/android/internal/telephony/IccProvider.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2010-06-27T10:42:43Z",
       "side": 1,
       "message": "Please wrap it in curly brackets { }, or write it in one line",
+      "revId": "aafaebdba391afda77ced04bdd0e734be5973acf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///f8\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-06-27T14:11:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///gk\u003d",
       "revId": "aafaebdba391afda77ced04bdd0e734be5973acf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
