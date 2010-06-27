@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA0n///go\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1003856
+      },
+      "writtenOn": "2010-06-27T10:42:43Z",
+      "side": 1,
+      "message": "Please wrap it in curly brackets { }, or write it in one line",
+      "revId": "aafaebdba391afda77ced04bdd0e734be5973acf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///gk\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1003856
+      },
+      "writtenOn": "2010-06-27T10:42:43Z",
+      "side": 1,
+      "message": "Please wrap it in curly brackets { }, or write it in one line",
+      "revId": "aafaebdba391afda77ced04bdd0e734be5973acf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
