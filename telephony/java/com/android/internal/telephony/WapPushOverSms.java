@@ -134,7 +134,12 @@ public class WapPushOverSms {
                     break;
                case WspTypeDecoder.CONTENT_TYPE_B_EMN:
                 	mimeType = WspTypeDecoder.CONTENT_MIME_TYPE_B_EMN;
+<<<<<<< HEAD:telephony/java/com/android/internal/telephony/WapPushOverSms.java
                 	break;
+=======
+                	          
+                	
+>>>>>>> No changes - just restored changed files from last sync over the orignals.:telephony/java/com/android/internal/telephony/WapPushOverSms.java
                 default:
                     if (Config.LOGD) {
                         Log.w(LOG_TAG,
@@ -159,7 +164,7 @@ public class WapPushOverSms {
                 binaryContentType = WspTypeDecoder.CONTENT_TYPE_B_VND_DOCOMO_PF;                
             } else if (mimeType.equals(WspTypeDecoder.CONTENT_MIME_TYPE_B_EMN)) {
                 binaryContentType = WspTypeDecoder.CONTENT_TYPE_B_EMN;
-                Log.w(LOG_TAG, "Received PDU. CONTENT_TYPE_B_EMN");
+                Log.w(LOG_TAG, "Received PDU. CONTENT_TYPE_B_EMN");                                            
             } else {
                 if (Config.LOGD) Log.w(LOG_TAG, "Received PDU. Unknown Content-Type = " + mimeType);
                 return Intents.RESULT_SMS_HANDLED;
