@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA0n///Z4\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaDataConnectionTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-29T00:16:13Z",
+      "side": 1,
+      "message": "I\u0027m concerned that this change is a change in the contract between the framework and the radio.  While a particular radio may be ok with this optimization, it\u0027s not clear to me that everybody\u0027s radio will be.",
+      "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///Z0\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-29T00:16:13Z",
+      "side": 1,
+      "message": "Again, this sounds like an implementation detail of a particular modem and it may not be generally true.",
+      "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
