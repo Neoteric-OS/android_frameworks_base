@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA0n///U4\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaDataConnectionTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-29T16:53:00Z",
+      "side": 1,
+      "message": "A modem may require we clean up connections before powering down.  We\u0027ve done that to date.  This optimization is a protocol change.  It may be benign - I\u0027m not in a position to judge.  I\u0027m hoping somebody more familiar with the protocol will review the change.",
+      "parentUuid": "AAAA0n///Zc\u003d",
+      "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///Z0\u003d",
         "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaServiceStateTracker.java",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "This is as per the CDMA standard. 3GPP2 C.S0005-A states that \"The mobile station shall send the Release Order (with power-down indication) in assured mode requiring confirmation of delivery.\" when mobile station is directed by the user to power off if any call (voice or data) is active.",
       "parentUuid": "AAAA0n///Z0\u003d",
+      "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///U0\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-29T16:53:00Z",
+      "side": 1,
+      "message": "This code is not implementing the CDMA standard.  It is implementing one half of the RIL protocol and your change is modifying that protocol.  If somebody implemented a CDMA modem assuming they would get the cleanup before the power off this change could break their modem.  Somebody closer to the RIL protocol needs to decide if this is ok - I\u0027m just pointing out that it is a change to the contract.",
+      "parentUuid": "AAAA0n///Zo\u003d",
       "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
