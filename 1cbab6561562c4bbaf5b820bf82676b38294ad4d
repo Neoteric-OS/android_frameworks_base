@@ -16,6 +16,23 @@
       "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///Lg\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2010-06-30T18:02:32Z",
+      "side": 1,
+      "message": "what purpose does this serve? it\u0027s a worse interface than using InetAddress directly, since it offers less control.",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
