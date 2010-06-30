@@ -47,6 +47,9 @@ interface IConnectivityManager
 
     boolean requestRouteToHost(int networkType, int hostAddress);
 
+    boolean requestRouteToHostAddress(int networkType, int addressType,
+            in String hostAddress);
+
     boolean getBackgroundDataSetting();
 
     void setBackgroundDataSetting(boolean allowBackgroundData);

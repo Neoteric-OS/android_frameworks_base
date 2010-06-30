@@ -76,6 +76,19 @@ static jint android_net_utils_addHostRoute(JNIEnv* env, jobject clazz, jstring i
     return (jint)result;
 }
 
+static jint android_net_utils_addRouteToHost(JNIEnv* env, jobject clazz, jstring ifname,
+          jint addrType, jstring addr)
+{
+    int result;
+
+    const char *nameStr = env->GetStringUTFChars(ifname, NULL);
+    const char *addrStr = env->GetStringUTFChars(addr, NULL);
+    result = ::ifc_add_route_to_host(nameStr, addrType, addrStr);
+    env->ReleaseStringUTFChars(ifname, nameStr);
+    env->ReleaseStringUTFChars(addr, addrStr);
+    return (jint)result;
+}
+
 static jint android_net_utils_removeHostRoutes(JNIEnv* env, jobject clazz, jstring ifname)
 {
     int result;
@@ -202,6 +215,7 @@ static JNINativeMethod gNetworkUtilMethods[] = {
     { "enableInterface", "(Ljava/lang/String;)I",  (void *)android_net_utils_enableInterface },
     { "disableInterface", "(Ljava/lang/String;)I",  (void *)android_net_utils_disableInterface },
     { "addHostRoute", "(Ljava/lang/String;I)I",  (void *)android_net_utils_addHostRoute },
+    { "addRouteToHost", "(Ljava/lang/String;ILjava/lang/String;)I",  (void *)android_net_utils_addRouteToHost },
     { "removeHostRoutes", "(Ljava/lang/String;)I",  (void *)android_net_utils_removeHostRoutes },
     { "setDefaultRoute", "(Ljava/lang/String;I)I",  (void *)android_net_utils_setDefaultRoute },
     { "getDefaultRoute", "(Ljava/lang/String;)I",  (void *)android_net_utils_getDefaultRoute },
