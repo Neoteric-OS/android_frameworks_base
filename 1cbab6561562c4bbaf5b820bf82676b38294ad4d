@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA0n///NI\u003d",
+        "filename": "core/java/android/net/IConnectivityManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2010-06-30T10:10:12Z",
+      "side": 1,
+      "message": "As per my comments in the framework change, the addressType can be implicitly obtained from the string, so there\u0027s no need to have it. On the other hand, it would be useful to be able to create more than just host routes, so could you add an \"int prefixLength\" parameter as well?",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
