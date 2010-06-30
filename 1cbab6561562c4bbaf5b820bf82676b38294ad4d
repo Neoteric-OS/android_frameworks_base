@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAA0n///L4\u003d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "Don\u0027t use Inet4Address \u0026 Inet6Address.  Let\u0027s keep things generic unless we need specificity.",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///L0\u003d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "Don\u0027t think this should be needed anywhere in java.",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///Lw\u003d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "Please mark requestRouteToHost as deprecated and have it create a InetAddress for the given hostAddress and use mService.requestRouteToHostAddress.\n\nrequestRouteToHostAddress does not need to distinguish between v4 and v6.  Drop the addressType stuff.",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///NI\u003d",
         "filename": "core/java/android/net/IConnectivityManager.aidl",
         "patchSetId": 1
@@ -19,6 +70,143 @@
     },
     {
       "key": {
+        "uuid": "AAAA0n///Ls\u003d",
+        "filename": "core/java/android/net/IConnectivityManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "Actually, I\u0027d rather not add the prefixLength parameter.  Applications should not have the ability to set network routes.  In fact this API will be deprecated when we have better methods for binding requests to interfaces.\n\nPlease do drop the addressType.",
+      "parentUuid": "AAAA0n///NI\u003d",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///LY\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "MobileDataStateTracker is not a public class - it is hidden.  Don\u0027t bother making a parallel implementation, just modify requestRoutToHost with a InetAddress parameter.  Modify NetworkUtils to accept a InetAddress.",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///LU\u003d",
+        "filename": "core/java/android/net/NetworkStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "Don\u0027t add this - modify requestRouteToHost to take an InetAddress parameter.",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///LQ\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "Don\u0027t add this - modify addHostRoute to take a InetAddress.",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///Kk\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "Modify setDefaultRoute to take a InetAddress (or use Lorenzo\u0027s idea of adding a prefix length param and combined with addRouteToHost for a new addRoute call)",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///Kg\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "Modify to return an InetAddress",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///Kc\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "DhcpInfo also needs int -\u003e InetAddress changes, but we can perhaps leave that for another change.",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///KY\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "Should probably be deprecated in favor for InetAddress.getByName(hostname);",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///Lg\u003d",
         "filename": "core/java/android/net/NetworkUtils.java",
         "patchSetId": 1
@@ -30,6 +218,126 @@
       "writtenOn": "2010-06-30T18:02:32Z",
       "side": 1,
       "message": "what purpose does this serve? it\u0027s a worse interface than using InetAddress directly, since it offers less control.",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///LM\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "Agreed - please don\u0027t add this.  The InetAddress provides this functionality already.",
+      "parentUuid": "AAAA0n///Lg\u003d",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///KU\u003d",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "Change addr to a jstring and add jint prefixLength and rename to addRoute.",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///KQ\u003d",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "don\u0027t add, use addRoute instead (see comment above).",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///KM\u003d",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "removed in favor of the general addRoute",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///KI\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "mark this as deprecated.\n\ngut the function in favor of calling requestRouteToHostAddress, casting the hostAddress into a InetAddress",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///KE\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "drop the addressType and change hostAddress to an InetAddress",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n///KA\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-06-30T19:32:31Z",
+      "side": 1,
+      "message": "pass just the InetAddress (hostAddress)",
       "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
