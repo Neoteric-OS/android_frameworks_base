@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA0n///Gg\u003d",
+        "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-07-01T17:21:51Z",
+      "side": 1,
+      "message": "Staying within 100 columns would be good.",
+      "revId": "c074b5af69a2446b6ca786db0c57982af2823b5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
