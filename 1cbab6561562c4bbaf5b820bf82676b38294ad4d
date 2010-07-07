@@ -106,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA0n//+sc\u003d",
+        "filename": "core/java/android/net/IConnectivityManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-07-07T18:30:35Z",
+      "side": 1,
+      "message": "Don\u0027t try adding InetAddress to the aidl.  The ConnectivityManager.java interface can accept an InetAddress.  The aidl should pass the host String and byte[] address from the InetAddress and the InetAddress can be reconstructed in the ConnectivityService.java code if needed.  The aidl is an internal interface, not a public one.",
+      "parentUuid": "AAAA0n//+u8\u003d",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///LY\u003d",
         "filename": "core/java/android/net/MobileDataStateTracker.java",
         "patchSetId": 1
