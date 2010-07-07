@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA0n//+u8\u003d",
+        "filename": "core/java/android/net/IConnectivityManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-07T05:53:32Z",
+      "side": 1,
+      "message": "It seems difficult to add InetAddress to the aidl. Basically we need to make it parcelable. But the original InetAddress seems to be part of the java.net package. Do we have to change the InetAddress in that package to make it parcelable or add a new InetAddress. java in Android package?",
+      "parentUuid": "AAAA0n///Ls\u003d",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///LY\u003d",
         "filename": "core/java/android/net/MobileDataStateTracker.java",
         "patchSetId": 1
