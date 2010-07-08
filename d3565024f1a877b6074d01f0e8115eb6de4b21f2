@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA0n//+l0\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccCard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-07-08T18:05:32Z",
+      "side": 1,
+      "message": "I don\u0027t like this, changing the callers intent behind their back doesn\u0027t feel right, what other solution can be used. Maybe changing the call sites?",
+      "revId": "d3565024f1a877b6074d01f0e8115eb6de4b21f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
