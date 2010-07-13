@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA0n//+Ac\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/AdnRecordCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2010-07-13T02:34:05Z",
+      "side": 1,
+      "message": "What are you passing for the USIM ? EF_ADN or the actual efid of the USIM ?",
+      "revId": "675b6e213e8e84b35a8ddf253be3602eeae5b727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n//+AY\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/AdnRecordCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2010-07-13T02:34:05Z",
+      "side": 1,
+      "message": "getRealEfid maintains a mapping of EF_PBR and all the efids.\n\nSo if you are passing EF_PBR you get the actual efid ? I am a bit confused here regarding the mapping.",
+      "revId": "675b6e213e8e84b35a8ddf253be3602eeae5b727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n//+AU\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/AdnRecordCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2010-07-13T02:34:05Z",
+      "side": 1,
+      "message": "This requires the full path. Have you tested writing and reading it back ? Which phone did u test it on ?",
+      "revId": "675b6e213e8e84b35a8ddf253be3602eeae5b727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
