@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA0n//9/E\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/AdnRecordCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1004144
+      },
+      "writtenOn": "2010-07-13T07:28:57Z",
+      "side": 1,
+      "message": "EF_ADN. The caller cannot know he\u0027s dealing with a USIM.",
+      "parentUuid": "AAAA0n//+Ac\u003d",
+      "revId": "675b6e213e8e84b35a8ddf253be3602eeae5b727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n//+AY\u003d",
         "filename": "telephony/java/com/android/internal/telephony/AdnRecordCache.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA0n//9/A\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/AdnRecordCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1004144
+      },
+      "writtenOn": "2010-07-13T07:28:57Z",
+      "side": 1,
+      "message": "There is a double mapping. EF_ADN to EF_PBR and then EF_PBR to the actual efid.\nThis is because requestLoadAllAdnLike is called twice. First from IccPhoneBookInterfaceManager and again from UsimPhoneBookManager.",
+      "parentUuid": "AAAA0n//+AY\u003d",
+      "revId": "675b6e213e8e84b35a8ddf253be3602eeae5b727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n//+AU\u003d",
         "filename": "telephony/java/com/android/internal/telephony/AdnRecordCache.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2010-07-13T02:34:05Z",
       "side": 1,
       "message": "This requires the full path. Have you tested writing and reading it back ? Which phone did u test it on ?",
+      "revId": "675b6e213e8e84b35a8ddf253be3602eeae5b727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n//9+8\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/AdnRecordCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1004144
+      },
+      "writtenOn": "2010-07-13T07:28:57Z",
+      "side": 1,
+      "message": "Yes, tested on a Nexus One. Reading and writing is OK, and it\u0027s still OK after restarting the phone.",
+      "parentUuid": "AAAA0n//+AU\u003d",
       "revId": "675b6e213e8e84b35a8ddf253be3602eeae5b727",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
