@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA0n//+AI\u003d",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2010-07-13T02:49:00Z",
+      "side": 1,
+      "message": "Can we elaborate on the comment - something like - intent for doing blah blah.\n\nAnd lets call VIRTUAL_CALL instead of VIRTUALCALL",
+      "revId": "93103c35185ce4313d222c15002576f1a6c8b181",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA0n//+AM\u003d",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2010-07-13T02:49:00Z",
+      "side": 1,
+      "message": "Lets call it VIRTUAL_CALL. Easy to ready since they are two words.",
+      "revId": "93103c35185ce4313d222c15002576f1a6c8b181",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
