@@ -1239,4 +1239,5 @@
     
   <public type="anim" name="cycle_interpolator" id="0x010a000c" />
 
+  <public type="attr" name="summaryFromEntries" id="0x010102be" />
 </resources>
