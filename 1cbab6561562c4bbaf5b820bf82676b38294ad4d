@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA1H///vo\u003d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///L4\u003d",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///L0\u003d",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA1H///vk\u003d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///L0\u003d",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///Lw\u003d",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2010-06-30T19:32:31Z",
       "side": 1,
       "message": "Please mark requestRouteToHost as deprecated and have it create a InetAddress for the given hostAddress and use mService.requestRouteToHostAddress.\n\nrequestRouteToHostAddress does not need to distinguish between v4 and v6.  Drop the addressType stuff.",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA1H///vg\u003d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///Lw\u003d",
       "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -124,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA1H///vY\u003d",
+        "filename": "core/java/android/net/IConnectivityManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n//+sc\u003d",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///LY\u003d",
         "filename": "core/java/android/net/MobileDataStateTracker.java",
         "patchSetId": 1
@@ -135,6 +207,24 @@
       "writtenOn": "2010-06-30T19:32:31Z",
       "side": 1,
       "message": "MobileDataStateTracker is not a public class - it is hidden.  Don\u0027t bother making a parallel implementation, just modify requestRoutToHost with a InetAddress parameter.  Modify NetworkUtils to accept a InetAddress.",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA1H///vM\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///LY\u003d",
       "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -158,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA1H///vI\u003d",
+        "filename": "core/java/android/net/NetworkStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///LU\u003d",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///LQ\u003d",
         "filename": "core/java/android/net/NetworkUtils.java",
         "patchSetId": 1
@@ -169,6 +277,24 @@
       "writtenOn": "2010-06-30T19:32:31Z",
       "side": 1,
       "message": "Don\u0027t add this - modify addHostRoute to take a InetAddress.",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA1H///sA\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///LQ\u003d",
       "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -192,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA1H///u8\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///Kk\u003d",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///Kg\u003d",
         "filename": "core/java/android/net/NetworkUtils.java",
         "patchSetId": 1
@@ -203,6 +347,24 @@
       "writtenOn": "2010-06-30T19:32:31Z",
       "side": 1,
       "message": "Modify to return an InetAddress",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA1H///us\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "We will do this as a separate change later.",
+      "parentUuid": "AAAA0n///Kg\u003d",
       "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -226,6 +388,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA1H///uk\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "Also later.",
+      "parentUuid": "AAAA0n///Kc\u003d",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///KY\u003d",
         "filename": "core/java/android/net/NetworkUtils.java",
         "patchSetId": 1
@@ -237,6 +417,24 @@
       "writtenOn": "2010-06-30T19:32:31Z",
       "side": 1,
       "message": "Should probably be deprecated in favor for InetAddress.getByName(hostname);",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA1H///uU\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "InetAddress does not have functions that take String and return an integer. I really dont like using integer for IP address. But existing code/API does that. So we need this utility function and another to convert int to InetAddress to support old APIs.",
+      "parentUuid": "AAAA0n///KY\u003d",
       "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -278,6 +476,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA1H///uQ\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///LM\u003d",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///KU\u003d",
         "filename": "core/jni/android_net_NetUtils.cpp",
         "patchSetId": 1
@@ -289,6 +505,24 @@
       "writtenOn": "2010-06-30T19:32:31Z",
       "side": 1,
       "message": "Change addr to a jstring and add jint prefixLength and rename to addRoute.",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA1H///r8\u003d",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///KU\u003d",
       "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -312,6 +546,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA1H///r4\u003d",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///KQ\u003d",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///KM\u003d",
         "filename": "core/jni/android_net_NetUtils.cpp",
         "patchSetId": 1
@@ -323,6 +575,24 @@
       "writtenOn": "2010-06-30T19:32:31Z",
       "side": 1,
       "message": "removed in favor of the general addRoute",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA1H///r0\u003d",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///KM\u003d",
       "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -346,6 +616,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA1H///rs\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///KI\u003d",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///KE\u003d",
         "filename": "services/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -363,6 +651,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA1H///rw\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///KE\u003d",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///KA\u003d",
         "filename": "services/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -374,6 +680,24 @@
       "writtenOn": "2010-06-30T19:32:31Z",
       "side": 1,
       "message": "pass just the InetAddress (hostAddress)",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA1H///ro\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-14T22:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA0n///KA\u003d",
       "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
