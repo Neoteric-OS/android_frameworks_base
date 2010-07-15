@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA1H///aE\u003d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-07-15T19:17:01Z",
+      "side": 1,
+      "message": "lookupHost is probably not the right name.  It has other connotations and it doesn\u0027t really say what it\u0027s doing.  v4IntToInetAddress?  intToInetAddress?  What do you think?",
+      "revId": "cd8fafd1ff9b407d386fee9d682d1b44964b0c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA1H///ZE\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-07-15T19:17:01Z",
+      "side": 1,
+      "message": "The old funciton did a dns lookup.  This does not - I think the name should change - I think I suggested some names elsewhere - intToInetAddress or something.",
+      "revId": "cd8fafd1ff9b407d386fee9d682d1b44964b0c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA1H///Y8\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-07-15T19:17:01Z",
+      "side": 1,
+      "message": "add check for tracker\u003d\u003dnull or get NPE when they try an unprovisioned network (ie try for wifi on a device with no wifi).",
+      "revId": "cd8fafd1ff9b407d386fee9d682d1b44964b0c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
