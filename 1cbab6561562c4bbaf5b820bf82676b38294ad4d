@@ -459,6 +459,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA1H///og\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-15T00:32:21Z",
+      "side": 1,
+      "message": "After i posted the comments, I did notice that this function is not used anymore after my changes. So I did remove it. \n\nBut we added another one to convert int to InetAddress. Let me know your thoughts on that.",
+      "parentUuid": "AAAA1H///p8\u003d",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///Lg\u003d",
         "filename": "core/java/android/net/NetworkUtils.java",
         "patchSetId": 1
