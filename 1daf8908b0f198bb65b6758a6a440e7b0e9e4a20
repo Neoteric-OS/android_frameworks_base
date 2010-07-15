@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA1H///dM\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/AdnRecordCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2010-07-15T16:56:39Z",
+      "side": 1,
+      "message": "So aren\u0027t u assuming here that there will be only 1 ADN file per PBR i.e\n\nEF_ADN will get mapped to EF_PBR.\nEF_PBR can have many ADN files in it.\n\nrecord Number of the old ADN needs to be remembered and then mapped to the correct ADN file",
+      "revId": "1daf8908b0f198bb65b6758a6a440e7b0e9e4a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA1H///eY\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/AdnRecordCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2010-07-15T16:56:39Z",
+      "side": 1,
+      "message": "We should make the EF_PBR check before calling getRecordsIfLoaded - saves us a call",
+      "revId": "1daf8908b0f198bb65b6758a6a440e7b0e9e4a20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
