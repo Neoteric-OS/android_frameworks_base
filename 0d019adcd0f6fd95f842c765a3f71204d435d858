@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA1H///bo\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-07-15T17:17:09Z",
+      "side": 1,
+      "message": "I think the code will be simpler if a for-each loop is used here and below. In addition, N shouldn\u0027t be needed.\n\nfor(AdnRecord record : andRecords)",
+      "revId": "0d019adcd0f6fd95f842c765a3f71204d435d858",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
