@@ -441,6 +441,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA1H///p8\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-07-15T00:21:30Z",
+      "side": 1,
+      "message": "Internally I have removed this function.  The only call site was ConnectivityService taking DNS hostname and getting an int to use with addHostRoute.  If addHostRoute is now taking a InetAddr, either this function can just return an InetAddr or this function can go away and we just create the InetAddr in ConnectivityService directly (see the 3rd line of this function).  I\u0027d vote for removing the function altogether.\n\nBecause we do still have to deal with some legacy code using int\u0027s, I would encourage you though to add:\npublic static byte[] v4IntToArray(int addr)\nand\npublic static int v4StringToInt(String str)\nin NetworkUtils so that you can go from legacy int\u0027s to something suitable for InetAddress construction and vice-versa.  These will be removed when we get rid of legacy int\u0027s (if we ever do..",
+      "parentUuid": "AAAA1H///uU\u003d",
+      "revId": "1cbab6561562c4bbaf5b820bf82676b38294ad4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///Lg\u003d",
         "filename": "core/java/android/net/NetworkUtils.java",
         "patchSetId": 1
