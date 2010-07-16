@@ -16,6 +16,24 @@
       "revId": "d3565024f1a877b6074d01f0e8115eb6de4b21f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA1X///2o\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccCard.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-16T00:11:29Z",
+      "side": 1,
+      "message": "I will come up with an alternate fix and upload a new patch set soon.",
+      "parentUuid": "AAAA0n//+l0\u003d",
+      "revId": "d3565024f1a877b6074d01f0e8115eb6de4b21f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
