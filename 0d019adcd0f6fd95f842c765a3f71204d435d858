@@ -16,6 +16,41 @@
       "revId": "0d019adcd0f6fd95f842c765a3f71204d435d858",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA1X///yI\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-16T01:09:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA1H///bo\u003d",
+      "revId": "0d019adcd0f6fd95f842c765a3f71204d435d858",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA1X///yE\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-07-16T01:09:26Z",
+      "side": 1,
+      "message": "Will do the same here as well",
+      "revId": "0d019adcd0f6fd95f842c765a3f71204d435d858",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
