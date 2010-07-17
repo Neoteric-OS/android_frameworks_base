@@ -51,6 +51,7 @@
     <protected-broadcast android:name="android.intent.action.DEVICE_STORAGE_LOW" />
     <protected-broadcast android:name="android.intent.action.DEVICE_STORAGE_OK" />
     <protected-broadcast android:name="android.intent.action.NEW_OUTGOING_CALL" />
+    <protected-broadcast android:name="android.intent.action.NEW_OUTGOING_SMS" />
     <protected-broadcast android:name="android.intent.action.REBOOT" />
     <protected-broadcast android:name="android.intent.action.DOCK_EVENT" />
 
@@ -464,6 +465,14 @@
         android:protectionLevel="dangerous"
         android:label="@string/permlab_processOutgoingCalls"
         android:description="@string/permdesc_processOutgoingCalls" />
+
+    <!-- Allows an application to monitor, modify, or abort outgoing
+         SMS. -->
+    <permission android:name="android.permission.PROCESS_OUTGOING_SMS"
+        android:permissionGroup="android.permission-group.PHONE_CALLS"
+        android:protectionLevel="dangerous"
+        android:label="@string/permlab_processOutgoingSms"
+        android:description="@string/permdesc_processOutgoingSms" />
 
     <!-- Allows modification of the telephony state - power on, mmi, etc.
          Does not include placing calls. -->

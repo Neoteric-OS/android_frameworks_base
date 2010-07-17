@@ -1826,6 +1826,40 @@ public class Intent implements Parcelable, Cloneable {
             "android.intent.action.NEW_OUTGOING_CALL";
 
     /**
+     * Broadcast Action: An outgoing SMS is about to be sent.
+     *
+     * <p>The Intent will have the following extra value:
+     * <ul>
+     *   <li><em>{@link android.content.Intent#EXTRA_PHONE_NUMBER}</em> -
+     *       the phone number originally intended to be used.</li>
+     * </ul>
+     * <p>Once the broadcast is finished, the resultData is used as the actual
+     * number to use.  If  <code>null</code>, no SMS will be sent.</p>
+     * <p>It is perfectly acceptable for multiple receivers to process the
+     * outgoing SMS in turn: for example, a parental control application
+     * might verify that the user is authorized to send an SMS at that
+     * time.</p>
+     * <p>For consistency, any receiver whose purpose is to prohibit sending
+     * SMS should have a priority of 0, to ensure it will see the final
+     * phone number to be sent.
+     * Any receiver whose purpose is to rewrite phone numbers to be used
+     * should have a positive priority.
+     * Negative priorities are reserved for the system for this broadcast;
+     * using them may cause problems.</p>
+     * <p>Any BroadcastReceiver receiving this Intent <em>must not</em>
+     * abort the broadcast.</p>
+     * <p>You must hold the
+     * {@link android.Manifest.permission#PROCESS_OUTGOING_SMS}
+     * permission to receive this Intent.</p>
+     *
+     * <p class="note">This is a protected intent that can only be sent
+     * by the system.
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_NEW_OUTGOING_SMS =
+            "android.intent.action.NEW_OUTGOING_SMS";
+
+    /**
      * Broadcast Action: Have the device reboot.  This is only for use by
      * system code.
      *

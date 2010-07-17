@@ -16,8 +16,11 @@
 
 package com.android.internal.telephony;
 
+import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.android.internal.util.HexDump;
@@ -32,6 +35,27 @@ import static android.telephony.SmsManager.STATUS_ON_ICC_FREE;
  * access Sms in Icc.
  */
 public abstract class IccSmsInterfaceManager extends ISms.Stub {
+    private static final String PERMISSION = android.Manifest.permission.PROCESS_OUTGOING_SMS;
+    public static final String EXTRA_SC_ADDRESS = "android.sms.extra.SC_ADDRESS";
+    public static final String EXTRA_TEXT = "android.sms.extra.TEXT";
+    public static final String EXTRA_SENT_INTENT = "android.sms.extra.SENT_INTENT";
+    public static final String EXTRA_DELIVERY_INTENT = "android.sms.extra.DELIVERY_INTENT";
+
+    public class OutgoingSmsReceiver extends BroadcastReceiver {
+        public void onReceive(Context context, Intent intent) {
+            String destAddr = getResultData();
+            if (destAddr == null) {
+                Log.v("OutgoingSmsReceiver", "SMS cancelled (null number), returning...");
+                return;
+            }
+            String scAddr = intent.getStringExtra(EXTRA_SC_ADDRESS);
+            String text = intent.getStringExtra(EXTRA_TEXT);
+            PendingIntent sentIntent = intent.getParcelableExtra(EXTRA_SENT_INTENT);
+            PendingIntent deliveryIntent = intent.getParcelableExtra(EXTRA_DELIVERY_INTENT);
+            mDispatcher.sendText(destAddr, scAddr, text, sentIntent, deliveryIntent);
+        }
+    }
+
     protected PhoneBase mPhone;
     protected Context mContext;
     protected SMSDispatcher mDispatcher;
@@ -120,7 +144,15 @@ public abstract class IccSmsInterfaceManager extends ISms.Stub {
                 " text='"+ text + "' sentIntent=" +
                 sentIntent + " deliveryIntent=" + deliveryIntent);
         }
-        mDispatcher.sendText(destAddr, scAddr, text, sentIntent, deliveryIntent);
+        Intent broadcastIntent = new Intent(Intent.ACTION_NEW_OUTGOING_SMS);
+        broadcastIntent.putExtra(Intent.EXTRA_PHONE_NUMBER, destAddr);
+        broadcastIntent.putExtra(EXTRA_SC_ADDRESS, scAddr);
+        broadcastIntent.putExtra(EXTRA_TEXT, text);
+        broadcastIntent.putExtra(EXTRA_SENT_INTENT, sentIntent);
+        broadcastIntent.putExtra(EXTRA_DELIVERY_INTENT, deliveryIntent);
+
+        mContext.sendOrderedBroadcast(broadcastIntent, PERMISSION,
+                new OutgoingSmsReceiver(), null, Activity.RESULT_OK, destAddr, null);
     }
 
     /**
