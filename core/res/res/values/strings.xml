@@ -406,6 +406,13 @@
         applications may monitor, redirect, or prevent outgoing calls.</string>
 
     <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_processOutgoingSms">intercept outgoing SMS</string>
+    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_processOutgoingSms">Allows application to
+        process outgoing SMS and change the number to be used.  Malicious
+        applications may monitor, redirect, or prevent outgoing SMS.</string>
+
+    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permlab_receiveSms">receive SMS</string>
     <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permdesc_receiveSms">Allows application to receive
