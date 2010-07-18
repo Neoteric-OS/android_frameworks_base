@@ -144,6 +144,9 @@ public abstract class IccPhoneBookInterfaceManager extends IIccPhoneBook.Stub {
         if (DBG) logd("updateAdnRecordsInEfBySearch: efid=" + efid +
                 " ("+ oldTag + "," + oldPhoneNumber + ")"+ "==>" +
                 " ("+ newTag + "," + newPhoneNumber + ")"+ " pin2=" + pin2);
+
+        efid = updateEfForIccType(efid);
+
         synchronized(mLock) {
             checkThread();
             success = false;
@@ -241,6 +244,7 @@ public abstract class IccPhoneBookInterfaceManager extends IIccPhoneBook.Stub {
         synchronized(mLock) {
             checkThread();
             Message response = mBaseHandler.obtainMessage(EVENT_LOAD_DONE);
+
             adnCache.requestLoadAllAdnLike(efid, adnCache.extensionEfForEf(efid), response);
             try {
                 mLock.wait();
