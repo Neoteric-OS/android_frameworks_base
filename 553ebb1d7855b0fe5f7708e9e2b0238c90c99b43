@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA3H///+s\u003d",
+        "filename": "core/java/android/text/Layout.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1003598
+      },
+      "writtenOn": "2010-07-20T17:11:31Z",
+      "side": 1,
+      "message": "Please revert this change.  Insets are from the leading margin, which is on the right if the paragraph direction is right-to-left.",
+      "revId": "553ebb1d7855b0fe5f7708e9e2b0238c90c99b43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3H///+4\u003d",
+        "filename": "core/java/android/text/StaticLayout.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1247,
+      "author": {
+        "id": 1003598
+      },
+      "writtenOn": "2010-07-20T17:11:31Z",
+      "side": 1,
+      "message": "Please revert this change, this is not the correct semantics.  The paragraph direction (base line direction) is not necessarily RTL if directionality is mixed on a line.",
+      "revId": "553ebb1d7855b0fe5f7708e9e2b0238c90c99b43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
