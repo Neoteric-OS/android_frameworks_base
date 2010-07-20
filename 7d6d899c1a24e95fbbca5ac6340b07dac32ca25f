@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA3H////0\u003d",
+        "filename": "core/java/android/net/NetworkStateTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2010-07-20T16:23:47Z",
+      "side": 1,
+      "message": "It\u0027s vaguely worrying that this function has multiple failure modes but its only indication of failure is a debug message if DBG is true. I imagine the API is set in stone and the function can\u0027t be changed to return a value?\n\nFailing that, if addRoute fails, perhaps it makes sense not to set mDefaultRouteSet to true?",
+      "revId": "7d6d899c1a24e95fbbca5ac6340b07dac32ca25f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3H////s\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2010-07-20T16:23:47Z",
+      "side": 1,
+      "message": "Can you specify whether the integer is in host byte order or network byte order? Looks like it\u0027s in little-endian host byte order.",
+      "revId": "7d6d899c1a24e95fbbca5ac6340b07dac32ca25f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3H////w\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2010-07-20T16:23:47Z",
+      "side": 1,
+      "message": "Do you need Integer.ToString? This might work:\n\nhostName \u003d \"\" + 0xff \u0026 hostAddress + \".\" + ...",
+      "revId": "7d6d899c1a24e95fbbca5ac6340b07dac32ca25f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
