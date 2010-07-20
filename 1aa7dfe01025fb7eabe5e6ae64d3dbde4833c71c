@@ -16,6 +16,24 @@
       "revId": "1aa7dfe01025fb7eabe5e6ae64d3dbde4833c71c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3H////E\u003d",
+        "filename": "core/java/android/text/Layout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1003738
+      },
+      "writtenOn": "2010-07-20T16:54:40Z",
+      "side": 1,
+      "message": "Done - in the new patchset, the new one is against master and not froyo, but applies cleanly to both.",
+      "parentUuid": "AAAA23///+c\u003d",
+      "revId": "1aa7dfe01025fb7eabe5e6ae64d3dbde4833c71c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
