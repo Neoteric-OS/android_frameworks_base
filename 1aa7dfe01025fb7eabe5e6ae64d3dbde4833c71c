@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA23///+c\u003d",
+        "filename": "core/java/android/text/Layout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2010-07-20T06:58:47Z",
+      "side": 1,
+      "message": "Please do not comment out code. Code should be removed if not necessary.",
+      "revId": "1aa7dfe01025fb7eabe5e6ae64d3dbde4833c71c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
