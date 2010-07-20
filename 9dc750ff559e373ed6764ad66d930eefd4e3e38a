@@ -34,6 +34,24 @@
       "revId": "9dc750ff559e373ed6764ad66d930eefd4e3e38a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3H////o\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/AdnRecordCache.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2010-07-20T16:19:06Z",
+      "side": 1,
+      "message": "You have already got the index above. Line 204. Why should it be done again below ?",
+      "parentUuid": "AAAA23///+U\u003d",
+      "revId": "9dc750ff559e373ed6764ad66d930eefd4e3e38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
