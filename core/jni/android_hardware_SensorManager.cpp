@@ -152,7 +152,7 @@ sensors_data_poll(JNIEnv *env, jclass clazz,
     int res = sSensorDevice->poll(sSensorDevice, &data);
     if (res >= 0) {
         jint accuracy = data.vector.status;
-        env->SetFloatArrayRegion(values, 0, 3, data.vector.v);
+        env->SetFloatArrayRegion(values, 0, 9, data.vector.v);
         env->SetIntArrayRegion(status, 0, 1, &accuracy);
         env->SetLongArrayRegion(timestamp, 0, 1, &data.time);
     }

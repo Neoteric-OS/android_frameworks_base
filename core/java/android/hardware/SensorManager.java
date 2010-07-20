@@ -369,7 +369,7 @@ public class SensorManager
 
             public void run() {
                 //Log.d(TAG, "entering main sensor thread");
-                final float[] values = new float[3];
+                final float[] values = new float[9];
                 final int[] status = new int[1];
                 final long timestamp[] = new long[1];
                 Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_DISPLAY);
@@ -455,7 +455,7 @@ public class SensorManager
 
         protected SensorEvent createSensorEvent() {
             // maximal size for all legacy events is 3
-            return new SensorEvent(3);
+            return new SensorEvent(9);
         }
 
         protected SensorEvent getFromPool() {
@@ -505,9 +505,7 @@ public class SensorManager
         void onSensorChangedLocked(Sensor sensor, float[] values, long[] timestamp, int accuracy) {
             SensorEvent t = getFromPool();
             final float[] v = t.values;
-            v[0] = values[0];
-            v[1] = values[1];
-            v[2] = values[2];
+            System.arraycopy( values, 0, t.values, 0, values.length);
             t.timestamp = timestamp[0];
             t.accuracy = accuracy;
             t.sensor = sensor;
@@ -1555,6 +1553,31 @@ public class SensorManager
         }
     }
 
+
+    /** Helper function to compute the angle change between two rotation matrices.
+     *  Given a current rotation matrix (R) and a previous rotation matrix
+     *  (prevR) computes the rotation around the x,y, and z axes which
+     *  transforms prevR to R.
+     *  outputs a 3 element vector containing the x,y, and z angle
+     *  change at indexes 0, 1, and 2 respectively.
+     */
+    public static void getAngleChange(float[] R, float[] prevR, float[] angleChange) {
+        float rotDiff[] = new float[9];
+        int i, j, k;
+
+        for (i=0; i<3; i++) {
+            for (j=0; j<3; j++) {
+                rotDiff[3*i+j] = 0;
+                for (k=0; k<3; k++) {
+                    rotDiff[3*i+j] += prevR[3*k+i]*R[3*k+j];
+                }
+            }
+        }
+        angleChange[0] = (float)Math.atan2(rotDiff[1], rotDiff[4]);
+        angleChange[1] = (float)Math.asin(-rotDiff[7]);
+        angleChange[2] = (float)Math.atan2(-rotDiff[6], rotDiff[8]);
+
+    }
     
     private static native void nativeClassInit();
 

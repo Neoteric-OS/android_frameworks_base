@@ -73586,6 +73586,17 @@
  visibility="public"
 >
 </field>
+<field name="TYPE_ROTATION_MATRIX"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="9"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
 <field name="TYPE_TEMPERATURE"
  type="int"
  transient="false"
@@ -73730,6 +73741,23 @@
  deprecated="not deprecated"
  visibility="public"
 >
+<method name="getAngleChange"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="R" type="float[]">
+</parameter>
+<parameter name="prevR" type="float[]">
+</parameter>
+<parameter name="angleChange" type="float[]">
+</parameter>
+</method>
 <method name="getDefaultSensor"
  return="android.hardware.Sensor"
  abstract="false"

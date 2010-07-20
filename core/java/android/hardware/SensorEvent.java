@@ -130,6 +130,18 @@ public class SensorEvent {
      *  <p> Note that some proximity sensors only support a binary "close" or "far" measurement.
      *   In this case, the sensor should report its maxRange value in the "far" state and a value
      *   less than maxRange in the "near" state.
+     *
+     *  <p>{@link android.hardware.Sensor#TYPE_ROTATION_MATRIX Sensor.TYPE_ROTATION_MATRIX}:<p>
+     *  9 values representing a 3 dimensional rotation matrix.  The 3x3 matrix (a) is held in the
+     *  values array with the elements in the following order:
+     *    {a11, a12, a13, a21, a22, a23, a31, a32, a33}
+     *
+     *  <p>{@link android.hardware.Sensor#TYPE_GRAVITY Sensor.  A three dimensional vector of
+     *  magnitude 1g indicating the direction of gravity in device coordinates.
+     *
+     *  <p>{@link android.hardware.Sensor#TYPE_LINEAR_ACCELERATION Sensor.  A three dimensional
+     *  vector indicating acceleration along each device axis, not including gravity.  All values
+     *  have units of m/s^2.
      */
     public final float[] values;
 
