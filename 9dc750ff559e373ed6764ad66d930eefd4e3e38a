@@ -16,6 +16,24 @@
       "revId": "9dc750ff559e373ed6764ad66d930eefd4e3e38a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA23///+U\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/AdnRecordCache.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1004144
+      },
+      "writtenOn": "2010-07-20T07:13:52Z",
+      "side": 1,
+      "message": "Yes, this code is defensive (too much?).\nI was not sure whether the recordNumber field in the ADN would always be relative to the EFID array or relative to the aggregated array returned by UsimPhoneBookManager. I thought it better to get the real index.\nBut I\u0027ll remove it and commit that change soon, once it\u0027s tested of course.",
+      "parentUuid": "AAAA23////I\u003d",
+      "revId": "9dc750ff559e373ed6764ad66d930eefd4e3e38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
