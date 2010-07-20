@@ -27,6 +27,7 @@ import java.io.Writer;
 import android.hardware.Camera;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.os.Environment;
 import android.os.Looper;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.LargeTest;
@@ -36,15 +37,15 @@ import com.android.mediaframeworktest.MediaRecorderStressTestRunner;
 
 /**
  * Junit / Instrumentation test case for the media player api
- 
- */  
-public class MediaRecorderStressTest extends ActivityInstrumentationTestCase2<MediaFrameworkTest> {    
-    
-  
+
+ */
+public class MediaRecorderStressTest extends ActivityInstrumentationTestCase2<MediaFrameworkTest> {
+
+
     private String TAG = "MediaRecorderStressTest";
     private MediaRecorder mRecorder;
     private Camera mCamera;
-   
+
     private static final int NUMBER_OF_CAMERA_STRESS_LOOPS = 100;
     private static final int NUMBER_OF_RECORDER_STRESS_LOOPS = 100;
     private static final int NUMBER_OF_RECORDERANDPLAY_STRESS_LOOPS = 50;
@@ -53,10 +54,11 @@ public class MediaRecorderStressTest extends ActivityInstrumentationTestCase2<Me
     private static final long WAIT_TIME_RECORDER_TEST = 6000;  // 6 second
     private static final long WAIT_TIME_RECORD = 10000;  // 10 seconds
     private static final long WAIT_TIME_PLAYBACK = 6000;  // 6 second
-    private static final String OUTPUT_FILE = "/sdcard/temp";
+    private static final String OUTPUT_FILE =
+        Environment.getExternalStorageDirectory() + "/temp";
     private static final String OUTPUT_FILE_EXT = ".3gp";
     private static final String MEDIA_STRESS_OUTPUT =
-        "/sdcard/mediaStressOutput.txt";
+        Environment.getExternalStorageDirectory() + "/mediaStressOutput.txt";
     private Looper mCameraLooper = null;
     private Looper mRecorderLooper = null;
     private final Object lock = new Object();
@@ -71,7 +73,7 @@ public class MediaRecorderStressTest extends ActivityInstrumentationTestCase2<Me
 
     protected void setUp() throws Exception {
         getActivity();
-        super.setUp();      
+        super.setUp();
     }
 
     private final class CameraErrorCallback implements android.hardware.Camera.ErrorCallback {

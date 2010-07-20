@@ -25,13 +25,12 @@ import android.content.Context;
 import android.hardware.Camera;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-import android.media.EncoderCapabilities;
 import android.media.EncoderCapabilities.VideoEncoderCap;
 import android.media.EncoderCapabilities.AudioEncoderCap;
+import android.os.Environment;
 import android.test.ActivityInstrumentationTestCase;
 import android.util.Log;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import com.android.mediaframeworktest.MediaProfileReader;
 
 import android.test.suitebuilder.annotation.LargeTest;
@@ -119,7 +118,8 @@ public class MediaRecorderTest extends ActivityInstrumentationTestCase<MediaFram
             videoFps = MIN_VIDEO_FPS;
         }
         mSurfaceHolder = MediaFrameworkTest.mSurfaceView.getHolder();
-        String filename = ("/sdcard/" + videoEncoder + "_" + audioEncoder + "_" + highQuality + ".3gp");
+        String filename = (Environment.getExternalStorageDirectory() + "/" + videoEncoder +
+                "_" + audioEncoder + "_" + highQuality + ".3gp");
         try {
             Log.v(TAG, "video encoder :" + videoEncoder);
             Log.v(TAG, "audio encoder :" + audioEncoder);

@@ -18,6 +18,7 @@ package com.android.mediaframeworktest.unit;
 
 import android.util.Log;
 import android.media.MediaRecorder;
+import android.os.Environment;
 import android.test.AndroidTestCase;
 
 /**
@@ -36,7 +37,8 @@ import android.test.AndroidTestCase;
  * 
  */
 class MediaRecorderStateUnitTestTemplate extends AndroidTestCase {
-    public static final String RECORD_OUTPUT_PATH = "/sdcard/recording.3gp";
+    public static final String RECORD_OUTPUT_PATH =
+        Environment.getExternalStorageDirectory() + "/recording.3gp";
     public static final int OUTPUT_FORMAT= MediaRecorder.OutputFormat.THREE_GPP;
     public static final int AUDIO_ENCODER = MediaRecorder.AudioEncoder.AMR_NB;
     public static final int AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;

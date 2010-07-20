@@ -25,6 +25,7 @@ import android.hardware.Camera.PreviewCallback;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.ConditionVariable;
+import android.os.Environment;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.test.ActivityInstrumentationTestCase;
@@ -35,7 +36,6 @@ import android.view.SurfaceHolder;
 
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
@@ -45,8 +45,6 @@ import java.io.BufferedWriter;
 
 import android.media.MediaMetadataRetriever;
 import com.android.mediaframeworktest.MediaProfileReader;
-
-import android.hardware.Camera.PreviewCallback;
 
 /**
  * Junit / Instrumentation - performance measurement for media player and 
@@ -61,8 +59,10 @@ public class MediaPlayerPerformance extends ActivityInstrumentationTestCase<Medi
     private static final int NUM_STRESS_LOOP = 10;
     private static final int NUM_PLAYBACk_IN_EACH_LOOP = 20;
     private static final long MEDIA_STRESS_WAIT_TIME = 5000; //5 seconds
+    private static final String EXTERNAL_DIR =
+        Environment.getExternalStorageDirectory().toString();
     private static final String MEDIA_MEMORY_OUTPUT =
-        "/sdcard/mediaMemOutput.txt";
+        EXTERNAL_DIR + "/mediaMemOutput.txt";
 
     private static int mStartMemory = 0;
     private static int mEndMemory = 0;
@@ -90,7 +90,7 @@ public class MediaPlayerPerformance extends ActivityInstrumentationTestCase<Medi
     }
 
     public void createDB() {
-        mDB = SQLiteDatabase.openOrCreateDatabase("/sdcard/perf.db", null);
+        mDB = SQLiteDatabase.openOrCreateDatabase(EXTERNAL_DIR + "/perf.db", null);
         mDB.execSQL("CREATE TABLE IF NOT EXISTS perfdata (_id INTEGER PRIMARY KEY," + 
                 "file TEXT," + "setdatatime LONG," + "preparetime LONG," +
                 "playtime LONG" + ");");

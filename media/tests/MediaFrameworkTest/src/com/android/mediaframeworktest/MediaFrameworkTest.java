@@ -24,6 +24,7 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Downloads;
 import android.util.Log;
 import android.util.Log;
@@ -53,7 +54,7 @@ public class MediaFrameworkTest extends Activity {
     private String urlpath;
     private MediaPlayer mpmidi;
     private MediaPlayer mpmp3;
-    private String testfilepath = "/sdcard/awb.awb";
+    private String testfilepath = Environment.getExternalStorageDirectory() + "/awb.awb";
     
     public static AssetFileDescriptor midiafd;
     public static AssetFileDescriptor mp3afd;

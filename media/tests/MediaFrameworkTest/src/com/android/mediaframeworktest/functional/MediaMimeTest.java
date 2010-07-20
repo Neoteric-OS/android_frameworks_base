@@ -20,15 +20,13 @@ import java.io.File;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Environment;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.suitebuilder.annotation.LargeTest;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.test.suitebuilder.annotation.Suppress;
-import android.util.Log;
 import com.android.mediaframeworktest.MediaFrameworkTest;
 
 /*
@@ -48,7 +46,8 @@ import com.android.mediaframeworktest.MediaFrameworkTest;
 public class MediaMimeTest extends ActivityInstrumentationTestCase2<MediaFrameworkTest> {    
     private final String TAG = "MediaMimeTest";
     private Context mContext;
-    private final String MP3_FILE = "/sdcard/media_api/music/SHORTMP3.mp3";
+    private final String MP3_FILE =
+        Environment.getExternalStorageDirectory() + "/media_api/music/SHORTMP3.mp3";
 
     public MediaMimeTest() {
         super("com.android.mediaframeworktest", MediaFrameworkTest.class);

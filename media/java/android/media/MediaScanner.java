@@ -28,6 +28,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.SystemProperties;
@@ -1054,7 +1055,7 @@ public class MediaScanner
 
     private void pruneDeadThumbnailFiles() {
         HashSet<String> existingFiles = new HashSet<String>();
-        String directory = "/sdcard/DCIM/.thumbnails";
+        String directory = Environment.getExternalStorageDirectory() + "/DCIM/.thumbnails";
         String [] files = (new File(directory)).list();
         if (files == null)
             files = new String[0];
