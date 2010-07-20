@@ -52,6 +52,24 @@
       "revId": "9dc750ff559e373ed6764ad66d930eefd4e3e38a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3H///+0\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/AdnRecordCache.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1004144
+      },
+      "writtenOn": "2010-07-20T17:08:29Z",
+      "side": 1,
+      "message": "Because it is an index in the array returned by mUsimPhoneBookManager.loadEfFilesFromUsim(). This array is an aggregate of (possibly) several EFID arrays. I need the index in the relevant EFID array. They are the same only if there is one EFID array.\nBut I believe I can get it from the \"recordNumber\" field in the found ADN record. I just wasn\u0027t sure its value would always be right.",
+      "parentUuid": "AAAA3H////o\u003d",
+      "revId": "9dc750ff559e373ed6764ad66d930eefd4e3e38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
