@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA3H///00\u003d",
+        "filename": "core/java/android/hardware/SensorManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-07-21T16:56:56Z",
+      "side": 1,
+      "message": "Just as a note: As defined, the Android code style calls for spaces around all operators. That being said, this specific file doesn\u0027t seem to use that style consistently, and in this specific new code I\u0027m not convinced that adding spaces would actually help readability much (it might actually hurt it) and I don\u0027t think it should be changed.\n\nHowever, it there\u0027s an opportunity to add a space around the central multiplication in the matrix multiply it\u0027d probably be beneficial.",
+      "revId": "d65a740bea87f55434fb6aa5222188adfc3cb6a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
