@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA3H///x0\u003d",
+        "filename": "services/java/com/android/server/InputMethodManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1517,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2010-07-21T19:44:20Z",
+      "side": 1,
+      "message": "no need to initialize these here since you\u0027re doing that on 1532-1533",
+      "revId": "e44d61152048347824bdb073944dd94c6250ca94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
