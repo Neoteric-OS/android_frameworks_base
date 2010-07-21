@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA3H///+c\u003d",
+        "filename": "core/java/android/text/Layout.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1003738
+      },
+      "writtenOn": "2010-07-21T04:53:56Z",
+      "side": 1,
+      "message": "The leading margin is indeed supposed to be on the right if the text is RTL, but since all applications (including the SMS/MMS application) assume the leading margin is a left margin this makes the layout work.\nWithout it there is text under the avatar and empty space in the beginning of messages in the SMS app.",
+      "parentUuid": "AAAA3H///+s\u003d",
+      "revId": "553ebb1d7855b0fe5f7708e9e2b0238c90c99b43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA3H///+4\u003d",
         "filename": "core/java/android/text/StaticLayout.java",
         "patchSetId": 2
