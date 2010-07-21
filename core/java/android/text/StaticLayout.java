@@ -1244,7 +1244,7 @@ extends Layout
     }
 
     public int getParagraphDirection(int line) {
-        return mLines[mColumns * line + DIR] >> DIR_SHIFT;
+        return Directions.baseDirection(mLineDirections[line],getLineEnd(line)-getLineStart(line));
     }
 
     public boolean getLineContainsTab(int line) {
