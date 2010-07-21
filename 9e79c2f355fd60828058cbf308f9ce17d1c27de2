@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA3H///4U\u003d",
+        "filename": "services/java/com/android/server/InputMethodManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1538,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2010-07-21T05:31:33Z",
+      "side": 1,
+      "message": "The list should be sorted here since we have all the information available. Replacing this block 1528-1540 with this code would probably do the trick:\n\n            {\n                final Map\u003cCharSequence, InputMethodInfo\u003e imMap \u003d\n                        new TreeMap\u003cCharSequence, InputMethodInfo\u003e(Collator.getInstance());\n    \n                for (int i \u003d 0; i \u003c N; ++i) {\n                    InputMethodInfo property \u003d immis.get(i);\n                    if (property \u003d\u003d null) {\n                        continue;\n                    }\n                    imMap.put(property.loadLabel(pm), property);\n                }\n    \n                N \u003d imMap.size();\n                mItems \u003d imMap.keySet().toArray(new CharSequence[N]);\n                mIms \u003d imMap.values().toArray(new InputMethodInfo[N]);\n            }",
+      "revId": "9e79c2f355fd60828058cbf308f9ce17d1c27de2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
