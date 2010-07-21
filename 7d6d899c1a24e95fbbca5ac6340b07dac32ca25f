@@ -50,6 +50,24 @@
       "revId": "7d6d899c1a24e95fbbca5ac6340b07dac32ca25f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3H///5g\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-07-21T00:33:39Z",
+      "side": 1,
+      "message": "You can also do this in a byte array and skip the tostring altogether - InetAddress can be constructed with byte[]",
+      "parentUuid": "AAAA3H////w\u003d",
+      "revId": "7d6d899c1a24e95fbbca5ac6340b07dac32ca25f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
