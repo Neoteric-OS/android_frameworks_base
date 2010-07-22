@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAA3H///ko\u003d",
+        "filename": "core/java/android/hardware/Sensor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-07-22T22:16:01Z",
+      "side": 1,
+      "message": "See question in hardware/sensor.h.",
+      "revId": "d65a740bea87f55434fb6aa5222188adfc3cb6a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3H///kg\u003d",
+        "filename": "core/java/android/hardware/SensorEvent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-07-22T22:16:01Z",
+      "side": 1,
+      "message": "this should use the same format than SensorManager.getRotationMatrix() -- not sure from the comments if this is actually the case.\n\nI would like to see some ascii art showing the exact position of the values in the matrix and call out explicitly that this is the same ordering than with SensorManager.getRotationMatrix().",
+      "revId": "d65a740bea87f55434fb6aa5222188adfc3cb6a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3H///kk\u003d",
+        "filename": "core/java/android/hardware/SensorEvent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-07-22T22:16:01Z",
+      "side": 1,
+      "message": "see comments in hardware/sensors.h change.",
+      "revId": "d65a740bea87f55434fb6aa5222188adfc3cb6a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3H///kU\u003d",
+        "filename": "core/java/android/hardware/SensorManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1560,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-07-22T22:16:01Z",
+      "side": 1,
+      "message": "this should handle matrices returned by SensorManager.getRotationMatrix and by a rotation matrix sensor. Therefore it needs to handle 4x4 matrices as well (as defined in SensorManager.getRotationMatrix).",
+      "revId": "d65a740bea87f55434fb6aa5222188adfc3cb6a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA3H///00\u003d",
         "filename": "core/java/android/hardware/SensorManager.java",
         "patchSetId": 1
@@ -13,6 +81,23 @@
       "writtenOn": "2010-07-21T16:56:56Z",
       "side": 1,
       "message": "Just as a note: As defined, the Android code style calls for spaces around all operators. That being said, this specific file doesn\u0027t seem to use that style consistently, and in this specific new code I\u0027m not convinced that adding spaces would actually help readability much (it might actually hurt it) and I don\u0027t think it should be changed.\n\nHowever, it there\u0027s an opportunity to add a space around the central multiplication in the matrix multiply it\u0027d probably be beneficial.",
+      "revId": "d65a740bea87f55434fb6aa5222188adfc3cb6a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3H///kQ\u003d",
+        "filename": "core/jni/android_hardware_SensorManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-07-22T22:16:01Z",
+      "side": 1,
+      "message": "since we cannot change hardware/sensors.h in this release, we actually cannot implement this now.",
       "revId": "d65a740bea87f55434fb6aa5222188adfc3cb6a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
