@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA3H///rw\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccPhoneBookInterfaceManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2010-07-22T02:38:29Z",
+      "side": 1,
+      "message": "Would you mind updating this function too ?",
+      "revId": "74ba31ba266231b76e2ab4ab46e0a9af6a6bcbb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3H///r0\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/UsimPhoneBookManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2010-07-22T02:38:29Z",
+      "side": 1,
+      "message": "Instead of making this a 2 step process  - just refresh the cache here - so that the next read becomes faster.\n\nThis method is currently called before user response is posted. Call this method after the user response has been posted and do the above.",
+      "revId": "74ba31ba266231b76e2ab4ab46e0a9af6a6bcbb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
