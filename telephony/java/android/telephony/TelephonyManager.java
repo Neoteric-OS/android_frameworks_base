@@ -31,6 +31,8 @@ import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneFactory;
 import com.android.internal.telephony.RILConstants;
 import com.android.internal.telephony.TelephonyProperties;
+import com.android.internal.telephony.IPhoneControl;
+import com.android.internal.telephony.ICallControl;
 
 import java.util.List;
 
@@ -893,4 +895,44 @@ public class TelephonyManager {
             return null;
         }
     }
+
+	/**
+	 * Initiates an incoming call.
+	 * @param number The phone number of the caller.
+     * @param listener The {@link CallListener} object to register.
+	 * @return A {@link Call} object representing the call.
+	 */
+	public Call newIncomingCall(String number, CallListener listener) {
+        IPhoneControl control = IPhoneControl.Stub.asInterface(ServiceManager.getService("phone-control"));
+		try {
+			ICallControl call = control.newIncomingCall(number, listener.callback);
+			if (call == null) {
+				return null;
+				}
+			return new Call(call);
+			}
+		catch (RemoteException _) {
+			return null;
+			}
+	}
+
+	/**
+	 * Initiates an outgoing call.
+	 * @param number The phone number of the callee.
+     * @param listener The {@link CallListener} object to register.
+	 * @return A {@link Call} object representing the call.
+	 */
+	public Call newOutgoingCall(String number, CallListener listener) {
+        IPhoneControl control = IPhoneControl.Stub.asInterface(ServiceManager.getService("phone-control"));
+		try {
+			ICallControl call = control.newOutgoingCall(number, listener.callback);
+			if (call == null) {
+				return null;
+				}
+			return new Call(call);
+			}
+		catch (RemoteException _) {
+			return null;
+			}
+	}
 }

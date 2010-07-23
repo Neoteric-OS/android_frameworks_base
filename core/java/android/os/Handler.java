@@ -168,6 +168,10 @@ public class Handler {
         mCallback = callback;
     }
 
+	public void callback(Callback callback) {
+		mCallback = callback;
+		}
+
     /**
      * Returns a new {@link android.os.Message Message} from the global message pool. More efficient than
      * creating and allocating new instances. The retrieved message has its handler set to this instance (Message.target == this).
@@ -589,6 +593,6 @@ public class Handler {
 
     final MessageQueue mQueue;
     final Looper mLooper;
-    final Callback mCallback;
+    Callback mCallback;
     IMessenger mMessenger;
 }

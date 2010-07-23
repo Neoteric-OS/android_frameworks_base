@@ -105,7 +105,7 @@ public class PhoneFactory {
                 Log.i(LOG_TAG, "Cdma Subscription set to " + Integer.toString(cdmaSubscription));
 
                 //reads the system properties and makes commandsinterface
-                sCommandsInterface = new RIL(context, networkMode, cdmaSubscription);
+                sCommandsInterface = new PhoneControlProxy(new RIL(context, networkMode, cdmaSubscription)).proxy();
 
                 int phoneType = getPhoneType(networkMode);
                 if (phoneType == Phone.PHONE_TYPE_GSM) {

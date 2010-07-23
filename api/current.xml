@@ -139515,6 +139515,144 @@
 </package>
 <package name="android.telephony"
 >
+<class name="Call"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="accept"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="cancel"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</class>
+<class name="CallListener"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="CallListener"
+ type="android.telephony.CallListener"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="onAccepted"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="onCancelled"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="onDtmf"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="dtmf" type="char">
+</parameter>
+</method>
+<method name="onHeld"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<field name="LISTEN_CALL_ACCEPTED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="LISTEN_CALL_CANCELLED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="2"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="LISTEN_CALL_DTMF"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="4"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="LISTEN_CALL_HELD"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="3"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
 <class name="CellLocation"
  extends="java.lang.Object"
  abstract="true"
@@ -142009,6 +142147,21 @@
 <parameter name="listener" type="android.telephony.PhoneStateListener">
 </parameter>
 <parameter name="events" type="int">
+</parameter>
+</method>
+<method name="newOutgoingCall"
+ return="android.telephony.Call"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="number" type="java.lang.String">
+</parameter>
+<parameter name="listener" type="android.telephony.CallListener">
 </parameter>
 </method>
 <field name="ACTION_PHONE_STATE_CHANGED"
