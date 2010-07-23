@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA3H///eM\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccPhoneBookInterfaceManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2010-07-23T17:16:26Z",
+      "side": 1,
+      "message": "Each EF_ADN file can have 254 records. I have to check how we store the record index - if for the second one is gets stored as 255 or 1.\nHow about doing this in another change ? and closing this change - so that we can get this checked in ?",
+      "parentUuid": "AAAA3H///rY\u003d",
+      "revId": "74ba31ba266231b76e2ab4ab46e0a9af6a6bcbb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA3H///r0\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/UsimPhoneBookManager.java",
         "patchSetId": 6
