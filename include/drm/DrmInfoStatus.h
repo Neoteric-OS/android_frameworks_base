@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,39 +25,39 @@ namespace android {
 /**
  * This is an utility class which wraps the result of communication between device
  * and online DRM server.
- *  
- * As a result of DrmManagerClient::processDrmInfo(const DrmInfo*) an instance of 
+ *
+ * As a result of DrmManagerClient::processDrmInfo(const DrmInfo*) an instance of
  * DrmInfoStatus would be returned. This class holds DrmBuffer which could be
  * used to instantiate DrmRights in license acquisition.
  */
 class DrmInfoStatus {
 
 public:
-	// Should be in sync with DrmInfoStatus.java
-	static const int STATUS_OK = 1;
-	static const int STATUS_ERROR = 2;
+    // Should be in sync with DrmInfoStatus.java
+    static const int STATUS_OK = 1;
+    static const int STATUS_ERROR = 2;
 
 public:
-	/**
-	 * Constructor for DrmInfoStatus
-	 *
-	 * @param[in] _statusCode Status of the communication
-	 * @param[in] _drmBuffer Rights information
-	 * @param[in] _mimeType MIME type
-	 */
-	DrmInfoStatus(int _statusCode, const DrmBuffer* _drmBuffer, const String8& _mimeType);
+    /**
+     * Constructor for DrmInfoStatus
+     *
+     * @param[in] _statusCode Status of the communication
+     * @param[in] _drmBuffer Rights information
+     * @param[in] _mimeType MIME type
+     */
+    DrmInfoStatus(int _statusCode, const DrmBuffer* _drmBuffer, const String8& _mimeType);
 
-	/**
-	 * Destructor for DrmInfoStatus
-	 */
-	virtual ~DrmInfoStatus() {
+    /**
+     * Destructor for DrmInfoStatus
+     */
+    virtual ~DrmInfoStatus() {
 
-	}
+    }
 
-public:	
-	int statusCode;
-	const DrmBuffer* drmBuffer;
-	String8 mimeType;
+public:
+    int statusCode;
+    const DrmBuffer* drmBuffer;
+    String8 mimeType;
 };
 
 };

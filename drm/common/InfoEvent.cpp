@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,22 +24,22 @@
 
 using namespace android; 
 
-InfoEvent::InfoEvent(int uniqueId, int infoType, const String8& message):
-					mUniqueId(uniqueId),
-					mInfoType(infoType),
-					mMessage(message) {
+InfoEvent::InfoEvent(int uniqueId, int infoType, const String8& message)
+    : mUniqueId(uniqueId),
+      mInfoType(infoType),
+      mMessage(message) {
 
 }
 
 int InfoEvent::getUniqueId() const {
-	return mUniqueId;
+    return mUniqueId;
 }
 
 int InfoEvent::getType() const {
-	return mInfoType;
+    return mInfoType;
 }
 
 const String8& InfoEvent::getMessage() const {
-	return mMessage;
+    return mMessage;
 }
 

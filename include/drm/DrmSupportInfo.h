@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,161 +30,159 @@ namespace android {
  * DrmSupportInfo instance.
  */
 class DrmSupportInfo {
+public:
+    /**
+     * Iterator for mMimeTypeVector
+     */
+    class MimeTypeIterator {
+        friend class DrmSupportInfo;
+    private:
+        MimeTypeIterator(DrmSupportInfo* drmSupportInfo)
+           : mDrmSupportInfo(drmSupportInfo), mIndex(0) {}
+    public:
+        MimeTypeIterator(const MimeTypeIterator& iterator);
+        MimeTypeIterator& operator=(const MimeTypeIterator& iterator);
+        virtual ~MimeTypeIterator() {}
 
-	public:
-		/**
-		 * Iterator for mMimeTypeVector
-		 */
-		class MimeTypeIterator {
-			friend class DrmSupportInfo;
+    public:
+        bool hasNext();
+        String8& next();
+    
+    private:
+        DrmSupportInfo* mDrmSupportInfo;
+        unsigned int mIndex;
+    };
 
-			private:
-				MimeTypeIterator(DrmSupportInfo* drmSupportInfo)
-					: mDrmSupportInfo(drmSupportInfo), mIndex(0) {}
-			public:
-				MimeTypeIterator(const MimeTypeIterator& iterator);
-				MimeTypeIterator& operator=(const MimeTypeIterator& iterator);
-				virtual ~MimeTypeIterator() {}
+    /**
+     * Iterator for mFileSuffixVector
+     */
+    class FileSuffixIterator {
+       friend class DrmSupportInfo;
 
-			public:
-				bool hasNext();
-				String8& next();
-	
-			private:
-				DrmSupportInfo* mDrmSupportInfo;
-				unsigned int mIndex;
-		};
+    private:
+        FileSuffixIterator(DrmSupportInfo* drmSupportInfo)
+            : mDrmSupportInfo(drmSupportInfo), mIndex(0) {}
+    public:
+        FileSuffixIterator(const FileSuffixIterator& iterator);
+        FileSuffixIterator& operator=(const FileSuffixIterator& iterator);
+        virtual ~FileSuffixIterator() {}
 
-		/**
-		 * Iterator for mFileSuffixVector
-		 */
-		class FileSuffixIterator {
-			friend class DrmSupportInfo;
+    public:
+        bool hasNext();
+        String8& next();
 
-			private:
-				FileSuffixIterator(DrmSupportInfo* drmSupportInfo)
-					: mDrmSupportInfo(drmSupportInfo), mIndex(0) {}
-			public:
-				FileSuffixIterator(const FileSuffixIterator& iterator);
-				FileSuffixIterator& operator=(const FileSuffixIterator& iterator);
-				virtual ~FileSuffixIterator() {}
+    private:
+        DrmSupportInfo* mDrmSupportInfo;
+        unsigned int mIndex;
+    };
 
-			public:
-				bool hasNext();
-				String8& next();
-	
-			private:
-				DrmSupportInfo* mDrmSupportInfo;
-				unsigned int mIndex;
-		};
+public:
+    /**
+     * Constructor for DrmSupportInfo
+     */
+    DrmSupportInfo();
 
-	public:
-		/**
-		 * Constructor for DrmSupportInfo
-		 */
-		DrmSupportInfo();
+    /**
+     * Copy constructor for DrmSupportInfo
+     */
+    DrmSupportInfo(const DrmSupportInfo& drmSupportInfo);
 
-		/**
-		 * Copy constructor for DrmSupportInfo
-		 */
-		DrmSupportInfo(const DrmSupportInfo& drmSupportInfo);
+    /**
+     * Destructor for DrmSupportInfo
+     */
+    virtual ~DrmSupportInfo() {}
 
-		/**
-		 * Destructor for DrmSupportInfo
-		 */
-		virtual ~DrmSupportInfo() {}
+    DrmSupportInfo& operator=(const DrmSupportInfo& drmSupportInfo);
+    bool operator<(const DrmSupportInfo& drmSupportInfo) const;
+    bool operator==(const DrmSupportInfo& drmSupportInfo) const;
 
-		DrmSupportInfo& operator=(const DrmSupportInfo& drmSupportInfo);
-		bool operator<(const DrmSupportInfo& drmSupportInfo) const;
-		bool operator==(const DrmSupportInfo& drmSupportInfo) const;
+    /**
+     * Returns FileSuffixIterator object to walk through file suffix values
+     * associated with this instance
+     *
+     * @return FileSuffixIterator object
+     */
+    FileSuffixIterator getFileSuffixIterator();
 
-		/**
-		 * Returns FileSuffixIterator object to walk through file suffix values
-		 *	 associated with this instance
-		 *
-		 * @return FileSuffixIterator object
-		 */
-		FileSuffixIterator getFileSuffixIterator();
+    /**
+     * Returns MimeTypeIterator object to walk through mimetype values
+     * associated with this instance
+     *
+     * @return MimeTypeIterator object
+     */
+    MimeTypeIterator getMimeTypeIterator();
 
-		/**
-		 * Returns MimeTypeIterator object to walk through mimetype values
-		 *	 associated with this instance
-		 *
-		 * @return MimeTypeIterator object
-		 */
-		MimeTypeIterator getMimeTypeIterator();
+public:
+    /**
+     * Returns the number of mimetypes supported.
+     *
+     * @return Number of mimetypes supported
+     */
+    int getMimeTypeCount(void) const;
 
-	public:
-		/**
-		 * Returns the number of mimetypes supported.
-		 *
-		 * @return Number of mimetypes supported
-		 */
-		int getMimeTypeCount(void) const;
+    /**
+     * Returns the number of file types supported.
+     *
+     * @return Number of file types supported
+     */
+    int getFileSuffixCount(void) const;
 
-		/**
-		 * Returns the number of file types supported.
-		 *
-		 * @return Number of file types supported
-		 */
-		int getFileSuffixCount(void) const;
+    /**
+     * Adds the mimetype to the list of supported mimetypes
+     *
+     * @param[in] mimeType mimetype to be added
+     * @return Returns DRM_NO_ERROR for success, DRM_ERROR_UNKNOWN for failure
+     */
+    status_t addMimeType(const String8& mimeType);
 
-		/**
-		 * Adds the mimetype to the list of supported mimetypes
-		 *
-		 * @param[in] mimeType mimetype to be added
-		 * @return Returns DRM_NO_ERROR for success, DRM_ERROR_UNKNOWN for failure
-		 */
-		status_t addMimeType(const String8& mimeType);
+    /**
+     * Adds the filesuffix to the list of supported file types
+     *
+     * @param[in] filesuffix file suffix to be added
+     * @return Returns DRM_NO_ERROR for success, DRM_ERROR_UNKNOWN for failure
+     */
+    status_t addFileSuffix(const String8& fileSuffix);
 
-		/**
-		 * Adds the filesuffix to the list of supported file types
-		 *
-		 * @param[in] filesuffix file suffix to be added
-		 * @return Returns DRM_NO_ERROR for success, DRM_ERROR_UNKNOWN for failure
-		 */
-		status_t addFileSuffix(const String8& fileSuffix);
+    /**
+     * Set the unique description about the plugin
+     * 
+     * @param[in] description Unique description
+     * @return Returns DRM_NO_ERROR for success, DRM_ERROR_UNKNOWN for failure
+     */
+    status_t setDescription(const String8& description);
 
-		/**
-		 * Set the unique description about the plugin
-		 * 
-		 * @param[in] description Unique description
-		 * @return Returns DRM_NO_ERROR for success, DRM_ERROR_UNKNOWN for failure
-		 */
-		status_t setDescription(const String8& description);
+    /**
+     * Returns the unique description associated with the plugin
+     * 
+     * @return Unique description
+     */
+    String8 getDescription() const;
 
-		/**
-		 * Returns the unique description associated with the plugin
-		 * 
-		 * @return Unique description
-		 */
-		String8 getDescription() const;
+    /**
+     * Returns whether given mimetype is supported or not
+     * 
+     * @param[in] mimeType MIME type
+     * @return
+     *        true - if mime-type is supported
+     *        false - if mime-type is not supported
+     */
+    bool isSupportedMimeType(const String8& mimeType) const;
 
-		/**
-		 * Returns whether given mimetype is supported or not
-		 * 
-		 * @param[in] mimeType MIME type
-		 * @return
-		 *		true - if mime-type is supported
-		 *		false - if mime-type is not supported
-		 */
-		bool isSupportedMimeType(const String8& mimeType) const;
+    /**
+     * Returns whether given file type is supported or not
+     * 
+     * @param[in] fileType File type 
+     * @return
+     *     true - if file type is supported
+     *     false - if file type is not supported
+     */
+    bool isSupportedFileSuffix(const String8& fileType) const;
 
-		/**
-		 * Returns whether given file type is supported or not
-		 * 
-		 * @param[in] fileType File type 
-		 * @return
-		 *		true - if file type is supported
-		 *		false - if file type is not supported
-		 */
-		bool isSupportedFileSuffix(const String8& fileType) const;
+private:
+    Vector<String8> mMimeTypeVector;
+    Vector<String8> mFileSuffixVector;
 
-	private:		
-		Vector<String8> mMimeTypeVector;
-		Vector<String8> mFileSuffixVector;
-
-		String8 mDescription;
+    String8 mDescription;
 };
 
 };

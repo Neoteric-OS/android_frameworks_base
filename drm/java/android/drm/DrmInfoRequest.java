@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,122 +28,123 @@ import java.util.Iterator;
  * to get the instance of {@link DrmInfo}
  */
 public class DrmInfoRequest {
-	
-	// Changes in following constants should be in sync with DrmInfoRequest.cpp
-	/**
-	 * Constants defines the type of {@link DrmInfoRequest}
-	 */
-	public static class Type {
-		public static final int REGISTRATION_INFO = 1;
-		public static final int UNREGISTRATION_INFO = 2;
-		public static final int RIGHTS_ACQUISITION_INFO = 3; 
-		public static final int RIGHTS_ACQUISITION_PROGRESS_INFO = 4;
+    // Changes in following constants should be in sync with DrmInfoRequest.cpp
+    /**
+     * Constants defines the type of {@link DrmInfoRequest}
+     */
+    public static class Type {
+        public static final int REGISTRATION_INFO = 1;
+        public static final int UNREGISTRATION_INFO = 2;
+        public static final int RIGHTS_ACQUISITION_INFO = 3; 
+        public static final int RIGHTS_ACQUISITION_PROGRESS_INFO = 4;
 
-		/* package */ static boolean isValid(int infoType) {
-			boolean isValid = false;
+        /* package */ static boolean isValid(int infoType) {
+            boolean isValid = false;
 
-			switch(infoType) {
-				case REGISTRATION_INFO:
-				case UNREGISTRATION_INFO:
-				case RIGHTS_ACQUISITION_INFO:
-				case RIGHTS_ACQUISITION_PROGRESS_INFO:
-					isValid = true;
-					break;
-			}
+            switch(infoType) {
+            case REGISTRATION_INFO:
+            case UNREGISTRATION_INFO:
+            case RIGHTS_ACQUISITION_INFO:
+            case RIGHTS_ACQUISITION_PROGRESS_INFO:
+                isValid = true;
+                break;
+            }
 
-			return isValid;
-		}
-	}
+            return isValid;
+        }
+    }
 
-	/**
-	 * Key to pass the unique id for the account or the user
-	 */
-	public static final String ACCOUNT_ID = "account_id";
-	/**
-	 * Key to pass the unique id used for subscription
-	 */
-	public static final String SUBSCRIPTION_ID = "subscription_id";
+    /**
+     * Key to pass the unique id for the account or the user
+     */
+    public static final String ACCOUNT_ID = "account_id";
 
-	private int mInfoType = -1;
-	private String mMimeType;
-	private HashMap<String, Object> mRequestInformation = new HashMap<String, Object>();
+    /**
+     * Key to pass the unique id used for subscription
+     */
+    public static final String SUBSCRIPTION_ID = "subscription_id";
 
-	/**
-	 * constructor to create DrmInfoRequest object with type and mimetype
-	 * 
-	 * @param infoType Type of information
-	 * @param mimeType MIME type
-	 */
-	public DrmInfoRequest(int infoType, String mimeType) {
-		mInfoType = infoType;
-		mMimeType = mimeType;
-	}
+    private int mInfoType = -1;
+    private String mMimeType;
+    private HashMap<String, Object> mRequestInformation = new HashMap<String, Object>();
 
-	/**
-	 * Returns the mimetype associated with this object
-	 * 
-	 * @return MIME type
-	 */
-	public String getMimeType() {
-		return mMimeType;
-	}
+    /**
+     * constructor to create DrmInfoRequest object with type and mimetype
+     * 
+     * @param infoType Type of information
+     * @param mimeType MIME type
+     */
+    public DrmInfoRequest(int infoType, String mimeType) {
+        mInfoType = infoType;
+        mMimeType = mimeType;
+    }
 
-	/**
-	 * Returns Information type associated with this instance
-	 * 
-	 * @return Information type
-	 */
-	public int getInfoType() {
-		return mInfoType;
-	}
+    /**
+     * Returns the mimetype associated with this object
+     * 
+     * @return MIME type
+     */
+    public String getMimeType() {
+        return mMimeType;
+    }
 
-	/**
-	 * Adds optional information as <key, value> pair to this object.
-	 * 
-	 * @param key Key to add
-	 * @param value Value to add
-	 */
-	public void put(String key, Object value) {
-		mRequestInformation.put(key, value);
-	}
+    /**
+     * Returns Information type associated with this instance
+     * 
+     * @return Information type
+     */
+    public int getInfoType() {
+        return mInfoType;
+    }
 
-	/**
-	 * Retrieves the value of given key, if not found returns null
-	 * 
-	 * @param key Key whose value to be retrieved
-	 * @return The value or null
-	 */
-	public Object get(String key) {
-		return mRequestInformation.get(key);
-	}
+    /**
+     * Adds optional information as <key, value> pair to this object.
+     * 
+     * @param key Key to add
+     * @param value Value to add
+     */
+    public void put(String key, Object value) {
+        mRequestInformation.put(key, value);
+    }
 
-	/**
-	 * Returns Iterator object to walk through the keys associated with this instance 
-	 * 
-	 * @return Iterator object
-	 */
-	public Iterator<String> keyIterator() {
-		return mRequestInformation.keySet().iterator();
-	}
+    /**
+     * Retrieves the value of given key, if not found returns null
+     * 
+     * @param key Key whose value to be retrieved
+     * @return The value or null
+     */
+    public Object get(String key) {
+        return mRequestInformation.get(key);
+    }
 
-	/**
-	 * Returns Iterator object to walk through the values associated with this instance
-	 * 
-	 * @return Iterator object
-	 */
-	public Iterator<Object> iterator() {
-		return mRequestInformation.values().iterator();
-	}
+    /**
+     * Returns Iterator object to walk through the keys associated with this instance 
+     * 
+     * @return Iterator object
+     */
+    public Iterator<String> keyIterator() {
+        return mRequestInformation.keySet().iterator();
+    }
 
-	/**
-	 * Returns whether this instance is valid or not
-	 *
-	 * @return
-	 *		true - if valid
-	 *		false - if invalid
-	 */
- 	boolean isValid() {
-		return (null != mMimeType && !mMimeType.equals("") 
-				&& null != mRequestInformation && Type.isValid(mInfoType));
-	}
+    /**
+     * Returns Iterator object to walk through the values associated with this instance
+     * 
+     * @return Iterator object
+     */
+    public Iterator<Object> iterator() {
+        return mRequestInformation.values().iterator();
+    }
+
+    /**
+     * Returns whether this instance is valid or not
+     *
+     * @return
+     *        true - if valid
+     *        false - if invalid
+     */
+     boolean isValid() {
+        return (null != mMimeType && !mMimeType.equals("") 
+                && null != mRequestInformation && Type.isValid(mInfoType));
+    }
 }
+

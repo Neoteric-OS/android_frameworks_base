@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +24,7 @@ namespace android {
 
 /**
  * This is an utility class in which necessary information required to transact
- * between device and online DRM server is described. DRM Framework achieves 
+ * between device and online DRM server is described. DRM Framework achieves
  * server registration, license acquisition and any other server related transaction
  * by passing an instance of this class to DrmManagerClient::processDrmInfo(const DrmInfo*).
  *  
@@ -33,142 +34,142 @@ namespace android {
 class DrmInfo {
 
 public:
-	/**
-	 * Constructor for DrmInfo
-	 *
-	 * @param[in] infoType Type of information
-	 * @param[in] drmBuffer Trigger data
-	 * @param[in] mimeType MIME type
-	 */
-	DrmInfo(int infoType, const DrmBuffer& drmBuffer, const String8& mimeType);
+    /**
+     * Constructor for DrmInfo
+     *
+     * @param[in] infoType Type of information
+     * @param[in] drmBuffer Trigger data
+     * @param[in] mimeType MIME type
+     */
+    DrmInfo(int infoType, const DrmBuffer& drmBuffer, const String8& mimeType);
 
-	/**
-	 * Destructor for DrmInfo
-	 */
-	virtual ~DrmInfo() {}
-
-public:
-
-	/**
-	 * Iterator for key
-	 */
-	class KeyIterator {
-		friend class DrmInfo;
-
-	private:
-		KeyIterator(const DrmInfo* drmInfo)
-			: mDrmInfo(const_cast <DrmInfo*> (drmInfo)), mIndex(0) {}
-
-	public:
-		KeyIterator(const KeyIterator& keyIterator);
-		KeyIterator& operator=(const KeyIterator& keyIterator);
-		virtual ~KeyIterator() {}
-
-	public:
-		bool hasNext();
-		const String8& next();
-
-	private:
-		DrmInfo* mDrmInfo;
-		unsigned int mIndex;
-	};
-
-	/**
-	 * Iterator
-	 */
-	class Iterator {
-		friend class DrmInfo;
-
-	private:
-		Iterator(const DrmInfo* drmInfo)
-			: mDrmInfo(const_cast <DrmInfo*> (drmInfo)), mIndex(0) {}
-
-	public:
-		Iterator(const Iterator& iterator);
-		Iterator& operator=(const Iterator& iterator);
-		virtual ~Iterator() {}
-
-	public:
-		bool hasNext();
-		String8& next();
-
-	private:
-		DrmInfo* mDrmInfo;
-		unsigned int mIndex;
-	};
+    /**
+     * Destructor for DrmInfo
+     */
+    virtual ~DrmInfo() {}
 
 public:
-	/**
-	 * Returns information type associated with this instance
-	 *
-	 * @return Information type
-	 */
-	int getInfoType(void) const;
 
-	/**
-	 * Returns MIME type associated with this instance
-	 *
-	 * @return MIME type
-	 */
-	String8 getMimeType(void) const;
+    /**
+     * Iterator for key
+     */
+    class KeyIterator {
+        friend class DrmInfo;
 
-	/**
-	 * Returns the trigger data associated with this instance
-	 *
-	 * @return Trigger data
-	 */
-	const DrmBuffer& getData(void) const;
+    private:
+        KeyIterator(const DrmInfo* drmInfo)
+            : mDrmInfo(const_cast <DrmInfo*> (drmInfo)), mIndex(0) {}
 
-	/**
-	 * Returns the number of attributes contained in this instance
-	 *
-	 * @return Number of attributes
-	 */
-	int getCount(void) const;
+    public:
+        KeyIterator(const KeyIterator& keyIterator);
+        KeyIterator& operator=(const KeyIterator& keyIterator);
+        virtual ~KeyIterator() {}
 
-	/**
-	 * Adds optional information as <key, value> pair to this instance
-	 *
-	 * @param[in] key Key to add
-	 * @param[in] value Value to add
-	 * @return Returns the error code
-	 */
-	status_t put(const String8& key, const String8& value);
+    public:
+        bool hasNext();
+        const String8& next();
 
-	/**
-	 * Retrieves the value of given key
-	 *
-	 * @param key Key whose value to be retrieved
-	 * @return The value
-	 */
-	String8 get(const String8& key) const;
+    private:
+        DrmInfo* mDrmInfo;
+        unsigned int mIndex;
+    };
 
-	/**
-	 * Returns KeyIterator object to walk through the keys associated with this instance
-	 *
-	 * @return KeyIterator object
-	 */
-	KeyIterator keyIterator() const;
+    /**
+     * Iterator
+     */
+    class Iterator {
+        friend class DrmInfo;
 
-	/**
-	 * Returns Iterator object to walk through the values associated with this instance
-	 *
-	 * @return Iterator object
-	 */
-	Iterator iterator() const;
+    private:
+        Iterator(const DrmInfo* drmInfo)
+            : mDrmInfo(const_cast <DrmInfo*> (drmInfo)), mIndex(0) {}
 
-	/**
-	 * Returns index of the given key
-	 *
-	 * @return index
-	 */
-	int indexOfKey(const String8& key) const;
+    public:
+        Iterator(const Iterator& iterator);
+        Iterator& operator=(const Iterator& iterator);
+        virtual ~Iterator() {}
+
+    public:
+        bool hasNext();
+        String8& next();
+
+    private:
+        DrmInfo* mDrmInfo;
+        unsigned int mIndex;
+    };
+
+public:
+    /**
+     * Returns information type associated with this instance
+     *
+     * @return Information type
+     */
+    int getInfoType(void) const;
+
+    /**
+     * Returns MIME type associated with this instance
+     *
+     * @return MIME type
+     */
+    String8 getMimeType(void) const;
+
+    /**
+     * Returns the trigger data associated with this instance
+     *
+     * @return Trigger data
+     */
+    const DrmBuffer& getData(void) const;
+
+    /**
+     * Returns the number of attributes contained in this instance
+     *
+     * @return Number of attributes
+     */
+    int getCount(void) const;
+
+    /**
+     * Adds optional information as <key, value> pair to this instance
+     *
+     * @param[in] key Key to add
+     * @param[in] value Value to add
+     * @return Returns the error code
+     */
+    status_t put(const String8& key, const String8& value);
+
+    /**
+     * Retrieves the value of given key
+     *
+     * @param key Key whose value to be retrieved
+     * @return The value
+     */
+    String8 get(const String8& key) const;
+
+    /**
+     * Returns KeyIterator object to walk through the keys associated with this instance
+     *
+     * @return KeyIterator object
+     */
+    KeyIterator keyIterator() const;
+
+    /**
+     * Returns Iterator object to walk through the values associated with this instance
+     *
+     * @return Iterator object
+     */
+    Iterator iterator() const;
+
+    /**
+     * Returns index of the given key
+     *
+     * @return index
+     */
+    int indexOfKey(const String8& key) const;
 
 protected:
-	int mInfoType;
-	DrmBuffer mData;
-	String8 mMimeType;
-	KeyedVector<String8, String8> mAttributes;
+    int mInfoType;
+    DrmBuffer mData;
+    String8 mMimeType;
+    KeyedVector<String8, String8> mAttributes;
 };
 
 };

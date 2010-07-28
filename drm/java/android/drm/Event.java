@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,48 +22,48 @@ package android.drm;
  * about any event occurred in DRM framework.  
  */
 public class Event {
+    private int mUniqueId;
+    private int mType;
+    private String mMessage = "";
 
-	private int mUniqueId;
-	private int mType;
-	private String mMessage = "";
+    /**
+     * constructor for Event class
+     * 
+     * @param uniqueId Unique session identifier
+     * @param type Type of information
+     * @param message Message description
+     */
+    protected Event(int uniqueId, int type, String message) {
+        mUniqueId = uniqueId;
+        mType = type;
+        mMessage = message;
+    }
 
-	/**
-	 * constructor for Event class
-	 * 
-	 * @param uniqueId Unique session identifier
-	 * @param type Type of information
-	 * @param message Message description
-	 */
-	protected Event(int uniqueId, int type, String message) {
-		mUniqueId = uniqueId;
-		mType = type;
-		mMessage = message;
-	}
+    /**
+     * Returns the Unique Id associated with this object
+     *
+     * @return Unique Id
+     */
+    public int getUniqueId() {
+        return mUniqueId;
+    }
 
-	/**
-	 * Returns the Unique Id associated with this object
-	 *
-	 * @return Unique Id
-	 */
-	public int getUniqueId() {
-		return mUniqueId;
-	}
+    /**
+     * Returns the Type of information associated with this object
+     *
+     * @return Type of information
+     */
+    public int getType() {
+        return mType;
+    }
 
-	/**
-	 * Returns the Type of information associated with this object
-	 *
-	 * @return Type of information
-	 */
-	public int getType() {
-		return mType;
-	}
-
-	/**
-	 * Returns the message description associated with this object
-	 *
-	 * @return message description
-	 */
-	public String getMessage() {
-		return mMessage;
-	}
+    /**
+     * Returns the message description associated with this object
+     *
+     * @return message description
+     */
+    public String getMessage() {
+        return mMessage;
+    }
 }
+

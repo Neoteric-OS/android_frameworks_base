@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,43 +27,42 @@ namespace android {
  * This is an utility class which performs IO operations.
  */
 class ReadWriteUtils {
+public:
+    /**
+     * Constructor for ReadWriteUtils
+     */
+    ReadWriteUtils() {}
+
+    /**
+     * Destructor for ReadWriteUtils
+     */
+    virtual ~ReadWriteUtils();
 
 public:
-	/**
-	 * Constructor for ReadWriteUtils
-	 */
-	ReadWriteUtils() {}
-
-	/**
-	 * Destructor for ReadWriteUtils
-	 */
-	virtual ~ReadWriteUtils();
-
-public:
-	/**
-	 * Reads the data from the file path provided
-	 *
-	 * @param[in] filePath Path of the file
-	 * @return Data read from the file
-	 */
-	static String8 readBytes(const String8& filePath);
-	/**
-	 * Writes the data into the file path provided
-	 *
-	 * @param[in] filePath Path of the file
-	 * @param[in] dataBuffer Data to write 
-	 */
-	static void writeToFile(const String8& filePath, const String8& data);
-	/**
-	 * Appends the data into the file path provided
-	 *
-	 * @param[in] filePath Path of the file
-	 * @param[in] dataBuffer Data to append 
-	 */
-	static void appendToFile(const String8& filePath, const String8& data);
+    /**
+     * Reads the data from the file path provided
+     *
+     * @param[in] filePath Path of the file
+     * @return Data read from the file
+     */
+    static String8 readBytes(const String8& filePath);
+    /**
+     * Writes the data into the file path provided
+     *
+     * @param[in] filePath Path of the file
+     * @param[in] dataBuffer Data to write 
+     */
+    static void writeToFile(const String8& filePath, const String8& data);
+    /**
+     * Appends the data into the file path provided
+     *
+     * @param[in] filePath Path of the file
+     * @param[in] dataBuffer Data to append 
+     */
+    static void appendToFile(const String8& filePath, const String8& data);
 
 private:
-	FileMap* mFileMap;
+    FileMap* mFileMap;
 };
 
 };

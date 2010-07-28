@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,65 +29,63 @@
 using namespace android;
 
 String8 ReadWriteUtils::readBytes(const String8& filePath) {
+    FILE* file = NULL;
+    file = fopen(filePath.string(), "r");
+    int fd = fileno(file);
+    struct stat sb;
 
-	FILE* file = NULL;
-	file = fopen(filePath.string(), "r");
-	int fd = fileno(file);
-	struct stat sb;
-	
-	String8 string("");
-	if (fstat(fd, &sb) == 0 && sb.st_size > 0) {
-		FileMap* fileMap = new FileMap();
-		fileMap->create(filePath.string(), fd, 0, sb.st_size, true);
-		char* addr = (char*)fileMap->getDataPtr();
-		string.append(addr, sb.st_size);
-		fileMap->release();
-	}
-	fclose(file);
+    String8 string("");
+    if (fstat(fd, &sb) == 0 && sb.st_size > 0) {
+        FileMap* fileMap = new FileMap();
+        fileMap->create(filePath.string(), fd, 0, sb.st_size, true);
+        char* addr = (char*)fileMap->getDataPtr();
+        string.append(addr, sb.st_size);
+        fileMap->release();
+    }
+    fclose(file);
 
-	return string;
+    return string;
 }
 
 void ReadWriteUtils::writeToFile(const String8& filePath, const String8& data) {
+    FILE* file = NULL;
+    file = fopen(filePath.string(), "w+");
+    int fd = fileno(file);
 
-	FILE* file = NULL;
-	file = fopen(filePath.string(), "w+");
-	int fd = fileno(file);
+    int size = data.size();
+    ftruncate(fd, size);
 
-	int size = data.size();
-	ftruncate(fd, size);
+    // Map to the file
+    FileMap* fileMap = NULL;
+    fileMap = new FileMap();
+    fileMap->create(filePath.string(), fd, 0, size, false);
+    char* addr = (char*)fileMap->getDataPtr();
 
-	// Map to the file
-	FileMap* fileMap = NULL;
-	fileMap = new FileMap();
-	fileMap->create(filePath.string(), fd, 0, size, false);
-	char* addr = (char*)fileMap->getDataPtr();
-
-	// add keyValue pair to the registry file
-	memcpy(addr, data.string(), size);
-	fileMap->release();
-	fclose(file);
+    // add keyValue pair to the registry file
+    memcpy(addr, data.string(), size);
+    fileMap->release();
+    fclose(file);
 }
 
 void ReadWriteUtils::appendToFile(const String8& filePath, const String8& data) {
-		
-	FILE* file = NULL;
-	file = fopen(filePath.string(), "a+");
-	int fd = fileno(file);
+    FILE* file = NULL;
+    file = fopen(filePath.string(), "a+");
+    int fd = fileno(file);
 
-	int offset = lseek(fd, 0, SEEK_END);
-	int newEntrySize = data.size();
-	int fileSize = offset + newEntrySize;
-	ftruncate(fd, fileSize);
+    int offset = lseek(fd, 0, SEEK_END);
+    int newEntrySize = data.size();
+    int fileSize = offset + newEntrySize;
+    ftruncate(fd, fileSize);
 
-	// Map to the file
-	FileMap* fileMap = NULL;
-	fileMap = new FileMap();
-	fileMap->create(filePath.string(), fd, offset, fileSize, false);
-	char* addr = (char*)fileMap->getDataPtr();
+    // Map to the file
+    FileMap* fileMap = NULL;
+    fileMap = new FileMap();
+    fileMap->create(filePath.string(), fd, offset, fileSize, false);
+    char* addr = (char*)fileMap->getDataPtr();
 
-	// add keyValue pair to the registry file
-	memcpy(addr, data.string(), data.size());
-	fileMap->release();
-	fclose(file);
+    // add keyValue pair to the registry file
+    memcpy(addr, data.string(), data.size());
+    fileMap->release();
+    fclose(file);
 }
+

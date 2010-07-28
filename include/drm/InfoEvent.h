@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,59 +23,56 @@ namespace android {
 class String8;
 
 /**
- * This is an entity class which would be passed to caller in 
+ * This is an entity class which would be passed to caller in
  * DrmManagerClient::OnInfoListener::onInfo(const InfoEvent&).
  */
 class InfoEvent {
 
 public:
-	static const int ALREADY_REGISTERED_BY_ANOTHER_ACCOUNT = 0x0000001;
-	static const int REMOVE_RIGHTS = 0x0000002;
+    static const int ALREADY_REGISTERED_BY_ANOTHER_ACCOUNT = 0x0000001;
+    static const int REMOVE_RIGHTS = 0x0000002;
 
 public:
-	/**
-	 * Constructor for InfoEvent
-	 *
-	 * @param[in] uniqueId Unique session identifier
-	 * @param[in] infoType Type of information
-	 * @param[in] message Message description
-	 */
-	InfoEvent(
-			int uniqueId,
-			int infoType,
-			const String8& message);
+    /**
+     * Constructor for InfoEvent
+     *
+     * @param[in] uniqueId Unique session identifier
+     * @param[in] infoType Type of information
+     * @param[in] message Message description
+     */
+    InfoEvent(int uniqueId, int infoType, const String8& message);
 
-	/**
-	 * Destructor for InfoEvent
-	 */
-	virtual ~InfoEvent() {}
+    /**
+     * Destructor for InfoEvent
+     */
+    virtual ~InfoEvent() {}
 
 public:
-	/**
-	 * Returns the Unique Id associated with this instance
-	 *
-	 * @return Unique Id
-	 */
-	int getUniqueId() const;
+    /**
+     * Returns the Unique Id associated with this instance
+     *
+     * @return Unique Id
+     */
+    int getUniqueId() const;
 
-	/**
-	 * Returns the Type of information associated with this object
-	 *
-	 * @return Type of information
-	 */
-	int getType() const;
+    /**
+     * Returns the Type of information associated with this object
+     *
+     * @return Type of information
+     */
+    int getType() const;
 
-	/**
-	 * Returns the message description associated with this object
-	 *
-	 * @return Message description
-	 */
-	const String8& getMessage() const;
+    /**
+     * Returns the message description associated with this object
+     *
+     * @return Message description
+     */
+    const String8& getMessage() const;
 
 private:
-	int mUniqueId;
-	int mInfoType;
-	const String8& mMessage;
+    int mUniqueId;
+    int mInfoType;
+    const String8& mMessage;
 };
 
 };

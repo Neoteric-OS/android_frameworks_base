@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,37 +19,34 @@
 
 using namespace android;
 
-DrmRights::DrmRights(const String8& rightsFilePath,
-					const String8& mimeType,
-					const String8& accountId,
-					const String8& subscriptionId) {
-	/**
-	 * TODO Read DrmRights from rights file
-	 */
+DrmRights::DrmRights(const String8& rightsFilePath, const String8& mimeType,
+            const String8& accountId, const String8& subscriptionId) {
+    /**
+     * TODO Read DrmRights from rights file
+     */
 }
 
-DrmRights::DrmRights(const DrmBuffer& rightsData,
-					const String8& mimeType,
-					const String8& accountId,
-					const String8& subscriptionId) :
-	mData(rightsData),
-	mMimeType(mimeType),
-	mAccountId(accountId),
-	mSubscriptionId(subscriptionId) {
+DrmRights::DrmRights(const DrmBuffer& rightsData, const String8& mimeType,
+            const String8& accountId, const String8& subscriptionId) :
+    mData(rightsData),
+    mMimeType(mimeType),
+    mAccountId(accountId),
+    mSubscriptionId(subscriptionId) {
 }
 
 const DrmBuffer& DrmRights::getData(void) const {
-	return mData;
+    return mData;
 }
 
 String8 DrmRights::getMimeType(void) const {
-	return mMimeType;
+    return mMimeType;
 }
 
 String8 DrmRights::getAccountId(void) const {
-	return mAccountId;
+    return mAccountId;
 }
 
 String8 DrmRights::getSubscriptionId(void) const {
-	return mSubscriptionId;
+    return mSubscriptionId;
 }
+

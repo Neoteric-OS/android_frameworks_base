@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,24 +26,25 @@ package android.drm;
  * {@link DrmRights#DrmRights(ProcessedData, String)} in license acquisition.
  */
 public class DrmInfoStatus {
-	// Should be in sync with DrmInfoStatus.cpp
-	public static final int STATUS_OK = 1;
-	public static final int STATUS_ERROR = 2;
+    // Should be in sync with DrmInfoStatus.cpp
+    public static final int STATUS_OK = 1;
+    public static final int STATUS_ERROR = 2;
 
-	public int statusCode;
-	public String mimeType;
-	public ProcessedData data;
+    public int statusCode;
+    public String mimeType;
+    public ProcessedData data;
 
-	/**
-	 * constructor to create DrmInfoStatus object with given parameters
-	 *
-	 * @param _statusCode Status of the communication
-	 * @param _data The processed data
-	 * @param _mimeType MIME type
-	 */
-	public DrmInfoStatus(int _statusCode, ProcessedData _data, String _mimeType) {
-		statusCode = _statusCode;
-		data = _data;
-		mimeType = _mimeType;
-	}
+    /**
+     * constructor to create DrmInfoStatus object with given parameters
+     *
+     * @param _statusCode Status of the communication
+     * @param _data The processed data
+     * @param _mimeType MIME type
+     */
+    public DrmInfoStatus(int _statusCode, ProcessedData _data, String _mimeType) {
+        statusCode = _statusCode;
+        data = _data;
+        mimeType = _mimeType;
+    }
 }
+

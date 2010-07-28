@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,40 +30,37 @@
 using namespace android;
 
 status_t BpDrmServiceListener::notify(const InfoEvent& event) {
+    Parcel data, reply;
 
-	Parcel data, reply;
+    data.writeInterfaceToken(IDrmServiceListener::getInterfaceDescriptor());
+    data.writeInt32(event.getUniqueId());
+    data.writeInt32(event.getType());
+    data.writeString8(event.getMessage());
 
-	data.writeInterfaceToken(IDrmServiceListener::getInterfaceDescriptor());
-	data.writeInt32(event.getUniqueId());
-	data.writeInt32(event.getType());
-	data.writeString8(event.getMessage());
-
-	remote()->transact(NOTIFY, data, &reply);
-	return reply.readInt32();
+    remote()->transact(NOTIFY, data, &reply);
+    return reply.readInt32();
 }
 
-IMPLEMENT_META_INTERFACE(DrmServiceListener, "sony.drm.IDrmServiceListener");
+IMPLEMENT_META_INTERFACE(DrmServiceListener, "drm.IDrmServiceListener");
 
 status_t BnDrmServiceListener::onTransact(
-						uint32_t code,
-						const Parcel& data,
-						Parcel* reply,
-						uint32_t flags) {
+        uint32_t code, const Parcel& data, Parcel* reply, uint32_t flags) {
 
-	 switch (code) {
-        case NOTIFY: 
-		{
-			CHECK_INTERFACE(IDrmServiceListener, data, reply);
-			int uniqueId = data.readInt32();
-			int type = data.readInt32();
-			const String8& message = data.readString8();
+    switch (code) {
+    case NOTIFY: 
+    {
+        CHECK_INTERFACE(IDrmServiceListener, data, reply);
+        int uniqueId = data.readInt32();
+        int type = data.readInt32();
+        const String8& message = data.readString8();
 
-    		status_t status = notify(InfoEvent(uniqueId, type, message));
-			reply->writeInt32(status);
+        status_t status = notify(InfoEvent(uniqueId, type, message));
+        reply->writeInt32(status);
 
-            return DRM_NO_ERROR;
-        }
-        default:		
-            return BBinder::onTransact(code, data, reply, flags);
+        return DRM_NO_ERROR;
+    }
+    default:
+        return BBinder::onTransact(code, data, reply, flags);
     }
 }
+

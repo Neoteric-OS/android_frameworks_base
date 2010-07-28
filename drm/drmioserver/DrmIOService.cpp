@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,33 +26,27 @@
 using namespace android;
 
 void DrmIOService::instantiate() {
-
-	LOGV("instantiate");
-	defaultServiceManager()->addService(
-					String16("drm.drmIOService"),
-					new DrmIOService());
+    LOGV("instantiate");
+    defaultServiceManager()->addService(String16("drm.drmIOService"), new DrmIOService());
 }
 
 DrmIOService::DrmIOService() {
-
-	LOGV("created");
+    LOGV("created");
 }
 
 DrmIOService::~DrmIOService() {
-
-	LOGV("Destroyed");
+    LOGV("Destroyed");
 }
 
 void DrmIOService::writeToFile(
-					const String8& filePath,
-					const String8& dataBuffer) {
-	
-	LOGV("Entering writeToFile");
-	ReadWriteUtils::writeToFile(filePath, dataBuffer);
+                    const String8& filePath,
+                    const String8& dataBuffer) {
+    LOGV("Entering writeToFile");
+    ReadWriteUtils::writeToFile(filePath, dataBuffer);
 }
 
 String8 DrmIOService::readFromFile(const String8& filePath) {
-
-	LOGV("Entering readFromFile");
-	return ReadWriteUtils::readBytes(filePath);
+    LOGV("Entering readFromFile");
+    return ReadWriteUtils::readBytes(filePath);
 }
+

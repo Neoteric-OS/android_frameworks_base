@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +19,11 @@
 
 using namespace android;
 
-DrmConvertedStatus::DrmConvertedStatus(int _statusCode, const DrmBuffer* _convertedData, int _offset) :
-	statusCode(_statusCode),
-	convertedData(_convertedData),
-	offset(_offset) {
+DrmConvertedStatus::DrmConvertedStatus(
+    int _statusCode, const DrmBuffer* _convertedData, int _offset) :
+    statusCode(_statusCode),
+    convertedData(_convertedData),
+    offset(_offset) {
 
 }
-
 

@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,128 +24,133 @@ DrmSupportInfo::DrmSupportInfo() {
 }
 
 DrmSupportInfo::DrmSupportInfo(const DrmSupportInfo& drmSupportInfo):
-						mMimeTypeVector(drmSupportInfo.mMimeTypeVector),
-						mFileSuffixVector(drmSupportInfo.mFileSuffixVector),
-						mDescription(drmSupportInfo.mDescription) {
+    mMimeTypeVector(drmSupportInfo.mMimeTypeVector),
+    mFileSuffixVector(drmSupportInfo.mFileSuffixVector),
+    mDescription(drmSupportInfo.mDescription) {
 
 }
 
 bool DrmSupportInfo::operator<(const DrmSupportInfo& drmSupportInfo) const {
-	// Do we need to check mMimeTypeVector & mFileSuffixVector ?
-	// Note Vector doesn't overrides "<" operator
-	return mDescription < drmSupportInfo.mDescription;
+    // Do we need to check mMimeTypeVector & mFileSuffixVector ?
+    // Note Vector doesn't overrides "<" operator
+    return mDescription < drmSupportInfo.mDescription;
 }
 
 bool DrmSupportInfo::operator==(const DrmSupportInfo& drmSupportInfo) const {
-	// Do we need to check mMimeTypeVector & mFileSuffixVector ?
-	// Note Vector doesn't overrides "==" operator
-	return (mDescription == drmSupportInfo.mDescription);
+    // Do we need to check mMimeTypeVector & mFileSuffixVector ?
+    // Note Vector doesn't overrides "==" operator
+    return (mDescription == drmSupportInfo.mDescription);
 }
 
 bool DrmSupportInfo::isSupportedMimeType(const String8& mimeType) const {
-	for (int i = 0; i < mMimeTypeVector.size(); i++) {
-		const String8 item = mMimeTypeVector.itemAt(i);
+    for (int i = 0; i < mMimeTypeVector.size(); i++) {
+        const String8 item = mMimeTypeVector.itemAt(i);
 
-		if (String8("") != mimeType && item.find(mimeType) != -1) {
-			return true;
-		}
-	}
-	return false;
+        if (String8("") != mimeType && item.find(mimeType) != -1) {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool DrmSupportInfo::isSupportedFileSuffix(const String8& fileType) const {
-	for (int i = 0; i < mFileSuffixVector.size(); i++) {
-		const String8 item = mFileSuffixVector.itemAt(i);
+    for (int i = 0; i < mFileSuffixVector.size(); i++) {
+        const String8 item = mFileSuffixVector.itemAt(i);
 
-		if (String8("") != fileType && item.find(fileType) != -1) {
-			return true;
-		}
-	}
-	return false;
+        if (String8("") != fileType && item.find(fileType) != -1) {
+            return true;
+        }
+    }
+    return false;
 }
 
 DrmSupportInfo& DrmSupportInfo::operator=(const DrmSupportInfo& drmSupportInfo) {
-	mMimeTypeVector = drmSupportInfo.mMimeTypeVector;
-	mFileSuffixVector = drmSupportInfo.mFileSuffixVector;
-	mDescription = drmSupportInfo.mDescription;
-	return *this;
+    mMimeTypeVector = drmSupportInfo.mMimeTypeVector;
+    mFileSuffixVector = drmSupportInfo.mFileSuffixVector;
+    mDescription = drmSupportInfo.mDescription;
+    return *this;
 }
 
 int DrmSupportInfo::getMimeTypeCount(void) const {
-	return mMimeTypeVector.size();
+    return mMimeTypeVector.size();
 }
 
 int DrmSupportInfo::getFileSuffixCount(void) const {
-	return mFileSuffixVector.size();
+    return mFileSuffixVector.size();
 }
 
 status_t DrmSupportInfo::addMimeType(const String8& mimeType) {
-	mMimeTypeVector.push(mimeType);
-	return DRM_NO_ERROR;
+    mMimeTypeVector.push(mimeType);
+    return DRM_NO_ERROR;
 }
 
 status_t DrmSupportInfo::addFileSuffix(const String8& fileSuffix) {
-	mFileSuffixVector.push(fileSuffix);
-	return DRM_NO_ERROR;
+    mFileSuffixVector.push(fileSuffix);
+    return DRM_NO_ERROR;
 }
 
 status_t DrmSupportInfo::setDescription(const String8& description) {
-	mDescription = description;
-	return DRM_NO_ERROR;
+    mDescription = description;
+    return DRM_NO_ERROR;
 }
 
 String8 DrmSupportInfo::getDescription() const {
-	return mDescription;
+    return mDescription;
 }
 
 DrmSupportInfo::FileSuffixIterator DrmSupportInfo::getFileSuffixIterator() {
-	return FileSuffixIterator(this);
+    return FileSuffixIterator(this);
 }
 
 DrmSupportInfo::MimeTypeIterator DrmSupportInfo::getMimeTypeIterator() {
-	return MimeTypeIterator(this);
+    return MimeTypeIterator(this);
 }
 
-DrmSupportInfo::FileSuffixIterator::FileSuffixIterator(const DrmSupportInfo::FileSuffixIterator& iterator) : 
-	mDrmSupportInfo(iterator.mDrmSupportInfo),
-	mIndex(iterator.mIndex) {
+DrmSupportInfo::FileSuffixIterator::FileSuffixIterator(
+    const DrmSupportInfo::FileSuffixIterator& iterator) :
+    mDrmSupportInfo(iterator.mDrmSupportInfo),
+    mIndex(iterator.mIndex) {
 
 }
 
-DrmSupportInfo::FileSuffixIterator& DrmSupportInfo::FileSuffixIterator::operator=(const DrmSupportInfo::FileSuffixIterator& iterator) {
-	mDrmSupportInfo = iterator.mDrmSupportInfo;
-	mIndex = iterator.mIndex;
-	return *this;
+DrmSupportInfo::FileSuffixIterator& DrmSupportInfo::FileSuffixIterator::operator=(
+    const DrmSupportInfo::FileSuffixIterator& iterator) {
+    mDrmSupportInfo = iterator.mDrmSupportInfo;
+    mIndex = iterator.mIndex;
+    return *this;
 }
 
 bool DrmSupportInfo::FileSuffixIterator::hasNext() {
-	return mIndex < mDrmSupportInfo->mFileSuffixVector.size();
+    return mIndex < mDrmSupportInfo->mFileSuffixVector.size();
 }
 
 String8& DrmSupportInfo::FileSuffixIterator::next() {
-	String8& value = mDrmSupportInfo->mFileSuffixVector.editItemAt(mIndex);
-	mIndex++;
-	return value;
+    String8& value = mDrmSupportInfo->mFileSuffixVector.editItemAt(mIndex);
+    mIndex++;
+    return value;
 }
 
-DrmSupportInfo::MimeTypeIterator::MimeTypeIterator(const DrmSupportInfo::MimeTypeIterator& iterator) : 
-	mDrmSupportInfo(iterator.mDrmSupportInfo),
-	mIndex(iterator.mIndex) {
+DrmSupportInfo::MimeTypeIterator::MimeTypeIterator(
+    const DrmSupportInfo::MimeTypeIterator& iterator) :
+    mDrmSupportInfo(iterator.mDrmSupportInfo),
+    mIndex(iterator.mIndex) {
 
 }
 
-DrmSupportInfo::MimeTypeIterator& DrmSupportInfo::MimeTypeIterator::operator=(const DrmSupportInfo::MimeTypeIterator& iterator) {
-	mDrmSupportInfo = iterator.mDrmSupportInfo;
-	mIndex = iterator.mIndex;
-	return *this;
+DrmSupportInfo::MimeTypeIterator& DrmSupportInfo::MimeTypeIterator::operator=(
+    const DrmSupportInfo::MimeTypeIterator& iterator) {
+    mDrmSupportInfo = iterator.mDrmSupportInfo;
+    mIndex = iterator.mIndex;
+    return *this;
 }
 
 bool DrmSupportInfo::MimeTypeIterator::hasNext() {
-	return mIndex < mDrmSupportInfo->mMimeTypeVector.size();
+    return mIndex < mDrmSupportInfo->mMimeTypeVector.size();
 }
 
 String8& DrmSupportInfo::MimeTypeIterator::next() {
-	String8& value = mDrmSupportInfo->mMimeTypeVector.editItemAt(mIndex);
-	mIndex++;
-	return value;
+    String8& value = mDrmSupportInfo->mMimeTypeVector.editItemAt(mIndex);
+    mIndex++;
+    return value;
 }
+

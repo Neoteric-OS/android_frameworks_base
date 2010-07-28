@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,119 +31,120 @@ import java.util.Iterator;
  * by passing {@link DrmInfoRequest} instance.
  */
 public class DrmInfo {
-	
-	private byte[] mData;
-	private String mMimeType;
-	private int mInfoType = -1;
-	// It would be used to add attributes specific to DRM scheme such as account id, path or multiple path's
-	private HashMap<String, Object> mAttributes = new HashMap<String, Object>();
+    
+    private byte[] mData;
+    private String mMimeType;
+    private int mInfoType = -1;
+    // It would be used to add attributes specific to DRM scheme such as account id, path or multiple path's
+    private HashMap<String, Object> mAttributes = new HashMap<String, Object>();
 
-	/**
-	 * constructor to create DrmInfo object with given parameters
-	 *
-	 * @param infoType Type of information
-	 * @param data Trigger data
-	 * @param mimeType MIME type
-	 */
-	public DrmInfo(int infoType, byte[] data, String mimeType) {
-		mInfoType = infoType;
-		mMimeType = mimeType;
-		mData = data; 
-	}
+    /**
+     * constructor to create DrmInfo object with given parameters
+     *
+     * @param infoType Type of information
+     * @param data Trigger data
+     * @param mimeType MIME type
+     */
+    public DrmInfo(int infoType, byte[] data, String mimeType) {
+        mInfoType = infoType;
+        mMimeType = mimeType;
+        mData = data; 
+    }
 
-	/**
-	 * constructor to create DrmInfo object with given parameters
-	 * 
-	 * @param infoType Type of information
-	 * @param path Trigger data
-	 * @param mimeType MIME type
-	 */
-	public DrmInfo(int infoType, String path, String mimeType) {
-		mInfoType = infoType;
-		mMimeType = mimeType;
-		try {
-			mData = DrmUtils.readBytes(path);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * Adds optional information as <key, value> pair to this object
-	 * 
-	 * @param key Key to add
-	 * @param value Value to add
-	 *  	- To put custom object into DrmInfo, custom object has to
-	 * override toString() implementation.
-	 */
-	public void put(String key, Object value) {
-		mAttributes.put(key, value);
-	}
+    /**
+     * constructor to create DrmInfo object with given parameters
+     * 
+     * @param infoType Type of information
+     * @param path Trigger data
+     * @param mimeType MIME type
+     */
+    public DrmInfo(int infoType, String path, String mimeType) {
+        mInfoType = infoType;
+        mMimeType = mimeType;
+        try {
+            mData = DrmUtils.readBytes(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Adds optional information as <key, value> pair to this object
+     * 
+     * @param key Key to add
+     * @param value Value to add
+     *      - To put custom object into DrmInfo, custom object has to
+     * override toString() implementation.
+     */
+    public void put(String key, Object value) {
+        mAttributes.put(key, value);
+    }
 
-	/**
-	 * Retrieves the value of given key, if not found returns null
-	 * 
-	 * @param key Key whose value to be retrieved
-	 * @return The value or null
-	 */
-	public Object get(String key) {
-		return mAttributes.get(key);
-	}
+    /**
+     * Retrieves the value of given key, if not found returns null
+     * 
+     * @param key Key whose value to be retrieved
+     * @return The value or null
+     */
+    public Object get(String key) {
+        return mAttributes.get(key);
+    }
 
-	/**
-	 * Returns Iterator object to walk through the keys associated with this instance
-	 *
-	 * @return Iterator object
-	 */
-	public Iterator<String> keyIterator() {
-		return mAttributes.keySet().iterator();
-	}
+    /**
+     * Returns Iterator object to walk through the keys associated with this instance
+     *
+     * @return Iterator object
+     */
+    public Iterator<String> keyIterator() {
+        return mAttributes.keySet().iterator();
+    }
 
-	/**
-	 * Returns Iterator object to walk through the values associated with this instance
-	 * 
-	 * @return Iterator object
-	 */
-	public Iterator<Object> iterator() {
-		return mAttributes.values().iterator();
-	}
+    /**
+     * Returns Iterator object to walk through the values associated with this instance
+     * 
+     * @return Iterator object
+     */
+    public Iterator<Object> iterator() {
+        return mAttributes.values().iterator();
+    }
 
-	/**
-	 * Returns the trigger data associated with this object
-	 *
-	 * @return Trigger data
-	 */
-	public byte[] getData() {
-		return mData;
-	}
+    /**
+     * Returns the trigger data associated with this object
+     *
+     * @return Trigger data
+     */
+    public byte[] getData() {
+        return mData;
+    }
 
-	/**
-	 * Returns the mimetype associated with this object
-	 *
-	 * @return MIME type
-	 */
-	public String getMimeType() {
-		return mMimeType;
-	}
+    /**
+     * Returns the mimetype associated with this object
+     *
+     * @return MIME type
+     */
+    public String getMimeType() {
+        return mMimeType;
+    }
 
-	/**
-	 * Returns information type associated with this instance
-	 *
-	 * @return Information type
-	 */
-	public int getInfoType() {
-		return mInfoType;
-	}
+    /**
+     * Returns information type associated with this instance
+     *
+     * @return Information type
+     */
+    public int getInfoType() {
+        return mInfoType;
+    }
 
-	/**
-	 * Returns whether this instance is valid or not
-	 *
-	 * @return
-	 *		true - if valid
-	 *		false - if invalid
-	 */
- 	boolean isValid() {
-		return (null != mMimeType && !mMimeType.equals("")
-				&& null != mData && mData.length > 0 && DrmInfoRequest.Type.isValid(mInfoType));
-	}
+    /**
+     * Returns whether this instance is valid or not
+     *
+     * @return
+     *     true - if valid
+     *     false - if invalid
+     */
+     boolean isValid() {
+        return (null != mMimeType && !mMimeType.equals("")
+                && null != mData && mData.length > 0 && DrmInfoRequest.Type.isValid(mInfoType));
+    }
 }
+

@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,17 +30,15 @@ namespace android {
 class DrmIOService : public BnDrmIOService {
 
 public:
-	static void instantiate();
+    static void instantiate();
 
 private:
-	DrmIOService();
-	virtual ~DrmIOService();
+    DrmIOService();
+    virtual ~DrmIOService();
 
 public:
-	void writeToFile(
-					const String8& filePath,
-					const String8& dataBuffer);
-	String8 readFromFile(const String8& filePath);
+    void writeToFile(const String8& filePath, const String8& dataBuffer);
+    String8 readFromFile(const String8& filePath);
 };
 
 };

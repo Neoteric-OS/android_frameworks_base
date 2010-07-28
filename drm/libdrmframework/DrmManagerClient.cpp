@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,241 +28,133 @@
 using namespace android;
 
 DrmManagerClient::DrmManagerClient() {
-	int uniqueId = 0;
-	mDrmManagerClientImpl = NULL;
-	
-	mDrmManagerClientImpl = DrmManagerClientImpl::create(&uniqueId);
-	mUniqueId = uniqueId;
+    int uniqueId = 0;
+    mDrmManagerClientImpl = NULL;
+    
+    mDrmManagerClientImpl = DrmManagerClientImpl::create(&uniqueId);
+    mUniqueId = uniqueId;
 
-	loadPlugIns();
+    loadPlugIns();
 }
 
 DrmManagerClient::~DrmManagerClient() {
+    unloadPlugIns();
 
-	unloadPlugIns();
-
-	delete mDrmManagerClientImpl; mDrmManagerClientImpl = NULL;
+    delete mDrmManagerClientImpl; mDrmManagerClientImpl = NULL;
 }
 
 status_t DrmManagerClient::loadPlugIns() {
-	return mDrmManagerClientImpl->loadPlugIns(mUniqueId);
+    return mDrmManagerClientImpl->loadPlugIns(mUniqueId);
 }
 
 status_t DrmManagerClient::setOnInfoListener(
-					const sp<DrmManagerClient::OnInfoListener>& infoListener) {
-
-	return mDrmManagerClientImpl->setOnInfoListener(mUniqueId, infoListener);
+                    const sp<DrmManagerClient::OnInfoListener>& infoListener) {
+    return mDrmManagerClientImpl->setOnInfoListener(mUniqueId, infoListener);
 }
 
 status_t DrmManagerClient::unloadPlugIns() {
-	return mDrmManagerClientImpl->unloadPlugIns(mUniqueId);
+    return mDrmManagerClientImpl->unloadPlugIns(mUniqueId);
 }
 
-DrmConstraints* DrmManagerClient::getConstraints(
-					const String8* path,
-					const int action) {
-	return mDrmManagerClientImpl->getConstraints(
-					mUniqueId,
-					path,
-					action);
+DrmConstraints* DrmManagerClient::getConstraints(const String8* path, const int action) {
+    return mDrmManagerClientImpl->getConstraints(mUniqueId, path, action);
 }
 
-bool DrmManagerClient::canHandle(
-					const String8& path,
-					const String8& mimeType) {
-	return mDrmManagerClientImpl->canHandle(
-					mUniqueId,
-					path,
-					mimeType);
+bool DrmManagerClient::canHandle(const String8& path, const String8& mimeType) {
+    return mDrmManagerClientImpl->canHandle(mUniqueId, path, mimeType);
 }
 
-DrmInfoStatus* DrmManagerClient::processDrmInfo(
-					const DrmInfo* drmInfo) {
-	return mDrmManagerClientImpl->processDrmInfo(
-					mUniqueId,
-					drmInfo);
+DrmInfoStatus* DrmManagerClient::processDrmInfo(const DrmInfo* drmInfo) {
+    return mDrmManagerClientImpl->processDrmInfo(mUniqueId, drmInfo);
 }
 
-DrmInfo* DrmManagerClient::acquireDrmInfo(
-					const DrmInfoRequest* drmInfoRequest) {
-	return mDrmManagerClientImpl->acquireDrmInfo(
-					mUniqueId,
-					drmInfoRequest);
+DrmInfo* DrmManagerClient::acquireDrmInfo(const DrmInfoRequest* drmInfoRequest) {
+    return mDrmManagerClientImpl->acquireDrmInfo(mUniqueId, drmInfoRequest);
 }
 
 void DrmManagerClient::saveRights(
-					const DrmRights& drmRights,
-					const String8& rightsPath,
-					const String8& contentPath) {
-	return mDrmManagerClientImpl->saveRights(
-					mUniqueId,
-					drmRights,
-					rightsPath,
-					contentPath);
+        const DrmRights& drmRights, const String8& rightsPath, const String8& contentPath) {
+    return mDrmManagerClientImpl->saveRights(mUniqueId, drmRights, rightsPath, contentPath);
 }
 
-String8 DrmManagerClient::getOriginalMimeType(
-					const String8& path) {
-	return mDrmManagerClientImpl->getOriginalMimeType(
-					mUniqueId,
-					path);
+String8 DrmManagerClient::getOriginalMimeType(const String8& path) {
+    return mDrmManagerClientImpl->getOriginalMimeType(mUniqueId, path);
 }
 
-int DrmManagerClient::getDrmObjectType(
-					const String8& path,
-					const String8& mimeType) {
-	return mDrmManagerClientImpl->getDrmObjectType(
-					mUniqueId,
-					path,
-					mimeType);
-}
-	
-int DrmManagerClient::checkRightsStatus(
-					const String8& path,
-					int action) {
-	return mDrmManagerClientImpl->checkRightsStatus(
-					mUniqueId,
-					path,
-					action);
+int DrmManagerClient::getDrmObjectType(const String8& path, const String8& mimeType) {
+    return mDrmManagerClientImpl->getDrmObjectType( mUniqueId, path, mimeType);
 }
 
-void DrmManagerClient::consumeRights(
-					DecryptHandle* decryptHandle,
-					int action,
-					bool reserve) {
-	mDrmManagerClientImpl->consumeRights(
-					mUniqueId,
-					decryptHandle,
-					action,
-					reserve);
+int DrmManagerClient::checkRightsStatus(const String8& path, int action) {
+    return mDrmManagerClientImpl->checkRightsStatus(mUniqueId, path, action);
+}
+
+void DrmManagerClient::consumeRights(DecryptHandle* decryptHandle, int action, bool reserve) {
+    mDrmManagerClientImpl->consumeRights(mUniqueId, decryptHandle, action, reserve);
 }
 
 void DrmManagerClient::setPlaybackStatus(
-					DecryptHandle* decryptHandle,
-					int playbackStatus,
-					int position) {
-	mDrmManagerClientImpl->setPlaybackStatus(
-					mUniqueId,
-					decryptHandle,
-					playbackStatus,
-					position);
+            DecryptHandle* decryptHandle, int playbackStatus, int position) {
+    mDrmManagerClientImpl->setPlaybackStatus(mUniqueId, decryptHandle, playbackStatus, position);
 }
 
 bool DrmManagerClient::validateAction(
-					const String8& path,
-					int action,
-					const ActionDescription& description) {
-	return mDrmManagerClientImpl->validateAction(
-					mUniqueId,
-					path,
-					action,
-					description);
+            const String8& path, int action, const ActionDescription& description) {
+    return mDrmManagerClientImpl->validateAction(mUniqueId, path, action, description);
 }
 
-void DrmManagerClient::removeRights(
-					const String8& path) {
-	mDrmManagerClientImpl->removeRights(
-					mUniqueId,
-					path);
+void DrmManagerClient::removeRights(const String8& path) {
+    mDrmManagerClientImpl->removeRights(mUniqueId, path);
 }
-	
+
 void DrmManagerClient::removeAllRights() {
-	mDrmManagerClientImpl->removeAllRights(mUniqueId);
+    mDrmManagerClientImpl->removeAllRights(mUniqueId);
 }
 
-int DrmManagerClient::openConvertSession(
-					const String8& mimeType) {
-	return mDrmManagerClientImpl->openConvertSession(
-					mUniqueId,
-					mimeType);
+int DrmManagerClient::openConvertSession(const String8& mimeType) {
+    return mDrmManagerClientImpl->openConvertSession(mUniqueId, mimeType);
 }
 
-DrmConvertedStatus* DrmManagerClient::convertData(
-					int convertId,
-					const DrmBuffer* inputData) {
-	return mDrmManagerClientImpl->convertData(
-					mUniqueId,
-					convertId,
-					inputData);
+DrmConvertedStatus* DrmManagerClient::convertData(int convertId, const DrmBuffer* inputData) {
+    return mDrmManagerClientImpl->convertData(mUniqueId, convertId, inputData);
 }
 
-DrmConvertedStatus* DrmManagerClient::closeConvertSession(
-					int convertId) {
-	return mDrmManagerClientImpl->closeConvertSession(
-					mUniqueId,
-					convertId);
+DrmConvertedStatus* DrmManagerClient::closeConvertSession(int convertId) {
+    return mDrmManagerClientImpl->closeConvertSession(mUniqueId, convertId);
 }
 
-status_t DrmManagerClient::getAllSupportInfo(
-					int* length,
-					DrmSupportInfo** drmSupportInfoArray) {
-	return mDrmManagerClientImpl->getAllSupportInfo(
-					mUniqueId,
-					length,
-					drmSupportInfoArray);
+status_t DrmManagerClient::getAllSupportInfo(int* length, DrmSupportInfo** drmSupportInfoArray) {
+    return mDrmManagerClientImpl->getAllSupportInfo(mUniqueId, length, drmSupportInfoArray);
 }
 
-DecryptHandle* DrmManagerClient::openDecryptSession(
-					int fd,
-					int offset,
-					int length) {
-	LOGV("Entering DrmManagerClient::openDecryptSession");
-	return mDrmManagerClientImpl->openDecryptSession(
-					mUniqueId,
-					fd,
-					offset,
-					length);
+DecryptHandle* DrmManagerClient::openDecryptSession(int fd, int offset, int length) {
+    LOGV("Entering DrmManagerClient::openDecryptSession");
+    return mDrmManagerClientImpl->openDecryptSession(mUniqueId, fd, offset, length);
 }
 
-void DrmManagerClient::closeDecryptSession(
-					DecryptHandle* decryptHandle) {
-	mDrmManagerClientImpl->closeDecryptSession(
-					mUniqueId,
-					decryptHandle);
+void DrmManagerClient::closeDecryptSession(DecryptHandle* decryptHandle) {
+    mDrmManagerClientImpl->closeDecryptSession(mUniqueId, decryptHandle);
 }
 
 void DrmManagerClient::initializeDecryptUnit(
-					DecryptHandle* decryptHandle,
-					int decryptUnitId,
-					const DrmBuffer* headerInfo) {
-	mDrmManagerClientImpl->initializeDecryptUnit(
-					mUniqueId,
-					decryptHandle,
-					decryptUnitId,
-					headerInfo);
+            DecryptHandle* decryptHandle, int decryptUnitId, const DrmBuffer* headerInfo) {
+    mDrmManagerClientImpl->initializeDecryptUnit(
+        mUniqueId, decryptHandle, decryptUnitId, headerInfo);
 }
 
 status_t DrmManagerClient::decrypt(
-					DecryptHandle* decryptHandle,
-					int decryptUnitId,
-					const DrmBuffer* encBuffer,
-					DrmBuffer** decBuffer) {
-	return mDrmManagerClientImpl->decrypt(
-					mUniqueId,
-					decryptHandle,
-					decryptUnitId,
-					encBuffer,
-					decBuffer);
+    DecryptHandle* decryptHandle, int decryptUnitId,
+    const DrmBuffer* encBuffer, DrmBuffer** decBuffer) {
+    return mDrmManagerClientImpl->decrypt(
+            mUniqueId, decryptHandle, decryptUnitId, encBuffer, decBuffer);
 }
 
-void DrmManagerClient::finalizeDecryptUnit(
-					DecryptHandle* decryptHandle,
-					int decryptUnitId) {
-	mDrmManagerClientImpl->finalizeDecryptUnit(
-					mUniqueId,
-					decryptHandle,
-					decryptUnitId);
+void DrmManagerClient::finalizeDecryptUnit(DecryptHandle* decryptHandle, int decryptUnitId) {
+    mDrmManagerClientImpl->finalizeDecryptUnit(mUniqueId, decryptHandle, decryptUnitId);
 }
 
 ssize_t DrmManagerClient::pread(
-					DecryptHandle* decryptHandle,
-					void* buffer,
-					ssize_t numBytes,
-					off_t offset) {
-	return mDrmManagerClientImpl->pread(
-					mUniqueId,
-					decryptHandle,
-					buffer,
-					numBytes,
-					offset);
+            DecryptHandle* decryptHandle, void* buffer, ssize_t numBytes, off_t offset) {
+    return mDrmManagerClientImpl->pread(mUniqueId, decryptHandle, buffer, numBytes, offset);
 }
+

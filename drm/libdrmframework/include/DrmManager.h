@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,179 +50,101 @@ class ActionDescription;
 class DrmManager : public IDrmEngine::OnInfoListener {
 
 public:
-	DrmManager();
-	virtual ~DrmManager();
+    DrmManager();
+    virtual ~DrmManager();
 
 public:
-	
-	status_t loadPlugIns(int uniqueId);
+    
+    status_t loadPlugIns(int uniqueId);
 
-	status_t loadPlugIns(
-					int uniqueId,
-					const String8& plugInDirPath);
+    status_t loadPlugIns(int uniqueId, const String8& plugInDirPath);
 
-	status_t setDrmServiceListener(
-					int uniqueId,
-					const sp<IDrmServiceListener>& drmServiceListener);
+    status_t setDrmServiceListener(int uniqueId, const sp<IDrmServiceListener>& drmServiceListener);
 
-	status_t unloadPlugIns(int uniqueId);
+    status_t unloadPlugIns(int uniqueId);
 
-	status_t installDrmEngine(
-					int uniqueId,
-					const String8& drmEngineFile);
+    status_t installDrmEngine(int uniqueId, const String8& drmEngineFile);
 
-	DrmConstraints* getConstraints(
-					int uniqueId,
-					const String8* path,
-					const int action);
+    DrmConstraints* getConstraints(int uniqueId, const String8* path, const int action);
 
-	bool canHandle(
-					int uniqueId,
-					const String8& path,
-					const String8& mimeType);
+    bool canHandle(int uniqueId, const String8& path, const String8& mimeType);
 
-	DrmInfoStatus* processDrmInfo(
-					int uniqueId,
-					const DrmInfo* drmInfo);
+    DrmInfoStatus* processDrmInfo(int uniqueId, const DrmInfo* drmInfo);
 
-	DrmInfo* acquireDrmInfo(
-					int uniqueId,
-					const DrmInfoRequest* drmInfoRequest);
+    DrmInfo* acquireDrmInfo(int uniqueId, const DrmInfoRequest* drmInfoRequest);
 
-	void saveRights(
-					int uniqueId,
-					const DrmRights& drmRights,
-					const String8& rightsPath,
-					const String8& contentPath);
+    void saveRights(int uniqueId, const DrmRights& drmRights,
+            const String8& rightsPath, const String8& contentPath);
 
-	String8 getOriginalMimeType(
-					int uniqueId,
-					const String8& path);
+    String8 getOriginalMimeType(int uniqueId, const String8& path);
 
-	int getDrmObjectType(
-					int uniqueId,
-					const String8& path,
-					const String8& mimeType);
-	
-	int checkRightsStatus(
-					int uniqueId,
-					const String8& path,
-					int action);
+    int getDrmObjectType(int uniqueId, const String8& path, const String8& mimeType);
+    
+    int checkRightsStatus(int uniqueId, const String8& path, int action);
 
-	void consumeRights(
-					int uniqueId,
-					DecryptHandle* decryptHandle,
-					int action,
-					bool reserve);
+    void consumeRights(int uniqueId, DecryptHandle* decryptHandle, int action, bool reserve);
 
-	void setPlaybackStatus(
-					int uniqueId,
-					DecryptHandle* decryptHandle,
-					int playbackStatus,
-					int position);
+    void setPlaybackStatus(
+            int uniqueId, DecryptHandle* decryptHandle, int playbackStatus, int position);
 
-	bool validateAction(
-					int uniqueId,
-					const String8& path,
-					int action,
-					const ActionDescription& description);
+    bool validateAction(
+            int uniqueId, const String8& path, int action, const ActionDescription& description);
 
-	void removeRights(
-					int uniqueId,
-					const String8& path);
-	
-	void removeAllRights(int uniqueId);
+    void removeRights(int uniqueId, const String8& path);
+    
+    void removeAllRights(int uniqueId);
 
-	int openConvertSession(
-					int uniqueId,
-					const String8& mimeType);
+    int openConvertSession(int uniqueId, const String8& mimeType);
 
-	DrmConvertedStatus* convertData(
-					int uniqueId,
-					int convertId,
-					const DrmBuffer* inputData);
+    DrmConvertedStatus* convertData(int uniqueId, int convertId, const DrmBuffer* inputData);
 
-	DrmConvertedStatus* closeConvertSession(
-					int uniqueId,
-					int convertId);
+    DrmConvertedStatus* closeConvertSession(int uniqueId, int convertId);
 
-	status_t getAllSupportInfo(
-					int uniqueId,
-					int* length,
-					DrmSupportInfo** drmSupportInfoArray);
+    status_t getAllSupportInfo(int uniqueId, int* length, DrmSupportInfo** drmSupportInfoArray);
 
-	DecryptHandle* openDecryptSession(
-					int uniqueId,
-					int fd,
-					int offset,
-					int length);
+    DecryptHandle* openDecryptSession(int uniqueId, int fd, int offset, int length);
 
-	void closeDecryptSession(
-					int uniqueId,
-					DecryptHandle* decryptHandle);
+    void closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle);
 
-	void initializeDecryptUnit(
-					int uniqueId,
-					DecryptHandle* decryptHandle,
-					int decryptUnitId,
-					const DrmBuffer* headerInfo);
+    void initializeDecryptUnit(int uniqueId, DecryptHandle* decryptHandle,
+            int decryptUnitId, const DrmBuffer* headerInfo);
 
-	status_t decrypt(
-				int uniqueId,
-				DecryptHandle* decryptHandle,
-				int decryptUnitId,
-				const DrmBuffer* encBuffer,
-				DrmBuffer** decBuffer);
+    status_t decrypt(int uniqueId, DecryptHandle* decryptHandle,
+            int decryptUnitId, const DrmBuffer* encBuffer,DrmBuffer** decBuffer);
 
-	void finalizeDecryptUnit(
-				int uniqueId,
-				DecryptHandle* decryptHandle,
-				int decryptUnitId);
+    void finalizeDecryptUnit(int uniqueId, DecryptHandle* decryptHandle, int decryptUnitId);
 
-	ssize_t pread(
-				int uniqueId,
-				DecryptHandle* decryptHandle,
-				void* buffer,
-				ssize_t numBytes,
-				off_t offset);	
+    ssize_t pread(int uniqueId, DecryptHandle* decryptHandle,
+            void* buffer, ssize_t numBytes, off_t offset);
 
-	void onInfo(const InfoEvent& event);
+    void onInfo(const InfoEvent& event);
 
 private:
+    String8 getSupportedPlugInId(int uniqueId, const String8& path, const String8& mimeType);
 
-	String8 getSupportedPlugInId(
-					int uniqueId,
-					const String8& path,
-					const String8& mimeType);
+    String8 getSupportedPlugInId(const String8& mimeType);
 
-	String8 getSupportedPlugInId(const String8& mimeType);
+    String8 getSupportedPlugInIdFromPath(int uniqueId, const String8& path);
 
-	String8 getSupportedPlugInIdFromPath(
-					int uniqueId,
-					const String8& path);
-	
-	void populate(int uniqueId);
+    void populate(int uniqueId);
 
-	bool canHandle(
-					int uniqueId,
-					const String8& path);
+    bool canHandle(int uniqueId, const String8& path);
 
-	void initializePlugIns(int uniqueId);
+    void initializePlugIns(int uniqueId);
 
 private:
+    static const String8 EMPTY_STRING;
 
-	static const String8 EMPTY_STRING;
-
-	int mDecryptSessionId;
-	int mConvertId;
-	Mutex mLock;
-	Mutex mDecryptLock;
-	Mutex mConvertLock;
-	TPlugInManager<IDrmEngine> mPlugInManager;
-	KeyedVector< DrmSupportInfo, String8 > mSupportInfoToPlugInIdMap;
-	KeyedVector< int, IDrmEngine*> mConvertSessionMap;
-	KeyedVector< int, sp<IDrmServiceListener> > mServiceListeners;
-	KeyedVector< int, IDrmEngine*> mDecryptSessionMap;
+    int mDecryptSessionId;
+    int mConvertId;
+    Mutex mLock;
+    Mutex mDecryptLock;
+    Mutex mConvertLock;
+    TPlugInManager<IDrmEngine> mPlugInManager;
+    KeyedVector< DrmSupportInfo, String8 > mSupportInfoToPlugInIdMap;
+    KeyedVector< int, IDrmEngine*> mConvertSessionMap;
+    KeyedVector< int, sp<IDrmServiceListener> > mServiceListeners;
+    KeyedVector< int, IDrmEngine*> mDecryptSessionMap;
 };
 
 };

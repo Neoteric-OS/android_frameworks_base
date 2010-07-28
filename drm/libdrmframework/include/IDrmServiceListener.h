@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,15 +32,15 @@ class InfoEvent;
 class IDrmServiceListener : public IInterface
 {
 public:
-	enum {
-		NOTIFY = IBinder::FIRST_CALL_TRANSACTION,
-	};
+    enum {
+        NOTIFY = IBinder::FIRST_CALL_TRANSACTION,
+    };
 
 public:
-	DECLARE_META_INTERFACE(DrmServiceListener);
+    DECLARE_META_INTERFACE(DrmServiceListener);
 
 public:
-	virtual status_t notify(const InfoEvent& event) = 0;
+    virtual status_t notify(const InfoEvent& event) = 0;
 };
 
 /**
@@ -49,10 +50,10 @@ class BpDrmServiceListener: public BpInterface<IDrmServiceListener>
 {
 
 public:
-	BpDrmServiceListener(const sp<IBinder>& impl)
-			: BpInterface<IDrmServiceListener>(impl) {}
+    BpDrmServiceListener(const sp<IBinder>& impl)
+            : BpInterface<IDrmServiceListener>(impl) {}
 
-	virtual status_t notify(const InfoEvent& event);
+    virtual status_t notify(const InfoEvent& event);
 };
 
 /**
@@ -61,11 +62,8 @@ public:
 class BnDrmServiceListener: public BnInterface<IDrmServiceListener>
 {
 public:
-	virtual status_t onTransact(
-					uint32_t code,
-					const Parcel& data,
-					Parcel* reply,
-					uint32_t flags = 0);
+    virtual status_t onTransact(
+            uint32_t code, const Parcel& data, Parcel* reply, uint32_t flags = 0);
 };
 
 };

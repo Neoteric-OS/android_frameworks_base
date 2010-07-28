@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,32 +30,30 @@ namespace android {
 class IDrmIOService : public IInterface
 {
 public:
-	enum {
-		WRITE_TO_FILE = IBinder::FIRST_CALL_TRANSACTION,
-		READ_FROM_FILE
-	};
+    enum {
+        WRITE_TO_FILE = IBinder::FIRST_CALL_TRANSACTION,
+        READ_FROM_FILE
+    };
 
 public:
-	DECLARE_META_INTERFACE(DrmIOService);
+    DECLARE_META_INTERFACE(DrmIOService);
 
 public:
-	/**
-	 * Writes the data into the file path provided
-	 *
-	 * @param[in] filePath Path of the file
-	 * @param[in] dataBuffer Data to write 
-	 */
-	virtual void writeToFile(
-					const String8& filePath,
-					const String8& dataBuffer) = 0;
+    /**
+     * Writes the data into the file path provided
+     *
+     * @param[in] filePath Path of the file
+     * @param[in] dataBuffer Data to write 
+     */
+    virtual void writeToFile(const String8& filePath, const String8& dataBuffer) = 0;
 
-	/**
-	 * Reads the data from the file path provided
-	 *
-	 * @param[in] filePath Path of the file
-	 * @return Data read from the file
-	 */
-	virtual String8 readFromFile(const String8& filePath) = 0;
+    /**
+     * Reads the data from the file path provided
+     *
+     * @param[in] filePath Path of the file
+     * @return Data read from the file
+     */
+    virtual String8 readFromFile(const String8& filePath) = 0;
 };
 
 /**
@@ -64,14 +63,12 @@ class BpDrmIOService: public BpInterface<IDrmIOService>
 {
 
 public:
-	BpDrmIOService(const sp<IBinder>& impl)
-			: BpInterface<IDrmIOService>(impl) {}
+    BpDrmIOService(const sp<IBinder>& impl)
+            : BpInterface<IDrmIOService>(impl) {}
 
-	virtual void writeToFile(
-					const String8& filePath,
-					const String8& dataBuffer);
+    virtual void writeToFile(const String8& filePath, const String8& dataBuffer);
 
-	virtual String8 readFromFile(const String8& filePath);
+    virtual String8 readFromFile(const String8& filePath);
 };
 
 /**
@@ -80,11 +77,8 @@ public:
 class BnDrmIOService: public BnInterface<IDrmIOService>
 {
 public:
-	virtual status_t onTransact(
-					uint32_t code,
-					const Parcel& data,
-					Parcel* reply,
-					uint32_t flags = 0);
+    virtual status_t onTransact(
+            uint32_t code, const Parcel& data, Parcel* reply, uint32_t flags = 0);
 };
 
 };

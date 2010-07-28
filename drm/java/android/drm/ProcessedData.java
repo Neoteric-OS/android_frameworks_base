@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,59 +25,59 @@ package android.drm;
  * of rights information. 
  */
 public class ProcessedData {
-	
-	private byte[] mData;
-	private String mAccountId = "_NO_USER";
-	private String mSubscriptionId = "";
+    private byte[] mData;
+    private String mAccountId = "_NO_USER";
+    private String mSubscriptionId = "";
 
-	/**
-	 * constructor to create ProcessedData object with given parameters
-	 *
-	 * @param data Rights data
-	 * @param accountId Account Id of the user
-	 */
-	/* package */ ProcessedData(byte[] data, String accountId) {
-		mData = data;
-		mAccountId = accountId;
-	}
+    /**
+     * constructor to create ProcessedData object with given parameters
+     *
+     * @param data Rights data
+     * @param accountId Account Id of the user
+     */
+    /* package */ ProcessedData(byte[] data, String accountId) {
+        mData = data;
+        mAccountId = accountId;
+    }
 
-	/**
-	 * constructor to create ProcessedData object with given parameters
-	 *
-	 * @param data Rights data
-	 * @param accountId Account Id of the user
-	 * @param subscriptionId Subscription Id of the user
-	 */
-	/* package */ ProcessedData(byte[] data, String accountId, String subscriptionId) {
-		mData = data;
-		mAccountId = accountId;
-		mSubscriptionId = subscriptionId;
-	}
+    /**
+     * constructor to create ProcessedData object with given parameters
+     *
+     * @param data Rights data
+     * @param accountId Account Id of the user
+     * @param subscriptionId Subscription Id of the user
+     */
+    /* package */ ProcessedData(byte[] data, String accountId, String subscriptionId) {
+        mData = data;
+        mAccountId = accountId;
+        mSubscriptionId = subscriptionId;
+    }
 
-	/**
-	 * Returns the processed data as a result.
-	 *
-	 * @return Rights data associated
-	 */
-	public byte[] getData() {
-		return mData;
-	}
+    /**
+     * Returns the processed data as a result.
+     *
+     * @return Rights data associated
+     */
+    public byte[] getData() {
+        return mData;
+    }
 
-	/**
-	 * Returns the account-id associated with this object
-	 *
-	 * @return Account Id associated
-	 */
-	public String getAccountId() {
-		return mAccountId;
-	}
+    /**
+     * Returns the account-id associated with this object
+     *
+     * @return Account Id associated
+     */
+    public String getAccountId() {
+        return mAccountId;
+    }
 
-	/**
-	 * Returns the subscription-id associated with this object
-	 *
-	 * @return Subscription Id associated
-	 */
-	public String getSubscriptionId() {
-		return mSubscriptionId;
-	}
+    /**
+     * Returns the subscription-id associated with this object
+     *
+     * @return Subscription Id associated
+     */
+    public String getSubscriptionId() {
+        return mSubscriptionId;
+    }
 }
+

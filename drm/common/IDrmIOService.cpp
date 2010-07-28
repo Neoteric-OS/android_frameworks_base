@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,56 +29,54 @@
 using namespace android;
 
 void BpDrmIOService::writeToFile(
-					const String8& filePath,
-					const String8& dataBuffer) {
+                    const String8& filePath,
+                    const String8& dataBuffer) {
 
-	Parcel data, reply;
+    Parcel data, reply;
 
-	data.writeInterfaceToken(IDrmIOService::getInterfaceDescriptor());
-	data.writeString8(filePath);
-	data.writeString8(dataBuffer);
+    data.writeInterfaceToken(IDrmIOService::getInterfaceDescriptor());
+    data.writeString8(filePath);
+    data.writeString8(dataBuffer);
 
-	remote()->transact(WRITE_TO_FILE, data, &reply);
+    remote()->transact(WRITE_TO_FILE, data, &reply);
 }
 
 String8 BpDrmIOService::readFromFile(const String8& filePath) {
 
-	Parcel data, reply;
+    Parcel data, reply;
 
-	data.writeInterfaceToken(IDrmIOService::getInterfaceDescriptor());
-	data.writeString8(filePath);
+    data.writeInterfaceToken(IDrmIOService::getInterfaceDescriptor());
+    data.writeString8(filePath);
 
-	remote()->transact(READ_FROM_FILE, data, &reply);
-	return reply.readString8();
+    remote()->transact(READ_FROM_FILE, data, &reply);
+    return reply.readString8();
 }
 
-IMPLEMENT_META_INTERFACE(DrmIOService, "sony.drm.IDrmIOService");
+IMPLEMENT_META_INTERFACE(DrmIOService, "drm.IDrmIOService");
 
 status_t BnDrmIOService::onTransact(
-						uint32_t code,
-						const Parcel& data,
-						Parcel* reply,
-						uint32_t flags) {
+    uint32_t code, const Parcel& data, Parcel* reply, uint32_t flags) {
 
-	 switch (code) {
-        case WRITE_TO_FILE: 
-		{
-			CHECK_INTERFACE(IDrmIOService, data, reply);
-		
-			writeToFile(data.readString8(), data.readString8());
-            return DRM_NO_ERROR;
-        }
+    switch (code) {
+    case WRITE_TO_FILE:
+    {
+        CHECK_INTERFACE(IDrmIOService, data, reply);
 
-        case READ_FROM_FILE: 
-		{
-			CHECK_INTERFACE(IDrmIOService, data, reply);
-		
-			String8 dataBuffer = readFromFile(data.readString8());
-			reply->writeString8(dataBuffer);
-            return DRM_NO_ERROR;
-        }
+        writeToFile(data.readString8(), data.readString8());
+        return DRM_NO_ERROR;
+    }
 
-        default:		
-            return BBinder::onTransact(code, data, reply, flags);
+    case READ_FROM_FILE:
+    {
+        CHECK_INTERFACE(IDrmIOService, data, reply);
+
+        String8 dataBuffer = readFromFile(data.readString8());
+        reply->writeString8(dataBuffer);
+        return DRM_NO_ERROR;
+    }
+
+    default:
+        return BBinder::onTransact(code, data, reply, flags);
     }
 }
+

@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #define LOG_NDEBUG 0
 #define LOG_TAG "DrmPassthruPlugIn"
 #include <utils/Log.h>
@@ -17,17 +34,17 @@ using namespace android;
 
 // This extern "C" is mandatory to be managed by TPlugInManager
 extern "C" IDrmEngine* create() {
-	return new DrmPassthruPlugIn();
+    return new DrmPassthruPlugIn();
 }
 
 // This extern "C" is mandatory to be managed by TPlugInManager
 extern "C" void destroy(IDrmEngine* pPlugIn) {
-	delete pPlugIn;
-	pPlugIn = NULL;
+    delete pPlugIn;
+    pPlugIn = NULL;
 }
 
 DrmPassthruPlugIn::DrmPassthruPlugIn()
-	: DrmEngineBase() {
+    : DrmEngineBase() {
 
 }
 
@@ -36,294 +53,234 @@ DrmPassthruPlugIn::~DrmPassthruPlugIn() {
 }
 
 DrmConstraints* DrmPassthruPlugIn::onGetConstraints(
-					int uniqueId, 
-					const String8* path,
-					const int action) {
-	LOGD("DrmPassthruPlugIn::onGetConstraints From Path: %d", uniqueId);
-	DrmConstraints* drmConstraints = new DrmConstraints();
+        int uniqueId, const String8* path, const int action) {
+    LOGD("DrmPassthruPlugIn::onGetConstraints From Path: %d", uniqueId);
+    DrmConstraints* drmConstraints = new DrmConstraints();
 
-	String8 value("dummy_available_time");
-	char* charValue = NULL;
-	charValue = new char[value.length() + 1];
-	memset(charValue,'\0',value.length() + 1);
-	strncpy(charValue,value.string(),value.length());
+    String8 value("dummy_available_time");
+    char* charValue = NULL;
+    charValue = new char[value.length() + 1];
+    memset(charValue,'\0',value.length() + 1);
+    strncpy(charValue,value.string(),value.length());
 
-	//Just add dummy available time for verification
-	drmConstraints->put(&(DrmConstraints::LICENSE_AVAILABLE_TIME), charValue);
+    //Just add dummy available time for verification
+    drmConstraints->put(&(DrmConstraints::LICENSE_AVAILABLE_TIME), charValue);
 
-	return drmConstraints;
+    return drmConstraints;
 }
 
 DrmInfoStatus* DrmPassthruPlugIn::onProcessDrmInfo(int uniqueId, const DrmInfo* drmInfo) {
-	LOGD("DrmPassthruPlugIn::onProcessDrmInfo - Enter : %d", uniqueId);
-	DrmInfoStatus* drmInfoStatus = NULL;
-	if (NULL != drmInfo) {
-		switch (drmInfo->getInfoType()) {
-			case DrmInfoRequest::TYPE_REGISTRATION_INFO: {
-				const DrmBuffer* emptyBuffer = new DrmBuffer();
-				drmInfoStatus = new DrmInfoStatus(DrmInfoStatus::STATUS_OK, emptyBuffer, drmInfo->getMimeType());
-				break;
-			}
-			case DrmInfoRequest::TYPE_UNREGISTRATION_INFO: {
-				const DrmBuffer* emptyBuffer = new DrmBuffer();
-				drmInfoStatus = new DrmInfoStatus(DrmInfoStatus::STATUS_OK, emptyBuffer, drmInfo->getMimeType());
-				break;
-			}
-			case DrmInfoRequest::TYPE_RIGHTS_ACQUISITION_INFO: {
-				String8 licenseString("dummy_license_string");
-				const int bufferSize = licenseString.size();
-				char* data = NULL;
-				data = new char[bufferSize];
-				memcpy(data, licenseString.string(), bufferSize);
-				const DrmBuffer* buffer = new DrmBuffer(data, bufferSize);
-				drmInfoStatus = new DrmInfoStatus(DrmInfoStatus::STATUS_OK, buffer, drmInfo->getMimeType());
-				break;
-			}
-		}
-	}
-	LOGD("DrmPassthruPlugIn::onProcessDrmInfo - Exit");
-	return drmInfoStatus;
+    LOGD("DrmPassthruPlugIn::onProcessDrmInfo - Enter : %d", uniqueId);
+    DrmInfoStatus* drmInfoStatus = NULL;
+    if (NULL != drmInfo) {
+        switch (drmInfo->getInfoType()) {
+        case DrmInfoRequest::TYPE_REGISTRATION_INFO: {
+            const DrmBuffer* emptyBuffer = new DrmBuffer();
+            drmInfoStatus
+                = new DrmInfoStatus(DrmInfoStatus::STATUS_OK, emptyBuffer, drmInfo->getMimeType());
+            break;
+        }
+        case DrmInfoRequest::TYPE_UNREGISTRATION_INFO: {
+            const DrmBuffer* emptyBuffer = new DrmBuffer();
+            drmInfoStatus
+                = new DrmInfoStatus(DrmInfoStatus::STATUS_OK, emptyBuffer, drmInfo->getMimeType());
+            break;
+        }
+        case DrmInfoRequest::TYPE_RIGHTS_ACQUISITION_INFO: {
+            String8 licenseString("dummy_license_string");
+            const int bufferSize = licenseString.size();
+            char* data = NULL;
+            data = new char[bufferSize];
+            memcpy(data, licenseString.string(), bufferSize);
+            const DrmBuffer* buffer = new DrmBuffer(data, bufferSize);
+            drmInfoStatus
+                = new DrmInfoStatus(DrmInfoStatus::STATUS_OK, buffer, drmInfo->getMimeType());
+            break;
+        }
+        }
+    }
+    LOGD("DrmPassthruPlugIn::onProcessDrmInfo - Exit");
+    return drmInfoStatus;
 }
 
 status_t DrmPassthruPlugIn::onSetOnInfoListener(
-					int uniqueId,
-					const IDrmEngine::OnInfoListener* infoListener) {
-	LOGD("DrmPassthruPlugIn::onSetOnInfoListener : %d", uniqueId);
-	return DRM_NO_ERROR;
+            int uniqueId, const IDrmEngine::OnInfoListener* infoListener) {
+    LOGD("DrmPassthruPlugIn::onSetOnInfoListener : %d", uniqueId);
+    return DRM_NO_ERROR;
 }
 
 status_t DrmPassthruPlugIn::onInitialize(int uniqueId) {
-	LOGD("DrmPassthruPlugIn::onInitialize : %d", uniqueId);
-	return DRM_NO_ERROR;
+    LOGD("DrmPassthruPlugIn::onInitialize : %d", uniqueId);
+    return DRM_NO_ERROR;
 }
 
 status_t DrmPassthruPlugIn::onTerminate(int uniqueId) {
-	LOGD("DrmPassthruPlugIn::onTerminate : %d", uniqueId);
-	return DRM_NO_ERROR;
+    LOGD("DrmPassthruPlugIn::onTerminate : %d", uniqueId);
+    return DRM_NO_ERROR;
 }
 
 DrmSupportInfo* DrmPassthruPlugIn::onGetSupportInfo(int uniqueId) {
-	LOGD("DrmPassthruPlugIn::onGetSupportInfo : %d", uniqueId);
-	DrmSupportInfo* drmSupportInfo = new DrmSupportInfo();
-	// Add mimetype's 
-	drmSupportInfo->addMimeType(String8("application/vnd.passthru.drm"));
-	// Add File Suffixes
-	drmSupportInfo->addFileSuffix(String8(".passthru"));
-	// Add plug-in description
-	drmSupportInfo->setDescription(String8("Passthru plug-in"));
-	return drmSupportInfo;
+    LOGD("DrmPassthruPlugIn::onGetSupportInfo : %d", uniqueId);
+    DrmSupportInfo* drmSupportInfo = new DrmSupportInfo();
+    // Add mimetype's 
+    drmSupportInfo->addMimeType(String8("application/vnd.passthru.drm"));
+    // Add File Suffixes
+    drmSupportInfo->addFileSuffix(String8(".passthru"));
+    // Add plug-in description
+    drmSupportInfo->setDescription(String8("Passthru plug-in"));
+    return drmSupportInfo;
 }
 
-void DrmPassthruPlugIn::onSaveRights(
-					int uniqueId,
-					const DrmRights& drmRights,
-					const String8& rightsPath,
-					const String8& contentPath) {
-	LOGD("DrmPassthruPlugIn::onSaveRights : %d", uniqueId);
+void DrmPassthruPlugIn::onSaveRights(int uniqueId, const DrmRights& drmRights,
+            const String8& rightsPath, const String8& contentPath) {
+    LOGD("DrmPassthruPlugIn::onSaveRights : %d", uniqueId);
 }
 
-DrmInfo* DrmPassthruPlugIn::onAcquireDrmInfo(
-					int uniqueId,
-					const DrmInfoRequest* drmInfoRequest) {
-	LOGD("DrmPassthruPlugIn::onAcquireDrmInfo : %d", uniqueId);
-	DrmInfo* drmInfo = NULL;
+DrmInfo* DrmPassthruPlugIn::onAcquireDrmInfo(int uniqueId, const DrmInfoRequest* drmInfoRequest) {
+    LOGD("DrmPassthruPlugIn::onAcquireDrmInfo : %d", uniqueId);
+    DrmInfo* drmInfo = NULL;
 
-	if (NULL != drmInfoRequest) {
-		String8 dataString("dummy_acquistion_string");
-		int length = dataString.length();
-		char* data = NULL;
-		data = new char[length];
-		memcpy(data, dataString.string(), length);		
-		drmInfo = new DrmInfo(drmInfoRequest->getInfoType(), DrmBuffer(data, length), drmInfoRequest->getMimeType());
-	}
-	return drmInfo;
+    if (NULL != drmInfoRequest) {
+        String8 dataString("dummy_acquistion_string");
+        int length = dataString.length();
+        char* data = NULL;
+        data = new char[length];
+        memcpy(data, dataString.string(), length);
+        drmInfo = new DrmInfo(drmInfoRequest->getInfoType(),
+            DrmBuffer(data, length), drmInfoRequest->getMimeType());
+    }
+    return drmInfo;
 }
 
-bool DrmPassthruPlugIn::onCanHandle(
-					int uniqueId,
-					const String8& path) {
-	LOGD("DrmPassthruPlugIn::canHandle: %s ", path.string());
-	String8 extension = path.getPathExtension();
-	extension.toLower();
-	return (String8(".passthru") == extension);
+bool DrmPassthruPlugIn::onCanHandle(int uniqueId, const String8& path) {
+    LOGD("DrmPassthruPlugIn::canHandle: %s ", path.string());
+    String8 extension = path.getPathExtension();
+    extension.toLower();
+    return (String8(".passthru") == extension);
 }
 
-String8 DrmPassthruPlugIn::onGetOriginalMimeType(
-					int uniqueId,
-					const String8& path) {
-	LOGD("DrmPassthruPlugIn::onGetOriginalMimeType() : %d", uniqueId);
-	return String8("video/passthru");
+String8 DrmPassthruPlugIn::onGetOriginalMimeType(int uniqueId, const String8& path) {
+    LOGD("DrmPassthruPlugIn::onGetOriginalMimeType() : %d", uniqueId);
+    return String8("video/passthru");
 }
 
 int DrmPassthruPlugIn::onGetDrmObjectType(
-					int uniqueId,
-					const String8& path,
-					const String8& mimeType) {
-	LOGD("DrmPassthruPlugIn::onGetDrmObjectType() : %d", uniqueId);
-	return DrmObjectType::UNKNOWN;
+            int uniqueId, const String8& path, const String8& mimeType) {
+    LOGD("DrmPassthruPlugIn::onGetDrmObjectType() : %d", uniqueId);
+    return DrmObjectType::UNKNOWN;
 }
 
-int DrmPassthruPlugIn::onCheckRightsStatus(
-					int uniqueId,
-					const String8& path,
-					int action) {
-
-	LOGD("DrmPassthruPlugIn::onCheckRightsStatus() : %d", uniqueId);
-	int rightsStatus = RightsStatus::RIGHTS_VALID;
-	return rightsStatus;
+int DrmPassthruPlugIn::onCheckRightsStatus(int uniqueId, const String8& path, int action) {
+    LOGD("DrmPassthruPlugIn::onCheckRightsStatus() : %d", uniqueId);
+    int rightsStatus = RightsStatus::RIGHTS_VALID;
+    return rightsStatus;
 }
 
-void DrmPassthruPlugIn::onConsumeRights(
-					int uniqueId,
-					DecryptHandle* decryptHandle,
-					int action,
-					bool reserve) {
-
-	LOGD("DrmPassthruPlugIn::onConsumeRights() : %d", uniqueId);
+void DrmPassthruPlugIn::onConsumeRights(int uniqueId, DecryptHandle* decryptHandle, 
+            int action, bool reserve) {
+    LOGD("DrmPassthruPlugIn::onConsumeRights() : %d", uniqueId);
 }
 
-void DrmPassthruPlugIn::onSetPlaybackStatus(
-					int uniqueId,
-					DecryptHandle* decryptHandle,
-					int playbackStatus,
-					int position) {
-
-	LOGD("DrmPassthruPlugIn::onSetPlaybackStatus() : %d", uniqueId);
+void DrmPassthruPlugIn::onSetPlaybackStatus(int uniqueId, DecryptHandle* decryptHandle,
+            int playbackStatus, int position) {
+    LOGD("DrmPassthruPlugIn::onSetPlaybackStatus() : %d", uniqueId);
 }
 
-bool DrmPassthruPlugIn::onValidateAction(
-					int uniqueId,
-					const String8& path,
-					int action,
-					const ActionDescription& description) {
-	LOGD("DrmPassthruPlugIn::onValidateAction() : %d", uniqueId);
-	return true;
+bool DrmPassthruPlugIn::onValidateAction(int uniqueId, const String8& path,
+            int action, const ActionDescription& description) {
+    LOGD("DrmPassthruPlugIn::onValidateAction() : %d", uniqueId);
+    return true;
 }
 
-void DrmPassthruPlugIn::onRemoveRights(
-					int uniqueId,
-					const String8& path) {
-	LOGD("DrmPassthruPlugIn::onRemoveRights() : %d", uniqueId);
+void DrmPassthruPlugIn::onRemoveRights(int uniqueId, const String8& path) {
+    LOGD("DrmPassthruPlugIn::onRemoveRights() : %d", uniqueId);
 }
-	
+
 void DrmPassthruPlugIn::onRemoveAllRights(int uniqueId) {
-	LOGD("DrmPassthruPlugIn::onRemoveAllRights() : %d", uniqueId);
+    LOGD("DrmPassthruPlugIn::onRemoveAllRights() : %d", uniqueId);
 }
 
-void DrmPassthruPlugIn::onOpenConvertSession(
-					int uniqueId,
-					int convertId) {
-
-	LOGD("DrmPassthruPlugIn::onOpenConvertSession() : %d", uniqueId);
+void DrmPassthruPlugIn::onOpenConvertSession(int uniqueId, int convertId) {
+    LOGD("DrmPassthruPlugIn::onOpenConvertSession() : %d", uniqueId);
 }
 
 DrmConvertedStatus* DrmPassthruPlugIn::onConvertData(
-					int uniqueId,
-					int convertId,
-					const DrmBuffer* inputData) {
+            int uniqueId, int convertId, const DrmBuffer* inputData) {
+    LOGD("DrmPassthruPlugIn::onConvertData() : %d", uniqueId);
+    DrmBuffer* convertedData = NULL;
 
-	LOGD("DrmPassthruPlugIn::onConvertData() : %d", uniqueId);
-	DrmBuffer* convertedData = NULL;
-
-	if (NULL != inputData && 0 < inputData->length) {
-		int length = inputData->length;
-		char* data = NULL;
-		data = new char[length];
-		convertedData = new DrmBuffer(data, length);
-		memcpy(convertedData->data, inputData->data, length);
-	}
-	return new DrmConvertedStatus(DrmConvertedStatus::STATUS_OK, convertedData, 0 /*offset*/);
+    if (NULL != inputData && 0 < inputData->length) {
+        int length = inputData->length;
+        char* data = NULL;
+        data = new char[length];
+        convertedData = new DrmBuffer(data, length);
+        memcpy(convertedData->data, inputData->data, length);
+    }
+    return new DrmConvertedStatus(DrmConvertedStatus::STATUS_OK, convertedData, 0 /*offset*/);
 }
 
-DrmConvertedStatus* DrmPassthruPlugIn::onCloseConvertSession(
-					int uniqueId,
-					int convertId) {
-
-	LOGD("DrmPassthruPlugIn::onCloseConvertSession() : %d", uniqueId);
-	return new DrmConvertedStatus(DrmConvertedStatus::STATUS_OK, NULL, 0 /*offset*/);
+DrmConvertedStatus* DrmPassthruPlugIn::onCloseConvertSession(int uniqueId, int convertId) {
+    LOGD("DrmPassthruPlugIn::onCloseConvertSession() : %d", uniqueId);
+    return new DrmConvertedStatus(DrmConvertedStatus::STATUS_OK, NULL, 0 /*offset*/);
 }
 
 DecryptHandle* DrmPassthruPlugIn::onOpenDecryptSession(
-					int uniqueId,
-					int fd,
-					int offset,
-					int length) {
-
-	LOGD("DrmPassthruPlugIn::onOpenDecryptSession() : %d", uniqueId);
-	return openDecryptSessionImpl();
+            int uniqueId, int fd, int offset, int length) {
+    LOGD("DrmPassthruPlugIn::onOpenDecryptSession() : %d", uniqueId);
+    return openDecryptSessionImpl();
 }
 
-void DrmPassthruPlugIn::onCloseDecryptSession(
-					int uniqueId,
-					DecryptHandle* decryptHandle) {
-
-	LOGD("DrmPassthruPlugIn::onCloseDecryptSession() : %d", uniqueId);
-	if (NULL != decryptHandle) {
-		if (NULL != decryptHandle->decryptInfo) {
-			delete decryptHandle->decryptInfo; decryptHandle->decryptInfo = NULL;
-		}
-		delete decryptHandle; decryptHandle = NULL;
-	}
+void DrmPassthruPlugIn::onCloseDecryptSession(int uniqueId, DecryptHandle* decryptHandle) {
+    LOGD("DrmPassthruPlugIn::onCloseDecryptSession() : %d", uniqueId);
+    if (NULL != decryptHandle) {
+        if (NULL != decryptHandle->decryptInfo) {
+            delete decryptHandle->decryptInfo; decryptHandle->decryptInfo = NULL;
+        }
+        delete decryptHandle; decryptHandle = NULL;
+    }
 }
 
-void DrmPassthruPlugIn::onInitializeDecryptUnit(
-					int uniqueId,
-					DecryptHandle* decryptHandle,
-					int decryptUnitId,
-					const DrmBuffer* headerInfo) {
-
-	LOGD("DrmPassthruPlugIn::onInitializeDecryptUnit() : %d", uniqueId);
+void DrmPassthruPlugIn::onInitializeDecryptUnit(int uniqueId, DecryptHandle* decryptHandle,
+            int decryptUnitId, const DrmBuffer* headerInfo) {
+    LOGD("DrmPassthruPlugIn::onInitializeDecryptUnit() : %d", uniqueId);
 }
 
-status_t DrmPassthruPlugIn::onDecrypt(
-					int uniqueId,
-					DecryptHandle* decryptHandle,
-					int decryptUnitId,
-					const DrmBuffer* encBuffer,
-					DrmBuffer** decBuffer) {
-
-	LOGD("DrmPassthruPlugIn::onDecrypt() : %d", uniqueId);
-	/**
-	 * As a workaround implementation passthru would copy the given
-	 * encrypted buffer as it is to decrypted buffer. Note, decBuffer 
-	 * memory has to be allocated by the caller.
-	 */
-	if (NULL != (*decBuffer) && 0 < (*decBuffer)->length) {
-		memcpy((*decBuffer)->data, encBuffer->data, encBuffer->length);
-		(*decBuffer)->length = encBuffer->length;
-	}
-	return DRM_NO_ERROR;
+status_t DrmPassthruPlugIn::onDecrypt(int uniqueId, DecryptHandle* decryptHandle,
+            int decryptUnitId, const DrmBuffer* encBuffer, DrmBuffer** decBuffer) {
+    LOGD("DrmPassthruPlugIn::onDecrypt() : %d", uniqueId);
+    /**
+     * As a workaround implementation passthru would copy the given
+     * encrypted buffer as it is to decrypted buffer. Note, decBuffer 
+     * memory has to be allocated by the caller.
+     */
+    if (NULL != (*decBuffer) && 0 < (*decBuffer)->length) {
+        memcpy((*decBuffer)->data, encBuffer->data, encBuffer->length);
+        (*decBuffer)->length = encBuffer->length;
+    }
+    return DRM_NO_ERROR;
 }
 
 void DrmPassthruPlugIn::onFinalizeDecryptUnit(
-					int uniqueId,
-					DecryptHandle* decryptHandle,
-					int decryptUnitId) {
-
-	LOGD("DrmPassthruPlugIn::onFinalizeDecryptUnit() : %d", uniqueId);
+            int uniqueId, DecryptHandle* decryptHandle, int decryptUnitId) {
+    LOGD("DrmPassthruPlugIn::onFinalizeDecryptUnit() : %d", uniqueId);
 }
 
-ssize_t DrmPassthruPlugIn::onPread(
-					int uniqueId,
-					DecryptHandle* decryptHandle,
-					void* buffer,
-					ssize_t numBytes,
-					off_t offset) {
-
-	LOGD("DrmPassthruPlugIn::onPread() : %d", uniqueId);
-	return 0;
+ssize_t DrmPassthruPlugIn::onPread(int uniqueId, DecryptHandle* decryptHandle,
+            void* buffer, ssize_t numBytes, off_t offset) {
+    LOGD("DrmPassthruPlugIn::onPread() : %d", uniqueId);
+    return 0;
 }
 
 DecryptHandle* DrmPassthruPlugIn::openDecryptSessionImpl() {
-	DecryptHandle* decryptHandle = NULL;
+    DecryptHandle* decryptHandle = NULL;
 
 #ifdef ENABLE_PASSTHRU_DECRYPTION
-	decryptHandle = new DecryptHandle();
-	decryptHandle->mimeType = String8("video/passthru");
-	decryptHandle->decryptApiType = DecryptApiType::ELEMENTARY_STREAM_BASED;
-	decryptHandle->status = DRM_NO_ERROR;
-	decryptHandle->decryptInfo = NULL;
+    decryptHandle = new DecryptHandle();
+    decryptHandle->mimeType = String8("video/passthru");
+    decryptHandle->decryptApiType = DecryptApiType::ELEMENTARY_STREAM_BASED;
+    decryptHandle->status = DRM_NO_ERROR;
+    decryptHandle->decryptInfo = NULL;
 #endif
 
-	return decryptHandle;
+    return decryptHandle;
 }

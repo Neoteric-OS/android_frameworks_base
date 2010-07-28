@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,32 +34,32 @@ namespace android {
 class DrmConvertedStatus {
 
 public:
-	// Should be in sync with DrmConvertedStatus.java
-	static const int STATUS_OK = 1;
-	static const int STATUS_INPUTDATA_ERROR = 2;
-	static const int STATUS_ERROR = 3;
+    // Should be in sync with DrmConvertedStatus.java
+    static const int STATUS_OK = 1;
+    static const int STATUS_INPUTDATA_ERROR = 2;
+    static const int STATUS_ERROR = 3;
 
 public:
-	/**
-	 * Constructor for DrmConvertedStatus
-	 *
-	 * @param[in] _statusCode Status of the conversion
-	 * @param[in] _convertedData Converted data/checksum data
-	 * @param[in] _offset Offset value
-	 */
-	DrmConvertedStatus(int _statusCode, const DrmBuffer* _convertedData, int _offset);
+    /**
+     * Constructor for DrmConvertedStatus
+     *
+     * @param[in] _statusCode Status of the conversion
+     * @param[in] _convertedData Converted data/checksum data
+     * @param[in] _offset Offset value
+     */
+    DrmConvertedStatus(int _statusCode, const DrmBuffer* _convertedData, int _offset);
 
-	/**
-	 * Destructor for DrmConvertedStatus
-	 */
-	virtual ~DrmConvertedStatus() {
+    /**
+     * Destructor for DrmConvertedStatus
+     */
+    virtual ~DrmConvertedStatus() {
 
-	}
+    }
 
-public:	
-	int statusCode;
-	const DrmBuffer* convertedData;
-	int offset;
+public:
+    int statusCode;
+    const DrmBuffer* convertedData;
+    int offset;
 };
 
 };

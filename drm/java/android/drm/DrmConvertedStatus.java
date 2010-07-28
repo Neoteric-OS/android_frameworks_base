@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,25 +27,26 @@ package android.drm;
  * would be returned.
  */
 public class DrmConvertedStatus {
-	// Should be in sync with DrmConvertedStatus.cpp
-	public static final int STATUS_OK = 1;
-	public static final int STATUS_INPUTDATA_ERROR = 2;
-	public static final int STATUS_ERROR = 3;
+    // Should be in sync with DrmConvertedStatus.cpp
+    public static final int STATUS_OK = 1;
+    public static final int STATUS_INPUTDATA_ERROR = 2;
+    public static final int STATUS_ERROR = 3;
 
-	public int statusCode;
-	public byte[] convertedData;
-	public int offset;
+    public int statusCode;
+    public byte[] convertedData;
+    public int offset;
 
-	/**
-	 * constructor to create DrmConvertedStatus object with given parameters
-	 *
-	 * @param _statusCode Status of the conversion
-	 * @param _convertedData Converted data/checksum data
-	 * @param _offset Offset value
-	 */
-	public DrmConvertedStatus(int _statusCode, byte[] _convertedData, int _offset) {
-		statusCode = _statusCode;
-		convertedData = _convertedData;
-		offset = _offset;
-	}
+    /**
+     * constructor to create DrmConvertedStatus object with given parameters
+     *
+     * @param _statusCode Status of the conversion
+     * @param _convertedData Converted data/checksum data
+     * @param _offset Offset value
+     */
+    public DrmConvertedStatus(int _statusCode, byte[] _convertedData, int _offset) {
+        statusCode = _statusCode;
+        convertedData = _convertedData;
+        offset = _offset;
+    }
 }
+

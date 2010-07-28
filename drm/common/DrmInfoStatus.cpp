@@ -1,5 +1,6 @@
 /*
- * Copyright 2009, 2010 Sony Corporation
+ * Copyright (C) 2010 The Android Open Source Project
+ * Copyright 2009 Sony Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +19,11 @@
 
 using namespace android;
 
-DrmInfoStatus::DrmInfoStatus(int _statusCode, const DrmBuffer* _drmBuffer, const String8& _mimeType) :
-	statusCode(_statusCode),
-	drmBuffer(_drmBuffer),
-	mimeType(_mimeType) {
+DrmInfoStatus::DrmInfoStatus(
+    int _statusCode, const DrmBuffer* _drmBuffer, const String8& _mimeType) :
+    statusCode(_statusCode),
+    drmBuffer(_drmBuffer),
+    mimeType(_mimeType) {
 
 }
+
