@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA3n///zU\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaDataConnectionTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-07-29T20:17:32Z",
+      "side": 1,
+      "message": "Since this is \"just an optimization\" and does change the contract lets not optimize unless this can be shown to save power or have some other direct benefit.",
+      "parentUuid": "AAAA0n///U4\u003d",
+      "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///Z0\u003d",
         "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaServiceStateTracker.java",
         "patchSetId": 1
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "This code is not implementing the CDMA standard.  It is implementing one half of the RIL protocol and your change is modifying that protocol.  If somebody implemented a CDMA modem assuming they would get the cleanup before the power off this change could break their modem.  Somebody closer to the RIL protocol needs to decide if this is ok - I\u0027m just pointing out that it is a change to the contract.",
       "parentUuid": "AAAA0n///Zo\u003d",
+      "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA3n///zE\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-07-29T20:17:32Z",
+      "side": 1,
+      "message": "Not only is the contract with the RIL changed but moving the dcTracker.sendMessage inside the else clause means that there is a change in the contract with the dcTracker too.\n\nWhy was that done?",
+      "parentUuid": "AAAA0n///U0\u003d",
       "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
