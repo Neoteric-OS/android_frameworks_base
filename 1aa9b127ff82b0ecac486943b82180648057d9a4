@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA33///uE\u003d",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2010-07-31T01:09:05Z",
+      "side": 1,
+      "message": "VIRTUAL_CALL",
+      "revId": "1aa9b127ff82b0ecac486943b82180648057d9a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
