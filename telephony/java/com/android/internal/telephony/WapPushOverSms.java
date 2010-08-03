@@ -137,7 +137,8 @@ public class WapPushOverSms {
                     break;
                 default:
                     if (Config.LOGD) {
-                        Log.w(LOG_TAG,"Received PDU. Unsupported Content-Type = " + binaryContentType);
+                        Log.w(LOG_TAG, "Received PDU. Unsupported Content-Type = "
+                                + binaryContentType);
                     }
                 return Intents.RESULT_SMS_HANDLED;
             }
@@ -159,8 +160,9 @@ public class WapPushOverSms {
             } else if (mimeType.equals(WspTypeDecoder.CONTENT_MIME_TYPE_B_EMN)) {
                 binaryContentType = WspTypeDecoder.CONTENT_TYPE_B_EMN;
             } else {
-                if (Config.LOGD)
+                if (Config.LOGD) {
                     Log.w(LOG_TAG, "Received PDU. Unknown Content-Type = " + mimeType);
+                }
                 return Intents.RESULT_SMS_HANDLED;
             }
         }
