@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA33///Us\u003d",
+        "filename": "core/java/android/hardware/Sensor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-04T22:31:25Z",
+      "side": 1,
+      "message": "see comments for sensors.h -- don\u0027t see the need for this type anymore.",
+      "revId": "1131e8f2c7bef0ab11423454141b8e67c463c40a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///Uo\u003d",
+        "filename": "core/java/android/hardware/SensorEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-04T22:31:25Z",
+      "side": 1,
+      "message": "I would prefer radian/sec.",
+      "revId": "1131e8f2c7bef0ab11423454141b8e67c463c40a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///UM\u003d",
+        "filename": "core/java/android/hardware/SensorEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-04T22:31:25Z",
+      "side": 1,
+      "message": "see sensors.h comment. we should get rid of this.",
+      "revId": "1131e8f2c7bef0ab11423454141b8e67c463c40a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///UI\u003d",
+        "filename": "core/java/android/hardware/SensorManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-04T22:31:25Z",
+      "side": 1,
+      "message": "if we get rid of the rotation_matrix type, this can stay 3 floats.",
+      "revId": "1131e8f2c7bef0ab11423454141b8e67c463c40a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///UE\u003d",
+        "filename": "core/java/android/hardware/SensorManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-04T22:31:25Z",
+      "side": 1,
+      "message": "This method doesn\u0027t follow the convention used in the rest of this file -- the returned values must appear first (see getRotationMatrix for instance): \"anglechange\" should be the first parameter.",
+      "revId": "1131e8f2c7bef0ab11423454141b8e67c463c40a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///Tw\u003d",
+        "filename": "core/java/android/hardware/SensorManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1584,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-04T22:31:25Z",
+      "side": 1,
+      "message": "you need to implement this method without doing any allocations. It\u0027s okay to duplicate code.",
+      "revId": "1131e8f2c7bef0ab11423454141b8e67c463c40a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///Ts\u003d",
+        "filename": "core/java/android/hardware/SensorManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1592,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-04T22:31:25Z",
+      "side": 1,
+      "message": "no temporary allocation.",
+      "revId": "1131e8f2c7bef0ab11423454141b8e67c463c40a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///To\u003d",
+        "filename": "core/java/android/hardware/SensorManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-04T22:31:25Z",
+      "side": 1,
+      "message": "no temporary allocation",
+      "revId": "1131e8f2c7bef0ab11423454141b8e67c463c40a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///UA\u003d",
+        "filename": "core/java/android/hardware/SensorManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1628,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-04T22:31:25Z",
+      "side": 1,
+      "message": "the code here seems to use only 5 values of rotDiff, why is rotDiff a 3x3 matrix then? Instead, calculate only the needed values, and do not use a temporary array.",
+      "revId": "1131e8f2c7bef0ab11423454141b8e67c463c40a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4H////8\u003d",
+        "filename": "core/java/android/hardware/SensorManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1645,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-04T22:31:25Z",
+      "side": 1,
+      "message": "convention: the returned values must appear first (R must be the first parameter)",
+      "revId": "1131e8f2c7bef0ab11423454141b8e67c463c40a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA33///T4\u003d",
+        "filename": "core/java/android/hardware/SensorManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-04T22:31:25Z",
+      "side": 1,
+      "message": "get rid of temporary memory allocation, okay to inline the code for getQuaternionFromVector here.",
+      "revId": "1131e8f2c7bef0ab11423454141b8e67c463c40a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4H////4\u003d",
+        "filename": "core/java/android/hardware/SensorManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1650,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-04T22:31:25Z",
+      "side": 1,
+      "message": "looks like a lot of expressions are recomputed multiple times. Please do each computation once and cache into local variables.",
+      "revId": "1131e8f2c7bef0ab11423454141b8e67c463c40a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4H////0\u003d",
+        "filename": "core/java/android/hardware/SensorManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1668,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-04T22:31:25Z",
+      "side": 1,
+      "message": "convention: Q should be the first parameter.",
+      "revId": "1131e8f2c7bef0ab11423454141b8e67c463c40a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4H////w\u003d",
+        "filename": "core/java/android/hardware/SensorManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-04T22:31:25Z",
+      "side": 1,
+      "message": "should we make sure that the argument of sqrt is not \u003c\u003d 0?",
+      "revId": "1131e8f2c7bef0ab11423454141b8e67c463c40a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
