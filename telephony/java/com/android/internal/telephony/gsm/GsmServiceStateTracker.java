@@ -38,6 +38,7 @@ import android.os.SystemProperties;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.provider.Telephony.Intents;
+import android.telephony.RadioTechnology;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.gsm.GsmCellLocation;
@@ -79,11 +80,8 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
     private int gprsState = ServiceState.STATE_OUT_OF_SERVICE;
     private int newGPRSState = ServiceState.STATE_OUT_OF_SERVICE;
 
-    /**
-     *  Values correspond to ServiceStateTracker.DATA_ACCESS_ definitions.
-     */
-    private int networkType = 0;
-    private int newNetworkType = 0;
+    private RadioTechnology networkType = RadioTechnology.RADIO_TECH_UNKNOWN;
+    private RadioTechnology newNetworkType = RadioTechnology.RADIO_TECH_UNKNOWN;
 
     /**
      * GSM roaming status solely based on TS 27.007 7.2 CREG. Only used by
@@ -698,8 +696,8 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
                     }
                     newGPRSState = regCodeToServiceState(regState);
                     mDataRoaming = regCodeIsRoaming(regState);
-                    newNetworkType = type;
-                    newSS.setRadioTechnology(type);
+                    newNetworkType = RadioTechnology.getRadioTechFromInt(type);
+                    newSS.setRadioTechnology(newNetworkType);
                 break;
 
                 case EVENT_POLL_STATE_OPERATOR:
@@ -819,44 +817,13 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
         }
     }
 
-    private static String networkTypeToString(int type) {
-        //Network Type from GPRS_REGISTRATION_STATE
-        String ret = "unknown";
-
-        switch (type) {
-            case DATA_ACCESS_GPRS:
-                ret = "GPRS";
-                break;
-            case DATA_ACCESS_EDGE:
-                ret = "EDGE";
-                break;
-            case DATA_ACCESS_UMTS:
-                ret = "UMTS";
-                break;
-            case DATA_ACCESS_HSDPA:
-                ret = "HSDPA";
-                break;
-            case DATA_ACCESS_HSUPA:
-                ret = "HSUPA";
-                break;
-            case DATA_ACCESS_HSPA:
-                ret = "HSPA";
-                break;
-            default:
-                Log.e(LOG_TAG, "Wrong network type: " + Integer.toString(type));
-                break;
-        }
-
-        return ret;
-    }
-
     private void pollStateDone() {
         if (DBG) {
             Log.d(LOG_TAG, "Poll ServiceState done: " +
                 " oldSS=[" + ss + "] newSS=[" + newSS +
                 "] oldGprs=" + gprsState + " newGprs=" + newGPRSState +
-                " oldType=" + networkTypeToString(networkType) +
-                " newType=" + networkTypeToString(newNetworkType));
+                " oldType=" + networkType.toString()+
+                " newType=" + newNetworkType.toString());
         }
 
         boolean hasRegistered =
@@ -909,10 +876,11 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
             int cid = -1;
             GsmCellLocation loc = ((GsmCellLocation)phone.getCellLocation());
             if (loc != null) cid = loc.getCid();
-            EventLog.writeEvent(EventLogTags.GSM_RAT_SWITCHED, cid, networkType, newNetworkType);
+            EventLog.writeEvent(EventLogTags.GSM_RAT_SWITCHED, cid,
+                    networkType.toString(), newNetworkType.toString());
             Log.d(LOG_TAG,
-                    "RAT switched " + networkTypeToString(networkType) + " -> "
-                    + networkTypeToString(newNetworkType) + " at cell " + cid);
+                    "RAT switched " + networkType.toString() + " -> "
+                    + newNetworkType.toString() + " at cell " + cid);
         }
 
         gprsState = newGPRSState;
@@ -922,7 +890,7 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
 
         if (hasNetworkTypeChanged) {
             phone.setSystemProperty(TelephonyProperties.PROPERTY_DATA_NETWORK_TYPE,
-                    networkTypeToString(networkType));
+                    networkType.toString());
         }
 
         if (hasRegistered) {
@@ -1334,7 +1302,9 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
      * that could support voice and data simultaneously.
      */
     boolean isConcurrentVoiceAndData() {
-        return (networkType >= DATA_ACCESS_UMTS);
+        return (networkType.isGsm() &&
+                networkType != RadioTechnology.RADIO_TECH_EDGE &&
+                networkType != RadioTechnology.RADIO_TECH_GPRS);
     }
 
     /**
