@@ -47,6 +47,8 @@ import com.android.internal.telephony.DataConnectionTracker;
 import com.android.internal.telephony.EventLogTags;
 import com.android.internal.telephony.IccCard;
 import com.android.internal.telephony.MccTable;
+import com.android.internal.telephony.Phone;
+import com.android.internal.telephony.Phone.RadioTechnology;
 import com.android.internal.telephony.ServiceStateTracker;
 import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.telephony.TelephonyProperties;
@@ -79,8 +81,8 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
     /**
      *  Values correspond to ServiceStateTracker.DATA_ACCESS_ definitions.
      */
-    private int networkType = 0;
-    private int newNetworkType = 0;
+    private Phone.RadioTechnology networkType = Phone.RadioTechnology.RADIO_TECH_UNKNOWN;
+    private Phone.RadioTechnology newNetworkType = Phone.RadioTechnology.RADIO_TECH_UNKNOWN;
 
     private boolean mCdmaRoaming = false;
     private int mRoamingIndicator;
@@ -665,7 +667,8 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
                 states = (String[])ar.result;
 
                 int registrationState = 4;     //[0] registrationState
-                int radioTechnology = -1;      //[3] radioTechnology
+                Phone.RadioTechnology radioTechnology = Phone.RadioTechnology.RADIO_TECH_UNKNOWN;
+                                               //[3] radioTechnology
                 int baseStationId = -1;        //[4] baseStationId
                 //[5] baseStationLatitude
                 int baseStationLatitude = CdmaCellLocation.INVALID_LAT_LONG;
@@ -685,7 +688,8 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
                             registrationState = Integer.parseInt(states[0]);
                         }
                         if (states[3] != null) {
-                            radioTechnology = Integer.parseInt(states[3]);
+                            radioTechnology = Phone.RadioTechnology.getRadioTechFromInt(
+                                    Integer.parseInt(states[3]));
                         }
                         if (states[4] != null) {
                             baseStationId = Integer.parseInt(states[4]);
@@ -927,36 +931,6 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
         }
     }
 
-    private static String networkTypeToString(int type) {
-        String ret = "unknown";
-
-        switch (type) {
-        case DATA_ACCESS_CDMA_IS95A:
-        case DATA_ACCESS_CDMA_IS95B:
-            ret = "CDMA";
-            break;
-        case DATA_ACCESS_CDMA_1xRTT:
-            ret = "CDMA - 1xRTT";
-            break;
-        case DATA_ACCESS_CDMA_EvDo_0:
-            ret = "CDMA - EvDo rev. 0";
-            break;
-        case DATA_ACCESS_CDMA_EvDo_A:
-            ret = "CDMA - EvDo rev. A";
-            break;
-        case DATA_ACCESS_CDMA_EvDo_B:
-            ret = "CDMA - EvDo rev. B";
-            break;
-        default:
-            if (DBG) {
-                Log.e(LOG_TAG, "Wrong network. Can not return a string.");
-            }
-        break;
-        }
-
-        return ret;
-    }
-
     private void fixTimeZone(String isoCountryCode) {
         TimeZone zone = null;
         // If the offset is (0, false) and the time zone property
@@ -1051,8 +1025,9 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
         newSS.setStateOutOfService(); // clean slate for next time
 
         if (hasNetworkTypeChanged) {
-            phone.setSystemProperty(TelephonyProperties.PROPERTY_DATA_NETWORK_TYPE,
-                    networkTypeToString(networkType));
+            phone.setSystemProperty(
+                    TelephonyProperties.PROPERTY_DATA_NETWORK_TYPE,
+                    networkType.toString());
         }
 
         if (hasRegistered) {
@@ -1226,27 +1201,10 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
     }
 
 
-    private int radioTechnologyToDataServiceState(int code) {
-        int retVal = ServiceState.STATE_OUT_OF_SERVICE;
-        switch(code) {
-        case 0:
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-            break;
-        case 6: // RADIO_TECHNOLOGY_1xRTT
-        case 7: // RADIO_TECHNOLOGY_EVDO_0
-        case 8: // RADIO_TECHNOLOGY_EVDO_A
-        case 12: // RADIO_TECHNOLOGY_EVDO_B
-            retVal = ServiceState.STATE_IN_SERVICE;
-            break;
-        default:
-            Log.e(LOG_TAG, "Wrong radioTechnology code.");
-        break;
-        }
-        return(retVal);
+    private int radioTechnologyToDataServiceState(Phone.RadioTechnology radioTech) {
+        if (radioTech != null && radioTech.isCdma())
+            return ServiceState.STATE_IN_SERVICE;
+        return ServiceState.STATE_OUT_OF_SERVICE;
     }
 
     /** code is registration state 0-5 from TS 27.007 7.2 */

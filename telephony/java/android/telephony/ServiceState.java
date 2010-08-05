@@ -16,6 +16,9 @@
 
 package android.telephony;
 
+import com.android.internal.telephony.Phone;
+import com.android.internal.telephony.Phone.RadioTechnology;
+
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -61,37 +64,6 @@ public class ServiceState implements Parcelable {
      */
     public static final int STATE_POWER_OFF = 3;
 
-
-    /**
-     * Available radio technologies for GSM, UMTS and CDMA.
-     */
-    /** @hide */
-    public static final int RADIO_TECHNOLOGY_UNKNOWN = 0;
-    /** @hide */
-    public static final int RADIO_TECHNOLOGY_GPRS = 1;
-    /** @hide */
-    public static final int RADIO_TECHNOLOGY_EDGE = 2;
-    /** @hide */
-    public static final int RADIO_TECHNOLOGY_UMTS = 3;
-    /** @hide */
-    public static final int RADIO_TECHNOLOGY_IS95A = 4;
-    /** @hide */
-    public static final int RADIO_TECHNOLOGY_IS95B = 5;
-    /** @hide */
-    public static final int RADIO_TECHNOLOGY_1xRTT = 6;
-    /** @hide */
-    public static final int RADIO_TECHNOLOGY_EVDO_0 = 7;
-    /** @hide */
-    public static final int RADIO_TECHNOLOGY_EVDO_A = 8;
-    /** @hide */
-    public static final int RADIO_TECHNOLOGY_HSDPA = 9;
-    /** @hide */
-    public static final int RADIO_TECHNOLOGY_HSUPA = 10;
-    /** @hide */
-    public static final int RADIO_TECHNOLOGY_HSPA = 11;
-    /** @hide */
-    public static final int RADIO_TECHNOLOGY_EVDO_B = 12;
-
     /**
      * Available registration states for GSM, UMTS and CDMA.
      */
@@ -118,7 +90,7 @@ public class ServiceState implements Parcelable {
     private boolean mIsEmergencyOnly;
 
     //***** CDMA
-    private int mRadioTechnology;
+    private Phone.RadioTechnology mRadioTechnology = RadioTechnology.RADIO_TECH_UNKNOWN;
     private boolean mCssIndicator;
     private int mNetworkId;
     private int mSystemId;
@@ -187,7 +159,7 @@ public class ServiceState implements Parcelable {
         mOperatorAlphaShort = in.readString();
         mOperatorNumeric = in.readString();
         mIsManualNetworkSelection = in.readInt() != 0;
-        mRadioTechnology = in.readInt();
+        mRadioTechnology = Phone.RadioTechnology.getRadioTechFromInt(in.readInt());
         mCssIndicator = (in.readInt() != 0);
         mNetworkId = in.readInt();
         mSystemId = in.readInt();
@@ -205,7 +177,7 @@ public class ServiceState implements Parcelable {
         out.writeString(mOperatorAlphaShort);
         out.writeString(mOperatorNumeric);
         out.writeInt(mIsManualNetworkSelection ? 1 : 0);
-        out.writeInt(mRadioTechnology);
+        out.writeInt(mRadioTechnology.ordinal());
         out.writeInt(mCssIndicator ? 1 : 0);
         out.writeInt(mNetworkId);
         out.writeInt(mSystemId);
@@ -383,51 +355,7 @@ public class ServiceState implements Parcelable {
 
     @Override
     public String toString() {
-        String radioTechnology = new String("Error in radioTechnology");
-        switch(this.mRadioTechnology) {
-        case 0:
-            radioTechnology = "Unknown";
-            break;
-        case 1:
-            radioTechnology = "GPRS";
-            break;
-        case 2:
-            radioTechnology = "EDGE";
-            break;
-        case 3:
-            radioTechnology = "UMTS";
-            break;
-        case 4:
-            radioTechnology = "IS95A";
-            break;
-        case 5:
-            radioTechnology = "IS95B";
-            break;
-        case 6:
-            radioTechnology = "1xRTT";
-            break;
-        case 7:
-            radioTechnology = "EvDo rev. 0";
-            break;
-        case 8:
-            radioTechnology = "EvDo rev. A";
-            break;
-        case 9:
-            radioTechnology = "HSDPA";
-            break;
-        case 10:
-            radioTechnology = "HSUPA";
-            break;
-        case 11:
-            radioTechnology = "HSPA";
-            break;
-        case 12:
-            radioTechnology = "EvDo rev. B";
-            break;
-        default:
-            Log.w(LOG_TAG, "mRadioTechnology variable out of range.");
-        break;
-        }
+        String radioTechnology = mRadioTechnology.toString();
 
         return (mState + " " + (mRoaming ? "roaming" : "home")
                 + " " + mOperatorAlphaLong
@@ -450,7 +378,7 @@ public class ServiceState implements Parcelable {
         mOperatorAlphaShort = null;
         mOperatorNumeric = null;
         mIsManualNetworkSelection = false;
-        mRadioTechnology = 0;
+        mRadioTechnology = Phone.RadioTechnology.RADIO_TECH_UNKNOWN;
         mCssIndicator = false;
         mNetworkId = -1;
         mSystemId = -1;
@@ -469,7 +397,7 @@ public class ServiceState implements Parcelable {
         mOperatorAlphaShort = null;
         mOperatorNumeric = null;
         mIsManualNetworkSelection = false;
-        mRadioTechnology = 0;
+        mRadioTechnology = Phone.RadioTechnology.RADIO_TECH_UNKNOWN;
         mCssIndicator = false;
         mNetworkId = -1;
         mSystemId = -1;
@@ -568,7 +496,7 @@ public class ServiceState implements Parcelable {
         mOperatorAlphaShort = m.getString("operator-alpha-short");
         mOperatorNumeric = m.getString("operator-numeric");
         mIsManualNetworkSelection = m.getBoolean("manual");
-        mRadioTechnology = m.getInt("radioTechnology");
+        mRadioTechnology = Phone.RadioTechnology.getRadioTechFromInt(m.getInt("radioTechnology"));
         mCssIndicator = m.getBoolean("cssIndicator");
         mNetworkId = m.getInt("networkId");
         mSystemId = m.getInt("systemId");
@@ -590,7 +518,7 @@ public class ServiceState implements Parcelable {
         m.putString("operator-alpha-short", mOperatorAlphaShort);
         m.putString("operator-numeric", mOperatorNumeric);
         m.putBoolean("manual", Boolean.valueOf(mIsManualNetworkSelection));
-        m.putInt("radioTechnology", mRadioTechnology);
+        m.putInt("radioTechnology", mRadioTechnology.ordinal());
         m.putBoolean("cssIndicator", mCssIndicator);
         m.putInt("networkId", mNetworkId);
         m.putInt("systemId", mSystemId);
@@ -601,8 +529,10 @@ public class ServiceState implements Parcelable {
 
     //***** CDMA
     /** @hide */
-    public void setRadioTechnology(int state) {
-        this.mRadioTechnology = state;
+    public void setRadioTechnology(Phone.RadioTechnology radioTech) {
+        if (radioTech == null)
+            radioTech = RadioTechnology.RADIO_TECH_UNKNOWN;
+        this.mRadioTechnology = radioTech;
     }
 
     /** @hide */
@@ -617,7 +547,7 @@ public class ServiceState implements Parcelable {
     }
 
     /** @hide */
-    public int getRadioTechnology() {
+    public Phone.RadioTechnology getRadioTechnology() {
         return this.mRadioTechnology;
     }
 

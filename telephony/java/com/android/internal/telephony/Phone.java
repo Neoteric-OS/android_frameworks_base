@@ -25,6 +25,7 @@ import android.telephony.CellLocation;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
+import android.util.Log;
 
 import com.android.internal.telephony.DataConnection;
 import com.android.internal.telephony.gsm.NetworkInfo;
@@ -94,6 +95,82 @@ public interface Phone {
     enum SuppService {
       UNKNOWN, SWITCH, SEPARATE, TRANSFER, CONFERENCE, REJECT, HANGUP;
     };
+
+    public enum RadioTechnologyFamily {
+        RADIO_TECH_UNKNOWN,
+        RADIO_TECH_3GPP,        /* 3GPP Technologies - GSM, WCDMA, */
+        RADIO_TECH_3GPP2;       /* 3GPP2 Technologies - CDMA, EVDO */
+
+        public boolean isUnknown() {
+            return this == RADIO_TECH_UNKNOWN;
+        }
+
+        public boolean isGsm() {
+            return this == RADIO_TECH_3GPP;
+        }
+
+        public boolean isCdma() {
+            return this == RADIO_TECH_3GPP2;
+        }
+
+        public static RadioTechnologyFamily getRadioTechFamilyFromInt(int techInt) {
+            RadioTechnologyFamily ret = RADIO_TECH_UNKNOWN;
+            try {
+                ret = values()[techInt];
+            } catch (IndexOutOfBoundsException e) {
+                Log.e("RIL", "Invalid radio technology family : " + techInt);
+            }
+            return ret;
+        }
+    }
+
+    public enum RadioTechnology {
+        /* implicitly matches those defined in ril.h */
+        RADIO_TECH_UNKNOWN, //0
+        RADIO_TECH_GPRS,    //1
+        RADIO_TECH_EDGE,    //2
+        RADIO_TECH_UMTS,    //3
+        RADIO_TECH_IS95A,   //4
+        RADIO_TECH_IS95B,   //5
+        RADIO_TECH_1xRTT,   //6
+        RADIO_TECH_EVDO_0,  //7
+        RADIO_TECH_EVDO_A,  //8
+        RADIO_TECH_HSDPA,   //9
+        RADIO_TECH_HSUPA,   //10
+        RADIO_TECH_HSPA,    //11
+        RADIO_TECH_EVDO_B;  //12
+
+        public boolean isUnknown() {
+            return this == RADIO_TECH_UNKNOWN;
+        }
+
+        public boolean isGsm() {
+            return this == RADIO_TECH_GPRS || this == RADIO_TECH_EDGE || this == RADIO_TECH_UMTS
+                    || this == RADIO_TECH_HSDPA || this == RADIO_TECH_HSUPA
+                    || this == RADIO_TECH_HSPA;
+        }
+
+        public boolean isCdma() {
+            return this == RADIO_TECH_IS95A || this == RADIO_TECH_IS95B || this == RADIO_TECH_1xRTT
+                    || this == RADIO_TECH_EVDO_0 || this == RADIO_TECH_EVDO_A
+                    || this == RADIO_TECH_EVDO_B;
+        }
+
+        public boolean isEvdo() {
+            return this == RADIO_TECH_EVDO_0 || this == RADIO_TECH_EVDO_A
+                    || this == RADIO_TECH_EVDO_B;
+        }
+
+        public static RadioTechnology getRadioTechFromInt(int techInt) {
+            RadioTechnology rt = RADIO_TECH_UNKNOWN;
+            try {
+                rt = values()[techInt];
+            } catch (IndexOutOfBoundsException e) {
+                Log.e("RIL", "Invalid radio technology : " + techInt);
+            }
+            return rt;
+        }
+    }
 
     static final String STATE_KEY = "state";
     static final String PHONE_NAME_KEY = "phoneName";

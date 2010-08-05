@@ -82,8 +82,6 @@ public interface CommandsInterface {
         }
     }
 
-    //***** Constants
-
     // Used as parameter to dial() and setCLIR() below
     static final int CLIR_DEFAULT = 0;      // "use subscription default value"
     static final int CLIR_INVOCATION = 1;   // (restrict CLI presentation)
