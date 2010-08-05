@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA4H///7E\u003d",
+        "filename": "core/java/android/hardware/SensorManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1661,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-05T19:08:40Z",
+      "side": 1,
+      "message": "In fact this should work the same way than getRotationMatrix, that is, it should handle the case where R is 9 or 16 -- this is so that the matrix can be used directly with OpenGL ES (and to keep the same convention than getRotationMatrix). The doc would need to be updated too.",
+      "revId": "eed7022047eaf60d05d85b51c97560da74974ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
