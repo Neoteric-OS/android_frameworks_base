@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA4H///84\u003d",
+        "filename": "core/java/android/hardware/SensorEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-05T03:17:40Z",
+      "side": 1,
+      "message": "More precision about which side is positive, maybe with an example?",
+      "revId": "e46facea56cf7070ee505eca6de2e07c82221de4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4H///80\u003d",
+        "filename": "core/java/android/hardware/SensorEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-05T03:17:40Z",
+      "side": 1,
+      "message": "more precision about the coordinate system (same than accelerometer)",
+      "revId": "e46facea56cf7070ee505eca6de2e07c82221de4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4H///8w\u003d",
+        "filename": "core/java/android/hardware/SensorEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2010-08-05T03:17:40Z",
+      "side": 1,
+      "message": "more precision about the coordinate system (same than accelerometer)",
+      "revId": "e46facea56cf7070ee505eca6de2e07c82221de4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
