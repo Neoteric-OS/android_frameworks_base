@@ -950,13 +950,7 @@ public class StatusBarPolicy {
     }
 
     private boolean isEvdo() {
-        return ( (mServiceState != null)
-                 && ((mServiceState.getRadioTechnology()
-                        == ServiceState.RADIO_TECHNOLOGY_EVDO_0)
-                     || (mServiceState.getRadioTechnology()
-                        == ServiceState.RADIO_TECHNOLOGY_EVDO_A)
-                     || (mServiceState.getRadioTechnology()
-                        == ServiceState.RADIO_TECHNOLOGY_EVDO_B)));
+        return mServiceState != null && mServiceState.getRadioTechnology().isEvdo();
     }
 
     private boolean hasService() {
