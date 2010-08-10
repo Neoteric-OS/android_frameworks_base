@@ -18,13 +18,14 @@ package android.net;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemProperties;
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Config;
 import android.util.Log;
 
 
@@ -129,10 +130,14 @@ public abstract class NetworkStateTracker extends Handler {
         }
         if (mInterfaceName != null && !mPrivateDnsRouteSet) {
             for (String addrString : getNameServers()) {
-                int addr = NetworkUtils.lookupHost(addrString);
-                if (addr != -1 && addr != 0) {
-                    if (DBG) Log.d(TAG, "  adding "+addrString+" ("+addr+")");
-                    NetworkUtils.addHostRoute(mInterfaceName, addr);
+                if (addrString != null) {
+                    try {
+                        InetAddress inetAddress = InetAddress.getByName(addrString);
+                        if (DBG) Log.d(TAG, "  adding " + addrString);
+                        NetworkUtils.addHostRoute(mInterfaceName, inetAddress);
+                    } catch (UnknownHostException e) {
+                        if (DBG) Log.d(TAG, " DNS address " + addrString + " : Exception " + e);
+                    }
                 }
             }
             mPrivateDnsRouteSet = true;
@@ -159,8 +164,16 @@ public abstract class NetworkStateTracker extends Handler {
                 Log.d(TAG, "addDefaultRoute for " + mNetworkInfo.getTypeName() +
                         " (" + mInterfaceName + "), GatewayAddr=" + mDefaultGatewayAddr);
             }
-            NetworkUtils.setDefaultRoute(mInterfaceName, mDefaultGatewayAddr);
-            mDefaultRouteSet = true;
+            InetAddress inetAddress = NetworkUtils.intToInetAddress(mDefaultGatewayAddr);
+            if (inetAddress == null) {
+                if (DBG) Log.d(TAG, " Unable to add default route. mDefaultGatewayAddr Error");
+            } else {
+                if (NetworkUtils.addRoute(mInterfaceName, inetAddress, 0)) {
+                    mDefaultRouteSet = true;
+                } else {
+                    if (DBG) Log.d(TAG, "  Unable to add default route.");
+                }
+            }
         }
     }
 
@@ -398,7 +411,7 @@ public abstract class NetworkStateTracker extends Handler {
      * @param hostAddress the IP address of the host to which the route is desired
      * @return {@code true} on success, {@code false} on failure
      */
-    public boolean requestRouteToHost(int hostAddress) {
+    public boolean requestRouteToHost(InetAddress hostAddress) {
         return false;
     }
 
