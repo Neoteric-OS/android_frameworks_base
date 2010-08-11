@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA4n///sM\u003d",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1004120
+      },
+      "writtenOn": "2010-08-11T01:43:27Z",
+      "side": 1,
+      "message": "dont want to import internal package. Any other location for RadioTechnology enum?",
+      "revId": "826eb9ecb4a41efbd3818405df7a7b42d104e9d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
