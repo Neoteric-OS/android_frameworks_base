@@ -16,6 +16,40 @@
       "revId": "826eb9ecb4a41efbd3818405df7a7b42d104e9d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n///sE\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/Phone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1004120
+      },
+      "writtenOn": "2010-08-11T01:44:43Z",
+      "side": 1,
+      "message": "not used anywhere yet. Probably we should be using this instead of various GSM/CDMA constants lying around..",
+      "revId": "826eb9ecb4a41efbd3818405df7a7b42d104e9d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n///sA\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/Phone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1004120
+      },
+      "writtenOn": "2010-08-11T01:44:43Z",
+      "side": 1,
+      "message": "couldnt think of any other place to put this enum. Suggestions?",
+      "revId": "826eb9ecb4a41efbd3818405df7a7b42d104e9d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
