@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA4n///sU\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/CommandsInterface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1004120
+      },
+      "writtenOn": "2010-08-11T01:38:18Z",
+      "side": 0,
+      "message": "oops...willl remove this.",
+      "revId": "0f0dd448ea54ddb760ed77e7d9167b7d7ad1b916",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
