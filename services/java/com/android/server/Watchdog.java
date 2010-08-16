@@ -346,7 +346,7 @@ public class Watchdog extends Thread {
      * text of why it is not a good time.
      */
     String shouldWeBeBrutalLocked(long curTime) {
-        if (mBattery == null || !mBattery.isPowered()) {
+        if (mBattery == null || !mBattery.isPowerSupplyConnected()) {
             return "battery";
         }
 

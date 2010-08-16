@@ -149,11 +149,24 @@ class BatteryService extends Binder {
     }
 
     final boolean isPowered() {
-        // assume we are powered if battery state is unknown so the "stay on while plugged in" option will work.
+        // assume we are powered if battery state is unknown so the device will
+        // not trigger shutdown.
+        // Do not look at the plug status to check if we are powered.
+        // Charger can be plugged but not charging because of i.e. USB suspend,
+        // battery temperature reasons etc. We are powered only if battery is
+        // being charged. This function will return false if charger is
+        // connected and battery is reported full.
+        return (mBatteryStatus == BatteryManager.BATTERY_STATUS_CHARGING ||
+                mBatteryStatus == BatteryManager.BATTERY_STATUS_UNKNOWN);
+    }
+
+    final boolean isPowerSupplyConnected() {
+        // assume we have power supply attached if battery state is unknown so
+        // the "stay on while plugged in" option will work.
         return (mAcOnline || mUsbOnline || mBatteryStatus == BatteryManager.BATTERY_STATUS_UNKNOWN);
     }
 
-    final boolean isPowered(int plugTypeSet) {
+    final boolean isPowerSupplyConnected(int plugTypeSet) {
         // assume we are powered if battery state is unknown so
         // the "stay on while plugged in" option will work.
         if (mBatteryStatus == BatteryManager.BATTERY_STATUS_UNKNOWN) {
@@ -208,7 +221,11 @@ class BatteryService extends Binder {
     private final void shutdownIfNoPower() {
         // shut down gracefully if our battery is critically low and we are not powered.
         // wait until the system has booted before attempting to display the shutdown dialog.
-        if (mBatteryLevel == 0 && !isPowered() && ActivityManagerNative.isSystemReady()) {
+        // Also shutdown if battery is reported to be 'dead' independent of
+        // battery level and power supply.
+        if (((mBatteryLevel == 0 && !isPowered()) ||
+             mBatteryHealth == BatteryManager.BATTERY_HEALTH_DEAD) &&
+            ActivityManagerNative.isSystemReady()) {
             Intent intent = new Intent(Intent.ACTION_REQUEST_SHUTDOWN);
             intent.putExtra(Intent.EXTRA_KEY_CONFIRM, false);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

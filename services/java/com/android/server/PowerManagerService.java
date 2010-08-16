@@ -408,7 +408,7 @@ public class PowerManagerService extends IPowerManager.Stub
         public void onReceive(Context context, Intent intent) {
             synchronized (mLocks) {
                 boolean wasPowered = mIsPowered;
-                mIsPowered = mBatteryService.isPowered();
+                mIsPowered = mBatteryService.isPowerSupplyConnected();
 
                 if (mIsPowered != wasPowered) {
                     // update mStayOnWhilePluggedIn wake lock
@@ -766,7 +766,7 @@ public class PowerManagerService extends IPowerManager.Stub
 
     private void updateWakeLockLocked() {
         final int stayOnConditions = getStayOnConditionsLocked();
-        if (stayOnConditions != 0 && mBatteryService.isPowered(stayOnConditions)) {
+        if (mStayOnConditions != 0 && mBatteryService.isPowerSupplyConnected(stayOnConditions)) {
             // keep the device on if we're plugged in and mStayOnWhilePluggedIn is set.
             mStayOnWhilePluggedInScreenDimLock.acquire();
             mStayOnWhilePluggedInPartialLock.acquire();
@@ -2108,7 +2108,8 @@ public class PowerManagerService extends IPowerManager.Stub
                         steps = (int)(ANIM_STEPS*ratio);
                     }
                     final int stayOnConditions = getStayOnConditionsLocked();
-                    if (stayOnConditions != 0 && mBatteryService.isPowered(stayOnConditions)) {
+                    if (stayOnConditions != 0 &&
+                        mBatteryService.isPowerSupplyConnected(stayOnConditions)) {
                         // If the "stay on while plugged in" option is
                         // turned on, then the screen will often not
                         // automatically turn off while plugged in.  To
