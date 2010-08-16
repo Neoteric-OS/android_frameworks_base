@@ -141,6 +141,24 @@
       "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n///OY\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-08-16T22:59:22Z",
+      "side": 1,
+      "message": "Naveen, could you respond to the moving of dcTracker.sendMessage please.",
+      "parentUuid": "AAAA3n///zE\u003d",
+      "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
