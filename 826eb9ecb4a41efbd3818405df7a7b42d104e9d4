@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA4n///Nc\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/Phone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-08-16T23:30:24Z",
+      "side": 1,
+      "message": "If not using yet remove.",
+      "parentUuid": "AAAA4n///sE\u003d",
+      "revId": "826eb9ecb4a41efbd3818405df7a7b42d104e9d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA4n///sA\u003d",
         "filename": "telephony/java/com/android/internal/telephony/Phone.java",
         "patchSetId": 1
@@ -47,6 +65,75 @@
       "writtenOn": "2010-08-11T01:44:43Z",
       "side": 1,
       "message": "couldnt think of any other place to put this enum. Suggestions?",
+      "revId": "826eb9ecb4a41efbd3818405df7a7b42d104e9d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n///NY\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/Phone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-08-16T23:30:24Z",
+      "side": 1,
+      "message": "How about a separate file frameworks/base/telephony/java/android/telephony/RadioTechnology.java.",
+      "parentUuid": "AAAA4n///sA\u003d",
+      "revId": "826eb9ecb4a41efbd3818405df7a7b42d104e9d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n///N4\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-08-16T23:30:24Z",
+      "side": 1,
+      "message": "networkType.toString() or both if you want the number",
+      "revId": "826eb9ecb4a41efbd3818405df7a7b42d104e9d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n///N0\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-08-16T23:30:24Z",
+      "side": 1,
+      "message": "newNetworkType.toString or both if you want the number",
+      "revId": "826eb9ecb4a41efbd3818405df7a7b42d104e9d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n///N8\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-08-16T23:30:24Z",
+      "side": 1,
+      "message": "why ordinal, I think it should be just networkType, newNetworkType",
       "revId": "826eb9ecb4a41efbd3818405df7a7b42d104e9d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
