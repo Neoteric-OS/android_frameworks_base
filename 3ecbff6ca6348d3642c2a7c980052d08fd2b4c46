@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA4n///LU\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-08-17T05:16:34Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "AAAA4n///hM\u003d",
+      "revId": "3ecbff6ca6348d3642c2a7c980052d08fd2b4c46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA4n///hI\u003d",
         "filename": "core/java/android/net/NetworkUtils.java",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA4n///LQ\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-08-17T05:16:34Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "AAAA4n///hI\u003d",
+      "revId": "3ecbff6ca6348d3642c2a7c980052d08fd2b4c46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA4n///hA\u003d",
         "filename": "core/java/android/net/NetworkUtils.java",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2010-08-12T02:32:29Z",
       "side": 1,
       "message": "To avoid confusion, call this function addDefaultRoute instead.",
+      "revId": "3ecbff6ca6348d3642c2a7c980052d08fd2b4c46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n///LM\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-08-17T05:16:34Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "AAAA4n///hA\u003d",
       "revId": "3ecbff6ca6348d3642c2a7c980052d08fd2b4c46",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
