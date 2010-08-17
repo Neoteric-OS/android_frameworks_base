@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA4n///Ic\u003d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-17T17:44:36Z",
+      "side": 1,
+      "message": "deprecate?",
+      "revId": "2302d972ec0efed2aa71166efb58cfb4f604dbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
