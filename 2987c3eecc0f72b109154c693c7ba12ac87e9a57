@@ -106,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA4n//++s\u003d",
+        "filename": "core/java/android/net/NetworkStateTracker.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2010-08-18T19:38:40Z",
+      "side": 1,
+      "message": "Sounds good, let\u0027s do it in another change.",
+      "parentUuid": "AAAA4n//+/U\u003d",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA4n//+/o\u003d",
         "filename": "core/java/android/net/NetworkStateTracker.java",
         "patchSetId": 7
@@ -152,6 +170,24 @@
       "side": 1,
       "message": "That is done in another change.",
       "parentUuid": "AAAA4n//+/c\u003d",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n//++o\u003d",
+        "filename": "core/java/android/net/NetworkStateTracker.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2010-08-18T19:38:40Z",
+      "side": 1,
+      "message": "Ack, separate change.",
+      "parentUuid": "AAAA4n//+/E\u003d",
       "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
