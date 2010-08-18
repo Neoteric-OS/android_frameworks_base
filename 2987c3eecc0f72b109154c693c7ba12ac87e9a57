@@ -19,6 +19,58 @@
     },
     {
       "key": {
+        "uuid": "AAAA4n//+/A\u003d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-18T19:25:06Z",
+      "side": 1,
+      "message": "Don\u0027t bother marking it deprecated then.  JBQ posted on how to work around it, but I think I can do this more easily on my end.",
+      "parentUuid": "AAAA4n///DI\u003d",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n//++0\u003d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-18T19:25:06Z",
+      "side": 1,
+      "message": "use getAddress to get a byte array instead - prevents the confusion on the other end that maybe the string is a host name and maybe it\u0027s an ip addr.",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n//++4\u003d",
+        "filename": "core/java/android/net/IConnectivityManager.aidl",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-18T19:25:06Z",
+      "side": 1,
+      "message": "change it to take a byte array for hostAddress",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA4n//+/k\u003d",
         "filename": "core/java/android/net/NetworkStateTracker.java",
         "patchSetId": 7
@@ -30,6 +82,24 @@
       "writtenOn": "2010-08-18T19:09:34Z",
       "side": 1,
       "message": "If we want to support IPv6 default routes (and we do, because at least one carrier is planning to run IPv6-only network), then we\u0027ll need an IPv6 default gateway as well.\n\nWe could make this an InetAddress, but since it\u0027s protected we\u0027d have to go and fix up all the classes that inherit from it, and also we won\u0027t be able to support having an IPv4 default route and IPv6 default route simultaneously (which will be the case on dual-stack networks such as Verizon).\n\nSo I think we should add a protected InetAddress mIPv6DefaultGateway. Robert, does that sound like a good idea? Should we do it in this change, while we\u0027re touching the code? The changes should be fairly minimal, there\u0027s only one method that needs to touch it.",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n//+/U\u003d",
+        "filename": "core/java/android/net/NetworkStateTracker.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-18T19:25:06Z",
+      "side": 1,
+      "message": "Lorenzo - we have several other changes in flight - lets focus each change on it\u0027s particular thing.  This is address by other change.  Even if it weren\u0027t, I\u0027d prefer to keep this change focused and address that need later.",
+      "parentUuid": "AAAA4n//+/k\u003d",
       "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -64,6 +134,24 @@
       "writtenOn": "2010-08-18T19:09:34Z",
       "side": 1,
       "message": "If we add the mIPv6DefaultGateway member then we\u0027ll need add a corresponding IPv6 route here as well.",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n//+/E\u003d",
+        "filename": "core/java/android/net/NetworkStateTracker.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-18T19:25:06Z",
+      "side": 1,
+      "message": "That is done in another change.",
+      "parentUuid": "AAAA4n//+/c\u003d",
       "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -166,6 +254,24 @@
       "writtenOn": "2010-08-18T19:09:34Z",
       "side": 1,
       "message": "If someone passes in a string that is not an IP address, this code will block trying to perform a name lookup. Should we try to avoid that?",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n//++8\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2010-08-18T19:25:06Z",
+      "side": 1,
+      "message": "We should change it to take a byte array.",
+      "parentUuid": "AAAA4n//+/0\u003d",
       "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
