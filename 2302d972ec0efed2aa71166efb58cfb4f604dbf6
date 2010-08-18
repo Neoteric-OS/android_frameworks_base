@@ -16,6 +16,24 @@
       "revId": "2302d972ec0efed2aa71166efb58cfb4f604dbf6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n///D0\u003d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-08-18T04:12:17Z",
+      "side": 1,
+      "message": "This was giving compilation error if i mark this as deprecated.\nIs this because this is an approved SDK API and not allowed to mark as deprecated??",
+      "parentUuid": "AAAA4n///Ic\u003d",
+      "revId": "2302d972ec0efed2aa71166efb58cfb4f604dbf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
