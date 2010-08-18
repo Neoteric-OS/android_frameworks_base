@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA4n///DI\u003d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-08-18T05:20:09Z",
+      "side": 1,
+      "message": "If i mark this as deprecated, the compilation fails from the second time onwards. The first time it is successful.\nIs this because we are deprecating an approved API in the SDK??\nShould i still mark this as deprecated??",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
