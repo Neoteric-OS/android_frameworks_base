@@ -16,6 +16,159 @@
       "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n//+/k\u003d",
+        "filename": "core/java/android/net/NetworkStateTracker.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2010-08-18T19:09:34Z",
+      "side": 1,
+      "message": "If we want to support IPv6 default routes (and we do, because at least one carrier is planning to run IPv6-only network), then we\u0027ll need an IPv6 default gateway as well.\n\nWe could make this an InetAddress, but since it\u0027s protected we\u0027d have to go and fix up all the classes that inherit from it, and also we won\u0027t be able to support having an IPv4 default route and IPv6 default route simultaneously (which will be the case on dual-stack networks such as Verizon).\n\nSo I think we should add a protected InetAddress mIPv6DefaultGateway. Robert, does that sound like a good idea? Should we do it in this change, while we\u0027re touching the code? The changes should be fairly minimal, there\u0027s only one method that needs to touch it.",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n//+/o\u003d",
+        "filename": "core/java/android/net/NetworkStateTracker.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2010-08-18T19:09:34Z",
+      "side": 1,
+      "message": "Instead of setting mPrivateDnsRouteSet even if the operation failed, you should probably do:\n\n    try {\n        InetAddress inetAddress \u003d InetAddress.getByName(addrString);\n        if (DBG) Log.d(TAG, \"  adding \" + addrString);\n        if (NetworkUtils.addHostRoute(mInterfaceName, inetAddress) \u003d\u003d 0) {\n            mPrivateDnsRouteSet \u003d true;\n        }\n    }",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n//+/c\u003d",
+        "filename": "core/java/android/net/NetworkStateTracker.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2010-08-18T19:09:34Z",
+      "side": 1,
+      "message": "If we add the mIPv6DefaultGateway member then we\u0027ll need add a corresponding IPv6 route here as well.",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n///Bs\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2010-08-18T19:09:34Z",
+      "side": 1,
+      "message": "Add a default route through the specified gateway.",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n///Bw\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2010-08-18T19:09:34Z",
+      "side": 1,
+      "message": "This method should not take prefixLength. The prefix length of a default route is always zero.",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n///Bo\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2010-08-18T19:09:34Z",
+      "side": 1,
+      "message": "Add a host route.",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n///Bk\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2010-08-18T19:09:34Z",
+      "side": 1,
+      "message": "Since you\u0027re not taking the prefix length parameter, and you already have an addDefaultRoute method, this method should be called addHostRoute. It should take interfaceName, dst, and gw.\n\nThe prefixLen parameter to addRoute should be determined by the type of dst. If dst is an IPv6 address it should be 128, and if it\u0027s an IPv4 address it should be 32. This is similar to what you do above in addDefaultRoute",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n///BQ\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2010-08-18T19:09:34Z",
+      "side": 1,
+      "message": "With the suggested changes above, I don\u0027t think you need this method. Essentially, what the API will provide is:\n\n- addRoute: adds a generic route. Could be default route, host route, host route via gateway, or anything else. Takes dst, prefixlen, and gw. gw can be null.\n\n- addDefaultRoute: adds a default route. Doesn\u0027t take dst, because it\u0027s either 0.0.0.0 or :: depending on whether gw is IPv4 or IPv6. Doesn\u0027t take prefixLen, because it\u0027s always 0. gw must not be null.\n\n- addHostRoute: adds a route to a host. The route may be directly connected or via a gateway. Takes dst and gw, but gw can be null if it\u0027s directly connected. Doesn\u0027t take prefixLen because it\u0027s either 32 or 128 depending on whether dst is IPv4 or IPv6.",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n//+/0\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2010-08-18T19:09:34Z",
+      "side": 1,
+      "message": "If someone passes in a string that is not an IP address, this code will block trying to perform a name lookup. Should we try to avoid that?",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
