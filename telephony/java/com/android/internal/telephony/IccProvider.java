@@ -197,6 +197,7 @@ public class IccProvider extends ContentProvider {
     private static final int ADN = 1;
     private static final int FDN = 2;
     private static final int SDN = 3;
+    private static final int SIMPOS = 4;
 
     private static final String STR_TAG = "tag";
     private static final String STR_NUMBER = "number";
@@ -210,6 +211,7 @@ public class IccProvider extends ContentProvider {
         URL_MATCHER.addURI("icc", "adn", ADN);
         URL_MATCHER.addURI("icc", "fdn", FDN);
         URL_MATCHER.addURI("icc", "sdn", SDN);
+        URL_MATCHER.addURI("icc", "adn/#", SIMPOS);
     }
 
 
@@ -235,6 +237,17 @@ public class IccProvider extends ContentProvider {
 
         if (!mSimulator) {
             switch (URL_MATCHER.match(url)) {
+                case SIMPOS:
+                    String SIMRecord = "content://icc/adn/";
+                    try {
+                        int index = Integer.parseInt(url.toString().substring(SIMRecord.length()));
+                        results = loadSIMPosFromEf(index);
+                    } catch (NumberFormatException ex) {
+                        if (DBG) log(ex.toString());
+                        results = null;
+                    }
+                    break;
+
                 case ADN:
                     results = loadFromEf(IccConstants.EF_ADN);
                     break;
@@ -507,6 +520,40 @@ public class IccProvider extends ContentProvider {
         return results;
     }
 
+    private ArrayList<ArrayList> loadSIMPosFromEf(int pos) {
+        ArrayList<ArrayList> results = new ArrayList<ArrayList>();
+        List<AdnRecord> adnRecords = null;
+
+        try {
+            IIccPhoneBook iccIpb = IIccPhoneBook.Stub.asInterface(
+                    ServiceManager.getService("simphonebook"));
+            if (iccIpb != null) {
+                adnRecords = iccIpb.getAdnRecordsInEf(IccConstants.EF_ADN);
+            }
+        } catch (RemoteException ex) {
+            // ignore it
+        } catch (SecurityException ex) {
+            if (DBG) log(ex.toString());
+        }
+        if (adnRecords != null) {
+            // Load the results
+            int n = adnRecords.size();
+            if (pos > 0 && pos <= n) {
+                loadAnyRecord((AdnRecord)adnRecords.get(pos - 1), results);
+            } else {
+                // No results to load
+                Log.w(TAG, "ADN record out of bounds");
+                results.clear();
+            }
+        } else {
+            // No results to load
+            Log.w(TAG, "Cannot load ADN record");
+            results.clear();
+        }
+        if (DBG) log("loadSIMPosFromEf: return results");
+        return results;
+    }
+
     private boolean
     addIccRecordToEf(int efType, String name, String number, String[] emails, String pin2) {
         if (DBG) log("addIccRecordToEf: efType=" + efType + ", name=" + name +
@@ -614,6 +661,41 @@ public class IccProvider extends ContentProvider {
             }
             results.add(contact);
         }
+    }
+
+    private void loadAnyRecord(AdnRecord record,
+            ArrayList<ArrayList> results) {
+        String alphaTag = "";
+        String number = "";
+        String[] emails = null;
+        StringBuilder emailString = null;
+        ArrayList<String> contact = new ArrayList<String>();
+
+        if (!record.isEmpty()) {
+            alphaTag = record.getAlphaTag();
+            number = record.getNumber();
+            emails = record.getEmails();
+
+            if (emails != null) {
+                emailString = new StringBuilder();
+                for (String email: emails) {
+                    emailString.append(email);
+                    emailString.append(",");
+                }
+            }
+        }
+
+        if (DBG) log("loadAnyRecord: " + alphaTag + ", " + number);
+        contact.add(alphaTag);
+        contact.add(number);
+
+        if (emailString != null) {
+            contact.add(emailString.toString());
+            if (DBG) log("email(s) " + emailString.toString());
+        } else {
+            contact.add(null);
+        }
+        results.add(contact);
     }
 
     private void log(String msg) {
