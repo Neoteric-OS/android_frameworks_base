@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA4n//+0Y\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2010-08-19T18:39:34Z",
+      "side": 1,
+      "message": "Might want to say \"if null, indicates a directly-connected route\".",
+      "revId": "44e9715e2271b450d557b99c789ebb5def00f116",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n//+0I\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2010-08-19T18:39:34Z",
+      "side": 1,
+      "message": "You don\u0027t need to do anything special if gwStr is null, since the native code will do the right thing if the gw parameter is NULL. So:\n\n    if (dst instanceof Inet4Address) {\n        prefixLength \u003d 32;\n    } else if (dst instanceof Inet6Address) {\n        prefixLength \u003d 128;\n    } else {\n        Log.w(...)\n        return false;\n    }",
+      "revId": "44e9715e2271b450d557b99c789ebb5def00f116",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
