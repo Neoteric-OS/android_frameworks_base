@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA4n//+4I\u003d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-08-19T12:44:19Z",
+      "side": 1,
+      "message": "Thanks a lot Robert. Then i will not mark this as deprecated.",
+      "parentUuid": "AAAA4n//+/A\u003d",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA4n//++0\u003d",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 7
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA4n//+38\u003d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-08-19T12:44:19Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "AAAA4n//++0\u003d",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA4n//++4\u003d",
         "filename": "core/java/android/net/IConnectivityManager.aidl",
         "patchSetId": 7
@@ -65,6 +101,24 @@
       "writtenOn": "2010-08-18T19:25:06Z",
       "side": 1,
       "message": "change it to take a byte array for hostAddress",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n//+34\u003d",
+        "filename": "core/java/android/net/IConnectivityManager.aidl",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-08-19T12:44:19Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "AAAA4n//++4\u003d",
       "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -141,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA4n//+3c\u003d",
+        "filename": "core/java/android/net/NetworkStateTracker.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-08-19T12:44:19Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "AAAA4n//+/o\u003d",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA4n//+/c\u003d",
         "filename": "core/java/android/net/NetworkStateTracker.java",
         "patchSetId": 7
@@ -211,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA4n//+3A\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-08-19T12:44:19Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "AAAA4n///Bs\u003d",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA4n///Bw\u003d",
         "filename": "core/java/android/net/NetworkUtils.java",
         "patchSetId": 7
@@ -222,6 +312,24 @@
       "writtenOn": "2010-08-18T19:09:34Z",
       "side": 1,
       "message": "This method should not take prefixLength. The prefix length of a default route is always zero.",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n//+28\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-08-19T12:44:19Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "AAAA4n///Bw\u003d",
       "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -245,6 +353,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA4n//+24\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-08-19T12:44:19Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "AAAA4n///Bo\u003d",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA4n///Bk\u003d",
         "filename": "core/java/android/net/NetworkUtils.java",
         "patchSetId": 7
@@ -262,6 +388,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA4n//+2k\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-08-19T12:44:19Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "AAAA4n///Bk\u003d",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA4n///BQ\u003d",
         "filename": "core/java/android/net/NetworkUtils.java",
         "patchSetId": 7
@@ -273,6 +417,24 @@
       "writtenOn": "2010-08-18T19:09:34Z",
       "side": 1,
       "message": "With the suggested changes above, I don\u0027t think you need this method. Essentially, what the API will provide is:\n\n- addRoute: adds a generic route. Could be default route, host route, host route via gateway, or anything else. Takes dst, prefixlen, and gw. gw can be null.\n\n- addDefaultRoute: adds a default route. Doesn\u0027t take dst, because it\u0027s either 0.0.0.0 or :: depending on whether gw is IPv4 or IPv6. Doesn\u0027t take prefixLen, because it\u0027s always 0. gw must not be null.\n\n- addHostRoute: adds a route to a host. The route may be directly connected or via a gateway. Takes dst and gw, but gw can be null if it\u0027s directly connected. Doesn\u0027t take prefixLen because it\u0027s either 32 or 128 depending on whether dst is IPv4 or IPv6.",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n//+2o\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-08-19T12:44:19Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "AAAA4n///BQ\u003d",
       "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -308,6 +470,24 @@
       "side": 1,
       "message": "We should change it to take a byte array.",
       "parentUuid": "AAAA4n//+/0\u003d",
+      "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA4n//+30\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-08-19T12:44:19Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "AAAA4n//++8\u003d",
       "revId": "2987c3eecc0f72b109154c693c7ba12ac87e9a57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
