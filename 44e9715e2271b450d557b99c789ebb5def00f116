@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA4n//+z4\u003d",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-08-19T19:04:31Z",
+      "side": 1,
+      "message": "Lorenzo, if i pass null here, there is a run time crash in android_net_Netutils.cpp at this line.\nconst char *gwStr \u003d env-\u003eGetStringUTFChars(gw, NULL);\nTo avoid this should the jstring gw parameter checked for null before calling env-\u003eGetStringUTFChars(gw, NULL)??\nPlease suggest.",
+      "parentUuid": "AAAA4n//+0Y\u003d",
+      "revId": "44e9715e2271b450d557b99c789ebb5def00f116",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA4n//+0I\u003d",
         "filename": "core/java/android/net/NetworkUtils.java",
         "patchSetId": 8
