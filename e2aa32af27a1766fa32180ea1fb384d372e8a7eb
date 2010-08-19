@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA4n//+48\u003d",
+        "filename": "core/java/android/hardware/SensorEvent.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-08-19T03:13:00Z",
+      "side": 1,
+      "message": "Typo: GYROSCOPE (this probably breaks the \"make docs\" build, BTW).",
+      "revId": "e2aa32af27a1766fa32180ea1fb384d372e8a7eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
