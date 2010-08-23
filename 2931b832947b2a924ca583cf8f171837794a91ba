@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA6H///4M\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-08-23T21:53:38Z",
+      "side": 1,
+      "message": "I wonder if this should be GSM specific maybe gsm.operator.use-plmn or maybe ro.operator.use-plmn?\n\nOther opinions?",
+      "revId": "2931b832947b2a924ca583cf8f171837794a91ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
