@@ -1028,6 +1028,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     
             loadBooleanSetting(stmt, Settings.System.VIBRATE_IN_SILENT,
                     R.bool.def_vibrate_in_silent);
+
+            loadIntegerSetting(stmt, Settings.System.WIFI_SLEEP_POLICY,
+                    R.integer.def_wifi_sleep_policy);
+
         } finally {
             if (stmt != null) stmt.close();
         }
