@@ -1399,7 +1399,7 @@ public final class SIMRecords extends IccRecords {
                 if (ar != null && ar.exception == null) {
                     data = (byte[]) ar.result;
                     String spnCphsTmp = IccUtils.adnStringFieldToString(
-                            data, 0, data.length - 1 );
+                            data, 0, data.length);
                     if (spnCphsTmp == null || spnCphsTmp.length() == 0) {
                         phone.getIccFileHandler().loadEFTransparent(
                                 EF_SPN_SHORT_CPHS, obtainMessage(EVENT_GET_SPN_DONE));
@@ -1427,7 +1427,7 @@ public final class SIMRecords extends IccRecords {
                 if (ar != null && ar.exception == null) {
                     data = (byte[]) ar.result;
                     String spnShortCphsTmp = IccUtils.adnStringFieldToString(
-                            data, 0, data.length - 1);
+                            data, 0, data.length);
 
                     if (spnShortCphsTmp == null || spnShortCphsTmp.length() == 0) {
                         if (DBG) log("No SPN loaded in either CHPS or 3GPP");
