@@ -1367,13 +1367,22 @@ public final class SIMRecords extends IccRecords {
                 if (ar != null && ar.exception == null) {
                     data = (byte[]) ar.result;
                     spnDisplayCondition = 0xff & data[0];
-                    spn = IccUtils.adnStringFieldToString(data, 1, data.length - 1);
+                    String spnTmp = IccUtils.adnStringFieldToString(data, 1, data.length - 1);
+                    if (spnTmp == null || spnTmp.length() == 0) {
+                        phone.getIccFileHandler().loadEFTransparent(EF_SPN_CPHS,
+                                obtainMessage(EVENT_GET_SPN_DONE));
+                        recordsToLoad++;
 
-                    if (DBG) log("Load EF_SPN: " + spn
-                            + " spnDisplayCondition: " + spnDisplayCondition);
-                    phone.setSystemProperty(PROPERTY_ICC_OPERATOR_ALPHA, spn);
+                        spnState = Get_Spn_Fsm_State.READ_SPN_CPHS;
+                        spnDisplayCondition = -1;
+                    } else {
+                        spn = spnTmp;
 
-                    spnState = Get_Spn_Fsm_State.IDLE;
+                        if (DBG) log("Load EF_SPN: " + spn);
+                        phone.setSystemProperty(PROPERTY_ICC_OPERATOR_ALPHA, spn);
+
+                        spnState = Get_Spn_Fsm_State.IDLE;
+                    }
                 } else {
                     phone.getIccFileHandler().loadEFTransparent( EF_SPN_CPHS,
                             obtainMessage(EVENT_GET_SPN_DONE));
@@ -1389,13 +1398,23 @@ public final class SIMRecords extends IccRecords {
             case READ_SPN_CPHS:
                 if (ar != null && ar.exception == null) {
                     data = (byte[]) ar.result;
-                    spn = IccUtils.adnStringFieldToString(
+                    String spnCphsTmp = IccUtils.adnStringFieldToString(
                             data, 0, data.length - 1 );
+                    if (spnCphsTmp == null || spnCphsTmp.length() == 0) {
+                        phone.getIccFileHandler().loadEFTransparent(
+                                EF_SPN_SHORT_CPHS, obtainMessage(EVENT_GET_SPN_DONE));
+                        recordsToLoad++;
 
-                    if (DBG) log("Load EF_SPN_CPHS: " + spn);
-                    phone.setSystemProperty(PROPERTY_ICC_OPERATOR_ALPHA, spn);
+                        spnState = Get_Spn_Fsm_State.READ_SPN_SHORT_CPHS;
+                    } else {
+                        spn = spnCphsTmp;
+                        spnDisplayCondition = 2;
 
-                    spnState = Get_Spn_Fsm_State.IDLE;
+                        if (DBG) log("Load EF_SPN_CPHS: " + spn);
+                        phone.setSystemProperty(PROPERTY_ICC_OPERATOR_ALPHA, spn);
+
+                        spnState = Get_Spn_Fsm_State.IDLE;
+                    }
                 } else {
                     phone.getIccFileHandler().loadEFTransparent(
                             EF_SPN_SHORT_CPHS, obtainMessage(EVENT_GET_SPN_DONE));
@@ -1407,12 +1426,19 @@ public final class SIMRecords extends IccRecords {
             case READ_SPN_SHORT_CPHS:
                 if (ar != null && ar.exception == null) {
                     data = (byte[]) ar.result;
-                    spn = IccUtils.adnStringFieldToString(
+                    String spnShortCphsTmp = IccUtils.adnStringFieldToString(
                             data, 0, data.length - 1);
 
-                    if (DBG) log("Load EF_SPN_SHORT_CPHS: " + spn);
-                    phone.setSystemProperty(PROPERTY_ICC_OPERATOR_ALPHA, spn);
-                }else {
+                    if (spnShortCphsTmp == null || spnShortCphsTmp.length() == 0) {
+                        if (DBG) log("No SPN loaded in either CHPS or 3GPP");
+                    } else {
+                        spn = spnShortCphsTmp;
+                        spnDisplayCondition = 2;
+
+                        if (DBG) log("Load EF_SPN_SHORT_CPHS: " + spn);
+                        phone.setSystemProperty(PROPERTY_ICC_OPERATOR_ALPHA, spn);
+                    }
+                } else {
                     if (DBG) log("No SPN loaded in either CHPS or 3GPP");
                 }
 
