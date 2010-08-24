@@ -16,6 +16,24 @@
       "revId": "2931b832947b2a924ca583cf8f171837794a91ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA6H///rA\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-08-24T10:02:42Z",
+      "side": 1,
+      "message": "Either is fine by us",
+      "parentUuid": "AAAA6H///4M\u003d",
+      "revId": "2931b832947b2a924ca583cf8f171837794a91ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
