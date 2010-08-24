@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA6H///pE\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaDataConnectionTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-08-24T16:26:57Z",
+      "side": 1,
+      "message": "I seem to have a problem with the contract itself :) When ril says that data call is disconnected (line 918 above), whats the point is asking them to disconnect again especially during power down? Its like killing a dead man :)\n\nThe direct benefit I see is that power down will be faster at least by a few ms. Also you know that modem is powered down in this case, so only thing I see in the logs is RADIO_NOT_AVAILABLE or GENERIC_FAILURE exception. If you see anything else in any of the phones that you have then it may make sense to keep this.",
+      "parentUuid": "AAAA3n///zU\u003d",
+      "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///Z0\u003d",
         "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaServiceStateTracker.java",
         "patchSetId": 1
@@ -156,6 +174,24 @@
       "side": 1,
       "message": "Naveen, could you respond to the moving of dcTracker.sendMessage please.",
       "parentUuid": "AAAA3n///zE\u003d",
+      "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA6H///pM\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-08-24T16:26:57Z",
+      "side": 1,
+      "message": "Wink, I am bit confused about the comment. Which else are you referring to? The else in line 565 or the else in line 575 or both?\n\nThe else in line 565 is the reason for the change. In 1X we do not want to send CLEAN_UP_CONNECTION to the ril. The else in line 575 is just an optimization. I did not see the need to disconnect data call when the call is in DISCONNECTED state.\n\nIf you want to send the message in both the cases. I can send CLEAN_UP_CONNECTION with msg.arg1 set to false in both cases 1X data call and in the case where the data call is in DISCONNECTED state. It seems like a few extra redundant messages but dont see much harm in that. Please let me know your thoughts.",
+      "parentUuid": "AAAA4n///OY\u003d",
       "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
