@@ -2272,6 +2272,13 @@ public final class ActivityThread {
     boolean mGcIdlerScheduled = false;
 
     public final PackageInfo getPackageInfo(String packageName, int flags) {
+        ApplicationInfo ai = null;
+        try {
+            ai = getPackageManager().getApplicationInfo(packageName,
+                    PackageManager.GET_SHARED_LIBRARY_FILES);
+        } catch (RemoteException e) {
+        }
+
         synchronized (mPackages) {
             WeakReference<PackageInfo> ref;
             if ((flags&Context.CONTEXT_INCLUDE_CODE) != 0) {
@@ -2283,6 +2290,14 @@ public final class ActivityThread {
             //Slog.i(TAG, "getPackageInfo " + packageName + ": " + packageInfo);
             //if (packageInfo != null) Slog.i(TAG, "isUptoDate " + packageInfo.mResDir
             //        + ": " + packageInfo.mResources.getAssets().isUpToDate());
+            if (packageInfo != null) {
+                if (ai != null && (!ai.sourceDir.equals(packageInfo.mAppDir) ||
+                            !ai.publicSourceDir.equals(packageInfo.mResDir))) {
+                    packageInfo = null;
+                    mPackages.remove(packageName);
+                    mResourcePackages.remove(packageName);
+                }
+            }
             if (packageInfo != null && (packageInfo.mResources == null
                     || packageInfo.mResources.getAssets().isUpToDate())) {
                 if (packageInfo.isSecurityViolation()
@@ -2295,13 +2310,6 @@ public final class ActivityThread {
                 }
                 return packageInfo;
             }
-        }
-
-        ApplicationInfo ai = null;
-        try {
-            ai = getPackageManager().getApplicationInfo(packageName,
-                    PackageManager.GET_SHARED_LIBRARY_FILES);
-        } catch (RemoteException e) {
         }
 
         if (ai != null) {
