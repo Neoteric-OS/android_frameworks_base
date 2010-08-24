@@ -1708,4 +1708,11 @@ public interface Phone {
     void unsetOnEcbModeExitResponse(Handler h);
 
 
+    /**
+     * Get the EONS derived from EF_OPL/EF_PNN or EF_CPHS_ONS/EF_CPHS_ONS_SHORT
+     * files for registered operator.
+     * @return Enhanced Operator Name String (EONS) if it can be derived and
+     * null otherwise.
+     */
+    public String getEons();
 }

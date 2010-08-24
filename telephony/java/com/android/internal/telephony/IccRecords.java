@@ -35,6 +35,7 @@ public abstract class IccRecords extends Handler implements IccConstants {
 
     protected PhoneBase phone;
     protected RegistrantList recordsLoadedRegistrants = new RegistrantList();
+    protected RegistrantList mRecordsEventsRegistrants = new RegistrantList();
 
     protected int recordsToLoad;  // number of pending load requests
 
@@ -61,6 +62,8 @@ public abstract class IccRecords extends Handler implements IccConstants {
     protected int spnDisplayCondition;
 
     // ***** Constants
+    public static final int EVENT_SPN = 0;
+    public static final int EVENT_EONS = 1;
 
     // Markers for mncLength
     protected static final int UNINITIALIZED = -1;
@@ -97,6 +100,15 @@ public abstract class IccRecords extends Handler implements IccConstants {
 
     public void unregisterForRecordsLoaded(Handler h) {
         recordsLoadedRegistrants.remove(h);
+    }
+
+    public synchronized void registerForRecordsEvents(Handler h, int what, Object obj) {
+        Registrant r = new Registrant (h, what, obj);
+        mRecordsEventsRegistrants.add(r);
+    }
+
+    public synchronized void unregisterForRecordsEvents(Handler h) {
+        mRecordsEventsRegistrants.remove(h);
     }
 
     public String getMsisdnNumber() {

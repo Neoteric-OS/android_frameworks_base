@@ -575,10 +575,25 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
         cm.setRadioPower(false, null);
     }
 
+    public void updateEons() {
+        boolean needsUpdate = false;
+        int lac = -1;
+
+        if (cellLoc != null) lac = cellLoc.getLac();
+        needsUpdate = phone.mSIMRecords.updateEons(ss.getOperatorNumeric(), lac);
+        if (needsUpdate) {
+            updateSpnDisplay();
+        }
+    }
+
     protected void updateSpnDisplay() {
         int rule = phone.mSIMRecords.getDisplayRule(ss.getOperatorNumeric());
         String spn = phone.mSIMRecords.getServiceProviderName();
-        String plmn = ss.getOperatorAlphaLong();
+        String plmn = phone.mSIMRecords.getEons();
+
+        if (plmn == null) {
+            plmn = ss.getOperatorAlphaLong();
+        }
 
         // For emergency calls only, pass the EmergencyCallsOnly string via EXTRA_PLMN
         if (mEmergencyOnly && cm.getRadioState().isOn()) {
@@ -590,7 +605,8 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
                 || !TextUtils.equals(spn, curSpn)
                 || !TextUtils.equals(plmn, curPlmn)) {
             boolean showSpn = !mEmergencyOnly
-                && (rule & SIMRecords.SPN_RULE_SHOW_SPN) == SIMRecords.SPN_RULE_SHOW_SPN;
+                && (rule & SIMRecords.SPN_RULE_SHOW_SPN) == SIMRecords.SPN_RULE_SHOW_SPN
+                && (ss.getState() == ServiceState.STATE_IN_SERVICE);
             boolean showPlmn =
                 (rule & SIMRecords.SPN_RULE_SHOW_PLMN) == SIMRecords.SPN_RULE_SHOW_PLMN;
 
@@ -885,6 +901,8 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
 
         boolean hasLocationChanged = !newCellLoc.equals(cellLoc);
 
+        boolean hasLacChanged = (newCellLoc.getLac() != cellLoc.getLac());
+
         // Add an event log when connection state changes
         if (ss.getState() != newSS.getState() || gprsState != newGPRSState) {
             EventLog.writeEvent(EventLogTags.GSM_SERVICE_STATE_CHANGE,
@@ -932,7 +950,8 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
         if (hasChanged) {
             String operatorNumeric;
 
-            updateSpnDisplay();
+            Log.i(LOG_TAG,"ServiceState changed, update operator name display");
+            updateEons();
 
             phone.setSystemProperty(TelephonyProperties.PROPERTY_OPERATOR_ALPHA,
                 ss.getOperatorAlphaLong());
@@ -1026,6 +1045,10 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
             phone.notifyLocationChanged();
         }
 
+        if (hasLacChanged) {
+            Log.i(LOG_TAG,"LAC changed, update operator name display");
+            updateEons();
+        }
         if (! isGprsConsistent(gprsState, ss.getState())) {
             if (!mStartedGprsRegCheck && !mReportedGprsNoReg) {
                 mStartedGprsRegCheck = true;
