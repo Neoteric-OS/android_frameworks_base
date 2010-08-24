@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA6H///o8\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaDataConnectionTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-08-24T16:49:12Z",
+      "side": 1,
+      "message": "The problem is we don\u0027t have all the phones, we\u0027re not like other companies which control the world from end-to-end. And I agree the contract may not be good, but for a few ms once in a while its probably not worth changing at this time. Someday maybe we\u0027ll get to revisit some of these decisions.",
+      "parentUuid": "AAAA6H///pE\u003d",
+      "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///Z0\u003d",
         "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaServiceStateTracker.java",
         "patchSetId": 1
@@ -192,6 +210,24 @@
       "side": 1,
       "message": "Wink, I am bit confused about the comment. Which else are you referring to? The else in line 565 or the else in line 575 or both?\n\nThe else in line 565 is the reason for the change. In 1X we do not want to send CLEAN_UP_CONNECTION to the ril. The else in line 575 is just an optimization. I did not see the need to disconnect data call when the call is in DISCONNECTED state.\n\nIf you want to send the message in both the cases. I can send CLEAN_UP_CONNECTION with msg.arg1 set to false in both cases 1X data call and in the case where the data call is in DISCONNECTED state. It seems like a few extra redundant messages but dont see much harm in that. Please let me know your thoughts.",
       "parentUuid": "AAAA4n///OY\u003d",
+      "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA6H///og\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-08-24T16:49:12Z",
+      "side": 1,
+      "message": "I\u0027m not talking about the communication with the ril but rather the communication with dcTracker. What I was trying to point out was that in the original code when powerOffRadioSafely is called the dcTracker.sendMessage is *always* sent back to the dcTracker. In the new code it is only sent *sometimes* (i.e. in this case I was referring to both else clauses) the main point was that it was only sent sometimes.",
+      "parentUuid": "AAAA6H///pM\u003d",
       "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
