@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA6H///oY\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaDataConnectionTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-08-24T16:56:20Z",
+      "side": 1,
+      "message": "Ok. I\u0027ll change this back and upload a new patch.",
+      "parentUuid": "AAAA6H///o8\u003d",
+      "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA0n///Z0\u003d",
         "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaServiceStateTracker.java",
         "patchSetId": 1
@@ -228,6 +246,24 @@
       "side": 1,
       "message": "I\u0027m not talking about the communication with the ril but rather the communication with dcTracker. What I was trying to point out was that in the original code when powerOffRadioSafely is called the dcTracker.sendMessage is *always* sent back to the dcTracker. In the new code it is only sent *sometimes* (i.e. in this case I was referring to both else clauses) the main point was that it was only sent sometimes.",
       "parentUuid": "AAAA6H///pM\u003d",
+      "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA6H///oU\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaServiceStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-08-24T16:56:20Z",
+      "side": 1,
+      "message": "Done. I\u0027ll make the changes and upload a new patch.",
+      "parentUuid": "AAAA6H///og\u003d",
       "revId": "7620c79047b8bc08afa3470bf73f15078e8c6563",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
