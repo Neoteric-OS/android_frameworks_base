@@ -50,6 +50,7 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
+import android.os.SystemProperties;
 import android.provider.Settings.SettingNotFoundException;
 import android.provider.Settings;
 import android.util.EventLog;
@@ -247,6 +248,19 @@ class PowerManagerService extends IPowerManager.Stub
     private static final boolean mSpew = false;
     private static final boolean mDebugProximitySensor = (true || mSpew);
     private static final boolean mDebugLightSensor = (false || mSpew);
+
+    // Whether device shape is clamshell type.
+    private boolean mIsClamshell = false;
+    // Only used for the device shape is a clamshell type
+    private boolean mScreenOffLock = false;
+    private boolean mTempDisableLightControl = false;
+    // clamshell open  --> acquireWakeLock --> Activity will go to resume
+    // clamshell close --> releaseWakeLock --> Activity will go to pause
+    private static final int ACTIVITY_STATE_DEFAULT  = 0;
+    private static final int ACTIVITY_GOTO_PAUSE     = 1;
+    private static final int ACTIVITY_GOTO_RESUME    = 2;
+    private static final int ACTIVITY_CANCEL_PAUSE   = 3;
+    private int mActivityCallState = ACTIVITY_STATE_DEFAULT;
 
     /*
     static PrintStream mLog;
@@ -463,6 +477,13 @@ class PowerManagerService extends IPowerManager.Stub
         mKeyboardLight = lights.getLight(LightsService.LIGHT_ID_KEYBOARD);
         mAttentionLight = lights.getLight(LightsService.LIGHT_ID_ATTENTION);
 
+        try {
+            mIsClamshell = !isEmulator()
+                            && mContext.getResources().getBoolean(
+                                com.android.internal.R.bool.config_clamshell_type);
+        } catch (Resources.NotFoundException e) {
+        }
+
         mHandlerThread = new HandlerThread("PowerManagerService") {
             @Override
             protected void onLooperPrepared() {
@@ -645,6 +666,7 @@ class PowerManagerService extends IPowerManager.Stub
             Slog.d(TAG, "acquireWakeLock flags=0x" + Integer.toHexString(flags) + " tag=" + tag);
         }
 
+        boolean currentWakeupFlag = mLocks.hasWakeupFlag();
         int index = mLocks.getIndex(lock);
         WakeLock wl;
         boolean newlock;
@@ -675,6 +697,9 @@ class PowerManagerService extends IPowerManager.Stub
                             + " flags=" + flags);
                     return;
             }
+            if (mScreenOffLock) {
+                wl.activated = false;
+            }
             mLocks.addLock(wl);
             newlock = true;
         } else {
@@ -688,7 +713,9 @@ class PowerManagerService extends IPowerManager.Stub
             // it already is.
             if ((wl.flags & PowerManager.ACQUIRE_CAUSES_WAKEUP) != 0) {
                 int oldWakeLockState = mWakeLockState;
-                mWakeLockState = mLocks.reactivateScreenLocksLocked();
+                if (!mScreenOffLock) {
+                    mWakeLockState = mLocks.reactivateScreenLocksLocked();
+                }
                 if (mSpew) {
                     Slog.d(TAG, "wakeup here mUserState=0x" + Integer.toHexString(mUserState)
                             + " mWakeLockState=0x"
@@ -704,7 +731,15 @@ class PowerManagerService extends IPowerManager.Stub
                 }
                 mWakeLockState = (mUserState | mWakeLockState) & mLocks.gatherState();
             }
-            setPowerState(mWakeLockState | mUserState);
+            if (mScreenOffLock) {
+                boolean newWakeupFlag = mLocks.hasWakeupFlag();
+                if (newWakeupFlag && (currentWakeupFlag != newWakeupFlag)) {
+                    mActivityCallState = ACTIVITY_GOTO_RESUME;
+                    mHandler.post(mNotificationTask);
+                }
+            } else {
+                setPowerState(mWakeLockState | mUserState);
+            }
         }
         else if ((flags & LOCK_MASK) == PowerManager.PARTIAL_WAKE_LOCK) {
             if (newlock) {
@@ -750,6 +785,7 @@ class PowerManagerService extends IPowerManager.Stub
         int releaseUid;
         String releaseName;
         int releaseType;
+        boolean currentWakeupFlag = mLocks.hasWakeupFlag();
 
         WakeLock wl = mLocks.removeLock(lock);
         if (wl == null) {
@@ -762,12 +798,20 @@ class PowerManagerService extends IPowerManager.Stub
         }
 
         if (isScreenLock(wl.flags)) {
-            mWakeLockState = mLocks.gatherState();
-            // goes in the middle to reduce flicker
-            if ((wl.flags & PowerManager.ON_AFTER_RELEASE) != 0) {
-                userActivity(SystemClock.uptimeMillis(), false);
+            if (mScreenOffLock) {
+                boolean newWakeupFlag = mLocks.hasWakeupFlag();
+                if (!newWakeupFlag && (currentWakeupFlag != newWakeupFlag)) {
+                    mActivityCallState = ACTIVITY_GOTO_PAUSE;
+                    mHandler.post(mNotificationTask);
+                }
+            } else {
+                mWakeLockState = mLocks.gatherState();
+                // goes in the middle to reduce flicker
+                if ((wl.flags & PowerManager.ON_AFTER_RELEASE) != 0) {
+                    userActivity(SystemClock.uptimeMillis(), false);
+                }
+                setPowerState(mWakeLockState | mUserState);
             }
-            setPowerState(mWakeLockState | mUserState);
         }
         else if ((wl.flags & LOCK_MASK) == PowerManager.PARTIAL_WAKE_LOCK) {
             mPartialCount--;
@@ -1155,6 +1199,8 @@ class PowerManagerService extends IPowerManager.Stub
     {
         public void run()
         {
+            int activityCallState = ACTIVITY_STATE_DEFAULT;
+
             while (true) {
                 int value;
                 int why;
@@ -1167,6 +1213,15 @@ class PowerManagerService extends IPowerManager.Stub
                         mBroadcastWhy[i] = mBroadcastWhy[i+1];
                     }
                     policy = getPolicyLocked();
+
+                    if (mActivityCallState != ACTIVITY_STATE_DEFAULT) {
+                        if (value == 1) {
+                            activityCallState = ACTIVITY_STATE_DEFAULT;
+                        } else {
+                            activityCallState = mActivityCallState;
+                            mActivityCallState = ACTIVITY_STATE_DEFAULT;
+                        }
+                    }
                 }
                 if (value == 1) {
                     mScreenOnStart = SystemClock.uptimeMillis();
@@ -1197,7 +1252,11 @@ class PowerManagerService extends IPowerManager.Stub
 
                     policy.screenTurnedOff(why);
                     try {
-                        ActivityManagerNative.getDefault().goingToSleep();
+                        if (activityCallState == ACTIVITY_CANCEL_PAUSE) {
+                            activityCallState = ACTIVITY_STATE_DEFAULT;
+                        } else {
+                            ActivityManagerNative.getDefault().goingToSleep();
+                        }
                     } catch (RemoteException e) {
                         // ignore it.
                     }
@@ -1217,6 +1276,18 @@ class PowerManagerService extends IPowerManager.Stub
                     // If we're in this case, then this handler is running for a previous
                     // paired transaction.  mBroadcastWakeLock will already have been released.
                     break;
+                }
+            }
+
+            if (activityCallState != ACTIVITY_STATE_DEFAULT && mBroadcastQueue[0] == -1) {
+                try {
+                    if (activityCallState == ACTIVITY_GOTO_RESUME) {
+                        ActivityManagerNative.getDefault().wakingUp();
+                    } else if (activityCallState == ACTIVITY_GOTO_PAUSE) {
+                        ActivityManagerNative.getDefault().goingToSleep();
+                    }
+                } catch (RemoteException e) {
+                    // ignore it.
                 }
             }
         }
@@ -1326,7 +1397,11 @@ class PowerManagerService extends IPowerManager.Stub
                         Slog.d(TAG,
                               "preventScreenOn: turning on after a prior preventScreenOn(true)!");
                     }
-                    int err = setScreenStateLocked(true);
+                    int err = 0;
+                    // never turns on if a (clamshell) device is closed
+                    if (!mScreenOffLock) {
+                        err = setScreenStateLocked(true);
+                    }
                     if (err != 0) {
                         Slog.w(TAG, "preventScreenOn: error from setScreenStateLocked(): " + err);
                     }
@@ -1510,7 +1585,11 @@ class PowerManagerService extends IPowerManager.Stub
                         reallyTurnScreenOn = false;
                     }
                     if (reallyTurnScreenOn) {
-                        err = setScreenStateLocked(true);
+                        err = 0;
+                        // never turns on if a (clamshell) device is closed
+                        if (!mScreenOffLock) {
+                            err = setScreenStateLocked(true);
+                        }
                         long identity = Binder.clearCallingIdentity();
                         try {
                             mBatteryStats.noteScreenBrightness(getPreferredBrightness());
@@ -1639,7 +1718,7 @@ class PowerManagerService extends IPowerManager.Stub
         }
 
         if ((difference & (SCREEN_ON_BIT | SCREEN_BRIGHT_BIT)) != 0) {
-            if (ANIMATE_SCREEN_LIGHTS) {
+            if (ANIMATE_SCREEN_LIGHTS && !mTempDisableLightControl) {
                 int nominalCurrentValue = -1;
                 // If there was an actual difference in the light state, then
                 // figure out the "ideal" current value based on the previous
@@ -1760,6 +1839,11 @@ class PowerManagerService extends IPowerManager.Stub
     }
 
     private void setLightBrightness(int mask, int value) {
+        if (mScreenOffLock) {
+            // ignore request because a (clamshell) device is closed
+            return;
+        }
+
         int brightnessMode = (mAutoBrightessEnabled
                             ? LightsService.BRIGHTNESS_MODE_SENSOR
                             : LightsService.BRIGHTNESS_MODE_USER);
@@ -1998,6 +2082,11 @@ class PowerManagerService extends IPowerManager.Stub
         }
 
         synchronized (mLocks) {
+            if (mScreenOffLock) {
+                // ignore request because a (clamshell) device is closed
+                return;
+            }
+
             if (mSpew) {
                 Slog.d(TAG, "userActivity mLastEventTime=" + mLastEventTime + " time=" + time
                         + " mUserActivityAllowed=" + mUserActivityAllowed
@@ -2279,6 +2368,10 @@ class PowerManagerService extends IPowerManager.Stub
                 if (isScreenLock(wl.flags)) {
                     mLocks.get(i).activated = false;
                     numCleared++;
+
+                    if (mTempDisableLightControl && mLocks.hasWakeupFlag()) {
+                        mActivityCallState = ACTIVITY_CANCEL_PAUSE;
+                    }
                 }
             }
             EventLog.writeEvent(EventLogTags.POWER_SLEEP_REQUESTED, numCleared);
@@ -2305,6 +2398,12 @@ class PowerManagerService extends IPowerManager.Stub
             }
             if (mKeyboardVisible != visible) {
                 mKeyboardVisible = visible;
+
+                if (mIsClamshell && !visible) {
+                    //avoid screen turns on when clamshell is closing.
+                    return;
+                }
+
                 // don't signal user activity if the screen is off; other code
                 // will take care of turning on due to a true change to the lid
                 // switch and synchronized with the lock screen.
@@ -2458,9 +2557,26 @@ class PowerManagerService extends IPowerManager.Stub
             return result;
         }
 
+        boolean hasWakeupFlag() {
+            int N = this.size();
+            for (int i = 0; i < N; i++) {
+                WakeLock wl = this.get(i);
+                if (((wl.flags & PowerManager.ACQUIRE_CAUSES_WAKEUP) != 0)
+                      || "KEEP_SCREEN_ON_FLAG".equals(wl.tag)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         int reactivateScreenLocksLocked()
         {
             int result = 0;
+ 
+            if (mScreenOffLock) {
+                return result;
+            }
+
             int N = this.size();
             for (int i=0; i<N; i++) {
                 WakeLock wl = this.get(i);
@@ -2759,4 +2875,57 @@ class PowerManagerService extends IPowerManager.Stub
             // ignore
         }
     };
+
+    /**
+     * Force to screen off (even if wakelock is acquired).
+     * This method is  controlled by PhoneWindowManager and should be used only
+     * when clamshell is closed
+     */
+    public void notifyClamshellClosed() {
+        synchronized (mLocks) {
+            mTempDisableLightControl = true;
+
+            // Screen off
+            goToSleep(SystemClock.uptimeMillis());
+            mScreenOffLock = true;
+
+            // initialize for next DIM animation because we did force screen off
+            mScreenBrightness.targetValue = Power.BRIGHTNESS_OFF;
+
+            mTempDisableLightControl = false;
+        }
+
+        // disable to send broadcast intent SCREEN_OFF when already screen off
+        if (!((mPowerState & SCREEN_ON_BIT) != 0)) {
+            mStillNeedSleepNotification = false;
+        }
+    }
+
+    /**
+     * Force to screen on
+     * This method is  controlled by PhoneWindowManager and should be used only
+     * when clamshell is opened
+     */
+    public void notifyClamshellOpened() {
+        synchronized (mLocks) {
+            mTempDisableLightControl = true;
+
+            mScreenOffLock = false;
+            userActivity(SystemClock.uptimeMillis(), false, OTHER_EVENT, true);
+
+            // initialize for next DIM animation because we did force screen on
+            mScreenBrightness.targetValue = getPreferredBrightness();
+
+            mTempDisableLightControl = false;
+        }
+    }
+
+    /**
+     * Returns whether environment is emulator or not.
+     *
+     * @return True if environment is emulator.
+     */
+    private boolean isEmulator() {
+        return SystemProperties.get("ro.kernel.qemu").equals("1");
+    }
 }

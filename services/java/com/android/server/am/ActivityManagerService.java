@@ -71,6 +71,7 @@ import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Binder;
@@ -830,6 +831,11 @@ public final class ActivityManagerService extends ActivityManagerNative implemen
     boolean mCheckedForSetup;
     
     /**
+     * Whether device shape is clamshell type.
+     */
+    private boolean mIsClamshell = false;
+
+    /**
      * The time at which we will allow normal application switches again,
      * after a call to {@link #stopAppSwitches()}.
      */
@@ -1299,6 +1305,14 @@ public final class ActivityManagerService extends ActivityManagerNative implemen
         Context context = at.getSystemContext();
         m.mContext = context;
         m.mFactoryTest = factoryTest;
+
+        try {
+            m.mIsClamshell = !isEmulator()
+                                && m.mContext.getResources().getBoolean(
+                                    com.android.internal.R.bool.config_clamshell_type);
+        } catch (Resources.NotFoundException e) {
+        }
+
         PowerManager pm =
             (PowerManager)context.getSystemService(Context.POWER_SERVICE);
         m.mGoingToSleep = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ActivityManager-Sleep");
@@ -13723,6 +13737,15 @@ public final class ActivityManagerService extends ActivityManagerNative implemen
                         + ", newConfig=" + newConfig);
             }
             if ((changes&(~r.info.configChanges)) != 0) {
+                if (mIsClamshell) {
+                    if (changes == ActivityInfo.CONFIG_KEYBOARD_HIDDEN
+                               && ((oldConfig.hardKeyboardHidden != Configuration.KEYBOARDHIDDEN_SOFT)
+                               && (newConfig.hardKeyboardHidden != Configuration.KEYBOARDHIDDEN_SOFT))) {
+                        r.stopFreezingScreenLocked(false);
+                        return true;
+                    }
+                }
+
                 // Aha, the activity isn't handling the change, so DIE DIE DIE.
                 r.configChangeFlags |= changes;
                 r.startFreezingScreenLocked(r.app, globalChanges);
@@ -14677,5 +14700,14 @@ public final class ActivityManagerService extends ActivityManagerNative implemen
     /** In this method we try to acquire our lock to make sure that we have not deadlocked */
     public void monitor() {
         synchronized (this) { }
+    }
+
+    /**
+     * Returns whether environment is emulator or not.
+     *
+     * @return True if environment is emulator.
+     */
+    static private boolean isEmulator() {
+        return SystemProperties.get("ro.kernel.qemu").equals("1");
     }
 }

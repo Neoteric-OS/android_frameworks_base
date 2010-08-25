@@ -332,4 +332,10 @@
     <!-- 2 means give warning -->
     <integer name="config_datause_notification_type">2</integer>
 
+    <!-- The default device shape is not clamshell -->
+    <bool name="config_clamshell_type">false</bool>
+
+    <!-- Set orientation to landscape when clamshell is opened. -->
+    <bool name="config_clamshell_orientation_to_landscape">true</bool>
+
 </resources>
