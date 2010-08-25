@@ -32,6 +32,7 @@ import com.android.internal.telephony.cdma.sms.CdmaSmsAddress;
 import com.android.internal.telephony.cdma.sms.SmsEnvelope;
 import com.android.internal.telephony.cdma.sms.UserData;
 import com.android.internal.util.HexDump;
+import android.provider.Telephony.Sms;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -77,11 +78,17 @@ public class SmsMessage extends SmsMessageBase {
      *  Here, the error class is defined by the bits from 9-8, the status code by the bits from 7-0.
      *  See C.S0015-B, v2.0, 4.5.21 for a detailed description of possible values.
      */
-    private int status;
+    private int mStatus;
 
     /** Specifies if a return of an acknowledgment is requested for send SMS */
     private static final int RETURN_NO_ACK  = 0;
     private static final int RETURN_ACK     = 1;
+
+    /* Indicates the Cdma Error Class values
+       Message Status (See 3GPP2 C.S0015-B, v2, 4.5.1) */
+    private static final int CDMA_SMS_STATUS_NO_ERROR  = 0;  // No Error
+    private static final int CDMA_SMS_STATUS_PENDING   = 2;  // Temporary Condition
+    private static final int CDMA_SMS_STATUS_FAILED    = 3;  // Permanent Condition
 
     private SmsEnvelope mEnvelope;
     private BearerData mBearerData;
@@ -417,11 +424,9 @@ public class SmsMessage extends SmsMessageBase {
 
     /**
      * Returns the status for a previously submitted message.
-     * For not interfering with status codes from GSM, this status code is
-     * shifted to the bits 31-16.
      */
     public int getStatus() {
-        return (status << 16);
+        return mStatus;
     }
 
     /** Return true iff the bearer data message type is DELIVERY_ACK. */
@@ -576,15 +581,28 @@ public class SmsMessage extends SmsMessageBase {
             // being reported refers to.  The MsgStatus subparameter
             // is primarily useful to indicate error conditions -- a
             // message without this subparameter is assumed to
-            // indicate successful delivery (status == 0).
+            // indicate successful delivery (mStatus == 0).
             if (! mBearerData.messageStatusSet) {
                 Log.d(LOG_TAG, "DELIVERY_ACK message without msgStatus (" +
                         (userData == null ? "also missing" : "does have") +
                         " userData).");
-                status = 0;
+                mStatus = 0;
             } else {
-                status = mBearerData.errorClass << 8;
-                status |= mBearerData.messageStatus;
+                // Message Status (See 3GPP2 C.S0015-B, v2, 4.5.1)
+                switch(mBearerData.errorClass) {
+                     case CDMA_SMS_STATUS_NO_ERROR:
+                          mStatus = Sms.STATUS_COMPLETE;
+                          break;
+                     case CDMA_SMS_STATUS_PENDING:
+                          mStatus = Sms.STATUS_PENDING;
+                          break;
+                     case CDMA_SMS_STATUS_FAILED:
+                          mStatus = Sms.STATUS_FAILED;
+                          break;
+                     default:
+                          mStatus = Sms.STATUS_NONE;
+                          break;
+                }
             }
         } else if (mBearerData.messageType != BearerData.MESSAGE_TYPE_DELIVER) {
             throw new RuntimeException("Unsupported message type: " + mBearerData.messageType);
