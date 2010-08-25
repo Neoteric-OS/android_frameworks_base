@@ -248,6 +248,10 @@ class PowerManagerService extends IPowerManager.Stub
     private static final boolean mDebugProximitySensor = (true || mSpew);
     private static final boolean mDebugLightSensor = (false || mSpew);
 
+    // Only used for the device shape is a clamshell type
+    private boolean mScreenOffLock = false;
+    private boolean mTempDisableLightAnimation = false;
+
     /*
     static PrintStream mLog;
     static {
@@ -1503,7 +1507,7 @@ class PowerManagerService extends IPowerManager.Stub
                               + mPreventScreenOn);
                     }
 
-                    if (mPreventScreenOn) {
+                    if (mPreventScreenOn || mScreenOffLock) {
                         if (mSpew) {
                             Slog.d(TAG, "- PREVENTING screen from really turning on!");
                         }
@@ -1639,7 +1643,8 @@ class PowerManagerService extends IPowerManager.Stub
         }
 
         if ((difference & (SCREEN_ON_BIT | SCREEN_BRIGHT_BIT)) != 0) {
-            if (ANIMATE_SCREEN_LIGHTS) {
+            // do not animate lights when clamshell is opened
+            if (ANIMATE_SCREEN_LIGHTS && !mTempDisableLightAnimation) {
                 int nominalCurrentValue = -1;
                 // If there was an actual difference in the light state, then
                 // figure out the "ideal" current value based on the previous
@@ -1760,6 +1765,11 @@ class PowerManagerService extends IPowerManager.Stub
     }
 
     private void setLightBrightness(int mask, int value) {
+        if (mScreenOffLock) {
+            // never turned on any lights while the clamshell is closed
+            return;
+        }
+
         int brightnessMode = (mAutoBrightessEnabled
                             ? LightsService.BRIGHTNESS_MODE_SENSOR
                             : LightsService.BRIGHTNESS_MODE_USER);
@@ -1995,6 +2005,14 @@ class PowerManagerService extends IPowerManager.Stub
             } else {
                 Slog.d(TAG, "mPokey=0x" + Integer.toHexString(mPokey));
             }
+        }
+
+        if (mScreenOffLock && eventType == BUTTON_EVENT) {
+            // ignore user activity by button event while the clamshell is closed
+            if (false) {
+                Log.d(TAG, "dropping button event during clamshell closed");
+            }
+            return;
         }
 
         synchronized (mLocks) {
@@ -2759,4 +2777,48 @@ class PowerManagerService extends IPowerManager.Stub
             // ignore
         }
     };
+
+    /**
+     * Force to screen off (even if wakelock is acquired).
+     * This method is  controlled by PhoneWindowManager and should be used only
+     * when clamshell is closed
+     */
+    public void notifyClamshellClosed() {
+        synchronized (mLocks) {
+            mTempDisableLightAnimation = true;
+
+            // Screen off
+            goToSleep(SystemClock.uptimeMillis());
+            mScreenOffLock = true;
+
+            // initialize for next DIM animation because we did force screen off
+            mScreenBrightness.targetValue = Power.BRIGHTNESS_OFF;
+
+            mTempDisableLightAnimation = false;
+        }
+
+        // disable to send broadcast intent SCREEN_OFF when already screen off
+        if (!((mPowerState & SCREEN_ON_BIT) != 0)) {
+            mStillNeedSleepNotification = false;
+        }
+    }
+
+    /**
+     * Force to screen on
+     * This method is  controlled by PhoneWindowManager and should be used only
+     * when clamshell is opened
+     */
+    public void notifyClamshellOpened() {
+        synchronized (mLocks) {
+            mTempDisableLightAnimation = true;
+
+            mScreenOffLock = false;
+            userActivity(SystemClock.uptimeMillis(), false, OTHER_EVENT, true);
+
+            // initialize for next DIM animation because we did force screen on
+            mScreenBrightness.targetValue = getPreferredBrightness();
+
+            mTempDisableLightAnimation = false;
+        }
+    }
 }

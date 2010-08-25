@@ -50,4 +50,18 @@ public interface LocalPowerManager {
 
     void setScreenBrightnessOverride(int brightness);
     void setButtonBrightnessOverride(int brightness);
+
+    /**
+     * Force to screen off (even if wakelock is acquired).
+     * This method is  controlled by PhoneWindowManager and should be used only
+     * when clamshell is closed
+     */
+    public void notifyClamshellClosed();
+
+    /**
+     * Force to screen on
+     * This method is  controlled by PhoneWindowManager and should be used only
+     * when clamshell is opened
+     */
+    public void notifyClamshellOpened();
 }
