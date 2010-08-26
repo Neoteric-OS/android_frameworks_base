@@ -332,4 +332,8 @@
     <!-- 2 means give warning -->
     <integer name="config_datause_notification_type">2</integer>
 
+    <!-- Can activities hide the status bar with window flags?
+         Platform default is true. -->
+    <bool name="config_statusBarCanHide">true</bool>
+
 </resources>
