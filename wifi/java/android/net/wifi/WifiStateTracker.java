@@ -1112,7 +1112,7 @@ public class WifiStateTracker extends NetworkStateTracker {
                  * sent after we closed our connection to the supplicant in the course
                  * of disabling Wi-Fi. In that case, we should just ignore the event.
                  */
-                if (mWifiInfo.getSupplicantState() == SupplicantState.UNINITIALIZED) {
+                if (mWifiInfo.getSupplicantState() != SupplicantState.COMPLETED) {
                     break;
                 }
                 mReconnectCount = 0;
@@ -2448,7 +2448,7 @@ public class WifiStateTracker extends NetworkStateTracker {
             }
             checkUseStaticIp();
 
-            if (mWifiInfo.getSupplicantState() == SupplicantState.UNINITIALIZED) {
+            if (mWifiInfo.getSupplicantState() != SupplicantState.COMPLETED) {
                 return;
             }
 
