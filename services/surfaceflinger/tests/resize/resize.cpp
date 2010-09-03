@@ -33,12 +33,13 @@ int main(int argc, char** argv)
     sp<SurfaceComposerClient> client = new SurfaceComposerClient();
     
     // create pushbuffer surface
-    sp<Surface> surface = client->createSurface(getpid(), 0, 160, 240, 
+    sp<SurfaceControl> control = client->createSurface(getpid(), 0, 160, 240, 
             PIXEL_FORMAT_RGB_565);
 
+    sp<Surface> surface = control->getSurface();
 
     client->openTransaction();
-    surface->setLayer(100000);
+    control->setLayer(100000);
     client->closeTransaction();
 
     Surface::SurfaceInfo info;
@@ -52,7 +53,7 @@ int main(int argc, char** argv)
     surface->unlockAndPost();
 
     client->openTransaction();
-    surface->setSize(320, 240);
+    control->setSize(320, 240);
     client->closeTransaction();
 
     

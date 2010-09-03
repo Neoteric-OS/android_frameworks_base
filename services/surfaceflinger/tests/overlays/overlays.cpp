@@ -7,6 +7,7 @@
 
 #include <surfaceflinger/Surface.h>
 #include <surfaceflinger/ISurface.h>
+#include <surfaceflinger/ISurfaceComposer.h>
 #include <surfaceflinger/SurfaceComposerClient.h>
 
 using namespace android;
@@ -30,15 +31,17 @@ int main(int argc, char** argv)
     sp<SurfaceComposerClient> client = new SurfaceComposerClient();
     
     // create pushbuffer surface
-    sp<Surface> surface = client->createSurface(getpid(), 0, 320, 240, 
+    sp<SurfaceControl> control = client->createSurface(getpid(), 0, 320, 240, 
             PIXEL_FORMAT_UNKNOWN, ISurfaceComposer::ePushBuffers);
+    sp<Surface> surface = control->getSurface();
 
     // get to the isurface
     sp<ISurface> isurface = Test::getISurface(surface);
     printf("isurface = %p\n", isurface.get());
     
     // now request an overlay
-    sp<OverlayRef> ref = isurface->createOverlay(320, 240, PIXEL_FORMAT_RGB_565);
+    sp<OverlayRef> ref = isurface->createOverlay(320, 240, 
+            PIXEL_FORMAT_RGB_565, ISurfaceComposer::eOrientationDefault);
     sp<Overlay> overlay = new Overlay(ref);
     
 
