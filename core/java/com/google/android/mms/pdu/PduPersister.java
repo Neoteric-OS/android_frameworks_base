@@ -424,8 +424,19 @@ public class PduPersister {
                     // faster.
                     if ("text/plain".equals(type) || "application/smil".equals(type)) {
                         String text = c.getString(PART_COLUMN_TEXT);
-                        byte [] blob = new EncodedStringValue(text != null ? text : "")
-                            .getTextString();
+                        if (text == null) {
+                            text = "";
+                        }
+                        byte [] blob;
+                        try {
+                            if (charset != null) {
+                                blob = text.getBytes(CharacterSets.getMimeName(charset));
+                            } else {
+                                blob = new EncodedStringValue(text).getTextString();
+                            }
+                        } catch (UnsupportedEncodingException _) {
+                            blob = new EncodedStringValue(text).getTextString();
+                        }
                         baos.write(blob, 0, blob.length);
                     } else {
 
@@ -738,7 +749,12 @@ public class PduPersister {
             byte[] data = part.getData();
             if ("text/plain".equals(contentType) || "application/smil".equals(contentType)) {
                 ContentValues cv = new ContentValues();
-                cv.put(Telephony.Mms.Part.TEXT, new EncodedStringValue(data).getString());
+                int charset = part.getCharset();
+                if (charset != 0) {
+                    cv.put(Telephony.Mms.Part.TEXT, new EncodedStringValue(charset, data).getString());
+                } else {
+                    cv.put(Telephony.Mms.Part.TEXT, new EncodedStringValue(data).getString());
+                }
                 if (mContentResolver.update(uri, cv, null, null) != 1) {
                     throw new MmsException("unable to update " + uri.toString());
                 }
