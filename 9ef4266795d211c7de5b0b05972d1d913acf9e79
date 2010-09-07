@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA7X///8g\u003d",
+        "filename": "core/java/android/preference/DialogPreference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2010-09-07T18:23:29Z",
+      "side": 1,
+      "message": "Spec says that these two flags cannot be combined.",
+      "revId": "9ef4266795d211c7de5b0b05972d1d913acf9e79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
