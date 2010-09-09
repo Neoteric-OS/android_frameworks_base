@@ -40,6 +40,8 @@ public class CharacterSets {
     public static final int ISO_8859_8  = 0x0B;
     public static final int ISO_8859_9  = 0x0C;
     public static final int SHIFT_JIS   = 0x11;
+    public static final int ISO_2022_JP = 0x27;
+
     public static final int UTF_8       = 0x6A;
     public static final int BIG5        = 0x07EA;
     public static final int UCS2        = 0x03E8;
@@ -66,6 +68,8 @@ public class CharacterSets {
         ISO_8859_8,
         ISO_8859_9,
         SHIFT_JIS,
+        ISO_2022_JP,
+
         UTF_8,
         BIG5,
         UCS2,
@@ -87,6 +91,8 @@ public class CharacterSets {
     public static final String MIMENAME_ISO_8859_8  = "iso-8859-8";
     public static final String MIMENAME_ISO_8859_9  = "iso-8859-9";
     public static final String MIMENAME_SHIFT_JIS   = "shift_JIS";
+    public static final String MIMENAME_ISO_2022_JP = "iso-2022-jp";
+
     public static final String MIMENAME_UTF_8       = "utf-8";
     public static final String MIMENAME_BIG5        = "big5";
     public static final String MIMENAME_UCS2        = "iso-10646-ucs-2";
@@ -110,6 +116,8 @@ public class CharacterSets {
         MIMENAME_ISO_8859_8,
         MIMENAME_ISO_8859_9,
         MIMENAME_SHIFT_JIS,
+        MIMENAME_ISO_2022_JP,
+
         MIMENAME_UTF_8,
         MIMENAME_BIG5,
         MIMENAME_UCS2,
