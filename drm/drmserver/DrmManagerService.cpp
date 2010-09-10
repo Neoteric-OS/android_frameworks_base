@@ -105,7 +105,7 @@ DrmInfo* DrmManagerService::acquireDrmInfo(int uniqueId, const DrmInfoRequest* d
     return mDrmManager->acquireDrmInfo(uniqueId, drmInfoRequest);
 }
 
-void DrmManagerService::saveRights(
+status_t DrmManagerService::saveRights(
             int uniqueId, const DrmRights& drmRights,
             const String8& rightsPath, const String8& contentPath) {
     LOGV("Entering saveRights");
@@ -129,16 +129,16 @@ int DrmManagerService::checkRightsStatus(
     return mDrmManager->checkRightsStatus(uniqueId, path, action);
 }
 
-void DrmManagerService::consumeRights(
+status_t DrmManagerService::consumeRights(
             int uniqueId, DecryptHandle* decryptHandle, int action, bool reserve) {
     LOGV("Entering consumeRights");
-    mDrmManager->consumeRights(uniqueId, decryptHandle, action, reserve);
+    return mDrmManager->consumeRights(uniqueId, decryptHandle, action, reserve);
 }
 
-void DrmManagerService::setPlaybackStatus(
+status_t DrmManagerService::setPlaybackStatus(
             int uniqueId, DecryptHandle* decryptHandle, int playbackStatus, int position) {
     LOGV("Entering setPlaybackStatus");
-    mDrmManager->setPlaybackStatus(uniqueId, decryptHandle, playbackStatus, position);
+    return mDrmManager->setPlaybackStatus(uniqueId, decryptHandle, playbackStatus, position);
 }
 
 bool DrmManagerService::validateAction(
@@ -148,14 +148,14 @@ bool DrmManagerService::validateAction(
     return mDrmManager->validateAction(uniqueId, path, action, description);
 }
 
-void DrmManagerService::removeRights(int uniqueId, const String8& path) {
+status_t DrmManagerService::removeRights(int uniqueId, const String8& path) {
     LOGV("Entering removeRights");
-    mDrmManager->removeRights(uniqueId, path);
+    return mDrmManager->removeRights(uniqueId, path);
 }
 
-void DrmManagerService::removeAllRights(int uniqueId) {
+status_t DrmManagerService::removeAllRights(int uniqueId) {
     LOGV("Entering removeAllRights");
-    mDrmManager->removeAllRights(uniqueId);
+    return mDrmManager->removeAllRights(uniqueId);
 }
 
 int DrmManagerService::openConvertSession(int uniqueId, const String8& mimeType) {
@@ -186,15 +186,15 @@ DecryptHandle* DrmManagerService::openDecryptSession(
     return mDrmManager->openDecryptSession(uniqueId, fd, offset, length);
 }
 
-void DrmManagerService::closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle) {
+status_t DrmManagerService::closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle) {
     LOGV("Entering closeDecryptSession");
-    mDrmManager->closeDecryptSession(uniqueId, decryptHandle);
+    return mDrmManager->closeDecryptSession(uniqueId, decryptHandle);
 }
 
-void DrmManagerService::initializeDecryptUnit(int uniqueId, DecryptHandle* decryptHandle,
+status_t DrmManagerService::initializeDecryptUnit(int uniqueId, DecryptHandle* decryptHandle,
             int decryptUnitId, const DrmBuffer* headerInfo) {
     LOGV("Entering initializeDecryptUnit");
-    mDrmManager->initializeDecryptUnit(uniqueId,decryptHandle, decryptUnitId, headerInfo);
+    return mDrmManager->initializeDecryptUnit(uniqueId,decryptHandle, decryptUnitId, headerInfo);
 }
 
 status_t DrmManagerService::decrypt(
@@ -204,10 +204,10 @@ status_t DrmManagerService::decrypt(
     return mDrmManager->decrypt(uniqueId, decryptHandle, decryptUnitId, encBuffer, decBuffer);
 }
 
-void DrmManagerService::finalizeDecryptUnit(
+status_t DrmManagerService::finalizeDecryptUnit(
             int uniqueId, DecryptHandle* decryptHandle, int decryptUnitId) {
     LOGV("Entering finalizeDecryptUnit");
-    mDrmManager->finalizeDecryptUnit(uniqueId, decryptHandle, decryptUnitId);
+    return mDrmManager->finalizeDecryptUnit(uniqueId, decryptHandle, decryptUnitId);
 }
 
 ssize_t DrmManagerService::pread(int uniqueId, DecryptHandle* decryptHandle,

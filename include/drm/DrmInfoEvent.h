@@ -29,26 +29,26 @@ class DrmInfoEvent {
 public:
     //! TYPE_ALREADY_REGISTERED_BY_ANOTHER_ACCOUNT, when registration has been
     //! already done by another account ID.
-    static const int TYPE_ALREADY_REGISTERED_BY_ANOTHER_ACCOUNT = 0x0000001;
+    static const int TYPE_ALREADY_REGISTERED_BY_ANOTHER_ACCOUNT = 0x01;
     //! TYPE_REMOVE_RIGHTS, when the rights needs to be removed completely.
-    static const int TYPE_REMOVE_RIGHTS = 0x0000002;
+    static const int TYPE_REMOVE_RIGHTS = 0x02;
     //! TYPE_RIGHTS_INSTALLED, when the rights are downloaded and installed ok.
-    static const int TYPE_RIGHTS_INSTALLED = 0x0000003;
+    static const int TYPE_RIGHTS_INSTALLED = 0x03;
     //! TYPE_RIGHTS_NOT_INSTALLED, when something went wrong installing the rights
-    static const int TYPE_RIGHTS_NOT_INSTALLED = 0x0000004;
+    static const int TYPE_RIGHTS_NOT_INSTALLED = 0x04;
     //! TYPE_RIGHTS_RENEWAL_NOT_ALLOWED, when the server rejects renewal of rights
-    static const int TYPE_RIGHTS_RENEWAL_NOT_ALLOWED = 0x0000005;
+    static const int TYPE_RIGHTS_RENEWAL_NOT_ALLOWED = 0x05;
     //! TYPE_NOT_SUPPORTED, when answer from server can not be handled by the native agent
-    static const int TYPE_NOT_SUPPORTED = 0x0000006;
+    static const int TYPE_NOT_SUPPORTED = 0x06;
     //! TYPE_WAIT_FOR_RIGHTS, rights object is on it's way to phone,
     //! wait before calling checkRights again
-    static const int TYPE_WAIT_FOR_RIGHTS = 0x0000007;
+    static const int TYPE_WAIT_FOR_RIGHTS = 0x07;
     //! TYPE_OUT_OF_MEMORY, when memory allocation fail during renewal.
     //! Can in the future perhaps be used to trigger garbage collector
-    static const int TYPE_OUT_OF_MEMORY = 0x0000008;
+    static const int TYPE_OUT_OF_MEMORY = 0x08;
     //! TYPE_NO_INTERNET_CONNECTION, when the Internet connection is missing and no attempt
     //! can be made to renew rights
-    static const int TYPE_NO_INTERNET_CONNECTION = 0x0000009;
+    static const int TYPE_NO_INTERNET_CONNECTION = 0x09;
 
 public:
     /**

@@ -237,7 +237,7 @@ DrmInfo* BpDrmManagerService::acquireDrmInfo(int uniqueId, const DrmInfoRequest*
     return drmInfo;
 }
 
-void BpDrmManagerService::saveRights(
+status_t BpDrmManagerService::saveRights(
             int uniqueId, const DrmRights& drmRights,
             const String8& rightsPath, const String8& contentPath) {
     LOGV("Save Rights");
@@ -264,6 +264,7 @@ void BpDrmManagerService::saveRights(
     data.writeString8((contentPath == String8("")) ? String8("NULL") : contentPath);
 
     remote()->transact(SAVE_RIGHTS, data, &reply);
+    return reply.readInt32();
 }
 
 String8 BpDrmManagerService::getOriginalMimeType(int uniqueId, const String8& path) {
@@ -307,10 +308,10 @@ int BpDrmManagerService::checkRightsStatus(int uniqueId, const String8& path, in
     return reply.readInt32();
 }
 
-void BpDrmManagerService::consumeRights(
+status_t BpDrmManagerService::consumeRights(
             int uniqueId, DecryptHandle* decryptHandle, int action, bool reserve) {
     LOGV("consumeRights");
-        Parcel data, reply;
+    Parcel data, reply;
 
     data.writeInterfaceToken(IDrmManagerService::getInterfaceDescriptor());
     data.writeInt32(uniqueId);
@@ -330,9 +331,10 @@ void BpDrmManagerService::consumeRights(
     data.writeInt32(static_cast< int>(reserve));
 
     remote()->transact(CONSUME_RIGHTS, data, &reply);
+    return reply.readInt32();
 }
 
-void BpDrmManagerService::setPlaybackStatus(
+status_t BpDrmManagerService::setPlaybackStatus(
             int uniqueId, DecryptHandle* decryptHandle, int playbackStatus, int position) {
     LOGV("setPlaybackStatus");
     Parcel data, reply;
@@ -355,6 +357,7 @@ void BpDrmManagerService::setPlaybackStatus(
     data.writeInt32(position);
 
     remote()->transact(SET_PLAYBACK_STATUS, data, &reply);
+    return reply.readInt32();
 }
 
 bool BpDrmManagerService::validateAction(
@@ -375,7 +378,7 @@ bool BpDrmManagerService::validateAction(
     return static_cast<bool>(reply.readInt32());
 }
 
-void BpDrmManagerService::removeRights(int uniqueId, const String8& path) {
+status_t BpDrmManagerService::removeRights(int uniqueId, const String8& path) {
     LOGV("removeRights");
     Parcel data, reply;
 
@@ -384,9 +387,10 @@ void BpDrmManagerService::removeRights(int uniqueId, const String8& path) {
     data.writeString8(path);
 
     remote()->transact(REMOVE_RIGHTS, data, &reply);
+    return reply.readInt32();
 }
 
-void BpDrmManagerService::removeAllRights(int uniqueId) {
+status_t BpDrmManagerService::removeAllRights(int uniqueId) {
     LOGV("removeAllRights");
     Parcel data, reply;
 
@@ -394,6 +398,7 @@ void BpDrmManagerService::removeAllRights(int uniqueId) {
     data.writeInt32(uniqueId);
 
     remote()->transact(REMOVE_ALL_RIGHTS, data, &reply);
+    return reply.readInt32();
 }
 
 int BpDrmManagerService::openConvertSession(int uniqueId, const String8& mimeType) {
@@ -546,7 +551,7 @@ DecryptHandle* BpDrmManagerService::openDecryptSession(
     return handle;
 }
 
-void BpDrmManagerService::closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle) {
+status_t BpDrmManagerService::closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle) {
     LOGV("closeDecryptSession");
     Parcel data, reply;
 
@@ -571,9 +576,10 @@ void BpDrmManagerService::closeDecryptSession(int uniqueId, DecryptHandle* decry
         delete decryptHandle->decryptInfo; decryptHandle->decryptInfo = NULL;
     }
     delete decryptHandle; decryptHandle = NULL;
+    return reply.readInt32();
 }
 
-void BpDrmManagerService::initializeDecryptUnit(
+status_t BpDrmManagerService::initializeDecryptUnit(
             int uniqueId, DecryptHandle* decryptHandle,
             int decryptUnitId, const DrmBuffer* headerInfo) {
     LOGV("initializeDecryptUnit");
@@ -598,6 +604,7 @@ void BpDrmManagerService::initializeDecryptUnit(
     data.write(headerInfo->data, headerInfo->length);
 
     remote()->transact(INITIALIZE_DECRYPT_UNIT, data, &reply);
+    return reply.readInt32();
 }
 
 status_t BpDrmManagerService::decrypt(
@@ -638,7 +645,7 @@ status_t BpDrmManagerService::decrypt(
     return status;
 }
 
-void BpDrmManagerService::finalizeDecryptUnit(
+status_t BpDrmManagerService::finalizeDecryptUnit(
             int uniqueId, DecryptHandle* decryptHandle, int decryptUnitId) {
     LOGV("finalizeDecryptUnit");
     Parcel data, reply;
@@ -660,6 +667,7 @@ void BpDrmManagerService::finalizeDecryptUnit(
     data.writeInt32(decryptUnitId);
 
     remote()->transact(FINALIZE_DECRYPT_UNIT, data, &reply);
+    return reply.readInt32();
 }
 
 ssize_t BpDrmManagerService::pread(
@@ -923,10 +931,11 @@ status_t BnDrmManagerService::onTransact(
                             ((accountId == String8("NULL")) ? String8("") : accountId),
                             ((subscriptionId == String8("NULL")) ? String8("") : subscriptionId));
 
-        saveRights(uniqueId, drmRights,
+        const status_t status = saveRights(uniqueId, drmRights,
                             ((rightsPath == String8("NULL")) ? String8("") : rightsPath),
                             ((contentPath == String8("NULL")) ? String8("") : contentPath));
 
+        reply->writeInt32(status);
         return DRM_NO_ERROR;
     }
 
@@ -985,7 +994,10 @@ status_t BnDrmManagerService::onTransact(
             handle.decryptInfo->decryptBufferLength = bufferLength;
         }
 
-        consumeRights(uniqueId, &handle, data.readInt32(), static_cast<bool>(data.readInt32()));
+        const status_t status
+            = consumeRights(uniqueId, &handle, data.readInt32(),
+                static_cast<bool>(data.readInt32()));
+        reply->writeInt32(status);
 
         delete handle.decryptInfo; handle.decryptInfo = NULL;
         return DRM_NO_ERROR;
@@ -1011,7 +1023,9 @@ status_t BnDrmManagerService::onTransact(
             handle.decryptInfo->decryptBufferLength = bufferLength;
         }
 
-        setPlaybackStatus(uniqueId, &handle, data.readInt32(), data.readInt32());
+        const status_t status
+            = setPlaybackStatus(uniqueId, &handle, data.readInt32(), data.readInt32());
+        reply->writeInt32(status);
 
         delete handle.decryptInfo; handle.decryptInfo = NULL;
         return DRM_NO_ERROR;
@@ -1037,7 +1051,8 @@ status_t BnDrmManagerService::onTransact(
         LOGV("BnDrmManagerService::onTransact :REMOVE_RIGHTS");
         CHECK_INTERFACE(IDrmManagerService, data, reply);
 
-        removeRights(data.readInt32(), data.readString8());
+        const status_t status = removeRights(data.readInt32(), data.readString8());
+        reply->writeInt32(status);
 
         return DRM_NO_ERROR;
     }
@@ -1047,7 +1062,8 @@ status_t BnDrmManagerService::onTransact(
         LOGV("BnDrmManagerService::onTransact :REMOVE_ALL_RIGHTS");
         CHECK_INTERFACE(IDrmManagerService, data, reply);
 
-        removeAllRights(data.readInt32());
+        const status_t status = removeAllRights(data.readInt32());
+        reply->writeInt32(status);
 
         return DRM_NO_ERROR;
     }
@@ -1207,7 +1223,8 @@ status_t BnDrmManagerService::onTransact(
             handle->decryptInfo->decryptBufferLength = bufferLength;
         }
 
-        closeDecryptSession(uniqueId, handle);
+        const status_t status = closeDecryptSession(uniqueId, handle);
+        reply->writeInt32(status);
         return DRM_NO_ERROR;
     }
 
@@ -1237,7 +1254,9 @@ status_t BnDrmManagerService::onTransact(
         DrmBuffer* headerInfo = NULL;
         headerInfo = new DrmBuffer((char *)data.readInplace(bufferSize), bufferSize);
 
-        initializeDecryptUnit(uniqueId, &handle, decryptUnitId, headerInfo);
+        const status_t status
+            = initializeDecryptUnit(uniqueId, &handle, decryptUnitId, headerInfo);
+        reply->writeInt32(status);
 
         delete handle.decryptInfo; handle.decryptInfo = NULL;
         delete headerInfo; headerInfo = NULL;
@@ -1309,7 +1328,8 @@ status_t BnDrmManagerService::onTransact(
             handle.decryptInfo->decryptBufferLength = bufferLength;
         }
 
-        finalizeDecryptUnit(uniqueId, &handle, data.readInt32());
+        const status_t status = finalizeDecryptUnit(uniqueId, &handle, data.readInt32());
+        reply->writeInt32(status);
 
         delete handle.decryptInfo; handle.decryptInfo = NULL;
         return DRM_NO_ERROR;

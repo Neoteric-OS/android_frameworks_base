@@ -132,8 +132,10 @@ public:
      * @param[in] drmRights DrmRights to be saved
      * @param[in] rightsPath File path where rights to be saved
      * @param[in] contentPath File path where content was saved
+     * @return status_t
+     *     Returns DRM_NO_ERROR for success, DRM_ERROR_UNKNOWN for failure
      */
-    void saveRights(int uniqueId, const DrmRights& drmRights,
+    status_t saveRights(int uniqueId, const DrmRights& drmRights,
             const String8& rightsPath, const String8& contentPath);
 
     /**
@@ -179,8 +181,10 @@ public:
      * @param[in] decryptHandle Handle for the decryption session
      * @param[in] action Action to perform. (Action::DEFAULT, Action::PLAY, etc)
      * @param[in] reserve True if the rights should be reserved.
+     * @return status_t
+     *     Returns DRM_NO_ERROR for success, DRM_ERROR_UNKNOWN for failure
      */
-    void consumeRights(int uniqueId, DecryptHandle* decryptHandle, int action, bool reserve);
+    status_t consumeRights(int uniqueId, DecryptHandle* decryptHandle, int action, bool reserve);
 
     /**
      * Informs the DRM engine about the playback actions performed on the DRM files.
@@ -190,8 +194,10 @@ public:
      * @param[in] playbackStatus Playback action (Playback::START, Playback::STOP, Playback::PAUSE)
      * @param[in] position Position in the file (in milliseconds) where the start occurs.
      *     Only valid together with Playback::START.
+     * @return status_t
+     *     Returns DRM_NO_ERROR for success, DRM_ERROR_UNKNOWN for failure
      */
-    void setPlaybackStatus(
+    status_t setPlaybackStatus(
             int uniqueId, DecryptHandle* decryptHandle, int playbackStatus, int position);
 
     /**
@@ -211,16 +217,20 @@ public:
      *
      * @param[in] uniqueId Unique identifier for a session
      * @param[in] path Path of the protected content
+     * @return status_t
+     *     Returns DRM_NO_ERROR for success, DRM_ERROR_UNKNOWN for failure
      */
-    void removeRights(int uniqueId, const String8& path);
+    status_t removeRights(int uniqueId, const String8& path);
 
     /**
      * Removes all the rights information of each plug-in associated with
      * DRM framework. Will be used in master reset
      *
      * @param[in] uniqueId Unique identifier for a session
+     * @return status_t
+     *     Returns DRM_NO_ERROR for success, DRM_ERROR_UNKNOWN for failure
      */
-    void removeAllRights(int uniqueId);
+    status_t removeAllRights(int uniqueId);
 
     /**
      * This API is for Forward Lock based DRM scheme.
@@ -295,8 +305,10 @@ public:
      *
      * @param[in] uniqueId Unique identifier for a session
      * @param[in] decryptHandle Handle for the decryption session
+     * @return status_t
+     *     Returns DRM_NO_ERROR for success, DRM_ERROR_UNKNOWN for failure
      */
-    void closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle);
+    status_t closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle);
 
     /**
      * Initialize decryption for the given unit of the protected content
@@ -305,8 +317,10 @@ public:
      * @param[in] decryptHandle Handle for the decryption session
      * @param[in] decryptUnitId ID which specifies decryption unit, such as track ID
      * @param[in] headerInfo Information for initializing decryption of this decrypUnit
+     * @return status_t
+     *     Returns DRM_NO_ERROR for success, DRM_ERROR_UNKNOWN for failure
      */
-    void initializeDecryptUnit(int uniqueId, DecryptHandle* decryptHandle,
+    status_t initializeDecryptUnit(int uniqueId, DecryptHandle* decryptHandle,
             int decryptUnitId, const DrmBuffer* headerInfo);
 
     /**
@@ -334,8 +348,10 @@ public:
      * @param[in] uniqueId Unique identifier for a session
      * @param[in] decryptHandle Handle for the decryption session
      * @param[in] decryptUnitId ID which specifies decryption unit, such as track ID
+     * @return status_t
+     *     Returns DRM_NO_ERROR for success, DRM_ERROR_UNKNOWN for failure
      */
-    void finalizeDecryptUnit(int uniqueId, DecryptHandle* decryptHandle, int decryptUnitId);
+    status_t finalizeDecryptUnit(int uniqueId, DecryptHandle* decryptHandle, int decryptUnitId);
 
     /**
      * Reads the specified number of bytes from an open DRM file.

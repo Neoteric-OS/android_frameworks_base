@@ -26,42 +26,72 @@ public class DrmInfoEvent extends DrmEvent {
      * TYPE_ALREADY_REGISTERED_BY_ANOTHER_ACCOUNT, when registration has been already done
      * by another account ID.
      */
-    public static final int TYPE_ALREADY_REGISTERED_BY_ANOTHER_ACCOUNT = 0x0000001;
+    public static final int TYPE_ALREADY_REGISTERED_BY_ANOTHER_ACCOUNT = 1;
     /**
      * TYPE_REMOVE_RIGHTS, when the rights needs to be removed completely.
      */
-    public static final int TYPE_REMOVE_RIGHTS = 0x0000002;
+    public static final int TYPE_REMOVE_RIGHTS = 2;
     /**
      * TYPE_RIGHTS_INSTALLED, when the rights are downloaded and installed ok.
      */
-    public static final int TYPE_RIGHTS_INSTALLED = 0x0000003;
+    public static final int TYPE_RIGHTS_INSTALLED = 3;
     /**
      * TYPE_RIGHTS_NOT_INSTALLED, when something went wrong installing the rights.
      */
-    public static final int TYPE_RIGHTS_NOT_INSTALLED = 0x0000004;
+    public static final int TYPE_RIGHTS_NOT_INSTALLED = 4;
     /**
      * TYPE_RIGHTS_RENEWAL_NOT_ALLOWED, when the server rejects renewal of rights.
      */
-    public static final int TYPE_RIGHTS_RENEWAL_NOT_ALLOWED = 0x0000005;
+    public static final int TYPE_RIGHTS_RENEWAL_NOT_ALLOWED = 5;
     /**
      * TYPE_NOT_SUPPORTED, when answer from server can not be handled by the native agent.
      */
-    public static final int TYPE_NOT_SUPPORTED = 0x0000006;
+    public static final int TYPE_NOT_SUPPORTED = 6;
     /**
      * TYPE_WAIT_FOR_RIGHTS, rights object is on it's way to phone,
      * wait before calling checkRights again.
      */
-    public static final int TYPE_WAIT_FOR_RIGHTS = 0x0000007;
+    public static final int TYPE_WAIT_FOR_RIGHTS = 7;
     /**
      * TYPE_OUT_OF_MEMORY, when memory allocation fail during renewal.
      * Can in the future perhaps be used to trigger garbage collector.
      */
-    public static final int TYPE_OUT_OF_MEMORY = 0x0000008;
+    public static final int TYPE_OUT_OF_MEMORY = 8;
     /**
      * TYPE_NO_INTERNET_CONNECTION, when the Internet connection is missing and no attempt
      * can be made to renew rights.
      */
-    public static final int TYPE_NO_INTERNET_CONNECTION = 0x0000009;
+    public static final int TYPE_NO_INTERNET_CONNECTION = 9;
+    /**
+     * TYPE_INITIALIZE_FAILED, when failed to load and initialize the available plugins.
+     */
+    public static final int TYPE_INITIALIZE_FAILED = 10;
+    /**
+     * TYPE_FINALIZE_FAILED, when failed to unload and finalize the loaded plugins.
+     */
+    public static final int TYPE_FINALIZE_FAILED = 11;
+    /**
+     * TYPE_REMOVE_ALL_RIGHTS_FAILED, when failed to remove all the rights objects
+     * associated with all DRM schemes.
+     */
+    public static final int TYPE_REMOVE_ALL_RIGHTS_FAILED = 12;
+    /**
+     * TYPE_REGISTRATION_FAILED, when failed to register with the service.
+     */
+    public static final int TYPE_REGISTRATION_FAILED = 13;
+    /**
+     * TYPE_UNREGISTRATION_FAILED, when failed to unregister with the service.
+     */
+    public static final int TYPE_UNREGISTRATION_FAILED = 14;
+    /**
+     * TYPE_RIGHTS_ACQUISITION_FAILED, when failed to acquire the rights information required.
+     */
+    public static final int TYPE_RIGHTS_ACQUISITION_FAILED = 15;
+    /**
+     * TYPE_DRM_INFO_ACQUISITION_FAILED, when failed to get the required information to
+     * communicate with the service.
+     */
+    public static final int TYPE_DRM_INFO_ACQUISITION_FAILED = 16;
 
     /**
      * constructor to create DrmInfoEvent object with given parameters

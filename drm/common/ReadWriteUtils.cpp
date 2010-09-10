@@ -51,6 +51,30 @@ String8 ReadWriteUtils::readBytes(const String8& filePath) {
     return string;
 }
 
+int ReadWriteUtils::readBytes(const String8& filePath, char** buffer) {
+    FILE* file = NULL;
+    file = fopen(filePath.string(), "r");
+    int length = 0;
+
+    String8 string("");
+    if (NULL != file) {
+        int fd = fileno(file);
+        struct stat sb;
+
+        if (fstat(fd, &sb) == 0 && sb.st_size > 0) {
+            length = sb.st_size;
+            FileMap* fileMap = new FileMap();
+            if (fileMap->create(filePath.string(), fd, 0, length, true)) {
+                *buffer = new char[length];
+                memcpy(*buffer, (char*)fileMap->getDataPtr(), length);
+                fileMap->release();
+            }
+        }
+        fclose(file);
+    }
+    return length;
+}
+
 void ReadWriteUtils::writeToFile(const String8& filePath, const String8& data) {
     FILE* file = NULL;
     file = fopen(filePath.string(), "w+");

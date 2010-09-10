@@ -55685,6 +55685,105 @@
  visibility="public"
 >
 </method>
+<field name="DRM_INFO_OBJECT"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;drm_info_object&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="DRM_INFO_STATUS_OBJECT"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;drm_info_status_object&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TYPE_ALL_RIGHTS_REMOVED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1006"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TYPE_DRM_INFO_ACQUIRED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1007"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TYPE_FINALIZED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1001"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TYPE_INITIALIZED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1003"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TYPE_REGISTERED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1002"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TYPE_RIGHTS_ACQUIRED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1005"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TYPE_UNREGISTERED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1004"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
 </class>
 <class name="DrmInfo"
  extends="java.lang.Object"
@@ -55839,6 +55938,39 @@
  visibility="public"
 >
 </field>
+<field name="TYPE_DRM_INFO_ACQUISITION_FAILED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="16"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TYPE_FINALIZE_FAILED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="11"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TYPE_INITIALIZE_FAILED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="10"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
 <field name="TYPE_NOT_SUPPORTED"
  type="int"
  transient="false"
@@ -55872,11 +56004,44 @@
  visibility="public"
 >
 </field>
+<field name="TYPE_REGISTRATION_FAILED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="13"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TYPE_REMOVE_ALL_RIGHTS_FAILED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="12"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
 <field name="TYPE_REMOVE_RIGHTS"
  type="int"
  transient="false"
  volatile="false"
  value="2"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TYPE_RIGHTS_ACQUISITION_FAILED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="15"
  static="true"
  final="true"
  deprecated="not deprecated"
@@ -55910,6 +56075,17 @@
  transient="false"
  volatile="false"
  value="5"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TYPE_UNREGISTRATION_FAILED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="14"
  static="true"
  final="true"
  deprecated="not deprecated"
@@ -56181,7 +56357,7 @@
 </parameter>
 </constructor>
 <method name="acquireDrmInfo"
- return="android.drm.DrmInfo"
+ return="int"
  abstract="false"
  native="false"
  synchronized="false"
@@ -56319,7 +56495,7 @@
 </parameter>
 </method>
 <method name="loadPlugIns"
- return="void"
+ return="int"
  abstract="false"
  native="false"
  synchronized="false"
@@ -56343,7 +56519,7 @@
 </parameter>
 </method>
 <method name="processDrmInfo"
- return="android.drm.DrmInfoStatus"
+ return="int"
  abstract="false"
  native="false"
  synchronized="false"
@@ -56356,7 +56532,7 @@
 </parameter>
 </method>
 <method name="removeAllRights"
- return="void"
+ return="int"
  abstract="false"
  native="false"
  synchronized="false"
@@ -56367,7 +56543,7 @@
 >
 </method>
 <method name="removeRights"
- return="void"
+ return="int"
  abstract="false"
  native="false"
  synchronized="false"
@@ -56380,7 +56556,7 @@
 </parameter>
 </method>
 <method name="saveRights"
- return="void"
+ return="int"
  abstract="false"
  native="false"
  synchronized="false"
@@ -56398,6 +56574,19 @@
 <exception name="IOException" type="java.io.IOException">
 </exception>
 </method>
+<method name="setOnEventListener"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="eventListener" type="android.drm.DrmManagerClient.OnEventListener">
+</parameter>
+</method>
 <method name="setOnInfoListener"
  return="void"
  abstract="false"
@@ -56412,7 +56601,7 @@
 </parameter>
 </method>
 <method name="unloadPlugIns"
- return="void"
+ return="int"
  abstract="false"
  native="false"
  synchronized="false"
@@ -56422,7 +56611,54 @@
  visibility="public"
 >
 </method>
+<field name="ERROR_NONE"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="0"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ERROR_UNKNOWN"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="-2000"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
 </class>
+<interface name="DrmManagerClient.OnEventListener"
+ abstract="true"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="onEvent"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="client" type="android.drm.DrmManagerClient">
+</parameter>
+<parameter name="event" type="android.drm.DrmEvent">
+</parameter>
+<parameter name="attributes" type="java.util.HashMap&lt;java.lang.String, java.lang.Object&gt;">
+</parameter>
+</method>
+</interface>
 <interface name="DrmManagerClient.OnInfoListener"
  abstract="true"
  static="true"

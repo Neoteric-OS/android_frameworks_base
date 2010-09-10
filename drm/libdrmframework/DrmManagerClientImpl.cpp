@@ -164,11 +164,13 @@ DrmInfo* DrmManagerClientImpl::acquireDrmInfo(int uniqueId, const DrmInfoRequest
     return drmInfo;
 }
 
-void DrmManagerClientImpl::saveRights(int uniqueId, const DrmRights& drmRights,
+status_t DrmManagerClientImpl::saveRights(int uniqueId, const DrmRights& drmRights,
             const String8& rightsPath, const String8& contentPath) {
+    status_t status = DRM_ERROR_UNKNOWN;
     if (EMPTY_STRING != contentPath) {
-        getDrmManagerService()->saveRights(uniqueId, drmRights, rightsPath, contentPath);
+        status = getDrmManagerService()->saveRights(uniqueId, drmRights, rightsPath, contentPath);
     }
+    return status;
 }
 
 String8 DrmManagerClientImpl::getOriginalMimeType(int uniqueId, const String8& path) {
@@ -197,19 +199,23 @@ int DrmManagerClientImpl::checkRightsStatus(
     return rightsStatus;
 }
 
-void DrmManagerClientImpl::consumeRights(
+status_t DrmManagerClientImpl::consumeRights(
             int uniqueId, DecryptHandle* decryptHandle, int action, bool reserve) {
+    status_t status = DRM_ERROR_UNKNOWN;
     if (NULL != decryptHandle) {
-        getDrmManagerService()->consumeRights(uniqueId, decryptHandle, action, reserve);
+        status = getDrmManagerService()->consumeRights(uniqueId, decryptHandle, action, reserve);
     }
+    return status;
 }
 
-void DrmManagerClientImpl::setPlaybackStatus(
+status_t DrmManagerClientImpl::setPlaybackStatus(
             int uniqueId, DecryptHandle* decryptHandle, int playbackStatus, int position) {
+    status_t status = DRM_ERROR_UNKNOWN;
     if (NULL != decryptHandle) {
-        getDrmManagerService()->setPlaybackStatus(
+        status = getDrmManagerService()->setPlaybackStatus(
                 uniqueId, decryptHandle, playbackStatus, position);
     }
+    return status;
 }
 
 bool DrmManagerClientImpl::validateAction(
@@ -221,14 +227,16 @@ bool DrmManagerClientImpl::validateAction(
     return retCode;
 }
 
-void DrmManagerClientImpl::removeRights(int uniqueId, const String8& path) {
+status_t DrmManagerClientImpl::removeRights(int uniqueId, const String8& path) {
+    status_t status = DRM_ERROR_UNKNOWN;
     if (EMPTY_STRING != path) {
-        getDrmManagerService()->removeRights(uniqueId, path);
+        status = getDrmManagerService()->removeRights(uniqueId, path);
     }
+    return status;
 }
 
-void DrmManagerClientImpl::removeAllRights(int uniqueId) {
-    getDrmManagerService()->removeAllRights(uniqueId);
+status_t DrmManagerClientImpl::removeAllRights(int uniqueId) {
+    return getDrmManagerService()->removeAllRights(uniqueId);
 }
 
 int DrmManagerClientImpl::openConvertSession(int uniqueId, const String8& mimeType) {
@@ -267,18 +275,22 @@ DecryptHandle* DrmManagerClientImpl::openDecryptSession(
     return getDrmManagerService()->openDecryptSession(uniqueId, fd, offset, length);
 }
 
-void DrmManagerClientImpl::closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle) {
+status_t DrmManagerClientImpl::closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle) {
+    status_t status = DRM_ERROR_UNKNOWN;
     if (NULL != decryptHandle) {
-        getDrmManagerService()->closeDecryptSession( uniqueId, decryptHandle);
+        status = getDrmManagerService()->closeDecryptSession( uniqueId, decryptHandle);
     }
+    return status;
 }
 
-void DrmManagerClientImpl::initializeDecryptUnit(int uniqueId, DecryptHandle* decryptHandle,
+status_t DrmManagerClientImpl::initializeDecryptUnit(int uniqueId, DecryptHandle* decryptHandle,
             int decryptUnitId, const DrmBuffer* headerInfo) {
+    status_t status = DRM_ERROR_UNKNOWN;
     if ((NULL != decryptHandle) && (NULL != headerInfo)) {
-        getDrmManagerService()->initializeDecryptUnit(
+        status = getDrmManagerService()->initializeDecryptUnit(
                 uniqueId, decryptHandle, decryptUnitId, headerInfo);
     }
+    return status;
 }
 
 status_t DrmManagerClientImpl::decrypt(int uniqueId, DecryptHandle* decryptHandle,
@@ -292,11 +304,14 @@ status_t DrmManagerClientImpl::decrypt(int uniqueId, DecryptHandle* decryptHandl
     return status;
 }
 
-void DrmManagerClientImpl::finalizeDecryptUnit(
+status_t DrmManagerClientImpl::finalizeDecryptUnit(
             int uniqueId, DecryptHandle* decryptHandle, int decryptUnitId) {
+    status_t status = DRM_ERROR_UNKNOWN;
     if (NULL != decryptHandle) {
-        getDrmManagerService()->finalizeDecryptUnit(uniqueId, decryptHandle, decryptUnitId);
+        status
+            = getDrmManagerService()->finalizeDecryptUnit(uniqueId, decryptHandle, decryptUnitId);
     }
+    return status;
 }
 
 ssize_t DrmManagerClientImpl::pread(int uniqueId, DecryptHandle* decryptHandle,

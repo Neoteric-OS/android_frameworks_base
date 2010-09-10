@@ -19,6 +19,7 @@ package android.drm;
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
@@ -26,6 +27,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Interface of DRM Framework.
@@ -34,7 +36,16 @@ import java.util.ArrayList;
  *
  */
 public class DrmManagerClient {
-    private static final String TAG = "DrmManager";
+    /**
+     * Constant field signifies the success or no error occurred
+     */
+    public static final int ERROR_NONE = 0;
+    /**
+     * Constant field signifies that error occurred and the reason is not known
+     */
+    public static final int ERROR_UNKNOWN = -2000;
+
+    private static final String TAG = "DrmManagerClient";
 
     static {
         // Load the respective library
@@ -55,19 +66,122 @@ public class DrmManagerClient {
         public void onInfo(DrmManagerClient client, DrmInfoEvent event);
     }
 
-    private static final int STATE_UNINITIALIZED = 0x00000000;
-    private static final int STATE_INITIALIZED = 0x00000001;
+    /**
+     * Interface definition of a callback to be invoked to communicate
+     * the result of time consuming APIs asynchronously
+     */
+    public interface OnEventListener {
+        /**
+         * Called to indicate the result of asynchronous APIs
+         *
+         * @param client DrmManagerClient instance
+         * @param event instance which wraps type and message
+         * @param attributes resultant values in key and value pair.
+         */
+        public void onEvent(DrmManagerClient client, DrmEvent event,
+                HashMap<String, Object> attributes);
+    }
+
+    private static final int STATE_UNINITIALIZED = 0;
+    private static final int STATE_INITIALIZED = 1;
+
+    private static final int ACTION_INITIALIZE = 1000;
+    private static final int ACTION_FINALIZE = 1001;
+    private static final int ACTION_REMOVE_ALL_RIGHTS = 1002;
+    private static final int ACTION_ACQUIRE_DRM_INFO = 1003;
+    private static final int ACTION_PROCESS_DRM_INFO = 1004;
 
     private int mUniqueId;
     private int mNativeContext;
     private EventHandler mEventHandler;
+    private ActionHandler mActionHandler;
     private OnInfoListener mOnInfoListener;
+    private OnEventListener mOnEventListener;
     private int mCurrentState = STATE_UNINITIALIZED;
+
+    private class ActionHandler extends Handler {
+
+        public ActionHandler(Looper looper) {
+            super(looper);
+        }
+
+        public void handleMessage(Message msg) {
+            DrmEvent event = null;
+            DrmInfoEvent infoEvent = null;
+            HashMap<String, Object> attributes = new HashMap<String, Object>();
+
+            switch(msg.what) {
+            case ACTION_INITIALIZE: {
+                if (ERROR_NONE == _loadPlugIns(mUniqueId, msg.obj)) {
+                    mCurrentState = STATE_INITIALIZED;
+                    event = new DrmEvent(mUniqueId, DrmEvent.TYPE_INITIALIZED, null);
+                } else {
+                    infoEvent = new DrmInfoEvent(mUniqueId,
+                            DrmInfoEvent.TYPE_INITIALIZE_FAILED, null);
+                }
+                break;
+            }
+            case ACTION_ACQUIRE_DRM_INFO: {
+                final DrmInfoRequest request = (DrmInfoRequest) msg.obj;
+                DrmInfo drmInfo = _acquireDrmInfo(mUniqueId, request);
+                if (null != drmInfo) {
+                    attributes.put(DrmEvent.DRM_INFO_OBJECT, drmInfo);
+                    event = new DrmEvent(mUniqueId, DrmEvent.TYPE_DRM_INFO_ACQUIRED, null);
+                } else {
+                    infoEvent = new DrmInfoEvent(mUniqueId,
+                            DrmInfoEvent.TYPE_DRM_INFO_ACQUISITION_FAILED, null);
+                }
+                break;
+            }
+            case ACTION_PROCESS_DRM_INFO: {
+                final DrmInfo drmInfo = (DrmInfo) msg.obj;
+                DrmInfoStatus status = _processDrmInfo(mUniqueId, drmInfo);
+                if (null != status && DrmInfoStatus.STATUS_OK == status.statusCode) {
+                    attributes.put(DrmEvent.DRM_INFO_STATUS_OBJECT, status);
+                    event = new DrmEvent(mUniqueId, getEventType(drmInfo.getInfoType()), null);
+                } else {
+                    infoEvent = new DrmInfoEvent(mUniqueId,
+                            getInfoEventType(drmInfo.getInfoType()), null);
+                }
+                break;
+            }
+            case ACTION_REMOVE_ALL_RIGHTS: {
+                if (ERROR_NONE == _removeAllRights(mUniqueId)) {
+                    event = new DrmEvent(mUniqueId, DrmEvent.TYPE_ALL_RIGHTS_REMOVED, null);
+                } else {
+                    infoEvent = new DrmInfoEvent(mUniqueId,
+                            DrmInfoEvent.TYPE_REMOVE_ALL_RIGHTS_FAILED, null);
+                }
+                break;
+            }
+            case ACTION_FINALIZE: {
+                if (ERROR_NONE == _unloadPlugIns(mUniqueId)) {
+                    mCurrentState = STATE_UNINITIALIZED;
+                    event = new DrmEvent(mUniqueId, DrmEvent.TYPE_FINALIZED, null);
+                } else {
+                    infoEvent = new DrmInfoEvent(mUniqueId,
+                            DrmInfoEvent.TYPE_FINALIZE_FAILED, null);
+                }
+                break;
+            }
+            default:
+                Log.e(TAG, "Unknown message type " + msg.what);
+                return;
+            }
+            if (null != mOnEventListener && null != event) {
+                mOnEventListener.onEvent(DrmManagerClient.this, event, attributes);
+            }
+            if (null != mOnInfoListener && null != infoEvent) {
+                mOnInfoListener.onInfo(DrmManagerClient.this, infoEvent);
+            }
+        }
+    }
 
     /**
      * {@hide}
      */
-    public static void notify(Object thisReference, int uniqueId, int infoType, String message) {
+    public static void notify(
+            Object thisReference, int uniqueId, int infoType, String message) {
         DrmManagerClient instance = (DrmManagerClient)((WeakReference)thisReference).get();
 
         if (null != instance && null != instance.mEventHandler) {
@@ -128,6 +242,10 @@ public class DrmManagerClient {
             mEventHandler = null;
         }
 
+        HandlerThread thread = new HandlerThread("DrmManagerClient.ActionHandler");
+        thread.start();
+        mActionHandler = new ActionHandler(thread.getLooper());
+
         // save the unique id
         mUniqueId = hashCode();
     }
@@ -146,29 +264,55 @@ public class DrmManagerClient {
         }
     }
 
+    public void setOnEventListener(OnEventListener eventListener) {
+        synchronized(this) {
+            if (null != eventListener) {
+                mOnEventListener = eventListener;
+            }
+        }
+    }
+
     /**
      * Initializes DrmFramework, which loads all available plug-ins
      * in the default plug-in directory path
      *
+     * @return
+     *     ERROR_NONE for success
+     *     ERROR_UNKNOWN for failure
      */
-    public void loadPlugIns() {
-        if (getState() == STATE_UNINITIALIZED) {
-            _loadPlugIns(mUniqueId, new WeakReference<DrmManagerClient>(this));
-
-            mCurrentState = STATE_INITIALIZED;
+    public int loadPlugIns() {
+        int result = ERROR_UNKNOWN;
+        if (STATE_UNINITIALIZED == getState()) {
+            if (null != mActionHandler) {
+                Message msg = mActionHandler.obtainMessage(
+                        ACTION_INITIALIZE, new WeakReference<DrmManagerClient>(this));
+                result = (mActionHandler.sendMessage(msg)) ? ERROR_NONE : result;
+            }
+        } else {
+            result = ERROR_NONE;
         }
+        return result;
     }
 
     /**
      * Finalize DrmFramework, which release resources associated with each plug-in
      * and unload all plug-ins.
+     *
+     * @return
+     *     ERROR_NONE for success
+     *     ERROR_UNKNOWN for failure
      */
-    public void unloadPlugIns() {
-        if (getState() == STATE_INITIALIZED) {
-            _unloadPlugIns(mUniqueId);
-
-            mCurrentState = STATE_UNINITIALIZED;
+    public int unloadPlugIns() {
+        int result = ERROR_UNKNOWN;
+        if (STATE_INITIALIZED == getState()) {
+            if (null != mActionHandler) {
+                Message msg = mActionHandler.obtainMessage(ACTION_FINALIZE);
+                result = (mActionHandler.sendMessage(msg)) ? ERROR_NONE : result;
+            }
+        } else {
+            result = ERROR_NONE;
         }
+        return result;
     }
 
     /**
@@ -216,11 +360,14 @@ public class DrmManagerClient {
      * @param drmRights DrmRights to be saved
      * @param rightsPath File path where rights to be saved
      * @param contentPath File path where content was saved
+     * @return
+     *     ERROR_NONE for success
+     *     ERROR_UNKNOWN for failure
      * @throws IOException if failed to save rights information in the given path
      *
      * @note In case of OMA or WM-DRM, rightsPath and contentPath could be null
      */
-    public void saveRights(
+    public int saveRights(
             DrmRights drmRights, String rightsPath, String contentPath) throws IOException {
         if (null == drmRights || !drmRights.isValid()
             || null == contentPath || contentPath.equals("")) {
@@ -231,7 +378,7 @@ public class DrmManagerClient {
         if (null != rightsPath && !rightsPath.equals("")) {
             DrmUtils.writeToFile(rightsPath, drmRights.getData());
         }
-        _saveRights(mUniqueId, drmRights, rightsPath, contentPath);
+        return _saveRights(mUniqueId, drmRights, rightsPath, contentPath);
     }
 
     /**
@@ -273,30 +420,44 @@ public class DrmManagerClient {
      * Executes given drm information based on its type
      *
      * @param drmInfo Information needs to be processed
-     * @return DrmInfoStatus Instance as a result of processing given input
+     * @return
+     *     ERROR_NONE for success
+     *     ERROR_UNKNOWN for failure
      */
-    public DrmInfoStatus processDrmInfo(DrmInfo drmInfo) {
+    public int processDrmInfo(DrmInfo drmInfo) {
         if (null == drmInfo || !drmInfo.isValid()) {
             throw new IllegalArgumentException("Given drmInfo is invalid/null");
         } else if (getState() == STATE_UNINITIALIZED) {
             throw new IllegalStateException("Not Initialized yet");
         }
-        return _processDrmInfo(mUniqueId, drmInfo);
+        int result = ERROR_UNKNOWN;
+        if (null != mActionHandler) {
+            Message msg = mActionHandler.obtainMessage(ACTION_PROCESS_DRM_INFO, drmInfo);
+            result = (mActionHandler.sendMessage(msg)) ? ERROR_NONE : result;
+        }
+        return result;
     }
 
     /**
      * Retrieves necessary information for register, unregister or rights acquisition.
      *
      * @param drmInfoRequest Request information to retrieve drmInfo
-     * @return DrmInfo Instance as a result of processing given input
+     * @return
+     *     ERROR_NONE for success
+     *     ERROR_UNKNOWN for failure
      */
-    public DrmInfo acquireDrmInfo(DrmInfoRequest drmInfoRequest) {
+    public int acquireDrmInfo(DrmInfoRequest drmInfoRequest) {
         if (null == drmInfoRequest || !drmInfoRequest.isValid()) {
             throw new IllegalArgumentException("Given drmInfoRequest is invalid/null");
         } else if (getState() == STATE_UNINITIALIZED) {
             throw new IllegalStateException("Not Initialized yet");
         }
-        return _acquireDrmInfo(mUniqueId, drmInfoRequest);
+        int result = ERROR_UNKNOWN;
+        if (null != mActionHandler) {
+            Message msg = mActionHandler.obtainMessage(ACTION_ACQUIRE_DRM_INFO, drmInfoRequest);
+            result = (mActionHandler.sendMessage(msg)) ? ERROR_NONE : result;
+        }
+        return result;
     }
 
     /**
@@ -365,25 +526,37 @@ public class DrmManagerClient {
      * Removes the rights associated with the given protected content
      *
      * @param path Path of the protected content
+     * @return
+     *     ERROR_NONE for success
+     *     ERROR_UNKNOWN for failure
      */
-    public void removeRights(String path) {
+    public int removeRights(String path) {
         if (null == path || path.equals("")) {
             throw new IllegalArgumentException("Given path should be non null");
         } else if (getState() == STATE_UNINITIALIZED) {
             throw new IllegalStateException("Not Initialized yet");
         }
-        _removeRights(mUniqueId, path);
+        return _removeRights(mUniqueId, path);
     }
 
     /**
      * Removes all the rights information of every plug-in associated with
      * DRM framework. Will be used in master reset
+     *
+     * @return
+     *     ERROR_NONE for success
+     *     ERROR_UNKNOWN for failure
      */
-    public void removeAllRights() {
+    public int removeAllRights() {
         if (getState() == STATE_UNINITIALIZED) {
             throw new IllegalStateException("Not Initialized yet");
         }
-        _removeAllRights(mUniqueId);
+        int result = ERROR_UNKNOWN;
+        if (null != mActionHandler) {
+            Message msg = mActionHandler.obtainMessage(ACTION_REMOVE_ALL_RIGHTS);
+            result = (mActionHandler.sendMessage(msg)) ? ERROR_NONE : result;
+        }
+        return result;
     }
 
     /**
@@ -448,10 +621,44 @@ public class DrmManagerClient {
         return mCurrentState;
     }
 
-    // private native interfaces
-    private native void _loadPlugIns(int uniqueId, Object weak_this);
+    private int getEventType(int infoType) {
+        int eventType = -1;
 
-    private native void _unloadPlugIns(int uniqueId);
+        switch (infoType) {
+        case DrmInfoRequest.TYPE_REGISTRATION_INFO:
+            eventType = DrmEvent.TYPE_REGISTERED;
+            break;
+        case DrmInfoRequest.TYPE_UNREGISTRATION_INFO:
+            eventType = DrmEvent.TYPE_UNREGISTERED;
+            break;
+        case DrmInfoRequest.TYPE_RIGHTS_ACQUISITION_INFO:
+            eventType = DrmEvent.TYPE_RIGHTS_ACQUIRED;
+            break;
+        }
+        return eventType;
+    }
+
+    private int getInfoEventType(int infoType) {
+        int infoEventType = -1;
+
+        switch (infoType) {
+        case DrmInfoRequest.TYPE_REGISTRATION_INFO:
+            infoEventType = DrmInfoEvent.TYPE_REGISTRATION_FAILED;
+            break;
+        case DrmInfoRequest.TYPE_UNREGISTRATION_INFO:
+            infoEventType = DrmInfoEvent.TYPE_UNREGISTRATION_FAILED;
+            break;
+        case DrmInfoRequest.TYPE_RIGHTS_ACQUISITION_INFO:
+            infoEventType = DrmInfoEvent.TYPE_RIGHTS_ACQUISITION_FAILED;
+            break;
+        }
+        return infoEventType;
+    }
+
+    // private native interfaces
+    private native int _loadPlugIns(int uniqueId, Object weak_this);
+
+    private native int _unloadPlugIns(int uniqueId);
 
     private native void _installDrmEngine(int uniqueId, String engineFilepath);
 
@@ -463,7 +670,7 @@ public class DrmManagerClient {
 
     private native DrmInfo _acquireDrmInfo(int uniqueId, DrmInfoRequest drmInfoRequest);
 
-    private native void _saveRights(
+    private native int _saveRights(
             int uniqueId, DrmRights drmRights, String rightsPath, String contentPath);
 
     private native int _getDrmObjectType(int uniqueId, String path, String mimeType);
@@ -472,13 +679,14 @@ public class DrmManagerClient {
 
     private native int _checkRightsStatus(int uniqueId, String path, int action);
 
-    private native void _removeRights(int uniqueId, String path);
+    private native int _removeRights(int uniqueId, String path);
 
-    private native void _removeAllRights(int uniqueId);
+    private native int _removeAllRights(int uniqueId);
 
     private native int _openConvertSession(int uniqueId, String mimeType);
 
-    private native DrmConvertedStatus _convertData(int uniqueId, int convertId, byte[] inputData);
+    private native DrmConvertedStatus _convertData(
+            int uniqueId, int convertId, byte[] inputData);
 
     private native DrmConvertedStatus _closeConvertSession(int uniqueId, int convertId);
 

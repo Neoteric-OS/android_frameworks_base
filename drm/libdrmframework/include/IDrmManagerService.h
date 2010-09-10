@@ -98,7 +98,7 @@ public:
 
     virtual DrmInfo* acquireDrmInfo(int uniqueId, const DrmInfoRequest* drmInforequest) = 0;
 
-    virtual void saveRights(int uniqueId, const DrmRights& drmRights,
+    virtual status_t saveRights(int uniqueId, const DrmRights& drmRights,
             const String8& rightsPath, const String8& contentPath) = 0;
 
     virtual String8 getOriginalMimeType(int uniqueId, const String8& path) = 0;
@@ -108,19 +108,19 @@ public:
 
     virtual int checkRightsStatus(int uniqueId, const String8& path, int action) = 0;
 
-    virtual void consumeRights(
+    virtual status_t consumeRights(
             int uniqueId, DecryptHandle* decryptHandle, int action, bool reserve) = 0;
 
-    virtual void setPlaybackStatus(
+    virtual status_t setPlaybackStatus(
             int uniqueId, DecryptHandle* decryptHandle, int playbackStatus, int position) = 0;
 
     virtual bool validateAction(
             int uniqueId, const String8& path,
             int action, const ActionDescription& description) = 0;
 
-    virtual void removeRights(int uniqueId, const String8& path) = 0;
+    virtual status_t removeRights(int uniqueId, const String8& path) = 0;
 
-    virtual void removeAllRights(int uniqueId) = 0;
+    virtual status_t removeAllRights(int uniqueId) = 0;
 
     virtual int openConvertSession(int uniqueId, const String8& mimeType) = 0;
 
@@ -134,15 +134,15 @@ public:
 
     virtual DecryptHandle* openDecryptSession(int uniqueId, int fd, int offset, int length) = 0;
 
-    virtual void closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle) = 0;
+    virtual status_t closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle) = 0;
 
-    virtual void initializeDecryptUnit(int uniqueId, DecryptHandle* decryptHandle,
+    virtual status_t initializeDecryptUnit(int uniqueId, DecryptHandle* decryptHandle,
             int decryptUnitId, const DrmBuffer* headerInfo) = 0;
 
     virtual status_t decrypt(int uniqueId, DecryptHandle* decryptHandle,
             int decryptUnitId, const DrmBuffer* encBuffer, DrmBuffer** decBuffer) = 0;
 
-    virtual void finalizeDecryptUnit(
+    virtual status_t finalizeDecryptUnit(
             int uniqueId, DecryptHandle* decryptHandle, int decryptUnitId) = 0;
 
     virtual ssize_t pread(int uniqueId, DecryptHandle* decryptHandle,
@@ -177,7 +177,7 @@ public:
 
     virtual DrmInfo* acquireDrmInfo(int uniqueId, const DrmInfoRequest* drmInforequest);
 
-    virtual void saveRights(int uniqueId, const DrmRights& drmRights,
+    virtual status_t saveRights(int uniqueId, const DrmRights& drmRights,
             const String8& rightsPath, const String8& contentPath);
 
     virtual String8 getOriginalMimeType(int uniqueId, const String8& path);
@@ -186,18 +186,18 @@ public:
 
     virtual int checkRightsStatus(int uniqueId, const String8& path, int action);
 
-    virtual void consumeRights(
+    virtual status_t consumeRights(
             int uniqueId, DecryptHandle* decryptHandle, int action, bool reserve);
 
-    virtual void setPlaybackStatus(
+    virtual status_t setPlaybackStatus(
             int uniqueId, DecryptHandle* decryptHandle, int playbackStatus, int position);
 
     virtual bool validateAction(
             int uniqueId, const String8& path, int action, const ActionDescription& description);
 
-    virtual void removeRights(int uniqueId, const String8& path);
+    virtual status_t removeRights(int uniqueId, const String8& path);
 
-    virtual void removeAllRights(int uniqueId);
+    virtual status_t removeAllRights(int uniqueId);
 
     virtual int openConvertSession(int uniqueId, const String8& mimeType);
 
@@ -211,15 +211,15 @@ public:
 
     virtual DecryptHandle* openDecryptSession(int uniqueId, int fd, int offset, int length);
 
-    virtual void closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle);
+    virtual status_t closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle);
 
-    virtual void initializeDecryptUnit(int uniqueId, DecryptHandle* decryptHandle,
+    virtual status_t initializeDecryptUnit(int uniqueId, DecryptHandle* decryptHandle,
             int decryptUnitId, const DrmBuffer* headerInfo);
 
     virtual status_t decrypt(int uniqueId, DecryptHandle* decryptHandle,
             int decryptUnitId, const DrmBuffer* encBuffer, DrmBuffer** decBuffer);
 
-    virtual void finalizeDecryptUnit(
+    virtual status_t finalizeDecryptUnit(
             int uniqueId, DecryptHandle* decryptHandle, int decryptUnitId);
 
     virtual ssize_t pread(int uniqueId, DecryptHandle* decryptHandle,

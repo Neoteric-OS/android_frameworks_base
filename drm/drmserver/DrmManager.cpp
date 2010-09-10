@@ -159,13 +159,15 @@ DrmInfo* DrmManager::acquireDrmInfo(int uniqueId, const DrmInfoRequest* drmInfoR
     return NULL;
 }
 
-void DrmManager::saveRights(int uniqueId, const DrmRights& drmRights,
+status_t DrmManager::saveRights(int uniqueId, const DrmRights& drmRights,
             const String8& rightsPath, const String8& contentPath) {
     const String8 plugInId = getSupportedPlugInId(drmRights.getMimeType());
+    status_t result = DRM_ERROR_UNKNOWN;
     if (EMPTY_STRING != plugInId) {
         IDrmEngine& rDrmEngine = mPlugInManager.getPlugIn(plugInId);
-        rDrmEngine.saveRights(uniqueId, drmRights, rightsPath, contentPath);
+        result = rDrmEngine.saveRights(uniqueId, drmRights, rightsPath, contentPath);
     }
+    return result;
 }
 
 String8 DrmManager::getOriginalMimeType(int uniqueId, const String8& path) {
@@ -195,21 +197,24 @@ int DrmManager::checkRightsStatus(int uniqueId, const String8& path, int action)
     return RightsStatus::RIGHTS_INVALID;
 }
 
-void DrmManager::consumeRights(
+status_t DrmManager::consumeRights(
     int uniqueId, DecryptHandle* decryptHandle, int action, bool reserve) {
+    status_t result = DRM_ERROR_UNKNOWN;
     if (mDecryptSessionMap.indexOfKey(decryptHandle->decryptId) != NAME_NOT_FOUND) {
         IDrmEngine* drmEngine = mDecryptSessionMap.valueFor(decryptHandle->decryptId);
-        drmEngine->consumeRights(uniqueId, decryptHandle, action, reserve);
+        result = drmEngine->consumeRights(uniqueId, decryptHandle, action, reserve);
     }
+    return result;
 }
 
-void DrmManager::setPlaybackStatus(
+status_t DrmManager::setPlaybackStatus(
     int uniqueId, DecryptHandle* decryptHandle, int playbackStatus, int position) {
-
+    status_t result = DRM_ERROR_UNKNOWN;
     if (mDecryptSessionMap.indexOfKey(decryptHandle->decryptId) != NAME_NOT_FOUND) {
         IDrmEngine* drmEngine = mDecryptSessionMap.valueFor(decryptHandle->decryptId);
-        drmEngine->setPlaybackStatus(uniqueId, decryptHandle, playbackStatus, position);
+        result = drmEngine->setPlaybackStatus(uniqueId, decryptHandle, playbackStatus, position);
     }
+    return result;
 }
 
 bool DrmManager::validateAction(
@@ -222,21 +227,27 @@ bool DrmManager::validateAction(
     return false;
 }
 
-void DrmManager::removeRights(int uniqueId, const String8& path) {
+status_t DrmManager::removeRights(int uniqueId, const String8& path) {
     const String8 plugInId = getSupportedPlugInIdFromPath(uniqueId, path);
+    status_t result = DRM_ERROR_UNKNOWN;
     if (EMPTY_STRING != plugInId) {
         IDrmEngine& rDrmEngine = mPlugInManager.getPlugIn(plugInId);
-        rDrmEngine.removeRights(uniqueId, path);
+        result = rDrmEngine.removeRights(uniqueId, path);
     }
+    return result;
 }
 
-void DrmManager::removeAllRights(int uniqueId) {
+status_t DrmManager::removeAllRights(int uniqueId) {
     Vector<String8> plugInIdList = mPlugInManager.getPlugInIdList();
-
+    status_t result = DRM_ERROR_UNKNOWN;
     for (unsigned int index = 0; index < plugInIdList.size(); index++) {
         IDrmEngine& rDrmEngine = mPlugInManager.getPlugIn(plugInIdList.itemAt(index));
-        rDrmEngine.removeAllRights(uniqueId);
+        result = rDrmEngine.removeAllRights(uniqueId);
+        if (DRM_NO_ERROR != result) {
+            break;
+        }
     }
+    return result;
 }
 
 int DrmManager::openConvertSession(int uniqueId, const String8& mimeType) {
@@ -246,12 +257,12 @@ int DrmManager::openConvertSession(int uniqueId, const String8& mimeType) {
     if (EMPTY_STRING != plugInId) {
         IDrmEngine& rDrmEngine = mPlugInManager.getPlugIn(plugInId);
 
-        Mutex::Autolock _l(mConvertLock);
-        ++mConvertId;
-        convertId = mConvertId;
-        mConvertSessionMap.add(mConvertId, &rDrmEngine);
-
-        rDrmEngine.openConvertSession(uniqueId, mConvertId);
+        if (DRM_NO_ERROR == rDrmEngine.openConvertSession(uniqueId, mConvertId + 1)) {
+            Mutex::Autolock _l(mConvertLock);
+            ++mConvertId;
+            convertId = mConvertId;
+            mConvertSessionMap.add(convertId, &rDrmEngine);
+        }
     }
     return convertId;
 }
@@ -343,39 +354,46 @@ DecryptHandle* DrmManager::openDecryptSession(int uniqueId, int fd, int offset, 
     return handle;
 }
 
-void DrmManager::closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle) {
+status_t DrmManager::closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle) {
+    status_t result = DRM_ERROR_UNKNOWN;
     if (mDecryptSessionMap.indexOfKey(decryptHandle->decryptId) != NAME_NOT_FOUND) {
         IDrmEngine* drmEngine = mDecryptSessionMap.valueFor(decryptHandle->decryptId);
-        drmEngine->closeDecryptSession(uniqueId, decryptHandle);
-
-        mDecryptSessionMap.removeItem(decryptHandle->decryptId);
+        result = drmEngine->closeDecryptSession(uniqueId, decryptHandle);
+        if (DRM_NO_ERROR == result) {
+            mDecryptSessionMap.removeItem(decryptHandle->decryptId);
+        }
     }
+    return result;
 }
 
-void DrmManager::initializeDecryptUnit(
+status_t DrmManager::initializeDecryptUnit(
     int uniqueId, DecryptHandle* decryptHandle, int decryptUnitId, const DrmBuffer* headerInfo) {
+    status_t result = DRM_ERROR_UNKNOWN;
     if (mDecryptSessionMap.indexOfKey(decryptHandle->decryptId) != NAME_NOT_FOUND) {
         IDrmEngine* drmEngine = mDecryptSessionMap.valueFor(decryptHandle->decryptId);
-        drmEngine->initializeDecryptUnit(uniqueId, decryptHandle, decryptUnitId, headerInfo);
+        result = drmEngine->initializeDecryptUnit(uniqueId, decryptHandle, decryptUnitId, headerInfo);
     }
+    return result;
 }
 
 status_t DrmManager::decrypt(int uniqueId, DecryptHandle* decryptHandle,
             int decryptUnitId, const DrmBuffer* encBuffer, DrmBuffer** decBuffer) {
-    status_t status = DRM_ERROR_UNKNOWN;
+    status_t result = DRM_ERROR_UNKNOWN;
     if (mDecryptSessionMap.indexOfKey(decryptHandle->decryptId) != NAME_NOT_FOUND) {
         IDrmEngine* drmEngine = mDecryptSessionMap.valueFor(decryptHandle->decryptId);
-        status = drmEngine->decrypt(uniqueId, decryptHandle, decryptUnitId, encBuffer, decBuffer);
+        result = drmEngine->decrypt(uniqueId, decryptHandle, decryptUnitId, encBuffer, decBuffer);
     }
-    return status;
+    return result;
 }
 
-void DrmManager::finalizeDecryptUnit(
+status_t DrmManager::finalizeDecryptUnit(
             int uniqueId, DecryptHandle* decryptHandle, int decryptUnitId) {
+    status_t result = DRM_ERROR_UNKNOWN;
     if (mDecryptSessionMap.indexOfKey(decryptHandle->decryptId) != NAME_NOT_FOUND) {
         IDrmEngine* drmEngine = mDecryptSessionMap.valueFor(decryptHandle->decryptId);
-        drmEngine->finalizeDecryptUnit(uniqueId, decryptHandle, decryptUnitId);
+        result = drmEngine->finalizeDecryptUnit(uniqueId, decryptHandle, decryptUnitId);
     }
+    return result;
 }
 
 ssize_t DrmManager::pread(int uniqueId, DecryptHandle* decryptHandle,
