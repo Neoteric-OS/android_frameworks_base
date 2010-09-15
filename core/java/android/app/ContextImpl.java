@@ -2666,10 +2666,8 @@ class ContextImpl extends Context {
         }
 
         public void replace(Map newContents) {
-            if (newContents != null) {
-                synchronized (this) {
-                    mMap = newContents;
-                }
+            synchronized (this) {
+                mMap = newContents != null ? newContents : new HashMap();
             }
         }
 
