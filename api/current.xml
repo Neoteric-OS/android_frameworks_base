@@ -34478,6 +34478,17 @@
  visibility="public"
 >
 </field>
+<field name="ETH_SERVICE"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;ethernet&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
 <field name="INPUT_METHOD_SERVICE"
  type="java.lang.String"
  transient="false"
@@ -89347,6 +89358,17 @@
  visibility="public"
 >
 </field>
+<field name="TYPE_ETH"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="7"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
 <field name="TYPE_MOBILE"
  type="int"
  transient="false"
@@ -92313,6 +92335,985 @@
 </parameter>
 </method>
 </interface>
+</package>
+<package name="android.net.ethernet"
+>
+<class name="EthernetDevInfo"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="android.os.Parcelable">
+</implements>
+<constructor name="EthernetDevInfo"
+ type="android.net.ethernet.EthernetDevInfo"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="describeContents"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getConnectMode"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getDnsAddr"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getIfName"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getIpAddress"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getNetMask"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getRouteAddr"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setConnectMode"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="mode" type="java.lang.String">
+</parameter>
+</method>
+<method name="setDnsAddr"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="dns" type="java.lang.String">
+</parameter>
+</method>
+<method name="setIfName"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="ifname" type="java.lang.String">
+</parameter>
+</method>
+<method name="setIpAddress"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="ip" type="java.lang.String">
+</parameter>
+</method>
+<method name="setNetMask"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="ip" type="java.lang.String">
+</parameter>
+</method>
+<method name="setRouteAddr"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="route" type="java.lang.String">
+</parameter>
+</method>
+<method name="writeToParcel"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="dest" type="android.os.Parcel">
+</parameter>
+<parameter name="flags" type="int">
+</parameter>
+</method>
+<field name="ETH_CONN_MODE_DHCP"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;dhcp&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ETH_CONN_MODE_MANUAL"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;manual&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+<class name="EthernetManager"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="EthernetManager"
+ type="android.net.ethernet.EthernetManager"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="service" type="android.net.ethernet.IEthernetManager">
+</parameter>
+<parameter name="handler" type="android.os.Handler">
+</parameter>
+</constructor>
+<method name="UpdateEthDevInfo"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="info" type="android.net.ethernet.EthernetDevInfo">
+</parameter>
+</method>
+<method name="ethConfigured"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="ethSetDefaultConf"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getDeviceNameList"
+ return="java.lang.String[]"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getEthState"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getSavedEthConfig"
+ return="android.net.ethernet.EthernetDevInfo"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getTotalInterface"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isEthConfigured"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setEthEnabled"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="enable" type="boolean">
+</parameter>
+</method>
+<field name="ETH_DEVICE_SCAN_RESULT_READY"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="0"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ETH_STATE_CHANGED_ACTION"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;android.net.ethernet.ETH_STATE_CHANGED&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ETH_STATE_DISABLED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ETH_STATE_ENABLED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="2"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ETH_STATE_UNKNOWN"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="0"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EXTRA_ETH_STATE"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;eth_state&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EXTRA_NETWORK_INFO"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;networkInfo&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EXTRA_PREVIOUS_ETH_STATE"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;previous_eth_state&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="NETWORK_STATE_CHANGED_ACTION"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;android.net.ethernet.STATE_CHANGE&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TAG"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;EthernetManager&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+<class name="EthernetMonitor"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="EthernetMonitor"
+ type="android.net.ethernet.EthernetMonitor"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="tracker" type="android.net.ethernet.EthernetStateTracker">
+</parameter>
+</constructor>
+<method name="startMonitoring"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</class>
+<class name="EthernetNative"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="EthernetNative"
+ type="android.net.ethernet.EthernetNative"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="getInterfaceCnt"
+ return="int"
+ abstract="false"
+ native="true"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getInterfaceName"
+ return="java.lang.String"
+ abstract="false"
+ native="true"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="i" type="int">
+</parameter>
+</method>
+<method name="initEthernetNative"
+ return="int"
+ abstract="false"
+ native="true"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="waitForEvent"
+ return="java.lang.String"
+ abstract="false"
+ native="true"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</class>
+<class name="EthernetStateTracker"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="EthernetStateTracker"
+ type="android.net.ethernet.EthernetStateTracker"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+<parameter name="target" type="android.os.Handler">
+</parameter>
+</constructor>
+<method name="StartPolling"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getTcpBufferSizesPropName"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isAvailable"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="notifyPhyConnected"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="ifname" type="java.lang.String">
+</parameter>
+</method>
+<method name="notifyStateChange"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="ifname" type="java.lang.String">
+</parameter>
+<parameter name="state" type="android.net.NetworkInfo.DetailedState">
+</parameter>
+</method>
+<method name="reconnect"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="resetInterface"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="UnknownHostException" type="java.net.UnknownHostException">
+</exception>
+</method>
+<method name="setRadio"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="turnOn" type="boolean">
+</parameter>
+</method>
+<method name="startMonitoring"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="startUsingNetworkFeature"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="feature" type="java.lang.String">
+</parameter>
+<parameter name="callingPid" type="int">
+</parameter>
+<parameter name="callingUid" type="int">
+</parameter>
+</method>
+<method name="stopInterface"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="suspend" type="boolean">
+</parameter>
+</method>
+<method name="stopUsingNetworkFeature"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="feature" type="java.lang.String">
+</parameter>
+<parameter name="callingPid" type="int">
+</parameter>
+<parameter name="callingUid" type="int">
+</parameter>
+</method>
+<method name="teardown"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<field name="EVENT_DHCP_START"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="0"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EVENT_HW_CONNECTED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="3"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EVENT_HW_DISCONNECTED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="4"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EVENT_HW_PHYCONNECTED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="5"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EVENT_INTERFACE_CONFIGURATION_FAILED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="2"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EVENT_INTERFACE_CONFIGURATION_SUCCEEDED"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+<interface name="IEthernetManager"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="android.os.IInterface">
+</implements>
+<method name="UpdateEthDevInfo"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="info" type="android.net.ethernet.EthernetDevInfo">
+</parameter>
+<exception name="RemoteException" type="android.os.RemoteException">
+</exception>
+</method>
+<method name="getDeviceNameList"
+ return="java.lang.String[]"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="RemoteException" type="android.os.RemoteException">
+</exception>
+</method>
+<method name="getEthState"
+ return="int"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="RemoteException" type="android.os.RemoteException">
+</exception>
+</method>
+<method name="getSavedEthConfig"
+ return="android.net.ethernet.EthernetDevInfo"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="RemoteException" type="android.os.RemoteException">
+</exception>
+</method>
+<method name="getTotalInterface"
+ return="int"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="RemoteException" type="android.os.RemoteException">
+</exception>
+</method>
+<method name="isEthConfigured"
+ return="boolean"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<exception name="RemoteException" type="android.os.RemoteException">
+</exception>
+</method>
+<method name="setEthMode"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="mode" type="java.lang.String">
+</parameter>
+<exception name="RemoteException" type="android.os.RemoteException">
+</exception>
+</method>
+<method name="setEthState"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="state" type="int">
+</parameter>
+<exception name="RemoteException" type="android.os.RemoteException">
+</exception>
+</method>
+</interface>
+<class name="IEthernetManager.Stub"
+ extends="android.os.Binder"
+ abstract="true"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="android.net.ethernet.IEthernetManager">
+</implements>
+<constructor name="IEthernetManager.Stub"
+ type="android.net.ethernet.IEthernetManager.Stub"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="asBinder"
+ return="android.os.IBinder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="asInterface"
+ return="android.net.ethernet.IEthernetManager"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="obj" type="android.os.IBinder">
+</parameter>
+</method>
+<method name="onTransact"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="code" type="int">
+</parameter>
+<parameter name="data" type="android.os.Parcel">
+</parameter>
+<parameter name="reply" type="android.os.Parcel">
+</parameter>
+<parameter name="flags" type="int">
+</parameter>
+<exception name="RemoteException" type="android.os.RemoteException">
+</exception>
+</method>
+</class>
 </package>
 <package name="android.net.http"
 >
@@ -136797,6 +137798,94 @@
  transient="false"
  volatile="false"
  value="&quot;enabled_input_methods&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ETH_CONF"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;eth_conf&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ETH_DNS"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;eth_dns&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ETH_IFNAME"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;eth_ifname&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ETH_IP"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;eth_ip&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ETH_MASK"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;eth_mask&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ETH_MODE"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;eth_mode&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ETH_ON"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;eth_on&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ETH_ROUTE"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;eth_route&quot;"
  static="true"
  final="true"
  deprecated="not deprecated"
