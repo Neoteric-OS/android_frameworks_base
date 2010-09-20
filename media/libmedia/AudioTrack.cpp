@@ -1068,7 +1068,7 @@ bool audio_track_cblk_t::stepServer(uint32_t frameCount)
 
     this->server = s;
 
-    cv.signal();
+    cv.broadcast();
     lock.unlock();
     return true;
 }
