@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA7X///nE\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/CdmaServiceStateTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-09-20T18:45:21Z",
+      "side": 1,
+      "message": "All other calls to hangupAndPowerOff are within synchronized(this) blocks I suggest doing the same here. This can be done by adding one here or moving the the one below \"out\" to cover the entire if statement.",
+      "revId": "885dee9efe2f1649f56add72bd88a5ddb2bd98af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
