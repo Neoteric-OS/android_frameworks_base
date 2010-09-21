@@ -30,11 +30,23 @@ public class NetworkInfo implements Parcelable {
         FORBIDDEN;
     }
 
+    public enum SelectionMode {
+        AUTOMATIC,
+        MANUAL;
+    }
+
+    public enum RAT {
+        GSM,
+        WCDMA,
+        UNDEFINED_OR_NO_CHANGE;
+    }
+
     String operatorAlphaLong;
     String operatorAlphaShort;
     String operatorNumeric;
 
     State state = State.UNKNOWN;
+    RAT rat = RAT.UNDEFINED_OR_NO_CHANGE;
 
 
     public String
@@ -57,25 +69,55 @@ public class NetworkInfo implements Parcelable {
         return state;
     }
 
+    public RAT
+    getRAT() {
+        return rat;
+    }
+
     NetworkInfo(String operatorAlphaLong,
                 String operatorAlphaShort,
                 String operatorNumeric,
-                State state) {
+                State state,
+                RAT rat) {
 
         this.operatorAlphaLong = operatorAlphaLong;
         this.operatorAlphaShort = operatorAlphaShort;
         this.operatorNumeric = operatorNumeric;
 
         this.state = state;
+        this.rat = rat;
     }
 
+    NetworkInfo(String operatorAlphaLong,
+        String operatorAlphaShort,
+        String operatorNumeric,
+        State state) {
+
+        this (operatorAlphaLong, operatorAlphaShort,
+              operatorNumeric, state,
+              RAT.UNDEFINED_OR_NO_CHANGE);
+}
 
     public NetworkInfo(String operatorAlphaLong,
                 String operatorAlphaShort,
                 String operatorNumeric,
-                String stateString) {
+                String stateString,
+                String ratString) {
         this (operatorAlphaLong, operatorAlphaShort,
-                operatorNumeric, rilStateToState(stateString));
+                operatorNumeric, rilStateToState(stateString),
+                rilRATtoRAT(ratString));
+    }
+
+    private static RAT rilRATtoRAT(String s) {
+        if (s.equals("undefined")) {
+            return RAT.UNDEFINED_OR_NO_CHANGE;
+        } else if (s.equals("gsm")) {
+            return RAT.GSM;
+        } else if (s.equals("wcdma")) {
+            return RAT.WCDMA;
+        } else {
+            throw new RuntimeException("RIL impl error: Invalid RAT '" + s + "'");
+        }
     }
 
     /**
@@ -96,12 +138,12 @@ public class NetworkInfo implements Parcelable {
         }
     }
 
-
     public String toString() {
         return "NetworkInfo " + operatorAlphaLong
                 + "/" + operatorAlphaShort
                 + "/" + operatorNumeric
-                + "/" + state;
+                + "/" + state
+                + "/" + rat;
     }
 
     /**
@@ -125,6 +167,7 @@ public class NetworkInfo implements Parcelable {
         dest.writeString(operatorAlphaShort);
         dest.writeString(operatorNumeric);
         dest.writeSerializable(state);
+        dest.writeSerializable(rat);
     }
 
     /**
@@ -138,7 +181,8 @@ public class NetworkInfo implements Parcelable {
                         in.readString(), /*operatorAlphaLong*/
                         in.readString(), /*operatorAlphaShort*/
                         in.readString(), /*operatorNumeric*/
-                        (State) in.readSerializable()); /*state*/
+                        (State) in.readSerializable(), /*state*/
+                        (RAT) in.readSerializable()); /*rat*/
                 return netInfo;
             }
 

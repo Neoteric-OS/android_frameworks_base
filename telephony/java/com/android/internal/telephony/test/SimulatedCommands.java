@@ -31,6 +31,7 @@ import com.android.internal.telephony.IccCard;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.UUSInfo;
 import com.android.internal.telephony.gsm.CallFailCause;
+import com.android.internal.telephony.gsm.NetworkInfo;
 import com.android.internal.telephony.gsm.SmsBroadcastConfigInfo;
 import com.android.internal.telephony.gsm.SuppServiceNotification;
 
@@ -1137,6 +1138,8 @@ public final class SimulatedCommands extends BaseCommands
     public void exitEmergencyCallbackMode(Message result) {unimplemented(result);}
     public void setNetworkSelectionModeManual(
             String operatorNumeric, Message result) {unimplemented(result);}
+    public void setNetworkSelection(String operatorNumeric, NetworkInfo.SelectionMode mode,
+            NetworkInfo.RAT rat, Message result) {unimplemented(result);}
 
     /**
      * Queries whether the current network selection mode is automatic

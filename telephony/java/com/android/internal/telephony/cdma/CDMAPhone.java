@@ -491,6 +491,21 @@ public class CDMAPhone extends PhoneBase {
         Log.e(LOG_TAG, "selectNetworkManually: not possible in CDMA");
     }
 
+    public void
+    setNetworkSelection(String operatorNumeric,
+            com.android.internal.telephony.gsm.NetworkInfo.SelectionMode mode,
+            com.android.internal.telephony.gsm.NetworkInfo.RAT rat,
+            Message response) {
+        Log.e(LOG_TAG, "setNetworkSelection: not possible in CDMA");
+    }
+
+    public void
+    setNetworkSelection(com.android.internal.telephony.gsm.NetworkInfo.SelectionMode mode,
+            com.android.internal.telephony.gsm.NetworkInfo network,
+            Message response) {
+        Log.e(LOG_TAG, "setNetworkSelection: not possible in CDMA");
+    }
+
     public void setOnPostDialCharacter(Handler h, int what, Object obj) {
         mPostDialHandler = new Registrant(h, what, obj);
     }

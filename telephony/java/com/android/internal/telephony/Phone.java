@@ -1065,6 +1065,56 @@ public interface Phone {
                             Message response);
 
     /**
+     * Switches network selection mode to "automatic", re-scanning and
+     * re-selecting a network if appropriate or manually selects a network.
+     * This is dependent on wether automatic or manual selection is choosen.
+     *
+     * <code>response</code> is dispatched when this is complete.
+     * <code>response.obj</code> will be
+     * an AsyncResult, and <code>response.obj.exception</code> will be non-null
+     * on failure.
+     *
+     * @param operatorNumeric The operator string in numeric, e.g "32011".
+     *        Can be choosen both in automatic and manual mode. Can be null.
+     *
+     * @param mode in what network mode the network selection should be made.
+     *
+     * @param rat The preferred RAT (Radio Acccess Technology) in which the selection
+     *        should be made.
+     *
+     * @param response The message to dispatch when the network selection
+     * is complete.
+     *
+     * @see #RIL.setNetworkSelection(String operatorNumeric, NetworkInfo.SelectionMode mode,
+     *                               NetworkInfo.RAT rat, Message response)
+     */
+    void setNetworkSelection(String operatorNumeric, NetworkInfo.SelectionMode mode,
+            NetworkInfo.RAT rat, Message response);
+
+    /**
+     * Switches network selection mode to "automatic", re-scanning and
+     * re-selecting a network if appropriate or manually selects a network.
+     * This is dependent on wether automatic or manual selection is choosen.
+     *
+     * <code>response</code> is dispatched when this is complete.
+     * <code>response.obj</code> will be
+     * an AsyncResult, and <code>response.obj.exception</code> will be non-null
+     * on failure.
+     *
+     * @param mode in what network mode the network selection should be made.
+     *
+     * @param network The network which the selection should be made on.
+     *
+     * @param response The message to dispatch when the network selection
+     * is complete.
+     *
+     * @see #RIL.setNetworkSelection(String operatorNumeric, NetworkInfo.SelectionMode mode,
+     *                               NetworkInfo.RAT rat, Message response)
+     */
+    void setNetworkSelection(NetworkInfo.SelectionMode mode, NetworkInfo network,
+            Message response);
+
+    /**
      *  Requests to set the preferred network type for searching and registering
      * (CS/PS domain, RAT, and operation mode)
      * @param networkType one of  NT_*_TYPE

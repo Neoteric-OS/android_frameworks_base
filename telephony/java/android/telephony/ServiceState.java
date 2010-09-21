@@ -65,29 +65,28 @@ public class ServiceState implements Parcelable {
     /**
      * Available radio technologies for GSM, UMTS and CDMA.
      */
-    /** @hide */
     public static final int RADIO_TECHNOLOGY_UNKNOWN = 0;
-    /** @hide */
+
     public static final int RADIO_TECHNOLOGY_GPRS = 1;
-    /** @hide */
+
     public static final int RADIO_TECHNOLOGY_EDGE = 2;
-    /** @hide */
+
     public static final int RADIO_TECHNOLOGY_UMTS = 3;
-    /** @hide */
+
     public static final int RADIO_TECHNOLOGY_IS95A = 4;
-    /** @hide */
+
     public static final int RADIO_TECHNOLOGY_IS95B = 5;
-    /** @hide */
+
     public static final int RADIO_TECHNOLOGY_1xRTT = 6;
-    /** @hide */
+
     public static final int RADIO_TECHNOLOGY_EVDO_0 = 7;
-    /** @hide */
+
     public static final int RADIO_TECHNOLOGY_EVDO_A = 8;
-    /** @hide */
+
     public static final int RADIO_TECHNOLOGY_HSDPA = 9;
-    /** @hide */
+
     public static final int RADIO_TECHNOLOGY_HSUPA = 10;
-    /** @hide */
+
     public static final int RADIO_TECHNOLOGY_HSPA = 11;
     /** @hide */
     public static final int RADIO_TECHNOLOGY_EVDO_B = 12;
@@ -616,7 +615,6 @@ public class ServiceState implements Parcelable {
         this.mNetworkId = networkId;
     }
 
-    /** @hide */
     public int getRadioTechnology() {
         return this.mRadioTechnology;
     }

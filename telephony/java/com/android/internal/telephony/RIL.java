@@ -1498,26 +1498,47 @@ public final class RIL extends BaseCommands implements CommandsInterface {
 
     public void
     setNetworkSelectionModeAutomatic(Message response) {
-        RILRequest rr
-                = RILRequest.obtain(RIL_REQUEST_SET_NETWORK_SELECTION_AUTOMATIC,
-                                    response);
-
-        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
-
-        send(rr);
+        setNetworkSelection(null, NetworkInfo.SelectionMode.AUTOMATIC,
+                NetworkInfo.RAT.UNDEFINED_OR_NO_CHANGE, response);
     }
 
     public void
     setNetworkSelectionModeManual(String operatorNumeric, Message response) {
-        RILRequest rr
-                = RILRequest.obtain(RIL_REQUEST_SET_NETWORK_SELECTION_MANUAL,
-                                    response);
+        setNetworkSelection(operatorNumeric, NetworkInfo.SelectionMode.MANUAL,
+                NetworkInfo.RAT.UNDEFINED_OR_NO_CHANGE, response);
+    }
+
+    public void
+    setNetworkSelection(String operatorNumeric, NetworkInfo.SelectionMode mode,
+                        NetworkInfo.RAT rat, Message response) {
+        RILRequest rr;
+        int intRat;
+
+        if (mode == NetworkInfo.SelectionMode.MANUAL) {
+            rr = RILRequest.obtain(RIL_REQUEST_SET_NETWORK_SELECTION_MANUAL, response);
+        } else {
+            rr = RILRequest.obtain(RIL_REQUEST_SET_NETWORK_SELECTION_AUTOMATIC, response);
+        }
 
         if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest)
-                    + " " + operatorNumeric);
+                + " " + operatorNumeric + " " + mode + " " + rat);
 
-        rr.mp.writeString(operatorNumeric);
+        switch (rat) {
+            case GSM:
+                 intRat = 0;
+                 break;
 
+             case WCDMA:
+                 intRat = 1;
+                 break;
+
+             case UNDEFINED_OR_NO_CHANGE:
+             default:
+                 intRat = -1;
+                 break;
+        }
+
+        rr.mp.writeInt(intRat);
         send(rr);
     }
 
@@ -2915,21 +2936,22 @@ public final class RIL extends BaseCommands implements CommandsInterface {
         String strings[] = (String [])responseStrings(p);
         ArrayList<NetworkInfo> ret;
 
-        if (strings.length % 4 != 0) {
+        if (strings.length % 5 != 0) {
             throw new RuntimeException(
                 "RIL_REQUEST_QUERY_AVAILABLE_NETWORKS: invalid response. Got "
-                + strings.length + " strings, expected multible of 4");
+                + strings.length + " strings, expected multible of 5");
         }
 
-        ret = new ArrayList<NetworkInfo>(strings.length / 4);
+        ret = new ArrayList<NetworkInfo>(strings.length / 5);
 
-        for (int i = 0 ; i < strings.length ; i += 4) {
+        for (int i = 0 ; i < strings.length ; i += 5) {
             ret.add (
                 new NetworkInfo(
                     strings[i+0],
                     strings[i+1],
                     strings[i+2],
-                    strings[i+3]));
+                    strings[i+3],
+                    strings[i+4]));
         }
 
         return ret;

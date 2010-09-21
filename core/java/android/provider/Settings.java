@@ -1590,6 +1590,13 @@ public final class Settings {
         public static final String SOUND_EFFECTS_ENABLED = "sound_effects_enabled";
 
         /**
+         * The user preferred network selection mode - The value is
+         * Manual or Automatic.
+         * @hide
+         */
+        public static final String NETWORK_SELECTION_MODE = "network_selection_mode";
+
+        /**
          * Whether the haptic feedback (long presses, ...) are enabled. The value is
          * boolean (1 or 0).
          */

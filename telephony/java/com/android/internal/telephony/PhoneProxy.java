@@ -544,6 +544,16 @@ public class PhoneProxy extends Handler implements Phone {
         mActivePhone.selectNetworkManually(network, response);
     }
 
+    public void setNetworkSelection(String operatorNumeric, NetworkInfo.SelectionMode mode,
+            NetworkInfo.RAT rat, Message response) {
+        mActivePhone.setNetworkSelection(operatorNumeric, mode, rat, response);
+    }
+
+     public void setNetworkSelection(NetworkInfo.SelectionMode mode, NetworkInfo network,
+             Message response) {
+        mActivePhone.setNetworkSelection(mode, network, response);
+    }
+
     public void setPreferredNetworkType(int networkType, Message response) {
         mActivePhone.setPreferredNetworkType(networkType, response);
     }

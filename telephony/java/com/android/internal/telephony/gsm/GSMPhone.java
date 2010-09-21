@@ -1041,6 +1041,60 @@ public class GSMPhone extends PhoneBase {
         mCM.setNetworkSelectionModeManual(network.operatorNumeric, msg);
     }
 
+    public void setNetworkSelection(String operatorNumeric,
+            com.android.internal.telephony.gsm.NetworkInfo.SelectionMode mode,
+            com.android.internal.telephony.gsm.NetworkInfo.RAT rat, Message response) {
+        // wrap the response message in our own message along with
+        // the operator's id.
+        NetworkSelectMessage nsm = new NetworkSelectMessage();
+        Message msg = null;
+        nsm.message = response;
+        nsm.operatorNumeric = operatorNumeric;
+        nsm.operatorAlphaLong = "";
+
+        if (mode == NetworkInfo.SelectionMode.AUTOMATIC) {
+            // get the message
+            msg = obtainMessage(EVENT_SET_NETWORK_AUTOMATIC_COMPLETE, nsm);
+
+            if (LOCAL_DEBUG)
+                Log.d(LOG_TAG, "wrapping and sending message to connect automatically");
+        } else {
+            // get the message
+            msg = obtainMessage(EVENT_SET_NETWORK_MANUAL_COMPLETE, nsm);
+
+            if (LOCAL_DEBUG)
+                Log.d(LOG_TAG, "wrapping and sending message to connect manually");
+        }
+        mCM.setNetworkSelection(operatorNumeric, mode, rat, msg);
+    }
+
+    public void setNetworkSelection(
+            com.android.internal.telephony.gsm.NetworkInfo.SelectionMode mode,
+            com.android.internal.telephony.gsm.NetworkInfo network, Message response) {
+        // wrap the response message in our own message along with
+        // the operator's id.
+        NetworkSelectMessage nsm = new NetworkSelectMessage();
+        Message msg = null;
+        nsm.message = response;
+        nsm.operatorNumeric = network.operatorNumeric;
+        nsm.operatorAlphaLong = network.operatorAlphaLong;
+
+        if (mode == NetworkInfo.SelectionMode.AUTOMATIC) {
+            // get the message
+            msg = obtainMessage(EVENT_SET_NETWORK_AUTOMATIC_COMPLETE, nsm);
+
+            if (LOCAL_DEBUG)
+                Log.d(LOG_TAG, "wrapping and sending message to connect automatically");
+        } else {
+            // get the message
+            msg = obtainMessage(EVENT_SET_NETWORK_MANUAL_COMPLETE, nsm);
+
+            if (LOCAL_DEBUG)
+                Log.d(LOG_TAG, "wrapping and sending message to connect manually");
+        }
+        mCM.setNetworkSelection(network.operatorNumeric, mode, network.rat, msg);
+    }
+
     public void
     getNeighboringCids(Message response) {
         mCM.getNeighboringCids(response);

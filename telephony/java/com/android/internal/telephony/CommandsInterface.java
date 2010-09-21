@@ -16,6 +16,7 @@
 
 package com.android.internal.telephony;
 
+import com.android.internal.telephony.gsm.NetworkInfo;
 import com.android.internal.telephony.gsm.SmsBroadcastConfigInfo;
 
 import android.os.Message;
@@ -1056,6 +1057,9 @@ public interface CommandsInterface {
     void setNetworkSelectionModeAutomatic(Message response);
 
     void setNetworkSelectionModeManual(String operatorNumeric, Message response);
+
+    void setNetworkSelection(String operatorNumeric, NetworkInfo.SelectionMode mode,
+        NetworkInfo.RAT rat, Message response);
 
     /**
      * Queries whether the current network selection mode is automatic
