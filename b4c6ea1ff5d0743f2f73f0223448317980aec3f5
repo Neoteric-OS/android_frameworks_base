@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA7n///fg\u003d",
+        "filename": "tests/CoreTests/android/core/SharedPreferencesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-09-22T15:49:33Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure you don\u0027t mean instance equality here, and we can\u0027t assume these Strings are intern()\u0027d.\n\nif (\"Value\".equals(....)) {\n....\n}",
+      "revId": "b4c6ea1ff5d0743f2f73f0223448317980aec3f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
