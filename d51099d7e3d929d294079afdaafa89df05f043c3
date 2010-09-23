@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA7n///YE\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/OplRecords.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-09-23T22:27:07Z",
+      "side": 1,
+      "message": "Set debug to false, this is seems a little chatty.",
+      "revId": "d51099d7e3d929d294079afdaafa89df05f043c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA7n///X8\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/PnnRecords.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-09-23T22:27:07Z",
+      "side": 1,
+      "message": "Default to false.",
+      "revId": "d51099d7e3d929d294079afdaafa89df05f043c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
