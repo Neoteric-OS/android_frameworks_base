@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA7n///UU\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/OplRecords.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-09-24T06:27:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA7n///YE\u003d",
+      "revId": "d51099d7e3d929d294079afdaafa89df05f043c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA7n///X8\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/PnnRecords.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2010-09-23T22:27:07Z",
       "side": 1,
       "message": "Default to false.",
+      "revId": "d51099d7e3d929d294079afdaafa89df05f043c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA7n///UQ\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/PnnRecords.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-09-24T06:27:12Z",
+      "side": 1,
+      "message": "Done.\nWill re base to tip once review is complete.",
+      "parentUuid": "AAAA7n///X8\u003d",
       "revId": "d51099d7e3d929d294079afdaafa89df05f043c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
