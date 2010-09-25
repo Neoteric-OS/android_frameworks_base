@@ -65,6 +65,8 @@ static int keystore_get(const char *key, int length, char *value)
             }
             offset += n;
         }
+    } else {
+        length = -1;
     }
     close(sock);
     return length;
