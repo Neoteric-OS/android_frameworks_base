@@ -410,9 +410,14 @@ public class GSMPhone extends PhoneBase {
     }
 
     /*package*/ void
-    updateMessageWaitingIndicator(boolean mwi) {
+    updateMessageWaitingIndicator(int mwi) {
+        /*
+         * mwi = number of voice mails; count is known, set notification mwi =
+         * -1; count is unknown, set notification mwi = 0; no unread voicemails
+         * , clear notification
+         */
         // this also calls notifyMessageWaitingIndicator()
-        mSIMRecords.setVoiceMessageWaiting(1, mwi ? -1 : 0);
+        mSIMRecords.setVoiceMessageWaiting(1, mwi);
     }
 
     public void
