@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA7n//+84\u003d",
+        "filename": "services/java/com/android/server/VibratorService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-09-28T14:39:43Z",
+      "side": 1,
+      "message": "doesn\u0027t unlinkToDeath return a boolean and take another parameter?\n\nor is this just confusing naming?  not sure I understand enough of this part of Binder.",
+      "revId": "79f505d9afb56024c9fa829066ec249da0b12ff2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
