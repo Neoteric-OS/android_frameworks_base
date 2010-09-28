@@ -124,6 +124,7 @@ public class MediaFile {
 
     static {
         addFileType("MP3", FILE_TYPE_MP3, "audio/mpeg");
+        addFileType("MPGA", FILE_TYPE_MP3, "audio/mpeg");
         addFileType("M4A", FILE_TYPE_M4A, "audio/mp4");
         addFileType("WAV", FILE_TYPE_WAV, "audio/x-wav");
         addFileType("AMR", FILE_TYPE_AMR, "audio/amr");
