@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA7n//+0Q\u003d",
+        "filename": "services/java/com/android/server/VibratorService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-09-29T16:06:59Z",
+      "side": 1,
+      "message": "right, will change.",
+      "parentUuid": "AAAA7n//+4k\u003d",
+      "revId": "79f505d9afb56024c9fa829066ec249da0b12ff2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA7n//+4g\u003d",
         "filename": "services/java/com/android/server/VibratorService.java",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2010-09-28T23:45:01Z",
       "side": 1,
       "message": "Why is this exception being caught?  If there are cases where it tries to unlink incorrectly, those should be fixed rather than hiding the problem by eating the exception.",
+      "revId": "79f505d9afb56024c9fa829066ec249da0b12ff2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA7n//+0U\u003d",
+        "filename": "services/java/com/android/server/VibratorService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-09-29T16:06:59Z",
+      "side": 1,
+      "message": "it seems unclear as to why there was a need to catch the exception ... looking into it.",
+      "parentUuid": "AAAA7n//+4g\u003d",
       "revId": "79f505d9afb56024c9fa829066ec249da0b12ff2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
