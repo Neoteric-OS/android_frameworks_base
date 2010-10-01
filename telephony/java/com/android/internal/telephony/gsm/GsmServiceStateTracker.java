@@ -575,6 +575,23 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
         cm.setRadioPower(false, null);
     }
 
+    public void updateEons() {
+        boolean needsUpdate = false;
+        int lac = -1;
+
+        if (cellLoc != null) lac = cellLoc.getLac();
+        needsUpdate = phone.mSIMRecords.updateEons(ss.getOperatorNumeric(), lac);
+        if (needsUpdate) {
+            String eonsLong = phone.mSIMRecords.getEons();
+            if (eonsLong != null) {
+                // Update operator long name with EONS Long.
+                ss.setOperatorName(eonsLong, ss.getOperatorAlphaShort(),
+                      ss.getOperatorNumeric());
+            }
+            updateSpnDisplay();
+        }
+    }
+
     protected void updateSpnDisplay() {
         int rule = phone.mSIMRecords.getDisplayRule(ss.getOperatorNumeric());
         String spn = phone.mSIMRecords.getServiceProviderName();
@@ -590,7 +607,8 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
                 || !TextUtils.equals(spn, curSpn)
                 || !TextUtils.equals(plmn, curPlmn)) {
             boolean showSpn = !mEmergencyOnly
-                && (rule & SIMRecords.SPN_RULE_SHOW_SPN) == SIMRecords.SPN_RULE_SHOW_SPN;
+                && (rule & SIMRecords.SPN_RULE_SHOW_SPN) == SIMRecords.SPN_RULE_SHOW_SPN
+                && (ss.getState() == ServiceState.STATE_IN_SERVICE);
             boolean showPlmn =
                 (rule & SIMRecords.SPN_RULE_SHOW_PLMN) == SIMRecords.SPN_RULE_SHOW_PLMN;
 
@@ -929,10 +947,12 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
             networkAttachedRegistrants.notifyRegistrants();
         }
 
+        Log.i(LOG_TAG,"Network State Changed, get EONS and update operator name display");
+        updateEons();
+
         if (hasChanged) {
             String operatorNumeric;
 
-            updateSpnDisplay();
 
             phone.setSystemProperty(TelephonyProperties.PROPERTY_OPERATOR_ALPHA,
                 ss.getOperatorAlphaLong());
