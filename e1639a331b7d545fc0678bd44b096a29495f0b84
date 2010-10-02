@@ -16,6 +16,24 @@
       "revId": "e1639a331b7d545fc0678bd44b096a29495f0b84",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA73///9w\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/Eons.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-10-02T05:40:24Z",
+      "side": 1,
+      "message": "Done.\nThanks for pointing out.",
+      "parentUuid": "AAAA7n//+g0\u003d",
+      "revId": "e1639a331b7d545fc0678bd44b096a29495f0b84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
