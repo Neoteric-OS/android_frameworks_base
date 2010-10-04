@@ -301,6 +301,7 @@ android.net.LocalSocketImpl$SocketOutputStream
 android.net.NetworkInfo
 android.net.NetworkInfo$DetailedState
 android.net.NetworkUtils
+android.net.ProxySelectorImpl
 android.net.SSLCertificateSocketFactory
 android.net.TrafficStats
 android.net.Uri

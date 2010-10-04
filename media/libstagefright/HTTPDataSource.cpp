@@ -46,7 +46,28 @@ status_t HTTPDataSource::connectWithRedirectsAndRange(off_t rangeStart) {
             }
         }
 
-        status_t err = mHttp->connect(host.c_str(), port);
+        char *proxyHost = NULL;
+        int proxyPort = -1;
+
+        char proxy[PROPERTY_VALUE_MAX];
+        property_get("net.http-proxy", proxy, "");
+        if (strlen(proxy) >= strlen("http://a:1")) {
+            char* hostPort = proxy + strlen("http://");
+            char* separator = strchr(hostPort, ':');
+            if (separator != NULL) {
+                proxyHost = hostPort;
+                *separator = '\0';
+                proxyPort = atoi(separator + 1);
+                LOGV("Using proxy '%s' port %d", proxyHost, proxyPort);
+            }
+        }
+
+        status_t err;
+        if (proxyHost != NULL) {
+            err = mHttp->connect(proxyHost, proxyPort);
+        } else {
+            err = mHttp->connect(host.c_str(), port);
+        }
 
         if (err != OK) {
             return err;
@@ -54,6 +75,10 @@ status_t HTTPDataSource::connectWithRedirectsAndRange(off_t rangeStart) {
 
         String8 request;
         request.append("GET ");
+	if (proxyHost != NULL) {
+	    request.append("http://");
+	    request.append(host.c_str());
+        }
         request.append(path.c_str());
         request.append(" HTTP/1.1\r\n");
         request.append(mHeaders);
