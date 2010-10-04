@@ -28,6 +28,7 @@ import android.net.MobileDataStateTracker;
 import android.net.NetworkInfo;
 import android.net.NetworkStateTracker;
 import android.net.NetworkUtils;
+import android.net.Uri;
 import android.net.wifi.WifiStateTracker;
 import android.os.Binder;
 import android.os.Handler;
@@ -1235,6 +1236,9 @@ public class ConnectivityService extends IConnectivityManager.Stub {
                 }
             }
         }
+
+        // Update the active proxy
+        handleHttpProxyConfigurationChange();
     }
 
     /**
@@ -1339,6 +1343,52 @@ public class ConnectivityService extends IConnectivityManager.Stub {
         }
 
         bumpDns();
+    }
+
+    private void handleHttpProxyConfigurationChange() {
+        // If there's a user-set global HTTP proxy, it overrides anything else
+        ContentResolver contentResolver = mContext.getContentResolver();
+        String userProxy = Settings.Secure.getString(
+                contentResolver,
+                Settings.Secure.HTTP_PROXY);
+        if (userProxy != null && userProxy.length() > 0) {
+            if (DBG) {
+                Slog.d(TAG, "Using user-specified HTTP proxy settings");
+            }
+            SystemProperties.set("net.http-proxy", "http://" + userProxy + "/");
+            return;
+        }
+        
+        NetworkInfo info = getActiveNetworkInfo();
+
+        if (info == null) {
+            if (DBG) {
+                Slog.d(TAG, "No active network, clearing HTTP proxy settings");
+            }
+            SystemProperties.set("net.http-proxy", null);
+            return;
+        }
+
+        switch (info.getType()) {
+            case ConnectivityManager.TYPE_WIFI:
+                if (DBG) {
+                    Slog.d(TAG, "Active network is WiFi, no HTTP proxy settings");
+                }
+                // TODO: in the future we would assign the selected WiFi network's proxy here
+                SystemProperties.set("net.http-proxy", null);
+                break;
+
+            case ConnectivityManager.TYPE_MOBILE:
+                String mobileProxy = SystemProperties.get("net.gprs.http-proxy");
+                if (DBG) {
+                    Slog.d(TAG, "Active network is mobile, setting HTTP proxy to " + mobileProxy);
+                }
+                SystemProperties.set("net.http-proxy", mobileProxy);
+                break;
+
+            default:
+                Slog.e(TAG, "Unknown type for active network: " + info.getType());
+        } 
     }
 
     private int getRestoreDefaultNetworkDelay() {

@@ -34,11 +34,13 @@ import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.routing.HttpRoutePlanner;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.RequestWrapper;
+import org.apache.http.impl.conn.ProxySelectorRoutePlanner;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
@@ -55,6 +57,7 @@ import java.io.OutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import java.net.URI;
+import java.net.ProxySelector;
 
 import android.content.Context;
 import android.content.ContentResolver;
@@ -176,6 +179,13 @@ public final class AndroidHttpClient implements HttpClient {
                         ClientContext.CREDS_PROVIDER,
                         getCredentialsProvider());
                 return context;
+            }
+
+            @Override
+            protected HttpRoutePlanner createHttpRoutePlanner() {
+                return new ProxySelectorRoutePlanner(
+                        getConnectionManager().getSchemeRegistry(),
+                        ProxySelector.getDefault());
             }
         };
     }

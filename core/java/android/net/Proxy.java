@@ -17,6 +17,9 @@
 package android.net;
 
 import org.apache.http.HttpHost;
+import org.apache.http.conn.routing.HttpRoutePlanner;
+import org.apache.http.impl.client.AbstractHttpClient;
+import org.apache.http.impl.conn.ProxySelectorRoutePlanner;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -25,6 +28,7 @@ import android.provider.Settings;
 import android.util.Log;
 
 import java.net.InetAddress;
+import java.net.ProxySelector;
 import java.net.URI;
 import java.net.UnknownHostException;
 
@@ -44,12 +48,17 @@ final public class Proxy {
 
     /**
      * Return the proxy host set by the user.
-     * @param ctx A Context used to get the settings for the proxy host.
+     * @param ctx A Context used to get the settings for the proxy host. If null, the default
+     * proxy port will be returned.
      * @return String containing the host name. If the user did not set a host
      *         name it returns the default host. A null value means that no
      *         host is to be used.
      */
     static final public String getHost(Context ctx) {
+        if (ctx == null) {
+            return getDefaultHost();
+        }
+        
         ContentResolver contentResolver = ctx.getContentResolver();
         Assert.assertNotNull(contentResolver);
         String host = Settings.Secure.getString(
@@ -70,10 +79,15 @@ final public class Proxy {
 
     /**
      * Return the proxy port set by the user.
-     * @param ctx A Context used to get the settings for the proxy port.
+     * @param ctx A Context used to get the settings for the proxy port. If null, the default
+     * proxy port will be returned.
      * @return The port number to use or -1 if no proxy is to be used.
      */
     static final public int getPort(Context ctx) {
+        if (ctx == null) {
+            return getDefaultPort();
+        }
+        
         ContentResolver contentResolver = ctx.getContentResolver();
         Assert.assertNotNull(contentResolver);
         String host = Settings.Secure.getString(
@@ -96,12 +110,12 @@ final public class Proxy {
     }
 
     /**
-     * Return the default proxy host specified by the carrier.
+     * Return the default proxy host specified for the current network
      * @return String containing the host name or null if there is no proxy for
-     * this carrier.
+     * the current network.
      */
     static final public String getDefaultHost() {
-        String host = SystemProperties.get("net.gprs.http-proxy");
+        String host = SystemProperties.get("net.http-proxy");
         if (host != null) {
             Uri u = Uri.parse(host);
             host = u.getHost();
@@ -112,12 +126,12 @@ final public class Proxy {
     }
 
     /**
-     * Return the default proxy port specified by the carrier.
+     * Return the default proxy port specified for the current network.
      * @return The port number to be used with the proxy host or -1 if there is
-     * no proxy for this carrier.
+     * no proxy for the current network.
      */
     static final public int getDefaultPort() {
-        String host = SystemProperties.get("net.gprs.http-proxy");
+        String host = SystemProperties.get("net.http-proxy");
         if (host != null) {
             Uri u = Uri.parse(host);
             return u.getPort();
@@ -134,8 +148,6 @@ final public class Proxy {
      * @param context the context which will be passed to
      * {@link android.net.Proxy#getHost()}
      * @param url the target URL for the request
-     * @note Calling this method requires permission
-     * android.permission.ACCESS_NETWORK_STATE
      * @return The preferred proxy to be used by clients, or null if there
      * is no proxy.
      *
@@ -143,7 +155,7 @@ final public class Proxy {
      */
     static final public HttpHost getPreferredHttpHost(Context context,
             String url) {
-        if (!isLocalHost(url) && !isNetworkWifi(context)) {
+        if (!isLocalHost(url)) {
             final String proxyHost = Proxy.getHost(context);
             if (proxyHost != null) {
                 return new HttpHost(proxyHost, Proxy.getPort(context), "http");
@@ -151,6 +163,18 @@ final public class Proxy {
         }
 
         return null;
+    }
+
+    /**
+     * Configures a {@link org.apache.http.impl.client.AbstractHttpClient} to use the
+     * appropriate proxy for each request. There is no need to call this if the HTTP proxy
+     * changes over the lifetime of the HttpClient - the client will automatically
+     * begin using the new proxy.
+     */
+    static final public void setHttpClientProxy(AbstractHttpClient client) {
+        HttpRoutePlanner routePlanner = new ProxySelectorRoutePlanner(
+                client.getConnectionManager().getSchemeRegistry(), ProxySelector.getDefault());
+        client.setRoutePlanner(routePlanner);
     }
 
     static final private boolean isLocalHost(String url) {
@@ -178,21 +202,4 @@ final public class Proxy {
         return false;
     }
 
-    static final private boolean isNetworkWifi(Context context) {
-        if (context == null) {
-            return false;
-        }
-
-        final ConnectivityManager connectivity = (ConnectivityManager)
-            context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity != null) {
-            final NetworkInfo info = connectivity.getActiveNetworkInfo();
-            if (info != null &&
-                    info.getType() == ConnectivityManager.TYPE_WIFI) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 };
