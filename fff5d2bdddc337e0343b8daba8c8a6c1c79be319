@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA73///x0\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-10-05T08:57:33Z",
+      "side": 1,
+      "message": "EONS enables the operator to control the operator name display. Some operators want their name to be displayed even in Roaming.\nIdeally they should do it using OPL/PNN but this can also be done using CPHS_ONS files. Ideally these files are not programmed, if programmed we use it as EONS in case of no match from OPL/PNN files.\nI will remove this if not required. Some OEMS requested this support as part of EONS. Please suggest.",
+      "parentUuid": "AAAA73///34\u003d",
+      "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA73///58\u003d",
         "filename": "telephony/java/com/android/internal/telephony/IccRecords.java",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2010-10-04T19:11:14Z",
       "side": 1,
       "message": "May make more sense to define these as non-public (default scope) in gsm/SimRecords.java.",
+      "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA73///xc\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccRecords.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-10-05T08:57:33Z",
+      "side": 1,
+      "message": "OK",
+      "parentUuid": "AAAA73///58\u003d",
       "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA73///xw\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccRecords.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-10-05T08:57:33Z",
+      "side": 1,
+      "message": "This is to notify the registrants of certain events like\n1) OPL/PNN records refreshed over the Air. (EVENT_EONS)\n    This should trigger EONS, update SS with the new operator and should update the operator name display as well. \n2) EF_SPN updated(EVENT_SPN). This should just update the display to reflect the new SPN name. Actually this can be done from SIMRecords.java file itself by making the updateSpnDisplay public and calling it directly using phone object like this \nphone.mSST.updateSpnDisplay() but again as said earlier we do not want the SIMRecords code to depend on phone object.\n\nAs you suggested the name can be changed to reflect the functionality  like registerForSIMEFUpdates(), i will change to any suggested name if this does not reflect the functionality.",
+      "parentUuid": "AAAA73///54\u003d",
+      "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA73///50\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/Eons.java",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2010-10-04T19:11:14Z",
       "side": 1,
       "message": "Does this class and its methods need to be public?  I don\u0027t see it used outside of the telephony.gsm package.",
+      "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA73///xU\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/Eons.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-10-05T08:57:33Z",
+      "side": 1,
+      "message": "OK",
+      "parentUuid": "AAAA73///50\u003d",
       "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA73///xQ\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/Eons.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-10-05T08:57:33Z",
+      "side": 1,
+      "message": "OK",
+      "parentUuid": "AAAA73///40\u003d",
+      "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA73///5Q\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2010-10-04T19:11:14Z",
       "side": 1,
       "message": "Why do we need to hook this through GSMPhone?  Can\u0027t GsmServiceStateTracker register for this event directly?",
+      "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA73///xs\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1421,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-10-05T08:57:33Z",
+      "side": 1,
+      "message": "If this is to be moved to GsmSST then mSIMRecords should be accessed using phone object like this,\nphone.mSIMRecords.registerForRecordsEvents(this, EVENT_ICC_RECORDS_EONS_UPDATED, null);\nFor this mSIMRecords should be declared as public in GSMPhone.java.\nAlso we wanted to remove the dependency on phone object as much as possible.\n\nLet me know if this needs to be moved to GsmSST, and if it is OK to declare mSIMRecords as public in GSMPhone for this purpose.",
+      "parentUuid": "AAAA73///5Q\u003d",
       "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA73///xM\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmServiceStateTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-10-05T08:57:33Z",
+      "side": 1,
+      "message": "OK",
+      "parentUuid": "AAAA73///48\u003d",
+      "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA73///4s\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/GsmServiceStateTracker.java",
         "patchSetId": 6
@@ -132,6 +258,24 @@
       "writtenOn": "2010-10-04T19:11:14Z",
       "side": 1,
       "message": "This doesn\u0027t seem quite right.  If this were a private method called only in pollStateDone(), it would be fine.  But it can also be called from GsmPhone in response to EVENT_ICC_RECORDS_EONS_UPDATED.  My two issues with that:  1) Seems a bit circular (SimRecords -\u003e GsmPhone -\u003e GsmSST -\u003e SimRecords); and 2) In that code path, ss is updated but phone.notifyServiceStateChanged() is not called, so no apps are notified of the operator name change.",
+      "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA73///xE\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmServiceStateTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-10-05T08:57:33Z",
+      "side": 1,
+      "message": "Issue1: This is circular because when there is a OTA refresh of OPL/PNN files, EONS name is to be derived (this can be triggered in SIMRecords itself). This derived name has to be updated in SS and also this name has to be updated in the display. For both these things we need phone object again. This is again done to avoid dependency on phone object .\nIssue2: This is definitely an issue. This can be fixed by moving the phone.notifyServiceStateChanged() to updateEons() if you agree.",
+      "parentUuid": "AAAA73///4s\u003d",
       "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA73///xA\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmServiceStateTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-10-05T08:57:33Z",
+      "side": 1,
+      "message": "Very valid scenario. Please suggest on how to handle this. My opinion is to move updateEons() to the start of this function and update newSS in place of SS.\n\nHow does passing SS as parameter can solve this? SS will any way be over written by newSS (if move to top) and the updated name is lost. Please let me know if i missed any thing in that comment.",
+      "parentUuid": "AAAA73///4U\u003d",
+      "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA73///4Q\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/OplRecords.java",
         "patchSetId": 6
@@ -166,6 +328,24 @@
       "writtenOn": "2010-10-04T19:11:14Z",
       "side": 1,
       "message": "Same as Eons:  None of this needs to be public.",
+      "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA73///w8\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/OplRecords.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-10-05T08:57:33Z",
+      "side": 1,
+      "message": "OK",
+      "parentUuid": "AAAA73///4Q\u003d",
       "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA73///w4\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/PnnRecords.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-10-05T08:57:33Z",
+      "side": 1,
+      "message": "OK",
+      "parentUuid": "AAAA73///4M\u003d",
+      "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA73///4A\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/SIMRecords.java",
         "patchSetId": 6
@@ -200,6 +398,24 @@
       "writtenOn": "2010-10-04T19:11:14Z",
       "side": 1,
       "message": "Why do we need this notification?  Loading this file always  leads to a recordsLoaded notification, so any interested parties can just register for that (and probably already do).  Also means that we aren\u0027t sending this notification 3x for one batch load of records.",
+      "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA73///w0\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SIMRecords.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-10-05T08:57:33Z",
+      "side": 1,
+      "message": "This is to handle OTA refresh of PNN/OPL files.\nIf we just depend on onAllRecords loaded, then any file refresh will trigger EONS.\nPlease suggest if the OTA refresh case can be handled better.",
+      "parentUuid": "AAAA73///4A\u003d",
       "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA73///ww\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SIMRecords.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1394,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-10-05T08:57:33Z",
+      "side": 1,
+      "message": "Yes clean up is required here but need your suggestions on this and this itself will be significant change. Hence i did not combine that will EONS to concentrate more on that.\nThese are the decisions to be taken.\n1) Presently only the first records of PNN is read and mPnnHome.. parameter is updated. For EONS we read all the records of PNN and cache them. Do you want me to remove the existing PNN first record read and derive that from PNN cache itself?\n2) getSpnFsm() conditionally reads EF_CPHS_ONS and EF_CPHS_ONS_SHORT. Do you want me to change the code of getSpnFsm() to use the already read data of EF_CPHS_ONS and EF_CPHS_SHORT_ONS as part of fetchsimrecords()?\nAnd any way if it is decided not to use CPHS_ONS files for EONS, these changes are not required.",
+      "parentUuid": "AAAA73///38\u003d",
+      "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA73///5E\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/SIMRecords.java",
         "patchSetId": 6
@@ -234,6 +468,24 @@
       "writtenOn": "2010-10-04T19:11:14Z",
       "side": 1,
       "message": "Don\u0027t think these three methods need to be public.  Default scope should be fine.",
+      "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA73///ws\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SIMRecords.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1004300
+      },
+      "writtenOn": "2010-10-05T08:57:33Z",
+      "side": 1,
+      "message": "OK",
+      "parentUuid": "AAAA73///5E\u003d",
       "revId": "fff5d2bdddc337e0343b8daba8c8a6c1c79be319",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
