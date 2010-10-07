@@ -567,6 +567,33 @@ public abstract class SMSDispatcher extends Handler {
      */
     protected abstract int dispatchMessage(SmsMessageBase sms);
 
+    /**
+     * Checks if a message part has already been received and should be discarded
+     * @return true if the message is a duplicate part, false otherwise
+     */
+    protected boolean messagePartIsDuplicate(SmsMessageBase sms,
+            SmsHeader.ConcatRef concatRef) {
+
+        StringBuilder where = new StringBuilder("reference_number =");
+        where.append(concatRef.refNumber);
+        where.append(" AND sequence =");
+        where.append(concatRef.seqNumber);
+        where.append(" AND address = ?");
+        String[] whereArgs = new String[] {sms.getOriginatingAddress()};
+
+        boolean retVal = false;
+        Cursor cursor = null;
+        try {
+            cursor = mResolver.query(mRawUri, RAW_PROJECTION, where.toString(), whereArgs, null);
+
+            retVal = (cursor.getCount() > 0);
+        } finally {
+            if (cursor != null) cursor.close();
+        }
+
+        return retVal;
+    }
+
 
     /**
      * If this is the last part send the parts out to the application, otherwise
@@ -589,6 +616,10 @@ public abstract class SMSDispatcher extends Handler {
         byte[][] pdus = null;
         Cursor cursor = null;
         try {
+            if (messagePartIsDuplicate(sms, concatRef)) {
+                return Intents.RESULT_SMS_HANDLED;
+            }
+
             cursor = mResolver.query(mRawUri, RAW_PROJECTION, where.toString(), whereArgs, null);
             int cursorCount = cursor.getCount();
             if (cursorCount != concatRef.msgCount - 1) {
