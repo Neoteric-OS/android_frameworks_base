@@ -107,6 +107,8 @@ public:
 
     DecryptHandle* openDecryptSession(int uniqueId, int fd, int offset, int length);
 
+    DecryptHandle* openDecryptSession(int uniqueId, const char* uri);
+
     status_t closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle);
 
     status_t initializeDecryptUnit(int uniqueId, DecryptHandle* decryptHandle,

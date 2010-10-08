@@ -538,14 +538,41 @@ DecryptHandle* BpDrmManagerService::openDecryptSession(
     LOGV("Entering BpDrmManagerService::openDecryptSession");
     Parcel data, reply;
 
-    const String16 interfaceDescriptor = IDrmManagerService::getInterfaceDescriptor();
-    data.writeInterfaceToken(interfaceDescriptor);
+    data.writeInterfaceToken(IDrmManagerService::getInterfaceDescriptor());
     data.writeInt32(uniqueId);
     data.writeFileDescriptor(fd);
     data.writeInt32(offset);
     data.writeInt32(length);
 
     remote()->transact(OPEN_DECRYPT_SESSION, data, &reply);
+
+    DecryptHandle* handle = NULL;
+    if (0 != reply.dataAvail()) {
+        handle = new DecryptHandle();
+        handle->decryptId = reply.readInt32();
+        handle->mimeType = reply.readString8();
+        handle->decryptApiType = reply.readInt32();
+        handle->status = reply.readInt32();
+        handle->decryptInfo = NULL;
+        if (0 != reply.dataAvail()) {
+            handle->decryptInfo = new DecryptInfo();
+            handle->decryptInfo->decryptBufferLength = reply.readInt32();
+        }
+    } else {
+        LOGE("no decryptHandle is generated in service side");
+    }
+    return handle;
+}
+
+DecryptHandle* BpDrmManagerService::openDecryptSession(int uniqueId, const char* uri) {
+    LOGV("Entering BpDrmManagerService::openDecryptSession");
+    Parcel data, reply;
+
+    data.writeInterfaceToken(IDrmManagerService::getInterfaceDescriptor());
+    data.writeInt32(uniqueId);
+    data.writeString8(String8(uri));
+
+    remote()->transact(OPEN_DECRYPT_SESSION_FROM_URI, data, &reply);
 
     DecryptHandle* handle = NULL;
     if (0 != reply.dataAvail()) {
@@ -1222,6 +1249,32 @@ status_t BnDrmManagerService::onTransact(
 
         DecryptHandle* handle
             = openDecryptSession(uniqueId, fd, data.readInt32(), data.readInt32());
+
+        if (NULL != handle) {
+            reply->writeInt32(handle->decryptId);
+            reply->writeString8(handle->mimeType);
+            reply->writeInt32(handle->decryptApiType);
+            reply->writeInt32(handle->status);
+            if (NULL != handle->decryptInfo) {
+                reply->writeInt32(handle->decryptInfo->decryptBufferLength);
+                delete handle->decryptInfo; handle->decryptInfo = NULL;
+            }
+        } else {
+            LOGE("NULL decryptHandle is returned");
+        }
+        delete handle; handle = NULL;
+        return DRM_NO_ERROR;
+    }
+
+    case OPEN_DECRYPT_SESSION_FROM_URI:
+    {
+        LOGV("BnDrmManagerService::onTransact :OPEN_DECRYPT_SESSION_FROM_URI");
+        CHECK_INTERFACE(IDrmManagerService, data, reply);
+
+        const int uniqueId = data.readInt32();
+        const String8 uri = data.readString8();
+
+        DecryptHandle* handle = openDecryptSession(uniqueId, uri.string());
 
         if (NULL != handle) {
             reply->writeInt32(handle->decryptId);

@@ -197,6 +197,12 @@ DecryptHandle* DrmManagerService::openDecryptSession(
     return mDrmManager->openDecryptSession(uniqueId, fd, offset, length);
 }
 
+DecryptHandle* DrmManagerService::openDecryptSession(
+            int uniqueId, const char* uri) {
+    LOGV("Entering DrmManagerService::openDecryptSession with uri");
+    return mDrmManager->openDecryptSession(uniqueId, uri);
+}
+
 status_t DrmManagerService::closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle) {
     LOGV("Entering closeDecryptSession");
     return mDrmManager->closeDecryptSession(uniqueId, decryptHandle);

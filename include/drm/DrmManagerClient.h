@@ -67,6 +67,15 @@ public:
     DecryptHandle* openDecryptSession(int fd, int offset, int length);
 
     /**
+     * Open the decrypt session to decrypt the given protected content
+     *
+     * @param[in] uri Path of the protected content to be decrypted
+     * @return
+     *     Handle for the decryption session
+     */
+    DecryptHandle* openDecryptSession(const char* uri);
+
+    /**
      * Close the decrypt session for the given handle
      *
      * @param[in] decryptHandle Handle for the decryption session

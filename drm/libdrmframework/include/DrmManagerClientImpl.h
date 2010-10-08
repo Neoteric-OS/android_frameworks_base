@@ -301,6 +301,16 @@ public:
     DecryptHandle* openDecryptSession(int uniqueId, int fd, int offset, int length);
 
     /**
+     * Open the decrypt session to decrypt the given protected content
+     *
+     * @param[in] uniqueId Unique identifier for a session
+     * @param[in] uri Path of the protected content to be decrypted
+     * @return
+     *     Handle for the decryption session
+     */
+    DecryptHandle* openDecryptSession(int uniqueId, const char* uri);
+
+    /**
      * Close the decrypt session for the given handle
      *
      * @param[in] uniqueId Unique identifier for a session

@@ -16,9 +16,11 @@
 
 package android.drm;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -411,6 +413,9 @@ public class DrmManagerClient {
      *         or null in case of failure
      */
     public ContentValues getConstraints(Uri uri, int action) {
+        if (null == uri || Uri.EMPTY == uri) {
+            throw new IllegalArgumentException("Uri should be non null");
+        }
         return getConstraints(convertUriToPath(uri), action);
     }
 
@@ -822,18 +827,28 @@ public class DrmManagerClient {
      * <row_index> the index of the content in given table
      */
     private String convertUriToPath(Uri uri) {
+        String path = null;
         String scheme = uri.getScheme();
-        if (null == scheme || scheme.equals("file")) {
-            return uri.getPath();
+        if (null == scheme || scheme.equals("") || scheme.equals(ContentResolver.SCHEME_FILE)) {
+            path = uri.getPath();
+        } else if (scheme.equals(ContentResolver.SCHEME_CONTENT)) {
+            String[] projection = new String[] {MediaStore.MediaColumns.DATA};
+            Cursor cursor = null;
+            try {
+                cursor = mContext.getContentResolver().query(uri, projection, null, null, null);
+            } catch (SQLiteException e) {
+                throw new IllegalArgumentException("Given Uri is not formatted in a way " +
+                        "so that it can be found in media store.");
+            }
+            if (null == cursor || 0 == cursor.getCount() || !cursor.moveToFirst()) {
+                throw new IllegalArgumentException("Given Uri could not be found in media store");
+            }
+            int pathIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+            path = cursor.getString(pathIndex);
+            cursor.close();
+        } else {
+            throw new IllegalArgumentException("Given Uri scheme is not supported");
         }
-        String[] projection = new String[] {MediaStore.MediaColumns.DATA};
-        Cursor cursor = mContext.getContentResolver().query(uri, projection, null, null, null);
-        if (null == cursor || 0 == cursor.getCount() || !cursor.moveToFirst()) {
-            throw new IllegalArgumentException("Given Uri could not be found in media store");
-        }
-        int pathIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-        String path = cursor.getString(pathIndex);
-        cursor.close();
         return path;
     }
 

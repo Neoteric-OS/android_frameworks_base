@@ -243,6 +243,11 @@ status_t DrmPassthruPlugIn::onOpenDecryptSession(
     return DRM_ERROR_CANNOT_HANDLE;
 }
 
+status_t DrmPassthruPlugIn::onOpenDecryptSession(
+            int uniqueId, DecryptHandle* decryptHandle, const char* uri) {
+    return DRM_ERROR_CANNOT_HANDLE;
+}
+
 status_t DrmPassthruPlugIn::onCloseDecryptSession(int uniqueId, DecryptHandle* decryptHandle) {
     LOGD("DrmPassthruPlugIn::onCloseDecryptSession() : %d", uniqueId);
     if (NULL != decryptHandle) {

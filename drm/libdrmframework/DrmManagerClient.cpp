@@ -128,6 +128,10 @@ DecryptHandle* DrmManagerClient::openDecryptSession(int fd, int offset, int leng
     return mDrmManagerClientImpl->openDecryptSession(mUniqueId, fd, offset, length);
 }
 
+DecryptHandle* DrmManagerClient::openDecryptSession(const char* uri) {
+    return mDrmManagerClientImpl->openDecryptSession(mUniqueId, uri);
+}
+
 status_t DrmManagerClient::closeDecryptSession(DecryptHandle* decryptHandle) {
     return mDrmManagerClientImpl->closeDecryptSession(mUniqueId, decryptHandle);
 }

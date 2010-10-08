@@ -251,6 +251,10 @@ DecryptHandle* DrmManagerClientImpl::openDecryptSession(
     return getDrmManagerService()->openDecryptSession(uniqueId, fd, offset, length);
 }
 
+DecryptHandle* DrmManagerClientImpl::openDecryptSession(int uniqueId, const char* uri) {
+    return getDrmManagerService()->openDecryptSession(uniqueId, uri);
+}
+
 status_t DrmManagerClientImpl::closeDecryptSession(int uniqueId, DecryptHandle* decryptHandle) {
     status_t status = DRM_ERROR_UNKNOWN;
     if (NULL != decryptHandle) {
