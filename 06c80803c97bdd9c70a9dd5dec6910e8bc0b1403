@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA73//+9g\u003d",
+        "filename": "core/java/android/provider/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-10-11T15:58:22Z",
+      "side": 1,
+      "message": "add a comment saying what spec/section these are defined in?\n\nI\u0027d otherwise assume reading this code that it\u0027s just an internal implementation detail.  I\u0027m also worried whether we store these on disk, in some sqlite database perhaps?",
+      "revId": "06c80803c97bdd9c70a9dd5dec6910e8bc0b1403",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
