@@ -160,7 +160,7 @@ public final class SIMRecords extends IccRecords {
         recordsToLoad = 0;
 
 
-        p.mCM.registerForSIMReady(this, EVENT_SIM_READY, null);
+        p.mSimCard.registerForReady(this, EVENT_SIM_READY, null);
         p.mCM.registerForOffOrNotAvailable(
                         this, EVENT_RADIO_OFF_OR_NOT_AVAILABLE, null);
         p.mCM.setOnSmsOnSim(this, EVENT_SMS_ON_SIM, null);
@@ -173,7 +173,7 @@ public final class SIMRecords extends IccRecords {
 
     public void dispose() {
         //Unregister for all events
-        phone.mCM.unregisterForSIMReady(this);
+        ((GSMPhone) phone).mSimCard.unregisterForReady(this);
         phone.mCM.unregisterForOffOrNotAvailable( this);
         phone.mCM.unSetOnIccRefresh(this);
     }

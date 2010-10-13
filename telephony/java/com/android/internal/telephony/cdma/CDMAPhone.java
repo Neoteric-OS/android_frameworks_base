@@ -103,6 +103,7 @@ public class CDMAPhone extends PhoneBase {
     CdmaServiceStateTracker mSST;
     RuimRecords mRuimRecords;
     RuimCard mRuimCard;
+    int mCdmaSubscriptionSource = CDMA_SUBSCRIPTION_NV;
     ArrayList <CdmaMmiCode> mPendingMmis = new ArrayList<CdmaMmiCode>();
     RuimPhoneBookInterfaceManager mRuimPhoneBookInterfaceManager;
     RuimSmsInterfaceManager mRuimSmsInterfaceManager;
@@ -150,13 +151,13 @@ public class CDMAPhone extends PhoneBase {
         super(notifier, context, ci, unitTestMode);
 
         mCM.setPhoneType(Phone.PHONE_TYPE_CDMA);
+        mRuimCard = new RuimCard(this);
         mCT = new CdmaCallTracker(this);
         mSST = new CdmaServiceStateTracker (this);
         mSMS = new CdmaSMSDispatcher(this);
         mIccFileHandler = new RuimFileHandler(this);
         mRuimRecords = new RuimRecords(this);
         mDataConnection = new CdmaDataConnectionTracker (this);
-        mRuimCard = new RuimCard(this);
         mRuimPhoneBookInterfaceManager = new RuimPhoneBookInterfaceManager(this);
         mRuimSmsInterfaceManager = new RuimSmsInterfaceManager(this);
         mSubInfo = new PhoneSubInfo(this);
@@ -170,8 +171,9 @@ public class CDMAPhone extends PhoneBase {
         mCM.registerForOn(this, EVENT_RADIO_ON, null);
         mCM.setOnSuppServiceNotification(this, EVENT_SSN, null);
         mSST.registerForNetworkAttach(this, EVENT_REGISTERED_TO_NETWORK, null);
-        mCM.registerForNVReady(this, EVENT_NV_READY, null);
         mCM.setEmergencyCallbackMode(this, EVENT_EMERGENCY_CALLBACK_MODE_ENTER, null);
+
+        mCM.registerForCdmaSubscriptionSourceChanged(this, EVENT_CDMA_SUBSCRIPTION_SOURCE_CHANGED, null);
 
         PowerManager pm
             = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
@@ -220,9 +222,9 @@ public class CDMAPhone extends PhoneBase {
             mCM.unregisterForAvailable(this); //EVENT_RADIO_AVAILABLE
             mCM.unregisterForOffOrNotAvailable(this); //EVENT_RADIO_OFF_OR_NOT_AVAILABLE
             mCM.unregisterForOn(this); //EVENT_RADIO_ON
-            mCM.unregisterForNVReady(this); //EVENT_NV_READY
             mSST.unregisterForNetworkAttach(this); //EVENT_REGISTERED_TO_NETWORK
             mCM.unSetOnSuppServiceNotification(this);
+            mCM.unregisterForCdmaSubscriptionSourceChanged(this);
             removeCallbacks(mExitEcmRunnable);
 
             mPendingMmis.clear();
@@ -889,7 +891,8 @@ public class CDMAPhone extends PhoneBase {
                     || cdmaMin.substring(0,6).equals(UNACTIVATED_MIN2_VALUE))
                     || SystemProperties.getBoolean("test_cdma_setup", false);
         }
-        if (DBG) Log.d(LOG_TAG, "needsOtaServiceProvisioning: ret=" + needsProvisioning);
+        if (DBG) Log.d(LOG_TAG, "needsOtaServiceProvisioning: ret=" + needsProvisioning +
+                                " cdmaMin=" + cdmaMin);
         return needsProvisioning;
     }
 
@@ -1044,6 +1047,13 @@ public class CDMAPhone extends PhoneBase {
 
             case EVENT_RADIO_ON:{
                 Log.d(LOG_TAG, "Event EVENT_RADIO_ON Received");
+                mCM.getCdmaSubscriptionSource(obtainMessage(EVENT_GET_CDMA_SUBSCRIPTION_SOURCE));
+            }
+            break;
+
+            case EVENT_CDMA_SUBSCRIPTION_SOURCE_CHANGED:{
+                Log.d(LOG_TAG, "EVENT_CDMA_SUBSCRIPTION_SOURCE_CHANGED");
+                mCM.getCdmaSubscriptionSource(obtainMessage(EVENT_GET_CDMA_SUBSCRIPTION_SOURCE));
             }
             break;
 
@@ -1056,6 +1066,21 @@ public class CDMAPhone extends PhoneBase {
                 Log.d(LOG_TAG, "Event EVENT_REGISTERED_TO_NETWORK Received");
             }
             break;
+
+            case EVENT_GET_CDMA_SUBSCRIPTION_SOURCE:
+                ar = (AsyncResult) msg.obj;
+                int newSubscriptionSource = ((int[]) ar.result)[0];
+
+                if (newSubscriptionSource != mCdmaSubscriptionSource) {
+                    Log.v(LOG_TAG, "Subscription Source Changed : " + mCdmaSubscriptionSource
+                            + " >> " + newSubscriptionSource);
+                    mCdmaSubscriptionSource = newSubscriptionSource;
+                    if (newSubscriptionSource == CDMA_SUBSCRIPTION_NV) {
+                        // NV is ready when subscription source is NV
+                        sendMessage(obtainMessage(EVENT_NV_READY));
+                    }
+                }
+                break;
 
             case EVENT_NV_READY:{
                 Log.d(LOG_TAG, "Event EVENT_NV_READY Received");
