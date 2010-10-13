@@ -372,4 +372,10 @@ class SipCommandInterface extends BaseCommands implements CommandsInterface {
 
     public void exitEmergencyCallbackMode(Message response) {
     }
+
+    public void getCdmaPrlVersion(Message result) {
+    }
+
+    public void getVoiceRadioTechnology(Message result) {
+    }
 }

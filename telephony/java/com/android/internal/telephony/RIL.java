@@ -598,14 +598,18 @@ public final class RIL extends BaseCommands implements CommandsInterface {
             case RILConstants.NETWORK_MODE_GSM_ONLY:
             case RILConstants.NETWORK_MODE_WCDMA_ONLY:
             case RILConstants.NETWORK_MODE_GSM_UMTS:
+            case RILConstants.NETWORK_MODE_GSM_WCDMA_LTE:
                 mPhoneType = RILConstants.GSM_PHONE;
                 break;
             case RILConstants.NETWORK_MODE_CDMA:
             case RILConstants.NETWORK_MODE_CDMA_NO_EVDO:
             case RILConstants.NETWORK_MODE_EVDO_NO_CDMA:
+            case RILConstants.NETWORK_MODE_CDMA_AND_LTE_EVDO:
                 mPhoneType = RILConstants.CDMA_PHONE;
                 break;
             case RILConstants.NETWORK_MODE_GLOBAL:
+            case RILConstants.NETWORK_MODE_GLOBAL_LTE:
+            case RILConstants.NETWORK_MODE_LTE_ONLY:
                 mPhoneType = RILConstants.CDMA_PHONE;
                 break;
             default:
@@ -639,8 +643,26 @@ public final class RIL extends BaseCommands implements CommandsInterface {
 
     //***** CommandsInterface implementation
 
+    public void getVoiceRadioTechnology(Message result) {
+        RILRequest rr = RILRequest.obtain(RIL_REQUEST_VOICE_RADIO_TECH, result);
+
+        if (RILJ_LOGD)
+            riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
+
+        send(rr);
+    }
+
     public void getCdmaSubscriptionSource(Message result) {
         RILRequest rr = RILRequest.obtain(RIL_REQUEST_CDMA_GET_SUBSCRIPTION_SOURCE, result);
+
+        if (RILJ_LOGD)
+            riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
+
+        send(rr);
+    }
+
+    public void getCdmaPrlVersion(Message result) {
+        RILRequest rr = RILRequest.obtain(RIL_REQUEST_CDMA_PRL_VERSION, result);
 
         if (RILJ_LOGD)
             riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
@@ -1983,14 +2005,7 @@ public final class RIL extends BaseCommands implements CommandsInterface {
         switch(stateInt) {
             case 0: state = RadioState.RADIO_OFF; break;
             case 1: state = RadioState.RADIO_UNAVAILABLE; break;
-            case 2: state = RadioState.SIM_NOT_READY; break;
-            case 3: state = RadioState.SIM_LOCKED_OR_ABSENT; break;
-            case 4: state = RadioState.SIM_READY; break;
-            case 5: state = RadioState.RUIM_NOT_READY; break;
-            case 6: state = RadioState.RUIM_READY; break;
-            case 7: state = RadioState.RUIM_LOCKED_OR_ABSENT; break;
-            case 8: state = RadioState.NV_NOT_READY; break;
-            case 9: state = RadioState.NV_READY; break;
+            case 2: state = RadioState.RADIO_ON; break;
 
             default:
                 throw new RuntimeException(
@@ -2233,6 +2248,8 @@ public final class RIL extends BaseCommands implements CommandsInterface {
             case RIL_REQUEST_REPORT_SMS_MEMORY_STATUS: ret = responseVoid(p); break;
             case RIL_REQUEST_REPORT_STK_SERVICE_IS_RUNNING: ret = responseVoid(p); break;
             case RIL_REQUEST_CDMA_GET_SUBSCRIPTION_SOURCE: ret = responseInts(p); break;
+            case RIL_REQUEST_VOICE_RADIO_TECH: ret = responseInts(p); break;
+            case RIL_REQUEST_CDMA_PRL_VERSION: ret = responseString(p); break;
             default:
                 throw new RuntimeException("Unrecognized solicited response: " + rr.mRequest);
             //break;
@@ -2374,6 +2391,7 @@ public final class RIL extends BaseCommands implements CommandsInterface {
             case RIL_UNSOL_OEM_HOOK_RAW: ret = responseRaw(p); break;
             case RIL_UNSOL_RINGBACK_TONE: ret = responseInts(p); break;
             case RIL_UNSOL_RESEND_INCALL_MUTE: ret = responseVoid(p); break;
+            case RIL_UNSOL_VOICE_RADIO_TECH_CHANGED: ret =  responseVoid(p); break;
             case RIL_UNSOL_CDMA_SUBSCRIPTION_SOURCE_CHANGED: ret =  responseVoid(p); break;
             case RIL_UNSOL_CDMA_PRL_CHANGED: ret =  responseVoid(p); break;
 
@@ -2394,12 +2412,17 @@ public final class RIL extends BaseCommands implements CommandsInterface {
 
                 switchToRadioState(newState);
                 break;
+            case RIL_UNSOL_VOICE_RADIO_TECH_CHANGED:
+                if (RILJ_LOGD) unsljLog(response);
+
+                mVoiceRadioTechChangedRegistrants
+                    .notifyRegistrants(new AsyncResult(null, null, null));
+                break;
             case RIL_UNSOL_CDMA_SUBSCRIPTION_SOURCE_CHANGED:
                 if (RILJ_LOGD) unsljLog(response);
 
-                int [] ssource = (int[])ret;
                 mCdmaSubscriptionSourceChangedRegistrants
-                    .notifyRegistrants(new AsyncResult(null, ssource, null));
+                    .notifyRegistrants(new AsyncResult(null, null, null));
                 break;
             case RIL_UNSOL_CDMA_PRL_CHANGED:
                 if (RILJ_LOGD) unsljLog(response);
@@ -3304,6 +3327,8 @@ public final class RIL extends BaseCommands implements CommandsInterface {
             case RIL_REQUEST_REPORT_SMS_MEMORY_STATUS: return "RIL_REQUEST_REPORT_SMS_MEMORY_STATUS";
             case RIL_REQUEST_REPORT_STK_SERVICE_IS_RUNNING: return "RIL_REQUEST_REPORT_STK_SERVICE_IS_RUNNING";
             case RIL_REQUEST_CDMA_GET_SUBSCRIPTION_SOURCE: return "RIL_REQUEST_CDMA_GET_SUBSCRIPTION_SOURCE";
+            case RIL_REQUEST_VOICE_RADIO_TECH: return "RIL_REQUEST_VOICE_RADIO_TECH";
+            case RIL_REQUEST_CDMA_PRL_VERSION: return "RIL_REQUEST_CDMA_PRL_VERSION";
             default: return "<unknown request>";
         }
     }
@@ -3350,6 +3375,7 @@ public final class RIL extends BaseCommands implements CommandsInterface {
             case RIL_UNSOL_RESEND_INCALL_MUTE: return "UNSOL_RESEND_INCALL_MUTE";
             case RIL_UNSOL_CDMA_SUBSCRIPTION_SOURCE_CHANGED: return "UNSOL_CDMA_SUBSCRIPTION_SOURCE_CHANGED";
             case RIL_UNSOL_CDMA_PRL_CHANGED: return "UNSOL_CDMA_PRL_CHANGED";
+            case RIL_UNSOL_VOICE_RADIO_TECH_CHANGED: return "UNSOL_VOICE_RADIO_TECH_CHANGED";
             default: return "<unknown response>";
         }
     }

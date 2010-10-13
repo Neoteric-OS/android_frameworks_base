@@ -45,6 +45,8 @@ public abstract class ServiceStateTracker extends Handler {
     protected static final int DATA_ACCESS_HSUPA = 10;
     protected static final int DATA_ACCESS_HSPA = 11;
     protected static final int DATA_ACCESS_CDMA_EvDo_B = 12;
+    protected static final int DATA_ACCESS_EHRPD = 13;
+    protected static final int DATA_ACCESS_LTE = 14;
 
     protected CommandsInterface cm;
 
@@ -122,6 +124,8 @@ public abstract class ServiceStateTracker extends Handler {
     protected static final int EVENT_SET_RADIO_POWER_OFF               = 38;
     protected static final int EVENT_CDMA_SUBSCRIPTION_SOURCE_CHANGED  = 39;
     protected static final int EVENT_CDMA_PRL_VERSION_CHANGED          = 40;
+    protected static final int EVENT_GET_CDMA_PRL_VERSION              = 41;
+    protected static final int EVENT_RADIO_ON                          = 42;
 
     protected static final String TIMEZONE_PROPERTY = "persist.sys.timezone";
 
