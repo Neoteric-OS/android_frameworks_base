@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA73//+bM\u003d",
+        "filename": "core/java/android/app/NotificationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-10-13T22:26:59Z",
+      "side": 1,
+      "message": "Might want to document that it can be null, too?  (apparently...)",
+      "revId": "91057ecd26be55d0257b010262825535d6792537",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
