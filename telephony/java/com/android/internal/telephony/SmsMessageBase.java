@@ -21,7 +21,6 @@ import com.android.internal.telephony.SmsHeader;
 import java.util.Arrays;
 
 import static android.telephony.SmsMessage.MessageClass;
-import android.provider.Telephony;
 
 /**
  * Base class declaring the specific methods and members for SmsMessage.
@@ -355,13 +354,11 @@ public abstract class SmsMessageBase {
         return indexOnIcc;
     }
 
-    protected void parseMessageBody() {
-        // originatingAddress could be null if this message is from a status
-        // report.
-        if (originatingAddress != null && originatingAddress.couldBeEmailGateway()) {
-            extractEmailAddressFromMessageBody();
-        }
-    }
+    /**
+     * Parses the message body, filtering out any potential email address
+     * information
+     */
+    abstract protected void parseMessageBody();
 
     /**
      * Try to parse this message as an email gateway message
@@ -373,21 +370,7 @@ public abstract class SmsMessageBase {
      * TP-OA/TP-DA field contains a generic gateway address and the to/from
      * address is added at the beginning as shown above." (which is supported here)
      * - Multiple addreses separated by commas, no spaces, Subject field delimited
-     * by '()' or '##' and '#' Section 9.2.3.24.11 (which are NOT supported here)
+     * by '()' or '##' and '#' Section 9.2.3.24.11
      */
-    protected void extractEmailAddressFromMessageBody() {
-
-        /* Some carriers may use " /" delimiter as below
-         *
-         * 1. [x@y][ ]/[subject][ ]/[body]
-         * -or-
-         * 2. [x@y][ ]/[body]
-         */
-         String[] parts = messageBody.split("( /)|( )", 2);
-         if (parts.length < 2) return;
-         emailFrom = parts[0];
-         emailBody = parts[1];
-         isEmail = Telephony.Mms.isEmailAddress(emailFrom);
-    }
-
+    abstract protected void extractEmailAddressFromMessageBody();
 }
