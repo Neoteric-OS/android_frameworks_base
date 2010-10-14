@@ -944,6 +944,25 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         setTypeface(tf, styleIndex);
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        if (enabled == isEnabled()) {
+            return;
+        }
+
+        if (enabled) {
+            setFocusableInTouchMode(true);
+        } else {
+            setFocusable(false);
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(
+                    Context.INPUT_METHOD_SERVICE);
+            if (imm.isActive(this)) {
+                imm.hideSoftInputFromWindow(getWindowToken(), 0);
+            }
+        }
+        super.setEnabled(enabled);
+    }
+
     /**
      * Sets the typeface and style in which the text should be displayed,
      * and turns on the fake bold and italic bits in the Paint if the
