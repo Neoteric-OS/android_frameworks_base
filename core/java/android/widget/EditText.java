@@ -24,6 +24,7 @@ import android.text.TextUtils;
 import android.text.method.ArrowKeyMovementMethod;
 import android.text.method.MovementMethod;
 import android.util.AttributeSet;
+import android.view.inputmethod.InputMethodManager;
 
 
 /*
@@ -110,5 +111,20 @@ public class EditText extends TextView {
                     + "TextUtils.TruncateAt.MARQUEE");
         }
         super.setEllipsize(ellipsis);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        if (enabled) {
+            setFocusableInTouchMode(true);
+        } else {
+            setFocusable(false);
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(
+                    Context.INPUT_METHOD_SERVICE);
+            if (imm.isActive(this)) {
+                imm.hideSoftInputFromWindow(getWindowToken(), 0);
+            }
+        }
+        super.setEnabled(enabled);
     }
 }
