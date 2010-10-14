@@ -97,8 +97,8 @@ public abstract class PhoneBase extends Handler implements Phone {
     protected static final int EVENT_RUIM_RECORDS_LOADED            = 22;
     protected static final int EVENT_NV_READY                       = 23;
     protected static final int EVENT_SET_ENHANCED_VP                = 24;
-    protected static final int EVENT_EMERGENCY_CALLBACK_MODE_ENTER  = 25;
-    protected static final int EVENT_EXIT_EMERGENCY_CALLBACK_RESPONSE = 26;
+    // Both enter and exit emergency callback mode
+    protected static final int EVENT_EMERGENCY_CALLBACK_MODE        = 25;
 
     // Key used to read/write current CLIR setting
     public static final String CLIR_KEY = "clir_key";

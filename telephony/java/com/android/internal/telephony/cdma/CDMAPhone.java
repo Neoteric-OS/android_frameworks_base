@@ -83,6 +83,7 @@ public class CDMAPhone extends PhoneBase {
     static final String LOG_TAG = "CDMA";
     private static final boolean DBG = true;
 
+    private static final int EVENT_EXIT_EMERGENCY_CALLBACK_RESPONSE = 100;
     // Min values used to by needsActivation
     private static final String UNACTIVATED_MIN2_VALUE = "000000";
     private static final String UNACTIVATED_MIN_VALUE = "1111110111";
@@ -172,7 +173,7 @@ public class CDMAPhone extends PhoneBase {
         mCM.setOnSuppServiceNotification(this, EVENT_SSN, null);
         mSST.registerForNetworkAttach(this, EVENT_REGISTERED_TO_NETWORK, null);
         mCM.registerForNVReady(this, EVENT_NV_READY, null);
-        mCM.setEmergencyCallbackMode(this, EVENT_EMERGENCY_CALLBACK_MODE_ENTER, null);
+        mCM.setEmergencyCallbackMode(this, EVENT_EMERGENCY_CALLBACK_MODE, null);
 
         PowerManager pm
             = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
@@ -937,8 +938,8 @@ public class CDMAPhone extends PhoneBase {
         if (mEcmExitRespRegistrant != null) {
             mEcmExitRespRegistrant.notifyRegistrant(ar);
         }
-        // if exiting ecm success
-        if (ar.exception == null) {
+        // if unsolicited or sucess exiting ecm
+        if (ar == null || ar.exception == null) {
             if (mIsPhoneInEcmState) {
                 mIsPhoneInEcmState = false;
                 setSystemProperty(TelephonyProperties.PROPERTY_INECM_MODE, "false");
@@ -1023,8 +1024,13 @@ public class CDMAPhone extends PhoneBase {
             }
             break;
 
-            case EVENT_EMERGENCY_CALLBACK_MODE_ENTER:{
-                handleEnterEmergencyCallbackMode(msg);
+            case EVENT_EMERGENCY_CALLBACK_MODE:{
+                ar = (AsyncResult) msg.obj;
+                boolean enter = (Boolean) ar.result;
+                if (enter)
+                    handleEnterEmergencyCallbackMode(msg);
+                else
+                    handleExitEmergencyCallbackMode(msg);
             }
             break;
 
