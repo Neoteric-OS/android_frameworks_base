@@ -864,6 +864,53 @@ public class SmsMessage extends SmsMessageBase{
         return replyPathPresent;
     }
 
+    /** {@inheritDoc} */
+    protected void parseMessageBody() {
+        if (getProtocolIdentifier() == 0x32) {
+            // This is an "email sms", extract sender address from message body
+            isEmail = true;
+            extractEmailAddressFromMessageBody();
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void extractEmailAddressFromMessageBody() {
+        int firstDoubleHashIndex = messageBody.indexOf("##");
+        int firstSingleHashIndex = messageBody.indexOf('#',
+                firstDoubleHashIndex + 2);
+        int firstLeftParenthesisIndex = messageBody.indexOf('(');
+        int firstRightParenthesisIndex = messageBody.indexOf(')',
+                firstLeftParenthesisIndex + 1);
+
+        if (firstDoubleHashIndex >= 0
+                && firstDoubleHashIndex < firstSingleHashIndex
+                && (firstLeftParenthesisIndex < 0
+                        || firstRightParenthesisIndex < 0
+                        || firstDoubleHashIndex < firstLeftParenthesisIndex)) {
+            // Using format from##subject#body
+            emailFrom = messageBody.substring(0, firstDoubleHashIndex);
+            pseudoSubject = messageBody.substring(firstDoubleHashIndex + 2,
+                    firstSingleHashIndex);
+            emailBody = messageBody.substring(firstSingleHashIndex + 1);
+        } else if (firstLeftParenthesisIndex >= 0
+                && firstLeftParenthesisIndex < firstRightParenthesisIndex) {
+            // Using format from(subject)body
+            emailFrom = messageBody.substring(0, firstLeftParenthesisIndex);
+            pseudoSubject = messageBody.substring(firstLeftParenthesisIndex + 1,
+                    firstRightParenthesisIndex);
+            emailBody = messageBody.substring(firstRightParenthesisIndex + 1);
+        } else {
+            // Using format from[space]body
+            String[] parts = messageBody.split(" ", 1);
+            if (parts.length < 2) {
+                emailBody = parts[0];
+            } else {
+                emailFrom = parts[0];
+                emailBody = parts[1];
+            }
+        }
+    }
+
     /**
      * TS 27.005 3.1, <pdu> definition "In the case of SMS: 3GPP TS 24.011 [6]
      * SC address followed by 3GPP TS 23.040 [3] TPDU in hexadecimal format:
