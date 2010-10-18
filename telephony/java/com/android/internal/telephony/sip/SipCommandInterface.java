@@ -40,22 +40,22 @@ class SipCommandInterface extends BaseCommands implements CommandsInterface {
     public void getIccCardStatus(Message result) {
     }
 
-    public void supplyIccPin(String pin, Message result) {
+    public void supplyIccPin(String aid, String pin, Message result) {
     }
 
-    public void supplyIccPuk(String puk, String newPin, Message result) {
+    public void supplyIccPuk(String aid, String puk, String newPin, Message result) {
     }
 
-    public void supplyIccPin2(String pin, Message result) {
+    public void supplyIccPin2(String aid, String pin, Message result) {
     }
 
-    public void supplyIccPuk2(String puk, String newPin2, Message result) {
+    public void supplyIccPuk2(String aid, String puk, String newPin2, Message result) {
     }
 
-    public void changeIccPin(String oldPin, String newPin, Message result) {
+    public void changeIccPin(String aid, String oldPin, String newPin, Message result) {
     }
 
-    public void changeIccPin2(String oldPin2, String newPin2, Message result) {
+    public void changeIccPin2(String aid, String oldPin2, String newPin2, Message result) {
     }
 
     public void changeBarringPassword(String facility, String oldPwd,
@@ -81,7 +81,7 @@ class SipCommandInterface extends BaseCommands implements CommandsInterface {
             Message result) {
     }
 
-    public void getIMSI(Message result) {
+    public void getIMSI(String aid, Message result) {
     }
 
     public void getIMEI(Message result) {
@@ -214,7 +214,7 @@ class SipCommandInterface extends BaseCommands implements CommandsInterface {
     }
 
 
-    public void iccIO (int command, int fileid, String path, int p1, int p2,
+    public void iccIO (String aid, int command, int fileid, String path, int p1, int p2,
             int p3, String data, String pin2, Message result) {
     }
 
@@ -258,11 +258,11 @@ class SipCommandInterface extends BaseCommands implements CommandsInterface {
     public void getBasebandVersion (Message response) {
     }
 
-    public void queryFacilityLock (String facility, String password,
+    public void queryFacilityLock (String aid, String facility, String password,
             int serviceClass, Message response) {
     }
 
-    public void setFacilityLock (String facility, boolean lockState,
+    public void setFacilityLock (String aid, String facility, boolean lockState,
             String password, int serviceClass, Message response) {
     }
 

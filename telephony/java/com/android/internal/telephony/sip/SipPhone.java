@@ -37,6 +37,7 @@ import com.android.internal.telephony.Connection;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneNotifier;
 import com.android.internal.telephony.UUSInfo;
+import com.android.internal.telephony.UiccCard;
 
 import java.text.ParseException;
 import java.util.List;
@@ -908,5 +909,11 @@ public class SipPhone extends SipPhoneBase {
                     onError(Connection.DisconnectCause.ERROR_UNSPECIFIED);
             }
         }
+    }
+
+    @Override
+    public UiccCard getUiccCard() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
