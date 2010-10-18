@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
+ * Copyright (c) 2010, Code Aurora Forum. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -128,6 +129,8 @@ public abstract class ServiceStateTracker extends Handler {
     protected static final int EVENT_GET_CDMA_PRL_VERSION              = 42;
 
     protected static final int EVENT_RADIO_ON                          = 43;
+    protected static final int EVENT_ICC_CHANGED                       = 44;
+    protected static final int EVENT_ICC_RECORD_EVENTS                 = 45;
 
     protected static final String TIMEZONE_PROPERTY = "persist.sys.timezone";
 
