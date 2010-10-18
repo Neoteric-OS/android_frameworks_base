@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2007,2010 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import com.android.internal.telephony.IccUtils;
 import com.android.internal.telephony.CommandsInterface;
 import com.android.internal.telephony.IccCard;
 import com.android.internal.telephony.IccFileHandler;
-import com.android.internal.telephony.IccRecords;
+import com.android.internal.telephony.UiccApplicationRecords;
 
 import android.util.Config;
 
@@ -115,7 +115,7 @@ class RilMessage {
 public class CatService extends Handler implements AppInterface {
 
     // Class members
-    private static IccRecords mIccRecords;
+    private static UiccApplicationRecords mIccRecords;
 
     // Service members.
     private static CatService sInstance;
@@ -147,7 +147,7 @@ public class CatService extends Handler implements AppInterface {
     private static final int DEV_ID_NETWORK     = 0x83;
 
     /* Intentionally private for singleton */
-    private CatService(CommandsInterface ci, IccRecords ir, Context context,
+    private CatService(CommandsInterface ci, UiccApplicationRecords ir, Context context,
             IccFileHandler fh, IccCard ic) {
         if (ci == null || ir == null || context == null || fh == null
                 || ic == null) {
@@ -513,7 +513,7 @@ public class CatService extends Handler implements AppInterface {
      * @param ic Icc card
      * @return The only Service object in the system
      */
-    public static CatService getInstance(CommandsInterface ci, IccRecords ir,
+    public static CatService getInstance(CommandsInterface ci, UiccApplicationRecords ir,
             Context context, IccFileHandler fh, IccCard ic) {
         if (sInstance == null) {
             if (ci == null || ir == null || context == null || fh == null

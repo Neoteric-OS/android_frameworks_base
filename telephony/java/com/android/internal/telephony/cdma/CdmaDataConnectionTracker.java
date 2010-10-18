@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 The Android Open Source Project
+ * Copyright (C) 2006,2010 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,6 +45,7 @@ import android.util.Log;
 import com.android.internal.telephony.CommandsInterface;
 import com.android.internal.telephony.DataCallState;
 import com.android.internal.telephony.DataConnection.FailCause;
+import com.android.internal.telephony.UiccManager.AppFamily;
 import com.android.internal.telephony.DataConnection;
 import com.android.internal.telephony.DataConnectionTracker;
 import com.android.internal.telephony.EventLogTags;
@@ -116,6 +117,8 @@ public final class CdmaDataConnectionTracker extends DataConnectionTracker {
     // if we have no active Apn this is null
     protected ApnSetting mActiveApn;
 
+    protected static final AppFamily mAppFamily = AppFamily.APP_FAM_3GPP2;
+
     // Possibly promote to base class, the only difference is
     // the INTENT_RECONNECT_ALARM action is a different string.
     // Do consider technology changes if it is promoted.
@@ -167,7 +170,6 @@ public final class CdmaDataConnectionTracker extends DataConnectionTracker {
 
         p.mCM.registerForAvailable (this, EVENT_RADIO_AVAILABLE, null);
         p.mCM.registerForOffOrNotAvailable(this, EVENT_RADIO_OFF_OR_NOT_AVAILABLE, null);
-        p.mRuimRecords.registerForRecordsLoaded(this, EVENT_RECORDS_LOADED, null);
         p.mCM.registerForDataStateChanged (this, EVENT_DATA_STATE_CHANGED, null);
         p.mCT.registerForVoiceCallEnded (this, EVENT_VOICE_CALL_ENDED, null);
         p.mCT.registerForVoiceCallStarted (this, EVENT_VOICE_CALL_STARTED, null);
@@ -225,9 +227,9 @@ public final class CdmaDataConnectionTracker extends DataConnectionTracker {
 
     public void dispose() {
         // Unregister from all events
+        mUiccManager.unregisterForIccChanged(this);
         phone.mCM.unregisterForAvailable(this);
         phone.mCM.unregisterForOffOrNotAvailable(this);
-        mCdmaPhone.mRuimRecords.unregisterForRecordsLoaded(this);
         phone.mCM.unregisterForDataStateChanged(this);
         mCdmaPhone.mCT.unregisterForVoiceCallEnded(this);
         mCdmaPhone.mCT.unregisterForVoiceCallStarted(this);
@@ -298,7 +300,7 @@ public final class CdmaDataConnectionTracker extends DataConnectionTracker {
         boolean roaming = phone.getServiceState().getRoaming();
 
         if (((mCdmaSSM.getCdmaSubscriptionSource() == RILConstants.SUBSCRIPTION_FROM_NV) ||
-                 mCdmaPhone.mRuimRecords.getRecordsLoaded()) &&
+                (mUiccAppRecords != null && mUiccAppRecords.getRecordsLoaded())) &&
                 (mCdmaPhone.mSST.getCurrentCdmaDataConnectionState() ==
                  ServiceState.STATE_IN_SERVICE) &&
                 (!roaming || getDataOnRoamingEnabled()) &&
@@ -333,7 +335,7 @@ public final class CdmaDataConnectionTracker extends DataConnectionTracker {
         if ((state == State.IDLE || state == State.SCANNING)
                 && (psState == ServiceState.STATE_IN_SERVICE)
                 && ((mCdmaSSM.getCdmaSubscriptionSource() == RILConstants.SUBSCRIPTION_FROM_NV) ||
-                        mCdmaPhone.mRuimRecords.getRecordsLoaded())
+                        (mUiccAppRecords != null && mUiccAppRecords.getRecordsLoaded()))
                 && (mCdmaPhone.mSST.isConcurrentVoiceAndData() ||
                         phone.getState() == Phone.State.IDLE )
                 && isDataAllowed()
@@ -350,7 +352,7 @@ public final class CdmaDataConnectionTracker extends DataConnectionTracker {
                     " PS state=" + psState +
                     " isSubscriptionFromRuim=" +
                     (mCdmaSSM.getCdmaSubscriptionSource() == RILConstants.SUBSCRIPTION_FROM_RUIM) +
-                    " ruim records loaded=" + mCdmaPhone.mRuimRecords.getRecordsLoaded() +
+                    " ruim records loaded=" + ((mUiccAppRecords != null) ? mUiccAppRecords.getRecordsLoaded() : null) +
                     " concurrentVoice&Data=" + mCdmaPhone.mSST.isConcurrentVoiceAndData() +
                     " phoneState=" + phone.getState() +
                     " dataEnabled=" + getAnyDataEnabled() +
