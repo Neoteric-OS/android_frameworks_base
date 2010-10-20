@@ -258,11 +258,18 @@
 
     <bool name="config_use_strict_phone_number_comparation">false</bool>
 
-    <!-- Display low battery warning when battery level dips to this value -->
-    <integer name="config_lowBatteryWarningLevel">15</integer>
-
-    <!-- Close low battery warning when battery level reaches this value -->
-    <integer name="config_lowBatteryCloseWarningLevel">20</integer>
+    <!-- Battery threshold pattern for feedback about low battery
+         Item 1:    (Mandatory) Close low battery warning when battery level reaches this value
+         Item 2:    (Mandatory) Display low battery warning when battery level dips to this value
+         Item 3-N:  (Optional)  This should be used if several battery low threshold values are
+                                needed
+         This array should never have less than two (Mandatory) values defined -->
+    <integer-array name="config_batteryThresholdPattern">
+        <item>20</item>
+        <item>15</item>
+        <item>10</item>
+        <item>5</item>
+    </integer-array>
 
     <!-- Default color for notification LED. -->
     <color name="config_defaultNotificationColor">#ff00ff00</color>
