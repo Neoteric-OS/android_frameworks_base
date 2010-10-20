@@ -332,4 +332,9 @@
     <!-- 2 means give warning -->
     <integer name="config_datause_notification_type">2</integer>
 
+    <!-- The URL that should be sent in an x-wap-profile header with an HTTP request.
+         If the URL contains a '%s' format string then that substring will be replaced
+         with the value of Build.MODEL. -->
+    <string name="config_useragentprofile_url"></string>
+
 </resources>
