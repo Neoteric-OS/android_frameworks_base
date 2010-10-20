@@ -24,6 +24,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.BatteryManager;
 import android.os.Binder;
 import android.os.FileUtils;
@@ -87,6 +88,8 @@ class BatteryService extends Binder {
     // This should probably be exposed in the API, though it's not critical
     private static final int BATTERY_PLUGGED_NONE = 0;
 
+    private static final int BATTERY_THRESHOLD_CLOSE_WARNING = 0;
+
     private final Context mContext;
     private final IBatteryStats mBatteryStats;
 
@@ -109,8 +112,8 @@ class BatteryService extends Binder {
     private int mLastBatteryTemperature;
     private boolean mLastBatteryLevelCritical;
 
-    private int mLowBatteryWarningLevel;
-    private int mLowBatteryCloseWarningLevel;
+    private int mFloatingBatteryLowThreshold = -1; // index into mBatteryThresholds
+    private int[] mBatteryThresholds;
 
     private int mPlugType;
     private int mLastPlugType = -1; // Extra state so we can detect first run
@@ -124,10 +127,30 @@ class BatteryService extends Binder {
         mContext = context;
         mBatteryStats = BatteryStatsService.getService();
 
-        mLowBatteryWarningLevel = mContext.getResources().getInteger(
-                com.android.internal.R.integer.config_lowBatteryWarningLevel);
-        mLowBatteryCloseWarningLevel = mContext.getResources().getInteger(
-                com.android.internal.R.integer.config_lowBatteryCloseWarningLevel);
+        try {
+            mBatteryThresholds = mContext.getResources().getIntArray(
+                    com.android.internal.R.array.config_batteryThresholdPattern);
+        } catch (Resources.NotFoundException e) {
+            Slog.e(TAG, "Low battery thresholds missing", e);
+        }
+
+        final int N = mBatteryThresholds.length;
+
+        // sanity check
+        if (N < 2) {
+            throw new RuntimeException(TAG +
+                    "There must be at least 2 values defined in mBatteryThresholds");
+        }
+
+        int value = mBatteryThresholds[0];
+        for (int i = 1; i < N; i++) {
+            if (value > mBatteryThresholds[i]) {
+                value = mBatteryThresholds[i];
+            } else {
+                throw new RuntimeException(TAG +
+                        "The elements in mBatteryThresholds must be in descending order");
+            }
+        }
 
         mUEventObserver.startObserving("SUBSYSTEM=power_supply");
 
@@ -175,6 +198,20 @@ class BatteryService extends Binder {
         return mBatteryLevel;
     }
 
+    private void pickNextBatteryLevel(int level) {
+        final int N = mBatteryThresholds.length;
+        // ignore the first value in the array, that is always the battery close warning value
+        for (int i = 1; i < N; i++) {
+            if (level >= mBatteryThresholds[i]) {
+                mFloatingBatteryLowThreshold = i;
+                break;
+            }
+        }
+        if (mFloatingBatteryLowThreshold >= N  || mFloatingBatteryLowThreshold < 0) {
+            mFloatingBatteryLowThreshold = N-1;
+        }
+    }
+
     void systemReady() {
         // check our power situation now that it is safe to display the shutdown dialog.
         shutdownIfNoPower();
@@ -210,6 +247,10 @@ class BatteryService extends Binder {
 
         boolean logOutlier = false;
         long dischargeDuration = 0;
+
+        if (mFloatingBatteryLowThreshold == -1) {
+            pickNextBatteryLevel(mBatteryLevel);
+        }
 
         mBatteryLevelCritical = mBatteryLevel <= CRITICAL_BATTERY_LEVEL;
         if (mAcOnline) {
@@ -289,12 +330,13 @@ class BatteryService extends Binder {
              * - is just un-plugged (previously was plugged) and battery level is
              *   less than or equal to WARNING, or
              * - is not plugged and battery level falls to WARNING boundary
-             *   (becomes <= mLowBatteryWarningLevel).
+             *   (becomes <= mBatteryThresholds[mFloatingBatteryLowThreshold]).
              */
             final boolean sendBatteryLow = !plugged
                 && mBatteryStatus != BatteryManager.BATTERY_STATUS_UNKNOWN
-                && mBatteryLevel <= mLowBatteryWarningLevel
-                && (oldPlugged || mLastBatteryLevel > mLowBatteryWarningLevel);
+                && mBatteryLevel <= mBatteryThresholds[mFloatingBatteryLowThreshold]
+                && (oldPlugged
+                        || mLastBatteryLevel > mBatteryThresholds[mFloatingBatteryLowThreshold]);
 
             sendIntent();
 
@@ -314,12 +356,18 @@ class BatteryService extends Binder {
 
             if (sendBatteryLow) {
                 mSentLowBatteryBroadcast = true;
+                pickNextBatteryLevel(mBatteryLevel);
                 statusIntent.setAction(Intent.ACTION_BATTERY_LOW);
                 mContext.sendBroadcast(statusIntent);
-            } else if (mSentLowBatteryBroadcast && mLastBatteryLevel >= mLowBatteryCloseWarningLevel) {
+            } else if (mSentLowBatteryBroadcast &&
+                    mLastBatteryLevel >= mBatteryThresholds[BATTERY_THRESHOLD_CLOSE_WARNING]) {
                 mSentLowBatteryBroadcast = false;
                 statusIntent.setAction(Intent.ACTION_BATTERY_OKAY);
                 mContext.sendBroadcast(statusIntent);
+            }
+
+            if (mBatteryStatus == BatteryManager.BATTERY_STATUS_CHARGING) {
+                pickNextBatteryLevel(mBatteryLevel);
             }
 
             // This needs to be done after sendIntent() so that we get the lastest battery stats.
