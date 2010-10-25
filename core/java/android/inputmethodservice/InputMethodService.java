@@ -364,6 +364,11 @@ public class InputMethodService extends AbstractInputMethodService {
          */
         public void hideSoftInput(int flags, ResultReceiver resultReceiver) {
             if (DEBUG) Log.v(TAG, "hideSoftInput()");
+            // Also hide the Dialog when the request to
+            // hide the soft input area is handled.
+            if (mWindowAdded) {
+                mWindow.dismiss();
+            }
             boolean wasVis = isInputViewShown();
             mShowInputFlags = 0;
             mShowInputRequested = false;

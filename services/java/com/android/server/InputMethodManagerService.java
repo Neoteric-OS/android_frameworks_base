@@ -1597,6 +1597,9 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
             mSwitchingDialog = null;
         }
 
+        // Hide the soft input area when an intent is
+        // received to close the system dialogs.
+        hideCurrentInputLocked(InputMethodManager.HIDE_NOT_ALWAYS, null);
         mDialogBuilder = null;
         mItems = null;
         mIms = null;
