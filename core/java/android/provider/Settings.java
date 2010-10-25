@@ -705,6 +705,7 @@ public final class Settings {
             MOVED_TO_SECURE.add(Secure.ANDROID_ID);
             MOVED_TO_SECURE.add(Secure.BLUETOOTH_ON);
             MOVED_TO_SECURE.add(Secure.DATA_ROAMING);
+            MOVED_TO_SECURE.add(Secure.MOBILE_DATA);
             MOVED_TO_SECURE.add(Secure.DEVICE_PROVISIONED);
             MOVED_TO_SECURE.add(Secure.HTTP_PROXY);
             MOVED_TO_SECURE.add(Secure.INSTALL_NON_MARKET_APPS);
