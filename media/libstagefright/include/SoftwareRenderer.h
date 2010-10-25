@@ -40,6 +40,8 @@ public:
     virtual void render(
             const void *data, size_t size, void *platformPrivate);
 
+    virtual Vector< sp<IMemory> > getBuffers();
+
 private:
     OMX_COLOR_FORMATTYPE mColorFormat;
     ColorConverter mConverter;

@@ -19,8 +19,9 @@
 #define MEDIA_SOURCE_H_
 
 #include <sys/types.h>
-
+#include <utils/Vector.h>
 #include <utils/RefBase.h>
+#include "binder/IMemory.h"
 
 namespace android {
 
@@ -31,7 +32,7 @@ struct MediaSource : public RefBase {
     MediaSource();
 
     // To be called before any other methods on this object, except
-    // getFormat().
+    // getFormat() and setBuffers.
     virtual status_t start(MetaData *params = NULL) = 0;
 
     // Any blocking read call returns immediately with a result of NO_INIT.
@@ -44,6 +45,9 @@ struct MediaSource : public RefBase {
 
     // Returns the format of the data output by this media source.
     virtual sp<MetaData> getFormat() = 0;
+
+    // Method to share externally allocated buffers with the Codec.
+    virtual void setBuffers(Vector< sp<IMemory> > mBufferAddresses) {}
 
     struct ReadOptions;
 

@@ -83,4 +83,10 @@ void SoftwareRenderer::render(
     mIndex = 1 - mIndex;
 }
 
+Vector< sp<IMemory> > SoftwareRenderer::getBuffers(){
+    // Not Implemented
+    Vector< sp<IMemory> > mDummy;
+    return mDummy;
+}
+
 }  // namespace android

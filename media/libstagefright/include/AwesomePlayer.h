@@ -40,6 +40,7 @@ struct AwesomeRenderer : public RefBase {
     AwesomeRenderer() {}
 
     virtual void render(MediaBuffer *buffer) = 0;
+    virtual Vector< sp<IMemory> > getBuffers() = 0;
 
 private:
     AwesomeRenderer(const AwesomeRenderer &);
@@ -98,6 +99,7 @@ private:
         PREPARED            = 16,
         AT_EOS              = 32,
         PREPARE_CANCELLED   = 64,
+        MAX_RESOLUTION      = 414720, // 864x480(WVGA) - 720x576(D1-PAL)
     };
 
     mutable Mutex mLock;

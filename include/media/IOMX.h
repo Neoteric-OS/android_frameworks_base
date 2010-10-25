@@ -184,6 +184,7 @@ public:
     DECLARE_META_INTERFACE(OMXRenderer);
 
     virtual void render(IOMX::buffer_id buffer) = 0;
+    virtual Vector< sp<IMemory> > getBuffers() = 0;
 };
 
 ////////////////////////////////////////////////////////////////////////////////

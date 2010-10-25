@@ -31,6 +31,7 @@ public:
     virtual ~OMXRenderer();
 
     virtual void render(IOMX::buffer_id buffer);
+    virtual Vector< sp<IMemory> > getBuffers();
 
 private:
     VideoRenderer *mImpl;

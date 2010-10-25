@@ -48,6 +48,7 @@ struct OMXCodec : public MediaSource,
     virtual status_t stop();
 
     virtual sp<MetaData> getFormat();
+    virtual void setBuffers(Vector< sp<IMemory> > mBufferAddresses);
 
     virtual status_t read(
             MediaBuffer **buffer, const ReadOptions *options = NULL);
@@ -129,6 +130,7 @@ private:
     sp<MemoryDealer> mDealer[2];
 
     State mState;
+    Vector< sp<IMemory> > mExtBufferAddresses;
     Vector<BufferInfo> mPortBuffers[2];
     PortStatus mPortStatus[2];
     bool mInitialBufferSubmit;

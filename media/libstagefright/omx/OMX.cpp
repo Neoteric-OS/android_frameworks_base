@@ -428,6 +428,10 @@ struct SharedVideoRenderer : public VideoRenderer {
         return mObj->render(data, size, platformPrivate);
     }
 
+    virtual Vector< sp<IMemory> > getBuffers() {
+        return mObj->getBuffers();
+    }
+
 private:
     void *mLibHandle;
     VideoRenderer *mObj;
@@ -501,11 +505,14 @@ OMXRenderer::~OMXRenderer() {
 
 void OMXRenderer::render(IOMX::buffer_id buffer) {
     OMX_BUFFERHEADERTYPE *header = (OMX_BUFFERHEADERTYPE *)buffer;
-
     mImpl->render(
             header->pBuffer + header->nOffset,
             header->nFilledLen,
             header->pPlatformPrivate);
+}
+
+Vector< sp<IMemory> > OMXRenderer::getBuffers() {
+    return mImpl->getBuffers();
 }
 
 }  // namespace android

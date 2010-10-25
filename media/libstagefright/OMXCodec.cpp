@@ -103,46 +103,50 @@ static sp<MediaSource> InstantiateSoftwareCodec(
 
 static const CodecInfo kDecoderInfo[] = {
     { MEDIA_MIMETYPE_IMAGE_JPEG, "OMX.TI.JPEG.decode" },
-//    { MEDIA_MIMETYPE_AUDIO_MPEG, "OMX.TI.MP3.decode" },
-    { MEDIA_MIMETYPE_AUDIO_MPEG, "MP3Decoder" },
+    { MEDIA_MIMETYPE_AUDIO_MPEG, "OMX.TI.MP3.decode" },
+//    { MEDIA_MIMETYPE_AUDIO_MPEG, "MP3Decoder" },
 //    { MEDIA_MIMETYPE_AUDIO_MPEG, "OMX.PV.mp3dec" },
-//    { MEDIA_MIMETYPE_AUDIO_AMR_NB, "OMX.TI.AMR.decode" },
-    { MEDIA_MIMETYPE_AUDIO_AMR_NB, "AMRNBDecoder" },
+    { MEDIA_MIMETYPE_AUDIO_AMR_NB, "OMX.TI.AMR.decode" },
+//    { MEDIA_MIMETYPE_AUDIO_AMR_NB, "AMRNBDecoder" },
 //    { MEDIA_MIMETYPE_AUDIO_AMR_NB, "OMX.PV.amrdec" },
     { MEDIA_MIMETYPE_AUDIO_AMR_WB, "OMX.TI.WBAMR.decode" },
-    { MEDIA_MIMETYPE_AUDIO_AMR_WB, "AMRWBDecoder" },
+//    { MEDIA_MIMETYPE_AUDIO_AMR_WB, "AMRWBDecoder" },
 //    { MEDIA_MIMETYPE_AUDIO_AMR_WB, "OMX.PV.amrdec" },
     { MEDIA_MIMETYPE_AUDIO_AAC, "OMX.TI.AAC.decode" },
-    { MEDIA_MIMETYPE_AUDIO_AAC, "AACDecoder" },
+    { MEDIA_MIMETYPE_AUDIO_AAC, "OMX.ITTIAM.AAC.decode" },
+//    { MEDIA_MIMETYPE_AUDIO_AAC, "AACDecoder" },
 //    { MEDIA_MIMETYPE_AUDIO_AAC, "OMX.PV.aacdec" },
-    { MEDIA_MIMETYPE_VIDEO_MPEG4, "OMX.qcom.video.decoder.mpeg4" },
+//    { MEDIA_MIMETYPE_VIDEO_MPEG4, "OMX.qcom.video.decoder.mpeg4" },
     { MEDIA_MIMETYPE_VIDEO_MPEG4, "OMX.TI.Video.Decoder" },
-    { MEDIA_MIMETYPE_VIDEO_MPEG4, "M4vH263Decoder" },
+    { MEDIA_MIMETYPE_VIDEO_MPEG4, "OMX.TI.720P.Decoder" },
+//    { MEDIA_MIMETYPE_VIDEO_MPEG4, "M4vH263Decoder" },
 //    { MEDIA_MIMETYPE_VIDEO_MPEG4, "OMX.PV.mpeg4dec" },
-    { MEDIA_MIMETYPE_VIDEO_H263, "OMX.qcom.video.decoder.h263" },
-    { MEDIA_MIMETYPE_VIDEO_H263, "M4vH263Decoder" },
+    { MEDIA_MIMETYPE_VIDEO_H263, "OMX.TI.Video.Decoder" },
+//    { MEDIA_MIMETYPE_VIDEO_H263, "OMX.qcom.video.decoder.h263" },
+//    { MEDIA_MIMETYPE_VIDEO_H263, "M4vH263Decoder" },
 //    { MEDIA_MIMETYPE_VIDEO_H263, "OMX.PV.h263dec" },
-    { MEDIA_MIMETYPE_VIDEO_AVC, "OMX.qcom.video.decoder.avc" },
+//    { MEDIA_MIMETYPE_VIDEO_AVC, "OMX.qcom.video.decoder.avc" },
     { MEDIA_MIMETYPE_VIDEO_AVC, "OMX.TI.Video.Decoder" },
-    { MEDIA_MIMETYPE_VIDEO_AVC, "AVCDecoder" },
+    { MEDIA_MIMETYPE_VIDEO_AVC, "OMX.TI.720P.Decoder" },
+//    { MEDIA_MIMETYPE_VIDEO_AVC, "AVCDecoder" },
 //    { MEDIA_MIMETYPE_VIDEO_AVC, "OMX.PV.avcdec" },
     { MEDIA_MIMETYPE_AUDIO_VORBIS, "VorbisDecoder" },
 };
 
 static const CodecInfo kEncoderInfo[] = {
     { MEDIA_MIMETYPE_AUDIO_AMR_NB, "OMX.TI.AMR.encode" },
-    { MEDIA_MIMETYPE_AUDIO_AMR_NB, "AMRNBEncoder" },
+//    { MEDIA_MIMETYPE_AUDIO_AMR_NB, "AMRNBEncoder" },
     { MEDIA_MIMETYPE_AUDIO_AMR_WB, "OMX.TI.WBAMR.encode" },
     { MEDIA_MIMETYPE_AUDIO_AAC, "OMX.TI.AAC.encode" },
-    { MEDIA_MIMETYPE_AUDIO_AAC, "OMX.PV.aacenc" },
-    { MEDIA_MIMETYPE_VIDEO_MPEG4, "OMX.qcom.video.encoder.mpeg4" },
+//    { MEDIA_MIMETYPE_AUDIO_AAC, "OMX.PV.aacenc" },
+//    { MEDIA_MIMETYPE_VIDEO_MPEG4, "OMX.qcom.video.encoder.mpeg4" },
     { MEDIA_MIMETYPE_VIDEO_MPEG4, "OMX.TI.Video.encoder" },
-    { MEDIA_MIMETYPE_VIDEO_MPEG4, "OMX.PV.mpeg4enc" },
-    { MEDIA_MIMETYPE_VIDEO_H263, "OMX.qcom.video.encoder.h263" },
+//    { MEDIA_MIMETYPE_VIDEO_MPEG4, "OMX.PV.mpeg4enc" },
+//    { MEDIA_MIMETYPE_VIDEO_H263, "OMX.qcom.video.encoder.h263" },
     { MEDIA_MIMETYPE_VIDEO_H263, "OMX.TI.Video.encoder" },
-    { MEDIA_MIMETYPE_VIDEO_H263, "OMX.PV.h263enc" },
+//    { MEDIA_MIMETYPE_VIDEO_H263, "OMX.PV.h263enc" },
     { MEDIA_MIMETYPE_VIDEO_AVC, "OMX.TI.Video.encoder" },
-    { MEDIA_MIMETYPE_VIDEO_AVC, "OMX.PV.avcenc" },
+//    { MEDIA_MIMETYPE_VIDEO_AVC, "OMX.PV.avcenc" },
 };
 
 #undef OPTIONAL
@@ -300,8 +304,14 @@ uint32_t OMXCodec::getComponentQuirks(const char *componentName) {
         quirks |= kRequiresAllocateBufferOnOutputPorts;
         quirks |= kDefersOutputBufferAllocation;
     }
-
-    if (!strncmp(componentName, "OMX.TI.", 7)) {
+    if (!strcmp(componentName, "OMX.TI.Video.Decoder")) {
+        // TI Video Decoder must use buffers allocated by Overlay for
+        // output port. So, I cannot call OMX_AllocateBuffer on output port.
+        // I must use OMX_UseBuffer on input port to ensure 128 byte alignment.
+        quirks |= kRequiresAllocateBufferOnInputPorts;
+        quirks |= kInputBufferSizesAreBogus;
+    }
+    else if (!strncmp(componentName, "OMX.TI.", 7)) {
         // Apparently I must not use OMX_UseBuffer on either input or
         // output ports on any of the TI components or quote:
         // "(I) may have unexpected problem (sic) which can be timing related
@@ -309,10 +319,6 @@ uint32_t OMXCodec::getComponentQuirks(const char *componentName) {
 
         quirks |= kRequiresAllocateBufferOnInputPorts;
         quirks |= kRequiresAllocateBufferOnOutputPorts;
-    }
-
-    if (!strcmp(componentName, "OMX.TI.Video.Decoder")) {
-        quirks |= kInputBufferSizesAreBogus;
     }
 
     return quirks;
@@ -566,6 +572,12 @@ status_t OMXCodec::configureCodec(const sp<MetaData> &meta) {
 
     int32_t maxInputSize;
     if (meta->findInt32(kKeyMaxInputSize, &maxInputSize)) {
+        if (!strcmp(mComponentName, "OMX.TI.Video.Decoder")) {
+            // We need to allocate at least twice the "maxInputSize"
+            // to get enough room for internal OMX buffer handling.
+            maxInputSize += maxInputSize;
+            CODEC_LOGV("Resize maxInputSize*2, maxInputSize=%d", maxInputSize);
+        }
         setMinBufferSize(kPortIndexInput, (OMX_U32)maxInputSize);
     }
 
@@ -1199,6 +1211,9 @@ status_t OMXCodec::allocateBuffers() {
 }
 
 status_t OMXCodec::allocateBuffersOnPort(OMX_U32 portIndex) {
+
+    bool useExternallyAllocatedBuffers = false;
+
     OMX_PARAM_PORTDEFINITIONTYPE def;
     InitOMXParams(&def);
     def.nPortIndex = portIndex;
@@ -1211,10 +1226,30 @@ status_t OMXCodec::allocateBuffersOnPort(OMX_U32 portIndex) {
     }
 
     size_t totalSize = def.nBufferCountActual * def.nBufferSize;
-    mDealer[portIndex] = new MemoryDealer(totalSize, "OMXCodec");
+
+    if ((!strcmp(mComponentName, "OMX.TI.Video.Decoder")) &&
+        (portIndex == kPortIndexOutput) &&
+        (mExtBufferAddresses.size() == def.nBufferCountActual)){
+
+        // One must use overlay buffers for TI video decoder output port.
+        // So, do not allocate memory here.
+        useExternallyAllocatedBuffers = true;
+    }
+    else{
+        mDealer[portIndex] = new MemoryDealer(totalSize, "OMXCodec");
+    }
+
+    sp<IMemory> mem;
 
     for (OMX_U32 i = 0; i < def.nBufferCountActual; ++i) {
-        sp<IMemory> mem = mDealer[portIndex]->allocate(def.nBufferSize);
+
+        if (useExternallyAllocatedBuffers){
+            mem = mExtBufferAddresses[i];
+        }
+        else{
+            mem = mDealer[portIndex]->allocate(def.nBufferSize);
+        }
+
         CHECK(mem.get() != NULL);
 
         BufferInfo info;
@@ -2430,6 +2465,10 @@ sp<MetaData> OMXCodec::getFormat() {
     Mutex::Autolock autoLock(mLock);
 
     return mOutputFormat;
+}
+
+void OMXCodec::setBuffers(Vector< sp<IMemory> > mBufferAddresses){
+    mExtBufferAddresses = mBufferAddresses;
 }
 
 status_t OMXCodec::read(

@@ -76,6 +76,10 @@ struct AwesomeRemoteRenderer : public AwesomeRenderer {
         }
     }
 
+    virtual Vector< sp<IMemory> > getBuffers(){
+        return mTarget->getBuffers();
+    }
+
 private:
     sp<IOMXRenderer> mTarget;
 
@@ -105,6 +109,10 @@ struct AwesomeLocalRenderer : public AwesomeRenderer {
 
     void render(const void *data, size_t size) {
         mTarget->render(data, size, NULL);
+    }
+
+    virtual Vector< sp<IMemory> > getBuffers(){
+        return mTarget->getBuffers();
     }
 
 protected:
@@ -763,10 +771,22 @@ status_t AwesomePlayer::initAudioDecoder() {
     if (!strcasecmp(mime, MEDIA_MIMETYPE_AUDIO_RAW)) {
         mAudioSource = mAudioTrack;
     } else {
-        mAudioSource = OMXCodec::Create(
-                mClient.interface(), mAudioTrack->getFormat(),
-                false, // createEncoder
-                mAudioTrack);
+        if (mVideoWidth*mVideoHeight > MAX_RESOLUTION) {
+         // video is launched first, so these capablities are known
+         // audio can be selected accordingly
+         // TODO: extend this to a method that can include more
+         // capabilities to evaluate
+
+            mAudioSource = OMXCodec::Create(
+                    mClient.interface(), mAudioTrack->getFormat(),
+                    false, // createEncoder
+                    mAudioTrack, "OMX.ITTIAM.AAC.decode");
+        } else {
+            mAudioSource = OMXCodec::Create(
+                    mClient.interface(), mAudioTrack->getFormat(),
+                    false, // createEncoder
+                    mAudioTrack);
+        }
     }
 
     if (mAudioSource != NULL) {
@@ -822,12 +842,6 @@ status_t AwesomePlayer::initVideoDecoder() {
         CHECK(mVideoTrack->getFormat()->findInt32(kKeyWidth, &mVideoWidth));
         CHECK(mVideoTrack->getFormat()->findInt32(kKeyHeight, &mVideoHeight));
 
-        status_t err = mVideoSource->start();
-
-        if (err != OK) {
-            mVideoSource.clear();
-            return err;
-        }
     }
 
     return mVideoSource != NULL ? OK : UNKNOWN_ERROR;
@@ -1187,6 +1201,24 @@ void AwesomePlayer::onPrepareAsyncEvent() {
 
         if (mVideoTrack != NULL && mVideoSource == NULL) {
             status_t err = initVideoDecoder();
+
+            if (err == OK){
+                if (mVideoRendererIsPreview || mVideoRenderer == NULL) {
+                    mVideoRendererIsPreview = false;
+                    initRenderer_l();
+                }
+            }
+
+            if (err == OK){
+                // Share overlay buffers with video decoder.
+                mVideoSource->setBuffers(mVideoRenderer->getBuffers());
+                err = mVideoSource->start();
+
+                if (err != OK) {
+                    mVideoSource.clear();
+                    //Subsequent error handling will take of returning.
+                }
+            }
 
             if (err != OK) {
                 abortPrepare(err);
