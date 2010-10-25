@@ -28,6 +28,7 @@ import android.net.MobileDataStateTracker;
 import android.net.NetworkInfo;
 import android.net.NetworkStateTracker;
 import android.net.NetworkUtils;
+import android.net.Proxy;
 import android.net.wifi.WifiStateTracker;
 import android.os.Binder;
 import android.os.Handler;
@@ -45,6 +46,8 @@ import android.util.Slog;
 import com.android.internal.telephony.Phone;
 
 import com.android.server.connectivity.Tethering;
+
+import org.apache.http.HttpHost;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -94,6 +97,8 @@ public class ConnectivityService extends IConnectivityManager.Stub {
     private int mActiveDefaultNetwork = -1;
 
     private int mNumDnsEntries;
+
+    private HttpHost mCurrentProxy;
 
     private boolean mTestMode;
     private static ConnectivityService sServiceInstance;
@@ -954,6 +959,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
          */
         if (newNet != null && newNet.getNetworkInfo().isConnected()) {
             sendConnectedBroadcast(newNet.getNetworkInfo());
+            sendProxyChangeBroadcast();
         }
     }
 
@@ -1034,6 +1040,17 @@ public class ConnectivityService extends IConnectivityManager.Stub {
         return newNet;
     }
 
+    private void sendProxyChangeBroadcast() {
+        // Only send if proxy has actually changed
+        HttpHost proxy = Proxy.getPreferredHttpHost(mContext, null);
+        if ((proxy == null && mCurrentProxy != null) ||
+                (proxy != null && !proxy.equals(mCurrentProxy))) {
+            if (DBG) Slog.v(TAG, "Sending PROXY_CHANGE_ACTION broadcast, proxy=" + proxy);
+            mCurrentProxy = proxy;
+            mContext.sendBroadcast(new Intent(Proxy.PROXY_CHANGE_ACTION));
+        }
+    }
+
     private void sendConnectedBroadcast(NetworkInfo info) {
         Intent intent = new Intent(ConnectivityManager.CONNECTIVITY_ACTION);
         intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
@@ -1111,6 +1128,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
          */
         if (newNet != null && newNet.getNetworkInfo().isConnected()) {
             sendConnectedBroadcast(newNet.getNetworkInfo());
+            sendProxyChangeBroadcast();
         }
     }
 
@@ -1176,6 +1194,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
         thisNet.updateNetworkSettings();
         handleConnectivityChange();
         sendConnectedBroadcast(info);
+        sendProxyChangeBroadcast();
     }
 
     private void handleScanResultsAvailable(NetworkInfo info) {
