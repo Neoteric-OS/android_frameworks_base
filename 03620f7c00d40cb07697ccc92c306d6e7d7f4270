@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA8H//+FA\u003d",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1002473
+      },
+      "writtenOn": "2010-10-28T17:43:38Z",
+      "side": 1,
+      "message": "this isn\u0027t a good change. It\u0027s going to break the U.S. phone number matching. I suspect the real change is going to take more effort, where we account for different country\u0027s phone number formats, etc.",
+      "revId": "03620f7c00d40cb07697ccc92c306d6e7d7f4270",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
