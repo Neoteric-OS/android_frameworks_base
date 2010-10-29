@@ -65,6 +65,12 @@ public final class SQLiteDebug {
             Log.isLoggable("SQLiteLockStackTrace", Log.VERBOSE);
 
     /**
+     * Controls the printing of stack traces when locking the database from the main thread.
+     */
+    public static final boolean DEBUG_LOCK_MAIN_THREAD =
+            Log.isLoggable("SQLiteLockMainThread", Log.VERBOSE);
+
+    /**
      * Contains statistics about the active pagers in the current process.
      *
      * @see #getPagerStats(PagerStats)

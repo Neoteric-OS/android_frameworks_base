@@ -25,6 +25,7 @@ import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDebug.DbStats;
 import android.os.Debug;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.text.TextUtils;
@@ -373,6 +374,11 @@ public class SQLiteDatabase extends SQLiteClosable {
     /* package */ void lock() {
         if (!mLockingEnabled) return;
         mLock.lock();
+        if (SQLiteDebug.DEBUG_LOCK_MAIN_THREAD) {
+            if (Looper.getMainLooper() == Looper.myLooper()) {
+                Log.d(TAG, "Locking database from main thread", new Exception());
+            }
+        }
         if (SQLiteDebug.DEBUG_LOCK_TIME_TRACKING) {
             if (mLock.getHoldCount() == 1) {
                 // Use elapsed real-time since the CPU may sleep when waiting for IO
