@@ -466,6 +466,9 @@
          to enable use of the new Release 9 tables for Indic languages. -->
     <integer-array name="config_sms_enabled_locking_shift_tables"></integer-array>
 
+    <!-- Default number of SMS sent in checking period without user permit -->
+    <integer name="config_sms_max_count">100</integer>
+
     <!-- Set and Unsets WiMAX -->
     <bool name="config_wimaxEnabled">false</bool>
     <!-- Location of the wimax framwork jar location -->
@@ -478,4 +481,5 @@
     <string name="config_wimaxServiceClassname"></string>
     <!-- Name of the wimax state tracker clas -->
     <string name="config_wimaxStateTrackerClassname"></string>
+
 </resources>

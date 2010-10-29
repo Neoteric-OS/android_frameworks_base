@@ -70,9 +70,6 @@ public abstract class SMSDispatcher extends Handler {
     /** Default checking period for SMS sent without user permit */
     private static final int DEFAULT_SMS_CHECK_PERIOD = 3600000;
 
-    /** Default number of SMS sent in checking period without user permit */
-    private static final int DEFAULT_SMS_MAX_COUNT = 100;
-
     /** Default timeout for SMS sent query */
     private static final int DEFAULT_SMS_TIMEOUT = 6000;
 
@@ -233,9 +230,12 @@ public abstract class SMSDispatcher extends Handler {
         int check_period = Settings.Secure.getInt(mResolver,
                 Settings.Secure.SMS_OUTGOING_CHECK_INTERVAL_MS,
                 DEFAULT_SMS_CHECK_PERIOD);
+
+        int defaultSmsMaxCount = mContext.getResources().getInteger(
+                com.android.internal.R.integer.config_sms_max_count);
         int max_count = Settings.Secure.getInt(mResolver,
                 Settings.Secure.SMS_OUTGOING_CHECK_MAX_COUNT,
-                DEFAULT_SMS_MAX_COUNT);
+                defaultSmsMaxCount);
         mCounter = new SmsCounter(max_count, check_period);
 
         mCm.setOnNewSMS(this, EVENT_NEW_SMS, null);
