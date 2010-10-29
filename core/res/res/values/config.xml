@@ -389,4 +389,7 @@
          Build.MODEL. The format string shall not be escaped. -->
     <string name="config_useragentprofile_url"></string>
 
+    <!-- Default number of SMS sent in checking period without user permit -->
+    <integer name="config_sms_max_count">100</integer>
+
 </resources>
