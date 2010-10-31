@@ -377,7 +377,9 @@ public class SQLiteCursor extends AbstractWindowedCursor {
 
     @Override
     public String[] getColumnNames() {
-        return mColumns;
+        String[] res = new String[mColumns.length];
+        System.arraycopy(mColumns, 0, res, 0, mColumns.length);
+        return res;
     }
 
     /**
