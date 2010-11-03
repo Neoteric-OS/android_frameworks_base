@@ -1549,7 +1549,7 @@ public final class GsmDataConnectionTracker extends DataConnectionTracker {
                     mPhone.notifyDataConnection(Phone.REASON_APN_FAILED, apnContext.getApnType());
                     return;
                 }
-                if (mReregisterOnReconnectFailure) {
+                if ((mReregisterOnReconnectFailure || !lastFailCauseCode.isPermanentFail())) {
                     // We've re-registerd once now just retry forever.
                     apnContext.getDataConnection().retryForeverUsingLastTimeout();
                 } else {

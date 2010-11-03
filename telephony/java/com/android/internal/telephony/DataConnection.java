@@ -29,9 +29,10 @@ import android.net.LinkProperties;
 import android.net.ProxyProperties;
 import android.os.AsyncResult;
 import android.os.Message;
+import android.util.Log;
+
 import android.os.SystemProperties;
 import android.text.TextUtils;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -115,6 +116,8 @@ public abstract class DataConnection extends StateMachine {
         SERVICE_OPTION_NOT_SUBSCRIBED(0x21),
         SERVICE_OPTION_OUT_OF_ORDER(0x22),
         NSAPI_IN_USE(0x23),
+        REGULAR_DEACTIVATION(0x24),
+        NETWORK_FAILURE(0x26),
         ONLY_IPV4_ALLOWED(0x32),
         ONLY_IPV6_ALLOWED(0x33),
         ONLY_SINGLE_BEARER_ALLOWED(0x34),
@@ -154,11 +157,18 @@ public abstract class DataConnection extends StateMachine {
         }
 
         public boolean isPermanentFail() {
+            if (isTemporaryFail()) return false;
             return (this == OPERATOR_BARRED) || (this == MISSING_UNKNOWN_APN) ||
                    (this == UNKNOWN_PDP_ADDRESS_TYPE) || (this == USER_AUTHENTICATION) ||
                    (this == SERVICE_OPTION_NOT_SUPPORTED) ||
                    (this == SERVICE_OPTION_NOT_SUBSCRIBED) || (this == NSAPI_IN_USE) ||
                    (this == PROTOCOL_ERRORS);
+        }
+
+        private boolean isTemporaryFail() {
+            for (FailCause f : tempFailCauses)
+                if (this == f) return true;
+            return false;
         }
 
         public boolean isEventLoggable() {
@@ -168,6 +178,7 @@ public abstract class DataConnection extends StateMachine {
                     (this == SERVICE_OPTION_NOT_SUBSCRIBED) ||
                     (this == SERVICE_OPTION_NOT_SUPPORTED) ||
                     (this == SERVICE_OPTION_OUT_OF_ORDER) || (this == NSAPI_IN_USE) ||
+                    (this == REGULAR_DEACTIVATION) ||(this == NETWORK_FAILURE) ||
                     (this == PROTOCOL_ERRORS) ||
                     (this == UNACCEPTABLE_NETWORK_PARAMETER);
         }
@@ -192,6 +203,8 @@ public abstract class DataConnection extends StateMachine {
             return mRetryOverride;
         }
     }
+
+    public static final String LOG_TAG = "DataConnection";
 
     // ***** Event codes for driving the state machine
     protected static final int BASE = Protocol.BASE_DATA_CONNECTION;
@@ -221,6 +234,8 @@ public abstract class DataConnection extends StateMachine {
     private int mRefCount;
     Object userData;
 
+    protected static ArrayList<FailCause> tempFailCauses = new ArrayList<FailCause>();
+
     //***** Abstract methods
     @Override
     public abstract String toString();
@@ -241,6 +256,10 @@ public abstract class DataConnection extends StateMachine {
         mRetryMgr = rm;
         this.cid = -1;
 
+        // Initializing temporary failure causes list
+        String settingStr = SystemProperties.get("ro.net.data_tmpfailures");
+        configureTempFailureCauses(settingStr);
+
         setDbg(false);
         addState(mDefaultState);
             addState(mInactiveState, mDefaultState);
@@ -252,6 +271,26 @@ public abstract class DataConnection extends StateMachine {
 
         mApnList = new ArrayList<ApnContext>();
         if (DBG) log("DataConnection constructor X");
+    }
+
+    protected void configureTempFailureCauses(String configStr) {
+        tempFailCauses.clear();
+        if (!TextUtils.isEmpty(configStr)) {
+            String strTempFailCausesArray[] = configStr.split(",");
+            if (strTempFailCausesArray.length > 0) {
+                for (String s : strTempFailCausesArray) {
+                    try {
+                        s = s.trim();
+                        int rilCause = Integer.parseInt(s);
+                        FailCause failCause = FailCause.fromInt(rilCause);
+                        if (failCause != FailCause.UNKNOWN)
+                            tempFailCauses.add(failCause);
+                    } catch (NumberFormatException e) {
+                        Log.e(LOG_TAG, "Temporary failure causes was not customized correctly.");
+                    }
+                }
+            }
+        }
     }
 
     /**
