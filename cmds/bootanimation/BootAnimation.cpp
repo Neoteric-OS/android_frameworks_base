@@ -250,8 +250,8 @@ status_t BootAnimation::readyToRun() {
     mAndroidAnimation = true;
     if ((access(USER_BOOTANIMATION_FILE, R_OK) == 0) ||
         (access(SYSTEM_BOOTANIMATION_FILE, R_OK) == 0)) {
-        if ((mZip.open(USER_BOOTANIMATION_FILE) != NO_ERROR) ||
-            (mZip.open(SYSTEM_BOOTANIMATION_FILE) != NO_ERROR)) {
+        if ((mZip.open(USER_BOOTANIMATION_FILE) == NO_ERROR) ||
+            (mZip.open(SYSTEM_BOOTANIMATION_FILE) == NO_ERROR)) {
             mAndroidAnimation = false;
         }
     }
