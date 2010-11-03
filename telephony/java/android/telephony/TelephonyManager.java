@@ -150,6 +150,71 @@ public class TelephonyManager {
      */
     public static final String EXTRA_INCOMING_NUMBER = "incoming_number";
 
+    /**
+     * Broadcast intent action requesting the sending of a string of DTMF tones.
+     * The action will only be carried out if there is an active foreground call.
+     * Use the {@link isCallActive()}  method to determine whether a call is active.
+     * <p>
+     * The {@link #EXTRA_DTMF_STRING} specifies the tones to send as a String of 
+     * characters.
+     * The {@link #EXTRA_DTMF_ON} optional integer parameter specifies the length 
+     * of each DTMF tone.
+     * The {@link #EXTRA_DTMF_OFF} optional integer parameter specifies the length 
+     * of the pause between tones.
+     * The {@link #EXTRA_DTMF_SOUND} optional boolean parameter specifies whether
+     * the DTMF sounds should be played locally as well.
+     * 
+     * <p class="note">
+     * Requires the CALL_PHONE permission.
+     *
+     * @see #EXTRA_DTMF_STRING
+     * @see #EXTRA_DTMF_ON
+     * @see #EXTRA_DTMF_OFF
+     * @see #getForegroundCallState
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_SEND_DTMF = 
+            "android.intent.action.SEND_DTMF";
+    
+    /**
+     * The lookup key used with the {@link #ACTION_SEND_DTMF} broadcast
+     * for specifying whether the DTMF tones should be played locally. 
+     *
+     * <p class="note">
+     * Set with
+     * {@link android.content.Intent#putExtra(String, boolean)}.
+     */
+    public static final String EXTRA_DTMF_SOUND = "android.intent.extra.DTMF_SOUND";
+
+    /**
+     * The lookup key used with the {@link #ACTION_SEND_DTMF} broadcast
+     * for specifying the length of the pause between DTMF tones.  
+     *
+     * <p class="note">
+     * Set with
+     * {@link android.content.Intent#putExtra(String, Integer)}.
+     */
+    public static final String EXTRA_DTMF_OFF = "android.intent.extra.DTMF_OFF";
+
+    /**
+     * The lookup key used with the {@link #ACTION_SEND_DTMF} broadcast
+     * for specifying the length of each DTMF tones.  
+     *
+     * <p class="note">
+     * Set with
+     * {@link android.content.Intent#putExtra(String, Integer)}.
+     */
+    public static final String EXTRA_DTMF_ON = "android.intent.extra.DTMF_ON";
+
+    /**
+     * The lookup key used with the {@link #ACTION_SEND_DTMF} broadcast
+     * for specifying the DTMF tones to send as a String of characters.  
+     *
+     * <p class="note">
+     * Set with
+     * {@link android.content.Intent#putExtra(String, String)}.
+     */
+    public static final String EXTRA_DTMF_STRING = "android.intent.extra.DTMF_STRING";
 
     //
     //
@@ -799,6 +864,38 @@ public class TelephonyManager {
         }
     }
 
+    /**
+     * Returns whether the foreground call is active.
+     * @return true if the foreground call is active. 
+     * @see #CALL_STATE_OFFHOOK
+     */
+    public boolean isCallActive() {
+        try {
+            return getITelephony().isCallActive();
+        } catch (RemoteException ex) {
+            // the phone process is restarting.
+            return false;
+        } catch (NullPointerException ex) {
+            return false;
+        }
+    }
+    
+    /**
+     * Returns whether the foreground call is holding.
+     * @return true if the foreground call is holding.
+     * @see #CALL_STATE_OFFHOOK 
+     */
+    public boolean isCallHolding() {
+        try {
+            return getITelephony().isCallHolding();
+        } catch (RemoteException ex) {
+            // the phone process is restarting.
+            return false;
+        } catch (NullPointerException ex) {
+            return false;
+        }
+    }
+
     private ITelephony getITelephony() {
         return ITelephony.Stub.asInterface(ServiceManager.getService(Context.TELEPHONY_SERVICE));
     }
@@ -892,5 +989,88 @@ public class TelephonyManager {
         } catch (NullPointerException ex) {
             return null;
         }
+    }
+
+    /**
+     * Sends one or more DTMF tones given in the string if there is
+     * an active call.
+     *
+     * This method will not block the calling thread.
+     *
+     * @param dtmfChars The DTMF String to send.
+     * Only characters '0' - '9', '*' and '#' may be sent, invalid characters
+     * in the string will be silently ignored.
+     * @param dtmfOn The length of each DTMF tone when playing the string 
+     * (in milliseconds). Use 0 for default value.
+     * @param dtmfOff The length the pause between each DTMF tone when playing 
+     * the string (in milliseconds). Use 0 for default value.
+     * @param sound Flag to specify whether the DTMF tones should be audible 
+     * on the sender phone
+     * 
+     * <p class="note">
+     * Requires the CALL_PHONE permission.
+     * 
+     * @see #isCallActive()
+     */
+    public void sendDtmfString(String dtmfChars, int dtmfOn, int dtmfOff, boolean sound) {
+        try {
+            getITelephony().sendDtmfString(dtmfChars, dtmfOn, dtmfOff, sound);
+        } catch (RemoteException ex) {
+            // Phone process is restarting
+        } catch (NullPointerException ex) {
+        }
+    }
+    
+    /**
+     * Starts sending a DTMF tone if there is an active call.
+     * This method will block the calling thread.
+     * 
+     * @param c the telephone key code of the DTMF tone to send.
+     * Only characters '0' - '9', '*' and '#' may be sent, invalid characters
+     * will be ignored.
+     * 
+     * @return true if the DTMF tone sending could be started successfully,
+     * false otherwise.
+     * 
+     * <p class="note">
+     * Requires the CALL_PHONE permission.
+     * 
+     * @see #isCallActive()
+     */
+    public boolean startDtmf(char c) {
+        if (!PhoneNumberUtils.is12Key(c)) {
+            return false;
+        }
+        try {
+           return getITelephony().startDtmf(c);
+        } catch (RemoteException ex) {
+            // Phone process is restarting
+            return false;
+        } catch (NullPointerException ex) {
+            return false;
+        }
+    }
+    
+    /**
+     * Stops sending the current DTMF tone if there is an active call.
+     * This method will block the calling thread.
+     * 
+     * @return true if the DTMF tone sending could be stopped successfully,
+     * false otherwise.
+     * 
+     * <p class="note">
+     * Requires the CALL_PHONE permission.
+     * 
+     * @see #isCallActive()
+     */
+    public boolean stopDtmf() {
+        try {
+             return getITelephony().stopDtmf();
+        } catch (RemoteException ex) {
+            // Phone process is restarting
+            return false;
+        } catch (NullPointerException ex) {
+            return false;
+        }        
     }
 }

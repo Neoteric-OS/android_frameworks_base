@@ -109,6 +109,18 @@ interface ITelephony {
     boolean isOffhook();
 
     /**
+     * Check if the foreground call is active.
+     * @return true if the foreground call is in active state.
+     */
+    boolean isCallActive();
+	
+    /**
+     * Check if the foreground call is holding.
+     * @return true if the foreground call is in holding state.
+     */
+    boolean isCallHolding();
+
+    /**
      * Check if an incoming phone call is ringing or call waiting.
      * @return true if the phone state is RINGING.
      */
@@ -257,5 +269,60 @@ interface ITelephony {
      * Return true if an ICC card is present
      */
     boolean hasIccCard();
+
+    /**
+     * Sends one or more DTMF tones given in the string if there is
+     * an active call.
+     *
+     * This method will not block the calling thread.
+     *
+     * @param dtmfChars The DTMF String to send.
+     * Only characters '0' - '9', '*' and '#' may be sent, invalid characters
+     * in the string will be silently ignored.
+     * @param dtmfOn The length of each DTMF tone when playing the string 
+     * (in milliseconds). Use 0 for default value.
+     * @param dtmfOff The length the pause between each DTMF tone when playing 
+     * the string (in milliseconds). Use 0 for default value.
+     * @param sound Flag to specify whether the DTMF tones should be audible 
+     * on the sender phone
+     * 
+     * <p class="note">
+     * Requires the CALL_PHONE permission.
+     * 
+     * @see #isCallActive()
+     */
+    void sendDtmfString(String s, int dtmfOn, int dtmfOff, boolean sound);
+
+    /**
+     * Starts sending a DTMF tone if there is an active call.
+     * This method will block the calling thread.
+     * 
+     * @param c the telephone key code of the DTMF tone to send.
+     * Only characters '0' - '9', '*' and '#' may be sent, invalid characters
+     * will be ignored.
+     * 
+     * @return true if the DTMF tone sending could be started successfully,
+     * false otherwise.
+     * 
+     * <p class="note">
+     * Requires the CALL_PHONE permission.
+     * 
+     * @see #isCallActive()
+     */
+    boolean startDtmf(char c);
+
+    /**
+     * Stops sending the current DTMF tone if there is an active call.
+     * This method will block the calling thread.
+     * 
+     * @return true if the DTMF tone sending could be stopped successfully,
+     * false otherwise.
+     * 
+     * <p class="note">
+     * Requires the CALL_PHONE permission.
+     * 
+     * @see #isCallActive()
+     */
+    boolean stopDtmf();
 }
 

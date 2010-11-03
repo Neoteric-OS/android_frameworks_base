@@ -144028,6 +144028,28 @@
  visibility="public"
 >
 </method>
+<method name="isCallActive"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isCallHolding"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
 <method name="isNetworkRoaming"
  return="boolean"
  abstract="false"
@@ -144054,11 +144076,65 @@
 <parameter name="events" type="int">
 </parameter>
 </method>
+<method name="sendDtmfString"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="dtmfChars" type="java.lang.String">
+</parameter>
+<parameter name="dtmfOn" type="int">
+</parameter>
+<parameter name="dtmfOff" type="int">
+</parameter>
+<parameter name="sound" type="boolean">
+</parameter>
+</method>
+<method name="startDtmf"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="c" type="char">
+</parameter>
+</method>
+<method name="stopDtmf"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
 <field name="ACTION_PHONE_STATE_CHANGED"
  type="java.lang.String"
  transient="false"
  volatile="false"
  value="&quot;android.intent.action.PHONE_STATE&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ACTION_SEND_DTMF"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;android.intent.action.SEND_DTMF&quot;"
  static="true"
  final="true"
  deprecated="not deprecated"
@@ -144191,6 +144267,50 @@
  transient="false"
  volatile="false"
  value="3"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EXTRA_DTMF_OFF"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;android.intent.extra.DTMF_OFF&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EXTRA_DTMF_ON"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;android.intent.extra.DTMF_ON&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EXTRA_DTMF_SOUND"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;android.intent.extra.DTMF_SOUND&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EXTRA_DTMF_STRING"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;android.intent.extra.DTMF_STRING&quot;"
  static="true"
  final="true"
  deprecated="not deprecated"
@@ -216168,7 +216288,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="t" type="T">
+<parameter name="arg0" type="T">
 </parameter>
 </method>
 </interface>
