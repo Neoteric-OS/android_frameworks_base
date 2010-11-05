@@ -538,6 +538,13 @@ status_t AwesomePlayer::play_l() {
 
     bool deferredAudioSeek = false;
 
+    if (mDecryptHandle != NULL) {
+        int64_t position;
+        getPosition(&position);
+        mDrmManagerClient->setPlaybackStatus(mDecryptHandle,
+                Playback::START, position / 1000);
+    }
+
     if (mAudioSource != NULL) {
         if (mAudioPlayer == NULL) {
             if (mAudioSink != NULL) {
@@ -592,13 +599,6 @@ status_t AwesomePlayer::play_l() {
         // Legacy behaviour, if a stream finishes playing and then
         // is started again, we play from the start...
         seekTo_l(0);
-    }
-
-    if (mDecryptHandle != NULL) {
-        int64_t position;
-        getPosition(&position);
-        mDrmManagerClient->setPlaybackStatus(mDecryptHandle,
-                Playback::START, position / 1000);
     }
 
     return OK;
