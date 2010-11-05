@@ -1772,6 +1772,7 @@ public class StatusBarService extends IStatusBar.Stub
                 mPlmnLabel.setText(plmn);
             } else {
                 mPlmnLabel.setText(R.string.lockscreen_carrier_default);
+                showSpn = false;
             }
         } else {
             mPlmnLabel.setText("");

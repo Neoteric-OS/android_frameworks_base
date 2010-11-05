@@ -706,8 +706,11 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
                     String opNames[] = (String[])ar.result;
 
                     if (opNames != null && opNames.length >= 3) {
-                        newSS.setOperatorName (
-                                opNames[0], opNames[1], opNames[2]);
+                        if (opNames[0] != null && opNames[0].length() > 0) {
+                            newSS.setOperatorName(opNames[0], opNames[1], opNames[2]);
+                        } else {
+                            newSS.setOperatorName(null, opNames[1], opNames[2]);
+                        }
                     }
                 break;
 
