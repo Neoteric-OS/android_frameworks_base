@@ -243,19 +243,14 @@ public class DrmManagerClient {
      */
     public DrmManagerClient(Context context) {
         mContext = context;
-        Looper looper;
 
-        if (null != (looper = Looper.myLooper())) {
-            mInfoHandler = new InfoHandler(looper);
-        } else if (null != (looper = Looper.getMainLooper())) {
-            mInfoHandler = new InfoHandler(looper);
-        } else {
-            mInfoHandler = null;
-        }
+        HandlerThread infoThread = new HandlerThread("DrmManagerClient.InfoHandler");
+        infoThread.start();
+        mInfoHandler = new InfoHandler(infoThread.getLooper());
 
-        HandlerThread thread = new HandlerThread("DrmManagerClient.EventHandler");
-        thread.start();
-        mEventHandler = new EventHandler(thread.getLooper());
+        HandlerThread eventThread = new HandlerThread("DrmManagerClient.EventHandler");
+        eventThread.start();
+        mEventHandler = new EventHandler(eventThread.getLooper());
 
         // save the unique id
         mUniqueId = hashCode();
@@ -335,10 +330,24 @@ public class DrmManagerClient {
         return _getConstraints(mUniqueId, path, action);
     }
 
+   /**
+    * Get metadata information from DRM content
+    *
+    * @param path Content path from where DRM metadata would be retrieved.
+    * @return ContentValues instance in which metadata key-value pairs are embedded
+    *         or null in case of failure
+    */
+    public ContentValues getMetadata(String path) {
+        if (null == path || path.equals("")) {
+            throw new IllegalArgumentException("Given path is invalid/null");
+        }
+        return _getMetadata(mUniqueId, path);
+    }
+
     /**
      * Get constraints information evaluated from DRM content
      *
-     * @param uri The Content URI of the data
+     * @param uri Content URI from where DRM constraints would be retrieved.
      * @param action Actions defined in {@link DrmStore.Action}
      * @return ContentValues instance in which constraints key-value pairs are embedded
      *         or null in case of failure
@@ -348,6 +357,20 @@ public class DrmManagerClient {
             throw new IllegalArgumentException("Uri should be non null");
         }
         return getConstraints(convertUriToPath(uri), action);
+    }
+
+   /**
+    * Get metadata information from DRM content
+    *
+    * @param uri Content URI from where DRM metadata would be retrieved.
+    * @return ContentValues instance in which metadata key-value pairs are embedded
+    *         or null in case of failure
+    */
+    public ContentValues getMetadata(Uri uri) {
+        if (null == uri || Uri.EMPTY == uri) {
+            throw new IllegalArgumentException("Uri should be non null");
+        }
+        return getMetadata(convertUriToPath(uri));
     }
 
     /**
@@ -408,7 +431,7 @@ public class DrmManagerClient {
     /**
      * Check whether the given mimetype or uri can be handled.
      *
-     * @param uri The content URI of the data
+     * @param uri Content URI of the data to be handled.
      * @param mimeType Mimetype of the object to be handled
      * @return
      *        true - if the given mimeType or path can be handled
@@ -749,6 +772,8 @@ public class DrmManagerClient {
     private native void _installDrmEngine(int uniqueId, String engineFilepath);
 
     private native ContentValues _getConstraints(int uniqueId, String path, int usage);
+
+    private native ContentValues _getMetadata(int uniqueId, String path);
 
     private native boolean _canHandle(int uniqueId, String path, String mimeType);
 

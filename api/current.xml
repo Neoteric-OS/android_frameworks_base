@@ -56512,6 +56512,32 @@
 <parameter name="mimeType" type="java.lang.String">
 </parameter>
 </method>
+<method name="getMetadata"
+ return="android.content.ContentValues"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="path" type="java.lang.String">
+</parameter>
+</method>
+<method name="getMetadata"
+ return="android.content.ContentValues"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="uri" type="android.net.Uri">
+</parameter>
+</method>
 <method name="getOriginalMimeType"
  return="java.lang.String"
  abstract="false"
@@ -57129,6 +57155,36 @@
 >
 </field>
 </class>
+<interface name="DrmStore.Metadata"
+ abstract="true"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<field name="ARTIST"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;artist&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="TITLE"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;title&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</interface>
 <class name="DrmStore.Playback"
  extends="java.lang.Object"
  abstract="false"

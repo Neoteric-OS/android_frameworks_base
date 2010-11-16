@@ -62,6 +62,20 @@ public class DrmStore {
         public static final String EXTENDED_METADATA = "extended_metadata";
     }
 
+    public interface Metadata {
+        /**
+         * The artist metadata
+         * <P>Type: TEXT</P>
+         */
+        public static final String ARTIST = "artist";
+
+        /**
+         * The title metadata
+         * <P>Type: TEXT</P>
+         */
+        public static final String TITLE = "title";
+    }
+
     /**
      * Defines constants related to DRM types
      */
