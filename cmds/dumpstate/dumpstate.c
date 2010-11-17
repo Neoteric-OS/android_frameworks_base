@@ -69,6 +69,7 @@ static void dumpstate() {
     printf("\n");
 
     dump_file("MEMORY INFO", "/proc/meminfo");
+    dump_file("FTRACE", "/sys/kernel/debug/tracing/trace");
     run_command("CPU INFO", 10, "top", "-n", "1", "-d", "1", "-m", "30", "-t", NULL);
     run_command("PROCRANK", 20, "procrank", NULL);
     dump_file("VIRTUAL MEMORY STATS", "/proc/vmstat");
