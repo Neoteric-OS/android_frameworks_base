@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA9n///YE\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/AdnRecordCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2010-11-20T02:43:51Z",
+      "side": 1,
+      "message": "Please leave the copyright notices uniformly to the umbrella \"The Android Open Source Project\" as any other notice tends to make some members of the ecosystem nervous.",
+      "revId": "2ccc1d2dec57562feb4476596acaf85dd9683278",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
