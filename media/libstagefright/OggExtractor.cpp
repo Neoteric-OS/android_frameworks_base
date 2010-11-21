@@ -34,6 +34,8 @@
 
 extern "C" {
     #include <Tremolo/codec_internal.h>
+    #include <Tremolo/ivorbiscodec.h>
+    #include <resolv.h> // for b64_pton
 
     int _vorbis_unpack_books(vorbis_info *vi,oggpack_buffer *opb);
     int _vorbis_unpack_info(vorbis_info *vi,oggpack_buffer *opb);
@@ -69,6 +71,7 @@ struct MyVorbisExtractor {
     virtual ~MyVorbisExtractor();
 
     sp<MetaData> getFormat() const;
+    sp<MetaData> getMetaData() const;
 
     // Returns an approximate bitrate in bits per second.
     uint64_t approxBitrate();
@@ -100,6 +103,9 @@ private:
     vorbis_comment mVc;
 
     sp<MetaData> mMeta;
+    sp<MetaData> mFileMeta;
+
+    void parseComment();
 
     ssize_t readPage(off_t offset, Page *page);
     status_t findNextPage(off_t startOffset, off_t *pageOffset);
@@ -195,6 +201,10 @@ MyVorbisExtractor::~MyVorbisExtractor() {
 
 sp<MetaData> MyVorbisExtractor::getFormat() const {
     return mMeta;
+}
+
+sp<MetaData> MyVorbisExtractor::getMetaData() const {
+    return mFileMeta;
 }
 
 status_t MyVorbisExtractor::findNextPage(
@@ -428,6 +438,8 @@ void MyVorbisExtractor::init() {
 
     mMeta = new MetaData;
     mMeta->setCString(kKeyMIMEType, MEDIA_MIMETYPE_AUDIO_VORBIS);
+    mFileMeta = new MetaData;
+    mFileMeta->setCString(kKeyMIMEType, MEDIA_MIMETYPE_CONTAINER_OGG);
 
     MediaBuffer *packet;
     CHECK_EQ(readNextPacket(&packet), OK);
@@ -449,6 +461,90 @@ void MyVorbisExtractor::init() {
     packet = NULL;
 
     mFirstDataOffset = mOffset + mCurrentPageSize;
+}
+
+void MyVorbisExtractor::parseComment() {
+    struct Map {
+        int key;
+        const char *tag;
+    };
+    static const Map kMap[] = {
+        // See: http://xiph.org/vorbis/doc/v-comment.html
+        { kKeyTitle, "TITLE" },
+        { kKeyAlbum, "ALBUM" },
+        { kKeyArtist, "ARTIST" },
+        { kKeyCDTrackNumber, "TRACKNUMBER" },
+        { kKeyGenre, "GENRE" },
+        { kKeyDate, "DATE" },
+        // No assign for "VERSION", "PERFORMER", "COPYRIGHT", "LICENSE",
+        // "ORGANIZATION", "DESCRIPTION"
+
+        /// See: http://age.hobba.nl/audio/mirroredpages/ogg-tagging.html
+        { kKeyComposer, "COMPOSER" },
+        { kKeyAuthor, "AUTHOR" },
+        { kKeyDiscNumber, "DISCNUMBER" },
+    };
+    static const char *mbp = "METADATA_BLOCK_PICTURE";
+    static const size_t kNumMapEntries = sizeof(kMap) / sizeof(kMap[0]);
+
+    for (size_t i = 0; i < kNumMapEntries; ++i) {
+        if (vorbis_comment_query_count(&mVc, (char *)kMap[i].tag) == 0) {
+            continue;
+        }
+        mFileMeta->setCString(kMap[i].key,
+                              vorbis_comment_query(&mVc, (char *)kMap[i].tag, 0));
+    }
+
+    if (vorbis_comment_query_count(&mVc, (char *)mbp)) {
+        // Parse METADATA_BLOCK_PICTURE
+        // See: http://wiki.xiph.org/VorbisComment#METADATA_BLOCK_PICTURE
+        char *pic_b64 = vorbis_comment_query(&mVc, (char *)mbp, 0);
+        uint8_t *pic = (uint8_t *)malloc(strlen(pic_b64));
+        if (!pic) {
+            return;
+        }
+        int pic_all_len = b64_pton(pic_b64, pic, strlen(pic_b64));
+        if (pic_all_len < 32) {
+            LOGV("PICTURE found: but too short: %d < 32", pic_all_len);
+            free(pic);
+            return;
+        }
+        int offset = 0;
+
+        int type = U32_AT(pic + offset);
+        offset += 4;
+
+        unsigned int mime_len = U32_AT(pic + offset);
+        offset += 4;
+        char mime[32] = { 0 };
+        memcpy(mime, pic + offset, (mime_len > sizeof(mime)) ? sizeof(mime) : mime_len);
+        mime[sizeof(mime) - 1] = '\0';
+        offset += mime_len;
+
+        unsigned int desc_len = U32_AT(pic + offset);
+        offset += 4;
+        char desc[256] = { 0 };
+        memcpy(desc, pic + offset, (desc_len > sizeof(desc)) ? sizeof(desc) : desc_len);
+        desc[sizeof(desc) - 1] = '\0';
+        offset += desc_len;
+
+        int width = U32_AT(pic + offset);
+        int height = U32_AT(pic + offset + 4);
+        int depth = U32_AT(pic + offset + 8);
+        int ncolors = U32_AT(pic + offset + 12);
+        int pic_len = U32_AT(pic + offset + 16);
+        LOGV("PICTURE found: type %d, mime %s, desc %s, %dx%d, depth %d, %d colors, pic_len %d",
+             type, mime, desc, width, height, depth, ncolors, pic_len);
+        offset += 20;
+        if (pic_all_len - 32 < pic_len) {
+            LOGV("Too short for picture: %d < %d", pic_all_len - 32, pic_len);
+            free(pic);
+            return;
+        }
+        mFileMeta->setData(kKeyAlbumArt, MetaData::TYPE_NONE, pic + offset, pic_len);
+        mFileMeta->setCString(kKeyAlbumArtMIME, mime);
+        free(pic);
+    }
 }
 
 void MyVorbisExtractor::verifyHeader(
@@ -509,6 +605,7 @@ void MyVorbisExtractor::verifyHeader(
         case 3:
         {
             CHECK_EQ(0, _vorbis_unpack_comment(&mVc, &bits));
+            parseComment();
             break;
         }
 
@@ -570,15 +667,11 @@ sp<MetaData> OggExtractor::getTrackMetaData(
 }
 
 sp<MetaData> OggExtractor::getMetaData() {
-    sp<MetaData> meta = new MetaData;
-
     if (mInitCheck != OK) {
-        return meta;
+        return new MetaData;
     }
 
-    meta->setCString(kKeyMIMEType, MEDIA_MIMETYPE_CONTAINER_OGG);
-
-    return meta;
+    return mImpl->getMetaData();
 }
 
 bool SniffOgg(

@@ -29,6 +29,9 @@
 // Ogg Vorbis includes
 #include <Tremolo/ivorbiscodec.h>
 #include <Tremolo/ivorbisfile.h>
+#if BUILD_WITH_FULL_STAGEFRIGHT
+#include <cutils/properties.h> // for property_get
+#endif
 
 namespace android {
 
@@ -164,6 +167,19 @@ status_t StagefrightMediaScanner::processFile(
         return UNKNOWN_ERROR;
     }
 
+#if BUILD_WITH_FULL_STAGEFRIGHT
+    /*
+     * Set 'media.stagefright.enable-vorbis=true' to use OggExtractor which
+     * supports embeded cover arts.
+     */
+    int is_enable_vorbis = 1;
+    char value[PROPERTY_VALUE_MAX];
+    if (property_get("media.stagefright.enable-vorbis", value, NULL)
+        && (!strcmp(value, "1") || !strcmp(value, "true"))) {
+        is_enable_vorbis = 0;
+    }
+#endif
+
     if (!strcasecmp(extension, ".mid")
             || !strcasecmp(extension, ".smf")
             || !strcasecmp(extension, ".imy")
@@ -176,7 +192,11 @@ status_t StagefrightMediaScanner::processFile(
         if (status != OK) {
             return status;
         }
-    } else if (!strcasecmp(extension, ".ogg")) {
+    } else if (!strcasecmp(extension, ".ogg")
+#if BUILD_WITH_FULL_STAGEFRIGHT
+             && is_enable_vorbis
+#endif
+               ) {
         status_t status = HandleOGG(path, &client);
         if (status != OK) {
             return status;
