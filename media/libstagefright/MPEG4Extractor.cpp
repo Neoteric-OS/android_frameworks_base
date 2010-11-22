@@ -1596,7 +1596,9 @@ status_t MPEG4Source::start(MetaData *params) {
     mGroup = new MediaBufferGroup;
 
     int32_t max_size;
-    CHECK(mFormat->findInt32(kKeyMaxInputSize, &max_size));
+
+    if (!(mFormat->findInt32(kKeyMaxInputSize, &max_size)))
+        return ERROR_MALFORMED;
 
     mGroup->add_buffer(new MediaBuffer(max_size));
 
@@ -1805,7 +1807,13 @@ status_t MPEG4Source::read(
             size_t dstOffset = 0;
 
             while (srcOffset < size) {
-                CHECK(srcOffset + mNALLengthSize <= size);
+                if (srcOffset + mNALLengthSize > size) {
+                    LOGW("unsupported NAL");
+                    mBuffer->release();
+                    mBuffer = NULL;
+                    return ERROR_UNSUPPORTED;
+                }
+
                 size_t nalLength = parseNALSize(&mSrcBuffer[srcOffset]);
                 srcOffset += mNALLengthSize;
 
