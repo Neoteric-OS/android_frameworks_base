@@ -87,7 +87,7 @@ public class CdmaDataConnection extends DataConnection {
         msg.obj = cp;
         phone.mCM.setupDataCall(Integer.toString(RILConstants.SETUP_DATA_TECH_CDMA),
                 Integer.toString(dataProfile), null, null,
-                null, Integer.toString(RILConstants.SETUP_DATA_AUTH_PAP_CHAP), msg);
+                null, Integer.toString(RILConstants.SETUP_DATA_AUTH_PAP_CHAP), null, msg);
     }
 
     @Override

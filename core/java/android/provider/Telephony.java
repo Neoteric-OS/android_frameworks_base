@@ -1724,6 +1724,8 @@ public final class Telephony {
 
         public static final String TYPE = "type";
 
+        public static final String NETWORK_TYPE = "networktype";
+
         public static final String CURRENT = "current";
     }
 

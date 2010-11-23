@@ -32,6 +32,7 @@ public class ApnSetting {
     String user;
     String password;
     int authType;
+    String networkType;
     public String[] types;
     int id;
     String numeric;
@@ -39,7 +40,7 @@ public class ApnSetting {
 
     public ApnSetting(int id, String numeric, String carrier, String apn, String proxy, String port,
             String mmsc, String mmsProxy, String mmsPort,
-            String user, String password, int authType, String[] types) {
+            String user, String password, int authType, String networkType, String[] types) {
         this.id = id;
         this.numeric = numeric;
         this.carrier = carrier;
@@ -52,6 +53,7 @@ public class ApnSetting {
         this.user = user;
         this.password = password;
         this.authType = authType;
+        this.networkType = networkType;
         this.types = types;
     }
 
@@ -68,20 +70,21 @@ public class ApnSetting {
     // data[10] = mcc
     // data[11] = mnc
     // data[12] = auth
-    // data[13] = first type...
+    // data[13] = network type
+    // data[14] = first type...
     public static ApnSetting fromString(String data) {
         if (data == null) return null;
         String[] a = data.split("\\s*,\\s*");
-        if (a.length < 14) return null;
+        if (a.length < 15) return null;
         int authType = 0;
         try {
             authType = Integer.parseInt(a[12]);
         } catch (Exception e) {
         }
-        String[] typeArray = new String[a.length - 13];
-        System.arraycopy(a, 13, typeArray, 0, a.length - 13);
+        String[] typeArray = new String[a.length - 14];
+        System.arraycopy(a, 14, typeArray, 0, a.length - 14);
         return new ApnSetting(-1,a[10]+a[11],a[0],a[1],a[2],a[3],a[7],a[8],
-                a[9],a[4],a[5],authType,typeArray);
+                a[9],a[4],a[5],authType,a[13],typeArray);
     }
 
     public String toString() {
@@ -95,7 +98,8 @@ public class ApnSetting {
         .append(", ").append(mmsProxy)
         .append(", ").append(mmsPort)
         .append(", ").append(port)
-        .append(", ").append(authType);
+        .append(", ").append(authType)
+        .append(", ").append(networkType);
         for (String t : types) {
             sb.append(", ").append(t);
         }

@@ -106,7 +106,7 @@ public class GsmDataConnection extends DataConnection {
         }
         phone.mCM.setupDataCall(Integer.toString(RILConstants.SETUP_DATA_TECH_GSM),
                 Integer.toString(RILConstants.DATA_PROFILE_DEFAULT), apn.apn, apn.user,
-                apn.password, Integer.toString(authType), msg);
+                apn.password, Integer.toString(authType), apn.networkType, msg);
     }
 
     @Override

@@ -559,6 +559,7 @@ public final class GsmDataConnectionTracker extends DataConnectionTracker {
                         cursor.getString(cursor.getColumnIndexOrThrow(Telephony.Carriers.USER)),
                         cursor.getString(cursor.getColumnIndexOrThrow(Telephony.Carriers.PASSWORD)),
                         cursor.getInt(cursor.getColumnIndexOrThrow(Telephony.Carriers.AUTH_TYPE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(Telephony.Carriers.NETWORK_TYPE)),
                         types);
                 result.add(apn);
             } while (cursor.moveToNext());
