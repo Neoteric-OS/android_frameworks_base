@@ -57,6 +57,11 @@ private:
     uint32_t mTTSCount;
     uint32_t mTTSDuration;
 
+    uint32_t mCompositionTimeToSampleIndex;
+    uint32_t mCompositionTTSSampleIndex;
+    uint32_t mCompositionTTSCount;
+    uint32_t mCompositionTTSDuration;
+
     uint32_t mCurrentSampleIndex;
     off_t mCurrentSampleOffset;
     size_t mCurrentSampleSize;
