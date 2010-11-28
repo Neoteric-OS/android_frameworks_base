@@ -87,6 +87,7 @@ public final class BridgeContext extends Context {
     private final IProjectCallback mProjectCallback;
     private final ILayoutLog mLogger;
     private BridgeContentResolver mContentResolver;
+    private ApplicationInfo mApplicationInfo;
 
     /**
      * @param projectKey An Object identifying the project. This is used for the cache mechanism.
@@ -110,6 +111,10 @@ public final class BridgeContext extends Context {
             Map<IStyleResourceValue, IStyleResourceValue> styleInheritanceMap,
             IProjectCallback customViewLoader, ILayoutLog logger) {
         mProjectKey = projectKey;
+        mApplicationInfo = new ApplicationInfo();
+        if (mProjectKey instanceof Integer) {
+            mApplicationInfo.targetSdkVersion = (Integer) mProjectKey;
+        }
         mProjectCallback = customViewLoader;
         mLogger = logger;
         Configuration config = new Configuration();
@@ -991,8 +996,7 @@ public final class BridgeContext extends Context {
 
     @Override
     public ApplicationInfo getApplicationInfo() {
-        // TODO Auto-generated method stub
-        return null;
+        return mApplicationInfo;
     }
 
     @Override
