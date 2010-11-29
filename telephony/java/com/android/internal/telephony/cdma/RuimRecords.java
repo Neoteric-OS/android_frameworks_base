@@ -179,6 +179,10 @@ public final class RuimRecords extends IccRecords {
         return mImsi.substring(0, 3 + MccTable.smallestDigitsMccForMnc(mcc));
     }
 
+    public String getIccOperatorNumeric() {
+        return getRUIMOperatorNumeric();
+    }
+
     @Override
     public void handleMessage(Message msg) {
         AsyncResult ar;

@@ -43,7 +43,7 @@ import android.util.TimeUtils;
 
 import com.android.internal.telephony.CommandException;
 import com.android.internal.telephony.CommandsInterface;
-import com.android.internal.telephony.DataConnectionTracker;
+import com.android.internal.telephony.data.DataConnectionTracker;
 import com.android.internal.telephony.EventLogTags;
 import com.android.internal.telephony.IccCard;
 import com.android.internal.telephony.MccTable;
@@ -235,7 +235,7 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
      * @param what what code of message when delivered
      * @param obj placed in Message.obj
      */
-    void registerForCdmaDataConnectionAttached(Handler h, int what, Object obj) {
+    public void registerForDataConnectionAttached(Handler h, int what, Object obj) {
         Registrant r = new Registrant(h, what, obj);
         cdmaDataConnectionAttachedRegistrants.add(r);
 
@@ -244,7 +244,7 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
         }
     }
 
-    void unregisterForCdmaDataConnectionAttached(Handler h) {
+    public void unregisterForDataConnectionAttached(Handler h) {
         cdmaDataConnectionAttachedRegistrants.remove(h);
     }
 
@@ -254,7 +254,7 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
      * @param what what code of message when delivered
      * @param obj placed in Message.obj
      */
-    void registerForCdmaDataConnectionDetached(Handler h, int what, Object obj) {
+    public void registerForDataConnectionDetached(Handler h, int what, Object obj) {
         Registrant r = new Registrant(h, what, obj);
         cdmaDataConnectionDetachedRegistrants.add(r);
 
@@ -263,7 +263,7 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
         }
     }
 
-    void unregisterForCdmaDataConnectionDetached(Handler h) {
+    public void unregisterForDataConnectionDetached(Handler h) {
         cdmaDataConnectionDetachedRegistrants.remove(h);
     }
 
@@ -515,13 +515,8 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
             break;
 
         case EVENT_SET_RADIO_POWER_OFF:
-            synchronized(this) {
-                if (mPendingRadioPowerOffAfterDataOff) {
-                    if (DBG) log("EVENT_SET_RADIO_OFF, turn radio off now.");
-                    hangupAndPowerOff();
-                    mPendingRadioPowerOffAfterDataOff = false;
-                }
-            }
+            if (DBG) log("EVENT_SET_RADIO_OFF, turn radio off now.");
+            hangupAndPowerOff();
             break;
 
         default:
@@ -538,14 +533,8 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
         if (mDesiredPowerState
             && cm.getRadioState() == CommandsInterface.RadioState.RADIO_OFF) {
             cm.setRadioPower(true, null);
+            phone.mDataConnection.setDataConnectionAsDesired(true, null);
         } else if (!mDesiredPowerState && cm.getRadioState().isOn()) {
-            DataConnectionTracker dcTracker = phone.mDataConnection;
-            if (! dcTracker.isDataConnectionAsDesired()) {
-                EventLog.writeEvent(EventLogTags.DATA_NETWORK_STATUS_ON_RADIO_OFF,
-                        dcTracker.getStateInString(),
-                        dcTracker.getAnyDataEnabled() ? 1 : 0);
-            }
-
             // If it's on and available and we want it off gracefully
             powerOffRadioSafely();
         } // Otherwise, we're in the desired state
@@ -553,55 +542,8 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
 
     @Override
     protected void powerOffRadioSafely() {
-        DataConnectionTracker dcTracker = phone.mDataConnection;
-
-        Message msg = dcTracker.obtainMessage(DataConnectionTracker.EVENT_CLEAN_UP_CONNECTION);
-        msg.obj = CDMAPhone.REASON_RADIO_TURNED_OFF;
-
-        synchronized (this) {
-            if (networkType == ServiceState.RADIO_TECHNOLOGY_1xRTT) {
-                /*
-                 * In 1x CDMA , during radio power off modem will disconnect the
-                 * data call and sends the power down registration message along
-                 * with the data call release message to the network
-                 */
-
-                msg.arg1 = 0; // tearDown is false since modem does it anyway for 1X
-                dcTracker.sendMessage(msg);
-
-                Log.w(LOG_TAG, "Turn off the radio right away");
-                hangupAndPowerOff();
-            } else {
-                if (!mPendingRadioPowerOffAfterDataOff) {
-                    DataConnectionTracker.State currentState = dcTracker.getState();
-                    if (currentState != DataConnectionTracker.State.CONNECTED
-                            && currentState != DataConnectionTracker.State.DISCONNECTING
-                            && currentState != DataConnectionTracker.State.INITING) {
-
-                        msg.arg1 = 0; // tearDown is false as it is not needed.
-                        dcTracker.sendMessage(msg);
-
-                        if (DBG)
-                            log("Data disconnected, turn off radio right away.");
-                        hangupAndPowerOff();
-                    } else {
-                        // clean data connection
-                        msg.arg1 = 1; // tearDown is true
-                        dcTracker.sendMessage(msg);
-
-                        if (sendEmptyMessageDelayed(EVENT_SET_RADIO_POWER_OFF, 30000)) {
-                            if (DBG) {
-                                log("Wait upto 30s for data to disconnect, then turn off radio.");
-                            }
-                            mPendingRadioPowerOffAfterDataOff = true;
-                        } else {
-                            Log.w(LOG_TAG, "Cannot send delayed Msg, turn off radio right away.");
-                            hangupAndPowerOff();
-                        }
-                    }
-                }
-            }
-        }
+        phone.mDataConnection.setDataConnectionAsDesired(false,
+                obtainMessage(EVENT_SET_RADIO_POWER_OFF));
     }
 
     @Override
@@ -1296,7 +1238,7 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
      * ServiceState.RADIO_TECHNOLOGY_EVDO is the same as "attached" and
      * ServiceState.RADIO_TECHNOLOGY_UNKNOWN is the same as detached.
      */
-    /*package*/ int getCurrentCdmaDataConnectionState() {
+    public int getDataServiceState() {
         return cdmaDataConnectionState;
     }
 
@@ -1627,7 +1569,7 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
      * @return true if phone is camping on a technology
      * that could support voice and data simultaneously.
      */
-    boolean isConcurrentVoiceAndData() {
+    public boolean isConcurrentVoiceAndData() {
         // Note: it needs to be confirmed which CDMA network types
         // can support voice and data calls concurrently.
         // For the time-being, the return value will be false.
@@ -1673,24 +1615,6 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
      */
     public boolean isMinInfoReady() {
         return mIsMinInfoReady;
-    }
-
-    /**
-     * process the pending request to turn radio off after data is disconnected
-     *
-     * return true if there is pending request to process; false otherwise.
-     */
-    public boolean processPendingRadioPowerOffAfterDataOff() {
-        synchronized(this) {
-            if (mPendingRadioPowerOffAfterDataOff) {
-                if (DBG) log("Process pending request to turn radio off.");
-                removeMessages(EVENT_SET_RADIO_POWER_OFF);
-                hangupAndPowerOff();
-                mPendingRadioPowerOffAfterDataOff = false;
-                return true;
-            }
-            return false;
-        }
     }
 
     private void hangupAndPowerOff() {
