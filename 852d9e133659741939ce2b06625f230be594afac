@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA9n//92M\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-12-02T16:01:43Z",
+      "side": 1,
+      "message": "You might want to put some of this comment into the Svc.java above it, which could be easier for people to find in the future when debugging access issues, rather than just in the commit message.",
+      "revId": "852d9e133659741939ce2b06625f230be594afac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
