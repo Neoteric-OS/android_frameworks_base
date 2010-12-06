@@ -860,6 +860,7 @@ public final class GsmMmiCode extends Handler implements MmiCode {
                 */
                 if ((ar.exception == null) && (msg.arg1 == 1)) {
                     boolean cffEnabled = (msg.arg2 == 1);
+                    phone.storeCFPref(cffEnabled);
                     phone.mSIMRecords.setVoiceCallForwardingFlag(1, cffEnabled);
                 }
 
@@ -1178,6 +1179,7 @@ public final class GsmMmiCode extends Handler implements MmiCode {
                 (info.serviceClass & serviceClassMask)
                         == CommandsInterface.SERVICE_CLASS_VOICE) {
             boolean cffEnabled = (info.status == 1);
+            phone.storeCFPref(cffEnabled);
             phone.mSIMRecords.setVoiceCallForwardingFlag(1, cffEnabled);
         }
 
@@ -1203,6 +1205,7 @@ public final class GsmMmiCode extends Handler implements MmiCode {
                 sb.append(context.getText(com.android.internal.R.string.serviceDisabled));
 
                 // Set unconditional CFF in SIM to false
+                phone.storeCFPref(false);
                 phone.mSIMRecords.setVoiceCallForwardingFlag(1, false);
             } else {
 
