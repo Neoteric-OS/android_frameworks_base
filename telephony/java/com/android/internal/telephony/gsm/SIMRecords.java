@@ -384,6 +384,14 @@ public final class SIMRecords extends IccRecords {
         }
     }
 
+    /**
+     * Check if call forward info is stored on sim
+     * @return true if call forward info is stored on sim.
+     */
+    public boolean isCallForwardStatusStored() {
+        return ((mEfCfis != null) || (mEfCff != null));
+    }
+
     public boolean getVoiceCallForwardingFlag() {
         return callForwardingEnabled;
     }
