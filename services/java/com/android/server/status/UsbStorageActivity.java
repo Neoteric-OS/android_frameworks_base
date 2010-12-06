@@ -198,9 +198,14 @@ public class UsbStorageActivity extends Activity
         return null;
     }
 
-    private void showDialogInner(int id) {
-        removeDialog(id);
-        showDialog(id);
+    private void showDialogInner(final int id) {
+        mUIHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                removeDialog(id);
+                showDialog(id);
+            }
+        });
     }
 
     private void switchUsbMassStorageAsync(boolean on) {
