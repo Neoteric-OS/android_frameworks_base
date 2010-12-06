@@ -1,14 +1,106 @@
-Android Utility Function Library
+ Android Utility Function Library
+==================================
 
 If you need a feature that is native to Linux but not present on other
 platforms, construct a platform-dependent implementation that shares
-the Linux interface.  That way the actual device runs as "light" as
+the Linux interface. That way the actual device runs as "light" as
 possible.
 
 If that isn't feasible, create a system-independent interface and hide
 the details.
 
 The ultimate goal is *not* to create a super-duper platform abstraction
-layer.  The goal is to provide an optimized solution for Linux with
+layer. The goal is to provide an optimized solution for Linux with
 reasonable implementations for other platforms.
 
+
+ Run-time resource overlay
+===========================
+
+
+ Description
+-------------
+
+Android resources (integers, strings, images, etc, as specified in the
+res/, assets/ and raw/ source directories) are bundled as part of .apk
+packages. Application access to resources are routed through the
+AssetManager.
+
+Run-time overlay allows the AssetManager to load a designated overlay
+package alongside the original package. During resource lookup, the
+application will be returned the corresponding resource of the overlay
+package, if present.
+
+Run-time overlay allows for
+
+- package customization decoupled from package development
+- rapid prototyping of libraries costly to rebuild (notably
+  framework-res.apk).
+- debugging
+
+The use of run-time overlay is optional and transparent to the targeted
+package; its run-time cost is negligible, its memory cost only that of the
+extra package loaded. Construction of overlay packages is decoupled from that
+of target packages, the only link between the two is the type and symbolic name
+of the resources to overlay.
+
+While technically possible to override any resource in any application,
+run-time overlay should be applied judiciously. One step towards this is
+to store overlay packages in the /system partition, barring end-users
+from applying run-time overlay on arbitrary packages.
+
+
+ Resource lookup priorities
+----------------------------
+
+A resource may have alternative values depending on phone language, current
+screen orientation, etc. Overlay resources may come in alternative forms as
+well, with one exception: where a resource must have a default value, an overlay
+resource does not. This means it is possible to overlay eg a string resource for
+a specific language without providing an overlay default.
+
+The priority order when looking for a resource is as follows, where `target' is
+the package overlaid, `overlay' is the overlay package, and X is a configuration
+matching the phone's current configuration better than the default one:
+
+- overlay/values-X
+- target/values-X
+- overlay/values
+- target/values
+
+
+ Usage
+-------
+
+Overlay packages are compiled like regular packages based on Android.mk.
+Resources are provided as usual; overlay packages lack source code.
+
+To match target and overlay packages, some naming conventions must be
+followed. To create an overlay package targeting a package "p.apk" with
+package name "a.b.c", ie compiled with the following options:
+
+- AndroidManifest.xml : <manifest ... package="a.b.c">
+- Android.mk          : LOCAL_PACKAGE_NAME := p
+
+create the overlay package as usual, while setting the package name and
+output path as follows, and instructing aapt to mark the package as an
+overlay package:
+
+- AndroidManifest.xml : <manifest ... package="a.b.c.overlay">
+- Android.mk          : LOCAL_PACKAGE_NAME := overlay-p
+                        LOCAL_MODULE_PATH := $(TARGET_OUT)/overlay
+                        LOCAL_AAPT_FLAGS := -o
+
+Note: the aapt flag -o denotes an overlay package targeting a regular
+application package. Should framework-res.apk be targeted, use the -O
+(capital oh) flag instead.
+
+
+ Examples
+----------
+
+For a working example, see frameworks/base/core/tests/coretests,
+subdirectories
+
+- src/android/overlay (targeted package)
+- apks/install_overlay (overlay package)

@@ -73,7 +73,7 @@ public:
      * then on success, *cookie is set to the value corresponding to the
      * newly-added asset source.
      */
-    bool addAssetPath(const String8& path, void** cookie);
+    bool addAssetPath(const String8& path, void** cookie, bool allowOverlay = true);
 
     /*                                                                       
      * Convenience for adding the standard system assets.  Uses the
@@ -198,10 +198,14 @@ public:
     void getLocales(Vector<String8>* locales) const;
 
 private:
+    enum {
+        NO_OVERLAY = 0
+    };
     struct asset_path
     {
         String8 path;
         FileType type;
+        size_t overlay;
     };
 
     Asset* openInPathLocked(const char* fileName, AccessMode mode,
@@ -241,6 +245,9 @@ private:
     const ResTable* getResTable(bool required = true) const;
     void setLocaleLocked(const char* locale);
     void updateResourceParamsLocked() const;
+
+    bool addAssetPathLocked(const String8& path, void** cookie, bool allowOverlay);
+    Asset* openNonAssetLocked(void* cookie, const char* fileName, AccessMode mode);
 
     class SharedZip : public RefBase {
     public:

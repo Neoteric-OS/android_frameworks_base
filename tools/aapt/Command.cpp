@@ -188,7 +188,7 @@ int doList(Bundle* bundle)
 
     if (bundle->getAndroidList()) {
         AssetManager assets;
-        if (!assets.addAssetPath(String8(zipFileName), NULL)) {
+        if (!assets.addAssetPath(String8(zipFileName), NULL, false)) {
             fprintf(stderr, "ERROR: list -a failed because assets could not be loaded\n");
             goto bail;
         }
@@ -376,7 +376,7 @@ int doDump(Bundle* bundle)
 
     AssetManager assets;
     void* assetsCookie;
-    if (!assets.addAssetPath(String8(filename), &assetsCookie)) {
+    if (!assets.addAssetPath(String8(filename), &assetsCookie, false)) {
         fprintf(stderr, "ERROR: dump failed because assets could not be loaded\n");
         return 1;
     }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Overlay (alternative resources) -->
+    <integer name="overlay_010">1</integer>
+    <integer name="overlay_011">1</integer>
+    <integer name="overlay_110">-3</integer>
+    <integer name="overlay_111">-3</integer>
+</resources>

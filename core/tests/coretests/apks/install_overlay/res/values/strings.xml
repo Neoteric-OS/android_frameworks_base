@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Overlay (to be overridden) -->
+    <string name="overlay_string">bar</string>
+
+    <!-- Misc overlay, see OverlayTest.java -->
+    <string name="overlay_001">yes</string>
+    <string name="overlay_011">no (o)</string>
+    <string name="overlay_101">no (o)</string>
+    <string name="overlay_111">no (o)</string>
+</resources>

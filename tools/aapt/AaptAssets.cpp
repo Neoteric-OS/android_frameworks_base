@@ -1968,7 +1968,7 @@ status_t AaptAssets::buildIncludedResources(Bundle* bundle)
         for (size_t i=0; i<N; i++) {
             if (bundle->getVerbose())
                 printf("Including resources from package: %s\n", incl[i]);
-            if (!mIncludedAssets.addAssetPath(String8(incl[i]), NULL)) {
+            if (!mIncludedAssets.addAssetPath(String8(incl[i]), NULL, false)) {
                 fprintf(stderr, "ERROR: Asset package include '%s' not found.\n",
                         incl[i]);
                 return UNKNOWN_ERROR;

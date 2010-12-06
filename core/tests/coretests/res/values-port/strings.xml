@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Misc overlay, see OverlayTest.java -->
+    <string name="overlay_010">yes</string>
+    <string name="overlay_011">yes</string>
+    <string name="overlay_110">no (tx)</string>
+    <string name="overlay_111">no (tx)</string>
+</resources>

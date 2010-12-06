@@ -229,12 +229,12 @@ Res_png_9patch* Res_png_9patch::deserialize(const void* inData)
 // --------------------------------------------------------------------
 
 ResStringPool::ResStringPool()
-    : mError(NO_INIT), mOwnedData(NULL), mHeader(NULL), mCache(NULL)
+    : mError(NO_INIT), mOwnedData(NULL), mHeader(NULL), mCache(NULL), mOverlayStringPool(NULL)
 {
 }
 
 ResStringPool::ResStringPool(const void* data, size_t size, bool copyData)
-    : mError(NO_INIT), mOwnedData(NULL), mHeader(NULL), mCache(NULL)
+    : mError(NO_INIT), mOwnedData(NULL), mHeader(NULL), mCache(NULL), mOverlayStringPool(NULL)
 {
     setTo(data, size, copyData);
 }
@@ -436,6 +436,7 @@ void ResStringPool::uninit()
         free(mCache);
         mCache = NULL;
     }
+    mOverlayStringPool = NULL;
 }
 
 #define DECODE_LENGTH(str, chrsz, len) \
@@ -448,50 +449,55 @@ void ResStringPool::uninit()
 
 const uint16_t* ResStringPool::stringAt(size_t idx, size_t* outLen) const
 {
-    if (mError == NO_ERROR && idx < mHeader->stringCount) {
-        const bool isUTF8 = (mHeader->flags&ResStringPool_header::UTF8_FLAG) != 0;
-        const uint32_t off = mEntries[idx]/(isUTF8?sizeof(char):sizeof(char16_t));
-        if (off < (mStringPoolSize-1)) {
-            if (!isUTF8) {
-                const char16_t* strings = (char16_t*)mStrings;
-                const char16_t* str = strings+off;
-                DECODE_LENGTH(str, sizeof(char16_t), *outLen)
-                if ((uint32_t)(str+*outLen-strings) < mStringPoolSize) {
-                    return str;
+    if (mError == NO_ERROR) {
+        if (idx < mHeader->stringCount) {
+            const bool isUTF8 = (mHeader->flags&ResStringPool_header::UTF8_FLAG) != 0;
+            const uint32_t off = mEntries[idx]/(isUTF8?sizeof(char):sizeof(char16_t));
+            if (off < (mStringPoolSize-1)) {
+                if (!isUTF8) {
+                    const char16_t* strings = (char16_t*)mStrings;
+                    const char16_t* str = strings+off;
+                    DECODE_LENGTH(str, sizeof(char16_t), *outLen)
+                        if ((uint32_t)(str+*outLen-strings) < mStringPoolSize) {
+                            return str;
+                        } else {
+                            LOGW("Bad string block: string #%d extends to %d, past end at %d\n",
+                                 (int)idx, (int)(str+*outLen-strings), (int)mStringPoolSize);
+                        }
                 } else {
-                    LOGW("Bad string block: string #%d extends to %d, past end at %d\n",
-                            (int)idx, (int)(str+*outLen-strings), (int)mStringPoolSize);
+                    const uint8_t* strings = (uint8_t*)mStrings;
+                    const uint8_t* str = strings+off;
+                    DECODE_LENGTH(str, sizeof(uint8_t), *outLen)
+                        size_t encLen;
+                    DECODE_LENGTH(str, sizeof(uint8_t), encLen)
+                        if ((uint32_t)(str+encLen-strings) < mStringPoolSize) {
+                            AutoMutex lock(mDecodeLock);
+                            if (mCache[idx] != NULL) {
+                                return mCache[idx];
+                            }
+                            char16_t *u16str = (char16_t *)calloc(*outLen+1, sizeof(char16_t));
+                            if (!u16str) {
+                                LOGW("No memory when trying to allocate decode cache "
+                                     "for string #%d\n", (int)idx);
+                                return NULL;
+                            }
+                            const unsigned char *u8src =
+                                reinterpret_cast<const unsigned char *>(str);
+                            utf8_to_utf16(u8src, encLen, u16str, *outLen);
+                            mCache[idx] = u16str;
+                            return u16str;
+                        } else {
+                            LOGW("Bad string block: string #%d extends to %d, past end at %d\n",
+                                 (int)idx, (int)(str+encLen-strings), (int)mStringPoolSize);
+                        }
                 }
             } else {
-                const uint8_t* strings = (uint8_t*)mStrings;
-                const uint8_t* str = strings+off;
-                DECODE_LENGTH(str, sizeof(uint8_t), *outLen)
-                size_t encLen;
-                DECODE_LENGTH(str, sizeof(uint8_t), encLen)
-                if ((uint32_t)(str+encLen-strings) < mStringPoolSize) {
-                    AutoMutex lock(mDecodeLock);
-                    if (mCache[idx] != NULL) {
-                        return mCache[idx];
-                    }
-                    char16_t *u16str = (char16_t *)calloc(*outLen+1, sizeof(char16_t));
-                    if (!u16str) {
-                        LOGW("No memory when trying to allocate decode cache for string #%d\n",
-                                (int)idx);
-                        return NULL;
-                    }
-                    const unsigned char *u8src = reinterpret_cast<const unsigned char *>(str);
-                    utf8_to_utf16(u8src, encLen, u16str, *outLen);
-                    mCache[idx] = u16str;
-                    return u16str;
-                } else {
-                    LOGW("Bad string block: string #%d extends to %d, past end at %d\n",
-                            (int)idx, (int)(str+encLen-strings), (int)mStringPoolSize);
-                }
+                LOGW("Bad string block: string #%d entry is at %d, past end at %d\n",
+                     (int)idx, (int)(off*sizeof(uint16_t)),
+                     (int)(mStringPoolSize*sizeof(uint16_t)));
             }
-        } else {
-            LOGW("Bad string block: string #%d entry is at %d, past end at %d\n",
-                    (int)idx, (int)(off*sizeof(uint16_t)),
-                    (int)(mStringPoolSize*sizeof(uint16_t)));
+        } else if (mOverlayStringPool) {
+            return mOverlayStringPool->stringAt(idx - mHeader->stringCount, outLen);
         }
     }
     return NULL;
@@ -499,27 +505,31 @@ const uint16_t* ResStringPool::stringAt(size_t idx, size_t* outLen) const
 
 const char* ResStringPool::string8At(size_t idx, size_t* outLen) const
 {
-    if (mError == NO_ERROR && idx < mHeader->stringCount) {
-        const bool isUTF8 = (mHeader->flags&ResStringPool_header::UTF8_FLAG) != 0;
-        const uint32_t off = mEntries[idx]/(isUTF8?sizeof(char):sizeof(char16_t));
-        if (off < (mStringPoolSize-1)) {
-            if (isUTF8) {
-                const uint8_t* strings = (uint8_t*)mStrings;
-                const uint8_t* str = strings+off;
-                DECODE_LENGTH(str, sizeof(uint8_t), *outLen)
-                size_t encLen;
-                DECODE_LENGTH(str, sizeof(uint8_t), encLen)
-                if ((uint32_t)(str+encLen-strings) < mStringPoolSize) {
-                    return (const char*)str;
-                } else {
-                    LOGW("Bad string block: string #%d extends to %d, past end at %d\n",
-                            (int)idx, (int)(str+encLen-strings), (int)mStringPoolSize);
+    if (mError == NO_ERROR) {
+        if (idx < mHeader->stringCount) {
+            const bool isUTF8 = (mHeader->flags&ResStringPool_header::UTF8_FLAG) != 0;
+            const uint32_t off = mEntries[idx]/(isUTF8?sizeof(char):sizeof(char16_t));
+            if (off < (mStringPoolSize-1)) {
+                if (isUTF8) {
+                    const uint8_t* strings = (uint8_t*)mStrings;
+                    const uint8_t* str = strings+off;
+                    DECODE_LENGTH(str, sizeof(uint8_t), *outLen);
+                    size_t encLen;
+                    DECODE_LENGTH(str, sizeof(uint8_t), encLen);
+                    if ((uint32_t)(str+encLen-strings) < mStringPoolSize) {
+                        return (const char*)str;
+                    } else {
+                        LOGW("Bad string block: string #%d extends to %d, past end at %d\n",
+                             (int)idx, (int)(str+encLen-strings), (int)mStringPoolSize);
+                    }
                 }
+            } else {
+                LOGW("Bad string block: string #%d entry is at %d, past end at %d\n",
+                     (int)idx, (int)(off*sizeof(uint16_t)),
+                     (int)(mStringPoolSize*sizeof(uint16_t)));
             }
-        } else {
-            LOGW("Bad string block: string #%d entry is at %d, past end at %d\n",
-                    (int)idx, (int)(off*sizeof(uint16_t)),
-                    (int)(mStringPoolSize*sizeof(uint16_t)));
+        } else if (mOverlayStringPool) {
+            return mOverlayStringPool->string8At(idx - mHeader->stringCount, outLen);
         }
     }
     return NULL;
@@ -549,6 +559,13 @@ ssize_t ResStringPool::indexOfString(const char16_t* str, size_t strLen) const
 {
     if (mError != NO_ERROR) {
         return mError;
+    }
+
+    if (mOverlayStringPool) {
+        ssize_t position = mOverlayStringPool->indexOfString(str, strLen);
+        if (position >= 0) {
+            return position + mHeader->stringCount;
+        }
     }
 
     size_t len;
@@ -601,7 +618,11 @@ ssize_t ResStringPool::indexOfString(const char16_t* str, size_t strLen) const
 
 size_t ResStringPool::size() const
 {
-    return (mError == NO_ERROR) ? mHeader->stringCount : 0;
+    if (mError != NO_ERROR) {
+        return 0;
+    }
+    const size_t n = mOverlayStringPool ? mOverlayStringPool->size() : 0;
+    return mHeader->stringCount + n;
 }
 
 #ifndef HAVE_ANDROID_OS
@@ -1253,18 +1274,25 @@ struct ResTable::Type
     Type(const Header* _header, const Package* _package, size_t count)
         : header(_header), package(_package), entryCount(count),
           typeSpec(NULL), typeSpecFlags(NULL) { }
+    ~Type()
+    {
+        for (size_t i = 0; i < ownedConfigs.size(); ++i) {
+            free(ownedConfigs[i]);
+        }
+    }
     const Header* const             header;
     const Package* const            package;
     const size_t                    entryCount;
     const ResTable_typeSpec*        typeSpec;
     const uint32_t*                 typeSpecFlags;
     Vector<const ResTable_type*>    configs;
+    Vector<ResTable_type*>          ownedConfigs;
 };
 
 struct ResTable::Package
 {
     Package(ResTable* _owner, const Header* _header, const ResTable_package* _package)
-        : owner(_owner), header(_header), package(_package) { }
+        : owner(_owner), header(_header), package(_package), isOverlaid(false) { }
     ~Package()
     {
         size_t i = types.size();
@@ -1281,6 +1309,8 @@ struct ResTable::Package
 
     ResStringPool                   typeStrings;
     ResStringPool                   keyStrings;
+
+    bool                            isOverlaid;
     
     const Type* getType(size_t idx) const {
         return idx < types.size() ? types[idx] : NULL;
@@ -1804,7 +1834,339 @@ status_t ResTable::add(const void* data, size_t size, void* cookie,
         LOGW("No string values found in resource table!");
     }
     TABLE_NOISY(LOGV("Returning from add with mError=%d\n", mError));
+
+    if (mError == NO_ERROR) {
+        for (size_t i = 0; i < mPackageGroups.size(); ++i) {
+            const PackageGroup* pg = mPackageGroups[i];
+            // Only allow the first package in a package group to have an overlay
+            // package (as opposed to looping through all packages in a group)
+            if (pg->packages.size() > 0) {
+                Package* pkg = pg->packages[0];
+                if (pkg->isOverlaid) {
+                    continue;
+                }
+                String16 packageName(pkg->package->name);
+                if (getOverlayPackage(packageName) != NULL) {
+                    if (!doOverlayPackage(pkg)) {
+                        LOGW("Failed to overlay package %s\n", String8(packageName).string());
+                    }
+                }
+            }
+        }
+    }
     return mError;
+}
+
+static void configToString(const ResTable_config* c, char* out, size_t n)
+{
+#define N 32
+    char buf[N];
+
+    memset(out, 0, n);
+    if (c == NULL) {
+        snprintf(out, n - 1, "(null)");
+        return;
+    }
+    if (c->imsi) {
+        memset(buf, 0, N);
+        sprintf(buf, "imsi=0x%x ", c->imsi);
+        strncat(out, buf, n - 1);
+    }
+    if (c->language[0]) {
+        memset(buf, 0, N);
+        sprintf(buf, "language=%c%c ",
+                c->language[0] == 0 ? '-' : c->language[0],
+                c->language[1] == 0 ? '-' : c->language[1]);
+        strncat(out, buf, n - 1);
+    }
+    if (c->country[0]) {
+        memset(buf, 0, N);
+        sprintf(buf, "country=%c%c ",
+                c->country[0] == 0 ? '-' : c->country[0],
+                c->country[1] == 0 ? '-' : c->country[1]);
+        strncat(out, buf, n - 1);
+    }
+    if (c->orientation) {
+        const char* str = "";
+        switch (c->orientation) {
+            case ResTable_config::ORIENTATION_PORT: str = "port"; break;
+            case ResTable_config::ORIENTATION_LAND: str = "land"; break;
+        }
+        memset(buf, 0, N);
+        sprintf(buf, "orientation=%s ", str);
+        strncat(out, buf, n - 1);
+    }
+    if (c->touchscreen) {
+        memset(buf, 0, N);
+        sprintf(buf, "touchscreen=%d ", c->touchscreen);
+        strncat(out, buf, n - 1);
+    }
+    if (c->density) {
+        memset(buf, 0, N);
+        sprintf(buf, "density=%d ", c->density);
+        strncat(out, buf, n - 1);
+    }
+    if (c->input) {
+        memset(buf, 0, N);
+        sprintf(buf, "input=0x%x ", c->input);
+        strncat(out, buf, n - 1);
+    }
+    if (c->screenSize) {
+        memset(buf, 0, N);
+        sprintf(buf, "screenSize=0x%x ", c->screenSize);
+        strncat(out, buf, n - 1);
+    }
+    if (c->version) {
+        memset(buf, 0, N);
+        sprintf(buf, "version=0x%x ", c->version);
+        strncat(out, buf, n - 1);
+    }
+    if (c->overlay) {
+        memset(buf, 0, N);
+        sprintf(buf, "overlay=%d ", c->overlay);
+        strncat(out, buf, n - 1);
+    }
+    size_t size = strlen(out);
+    if (size > 0) {
+        out[size - 1] = '\0'; // remove trailing whitespace
+    } else {
+        snprintf(out, n - 1, "(default)");
+    }
+#undef N
+}
+
+bool ResTable::doOverlayType(Package* package,
+                             Type* parent,
+                             const String16& packageName,
+                             const String16& typeName,
+                             bool isString)
+{
+    const Package* overlayPackage = getOverlayPackage(packageName);
+
+    if (overlayPackage == NULL) {
+        return false;
+    }
+
+    size_t stringOffset = 0;
+    if (isString) {
+        const ResStringPool* overlayStringPool = ((Header*)package->header)->values.getOverlay();
+        if (overlayStringPool == NULL) { // add overlay string pool
+            stringOffset = package->header->values.size();
+            ((Header*)package->header)->values.setOverlay(&overlayPackage->header->values);
+        } else { // overlay string pool already added, just calculate offset
+            stringOffset = package->header->values.size() - overlayStringPool->size();
+        }
+    }
+
+    ssize_t idx = overlayPackage->typeStrings.indexOfString(typeName.string(), typeName.size());
+    if (idx < 0) {
+        LOGW("expected type %s not found in overlay package\n", String8(typeName).string());
+        return false;
+    }
+    const Type* overlayType = overlayPackage->getType(idx);
+    if (overlayType == NULL) {
+        LOGW("expected type %s not found in overlay package\n", String8(typeName).string());
+        return false;
+    }
+
+    const ResTable_type* orig = parent->configs[0];
+    const size_t size = orig->header.size;
+    for (size_t configIndex = 0; configIndex < overlayType->configs.size(); ++configIndex) {
+        const ResTable_config& overlayConfig = overlayType->configs[configIndex]->config;
+        ResTable_type* copy = (ResTable_type*)malloc(size);
+        if (copy == NULL) {
+            LOGW("failed to overlay type: failed to allocate 0x%x bytes of memory", size);
+            return false;
+        }
+        memcpy(copy, orig, size);
+        copy->config.copyFromDeviceNoSwap(overlayConfig);
+        copy->config.overlay = 1;
+        parent->configs.insertAt(copy, 0); // insert first: overlay values has highest precedence
+        parent->ownedConfigs.push(copy);
+
+        char configString[256];
+        configToString(&copy->config, configString, 256);
+
+        size_t entryCount = dtohl(copy->entryCount);
+        uint32_t entriesStart = dtohl(copy->entriesStart);
+        const uint32_t* const eindex = (const uint32_t*)
+            (((const uint8_t*)copy) + dtohs(copy->header.headerSize));
+        for (uint32_t i = 0; i < entryCount; ++i) {
+            uint32_t offset = dtohl(eindex[i]);
+            const ResTable_entry* entry =
+                (const ResTable_entry*)(((const uint8_t*)copy) + entriesStart + offset);
+            ssize_t keyIndex = (ssize_t)dtohl(entry->key.index);
+            size_t len;
+            const uint16_t* strPtr = package->keyStrings.stringAt(keyIndex, &len);
+            if (strPtr == NULL) {
+                continue;
+            }
+            String16 resourceName(strPtr);
+            uint32_t newValue;
+            if (isResourceOverlaid(packageName, typeName, resourceName, configIndex, &newValue)) {
+                if (isString) {
+                    newValue += stringOffset;
+                }
+                Res_value* valuePtr = (Res_value*)(((const uint8_t*)entry) + dtohs(entry->size));
+                if (isString) {
+                    size_t oldLen, newLen;
+                    const char16_t* oldString =
+                        package->header->values.stringAt(valuePtr->data, &oldLen);
+                    const char16_t* newString =
+                        package->header->values.stringAt(newValue, &newLen);
+                    LOGI("run-time overlay: [%s] %s:%s/%s: 0x%08x \"%s\" -> 0x%08x \"%s\"",
+                         configString, String8(packageName).string(), String8(typeName).string(),
+                         String8(resourceName).string(), valuePtr->data,
+                         String8(String16(oldString, oldLen)).string(), newValue,
+                         String8(String16(newString, newLen)).string());
+                } else {
+                    LOGI("run-time overlay: [%s] %s:%s/%s: 0x%08x -> 0x%08x",
+                         configString, String8(packageName).string(), String8(typeName).string(),
+                         String8(resourceName).string(), valuePtr->data, newValue);
+                }
+                valuePtr->data = newValue;
+            } else {
+                uint32_t* p = (uint32_t*)&eindex[i];
+                *p = dtohl(ResTable_type::NO_ENTRY);
+            }
+        }
+    }
+
+    return true;
+}
+
+const ResTable::Package* ResTable::getOverlayPackage(const String16& targetPackageName) const
+{
+    const Package* overlayPackage = NULL;
+    String16 overlayPackageName(targetPackageName);
+    overlayPackageName.append(String16(".overlay"));
+    for (size_t i = 0; i < mPackageGroups.size() && overlayPackage == NULL; ++i) {
+        const PackageGroup* pg = mPackageGroups[i];
+        for (size_t j = 0; j < pg->packages.size(); ++j) {
+            Package* pkg = pg->packages[j];
+            if (String16(pkg->package->name) == overlayPackageName) {
+                overlayPackage = pkg;
+                break;
+            }
+        }
+    }
+
+    return overlayPackage;
+}
+
+bool ResTable::isTypeOverlaid(const String16& packageName, const String16& typeName) const
+{
+    // type attr is never overlaid
+    if (typeName == String16("attr")) {
+        return false;
+    }
+
+    const Package* overlayPackage = getOverlayPackage(packageName);
+    if (overlayPackage == NULL) {
+        return false;
+    }
+
+    ssize_t i = overlayPackage->typeStrings.indexOfString(typeName.string(), typeName.size());
+    bool b = i >= 0 && overlayPackage->types[i]->entryCount > 0;
+
+    // filter out requested but as of yet unsupported types
+    if (b && (typeName == String16("array") || typeName == String16("plurals"))) {
+        LOGW("%s: Overlay support for %s not yet implemented, skipping...\n", __FUNCTION__,
+             String8(typeName).string());
+        return false;
+    }
+
+    return b;
+}
+
+bool ResTable::isResourceOverlaid(const String16& packageName,
+                                  const String16& typeName,
+                                  const String16& resourceName,
+                                  size_t overlayConfigIndex,
+                                  uint32_t* outOverlaidValue) const
+{
+    const Package* overlayPackage = getOverlayPackage(packageName);
+
+    if (overlayPackage == NULL) {
+        return false;
+    }
+
+    ssize_t entryIndex =
+        overlayPackage->keyStrings.indexOfString(resourceName.string(), resourceName.size());
+    if (entryIndex < 0) {
+        return false;
+    }
+
+    ssize_t typeIndex =
+        overlayPackage->typeStrings.indexOfString(typeName.string(), typeName.size());
+    if (typeIndex < 0) {
+        return false;
+    }
+
+    const Type* typeConfig = overlayPackage->getType(typeIndex);
+    if (typeConfig == NULL || typeConfig->configs.size() == 0) {
+        return false;
+    }
+
+    if (overlayConfigIndex > typeConfig->configs.size()) {
+        return false;
+    }
+    const ResTable_type* type = typeConfig->configs[overlayConfigIndex];
+
+    uint32_t entriesStart = dtohl(type->entriesStart);
+    size_t entryCount = dtohl(type->entryCount);
+    bool entryFound = false;
+    for (size_t a = 0; a < entryCount && !entryFound; a++) {
+        const uint32_t* const eindex =
+            (const uint32_t*)(((const uint8_t*)type) + dtohs(type->header.headerSize));
+        uint32_t offset = dtohl(eindex[a]);
+        if (offset == ResTable_type::NO_ENTRY) {
+            continue;
+        }
+        const ResTable_entry* entry =
+            (const ResTable_entry*)(((const uint8_t*)type) + entriesStart + offset);
+        if ((ssize_t)dtohl(entry->key.index) == entryIndex) {
+            uint16_t esize = dtohs(entry->size);
+            const Res_value* valuePtr =
+                (const Res_value*)(((const uint8_t*)entry) + esize);
+            *outOverlaidValue = valuePtr->data;
+            entryFound = true;
+            break;
+        }
+    }
+
+    return entryFound;
+}
+
+bool ResTable::doOverlayPackage(Package* pkg)
+{
+    if (pkg->isOverlaid) {
+        return true;
+    }
+    bool retval = true;
+
+    String16 packageName(pkg->package->name);
+
+    for (size_t i = 0; i < pkg->types.size(); ++i) {
+        size_t len;
+        const char16_t* tmp = pkg->typeStrings.stringAt(i, &len);
+        if (tmp == NULL) {
+            continue;
+        }
+        String16 typeName(tmp, len);
+        if (isTypeOverlaid(packageName, typeName)) {
+            Type* parent = pkg->types[i];
+            bool isString = typeName == String16("string") || typeName == String16("drawable");
+            if (!doOverlayType(pkg, parent, packageName, typeName, isString)) {
+                LOGW("Failed to overlay type %s:%s",
+                     String8(packageName).string(), String8(typeName).string());
+                retval = false;
+            }
+        }
+    }
+
+    pkg->isOverlaid = true;
+    return retval;
 }
 
 status_t ResTable::getError() const
@@ -2177,7 +2539,7 @@ ssize_t ResTable::getBagLocked(uint32_t resID, const bag_entry** outBag,
         const Type* typeClass;
         LOGV("Getting entry pkg=%p, t=%d, e=%d\n", package, t, e);
         ssize_t offset = getEntry(package, t, e, &mParams, &type, &entry, &typeClass);
-        LOGV("Resulting offset=%d\n", offset);
+        LOGV("Resulting offset=%d\n", (int)offset);
         if (offset <= 0) {
             if (offset < 0) {
                 if (set) free(set);

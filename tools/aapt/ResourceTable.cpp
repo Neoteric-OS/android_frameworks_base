@@ -3570,7 +3570,8 @@ sp<ResourceTable::Package> ResourceTable::getPackage(const String16& package)
                 return NULL;
             }
             mHaveAppPackage = true;
-            p = new Package(package, 127);
+            int runtimeOverlay = mBundle->getRuntimeOverlay();
+            p = new Package(package, runtimeOverlay == 0 ? 127 : runtimeOverlay);
         } else {
             p = new Package(package, mNextPackageId);
         }

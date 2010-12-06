@@ -103,6 +103,8 @@ void usage(void)
         "   -j  specify a jar or zip file containing classes to include\n"
         "   -k  junk path of file(s) added\n"
         "   -m  make package directories under location specified by -J\n"
+        "   -o  create application run-time overlay package ID\n"
+        "   -O  create non-application run-time overlay package ID\n"
 #if 0
         "   -p  pseudolocalize the default configuration\n"
 #endif
@@ -274,6 +276,12 @@ int main(int argc, char* const argv[])
                 break;
             case 'x':
                 bundle.setExtending(true);
+                break;
+            case 'o':
+                bundle.setRuntimeOverlay(0x03);
+                break;
+            case 'O':
+                bundle.setRuntimeOverlay(0x04);
                 break;
             case 'z':
                 bundle.setRequireLocalization(true);

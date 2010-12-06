@@ -85,6 +85,22 @@
     <string name="menu_add">Add</string>
     <string name="menu_remove">Remove</string>
 
+    <!-- Overlay (keep as is) -->
+    <string name="do_not_overlay_string">foo</string>
+
+    <!-- Overlay (to be overridden) -->
+    <string name="overlay_string">foo</string>
+
+    <!-- Misc overlay, see OverlayTest.java -->
+    <string name="overlay_000">yes</string>
+    <string name="overlay_001">no (t)</string>
+    <string name="overlay_010">no (t)</string>
+    <string name="overlay_011">no (t)</string>
+    <string name="overlay_100">no (t)</string>
+    <string name="overlay_101">no (t)</string>
+    <string name="overlay_110">no (t)</string>
+    <string name="overlay_111">no (t)</string>
+
     <!-- Misc. -->
     <string name="add_row_button">Add Row</string>
     <string name="disabled_button">Disabled</string>

@@ -460,6 +460,20 @@ public:
     bool isUTF8() const;
 #endif
 
+    inline void setOverlay(const ResStringPool* overlayPool) {
+        if (mError == NO_ERROR) {
+            mOverlayStringPool = overlayPool;
+        }
+    }
+
+    inline const ResStringPool* getOverlay() const {
+        if (mError == NO_ERROR) {
+            return mOverlayStringPool;
+        } else {
+            return NULL;
+        }
+    }
+
 private:
     status_t                    mError;
     void*                       mOwnedData;
@@ -473,6 +487,7 @@ private:
     uint32_t                    mStringPoolSize;    // number of uint16_t
     const uint32_t*             mStyles;
     uint32_t                    mStylePoolSize;    // number of uint32_t
+    const ResStringPool*        mOverlayStringPool;
 };
 
 /** ********************************************************************
@@ -925,7 +940,7 @@ struct ResTable_config
         };
         uint32_t version;
     };
-    
+
     enum {
         // screenLayout bits for screen size class.
         MASK_SCREENSIZE = 0x0f,
@@ -965,6 +980,8 @@ struct ResTable_config
         };
         uint32_t screenConfig;
     };
+
+    uint8_t overlay;
     
     inline void copyFromDeviceNoSwap(const ResTable_config& o) {
         const size_t size = dtohl(o.size);
@@ -1064,6 +1081,13 @@ struct ResTable_config
         // The order of the following tests defines the importance of one
         // configuration parameter over another.  Those tests first are more
         // important, trumping any values in those following them.
+        if (overlay || o.overlay) {
+            if (overlay != o.overlay) {
+                if (!overlay) return false;
+                if (!o.overlay) return true;
+            }
+        }
+
         if (imsi || o.imsi) {
             if (mcc != o.mcc) {
                 if (!mcc) return false;
@@ -1975,7 +1999,21 @@ private:
         const ResTable_package* const pkg, const Header* const header);
 
     void print_value(const Package* pkg, const Res_value& value) const;
-    
+
+    const Package* getOverlayPackage(const String16& targetPackageName) const;
+    bool isTypeOverlaid(const String16& packageName, const String16& typeName) const;
+    bool isResourceOverlaid(const String16& packageName,
+                            const String16& typeName,
+                            const String16& resourceName,
+                            size_t overlayConfigIndex,
+                            uint32_t* outOverlaidValue) const;
+    bool doOverlayType(Package* package,
+                       Type* parent,
+                       const String16& packageName,
+                       const String16& typeName,
+                       bool isString);
+    bool doOverlayPackage(Package* pkg);
+
     mutable Mutex               mLock;
 
     status_t                    mError;

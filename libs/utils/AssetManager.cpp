@@ -48,6 +48,7 @@ static const char* kDefaultVendor = "default";
 static const char* kAssetsRoot = "assets";
 static const char* kAppZipName = NULL; //"classes.jar";
 static const char* kSystemAssets = "framework/framework-res.apk";
+static const char* kOverlayPrefix = "/overlay/overlay-";
 
 static const char* kExcludeExtension = ".EXCLUDE";
 
@@ -90,10 +91,14 @@ AssetManager::~AssetManager(void)
     delete[] mVendor;
 }
 
-bool AssetManager::addAssetPath(const String8& path, void** cookie)
+bool AssetManager::addAssetPath(const String8& path, void** cookie, bool allowOverlay)
 {
     AutoMutex _l(mLock);
+    return addAssetPathLocked(path, cookie, allowOverlay);
+}
 
+bool AssetManager::addAssetPathLocked(const String8& path, void** cookie, bool allowOverlay)
+{
     asset_path ap;
 
     String8 realPath(path);
@@ -112,7 +117,6 @@ bool AssetManager::addAssetPath(const String8& path, void** cookie)
             return false;
         }
     }
-
     // Skip if we have it already.
     for (size_t i=0; i<mAssetPaths.size(); i++) {
         if (mAssetPaths[i].path == ap.path) {
@@ -126,11 +130,31 @@ bool AssetManager::addAssetPath(const String8& path, void** cookie)
     LOGV("In %p Asset %s path: %s", this,
          ap.type == kFileTypeDirectory ? "dir" : "zip", ap.path.string());
 
+    ap.overlay = NO_OVERLAY;
     mAssetPaths.add(ap);
 
     // new paths are always added at the end
     if (cookie) {
         *cookie = (void*)mAssetPaths.size();
+    }
+
+    if (allowOverlay) {
+        const char* root = getenv("ANDROID_ROOT");
+        LOG_ALWAYS_FATAL_IF(root == NULL, "ANDROID_ROOT not set");
+        String8 overlayPath(root);
+        overlayPath.append(kOverlayPrefix);
+        overlayPath.append(path.getPathLeaf());
+        if (::getFileType(overlayPath.string()) != kFileTypeNonexistent) {
+#if 0
+            LOGI("loading overlay package %s for package %s\n",
+                 overlayPath.string(), path.string());
+#endif
+            size_t* overlayCookie;
+            if (addAssetPathLocked(overlayPath, (void**)&overlayCookie, false)) {
+                asset_path& tmp = mAssetPaths.editItemAt(mAssetPaths.size() - 2);
+                tmp.overlay = (size_t)overlayCookie;
+            }
+        }
     }
 
     return true;
@@ -271,14 +295,25 @@ Asset* AssetManager::open(const char* fileName, AccessMode mode)
 
     /*
      * For each top-level asset path, search for the asset.
+     * By searching backwards, overlay packages are considered prior to the packages they target.
      */
-
     size_t i = mAssetPaths.size();
     while (i > 0) {
         i--;
         LOGV("Looking for asset '%s' in '%s'\n",
                 assetName.string(), mAssetPaths.itemAt(i).path.string());
-        Asset* pAsset = openNonAssetInPathLocked(assetName.string(), mode, mAssetPaths.itemAt(i));
+        Asset* pAsset = NULL;
+        size_t o = mAssetPaths.itemAt(i).overlay;
+        if (o != NO_OVERLAY) {
+            pAsset = openNonAssetInPathLocked(assetName.string(), mode, mAssetPaths.itemAt(o - 1));
+        }
+        if (pAsset == NULL) {
+            pAsset = openNonAssetInPathLocked(assetName.string(), mode, mAssetPaths.itemAt(i));
+        } else {
+            LOGI("run-time overlay: %s:%s/%s -> %s:%s/%s",
+                 mAssetPaths[i].path.string(), kAssetsRoot, fileName,
+                 mAssetPaths[o - 1].path.string(), kAssetsRoot, fileName);
+        }
         if (pAsset != NULL) {
             return pAsset != kExcludedAsset ? pAsset : NULL;
         }
@@ -323,12 +358,28 @@ Asset* AssetManager::openNonAsset(const char* fileName, AccessMode mode)
 
 Asset* AssetManager::openNonAsset(void* cookie, const char* fileName, AccessMode mode)
 {
+    AutoMutex _l(mLock);
+    return openNonAssetLocked(cookie, fileName, mode);
+}
+
+Asset* AssetManager::openNonAssetLocked(void* cookie, const char* fileName, AccessMode mode)
+{
     const size_t which = ((size_t)cookie)-1;
 
-    AutoMutex _l(mLock);
+    if (strncmp(fileName, "res/", 4) == 0 && // skip eg AndroidManifest.xml
+        which < mAssetPaths.size() &&
+        mAssetPaths[which].overlay != NO_OVERLAY) {
+        size_t c = mAssetPaths[which].overlay;
+        Asset* overlayAsset = openNonAssetLocked((void*)c, fileName, mode);
+        if (overlayAsset != NULL) {
+            LOGI("run-time overlay: %s:%s -> %s:%s",
+                 mAssetPaths[which].path.string(), fileName,
+                 mAssetPaths[c - 1].path.string(), fileName);
+            return overlayAsset;
+        }
+    }
 
     LOG_FATAL_IF(mAssetPaths.size() == 0, "No assets added to AssetManager");
-
 
     if (mCacheMode != CACHE_OFF && !mCacheValid)
         loadFileNameCacheLocked();
@@ -400,6 +451,9 @@ const ResTable* AssetManager::getResTable(bool required) const
         const asset_path& ap = mAssetPaths.itemAt(i);
         LOGV("Looking for resource asset in '%s'\n", ap.path.string());
         if (ap.type != kFileTypeDirectory) {
+            // Currently, some Java parts will break if more than one package
+            // is shared, which means only framework-res.apk is shared, not
+            // it's run-time overlay package (if present)
             if (i == 0) {
                 // The first item is typically the framework resources,
                 // which we want to avoid parsing every time.
