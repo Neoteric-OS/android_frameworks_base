@@ -45,10 +45,15 @@ public class Touch {
         int left = Integer.MAX_VALUE;
         int right = 0;
         Alignment a = null;
+        int dir = 0;
 
         for (int i = top; i <= bottom; i++) {
             left = (int) Math.min(left, layout.getLineLeft(i));
             right = (int) Math.max(right, layout.getLineRight(i));
+
+            if (dir == 0) {
+                dir = layout.getParagraphDirection(i);
+            }
 
             if (a == null) {
                 a = layout.getParagraphAlignment(i);
@@ -62,7 +67,8 @@ public class Touch {
         if (right - left < width - padding) {
             if (a == Alignment.ALIGN_CENTER) {
                 diff = (width - padding - (right - left)) / 2;
-            } else if (a == Alignment.ALIGN_OPPOSITE) {
+            } else if ((a == Alignment.ALIGN_OPPOSITE && dir == Layout.DIR_LEFT_TO_RIGHT)
+                    || (a == Alignment.ALIGN_NORMAL && dir == Layout.DIR_RIGHT_TO_LEFT)) {
                 diff = width - padding - (right - left);
             }
         }
