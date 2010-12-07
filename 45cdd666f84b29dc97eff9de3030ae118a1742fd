@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA9n//9aA\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1406,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-12-07T01:31:45Z",
+      "side": 1,
+      "message": "Do we really need this? Can we not wait for EVENT_SIM_RECORDS_LOADED event and update CF preference just as it is done for Voice Mail above.",
+      "revId": "45cdd666f84b29dc97eff9de3030ae118a1742fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA9n//9Z8\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1420,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-12-07T01:31:45Z",
+      "side": 1,
+      "message": "Can we move this code to EVENT_SIM_RECORDS_LOADED above?",
+      "revId": "45cdd666f84b29dc97eff9de3030ae118a1742fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
