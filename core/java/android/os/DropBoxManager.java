@@ -54,6 +54,18 @@ public class DropBoxManager {
     public static final int IS_GZIPPED = 4;
 
     /**
+     * Extra for {@link android.content.Intent#ACTION_DROPBOX_ENTRY_ADDED}:
+     * string containing the dropbox tag.
+     */
+    public static final String EXTRA_TAG = "tag";
+
+    /**
+     * Extra for {@link android.content.Intent#ACTION_DROPBOX_ENTRY_ADDED}:
+     * long containing time when the entry was created.
+     */
+    public static final String EXTRA_TIME = "time";
+
+    /**
      * A single entry retrieved from the drop box.
      * This may include a reference to a stream, so you must call
      * {@link #close()} when you are done using it.

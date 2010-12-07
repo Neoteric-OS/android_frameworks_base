@@ -513,6 +513,7 @@ import java.util.Set;
  *     <li> {@link #ACTION_POWER_CONNECTED}
  *     <li> {@link #ACTION_POWER_DISCONNECTED}
  *     <li> {@link #ACTION_SHUTDOWN}
+ *     <li> {@link #ACTION_DROPBOX_ENTRY_ADDED}
  * </ul>
  *
  * <h3>Standard Categories</h3>
@@ -1236,6 +1237,17 @@ public class Intent implements Parcelable, Cloneable {
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_BOOT_COMPLETED = "android.intent.action.BOOT_COMPLETED";
+    /**
+     * Broadcast Action: This is broadcast when a new entry is added in the dropbox.
+     * You must hold the {@link android.Manifest.permission#READ_LOGS} permission
+     * in order to receive this broadcast.
+     *
+     * <p class="note">This is a protected intent that can only be sent
+     * by the system.
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_DROPBOX_ENTRY_ADDED =
+        "android.intent.action.DROPBOX_ENTRY_ADDED";
     /**
      * Broadcast Action: This is broadcast when a user action should request a
      * temporary system dialog to dismiss.  Some examples of temporary system
