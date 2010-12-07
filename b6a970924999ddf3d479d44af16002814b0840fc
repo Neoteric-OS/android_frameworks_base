@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA93///8U\u003d",
+        "filename": "services/java/com/android/server/ThrottleService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-12-07T16:07:38Z",
+      "side": 1,
+      "message": "you access mNtpActive from this thread...",
+      "revId": "b6a970924999ddf3d479d44af16002814b0840fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA93///8Y\u003d",
+        "filename": "services/java/com/android/server/ThrottleService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-12-07T16:07:38Z",
+      "side": 1,
+      "message": "An Android rule that\u0027s being increasingly enforced is that all threads must be named.  Makes debugging a lot easier.\n\nSomething like:\n\nnew Thread(\"ThrottleService-NtpRequest\") {\n ....\n}.start()",
+      "revId": "b6a970924999ddf3d479d44af16002814b0840fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA93///8Q\u003d",
+        "filename": "services/java/com/android/server/ThrottleService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2010-12-07T16:07:38Z",
+      "side": 1,
+      "message": "and you also access mNtpActive from this thread.\n\nWhat lock guards this member?",
+      "revId": "b6a970924999ddf3d479d44af16002814b0840fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
