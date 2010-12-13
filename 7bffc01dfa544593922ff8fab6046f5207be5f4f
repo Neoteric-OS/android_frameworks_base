@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+X///8Y\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/DataConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-12-13T19:53:00Z",
+      "side": 1,
+      "message": "Why not make a list of the permanent failures?\n\nI wonder if all of these switch statements and series of if expressions should be turned into HashMap\u0027s, your thoughs?",
+      "revId": "7bffc01dfa544593922ff8fab6046f5207be5f4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+X///8U\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/DataConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-12-13T19:53:00Z",
+      "side": 1,
+      "message": "looping through a list seems inefficient.",
+      "revId": "7bffc01dfa544593922ff8fab6046f5207be5f4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+X///8Q\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/DataConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2010-12-13T19:53:00Z",
+      "side": 1,
+      "message": "As mentioned above HashMap of permanent failures?",
+      "revId": "7bffc01dfa544593922ff8fab6046f5207be5f4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
