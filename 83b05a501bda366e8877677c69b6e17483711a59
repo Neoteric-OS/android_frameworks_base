@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+X///6U\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-12-13T22:46:04Z",
+      "side": 1,
+      "message": "It looks like EVENT_SIM_READY and EVENT_GOT_IMSI are not used anymore. Can they be removed?",
+      "revId": "83b05a501bda366e8877677c69b6e17483711a59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+X///6A\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1440,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-12-13T22:46:04Z",
+      "side": 1,
+      "message": "In this case where CF is stored in SIM is the notifyCallForwardIndicator done by SIMRecords ? Because in the code that follows mCFOnBootDone will be set to true and CHECK_CALLFORWARDING_STATUS not sent.\n\nAlso comment says \"check with the network\". Where is that done?",
+      "revId": "83b05a501bda366e8877677c69b6e17483711a59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+X///5g\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1446,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2010-12-13T22:46:04Z",
+      "side": 1,
+      "message": "Wondering if you can remove these mCFOnBootDont and mCFOnBootSim flags altogether? I dont see any harm in invoking this function after every SIM_RECORDS_LOADED event. This should happen only after boot and when coming back up from airplane mode. In that case, you can also change the name of this method to updateCallForwardStatus.",
+      "revId": "83b05a501bda366e8877677c69b6e17483711a59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
