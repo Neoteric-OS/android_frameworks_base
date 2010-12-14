@@ -1879,7 +1879,7 @@ final class WebViewCore {
     /* package */ void contentDraw() {
         // don't update the Picture until we have an initial width and finish
         // the first layout
-        if (mCurrentViewWidth == 0 || !mBrowserFrame.firstLayoutDone()) {
+        if (mCurrentViewWidth == 0 || mBrowserFrame == null || !mBrowserFrame.firstLayoutDone()) {
             return;
         }
         // only fire an event if this is our first request
