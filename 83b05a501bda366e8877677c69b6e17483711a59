@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA+3///0w\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-12-17T14:14:17Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "AAAA+X///6U\u003d",
+      "revId": "83b05a501bda366e8877677c69b6e17483711a59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA+X///6A\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA+3///0s\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1440,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-12-17T14:14:17Z",
+      "side": 1,
+      "message": "1. Yes SIMRecords makes the notifyCallForwardIndicator call when the CF is stored on the SIM.\n\n2. The comment should say \"SIMCard has the info so we don\u0027t need to check with the shared preference\".",
+      "parentUuid": "AAAA+X///6A\u003d",
+      "revId": "83b05a501bda366e8877677c69b6e17483711a59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA+X///5g\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2010-12-13T22:46:04Z",
       "side": 1,
       "message": "Wondering if you can remove these mCFOnBootDont and mCFOnBootSim flags altogether? I dont see any harm in invoking this function after every SIM_RECORDS_LOADED event. This should happen only after boot and when coming back up from airplane mode. In that case, you can also change the name of this method to updateCallForwardStatus.",
+      "revId": "83b05a501bda366e8877677c69b6e17483711a59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3///0o\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GSMPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1446,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2010-12-17T14:14:17Z",
+      "side": 1,
+      "message": "True, will fix.",
+      "parentUuid": "AAAA+X///5g\u003d",
       "revId": "83b05a501bda366e8877677c69b6e17483711a59",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
