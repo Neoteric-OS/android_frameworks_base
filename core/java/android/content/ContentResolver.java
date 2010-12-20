@@ -216,6 +216,8 @@ public abstract class ContentResolver {
             return type;
         } catch (RemoteException e) {
             return null;
+        } catch (java.lang.Exception e) {
+            return null;
         }
     }
 
