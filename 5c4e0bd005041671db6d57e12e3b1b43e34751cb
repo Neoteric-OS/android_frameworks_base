@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3///pU\u003d",
+        "filename": "core/java/android/webkit/WebViewCore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1670,
+      "author": {
+        "id": 1001047
+      },
+      "writtenOn": "2010-12-20T17:32:41Z",
+      "side": 1,
+      "message": "you are assuming here that viewSizeChanged will always be called for orientation events.  It may be the case that either a) the screen is square in which case the view size is constant or b) the virtual viewport has not changed",
+      "revId": "5c4e0bd005041671db6d57e12e3b1b43e34751cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
