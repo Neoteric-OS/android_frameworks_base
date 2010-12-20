@@ -4670,6 +4670,30 @@ public class WebView extends AbsoluteLayout
         return changed;
     }
 
+    private static class PostLayout implements Runnable {
+        final WebView mWebView;
+
+        public PostLayout(WebView webView) {
+            mWebView = webView;
+        }
+
+        public void run() {
+            if (mWebView != null && mWebView.mWebViewCore != null) {
+                mWebView.mWebViewCore.sendMessage(EventHub.ON_LAYOUT);
+            }
+        }
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+
+        // tell WebViewCore a layout occurred.
+        // Put PostLayout in queue in order to
+        // keep in sync with PostScale in onSizeChanged
+        post(new PostLayout(this));
+    }
+
     private static class PostScale implements Runnable {
         final WebView mWebView;
         final boolean mUpdateTextWrap;
