@@ -3499,4 +3499,17 @@ public final class RIL extends BaseCommands implements CommandsInterface {
 
         send(rr);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void validateAndStoreAuthenticationKey(String akey, Message response) {
+        RILRequest rr = RILRequest.obtain(RIL_REQUEST_CDMA_VALIDATE_AND_WRITE_AKEY, response);
+
+        rr.mp.writeString(akey);
+
+        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
+
+        send(rr);
+    }
 }

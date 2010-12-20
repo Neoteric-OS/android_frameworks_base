@@ -1401,4 +1401,14 @@ public interface CommandsInterface {
      *          Callback message containing {@link IccCardStatus} structure for the card.
      */
     public void getIccCardStatus(Message result);
+
+    /**
+     * Request to validate and store the Authentication Key
+     *
+     * @param akey
+     *            String containing authentication key with the checksum
+     * @param response
+     *            Callback message to report success or failure
+     */
+    public void validateAndStoreAuthenticationKey(String akey, Message response);
 }
