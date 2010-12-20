@@ -1396,7 +1396,8 @@ public abstract class ContentResolver {
         protected void finalize() throws Throwable {
             try {
                 if(!mCloseFlag) {
-                    ContentResolver.this.releaseProvider(mContentProvider);
+                    Log.w(TAG, "Cursor finalized without prior close()");
+                    close();
                 }
             } finally {
                 super.finalize();
