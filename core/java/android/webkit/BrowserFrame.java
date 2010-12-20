@@ -72,6 +72,7 @@ class BrowserFrame extends Handler {
     // queue has been cleared,they are ignored.
     private boolean mBlockMessages = false;
     private int mOrientation = -1;
+    private boolean mPendingOrientationChanged = false;
 
     // Is this frame the main frame?
     private boolean mIsMainFrame;
@@ -476,13 +477,20 @@ class BrowserFrame extends Handler {
             case ORIENTATION_CHANGED: {
                 if (mOrientation != msg.arg1) {
                     mOrientation = msg.arg1;
-                    nativeOrientationChanged(msg.arg1);
+                    mPendingOrientationChanged = true;
                 }
                 break;
             }
 
             default:
                 break;
+        }
+    }
+
+    /* package */ void onLayout() {
+        if (mPendingOrientationChanged) {
+            nativeOrientationChanged(mOrientation);
+            mPendingOrientationChanged = false;
         }
     }
 

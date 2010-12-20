@@ -873,6 +873,8 @@ final class WebViewCore {
         static final int ADD_PACKAGE_NAME = 185;
         static final int REMOVE_PACKAGE_NAME = 186;
 
+        static final int ONLAYOUT = 187;
+
         // private message ids
         private static final int DESTROY =     200;
 
@@ -1364,6 +1366,12 @@ final class WebViewCore {
                             }
                             BrowserFrame.sJavaBridge.removePackageName(
                                     (String) msg.obj);
+                            break;
+
+                        case ONLAYOUT:
+                            if (mBrowserFrame != null) {
+                                mBrowserFrame.onLayout();
+                            }
                             break;
                     }
                 }
