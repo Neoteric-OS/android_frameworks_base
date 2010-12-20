@@ -72,6 +72,7 @@ class BrowserFrame extends Handler {
     // queue has been cleared,they are ignored.
     private boolean mBlockMessages = false;
     private int mOrientation = -1;
+    private boolean mPendingOrientationChanged = false;
 
     // Is this frame the main frame?
     private boolean mIsMainFrame;
@@ -476,7 +477,7 @@ class BrowserFrame extends Handler {
             case ORIENTATION_CHANGED: {
                 if (mOrientation != msg.arg1) {
                     mOrientation = msg.arg1;
-                    nativeOrientationChanged(msg.arg1);
+                    mPendingOrientationChanged = true;
                 }
                 break;
             }
@@ -484,6 +485,26 @@ class BrowserFrame extends Handler {
             default:
                 break;
         }
+    }
+
+    /**
+    * Return true if there is a pending orientation change that has
+    * not been reported to native webkit yet
+    * @return True if there is a pending orientation change else false
+    */
+    /* package */ boolean hasPendingOrientationChange() {
+        return mPendingOrientationChanged;
+    }
+
+    /**
+    * Report orientation change to native and update
+    * the internal pending orientation change state.
+    * Use together with {@link BrowserFrame#hasPendingOrientationChange()}
+    * in order to prevent unnecessary calls.
+    */
+    /* package */ void sendOrientationChanged() {
+        nativeOrientationChanged(mOrientation);
+        mPendingOrientationChanged = false;
     }
 
     /**

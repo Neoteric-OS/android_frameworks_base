@@ -1665,6 +1665,9 @@ final class WebViewCore {
         }
         mEventHub.sendMessage(Message.obtain(null,
                 EventHub.UPDATE_CACHE_AND_TEXT_ENTRY));
+        if (mBrowserFrame != null && mBrowserFrame.hasPendingOrientationChange()) {
+            mBrowserFrame.sendOrientationChanged();
+        }
     }
 
     private void sendUpdateTextEntry() {
