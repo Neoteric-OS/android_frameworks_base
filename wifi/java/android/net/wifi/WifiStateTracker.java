@@ -938,6 +938,7 @@ public class WifiStateTracker extends NetworkStateTracker {
                 // When supplicant dies, kill the DHCP thread
                 if (mDhcpTarget != null) {
                     mDhcpTarget.getLooper().quit();
+                    mDhcpTarget.closeBluetoothHeadset();
                     mDhcpTarget = null;
                 }
                 mContext.removeStickyBroadcast(new Intent(WifiManager.NETWORK_STATE_CHANGED_ACTION));
@@ -2507,6 +2508,12 @@ public class WifiStateTracker extends NetworkStateTracker {
         private boolean shouldDisableCoexistenceMode() {
             int state = mBluetoothHeadset.getState(mBluetoothHeadset.getCurrentHeadset());
             return state == BluetoothHeadset.STATE_DISCONNECTED;
+        }
+
+        public void closeBluetoothHeadset() {
+            if (mBluetoothHeadset != null) {
+                mBluetoothHeadset.close();
+            }
         }
     }
     
