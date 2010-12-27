@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2008,2010 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package com.android.internal.telephony.cdma;
 import android.os.*;
 import android.util.Log;
 
+import com.android.internal.telephony.CommandsInterface;
 import com.android.internal.telephony.IccConstants;
 import com.android.internal.telephony.IccException;
 import com.android.internal.telephony.IccFileHandler;
@@ -26,6 +27,7 @@ import com.android.internal.telephony.IccFileTypeMismatch;
 import com.android.internal.telephony.IccIoResult;
 import com.android.internal.telephony.IccUtils;
 import com.android.internal.telephony.PhoneProxy;
+import com.android.internal.telephony.UiccCardApplication;
 
 import java.util.ArrayList;
 
@@ -38,8 +40,8 @@ public final class RuimFileHandler extends IccFileHandler {
     //***** Instance Variables
 
     //***** Constructor
-    RuimFileHandler(CDMAPhone phone) {
-        super(phone);
+    public RuimFileHandler(UiccCardApplication app, String aid, CommandsInterface ci) {
+        super(app, aid, ci);
     }
 
     public void dispose() {
@@ -57,7 +59,7 @@ public final class RuimFileHandler extends IccFileHandler {
         Message response = obtainMessage(EVENT_READ_ICON_DONE, fileid, 0,
                 onLoaded);
 
-        phone.mCM.iccIO(COMMAND_GET_RESPONSE, fileid, "img", 0, 0,
+        mCi.iccIO(mAid, COMMAND_GET_RESPONSE, fileid, "img", 0, 0,
                 GET_RESPONSE_EF_IMG_SIZE_BYTES, null, null, response);
     }
 
