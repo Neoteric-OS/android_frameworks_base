@@ -28,6 +28,7 @@ import android.util.Log;
 
 import com.android.internal.telephony.UiccConstants.CardState;
 import com.android.internal.telephony.cat.CatService;
+import android.telephony.TelephonyManager;
 
 /**
  * {@hide}
@@ -47,20 +48,32 @@ public class UiccManager extends Handler{
     private static final int EVENT_ICC_STATUS_CHANGED = 2;
     private static final int EVENT_GET_ICC_STATUS_DONE = 3;
     private static final int EVENT_RADIO_OFF_OR_UNAVAILABLE = 4;
+    public static final int SUBSCRIPTION_INDEX_INVALID = 99999;
 
     private String mLogTag = "RIL_UiccManager";
-    CommandsInterface mCi;
+    CommandsInterface[] mCi;
     Context mContext;
-    UiccCard mUiccCard;
+    UiccCard[] mUiccCards;
 
     private RegistrantList mIccChangedRegistrants = new RegistrantList();
     private CatService mCatService;
+
+
+    public static UiccManager getInstance(Context c, CommandsInterface[] ci) {
+        if (mInstance == null) {
+            mInstance = new UiccManager(c, ci);
+        } else {
+            mInstance.mCi = ci;
+            mInstance.mContext = c;
+        }
+        return mInstance;
+    }
 
     public static UiccManager getInstance(Context c, CommandsInterface ci) {
         if (mInstance == null) {
             mInstance = new UiccManager(c, ci);
         } else {
-            mInstance.mCi = ci;
+            mInstance.mCi[0] = ci;
             mInstance.mContext = c;
         }
         return mInstance;
@@ -74,16 +87,22 @@ public class UiccManager extends Handler{
         }
     }
 
+    private UiccManager(Context c, CommandsInterface[] ci) {
+        this(c, ci[0]);
+    }
+
     private UiccManager(Context c, CommandsInterface ci) {
-        Log.e(mLogTag, "Creating");
+        Log.e(mLogTag, "Constructing");
+        mUiccCards = new UiccCard[UiccConstants.RIL_MAX_CARDS];
 
+        mCi = new CommandsInterface[TelephonyManager.getPhoneCount()];
         mContext = c;
-        mCi = ci;
-        mCi.registerForOn(this,EVENT_RADIO_ON, null);
-        mCi.registerForIccStatusChanged(this, EVENT_ICC_STATUS_CHANGED, null);
-        mCi.registerForOffOrNotAvailable(this, EVENT_RADIO_OFF_OR_UNAVAILABLE, null);
+        mCi[0] = ci;
+        mCi[0].registerForOn(this,EVENT_RADIO_ON, null);
+        mCi[0].registerForIccStatusChanged(this, EVENT_ICC_STATUS_CHANGED, null);
+        mCi[0].registerForOffOrNotAvailable(this, EVENT_RADIO_OFF_OR_UNAVAILABLE, null);
 
-        mCatService = CatService.getInstance(mCi, null, mContext, null, null);
+        mCatService = CatService.getInstance(mCi[0], null, mContext, null, null);
 
     }
 
@@ -95,7 +114,7 @@ public class UiccManager extends Handler{
             case EVENT_RADIO_ON:
             case EVENT_ICC_STATUS_CHANGED:
                 Log.d(mLogTag, "Received EVENT_ICC_STATUS_CHANGED, calling getIccCardStatus");
-                mCi.getIccCardStatus(obtainMessage(EVENT_GET_ICC_STATUS_DONE, msg.obj));
+                mCi[0].getIccCardStatus(obtainMessage(EVENT_GET_ICC_STATUS_DONE, msg.obj));
                 break;
             case EVENT_GET_ICC_STATUS_DONE:
                 ar = (AsyncResult)msg.obj;
@@ -119,7 +138,7 @@ public class UiccManager extends Handler{
                 }
                 break;
             case EVENT_RADIO_OFF_OR_UNAVAILABLE:
-                disposeCard();
+                disposeCards();
                 break;
             default:
                 Log.e(mLogTag, " Unknown Event " + msg.what);
@@ -138,66 +157,127 @@ public class UiccManager extends Handler{
         UiccCardStatusResponse status = (UiccCardStatusResponse)ar.result;
 
         boolean cardStatusChanged = false;
-        
-        if (mUiccCard != null && status.card != null) {
-            //Update already existing card
-            if (mUiccCard.getCardState() != status.card.card_state) {
+
+        for (int i = 0; i < UiccConstants.RIL_MAX_CARDS; i++) {
+            //Update already existing cards
+            if (mUiccCards[i] != null && status.card != null) {
+                if (mUiccCards[i].getCardState() != status.card.card_state) {
+                    cardStatusChanged = true;
+                }
+                mUiccCards[i].update(status.card, mContext, mCi[0]);
+            }
+
+            //Dispose of removed cards
+            if (mUiccCards[i] != null && status.card == null) {
+                mUiccCards[i].dispose();
+                mUiccCards[i] = null;
                 cardStatusChanged = true;
             }
-            mUiccCard.update(status.card, mContext, mCi);
-        } else if (mUiccCard != null && status.card == null) {
-            //Dispose of removed card
-            mUiccCard.dispose();
-            mUiccCard = null;
-            cardStatusChanged = true;
-        } else if (mUiccCard == null && status.card != null) {
-            //Create new card
-            mUiccCard = new UiccCard(this, status.card, mContext, mCi);
-            cardStatusChanged = true;
+
+            //Create added cards
+            if (mUiccCards[i] == null && status.card != null) {
+                //mUiccCards[i] = new UiccCard(this, i, status.card, mContext, mCi[0]);
+                mUiccCards[i] = new UiccCard(this, status.card, mContext, mCi[0]);
+                cardStatusChanged = true;
+            }
         }
 
-
         if (cardStatusChanged) {
+            Log.d(mLogTag, "Notifying IccChangedRegistrants");
             mIccChangedRegistrants.notifyRegistrants();
         }
     }
 
-    private synchronized void disposeCard() {
-            if (mUiccCard != null) {
-                mUiccCard.dispose();
-                mUiccCard = null;
+    private synchronized void disposeCards() {
+        for (int i = mUiccCards.length - 1; i >= 0; i--) {
+            if (mUiccCards[i] != null) {
+                Log.d(mLogTag, "Disposing card " + i);
+                mUiccCards[i].dispose();
+                mUiccCards[i] = null;
             }
+        }
     }
 
     public void triggerIccStatusUpdate(Object onComplete) {
         sendMessage(obtainMessage(EVENT_ICC_STATUS_CHANGED, onComplete));
     }
 
-    public synchronized UiccCard getIccCard() {
-        return mUiccCard;
+    public synchronized UiccCard[] getIccCards() {
+        ArrayList<UiccCard> cards = new ArrayList<UiccCard>();
+        for (UiccCard c: mUiccCards) {
+            //present and absent both cards are returned.
+            if (c != null && (c.getCardState() == CardState.PRESENT
+                        || c.getCardState() == CardState.ABSENT)) {
+                cards.add(c);
+            }
+        }
+        Log.d(mLogTag, "Number of cards = " + cards.size());
+        UiccCard arrayCards[] = new UiccCard[cards.size()];
+        arrayCards = (UiccCard[])cards.toArray(arrayCards);
+        return arrayCards;
     }
 
-    /* Return First subscription of selected family */
-    public synchronized UiccCardApplication getCurrentApplication(AppFamily family) {
-        UiccCard c = mUiccCard;
-        if (c == null || c.getCardState() != CardState.PRESENT) {
-            //There is no card
-            return null;
+    /*
+     * This Function gets the UiccCard at the index in case of
+     * the card is present and it has any applications or the
+     * card is absent.  Otherwise retrun null.
+     */
+    public synchronized UiccCard getCard(int index) {
+        UiccCard card = mUiccCards[index];
+        if (card != null
+                && ((card.getCardState() == CardState.PRESENT
+                        && card.getNumApplications() > 0)
+                    || card.getCardState() == CardState.ABSENT)) {
+            return card;
         }
-        int[] subscriptions;
-        if (family == AppFamily.APP_FAM_3GPP) {
-            subscriptions = c.getSubscription3gppAppIndex();
-        } else {
-            subscriptions = c.getSubscription3gpp2AppIndex();
+        return null;
+    }
+
+    //Gets first 3gpp Application Index
+    public int getFirst3gppAppIndex(int slotId) {
+        if (slotId >= 0 && slotId < mUiccCards.length) {
+            UiccCard c = mUiccCards[slotId];
+            if (c == null || c.getCardState() == CardState.PRESENT) {
+                int[] subscriptions;
+                subscriptions = c.getSubscription3gppAppIndex();
+                if (subscriptions != null && subscriptions.length > 0) {
+                    return subscriptions[0];
+                } else {
+                    return SUBSCRIPTION_INDEX_INVALID;
+                }
+            }
         }
-        if (subscriptions != null && subscriptions.length > 0) {
-            //return First current subscription
-            UiccCardApplication app = c.getUiccCardApplication(subscriptions[0]);
-            return app;
-        } else {
-            //No subscriptions found
-            return null;
+        return SUBSCRIPTION_INDEX_INVALID;
+    }
+
+    //Gets first 3gpp2 Application Index
+    public int getFirst3gpp2AppIndex(int slotId) {
+        if (slotId >= 0 && slotId < mUiccCards.length) {
+            UiccCard c = mUiccCards[slotId];
+            if (c == null || c.getCardState() == CardState.PRESENT) {
+                int[] subscriptions;
+                subscriptions = c.getSubscription3gpp2AppIndex();
+                if (subscriptions != null && subscriptions.length > 0) {
+                    return subscriptions[0];
+                } else {
+                    return SUBSCRIPTION_INDEX_INVALID;
+                }
+            }
         }
+        return SUBSCRIPTION_INDEX_INVALID;
+    }
+
+    //Gets current application based on slotId and appId
+    public synchronized UiccCardApplication getApplication(int slotId, int appId) {
+        if (slotId >= 0 && slotId < mUiccCards.length) {
+            UiccCard c = mUiccCards[slotId];
+            if (c != null && (c.getCardState() == CardState.PRESENT) &&
+                (appId >= 0 && appId < c.getNumApplications())) {
+                UiccCardApplication app = c.getUiccCardApplication(appId);
+                return app;
+            }
+        }
+        return null;
     }
 
     //Notifies when any of the cards' STATE changes (or card gets added or removed)

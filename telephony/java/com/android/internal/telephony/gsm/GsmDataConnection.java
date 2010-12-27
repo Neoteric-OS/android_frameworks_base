@@ -206,7 +206,7 @@ public class GsmDataConnection extends DataConnection {
 
     private void setHttpProxy(String httpProxy, String httpPort) {
         if (httpProxy == null || httpProxy.length() == 0) {
-            phone.setSystemProperty("net.gprs.http-proxy", null);
+            ((GSMPhone)phone).setSystemProperty("net.gprs.http-proxy", null);
             return;
         }
 
@@ -214,7 +214,7 @@ public class GsmDataConnection extends DataConnection {
             httpPort = "8080";     // Default to port 8080
         }
 
-        phone.setSystemProperty("net.gprs.http-proxy",
+        ((GSMPhone)phone).setSystemProperty("net.gprs.http-proxy",
                 "http://" + httpProxy + ":" + httpPort + "/");
     }
 

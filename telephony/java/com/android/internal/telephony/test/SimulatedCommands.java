@@ -33,6 +33,7 @@ import com.android.internal.telephony.UUSInfo;
 import com.android.internal.telephony.gsm.CallFailCause;
 import com.android.internal.telephony.gsm.SmsBroadcastConfigInfo;
 import com.android.internal.telephony.gsm.SuppServiceNotification;
+import com.android.internal.telephony.ProxyManager.Subscription;
 
 import java.util.ArrayList;
 
@@ -1478,4 +1479,17 @@ public final class SimulatedCommands extends BaseCommands
     public void getCdmaPrlVersion(Message response) {
         unimplemented(response);
     }
+    public void setUiccSubscription(int slotId, int appIndex, int subId, int subStatus,
+            Message response) {
+        unimplemented(response);
+    }
+
+    public void setDataSubscription (Message response) {
+        unimplemented(response);
+    }
+
+    public void setSubscriptionMode(int subscription_mode, Message response) {
+        unimplemented(response);
+    }
+
 }

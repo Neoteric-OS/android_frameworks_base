@@ -650,6 +650,7 @@ public abstract class SMSDispatcher extends Handler {
     protected void dispatchPdus(byte[][] pdus) {
         Intent intent = new Intent(Intents.SMS_RECEIVED_ACTION);
         intent.putExtra("pdus", pdus);
+        intent.putExtra("sub_id", mPhone.getSubscription()); //Subscription information to be passed in an intent
         dispatch(intent, "android.permission.RECEIVE_SMS");
     }
 
@@ -663,6 +664,7 @@ public abstract class SMSDispatcher extends Handler {
         Uri uri = Uri.parse("sms://localhost:" + port);
         Intent intent = new Intent(Intents.DATA_SMS_RECEIVED_ACTION, uri);
         intent.putExtra("pdus", pdus);
+        intent.putExtra("sub_id", mPhone.getSubscription()); //Subscription information to be passed in an intent
         dispatch(intent, "android.permission.RECEIVE_SMS");
     }
 

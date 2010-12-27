@@ -30,6 +30,8 @@ import com.android.internal.telephony.DataConnection;
 import com.android.internal.telephony.gsm.NetworkInfo;
 import com.android.internal.telephony.gsm.GsmDataConnection;
 import com.android.internal.telephony.test.SimulatedRadioControl;
+import com.android.internal.telephony.ProxyManager.Subscription;
+import com.android.internal.telephony.CommandsInterface.RadioTechnologyFamily;
 
 import java.util.List;
 
@@ -228,6 +230,12 @@ public interface Phone {
     public static final int CDMA_OTA_PROVISION_STATUS_OTAPA_STARTED = 9;
     public static final int CDMA_OTA_PROVISION_STATUS_OTAPA_STOPPED = 10;
     public static final int CDMA_OTA_PROVISION_STATUS_OTAPA_ABORTED = 11;
+
+    /**
+     * Used to pass subscription information of a
+     * phone object to PhoneApp
+     */
+    static final String PHONE_SUBSCRIPTION = "phone_subscription";
 
 
     /**
@@ -632,6 +640,7 @@ public interface Phone {
      */
     IccCard getIccCard();
 
+
     /**
      * Answers a ringing or waiting call. Active calls, if any, go on hold.
      * Answering occurs asynchronously, and final notification occurs via
@@ -725,6 +734,10 @@ public interface Phone {
      */
     void clearDisconnected();
 
+    /**
+     * To know whether any call is active on the voice phone instance.
+     */
+    boolean isInCall();
 
     /**
      * Gets the foreground call object, which represents all connections that
@@ -1726,4 +1739,28 @@ public interface Phone {
      * false otherwise
      */
     boolean isCspPlmnEnabled();
+
+    /**
+     * Sets the subscription information (slotId, subIndex, subId)
+     * @param subscription information
+     */
+    public void setSubscriptionInfo(Subscription subscription);
+
+    /**
+     * Gets the subscription information (slotId, subIndex, subId)
+     * @return Subscription information
+     */
+    public Subscription getSubscriptionInfo();
+
+    /**
+     * Gets the subscription
+     * @return subscription number "0" or "1"
+     */
+    public int getSubscription();
+
+    /**
+     * Sets the subscription
+     * @param subscription number "0" or "1"
+     */
+    public void setSubscription(int subscripton);
 }

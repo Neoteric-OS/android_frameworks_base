@@ -598,9 +598,19 @@ public abstract class DataConnectionTracker extends Handler {
     }
 
     void updateIccAvailability() {
+        UiccCardApplication newApplication = null;
 
-        UiccCardApplication newApplication = mUiccManager
-                .getCurrentApplication(mAppFamily);
+        if (phone.getSubscriptionInfo() != null) {
+            if (mAppFamily == AppFamily.APP_FAM_3GPP) {
+                newApplication = mUiccManager
+                        .getApplication(phone.getSubscriptionInfo().slotId,
+                             phone.getSubscriptionInfo().m3gppIndex);
+            } else if (mAppFamily == AppFamily.APP_FAM_3GPP2) {
+                newApplication = mUiccManager
+                        .getApplication(phone.getSubscriptionInfo().slotId,
+                             phone.getSubscriptionInfo().m3gpp2Index);
+            }
+        }
 
         if (mUiccApplication != newApplication) {
             if (mUiccApplication != null) {
