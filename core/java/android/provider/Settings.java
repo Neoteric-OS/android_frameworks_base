@@ -1569,6 +1569,35 @@ public final class Settings {
         public static final String DTMF_TONE_WHEN_DIALING = "dtmf_tone";
 
         /**
+          * Dual Sim Selected Value for Voice Call. The supported values are 0 = SUB1,
+          * 1 = SUB2 and -1 (for not selected).
+          */
+        public static final String DUAL_SIM_VOICE_CALL = "dual_sim_voice_call";
+
+        /**
+          * Dual Sim Selected Value for Data Call. The supported values are 0 = SUB1,
+          * 1 = SUB2 and -1 (for not selected).
+          */
+        public static final String DUAL_SIM_DATA_CALL = "dual_sim_data_call";
+
+        /**
+          * Dual Sim Selected Value for SMS. The supported values are 0 = SUB1,
+          * 1 = SUB2 and -1 (for not selected).
+          */
+        public static final String DUAL_SIM_SMS = "dual_sim_sms";
+
+        /**
+          * Default subscription. The supported values are 0 = SUB1 and 1 = SUB2.
+          * @hide
+          */
+        public static final String DEFAULT_SUBSCRIPTION = "default_subscription";
+
+        /** User preferred subscriptions for one and two i.e. sub1 preferred, sub2 preferred
+          * @hide
+          */
+        public static final String [] USER_PREFERRED_SUBS = {"user_preferred_sub1", "user_preferred_sub2"};
+
+        /**
          * CDMA only settings
          * DTMF tone type played by the dialer when dialing.
          *                 0 = Normal
@@ -2087,6 +2116,25 @@ public final class Settings {
         }
 
         /**
+         * @hide
+         */
+        public static int getIntAtIndex(ContentResolver cr, String name, int index)
+                throws SettingNotFoundException {
+            String v = getString(cr, name);
+            if (v != null) {
+                String valArray[] = v.split(",");
+                if ((index >= 0) && (index < valArray.length) && (valArray[index] != null)) {
+                    try {
+                        return Integer.parseInt(valArray[index]);
+                    } catch (NumberFormatException e) {
+                        Log.w(TAG, "Exception while parsing Integer: ", e);
+                    }
+                }
+            }
+            throw new SettingNotFoundException(name);
+        }
+
+        /**
          * Convenience function for retrieving a single secure settings value
          * as an integer.  Note that internally setting values are always
          * stored as strings; this function converts the string to an integer
@@ -2152,6 +2200,38 @@ public final class Settings {
          */
         public static boolean putInt(ContentResolver cr, String name, int value) {
             return putString(cr, name, Integer.toString(value));
+        }
+
+        /**
+         * @hide
+         */
+        public static boolean putIntAtIndex(ContentResolver cr, String name, int index, int value) {
+            String data = "";
+            String valArray[] = null;
+            String v = getString(cr, name);
+
+            if (v != null) {
+                valArray = v.split(",");
+            }
+
+            // Copy the elements from valArray till index
+            for (int i = 0; i < index; i++) {
+                String str = "";
+                if ((valArray != null) && (i < valArray.length)) {
+                    str = valArray[i];
+                }
+                data = data + str + ",";
+            }
+
+            data = data + value;
+
+            // Copy the remaining elements from valArray if any.
+            if (valArray != null) {
+                for (int i = index+1; i < valArray.length; i++) {
+                    data = data + "," + valArray[i];
+                }
+            }
+            return putString(cr, name, data);
         }
 
         /**

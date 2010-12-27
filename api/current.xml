@@ -146534,6 +146534,39 @@
  visibility="public"
 >
 </field>
+<field name="DUAL_SIM_DATA_CALL"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;dual_sim_data_call&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="DUAL_SIM_SMS"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;dual_sim_sms&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="DUAL_SIM_VOICE_CALL"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;dual_sim_voice_call&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
 <field name="END_BUTTON_BEHAVIOR"
  type="java.lang.String"
  transient="false"

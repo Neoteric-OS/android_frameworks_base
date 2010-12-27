@@ -21,15 +21,12 @@ import android.os.ServiceManager;
 
 import java.util.List;
 
-public class IccSmsInterfaceManagerProxy extends ISms.Stub {
+public class IccSmsInterfaceManagerProxy {
     private IccSmsInterfaceManager mIccSmsInterfaceManager;
 
     public IccSmsInterfaceManagerProxy(IccSmsInterfaceManager
             iccSmsInterfaceManager) {
         this.mIccSmsInterfaceManager = iccSmsInterfaceManager;
-        if(ServiceManager.getService("isms") == null) {
-            ServiceManager.addService("isms", this);
-        }
     }
 
     public void setmIccSmsInterfaceManager(IccSmsInterfaceManager iccSmsInterfaceManager) {

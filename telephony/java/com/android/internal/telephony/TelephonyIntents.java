@@ -75,6 +75,28 @@ public class TelephonyIntents {
      */
     public static final String ACTION_RADIO_TECHNOLOGY_CHANGED
             = "android.intent.action.RADIO_TECHNOLOGY";
+
+    /**
+     * <p>Broadcast Action: The radio technology has changed. The intent will have the following
+     * extra values:</p>
+     * <ul>
+     *   <li><em>phone_subscription</em> - A string version of the new phone name.</li>
+     * </ul>
+     *
+     * <p class="note">
+     * You can <em>not</em> receive this through components declared
+     * in manifests, only by explicitly registering for it with
+     * {@link android.content.Context#registerReceiver(android.content.BroadcastReceiver,
+     * android.content.IntentFilter) Context.registerReceiver()}.
+     *
+     * <p class="note">
+     * Requires no permission.
+     *
+     * <p class="note">This is a protected intent that can only be sent
+     * by the system.
+     */
+    public static final String ACTION_PHONE_CHANGED = "android.intentaction.PHONE_CHANGED" ;
+
     /**
      * <p>Broadcast Action: The emergency callback mode is changed.
      * <ul>
@@ -236,4 +258,17 @@ public class TelephonyIntents {
      */
     public static final String ACTION_SHOW_NOTICE_ECM_BLOCK_OTHERS
             = "android.intent.action.ACTION_SHOW_NOTICE_ECM_BLOCK_OTHERS";
+
+    /**
+     * Broadcast Action: The default subscription has changed.  This has the following
+     * extra values:</p>
+     * <ul>
+     *   <li><em>phone_subscription</em> - A int, the current default subscription.</li>
+     * </ul>
+     *
+     * <p class="note">This is a protected intent that can only be sent
+     * by the system.
+     */
+    public static final String ACTION_DEFAULT_SUBSCRIPTION_CHANGED
+            = "android.intent.action.ACTION_DEFAULT_SUBSCRIPTION_CHANGED";
 }

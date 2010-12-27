@@ -31,7 +31,7 @@ import static android.telephony.SmsManager.STATUS_ON_ICC_FREE;
  * IccSmsInterfaceManager to provide an inter-process communication to
  * access Sms in Icc.
  */
-public abstract class IccSmsInterfaceManager extends ISms.Stub {
+public abstract class IccSmsInterfaceManager {
     protected PhoneBase mPhone;
     protected Context mContext;
     protected SMSDispatcher mDispatcher;
@@ -211,6 +211,16 @@ public abstract class IccSmsInterfaceManager extends ISms.Stub {
 
         return data;
     }
+
+    public abstract boolean updateMessageOnIccEf(int index, int status, byte[] pdu);
+
+    public abstract boolean copyMessageToIccEf(int status, byte[] pdu, byte[] smsc);
+
+    public abstract List<SmsRawData> getAllMessagesFromIccEf();
+
+    public abstract boolean enableCellBroadcast(int messageIdentifier);
+
+    public abstract boolean disableCellBroadcast(int messageIdentifier);
 
     protected abstract void log(String msg);
 

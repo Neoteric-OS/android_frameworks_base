@@ -31,12 +31,14 @@ import android.os.SystemProperties;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.telephony.ServiceState;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.internal.R;
 import com.android.internal.telephony.gsm.GsmDataConnection;
 import com.android.internal.telephony.test.SimulatedRadioControl;
+import com.android.internal.telephony.ProxyManager.Subscription;
 
 import java.util.List;
 import java.util.Locale;
@@ -105,6 +107,7 @@ public abstract class PhoneBase extends Handler implements Phone {
     protected static final int EVENT_SET_NETWORK_AUTOMATIC          = 29;
     protected static final int EVENT_NEW_ICC_SMS                    = 30;
     protected static final int EVENT_ICC_RECORD_EVENTS              = 31;
+    protected static final int EVENT_SUBSCRIPTION_READY             = 33;
 
     // Key used to read/write current CLIR setting
     public static final String CLIR_KEY = "clir_key";
@@ -125,13 +128,23 @@ public abstract class PhoneBase extends Handler implements Phone {
      * Set a system property, unless we're in unit test mode
      */
     public void
-    setSystemProperty(String property, String value) {
+    setSystemProperty(String property, String value, int subscription) {
         if(getUnitTestMode()) {
             return;
         }
-        SystemProperties.set(property, value);
+        TelephonyManager.setTelephonyProperty(property, subscription, value);
     }
 
+    /**
+     * Gets the system property, unless we're in unit test mode
+     */
+    public String
+    getSystemProperty(String property, String defValue, int subscription) {
+        if(getUnitTestMode()) {
+            return null;
+        }
+        return TelephonyManager.getTelephonyProperty(property, subscription, defValue);
+    }
 
     protected final RegistrantList mPreciseCallStateRegistrants
             = new RegistrantList();
@@ -707,6 +720,16 @@ public abstract class PhoneBase extends Handler implements Phone {
     public abstract String getPhoneName();
 
     public abstract int getPhoneType();
+
+    /*
+    public abstract void setSubscriptionInfo(Subscription subData);
+
+    public abstract Subscription getSubscriptionInfo();
+
+    public abstract void setSubscription(int subscription);
+
+    public abstract int getSubscription();
+    */
 
     /** @hide */
     public int getVoiceMessageCount(){

@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006,2010 The Android Open Source Project
+ * Copyright (c) 2009-2010, Code Aurora Forum. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,6 +45,7 @@ import android.telephony.NeighboringCellInfo;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
+import android.telephony.TelephonyManager;
 import android.util.Config;
 import android.util.Log;
 
@@ -213,6 +215,7 @@ public final class RIL extends BaseCommands implements CommandsInterface {
      * the vendor ril.
      */
     private static final int DEFAULT_WAKE_LOCK_TIMEOUT = 30000;
+    protected int mInstanceId = 0;
 
     //***** Instance Variables
 
@@ -246,7 +249,8 @@ public final class RIL extends BaseCommands implements CommandsInterface {
     static final int RESPONSE_SOLICITED = 0;
     static final int RESPONSE_UNSOLICITED = 1;
 
-    static final String SOCKET_NAME_RIL = "rild";
+    static final String SOCKET_NAME_RIL1 = "rild1";
+    static final String SOCKET_NAME_RIL2 = "rild2";
 
     static final int SOCKET_OPEN_RETRY_MILLIS = 4 * 1000;
 
@@ -462,22 +466,34 @@ public final class RIL extends BaseCommands implements CommandsInterface {
 
     class RILReceiver implements Runnable {
         byte[] buffer;
+        private int mInstId = 0;
 
         RILReceiver() {
             buffer = new byte[RIL_MAX_COMMAND_BYTES];
         }
 
+        RILReceiver(int inst) {
+            this();
+            mInstId = inst;
+        }
         public void
         run() {
             int retryCount = 0;
+            String rilInst = "rild1";
 
             try {for (;;) {
                 LocalSocket s = null;
                 LocalSocketAddress l;
 
+                if(mInstId == 0) {
+                    rilInst = SOCKET_NAME_RIL1;
+                } else {
+                    rilInst = SOCKET_NAME_RIL2;
+                }
+
                 try {
                     s = new LocalSocket();
-                    l = new LocalSocketAddress(SOCKET_NAME_RIL,
+                    l = new LocalSocketAddress(rilInst,
                             LocalSocketAddress.Namespace.RESERVED);
                     s.connect(l);
                 } catch (IOException ex){
@@ -494,12 +510,12 @@ public final class RIL extends BaseCommands implements CommandsInterface {
 
                     if (retryCount == 8) {
                         Log.e (LOG_TAG,
-                            "Couldn't find '" + SOCKET_NAME_RIL
+                            "Couldn't find '" +rilInst
                             + "' socket after " + retryCount
                             + " times, continuing to retry silently");
                     } else if (retryCount > 0 && retryCount < 8) {
                         Log.i (LOG_TAG,
-                            "Couldn't find '" + SOCKET_NAME_RIL
+                            "Couldn't find '" + rilInst
                             + "' socket; retrying after timeout");
                     }
 
@@ -515,7 +531,7 @@ public final class RIL extends BaseCommands implements CommandsInterface {
                 retryCount = 0;
 
                 mSocket = s;
-                Log.i(LOG_TAG, "Connected to '" + SOCKET_NAME_RIL + "' socket");
+                Log.i(LOG_TAG, "Connected to '" + rilInst + "' socket");
 
                 int length = 0;
                 try {
@@ -541,14 +557,14 @@ public final class RIL extends BaseCommands implements CommandsInterface {
                         p.recycle();
                     }
                 } catch (java.io.IOException ex) {
-                    Log.i(LOG_TAG, "'" + SOCKET_NAME_RIL + "' socket closed",
+                    Log.i(LOG_TAG, "'" + rilInst + "' socket closed",
                           ex);
                 } catch (Throwable tr) {
                     Log.e(LOG_TAG, "Uncaught exception read length=" + length +
                         "Exception:" + tr.toString());
                 }
 
-                Log.i(LOG_TAG, "Disconnected from '" + SOCKET_NAME_RIL
+                Log.i(LOG_TAG, "Disconnected from '" + rilInst
                       + "' socket");
 
                 setRadioState (RadioState.RADIO_UNAVAILABLE);
@@ -583,13 +599,14 @@ public final class RIL extends BaseCommands implements CommandsInterface {
     public
     RIL(Context context) {
         this(context, RILConstants.PREFERRED_NETWORK_MODE,
-                RILConstants.PREFERRED_CDMA_SUBSCRIPTION);
+                RILConstants.PREFERRED_CDMA_SUBSCRIPTION, 0);
     }
 
-    public RIL(Context context, int networkMode, int cdmaSubscription) {
+    public RIL(Context context, int networkMode, int cdmaSubscription, int instanceId) {
         super(context);
         mCdmaSubscription  = cdmaSubscription;
         mNetworkMode = networkMode;
+        mInstanceId = instanceId;
         //At startup mPhoneType is first set from networkMode
         switch(networkMode) {
             case RILConstants.NETWORK_MODE_WCDMA_PREF:
@@ -629,7 +646,7 @@ public final class RIL extends BaseCommands implements CommandsInterface {
         Looper looper = mSenderThread.getLooper();
         mSender = new RILSender(looper);
 
-        mReceiver = new RILReceiver();
+        mReceiver = new RILReceiver(mInstanceId);
         mReceiverThread = new Thread(mReceiver, "RILReceiver");
         mReceiverThread.start();
 
@@ -691,6 +708,43 @@ public final class RIL extends BaseCommands implements CommandsInterface {
 
         send(rr);
     }
+
+    public void
+    setUiccSubscription(int slotId, int appIndex, int subId, int subStatus, Message result) {
+        //Note: This RIL request is also valid for SIM and RUIM (ICC card)
+        RILRequest rr = RILRequest.obtain(RIL_REQUEST_SET_UICC_SUBSCRIPTION_SOURCE, result);
+
+        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest)
+                + " slot: " + slotId + " app_index: " + appIndex
+                + " sub_num: " + subId + " act_status: " + subStatus);
+
+        rr.mp.writeInt(slotId);
+        rr.mp.writeInt(appIndex);
+        rr.mp.writeInt(subId);
+        rr.mp.writeInt(subStatus);
+
+        send(rr);
+    }
+
+    public void setSubscriptionMode(int subscriptionMode, Message result) {
+        /* Sets the subscription mode SingleStandBy or DualStandBy
+         * This request does not come into picture in non-DSDS
+         */
+        RILRequest rr = RILRequest.obtain(RIL_REQUEST_SET_SUBSCRIPTION_MODE, result);
+        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest)
+                + " subscriptionMode: " + subscriptionMode);
+        rr.mp.writeInt(1);
+        rr.mp.writeInt(subscriptionMode);
+        send(rr);
+    }
+
+    public void setDataSubscription(Message result) {
+        Log.d(LOG_TAG, "In setDataSubscription ");
+        RILRequest rr = RILRequest.obtain(RIL_REQUEST_SET_DATA_SUBSCRIPTION_SOURCE, result);
+        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
+        send(rr);
+    }
+
 
     public void
     supplyIccPin(String aid, String pin, Message result) {
@@ -2261,6 +2315,9 @@ public final class RIL extends BaseCommands implements CommandsInterface {
             case RIL_REQUEST_VOICE_RADIO_TECH: ret = responseInts(p); break;
             case RIL_REQUEST_CDMA_GET_SUBSCRIPTION_SOURCE: ret = responseInts(p); break;
             case RIL_REQUEST_CDMA_PRL_VERSION: ret = responseString(p); break;
+            case RIL_REQUEST_SET_UICC_SUBSCRIPTION_SOURCE: ret = responseVoid(p); break;
+            case RIL_REQUEST_SET_DATA_SUBSCRIPTION_SOURCE: ret = responseVoid(p); break;
+            case RIL_REQUEST_SET_SUBSCRIPTION_MODE: ret = responseVoid(p); break;
             default:
                 throw new RuntimeException("Unrecognized solicited response: " + rr.mRequest);
             //break;
@@ -2405,6 +2462,7 @@ public final class RIL extends BaseCommands implements CommandsInterface {
             case RIL_UNSOL_VOICE_RADIO_TECH_CHANGED: ret =  responseVoid(p); break;
             case RIL_UNSOL_CDMA_SUBSCRIPTION_SOURCE_CHANGED: ret =  responseVoid(p); break;
             case RIL_UNSOL_CDMA_PRL_CHANGED: ret =  responseVoid(p); break;
+            case RIL_UNSOL_SUBSCRIPTION_READY: ret =  responseVoid(p); break;
 
             default:
                 throw new RuntimeException("Unrecognized unsol response: " + response);
@@ -3346,6 +3404,9 @@ public final class RIL extends BaseCommands implements CommandsInterface {
             case RIL_REQUEST_VOICE_RADIO_TECH: return "RIL_REQUEST_VOICE_RADIO_TECH";
             case RIL_REQUEST_CDMA_GET_SUBSCRIPTION_SOURCE: return "RIL_REQUEST_CDMA_GET_SUBSCRIPTION_SOURCE";
             case RIL_REQUEST_CDMA_PRL_VERSION: return "RIL_REQUEST_CDMA_PRL_VERSION";
+            case RIL_REQUEST_SET_UICC_SUBSCRIPTION_SOURCE: return "RIL_REQUEST_SET_UICC_SUBSCRIPTION_SOURCE";
+            case RIL_REQUEST_SET_DATA_SUBSCRIPTION_SOURCE: return "RIL_REQUEST_SET_DATA_SUBSCRIPTION_SOURCE";
+            case RIL_REQUEST_SET_SUBSCRIPTION_MODE: return "RIL_REQUEST_SET_SUBSCRIPTION_MODE";
             default: return "<unknown request>";
         }
     }
@@ -3393,16 +3454,25 @@ public final class RIL extends BaseCommands implements CommandsInterface {
             case RIL_UNSOL_CDMA_SUBSCRIPTION_SOURCE_CHANGED: return "UNSOL_CDMA_SUBSCRIPTION_SOURCE_CHANGED";
             case RIL_UNSOL_CDMA_PRL_CHANGED: return "UNSOL_CDMA_PRL_CHANGED";
             case RIL_UNSOL_VOICE_RADIO_TECH_CHANGED: return "UNSOL_VOICE_RADIO_TECH_CHANGED";
+            case RIL_UNSOL_SUBSCRIPTION_READY: return "RIL_UNSOL_SUBSCRIPTION_READY";
             default: return "<unknown response>";
         }
     }
 
     private void riljLog(String msg) {
-        Log.d(LOG_TAG, msg);
+        if (TelephonyManager.isDsdsEnabled()) {
+            Log.d(LOG_TAG, msg + " [SUB" + mInstanceId + "]");
+        } else {
+            Log.d(LOG_TAG, msg);
+        }
     }
 
     private void riljLogv(String msg) {
-        Log.v(LOG_TAG, msg);
+        if (TelephonyManager.isDsdsEnabled()) {
+            Log.v(LOG_TAG, msg + " [SUB" + mInstanceId + "]");
+        } else {
+            Log.v(LOG_TAG, msg);
+        }
     }
 
     private void unsljLog(int response) {

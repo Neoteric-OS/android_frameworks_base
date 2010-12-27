@@ -395,4 +395,14 @@ class SipCommandInterface extends BaseCommands implements CommandsInterface {
 
     public void invokeDepersonalization(String pin, int type, Message response) {
     }
+
+    public void setSubscriptionMode (int subscriptionMode, Message result) {
+    }
+
+    public void setUiccSubscription(int slotId, int appIndex, int subId, int subStatus,
+            Message result) {
+    }
+
+    public void setDataSubscription (Message result) {
+    }
 }

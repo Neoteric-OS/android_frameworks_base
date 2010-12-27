@@ -16,9 +16,6 @@
 
 package com.android.internal.telephony.gsm;
 
-import static com.android.internal.telephony.TelephonyProperties.PROPERTY_ICC_OPERATOR_ALPHA;
-import static com.android.internal.telephony.TelephonyProperties.PROPERTY_ICC_OPERATOR_ISO_COUNTRY;
-import static com.android.internal.telephony.TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC;
 import android.content.Context;
 import android.os.AsyncResult;
 import android.os.Message;
@@ -197,10 +194,6 @@ public final class SIMRecords extends UiccApplicationRecords {
         pnnHomeName = null;
 
         adnCache.reset();
-
-        SystemProperties.set(PROPERTY_ICC_OPERATOR_NUMERIC, null);
-        SystemProperties.set(PROPERTY_ICC_OPERATOR_ALPHA, null);
-        SystemProperties.set(PROPERTY_ICC_OPERATOR_ISO_COUNTRY, null);
 
         // recordsRequested is set to false indicating that the SIM
         // read requests made so far are not valid. This is set to
@@ -461,6 +454,16 @@ public final class SIMRecords extends UiccApplicationRecords {
         return mImsi.substring(0, 3 + mncLength);
     }
 
+    /** Returns the country code associated with the SIM
+     * i.e the first 3 digits of IMSI.
+     */
+    public String getCountryCode() {
+        if (mImsi == null) {
+            return null;
+        }
+        return (mImsi.substring(0,3));
+    }
+
     // ***** Overridden from Handler
     public void handleMessage(Message msg) {
         AsyncResult ar;
@@ -492,7 +495,7 @@ public final class SIMRecords extends UiccApplicationRecords {
                 ar = (AsyncResult)msg.obj;
 
                 if (ar.exception != null) {
-                    Log.e(LOG_TAG, "Exception querying IMSI, Exception:" + ar.exception);
+                    Log.e(LOG_TAG, "Exception querying IMSI, Received exception:" + ar.exception);
                     break;
                 }
 
@@ -1176,17 +1179,6 @@ public final class SIMRecords extends UiccApplicationRecords {
 
         String operator = getSIMOperatorNumeric();
 
-        // Some fields require more than one SIM record to set
-        SystemProperties.set(PROPERTY_ICC_OPERATOR_NUMERIC, operator);
-
-        if (mImsi != null) {
-            SystemProperties.set(PROPERTY_ICC_OPERATOR_ISO_COUNTRY,
-                    MccTable.countryCodeForMcc(Integer.parseInt(mImsi.substring(0,3))));
-        }
-        else {
-            Log.e("SIM", "[SIMRecords] onAllRecordsLoaded: imsi is NULL!");
-        }
-
         setVoiceMailByCountry(operator);
         setSpnFromConfig(operator);
 
@@ -1395,7 +1387,6 @@ public final class SIMRecords extends UiccApplicationRecords {
 
                     if (DBG) log("Load EF_SPN: " + spn
                             + " spnDisplayCondition: " + spnDisplayCondition);
-                    SystemProperties.set(PROPERTY_ICC_OPERATOR_ALPHA, spn);
 
                     spnState = Get_Spn_Fsm_State.IDLE;
                 } else {
@@ -1417,7 +1408,6 @@ public final class SIMRecords extends UiccApplicationRecords {
                             data, 0, data.length - 1 );
 
                     if (DBG) log("Load EF_SPN_CPHS: " + spn);
-                    SystemProperties.set(PROPERTY_ICC_OPERATOR_ALPHA, spn);
 
                     spnState = Get_Spn_Fsm_State.IDLE;
                 } else {
@@ -1435,7 +1425,6 @@ public final class SIMRecords extends UiccApplicationRecords {
                             data, 0, data.length - 1);
 
                     if (DBG) log("Load EF_SPN_SHORT_CPHS: " + spn);
-                    SystemProperties.set(PROPERTY_ICC_OPERATOR_ALPHA, spn);
                 }else {
                     if (DBG) log("No SPN loaded in either CHPS or 3GPP");
                 }

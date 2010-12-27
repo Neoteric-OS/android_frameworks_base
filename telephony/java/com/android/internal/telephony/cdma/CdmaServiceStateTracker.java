@@ -42,6 +42,12 @@ import android.util.Log;
 import android.util.Config;
 import android.util.TimeUtils;
 
+import static com.android.internal.telephony.TelephonyProperties.PROPERTY_OPERATOR_ALPHA;
+import static com.android.internal.telephony.TelephonyProperties.PROPERTY_OPERATOR_NUMERIC;
+import static com.android.internal.telephony.TelephonyProperties.PROPERTY_OPERATOR_ISO_COUNTRY;
+import static com.android.internal.telephony.TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC;
+import static com.android.internal.telephony.TelephonyProperties.PROPERTY_ICC_OPERATOR_ALPHA;
+import static com.android.internal.telephony.TelephonyProperties.PROPERTY_OPERATOR_ISROAMING;
 import com.android.internal.telephony.CommandException;
 import com.android.internal.telephony.CommandsInterface;
 import com.android.internal.telephony.DataConnectionTracker;
@@ -58,6 +64,7 @@ import com.android.internal.telephony.UiccManager;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.UiccConstants.AppState;
 import com.android.internal.telephony.UiccManager.AppFamily;
+import com.android.internal.telephony.ProxyManager.Subscription;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -190,7 +197,7 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
         cm.setOnSignalStrengthUpdate(this, EVENT_SIGNAL_STRENGTH_UPDATE, null);
         cm.registerForCdmaPrlChanged(this, EVENT_CDMA_PRL_VERSION_CHANGED, null);
 
-        mUiccManager = UiccManager.getInstance(phone.getContext(), this.cm);
+        mUiccManager = UiccManager.getInstance();
         mUiccManager.registerForIccChanged(this, EVENT_ICC_CHANGED, null);
 
         phone.registerForEriFileLoaded(this, EVENT_ERI_FILE_LOADED, null);
@@ -702,6 +709,7 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
             intent.putExtra(Intents.EXTRA_SPN, spn);
             intent.putExtra(Intents.EXTRA_SHOW_PLMN, showPlmn);
             intent.putExtra(Intents.EXTRA_PLMN, plmn);
+            Log.d(LOG_TAG, "updateSpnDisplay on sub :" + phone.getSubscription());
             phone.getContext().sendStickyBroadcast(intent);
         }
 
@@ -1152,14 +1160,14 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
 
             String operatorNumeric;
 
-            phone.setSystemProperty(TelephonyProperties.PROPERTY_OPERATOR_ALPHA,
+            phone.setSystemProperty(PROPERTY_OPERATOR_ALPHA,
                     ss.getOperatorAlphaLong());
 
             operatorNumeric = ss.getOperatorNumeric();
-            phone.setSystemProperty(TelephonyProperties.PROPERTY_OPERATOR_NUMERIC, operatorNumeric);
+            phone.setSystemProperty(PROPERTY_OPERATOR_NUMERIC, operatorNumeric);
 
             if (operatorNumeric == null) {
-                phone.setSystemProperty(TelephonyProperties.PROPERTY_OPERATOR_ISO_COUNTRY, "");
+                phone.setSystemProperty(PROPERTY_OPERATOR_ISO_COUNTRY, "");
             } else {
                 String isoCountryCode = "";
                 try{
@@ -1171,15 +1179,14 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
                     Log.w(LOG_TAG, "countryCodeForMcc error" + ex);
                 }
 
-                phone.setSystemProperty(TelephonyProperties.PROPERTY_OPERATOR_ISO_COUNTRY,
-                        isoCountryCode);
+                phone.setSystemProperty(PROPERTY_OPERATOR_ISO_COUNTRY, isoCountryCode);
                 mGotCountryCode = true;
                 if (mNeedFixZone) {
                     fixTimeZone(isoCountryCode);
                 }
             }
 
-            phone.setSystemProperty(TelephonyProperties.PROPERTY_OPERATOR_ISROAMING,
+            phone.setSystemProperty(PROPERTY_OPERATOR_ISROAMING,
                     ss.getRoaming() ? "true" : "false");
 
             updateSpnDisplay();
@@ -1211,14 +1218,35 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
         }
     }
 
+    //Gets Application records and register for record events
+    public void updateRecords() {
+
+        Log.d(LOG_TAG, "updateRecords CdmaServiceStateTracer");
+        Subscription subscriptionData = phone.getSubscriptionInfo();
+        m3gpp2Application = mUiccManager.getApplication(subscriptionData.slotId, subscriptionData.m3gpp2Index);
+
+        if(m3gpp2Application != null) {
+            mRuimRecords = (RuimRecords) m3gpp2Application.getApplicationRecords();
+            Log.d(LOG_TAG, "registerForSimRecordEvents");
+            mRuimRecords.registerForRecordsLoaded(this, EVENT_SIM_RECORDS_LOADED, null);
+            mRuimRecords.registerForRecordsEvents(this, EVENT_ICC_RECORD_EVENTS, null);
+
+        }
+    }
+
     void updateIccAvailability() {
 
-        UiccCardApplication new3gpp2Application = mUiccManager
-                .getCurrentApplication(AppFamily.APP_FAM_3GPP2);
+        UiccCardApplication new3gpp2Application = null;
+
+        Subscription subscriptionData = phone.getSubscriptionInfo();
+        if(subscriptionData != null) {
+            new3gpp2Application = mUiccManager
+                       .getApplication(subscriptionData.slotId, subscriptionData.m3gpp2Index);
+        }
 
         if (m3gpp2Application != new3gpp2Application) {
             if (m3gpp2Application != null) {
-                log("Removing stale 3gpp Application.");
+                log("Removing stale 3gpp2 Application.");
                 m3gpp2Application.unregisterForReady(this);
                 if (mRuimRecords != null) {
                     mRuimRecords.unregisterForRecordsLoaded(this);
@@ -1425,7 +1453,8 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
      */
     private
     boolean isRoamingBetweenOperators(boolean cdmaRoaming, ServiceState s) {
-        String spn = SystemProperties.get(TelephonyProperties.PROPERTY_ICC_OPERATOR_ALPHA, "empty");
+        String spn = phone.getSystemProperty
+                (PROPERTY_ICC_OPERATOR_ALPHA, "empty");
 
         // NOTE: in case of RUIM we should completely ignore the ERI data file and
         // mOperatorAlphaLong is set from RIL_REQUEST_OPERATOR response 0 (alpha ONS)
@@ -1509,7 +1538,7 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
                 zone = TimeZone.getTimeZone( tzname );
             }
 
-            String iso = SystemProperties.get(TelephonyProperties.PROPERTY_OPERATOR_ISO_COUNTRY);
+            String iso = phone.getSystemProperty(PROPERTY_OPERATOR_ISO_COUNTRY, null);
 
             if (zone == null) {
 
@@ -1736,8 +1765,8 @@ final class CdmaServiceStateTracker extends ServiceStateTracker {
      */
     String getImsi() {
         // TODO: When RUIM is enabled, IMSI will come from RUIM not build-time props.
-        String operatorNumeric = SystemProperties.get(
-                TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC, "");
+        String operatorNumeric = phone.getSystemProperty
+                (PROPERTY_ICC_OPERATOR_NUMERIC, "");
 
         if (!TextUtils.isEmpty(operatorNumeric) && getCdmaMin() != null) {
             return (operatorNumeric + getCdmaMin());

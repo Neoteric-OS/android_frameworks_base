@@ -24,14 +24,11 @@ import android.os.Binder;
 import android.os.ServiceManager;
 
 
-public class PhoneSubInfoProxy extends IPhoneSubInfo.Stub {
+public class PhoneSubInfoProxy {
     private PhoneSubInfo mPhoneSubInfo;
 
     public PhoneSubInfoProxy(PhoneSubInfo phoneSubInfo) {
         mPhoneSubInfo = phoneSubInfo;
-        if(ServiceManager.getService("iphonesubinfo") == null) {
-            ServiceManager.addService("iphonesubinfo", this);
-        }
     }
 
     public void setmPhoneSubInfo(PhoneSubInfo phoneSubInfo) {
