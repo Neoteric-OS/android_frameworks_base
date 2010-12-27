@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (c) 2010, Code Aurora Forum. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,4 +37,13 @@ interface ITelephonyRegistry {
             String gateway);
     void notifyDataConnectionFailed(String reason);
     void notifyCellLocation(in Bundle cellLocation);
+
+    // methods with subscription info added.
+    void listenOnSubscription(String pkg, IPhoneStateListener callback, int events, boolean notifyNow, int subscription);
+    void notifyCallStateOnSubscription(int state, String incomingNumber, in int subscription);
+    void notifyServiceStateOnSubscription(in ServiceState state, in int subscription);
+    void notifySignalStrengthOnSubscription(in SignalStrength signalStrength, in int subscription);
+    void notifyMessageWaitingChangedOnSubscription(boolean mwi, in int subscription);
+    void notifyCallForwardingChangedOnSubscription(boolean cfi, in int subscription);
+    void notifyCellLocationOnSubscription(in Bundle cellLocation, in int subscription);
 }

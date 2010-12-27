@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (c) 2010, Code Aurora Forum. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,10 +39,26 @@ interface ITelephony {
     void dial(String number);
 
     /**
+     * Dial a number. This doesn't place the call. It displays
+     * the Dialer screen for that subscription.
+     * @param number the number to be dialed. If null, this
+     * would display the Dialer screen with no number pre-filled.
+     * @param subscription user preferred subscription.
+     */
+    void dialOnSubscription(String number, int subscription);
+
+    /**
      * Place a call to the specified number.
      * @param number the number to be called.
      */
     void call(String number);
+
+    /**
+     * Place a call to the specified number on particular subscription.
+     * @param number the number to be called.
+     * @param subscription user preferred subscription.
+     */
+    void callOnSubscription(String number, int subscription);
 
     /**
      * If there is currently a call in progress, show the call screen.
@@ -73,6 +90,13 @@ interface ITelephony {
     boolean endCall();
 
     /**
+     * End call on particular subscription or go to the Home screen
+     * @param subscription user preferred subscription.
+     * @return whether it hung up
+     */
+    boolean endCallOnSubscription(int subscription);
+
+    /**
      * Answer the currently-ringing call.
      *
      * If there's already a current active call, that call will be
@@ -88,6 +112,25 @@ interface ITelephony {
      * directly from the key queue thread).
      */
     void answerRingingCall();
+
+    /**
+     * Answer the currently-ringing call on particular subscription.
+     *
+     * If there's already a current active call, that call will be
+     * automatically put on hold.  If both lines are currently in use, the
+     * current active call will be ended.
+     *
+     * TODO: provide a flag to let the caller specify what policy to use
+     * if both lines are in use.  (The current behavior is hardwired to
+     * "answer incoming, end ongoing", which is how the CALL button
+     * is specced to behave.)
+     *
+     * TODO: this should be a oneway call (especially since it's called
+     * directly from the key queue thread).
+     *
+     * @param subscription user preferred subscription.
+     */
+    void answerRingingCallOnSubscription(int subscription);
 
     /**
      * Silence the ringer if an incoming call is currently ringing.
@@ -109,10 +152,26 @@ interface ITelephony {
     boolean isOffhook();
 
     /**
+     * Check if we are in either an active or holding call
+     * for that subscription.
+     * @param subscription user preferred subscription.
+     * @return true if the phone state is OFFHOOK.
+     */
+    boolean isOffhookOnSubscription(int subscription);
+
+    /**
      * Check if an incoming phone call is ringing or call waiting.
      * @return true if the phone state is RINGING.
      */
     boolean isRinging();
+
+    /**
+     * Check if an incoming phone call is ringing or call waiting
+     * on partuicular subscription.
+     * @param subscription user preferred subscription.
+     * @return true if the phone state is RINGING.
+     */
+    boolean isRingingOnSubscription(int subscription);
 
     /**
      * Check if the phone is idle.
@@ -121,10 +180,24 @@ interface ITelephony {
     boolean isIdle();
 
     /**
+     * Check if the phone is idle on particular subscription.
+     * @param subscription user preferred subscription.
+     * @return true if the phone state is IDLE.
+     */
+    boolean isIdleOnSubscription(int subscription);
+
+    /**
      * Check to see if the radio is on or not.
      * @return returns true if the radio is on.
      */
     boolean isRadioOn();
+
+    /**
+     * Check to see if the radio is on or not on particular subscription.
+     * @param subscription user preferred subscription.
+     * @return returns true if the radio is on.
+     */
+    boolean isRadioOnOnSubscription(int subscription);
 
     /**
      * Check if the SIM pin lock is enabled.
@@ -133,9 +206,23 @@ interface ITelephony {
     boolean isSimPinEnabled();
 
     /**
+     * Check if the SIM pin lock is enable
+     * for particular subscription.
+     * @param subscription user preferred subscription.
+     * @return true if the SIM pin lock is enabled.
+     */
+    boolean isSimPinEnabledOnSubscription(int subscription);
+
+    /**
      * Cancels the missed calls notification.
      */
     void cancelMissedCallsNotification();
+
+    /**
+     * Cancels the missed calls notification on particular subscription.
+     * @param subscription user preferred subscription.
+     */
+    void cancelMissedCallsNotificationOnSubscription(int subscription);
 
     /**
      * Supply a pin to unlock the SIM.  Blocks until a result is determined.
@@ -143,6 +230,14 @@ interface ITelephony {
      * @return whether the operation was a success.
      */
     boolean supplyPin(String pin);
+
+    /**
+     * Supply a pin to unlock the SIM for particular sub.Blocks until a result is determined.
+     * @param pin The pin to check.
+     * @param subscription user preferred subscription.
+     * @return whether the operation was a success.
+     */
+    boolean supplyPinOnSubscription(String pin, int subscription);
 
     /**
      * Handles PIN MMI commands (PIN/PIN2/PUK/PUK2), which are initiated
@@ -154,9 +249,25 @@ interface ITelephony {
     boolean handlePinMmi(String dialString);
 
     /**
+     * Handles PIN MMI commands (PIN/PIN2/PUK/PUK2), which are initiated
+     * without SEND (so <code>dial</code> is not appropriate) for
+     * a particular subscription.
+     * @param dialString the MMI command to be executed.
+     * @param subscription user preferred subscription.
+     * @return true if MMI command is executed.
+     */
+    boolean handlePinMmiOnSubscription(String dialString, int subscription);
+
+    /**
      * Toggles the radio on or off.
      */
     void toggleRadioOnOff();
+
+    /**
+     * Toggles the radio on or off on particular subscription.
+     * @param subscription user preferred subscription.
+     */
+    void toggleRadioOnOffOnSubscription(int subscription);
 
     /**
      * Set the radio to on or off
@@ -164,9 +275,21 @@ interface ITelephony {
     boolean setRadio(boolean turnOn);
 
     /**
+     * Set the radio to on or off on particular subscription.
+     * @param subscription user preferred subscription.
+     */
+    boolean setRadioOnSubscription(boolean turnOn, int subscription);
+
+    /**
      * Request to update location information in service state
      */
     void updateServiceLocation();
+
+    /**
+     * Request to update location information for a subscrition in service state
+     * @param subscription user preferred subscription.
+     */
+    void updateServiceLocationOnSubscription(int subscription);
 
     /**
      * Enable location update notifications.
@@ -174,9 +297,21 @@ interface ITelephony {
     void enableLocationUpdates();
 
     /**
+     * Enable location update notifications for a particular subscription.
+     * @param subscription user preferred subscription.
+     */
+    void enableLocationUpdatesOnSubscription(int subscription);
+
+    /**
      * Disable location update notifications.
      */
     void disableLocationUpdates();
+
+    /**
+     * Disable location update notifications for a particular subscription.
+     * @param subscription user preferred subscription.
+     */
+    void disableLocationUpdatesOnSubscription(int subscription);
 
     /**
      * Enable a specific APN type.
@@ -205,12 +340,29 @@ interface ITelephony {
 
     Bundle getCellLocation();
 
+    Bundle getCellLocationOnSubscription(int subscription);
+
     /**
      * Returns the neighboring cell information of the device.
      */
     List<NeighboringCellInfo> getNeighboringCellInfo();
 
+    /**
+     * Returns the neighboring cell information of the device on particular subscription.
+     * @param subscription user preferred subscription.
+     */
+    List<NeighboringCellInfo> getNeighboringCellInfoOnSubscription(int subscription);
+
+    /**
+     * Returns the call state.
+     */
      int getCallState();
+
+    /**
+     * Returns the call state for a subscription.
+     */
+     int getCallStateOnSubscription(int subscription);
+
      int getDataActivity();
      int getDataState();
 
@@ -222,9 +374,23 @@ interface ITelephony {
     int getActivePhoneType();
 
     /**
+     * Returns the current active phone type as integer for particular subscription.
+     * Returns TelephonyManager.PHONE_TYPE_CDMA if RILConstants.CDMA_PHONE
+     * and TelephonyManager.PHONE_TYPE_GSM if RILConstants.GSM_PHONE
+     * @param subscription user preferred subscription.
+     */
+    int getActivePhoneTypeOnSubscription(int subscription);
+
+    /**
      * Returns the CDMA ERI icon index to display
      */
     int getCdmaEriIconIndex();
+
+    /**
+     * Returns the CDMA ERI icon index to display on particular subscription.
+     * @param subscription user preferred subscription.
+     */
+    int getCdmaEriIconIndexOnSubscription(int subscription);
 
     /**
      * Returns the CDMA ERI icon mode,
@@ -234,9 +400,23 @@ interface ITelephony {
     int getCdmaEriIconMode();
 
     /**
+     * Returns the CDMA ERI icon mode on particular subscription,
+     * 0 - ON
+     * 1 - FLASHING
+     * @param subscription user preferred subscription.
+     */
+    int getCdmaEriIconModeOnSubscription(int subscription);
+
+    /**
      * Returns the CDMA ERI text,
      */
     String getCdmaEriText();
+
+    /**
+     * Returns the CDMA ERI text for particular subscription,
+     * @param subscription user preferred subscription.
+     */
+    String getCdmaEriTextOnSubscription(int subscription);
 
     /**
      * Returns true if CDMA provisioning needs to run.
@@ -244,18 +424,70 @@ interface ITelephony {
     boolean getCdmaNeedsProvisioning();
 
     /**
+     * Returns true if CDMA provisioning needs to run
+     * on particular subscription.
+     * @param subscription user preferred subscription.
+     */
+    boolean getCdmaNeedsProvisioningOnSubscription(int subscription);
+
+    /**
       * Returns the unread count of voicemails
       */
     int getVoiceMessageCount();
 
     /**
+     * Returns the unread count of voicemails for a subscription.
+     * @param subscription user preferred subscription.
+     * Returns the unread count of voicemails
+     */
+    int getVoiceMessageCountOnSubscription(int subscription);
+
+    /**
       * Returns the network type
       */
     int getNetworkType();
+
+    /**
+     * Returns the network type of a subscription.
+     * @param subscription user preferred subscription.
+     * Returns the network type
+     */
+    int getNetworkTypeOnSubscription(int subscription);
     
     /**
      * Return true if an ICC card is present
      */
     boolean hasIccCard();
+
+    /**
+     * Return true if an ICC card is present for a subscription.
+     * @param subscription user preferred subscription.
+     * Return true if an ICC card is present
+     */
+    boolean hasIccCardOnSubscription(int subscription);
+
+    /**
+     * Return true if a subscription is PUK-Locked.
+     * @param subscription user preferred subscription.
+     */ 
+    boolean isSimPukLockedOnSubscription(int subscription);
+
+    /**
+     * get default subscription
+     * @return subscription id
+     */
+    int getDefaultSubscription();
+
+    /**
+     * get user prefered voice subscription
+     * @return subscription id
+     */
+    int getPreferredVoiceSubscription();
+
+    /**
+     * get user prefered data subscription
+     * @return subscription id
+     */
+    int getPreferredDataSubscription();
 }
 

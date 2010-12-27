@@ -335,6 +335,20 @@ public class SipPhone extends SipPhoneBase {
         return null;
     }
 
+    public void setSubscription(int subscription) {
+    }
+
+    public void setSubscriptionInfo(Subscription subscription) {
+    }
+
+    public Subscription getSubscriptionInfo() {
+        return null;
+    }
+
+    public int getSubscription() {
+        return 0;
+    }
+
     private String getUriString(SipProfile p) {
         // SipProfile.getUriString() may contain "SIP:" and port
         return p.getUserName() + "@" + getSipDomain(p);
@@ -583,6 +597,10 @@ public class SipPhone extends SipPhoneBase {
         private AudioGroup getAudioGroup() {
             if (connections.isEmpty()) return null;
             return ((SipConnection) connections.get(0)).getAudioGroup();
+        }
+
+        public int getSubscription() {
+            return 0;
         }
     }
 

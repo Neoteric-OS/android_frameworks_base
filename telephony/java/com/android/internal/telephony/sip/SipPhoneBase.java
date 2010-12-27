@@ -213,7 +213,7 @@ abstract class SipPhoneBase extends PhoneBase {
         return false;
     }
 
-    boolean isInCall() {
+    public boolean isInCall() {
         Call.State foregroundCallState = getForegroundCall().getState();
         Call.State backgroundCallState = getBackgroundCall().getState();
         Call.State ringingCallState = getRingingCall().getState();

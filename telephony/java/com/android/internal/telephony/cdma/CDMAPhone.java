@@ -66,13 +66,17 @@ import com.android.internal.telephony.PhoneBase;
 import com.android.internal.telephony.PhoneNotifier;
 import com.android.internal.telephony.PhoneProxy;
 import com.android.internal.telephony.PhoneSubInfo;
+import com.android.internal.telephony.IccSmsInterfaceManager;
 import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.telephony.TelephonyProperties;
 import com.android.internal.telephony.UUSInfo;
+import com.android.internal.telephony.ProxyManager.Subscription;
+import android.telephony.TelephonyManager;
 
 import static com.android.internal.telephony.TelephonyProperties.PROPERTY_ICC_OPERATOR_ALPHA;
 import static com.android.internal.telephony.TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC;
 import static com.android.internal.telephony.TelephonyProperties.PROPERTY_ICC_OPERATOR_ISO_COUNTRY;
+import static com.android.internal.telephony.TelephonyProperties.CURRENT_ACTIVE_PHONE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,10 +101,14 @@ public class CDMAPhone extends PhoneBase {
 
     static final String VM_COUNT_CDMA = "vm_count_key_cdma";
     private static final String VM_NUMBER_CDMA = "vm_number_key_cdma";
+    private String mVmNumCdmaKey = null;
     private String mVmNumber = null;
 
     static final int RESTART_ECM_TIMER = 0; // restart Ecm timer
     static final int CANCEL_ECM_TIMER = 1; // cancel Ecm timer
+
+    Subscription subscriptionData; // to store subscription information
+    int mSubscription = 0;
 
     // Instance Variables
     CdmaCallTracker mCT;
@@ -168,6 +176,8 @@ public class CDMAPhone extends PhoneBase {
                                         EVENT_CDMA_SUBSCRIPTION_SOURCE_CHANGED, null);
         mSMS = new CdmaSMSDispatcher(this);
 
+        mVmNumCdmaKey = VM_NUMBER_CDMA;
+
         mDataConnection = new CdmaDataConnectionTracker (this);
         mRuimPhoneBookInterfaceManager = new RuimPhoneBookInterfaceManager(this);
         mRuimSmsInterfaceManager = new RuimSmsInterfaceManager(this, mSMS);
@@ -182,17 +192,14 @@ public class CDMAPhone extends PhoneBase {
         mSST.registerForNetworkAttach(this, EVENT_REGISTERED_TO_NETWORK, null);
         mCM.setEmergencyCallbackMode(this, EVENT_EMERGENCY_CALLBACK_MODE_ENTER, null);
         mCM.registerForCdmaSubscriptionSourceChanged(this, EVENT_CDMA_SUBSCRIPTION_SOURCE_CHANGED, null);
+        mCM.registerForSubscriptionReady(this, EVENT_SUBSCRIPTION_READY, null);
 
-        mUiccManager = UiccManager.getInstance(getContext(), mCM);
+        mUiccManager = UiccManager.getInstance();
         mUiccManager.registerForIccChanged(this, EVENT_ICC_CHANGED, null);
 
         PowerManager pm
             = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,LOG_TAG);
-
-        //Change the system setting
-        SystemProperties.set(TelephonyProperties.CURRENT_ACTIVE_PHONE,
-                new Integer(Phone.PHONE_TYPE_CDMA).toString());
 
         // This is needed to handle phone process crashes
         String inEcm=SystemProperties.get(TelephonyProperties.PROPERTY_INECM_MODE, "false");
@@ -206,19 +213,8 @@ public class CDMAPhone extends PhoneBase {
         mCarrierOtaSpNumSchema = SystemProperties.get(
                 TelephonyProperties.PROPERTY_OTASP_NUM_SCHEMA,"");
 
-        // Sets operator alpha property by retrieving from build-time system property
-        String operatorAlpha = SystemProperties.get("ro.cdma.home.operator.alpha");
-        setSystemProperty(PROPERTY_ICC_OPERATOR_ALPHA, operatorAlpha);
-
-        // Sets operator numeric property by retrieving from build-time system property
-        String operatorNumeric = SystemProperties.get("ro.cdma.home.operator.numeric");
-        setSystemProperty(PROPERTY_ICC_OPERATOR_NUMERIC, operatorNumeric);
-
-        // Sets iso country property by retrieving from build-time system property
-        setIsoCountryProperty(operatorNumeric);
-
-        // Sets current entry in the telephony carrier table
-        updateCurrentCarrierInProvider(operatorNumeric);
+        // Set the default values of telephony properties.
+        setProperties();
 
         // Notify voicemails.
         notifier.notifyMessageWaitingChanged(this);
@@ -236,6 +232,7 @@ public class CDMAPhone extends PhoneBase {
             mCM.unSetOnSuppServiceNotification(this);
             mCM.unregisterForCdmaSubscriptionSourceChanged(this);
             removeCallbacks(mExitEcmRunnable);
+            mCM.unregisterForSubscriptionReady(this);
 
             mPendingMmis.clear();
 
@@ -298,6 +295,61 @@ public class CDMAPhone extends PhoneBase {
 
     public int getPhoneType() {
         return Phone.PHONE_TYPE_CDMA;
+    }
+
+    //Sets Subscription information in the Phone Object
+    public void setSubscriptionInfo(Subscription subData) {
+        subscriptionData = subData;
+        setSubscription(subscriptionData.subId);
+        updateRecords();
+        mSST.updateRecords();
+    }
+
+    //Gets Application records and register for record events.
+    public void updateRecords() {
+        //gets records from the active suscription application
+        m3gpp2Application = mUiccManager.getApplication(subscriptionData.slotId, subscriptionData.m3gpp2Index);
+        if(m3gpp2Application != null) {
+            mRuimCard = m3gpp2Application.getCard();
+            mRuimRecords = (RuimRecords) m3gpp2Application.getApplicationRecords();
+            mRuimRecords.setSubscription(subscriptionData.subId);
+            //Register for Record events once records are available.
+            registerForRuimRecordEvents();
+            mRuimPhoneBookInterfaceManager.updateRuimRecords(mRuimRecords);
+        }
+    }
+
+    //Gets Subscription Information
+    public Subscription getSubscriptionInfo() {
+        return subscriptionData;
+    }
+
+    public void setSubscription(int subId) {
+        mSubscription = subId;
+        mVmNumCdmaKey = VM_NUMBER_CDMA + mSubscription;
+        // Make sure the properties are set for the proper subscription.
+        setProperties();
+    }
+
+    public int getSubscription() {
+        return mSubscription;
+    }
+
+    private void setProperties() {
+        //Change the system setting
+        setSystemProperty(CURRENT_ACTIVE_PHONE,
+                new Integer(Phone.PHONE_TYPE_CDMA).toString());
+        // Sets operator alpha property by retrieving from build-time system property
+        String operatorAlpha = SystemProperties.get("ro.cdma.home.operator.alpha");
+        setSystemProperty(PROPERTY_ICC_OPERATOR_ALPHA, operatorAlpha);
+
+        // Sets operator numeric property by retrieving from build-time system property
+        String operatorNumeric = SystemProperties.get("ro.cdma.home.operator.numeric");
+        setSystemProperty(PROPERTY_ICC_OPERATOR_NUMERIC, operatorNumeric);
+        // Sets iso country property by retrieving from build-time system property
+        setIsoCountryProperty(operatorNumeric);
+        // Updates MCC MNC device configuration information
+        MccTable.updateMccMncConfiguration(mContext, operatorNumeric);
     }
 
     public boolean canTransfer() {
@@ -404,7 +456,7 @@ public class CDMAPhone extends PhoneBase {
         return false;
     }
 
-    boolean isInCall() {
+    public boolean isInCall() {
         CdmaCall.State foregroundCallState = getForegroundCall().getState();
         CdmaCall.State backgroundCallState = getBackgroundCall().getState();
         CdmaCall.State ringingCallState = getRingingCall().getState();
@@ -772,7 +824,7 @@ public class CDMAPhone extends PhoneBase {
         String number = null;
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         // TODO: The default value of voicemail number should be read from a system property
-        number = sp.getString(VM_NUMBER_CDMA, "*86");
+        number = sp.getString(mVmNumCdmaKey, "*86");
         return number;
     }
 
@@ -1150,6 +1202,12 @@ public class CDMAPhone extends PhoneBase {
             }
             break;
 
+            case EVENT_SUBSCRIPTION_READY: {
+                Log.d(LOG_TAG, "Event EVENT_SUBSCRIPTION_READY Received");
+                mCM.getDeviceIdentity(obtainMessage(EVENT_GET_DEVICE_IDENTITY_DONE));
+            }
+            break;
+
             default:{
                 super.handleMessage(msg);
             }
@@ -1165,12 +1223,16 @@ public class CDMAPhone extends PhoneBase {
     }
 
     void updateIccAvailability() {
-        if (mUiccManager == null ) {
+
+        Log.d(LOG_TAG, "In CDMA phone updateIccAvailability fn");
+        UiccCardApplication new3gpp2Application = null;
+
+        if(subscriptionData != null) {
+            new3gpp2Application = mUiccManager
+                    .getApplication(subscriptionData.slotId, subscriptionData.m3gpp2Index);
+        } else {
             return;
         }
-
-        UiccCardApplication new3gpp2Application = mUiccManager
-                .getCurrentApplication(AppFamily.APP_FAM_3GPP2);
 
         if (m3gpp2Application != new3gpp2Application) {
             if (m3gpp2Application != null) {
@@ -1253,7 +1315,15 @@ public class CDMAPhone extends PhoneBase {
      * {@inheritDoc}
      */
     public final void setSystemProperty(String property, String value) {
-        super.setSystemProperty(property, value);
+        super.setSystemProperty(property, value, mSubscription);
+    }
+
+    // override for allowing access from other classes of this package
+    /**
+     * {@inheritDoc}
+     */
+    public final String getSystemProperty(String property, String defValue) {
+        return super.getSystemProperty(property, defValue, mSubscription);
     }
 
     /**
@@ -1527,7 +1597,7 @@ public class CDMAPhone extends PhoneBase {
         // Update the preference value of voicemail number
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString(VM_NUMBER_CDMA, number);
+        editor.putString(mVmNumCdmaKey, number);
         editor.apply();
     }
 

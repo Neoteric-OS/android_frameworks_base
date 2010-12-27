@@ -41,12 +41,14 @@ public class DefaultPhoneNotifier implements PhoneNotifier {
 
     public void notifyPhoneState(Phone sender) {
         Call ringingCall = sender.getRingingCall();
+        int subscription = sender.getSubscription();
         String incomingNumber = "";
         if (ringingCall != null && ringingCall.getEarliestConnection() != null){
             incomingNumber = ringingCall.getEarliestConnection().getAddress();
         }
         try {
-            mRegistry.notifyCallState(convertCallState(sender.getState()), incomingNumber);
+            mRegistry.notifyCallStateOnSubscription(convertCallState(sender.getState()),
+                    incomingNumber, subscription);
         } catch (RemoteException ex) {
             // system process is dead
         }
@@ -54,7 +56,8 @@ public class DefaultPhoneNotifier implements PhoneNotifier {
 
     public void notifyServiceState(Phone sender) {
         try {
-            mRegistry.notifyServiceState(sender.getServiceState());
+            mRegistry.notifyServiceStateOnSubscription(sender.getServiceState(),
+                    sender.getSubscription());
         } catch (RemoteException ex) {
             // system process is dead
         }
@@ -62,7 +65,8 @@ public class DefaultPhoneNotifier implements PhoneNotifier {
 
     public void notifySignalStrength(Phone sender) {
         try {
-            mRegistry.notifySignalStrength(sender.getSignalStrength());
+            mRegistry.notifySignalStrengthOnSubscription(sender.getSignalStrength(),
+                    sender.getSubscription());
         } catch (RemoteException ex) {
             // system process is dead
         }
@@ -70,7 +74,8 @@ public class DefaultPhoneNotifier implements PhoneNotifier {
 
     public void notifyMessageWaitingChanged(Phone sender) {
         try {
-            mRegistry.notifyMessageWaitingChanged(sender.getMessageWaitingIndicator());
+            mRegistry.notifyMessageWaitingChangedOnSubscription(sender.getMessageWaitingIndicator(),
+                    sender.getSubscription());
         } catch (RemoteException ex) {
             // system process is dead
         }
@@ -78,7 +83,8 @@ public class DefaultPhoneNotifier implements PhoneNotifier {
 
     public void notifyCallForwardingChanged(Phone sender) {
         try {
-            mRegistry.notifyCallForwardingChanged(sender.getCallForwardingIndicator());
+            mRegistry.notifyCallForwardingChangedOnSubscription(sender.getCallForwardingIndicator(),
+                    sender.getSubscription());
         } catch (RemoteException ex) {
             // system process is dead
         }
@@ -121,7 +127,7 @@ public class DefaultPhoneNotifier implements PhoneNotifier {
         Bundle data = new Bundle();
         sender.getCellLocation().fillInNotifierBundle(data);
         try {
-            mRegistry.notifyCellLocation(data);
+            mRegistry.notifyCellLocationOnSubscription(data, sender.getSubscription());
         } catch (RemoteException ex) {
             // system process is dead
         }
