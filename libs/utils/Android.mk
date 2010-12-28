@@ -86,7 +86,8 @@ LOCAL_SRC_FILES:= \
 	$(commonSources) \
 	BackupData.cpp \
 	BackupHelpers.cpp \
-	Looper.cpp
+	Looper.cpp \
+	FontEngineManager.cpp
 
 ifeq ($(TARGET_OS),linux)
 LOCAL_LDLIBS += -lrt -ldl
@@ -101,7 +102,8 @@ LOCAL_LDLIBS += -lpthread
 LOCAL_SHARED_LIBRARIES := \
 	libz \
 	liblog \
-	libcutils
+	libcutils \
+	libdl
 
 ifneq ($(TARGET_SIMULATOR),true)
 ifeq ($(TARGET_OS)-$(TARGET_ARCH),linux-x86)
