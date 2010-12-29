@@ -285,6 +285,14 @@ public class SensorEvent {
      * 
      * @see SensorEvent
      * @see GeomagneticField
+     *
+     * <h4>{@link android.hardware.Sensor#TYPE_RELATIVE_HUMIDITY
+     * Sensor.TYPE_RELATIVE_HUMIDITY}:</h4>
+     * <ul>
+     * <p>
+     * values[0]: Relative ambient air humidity in percent
+     * </p>
+     * </ul>
      */
 
     public final float[] values;
