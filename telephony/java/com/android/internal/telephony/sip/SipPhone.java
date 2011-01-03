@@ -36,7 +36,9 @@ import com.android.internal.telephony.CallStateException;
 import com.android.internal.telephony.Connection;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneNotifier;
+import com.android.internal.telephony.ProxyManager.Subscription;
 import com.android.internal.telephony.UUSInfo;
+import com.android.internal.telephony.UiccCard;
 
 import java.text.ParseException;
 import java.util.List;
@@ -327,6 +329,10 @@ public class SipPhone extends SipPhoneBase {
         // FIXME: we may need to provide this when data connectivity is lost
         // or when server is down
         return super.getServiceState();
+    }
+
+    public UiccCard getUiccCard() {
+        return null;
     }
 
     private String getUriString(SipProfile p) {

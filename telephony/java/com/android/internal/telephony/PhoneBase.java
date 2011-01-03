@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2007,2010 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,6 +99,12 @@ public abstract class PhoneBase extends Handler implements Phone {
     protected static final int EVENT_SET_ENHANCED_VP                = 24;
     protected static final int EVENT_EMERGENCY_CALLBACK_MODE_ENTER  = 25;
     protected static final int EVENT_EXIT_EMERGENCY_CALLBACK_RESPONSE = 26;
+    protected static final int EVENT_CDMA_SUBSCRIPTION_SOURCE_CHANGED = 27;
+    //other
+    protected static final int EVENT_ICC_CHANGED                    = 28;
+    protected static final int EVENT_SET_NETWORK_AUTOMATIC          = 29;
+    protected static final int EVENT_NEW_ICC_SMS                    = 30;
+    protected static final int EVENT_ICC_RECORD_EVENTS              = 31;
 
     // Key used to read/write current CLIR setting
     public static final String CLIR_KEY = "clir_key";
@@ -108,7 +114,6 @@ public abstract class PhoneBase extends Handler implements Phone {
 
     /* Instance Variables */
     public CommandsInterface mCM;
-    protected IccFileHandler mIccFileHandler;
     boolean mDnsCheckDisabled = false;
     public DataConnectionTracker mDataConnection;
     boolean mDoesRilSendMultipleCallRing;
@@ -569,7 +574,7 @@ public abstract class PhoneBase extends Handler implements Phone {
                 if (l.length() >=5) {
                     country = l.substring(3, 5);
                 }
-                setSystemLocale(language, country);
+                MccTable.setSystemLocale(mContext, language, country);
 
                 if (wifiChannels != 0) {
                     try {
@@ -588,61 +593,15 @@ public abstract class PhoneBase extends Handler implements Phone {
     }
 
     /**
-     * Utility code to set the system locale if it's not set already
-     * @param language Two character language code desired
-     * @param country Two character country code desired
-     *
-     *  {@hide}
-     */
-    public void setSystemLocale(String language, String country) {
-        String l = SystemProperties.get("persist.sys.language");
-        String c = SystemProperties.get("persist.sys.country");
-
-        if (null == language) {
-            return; // no match possible
-        }
-        language = language.toLowerCase();
-        if (null == country) {
-            country = "";
-        }
-        country = country.toUpperCase();
-
-        if((null == l || 0 == l.length()) && (null == c || 0 == c.length())) {
-            try {
-                // try to find a good match
-                String[] locales = mContext.getAssets().getLocales();
-                final int N = locales.length;
-                String bestMatch = null;
-                for(int i = 0; i < N; i++) {
-                    // only match full (lang + country) locales
-                    if (locales[i]!=null && locales[i].length() >= 5 &&
-                            locales[i].substring(0,2).equals(language)) {
-                        if (locales[i].substring(3,5).equals(country)) {
-                            bestMatch = locales[i];
-                            break;
-                        } else if (null == bestMatch) {
-                            bestMatch = locales[i];
-                        }
-                    }
-                }
-                if (null != bestMatch) {
-                    IActivityManager am = ActivityManagerNative.getDefault();
-                    Configuration config = am.getConfiguration();
-                    config.locale = new Locale(bestMatch.substring(0,2),
-                                               bestMatch.substring(3,5));
-                    config.userSetLocale = true;
-                    am.updateConfiguration(config);
-                }
-            } catch (Exception e) {
-                // Intentionally left blank
-            }
-        }
-    }
-
-    /**
      * Get state
      */
-    public abstract Phone.State getState();
+    public abstract State getState();
+
+    /**
+     * Returns the ICC card interface for this phone, or null
+     * if not applicable to underlying technology.
+     */
+    public abstract UiccCard getUiccCard();
 
     /**
      * Retrieves the IccFileHandler of the Phone instance

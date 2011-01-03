@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 The Android Open Source Project
+ * Copyright (C) 2006,2010 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.ArrayList;
+
+import com.android.internal.telephony.UiccManager.AppFamily;
+import com.android.internal.telephony.gsm.SIMRecords;
 
 /**
  * {@hide}
@@ -93,7 +96,7 @@ public abstract class DataConnectionTracker extends Handler {
     protected static final int EVENT_START_RECOVERY = 28;
     protected static final int EVENT_APN_CHANGED = 29;
     protected static final int EVENT_CDMA_DATA_DETACHED = 30;
-    protected static final int EVENT_NV_READY = 31;
+    protected static final int EVENT_CDMA_SUBSCRIPTION_SOURCE_CHANGED = 31;
     protected static final int EVENT_PS_RESTRICT_ENABLED = 32;
     protected static final int EVENT_PS_RESTRICT_DISABLED = 33;
     public static final int EVENT_CLEAN_UP_CONNECTION = 34;
@@ -101,6 +104,7 @@ public abstract class DataConnectionTracker extends Handler {
     protected static final int EVENT_RESTART_RADIO = 36;
     protected static final int EVENT_SET_MASTER_DATA_ENABLE = 37;
     protected static final int EVENT_RESET_DONE = 38;
+    protected static final int EVENT_ICC_CHANGED = 39;
 
     /***** Constants *****/
 
@@ -187,6 +191,14 @@ public abstract class DataConnectionTracker extends Handler {
 
     /** CID of active data connection */
     protected int cidActive;
+ 
+    /** Should be overridden in child classes */
+    protected static final AppFamily mAppFamily = AppFamily.APP_FAM_3GPP;
+
+    protected UiccManager mUiccManager = null;
+    private UiccCardApplication mUiccApplication = null;
+    private UiccCard mUiccCard = null;
+    protected UiccApplicationRecords mUiccAppRecords = null;
 
    /**
      * Default constructor
@@ -194,6 +206,9 @@ public abstract class DataConnectionTracker extends Handler {
     protected DataConnectionTracker(PhoneBase phone) {
         super();
         this.phone = phone;
+        mUiccManager = UiccManager.getInstance();
+        mUiccManager.registerForIccChanged(this, EVENT_ICC_CHANGED, null);
+
     }
 
     public abstract void dispose();
@@ -333,6 +348,10 @@ public abstract class DataConnectionTracker extends Handler {
 
             case EVENT_RESET_DONE:
                 onResetDone((AsyncResult) msg.obj);
+                break;
+
+            case EVENT_ICC_CHANGED:
+                updateIccAvailability();
                 break;
 
             default:
@@ -578,5 +597,29 @@ public abstract class DataConnectionTracker extends Handler {
         }
     }
 
+    void updateIccAvailability() {
+
+        UiccCardApplication newApplication = mUiccManager
+                .getCurrentApplication(mAppFamily);
+
+        if (mUiccApplication != newApplication) {
+            if (mUiccApplication != null) {
+                Log.d(LOG_TAG, "Removing stale Application");
+                if (mUiccAppRecords != null) {
+                    mUiccAppRecords.unregisterForRecordsLoaded(this);
+                    mUiccAppRecords = null;
+                }
+                mUiccApplication = null;
+                mUiccCard = null;
+            }
+            if (newApplication != null) {
+                Log.d(LOG_TAG, "New application found " + mAppFamily);
+                mUiccApplication = newApplication;
+                mUiccCard = newApplication.getCard();
+                mUiccAppRecords = newApplication.getApplicationRecords();
+                mUiccAppRecords.registerForRecordsLoaded(this, EVENT_RECORDS_LOADED, null);
+            }
+        }
+    }
 
 }
