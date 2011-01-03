@@ -327,7 +327,8 @@ abstract class ValueParser {
             } else if (codingScheme == 0x08) { // UCS2
                 text = new String(rawValue, valueIndex + 1, textLen, "UTF-16");
             } else {
-                throw new ResultException(ResultCode.CMD_DATA_NOT_UNDERSTOOD);
+                text = GsmAlphabet.gsm7BitPackedToString(rawValue,
+                        valueIndex + 1, (textLen * 8) / 7);
             }
 
             return text;
