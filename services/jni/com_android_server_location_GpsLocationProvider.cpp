@@ -250,6 +250,22 @@ static const GpsInterface* GetGpsInterface(JNIEnv* env, jobject obj) {
     return sGpsInterface;
 }
 
+static void ReleaseGpsInterfaces()
+{
+    if (sGpsInterface) {
+        sGpsInterface->cleanup();
+        sGpsInterface = NULL;
+    }
+
+    // Set these to NULL in case we get a pointer to a different
+    // implementation next time we call get_gps_interface()
+    sAGpsInterface = NULL;
+    sGpsNiInterface = NULL;
+    sGpsXtraInterface = NULL;
+    sAGpsRilInterface = NULL;
+    sGpsDebugInterface = NULL;
+}
+
 static const AGpsInterface* GetAGpsInterface(JNIEnv* env, jobject obj)
 {
     const GpsInterface* interface = GetGpsInterface(env, obj);
@@ -315,6 +331,10 @@ static jboolean android_location_GpsLocationProvider_init(JNIEnv* env, jobject o
     if (!interface)
         return false;
 
+     // For control plane MT-LR, and for platforms that handle SUPL MT-SMS on the modem
+     // side, the NI interface needs to be initialized in order to receive callbacks.
+    GetNiInterface(env, obj);
+
     if (!sGpsDebugInterface)
        sGpsDebugInterface = (const GpsDebugInterface*)interface->get_extension(GPS_DEBUG_INTERFACE);
 
@@ -323,9 +343,7 @@ static jboolean android_location_GpsLocationProvider_init(JNIEnv* env, jobject o
 
 static void android_location_GpsLocationProvider_cleanup(JNIEnv* env, jobject obj)
 {
-    const GpsInterface* interface = GetGpsInterface(env, obj);
-    if (interface)
-        interface->cleanup();
+    ReleaseGpsInterfaces();
 }
 
 static jboolean android_location_GpsLocationProvider_set_position_mode(JNIEnv* env, jobject obj,
