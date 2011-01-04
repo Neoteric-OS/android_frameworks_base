@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA+3//+SQ\u003d",
+        "filename": "libs/utils/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4046,
+      "author": {
+        "id": 1002372
+      },
+      "writtenOn": "2011-01-04T17:44:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA+3//+TY\u003d",
+      "revId": "a3bff36c4ee1e9a44f474534e154830948beabdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA+3//+TU\u003d",
         "filename": "libs/utils/ResourceTypes.cpp",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2011-01-04T17:16:22Z",
       "side": 1,
       "message": "style: spaces around !\u003d, but remove spaces by the parens.  and a space after \"while\"",
+      "revId": "a3bff36c4ee1e9a44f474534e154830948beabdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//+SU\u003d",
+        "filename": "libs/utils/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4048,
+      "author": {
+        "id": 1002372
+      },
+      "writtenOn": "2011-01-04T17:44:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA+3//+TU\u003d",
       "revId": "a3bff36c4ee1e9a44f474534e154830948beabdf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA+3//+SY\u003d",
+        "filename": "libs/utils/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4049,
+      "author": {
+        "id": 1002372
+      },
+      "writtenOn": "2011-01-04T17:44:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAA+3//+TQ\u003d",
+      "revId": "a3bff36c4ee1e9a44f474534e154830948beabdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA+3//+TM\u003d",
         "filename": "libs/utils/ResourceTypes.cpp",
         "patchSetId": 1
@@ -81,6 +135,24 @@
       "writtenOn": "2011-01-04T17:16:22Z",
       "side": 1,
       "message": "80 lines",
+      "revId": "a3bff36c4ee1e9a44f474534e154830948beabdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//+Sk\u003d",
+        "filename": "libs/utils/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4050,
+      "author": {
+        "id": 1002372
+      },
+      "writtenOn": "2011-01-04T17:44:26Z",
+      "side": 1,
+      "message": "Surely you meant 100 columns....\n\nI have heard the number 80 before. It is unsupported by the published code guidelines (which says 100. Granted, this lines violates that rule as well), as well as the actual code in this file (which also does an okay job of not wrapping on 100, but not on 80).\n\nSo I\u0027ll shorten it to 100, but not to 80.",
+      "parentUuid": "AAAA+3//+TM\u003d",
       "revId": "a3bff36c4ee1e9a44f474534e154830948beabdf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
