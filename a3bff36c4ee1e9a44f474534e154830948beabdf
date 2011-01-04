@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//+Tc\u003d",
+        "filename": "include/utils/ResourceTypes.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1986,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-01-04T17:16:22Z",
+      "side": 1,
+      "message": "style consistency: remove the spaces around the parens",
+      "revId": "a3bff36c4ee1e9a44f474534e154830948beabdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//+TY\u003d",
+        "filename": "libs/utils/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4046,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-01-04T17:16:22Z",
+      "side": 1,
+      "message": "style: spaces around \u003d",
+      "revId": "a3bff36c4ee1e9a44f474534e154830948beabdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//+TU\u003d",
+        "filename": "libs/utils/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4048,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-01-04T17:16:22Z",
+      "side": 1,
+      "message": "style: spaces around !\u003d, but remove spaces by the parens.  and a space after \"while\"",
+      "revId": "a3bff36c4ee1e9a44f474534e154830948beabdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//+TQ\u003d",
+        "filename": "libs/utils/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4049,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-01-04T17:16:22Z",
+      "side": 1,
+      "message": "style: space after switch, remove spaces around parens",
+      "revId": "a3bff36c4ee1e9a44f474534e154830948beabdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//+TM\u003d",
+        "filename": "libs/utils/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4050,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-01-04T17:16:22Z",
+      "side": 1,
+      "message": "80 lines",
+      "revId": "a3bff36c4ee1e9a44f474534e154830948beabdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
