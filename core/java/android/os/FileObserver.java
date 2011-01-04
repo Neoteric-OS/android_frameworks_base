@@ -18,11 +18,12 @@ package android.os;
 
 import android.util.Log;
 
-import com.android.internal.os.RuntimeInit;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Monitors files (using <a href="http://en.wikipedia.org/wiki/Inotify">inotify</a>)
@@ -77,6 +78,8 @@ public abstract class FileObserver {
 
     private static class ObserverThread extends Thread {
         private HashMap<Integer, WeakReference> m_observers = new HashMap<Integer, WeakReference>();
+        private HashMap<Integer,String> m_listPath = new HashMap<Integer,String>();
+        private FolderFilter filter = new FolderFilter();
         private int m_fd;
 
         public ObserverThread() {
@@ -88,22 +91,51 @@ public abstract class FileObserver {
             observe(m_fd);
         }
 
-        public int startWatching(String path, int mask, FileObserver observer) {
+        public int startWatching(String observed, String path, int mask, FileObserver observer) {
             int wfd = startWatching(m_fd, path, mask);
 
             Integer i = new Integer(wfd);
             if (wfd >= 0) {
                 synchronized (m_observers) {
                     m_observers.put(i, new WeakReference(observer));
+                    m_listPath.put(i, path.replaceFirst(observed, ""));
+
+                    File rootFolder = new File(path);
+                    File[] childFolders = rootFolder.listFiles(filter);
+                    if((childFolders != null))
+                    {
+                        for(int index = 0; index < childFolders.length; index++)
+                            startWatching(observed, childFolders[index].getPath(), mask, observer);
+                    }
+
                 }
             }
 
             return i;
         }
 
-        public void stopWatching(int descriptor) {
-            stopWatching(m_fd, descriptor);
+        public void stopWatching(int descriptor, FileObserver observer) {
+            synchronized(m_observers)
+            {
+                stopWatching(m_fd, descriptor);
+                m_listPath.remove(descriptor);
+                m_observers.remove(descriptor);
+
+                Iterator <Integer> it = m_listPath.keySet().iterator();
+                while(it.hasNext())
+                {
+                    Integer fd = it.next();
+                    if(m_observers.get(fd).get() == observer)
+                    {
+                        stopWatching(m_fd, fd);
+                        it.remove();
+                        m_observers.remove(fd);
+                    }
+                }
+            }
         }
+
+
 
         public void onEvent(int wfd, int mask, String path) {
             // look up our observer, fixing up the map if necessary...
@@ -115,6 +147,7 @@ public abstract class FileObserver {
                     observer = (FileObserver) weak.get();
                     if (observer == null) {
                         m_observers.remove(wfd);
+                        m_listPath.remove(wfd);
                     }
                 }
             }
@@ -122,7 +155,15 @@ public abstract class FileObserver {
             // ...then call out to the observer without the sync lock held
             if (observer != null) {
                 try {
-                    observer.onEvent(mask, path);
+                    String p = m_listPath.get(wfd);
+                    if (path != null) {
+                        if (p.length() > 0)
+                            p += "/";
+                        p += path;
+                    }
+                    if (p.length() == 0)
+                        p = null;
+                    observer.onEvent(mask, p);
                 } catch (Throwable throwable) {
                     Log.wtf(LOG_TAG, "Unhandled exception in FileObserver " + observer, throwable);
                 }
@@ -179,7 +220,7 @@ public abstract class FileObserver {
      */
     public void startWatching() {
         if (m_descriptor < 0) {
-            m_descriptor = s_observerThread.startWatching(m_path, m_mask, this);
+            m_descriptor = s_observerThread.startWatching(m_path, m_path, m_mask, this);
         }
     }
 
@@ -190,7 +231,7 @@ public abstract class FileObserver {
      */
     public void stopWatching() {
         if (m_descriptor >= 0) {
-            s_observerThread.stopWatching(m_descriptor);
+            s_observerThread.stopWatching(m_descriptor, this);
             m_descriptor = -1;
         }
     }
@@ -210,4 +251,12 @@ public abstract class FileObserver {
      *     of the file or directory which triggered the event
      */
     public abstract void onEvent(int event, String path);
+
+    private static class FolderFilter implements FileFilter
+    {
+
+        public boolean accept(File pathname) {
+            return pathname.isDirectory();
+        }
+    }
 }
