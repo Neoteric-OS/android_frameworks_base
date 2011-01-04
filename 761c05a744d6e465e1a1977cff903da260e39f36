@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//+Ts\u003d",
+        "filename": "services/java/com/android/server/ThrottleService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-01-04T16:22:02Z",
+      "side": 1,
+      "message": "mNtpActive still looks it it\u0027s being read/mutated from different threads without a lock.  What guards it?\n\nCould you add some comments on some of these functions about which thread(s) these functions run in?  And perhaps some comments on data members about which lock guards them?\n\n(sorry if I\u0027m forgetting this ... last time I reviewed this patch was from before holidays ....)",
+      "revId": "761c05a744d6e465e1a1977cff903da260e39f36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
