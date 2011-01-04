@@ -240,6 +240,7 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
         cm.unSetOnRestrictedStateChanged(this);
         cm.unSetOnNITZTime(this);
         cr.unregisterContentObserver(this.mAutoTimeObserver);
+        phone.getContext().unregisterReceiver(mIntentReceiver);
     }
 
     protected void finalize() {
