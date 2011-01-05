@@ -2940,7 +2940,10 @@ public class PowerManagerService extends IPowerManager.Stub
             brightness = Math.max(brightness, mScreenBrightnessDim);
             mLcdLight.setBrightness(brightness);
             mKeyboardLight.setBrightness(mKeyboardVisible ? brightness : 0);
+            mUserState |= (mKeyboardVisible ? KEYBOARD_BRIGHT_BIT : 0);
             mButtonLight.setBrightness(brightness);
+            mUserState |= BUTTON_BRIGHT_BIT;
+            forceUserActivityLocked();
             long identity = Binder.clearCallingIdentity();
             try {
                 mBatteryStats.noteScreenBrightness(brightness);
