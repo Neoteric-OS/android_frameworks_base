@@ -426,9 +426,11 @@ class ServerThread extends Thread {
         mContentResolver.registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ADB_ENABLED),
                 false, new AdbSettingsObserver());
 
+        // WBT fix - CID363 prevent null pointer reference [START]
         // Before things start rolling, be sure we have decided whether
-        // we are in safe mode.
-        final boolean safeMode = wm.detectSafeMode();
+        // we are in safe mode.        
+        final boolean safeMode = (wm != null) ? wm.detectSafeMode() : false;
+        // WBT fix - CID363 prevent null pointer reference [END]
         if (safeMode) {
             try {
                 ActivityManagerNative.getDefault().enterSafeMode();
@@ -456,8 +458,17 @@ class ServerThread extends Thread {
         if (statusBar != null) {
             statusBar.systemReady();
         }
-        wm.systemReady();
-        power.systemReady();
+
+        // WBT fix - CID363 prevent null pointer reference [START]
+        if (wm != null) {
+            wm.systemReady();
+        }
+
+        if (power != null) {
+            power.systemReady();
+        }
+        // WBT fix - CID363 prevent null pointer reference [END]
+		
         try {
             pm.systemReady();
         } catch (RemoteException e) {
