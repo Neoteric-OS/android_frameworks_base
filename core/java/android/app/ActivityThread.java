@@ -155,7 +155,7 @@ public final class ActivityThread {
             = new HashMap<IBinder, Service>();
     AppBindData mBoundApplication;
     Profiler mProfiler;
-    Configuration mConfiguration;
+    Configuration mConfiguration = new Configuration();
     Configuration mCompatConfiguration;
     Configuration mResConfiguration;
     CompatibilityInfo mResCompatibilityInfo;
@@ -3565,9 +3565,6 @@ public final class ActivityThread {
         
             applyConfigurationToResourcesLocked(config, compat);
             
-            if (mConfiguration == null) {
-                mConfiguration = new Configuration();
-            }
             if (!mConfiguration.isOtherSeqNewer(config) && compat == null) {
                 return;
             }
