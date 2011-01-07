@@ -17,9 +17,11 @@
 package com.android.systemui.statusbar;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.provider.Settings;
 import android.provider.Telephony;
 import android.util.AttributeSet;
 import android.util.Slog;
@@ -60,6 +62,7 @@ public class CarrierLabel extends TextView {
             mAttached = true;
             IntentFilter filter = new IntentFilter();
             filter.addAction(Telephony.Intents.SPN_STRINGS_UPDATED_ACTION);
+            filter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
             getContext().registerReceiver(mIntentReceiver, filter, null, getHandler());
         }
     }
@@ -82,9 +85,16 @@ public class CarrierLabel extends TextView {
                         intent.getStringExtra(Telephony.Intents.EXTRA_SPN),
                         intent.getBooleanExtra(Telephony.Intents.EXTRA_SHOW_PLMN, false),
                         intent.getStringExtra(Telephony.Intents.EXTRA_PLMN));
+            } else if (Intent.ACTION_AIRPLANE_MODE_CHANGED.equals(action)) {
+                updateNetworkName(false, null, false, null);
             }
         }
     };
+
+    private final boolean isAirPlaneModeOn() {
+        ContentResolver resolver = mContext.getContentResolver();
+        return Settings.System.getInt(resolver, Settings.System.AIRPLANE_MODE_ON, 0) == 1;
+    }
 
     void updateNetworkName(boolean showSpn, String spn, boolean showPlmn, String plmn) {
         if (false) {
@@ -93,6 +103,11 @@ public class CarrierLabel extends TextView {
         }
         StringBuilder str = new StringBuilder();
         boolean something = false;
+        if (isAirPlaneModeOn()) {
+            showSpn = false;
+            showPlmn = true;
+            plmn = mContext.getText(R.string.global_actions_airplane_mode_on_status).toString();
+        }
         if (showPlmn && plmn != null) {
             str.append(plmn);
             something = true;
