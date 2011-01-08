@@ -68,7 +68,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -996,8 +995,7 @@ public class Activity extends ContextThemeWrapper
      * @see #onResume
      */
     protected void onPostResume() {
-        final Window win = getWindow();
-        if (win != null) win.makeActive();
+        if (mWindow != null) mWindow.makeActive();
         mCalled = true;
     }
 
@@ -1644,7 +1642,7 @@ public class Activity extends ContextThemeWrapper
      * @return The view if found or null otherwise.
      */
     public View findViewById(int id) {
-        return getWindow().findViewById(id);
+        return mWindow.findViewById(id);
     }
 
     /**
@@ -1654,7 +1652,7 @@ public class Activity extends ContextThemeWrapper
      * @param layoutResID Resource ID to be inflated.
      */
     public void setContentView(int layoutResID) {
-        getWindow().setContentView(layoutResID);
+        mWindow.setContentView(layoutResID);
     }
 
     /**
@@ -1665,7 +1663,7 @@ public class Activity extends ContextThemeWrapper
      * @param view The desired content to display.
      */
     public void setContentView(View view) {
-        getWindow().setContentView(view);
+        mWindow.setContentView(view);
     }
 
     /**
@@ -1677,7 +1675,7 @@ public class Activity extends ContextThemeWrapper
      * @param params Layout parameters for the view.
      */
     public void setContentView(View view, ViewGroup.LayoutParams params) {
-        getWindow().setContentView(view, params);
+        mWindow.setContentView(view, params);
     }
 
     /**
@@ -1688,7 +1686,7 @@ public class Activity extends ContextThemeWrapper
      * @param params Layout parameters for the view.
      */
     public void addContentView(View view, ViewGroup.LayoutParams params) {
-        getWindow().addContentView(view, params);
+        mWindow.addContentView(view, params);
     }
 
     /**
@@ -1821,7 +1819,7 @@ public class Activity extends ContextThemeWrapper
         if (mDefaultKeyMode == DEFAULT_KEYS_DISABLE) {
             return false;
         } else if (mDefaultKeyMode == DEFAULT_KEYS_SHORTCUT) {
-            if (getWindow().performPanelShortcut(Window.FEATURE_OPTIONS_PANEL, 
+            if (mWindow.performPanelShortcut(Window.FEATURE_OPTIONS_PANEL,
                     keyCode, event, Menu.FLAG_ALWAYS_PERFORM_CLOSE)) {
                 return true;
             }
@@ -2048,9 +2046,8 @@ public class Activity extends ContextThemeWrapper
      * @see #onWindowAttributesChanged(android.view.WindowManager.LayoutParams)
      */
     public boolean hasWindowFocus() {
-        Window w = getWindow();
-        if (w != null) {
-            View d = w.getDecorView();
+        if (mWindow != null) {
+            View d = mWindow.getDecorView();
             if (d != null) {
                 return d.hasWindowFocus();
             }
@@ -2069,12 +2066,11 @@ public class Activity extends ContextThemeWrapper
      */
     public boolean dispatchKeyEvent(KeyEvent event) {
         onUserInteraction();
-        Window win = getWindow();
-        if (win.superDispatchKeyEvent(event)) {
+        if (mWindow.superDispatchKeyEvent(event)) {
             return true;
         }
         View decor = mDecor;
-        if (decor == null) decor = win.getDecorView();
+        if (decor == null) decor = mWindow.getDecorView();
         return event.dispatch(this, decor != null
                 ? decor.getKeyDispatcherState() : null, this);
     }
@@ -2093,7 +2089,7 @@ public class Activity extends ContextThemeWrapper
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             onUserInteraction();
         }
-        if (getWindow().superDispatchTouchEvent(ev)) {
+        if (mWindow.superDispatchTouchEvent(ev)) {
             return true;
         }
         return onTouchEvent(ev);
@@ -2111,7 +2107,7 @@ public class Activity extends ContextThemeWrapper
      */
     public boolean dispatchTrackballEvent(MotionEvent ev) {
         onUserInteraction();
-        if (getWindow().superDispatchTrackballEvent(ev)) {
+        if (mWindow.superDispatchTrackballEvent(ev)) {
             return true;
         }
         return onTrackballEvent(ev);
@@ -2121,7 +2117,7 @@ public class Activity extends ContextThemeWrapper
         event.setClassName(getClass().getName());
         event.setPackageName(getPackageName());
 
-        LayoutParams params = getWindow().getAttributes();
+        LayoutParams params = mWindow.getAttributes();
         boolean isFullScreen = (params.width == LayoutParams.MATCH_PARENT) &&
             (params.height == LayoutParams.MATCH_PARENT);
         event.setFullScreen(isFullScreen);
@@ -2711,7 +2707,7 @@ public class Activity extends ContextThemeWrapper
      * @see android.view.Window#takeKeyEvents
      */
     public void takeKeyEvents(boolean get) {
-        getWindow().takeKeyEvents(get);
+        mWindow.takeKeyEvents(get);
     }
 
     /**
@@ -2726,7 +2722,7 @@ public class Activity extends ContextThemeWrapper
      * @see android.view.Window#requestFeature
      */
     public final boolean requestWindowFeature(int featureId) {
-        return getWindow().requestFeature(featureId);
+        return mWindow.requestFeature(featureId);
     }
 
     /**
@@ -2734,7 +2730,7 @@ public class Activity extends ContextThemeWrapper
      * {@link android.view.Window#setFeatureDrawableResource}.
      */
     public final void setFeatureDrawableResource(int featureId, int resId) {
-        getWindow().setFeatureDrawableResource(featureId, resId);
+        mWindow.setFeatureDrawableResource(featureId, resId);
     }
 
     /**
@@ -2742,7 +2738,7 @@ public class Activity extends ContextThemeWrapper
      * {@link android.view.Window#setFeatureDrawableUri}.
      */
     public final void setFeatureDrawableUri(int featureId, Uri uri) {
-        getWindow().setFeatureDrawableUri(featureId, uri);
+        mWindow.setFeatureDrawableUri(featureId, uri);
     }
 
     /**
@@ -2750,7 +2746,7 @@ public class Activity extends ContextThemeWrapper
      * {@link android.view.Window#setFeatureDrawable(int, Drawable)}.
      */
     public final void setFeatureDrawable(int featureId, Drawable drawable) {
-        getWindow().setFeatureDrawable(featureId, drawable);
+        mWindow.setFeatureDrawable(featureId, drawable);
     }
 
     /**
@@ -2758,7 +2754,7 @@ public class Activity extends ContextThemeWrapper
      * {@link android.view.Window#setFeatureDrawableAlpha}.
      */
     public final void setFeatureDrawableAlpha(int featureId, int alpha) {
-        getWindow().setFeatureDrawableAlpha(featureId, alpha);
+        mWindow.setFeatureDrawableAlpha(featureId, alpha);
     }
 
     /**
@@ -2766,7 +2762,7 @@ public class Activity extends ContextThemeWrapper
      * {@link android.view.Window#getLayoutInflater}.
      */
     public LayoutInflater getLayoutInflater() {
-        return getWindow().getLayoutInflater();
+        return mWindow.getLayoutInflater();
     }
 
     /**
@@ -3212,7 +3208,7 @@ public class Activity extends ContextThemeWrapper
     void makeVisible() {
         if (!mWindowAdded) {
             ViewManager wm = getWindowManager();
-            wm.addView(mDecor, getWindow().getAttributes());
+            wm.addView(mDecor, mWindow.getAttributes());
             mWindowAdded = true;
         }
         mDecor.setVisibility(View.VISIBLE);
@@ -3586,11 +3582,10 @@ public class Activity extends ContextThemeWrapper
 
     protected void onTitleChanged(CharSequence title, int color) {
         if (mTitleReady) {
-            final Window win = getWindow();
-            if (win != null) {
-                win.setTitle(title);
+            if (mWindow != null) {
+                mWindow.setTitle(title);
                 if (color != 0) {
-                    win.setTitleColor(color);
+                    mWindow.setTitleColor(color);
                 }
             }
         }
@@ -3608,7 +3603,7 @@ public class Activity extends ContextThemeWrapper
      * @param visible Whether to show the progress bars in the title.
      */
     public final void setProgressBarVisibility(boolean visible) {
-        getWindow().setFeatureInt(Window.FEATURE_PROGRESS, visible ? Window.PROGRESS_VISIBILITY_ON :
+        mWindow.setFeatureInt(Window.FEATURE_PROGRESS, visible ? Window.PROGRESS_VISIBILITY_ON :
             Window.PROGRESS_VISIBILITY_OFF);
     }
 
@@ -3621,7 +3616,7 @@ public class Activity extends ContextThemeWrapper
      * @param visible Whether to show the progress bars in the title.
      */
     public final void setProgressBarIndeterminateVisibility(boolean visible) {
-        getWindow().setFeatureInt(Window.FEATURE_INDETERMINATE_PROGRESS,
+        mWindow.setFeatureInt(Window.FEATURE_INDETERMINATE_PROGRESS,
                 visible ? Window.PROGRESS_VISIBILITY_ON : Window.PROGRESS_VISIBILITY_OFF);
     }
     
@@ -3635,7 +3630,7 @@ public class Activity extends ContextThemeWrapper
      * @param indeterminate Whether the horizontal progress bar should be indeterminate.
      */
     public final void setProgressBarIndeterminate(boolean indeterminate) {
-        getWindow().setFeatureInt(Window.FEATURE_PROGRESS,
+        mWindow.setFeatureInt(Window.FEATURE_PROGRESS,
                 indeterminate ? Window.PROGRESS_INDETERMINATE_ON : Window.PROGRESS_INDETERMINATE_OFF);
     }
     
@@ -3650,7 +3645,7 @@ public class Activity extends ContextThemeWrapper
      *            bar will be completely filled and will fade out.
      */
     public final void setProgress(int progress) {
-        getWindow().setFeatureInt(Window.FEATURE_PROGRESS, progress + Window.PROGRESS_START);
+        mWindow.setFeatureInt(Window.FEATURE_PROGRESS, progress + Window.PROGRESS_START);
     }
     
     /**
@@ -3667,7 +3662,7 @@ public class Activity extends ContextThemeWrapper
      *            0 to 10000 (both inclusive).
      */
     public final void setSecondaryProgress(int secondaryProgress) {
-        getWindow().setFeatureInt(Window.FEATURE_PROGRESS,
+        mWindow.setFeatureInt(Window.FEATURE_PROGRESS,
                 secondaryProgress + Window.PROGRESS_SECONDARY_START);
     }
 
@@ -3688,7 +3683,7 @@ public class Activity extends ContextThemeWrapper
      *        {@link AudioManager#USE_DEFAULT_STREAM_TYPE}.
      */
     public final void setVolumeControlStream(int streamType) {
-        getWindow().setVolumeControlStream(streamType);
+        mWindow.setVolumeControlStream(streamType);
     }
 
     /**
@@ -3700,7 +3695,7 @@ public class Activity extends ContextThemeWrapper
      * @see #setVolumeControlStream(int)
      */
     public final int getVolumeControlStream() {
-        return getWindow().getVolumeControlStream();
+        return mWindow.getVolumeControlStream();
     }
     
     /**
