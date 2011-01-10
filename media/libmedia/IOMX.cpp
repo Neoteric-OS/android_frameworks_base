@@ -498,9 +498,11 @@ status_t BnOMX::onTransact(
             OMX_INDEXTYPE index = static_cast<OMX_INDEXTYPE>(data.readInt32());
 
             size_t size = data.readInt32();
-            void *params = const_cast<void *>(data.readInplace(size));
+            void *params = malloc(size);
+            data.read(params, size);
 
             reply->writeInt32(setParameter(node, index, params, size));
+            free(params);
 
             return NO_ERROR;
         }
