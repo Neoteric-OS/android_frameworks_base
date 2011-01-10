@@ -2436,7 +2436,9 @@ void OMXCodec::drainInputBuffer(BufferInfo *info) {
             mSeekMode = ReadOptions::SEEK_CLOSEST_SYNC;
             mBufferFilled.signal();
 
+            mLock.unlock();
             err = mSource->read(&srcBuffer, &options);
+            mLock.lock();
 
             if (err == OK) {
                 int64_t targetTimeUs;
@@ -2454,7 +2456,9 @@ void OMXCodec::drainInputBuffer(BufferInfo *info) {
 
             err = OK;
         } else {
+            mLock.unlock();
             err = mSource->read(&srcBuffer, &options);
+            mLock.lock();
         }
 
         if (err != OK) {
