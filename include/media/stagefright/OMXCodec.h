@@ -28,6 +28,7 @@ namespace android {
 class MemoryDealer;
 struct OMXCodecObserver;
 struct CodecProfileLevel;
+class InputReader;
 
 struct OMXCodec : public MediaSource,
                   public MediaBufferObserver {
@@ -61,6 +62,8 @@ struct OMXCodec : public MediaSource,
     virtual status_t pause();
 
     void on_message(const omx_message &msg);
+
+    bool readInput();
 
     // from MediaBufferObserver
     virtual void signalBufferReturned(MediaBuffer *buffer);
@@ -163,6 +166,12 @@ private:
     // A list of indices into mPortStatus[kPortIndexOutput] filled with data.
     List<size_t> mFilledBuffers;
     Condition mBufferFilled;
+
+    List<size_t> mEmptyBuffers;
+    Condition mBufferEmptied;
+
+    bool mInputThreadStopping;
+    sp<InputReader> mInputThread;
 
     OMXCodec(const sp<IOMX> &omx, IOMX::node_id node, uint32_t quirks,
              bool isEncoder, const char *mime, const char *componentName,

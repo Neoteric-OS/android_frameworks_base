@@ -248,6 +248,23 @@ private:
     OMXCodecObserver &operator=(const OMXCodecObserver &);
 };
 
+class InputReader : public Thread {
+public:
+     InputReader() : Thread(false) {
+     }
+
+     void setCodec(OMXCodec *codec) {
+         mCodec = codec;
+     }
+
+     bool threadLoop() {
+         return mCodec->readInput();
+     }
+
+protected:
+     OMXCodec *mCodec;
+};
+
 static const char *GetCodec(const CodecInfo *info, size_t numInfos,
                             const char *mime, int index) {
     CHECK(index >= 0);
@@ -1435,7 +1452,8 @@ OMXCodec::OMXCodec(
       mTargetTimeUs(-1),
       mSkipTimeUs(-1),
       mLeftOverBuffer(NULL),
-      mPaused(false) {
+      mPaused(false),
+      mInputThreadStopping(false) {
     mPortStatus[kPortIndexInput] = ENABLED;
     mPortStatus[kPortIndexOutput] = ENABLED;
 
@@ -1723,7 +1741,8 @@ void OMXCodec::on_message(const omx_message &msg) {
             } else if (mState != ERROR
                     && mPortStatus[kPortIndexInput] != SHUTTING_DOWN) {
                 CHECK_EQ(mPortStatus[kPortIndexInput], ENABLED);
-                drainInputBuffer(&buffers->editItemAt(i));
+                mEmptyBuffers.push_back(i);
+                mBufferEmptied.signal();
             }
             break;
         }
@@ -2328,6 +2347,21 @@ void OMXCodec::drainInputBuffers() {
     }
 }
 
+bool OMXCodec::readInput() {
+    Mutex::Autolock autoLock(mLock);
+
+    while (mEmptyBuffers.empty() && !mInputThreadStopping)
+        mBufferEmptied.wait(mLock);
+    if (mInputThreadStopping)
+        return false;
+
+    size_t index = *mEmptyBuffers.begin();
+    mEmptyBuffers.erase(mEmptyBuffers.begin());
+    drainInputBuffer(&mPortBuffers[kPortIndexInput].editItemAt(index));
+
+    return !mSignalledEOS;
+}
+
 void OMXCodec::drainInputBuffer(BufferInfo *info) {
     CHECK_EQ(info->mOwnedByComponent, false);
 
@@ -2923,6 +2957,11 @@ status_t OMXCodec::start(MetaData *meta) {
         return err;
     }
 
+    mInputThreadStopping = false;
+    mInputThread = new InputReader();
+    mInputThread->setCodec(this);
+    mInputThread->run();
+
     mCodecSpecificDataIndex = 0;
     mInitialBufferSubmit = true;
     mSignalledEOS = false;
@@ -2939,6 +2978,11 @@ status_t OMXCodec::start(MetaData *meta) {
 
 status_t OMXCodec::stop() {
     CODEC_LOGV("stop mState=%d", mState);
+
+    mInputThreadStopping = true;
+    mBufferEmptied.signal();
+    mInputThread->requestExitAndWait();
+    mInputThread = NULL;
 
     Mutex::Autolock autoLock(mLock);
 
