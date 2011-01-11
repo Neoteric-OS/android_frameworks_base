@@ -200,7 +200,10 @@ public class DrmManagerClient {
                     event = new DrmInfoEvent(uniqueId, infoType, message);
                     break;
                 }
-                case DrmInfoEvent.TYPE_ALREADY_REGISTERED_BY_ANOTHER_ACCOUNT: {
+                case DrmInfoEvent.TYPE_ALREADY_REGISTERED_BY_ANOTHER_ACCOUNT:
+                case DrmInfoEvent.TYPE_RIGHTS_INSTALLED:
+                case DrmInfoEvent.TYPE_WAIT_FOR_RIGHTS:
+                case DrmInfoEvent.TYPE_ACCOUNT_ALREADY_REGISTERED: {
                     event = new DrmInfoEvent(uniqueId, infoType, message);
                     break;
                 }
