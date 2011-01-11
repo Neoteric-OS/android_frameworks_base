@@ -37,7 +37,6 @@
 
 using namespace android;
 
-Vector<int> DrmManager::mUniqueIdVector;
 const String8 DrmManager::EMPTY_STRING("");
 
 DrmManager::DrmManager() :
@@ -51,6 +50,7 @@ DrmManager::~DrmManager() {
 }
 
 int DrmManager::addUniqueId(int uniqueId) {
+    Mutex::Autolock _l(mUniqueIdLock);
     if (0 == uniqueId) {
         int temp = 0;
         bool foundUniqueId = false;
@@ -78,6 +78,7 @@ int DrmManager::addUniqueId(int uniqueId) {
 }
 
 void DrmManager::removeUniqueId(int uniqueId) {
+    Mutex::Autolock _l(mUniqueIdLock);
     for (unsigned int i = 0; i < mUniqueIdVector.size(); i++) {
         if (uniqueId == mUniqueIdVector.itemAt(i)) {
             mUniqueIdVector.removeAt(i);
@@ -407,7 +408,7 @@ DecryptHandle* DrmManager::openDecryptSession(int uniqueId, int fd, int offset, 
     }
     if (DRM_NO_ERROR != result) {
         delete handle; handle = NULL;
-        LOGE("DrmManager::openDecryptSession: no capable plug-in found");
+        LOGV("DrmManager::openDecryptSession: no capable plug-in found");
     }
     return handle;
 }
@@ -435,7 +436,7 @@ DecryptHandle* DrmManager::openDecryptSession(int uniqueId, const char* uri) {
     }
     if (DRM_NO_ERROR != result) {
         delete handle; handle = NULL;
-        LOGE("DrmManager::openDecryptSession: no capable plug-in found");
+        LOGV("DrmManager::openDecryptSession: no capable plug-in found");
     }
     return handle;
 }

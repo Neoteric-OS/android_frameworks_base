@@ -141,7 +141,7 @@ private:
     bool canHandle(int uniqueId, const String8& path);
 
 private:
-    static Vector<int> mUniqueIdVector;
+    Vector<int> mUniqueIdVector;
     static const String8 EMPTY_STRING;
 
     int mDecryptSessionId;
@@ -149,6 +149,7 @@ private:
     Mutex mLock;
     Mutex mDecryptLock;
     Mutex mConvertLock;
+    Mutex mUniqueIdLock;
     TPlugInManager<IDrmEngine> mPlugInManager;
     KeyedVector< DrmSupportInfo, String8 > mSupportInfoToPlugInIdMap;
     KeyedVector< int, IDrmEngine*> mConvertSessionMap;
