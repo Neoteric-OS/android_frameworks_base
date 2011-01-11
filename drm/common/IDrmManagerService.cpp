@@ -314,8 +314,8 @@ int BpDrmManagerService::getDrmObjectType(
 
     data.writeInterfaceToken(IDrmManagerService::getInterfaceDescriptor());
     data.writeInt32(uniqueId);
-    data.writeString8(path);
-    data.writeString8(mimeType);
+    data.writeString8((path == String8("")) ? String8("NULL") : path);
+    data.writeString8((mimeType == String8("")) ? String8("NULL") : mimeType);
 
     remote()->transact(GET_DRM_OBJECT_TYPE, data, &reply);
 
@@ -1044,8 +1044,12 @@ status_t BnDrmManagerService::onTransact(
         LOGV("BnDrmManagerService::onTransact :GET_DRM_OBJECT_TYPE");
         CHECK_INTERFACE(IDrmManagerService, data, reply);
 
+        const int uniqueId = data.readInt32();
+        const String8 path = data.readString8();
+        const String8 mimeType = data.readString8();
         const int drmObjectType
-            = getDrmObjectType(data.readInt32(), data.readString8(), data.readString8());
+            = getDrmObjectType(uniqueId, (path == String8("NULL")) ? String8("") : path,
+                (mimeType == String8("NULL")) ? String8("") : mimeType);
 
         reply->writeInt32(drmObjectType);
         return DRM_NO_ERROR;
