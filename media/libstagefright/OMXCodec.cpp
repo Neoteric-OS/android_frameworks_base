@@ -2343,8 +2343,9 @@ void OMXCodec::drainInputBuffers() {
 
     Vector<BufferInfo> *buffers = &mPortBuffers[kPortIndexInput];
     for (size_t i = 0; i < buffers->size(); ++i) {
-        drainInputBuffer(&buffers->editItemAt(i));
+        mEmptyBuffers.push_back(i);
     }
+    mBufferEmptied.signal();
 }
 
 bool OMXCodec::readInput() {
