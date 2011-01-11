@@ -30,6 +30,7 @@ using namespace android;
 
 Mutex DrmManagerClientImpl::mMutex;
 sp<IDrmManagerService> DrmManagerClientImpl::mDrmManagerService;
+sp<DrmManagerClientImpl::DeathNotifier> DrmManagerClientImpl::sDeathNotifier;
 const String8 DrmManagerClientImpl::EMPTY_STRING("");
 
 DrmManagerClientImpl* DrmManagerClientImpl::create(int* pUniqueId) {
@@ -47,7 +48,7 @@ void DrmManagerClientImpl::remove(int uniqueId) {
 }
 
 const sp<IDrmManagerService>& DrmManagerClientImpl::getDrmManagerService() {
-    mMutex.lock();
+    Mutex::Autolock lock(mMutex);
     if (NULL == mDrmManagerService.get()) {
         sp<IServiceManager> sm = defaultServiceManager();
         sp<IBinder> binder;
@@ -62,10 +63,12 @@ const sp<IDrmManagerService>& DrmManagerClientImpl::getDrmManagerService() {
             reqt.tv_nsec = 500000000; //0.5 sec
             nanosleep(&reqt, NULL);
         } while (true);
-
+        if (NULL == sDeathNotifier.get()) {
+            sDeathNotifier = new DeathNotifier();
+        }
+        binder->linkToDeath(sDeathNotifier);
         mDrmManagerService = interface_cast<IDrmManagerService>(binder);
     }
-    mMutex.unlock();
     return mDrmManagerService;
 }
 
@@ -307,5 +310,18 @@ status_t DrmManagerClientImpl::notify(const DrmInfoEvent& event) {
         listener->onInfo(event);
     }
     return DRM_NO_ERROR;
+}
+
+DrmManagerClientImpl::DeathNotifier::~DeathNotifier() {
+    Mutex::Autolock lock(mMutex);
+    if (NULL != mDrmManagerService.get()) {
+        mDrmManagerService->asBinder()->unlinkToDeath(this);
+    }
+}
+
+void DrmManagerClientImpl::DeathNotifier::binderDied(const wp<IBinder>& who) {
+    Mutex::Autolock lock(mMutex);
+    DrmManagerClientImpl::mDrmManagerService.clear();
+    LOGW("DrmManager server died!");
 }
 

@@ -37,7 +37,6 @@
 
 using namespace android;
 
-Vector<int> DrmManager::mUniqueIdVector;
 const String8 DrmManager::EMPTY_STRING("");
 
 DrmManager::DrmManager() :
@@ -51,6 +50,7 @@ DrmManager::~DrmManager() {
 }
 
 int DrmManager::addUniqueId(int uniqueId) {
+    Mutex::Autolock _l(mUniqueIdLock);
     if (0 == uniqueId) {
         int temp = 0;
         bool foundUniqueId = false;
@@ -78,6 +78,7 @@ int DrmManager::addUniqueId(int uniqueId) {
 }
 
 void DrmManager::removeUniqueId(int uniqueId) {
+    Mutex::Autolock _l(mUniqueIdLock);
     for (unsigned int i = 0; i < mUniqueIdVector.size(); i++) {
         if (uniqueId == mUniqueIdVector.itemAt(i)) {
             mUniqueIdVector.removeAt(i);
@@ -335,6 +336,7 @@ DrmConvertedStatus* DrmManager::convertData(
             int uniqueId, int convertId, const DrmBuffer* inputData) {
     DrmConvertedStatus *drmConvertedStatus = NULL;
 
+    Mutex::Autolock _l(mConvertLock);
     if (mConvertSessionMap.indexOfKey(convertId) != NAME_NOT_FOUND) {
         IDrmEngine* drmEngine = mConvertSessionMap.valueFor(convertId);
         drmConvertedStatus = drmEngine->convertData(uniqueId, convertId, inputData);
@@ -345,6 +347,7 @@ DrmConvertedStatus* DrmManager::convertData(
 DrmConvertedStatus* DrmManager::closeConvertSession(int uniqueId, int convertId) {
     DrmConvertedStatus *drmConvertedStatus = NULL;
 
+    Mutex::Autolock _l(mConvertLock);
     if (mConvertSessionMap.indexOfKey(convertId) != NAME_NOT_FOUND) {
         IDrmEngine* drmEngine = mConvertSessionMap.valueFor(convertId);
         drmConvertedStatus = drmEngine->closeConvertSession(uniqueId, convertId);
@@ -407,7 +410,7 @@ DecryptHandle* DrmManager::openDecryptSession(int uniqueId, int fd, int offset, 
     }
     if (DRM_NO_ERROR != result) {
         delete handle; handle = NULL;
-        LOGE("DrmManager::openDecryptSession: no capable plug-in found");
+        LOGV("DrmManager::openDecryptSession: no capable plug-in found");
     }
     return handle;
 }
@@ -435,7 +438,7 @@ DecryptHandle* DrmManager::openDecryptSession(int uniqueId, const char* uri) {
     }
     if (DRM_NO_ERROR != result) {
         delete handle; handle = NULL;
-        LOGE("DrmManager::openDecryptSession: no capable plug-in found");
+        LOGV("DrmManager::openDecryptSession: no capable plug-in found");
     }
     return handle;
 }
@@ -455,6 +458,7 @@ status_t DrmManager::closeDecryptSession(int uniqueId, DecryptHandle* decryptHan
 
 status_t DrmManager::initializeDecryptUnit(
     int uniqueId, DecryptHandle* decryptHandle, int decryptUnitId, const DrmBuffer* headerInfo) {
+    Mutex::Autolock _l(mDecryptLock);
     status_t result = DRM_ERROR_UNKNOWN;
     if (mDecryptSessionMap.indexOfKey(decryptHandle->decryptId) != NAME_NOT_FOUND) {
         IDrmEngine* drmEngine = mDecryptSessionMap.valueFor(decryptHandle->decryptId);
@@ -465,6 +469,7 @@ status_t DrmManager::initializeDecryptUnit(
 
 status_t DrmManager::decrypt(int uniqueId, DecryptHandle* decryptHandle, int decryptUnitId,
             const DrmBuffer* encBuffer, DrmBuffer** decBuffer, DrmBuffer* IV) {
+    Mutex::Autolock _l(mDecryptLock);
     status_t result = DRM_ERROR_UNKNOWN;
     if (mDecryptSessionMap.indexOfKey(decryptHandle->decryptId) != NAME_NOT_FOUND) {
         IDrmEngine* drmEngine = mDecryptSessionMap.valueFor(decryptHandle->decryptId);
@@ -476,6 +481,7 @@ status_t DrmManager::decrypt(int uniqueId, DecryptHandle* decryptHandle, int dec
 
 status_t DrmManager::finalizeDecryptUnit(
             int uniqueId, DecryptHandle* decryptHandle, int decryptUnitId) {
+    Mutex::Autolock _l(mDecryptLock);
     status_t result = DRM_ERROR_UNKNOWN;
     if (mDecryptSessionMap.indexOfKey(decryptHandle->decryptId) != NAME_NOT_FOUND) {
         IDrmEngine* drmEngine = mDecryptSessionMap.valueFor(decryptHandle->decryptId);
@@ -486,6 +492,7 @@ status_t DrmManager::finalizeDecryptUnit(
 
 ssize_t DrmManager::pread(int uniqueId, DecryptHandle* decryptHandle,
             void* buffer, ssize_t numBytes, off_t offset) {
+    Mutex::Autolock _l(mDecryptLock);
     ssize_t result = DECRYPT_FILE_ERROR;
 
     if (mDecryptSessionMap.indexOfKey(decryptHandle->decryptId) != NAME_NOT_FOUND) {
