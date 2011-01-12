@@ -33,6 +33,7 @@ class ComprehensionTlv {
     private int mLength;
     private int mValueIndex;
     private byte[] mRawValue;
+    private static int sPrevTag;
 
     /**
      * Constructor. Private on purpose. Use
@@ -88,6 +89,9 @@ class ComprehensionTlv {
         int endIndex = data.length;
         while (startIndex < endIndex) {
             ComprehensionTlv ctlv = ComprehensionTlv.decode(data, startIndex);
+            if (ctlv == null) {
+                break;
+            }
             items.add(ctlv);
             startIndex = ctlv.mValueIndex + ctlv.mLength;
         }
@@ -115,6 +119,12 @@ class ComprehensionTlv {
             int temp = data[curIndex++] & 0xff;
             switch (temp) {
             case 0:
+                // Avoid exception if the SIM card pads NEXT_ACTION_INDICATOR command
+                // with '00'. Rare (but is happening in the wild) since padding is not
+                // really allowed by spec.
+                if (sPrevTag == ComprehensionTlvTag.NEXT_ACTION_INDICATOR.value()) {
+                    return null;
+                }
             case 0xff:
             case 0x80:
                 throw new ResultException(ResultCode.CMD_DATA_NOT_UNDERSTOOD);
@@ -133,6 +143,7 @@ class ComprehensionTlv {
                 tag &= ~0x80;
                 break;
             }
+            sPrevTag = tag;
 
             /* length */
             int length;
