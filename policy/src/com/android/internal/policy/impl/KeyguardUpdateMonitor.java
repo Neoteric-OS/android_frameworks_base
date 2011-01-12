@@ -510,8 +510,8 @@ public class KeyguardUpdateMonitor {
      * for the intent broadcast from the telephony code.
      * @param subscription the subscription for which sim was unlocked.
      */
-    public void reportSimPinUnlocked() {
-        mSimState[TelephonyManager.getDefaultSubscription()] = IccCard.State.READY;
+    public void reportSimPinUnlocked(int subscription) {
+        mSimState[subscription] = IccCard.State.READY;
     }
 
     public boolean isKeyguardBypassEnabled() {
