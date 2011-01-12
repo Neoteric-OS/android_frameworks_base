@@ -817,6 +817,13 @@ public class GSMPhone extends PhoneBase {
         return number;
     }
 
+    /* Returns the default message priority for voice mail.
+     * @hide
+     */
+    public int getVoiceMessagePriority() {
+        return 0;
+    }
+
     private String getVmSimImsi() {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         return sp.getString(VM_SIM_IMSI, null);

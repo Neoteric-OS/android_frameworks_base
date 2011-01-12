@@ -928,6 +928,11 @@ public interface Phone {
     int getVoiceMessageCount();
 
     /**
+     * Return message priority flag.
+     */
+    int getVoiceMessagePriority();
+
+    /**
      * Returns the alpha tag associated with the voice mail number.
      * If there is no alpha tag associated or the record is not yet available,
      * returns a default localized string. <p>

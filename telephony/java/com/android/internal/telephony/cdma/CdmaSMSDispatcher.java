@@ -121,14 +121,17 @@ final class CdmaSMSDispatcher extends SMSDispatcher {
                 (SmsEnvelope.TELESERVICE_MWI == teleService)) {
             // handling Voicemail
             int voicemailCount = sms.getNumOfVoicemails();
+            int voicemailPriority = sms.getMessagePriority();
             Log.d(TAG, "Voicemail count=" + voicemailCount);
             // Store the voicemail count in preferences.
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(
                     mPhone.getContext());
             SharedPreferences.Editor editor = sp.edit();
             editor.putInt(CDMAPhone.VM_COUNT_CDMA, voicemailCount);
+            editor.putInt(CDMAPhone.VM_VOICE_MAIL_PRIORITY_CDMA, voicemailPriority);
             editor.apply();
             ((CDMAPhone) mPhone).updateMessageWaitingIndicator(voicemailCount);
+            ((CDMAPhone) mPhone).updateVoiceMessagePriority(voicemailPriority);
             handled = true;
         } else if (((SmsEnvelope.TELESERVICE_WMT == teleService) ||
                 (SmsEnvelope.TELESERVICE_WEMT == teleService)) &&

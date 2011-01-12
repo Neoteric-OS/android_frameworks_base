@@ -17,6 +17,7 @@
 package com.android.internal.telephony;
 
 import android.util.Log;
+import com.android.internal.telephony.cdma.sms.BearerData;
 import com.android.internal.telephony.SmsHeader;
 import java.util.Arrays;
 
@@ -181,6 +182,13 @@ public abstract class SmsMessageBase {
      */
     public String getMessageBody() {
         return messageBody;
+    }
+
+    /**
+     * @return default priority as an integer. It can be overriden by child classe(s).
+     */
+    public int getMessagePriority() {
+        return BearerData.PRIORITY_NORMAL;
     }
 
     /**

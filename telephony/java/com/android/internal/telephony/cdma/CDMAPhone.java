@@ -92,6 +92,7 @@ public class CDMAPhone extends PhoneBase {
 
     static final String VM_COUNT_CDMA = "vm_count_key_cdma";
     private static final String VM_NUMBER_CDMA = "vm_number_key_cdma";
+    static final String VM_VOICE_MAIL_PRIORITY_CDMA = "vm_voice_mail_priority_cdma";
     private String mVmNumber = null;
 
     static final int RESTART_ECM_TIMER = 0; // restart Ecm timer
@@ -756,6 +757,23 @@ public class CDMAPhone extends PhoneBase {
         return voicemailCount;
     }
 
+    /**
+     * Returns priority flag for voice mail message. Carrier sends a SMS to device if there is
+     * any updated voicemail info. The parser first stores these values such as voicemail count
+     * in mRuimRecords/IccReords. Applications have no access to IccRecords, but it can access
+     * CDMAPhone instance if it is a CDMA device. As you can see, phone app accesses voice message
+     * count in the same way.
+     * @hide
+     */
+    public int getVoiceMessagePriority() {
+        int voicemailPriority = mRuimRecords.getVoiceMessagePriority();
+        if (voicemailPriority == 0) {
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+            voicemailPriority = sp.getInt(VM_VOICE_MAIL_PRIORITY_CDMA, 0);
+        }
+        return voicemailPriority;
+    }
+
     public String getVoiceMailAlphaTag() {
         // TODO: Where can we get this value has to be clarified with QC.
         String ret = "";//TODO: Remove = "", if we know where to get this value.
@@ -876,6 +894,11 @@ public class CDMAPhone extends PhoneBase {
     /*package*/ void
     updateMessageWaitingIndicator(int mwi) {
         mRuimRecords.setVoiceMessageWaiting(1, mwi);
+    }
+
+    /* This function stores priority flag for voicemails */
+    void updateVoiceMessagePriority(int priority) {
+        mRuimRecords.setVoiceMessagePriority(priority);
     }
 
     /**

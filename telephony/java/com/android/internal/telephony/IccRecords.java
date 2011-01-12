@@ -53,6 +53,7 @@ public abstract class IccRecords extends Handler implements IccConstants {
     protected String newVoiceMailTag = null;
     protected boolean isVoiceMailFixed = false;
     protected int countVoiceMessages = 0;
+    protected int mVoiceMessagePriority = 0;
 
     protected int mncLength = UNINITIALIZED;
     protected int mailboxIndex = 0; // 0 is no mailbox dailing number associated
@@ -178,6 +179,20 @@ public abstract class IccRecords extends Handler implements IccConstants {
 
     public String getVoiceMailAlphaTag() {
         return voiceMailTag;
+    }
+
+    /**
+     * Store priority flag for voicemails.
+     * @param priority SMS priority
+     */
+    public void setVoiceMessagePriority(int priority) {
+        mVoiceMessagePriority = priority;
+    }
+
+    /** @return priority flag for voice mail message(s).
+     */
+    public int getVoiceMessagePriority() {
+        return mVoiceMessagePriority;
     }
 
     /**

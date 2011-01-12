@@ -755,6 +755,14 @@ public abstract class PhoneBase extends Handler implements Phone {
     }
 
     /**
+     * Return default message priority for voice mail.
+     * @hide
+     */
+     public int getVoiceMessagePriority() {
+         return 0;
+     }
+
+    /**
      * Returns the CDMA ERI icon index to display
      */
     public int getCdmaEriIconIndex() {

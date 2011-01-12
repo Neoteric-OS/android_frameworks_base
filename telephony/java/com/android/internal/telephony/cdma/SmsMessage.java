@@ -440,6 +440,13 @@ public class SmsMessage extends SmsMessageBase {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public int getMessagePriority() {
+        return mBearerData != null ? mBearerData.priority : BearerData.PRIORITY_NORMAL;
+    }
+
+    /**
      * Returns the status for a previously submitted message.
      * For not interfering with status codes from GSM, this status code is
      * shifted to the bits 31-16.

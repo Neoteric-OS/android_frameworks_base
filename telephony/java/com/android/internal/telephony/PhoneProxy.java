@@ -492,6 +492,11 @@ public class PhoneProxy extends Handler implements Phone {
         return mActivePhone.getVoiceMessageCount();
     }
 
+    /** @hide */
+    public int getVoiceMessagePriority() {
+        return mActivePhone.getVoiceMessagePriority();
+    }
+
     public String getVoiceMailAlphaTag() {
         return mActivePhone.getVoiceMailAlphaTag();
     }
