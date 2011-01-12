@@ -34,6 +34,7 @@ class CommandParams {
     }
 
     boolean setIcon(Bitmap icon) { return true; }
+
 }
 
 class DisplayTextParams extends CommandParams {
@@ -45,9 +46,13 @@ class DisplayTextParams extends CommandParams {
     }
 
     boolean setIcon(Bitmap icon) {
-        if (icon != null && textMsg != null) {
-            textMsg.icon = icon;
-            return true;
+        if (textMsg != null) {
+            if (icon != null) {
+                textMsg.icon = icon;
+                return true;
+            } else {
+                textMsg.iconLoadingFailed = true;
+            }
         }
         return false;
     }
@@ -67,9 +72,13 @@ class LaunchBrowserParams extends CommandParams {
     }
 
     boolean setIcon(Bitmap icon) {
-        if (icon != null && confirmMsg != null) {
-            confirmMsg.icon = icon;
-            return true;
+        if (confirmMsg != null) {
+            if (icon != null) {
+                confirmMsg.icon = icon;
+                return true;
+            } else {
+                confirmMsg.iconLoadingFailed = true;
+            }
         }
         return false;
     }
@@ -87,9 +96,13 @@ class PlayToneParams extends CommandParams {
     }
 
     boolean setIcon(Bitmap icon) {
-        if (icon != null && textMsg != null) {
-            textMsg.icon = icon;
-            return true;
+        if (textMsg != null) {
+            if (icon != null) {
+                textMsg.icon = icon;
+                return true;
+            } else {
+                textMsg.iconLoadingFailed = true;
+            }
         }
         return false;
     }
@@ -107,15 +120,20 @@ class CallSetupParams extends CommandParams {
     }
 
     boolean setIcon(Bitmap icon) {
-        if (icon == null) {
-            return false;
-        }
         if (confirmMsg != null && confirmMsg.icon == null) {
-            confirmMsg.icon = icon;
-            return true;
+            if (icon == null) {
+                confirmMsg.iconLoadingFailed = true;
+            } else {
+                confirmMsg.icon = icon;
+                return true;
+            }
         } else if (callMsg != null && callMsg.icon == null) {
-            callMsg.icon = icon;
-            return true;
+            if (icon == null) {
+                callMsg.iconLoadingFailed = true;
+            } else {
+                callMsg.icon = icon;
+                return true;
+            }
         }
         return false;
     }
@@ -132,19 +150,23 @@ class SelectItemParams extends CommandParams {
     }
 
     boolean setIcon(Bitmap icon) {
-        if (icon != null && menu != null) {
-            if (loadTitleIcon && menu.titleIcon == null) {
-                menu.titleIcon = icon;
-            } else {
-                for (Item item : menu.items) {
-                    if (item.icon != null) {
-                        continue;
+        if (menu != null) {
+            if (icon != null) {
+                if (loadTitleIcon && menu.titleIcon == null) {
+                    menu.titleIcon = icon;
+                } else {
+                    for (Item item : menu.items) {
+                        if (item.icon != null) {
+                            continue;
+                        }
+                        item.icon = icon;
+                        break;
                     }
-                    item.icon = icon;
-                    break;
                 }
+                return true;
+            } else {
+                menu.iconLoadingFailed = true;
             }
-            return true;
         }
         return false;
     }
@@ -159,10 +181,15 @@ class GetInputParams extends CommandParams {
     }
 
     boolean setIcon(Bitmap icon) {
-        if (icon != null && input != null) {
-            input.icon = icon;
+        if (input != null) {
+            if (icon != null) {
+                input.icon = icon;
+                return true;
+            } else {
+                input.iconLoadingFailed = true;
+            }
         }
-        return true;
+        return false;
     }
 }
 

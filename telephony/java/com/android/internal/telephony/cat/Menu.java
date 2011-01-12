@@ -33,6 +33,7 @@ public class Menu implements Parcelable {
     public PresentationType presentationType;
     public String title;
     public Bitmap titleIcon;
+    public boolean iconLoadingFailed;
     public int defaultItem;
     public boolean softKeyPreferred;
     public boolean helpAvailable;
@@ -50,6 +51,7 @@ public class Menu implements Parcelable {
         titleIconSelfExplanatory = false;
         itemsIconSelfExplanatory = false;
         titleIcon = null;
+        iconLoadingFailed = false;
         // set default style to be navigation menu.
         presentationType = PresentationType.NAVIGATION_OPTIONS;
     }
@@ -57,6 +59,7 @@ public class Menu implements Parcelable {
     private Menu(Parcel in) {
         title = in.readString();
         titleIcon = in.readParcelable(null);
+        iconLoadingFailed = in.readInt() == 1 ? true : false;
         // rebuild items list.
         items = new ArrayList<Item>();
         int size = in.readInt();
@@ -79,6 +82,7 @@ public class Menu implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
         dest.writeParcelable(titleIcon, flags);
+        dest.writeInt(iconLoadingFailed ? 1 : 0);
         // write items list to the parcel.
         int size = items.size();
         dest.writeInt(size);

@@ -25,6 +25,7 @@ public class TextMessage implements Parcelable {
     public String text = null;
     public Bitmap icon = null;
     public boolean iconSelfExplanatory = false;
+    public boolean iconLoadingFailed = false;
     public boolean isHighPriority = false;
     public boolean responseNeeded = true;
     public boolean userClear = false;
@@ -38,6 +39,7 @@ public class TextMessage implements Parcelable {
         text = in.readString();
         icon = in.readParcelable(null);
         iconSelfExplanatory = in.readInt() == 1 ? true : false;
+        iconLoadingFailed = in.readInt() == 1 ? true : false;
         isHighPriority = in.readInt() == 1 ? true : false;
         responseNeeded = in.readInt() == 1 ? true : false;
         userClear = in.readInt() == 1 ? true : false;
@@ -53,6 +55,7 @@ public class TextMessage implements Parcelable {
         dest.writeString(text);
         dest.writeParcelable(icon, 0);
         dest.writeInt(iconSelfExplanatory ? 1 : 0);
+        dest.writeInt(iconLoadingFailed ? 1 : 0);
         dest.writeInt(isHighPriority ? 1 : 0);
         dest.writeInt(responseNeeded ? 1 : 0);
         dest.writeInt(userClear ? 1 : 0);

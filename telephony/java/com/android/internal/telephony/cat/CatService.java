@@ -176,7 +176,8 @@ public class CatService extends Handler implements AppInterface {
                 break;
             }
             if (cmdParams != null) {
-                if (rilMsg.mResCode == ResultCode.OK) {
+                if (rilMsg.mResCode == ResultCode.OK ||
+                    rilMsg.mResCode == ResultCode.PRFRMD_ICON_NOT_DISPLAYED) {
                     handleCommand(cmdParams, true);
                 } else {
                     // for proactive commands that couldn't be decoded
@@ -212,6 +213,7 @@ public class CatService extends Handler implements AppInterface {
      */
     private void handleCommand(CommandParams cmdParams, boolean isProactiveCmd) {
         CatLog.d(this, cmdParams.getCommandType().name());
+        ResultCode result = ResultCode.OK;
 
         CharSequence message;
         CatCmdMessage cmdMsg = new CatCmdMessage(cmdParams);
@@ -221,13 +223,19 @@ public class CatService extends Handler implements AppInterface {
                     mMenuCmd = null;
                 } else {
                     mMenuCmd = cmdMsg;
+                    if (cmdMsg.getMenu().iconLoadingFailed) {
+                        result = ResultCode.PRFRMD_ICON_NOT_DISPLAYED;
+                    }
                 }
-                sendTerminalResponse(cmdParams.cmdDet, ResultCode.OK, false, 0, null);
+                sendTerminalResponse(cmdParams.cmdDet, result, false, 0, null);
                 break;
             case DISPLAY_TEXT:
                 // when application is not required to respond, send an immediate response.
                 if (!cmdMsg.geTextMessage().responseNeeded) {
-                    sendTerminalResponse(cmdParams.cmdDet, ResultCode.OK, false, 0, null);
+                    if (cmdMsg.geTextMessage().iconLoadingFailed) {
+                        result = ResultCode.PRFRMD_ICON_NOT_DISPLAYED;
+                    }
+                    sendTerminalResponse(cmdParams.cmdDet, result, false, 0, null);
                 }
                 break;
             case REFRESH:
@@ -236,7 +244,10 @@ public class CatService extends Handler implements AppInterface {
                 cmdParams.cmdDet.typeOfCommand = CommandType.SET_UP_IDLE_MODE_TEXT.value();
                 break;
             case SET_UP_IDLE_MODE_TEXT:
-                sendTerminalResponse(cmdParams.cmdDet, ResultCode.OK, false, 0, null);
+                if (cmdMsg.geTextMessage().iconLoadingFailed) {
+                    result = ResultCode.PRFRMD_ICON_NOT_DISPLAYED;
+                }
+                sendTerminalResponse(cmdParams.cmdDet, result, false, 0, null);
                 break;
             case PROVIDE_LOCAL_INFORMATION:
                 ResponseData resp;
@@ -694,15 +705,21 @@ public class CatService extends Handler implements AppInterface {
         case PRFRMD_TONE_NOT_PLAYED:
             switch (AppInterface.CommandType.fromInt(cmdDet.typeOfCommand)) {
             case SET_UP_MENU:
-                helpRequired = resMsg.resCode == ResultCode.HELP_INFO_REQUIRED;
                 sendMenuSelection(resMsg.usersMenuSelection, helpRequired);
                 return;
             case SELECT_ITEM:
+                Menu menu = mCurrntCmd.getMenu();
+                if (resMsg.resCode == ResultCode.OK && menu.iconLoadingFailed) {
+                    resMsg.resCode = ResultCode.PRFRMD_ICON_NOT_DISPLAYED;
+                }
                 resp = new SelectItemResponseData(resMsg.usersMenuSelection);
                 break;
             case GET_INPUT:
             case GET_INKEY:
                 Input input = mCurrntCmd.geInput();
+                if (resMsg.resCode == ResultCode.OK && input.iconLoadingFailed) {
+                    resMsg.resCode = ResultCode.PRFRMD_ICON_NOT_DISPLAYED;
+                }
                 if (!input.yesNo) {
                     // when help is requested there is no need to send the text
                     // string object.
@@ -715,10 +732,24 @@ public class CatService extends Handler implements AppInterface {
                             resMsg.usersYesNoSelection);
                 }
                 break;
+            case SEND_DTMF:
+            case SEND_SMS:
+            case SEND_SS:
+            case SEND_USSD:
+            case PLAY_TONE:
             case DISPLAY_TEXT:
             case LAUNCH_BROWSER:
+                TextMessage text = mCurrntCmd.geTextMessage();
+                if (resMsg.resCode == ResultCode.OK && text.iconLoadingFailed) {
+                    resMsg.resCode = ResultCode.PRFRMD_ICON_NOT_DISPLAYED;
+                }
                 break;
             case SET_UP_CALL:
+                // FIXME Add support to transport indication of icon loading
+                // failed to handleCallSetupRequestFromSim. If any of
+                // confirmMsg.iconLoadingFailed or callMsg.iconLoadingFailed is
+                // true then a terminal response with PRFRMD_ICON_NOT_DISPLAYED
+                // shall be sent.
                 mCmdIf.handleCallSetupRequestFromSim(resMsg.usersConfirm, null);
                 // No need to send terminal response for SET UP CALL. The user's
                 // confirmation result is send back using a dedicated ril message

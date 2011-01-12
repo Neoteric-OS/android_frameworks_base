@@ -198,9 +198,9 @@ class CommandParamsFactory extends Handler {
 
     private ResultCode setIcons(Object data) {
         Bitmap[] icons = null;
-        int iconIndex = 0;
 
         if (data == null) {
+            mCmdParams.setIcon(null);
             return ResultCode.PRFRMD_ICON_NOT_DISPLAYED;
         }
         switch(mIconLoadState) {
@@ -394,6 +394,7 @@ class CommandParamsFactory extends Handler {
         ctlv = searchForTag(ComprehensionTlvTag.ICON_ID, ctlvs);
         if (ctlv != null) {
             iconId = ValueParser.retrieveIconId(ctlv);
+            input.iconSelfExplanatory = iconId.selfExplanatory;
         }
 
         // parse duration
@@ -470,6 +471,7 @@ class CommandParamsFactory extends Handler {
         ctlv = searchForTag(ComprehensionTlvTag.ICON_ID, ctlvs);
         if (ctlv != null) {
             iconId = ValueParser.retrieveIconId(ctlv);
+            input.iconSelfExplanatory = iconId.selfExplanatory;
         }
 
         input.digitOnly = (cmdDet.commandQualifier & 0x01) == 0;

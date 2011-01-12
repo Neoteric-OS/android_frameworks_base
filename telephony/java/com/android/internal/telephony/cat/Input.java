@@ -28,6 +28,8 @@ public class Input implements Parcelable {
     public String text;
     public String defaultText;
     public Bitmap icon;
+    public boolean iconSelfExplanatory;
+    public boolean iconLoadingFailed;
     public int minLen;
     public int maxLen;
     public boolean ucs2;
@@ -42,6 +44,8 @@ public class Input implements Parcelable {
         text = "";
         defaultText = null;
         icon = null;
+        iconSelfExplanatory = false;
+        iconLoadingFailed = false;
         minLen = 0;
         maxLen = 1;
         ucs2 = false;
@@ -57,6 +61,8 @@ public class Input implements Parcelable {
         text = in.readString();
         defaultText = in.readString();
         icon = in.readParcelable(null);
+        iconSelfExplanatory = in.readInt() == 1 ? true : false;
+        iconLoadingFailed = in.readInt() == 1 ? true : false;
         minLen = in.readInt();
         maxLen = in.readInt();
         ucs2 = in.readInt() == 1 ? true : false;
@@ -76,6 +82,8 @@ public class Input implements Parcelable {
         dest.writeString(text);
         dest.writeString(defaultText);
         dest.writeParcelable(icon, 0);
+        dest.writeInt(iconSelfExplanatory ? 1 : 0);
+        dest.writeInt(iconLoadingFailed ? 1 : 0);
         dest.writeInt(minLen);
         dest.writeInt(maxLen);
         dest.writeInt(ucs2 ? 1 : 0);
