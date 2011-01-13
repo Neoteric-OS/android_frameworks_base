@@ -1417,7 +1417,7 @@ public final class SIMRecords extends IccRecords {
                 if (ar != null && ar.exception == null) {
                     data = (byte[]) ar.result;
                     spn = IccUtils.adnStringFieldToString(
-                            data, 0, data.length - 1 );
+                            data, 0, data.length);
 
                     if (DBG) log("Load EF_SPN_CPHS: " + spn);
                     phone.setSystemProperty(PROPERTY_ICC_OPERATOR_ALPHA, spn);
@@ -1435,7 +1435,7 @@ public final class SIMRecords extends IccRecords {
                 if (ar != null && ar.exception == null) {
                     data = (byte[]) ar.result;
                     spn = IccUtils.adnStringFieldToString(
-                            data, 0, data.length - 1);
+                            data, 0, data.length);
 
                     if (DBG) log("Load EF_SPN_SHORT_CPHS: " + spn);
                     phone.setSystemProperty(PROPERTY_ICC_OPERATOR_ALPHA, spn);
