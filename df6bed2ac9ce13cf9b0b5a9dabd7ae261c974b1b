@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//8kY\u003d",
+        "filename": "core/java/android/webkit/WebViewCore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1001047
+      },
+      "writtenOn": "2011-01-14T14:34:25Z",
+      "side": 1,
+      "message": "Preferred name is ON_LAYOUT",
+      "revId": "df6bed2ac9ce13cf9b0b5a9dabd7ae261c974b1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
