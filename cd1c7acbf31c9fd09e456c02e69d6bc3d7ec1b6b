@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//8kA\u003d",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4681,
+      "author": {
+        "id": 1001047
+      },
+      "writtenOn": "2011-01-14T15:14:51Z",
+      "side": 1,
+      "message": "mWebView !\u003d null check isn\u0027t necessary",
+      "revId": "cd1c7acbf31c9fd09e456c02e69d6bc3d7ec1b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
