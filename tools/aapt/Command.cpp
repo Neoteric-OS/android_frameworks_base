@@ -1353,6 +1353,8 @@ int doPackage(Bundle* bundle)
     status_t err;
     sp<AaptAssets> assets;
     int N;
+    AssetManager overlayTargetAm;
+    const ResTable* overlayTargetRes = NULL;
 
     // -c zz_ZZ means do pseudolocalization
     ResourceFilter filter;
@@ -1383,6 +1385,22 @@ int doPackage(Bundle* bundle)
                 outputAPKFile);
             goto bail;
         }
+    }
+
+    if (bundle->getOverlayPackageTarget() != NULL) {
+        if (!overlayTargetAm.addAssetPath(String8(bundle->getOverlayPackageTarget()), NULL)) {
+            fprintf(stderr, "ERROR: failed to read overlay target package file '%s'\n",
+                    bundle->getOverlayPackageTarget());
+            goto bail;
+        }
+        overlayTargetRes = &overlayTargetAm.getResources(false);
+        if (overlayTargetRes == NULL) {
+            fprintf(stderr, "ERROR: overlay target package contains no resource table\n");
+            goto bail;
+        }
+
+        // caveat: only allow overlays for first package group (0)
+        bundle->setOverlayPackageTargetId(overlayTargetRes->getBasePackageId(0));
     }
 
     // Load the assets.
@@ -1436,6 +1454,37 @@ int doPackage(Bundle* bundle)
     err = writeProguardFile(bundle, assets);
     if (err < 0) {
         goto bail;
+    }
+
+    // Write the resource ID map (overlay package resource ID -> target package resource ID)
+    if (bundle->getOverlayPackageTarget() != NULL) {
+        sp<AaptGroup> group = assets->getFiles().valueFor(String8("resources.arsc"));
+        if (group == NULL) {
+            fprintf(stderr, "ERROR: overlay target package contains no resources\n");
+            goto bail;
+        }
+        sp<AaptFile> resFile = group->getFiles().valueFor(AaptGroupEntry());
+        if (resFile == NULL) {
+            fprintf(stderr, "ERROR: failed to read overlay target package resources\n");
+            goto bail;
+        }
+        ResTable res;
+        res.add(resFile->getData(), resFile->getSize(), NULL);
+
+        void *data = NULL;
+        size_t size;
+        if (overlayTargetRes->generateResIDMapping(res, &data, &size) != NO_ERROR) {
+            fprintf(stderr, "ERROR: failed to generate overlay package resource ID map\n");
+            goto bail;
+        }
+
+        sp<AaptFile> mapFile = assets->addFile(String8("resources.idmap"), AaptGroupEntry(),
+                                               String8(), NULL, String8());
+        if (mapFile == NULL) {
+            fprintf(stderr, "ERROR: failed to write overlay package resource ID map\n");
+            goto bail;
+        }
+        mapFile->writeData(data, size);
     }
 
     // Write the apk

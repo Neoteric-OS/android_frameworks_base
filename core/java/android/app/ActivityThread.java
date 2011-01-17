@@ -83,6 +83,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -1192,6 +1193,31 @@ public final class ActivityThread {
         AssetManager assets = new AssetManager();
         if (assets.addAssetPath(resDir) == 0) {
             return null;
+        }
+
+        // load overlay packages, if present
+        File overlayDir = new File("/system/overlay");
+        String[] fileList = overlayDir.list();
+        Arrays.sort(fileList);
+        Iterator<WeakReference<LoadedApk>> itr = mPackages.values().iterator();
+        while (itr.hasNext()) {
+            WeakReference<LoadedApk> apk = itr.next();
+            String packageName = apk.get().getPackageName();
+            if (packageName == "android") { // framework resources are handled in AssetManager.cpp
+                continue;
+            }
+            String prefix = packageName + ".overlay.";
+            String suffix = ".apk";
+
+            for (int i = 0; i < fileList.length; i++) {
+                String fileName = fileList[i];
+                if (fileName.startsWith(prefix) && fileName.endsWith(suffix)) {
+                    String path = overlayDir.toString() + File.separatorChar + fileName;
+                    if (assets.addAssetPath(path) == 0) {
+                        Log.w(TAG, "Failed to load overlay package " + path);
+                    }
+                }
+            }
         }
 
         //Slog.i(TAG, "Resource: key=" + key + ", display metrics=" + metrics);

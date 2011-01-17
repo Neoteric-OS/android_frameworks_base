@@ -68,6 +68,7 @@ void usage(void)
         "        [-S resource-sources [-S resource-sources ...]] "
         "        [-F apk-file] [-J R-file-dir] \\\n"
         "        [--product product1,product2,...] \\\n"
+        "        [-o apk-file] \\\n"
         "        [raw-files-dir [raw-files-dir] ...]\n"
         "\n"
         "   Package the android resources.  It will read assets and resources that are\n"
@@ -105,6 +106,7 @@ void usage(void)
         "   -j  specify a jar or zip file containing classes to include\n"
         "   -k  junk path of file(s) added\n"
         "   -m  make package directories under location specified by -J\n"
+        "   -o  create overlay package targeting specified .apk\n"
 #if 0
         "   -p  pseudolocalize the default configuration\n"
 #endif
@@ -270,6 +272,17 @@ int main(int argc, char* const argv[])
                 break;
             case 'm':
                 bundle.setMakePackageDirs(true);
+                break;
+            case 'o':
+                argc--;
+                argv++;
+                if (!argc) {
+                    fprintf(stderr, "ERROR: No argument supplied for '-o' option\n");
+                    wantUsage = true;
+                    goto bail;
+                }
+                convertPath(argv[0]);
+                bundle.setOverlayPackageTarget(argv[0]);
                 break;
 #if 0
             case 'p':

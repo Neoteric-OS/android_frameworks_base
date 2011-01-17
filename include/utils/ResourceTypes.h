@@ -1740,6 +1740,8 @@ public:
                  bool copyData=false);
     status_t add(ResTable* src);
 
+    status_t addResourceIDMap(Asset* asset, void* cookie);
+
     status_t getError() const;
 
     void uninit();
@@ -1983,6 +1985,7 @@ public:
 
 #ifndef HAVE_ANDROID_OS
     void print(bool inclValues) const;
+    status_t generateResIDMapping(const ResTable& overlay, void **outData, size_t *outSize) const;
 #endif
 
 private:

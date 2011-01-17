@@ -262,6 +262,8 @@ private:
     void setLocaleLocked(const char* locale);
     void updateResourceParamsLocked() const;
 
+    void addDefaultAssetOverlays();
+
     class SharedZip : public RefBase {
     public:
         static sp<SharedZip> get(const String8& path);

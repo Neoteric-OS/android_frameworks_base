@@ -48,6 +48,8 @@ static const char* kDefaultVendor = "default";
 static const char* kAssetsRoot = "assets";
 static const char* kAppZipName = NULL; //"classes.jar";
 static const char* kSystemAssets = "framework/framework-res.apk";
+static const String8 kOverlayDir = String8("/system/overlay/");
+static const char* kSystemOverlayPrefix = "android.overlay.";
 
 static const char* kExcludeExtension = ".EXCLUDE";
 
@@ -136,6 +138,34 @@ bool AssetManager::addAssetPath(const String8& path, void** cookie)
     return true;
 }
 
+#define str_ends_with_dot_apk(str, n) \
+    (n > 4 && str[n - 4] == '.' && str[n - 3] == 'a' && str[n - 2] == 'p' && str[n - 1] == 'k')
+
+void AssetManager::addDefaultAssetOverlays()
+{
+    mLock.lock();
+    SortedVector<AssetDir::FileInfo>* pContents = scanDirLocked(kOverlayDir);
+    mLock.unlock();
+    if (pContents != NULL) {
+        for (size_t i = 0; i < pContents->size(); ++i) {
+            AssetDir::FileInfo info = pContents->itemAt(i);
+            if (info.getFileType() != kFileTypeRegular) {
+                continue;
+            }
+            const char* filename = info.getFileName().string();
+            const size_t N = strlen(filename);
+            if (strncmp(kSystemOverlayPrefix, filename, strlen(kSystemOverlayPrefix)) != 0 &&
+                str_ends_with_dot_apk(filename, N)) {
+                continue;
+            }
+            String8 path(kOverlayDir);
+            path.append(filename);
+            (void)addAssetPath(path, NULL);
+        }
+        delete pContents;
+    }
+}
+
 bool AssetManager::addDefaultAssets()
 {
     const char* root = getenv("ANDROID_ROOT");
@@ -144,7 +174,9 @@ bool AssetManager::addDefaultAssets()
     String8 path(root);
     path.appendPath(kSystemAssets);
 
-    return addAssetPath(path, NULL);
+    bool b = addAssetPath(path, NULL);
+    addDefaultAssetOverlays();
+    return b;
 }
 
 void* AssetManager::nextAssetPath(void* cookie) const
@@ -462,6 +494,12 @@ const ResTable* AssetManager::getResTable(bool required) const
 
             if (!shared) {
                 delete ass;
+            }
+
+            ass = const_cast<AssetManager*>(this)->
+                openNonAssetInPathLocked("resources.idmap", Asset::ACCESS_BUFFER, ap);
+            if (ass) {
+                rt->addResourceIDMap(ass, (void*)(i + 1));
             }
         }
     }
