@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//8IQ\u003d",
+        "filename": "core/java/android/content/ContentService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1004017
+      },
+      "writtenOn": "2011-01-18T22:10:40Z",
+      "side": 1,
+      "message": "Does this fix a bug? If so, then there\u0027s probably something else going on and this only masks the problem.",
+      "revId": "2d3147cf71e11a55af7937658f205c28814852f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
