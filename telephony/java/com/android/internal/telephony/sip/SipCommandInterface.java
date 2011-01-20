@@ -369,4 +369,7 @@ class SipCommandInterface extends BaseCommands implements CommandsInterface {
 
     public void exitEmergencyCallbackMode(Message response) {
     }
+
+    public void setRilPowerOff(Message result) {
+    }
 }

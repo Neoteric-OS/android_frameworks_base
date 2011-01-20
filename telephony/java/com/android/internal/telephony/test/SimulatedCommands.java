@@ -1473,4 +1473,8 @@ public final class SimulatedCommands extends BaseCommands
     public void getGsmBroadcastConfig(Message response) {
         unimplemented(response);
     }
+
+    public void setRilPowerOff(Message result) {
+        return;
+    }
 }
