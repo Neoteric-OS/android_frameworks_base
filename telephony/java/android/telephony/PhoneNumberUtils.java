@@ -1059,6 +1059,8 @@ public class PhoneNumberUtils
     public static final int FORMAT_NANP = 1;
     /** Japanese formatting */
     public static final int FORMAT_JAPAN = 2;
+    /** Korean formatting */
+    public static final int FORMAT_KOREA = 3;
 
     /** List of country codes for countries that use the NANP */
     private static final String[] NANP_COUNTRIES = new String[] {
@@ -1149,6 +1151,9 @@ public class PhoneNumberUtils
             } else if (text.length() >= 3 && text.charAt(1) == '8'
                 && text.charAt(2) == '1') {
                 formatType = FORMAT_JAPAN;
+            } else if (text.length() >= 3 && text.charAt(1) == '8'
+					   && text.charAt(2) == '2') {
+                formatType = FORMAT_KOREA;
             } else {
                 formatType = FORMAT_UNKNOWN;
             }
@@ -1160,6 +1165,9 @@ public class PhoneNumberUtils
                 return;
             case FORMAT_JAPAN:
                 formatJapaneseNumber(text);
+                return;
+            case FORMAT_KOREA:
+                formatKoreanNumber(text);
                 return;
             case FORMAT_UNKNOWN:
                 removeDashes(text);
@@ -1303,6 +1311,28 @@ public class PhoneNumberUtils
         JapanesePhoneNumberFormatter.format(text);
     }
 
+	/**
+     * Formats a phone number in-place using the Korean formatting rules.
+     * Numbers will be formatted as:
+     *
+     * <p><code>
+     * 02-xxx-xxxx
+     * 02-xxxx-xxxx
+     * 031-xxx-xxxx
+     * 016-xxx-xxxx
+     * 016-xxx-xxxx
+     * 016-xxxx-xxxx
+     * +82-2-xxxx-xxxx
+     * </code></p>
+     *
+     * @param text the number to be formatted, will be modified with
+     * the formatting
+     */
+    public static void formatKoreanNumber(Editable text) {
+        KoreanPhoneNumberFormatter.format(text);
+    }
+	
+	
     /**
      * Removes all dashes from the number.
      *
@@ -1645,6 +1675,9 @@ public class PhoneNumberUtils
         }
         if ("jp".compareToIgnoreCase(country) == 0) {
             return FORMAT_JAPAN;
+        }
+        if ("kr".compareToIgnoreCase(country) == 0) {
+            return FORMAT_KOREA;
         }
         return FORMAT_UNKNOWN;
     }
