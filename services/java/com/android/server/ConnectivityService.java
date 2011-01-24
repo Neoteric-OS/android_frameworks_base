@@ -1322,6 +1322,17 @@ public class ConnectivityService extends IConnectivityManager.Stub {
          */
         handleDnsConfigurationChange(netType);
 
+        if (mNetAttributes[netType].isDefault() &&
+            mNetAttributes[netType].mType == ConnectivityManager.TYPE_MOBILE) {
+
+            // Do not add/remove DefaultRoute for default mobile connection.
+            // This should not affect other default connection types ...
+            // We do not want to remove the default route since on a cellular network
+            // it is likely we'll get a temporary disconnect only to be connected again
+            // DHCP/linux kernel should automatically update default route whenever necessary.
+            return;
+        }
+
         if (mNetTrackers[netType].getNetworkInfo().isConnected()) {
             if (mNetAttributes[netType].isDefault()) {
                 mNetTrackers[netType].addDefaultRoute();
