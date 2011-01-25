@@ -1,7 +1,7 @@
 page.title=Android Emulator
 @jd:body
 
-<div style="padding:1em;"><img src="/images/emulator-wvga800l.png" alt="Image of the Android Emulator" width="367" height="349" style="margin-left:2em;margin-top:-4em;float:right;"/></div>
+<div style="padding:1em;"><img src="{@docRoot}/images/emulator-wvga800l.png" alt="Image of the Android Emulator" width="367" height="349" style="margin-left:2em;margin-top:-4em;float:right;"/></div>
 
 <p>The Android SDK includes a mobile device emulator -- a virtual mobile device 
 that runs on your computer. The emulator lets you prototype, develop, and test 
