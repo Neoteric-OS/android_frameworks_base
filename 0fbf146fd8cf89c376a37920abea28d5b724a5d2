@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//7qc\u003d",
+        "filename": "voip/java/com/android/server/sip/SipSessionGroup.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1001942
+      },
+      "writtenOn": "2011-01-25T03:33:24Z",
+      "side": 1,
+      "message": "expires parameter may not exist in the contact header. If so, return the expires value right away instead.  From the spec, the expires parameter has higher precedence than the expires header no matter if the expires header exists. So, move the code above the expires header block is better.",
+      "revId": "0fbf146fd8cf89c376a37920abea28d5b724a5d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
