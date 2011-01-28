@@ -90,6 +90,7 @@ public class VideoView extends SurfaceView implements MediaPlayerControl {
     private boolean     mCanSeekBack;
     private boolean     mCanSeekForward;
     private int         mStateWhenSuspended;  //state before calling suspend()
+    private AlertDialog mPopup;
 
     public VideoView(Context context) {
         super(context);
@@ -383,7 +384,7 @@ public class VideoView extends SurfaceView implements MediaPlayerControl {
                     messageId = com.android.internal.R.string.VideoView_error_text_unknown;
                 }
 
-                new AlertDialog.Builder(mContext)
+                mPopup = new AlertDialog.Builder(mContext)
                         .setTitle(com.android.internal.R.string.VideoView_error_title)
                         .setMessage(messageId)
                         .setPositiveButton(com.android.internal.R.string.VideoView_error_button,
@@ -395,6 +396,7 @@ public class VideoView extends SurfaceView implements MediaPlayerControl {
                                         if (mOnCompletionListener != null) {
                                             mOnCompletionListener.onCompletion(mMediaPlayer);
                                         }
+                                        mPopup = null;
                                     }
                                 })
                         .setCancelable(false)
@@ -555,6 +557,16 @@ public class VideoView extends SurfaceView implements MediaPlayerControl {
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+        if (mPopup != null && mPopup.isShowing()) {
+            mPopup.dismiss();
+            mPopup = null;
+        }
     }
 
     private void toggleMediaControlsVisiblity() {
