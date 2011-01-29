@@ -23,6 +23,8 @@
 #include <pthread.h>
 #include <sys/prctl.h>
 #include <sys/resource.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 
 #include <media/stagefright/MPEG4Writer.h>
 #include <media/stagefright/MediaBuffer.h>
@@ -39,6 +41,7 @@
 namespace android {
 
 static const int64_t kMax32BitFileSize = 0x007fffffffLL;
+static const int64_t kMax64BitFileSize = 0x00ffffffffLL;
 static const uint8_t kNalUnitTypeSeqParamSet = 0x07;
 static const uint8_t kNalUnitTypePicParamSet = 0x08;
 
@@ -64,7 +67,7 @@ public:
     bool isAvc() const { return mIsAvc; }
     bool isAudio() const { return mIsAudio; }
     bool isMPEG4() const { return mIsMPEG4; }
-    void addChunkOffset(off_t offset);
+    void addChunkOffset(off64_t offset);
     status_t dump(int fd, const Vector<String16>& args) const;
 
 private:
@@ -99,7 +102,7 @@ private:
     List<MediaBuffer *> mChunkSamples;
 
     size_t              mNumStcoTableEntries;
-    List<off_t>         mChunkOffsets;
+    List<off64_t>         mChunkOffsets;
 
     size_t              mNumStscTableEntries;
     struct StscTableEntry {
@@ -214,7 +217,7 @@ private:
 };
 
 MPEG4Writer::MPEG4Writer(const char *filename)
-    : mFile(fopen(filename, "wb")),
+    : mFd(open(filename, O_CREAT|O_RDWR, S_IRWXG|S_IROTH|S_IXOTH)),
       mUse4ByteNalLength(true),
       mUse32BitOffset(true),
       mIsFileSizeLimitExplicitlyRequested(false),
@@ -224,11 +227,11 @@ MPEG4Writer::MPEG4Writer(const char *filename)
       mMdatOffset(0),
       mEstimatedMoovBoxSize(0),
       mInterleaveDurationUs(1000000) {
-    CHECK(mFile != NULL);
+    CHECK(mFd >= NULL);
 }
 
 MPEG4Writer::MPEG4Writer(int fd)
-    : mFile(fdopen(fd, "wb")),
+    : mFd(fd),
       mUse4ByteNalLength(true),
       mUse32BitOffset(true),
       mIsFileSizeLimitExplicitlyRequested(false),
@@ -238,7 +241,7 @@ MPEG4Writer::MPEG4Writer(int fd)
       mMdatOffset(0),
       mEstimatedMoovBoxSize(0),
       mInterleaveDurationUs(1000000) {
-    CHECK(mFile != NULL);
+    CHECK(mFd >= NULL);
 }
 
 MPEG4Writer::~MPEG4Writer() {
@@ -368,7 +371,7 @@ int64_t MPEG4Writer::estimateMoovBoxSize(int32_t bitRate) {
 }
 
 status_t MPEG4Writer::start(MetaData *param) {
-    if (mFile == NULL) {
+    if (mFd < 0) {
         return UNKNOWN_ERROR;
     }
 
@@ -402,6 +405,16 @@ status_t MPEG4Writer::start(MetaData *param) {
                  "It is changed to %lld bytes",
                 mMaxFileSizeLimitBytes, kMax32BitFileSize);
             mMaxFileSizeLimitBytes = kMax32BitFileSize;
+        }
+    } else {
+        if(mMaxFileSizeLimitBytes == 0) {
+            mMaxFileSizeLimitBytes = kMax64BitFileSize;
+        }
+        if(mMaxFileSizeLimitBytes > kMax64BitFileSize) {
+            LOGW("64-bit file size limit (%lld bytes) too big. "
+                    "It is changed to %lld bytes",
+                    mMaxFileSizeLimitBytes, kMax64BitFileSize);
+            mMaxFileSizeLimitBytes = kMax64BitFileSize;
         }
     }
 
@@ -459,13 +472,13 @@ status_t MPEG4Writer::start(MetaData *param) {
         mEstimatedMoovBoxSize = estimateMoovBoxSize(bitRate);
     }
     CHECK(mEstimatedMoovBoxSize >= 8);
-    fseeko(mFile, mFreeBoxOffset, SEEK_SET);
+    lseek64(mFd, mFreeBoxOffset, SEEK_SET);
     writeInt32(mEstimatedMoovBoxSize);
     write("free", 4);
 
     mMdatOffset = mFreeBoxOffset + mEstimatedMoovBoxSize;
     mOffset = mMdatOffset;
-    fseeko(mFile, mMdatOffset, SEEK_SET);
+    lseek64(mFd, mMdatOffset, SEEK_SET);
     if (mUse32BitOffset) {
         write("????mdat", 8);
     } else {
@@ -491,7 +504,7 @@ bool MPEG4Writer::use32BitFileOffset() const {
 }
 
 status_t MPEG4Writer::pause() {
-    if (mFile == NULL) {
+    if (mFd < 0) {
         return OK;
     }
     mPaused = true;
@@ -573,7 +586,7 @@ void MPEG4Writer::writeCompositionMatrix(int degrees) {
 }
 
 status_t MPEG4Writer::stop() {
-    if (mFile == NULL) {
+    if (mFd < 0) {
         return OK;
     }
 
@@ -596,28 +609,27 @@ status_t MPEG4Writer::stop() {
 
     // Do not write out movie header on error.
     if (err != OK) {
-        fflush(mFile);
-        fclose(mFile);
-        mFile = NULL;
+        ::close(mFd);
+        mFd = -1;
         mStarted = false;
         return err;
     }
 
     // Fix up the size of the 'mdat' chunk.
     if (mUse32BitOffset) {
-        fseeko(mFile, mMdatOffset, SEEK_SET);
+        lseek64(mFd, mMdatOffset, SEEK_SET);
         int32_t size = htonl(static_cast<int32_t>(mOffset - mMdatOffset));
-        fwrite(&size, 1, 4, mFile);
+        ::write(mFd, &size, 4);
     } else {
-        fseeko(mFile, mMdatOffset + 8, SEEK_SET);
+        lseek64(mFd, mMdatOffset + 8, SEEK_SET);
         int64_t size = mOffset - mMdatOffset;
         size = hton64(size);
-        fwrite(&size, 1, 8, mFile);
+        ::write(mFd, &size, 8);
     }
-    fseeko(mFile, mOffset, SEEK_SET);
+    lseek64(mFd, mOffset, SEEK_SET);
 
     time_t now = time(NULL);
-    const off_t moovOffset = mOffset;
+    const off64_t moovOffset = mOffset;
     mWriteMoovBoxToMemory = true;
     mMoovBoxBuffer = (uint8_t *) malloc(mEstimatedMoovBoxSize);
     mMoovBoxBufferOffset = 0;
@@ -659,12 +671,12 @@ status_t MPEG4Writer::stop() {
         CHECK(mMoovBoxBufferOffset + 8 <= mEstimatedMoovBoxSize);
 
         // Moov box
-        fseeko(mFile, mFreeBoxOffset, SEEK_SET);
+        lseek64(mFd, mFreeBoxOffset, SEEK_SET);
         mOffset = mFreeBoxOffset;
-        write(mMoovBoxBuffer, 1, mMoovBoxBufferOffset, mFile);
+        write(mMoovBoxBuffer, 1, mMoovBoxBufferOffset, mFd);
 
         // Free box
-        fseeko(mFile, mOffset, SEEK_SET);
+        lseek64(mFd, mOffset, SEEK_SET);
         writeInt32(mEstimatedMoovBoxSize - mMoovBoxBufferOffset);
         write("free", 4);
 
@@ -678,9 +690,8 @@ status_t MPEG4Writer::stop() {
 
     CHECK(mBoxes.empty());
 
-    fflush(mFile);
-    fclose(mFile);
-    mFile = NULL;
+    ::close(mFd);
+    mFd = -1;
     mStarted = false;
     return err;
 }
@@ -698,11 +709,11 @@ void MPEG4Writer::unlock() {
     mLock.unlock();
 }
 
-off_t MPEG4Writer::addSample_l(MediaBuffer *buffer) {
-    off_t old_offset = mOffset;
+off64_t MPEG4Writer::addSample_l(MediaBuffer *buffer) {
+    off64_t old_offset = mOffset;
 
-    fwrite((const uint8_t *)buffer->data() + buffer->range_offset(),
-           1, buffer->range_length(), mFile);
+    ::write(mFd, (const uint8_t *)buffer->data() + buffer->range_offset(),
+           buffer->range_length());
 
     mOffset += buffer->range_length();
 
@@ -723,33 +734,33 @@ static void StripStartcode(MediaBuffer *buffer) {
     }
 }
 
-off_t MPEG4Writer::addLengthPrefixedSample_l(MediaBuffer *buffer) {
-    off_t old_offset = mOffset;
+off64_t MPEG4Writer::addLengthPrefixedSample_l(MediaBuffer *buffer) {
+    off64_t old_offset = mOffset;
 
     size_t length = buffer->range_length();
 
     if (mUse4ByteNalLength) {
         uint8_t x = length >> 24;
-        fwrite(&x, 1, 1, mFile);
+        ::write(mFd, &x, 1);
         x = (length >> 16) & 0xff;
-        fwrite(&x, 1, 1, mFile);
+        ::write(mFd, &x, 1);
         x = (length >> 8) & 0xff;
-        fwrite(&x, 1, 1, mFile);
+        ::write(mFd, &x, 1);
         x = length & 0xff;
-        fwrite(&x, 1, 1, mFile);
+        ::write(mFd, &x, 1);
 
-        fwrite((const uint8_t *)buffer->data() + buffer->range_offset(),
-                1, length, mFile);
+        ::write(mFd, (const uint8_t *)buffer->data() + buffer->range_offset(),
+                length);
         mOffset += length + 4;
     } else {
         CHECK(length < 65536);
 
         uint8_t x = length >> 8;
-        fwrite(&x, 1, 1, mFile);
+        ::write(mFd, &x, 1);
         x = length & 0xff;
-        fwrite(&x, 1, 1, mFile);
-        fwrite((const uint8_t *)buffer->data() + buffer->range_offset(),
-                1, length, mFile);
+        ::write(mFd, &x, 1);
+        ::write(mFd, (const uint8_t *)buffer->data() + buffer->range_offset(),
+                length);
         mOffset += length + 2;
     }
 
@@ -757,19 +768,19 @@ off_t MPEG4Writer::addLengthPrefixedSample_l(MediaBuffer *buffer) {
 }
 
 size_t MPEG4Writer::write(
-        const void *ptr, size_t size, size_t nmemb, FILE *stream) {
+        const void *ptr, size_t size, size_t nmemb, int fd) {
 
     const size_t bytes = size * nmemb;
     if (mWriteMoovBoxToMemory) {
-        off_t moovBoxSize = 8 + mMoovBoxBufferOffset + bytes;
+        off64_t moovBoxSize = 8 + mMoovBoxBufferOffset + bytes;
         if (moovBoxSize > mEstimatedMoovBoxSize) {
-            for (List<off_t>::iterator it = mBoxes.begin();
+            for (List<off64_t>::iterator it = mBoxes.begin();
                  it != mBoxes.end(); ++it) {
                 (*it) += mOffset;
             }
-            fseeko(mFile, mOffset, SEEK_SET);
-            fwrite(mMoovBoxBuffer, 1, mMoovBoxBufferOffset, stream);
-            fwrite(ptr, size, nmemb, stream);
+            lseek64(mFd, mOffset, SEEK_SET);
+            ::write(fd, mMoovBoxBuffer, mMoovBoxBufferOffset);
+            ::write(fd, ptr, size * nmemb);
             mOffset += (bytes + mMoovBoxBufferOffset);
             free(mMoovBoxBuffer);
             mMoovBoxBuffer = NULL;
@@ -781,7 +792,7 @@ size_t MPEG4Writer::write(
             mMoovBoxBufferOffset += bytes;
         }
     } else {
-        fwrite(ptr, size, nmemb, stream);
+        ::write(fd, ptr, size * nmemb);
         mOffset += bytes;
     }
     return bytes;
@@ -800,51 +811,51 @@ void MPEG4Writer::beginBox(const char *fourcc) {
 void MPEG4Writer::endBox() {
     CHECK(!mBoxes.empty());
 
-    off_t offset = *--mBoxes.end();
+    off64_t offset = *--mBoxes.end();
     mBoxes.erase(--mBoxes.end());
 
     if (mWriteMoovBoxToMemory) {
        int32_t x = htonl(mMoovBoxBufferOffset - offset);
        memcpy(mMoovBoxBuffer + offset, &x, 4);
     } else {
-        fseeko(mFile, offset, SEEK_SET);
+        lseek64(mFd, offset, SEEK_SET);
         writeInt32(mOffset - offset);
         mOffset -= 4;
-        fseeko(mFile, mOffset, SEEK_SET);
+        lseek64(mFd, mOffset, SEEK_SET);
     }
 }
 
 void MPEG4Writer::writeInt8(int8_t x) {
-    write(&x, 1, 1, mFile);
+    write(&x, 1, 1, mFd);
 }
 
 void MPEG4Writer::writeInt16(int16_t x) {
     x = htons(x);
-    write(&x, 1, 2, mFile);
+    write(&x, 1, 2, mFd);
 }
 
 void MPEG4Writer::writeInt32(int32_t x) {
     x = htonl(x);
-    write(&x, 1, 4, mFile);
+    write(&x, 1, 4, mFd);
 }
 
 void MPEG4Writer::writeInt64(int64_t x) {
     x = hton64(x);
-    write(&x, 1, 8, mFile);
+    write(&x, 1, 8, mFd);
 }
 
 void MPEG4Writer::writeCString(const char *s) {
     size_t n = strlen(s);
-    write(s, 1, n + 1, mFile);
+    write(s, 1, n + 1, mFd);
 }
 
 void MPEG4Writer::writeFourcc(const char *s) {
     CHECK_EQ(strlen(s), 4);
-    write(s, 1, 4, mFile);
+    write(s, 1, 4, mFd);
 }
 
 void MPEG4Writer::write(const void *data, size_t size) {
-    write(data, 1, size, mFile);
+    write(data, 1, size, mFd);
 }
 
 bool MPEG4Writer::isFileStreamable() const {
@@ -985,7 +996,7 @@ void MPEG4Writer::Track::addOneSttsTableEntry(
     ++mNumSttsTableEntries;
 }
 
-void MPEG4Writer::Track::addChunkOffset(off_t offset) {
+void MPEG4Writer::Track::addChunkOffset(off64_t offset) {
     ++mNumStcoTableEntries;
     mChunkOffsets.push_back(offset);
 }
@@ -1100,7 +1111,7 @@ void MPEG4Writer::writeFirstChunk(ChunkInfo* info) {
     for (List<MediaBuffer *>::iterator it = chunkIt->mSamples.begin();
          it != chunkIt->mSamples.end(); ++it) {
 
-        off_t offset = info->mTrack->isAvc()
+        off64_t offset = info->mTrack->isAvc()
                             ? addLengthPrefixedSample_l(*it)
                             : addSample_l(*it);
         if (it == chunkIt->mSamples.begin()) {
@@ -1921,7 +1932,7 @@ status_t MPEG4Writer::Track::threadEntry() {
             trackProgressStatus(timestampUs);
         }
         if (mOwner->numTracks() == 1) {
-            off_t offset = mIsAvc? mOwner->addLengthPrefixedSample_l(copy)
+            off64_t offset = mIsAvc? mOwner->addLengthPrefixedSample_l(copy)
                                  : mOwner->addSample_l(copy);
             if (mChunkOffsets.empty()) {
                 addChunkOffset(offset);
@@ -2469,7 +2480,7 @@ void MPEG4Writer::Track::writeTrackHeader(
           mOwner->beginBox(use32BitOffset? "stco": "co64");
             mOwner->writeInt32(0);  // version=0, flags=0
             mOwner->writeInt32(mNumStcoTableEntries);
-            for (List<off_t>::iterator it = mChunkOffsets.begin();
+            for (List<off64_t>::iterator it = mChunkOffsets.begin();
                  it != mChunkOffsets.end(); ++it) {
                 if (use32BitOffset) {
                     mOwner->writeInt32(static_cast<int32_t>(*it));
