@@ -153,6 +153,8 @@ public abstract class SMSDispatcher extends Handler {
     protected boolean mStorageAvailable = true;
     protected boolean mReportMemoryStatusPending = false;
 
+    protected static int mRemaingMessages = -1;
+
     protected static int getNextConcatenatedRef() {
         sConcatenatedRef += 1;
         return sConcatenatedRef;
@@ -463,7 +465,16 @@ public abstract class SMSDispatcher extends Handler {
 
             if (sentIntent != null) {
                 try {
-                    sentIntent.send(Activity.RESULT_OK);
+                    if(mRemaingMessages > -1)
+                        mRemaingMessages--;
+
+                    if(mRemaingMessages == 0) {
+                        Intent sendNext = new Intent();
+                        sendNext.putExtra("SendNextMsg", true);
+                        sentIntent.send(mContext, Activity.RESULT_OK, sendNext);
+                    } else {
+                        sentIntent.send(Activity.RESULT_OK);
+                    }
                 } catch (CanceledException ex) {}
             }
         } else {
@@ -502,8 +513,13 @@ public abstract class SMSDispatcher extends Handler {
                     if (ar.result != null) {
                         fillIn.putExtra("errorCode", ((SmsResponse)ar.result).errorCode);
                     }
-                    tracker.mSentIntent.send(mContext, error, fillIn);
+                    if(mRemaingMessages > -1)
+                        mRemaingMessages--;
 
+                    if(mRemaingMessages == 0)
+                        fillIn.putExtra("SendNextMsg", true);
+
+                    tracker.mSentIntent.send(mContext, RESULT_ERROR_GENERIC_FAILURE, fillIn);
                 } catch (CanceledException ex) {}
             }
         }
