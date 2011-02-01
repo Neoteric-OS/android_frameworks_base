@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//6pk\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmMmiCode.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2011-02-01T19:26:40Z",
+      "side": 1,
+      "message": "check a config flag instead of hardcoded MCC\u0027s.",
+      "revId": "17b0e47572fd68b7f2c95e35e677364bd5d395fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//6pg\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmMmiCode.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2011-02-01T19:26:40Z",
+      "side": 1,
+      "message": "pull list from resource.",
+      "revId": "17b0e47572fd68b7f2c95e35e677364bd5d395fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
