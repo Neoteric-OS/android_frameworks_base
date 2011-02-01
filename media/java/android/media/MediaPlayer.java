@@ -64,7 +64,7 @@ import java.lang.ref.WeakReference;
  * head represent synchronous method calls, while those with
  * a double arrow head represent asynchronous method calls.</p>
  *
- * <p><img src="../../../images/mediaplayer_state_diagram.gif"
+ * <p><img src="{@docRoot}images/mediaplayer_state_diagram.gif"
  *         alt="MediaPlayer State diagram"
  *         border="0" /></p>
  *
