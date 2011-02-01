@@ -89,6 +89,10 @@ public final class GsmMmiCode extends Handler implements MmiCode {
     static final String SC_PUK          = "05";
     static final String SC_PUK2         = "052";
 
+    //Allow 2 Digit code for Croatia - MCC code for Croatia
+    static final String MCC_CROATIA     = "219";
+    // Allow 2 Digit code for Serbia - MCC code for Serbia nypark_20100709
+    static final String MCC_SERBIA     = "220";
     //***** Event Constants
 
     static final int EVENT_SET_COMPLETE         = 1;
@@ -191,6 +195,9 @@ public final class GsmMmiCode extends Handler implements MmiCode {
 
             ret = new GsmMmiCode(phone);
             ret.poundString = dialString;
+        } else if (isTwoDigitShortCode(dialString)) {
+            // this may be a short code, as defined in TS 22.030, 6.5.3.2
+            ret = null;
         } else if (isShortCode(dialString, phone)) {
             // this may be a short code, as defined in TS 22.030, 6.5.3.2
             ret = new GsmMmiCode(phone);
@@ -443,6 +450,23 @@ public final class GsmMmiCode extends Handler implements MmiCode {
         return poundString == null
                     && dialingNumber != null && dialingNumber.length() <= 2;
 
+    }
+
+    static private boolean isTwoDigitShortCode(String dialString) {
+        String mcc = "000";
+        String numeric =  SystemProperties.get(TelephonyProperties.PROPERTY_OPERATOR_NUMERIC);
+
+        if (numeric != null && numeric.length() > 4)
+            mcc = numeric.substring(0, 3);
+        else
+            return false;
+
+        if ((mcc.equals(MCC_CROATIA) ||  mcc.equals(MCC_SERBIA))
+                  && (dialString.equals("92") || dialString.equals("93") || dialString.equals("94")
+                  || dialString.equals("95") || dialString.equals("96")))
+            return true;
+
+        return false;
     }
 
     /**
