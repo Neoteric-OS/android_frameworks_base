@@ -148,6 +148,7 @@ public final class GsmMmiCode extends Handler implements MmiCode {
     static final int MATCH_GROUP_SIC = 9;
     static final int MATCH_GROUP_PWD_CONFIRM = 11;
     static final int MATCH_GROUP_DIALING_NUMBER = 12;
+    static private String[] mTwoDigitNumberPattern;
 
 
     //***** Public Class methods
@@ -191,6 +192,9 @@ public final class GsmMmiCode extends Handler implements MmiCode {
 
             ret = new GsmMmiCode(phone);
             ret.poundString = dialString;
+        } else if (isTwoDigitShortCode(dialString)) {
+            // this may be a short code, as defined in TS 22.030, 6.5.3.2
+            ret = null;
         } else if (isShortCode(dialString, phone)) {
             // this may be a short code, as defined in TS 22.030, 6.5.3.2
             ret = new GsmMmiCode(phone);
@@ -379,6 +383,8 @@ public final class GsmMmiCode extends Handler implements MmiCode {
         super(phone.getHandler().getLooper());
         this.phone = phone;
         this.context = phone.getContext();
+        mTwoDigitNumberPattern = context.getResources().getStringArray(
+            com.android.internal.R.array.config_twoDigitNumberPattern);
     }
 
     //***** MmiCode implementation
@@ -443,6 +449,22 @@ public final class GsmMmiCode extends Handler implements MmiCode {
         return poundString == null
                     && dialingNumber != null && dialingNumber.length() <= 2;
 
+    }
+
+	
+    static private boolean 
+    isTwoDigitShortCode(String dialString) {
+    Log.d(LOG_TAG, "isTwoDigitShortCode");
+        if (mTwoDigitNumberPattern == null) return false;
+        for (String dialnumber : mTwoDigitNumberPattern) {
+            Log.d(LOG_TAG, "Two Digit Number Pattern");
+            if (dialString.equals(dialnumber)) {
+                Log.d(LOG_TAG, "Two Digit Number Pattern -true");
+                return true;
+            }
+        }
+        Log.d(LOG_TAG, "Two Digit Number Pattern -false");
+        return false;
     }
 
     /**
