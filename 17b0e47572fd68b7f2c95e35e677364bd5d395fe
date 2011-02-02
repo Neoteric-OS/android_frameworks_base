@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA+3//6f0\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmMmiCode.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2011-02-02T03:30:50Z",
+      "side": 1,
+      "message": "See frameworks/base/core/res/res/values/config.xml for examples.\n\nThe values in values/config.xml are the defaults.  You can then use a different value in values-mcc219/config.xml and values-mcc220/config.xml, and the behavior will change for SIMs with those MCCs.",
+      "parentUuid": "AAAA+3//6f8\u003d",
+      "revId": "17b0e47572fd68b7f2c95e35e677364bd5d395fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA+3//6pg\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/GsmMmiCode.java",
         "patchSetId": 3
