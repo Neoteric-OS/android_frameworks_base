@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA+3//6f8\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmMmiCode.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1005536
+      },
+      "writtenOn": "2011-02-02T03:25:02Z",
+      "side": 1,
+      "message": "what do you mean a config flag??",
+      "parentUuid": "AAAA+3//6pk\u003d",
+      "revId": "17b0e47572fd68b7f2c95e35e677364bd5d395fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA+3//6pg\u003d",
         "filename": "telephony/java/com/android/internal/telephony/gsm/GsmMmiCode.java",
         "patchSetId": 3
