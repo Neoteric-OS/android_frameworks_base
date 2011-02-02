@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//6aU\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmMmiCode.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2011-02-02T17:58:25Z",
+      "side": 1,
+      "message": "Fix this comment.  This case is for short dial strings that should not be interpreted as a \"short code\" in this particular country.  So something like \"is a country-specific exception to short codes as defined in TS 22.030, 6.5.3.2\".",
+      "revId": "12c82fbfec0fbcf47b3a3a781f0b10d697e073fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//6aQ\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmMmiCode.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2011-02-02T17:58:25Z",
+      "side": 1,
+      "message": "I don\u0027t think you can do this here.  There is no guarantee that a GsmMmiCode object has been created before the call to isTwoDigitShortCode().",
+      "revId": "12c82fbfec0fbcf47b3a3a781f0b10d697e073fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//6aI\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmMmiCode.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2011-02-02T17:58:25Z",
+      "side": 1,
+      "message": "since we\u0027re specifically looking for 2-digit sequences, you can also add a check for dialString.length() \u003d\u003d 2.",
+      "revId": "12c82fbfec0fbcf47b3a3a781f0b10d697e073fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
