@@ -44,6 +44,7 @@ bool isWhitespace(const char16_t* str)
 }
 
 static const String16 RESOURCES_PREFIX(RESOURCES_ROOT_NAMESPACE);
+static const String16 RESOURCES_ANDROID_PREFIX(RESOURCES_ANDROID_NAMESPACE);
 static const String16 RESOURCES_PRV_PREFIX(RESOURCES_ROOT_PRV_NAMESPACE);
 
 String16 getNamespaceResourcePackage(String16 namespaceUri, bool* outIsPublic)
@@ -920,7 +921,11 @@ status_t XMLNode::assignResourceIds(const sp<AaptAssets>& assets,
         const size_t N = mAttributes.size();
         for (size_t i=0; i<N; i++) {
             const attribute_entry& e = mAttributes.itemAt(i);
-            if (e.ns.size() <= 0) continue;
+            if (e.ns.size() <= 0
+		|| (strcmp16(RESOURCES_ANDROID_PREFIX, e.ns) != 0
+		    && strcmp16(RESOURCES_PRV_PREFIX, e.ns) != 0)) {
+              continue;
+	    }
             bool nsIsPublic;
             String16 pkg(getNamespaceResourcePackage(e.ns, &nsIsPublic));
             NOISY(printf("Elem %s %s=\"%s\": namespace(%s) %s ===> %s\n",
