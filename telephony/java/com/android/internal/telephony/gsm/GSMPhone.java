@@ -396,11 +396,6 @@ public class GSMPhone extends PhoneBase {
     }
 
     /*package*/ void
-    notifySignalStrength() {
-        mNotifier.notifySignalStrength(this);
-    }
-
-    /*package*/ void
     notifyDataConnectionFailed(String reason) {
         mNotifier.notifyDataConnectionFailed(this, reason);
     }
