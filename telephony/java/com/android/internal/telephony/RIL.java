@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 The Android Open Source Project
+ * Copyright (C) 2006, 2012 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -231,6 +231,7 @@ public final class RIL extends BaseCommands implements CommandsInterface {
 
     Object     mLastNITZTimeInfo;
 
+    private Integer mInstanceId;
     //***** Events
 
     static final int EVENT_SEND                 = 1;
@@ -487,22 +488,35 @@ public final class RIL extends BaseCommands implements CommandsInterface {
 
     class RILReceiver implements Runnable {
         byte[] buffer;
+        private Integer mInstId;
 
         RILReceiver() {
             buffer = new byte[RIL_MAX_COMMAND_BYTES];
         }
 
+        RILReceiver(Integer inst) {
+            this();
+            mInstId = inst;
+        }
+
         public void
         run() {
             int retryCount = 0;
+            String rilSocket = "rild";
 
             try {for (;;) {
                 LocalSocket s = null;
                 LocalSocketAddress l;
 
+                if (mInstId == null || mInstId == 0) {
+                    rilSocket = SOCKET_NAME_RIL;
+                } else {
+                    rilSocket = SOCKET_NAME_RIL + mInstId;
+                }
+
                 try {
                     s = new LocalSocket();
-                    l = new LocalSocketAddress(SOCKET_NAME_RIL,
+                    l = new LocalSocketAddress(rilSocket,
                             LocalSocketAddress.Namespace.RESERVED);
                     s.connect(l);
                 } catch (IOException ex){
@@ -519,12 +533,12 @@ public final class RIL extends BaseCommands implements CommandsInterface {
 
                     if (retryCount == 8) {
                         Log.e (LOG_TAG,
-                            "Couldn't find '" + SOCKET_NAME_RIL
+                            "Couldn't find '" + rilSocket
                             + "' socket after " + retryCount
                             + " times, continuing to retry silently");
                     } else if (retryCount > 0 && retryCount < 8) {
                         Log.i (LOG_TAG,
-                            "Couldn't find '" + SOCKET_NAME_RIL
+                            "Couldn't find '" + rilSocket
                             + "' socket; retrying after timeout");
                     }
 
@@ -540,7 +554,7 @@ public final class RIL extends BaseCommands implements CommandsInterface {
                 retryCount = 0;
 
                 mSocket = s;
-                Log.i(LOG_TAG, "Connected to '" + SOCKET_NAME_RIL + "' socket");
+                Log.i(LOG_TAG, "Connected to '" + rilSocket + "' socket");
 
                 int length = 0;
                 try {
@@ -566,14 +580,14 @@ public final class RIL extends BaseCommands implements CommandsInterface {
                         p.recycle();
                     }
                 } catch (java.io.IOException ex) {
-                    Log.i(LOG_TAG, "'" + SOCKET_NAME_RIL + "' socket closed",
+                    Log.i(LOG_TAG, "'" + rilSocket + "' socket closed",
                           ex);
                 } catch (Throwable tr) {
                     Log.e(LOG_TAG, "Uncaught exception read length=" + length +
                         "Exception:" + tr.toString());
                 }
 
-                Log.i(LOG_TAG, "Disconnected from '" + SOCKET_NAME_RIL
+                Log.i(LOG_TAG, "Disconnected from '" + rilSocket
                       + "' socket");
 
                 setRadioState (RadioState.RADIO_UNAVAILABLE);
@@ -600,13 +614,17 @@ public final class RIL extends BaseCommands implements CommandsInterface {
 
 
     //***** Constructors
-
     public RIL(Context context, int preferredNetworkType, int cdmaSubscription) {
+        this(context, preferredNetworkType, cdmaSubscription, null);
+    }
+
+    public RIL(Context context, int preferredNetworkType, int cdmaSubscription, Integer instanceId) {
         super(context);
         if (RILJ_LOGD) {
             riljLog("RIL(context, preferredNetworkType=" + preferredNetworkType +
                     " cdmaSubscription=" + cdmaSubscription + ")");
         }
+        mInstanceId = instanceId;
         mCdmaSubscription  = cdmaSubscription;
         mPreferredNetworkType = preferredNetworkType;
         mPhoneType = RILConstants.NO_PHONE;
@@ -631,7 +649,7 @@ public final class RIL extends BaseCommands implements CommandsInterface {
             riljLog("Not starting RILReceiver: wifi-only");
         } else {
             riljLog("Starting RILReceiver");
-            mReceiver = new RILReceiver();
+            mReceiver = new RILReceiver(mInstanceId);
             mReceiverThread = new Thread(mReceiver, "RILReceiver");
             mReceiverThread.start();
 
@@ -3548,11 +3566,13 @@ public final class RIL extends BaseCommands implements CommandsInterface {
     }
 
     private void riljLog(String msg) {
-        Log.d(LOG_TAG, msg);
+        Log.d(LOG_TAG, msg
+                + (mInstanceId != null ? (" [SUB" + mInstanceId + "]") : ""));
     }
 
     private void riljLogv(String msg) {
-        Log.v(LOG_TAG, msg);
+        Log.v(LOG_TAG, msg
+                + (mInstanceId != null ? (" [SUB" + mInstanceId + "]") : ""));
     }
 
     private void unsljLog(int response) {
