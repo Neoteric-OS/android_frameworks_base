@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2009 Qualcomm Innovation Center, Inc.  All Rights Reserved.
- * Copyright (C) 2009 The Android Open Source Project
+ * Copyright (C) 2010 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.android.internal.net;
 
-package com.android.internal.telephony;
 
-public class DataCallState {
-    public int cid;
-    public int active;
-    public String type;
-    public String apn;
-    public String address;
-
-    @Override
-    public String toString() {
-        return "DataCallState: {" + " cid: " + cid + ", active: " + active + ", type: " + type
-                + ", apn: " + apn + ", address: " + address + " }";
-    }
+public enum IPVersion {
+    INET, INET6;
 }

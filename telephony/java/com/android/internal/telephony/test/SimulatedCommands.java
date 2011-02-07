@@ -26,7 +26,7 @@ import android.util.Log;
 import com.android.internal.telephony.BaseCommands;
 import com.android.internal.telephony.CommandException;
 import com.android.internal.telephony.CommandsInterface;
-import com.android.internal.telephony.DataCallState;
+import com.android.internal.telephony.data.DataCallState;
 import com.android.internal.telephony.IccCard;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.UUSInfo;
@@ -961,7 +961,7 @@ public final class SimulatedCommands extends BaseCommands
     }
 
     public void setupDataCall(String radioTechnology, String profile, String apn, String user,
-            String password, String authType, Message result) {
+            String password, String authType, String bearerType, Message result) {
         unimplemented(result);
     }
 

@@ -31,10 +31,11 @@ import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.util.Log;
 
+import com.android.internal.net.IPVersion;
 import com.android.internal.telephony.cdma.CDMAPhone;
+import com.android.internal.telephony.data.DataConnection;
 import com.android.internal.telephony.gsm.GSMPhone;
 import com.android.internal.telephony.gsm.NetworkInfo;
-import com.android.internal.telephony.gsm.GsmDataConnection;
 import com.android.internal.telephony.test.SimulatedRadioControl;
 
 import java.util.List;
@@ -205,10 +206,6 @@ public class PhoneProxy extends Handler implements Phone {
 
     public String[] getActiveApnTypes() {
         return mActivePhone.getActiveApnTypes();
-    }
-
-    public String getActiveApn() {
-        return mActivePhone.getActiveApn();
     }
 
     public SignalStrength getSignalStrength() {
@@ -664,16 +661,16 @@ public class PhoneProxy extends Handler implements Phone {
         return mActivePhone.isDataConnectivityPossible();
     }
 
-    public String getInterfaceName(String apnType) {
-        return mActivePhone.getInterfaceName(apnType);
+    public String getInterfaceName(String apnType, IPVersion ipv) {
+        return mActivePhone.getInterfaceName(apnType, ipv);
     }
 
-    public String getIpAddress(String apnType) {
+    public String[] getIpAddress(String apnType) {
         return mActivePhone.getIpAddress(apnType);
     }
 
-    public String getGateway(String apnType) {
-        return mActivePhone.getGateway(apnType);
+    public String getGateway(String apnType, IPVersion ipv) {
+        return mActivePhone.getGateway(apnType, ipv);
     }
 
     public String[] getDnsServers(String apnType) {
@@ -846,5 +843,25 @@ public class PhoneProxy extends Handler implements Phone {
 
     public boolean isCspPlmnEnabled() {
         return mActivePhone.isCspPlmnEnabled();
+    }
+
+    public DataState getDataConnectionState(String apnType, IPVersion ipv) {
+        return mActivePhone.getDataConnectionState(apnType, ipv);
+    }
+
+    public String getActiveApn(String type, IPVersion ipv) {
+        return mActivePhone.getActiveApn(type, ipv);
+    }
+
+    public boolean isServiceTypeActiveOnDualBearerInterface(String apnType) {
+        return mActivePhone.isServiceTypeActiveOnDualBearerInterface(apnType);
+    }
+
+    public String[] getIpAddress(String apnType, IPVersion ipv) {
+        return mActivePhone.getIpAddress(apnType, ipv);
+    }
+
+    public String[] getDnsServers(String apnType, IPVersion ipv) {
+        return mActivePhone.getDnsServers(apnType, ipv);
     }
 }

@@ -480,6 +480,10 @@ public final class SIMRecords extends IccRecords {
         return imsi.substring(0, 3 + mncLength);
     }
 
+    public String getIccOperatorNumeric() {
+        return getSIMOperatorNumeric();
+    }
+
     // ***** Overridden from Handler
     public void handleMessage(Message msg) {
         AsyncResult ar;

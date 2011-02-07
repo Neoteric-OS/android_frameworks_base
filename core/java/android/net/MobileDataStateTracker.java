@@ -22,6 +22,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.Handler;
 import android.os.ServiceManager;
@@ -29,6 +30,7 @@ import com.android.internal.telephony.ITelephony;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.TelephonyIntents;
 import android.net.NetworkInfo.DetailedState;
+import android.telephony.ApnTypeInfo;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.text.TextUtils;
@@ -50,7 +52,7 @@ public class MobileDataStateTracker extends NetworkStateTracker {
 
     private String mApnType;
     private String mApnTypeToWatchFor;
-    private String mApnName;
+    private ApnTypeInfo mApnTypeInfo;
     private boolean mEnabled;
     private BroadcastReceiver mStateReceiver;
 
@@ -123,7 +125,7 @@ public class MobileDataStateTracker extends NetworkStateTracker {
         String str = intent.getStringExtra(Phone.STATE_KEY);
         if (str != null) {
             String apnTypeList =
-                    intent.getStringExtra(Phone.DATA_APN_TYPES_KEY);
+                    intent.getStringExtra(Phone.DATA_APN_TYPE_KEY);
             if (isApnTypeIncluded(apnTypeList)) {
                 return Enum.valueOf(Phone.DataState.class, str);
             }
@@ -154,9 +156,11 @@ public class MobileDataStateTracker extends NetworkStateTracker {
                         ACTION_ANY_DATA_CONNECTION_STATE_CHANGED)) {
                     Phone.DataState state = getMobileDataState(intent);
                     String reason = intent.getStringExtra(Phone.STATE_CHANGE_REASON_KEY);
-                    String apnName = intent.getStringExtra(Phone.DATA_APN_KEY);
-                    String apnTypeList = intent.getStringExtra(Phone.DATA_APN_TYPES_KEY);
-                    mApnName = apnName;
+                    String apnTypeList = intent.getStringExtra(Phone.DATA_APN_TYPE_KEY);
+
+                    /* TODO: handle ipv6 - just tracking ipv4 info for now. */
+                    mApnTypeInfo = ApnTypeInfo.newFromBundle(intent
+                            .getBundleExtra(Phone.DATA_IPV4_INFO));
 
                     boolean unavailable = intent.getBooleanExtra(Phone.NETWORK_UNAVAILABLE_KEY,
                             false);
@@ -175,9 +179,9 @@ public class MobileDataStateTracker extends NetworkStateTracker {
                             if (state == Phone.DataState.CONNECTED) {
                                 if (DBG) Log.d(TAG, "replacing old mInterfaceName (" +
                                         mInterfaceName + ") with " +
-                                        intent.getStringExtra(Phone.DATA_IFACE_NAME_KEY) +
+                                        mApnTypeInfo.getInterfaceName() +
                                         " for " + mApnType);
-                                mInterfaceName = intent.getStringExtra(Phone.DATA_IFACE_NAME_KEY);
+                                mInterfaceName = mApnTypeInfo.getInterfaceName();
                             }
                             return;
                         }
@@ -199,7 +203,7 @@ public class MobileDataStateTracker extends NetworkStateTracker {
                                     setTeardownRequested(false);
                                 }
 
-                                setDetailedState(DetailedState.DISCONNECTED, reason, apnName);
+                                setDetailedState(DetailedState.DISCONNECTED, reason, mApnTypeInfo.getApn());
                                 boolean doReset = true;
                                 if (mIsDefaultOrHipri == true) {
                                     // both default and hipri must go down before we reset
@@ -231,18 +235,24 @@ public class MobileDataStateTracker extends NetworkStateTracker {
                                 //mDefaultGatewayAddr = 0;
                                 break;
                             case CONNECTING:
-                                setDetailedState(DetailedState.CONNECTING, reason, apnName);
+                                setDetailedState(DetailedState.CONNECTING, reason,
+                                        mApnTypeInfo.getApn());
                                 break;
                             case SUSPENDED:
-                                setDetailedState(DetailedState.SUSPENDED, reason, apnName);
+                                setDetailedState(DetailedState.SUSPENDED, reason,
+                                        mApnTypeInfo.getApn());
                                 break;
                             case CONNECTED:
-                                mInterfaceName = intent.getStringExtra(Phone.DATA_IFACE_NAME_KEY);
+                                mInterfaceName = intent.getStringExtra(mApnTypeInfo
+                                        .getInterfaceName());
                                 if (mInterfaceName == null) {
                                     Log.d(TAG, "CONNECTED event did not supply interface name.");
                                 }
-                                mDefaultGatewayAddr = intent.getIntExtra(Phone.DATA_GATEWAY_KEY, 0);
-                                setDetailedState(DetailedState.CONNECTED, reason, apnName);
+                                String gwString = mApnTypeInfo.getGateWay();
+                                mDefaultGatewayAddr = gwString == null ? 0 : NetworkUtils
+                                        .v4StringToInt(mApnTypeInfo.getGateWay());
+                                setDetailedState(DetailedState.CONNECTED, reason,
+                                        mApnTypeInfo.getApn());
                                 break;
                         }
                     }
@@ -250,7 +260,8 @@ public class MobileDataStateTracker extends NetworkStateTracker {
                         equals(TelephonyIntents.ACTION_DATA_CONNECTION_FAILED)) {
                     mEnabled = false;
                     String reason = intent.getStringExtra(Phone.FAILURE_REASON_KEY);
-                    String apnName = intent.getStringExtra(Phone.DATA_APN_KEY);
+                    //TODO - Fix this. APN name is not broadcasted in ACTION_DATA_CONNECTION_FAILED.
+                    String apnName = null;
                     if (DBG) Log.d(TAG, "Received " + intent.getAction() + " broadcast" +
                             reason == null ? "" : "(" + reason + ")");
                     setDetailedState(DetailedState.FAILED, reason, apnName);
@@ -373,15 +384,14 @@ public class MobileDataStateTracker extends NetworkStateTracker {
                 mEnabled = true;
                 // need to set self to CONNECTING so the below message is handled.
                 mMobileDataState = Phone.DataState.CONNECTING;
-                setDetailedState(DetailedState.CONNECTING, Phone.REASON_APN_CHANGED, null);
+                setDetailedState(DetailedState.CONNECTING, Phone.REASON_SERVICE_TYPE_ENABLED, null);
                 //send out a connected message
                 Intent intent = new Intent(TelephonyIntents.
                         ACTION_ANY_DATA_CONNECTION_STATE_CHANGED);
                 intent.putExtra(Phone.STATE_KEY, Phone.DataState.CONNECTED.toString());
-                intent.putExtra(Phone.STATE_CHANGE_REASON_KEY, Phone.REASON_APN_CHANGED);
-                intent.putExtra(Phone.DATA_APN_TYPES_KEY, mApnTypeToWatchFor);
-                intent.putExtra(Phone.DATA_APN_KEY, mApnName);
-                intent.putExtra(Phone.DATA_IFACE_NAME_KEY, mInterfaceName);
+                intent.putExtra(Phone.STATE_CHANGE_REASON_KEY, Phone.REASON_SERVICE_TYPE_ENABLED);
+                intent.putExtra(Phone.DATA_APN_TYPE_KEY, mApnTypeToWatchFor);
+                intent.putExtra(Phone.DATA_IPV4_INFO, mApnTypeInfo);
                 intent.putExtra(Phone.NETWORK_UNAVAILABLE_KEY, false);
                 if (mStateReceiver != null) mStateReceiver.onReceive(mContext, intent);
                 break;

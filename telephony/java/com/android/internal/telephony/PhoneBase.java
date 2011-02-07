@@ -35,7 +35,11 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.internal.R;
-import com.android.internal.telephony.gsm.GsmDataConnection;
+import com.android.internal.net.IPVersion;
+import com.android.internal.telephony.data.DataConnection;
+import com.android.internal.telephony.data.DataConnectionTracker;
+import com.android.internal.telephony.data.DataInterface.DataActivityState;
+import com.android.internal.telephony.data.DataInterface.DataState;
 import com.android.internal.telephony.test.SimulatedRadioControl;
 
 import java.util.List;
@@ -227,7 +231,7 @@ public abstract class PhoneBase extends Handler implements Phone {
     public void dispose() {
         synchronized(PhoneProxy.lockForRadioTechnologyChange) {
             mCM.unSetOnCallRing(this);
-            mDataConnection.onCleanUpConnection(false, REASON_RADIO_TURNED_OFF);
+            mDataConnection.setDataConnectionAsDesired(false, null);
             mIsTheCurrentActivePhone = false;
         }
     }
@@ -282,18 +286,14 @@ public abstract class PhoneBase extends Handler implements Phone {
      * @param b true disables the check, false enables.
      */
     public void disableDnsCheck(boolean b) {
-        mDnsCheckDisabled = b;
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean(DNS_SERVER_CHECK_DISABLED_KEY, b);
-        editor.apply();
+        mDataConnection.disableDnsCheck(b);
     }
 
     /**
      * Returns true if the DNS check is currently disabled.
      */
     public boolean isDnsCheckDisabled() {
-        return mDnsCheckDisabled;
+        return mDataConnection.isDnsCheckDisabled();
     }
 
     // Inherited documentation suffices.
@@ -649,6 +649,16 @@ public abstract class PhoneBase extends Handler implements Phone {
      */
     public abstract IccFileHandler getIccFileHandler();
 
+    /**
+     * Retrieves the IccRecords of the Phone instance
+     */
+    public abstract IccRecords getIccRecords();
+
+    /**
+     * Retrieves the ServiceStateTracker instance of the phone object.
+     */
+    public abstract ServiceStateTracker getServiceStateTracker();
+
     /*
      * Retrieves the Handler of the Phone instance
      */
@@ -744,6 +754,11 @@ public abstract class PhoneBase extends Handler implements Phone {
     public void notifyDataConnection(String reason) {
         mNotifier.notifyDataConnection(this, reason);
     }
+
+    public void notifyDataConnectionFailed(String reason) {
+        mNotifier.notifyDataConnectionFailed(this, reason);
+    }
+
 
     public abstract String getPhoneName();
 
@@ -920,32 +935,52 @@ public abstract class PhoneBase extends Handler implements Phone {
          logUnexpectedCdmaMethodCall("unsetOnEcbModeExitResponse");
      }
 
-    public String getInterfaceName(String apnType) {
-        return mDataConnection.getInterfaceName(apnType);
+    public String getInterfaceName(String apnType, IPVersion ipv) {
+        return mDataConnection.getInterfaceName(apnType, ipv);
     }
 
-    public String getIpAddress(String apnType) {
+    public String[] getIpAddress(String apnType) {
         return mDataConnection.getIpAddress(apnType);
     }
 
+    public String[] getIpAddress(String apnType, IPVersion ipv) {
+        return mDataConnection.getIpAddress(apnType, ipv);
+   }
+
     public boolean isDataConnectivityEnabled() {
-        return mDataConnection.getDataEnabled();
+        return mDataConnection.isDataConnectivityEnabled();
     }
 
-    public String getGateway(String apnType) {
-        return mDataConnection.getGateway(apnType);
+    public String getGateway(String apnType, IPVersion ipv) {
+        return mDataConnection.getGateway(apnType, ipv);
     }
 
     public String[] getDnsServers(String apnType) {
         return mDataConnection.getDnsServers(apnType);
     }
 
-    public String[] getActiveApnTypes() {
-        return mDataConnection.getActiveApnTypes();
+    public DataState getDataConnectionState() {
+        return mDataConnection.getDataConnectionState();
     }
 
-    public String getActiveApn() {
-        return mDataConnection.getActiveApnString();
+    public DataState getDataConnectionState(String apnType, IPVersion ipv) {
+        return mDataConnection.getDataConnectionState(apnType, ipv);
+    }
+
+    public boolean isServiceTypeActiveOnDualBearerInterface(String apnType) {
+        return mDataConnection.isServiceTypeActiveOnDualBearerInterface(apnType);
+    }
+
+    public String[] getDnsServers(String apnType, IPVersion ipv) {
+        return mDataConnection.getDnsServers(apnType, ipv);
+    }
+
+    public String getActiveApn(String type, IPVersion ipv) {
+        return mDataConnection.getActiveApn(type, ipv);
+    }
+
+    public String[] getActiveApnTypes() {
+        return mDataConnection.getActiveApnTypes();
     }
 
     public int enableApnType(String type) {
@@ -954,6 +989,38 @@ public abstract class PhoneBase extends Handler implements Phone {
 
     public int disableApnType(String type) {
         return mDataConnection.disableApnType(type);
+    }
+
+    public void getDataCallList(Message response) {
+        mDataConnection.getDataCallList(response);
+    }
+
+    public List<DataConnection> getCurrentDataConnectionList() {
+        return mDataConnection.getCurrentDataConnectionList();
+    }
+
+    public boolean getDataRoamingEnabled() {
+        return mDataConnection.getDataRoamingEnabled();
+    }
+
+    public void setDataRoamingEnabled(boolean enable) {
+        mDataConnection.setDataRoamingEnabled(enable);
+    }
+
+    public DataActivityState getDataActivityState() {
+        return mDataConnection.getDataActivityState();
+    }
+
+    public boolean enableDataConnectivity() {
+        return mDataConnection.enableDataConnectivity();
+    }
+
+    public boolean disableDataConnectivity() {
+        return mDataConnection.disableDataConnectivity();
+    }
+
+    public boolean isDataConnectivityPossible() {
+        return mDataConnection.isDataConnectivityPossible();
     }
 
     /**

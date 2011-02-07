@@ -1057,8 +1057,7 @@ public final class CdmaCallTracker extends CallTracker {
             }
             if (inEcm.compareTo("false") == 0) {
                 // Re-initiate data connection
-                // TODO - can this be changed to phone.enableDataConnectivity();
-                phone.mDataConnection.setDataEnabled(true);
+                phone.enableDataConnectivity();
             }
         }
     }

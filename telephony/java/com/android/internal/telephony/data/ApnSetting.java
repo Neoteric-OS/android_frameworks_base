@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package com.android.internal.telephony.gsm;
+package com.android.internal.telephony.data;
 
-import com.android.internal.telephony.*;
+import com.android.internal.telephony.data.DataInterface.BearerType;
+
 /**
  * This class represents a apn setting for create PDP link
  */
-public class ApnSetting {
+public class ApnSetting extends DataProfile {
 
     String carrier;
     String apn;
@@ -32,14 +33,16 @@ public class ApnSetting {
     String user;
     String password;
     int authType;
-    public String[] types;
+    DataServiceType serviceTypes[];
     int id;
     String numeric;
+    BearerType bearerType = null;
 
 
-    public ApnSetting(int id, String numeric, String carrier, String apn, String proxy, String port,
-            String mmsc, String mmsProxy, String mmsPort,
-            String user, String password, int authType, String[] types) {
+    ApnSetting(int id, String numeric, String carrier, String apn, String proxy, String port,
+            String mmsc, String mmsProxy, String mmsPort, String user, String password,
+            int authType, DataServiceType[] serviceTypes, String bearerType) {
+        super();
         this.id = id;
         this.numeric = numeric;
         this.carrier = carrier;
@@ -52,41 +55,28 @@ public class ApnSetting {
         this.user = user;
         this.password = password;
         this.authType = authType;
-        this.types = types;
+        this.serviceTypes = serviceTypes;
+
+        try {
+            this.bearerType = Enum.valueOf(BearerType.class, bearerType.toUpperCase());
+        } catch (Exception e) {
+            //TODO: is falling back to V4 a good thing?
+            this.bearerType = BearerType.IP;
+        }
     }
 
-    // data[0] = name
-    // data[1] = apn
-    // data[2] = proxy
-    // data[3] = port
-    // data[4] = username
-    // data[5] = password
-    // data[6] = server
-    // data[7] = mmsc
-    // data[8] = mmsproxy
-    // data[9] = mmsport
-    // data[10] = mcc
-    // data[11] = mnc
-    // data[12] = auth
-    // data[13] = first type...
-    public static ApnSetting fromString(String data) {
-        if (data == null) return null;
-        String[] a = data.split("\\s*,\\s*");
-        if (a.length < 14) return null;
-        int authType = 0;
-        try {
-            authType = Integer.parseInt(a[12]);
-        } catch (Exception e) {
-        }
-        String[] typeArray = new String[a.length - 13];
-        System.arraycopy(a, 13, typeArray, 0, a.length - 13);
-        return new ApnSetting(-1,a[10]+a[11],a[0],a[1],a[2],a[3],a[7],a[8],
-                a[9],a[4],a[5],authType,typeArray);
+    /*
+     * simple way to compare apns - toString() + username + password
+     */
+    String toHash() {
+        return this.toString() + this.user + this.password;
     }
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(carrier)
+
+        sb.append(super.toString())
+        .append(carrier)
         .append(", ").append(id)
         .append(", ").append(numeric)
         .append(", ").append(apn)
@@ -95,22 +85,40 @@ public class ApnSetting {
         .append(", ").append(mmsProxy)
         .append(", ").append(mmsPort)
         .append(", ").append(port)
-        .append(", ").append(authType);
-        for (String t : types) {
+        .append(", ").append(authType)
+        .append(", ").append(bearerType)
+        .append(", [");
+        for (DataServiceType t : serviceTypes) {
             sb.append(", ").append(t);
         }
+        sb.append("]");
+        sb.append("]");
         return sb.toString();
     }
 
-    public boolean canHandleType(String type) {
-        for (String t : types) {
-            // DEFAULT handles all, and HIPRI is handled by DEFAULT
-            if (t.equals(type) || t.equals(Phone.APN_TYPE_ALL) ||
-                    (t.equals(Phone.APN_TYPE_DEFAULT) &&
-                    type.equals(Phone.APN_TYPE_HIPRI))) {
+    public String toShortString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toString())
+          .append(numeric)
+          .append(", ").append(apn)
+          .append("]");
+        return sb.toString();
+    }
+
+    boolean canHandleServiceType(DataServiceType type) {
+        for (DataServiceType t : serviceTypes) {
+            if (t == type)
                 return true;
-            }
         }
         return false;
+    }
+
+    DataProfileType getDataProfileType() {
+        return DataProfileType.PROFILE_TYPE_3GPP_APN;
+    }
+
+    @Override
+    BearerType getBearerType() {
+        return bearerType;
     }
 }

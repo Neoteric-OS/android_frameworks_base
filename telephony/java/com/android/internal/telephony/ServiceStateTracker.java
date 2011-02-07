@@ -23,6 +23,7 @@ import android.os.Registrant;
 import android.os.RegistrantList;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
+import android.util.Slog;
 
 /**
  * {@hide}
@@ -45,6 +46,8 @@ public abstract class ServiceStateTracker extends Handler {
     protected static final int DATA_ACCESS_HSUPA = 10;
     protected static final int DATA_ACCESS_HSPA = 11;
     protected static final int DATA_ACCESS_CDMA_EvDo_B = 12;
+
+    static final String LOG_TAG = "SST";
 
     protected CommandsInterface cm;
 
@@ -164,6 +167,8 @@ public abstract class ServiceStateTracker extends Handler {
         return mDesiredPowerState;
     }
 
+    public abstract int getDataServiceState();
+
     /**
      * Registration point for combined roaming on
      * combined roaming is true when roaming is true and ONS differs SPN
@@ -272,12 +277,43 @@ public abstract class ServiceStateTracker extends Handler {
     protected abstract void updateSpnDisplay();
     protected abstract void setPowerStateToDesired();
 
+    public abstract void registerForDataConnectionAttached(Handler h, int what, Object obj);
+    public abstract void unregisterForDataConnectionAttached(Handler h);
+    public abstract void registerForDataConnectionDetached(Handler h, int what, Object obj);
+    public abstract void unregisterForDataConnectionDetached(Handler h);
+
+    /**
+     * Common error logger method for unexpected calls to GSM/WCDMA-only methods.
+     */
+    private void logUnexpectedGsmMethodCall(String name) {
+        Slog.e(LOG_TAG, "Error! " + name + "() in ServiceStateTracker should not be " +
+                "called, GsmServiceStateTracker inactive.");
+    }
+
+    public void registerForPsRestrictedEnabled(Handler h, int what, Object obj) {
+        logUnexpectedGsmMethodCall("registerForPsRestrictedEnabled");
+    }
+
+    public void unregisterForPsRestrictedEnabled(Handler h) {
+        logUnexpectedGsmMethodCall("unregisterForPsRestrictedEnabled");
+    }
+
+    public void registerForPsRestrictedDisabled(Handler h, int what, Object obj) {
+        logUnexpectedGsmMethodCall("registerForPsRestrictedDisabled");
+    }
+
+    public void unregisterForPsRestrictedDisabled(Handler h) {
+        logUnexpectedGsmMethodCall("registerForPsRestrictedDisabled");
+    }
+
     /**
      * Clean up existing voice and data connection then turn off radio power.
      *
      * Hang up the existing voice calls to decrease call drop rate.
      */
     protected abstract void powerOffRadioSafely();
+
+    public abstract boolean isConcurrentVoiceAndData();
 
     /** Cancel a pending (if any) pollState() operation */
     protected void cancelPollState() {

@@ -1347,7 +1347,7 @@ public interface CommandsInterface {
      *            Callback message
      */
     public void setupDataCall(String radioTechnology, String profile, String apn,
-            String user, String password, String authType, Message result);
+            String user, String password, String authType, String bearerType, Message result);
 
     /**
      * Deactivate packet data connection

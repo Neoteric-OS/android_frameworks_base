@@ -31,16 +31,18 @@ import android.util.Log;
 import com.android.internal.telephony.Call;
 import com.android.internal.telephony.CallStateException;
 import com.android.internal.telephony.Connection;
-import com.android.internal.telephony.DataConnection;
+import com.android.internal.telephony.data.DataConnection;
 import com.android.internal.telephony.IccCard;
 import com.android.internal.telephony.IccFileHandler;
 import com.android.internal.telephony.IccPhoneBookInterfaceManager;
+import com.android.internal.telephony.IccRecords;
 import com.android.internal.telephony.IccSmsInterfaceManager;
 import com.android.internal.telephony.MmiCode;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneBase;
 import com.android.internal.telephony.PhoneNotifier;
 import com.android.internal.telephony.PhoneSubInfo;
+import com.android.internal.telephony.ServiceStateTracker;
 import com.android.internal.telephony.TelephonyProperties;
 
 import java.util.ArrayList;
@@ -329,6 +331,14 @@ abstract class SipPhoneBase extends PhoneBase {
     }
 
     public IccCard getIccCard() {
+        return null;
+    }
+
+    public IccRecords getIccRecords() {
+        return null;
+    }
+
+    public ServiceStateTracker getServiceStateTracker() {
         return null;
     }
 

@@ -19,6 +19,7 @@ package com.android.internal.telephony;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.ServiceState;
+import android.telephony.ApnTypeInfo;
 import android.telephony.SignalStrength;
 import com.android.internal.telephony.IPhoneStateListener;
 
@@ -32,8 +33,7 @@ interface ITelephonyRegistry {
     void notifyCallForwardingChanged(boolean cfi);
     void notifyDataActivity(int state);
     void notifyDataConnection(int state, boolean isDataConnectivityPossible,
-            String reason, String apn, in String[] apnTypes, String interfaceName, int networkType,
-            String gateway);
+            String reason, String apnType, in ApnTypeInfo ipv4Info, in ApnTypeInfo ipv6Info, int networkType);
     void notifyDataConnectionFailed(String reason);
     void notifyCellLocation(in Bundle cellLocation);
 }

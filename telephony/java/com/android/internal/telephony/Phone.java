@@ -26,9 +26,8 @@ import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 
-import com.android.internal.telephony.DataConnection;
+import com.android.internal.telephony.data.DataInterface;
 import com.android.internal.telephony.gsm.NetworkInfo;
-import com.android.internal.telephony.gsm.GsmDataConnection;
 import com.android.internal.telephony.test.SimulatedRadioControl;
 
 import java.util.List;
@@ -40,7 +39,7 @@ import java.util.List;
  * {@hide}
  *
  */
-public interface Phone {
+public interface Phone extends DataInterface {
 
     /** used to enable additional debug messages */
     static final boolean DEBUG_PHONE = true;
@@ -61,36 +60,6 @@ public interface Phone {
         IDLE, RINGING, OFFHOOK;
     };
 
-    /**
-     * The state of a data connection.
-     * <ul>
-     * <li>CONNECTED = IP traffic should be available</li>
-     * <li>CONNECTING = Currently setting up data connection</li>
-     * <li>DISCONNECTED = IP not available</li>
-     * <li>SUSPENDED = connection is created but IP traffic is
-     *                 temperately not available. i.e. voice call is in place
-     *                 in 2G network</li>
-     * </ul>
-     */
-    enum DataState {
-        CONNECTED, CONNECTING, DISCONNECTED, SUSPENDED;
-    };
-
-    public enum DataActivityState {
-        /**
-         * The state of a data activity.
-         * <ul>
-         * <li>NONE = No traffic</li>
-         * <li>DATAIN = Receiving IP ppp traffic</li>
-         * <li>DATAOUT = Sending IP ppp traffic</li>
-         * <li>DATAINANDOUT = Both receiving and sending IP ppp traffic</li>
-         * <li>DORMANT = The data connection is still active,
-                                     but physical link is down</li>
-         * </ul>
-         */
-        NONE, DATAIN, DATAOUT, DATAINANDOUT, DORMANT;
-    };
-
     enum SuppService {
       UNKNOWN, SWITCH, SEPARATE, TRANSFER, CONFERENCE, REJECT, HANGUP;
     };
@@ -99,71 +68,7 @@ public interface Phone {
     static final String PHONE_NAME_KEY = "phoneName";
     static final String FAILURE_REASON_KEY = "reason";
     static final String STATE_CHANGE_REASON_KEY = "reason";
-    static final String DATA_APN_TYPES_KEY = "apnType";
-    static final String DATA_APN_KEY = "apn";
-
-    static final String DATA_IFACE_NAME_KEY = "iface";
-    static final String DATA_GATEWAY_KEY = "gateway";
-    static final String NETWORK_UNAVAILABLE_KEY = "networkUnvailable";
     static final String PHONE_IN_ECM_STATE = "phoneinECMState";
-
-    /**
-     * APN types for data connections.  These are usage categories for an APN
-     * entry.  One APN entry may support multiple APN types, eg, a single APN
-     * may service regular internet traffic ("default") as well as MMS-specific
-     * connections.<br/>
-     * APN_TYPE_ALL is a special type to indicate that this APN entry can
-     * service all data connections.
-     */
-    static final String APN_TYPE_ALL = "*";
-    /** APN type for default data traffic */
-    static final String APN_TYPE_DEFAULT = "default";
-    /** APN type for MMS traffic */
-    static final String APN_TYPE_MMS = "mms";
-    /** APN type for SUPL assisted GPS */
-    static final String APN_TYPE_SUPL = "supl";
-    /** APN type for DUN traffic */
-    static final String APN_TYPE_DUN = "dun";
-    /** APN type for HiPri traffic */
-    static final String APN_TYPE_HIPRI = "hipri";
-
-    // "Features" accessible through the connectivity manager
-    static final String FEATURE_ENABLE_MMS = "enableMMS";
-    static final String FEATURE_ENABLE_SUPL = "enableSUPL";
-    static final String FEATURE_ENABLE_DUN = "enableDUN";
-    static final String FEATURE_ENABLE_HIPRI = "enableHIPRI";
-
-    /**
-     * Return codes for <code>enableApnType()</code>
-     */
-    static final int APN_ALREADY_ACTIVE     = 0;
-    static final int APN_REQUEST_STARTED    = 1;
-    static final int APN_TYPE_NOT_AVAILABLE = 2;
-    static final int APN_REQUEST_FAILED     = 3;
-
-
-    /**
-     * Optional reasons for disconnect and connect
-     */
-    static final String REASON_ROAMING_ON = "roamingOn";
-    static final String REASON_ROAMING_OFF = "roamingOff";
-    static final String REASON_DATA_DISABLED = "dataDisabled";
-    static final String REASON_DATA_ENABLED = "dataEnabled";
-    static final String REASON_GPRS_ATTACHED = "gprsAttached";
-    static final String REASON_GPRS_DETACHED = "gprsDetached";
-    static final String REASON_CDMA_DATA_ATTACHED = "cdmaDataAttached";
-    static final String REASON_CDMA_DATA_DETACHED = "cdmaDataDetached";
-    static final String REASON_APN_CHANGED = "apnChanged";
-    static final String REASON_APN_SWITCHED = "apnSwitched";
-    static final String REASON_APN_FAILED = "apnFailed";
-    static final String REASON_RESTORE_DEFAULT_APN = "restoreDefaultApn";
-    static final String REASON_RADIO_TURNED_OFF = "radioTurnedOff";
-    static final String REASON_PDP_RESET = "pdpReset";
-    static final String REASON_VOICE_CALL_ENDED = "2GVoiceCallEnded";
-    static final String REASON_VOICE_CALL_STARTED = "2GVoiceCallStarted";
-    static final String REASON_PS_RESTRICT_ENABLED = "psRestrictEnabled";
-    static final String REASON_PS_RESTRICT_DISABLED = "psRestrictDisabled";
-    static final String REASON_SIM_LOADED = "simLoaded";
 
     // Used for band mode selection methods
     static final int BM_UNSPECIFIED = 0; // selected by baseband automatically
@@ -243,35 +148,9 @@ public interface Phone {
     CellLocation getCellLocation();
 
     /**
-     * Get the current DataState. No change notification exists at this
-     * interface -- use
-     * {@link android.telephony.PhoneStateListener} instead.
-     */
-    DataState getDataConnectionState();
-
-    /**
-     * Get the current DataActivityState. No change notification exists at this
-     * interface -- use
-     * {@link android.telephony.TelephonyManager} instead.
-     */
-    DataActivityState getDataActivityState();
-
-    /**
      * Gets the context for the phone, as set at initialization time.
      */
     Context getContext();
-
-    /**
-     * Disables the DNS check (i.e., allows "0.0.0.0").
-     * Useful for lab testing environment.
-     * @param b true disables the check, false enables.
-     */
-    void disableDnsCheck(boolean b);
-
-    /**
-     * Returns true if the DNS check is currently disabled.
-     */
-    boolean isDnsCheckDisabled();
 
     /**
      * Get current coarse-grained voice call state.
@@ -298,19 +177,6 @@ public interface Phone {
      * @return PHONE_TYPE_XXX as defined above.
      */
     int getPhoneType();
-
-    /**
-     * Returns an array of string identifiers for the APN types serviced by the
-     * currently active or last connected APN.
-     *  @return The string array.
-     */
-    String[] getActiveApnTypes();
-
-    /**
-     * Returns a string identifier for currently active or last connected APN.
-     *  @return The string name.
-     */
-    String getActiveApn();
 
     /**
      * Get current signal strength. No change notification available on this
@@ -1205,26 +1071,6 @@ public interface Phone {
     void invokeOemRilRequestStrings(String[] strings, Message response);
 
     /**
-     * Get the current active Data Call list
-     *
-     * @param response <strong>On success</strong>, "response" bytes is
-     * made available as:
-     * (String[])(((AsyncResult)response.obj).result).
-     * <strong>On failure</strong>,
-     * (((AsyncResult)response.obj).result) == null and
-     * (((AsyncResult)response.obj).exception) being an instance of
-     * com.android.internal.telephony.gsm.CommandException
-     */
-    void getDataCallList(Message response);
-
-    /**
-     * Get current mutiple data connection status
-     *
-     * @return list of data connections
-     */
-    List<DataConnection> getCurrentDataConnectionList();
-
-    /**
      * Update the ServiceState CellLocation for current network registration.
      */
     void updateServiceLocation();
@@ -1304,96 +1150,6 @@ public interface Phone {
      * otherwise, null.
      */
     SimulatedRadioControl getSimulatedRadioControl();
-
-    /**
-     * Allow mobile data connections.
-     * @return {@code true} if the operation started successfully
-     * <br/>{@code false} if it
-     * failed immediately.<br/>
-     * Even in the {@code true} case, it may still fail later
-     * during setup, in which case an asynchronous indication will
-     * be supplied.
-     */
-    boolean enableDataConnectivity();
-
-    /**
-     * Disallow mobile data connections, and terminate any that
-     * are in progress.
-     * @return {@code true} if the operation started successfully
-     * <br/>{@code false} if it
-     * failed immediately.<br/>
-     * Even in the {@code true} case, it may still fail later
-     * during setup, in which case an asynchronous indication will
-     * be supplied.
-     */
-    boolean disableDataConnectivity();
-
-    /**
-     * Report the current state of data connectivity (enabled or disabled)
-     * @return {@code false} if data connectivity has been explicitly disabled,
-     * {@code true} otherwise.
-     */
-    boolean isDataConnectivityEnabled();
-
-    /**
-     * Enables the specified APN type. Only works for "special" APN types,
-     * i.e., not the default APN.
-     * @param type The desired APN type. Cannot be {@link #APN_TYPE_DEFAULT}.
-     * @return <code>APN_ALREADY_ACTIVE</code> if the current APN
-     * services the requested type.<br/>
-     * <code>APN_TYPE_NOT_AVAILABLE</code> if the carrier does not
-     * support the requested APN.<br/>
-     * <code>APN_REQUEST_STARTED</code> if the request has been initiated.<br/>
-     * <code>APN_REQUEST_FAILED</code> if the request was invalid.<br/>
-     * A <code>ACTION_ANY_DATA_CONNECTION_STATE_CHANGED</code> broadcast will
-     * indicate connection state progress.
-     */
-    int enableApnType(String type);
-
-    /**
-     * Disables the specified APN type, and switches back to the default APN,
-     * if necessary. Switching to the default APN will not happen if default
-     * data traffic has been explicitly disabled via a call to {@link #disableDataConnectivity}.
-     * <p/>Only works for "special" APN types,
-     * i.e., not the default APN.
-     * @param type The desired APN type. Cannot be {@link #APN_TYPE_DEFAULT}.
-     * @return <code>APN_ALREADY_ACTIVE</code> if the default APN
-     * is already active.<br/>
-     * <code>APN_REQUEST_STARTED</code> if the request to switch to the default
-     * APN has been initiated.<br/>
-     * <code>APN_REQUEST_FAILED</code> if the request was invalid.<br/>
-     * A <code>ACTION_ANY_DATA_CONNECTION_STATE_CHANGED</code> broadcast will
-     * indicate connection state progress.
-     */
-    int disableApnType(String type);
-
-    /**
-     * Report on whether data connectivity is allowed.
-     */
-    boolean isDataConnectivityPossible();
-
-    /**
-     * Returns the name of the network interface used by the specified APN type.
-     */
-    String getInterfaceName(String apnType);
-
-    /**
-     * Returns the IP address of the network interface used by the specified
-     * APN type.
-     */
-    String getIpAddress(String apnType);
-
-    /**
-     * Returns the gateway for the network interface used by the specified APN
-     * type.
-     */
-    String getGateway(String apnType);
-
-    /**
-     * Returns the DNS servers for the network interface used by the specified
-     * APN type.
-     */
-    public String[] getDnsServers(String apnType);
 
     /**
      * Retrieves the unique device ID, e.g., IMEI for GSM phones and MEID for CDMA phones.

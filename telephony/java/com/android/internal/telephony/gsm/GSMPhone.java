@@ -50,16 +50,16 @@ import static com.android.internal.telephony.CommandsInterface.SERVICE_CLASS_VOI
 import static com.android.internal.telephony.TelephonyProperties.PROPERTY_BASEBAND_VERSION;
 
 import com.android.internal.telephony.cat.CatService;
+import com.android.internal.telephony.data.MMDataConnectionTracker;
 import com.android.internal.telephony.Call;
 import com.android.internal.telephony.CallForwardInfo;
 import com.android.internal.telephony.CallStateException;
 import com.android.internal.telephony.CommandsInterface;
 import com.android.internal.telephony.Connection;
-import com.android.internal.telephony.DataConnection;
-import com.android.internal.telephony.DataConnectionTracker;
 import com.android.internal.telephony.IccCard;
 import com.android.internal.telephony.IccFileHandler;
 import com.android.internal.telephony.IccPhoneBookInterfaceManager;
+import com.android.internal.telephony.IccRecords;
 import com.android.internal.telephony.IccSmsInterfaceManager;
 import com.android.internal.telephony.MmiCode;
 import com.android.internal.telephony.Phone;
@@ -67,6 +67,7 @@ import com.android.internal.telephony.PhoneBase;
 import com.android.internal.telephony.PhoneNotifier;
 import com.android.internal.telephony.PhoneProxy;
 import com.android.internal.telephony.PhoneSubInfo;
+import com.android.internal.telephony.ServiceStateTracker;
 import com.android.internal.telephony.TelephonyProperties;
 import com.android.internal.telephony.UUSInfo;
 import com.android.internal.telephony.test.SimulatedRadioControl;
@@ -143,7 +144,7 @@ public class GSMPhone extends PhoneBase {
         mSMS = new GsmSMSDispatcher(this);
         mIccFileHandler = new SIMFileHandler(this);
         mSIMRecords = new SIMRecords(this);
-        mDataConnection = new GsmDataConnectionTracker (this);
+        mDataConnection = new MMDataConnectionTracker(this);
         mSimCard = new SimCard(this);
         if (!unitTestMode) {
             mSimPhoneBookIntManager = new SimPhoneBookInterfaceManager(this);
@@ -287,69 +288,6 @@ public class GSMPhone extends PhoneBase {
         return mPendingMMIs;
     }
 
-    public DataState getDataConnectionState() {
-        DataState ret = DataState.DISCONNECTED;
-
-        if (mSST == null) {
-            // Radio Technology Change is ongoning, dispose() and removeReferences() have
-            // already been called
-
-            ret = DataState.DISCONNECTED;
-        } else if (mSST.getCurrentGprsState()
-                != ServiceState.STATE_IN_SERVICE) {
-            // If we're out of service, open TCP sockets may still work
-            // but no data will flow
-            ret = DataState.DISCONNECTED;
-        } else { /* mSST.gprsState == ServiceState.STATE_IN_SERVICE */
-            switch (mDataConnection.getState()) {
-                case FAILED:
-                case IDLE:
-                    ret = DataState.DISCONNECTED;
-                break;
-
-                case CONNECTED:
-                case DISCONNECTING:
-                    if ( mCT.state != Phone.State.IDLE
-                            && !mSST.isConcurrentVoiceAndData()) {
-                        ret = DataState.SUSPENDED;
-                    } else {
-                        ret = DataState.CONNECTED;
-                    }
-                break;
-
-                case INITING:
-                case CONNECTING:
-                case SCANNING:
-                    ret = DataState.CONNECTING;
-                break;
-            }
-        }
-
-        return ret;
-    }
-
-    public DataActivityState getDataActivityState() {
-        DataActivityState ret = DataActivityState.NONE;
-
-        if (mSST.getCurrentGprsState() == ServiceState.STATE_IN_SERVICE) {
-            switch (mDataConnection.getActivity()) {
-                case DATAIN:
-                    ret = DataActivityState.DATAIN;
-                break;
-
-                case DATAOUT:
-                    ret = DataActivityState.DATAOUT;
-                break;
-
-                case DATAINANDOUT:
-                    ret = DataActivityState.DATAINANDOUT;
-                break;
-            }
-        }
-
-        return ret;
-    }
-
     /**
      * Notify any interested party of a Phone state change {@link Phone.State}
      */
@@ -398,11 +336,6 @@ public class GSMPhone extends PhoneBase {
     /*package*/ void
     notifySignalStrength() {
         mNotifier.notifySignalStrength(this);
-    }
-
-    /*package*/ void
-    notifyDataConnectionFailed(String reason) {
-        mNotifier.notifyDataConnectionFailed(this, reason);
     }
 
     /*package*/ void
@@ -986,6 +919,10 @@ public class GSMPhone extends PhoneBase {
         return mSimCard;
     }
 
+    public IccRecords getIccRecords() {
+        return mSIMRecords;
+    }
+
     public void
     getAvailableNetworks(Message response) {
         mCM.getAvailableNetworks(response);
@@ -1054,14 +991,6 @@ public class GSMPhone extends PhoneBase {
         return mCT.getMute();
     }
 
-    public void getDataCallList(Message response) {
-        mCM.getDataCallList(response);
-    }
-
-    public List<DataConnection> getCurrentDataConnectionList () {
-        return mDataConnection.getAllDataConnections();
-    }
-
     public void updateServiceLocation() {
         mSST.enableSingleLocationUpdate();
     }
@@ -1072,43 +1001,6 @@ public class GSMPhone extends PhoneBase {
 
     public void disableLocationUpdates() {
         mSST.disableLocationUpdates();
-    }
-
-    public boolean getDataRoamingEnabled() {
-        return mDataConnection.getDataOnRoamingEnabled();
-    }
-
-    public void setDataRoamingEnabled(boolean enable) {
-        mDataConnection.setDataOnRoamingEnabled(enable);
-    }
-
-    public boolean enableDataConnectivity() {
-        return mDataConnection.setDataEnabled(true);
-    }
-
-    public boolean disableDataConnectivity() {
-        return mDataConnection.setDataEnabled(false);
-    }
-
-    /**
-     * The only circumstances under which we report that data connectivity is not
-     * possible are
-     * <ul>
-     * <li>Data roaming is disallowed and we are roaming.</li>
-     * <li>The current data state is {@code DISCONNECTED} for a reason other than
-     * having explicitly disabled connectivity. In other words, data is not available
-     * because the phone is out of coverage or some like reason.</li>
-     * </ul>
-     * @return {@code true} if data connectivity is possible, {@code false} otherwise.
-     */
-    public boolean isDataConnectivityPossible() {
-        // TODO: Currently checks if any GPRS connection is active. Should it only
-        // check for "default"?
-        boolean noData = mDataConnection.getDataEnabled() &&
-            getDataConnectionState() == DataState.DISCONNECTED;
-        return !noData && getIccCard().getState() == SimCard.State.READY &&
-                getServiceState().getState() == ServiceState.STATE_IN_SERVICE &&
-            (mDataConnection.getDataOnRoamingEnabled() || !getServiceState().getRoaming());
     }
 
     /**
@@ -1485,5 +1377,9 @@ public class GSMPhone extends PhoneBase {
 
     public boolean isCspPlmnEnabled() {
         return mSIMRecords.isCspPlmnEnabled();
+    }
+
+    public ServiceStateTracker getServiceStateTracker() {
+        return mSST;
     }
 }

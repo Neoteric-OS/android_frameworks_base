@@ -19,9 +19,11 @@ package com.android.internal.telephony;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.telephony.ApnTypeInfo;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import com.android.internal.net.IPVersion;
 import com.android.internal.telephony.ITelephonyRegistry;
 
 /**
@@ -92,20 +94,44 @@ public class DefaultPhoneNotifier implements PhoneNotifier {
         }
     }
 
-    public void notifyDataConnection(Phone sender, String reason) {
+    public void notifyDataConnection(Phone sender, String apnType, String reason) {
         TelephonyManager telephony = TelephonyManager.getDefault();
+
+        ApnTypeInfo v4Info = getApnTypeInfo(sender, apnType, IPVersion.INET);
+        ApnTypeInfo v6Info = getApnTypeInfo(sender, apnType, IPVersion.INET6);
+
         try {
             mRegistry.notifyDataConnection(
                     convertDataState(sender.getDataConnectionState()),
                     sender.isDataConnectivityPossible(), reason,
-                    sender.getActiveApn(),
-                    sender.getActiveApnTypes(),
-                    sender.getInterfaceName(null),
+                    apnType, v4Info, v6Info,
                     ((telephony!=null) ? telephony.getNetworkType() :
-                    TelephonyManager.NETWORK_TYPE_UNKNOWN),
-                    sender.getGateway(null));
+                    TelephonyManager.NETWORK_TYPE_UNKNOWN));
         } catch (RemoteException ex) {
             // system process is dead
+        }
+    }
+
+    private ApnTypeInfo getApnTypeInfo(Phone sender, String apnType, IPVersion ipv) {
+        ApnTypeInfo apnInfo = new ApnTypeInfo();
+        apnInfo.setDataState(convertDataState(sender.getDataConnectionState(apnType, ipv)));
+        apnInfo.setInterfaceName(sender.getInterfaceName(apnType, ipv));
+        apnInfo.setApn(sender.getActiveApn(apnType, ipv));
+        apnInfo.setIpAddressList(sender.getIpAddress(apnType, ipv));
+        apnInfo.setGateWay(sender.getGateway(apnType, ipv));
+        return apnInfo;
+    }
+
+    public void notifyDataConnection(Phone sender, String reason) {
+
+        /* notify all apn types! */
+        String types[] = new String[] {
+                Phone.APN_TYPE_DEFAULT, Phone.APN_TYPE_MMS, Phone.APN_TYPE_SUPL,
+                Phone.APN_TYPE_DUN, Phone.APN_TYPE_HIPRI
+        };
+
+        for (String type : types) {
+            notifyDataConnection(sender, type, reason);
         }
     }
 

@@ -1724,6 +1724,8 @@ public final class Telephony {
         public static final String TYPE = "type";
 
         public static final String CURRENT = "current";
+
+        public static final String BEARER_TYPE = "bearertype";
     }
 
     public static final class Intents {

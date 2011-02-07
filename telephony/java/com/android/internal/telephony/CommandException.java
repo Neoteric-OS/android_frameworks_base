@@ -42,6 +42,7 @@ public class CommandException extends RuntimeException {
         MODE_NOT_SUPPORTED,
         FDN_CHECK_FAILURE,
         ILLEGAL_SIM_OR_ME,
+        SETUP_DATA_CALL_FAILURE
     }
 
     public CommandException(Error e) {

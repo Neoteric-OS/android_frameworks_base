@@ -103,6 +103,8 @@ public abstract class IccRecords extends Handler implements IccConstants {
         return msisdn;
     }
 
+    public abstract String getIccOperatorNumeric();
+
     /**
      * Set subscriber number to SIM record
      *
