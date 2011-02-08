@@ -87,11 +87,21 @@ public:
      * added asset path will be examined first when searching for assets,
      * before any that were previously added.
      *
+     * If provided, will use the idmap to translate resource IDs between
+     * packages with identical package identifier (the pp part in resource ID
+     * 0xppttiiii).
+     *
      * Returns "true" on success, "false" on failure.  If 'cookie' is non-NULL,
      * then on success, *cookie is set to the value corresponding to the
      * newly-added asset source.
      */
-    bool addAssetPath(const String8& path, void** cookie);
+    bool addAssetPath(const String8& path, void** cookie, const String8& idmapPath = String8());
+
+    /*
+     * Create ID mapping (original -> overlay) at the specificed file path.
+     */
+    bool createIDMapping(const String8& originalPath, const String8& overlayPath,
+                         const String8& idmapPath);
 
     /*                                                                       
      * Convenience for adding the standard system assets.  Uses the
@@ -222,6 +232,7 @@ private:
     {
         String8 path;
         FileType type;
+        String8 idmap;
     };
 
     Asset* openInPathLocked(const char* fileName, AccessMode mode,

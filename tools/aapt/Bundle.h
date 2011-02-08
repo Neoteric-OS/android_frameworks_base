@@ -36,6 +36,7 @@ public:
         : mCmd(kCommandUnknown), mVerbose(false), mAndroidList(false),
           mForce(false), mGrayscaleTolerance(0), mMakePackageDirs(false),
           mUpdate(false), mExtending(false),
+          mOverlayPackageTarget(NULL), mOverlayPackageTargetId(0),
           mRequireLocalization(false), mPseudolocalize(false),
           mWantUTF16(false), mValues(false),
           mCompressionMethod(0), mOutputAPKFile(NULL),
@@ -74,6 +75,10 @@ public:
     void setUpdate(bool val) { mUpdate = val; }
     bool getExtending(void) const { return mExtending; }
     void setExtending(bool val) { mExtending = val; }
+    void setOverlayPackageTarget(const char* path) { mOverlayPackageTarget = path; }
+    const char* getOverlayPackageTarget() const { return mOverlayPackageTarget; }
+    void setOverlayPackageTargetId(uint32_t id) { mOverlayPackageTargetId = id; }
+    uint32_t getOverlayPackageTargetId() const { return mOverlayPackageTargetId; }
     bool getRequireLocalization(void) const { return mRequireLocalization; }
     void setRequireLocalization(bool val) { mRequireLocalization = val; }
     bool getPseudolocalize(void) const { return mPseudolocalize; }
@@ -208,6 +213,8 @@ private:
     bool        mMakePackageDirs;
     bool        mUpdate;
     bool        mExtending;
+    const char* mOverlayPackageTarget;
+    uint32_t    mOverlayPackageTargetId;
     bool        mRequireLocalization;
     bool        mPseudolocalize;
     bool        mWantUTF16;

@@ -36,6 +36,8 @@
 #include <dirent.h>
 #include <errno.h>
 #include <assert.h>
+#include <fcntl.h> // FIXME: temporarily needed for ::open()
+#include <sys/stat.h> // FIXME: temporarily needed for ::mkdir()
 
 using namespace android;
 
@@ -90,7 +92,7 @@ AssetManager::~AssetManager(void)
     delete[] mVendor;
 }
 
-bool AssetManager::addAssetPath(const String8& path, void** cookie)
+bool AssetManager::addAssetPath(const String8& path, void** cookie, const String8& idmapPath)
 {
     AutoMutex _l(mLock);
 
@@ -122,6 +124,8 @@ bool AssetManager::addAssetPath(const String8& path, void** cookie)
             return true;
         }
     }
+
+    ap.idmap = idmapPath;
     
     LOGV("In %p Asset %s path: %s", this,
          ap.type == kFileTypeDirectory ? "dir" : "zip", ap.path.string());
@@ -134,6 +138,75 @@ bool AssetManager::addAssetPath(const String8& path, void** cookie)
     }
 
     return true;
+}
+
+bool AssetManager::createIDMapping(const String8& originalPath, const String8& overlayPath,
+                                   const String8& idmapPath)
+{
+    LOGD("%s: originalPath=%s overlayPath=%s idmapPath=%s\n",
+         __FUNCTION__, originalPath.string(), overlayPath.string(), idmapPath.string());
+    ResTable tables[2];
+    const String8* paths[2] = { &originalPath, &overlayPath };
+    bool retval = false;
+
+    {
+        AutoMutex _l(mLock);
+        for (int i = 0; i < 2; ++i) {
+            asset_path ap;
+            ap.type = kFileTypeRegular;
+            ap.path = *paths[i];
+            Asset* ass = openNonAssetInPathLocked("resources.arsc", Asset::ACCESS_BUFFER, ap);
+            if (ass == NULL) {
+                LOGW("failed to find resources.arsc in %s\n", ap.path.string());
+                return retval;
+            }
+            tables[i].add(ass, (void*)1, false);
+        }
+    }
+
+    uint32_t* data = NULL;
+    size_t size;
+    status_t status = tables[0].generateResIDMapping(tables[1], (void**)&data, &size);
+
+    if (status == NO_ERROR) {
+#if 0
+        uint32_t* p = (uint32_t*)data;
+        for (size_t i = 0; i < size / sizeof(uint32_t); ++i) {
+            LOGD("p[%2zd]: 0x%08x\n", i, dtohl(*p++));
+        }
+#endif
+
+        // FIXME: abstract this (replace by stand-alone application like
+        // dexopt, triggered by installd?). Have cache_path be created by init
+        // (as is done for /data/dalvik-cache)
+        const char* cache_path = "/data/resource-cache";
+
+        // if access fails for any other reason than ENOENT, later I/O calls
+        // will fail anyway
+        if (access(cache_path, W_OK) != 0 && errno == ENOENT) {
+            if (mkdir(cache_path, 0755) != 0) {
+                LOGW("failed to create ID mapping cache directory\n");
+                goto error;
+            }
+        }
+
+        int fd = ::open(idmapPath.string(), O_WRONLY | O_CREAT, 0644);
+        if (fd == -1) {
+            LOGW("failed to write ID mapping data to %s (open)\n", idmapPath.string());
+            goto error;
+        }
+        if (write(fd, data, size) != (ssize_t)size) {
+            (void)close(fd);
+            LOGW("failed to write ID mapping data to %s (write)\n", idmapPath.string());
+            goto error;
+        }
+        (void)close(fd);
+    }
+
+    retval = true;
+error:
+    free(data);
+    return retval;
 }
 
 bool AssetManager::addDefaultAssets()
@@ -462,6 +535,18 @@ const ResTable* AssetManager::getResTable(bool required) const
 
             if (!shared) {
                 delete ass;
+            }
+
+            if (ap.idmap.size() != 0) {
+                // FIXME: handle locked part
+                ass = const_cast<AssetManager*>(this)->
+                    openAssetFromFileLocked(ap.idmap, Asset::ACCESS_BUFFER);
+                if (ass) {
+                    LOGV("loading idmap %s\n", ap.idmap.string());
+                    rt->addResourceIDMap(ass, (void*)(i + 1));
+                } else {
+                    LOGW("failed to load idmap %s\n", ap.idmap.string());
+                }
             }
         }
     }

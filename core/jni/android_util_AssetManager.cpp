@@ -466,6 +466,77 @@ static jint android_content_AssetManager_addAssetPath(JNIEnv* env, jobject clazz
     return (res) ? (jint)cookie : 0;
 }
 
+static jint android_content_AssetManager_addOverlayAssetPath(JNIEnv* env, jobject clazz,
+                                                             jstring overlayPath,
+                                                             jstring idmapPath)
+{
+    if (overlayPath == NULL) {
+        jniThrowException(env, "java/lang/NullPointerException", "overlayPath");
+        return JNI_FALSE;
+    }
+
+    if (idmapPath == NULL) {
+        jniThrowException(env, "java/lang/NullPointerException", "idmapPath");
+        return JNI_FALSE;
+    }
+
+    AssetManager* am = assetManagerForJavaObject(env, clazz);
+    if (am == NULL) {
+        return JNI_FALSE;
+    }
+
+    const char* overlayPath8 = env->GetStringUTFChars(overlayPath, NULL);
+    const char* idmapPath8 = env->GetStringUTFChars(idmapPath, NULL);
+
+    void* cookie;
+    bool res = am->addAssetPath(String8(overlayPath8), &cookie, String8(idmapPath8));
+
+    env->ReleaseStringUTFChars(overlayPath, overlayPath8);
+    env->ReleaseStringUTFChars(idmapPath, idmapPath8);
+
+    return (res) ? (jint)cookie : 0;
+}
+
+
+static jboolean android_content_AssetManager_createIDMapping(JNIEnv* env, jobject clazz,
+                                                             jstring originalPath,
+                                                             jstring overlayPath,
+                                                             jstring idmapPath)
+{
+    if (originalPath == NULL) {
+        jniThrowException(env, "java/lang/NullPointerException", "originalPath");
+        return JNI_FALSE;
+    }
+
+    if (overlayPath == NULL) {
+        jniThrowException(env, "java/lang/NullPointerException", "overlayPath");
+        return JNI_FALSE;
+    }
+
+    if (idmapPath == NULL) {
+        jniThrowException(env, "java/lang/NullPointerException", "idmapPath");
+        return JNI_FALSE;
+    }
+
+    AssetManager* am = assetManagerForJavaObject(env, clazz);
+    if (am == NULL) {
+        return JNI_FALSE;
+    }
+
+    const char* originalPath8 = env->GetStringUTFChars(originalPath, NULL);
+    const char* overlayPath8 = env->GetStringUTFChars(overlayPath, NULL);
+    const char* idmapPath8 = env->GetStringUTFChars(idmapPath, NULL);
+
+    bool res = am->createIDMapping(String8(originalPath8), String8(overlayPath8),
+                                   String8(idmapPath8));
+
+    env->ReleaseStringUTFChars(originalPath, originalPath8);
+    env->ReleaseStringUTFChars(overlayPath, overlayPath8);
+    env->ReleaseStringUTFChars(idmapPath, idmapPath8);
+
+    return res ? JNI_TRUE : JNI_FALSE;
+}
+
 static jboolean android_content_AssetManager_isUpToDate(JNIEnv* env, jobject clazz)
 {
     AssetManager* am = assetManagerForJavaObject(env, clazz);
@@ -1683,6 +1754,10 @@ static JNINativeMethod gAssetManagerMethods[] = {
         (void*) android_content_AssetManager_getAssetRemainingLength },
     { "addAssetPath",   "(Ljava/lang/String;)I",
         (void*) android_content_AssetManager_addAssetPath },
+    { "addOverlayAssetPath",   "(Ljava/lang/String;Ljava/lang/String;)I",
+        (void*) android_content_AssetManager_addOverlayAssetPath },
+    { "createIDMapping",   "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z",
+        (void*) android_content_AssetManager_createIDMapping },
     { "isUpToDate",     "()Z",
         (void*) android_content_AssetManager_isUpToDate },
 

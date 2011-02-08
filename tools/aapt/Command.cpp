@@ -1385,6 +1385,25 @@ int doPackage(Bundle* bundle)
         }
     }
 
+    // If this package is an overlay package, ensure the package IDs match
+    // between overlay and original package.
+    if (bundle->getOverlayPackageTarget() != NULL) {
+        AssetManager overlayTargetAm;
+        if (!overlayTargetAm.addAssetPath(String8(bundle->getOverlayPackageTarget()), NULL)) {
+            fprintf(stderr, "ERROR: failed to read overlay target package file '%s'\n",
+                    bundle->getOverlayPackageTarget());
+            goto bail;
+        }
+        const ResTable& overlayTargetRes = overlayTargetAm.getResources(false);
+        if (&overlayTargetRes == NULL) {
+            fprintf(stderr, "ERROR: overlay target package contains no resource table\n");
+            goto bail;
+        }
+
+        // caveat: only allow overlays for first package group (0)
+        bundle->setOverlayPackageTargetId(overlayTargetRes.getBasePackageId(0));
+    }
+
     // Load the assets.
     assets = new AaptAssets();
     err = assets->slurpFromArgs(bundle);

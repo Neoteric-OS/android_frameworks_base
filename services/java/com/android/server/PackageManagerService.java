@@ -65,6 +65,7 @@ import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
 import android.content.pm.Signature;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
@@ -228,6 +229,9 @@ class PackageManagerService extends IPackageManager.Stub {
 
     // This is the object monitoring the system app dir.
     final FileObserver mVendorInstallObserver;
+
+    // This is the object monitoring the overlay package dir.
+    final FileObserver mOverlayInstallObserver;
 
     // This is the object monitoring mAppInstallDir.
     final FileObserver mAppInstallObserver;
@@ -925,7 +929,7 @@ class PackageManagerService extends IPackageManager.Stub {
 
             // Find base frameworks (resource packages without code).
             mFrameworkInstallObserver = new AppDirObserver(
-                mFrameworkDir.getPath(), OBSERVER_EVENTS, true);
+                mFrameworkDir.getPath(), OBSERVER_EVENTS, true, false);
             mFrameworkInstallObserver.startWatching();
             scanDirLI(mFrameworkDir, PackageParser.PARSE_IS_SYSTEM
                     | PackageParser.PARSE_IS_SYSTEM_DIR,
@@ -934,7 +938,7 @@ class PackageManagerService extends IPackageManager.Stub {
             // Collect all system packages.
             mSystemAppDir = new File(Environment.getRootDirectory(), "app");
             mSystemInstallObserver = new AppDirObserver(
-                mSystemAppDir.getPath(), OBSERVER_EVENTS, true);
+                mSystemAppDir.getPath(), OBSERVER_EVENTS, true, false);
             mSystemInstallObserver.startWatching();
             scanDirLI(mSystemAppDir, PackageParser.PARSE_IS_SYSTEM
                     | PackageParser.PARSE_IS_SYSTEM_DIR, scanMode, 0);
@@ -942,7 +946,7 @@ class PackageManagerService extends IPackageManager.Stub {
             // Collect all vendor packages.
             mVendorAppDir = new File("/vendor/app");
             mVendorInstallObserver = new AppDirObserver(
-                mVendorAppDir.getPath(), OBSERVER_EVENTS, true);
+                mVendorAppDir.getPath(), OBSERVER_EVENTS, true, false);
             mVendorInstallObserver.startWatching();
             scanDirLI(mVendorAppDir, PackageParser.PARSE_IS_SYSTEM
                     | PackageParser.PARSE_IS_SYSTEM_DIR, scanMode, 0);
@@ -951,6 +955,15 @@ class PackageManagerService extends IPackageManager.Stub {
                 if (DEBUG_UPGRADE) Log.v(TAG, "Running installd update commands");
                 mInstaller.moveFiles();
             }
+
+            // Find overlay packages
+            File overlayDir = new File("/system/overlay");
+            mOverlayInstallObserver =
+                new AppDirObserver(overlayDir.getPath(), OBSERVER_EVENTS, true, true);
+            mOverlayInstallObserver.startWatching();
+            scanDirLI(overlayDir,
+                    PackageParser.PARSE_IS_SYSTEM | PackageParser.PARSE_IS_OVERLAY_PACKAGE,
+                    scanMode | SCAN_NO_DEX, 0);
             
             // Prune any system packages that no longer exist.
             Iterator<PackageSetting> psit = mSettings.mPackages.values().iterator();
@@ -970,6 +983,8 @@ class PackageManagerService extends IPackageManager.Stub {
                     }
                 }
             }
+
+            // FIXME: Prune idmap files for overlay packages that no longer exist?
             
             mAppInstallDir = new File(dataDir, "app");
             if (mInstaller == null) {
@@ -990,12 +1005,12 @@ class PackageManagerService extends IPackageManager.Stub {
             EventLog.writeEvent(EventLogTags.BOOT_PROGRESS_PMS_DATA_SCAN_START,
                     SystemClock.uptimeMillis());
             mAppInstallObserver = new AppDirObserver(
-                mAppInstallDir.getPath(), OBSERVER_EVENTS, false);
+                mAppInstallDir.getPath(), OBSERVER_EVENTS, false, false);
             mAppInstallObserver.startWatching();
             scanDirLI(mAppInstallDir, 0, scanMode, 0);
 
             mDrmAppInstallObserver = new AppDirObserver(
-                mDrmAppPrivateInstallDir.getPath(), OBSERVER_EVENTS, false);
+                mDrmAppPrivateInstallDir.getPath(), OBSERVER_EVENTS, false, false);
             mDrmAppInstallObserver.startWatching();
             scanDirLI(mDrmAppPrivateInstallDir, PackageParser.PARSE_FORWARD_LOCK,
                     scanMode, 0);
@@ -1590,6 +1605,10 @@ class PackageManagerService extends IPackageManager.Stub {
             }
         }
         return null;
+    }
+
+    public String getIDMappingPath(String apkPath) {
+        return "/data/resource-cache/" + apkPath.substring(1).replace('/', '@') + "@idmap";
     }
 
     public ActivityInfo getReceiverInfo(ComponentName component, int flags) {
@@ -2809,6 +2828,97 @@ class PackageManagerService extends IPackageManager.Stub {
         }
         return dataPath;
     }
+
+    private boolean generateIDMapping(PackageParser.Package original,
+            PackageParser.Package overlay, long currentTime) {
+        String idmapPath = getIDMappingPath(overlay.mPath);
+        File idmapFile = new File(idmapPath);
+        boolean idmapFileExists = idmapFile.exists();
+
+        if (currentTime == 0 && idmapFileExists) {
+            // system is booting, but idmap file exists since previous run; keep it
+            // FIXME: does this cover every way of injecting new packages?
+            // possible to modify the file system/image without android
+            // running? this could force the files out of sync
+            return true;
+        }
+
+        // Always kill the original process to prevent mixed-version scenarios
+        killApplication(original.applicationInfo.packageName, original.applicationInfo.uid);
+
+        if (idmapFileExists) {
+            Log.v(TAG, "Removing old idmap file, will generate a new one.");
+            idmapFile.delete();
+        }
+
+        AssetManager am = new AssetManager();
+        if (!am.createIDMapping(original.mPath, overlay.mPath, idmapPath)) {
+            Log.w(TAG, "Failed to create ID mapping for " + overlay.packageName + " -> " +
+                    original.packageName);
+            return false;
+        }
+
+        return true;
+    }
+
+    private PackageParser.Package getTargetPackageLP(PackageParser.Package overlayPackage) {
+        if (overlayPackage.mOverlayForPackage == null) {
+            Log.w(TAG, "cannot find target package; provided package not an overlay package");
+            return null;
+        }
+        return mPackages.get(overlayPackage.mOverlayForPackage);
+    }
+
+    private PackageParser.Package[] getOverlayPackagesLP(PackageParser.Package targetPackage) {
+        Set<PackageParser.Package> matchesSet = new HashSet<PackageParser.Package>();
+        for (PackageParser.Package pkg : mPackages.values()) {
+            if (targetPackage.packageName.equals(pkg.mOverlayForPackage)) {
+                matchesSet.add(pkg);
+            }
+        }
+        int size = matchesSet.size();
+        if (size > 0) {
+            PackageParser.Package[] matches = new PackageParser.Package[size];
+            matchesSet.toArray(matches);
+            return matches;
+        }
+        return null;
+    }
+
+    public String[] getOverlayPackagePaths(String originalApkPath) {
+        if (originalApkPath == null) {
+            return null;
+        }
+        PackageParser.Package originalPackage = null;
+        synchronized (mPackages) {
+            for (PackageParser.Package pkg : mPackages.values()) {
+                if (originalApkPath.equals(pkg.mPath)) {
+                    originalPackage = pkg;
+                    break;
+                }
+            }
+        }
+        if (originalPackage == null) {
+            return null;
+        }
+        PackageParser.Package[] packages = null;
+        synchronized (mPackages) {
+            packages = getOverlayPackagesLP(originalPackage);
+        }
+        if (packages == null) {
+            return null;
+        }
+        int size = packages.length;
+        if (size > 0) {
+            String[] packagePaths = new String[size];
+            for (int i = 0; i < size; i++) {
+                packagePaths[i] = packages[i].mPath;
+            }
+            return packagePaths;
+        }
+        return null;
+    }
+
     
     private PackageParser.Package scanPackageLI(PackageParser.Package pkg,
             int parseFlags, int scanMode, long currentTime) {
@@ -3339,6 +3449,39 @@ class PackageManagerService extends IPackageManager.Stub {
         if ((parseFlags & PackageManager.INSTALL_REPLACE_EXISTING) != 0) {
             killApplication(pkg.applicationInfo.packageName,
                         pkg.applicationInfo.uid);
+        }
+        if ((parseFlags & PackageParser.PARSE_IS_OVERLAY_PACKAGE) != 0) {
+            PackageParser.Package targetPackage = null;
+            synchronized (mPackages) {
+                int index = pkg.packageName.lastIndexOf(".overlay.");
+                if (index == -1) {
+                    Log.w(TAG, "overlay package does not follow naming convention:" +
+                            pkg.packageName);
+                    mLastScanError = PackageManager.INSTALL_FAILED_INVALID_APK;
+                    return null;
+                }
+                pkg.mOverlayForPackage = pkg.packageName.substring(0, index);
+                targetPackage = getTargetPackageLP(pkg);
+            }
+            if (targetPackage != null) {
+                if (!generateIDMapping(targetPackage, pkg, currentTime)) {
+                    mLastScanError = PackageManager.INSTALL_FAILED_INTERNAL_ERROR;
+                    return null;
+                }
+            }
+        } else {
+            PackageParser.Package[] overlayPackages = null;
+            synchronized (mPackages) {
+                overlayPackages = getOverlayPackagesLP(pkg);
+            }
+            if (overlayPackages != null && overlayPackages.length > 0) {
+                for (PackageParser.Package overlayPackage : overlayPackages) {
+                    if (!generateIDMapping(pkg, overlayPackage, currentTime)) {
+                        mLastScanError = PackageManager.INSTALL_FAILED_INTERNAL_ERROR;
+                        return null;
+                    }
+                }
+            }
         }
 
         synchronized (mPackages) {
@@ -4461,10 +4604,11 @@ class PackageManagerService extends IPackageManager.Stub {
     }
     
     private final class AppDirObserver extends FileObserver {
-        public AppDirObserver(String path, int mask, boolean isrom) {
+        public AppDirObserver(String path, int mask, boolean isrom, boolean isoverlay) {
             super(path, mask);
             mRootDir = path;
             mIsRom = isrom;
+            mIsOverlay = isoverlay;
         }
 
         public void onEvent(int event, String path) {
@@ -4505,6 +4649,21 @@ class PackageManagerService extends IPackageManager.Stub {
                         removePackageLI(p, true);
                         removedPackage = p.applicationInfo.packageName;
                         removedUid = p.applicationInfo.uid;
+
+                        if (p.mOverlayForPackage != null) {
+                            // Always kill the original process to prevent mixed-version scenarios
+                            PackageParser.Package targetPackage = null;
+                            synchronized (mPackages) {
+                                targetPackage = getTargetPackageLP(p);
+                            }
+                            if (targetPackage != null) {
+                                killApplication(targetPackage.applicationInfo.packageName,
+                                        targetPackage.applicationInfo.uid);
+                            }
+
+                            File idmapFile = new File(getIDMappingPath(fullPathStr));
+                            idmapFile.delete();
+                        }
                     }
                 }
 
@@ -4514,7 +4673,8 @@ class PackageManagerService extends IPackageManager.Stub {
                                 (mIsRom ? PackageParser.PARSE_IS_SYSTEM
                                         | PackageParser.PARSE_IS_SYSTEM_DIR: 0) |
                                 PackageParser.PARSE_CHATTY |
-                                PackageParser.PARSE_MUST_BE_APK,
+                                PackageParser.PARSE_MUST_BE_APK |
+                                (mIsOverlay ? PackageParser.PARSE_IS_OVERLAY_PACKAGE : 0),
                                 SCAN_MONITOR | SCAN_NO_PATHS | SCAN_UPDATE_TIME,
                                 System.currentTimeMillis());
                         if (p != null) {
@@ -4550,6 +4710,7 @@ class PackageManagerService extends IPackageManager.Stub {
 
         private final String mRootDir;
         private final boolean mIsRom;
+        private final boolean mIsOverlay;
     }
 
     /* Called when a downloaded package installation has been confirmed by the user */

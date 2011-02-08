@@ -604,6 +604,26 @@ public final class AssetManager {
     public native final int addAssetPath(String path);
 
     /**
+     * Add an overlay asset, which will shadow parts of the assets defined by
+     * another package. Resource IDs must be coherent between the two assets --
+     * the mapping at the path provided will be used to achieve this.
+     *
+     * The asset can be either a directory or ZIP file. Not for use by
+     * applications. Returns the cookie of the added asset, or 0 on failure.
+     * {@hide}
+     */
+    public native final int addOverlayAssetPath(String overlayPath, String idmapPath);
+
+    /**
+     * Create a resource ID mapping between two packages at the provided file
+     * path.
+     * {@hide}
+     */
+    public native final boolean createIDMapping(String originalPath,
+            String overlayPath,
+            String idmapPath);
+
+    /**
      * Add multiple sets of assets to the asset manager at once.  See
      * {@link #addAssetPath(String)} for more information.  Returns array of
      * cookies for each added asset with 0 indicating failure, or null if
