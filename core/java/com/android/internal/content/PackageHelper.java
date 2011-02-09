@@ -96,6 +96,8 @@ public class PackageHelper {
         return getMountService().getSecureContainerPath(cid);
     } catch (RemoteException e) {
         Log.e(TAG, "MountService running?");
+    } catch (IllegalArgumentException iae) {
+        Log.e(TAG, "mountSdDir failed to mount container " + cid);
     }
     return null;
    }
