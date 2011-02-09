@@ -716,6 +716,8 @@ public class InputMethodService extends AbstractInputMethodService {
     @Override public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         
+        mWindow.getWindow().closePanel(Window.FEATURE_CONTEXT_MENU);
+
         boolean visible = mWindowVisible;
         int showFlags = mShowInputFlags;
         boolean showingInput = mShowInputRequested;
