@@ -123,6 +123,9 @@ status_t AMRNBDecoder::read(
 
         mNumSamplesOutput = 0;
 
+        //Reset decoder in case of seek to 0
+        Speech_Decode_Frame_reset(mState);
+
         if (mInputBuffer) {
             mInputBuffer->release();
             mInputBuffer = NULL;
