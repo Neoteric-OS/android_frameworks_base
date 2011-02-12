@@ -122,6 +122,7 @@ public abstract class ServiceStateTracker extends Handler {
     protected static final int EVENT_SET_RADIO_POWER_OFF               = 38;
     protected static final int EVENT_CDMA_SUBSCRIPTION_SOURCE_CHANGED  = 39;
     protected static final int EVENT_CDMA_PRL_VERSION_CHANGED          = 40;
+    protected static final int EVENT_RADIO_ON                          = 41;
 
     protected static final String TIMEZONE_PROPERTY = "persist.sys.timezone";
 
