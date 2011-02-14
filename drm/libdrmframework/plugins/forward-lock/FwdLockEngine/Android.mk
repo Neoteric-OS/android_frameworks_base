@@ -15,12 +15,16 @@
 #
 LOCAL_PATH := $(call my-dir)
 
+# OMA FL Agent
+# =====================================================
+
 include $(CLEAR_VARS)
 
 base := frameworks/base
+plugins := $(base)/drm/libdrmframework/plugins
 
 # Determine whether the DRM framework uses 64-bit data types for file offsets and do the same.
-ifneq ($(shell grep -c 'off64_t offset' $(base)/drm/libdrmframework/plugins/common/include/IDrmEngine.h), 0)
+ifneq ($(shell grep -c 'off64_t offset' $(plugins)/common/include/IDrmEngine.h), 0)
 LOCAL_CFLAGS += -DUSE_64BIT_DRM_API
 endif
 
@@ -52,11 +56,11 @@ LOCAL_PRELINK_MODULE := false
 LOCAL_C_INCLUDES += \
     $(JNI_H_INCLUDE) \
     $(base)/include/drm \
-    $(base)/drm/libdrmframework/plugins/common/include \
-    $(base)/drm/libdrmframework/plugins/common/util/include \
-    $(base)/drm/libdrmframework/plugins/forward-lock/internal-format/common \
-    $(base)/drm/libdrmframework/plugins/forward-lock/internal-format/converter \
-    $(base)/drm/libdrmframework/plugins/forward-lock/internal-format/decoder \
+    $(plugins)/common/include \
+    $(plugins)/common/util/include \
+    $(plugins)/forward-lock/internal-format/common \
+    $(plugins)/forward-lock/internal-format/converter \
+    $(plugins)/forward-lock/internal-format/decoder \
     $(LOCAL_PATH)/include \
     external/openssl/include
 
@@ -65,3 +69,68 @@ LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/drm/plugins/native
 LOCAL_MODULE_TAGS := optional
 
 include $(BUILD_SHARED_LIBRARY)
+
+# Google test cases
+# =====================================================
+
+include $(CLEAR_VARS)
+
+# Determine whether the DRM framework uses 64-bit data types for file offsets and do the same.
+ifneq ($(shell grep -c 'off64_t offset' $(plugins)/common/include/IDrmEngine.h), 0)
+LOCAL_CFLAGS += -DUSE_64BIT_DRM_API
+endif
+
+LOCAL_MODULE := gtest_fwdlockengine
+
+LOCAL_MODULE_TAGS := tests
+
+LOCAL_SRC_FILES := test/src/fwdlockTest.cpp \
+    src/FwdLockEngine.cpp \
+
+LOCAL_C_INCLUDES += \
+    $(JNI_H_INCLUDE) \
+    $(LOCAL_PATH)/include \
+    $(plugins)/common/util/include \
+    $(base)/include \
+    $(base)/include/drm \
+    $(plugins)/common/include \
+    $(plugins)/forward-lock/internal-format/converter \
+    $(plugins)/forward-lock/internal-format/decoder \
+    $(plugins)/forward-lock/internal-format/common \
+    external/openssl/include \
+    external/stlport/stlport \
+    external/gtest/include \
+    bionic
+
+LOCAL_SHARED_LIBRARIES += \
+    liblog \
+    libutils \
+    libbinder \
+    libdrmframework \
+    libicui18n \
+    libicuuc \
+    libdl \
+    libandroid_runtime \
+    libnativehelper \
+    libcrypto \
+    libssl \
+    libstlport
+
+LOCAL_STATIC_LIBRARIES := \
+    libdrmutility \
+    libdrmframeworkcommon \
+    libfwdlock-common \
+    libfwdlock-converter \
+    libfwdlock-decoder \
+    libgtest \
+    libgtest_main
+
+LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
+
+ifeq ($(TARGET_BUILD_VARIANT), tests)
+PRODUCT_COPY_FILES +=  \
+    $(LOCAL_PATH)/test/res/musictest.dm:/data/data/flenginetest/musictest.dm \
+    $(LOCAL_PATH)/test/res/musictest.fl:/data/data/flenginetest/musictest.fl
+endif
+
+include $(BUILD_EXECUTABLE)
