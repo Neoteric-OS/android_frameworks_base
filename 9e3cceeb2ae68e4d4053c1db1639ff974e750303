@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//4oA\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6733,
+      "author": {
+        "id": 1003806
+      },
+      "writtenOn": "2011-02-15T21:55:23Z",
+      "side": 1,
+      "message": "Can we access process.pid (to compare with MY_PID) without acquiring the am lock?\n\nRegardless, you must place a comment here explaining this subtle deadlock issue!",
+      "revId": "9e3cceeb2ae68e4d4053c1db1639ff974e750303",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
