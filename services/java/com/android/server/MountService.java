@@ -1140,7 +1140,12 @@ class MountService extends IMountService.Stub
             }
         }
 
-        if (state.equals(Environment.MEDIA_MOUNTED)) {
+        /*
+         * Send call back notification to speedup shutdown when there is no
+         * SDcard
+         */
+        if (state.equals(Environment.MEDIA_MOUNTED) ||
+                state.equals(Environment.MEDIA_REMOVED)) {
             // Post a unmount message.
             ShutdownCallBack ucb = new ShutdownCallBack(path, observer);
             mHandler.sendMessage(mHandler.obtainMessage(H_UNMOUNT_PM_UPDATE, ucb));
