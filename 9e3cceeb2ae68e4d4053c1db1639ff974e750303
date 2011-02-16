@@ -16,6 +16,24 @@
       "revId": "9e3cceeb2ae68e4d4053c1db1639ff974e750303",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA+3//4js\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6733,
+      "author": {
+        "id": 1004254
+      },
+      "writtenOn": "2011-02-16T05:45:52Z",
+      "side": 1,
+      "message": "I\u0027m leaving the rest of the function as it is as package list is being accessed.",
+      "parentUuid": "AAAA+3//4oA\u003d",
+      "revId": "9e3cceeb2ae68e4d4053c1db1639ff974e750303",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
