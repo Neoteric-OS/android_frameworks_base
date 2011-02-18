@@ -16,8 +16,11 @@
 
 package android.widget;
 
+import com.android.internal.R;
+
 import android.content.Context;
 import android.util.AttributeSet;
+import android.graphics.drawable.Drawable;
 
 
 /**
@@ -54,6 +57,9 @@ import android.util.AttributeSet;
  * </p>
  */
 public class CheckBox extends CompoundButton {
+    private Drawable mLtrBackground;
+    private int mStyle;
+
     public CheckBox(Context context) {
         this(context, null);
     }
@@ -64,5 +70,28 @@ public class CheckBox extends CompoundButton {
 
     public CheckBox(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        if (attrs != null) {
+            mStyle = attrs.getStyleAttribute();
+        }
+        mLtrBackground = getBackground();
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        if (shouldMirror()) {
+            switch (mStyle) {
+                case com.android.internal.R.attr.starStyle:
+                    setBackgroundResource(R.drawable.btn_star_label_background_rtl);
+                    break;
+                case com.android.internal.R.attr.radioButtonStyle:
+                    // fall through
+                default:
+                    setBackgroundResource(R.drawable.btn_check_label_background_rtl);
+                    break;
+            }
+        } else {
+            setBackgroundDrawable(mLtrBackground);
+        }
     }
 }

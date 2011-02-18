@@ -66,6 +66,10 @@ public class AnimatedRotateDrawable extends Drawable implements Drawable.Callbac
     }
 
     public void draw(Canvas canvas) {
+        draw(canvas, false);
+    }
+
+    public void draw(Canvas canvas, boolean mirror) {
         int saveCount = canvas.save();
 
         final AnimatedRotateState st = mState;
@@ -80,7 +84,7 @@ public class AnimatedRotateDrawable extends Drawable implements Drawable.Callbac
 
         canvas.rotate(mCurrentDegrees, px, py);
 
-        drawable.draw(canvas);
+        drawable.draw(canvas, mirror);
 
         canvas.restoreToCount(saveCount);
     }

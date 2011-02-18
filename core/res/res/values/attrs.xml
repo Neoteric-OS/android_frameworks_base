@@ -1423,6 +1423,15 @@
             <enum name="blocksDescendants" value="2" />
         </attr>
 
+        <!-- Defines in which direction the child views are <i>designed</i> to
+             be laid out. -->
+        <attr name="directionality">
+            <!-- The order of the views does not represent any specific direction. -->
+            <enum name="none" value="0" />
+            <!-- The views has been designed to be shown from left to right. -->
+            <enum name="leftToRight" value="1" />
+        </attr>
+
     </declare-styleable>
 
     <!-- A {@link android.view.ViewStub} lets you lazily include other XML layouts

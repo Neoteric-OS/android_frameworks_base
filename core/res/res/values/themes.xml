@@ -433,6 +433,13 @@
         <item name="windowContentOverlay">@null</item>
     </style>
     
+    <!-- This style was added to support bi-directionality, for example alert dialogs will be
+         left aligned when English is used, while they will be right aligned when Arabic, Farsi,
+          Hebrew etc are used. -->
+    <style name="BidiDialogAlert" parent="Theme.Dialog.Alert">
+        <item name="android:directionality">leftToRight</item>
+    </style>
+
     <!-- Default dark theme for panel windows.  This removes all extraneous
          window decorations, so you basically have an empty rectangle in which
          to place your content.  It makes the window floating, with a transparent

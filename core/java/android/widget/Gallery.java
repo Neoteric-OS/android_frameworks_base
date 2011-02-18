@@ -372,10 +372,20 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
         
         if (toLeft) {
             // If moved left, there will be empty space on the right
-            fillToGalleryRight();
+            if (shouldMirror()) {
+                // When mirrored, views filled to the left appear to the right
+                fillToGalleryLeft();
+            } else {
+                fillToGalleryRight();
+            }
         } else {
             // Similarly, empty space on the left
-            fillToGalleryLeft();
+            if (shouldMirror()) {
+                // When mirrored, views filled to the right appear to the left
+                fillToGalleryRight();
+            } else {
+                fillToGalleryLeft();
+            }
         }
         
         // Clear unused views
@@ -387,7 +397,12 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
     }
 
     int getLimitedMotionScrollAmount(boolean motionToLeft, int deltaX) {
-        int extremeItemPosition = motionToLeft ? mItemCount - 1 : 0;
+        int extremeItemPosition;
+        if (shouldMirror()) {
+            extremeItemPosition = motionToLeft ? 0 : mItemCount - 1;
+        } else {
+            extremeItemPosition = motionToLeft ? mItemCount - 1 : 0;
+        }
         View extremeChild = getChildAt(extremeItemPosition - mFirstPosition);
         
         if (extremeChild == null) {
@@ -458,25 +473,52 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
 
         if (toLeft) {
             final int galleryLeft = mPaddingLeft;
-            for (int i = 0; i < numChildren; i++) {
-                final View child = getChildAt(i);
-                if (child.getRight() >= galleryLeft) {
-                    break;
-                } else {
-                    count++;
-                    mRecycler.put(firstPosition + i, child);
+            if (shouldMirror()) {
+                // When mirrored, it is the higher index views that can be too far left
+                for (int i = numChildren - 1; i >= 0; i--) {
+                    final View child = getChildAt(i);
+                    if (child.getRight() >= galleryLeft) {
+                        break;
+                    } else {
+                        start = i;
+                        count++;
+                        mRecycler.put(firstPosition + i, child);
+                    }
+                }
+            } else {
+                for (int i = 0; i < numChildren; i++) {
+                    final View child = getChildAt(i);
+                    if (child.getRight() >= galleryLeft) {
+                        break;
+                    } else {
+                        count++;
+                        mRecycler.put(firstPosition + i, child);
+                    }
                 }
             }
         } else {
             final int galleryRight = getWidth() - mPaddingRight;
-            for (int i = numChildren - 1; i >= 0; i--) {
-                final View child = getChildAt(i);
-                if (child.getLeft() <= galleryRight) {
-                    break;
-                } else {
-                    start = i;
-                    count++;
-                    mRecycler.put(firstPosition + i, child);
+            if (shouldMirror()) {
+                // When mirrored, it is the lower index views that can be too far right
+                for (int i = 0; i < numChildren; i++) {
+                    final View child = getChildAt(i);
+                    if (child.getLeft() <= galleryRight) {
+                        break;
+                    } else {
+                        count++;
+                        mRecycler.put(firstPosition + i, child);
+                    }
+                }
+            } else {
+                for (int i = numChildren - 1; i >= 0; i--) {
+                    final View child = getChildAt(i);
+                    if (child.getLeft() <= galleryRight) {
+                        break;
+                    } else {
+                        start = i;
+                        count++;
+                        mRecycler.put(firstPosition + i, child);
+                    }
                 }
             }
         }
@@ -484,7 +526,13 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
         detachViewsFromParent(start, count);
         
         if (toLeft) {
-            mFirstPosition += count;
+            if (!shouldMirror()) {
+                mFirstPosition += count;
+            }
+        } else {
+            if (shouldMirror()) {
+                mFirstPosition += count;
+            }
         }
     }
     
@@ -626,7 +674,12 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
         
         // Put the selected child in the center
         int selectedOffset = childrenLeft + (childrenWidth / 2) - (sel.getWidth() / 2);
-        sel.offsetLeftAndRight(selectedOffset);
+        if (shouldMirror()) {
+            // The selected view has already been mirrored, offset opposite
+            sel.offsetLeftAndRight(-selectedOffset);
+        } else {
+            sel.offsetLeftAndRight(selectedOffset);
+        }
 
         fillToGalleryRight();
         fillToGalleryLeft();
@@ -647,6 +700,7 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
     private void fillToGalleryLeft() {
         int itemSpacing = mSpacing;
         int galleryLeft = mPaddingLeft;
+        int galleryRight = mRight - mLeft - mPaddingRight;
         
         // Set state for initial iteration
         View prevIterationView = getChildAt(0);
@@ -655,11 +709,15 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
         
         if (prevIterationView != null) {
             curPosition = mFirstPosition - 1;
-            curRightEdge = prevIterationView.getLeft() - itemSpacing;
+            if (shouldMirror()) {
+                curRightEdge = galleryRight - prevIterationView.getRight() - itemSpacing;
+            } else {
+                curRightEdge = prevIterationView.getLeft() - itemSpacing;
+            }
         } else {
             // No children available!
             curPosition = 0; 
-            curRightEdge = mRight - mLeft - mPaddingRight;
+            curRightEdge = galleryRight;
             mShouldStopFling = true;
         }
                 
@@ -671,7 +729,11 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
             mFirstPosition = curPosition;
             
             // Set state for next iteration
-            curRightEdge = prevIterationView.getLeft() - itemSpacing;
+            if (shouldMirror()) {
+                curRightEdge = galleryRight - prevIterationView.getRight() - itemSpacing;
+            } else {
+                curRightEdge = prevIterationView.getLeft() - itemSpacing;
+            }
             curPosition--;
         }
     }
@@ -689,7 +751,11 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
         
         if (prevIterationView != null) {
             curPosition = mFirstPosition + numChildren;
-            curLeftEdge = prevIterationView.getRight() + itemSpacing;
+            if (shouldMirror()) {
+                curLeftEdge = galleryRight - prevIterationView.getLeft() + itemSpacing;
+            } else {
+                curLeftEdge = prevIterationView.getRight() + itemSpacing;
+            }
         } else {
             mFirstPosition = curPosition = mItemCount - 1;
             curLeftEdge = mPaddingLeft;
@@ -701,7 +767,11 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
                     curLeftEdge, true);
 
             // Set state for next iteration
-            curLeftEdge = prevIterationView.getRight() + itemSpacing;
+            if (shouldMirror()) {
+                    curLeftEdge = galleryRight - prevIterationView.getLeft() + itemSpacing;
+                } else {
+                    curLeftEdge = prevIterationView.getRight() + itemSpacing;
+                }
             curPosition++;
         }
     }
@@ -1102,14 +1172,28 @@ public class Gallery extends AbsSpinner implements GestureDetector.OnGestureList
         switch (keyCode) {
             
         case KeyEvent.KEYCODE_DPAD_LEFT:
-            if (movePrevious()) {
-                playSoundEffect(SoundEffectConstants.NAVIGATION_LEFT);
+            if (shouldMirror()) {
+                // When mirrored, the higher index is to the the left
+                if (moveNext()) {
+                    playSoundEffect(SoundEffectConstants.NAVIGATION_LEFT);
+                }
+            } else {
+                if (movePrevious()) {
+                    playSoundEffect(SoundEffectConstants.NAVIGATION_LEFT);
+                }
             }
             return true;
 
         case KeyEvent.KEYCODE_DPAD_RIGHT:
-            if (moveNext()) {
-                playSoundEffect(SoundEffectConstants.NAVIGATION_RIGHT);
+            if (shouldMirror()) {
+                // When mirrored, the lower index is to the right
+                if (movePrevious()) {
+                    playSoundEffect(SoundEffectConstants.NAVIGATION_RIGHT);
+                }
+            } else {
+                if (moveNext()) {
+                    playSoundEffect(SoundEffectConstants.NAVIGATION_RIGHT);
+                }
             }
             return true;
 

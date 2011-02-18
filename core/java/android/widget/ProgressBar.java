@@ -798,7 +798,9 @@ public class ProgressBar extends View {
         if (!mInDrawing) {
             if (verifyDrawable(dr)) {
                 final Rect dirty = dr.getBounds();
-                final int scrollX = mScrollX + mPaddingLeft;
+                final int scrollX = mScrollX +
+                                    (shouldMirror() && !hasBackgroundDrawablePadding() ?
+                                            mPaddingRight : mPaddingLeft);
                 final int scrollY = mScrollY + mPaddingTop;
 
                 invalidate(dirty.left + scrollX, dirty.top + scrollY,
@@ -833,7 +835,8 @@ public class ProgressBar extends View {
             // Translate canvas so a indeterminate circular progress bar with padding
             // rotates properly in its animation
             canvas.save();
-            canvas.translate(mPaddingLeft, mPaddingTop);
+            canvas.translate(shouldMirror() && !hasBackgroundDrawablePadding() ?
+                                 mPaddingRight : mPaddingLeft, mPaddingTop);
             long time = getDrawingTime();
             if (mAnimation != null) {
                 mAnimation.getTransformation(time, mTransformation);
@@ -849,7 +852,7 @@ public class ProgressBar extends View {
                     postInvalidateDelayed(ANIMATION_RESOLUTION);
                 }
             }
-            d.draw(canvas);
+            d.draw(canvas, shouldMirror());
             canvas.restore();
             if (mShouldStartAnimationDrawable && d instanceof Animatable) {
                 ((Animatable) d).start();

@@ -28,6 +28,10 @@ import android.view.MotionEvent;
 public abstract class AbsSeekBar extends ProgressBar {
     private Drawable mThumb;
     private int mThumbOffset;
+    private int mThumbPos;
+    private int mTopBound;
+    private int mBottomBound;
+    private int mAvailable;
     
     /**
      * On touch, this offset plus the scaled value from the position of the
@@ -231,31 +235,41 @@ public abstract class AbsSeekBar extends ProgressBar {
         // The extra space for the thumb to move on the track
         available += mThumbOffset * 2;
 
-        int thumbPos = (int) (scale * available);
+        mAvailable = available;
+        mThumbPos = (int) (scale * available);
 
-        int topBound, bottomBound;
         if (gap == Integer.MIN_VALUE) {
             Rect oldBounds = thumb.getBounds();
-            topBound = oldBounds.top;
-            bottomBound = oldBounds.bottom;
+            mTopBound = oldBounds.top;
+            mBottomBound = oldBounds.bottom;
         } else {
-            topBound = gap;
-            bottomBound = gap + thumbHeight;
+            mTopBound = gap;
+            mBottomBound = gap + thumbHeight;
         }
-        
-        // Canvas will be translated, so 0,0 is where we start drawing
-        thumb.setBounds(thumbPos, topBound, thumbPos + thumbWidth, bottomBound);
     }
     
     @Override
     protected synchronized void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (mThumb != null) {
+        Drawable thumb = mThumb;
+        if (thumb != null) {
             canvas.save();
             // Translate the padding. For the x, we need to allow the thumb to
             // draw in its extra space
-            canvas.translate(mPaddingLeft - mThumbOffset, mPaddingTop);
-            mThumb.draw(canvas);
+            final int padding;
+            final int x;
+            final boolean mirror = shouldMirror();
+            if (mirror) {
+                x = mAvailable - mThumbPos;
+                padding = hasBackgroundDrawablePadding() ? mPaddingLeft : mPaddingRight;
+            } else {
+                x = mThumbPos;
+                padding = mPaddingLeft;
+            }
+            thumb.setBounds(x, mTopBound, x + thumb.getIntrinsicWidth(), mBottomBound);
+
+            canvas.translate(padding - mThumbOffset, mPaddingTop);
+            thumb.draw(canvas, mirror);
             canvas.restore();
         }
     }
@@ -322,12 +336,19 @@ public abstract class AbsSeekBar extends ProgressBar {
         int x = (int)event.getX();
         float scale;
         float progress = 0;
-        if (x < mPaddingLeft) {
-            scale = 0.0f;
+        final boolean mirror = shouldMirror();
+        int padding = mirror ? mPaddingRight : mPaddingLeft;
+        if (x < padding) {
+            scale = mirror ? 1.0f : 0.0f;
         } else if (x > width - mPaddingRight) {
-            scale = 1.0f;
+            scale = mirror ? 0.0f : 1.0f;
         } else {
-            scale = (float)(x - mPaddingLeft) / (float)available;
+            if (mirror) {
+                scale = (float)(getWidth() - x - mPaddingRight);
+            } else {
+                scale = (float)(x - mPaddingLeft);
+            }
+            scale /= (float)available;
             progress = mTouchProgressOffset;
         }
         
@@ -372,16 +393,30 @@ public abstract class AbsSeekBar extends ProgressBar {
             int progress = getProgress();
             switch (keyCode) {
                 case KeyEvent.KEYCODE_DPAD_LEFT:
-                    if (progress <= 0) break;
-                    setProgress(progress - mKeyProgressIncrement, true);
-                    onKeyChange();
-                    return true;
+                    if (shouldMirror()) {
+                        if (progress >= getMax()) break;
+                        setProgress(progress + mKeyProgressIncrement, true);
+                        onKeyChange();
+                        return true;
+                    } else {
+                        if (progress <= 0) break;
+                        setProgress(progress - mKeyProgressIncrement, true);
+                        onKeyChange();
+                        return true;
+                    }
             
                 case KeyEvent.KEYCODE_DPAD_RIGHT:
-                    if (progress >= getMax()) break;
-                    setProgress(progress + mKeyProgressIncrement, true);
-                    onKeyChange();
-                    return true;
+                    if (shouldMirror()) {
+                        if (progress <= 0) break;
+                        setProgress(progress - mKeyProgressIncrement, true);
+                        onKeyChange();
+                        return true;
+                    } else {
+                        if (progress >= getMax()) break;
+                        setProgress(progress + mKeyProgressIncrement, true);
+                        onKeyChange();
+                        return true;
+                    }
             }
         }
 

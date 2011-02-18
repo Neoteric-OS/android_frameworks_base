@@ -1379,6 +1379,11 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
     private static final Object sTagsLock = new Object();
 
     /**
+     * Indicates whether this view should mirror its layout position.
+     */
+    private boolean mMirror;
+
+    /**
      * The animation currently associated with this view.
      * @hide
      */
@@ -1536,6 +1541,15 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
      */
     private static final int PREPRESSED             = 0x02000000;
     
+    /**
+     * Indicates that the padding originates from information embedded
+     * in the background drawable.
+     * Indicates whether the view is temporarily detached.
+     *
+     * @hide
+     */
+    static final int PADDING_FROM_BGDRAWABLE        = 0x10000000;
+
     /**
      * Indicates whether the view is temporarily detached.
      *
@@ -2171,10 +2185,18 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
         // android:paddingLeft/Top/Right/Bottom), use this padding, otherwise
         // use the default padding or the padding from the background drawable
         // (stored at this point in mPadding*)
+        final int paddingFromDrawable = mPrivateFlags & PADDING_FROM_BGDRAWABLE;
         setPadding(leftPadding >= 0 ? leftPadding : mPaddingLeft,
                 topPadding >= 0 ? topPadding : mPaddingTop,
                 rightPadding >= 0 ? rightPadding : mPaddingRight,
                 bottomPadding >= 0 ? bottomPadding : mPaddingBottom);
+
+        // Restore the PADDING_FROM_BGDRAWABLE flag since setPadding() is public
+        // and thus assumes padding is set by the user and clears the flag.
+        if (leftPadding < 0 && topPadding < 0 &&
+                rightPadding < 0 && bottomPadding < 0) {
+            mPrivateFlags |= paddingFromDrawable;
+        }
 
         if (viewFlagMasks != 0) {
             setFlags(viewFlagValues, viewFlagMasks);
@@ -2212,6 +2234,29 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
         --sInstanceCount;
     }
     */
+
+    /**
+     * Indicates whether this View should be mirrored due to being shown in a
+     * context where its original directionality is the opposite of the one
+     * expected by the user.
+     *
+     * @return <code>true</code> when the View should be mirrored,
+     *         <code>false</code> otherwise.
+     */
+    protected final boolean shouldMirror() {
+        return mMirror;
+    }
+
+    /**
+     * Indicates wheather the padding originated from the background drawable or not.
+     *
+     * @return <code>true</code> when the padding is fetched from the background drawable,
+     *         <code>false</code> otherwise.
+     */
+    @ViewDebug.ExportedProperty
+    protected final boolean hasBackgroundDrawablePadding() {
+        return (mPrivateFlags & PADDING_FROM_BGDRAWABLE) == PADDING_FROM_BGDRAWABLE;
+    }
 
     /**
      * <p>
@@ -2607,7 +2652,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
 
             // offset rect so next call has the rectangle in the
             // coordinate system of its direct child.
-            rectangle.offset(child.getLeft(), child.getTop());
+            rectangle.offset(child.mLeft, child.getTop());
             rectangle.offset(-child.getScrollX(), -child.getScrollY());
 
             if (!(parent instanceof View)) {
@@ -4888,6 +4933,34 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
         return mRight;
     }
 
+     /**
+     * Returns the left coordinate passed to {@link #layout(int, int, int, int)}, rather
+     * than the current left coordinate as from {@link #getLeft()}.
+     * @hide
+     */
+    @Deprecated
+    public final int getLayoutedLeft() {
+        if (mMirror && !hasBackgroundDrawablePadding()) {
+            return ((ViewGroup)mParent).getWidth() - mRight;
+        } else {
+            return mLeft;
+        }
+    }
+
+    /**
+     * Returns the right coordinate passed to {@link #layout(int, int, int, int)}, rather
+     * than the current right coordinate as from {@link #getLeft()}.
+     * @hide
+     */
+    @Deprecated
+    public final int getLayoutedRight() {
+        if (mMirror && !hasBackgroundDrawablePadding()) {
+            return ((ViewGroup)mParent).getWidth() - mLeft;
+        } else {
+            return mRight;
+        }
+    }
+
     /**
      * Hit rectangle in parent's coordinates
      *
@@ -5686,7 +5759,9 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
     }
 
     private void recomputePadding() {
+        final int paddingFromDrawable = mPrivateFlags & PADDING_FROM_BGDRAWABLE;
         setPadding(mPaddingLeft, mPaddingTop, mUserPaddingRight, mUserPaddingBottom);
+        mPrivateFlags |= paddingFromDrawable;
     }
     
     /**
@@ -5948,6 +6023,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
                 final int inside = (viewFlags & SCROLLBARS_OUTSIDE_MASK) == 0 ? ~0 : 0;
 
                 int left, top, right, bottom;
+                final boolean mirror = mMirror;
                 
                 if (drawHorizontalScrollBar) {
                     scrollBar.setParameters(computeHorizontalScrollRange(),
@@ -5955,9 +6031,15 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
                                             computeHorizontalScrollExtent(), false);
                     final int verticalScrollBarGap = drawVerticalScrollBar ?
                             getVerticalScrollbarWidth() : 0;
-                    top = scrollY + height - size - (mUserPaddingBottom & inside);                         
-                    left = scrollX + (mPaddingLeft & inside);
-                    right = scrollX + width - (mUserPaddingRight & inside) - verticalScrollBarGap;
+                    if (mirror) {
+                        left = scrollX + (mUserPaddingRight & inside) + verticalScrollBarGap;
+                        right = scrollX + width - (mPaddingLeft & inside);
+                    } else {
+                        left = scrollX + (mPaddingLeft & inside);
+                        right = scrollX + width - (mUserPaddingRight & inside) -
+                                verticalScrollBarGap;
+                    }
+                    top = scrollY + height - size - (mUserPaddingBottom & inside);
                     bottom = top + size;
                     onDrawHorizontalScrollBar(canvas, scrollBar, left, top, right, bottom);
                     if (invalidate) {
@@ -5969,8 +6051,11 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
                     scrollBar.setParameters(computeVerticalScrollRange(),
                                             computeVerticalScrollOffset(),
                                             computeVerticalScrollExtent(), true);
-                    // TODO: Deal with RTL languages to position scrollbar on left
-                    left = scrollX + width - size - (mUserPaddingRight & inside);
+                    if (mirror) {
+                        left = scrollX + (mUserPaddingRight & inside);
+                    } else {
+                        left = scrollX + width - size - (mUserPaddingRight & inside);
+                    }
                     top = scrollY + (mPaddingTop & inside);
                     right = left + size;
                     bottom = scrollY + height - (mUserPaddingBottom & inside);
@@ -6917,7 +7002,8 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
             paddingTop += getTopPaddingOffset();
         }
 
-        int left = mScrollX + paddingLeft;
+        int left = mScrollX + (mMirror && !hasBackgroundDrawablePadding() ?
+                mPaddingRight : paddingLeft);
         int right = left + mRight - mLeft - mPaddingRight - paddingLeft;
         int top = mScrollY + paddingTop;
         int bottom = top + mBottom - mTop - mPaddingBottom - paddingTop;
@@ -7167,6 +7253,44 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
      * @param b Bottom position, relative to parent
      */
     public final void layout(int l, int t, int r, int b) {
+        // Calculate if the view position needs to be mirrored
+        final boolean mirror;
+        ViewParent p = mParent;
+        if (p instanceof ViewGroup) {
+            final int dir = ((ViewGroup)p).getDirectionality();
+            if (dir != ViewGroup.DIRECTIONALITY_NONE) {
+                final boolean rtl = mContext.getResources().
+                                        getBoolean(R.bool.alphabet_isRtl);
+                mirror = (dir == ViewGroup.DIRECTIONALITY_LEFT_TO_RIGHT && rtl);
+
+                // Apply mirroring to layout position
+                if (mirror) {
+                    final int w = ((ViewGroup)p).getWidth();
+                    final int ll = l;
+                    l = w - r;
+                    r = w - ll;
+                }
+            } else {
+                mirror = false;
+            }
+        } else {
+            mirror = false;
+        }
+
+        // Calculate if the view contents needs to be mirrored
+        if (ViewGroup.class.isAssignableFrom(getClass())) {
+            final int dir = ((ViewGroup)this).getDirectionality();
+            if (dir != ViewGroup.DIRECTIONALITY_NONE) {
+                final boolean rtl = mContext.getResources().
+                                        getBoolean(R.bool.alphabet_isRtl);
+                mMirror = (dir == ViewGroup.DIRECTIONALITY_LEFT_TO_RIGHT && rtl);
+            } else {
+                mMirror = false;
+            }
+        } else {
+            mMirror = mirror;
+        }
+
         boolean changed = setFrame(l, t, r, b);
         if (changed || (mPrivateFlags & LAYOUT_REQUIRED) == LAYOUT_REQUIRED) {
             if (ViewDebug.TRACE_HIERARCHY) {
@@ -7570,6 +7694,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
             }
             if (d.getPadding(padding)) {
                 setPadding(padding.left, padding.top, padding.right, padding.bottom);
+                mPrivateFlags |= PADDING_FROM_BGDRAWABLE;
             }
 
             // Compare the minimum sizes of the old Drawable and the new.  If there isn't an old or
@@ -7659,6 +7784,9 @@ public class View implements Drawable.Callback, KeyEvent.Callback, Accessibility
         mUserPaddingBottom = bottom;
 
         final int viewFlags = mViewFlags;
+
+        // Padding now no longer originates from the background drawable
+        mPrivateFlags &= ~PADDING_FROM_BGDRAWABLE;
 
         // Common case is there are no scroll bars.
         if ((viewFlags & (SCROLLBARS_VERTICAL|SCROLLBARS_HORIZONTAL)) != 0) {

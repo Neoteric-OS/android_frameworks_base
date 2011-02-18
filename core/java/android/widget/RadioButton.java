@@ -16,8 +16,11 @@
 
 package android.widget;
 
+import com.android.internal.R;
+
 import android.content.Context;
 import android.util.AttributeSet;
+import android.graphics.drawable.Drawable;
 
 
 /**
@@ -46,6 +49,7 @@ import android.util.AttributeSet;
  * </p>
  */
 public class RadioButton extends CompoundButton {
+    private Drawable mLtrBackground;
     
     public RadioButton(Context context) {
         this(context, null);
@@ -57,6 +61,7 @@ public class RadioButton extends CompoundButton {
 
     public RadioButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        mLtrBackground = getBackground();
     }
 
     /**
@@ -70,6 +75,16 @@ public class RadioButton extends CompoundButton {
         // checked (as opposed to check boxes widgets)
         if (!isChecked()) {
             super.toggle();
+        }
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        if (shouldMirror()) {
+            setBackgroundResource(R.drawable.btn_radio_label_background_rtl);
+        } else {
+            setBackgroundDrawable(mLtrBackground);
         }
     }
 }

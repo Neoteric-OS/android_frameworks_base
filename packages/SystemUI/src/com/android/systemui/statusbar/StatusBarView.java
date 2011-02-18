@@ -75,7 +75,7 @@ public class StatusBarView extends FrameLayout {
         super.onLayout(changed, l, t, r, b);
 
         // put the date date view quantized to the icons
-        int oldDateRight = mDate.getRight();
+        int oldDateRight = mDate.getLayoutedRight();
         int newDateRight;
 
         newDateRight = getDateSize(mNotificationIcons, oldDateRight,
@@ -96,8 +96,8 @@ public class StatusBarView extends FrameLayout {
             newDateRight = max;
         }
 
-        mDate.layout(mDate.getLeft(), mDate.getTop(), newDateRight, mDate.getBottom());
-        mBackground.setFixedBounds(-mDate.getLeft(), -mDate.getTop(), (r-l), (b-t));
+        mDate.layout(mDate.getLayoutedLeft(), mDate.getTop(), newDateRight, mDate.getBottom());
+        mBackground.setFixedBounds(-mDate.getLayoutedLeft(), -mDate.getTop(), (r-l), (b-t));
     }
 
     /**
@@ -107,7 +107,7 @@ public class StatusBarView extends FrameLayout {
     private int getViewOffset(View v) {
         int offset = 0;
         while (v != this) {
-            offset += v.getLeft();
+            offset += v.getLayoutedLeft();
             ViewParent p = v.getParent();
             if (v instanceof View) {
                 v = (View)p;
@@ -122,8 +122,8 @@ public class StatusBarView extends FrameLayout {
         final int N = g.getChildCount();
         for (int i=0; i<N; i++) {
             View v = g.getChildAt(i);
-            int l = v.getLeft() + offset;
-            int r = v.getRight() + offset;
+            int l = v.getLayoutedLeft() + offset;
+            int r = v.getLayoutedRight() + offset;
             if (w >= l && w <= r) {
                 return r;
             }

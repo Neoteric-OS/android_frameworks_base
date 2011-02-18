@@ -66,7 +66,7 @@ public class IconMerger extends LinearLayout {
         for (i=N-1; i>=0; i--) {
             final View child = getChildAt(i);
             if (child.getVisibility() != GONE) {
-                fitRight = child.getRight();
+                fitRight = child.getLayoutedRight();
                 break;
             }
         }
@@ -81,7 +81,7 @@ public class IconMerger extends LinearLayout {
                 startIndex = i+1;
             }
             else if (child.getVisibility() != GONE) {
-                fitLeft = child.getLeft();
+                fitLeft = child.getLayoutedLeft();
                 break;
             }
         }
@@ -98,7 +98,7 @@ public class IconMerger extends LinearLayout {
         // so everything gets pushed left
         int adjust = 0;
         if (fitRight - fitLeft <= maxWidth) {
-            adjust = fitLeft - moreView.getLeft();
+            adjust = fitLeft - moreView.getLayoutedLeft();
             fitLeft -= adjust;
             fitRight -= adjust;
             moreView.layout(0, moreView.getTop(), 0, moreView.getBottom());
@@ -111,8 +111,8 @@ public class IconMerger extends LinearLayout {
         for (i=startIndex; i<N; i++) {
             final StatusBarIconView child = (StatusBarIconView)getChildAt(i);
             if (child.getVisibility() != GONE) {
-                int childLeft = child.getLeft();
-                int childRight = child.getRight();
+                int childLeft = child.getLayoutedLeft();
+                int childRight = child.getLayoutedRight();
                 if (childLeft < breakingPoint) {
                     // hide this one
                     child.layout(0, child.getTop(), 0, child.getBottom());

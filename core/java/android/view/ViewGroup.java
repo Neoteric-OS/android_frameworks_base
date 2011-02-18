@@ -28,6 +28,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.os.Parcelable;
+import android.os.Process;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Config;
@@ -214,6 +215,16 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
      */
     public static final int FOCUS_BLOCK_DESCENDANTS = 0x60000;
 
+     /**
+     * The order of the views does not represent any specific direction.
+     */
+    public static final int DIRECTIONALITY_NONE = 0;
+
+    /**
+     * The views has been designed to be shown from left to right.
+     */
+    public static final int DIRECTIONALITY_LEFT_TO_RIGHT = 1;
+
     /**
      * Used to map between enum in attrubutes and flag values.
      */
@@ -271,6 +282,9 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
     // considered as children
     private int mChildrenCount;
 
+    // Directionality of layout of the child views
+    private int mDirectionality;
+
     private static final int ARRAY_INITIAL_CAPACITY = 12;
     private static final int ARRAY_CAPACITY_INCREMENT = 12;
 
@@ -307,6 +321,12 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
 
         mChildren = new View[ARRAY_INITIAL_CAPACITY];
         mChildrenCount = 0;
+
+        // For legacy reasons only layouts in the system process can be assumed to
+        // support automatic mirroring, all other applications has to set this
+        // property manually to signal their compatibility.
+        mDirectionality = (Process.myUid() == Process.SYSTEM_UID) ?
+                           DIRECTIONALITY_LEFT_TO_RIGHT : DIRECTIONALITY_NONE;
 
         mCachePaint.setDither(false);
 
@@ -347,6 +367,9 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
                     break;
                 case R.styleable.ViewGroup_descendantFocusability:
                     setDescendantFocusability(DESCENDANT_FOCUSABILITY_FLAGS[a.getInt(attr, 0)]);
+                    break;
+                case R.styleable.ViewGroup_directionality:
+                    mDirectionality = a.getInt(attr, mDirectionality);
                     break;
             }
         }
@@ -392,6 +415,54 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
         }
         mGroupFlags &= ~FLAG_MASK_FOCUSABILITY;
         mGroupFlags |= (focusability & FLAG_MASK_FOCUSABILITY);
+    }
+
+    /**
+     * Set the layout directionality of the children of this view, e.g. when the application
+     * is designed with English in mind the directionality is DIRECTIONALITY_LEFT_TO_RIGHT.
+     * When the directionality given is other than DIRECTIONALITY_NONE the framework will
+     * automatically mirror the layout in case the directionality of the alphabet of the
+     * current locale differs from the view layout directionality.
+     *
+     * @attr ref android.R.styleable#ViewGroup_directionality
+     *
+     * @param direction  The directionality of the layout of the view children. Must be one
+     *                   of {@link #DIRECTIONALITY_NONE} and {@link #DIRECTIONALITY_LEFT_TO_RIGHT}.
+     *
+     * @see #getDirectionality()
+     */
+    public void setDirectionality(int direction) {
+        switch (direction) {
+            case DIRECTIONALITY_NONE:
+            case DIRECTIONALITY_LEFT_TO_RIGHT:
+                break;
+            default:
+                throw new IllegalArgumentException("must be one of DIRECTIONALITY_NONE, "
+                        + "DIRECTIONALITY_LEFT_TO_RIGHT");
+        }
+        mDirectionality = direction;
+        invalidate();
+    }
+
+    /**
+     * Gets the directionality of the layout of the child views of this view group. The layout
+     * directionality is the direction in which the layouts are though to be viewed by the user,
+     * e.g. for a layout designed for English view children are usually discovered from left to
+     * right (the eye sweeps from left to right because the text in the UI is oriented left to
+     * right), but for e.g. Arabic the child views are discovered from right to left, hence the
+     * directionality is right to left.
+     *
+     * @return one of {@link #DIRECTIONALITY_NONE}, {@link #DIRECTIONALITY_LEFT_TO_RIGHT}.
+     *
+     * @see #setDirectionality(int)
+     */
+    @ViewDebug.ExportedProperty(mapping = {
+        @ViewDebug.IntToString(from = DIRECTIONALITY_NONE, to = "DIRECTIONALITY_NONE"),
+        @ViewDebug.IntToString(from = DIRECTIONALITY_LEFT_TO_RIGHT,
+                to = "DIRECTIONALITY_LEFT_TO_RIGHT")
+    })
+    public int getDirectionality() {
+        return mDirectionality;
     }
 
     /**
@@ -1353,8 +1424,10 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
         final boolean clipToPadding = (flags & CLIP_TO_PADDING_MASK) == CLIP_TO_PADDING_MASK;
         if (clipToPadding) {
             saveCount = canvas.save();
-            canvas.clipRect(mScrollX + mPaddingLeft, mScrollY + mPaddingTop,
-                    mScrollX + mRight - mLeft - mPaddingRight,
+            final boolean mirror = shouldMirror() && !hasBackgroundDrawablePadding();
+            canvas.clipRect(mScrollX + (mirror ? mPaddingRight : mPaddingLeft), mScrollY +
+                    mPaddingTop, mScrollX + mRight - mLeft -
+                    (mirror ? mPaddingLeft : mPaddingRight),
                     mScrollY + mBottom - mTop - mPaddingBottom);
 
         }

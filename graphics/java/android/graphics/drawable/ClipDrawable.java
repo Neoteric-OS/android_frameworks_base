@@ -188,6 +188,11 @@ public class ClipDrawable extends Drawable implements Drawable.Callback {
 
     @Override
     public void draw(Canvas canvas) {
+        draw(canvas, false);
+    }
+
+    @Override
+    public void draw(Canvas canvas, boolean mirror) {
         
         if (mClipState.mDrawable.getLevel() == 0) {
             return;
@@ -206,12 +211,21 @@ public class ClipDrawable extends Drawable implements Drawable.Callback {
         if ((mClipState.mOrientation & VERTICAL) != 0) {
             h -= (h - ih) * (10000 - level) / 10000;
         }
-        Gravity.apply(mClipState.mGravity, w, h, bounds, r);
+
+        int gravity = mClipState.mGravity;
+        if (mirror) {
+            if ((gravity & Gravity.LEFT) > 0) {
+                gravity = (gravity & ~Gravity.LEFT) | Gravity.RIGHT;
+            } else if ((gravity & Gravity.RIGHT) > 0) {
+                gravity = (gravity & ~Gravity.RIGHT) | Gravity.LEFT;
+            }
+        }
+        Gravity.apply(gravity, w, h, bounds, r);
 
         if (w > 0 && h > 0) {
             canvas.save();
             canvas.clipRect(r);
-            mClipState.mDrawable.draw(canvas);
+            mClipState.mDrawable.draw(canvas, mirror);
             canvas.restore();
         }
     }

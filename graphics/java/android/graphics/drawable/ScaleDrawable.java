@@ -145,8 +145,13 @@ public class ScaleDrawable extends Drawable implements Drawable.Callback {
 
     @Override
     public void draw(Canvas canvas) {
+        draw(canvas, false);
+    }
+
+    @Override
+    public void draw(Canvas canvas, boolean mirror) {
         if (mScaleState.mDrawable.getLevel() != 0)
-            mScaleState.mDrawable.draw(canvas);
+            mScaleState.mDrawable.draw(canvas, mirror);
     }
 
     @Override

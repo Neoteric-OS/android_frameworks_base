@@ -152,7 +152,12 @@ public class InsetDrawable extends Drawable implements Drawable.Callback
 
     @Override
     public void draw(Canvas canvas) {
-        mInsetState.mDrawable.draw(canvas);
+        draw(canvas, false);
+    }
+
+    @Override
+    public void draw(Canvas canvas, boolean mirror) {
+        mInsetState.mDrawable.draw(canvas, mirror);
     }
 
     @Override

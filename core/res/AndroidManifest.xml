@@ -1276,7 +1276,7 @@
                  android:killAfterRestore="false"
                  android:icon="@drawable/ic_launcher_android">
         <activity android:name="com.android.internal.app.ChooserActivity"
-                android:theme="@style/Theme.Dialog.Alert"
+                android:theme="@style/BidiDialogAlert"
                 android:finishOnCloseSystemDialogs="true"
                 android:excludeFromRecents="true"
                 android:multiprocess="true">
@@ -1299,7 +1299,7 @@
                 android:excludeFromRecents="true">
         </activity>
         <activity android:name="com.android.internal.app.RingtonePickerActivity"
-                android:theme="@style/Theme.Dialog.Alert"
+                android:theme="@style/BidiDialogAlert"
                 android:excludeFromRecents="true"
                 android:multiprocess="true">
             <intent-filter>

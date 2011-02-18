@@ -246,7 +246,13 @@ public abstract class CompoundButton extends Button implements Checkable {
                     break;
             }
 
-            buttonDrawable.setBounds(0, y, buttonDrawable.getIntrinsicWidth(), y + height);
+            if (shouldMirror()) {
+                final int width = getWidth();
+                buttonDrawable.setBounds(width - buttonDrawable.getIntrinsicWidth(), y,
+                                         width, y + height);
+            } else {
+                buttonDrawable.setBounds(0, y, buttonDrawable.getIntrinsicWidth(), y + height);
+            }
             buttonDrawable.draw(canvas);
         }
     }

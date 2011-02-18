@@ -1252,7 +1252,8 @@ public class GridView extends AbsListView {
                 mMotionPosition == position;
         final boolean updateChildPressed = isPressed != child.isPressed();
         
-        boolean needToMeasure = !recycled || updateChildSelected || child.isLayoutRequested();
+        boolean needToMeasure = !recycled || updateChildSelected || child.isLayoutRequested() ||
+                shouldMirror();
 
         // Respect layout params that are already in the view. Otherwise make
         // some up...
@@ -1576,17 +1577,33 @@ public class GridView extends AbsListView {
                 }
                 break;
             case FOCUS_LEFT:
-                if (selectedPosition > startOfRowPos) {
-                    mLayoutMode = LAYOUT_MOVE_SELECTION;
-                    setSelectionInt(Math.max(0, selectedPosition - 1));
-                    moved = true;
+                if (shouldMirror()) { // When mirrored the higher index is to the left
+                    if (selectedPosition < endOfRowPos) {
+                        mLayoutMode = LAYOUT_MOVE_SELECTION;
+                        setSelectionInt(Math.min(selectedPosition + 1, mItemCount - 1));
+                        moved = true;
+                    }
+                } else {
+                    if (selectedPosition > startOfRowPos) {
+                        mLayoutMode = LAYOUT_MOVE_SELECTION;
+                        setSelectionInt(Math.max(0, selectedPosition - 1));
+                        moved = true;
+                    }
                 }
                 break;
             case FOCUS_RIGHT:
-                if (selectedPosition < endOfRowPos) {
-                    mLayoutMode = LAYOUT_MOVE_SELECTION;
-                    setSelectionInt(Math.min(selectedPosition + 1, mItemCount - 1));
-                    moved = true;
+                if (shouldMirror()) { // When mirrored the lower index is to the right
+                    if (selectedPosition > startOfRowPos) {
+                        mLayoutMode = LAYOUT_MOVE_SELECTION;
+                        setSelectionInt(Math.max(0, selectedPosition - 1));
+                        moved = true;
+                    }
+                } else {
+                    if (selectedPosition < endOfRowPos) {
+                        mLayoutMode = LAYOUT_MOVE_SELECTION;
+                        setSelectionInt(Math.min(selectedPosition + 1, mItemCount - 1));
+                        moved = true;
+                    }
                 }
                 break;
         }

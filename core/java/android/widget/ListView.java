@@ -1772,8 +1772,8 @@ public class ListView extends AbsListView {
         final boolean isPressed = mode > TOUCH_MODE_DOWN && mode < TOUCH_MODE_SCROLL &&
                 mMotionPosition == position;
         final boolean updateChildPressed = isPressed != child.isPressed();
-        final boolean needToMeasure = !recycled || updateChildSelected || child.isLayoutRequested();
-
+        final boolean needToMeasure = !recycled || updateChildSelected ||
+                child.isLayoutRequested() || shouldMirror();
         // Respect layout params that are already in the view. Otherwise make some up...
         // noinspection unchecked
         AbsListView.LayoutParams p = (AbsListView.LayoutParams) child.getLayoutParams();
@@ -3008,8 +3008,9 @@ public class ListView extends AbsListView {
         if (drawDividers || drawOverscrollHeader || drawOverscrollFooter) {
             // Only modify the top and bottom in the loop, we set the left and right here
             final Rect bounds = mTempRect;
-            bounds.left = mPaddingLeft;
-            bounds.right = mRight - mLeft - mPaddingRight;
+            final boolean mirror = shouldMirror() && !hasBackgroundDrawablePadding();
+            bounds.left = mirror ? mPaddingRight : mPaddingLeft;
+            bounds.right = mRight - mLeft - (mirror ? mPaddingLeft : mPaddingRight);
 
             final int count = getChildCount();
             final int headerCount = mHeaderViewInfos.size();

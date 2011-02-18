@@ -44,8 +44,13 @@ public class DrawableContainer extends Drawable implements Drawable.Callback {
 
     @Override
     public void draw(Canvas canvas) {
+        draw(canvas, false);
+    }
+
+    @Override
+    public void draw(Canvas canvas, boolean mirror) {
         if (mCurrDrawable != null) {
-            mCurrDrawable.draw(canvas);
+            mCurrDrawable.draw(canvas, mirror);
         }
     }
 

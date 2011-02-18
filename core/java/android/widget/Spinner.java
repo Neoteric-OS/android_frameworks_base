@@ -16,13 +16,17 @@
 
 package android.widget;
 
+import com.android.internal.R;
+
 import android.annotation.Widget;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +47,9 @@ public class Spinner extends AbsSpinner implements OnClickListener {
     
     private CharSequence mPrompt;
     private AlertDialog mPopup;
+    private Drawable mLtrBackground;
+    private boolean mHasDir;
+    private boolean mIsRtl;
 
     public Spinner(Context context) {
         this(context, null);
@@ -59,6 +66,15 @@ public class Spinner extends AbsSpinner implements OnClickListener {
                 com.android.internal.R.styleable.Spinner, defStyle, 0);
         
         mPrompt = a.getString(com.android.internal.R.styleable.Spinner_prompt);
+        mHasDir = (getDirectionality() != DIRECTIONALITY_NONE);
+        mLtrBackground = getBackground();
+        mIsRtl = getResources().getBoolean(R.bool.alphabet_isRtl); // get original language
+                                                                   // directionality
+        if (mHasDir && mIsRtl) {
+            setBackgroundResource(R.drawable.btn_dropdown_rtl);
+        } else {
+            setBackgroundDrawable(mLtrBackground);
+        }
 
         a.recycle();
     }
@@ -100,6 +116,27 @@ public class Spinner extends AbsSpinner implements OnClickListener {
     @Override
     public void setOnItemClickListener(OnItemClickListener l) {
         throw new RuntimeException("setOnItemClickListener cannot be used with a spinner.");
+    }
+
+    /**
+     * @see android.view.View#onConfigurationChanged(Configuration)
+     *
+     * Called when the current configuration of the resources being used
+     * by the application have changed.
+     *
+     * @param newConfig The new resource configuration.
+     */
+    @Override
+    protected void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (mHasDir && (mIsRtl != getResources().getBoolean(R.bool.alphabet_isRtl))) {
+            mIsRtl = getResources().getBoolean(R.bool.alphabet_isRtl);
+            if (mIsRtl) {
+                setBackgroundResource(R.drawable.btn_dropdown_rtl);
+            } else {
+                setBackgroundDrawable(mLtrBackground);
+            }
+        }
     }
 
     /**
@@ -150,8 +187,19 @@ public class Spinner extends AbsSpinner implements OnClickListener {
         mFirstPosition = mSelectedPosition;
         View sel = makeAndAddView(mSelectedPosition);
         int width = sel.getMeasuredWidth();
-        int selectedOffset = childrenLeft + (childrenWidth / 2) - (width / 2);
-        sel.offsetLeftAndRight(selectedOffset);
+        final int selectedOffset;
+
+        if (shouldMirror()) {
+            if (hasBackgroundDrawablePadding()) {
+                selectedOffset = mSpinnerPadding.right + (childrenWidth / 2) - (width / 2);
+            } else {
+                selectedOffset = mSpinnerPadding.left + (childrenWidth / 2) - (width / 2);
+            }
+            sel.offsetLeftAndRight(-selectedOffset);
+        } else {
+            selectedOffset = mSpinnerPadding.left + (childrenWidth / 2) - (width / 2);
+            sel.offsetLeftAndRight(selectedOffset);
+        }
 
         // Flush any cached views that did not get reused above
         mRecycler.clear();

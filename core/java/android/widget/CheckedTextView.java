@@ -166,11 +166,25 @@ public class CheckedTextView extends TextView implements Checkable {
             }
             
             int right = getWidth();
-            checkMarkDrawable.setBounds(
-                    right - mCheckMarkWidth - mBasePaddingRight, 
-                    y, 
-                    right - mBasePaddingRight, 
-                    y + height);
+            if (shouldMirror()) {
+                final int padding;
+                if (hasBackgroundDrawablePadding()) {
+                    padding = mPaddingLeft;
+                } else {
+                    padding = mBasePaddingRight;
+                }
+                checkMarkDrawable.setBounds(
+                        mScrollX + padding,
+                        y,
+                        mScrollX + padding + mCheckMarkWidth,
+                        y + height);
+            } else {
+                checkMarkDrawable.setBounds(
+                        mScrollX + right - mCheckMarkWidth - mBasePaddingRight,
+                        y,
+                        mScrollX + right - mBasePaddingRight,
+                        y + height);
+            }
             checkMarkDrawable.draw(canvas);
         }
     }

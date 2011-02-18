@@ -3045,6 +3045,17 @@
  visibility="public"
 >
 </field>
+<field name="directionality"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="16843468"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
 <field name="disableDependentsState"
  type="int"
  transient="false"
@@ -72210,6 +72221,21 @@
 </exception>
 <exception name="XmlPullParserException" type="org.xmlpull.v1.XmlPullParserException">
 </exception>
+</method>
+<method name="draw"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="canvas" type="android.graphics.Canvas">
+</parameter>
+<parameter name="mirror" type="boolean">
+</parameter>
 </method>
 <method name="draw"
  return="void"
@@ -187470,6 +187496,17 @@
 <parameter name="outRect" type="android.graphics.Rect">
 </parameter>
 </method>
+<method name="hasBackgroundDrawablePadding"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+</method>
 <method name="hasFocus"
  return="boolean"
  abstract="false"
@@ -189535,6 +189572,17 @@
 >
 <parameter name="willNotDraw" type="boolean">
 </parameter>
+</method>
+<method name="shouldMirror"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="protected"
+>
 </method>
 <method name="showContextMenu"
  return="boolean"
@@ -191733,6 +191781,17 @@
  visibility="public"
 >
 </method>
+<method name="getDirectionality"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
 <method name="getFocusedChild"
  return="android.view.View"
  abstract="false"
@@ -192301,6 +192360,19 @@
 <parameter name="focusability" type="int">
 </parameter>
 </method>
+<method name="setDirectionality"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="direction" type="int">
+</parameter>
+</method>
 <method name="setLayoutAnimation"
  return="void"
  abstract="false"
@@ -192414,6 +192486,28 @@
  final="true"
  deprecated="not deprecated"
  visibility="protected"
+>
+</field>
+<field name="DIRECTIONALITY_LEFT_TO_RIGHT"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="1"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="DIRECTIONALITY_NONE"
+ type="int"
+ transient="false"
+ volatile="false"
+ value="0"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
 >
 </field>
 <field name="FOCUS_AFTER_DESCENDANTS"

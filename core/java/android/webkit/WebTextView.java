@@ -794,6 +794,11 @@ import java.util.ArrayList;
      * @param height    height of the textfield.
      */
     /* package */ void setRect(int x, int y, int width, int height) {
+        // If the WebView uses RTL layout, then the x-coordinate of the WebTextView should
+        // be measured from the right edge of the WebView.
+        if (shouldMirror()) {
+            x = mWebView.getWidth() - x - width;
+        }
         LayoutParams lp = (LayoutParams) getLayoutParams();
         if (null == lp) {
             lp = new LayoutParams(width, height, x, y);

@@ -211,6 +211,8 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
     private boolean mEatTouchRelease = false;
     private boolean mScrolled = false;
 
+    private boolean mMirrored;
+
     private Editable.Factory mEditableFactory = Editable.Factory.getInstance();
     private Spannable.Factory mSpannableFactory = Spannable.Factory.getInstance();
 
@@ -1258,10 +1260,20 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
      */
     public int getCompoundPaddingLeft() {
         final Drawables dr = mDrawables;
-        if (dr == null || dr.mDrawableLeft == null) {
-            return mPaddingLeft;
+        if (shouldMirror()) {
+            final int padding = hasBackgroundDrawablePadding() ?
+                                    mPaddingLeft : mPaddingRight;
+            if (dr == null || dr.mDrawableRight == null) {
+                return padding;
+            } else {
+                return padding + dr.mDrawablePadding + dr.mDrawableSizeRight;
+            }
         } else {
-            return mPaddingLeft + dr.mDrawablePadding + dr.mDrawableSizeLeft;
+            if (dr == null || dr.mDrawableLeft == null) {
+                return mPaddingLeft;
+            } else {
+                return mPaddingLeft + dr.mDrawablePadding + dr.mDrawableSizeLeft;
+            }
         }
     }
 
@@ -1271,10 +1283,21 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
      */
     public int getCompoundPaddingRight() {
         final Drawables dr = mDrawables;
-        if (dr == null || dr.mDrawableRight == null) {
-            return mPaddingRight;
-        } else {
-            return mPaddingRight + dr.mDrawablePadding + dr.mDrawableSizeRight;
+        if (shouldMirror()) {
+            final int padding = hasBackgroundDrawablePadding() ?
+                                    mPaddingRight : mPaddingLeft;
+            if (dr == null || dr.mDrawableLeft == null) {
+                return padding;
+            } else {
+                return padding + dr.mDrawablePadding + dr.mDrawableSizeLeft;
+            }
+        }
+        else {
+            if (dr == null || dr.mDrawableRight == null) {
+                return mPaddingRight;
+            } else {
+                return mPaddingRight + dr.mDrawablePadding + dr.mDrawableSizeRight;
+            }
         }
     }
 
@@ -1589,6 +1612,14 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
     public int getCompoundDrawablePadding() {
         final Drawables dr = mDrawables;
         return dr != null ? dr.mDrawablePadding : 0;
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        if (shouldMirror() != mMirrored) {
+            checkForRelayout();
+        }
     }
 
     @Override
@@ -3836,8 +3867,10 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
     @Override
     protected int getLeftPaddingOffset() {
-        return getCompoundPaddingLeft() - mPaddingLeft +
-                (int) Math.min(0, mShadowDx - mShadowRadius);
+        return getCompoundPaddingLeft() -
+               (shouldMirror() && !hasBackgroundDrawablePadding() ?
+                       mPaddingRight : mPaddingLeft) +
+               (int) Math.min(0, mShadowDx - mShadowRadius);
     }
 
     @Override
@@ -3852,7 +3885,9 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
     @Override
     protected int getRightPaddingOffset() {
-        return -(getCompoundPaddingRight() - mPaddingRight) +
+        return -(getCompoundPaddingRight() -
+                (shouldMirror() && !hasBackgroundDrawablePadding() ?
+                        mPaddingLeft : mPaddingRight)) +
                 (int) Math.max(0, mShadowDx + mShadowRadius);
     }
 
@@ -3878,21 +3913,37 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             // accordingly.
             final TextView.Drawables drawables = mDrawables;
             if (drawables != null) {
-                if (drawable == drawables.mDrawableLeft) {
+                if (shouldMirror()) {
                     final int compoundPaddingTop = getCompoundPaddingTop();
                     final int compoundPaddingBottom = getCompoundPaddingBottom();
                     final int vspace = mBottom - mTop - compoundPaddingBottom - compoundPaddingTop;
 
-                    scrollX += mPaddingLeft;
-                    scrollY += compoundPaddingTop + (vspace - drawables.mDrawableHeightLeft) / 2;
-                } else if (drawable == drawables.mDrawableRight) {
+                    if (drawable == drawables.mDrawableRight) {
+                        scrollX += hasBackgroundDrawablePadding() ? mPaddingLeft : mPaddingRight;
+                        scrollY += compoundPaddingTop + (vspace -
+                                drawables.mDrawableHeightRight) / 2;
+                    } else if (drawable == drawables.mDrawableLeft) {
+                        scrollX += (mRight - mLeft -
+                                (!hasBackgroundDrawablePadding() ? mPaddingLeft : mPaddingRight) -
+                                drawables.mDrawableSizeLeft);
+                        scrollY += compoundPaddingTop + (vspace - drawables.mDrawableHeightLeft) / 2;
+                    }
+                } else {
                     final int compoundPaddingTop = getCompoundPaddingTop();
                     final int compoundPaddingBottom = getCompoundPaddingBottom();
                     final int vspace = mBottom - mTop - compoundPaddingBottom - compoundPaddingTop;
 
-                    scrollX += (mRight - mLeft - mPaddingRight - drawables.mDrawableSizeRight);
-                    scrollY += compoundPaddingTop + (vspace - drawables.mDrawableHeightRight) / 2;
-                } else if (drawable == drawables.mDrawableTop) {
+                    if (drawable == drawables.mDrawableLeft) {
+                        scrollX += mPaddingLeft;
+                        scrollY += compoundPaddingTop + (vspace -
+                                drawables.mDrawableHeightLeft) / 2;
+                    } else if (drawable == drawables.mDrawableRight) {
+                        scrollX += (mRight - mLeft - mPaddingRight - drawables.mDrawableSizeRight);
+                        scrollY += compoundPaddingTop + (vspace -
+                                drawables.mDrawableHeightRight) / 2;
+                    }
+                }
+                if (drawable == drawables.mDrawableTop) {
                     final int compoundPaddingLeft = getCompoundPaddingLeft();
                     final int compoundPaddingRight = getCompoundPaddingRight();
                     final int hspace = mRight - mLeft - compoundPaddingRight - compoundPaddingLeft;
@@ -3931,6 +3982,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         final int left = mLeft;
         final int bottom = mBottom;
         final int top = mTop;
+        final boolean mirror = shouldMirror();
 
         final Drawables dr = mDrawables;
         if (dr != null) {
@@ -3944,7 +3996,18 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
             // IMPORTANT: The coordinates computed are also used in invalidateDrawable()
             // Make sure to update invalidateDrawable() when changing this code.
-            if (dr.mDrawableLeft != null) {
+            if (mirror) {
+                if (dr.mDrawableRight != null) {
+                    canvas.save();
+                    canvas.translate(scrollX +
+                                         (hasBackgroundDrawablePadding() ?
+                                          mPaddingLeft : mPaddingRight),
+                                     scrollY + compoundPaddingTop +
+                                     (vspace - dr.mDrawableHeightRight) / 2);
+                    dr.mDrawableRight.draw(canvas);
+                    canvas.restore();
+                }
+            } else if (dr.mDrawableLeft != null) {
                 canvas.save();
                 canvas.translate(scrollX + mPaddingLeft,
                                  scrollY + compoundPaddingTop +
@@ -3955,7 +4018,17 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
             // IMPORTANT: The coordinates computed are also used in invalidateDrawable()
             // Make sure to update invalidateDrawable() when changing this code.
-            if (dr.mDrawableRight != null) {
+            if (mirror) {
+                if (dr.mDrawableLeft != null) {
+                    canvas.save();
+                    canvas.translate(scrollX + right - left -
+                            (hasBackgroundDrawablePadding() ? mPaddingRight : mPaddingLeft) -
+                            dr.mDrawableSizeLeft, scrollY + compoundPaddingTop + (vspace -
+                            dr.mDrawableHeightLeft) / 2);
+                    dr.mDrawableLeft.draw(canvas);
+                    canvas.restore();
+                }
+            } else if (dr.mDrawableRight != null) {
                 canvas.save();
                 canvas.translate(scrollX + right - left - mPaddingRight - dr.mDrawableSizeRight,
                          scrollY + compoundPaddingTop + (vspace - dr.mDrawableHeightRight) / 2);
@@ -4051,7 +4124,8 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
         if (mEllipsize == TextUtils.TruncateAt.MARQUEE) {
             if (!mSingleLine && getLineCount() == 1 && canMarquee() &&
-                    (mGravity & Gravity.HORIZONTAL_GRAVITY_MASK) != Gravity.LEFT) {
+                    (mGravity & Gravity.HORIZONTAL_GRAVITY_MASK) !=
+                        (shouldMirror() ? Gravity.RIGHT : Gravity.LEFT)) {
                 canvas.translate(mLayout.getLineRight(0) - (mRight - mLeft -
                         getCompoundPaddingLeft() - getCompoundPaddingRight()), 0.0f);
             }
@@ -5006,6 +5080,17 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
             default:
                 alignment = Layout.Alignment.ALIGN_NORMAL;
+        }
+
+        final boolean mirrored = shouldMirror();
+        mMirrored = mirrored;
+        if (mirrored) {
+            if (alignment == Layout.Alignment.ALIGN_OPPOSITE) {
+                alignment = Layout.Alignment.ALIGN_NORMAL;
+            }
+            else if (alignment == Layout.Alignment.ALIGN_NORMAL) {
+                alignment = Layout.Alignment.ALIGN_OPPOSITE;
+            }
         }
 
         boolean shouldEllipsize = mEllipsize != null && mInput == null;
@@ -7025,11 +7110,21 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             } else if (getLineCount() == 1) {
                 switch (mGravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
                     case Gravity.LEFT:
-                        return 0.0f;
+                        if (shouldMirror()) {
+                            return (mLayout.getLineRight(0) - ((mRight - mLeft) -
+                                    getCompoundPaddingLeft() - getCompoundPaddingRight()) -
+                                    mLayout.getLineLeft(0)) / getHorizontalFadingEdgeLength();
+                        } else {
+                            return 0.0f;
+                        }
                     case Gravity.RIGHT:
-                        return (mLayout.getLineRight(0) - (mRight - mLeft) -
-                                getCompoundPaddingLeft() - getCompoundPaddingRight() -
-                                mLayout.getLineLeft(0)) / getHorizontalFadingEdgeLength();
+                        if (shouldMirror()) {
+                            return 0.0f;
+                        } else {
+                            return (mLayout.getLineRight(0) - ((mRight - mLeft) -
+                                    getCompoundPaddingLeft() - getCompoundPaddingRight()) -
+                                    mLayout.getLineLeft(0)) / getHorizontalFadingEdgeLength();
+                        }
                     case Gravity.CENTER_HORIZONTAL:
                         return 0.0f;
                 }
@@ -7047,12 +7142,23 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             } else if (getLineCount() == 1) {
                 switch (mGravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
                     case Gravity.LEFT:
-                        final int textWidth = (mRight - mLeft) - getCompoundPaddingLeft() -
-                                getCompoundPaddingRight();
-                        final float lineWidth = mLayout.getLineWidth(0);
-                        return (lineWidth - textWidth) / getHorizontalFadingEdgeLength();
+                        if (shouldMirror()) {
+                            return 0.0f;
+                        } else {
+                            final int textWidth = (mRight - mLeft) - getCompoundPaddingLeft() -
+                                    getCompoundPaddingRight();
+                            final float lineWidth = mLayout.getLineWidth(0);
+                            return (lineWidth - textWidth) / getHorizontalFadingEdgeLength();
+                        }
                     case Gravity.RIGHT:
-                        return 0.0f;
+                        if (shouldMirror()) {
+                            final int textWidth = (mRight - mLeft) - getCompoundPaddingLeft() -
+                                    getCompoundPaddingRight();
+                            final float lineWidth = mLayout.getLineWidth(0);
+                            return (lineWidth - textWidth) / getHorizontalFadingEdgeLength();
+                        } else {
+                            return 0.0f;
+                        }
                     case Gravity.CENTER_HORIZONTAL:
                         return (mLayout.getLineWidth(0) - ((mRight - mLeft) -
                                 getCompoundPaddingLeft() - getCompoundPaddingRight())) /

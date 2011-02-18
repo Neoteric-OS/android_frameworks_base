@@ -370,7 +370,9 @@ public class FrameLayout extends ViewGroup {
                 if (mForegroundInPadding) {
                     selfBounds.set(0, 0, w, h);
                 } else {
-                    selfBounds.set(mPaddingLeft, mPaddingTop, w - mPaddingRight, h - mPaddingBottom);
+                    final boolean mirror = shouldMirror() && !hasBackgroundDrawablePadding();
+                    selfBounds.set(mirror ? mPaddingRight : mPaddingLeft, mPaddingTop,
+                                   w - (mirror ? mPaddingLeft : mPaddingRight), h - mPaddingBottom);
                 }
 
                 Gravity.apply(mForegroundGravity, foreground.getIntrinsicWidth(),

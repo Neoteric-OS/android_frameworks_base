@@ -289,16 +289,26 @@ public class ExpandableListView extends ListView {
             // the left & right bounds
             if (pos.position.type != lastItemType) {
                 if (pos.position.type == ExpandableListPosition.CHILD) {
-                    indicatorRect.left = (mChildIndicatorLeft == CHILD_INDICATOR_INHERIT) ?
-                            mIndicatorLeft : mChildIndicatorLeft;
-                    indicatorRect.right = (mChildIndicatorRight == CHILD_INDICATOR_INHERIT) ?
-                            mIndicatorRight : mChildIndicatorRight;
+                    if (shouldMirror()) {
+                        indicatorRect.left = (mChildIndicatorLeft == CHILD_INDICATOR_INHERIT) ?
+                                mRight - mIndicatorRight : mRight - mChildIndicatorRight;
+                        indicatorRect.right = (mChildIndicatorRight == CHILD_INDICATOR_INHERIT) ?
+                                mRight - mIndicatorLeft : mRight - mChildIndicatorLeft;
+                    } else {
+                        indicatorRect.left = (mChildIndicatorLeft == CHILD_INDICATOR_INHERIT) ?
+                                mIndicatorLeft : mChildIndicatorLeft;
+                        indicatorRect.right = (mChildIndicatorRight == CHILD_INDICATOR_INHERIT) ?
+                                mIndicatorRight : mChildIndicatorRight;
+                    }
                 } else {
-                    indicatorRect.left = mIndicatorLeft;
-                    indicatorRect.right = mIndicatorRight;
+                    if (shouldMirror()) {
+                        indicatorRect.left = mRight - mIndicatorRight;
+                        indicatorRect.right = mRight - mIndicatorLeft;
+                    } else {
+                        indicatorRect.left = mIndicatorLeft;
+                        indicatorRect.right = mIndicatorRight;
+                    }
                 }
-                
-                lastItemType = pos.position.type; 
             }
 
             if (indicatorRect.left != indicatorRect.right) {

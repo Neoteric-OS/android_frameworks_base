@@ -853,18 +853,23 @@ public class ImageView extends View {
         if (mDrawMatrix == null && mPaddingTop == 0 && mPaddingLeft == 0) {
             mDrawable.draw(canvas);
         } else {
+            // Adjust padding when mirrored
+            final boolean mirror = shouldMirror() && !hasBackgroundDrawablePadding();
+            final int paddingLeft = mirror ? mPaddingRight : mPaddingLeft;
+            final int paddingRight = mirror ? mPaddingLeft : mPaddingRight;
+
             int saveCount = canvas.getSaveCount();
             canvas.save();
             
             if (mCropToPadding) {
                 final int scrollX = mScrollX;
                 final int scrollY = mScrollY;
-                canvas.clipRect(scrollX + mPaddingLeft, scrollY + mPaddingTop,
-                        scrollX + mRight - mLeft - mPaddingRight,
+                canvas.clipRect(scrollX + paddingLeft, scrollY + mPaddingTop,
+                        scrollX + mRight - mLeft - paddingRight,
                         scrollY + mBottom - mTop - mPaddingBottom);
             }
             
-            canvas.translate(mPaddingLeft, mPaddingTop);
+            canvas.translate(paddingLeft, mPaddingTop);
 
             if (mDrawMatrix != null) {
                 canvas.concat(mDrawMatrix);

@@ -1059,17 +1059,20 @@ public class LinearLayout extends ViewGroup {
      * @see #onLayout(boolean, int, int, int, int)
      */
     void layoutVertical() {
-        final int paddingLeft = mPaddingLeft;
+        final int paddingLeft = (shouldMirror() && hasBackgroundDrawablePadding()) ?
+                mPaddingRight : mPaddingLeft;
 
         int childTop = mPaddingTop;
         int childLeft;
         
         // Where right end of child should go
+        final int paddingRight = (shouldMirror() && hasBackgroundDrawablePadding()) ?
+                mPaddingLeft : mPaddingRight;
         final int width = mRight - mLeft;
-        int childRight = width - mPaddingRight;
+        int childRight = width - paddingRight;
         
         // Space available for child
-        int childSpace = width - paddingLeft - mPaddingRight;
+        int childSpace = width - paddingLeft - paddingRight;
         
         final int count = getVirtualChildCount();
 
@@ -1147,8 +1150,10 @@ public class LinearLayout extends ViewGroup {
     void layoutHorizontal() {
         final int paddingTop = mPaddingTop;
 
+        final int paddingLeft = (shouldMirror() && hasBackgroundDrawablePadding()) ?
+                mPaddingRight : mPaddingLeft;
         int childTop;
-        int childLeft = mPaddingLeft;
+        int childLeft = paddingLeft;
         
         // Where bottom of child should go
         final int height = mBottom - mTop;
@@ -1172,7 +1177,7 @@ public class LinearLayout extends ViewGroup {
                 case Gravity.RIGHT:
                     // mTotalLength contains the padding already, we add the left
                     // padding to compensate
-                    childLeft = mRight - mLeft + mPaddingLeft - mTotalLength;
+                    childLeft = mRight - mLeft + paddingLeft - mTotalLength;
                     break;
 
                 case Gravity.CENTER_HORIZONTAL:

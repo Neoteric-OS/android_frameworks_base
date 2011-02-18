@@ -107,6 +107,20 @@ public abstract class Drawable {
     private boolean mVisible = true;
 
     /**
+     * Same as {@link #draw(Canvas)} but also tells the drawable to mirror itself.
+     * This functionality does not have to be supported by a drawable (e.g. when it makes
+     * no sense to mirror the contents), and a call to this method defaults to a
+     * standard draw.
+     *
+     * @param canvas The canvas to draw into
+     * @param mirror true in case whatever is about to be drawn should be mirrored,
+     *               false otherwise
+     */
+    public void draw(Canvas canvas, boolean mirror) {
+        draw(canvas);
+    }
+
+    /**
      * Draw in its bounds (set via setBounds) respecting optional effects such
      * as alpha (set via setAlpha) and color filter (set via setColorFilter).
      *

@@ -1454,8 +1454,10 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
             saveCount = canvas.save();
             final int scrollX = mScrollX;
             final int scrollY = mScrollY;
-            canvas.clipRect(scrollX + mPaddingLeft, scrollY + mPaddingTop,
-                    scrollX + mRight - mLeft - mPaddingRight,
+            final boolean mirror = shouldMirror() && !hasBackgroundDrawablePadding();
+            canvas.clipRect(scrollX + (mirror ? mPaddingRight : mPaddingLeft), scrollY +
+                    mPaddingTop, scrollX + mRight - mLeft -
+                    (mirror ? mPaddingLeft : mPaddingRight),
                     scrollY + mBottom - mTop - mPaddingBottom);
             mGroupFlags &= ~CLIP_TO_PADDING_MASK;
         }

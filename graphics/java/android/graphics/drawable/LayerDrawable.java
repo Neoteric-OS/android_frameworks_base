@@ -315,10 +315,15 @@ public class LayerDrawable extends Drawable implements Drawable.Callback {
 
     @Override
     public void draw(Canvas canvas) {
+        draw(canvas, false);
+    }
+
+    @Override
+    public void draw(Canvas canvas, boolean mirror) {
         final ChildDrawable[] array = mLayerState.mChildren;
         final int N = mLayerState.mNum;
         for (int i=0; i<N; i++) {
-            array[i].mDrawable.draw(canvas);
+            array[i].mDrawable.draw(canvas, mirror);
         }
     }
 

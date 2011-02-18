@@ -71,6 +71,10 @@ public class RotateDrawable extends Drawable implements Drawable.Callback {
     }
 
     public void draw(Canvas canvas) {
+        draw(canvas, false);
+    }
+
+    public void draw(Canvas canvas, boolean mirror) {
         int saveCount = canvas.save();
 
         Rect bounds = mState.mDrawable.getBounds();
@@ -85,7 +89,7 @@ public class RotateDrawable extends Drawable implements Drawable.Callback {
 
         canvas.rotate(st.mCurrentDegrees, px, py);
 
-        st.mDrawable.draw(canvas);
+        st.mDrawable.draw(canvas, mirror);
 
         canvas.restoreToCount(saveCount);
     }
