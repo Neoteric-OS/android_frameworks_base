@@ -2032,6 +2032,10 @@ status_t SurfaceFlinger::captureScreenImplLocked(DisplayID dpy,
     // make sure to clear all GL error flags
     while ( glGetError() != GL_NO_ERROR ) ;
 
+    LayerVector& currentLayers = const_cast<LayerVector&>(
+        mDrawingState.layersSortedByZ);
+    lockPageFlip(currentLayers);
+
     // create a FBO
     GLuint name, tname;
     glGenRenderbuffersOES(1, &tname);
@@ -2106,6 +2110,9 @@ status_t SurfaceFlinger::captureScreenImplLocked(DisplayID dpy,
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, 0);
     glDeleteRenderbuffersOES(1, &tname);
     glDeleteFramebuffersOES(1, &name);
+
+    unlockPageFlip(currentLayers);
+
     return result;
 }
 
