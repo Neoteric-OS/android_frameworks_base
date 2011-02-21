@@ -6920,6 +6920,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 mLayout != null;
 
         if (!mInsertionControllerEnabled) {
+            hideInsertionPointCursorController();
             mInsertionPointCursorController = null;
         }
 
