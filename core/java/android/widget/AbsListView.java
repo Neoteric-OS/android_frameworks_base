@@ -3071,8 +3071,10 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                 final int lastViewPixelsShowing = listHeight - lastViewTop;
                 final int extraScroll = lastPos < mItemCount - 1 ? mExtraScroll : mListPadding.bottom;
 
-                smoothScrollBy(lastViewHeight - lastViewPixelsShowing + extraScroll,
-                        mScrollDuration);
+                final int scrollDistance = lastViewHeight - lastViewPixelsShowing + extraScroll;
+                if (scrollDistance > 0) {
+                    smoothScrollBy(scrollDistance, mScrollDuration);
+                }
 
                 mLastSeenPos = lastPos;
                 if (lastPos < mTargetPos) {
