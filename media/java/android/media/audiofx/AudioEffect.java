@@ -591,7 +591,7 @@ public class AudioEffect {
         if (value.length > vSize[0]) {
             byte[] resizedValue = new byte[vSize[0]];
             System.arraycopy(value, 0, resizedValue, 0, vSize[0]);
-            value = resizedValue;
+            value = resizedValue; // TODO: THIS IS LIKELY A BUG - IT DOES NOT WORK LIKE INTENDED. IN REALITY, THIS HAS _NO_ EFFECT.
         }
         return status;
     }
