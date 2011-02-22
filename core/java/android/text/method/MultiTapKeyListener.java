@@ -140,7 +140,7 @@ public class MultiTapKeyListener extends BaseKeyListener
 
                     content.replace(selStart, selEnd, val, ix, ix + 1);
                     removeTimeouts(content);
-                    Timeout t = new Timeout(content);
+                    new Timeout(content);
 
                     return true;
                 }
@@ -206,7 +206,7 @@ public class MultiTapKeyListener extends BaseKeyListener
             }
 
             removeTimeouts(content);
-            Timeout t = new Timeout(content);
+            new Timeout(content);
 
             // Set up the callback so we can remove the timeout if the
             // cursor moves.
