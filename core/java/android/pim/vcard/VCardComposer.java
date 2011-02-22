@@ -500,8 +500,6 @@ public class VCardComposer {
 
         // This function does not care the OutOfMemoryError on the handler side :-P
         if (mCareHandlerErrors) {
-            List<OneEntryHandler> finishedList = new ArrayList<OneEntryHandler>(
-                    mHandlerList.size());
             for (OneEntryHandler handler : mHandlerList) {
                 if (!handler.onEntryCreated(vcard)) {
                     return false;
