@@ -2314,11 +2314,11 @@ public class WebView extends AbsoluteLayout
             // reset mLastHeightSent to force VIEW_SIZE_CHANGED sent to WebKit
             mLastHeightSent = 0;
         }
-        if (scale != mActualScale || force) {
+        if (force || areDifferent(scale, mActualScale)) {
             if (mDrawHistory) {
                 // If history Picture is drawn, don't update scroll. They will
                 // be updated when we get out of that mode.
-                if (scale != mActualScale && !mPreviewZoomOnly) {
+                if (!mPreviewZoomOnly && areDifferent(scale, mActualScale)) {
                     mCallbackProxy.onScaleChanged(mActualScale, scale);
                 }
                 mActualScale = scale;
@@ -2336,7 +2336,7 @@ public class WebView extends AbsoluteLayout
                         * (mZoomCenterY - getTitleHeight());
 
                 // now update our new scale and inverse
-                if (scale != mActualScale && !mPreviewZoomOnly) {
+                if (!mPreviewZoomOnly && areDifferent(scale, mActualScale)) {
                     mCallbackProxy.onScaleChanged(mActualScale, scale);
                 }
                 mActualScale = scale;
@@ -2363,6 +2363,13 @@ public class WebView extends AbsoluteLayout
                 sendViewSizeZoom();
             }
         }
+    }
+
+    /** Delta used for floating point equality checks. */
+    private static final float FP_EQUALITY_DELTA = 1e-8f;
+
+    private static boolean areDifferent(final float x, final float y) {
+        return Math.abs(x - y) > FP_EQUALITY_DELTA;
     }
 
     // Used to avoid sending many visible rect messages.
