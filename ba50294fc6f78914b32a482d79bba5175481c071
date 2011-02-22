@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//4A0\u003d",
+        "filename": "media/java/android/media/audiofx/AudioEffect.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-02-22T15:39:36Z",
+      "side": 1,
+      "message": "hah.  Rather than shouting here (line is too long, too) I\u0027d just remove all this code, then.\n\nYou could just do:\n\nreturn native_command(cmdCode, ...)",
+      "revId": "ba50294fc6f78914b32a482d79bba5175481c071",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
