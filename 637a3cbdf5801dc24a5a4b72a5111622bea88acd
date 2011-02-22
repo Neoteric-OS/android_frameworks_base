@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//4DY\u003d",
+        "filename": "core/java/com/google/android/mms/util/PduCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002348
+      },
+      "writtenOn": "2011-02-22T08:10:19Z",
+      "side": 1,
+      "message": "Nice.\n\nPrefer to convert primitives to wrappers using valueOf:\n  mThreads.get(Long.valueOf(entry.getMessageBox()));\n\nThat takes advantage of the autoboxing cache of values between -128 and 127, saving allocations for low values. Gross, I know.\n\nhttp://download.oracle.com/javase/6/docs/api/java/lang/Long.html#valueOf(long)",
+      "revId": "637a3cbdf5801dc24a5a4b72a5111622bea88acd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
