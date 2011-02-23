@@ -399,4 +399,11 @@
     <!-- Do not translate. Defines the slots is Two Digit Number for dialing normally not USSD -->
     <string-array name="config_twoDigitNumberPattern">
     </string-array>
+
+    <!-- A list of services that are started inside the SystemServer, in addition
+         to the built-in services. Specified of form package.class to be used by
+         Class.forName(...) -->
+    <string-array translatable="false" name="systemServices">
+    </string-array>
+
 </resources>

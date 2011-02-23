@@ -35,6 +35,7 @@ import android.content.pm.IPackageManager;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.media.AudioService;
+import android.os.IBinder;
 import android.os.Looper;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -52,6 +53,8 @@ import android.util.Slog;
 import android.accounts.AccountManagerService;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -443,6 +446,26 @@ class ServerThread extends Thread {
             }
         }
 
+        final List<SystemService> systemServices = new ArrayList<SystemService>();
+
+        String[] serviceEntries =
+            context.getResources().getStringArray(com.android.internal.R.array.systemServices);
+        for (String entry : serviceEntries) {
+            SystemService systemService = null;
+            try {
+                Class clazz = Class.forName(entry);
+                systemService =
+                    (SystemService)clazz.getConstructor(Context.class).newInstance(context);
+                Slog.i(TAG, "Service started " + systemService);
+                systemServices.add(systemService);
+                if (systemService.getHandle() != null) {
+                    ServiceManager.addService(systemService.getHandle(), (IBinder)systemService);
+                }
+            } catch (Throwable e) {
+                Slog.e(TAG, "Failed to start " + systemService, e);
+            }
+        }
+
         // make sure the ADB_ENABLED setting value matches the secure property value
         Settings.Secure.putInt(mContentResolver, Settings.Secure.ADB_ENABLED,
                 "1".equals(SystemProperties.get("persist.service.adb.enable")) ? 1 : 0);
@@ -519,6 +542,9 @@ class ServerThread extends Thread {
                 if (usbF != null) usbF.systemReady();
                 if (uiModeF != null) uiModeF.systemReady();
                 if (recognitionF != null) recognitionF.systemReady();
+                for (SystemService service : systemServices) {
+                    service.onSystemEvent(SystemService.SYSTEM_READY);
+                }
                 Watchdog.getInstance().start();
 
                 // It is now okay to let the various system services start their
