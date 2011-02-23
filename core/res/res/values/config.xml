@@ -389,4 +389,10 @@
          Build.MODEL. The format string shall not be escaped. -->
     <string name="config_useragentprofile_url"></string>
 
+    <!-- A list of services that are started inside the SystemServer, in addition
+         to the built-in services. Specified of form package.class to be used by
+         Class.forName(...) -->
+    <string-array translatable="false" name="systemServices">
+    </string-array>
+
 </resources>
