@@ -362,6 +362,7 @@ public class PackageParser {
     public final static int PARSE_FORWARD_LOCK = 1<<4;
     public final static int PARSE_ON_SDCARD = 1<<5;
     public final static int PARSE_IS_SYSTEM_DIR = 1<<6;
+    public final static int PARSE_IS_OVERLAY_PACKAGE = 1<<7;
 
     public int getParseError() {
         return mParseError;
@@ -2805,10 +2806,15 @@ public class PackageParser {
 
         public int installLocation;
 
+        // Package name for which this package provides additional resources
+        // (overlay); null for regular packages
+        public String mOverlayForPackage;
+
         public Package(String _name) {
             packageName = _name;
             applicationInfo.packageName = _name;
             applicationInfo.uid = -1;
+            mOverlayForPackage = null;
         }
 
         public void setPackageName(String newName) {

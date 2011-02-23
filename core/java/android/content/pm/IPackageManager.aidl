@@ -64,6 +64,10 @@ interface IPackageManager {
 
     ActivityInfo getActivityInfo(in ComponentName className, int flags);
 
+    String[] getOverlayPackagePaths(String originalApkPath);
+
+    String getIDMappingPath(String apkPath);
+
     ActivityInfo getReceiverInfo(in ComponentName className, int flags);
 
     ServiceInfo getServiceInfo(in ComponentName className, int flags);

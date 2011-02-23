@@ -1194,6 +1194,26 @@ public final class ActivityThread {
             return null;
         }
 
+        // Load overlay packages (if present) for both framework and application.
+        IPackageManager pm = getPackageManager();
+        try {
+            // Shouldn't name the framework package explicitly, but... it's a secret to everybody.
+            String[] packagePaths = { "/system/framework/framework-res.apk", resDir };
+            for (String path : packagePaths) {
+                String[] overlayPackagePaths = getPackageManager().getOverlayPackagePaths(path);
+                if (overlayPackagePaths != null) {
+                    for (String overlayPath : overlayPackagePaths) {
+                        String idmapPath = getPackageManager().getIDMappingPath(overlayPath);
+                        if (assets.addOverlayAssetPath(overlayPath, idmapPath) == 0) {
+                            Log.w(TAG, "Failed to load overlay package " + overlayPath);
+                            return null;
+                        }
+                    }
+                }
+            }
+        } catch (RemoteException ex) {
+        }
+
         //Slog.i(TAG, "Resource: key=" + key + ", display metrics=" + metrics);
         DisplayMetrics metrics = getDisplayMetricsLocked(false);
         r = new Resources(assets, metrics, getConfiguration(), compInfo);

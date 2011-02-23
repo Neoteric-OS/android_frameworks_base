@@ -1438,6 +1438,18 @@ int doPackage(Bundle* bundle)
         goto bail;
     }
 
+    // Write overlay package target file
+    if (bundle->getOverlayPackageTarget() != NULL) {
+        sp<AaptFile> targetFile = assets->addFile(String8("overlay-target"), AaptGroupEntry(),
+                                                  String8(), NULL, String8());
+        if (targetFile == NULL) {
+            fprintf(stderr, "ERROR: failed to write overlay target file\n");
+            goto bail;
+        }
+        const char* data = bundle->getOverlayPackageTarget();
+        targetFile->writeData(data, strlen(data));
+    }
+
     // Write the apk
     if (outputAPKFile) {
         err = writeAPK(bundle, assets, String8(outputAPKFile));

@@ -1735,9 +1735,9 @@ public:
     ~ResTable();
 
     status_t add(const void* data, size_t size, void* cookie,
-                 bool copyData=false);
+                 bool copyData=false, Asset* idmap = NULL);
     status_t add(Asset* asset, void* cookie,
-                 bool copyData=false);
+                 bool copyData=false, Asset* idmap = NULL);
     status_t add(ResTable* src);
 
     status_t getError() const;
@@ -1981,6 +1981,8 @@ public:
 
     void getLocales(Vector<String8>* locales) const;
 
+    status_t generateResIDMapping(const ResTable& overlay, void** outData, size_t* outSize) const;
+
 #ifndef HAVE_ANDROID_OS
     void print(bool inclValues) const;
     static String8 normalizeForOutput(const char* input);
@@ -1994,7 +1996,7 @@ private:
     struct bag_set;
 
     status_t add(const void* data, size_t size, void* cookie,
-                 Asset* asset, bool copyData);
+                 Asset* asset, bool copyData, Asset* idmap);
 
     ssize_t getResourcePackageIndex(uint32_t resID) const;
     ssize_t getEntry(
@@ -2003,7 +2005,7 @@ private:
         const ResTable_type** outType, const ResTable_entry** outEntry,
         const Type** outTypeClass) const;
     status_t parsePackage(
-        const ResTable_package* const pkg, const Header* const header);
+        const ResTable_package* const pkg, const Header* const header, uint32_t idmap_id);
 
     void print_value(const Package* pkg, const Res_value& value) const;
     
