@@ -153,7 +153,6 @@ class HeadsetObserver extends UEventObserver {
         if ((headsetState & headset) != (prevHeadsetState & headset)) {
             //  Pack up the values and broadcast them to everyone
             Intent intent = new Intent(Intent.ACTION_HEADSET_PLUG);
-            intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
             int state = 0;
             int microphone = 0;
 
