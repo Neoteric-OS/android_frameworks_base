@@ -690,13 +690,14 @@ class AlarmManagerService extends IAlarmManager.Stub {
             // the time zone property
             boolean timeZoneWasChanged = false;
             synchronized (this) {
-                String current = SystemProperties.get(TIMEZONE_PROPERTY);
-                if (current == null || !current.equals(zone.getID())) {
+                TimeZone current = TimeZone.getDefault();
+                if (current == null || !current.getID().equals(zone.getID())) {
                     if (localLOGV) {
-                        Slog.v(TAG, "timezone changed: " + current + ", new=" + zone.getID());
+                        Slog.v(TAG, "timezone changed: " + current.getID() + ", new=" + zone.getID());
                     }
                     timeZoneWasChanged = true;
                     SystemProperties.set(TIMEZONE_PROPERTY, zone.getID());
+                    TimeZone.setDefault(zone);
                 }
 
                 // Update the kernel timezone information
@@ -704,8 +705,6 @@ class AlarmManagerService extends IAlarmManager.Stub {
                 int gmtOffset = zone.getOffset(System.currentTimeMillis());
                 setKernelTimezone(mNativeData, -(gmtOffset / 60000));
             }
-
-            TimeZone.setDefault(null);
 
             if (timeZoneWasChanged) {
                 Intent intent = new Intent(Intent.ACTION_TIMEZONE_CHANGED);

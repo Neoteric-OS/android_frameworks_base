@@ -782,8 +782,12 @@ public final class ActivityThread {
             sendMessage(H.CONFIGURATION_CHANGED, config);
         }
 
-        public void updateTimeZone() {
-            TimeZone.setDefault(null);
+        public void updateTimeZone(String timeZone) {
+            if (timeZone != null) {
+                TimeZone.setDefault(TimeZone.getTimeZone(timeZone));
+            } else {
+                TimeZone.setDefault(null);
+            }
         }
 
         public void clearDnsCache() {
@@ -2429,6 +2433,15 @@ public final class ActivityThread {
             ContextImpl context = (ContextImpl)app.getBaseContext();
             sCurrentBroadcastIntent.set(data.intent);
             receiver.setPendingResult(data);
+            if (Intent.ACTION_TIMEZONE_CHANGED.equals(data.intent.getAction())) {
+                // The default time zone is updated via IBinder but it might not have
+                // been updated yet. Make sure the default time zone for this process
+                // is set before we continue.
+                final String timeZone = data.intent.getStringExtra("time-zone");
+                if (timeZone != null) {
+                    TimeZone.setDefault(TimeZone.getTimeZone(timeZone));
+                }
+            }
             receiver.onReceive(context.getReceiverRestrictedContext(),
                     data.intent);
         } catch (Exception e) {

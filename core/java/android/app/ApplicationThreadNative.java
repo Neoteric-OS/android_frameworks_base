@@ -323,7 +323,8 @@ public abstract class ApplicationThreadNative extends Binder
 
         case UPDATE_TIME_ZONE_TRANSACTION: {
             data.enforceInterface(IApplicationThread.descriptor);
-            updateTimeZone();
+            String timeZone = data.readString();
+            updateTimeZone(timeZone);
             return true;
         }
 
@@ -984,9 +985,10 @@ class ApplicationThreadProxy implements IApplicationThread {
         data.recycle();
     }
 
-    public void updateTimeZone() throws RemoteException {
+    public void updateTimeZone(String timeZone) throws RemoteException {
         Parcel data = Parcel.obtain();
         data.writeInterfaceToken(IApplicationThread.descriptor);
+        data.writeString(timeZone);
         mRemote.transact(UPDATE_TIME_ZONE_TRANSACTION, data, null,
                 IBinder.FLAG_ONEWAY);
         data.recycle();
