@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA+3//3TI\u003d",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-02-28T20:23:33Z",
+      "side": 1,
+      "message": "\"of form\"?\n\nAlso, is there a special meaning to the empty list?  For instance, does empty mean all services?",
+      "revId": "423117f75131d42c00fc0381971704466e71bccd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
