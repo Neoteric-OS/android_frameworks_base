@@ -1013,7 +1013,7 @@ public final class ActivityManagerService extends ActivityManagerNative
                         ProcessRecord r = mLruProcesses.get(i);
                         if (r.thread != null) {
                             try {
-                                r.thread.updateTimeZone();
+                                r.thread.updateTimeZone((String)msg.obj);
                             } catch (RemoteException ex) {
                                 Slog.w(TAG, "Failed to update time zone for: " + r.info.processName);
                             }
@@ -12217,12 +12217,14 @@ public final class ActivityManagerService extends ActivityManagerNative
         }
 
         /*
-         * If this is the time zone changed action, queue up a message that will reset the timezone
+         * If this is the time zone changed action, queue up a message that will set the timezone
          * of all currently running processes. This message will get queued up before the broadcast
          * happens.
          */
-        if (intent.ACTION_TIMEZONE_CHANGED.equals(intent.getAction())) {
-            mHandler.sendEmptyMessage(UPDATE_TIME_ZONE);
+        if (Intent.ACTION_TIMEZONE_CHANGED.equals(intent.getAction())) {
+            Message msg = mHandler.obtainMessage(UPDATE_TIME_ZONE);
+            msg.obj = intent.getStringExtra("time-zone");
+            mHandler.sendMessage(msg);
         }
 
         if (intent.ACTION_CLEAR_DNS_CACHE.equals(intent.getAction())) {
