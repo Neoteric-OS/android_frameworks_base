@@ -35,6 +35,7 @@ import static android.view.WindowManager.LayoutParams.TYPE_BASE_APPLICATION;
 import static android.view.WindowManager.LayoutParams.TYPE_INPUT_METHOD;
 import static android.view.WindowManager.LayoutParams.TYPE_INPUT_METHOD_DIALOG;
 import static android.view.WindowManager.LayoutParams.TYPE_WALLPAPER;
+import static android.view.WindowManager.LayoutParams.TYPE_APPLICATION_MEDIA;
 
 import com.android.internal.app.IBatteryStats;
 import com.android.internal.policy.PolicyManager;
@@ -1481,7 +1482,8 @@ public class WindowManagerService extends IWindowManager.Stub
                 WindowState wb = localmWindows.get(foundI-1);
                 if (wb.mBaseLayer < maxLayer &&
                         wb.mAttachedWindow != foundW &&
-                        wb.mAttachedWindow != foundW.mAttachedWindow &&
+                        (wb.mAttrs.type != TYPE_APPLICATION_MEDIA ||
+                                wb.mAttachedWindow != foundW.mAttachedWindow) &&
                         (wb.mAttrs.type != TYPE_APPLICATION_STARTING ||
                                 wb.mToken != foundW.mToken)) {
                     // This window is not related to the previous one in any
