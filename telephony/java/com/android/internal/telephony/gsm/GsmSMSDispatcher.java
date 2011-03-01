@@ -115,13 +115,13 @@ final class GsmSMSDispatcher extends SMSDispatcher {
 
         // Special case the message waiting indicator messages
         if (sms.isMWISetMessage()) {
-            mGsmPhone.updateMessageWaitingIndicator(true);
+            mGsmPhone.updateMessageWaitingIndicator(sms.getNumOfVoicemails());
             handled = sms.isMwiDontStore();
             if (Config.LOGD) {
                 Log.d(TAG, "Received voice mail indicator set SMS shouldStore=" + !handled);
             }
         } else if (sms.isMWIClearMessage()) {
-            mGsmPhone.updateMessageWaitingIndicator(false);
+            mGsmPhone.updateMessageWaitingIndicator(0);
             handled = sms.isMwiDontStore();
             if (Config.LOGD) {
                 Log.d(TAG, "Received voice mail indicator clear SMS shouldStore=" + !handled);
