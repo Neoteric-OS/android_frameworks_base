@@ -16,6 +16,24 @@
       "revId": "423117f75131d42c00fc0381971704466e71bccd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/H///lE\u003d",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1003744
+      },
+      "writtenOn": "2011-03-02T17:51:26Z",
+      "side": 1,
+      "message": "I will update the comment. When preparing this, we experimented a bit internally with the syntax here, and I missed this in the upload.\n\nThe empty list is a current placeholder for future services, like the DockObserver as Johan mentioned that could be moved here.\n\nAlso, as you might suspect, internally we are planning to overlay this list to optimize for our products.",
+      "parentUuid": "AAAA+3//3TI\u003d",
+      "revId": "423117f75131d42c00fc0381971704466e71bccd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
