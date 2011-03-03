@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA/H///gw\u003d",
+        "filename": "media/java/android/media/audiofx/AudioEffect.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-03-03T18:07:49Z",
+      "side": 1,
+      "message": "The Dalvik guys suggest you change the byte[] value parameter to be a static struct-like class:\n\n/**\n * @hide\n */\npublic static InOutValue {\n   public byte[] buf;\n}\n\nThen you can change it to:\n\npublic int getParameter(byte[] param, InOutValue value)\n\nand then you can use and modify value.buf within getParameter.\n\nWant to do that?",
+      "parentUuid": "AAAA/H///g8\u003d",
+      "revId": "416d15491f722c84725eb37cb794377d36aefd89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA/H///hU\u003d",
         "filename": "media/java/android/media/audiofx/AudioEffect.java",
         "patchSetId": 1
