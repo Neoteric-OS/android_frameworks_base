@@ -91,6 +91,42 @@
     },
     {
       "key": {
+        "uuid": "AAAA/H///gg\u003d",
+        "filename": "media/java/android/media/audiofx/AudioEffect.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2011-03-03T19:08:36Z",
+      "side": 1,
+      "message": "Given previous comments it is better to get rid of the resizing",
+      "parentUuid": "AAAA/H///gw\u003d",
+      "revId": "416d15491f722c84725eb37cb794377d36aefd89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/H///gk\u003d",
+        "filename": "media/java/android/media/audiofx/AudioEffect.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2011-03-03T19:08:36Z",
+      "side": 1,
+      "message": "Actually the returned value size is always smaller than the original array size passed by the called. This can happen for strings (but in this case the caller has other means to get the actual returned string size). For other cases, the caller knows what return size to expect so I agree the resizing is useless.\nWhat is the problem with current JNI method signature? It returns the useful size in pJavaValue array in pJavaValueSize int array. Provided the returned size is always smaller than the pJavaValue array size it is correct. A agree it is useless though given current bug in JAVA code.",
+      "parentUuid": "AAAA/H///g8\u003d",
+      "revId": "416d15491f722c84725eb37cb794377d36aefd89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA/H///hU\u003d",
         "filename": "media/java/android/media/audiofx/AudioEffect.java",
         "patchSetId": 1
