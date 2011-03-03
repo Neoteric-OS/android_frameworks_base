@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/H///hY\u003d",
+        "filename": "media/java/android/media/audiofx/AudioEffect.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2011-03-03T16:27:40Z",
+      "side": 1,
+      "message": "native_getParameter() will update vSize according to the actual length of the parameter returned that can differ from value.length passed by the caller. This code is to reflect the actual size of the returned array.",
+      "revId": "416d15491f722c84725eb37cb794377d36aefd89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/H///hU\u003d",
+        "filename": "media/java/android/media/audiofx/AudioEffect.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2011-03-03T16:27:40Z",
+      "side": 1,
+      "message": "Same comment as for native_getParameter()",
+      "revId": "416d15491f722c84725eb37cb794377d36aefd89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
