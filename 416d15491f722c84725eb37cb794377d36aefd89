@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA/H///g8\u003d",
+        "filename": "media/java/android/media/audiofx/AudioEffect.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-03-03T17:31:49Z",
+      "side": 1,
+      "message": "Well, this is an @hide API so you can change the signature, which you\u0027ll have to.  The current signature doesn\u0027t allow anything to escape unless it\u0027s in the caller\u0027s original \"param\" or \"value\" arrays, or in the \"int\" return value.\n\nJava doesn\u0027t let you do multiple return values, and doesn\u0027t have convenient out parameters, so could make the return value a class, or you could make an out parameter that\u0027s a length-1 array to the byte[] value.  Or return the byte[] value instead of int and use Exceptions instead for your errors.\n\nAnd of course you\u0027ll need to modify the JNI code as well.  It faces the same problem right now with its signature.\n\nI don\u0027t care which route you choose, but the current code is deceptive/buggy.  It might be giving readers a false sense of security that it does something that it doesn\u0027t.\n\nIs this resizing code even needed, though?  Are the parameters frequently larger than the caller-provided value buffer?",
+      "parentUuid": "AAAA/H///hE\u003d",
+      "revId": "416d15491f722c84725eb37cb794377d36aefd89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA/H///hU\u003d",
         "filename": "media/java/android/media/audiofx/AudioEffect.java",
         "patchSetId": 1
