@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAA/H///hM\u003d",
+        "filename": "media/java/android/media/audiofx/AudioEffect.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-03-03T17:12:53Z",
+      "side": 1,
+      "message": "Yes, but how does that make its way back to the caller of getParameter()?\n\nThe \"value\" parameter is just a byte[] reference.  It\u0027s not a C++ pointer-to-an-array.  The new byte[vSize[0]] and subsequent assignment to \"value\" is a no-op that doesn\u0027t escape this method.\n\nThis CL just removes dead code as far as I can tell.  Can you double-check?",
+      "parentUuid": "AAAA/H///hY\u003d",
+      "revId": "416d15491f722c84725eb37cb794377d36aefd89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA/H///hU\u003d",
         "filename": "media/java/android/media/audiofx/AudioEffect.java",
         "patchSetId": 1
