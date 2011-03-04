@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/H///Ys\u003d",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-03-04T21:41:44Z",
+      "side": 1,
+      "message": "A list of services that are started inside the SystemServer,\nin addition to the built-in services.",
+      "revId": "18d62bbcf55ba88632e7ed80834e42c5b1b4a7a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/H///Yg\u003d",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-03-04T21:41:44Z",
+      "side": 1,
+      "message": "\"of form\" (not \"on form\")",
+      "revId": "18d62bbcf55ba88632e7ed80834e42c5b1b4a7a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
