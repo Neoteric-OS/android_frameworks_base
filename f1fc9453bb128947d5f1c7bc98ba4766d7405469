@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/H///FQ\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2011-03-08T17:10:15Z",
+      "side": 1,
+      "message": "it feels like we should have another *Alphabet class with a detection method and a ksc5601ToString method and not put that code here.",
+      "revId": "f1fc9453bb128947d5f1c7bc98ba4766d7405469",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/H///F0\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2011-03-08T17:10:15Z",
+      "side": 1,
+      "message": "Please add \u0027{\u0027 and \u0027}\u0027",
+      "revId": "f1fc9453bb128947d5f1c7bc98ba4766d7405469",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/H///Fg\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2011-03-08T17:10:15Z",
+      "side": 1,
+      "message": "this looks like it\u0027s indented too far.  Should only be 4 spaces beyond the try line.",
+      "revId": "f1fc9453bb128947d5f1c7bc98ba4766d7405469",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/H///Fw\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/IccUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2011-03-08T17:10:15Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "f1fc9453bb128947d5f1c7bc98ba4766d7405469",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
