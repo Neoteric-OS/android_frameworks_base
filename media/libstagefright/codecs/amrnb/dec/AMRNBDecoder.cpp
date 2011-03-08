@@ -154,13 +154,18 @@ status_t AMRNBDecoder::read(
     const uint8_t *inputPtr =
         (const uint8_t *)mInputBuffer->data() + mInputBuffer->range_offset();
 
-    size_t numBytesRead =
+    int32_t numBytesRead =
         AMRDecode(mState,
           (Frame_Type_3GPP)((inputPtr[0] >> 3) & 0x0f),
           (UWord8 *)&inputPtr[1],
           static_cast<int16_t *>(buffer->data()),
           MIME_IETF);
 
+    if (numBytesRead == -1 ) {
+        buffer->release();
+        buffer = NULL;
+        return ERROR_MALFORMED;
+    }
     ++numBytesRead;  // Include the frame type header byte.
 
     buffer->set_range(0, kNumSamplesPerFrame * sizeof(int16_t));
