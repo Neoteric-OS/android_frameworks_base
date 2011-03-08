@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/H///KI\u003d",
+        "filename": "libs/ui/InputDispatcher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2098,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2011-03-08T00:45:52Z",
+      "side": 1,
+      "message": "Actually, the following would be a bit better:\n\n\n    if (policyFlags \u0026 POLICY_FLAG_ALT) {\n        metaState |\u003d AMETA_ALT_ON | AMETA_ALT_LEFT_ON;\n    }\n    if (policyFlags \u0026 POLICY_FLAG_ALT_GR) {\n        metaState |\u003d AMETA_ALT_ON | AMETA_ALT_RIGHT_ON;\n    }\n    if (policyFlags \u0026 POLICY_FLAG_SHIFT) {\n        metaState |\u003d AMETA_SHIFT_ON | AMETA_SHIFT_LEFT_ON;\n    }",
+      "revId": "016acef7304a521b9ca1837c5eb99994240ab792",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
