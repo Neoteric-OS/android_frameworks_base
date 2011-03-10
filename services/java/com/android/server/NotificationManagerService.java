@@ -40,6 +40,7 @@ import android.database.ContentObserver;
 import android.media.AudioManager;
 import android.media.IAudioService;
 import android.media.IRingtonePlayer;
+import android.media.ToneGenerator;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Handler;
@@ -108,6 +109,11 @@ public class NotificationManagerService extends INotificationManager.Stub
 
     private static final boolean ENABLE_BLOCKED_NOTIFICATIONS = true;
     private static final boolean ENABLE_BLOCKED_TOASTS = true;
+
+    private static final int TONE_INCALL_NOTIFICATION_MAX_LENGTH = 1000;
+
+    private ToneGenerator mInCallToneGenerator;
+    private final Object mInCallToneGeneratorLock = new Object();
 
     final Context mContext;
     final IActivityManager mAm;
@@ -541,6 +547,19 @@ public class NotificationManagerService extends INotificationManager.Stub
                 mInCall = (intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(
                         TelephonyManager.EXTRA_STATE_OFFHOOK));
                 updateNotificationPulse();
+                synchronized (mInCallToneGeneratorLock) {
+                    if (mInCall) {
+                        if (mInCallToneGenerator == null) {
+                            mInCallToneGenerator = new ToneGenerator(
+                                    AudioManager.STREAM_VOICE_CALL, ToneGenerator.MAX_VOLUME);
+                        }
+                    } else {
+                        if (mInCallToneGenerator != null) {
+                            mInCallToneGenerator.release();
+                            mInCallToneGenerator = null;
+                        }
+                     }
+                }
             } else if (action.equals(Intent.ACTION_USER_PRESENT)) {
                 // turn off LED when user passes through lock screen
                 mNotificationLight.turnOff();
@@ -1022,46 +1041,52 @@ public class NotificationManagerService extends INotificationManager.Stub
                 final boolean useDefaultSound =
                     (notification.defaults & Notification.DEFAULT_SOUND) != 0;
                 if (useDefaultSound || notification.sound != null) {
-                    Uri uri;
-                    if (useDefaultSound) {
-                        uri = Settings.System.DEFAULT_NOTIFICATION_URI;
+                    if (mInCall) {
+                        playInCallNotification();
                     } else {
-                        uri = notification.sound;
-                    }
-                    boolean looping = (notification.flags & Notification.FLAG_INSISTENT) != 0;
-                    int audioStreamType;
-                    if (notification.audioStreamType >= 0) {
-                        audioStreamType = notification.audioStreamType;
-                    } else {
-                        audioStreamType = DEFAULT_STREAM_TYPE;
-                    }
-                    mSoundNotification = r;
-                    // do not play notifications if stream volume is 0
-                    // (typically because ringer mode is silent).
-                    if (audioManager.getStreamVolume(audioStreamType) != 0) {
-                        final long identity = Binder.clearCallingIdentity();
-                        try {
-                            final IRingtonePlayer player = mAudioService.getRingtonePlayer();
-                            if (player != null) {
-                                player.playAsync(uri, looping, audioStreamType);
+                        Uri uri;
+                        if (useDefaultSound) {
+                            uri = Settings.System.DEFAULT_NOTIFICATION_URI;
+                        } else {
+                            uri = notification.sound;
+                        }
+                        boolean looping = (notification.flags & Notification.FLAG_INSISTENT) != 0;
+                        int audioStreamType;
+                        if (notification.audioStreamType >= 0) {
+                            audioStreamType = notification.audioStreamType;
+                        } else {
+                            audioStreamType = DEFAULT_STREAM_TYPE;
+                        }
+                        mSoundNotification = r;
+                        // do not play notifications if stream volume is 0
+                        // (typically because ringer mode is silent).
+                        if (audioManager.getStreamVolume(audioStreamType) != 0) {
+                            final long identity = Binder.clearCallingIdentity();
+                            try {
+                                final IRingtonePlayer player = mAudioService.getRingtonePlayer();
+                                if (player != null) {
+                                    player.playAsync(uri, looping, audioStreamType);
+                                }
+                            } catch (RemoteException e) {
+                            } finally {
+                                Binder.restoreCallingIdentity(identity);
                             }
-                        } catch (RemoteException e) {
-                        } finally {
-                            Binder.restoreCallingIdentity(identity);
                         }
                     }
                 }
+                if (!mInCall) {
+                    // vibrate
+                    final boolean useDefaultVibrate =
+                        (notification.defaults & Notification.DEFAULT_VIBRATE) != 0;
+                    if ((useDefaultVibrate || notification.vibrate != null)
+                            && !(audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT)) {
+                        mVibrateNotification = r;
 
-                // vibrate
-                final boolean useDefaultVibrate =
-                    (notification.defaults & Notification.DEFAULT_VIBRATE) != 0;
-                if ((useDefaultVibrate || notification.vibrate != null)
-                        && !(audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT)) {
-                    mVibrateNotification = r;
-
-                    mVibrator.vibrate(useDefaultVibrate ? DEFAULT_VIBRATE_PATTERN
-                                                        : notification.vibrate,
-                              ((notification.flags & Notification.FLAG_INSISTENT) != 0) ? 0: -1);
+                        mVibrator.vibrate(useDefaultVibrate ? DEFAULT_VIBRATE_PATTERN
+                                                            : notification.vibrate,
+                                  ((notification.flags & Notification.FLAG_INSISTENT) != 0) ? 0
+                                          : -1);
+                    }
                 }
             }
 
@@ -1087,6 +1112,26 @@ public class NotificationManagerService extends INotificationManager.Stub
         }
 
         idOut[0] = id;
+    }
+
+    private void playInCallNotification() {
+        new Thread() {
+            @Override
+            public void run() {
+                // If toneGenerator creation fails, just continue the call
+                // without playing the notification sound.
+                try {
+                    synchronized (mInCallToneGeneratorLock) {
+                        if (mInCallToneGenerator != null) {
+                            mInCallToneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP2,
+                                    TONE_INCALL_NOTIFICATION_MAX_LENGTH);
+                        }
+                    }
+                } catch (RuntimeException e) {
+                    Log.w(TAG, "Exception from ToneGenerator: " + e);
+                }
+            }
+        }.start();
     }
 
     private void sendAccessibilityEvent(Notification notification, CharSequence packageName) {
