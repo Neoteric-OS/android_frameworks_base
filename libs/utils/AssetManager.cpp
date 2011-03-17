@@ -36,6 +36,7 @@
 #include <dirent.h>
 #include <errno.h>
 #include <assert.h>
+#include <fcntl.h> // temporarily needed for ::open()
 
 using namespace android;
 
@@ -48,6 +49,8 @@ static const char* kDefaultVendor = "default";
 static const char* kAssetsRoot = "assets";
 static const char* kAppZipName = NULL; //"classes.jar";
 static const char* kSystemAssets = "framework/framework-res.apk";
+static const char* kIdmapCacheDir = "/data/resource-cache/";
+static const char* kSystemOverlayDir = "/vendor/system/overlay/";
 
 static const char* kExcludeExtension = ".EXCLUDE";
 
@@ -55,6 +58,54 @@ static Asset* const kExcludedAsset = (Asset*) 0xd000000d;
 
 static volatile int32_t gCount = 0;
 
+namespace {
+    String8 idmapPathForPackagePath(const String8& pkgPath)
+    {
+        if (strlen(kIdmapCacheDir) + pkgPath.size() + 6 > 1024) {
+            // idmap path won't fit buffer, abort
+            return String8();
+        }
+        char buf[1024];
+        memset(buf, 0, 1024);
+        strcpy(buf, kIdmapCacheDir);
+        char* p = buf + strlen(kIdmapCacheDir);
+        strcpy(p, pkgPath.string() + 1); // skip initial /
+        while (*p) {
+            if (*p == '/') {
+                *p = '@';
+            }
+            ++p;
+        }
+        strcpy(p, "@idmap");
+        return String8(buf);
+    }
+
+    void listSystemOverlayPackages(Vector<String8>& out)
+    {
+        DIR* dir;
+        struct dirent* entry;
+
+        if ((dir = opendir(kSystemOverlayDir)) == NULL) {
+            return;
+        }
+        while ((entry = readdir(dir)) != NULL) {
+            if (entry->d_type != DT_REG) {
+                continue;
+            }
+            const char* dot = strrchr(entry->d_name, '.');
+            if (dot == NULL) {
+                continue;
+            }
+            if (strcmp(dot, ".apk") != 0) {
+                continue;
+            }
+            String8 e(kSystemOverlayDir);
+            e.append(entry->d_name);
+            out.add(e);
+        }
+        closedir(dir);
+    }
+}
 
 /*
  * ===========================================================================
@@ -90,7 +141,7 @@ AssetManager::~AssetManager(void)
     delete[] mVendor;
 }
 
-bool AssetManager::addAssetPath(const String8& path, void** cookie)
+bool AssetManager::addAssetPath(const String8& path, void** cookie, const String8& idmapPath)
 {
     AutoMutex _l(mLock);
 
@@ -122,6 +173,8 @@ bool AssetManager::addAssetPath(const String8& path, void** cookie)
             return true;
         }
     }
+
+    ap.idmap = idmapPath;
     
     LOGV("In %p Asset %s path: %s", this,
          ap.type == kFileTypeDirectory ? "dir" : "zip", ap.path.string());
@@ -136,6 +189,71 @@ bool AssetManager::addAssetPath(const String8& path, void** cookie)
     return true;
 }
 
+bool AssetManager::createIdmapFile(const String8& originalPath, const String8& overlayPath,
+                                   const String8& idmapPath)
+{
+    LOGD("%s: originalPath=%s overlayPath=%s idmapPath=%s\n",
+         __FUNCTION__, originalPath.string(), overlayPath.string(), idmapPath.string());
+    ResTable tables[2];
+    const String8* paths[2] = { &originalPath, &overlayPath };
+    bool retval = false;
+
+    {
+        AutoMutex _l(mLock);
+        for (int i = 0; i < 2; ++i) {
+            asset_path ap;
+            ap.type = kFileTypeRegular;
+            ap.path = *paths[i];
+            Asset* ass = openNonAssetInPathLocked("resources.arsc", Asset::ACCESS_BUFFER, ap);
+            if (ass == NULL) {
+                LOGW("failed to find resources.arsc in %s\n", ap.path.string());
+                return retval;
+            }
+            tables[i].add(ass, (void*)1, false);
+        }
+    }
+
+    uint32_t* data = NULL;
+    size_t size;
+    status_t status = tables[0].createIdmap(tables[1], (void**)&data, &size);
+
+    if (status == NO_ERROR && size != 0) {
+#if 0
+        uint32_t* p = (uint32_t*)data;
+        for (size_t i = 0; i < size / sizeof(uint32_t); ++i) {
+            LOGD("p[%2zd]: 0x%08x\n", i, dtohl(*p++));
+        }
+#endif
+
+        // This should be abstracted (eg replaced by a stand-alone
+        // application like dexopt, triggered by something equivalent to
+        // installd).
+        int fd = ::open(idmapPath.string(), O_WRONLY | O_CREAT, 0644);
+        if (fd == -1) {
+            LOGW("failed to write ID mapping data to %s (open)\n", idmapPath.string());
+            goto error;
+        }
+        for (;;) {
+            ssize_t written = write(fd, data, size);
+            if (written < 0) {
+                (void)close(fd);
+                LOGW("failed to write ID mapping data to %s (write)\n", idmapPath.string());
+                goto error;
+            }
+            size -= (size_t)written;
+            if (size == 0) {
+                break;
+            }
+        }
+        (void)close(fd);
+    }
+
+    retval = true;
+error:
+    free(data);
+    return retval;
+}
+
 bool AssetManager::addDefaultAssets()
 {
     const char* root = getenv("ANDROID_ROOT");
@@ -144,7 +262,37 @@ bool AssetManager::addDefaultAssets()
     String8 path(root);
     path.appendPath(kSystemAssets);
 
-    return addAssetPath(path, NULL);
+    bool retval = addAssetPath(path, NULL);
+#ifdef HAVE_ANDROID_OS
+    if (retval) {
+        Vector<String8> overlays;
+        listSystemOverlayPackages(overlays);
+        const size_t n = overlays.size();
+        for (size_t i = 0; i < n; ++i) {
+            const String8 overlayPath = overlays.itemAt(i);
+            const String8 idmapPath = idmapPathForPackagePath(overlayPath);
+
+            // Ugly hack: the first time this function is called, we happen to run as
+            // root. That is our chance to create idmap files for overlay packages
+            // targeting framework-res.apk. (A cleaner solution would be to create a
+            // standalone program responsible for creating idmap files, and trigger that
+            // program as a sufficiently elevated user via a socket interface, similar to
+            // how installd/dexopt work.)
+            bool loadOverlay = true;
+            if (getuid() == 0 && ::access(idmapPath.string(), F_OK) != 0) {
+                if (!(loadOverlay = createIdmapFile(path, overlayPath, idmapPath))) {
+                    LOGW("failed to create idmap file %s\n", idmapPath.string());
+                }
+            }
+            if (loadOverlay) {
+                // We really should cache overlay packages in zygote, just like
+                // framework-res.apk (sharedRes in getResourceTable).
+                bool b = addAssetPath(overlayPath, NULL, idmapPath);
+            }
+        }
+    }
+#endif // HAVE_ANDROID_OS
+    return retval;
 }
 
 void* AssetManager::nextAssetPath(void* cookie) const
@@ -404,6 +552,7 @@ const ResTable* AssetManager::getResTable(bool required) const
         ResTable* sharedRes = NULL;
         bool shared = true;
         const asset_path& ap = mAssetPaths.itemAt(i);
+        Asset* idmap = openIdmapLocked(ap);
         LOGV("Looking for resource asset in '%s'\n", ap.path.string());
         if (ap.type != kFileTypeDirectory) {
             if (i == 0) {
@@ -433,7 +582,7 @@ const ResTable* AssetManager::getResTable(bool required) const
                     // can quickly copy it out for others.
                     LOGV("Creating shared resources for %s", ap.path.string());
                     sharedRes = new ResTable();
-                    sharedRes->add(ass, (void*)(i+1), false);
+                    sharedRes->add(ass, (void*)(i+1), false, idmap);
                     sharedRes = const_cast<AssetManager*>(this)->
                         mZipSet.setZipResourceTable(ap.path, sharedRes);
                 }
@@ -457,7 +606,7 @@ const ResTable* AssetManager::getResTable(bool required) const
                 rt->add(sharedRes);
             } else {
                 LOGV("Parsing resources for %s", ap.path.string());
-                rt->add(ass, (void*)(i+1), !shared);
+                rt->add(ass, (void*)(i+1), !shared, idmap);
             }
 
             if (!shared) {
@@ -496,6 +645,21 @@ void AssetManager::updateResourceParamsLocked() const
     mConfig->size = sizeof(*mConfig);
 
     res->setParameters(mConfig);
+}
+
+Asset* AssetManager::openIdmapLocked(const struct asset_path& ap) const
+{
+    Asset* ass = NULL;
+    if (ap.idmap.size() != 0) {
+        ass = const_cast<AssetManager*>(this)->
+            openAssetFromFileLocked(ap.idmap, Asset::ACCESS_BUFFER);
+        if (ass) {
+            LOGV("loading idmap %s\n", ap.idmap.string());
+        } else {
+            LOGW("failed to load idmap %s\n", ap.idmap.string());
+        }
+    }
+    return ass;
 }
 
 const ResTable& AssetManager::getResources(bool required) const
