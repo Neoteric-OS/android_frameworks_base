@@ -177,8 +177,10 @@ public final class BluetoothDeviceProfileState extends HierarchicalStateMachine 
 
         mContext.registerReceiver(mBroadcastReceiver, filter);
 
-        HeadsetServiceListener l = new HeadsetServiceListener();
-        PbapServiceListener p = new PbapServiceListener();
+        // Note: Do not remove! As a side effect, following
+        // constructor calls bind listeners to services.
+        new HeadsetServiceListener();
+        new PbapServiceListener();
     }
 
     private class HeadsetServiceListener implements BluetoothHeadset.ServiceListener {
