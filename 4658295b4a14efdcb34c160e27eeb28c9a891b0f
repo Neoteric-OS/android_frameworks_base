@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/X///js\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1004525
+      },
+      "writtenOn": "2011-03-17T17:09:01Z",
+      "side": 1,
+      "message": "Fix typo in the commit text",
+      "revId": "4658295b4a14efdcb34c160e27eeb28c9a891b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
