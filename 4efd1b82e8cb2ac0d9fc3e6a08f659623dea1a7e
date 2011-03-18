@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/X///c4\u003d",
+        "filename": "core/jni/android_bluetooth_BluetoothSocket.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-03-18T15:34:05Z",
+      "side": 1,
+      "message": "Minor nit:  you should follow local coding style.  Looks like style around here (this function, file, directory) uses spaces after control keywords.",
+      "revId": "4efd1b82e8cb2ac0d9fc3e6a08f659623dea1a7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
