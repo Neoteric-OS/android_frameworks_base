@@ -16,6 +16,24 @@
       "revId": "1f01aa8641130397abf5b4013c555fe175101f5d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X///PM\u003d",
+        "filename": "core/jni/android_bluetooth_BluetoothSocket.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1003213
+      },
+      "writtenOn": "2011-03-21T15:58:22Z",
+      "side": 1,
+      "message": "asocket_write() calls poll() to wait until the socket indicates that it\u0027s writeable before attempting to write.\n\nMaybe there\u0027s some race condition whereby the socket can become non-writeable between the poll() returning and the write() being called, but I wouldn\u0027t expect this situation to persist.\n\nIt would be easy enough to make this function throw an exception if this situation ever occurs, but my inclination would be to just retry the write. It\u0027s up to you guys though, I suppose!",
+      "parentUuid": "AAAA/X///Ps\u003d",
+      "revId": "1f01aa8641130397abf5b4013c555fe175101f5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
