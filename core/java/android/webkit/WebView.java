@@ -4348,7 +4348,9 @@ public class WebView extends AbsoluteLayout
             // remove the long press message first
             mPrivateHandler.removeMessages(LONG_PRESS_CENTER);
             mGotCenterDown = false;
-
+            if (event.isCanceled()) {
+                return false;
+            }
             if (mSelectingText) {
                 if (mExtendSelection) {
                     copySelection();
