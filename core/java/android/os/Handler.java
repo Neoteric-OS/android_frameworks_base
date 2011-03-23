@@ -71,6 +71,12 @@ public class Handler {
     private static final String TAG = "Handler";
 
     /**
+     * Reserved value for Runnables.
+     * You should not use this value for what field of your message.
+     */
+    private static final int MSG_RUNNABLE = Integer.MIN_VALUE;
+
+    /**
      * Callback interface you can use when instantiating a Handler to avoid
      * having to implement your own subclass of Handler.
      */
@@ -572,12 +578,14 @@ public class Handler {
 
     private final Message getPostMessage(Runnable r) {
         Message m = Message.obtain();
+        m.what = MSG_RUNNABLE;
         m.callback = r;
         return m;
     }
 
     private final Message getPostMessage(Runnable r, Object token) {
         Message m = Message.obtain();
+        m.what = MSG_RUNNABLE;
         m.obj = token;
         m.callback = r;
         return m;
