@@ -227,13 +227,31 @@ public class MessageQueue {
 
     final boolean removeMessages(Handler h, int what, Object object,
             boolean doRemove) {
+        return removeMessages(h, what, null, object, true, false, doRemove);
+    }
+
+    final void removeMessages(Handler h, Runnable r, Object object) {
+        removeMessages(h, null, r, object, false, true, true);
+    }
+
+    final boolean removeMessages(Handler h, int what, Runnable r, Object object,
+            boolean checkWhat, boolean checkRunnable, boolean doRemove) {
+        if ((checkRunnable && r == null) || (!checkRunnable && !checkWhat)) {
+            return false;
+        }
+
         synchronized (this) {
             Message p = mMessages;
             boolean found = false;
 
             // Remove all messages at front.
-            while (p != null && p.target == h && p.what == what
-                   && (object == null || p.obj == object)) {
+            while (p != null && p.target == h && (object == null || p.obj == object)) {
+                if (checkWhat && p.what != what) {
+                    break;
+                }
+                if (checkRunnable && p.callback != r) {
+                    break;
+                }
                 if (!doRemove) return true;
                 found = true;
                 Message n = p.next;
@@ -246,8 +264,13 @@ public class MessageQueue {
             while (p != null) {
                 Message n = p.next;
                 if (n != null) {
-                    if (n.target == h && n.what == what
-                        && (object == null || n.obj == object)) {
+                    if (n.target == h && (object == null || n.obj == object)) {
+                        if (checkWhat && n.what != what) {
+                            continue;
+                        }
+                        if (checkRunnable && n.callback != r) {
+                            continue;
+                        }
                         if (!doRemove) return true;
                         found = true;
                         Message nn = n.next;
@@ -258,42 +281,8 @@ public class MessageQueue {
                 }
                 p = n;
             }
-            
+
             return found;
-        }
-    }
-
-    final void removeMessages(Handler h, Runnable r, Object object) {
-        if (r == null) {
-            return;
-        }
-
-        synchronized (this) {
-            Message p = mMessages;
-
-            // Remove all messages at front.
-            while (p != null && p.target == h && p.callback == r
-                   && (object == null || p.obj == object)) {
-                Message n = p.next;
-                mMessages = n;
-                p.recycle();
-                p = n;
-            }
-
-            // Remove all messages after front.
-            while (p != null) {
-                Message n = p.next;
-                if (n != null) {
-                    if (n.target == h && n.callback == r
-                        && (object == null || n.obj == object)) {
-                        Message nn = n.next;
-                        n.recycle();
-                        p.next = nn;
-                        continue;
-                    }
-                }
-                p = n;
-            }
         }
     }
 

@@ -497,7 +497,7 @@ public class Handler {
      * message queue.
      */
     public final void removeMessages(int what) {
-        mQueue.removeMessages(this, what, null, true);
+        mQueue.removeMessages(this, what, null, null, true, false, true);
     }
 
     /**
@@ -505,7 +505,7 @@ public class Handler {
      * 'object' that are in the message queue.
      */
     public final void removeMessages(int what, Object object) {
-        mQueue.removeMessages(this, what, object, true);
+        mQueue.removeMessages(this, what, null, object, true, false, true);
     }
 
     /**
@@ -521,7 +521,7 @@ public class Handler {
      * the message queue.
      */
     public final boolean hasMessages(int what) {
-        return mQueue.removeMessages(this, what, null, false);
+        return mQueue.removeMessages(this, what, null, null, true, false, false);
     }
 
     /**
@@ -529,7 +529,7 @@ public class Handler {
      * whose obj is 'object' in the message queue.
      */
     public final boolean hasMessages(int what, Object object) {
-        return mQueue.removeMessages(this, what, object, false);
+        return mQueue.removeMessages(this, what, null, object, false, true, false);
     }
 
     // if we can get rid of this method, the handler need not remember its loop
