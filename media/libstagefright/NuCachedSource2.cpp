@@ -433,6 +433,11 @@ ssize_t NuCachedSource2::readInternal(off_t offset, void *data, size_t size) {
     }
 
     size_t delta = offset - mCacheOffset;
+    if (offset + size <= mCacheOffset + mCache->totalSize()) {
+        mCache->copy(delta, data, size);
+
+        return size;
+    }
 
     if (mFinalStatus != OK) {
         if (delta >= mCache->totalSize()) {
@@ -443,12 +448,6 @@ ssize_t NuCachedSource2::readInternal(off_t offset, void *data, size_t size) {
         mCache->copy(delta, data, avail);
 
         return avail;
-    }
-
-    if (offset + size <= mCacheOffset + mCache->totalSize()) {
-        mCache->copy(delta, data, size);
-
-        return size;
     }
 
     LOGV("deferring read");
