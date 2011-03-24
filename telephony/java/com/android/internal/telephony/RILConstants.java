@@ -138,6 +138,9 @@ cat include/telephony/ril.h | \
     static final int DATA_PROFILE_TETHERED  = 1;
     static final int DATA_PROFILE_OEM_BASE  = 1000;
 
+    /* Modem transmit power levels as per FCC regulations */
+    static final int TRANSMIT_POWER_DEFAULT = 0;
+    static final int TRANSMIT_POWER_WIFI_HOTSPOT = 1;
 
     int RIL_REQUEST_GET_SIM_STATUS = 1;
     int RIL_REQUEST_ENTER_SIM_PIN = 2;
@@ -242,6 +245,7 @@ cat include/telephony/ril.h | \
     int RIL_REQUEST_SET_SMSC_ADDRESS = 101;
     int RIL_REQUEST_REPORT_SMS_MEMORY_STATUS = 102;
     int RIL_REQUEST_REPORT_STK_SERVICE_IS_RUNNING = 103;
+    int RIL_REQUEST_SET_TRANSMIT_POWER = 104;
     int RIL_UNSOL_RESPONSE_BASE = 1000;
     int RIL_UNSOL_RESPONSE_RADIO_STATE_CHANGED = 1000;
     int RIL_UNSOL_RESPONSE_CALL_STATE_CHANGED = 1001;

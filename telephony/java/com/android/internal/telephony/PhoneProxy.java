@@ -847,4 +847,8 @@ public class PhoneProxy extends Handler implements Phone {
     public boolean isCspPlmnEnabled() {
         return mActivePhone.isCspPlmnEnabled();
     }
+
+    public void setTransmitPower(int powerLevel) {
+        mCi.setTransmitPower(powerLevel, null);
+    }
 }

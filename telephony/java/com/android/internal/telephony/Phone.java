@@ -1728,4 +1728,11 @@ public interface Phone {
      * false otherwise
      */
     boolean isCspPlmnEnabled();
+
+    /**
+     * Sets the transmit power
+     *
+     * @param powerLevel Transmit power level to set
+     */
+    void setTransmitPower(int powerLevel);
 }
