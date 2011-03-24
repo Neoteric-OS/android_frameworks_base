@@ -257,5 +257,12 @@ interface ITelephony {
      * Return true if an ICC card is present
      */
     boolean hasIccCard();
+
+    /**
+     * Sets the transmit power
+     *
+     * @param powerLevel Transmit power level to set
+     */
+    void setTransmitPower(int powerLevel);
 }
 

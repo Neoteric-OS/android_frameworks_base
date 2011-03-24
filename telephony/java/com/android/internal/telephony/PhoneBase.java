@@ -1043,4 +1043,8 @@ public abstract class PhoneBase extends Handler implements Phone {
         Log.e(LOG_TAG, "Error! " + name + "() in PhoneBase should not be " +
                 "called, GSMPhone inactive.");
     }
+
+    public void setTransmitPower(int powerLevel) {
+        return;
+    }
 }
