@@ -93,6 +93,8 @@ public:
      */
     bool addAssetPath(const String8& path, void** cookie);
 
+    bool getZipEntryCrc(const String8& zipPath, const char* entryFilename, uint32_t* pCrc);
+
     /*                                                                       
      * Convenience for adding the standard system assets.  Uses the
      * ANDROID_ROOT environment variable to find them.
@@ -222,6 +224,7 @@ private:
     {
         String8 path;
         FileType type;
+        String8 idmap;
     };
 
     Asset* openInPathLocked(const char* fileName, AccessMode mode,
@@ -261,6 +264,14 @@ private:
     const ResTable* getResTable(bool required = true) const;
     void setLocaleLocked(const char* locale);
     void updateResourceParamsLocked() const;
+
+    bool createIdmapFileLocked(const String8& originalPath, const String8& overlayPath,
+                               const String8& idmapPath);
+
+    bool isIdmapStale(const String8& originalPath, const String8& overlayPath,
+                      const String8& idmapPath);
+
+    Asset* openIdmapLocked(const struct asset_path& ap) const;
 
     class SharedZip : public RefBase {
     public:
