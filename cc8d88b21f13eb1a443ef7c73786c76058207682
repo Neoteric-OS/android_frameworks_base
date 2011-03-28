@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/X//+ak\u003d",
+        "filename": "tests/CoreTests/android/core/HttpHeaderTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-03-28T21:18:06Z",
+      "side": 1,
+      "message": "Could you also add a test for this:\nstatic final String CACHE_CONTROL_COMPOUND2 \u003d \"Cache-Control: max-age\u003d200000, no-cache\";",
+      "revId": "cc8d88b21f13eb1a443ef7c73786c76058207682",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X//+ag\u003d",
+        "filename": "tests/CoreTests/android/core/HttpHeaderTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2011-03-28T21:18:06Z",
+      "side": 1,
+      "message": "also test CACHE_CONTROL_COMPOUND2 suggested above",
+      "revId": "cc8d88b21f13eb1a443ef7c73786c76058207682",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
