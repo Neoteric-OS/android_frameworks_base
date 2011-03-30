@@ -34,6 +34,24 @@
       "revId": "1f01aa8641130397abf5b4013c555fe175101f5d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X//+U4\u003d",
+        "filename": "core/jni/android_bluetooth_BluetoothSocket.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2011-03-30T03:06:39Z",
+      "side": 1,
+      "message": "Just retrying the write is good enough",
+      "parentUuid": "AAAA/X///PM\u003d",
+      "revId": "1f01aa8641130397abf5b4013c555fe175101f5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
