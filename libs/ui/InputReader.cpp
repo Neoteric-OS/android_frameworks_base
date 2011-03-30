@@ -548,7 +548,7 @@ int32_t InputReader::getState(int32_t deviceId, uint32_t sourceMask, int32_t cod
                 InputDevice* device = mDevices.valueAt(i);
                 if (! device->isIgnored() && sourcesMatchMask(device->getSources(), sourceMask)) {
                     result = (device->*getStateFunc)(sourceMask, code);
-                    if (result >= AKEY_STATE_DOWN) {
+                    if (result >= AKEY_STATE_UP) {
                         return result;
                     }
                 }
@@ -738,7 +738,7 @@ int32_t InputDevice::getState(uint32_t sourceMask, int32_t code, GetStateFunc ge
         InputMapper* mapper = mMappers[i];
         if (sourcesMatchMask(mapper->getSources(), sourceMask)) {
             result = (mapper->*getStateFunc)(sourceMask, code);
-            if (result >= AKEY_STATE_DOWN) {
+            if (result >= AKEY_STATE_UP) {
                 return result;
             }
         }
