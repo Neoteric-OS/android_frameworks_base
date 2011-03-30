@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/X//+UA\u003d",
+        "filename": "libs/ui/InputReader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2011-03-30T09:44:52Z",
+      "side": 1,
+      "message": "int32_t state \u003d (device-\u003e*getStateFunc)(sourceMask, code);\nif (state \u003e result) {\n    result \u003d state;\n}",
+      "revId": "2b8fee38c02270ffdf0e624ff74a25101c14d49a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/X//+T8\u003d",
+        "filename": "libs/ui/InputReader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2011-03-30T09:44:52Z",
+      "side": 1,
+      "message": "int32_t state \u003d (mapper-\u003e*getStateFunc)(sourceMask, code);\nif (state \u003e result) {\n    result \u003d state;\n}",
+      "revId": "2b8fee38c02270ffdf0e624ff74a25101c14d49a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
