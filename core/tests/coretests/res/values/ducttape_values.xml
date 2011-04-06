@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color
+        name="c1">#cafebabe</color>
+    <dimen
+        name="d1">14px</dimen>
+    <integer-array
+        name="ia1">
+        <item>78</item>
+        <item>10</item>
+    </integer-array>
+    <string
+        name="s1">blurp</string>
+    <string-array
+        name="sa1">
+        <item>hello</item>
+        <item>funny</item>
+        <item>man</item>
+    </string-array>
+    <bool
+        name="b1">true</bool>
+</resources>
