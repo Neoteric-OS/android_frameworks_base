@@ -329,7 +329,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             }
 
             // Callback and return if the callback does not want to show the menu
-            if (!cb.onPreparePanel(st.featureId, st.createdPanelView, st.menu)) {
+            if ( (cb != null) && !cb.onPreparePanel(st.featureId, st.createdPanelView, st.menu)) {
                 return false;
             }
 
