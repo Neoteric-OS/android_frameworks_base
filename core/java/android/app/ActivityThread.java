@@ -3238,8 +3238,11 @@ public final class ActivityThread {
             if (data.profileFile != null && !ii.handleProfiling) {
                 data.handlingProfiling = true;
                 File file = new File(data.profileFile);
-                file.getParentFile().mkdirs();
-                Debug.startMethodTracing(file.toString(), 8 * 1024 * 1024);
+                File parentFile = file.getParentFile();
+                if (parentFile != null){
+                    parentFile.mkdirs();
+                    Debug.startMethodTracing(file.toString(), 8 * 1024 * 1024);
+                }
             }
 
             try {
