@@ -266,6 +266,8 @@ class ViewServer implements Runnable {
                 }
             } catch(IOException e) {
                 Slog.w(LOG_TAG, "Connection error: ", e);
+            } catch(NullPointerException e) {
+                e.printStackTrace();
             } finally {
                 if (in != null) {
                     try {
