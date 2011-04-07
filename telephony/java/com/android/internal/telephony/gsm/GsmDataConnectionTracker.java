@@ -1043,6 +1043,7 @@ public final class GsmDataConnectionTracker extends DataConnectionTracker {
 
     private void notifyNoData(GsmDataConnection.FailCause lastFailCauseCode) {
         setState(State.FAILED);
+        mGsmPhone.notifyDataConnectionFailed(lastFailCauseCode.toString());
     }
 
     protected void onRecordsLoaded() {
