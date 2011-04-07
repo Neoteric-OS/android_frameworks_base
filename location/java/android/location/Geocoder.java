@@ -133,7 +133,12 @@ public final class Geocoder {
             String ex =  mService.getFromLocation(latitude, longitude, maxResults,
                 mParams, results);
             if (ex != null) {
-                throw new IOException(ex);
+                if (ex.equals("Service not Available")) {
+                    Log.e(TAG, "getFromLocation: Service not Available");
+                    return null;
+                } else {
+                    throw new IOException(ex);
+                }
             } else {
                 return results;
             }
@@ -175,7 +180,12 @@ public final class Geocoder {
             String ex = mService.getFromLocationName(locationName,
                 0, 0, 0, 0, maxResults, mParams, results);
             if (ex != null) {
-                throw new IOException(ex);
+                if (ex.equals("Service not Available")) {
+                    Log.e(TAG, "getFromLocationName: Service not Available");
+                    return null;
+                } else {
+                    throw new IOException(ex);
+                }
             } else {
                 return results;
             }
