@@ -72,6 +72,9 @@ public abstract class Connection {
 
     Object userData;
 
+    protected String cnapName;
+    protected int cnapNamePresentation;
+
     /* Instance Methods */
 
     /**
@@ -88,7 +91,7 @@ public abstract class Connection {
      * @return cnap name or null if unavailable
      */
     public String getCnapName() {
-        return null;
+        return cnapName;
     }
 
     /**
@@ -105,8 +108,8 @@ public abstract class Connection {
      */
 
     public int getCnapNamePresentation() {
-       return 0;
-    };
+        return cnapNamePresentation;
+    }
 
     /**
      * @return Call that owns this Connection, or null if none

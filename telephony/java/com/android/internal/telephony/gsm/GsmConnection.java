@@ -23,6 +23,7 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.os.Registrant;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.util.Config;
 import android.util.Log;
 import android.telephony.PhoneNumberUtils;
@@ -125,6 +126,8 @@ public class GsmConnection extends Connection {
         address = dc.number;
 
         isIncoming = dc.isMT;
+        cnapName = dc.name;
+        cnapNamePresentation = dc.namePresentation;
         createTime = System.currentTimeMillis();
         numberPresentation = dc.numberPresentation;
         uusInfo = dc.uusInfo;
@@ -152,6 +155,8 @@ public class GsmConnection extends Connection {
         index = -1;
 
         isIncoming = false;
+        cnapName = null;
+        cnapNamePresentation = Connection.PRESENTATION_ALLOWED;
         createTime = System.currentTimeMillis();
 
         this.parent = parent;
@@ -437,6 +442,19 @@ public class GsmConnection extends Connection {
             address = dc.number;
             changed = true;
         }
+
+        // A null cnapName should be the same as ""
+        if (TextUtils.isEmpty(dc.name)) {
+            if (!TextUtils.isEmpty(cnapName)) {
+                changed = true;
+                cnapName = "";
+            }
+        } else if (!dc.name.equals(cnapName)) {
+            changed = true;
+            cnapName = dc.name;
+        }
+
+        cnapNamePresentation = dc.namePresentation;
 
         if (newParent != parent) {
             if (parent != null) {
