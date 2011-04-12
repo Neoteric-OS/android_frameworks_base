@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/n//+vo\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmMmiCode.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2011-04-12T18:58:32Z",
+      "side": 1,
+      "message": "Seems like our pattern matching is insufficient for recognizing #-string. The definition is any chars in default alphabet followed by #send, so perhaps we should just define poundString \u003d dialString.endsWith(\"#\") ? dialString : null;",
+      "revId": "c8961feb2f33aafb6488aebc70a01110b5de5852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/n//+vQ\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmMmiCode.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2011-04-12T18:58:32Z",
+      "side": 1,
+      "message": "with above change, I think you just need to check if (dialingNumber !\u003d null \u0026\u0026 poundString \u003d\u003d null).",
+      "revId": "c8961feb2f33aafb6488aebc70a01110b5de5852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/n//+vU\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmMmiCode.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1000718
+      },
+      "writtenOn": "2011-04-12T18:58:32Z",
+      "side": 1,
+      "message": "with above change for poundString I don\u0027t think we need this extra logic.",
+      "revId": "c8961feb2f33aafb6488aebc70a01110b5de5852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
