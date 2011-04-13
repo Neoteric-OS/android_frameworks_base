@@ -1212,9 +1212,13 @@ public class ConnectivityService extends IConnectivityManager.Stub {
         boolean isFailover = info.isFailover();
         NetworkStateTracker thisNet = mNetTrackers[type];
 
+        if (!mNetTrackers[type].useAsDefaultGw()) {
+            tryFailover(type);
+        }
+
         // if this is a default net and other default is running
         // kill the one not preferred
-        if (mNetAttributes[type].isDefault()) {
+        if (mNetAttributes[type].isDefault() && mNetTrackers[type].useAsDefaultGw()) {
             if (mActiveDefaultNetwork != -1 && mActiveDefaultNetwork != type) {
                 if ((type != mNetworkPreference &&
                         mNetAttributes[mActiveDefaultNetwork].mPriority >
@@ -1376,7 +1380,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
     private void handleDnsConfigurationChange(int netType) {
         // add default net's dns entries
         NetworkStateTracker nt = mNetTrackers[netType];
-        if (nt != null && nt.getNetworkInfo().isConnected() && !nt.isTeardownRequested()) {
+        if (nt != null && nt.getNetworkInfo().isConnected() && !nt.isTeardownRequested() && nt.useAsDefaultGw()) {
             String[] dnsList = nt.getNameServers();
             if (mNetAttributes[netType].isDefault()) {
                 int j = 1;

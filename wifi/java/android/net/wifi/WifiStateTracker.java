@@ -1356,6 +1356,15 @@ public class WifiStateTracker extends NetworkStateTracker {
             int event;
             if (NetworkUtils.configureInterface(mInterfaceName, mDhcpInfo)) {
                 mHaveIpAddress = true;
+                if (!useAsDefaultGw()) {
+                    // Remove default route for this interface
+                    // (was set via dhcpcd) because it should be
+                    // provided by a other interface. This will
+                    // only be done if the current network should
+                    // not be a default one
+                    NetworkUtils.removeDefaultRoute(mInterfaceName);
+                    Log.i(TAG, "Static IP default route was removed");
+                }
                 event = EVENT_INTERFACE_CONFIGURATION_SUCCEEDED;
                 if (LOCAL_LOGD) Log.v(TAG, "Static IP configuration succeeded");
             } else {
@@ -1936,7 +1945,13 @@ public class WifiStateTracker extends NetworkStateTracker {
         if (mWifiState.get() != WIFI_STATE_ENABLED) {
             return null;
         }
-        return WifiNative.getNetworkVariableCommand(netId, name);
+        String res = WifiNative.getNetworkVariableCommand(netId, name);
+        if ((res == null) && WifiConfiguration.useMobileAsDefaultGwName.equals(name)) {
+            String string = Settings.Secure.getString(mContext.getContentResolver(),
+                    getNetworkVariableKey2(netId, name));
+            return string;
+        }
+        return res;
     }
 
     /**
@@ -1951,7 +1966,13 @@ public class WifiStateTracker extends NetworkStateTracker {
         if (mWifiState.get() != WIFI_STATE_ENABLED) {
             return false;
         }
-        return WifiNative.setNetworkVariableCommand(netId, name, value);
+        boolean ok = WifiNative.setNetworkVariableCommand(netId, name, value);
+        if ((!ok) && WifiConfiguration.useMobileAsDefaultGwName.equals(name)) {
+            boolean ok2 = Settings.Secure.putString(mContext.getContentResolver(),
+                    getNetworkVariableKey2(netId, name), value);
+            return ok2;
+        }
+        return ok;
     }
 
     /**
@@ -2468,6 +2489,15 @@ public class WifiStateTracker extends NetworkStateTracker {
                     if (NetworkUtils.runDhcp(mInterfaceName, mDhcpInfo)) {
                         event = EVENT_INTERFACE_CONFIGURATION_SUCCEEDED;
                         if (LOCAL_LOGD) Log.v(TAG, "DhcpHandler: DHCP request succeeded");
+                        if (!useAsDefaultGw()) {
+                            // Remove default route for this interface
+                            // (was set via dhcpcd) because it should be
+                            // provided by a other interface. This will
+                            // only be done if the current network should
+                            // not be a default one
+                            NetworkUtils.removeDefaultRoute(mInterfaceName);
+                            Log.i(TAG, "DHCP default route was removed");
+                        }
                     } else {
                         event = EVENT_INTERFACE_CONFIGURATION_FAILED;
                         Log.i(TAG, "DhcpHandler: DHCP request failed: " +
@@ -2671,5 +2701,21 @@ public class WifiStateTracker extends NetworkStateTracker {
             return Settings.Secure.getInt(mContext.getContentResolver(),
                     Settings.Secure.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON, 1) == 1;
         }
+    }
+
+    public boolean useAsDefaultGw() {
+        if (mWifiInfo != null) {
+            String res = getNetworkVariable(mWifiInfo.getNetworkId(),
+                    WifiConfiguration.useMobileAsDefaultGwName);
+            try {
+                return !"1".equals(res);
+            } catch (NumberFormatException e) {
+            }
+        }
+        return true;
+    }
+
+    private String getNetworkVariableKey2(int netId, String name) {
+        return "" + netId + "." + name;
     }
 }

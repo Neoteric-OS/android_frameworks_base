@@ -897,6 +897,14 @@ public class WifiService extends IWifiManager.Stub {
             } catch (NumberFormatException ignore) {
             }
         }
+        value = mWifiStateTracker.getNetworkVariable(netId, WifiConfiguration.useMobileAsDefaultGwName);
+        config.useMobileAsDefaultGw = null;
+        if (!TextUtils.isEmpty(value)) {
+            try {
+                config.useMobileAsDefaultGw = value;
+            } catch (NumberFormatException ignore) {
+            }
+        }
 
         value = mWifiStateTracker.getNetworkVariable(netId, WifiConfiguration.hiddenSSIDVarName);
         config.hiddenSSID = false;
@@ -1211,6 +1219,15 @@ public class WifiService extends IWifiManager.Stub {
                 if (DBG) {
                     Slog.d(TAG, config.SSID + ": failed to set priority: "
                             +config.priority);
+                }
+                break setVariables;
+            }
+            if (config.useMobileAsDefaultGw != null && !mWifiStateTracker.setNetworkVariable(netId,
+                    WifiConfiguration.useMobileAsDefaultGwName,
+                    config.useMobileAsDefaultGw)) {
+                if (DBG) {
+                    Slog.d(TAG, config.SSID + ": failed to set useAsGateway: "
+                            +config.useMobileAsDefaultGw);
                 }
                 break setVariables;
             }

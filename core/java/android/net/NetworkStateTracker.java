@@ -410,4 +410,12 @@ public abstract class NetworkStateTracker extends Handler {
     public void interpretScanResultsAvailable() {
     }
 
+    /**
+     * Use this network as default gateway.
+     * @return {@code true} if the network has a default gateway
+     */
+    public boolean useAsDefaultGw() {
+        return true;
+    }
+
 }

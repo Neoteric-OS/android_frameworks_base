@@ -39,6 +39,8 @@ public class WifiConfiguration implements Parcelable {
     /** {@hide} */
     public static final String wepTxKeyIdxVarName = "wep_tx_keyidx";
     /** {@hide} */
+    public static final String useMobileAsDefaultGwName = "use_mobile_as_default_gw";
+    /** {@hide} */
     public static final String priorityVarName = "priority";
     /** {@hide} */
     public static final String hiddenSSIDVarName = "scan_ssid";
@@ -294,6 +296,13 @@ public class WifiConfiguration implements Parcelable {
      */
     public BitSet allowedGroupCiphers;
 
+    /**
+     * This is a wifi network without Internet access. Set this flag
+     * to allow using the mobile network instead.
+     */
+    /** {@hide} */
+    public String useMobileAsDefaultGw;
+
 
     public WifiConfiguration() {
         networkId = -1;
@@ -312,6 +321,7 @@ public class WifiConfiguration implements Parcelable {
         for (EnterpriseField field : enterpriseFields) {
             field.setValue(null);
         }
+        useMobileAsDefaultGw = null;
     }
 
     public String toString() {
@@ -323,6 +333,7 @@ public class WifiConfiguration implements Parcelable {
         }
         sbuf.append("ID: ").append(this.networkId).append(" SSID: ").append(this.SSID).
                 append(" BSSID: ").append(this.BSSID).append(" PRIO: ").append(this.priority).
+                append(" useMobileAsDefaultGw: ").append(this.useMobileAsDefaultGw).
                 append('\n');
         sbuf.append(" KeyMgmt:");
         for (int k = 0; k < this.allowedKeyManagement.size(); k++) {
@@ -438,6 +449,7 @@ public class WifiConfiguration implements Parcelable {
         dest.writeInt(status);
         dest.writeString(SSID);
         dest.writeString(BSSID);
+        dest.writeString(useMobileAsDefaultGw);
         dest.writeString(preSharedKey);
         for (String wepKey : wepKeys)
             dest.writeString(wepKey);
@@ -465,6 +477,7 @@ public class WifiConfiguration implements Parcelable {
                 config.status = in.readInt();
                 config.SSID = in.readString();
                 config.BSSID = in.readString();
+                config.useMobileAsDefaultGw = in.readString();
                 config.preSharedKey = in.readString();
                 for (int i = 0; i < config.wepKeys.length; i++)
                     config.wepKeys[i] = in.readString();
