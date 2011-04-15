@@ -200,15 +200,21 @@ public class ViewConfiguration {
         final DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         final float density = metrics.density;
 
-        mEdgeSlop = (int) (density * EDGE_SLOP + 0.5f);
+        // Use the physical DPI of the screen to set up the touch physics.
+        final float physicalDpi = (metrics.xdpi + metrics.ydpi) / 2;
+        final float logicalDpi = metrics.densityDpi;
+        final float physicalDensity = density * (physicalDpi / logicalDpi);
+
+        // Math.ceil is used to make every started pixel count
+        mEdgeSlop = (int) Math.ceil(physicalDensity * EDGE_SLOP + 0.5f);
         mFadingEdgeLength = (int) (density * FADING_EDGE_LENGTH + 0.5f);
-        mMinimumFlingVelocity = (int) (density * MINIMUM_FLING_VELOCITY + 0.5f);
-        mMaximumFlingVelocity = (int) (density * MAXIMUM_FLING_VELOCITY + 0.5f);
+        mMinimumFlingVelocity = (int) Math.ceil(physicalDensity * MINIMUM_FLING_VELOCITY + 0.5f);
+        mMaximumFlingVelocity = (int) Math.ceil(physicalDensity * MAXIMUM_FLING_VELOCITY + 0.5f);
         mScrollbarSize = (int) (density * SCROLL_BAR_SIZE + 0.5f);
-        mTouchSlop = (int) (density * TOUCH_SLOP + 0.5f);
-        mPagingTouchSlop = (int) (density * PAGING_TOUCH_SLOP + 0.5f);
-        mDoubleTapSlop = (int) (density * DOUBLE_TAP_SLOP + 0.5f);
-        mWindowTouchSlop = (int) (density * WINDOW_TOUCH_SLOP + 0.5f);
+        mTouchSlop = (int) Math.ceil(physicalDensity * TOUCH_SLOP + 0.5f);
+        mPagingTouchSlop = (int) Math.ceil(physicalDensity * PAGING_TOUCH_SLOP + 0.5f);
+        mDoubleTapSlop = (int) Math.ceil(physicalDensity * DOUBLE_TAP_SLOP + 0.5f);
+        mWindowTouchSlop = (int) Math.ceil(physicalDensity * WINDOW_TOUCH_SLOP + 0.5f);
 
         // Size of the screen in bytes, in ARGB_8888 format
         mMaximumDrawingCacheSize = 4 * metrics.widthPixels * metrics.heightPixels;
