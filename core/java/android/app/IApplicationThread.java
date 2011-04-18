@@ -86,7 +86,7 @@ public interface IApplicationThread extends IInterface {
     void scheduleSuicide() throws RemoteException;
     void requestThumbnail(IBinder token) throws RemoteException;
     void scheduleConfigurationChanged(Configuration config) throws RemoteException;
-    void updateTimeZone() throws RemoteException;
+    void updateTimeZone(String timeZone) throws RemoteException;
     void processInBackground() throws RemoteException;
     void dumpService(FileDescriptor fd, IBinder servicetoken, String[] args)
             throws RemoteException;
