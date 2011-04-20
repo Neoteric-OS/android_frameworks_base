@@ -958,7 +958,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                 saveSettingsLocked();
                 int max = getMaximumFailedPasswordsForWipe(null);
                 if (max > 0 && mFailedPasswordAttempts >= max) {
-                    wipeDataLocked(0);
+                    wipeDataLocked(1);
                 }
                 sendAdminCommandLocked(DeviceAdminReceiver.ACTION_PASSWORD_FAILED,
                         DeviceAdminInfo.USES_POLICY_WATCH_LOGIN);
