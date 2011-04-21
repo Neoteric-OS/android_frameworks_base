@@ -513,14 +513,15 @@ public class LockPatternUtils {
         return hashed;
     }
 
-    private static String toHex(byte[] ary) {
-        final String hex = "0123456789ABCDEF";
-        String ret = "";
-        for (int i = 0; i < ary.length; i++) {
-            ret += hex.charAt((ary[i] >> 4) & 0xf);
-            ret += hex.charAt(ary[i] & 0xf);
+    private static final String HEX = "0123456789ABCDEF";
+
+    private static String toHex(final byte[] array) {
+        final StringBuilder result = new StringBuilder();
+        for (final byte b : array) {
+            result.append(HEX.charAt((b >> 4) & 0xf));
+            result.append(HEX.charAt(b & 0xf));
         }
-        return ret;
+        return result.toString();
     }
 
     /**
