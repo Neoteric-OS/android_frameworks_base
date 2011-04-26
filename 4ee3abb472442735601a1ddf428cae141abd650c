@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/3///5g\u003d",
+        "filename": "obex/javax/obex/ClientSession.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2011-04-26T18:07:10Z",
+      "side": 1,
+      "message": "Can we put a comment regarding the length of this buffer ?",
+      "revId": "4ee3abb472442735601a1ddf428cae141abd650c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
