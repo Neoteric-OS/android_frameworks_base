@@ -279,6 +279,10 @@ protected:
             code, (int32_t)&data, (int32_t)reply, flags);
         jthrowable excep = env->ExceptionOccurred();
 
+        // Clear any potential exception to avoid calling back into Java with these
+        // raised as this aborts the vm. The exception is "handled" later.
+        env->ExceptionClear();
+
         // Restore the Java binder thread's state if it changed while
         // processing a call (as it would if the Parcel's header had a
         // new policy mask and Parcel.enforceInterface() changed
