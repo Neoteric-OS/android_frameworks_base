@@ -16,6 +16,193 @@
       "revId": "4ee3abb472442735601a1ddf428cae141abd650c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/3///00\u003d",
+        "filename": "obex/javax/obex/ObexByteBuffer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003544
+      },
+      "writtenOn": "2011-04-26T22:59:07Z",
+      "side": 1,
+      "message": "\"Will read length bytes\", not (length - destOffset) bytes.",
+      "revId": "4ee3abb472442735601a1ddf428cae141abd650c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/3///0o\u003d",
+        "filename": "obex/javax/obex/ObexByteBuffer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1003544
+      },
+      "writtenOn": "2011-04-26T22:59:07Z",
+      "side": 1,
+      "message": "Bug: should be: \"if (offset \u003e\u003d mLength)\"",
+      "revId": "4ee3abb472442735601a1ddf428cae141abd650c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/3///0k\u003d",
+        "filename": "obex/javax/obex/ObexByteBuffer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003544
+      },
+      "writtenOn": "2011-04-26T22:59:07Z",
+      "side": 1,
+      "message": "Should be \"Will read length bytes\", not (length - destOffset).",
+      "revId": "4ee3abb472442735601a1ddf428cae141abd650c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/3///0g\u003d",
+        "filename": "obex/javax/obex/ObexByteBuffer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1003544
+      },
+      "writtenOn": "2011-04-26T22:59:07Z",
+      "side": 1,
+      "message": "the first half of the test is redundant. Should be \"if (offset + length \u003e mLength)\"",
+      "revId": "4ee3abb472442735601a1ddf428cae141abd650c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/3///0Y\u003d",
+        "filename": "obex/javax/obex/ObexByteBuffer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1003544
+      },
+      "writtenOn": "2011-04-26T22:59:07Z",
+      "side": 1,
+      "message": "Change \"read/write\" to \"copy\" for clarity.",
+      "revId": "4ee3abb472442735601a1ddf428cae141abd650c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/3///0U\u003d",
+        "filename": "obex/javax/obex/ObexByteBuffer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1003544
+      },
+      "writtenOn": "2011-04-26T22:59:07Z",
+      "side": 1,
+      "message": "Change \"read/write\" to \"copy\" for clarity.",
+      "revId": "4ee3abb472442735601a1ddf428cae141abd650c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/3///0c\u003d",
+        "filename": "obex/javax/obex/ObexByteBuffer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1003544
+      },
+      "writtenOn": "2011-04-26T22:59:07Z",
+      "side": 1,
+      "message": "Change \"read/write\" to \"copy\" for clarity. Should be \"Will copy srcLength bytes.\"",
+      "revId": "4ee3abb472442735601a1ddf428cae141abd650c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/3///0Q\u003d",
+        "filename": "obex/javax/obex/ObexByteBuffer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1003544
+      },
+      "writtenOn": "2011-04-26T22:59:07Z",
+      "side": 1,
+      "message": "Change \"read/write\" to \"copy\" for clarity.",
+      "revId": "4ee3abb472442735601a1ddf428cae141abd650c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/3///0M\u003d",
+        "filename": "obex/javax/obex/ObexByteBuffer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1003544
+      },
+      "writtenOn": "2011-04-26T22:59:07Z",
+      "side": 1,
+      "message": "Change \"read/write\" to \"copy\" for clarity.",
+      "revId": "4ee3abb472442735601a1ddf428cae141abd650c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/3///0I\u003d",
+        "filename": "obex/javax/obex/ObexByteBuffer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1003544
+      },
+      "writtenOn": "2011-04-26T22:59:07Z",
+      "side": 1,
+      "message": "Change \"read/write\" to \"copy\" for clarity. Should be \"Will copy srcLength bytes...\"",
+      "revId": "4ee3abb472442735601a1ddf428cae141abd650c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/3///0E\u003d",
+        "filename": "obex/javax/obex/ObexByteBuffer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1003544
+      },
+      "writtenOn": "2011-04-26T22:59:07Z",
+      "side": 1,
+      "message": "Redundant test. Should be \"if (srcOffset + srcLength \u003e src.mLength)\"",
+      "revId": "4ee3abb472442735601a1ddf428cae141abd650c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
