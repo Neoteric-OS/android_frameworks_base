@@ -49,7 +49,7 @@ public class Input {
         String command = args[0];
 
         if (command.equals("text")) {
-            sendText(args[1]);
+            sendText(collectArguments(args, 1));
         } else if (command.equals("keyevent")) {
             sendKeyEvent(args[1]);
         } else if (command.equals("motionevent")) {
@@ -64,16 +64,28 @@ public class Input {
     }
 
     /**
-     * Convert the characters of string text into key event's and send to
-     * device.
+     * Collect remaining arguments into a StringBuffer.
      *
-     * @param text is a string of characters you want to input to the device.
+     * @param args The argument array
+     * @param from The index of the first argument which should be collected
      */
+    private StringBuffer collectArguments(String[] args, int from) {
+        StringBuffer buff = new StringBuffer();
+        // copy all arguments starting from `from` into the buffer
+        for (int i=from; i<args.length; i++) {
+            if (buff.length() > 0)
+                buff.append(' ');
+            buff.append(args[i]);
+        }
+        return buff;
+    }
 
-    private void sendText(String text) {
-
-        StringBuffer buff = new StringBuffer(text);
-
+    /**
+     * Convert a text into key events and send them to the device.
+     *
+     * @param buff is a StringBuffer of characters to send to the device
+     */
+    private void sendText(StringBuffer buff) {
         boolean escapeFlag = false;
         for (int i=0; i<buff.length(); i++) {
             if (escapeFlag) {
