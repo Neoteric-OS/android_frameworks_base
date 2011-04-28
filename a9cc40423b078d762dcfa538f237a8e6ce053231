@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/3///mA\u003d",
+        "filename": "services/java/com/android/server/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5712,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2011-04-28T17:00:18Z",
+      "side": 1,
+      "message": "There\u0027s another place where this is called unguarded. Are you running this in the sim-eng build?",
+      "revId": "a9cc40423b078d762dcfa538f237a8e6ce053231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
