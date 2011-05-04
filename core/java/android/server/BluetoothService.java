@@ -511,15 +511,8 @@ public class BluetoothService extends IBluetooth.Stub {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-            case MESSAGE_UUID_INTENT:
-                String address = (String)msg.obj;
-                if (address != null) {
-                    sendUuidIntent(address);
-                    makeServiceChannelCallbacks(address);
-                }
-                break;
             case MESSAGE_AUTO_PAIRING_FAILURE_ATTEMPT_DELAY:
-                address = (String)msg.obj;
+                String address = (String)msg.obj;
                 if (address == null) return;
                 int attempt = mBondState.getAttempt(address);
 
@@ -1254,9 +1247,6 @@ public class BluetoothService extends IBluetooth.Stub {
      * The UUID's found are broadcast as intents.
      * Optionally takes a uuid and callback to fetch the RFCOMM channel for the
      * a given uuid.
-     * TODO: Don't wait UUID_INTENT_DELAY to broadcast UUID intents on success
-     * TODO: Don't wait UUID_INTENT_DELAY to handle the failure case for
-     * callback and broadcast intents.
      */
     public synchronized boolean fetchRemoteUuids(String address, ParcelUuid uuid,
             IBluetoothCallback callback) {
@@ -1292,9 +1282,6 @@ public class BluetoothService extends IBluetooth.Stub {
             mUuidCallbackTracker.put(new RemoteService(address, uuid), callback);
         }
 
-        Message message = mHandler.obtainMessage(MESSAGE_UUID_INTENT);
-        message.obj = address;
-        mHandler.sendMessageDelayed(message, UUID_INTENT_DELAY);
         return ret;
     }
 
@@ -1474,28 +1461,6 @@ public class BluetoothService extends IBluetooth.Stub {
         }
 
         synchronized (this) {
-            // Make application callbacks
-            for (Iterator<RemoteService> iter = mUuidCallbackTracker.keySet().iterator();
-                    iter.hasNext();) {
-                RemoteService service = iter.next();
-                if (service.address.equals(address)) {
-                    if (uuidToChannelMap.containsKey(service.uuid)) {
-                        int channel = uuidToChannelMap.get(service.uuid);
-
-                        if (DBG) Log.d(TAG, "Making callback for " + service.uuid +
-                                    " with result " + channel);
-                        IBluetoothCallback callback = mUuidCallbackTracker.get(service);
-                        if (callback != null) {
-                            try {
-                                callback.onRfcommChannelFound(channel);
-                            } catch (RemoteException e) {Log.e(TAG, "", e);}
-                        }
-
-                        iter.remove();
-                    }
-                }
-            }
-
             // Update cache
             mDeviceServiceChannelCache.put(address, uuidToChannelMap);
         }
@@ -1726,13 +1691,25 @@ public class BluetoothService extends IBluetooth.Stub {
                 iter.hasNext();) {
             RemoteService service = iter.next();
             if (service.address.equals(address)) {
-                if (DBG) Log.d(TAG, "Cleaning up failed UUID channel lookup: "
-                    + service.address + " " + service.uuid);
+                // Make application callbacks
                 IBluetoothCallback callback = mUuidCallbackTracker.get(service);
                 if (callback != null) {
-                    try {
-                        callback.onRfcommChannelFound(-1);
-                    } catch (RemoteException e) {Log.e(TAG, "", e);}
+                    Map <ParcelUuid, Integer> uuidToChannelMap = new HashMap<ParcelUuid, Integer>();
+                    uuidToChannelMap = mDeviceServiceChannelCache.get(address);
+                    if (uuidToChannelMap.containsKey(service.uuid)) {
+                        int channel = uuidToChannelMap.get(service.uuid);
+                        if (DBG) log("Making callback for " + service.uuid +
+                                     " with result " + channel);
+                        try {
+                            callback.onRfcommChannelFound(channel);
+                        } catch (RemoteException e) {Log.e(TAG, "", e);}
+                    } else {
+                        if (DBG) log("Cleaning up failed UUID channel lookup: " +
+                                     service.address + " " + service.uuid);
+                        try {
+                            callback.onRfcommChannelFound(-1);
+                        } catch (RemoteException e) {Log.e(TAG, "", e);}
+                    }
                 }
 
                 iter.remove();

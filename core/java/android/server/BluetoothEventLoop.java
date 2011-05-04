@@ -446,6 +446,8 @@ class BluetoothEventLoop {
             mBluetoothService.updateDeviceServiceChannelCache(address);
 
             mBluetoothService.sendUuidIntent(address);
+            mBluetoothService.makeServiceChannelCallbacks(address);
+
         } else if (name.equals("Paired")) {
             if (propValues[1].equals("true")) {
                 // If locally initiated pairing, we will
