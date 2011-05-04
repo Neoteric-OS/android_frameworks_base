@@ -16,6 +16,24 @@
       "revId": "a9cc40423b078d762dcfa538f237a8e6ce053231",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/3///ds\u003d",
+        "filename": "services/java/com/android/server/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5712,
+      "author": {
+        "id": 1006288
+      },
+      "writtenOn": "2011-05-04T07:34:53Z",
+      "side": 1,
+      "message": "I am running this in sim-user build. Another place calling this is in processPendingMove(), right?",
+      "parentUuid": "AAAA/3///mA\u003d",
+      "revId": "a9cc40423b078d762dcfa538f237a8e6ce053231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
