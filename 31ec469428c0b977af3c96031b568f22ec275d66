@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAA/3//+5A\u003d",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2011-05-04T07:41:43Z",
+      "side": 1,
+      "message": "Just call env-\u003eExceptionClear() here instead, then we don\u0027t need to move the following block of code.\n\nIt\u0027s unclear to me whether there are any undesirable implications resulting from reporting the exception before we restore the strict mode state.  Probably harmless...",
+      "revId": "31ec469428c0b977af3c96031b568f22ec275d66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
