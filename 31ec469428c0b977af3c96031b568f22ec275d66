@@ -16,6 +16,24 @@
       "revId": "31ec469428c0b977af3c96031b568f22ec275d66",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAA/3//+2M\u003d",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2011-05-04T17:19:53Z",
+      "side": 1,
+      "message": "i think the main difference is that the logE call back into Java gets called with the current strict mode state rather than the old to-be-restored state. i too have no idea whether that matters.\n\nit\u0027s valid to call ExceptionClear with no exception pending, so your suggestion wouldn\u0027t cause trouble with the ExceptionClear at the beginning of report_exception.",
+      "parentUuid": "AAAA/3//+5A\u003d",
+      "revId": "31ec469428c0b977af3c96031b568f22ec275d66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
