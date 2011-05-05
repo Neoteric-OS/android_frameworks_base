@@ -1315,7 +1315,7 @@ status_t ResXMLTree::validateNode(const ResXMLTree_node* node) const
 struct ResTable::Header
 {
     Header(ResTable* _owner) : owner(_owner), ownedData(NULL), header(NULL),
-        resourceIDMap(NULL), resourceIDMapSize(0) { }
+        resourceIDMap(NULL), resourceIDMapSize(0), skin("") { }
 
     ~Header()
     {
@@ -1333,6 +1333,7 @@ struct ResTable::Header
     ResStringPool                   values;
     uint32_t*                       resourceIDMap;
     size_t                          resourceIDMapSize;
+    String16                        skin;
 };
 
 struct ResTable::Type
@@ -1418,11 +1419,31 @@ struct ResTable::PackageGroup
             bags = NULL;
         }
     }
+
+    void updateEnabledPackages()
+    {
+        enabledPackages.clear();
+        const size_t N = packages.size();
+        Package* skinPackage = NULL;
+        for (size_t i = 0; i < N; ++i) {
+            Package* pkg = packages[i];
+            if (pkg->header->skin.size() == 0) {
+                enabledPackages.add(pkg);
+            } else if (pkg->header->skin == skin) {
+                skinPackage = pkg;
+            }
+        }
+        if (skinPackage != NULL) {
+            enabledPackages.add(skinPackage);
+        }
+    }
     
     ResTable* const                 owner;
     String16 const                  name;
     uint32_t const                  id;
     Vector<Package*>                packages;
+    // subset of packages: the original package, all overlays, zero or one skin
+    Vector<Package*>                enabledPackages;
     
     // This is for finding typeStrings and other common package stuff.
     Package*                        basePackage;
@@ -1433,6 +1454,8 @@ struct ResTable::PackageGroup
     // Computed attribute bags, first indexed by the type and second
     // by the entry in that type.
     bag_set***                      bags;
+
+    String16                        skin;
 };
 
 struct ResTable::bag_set
@@ -1749,12 +1772,14 @@ inline ssize_t ResTable::getResourcePackageIndex(uint32_t resID) const
 }
 
 status_t ResTable::add(const void* data, size_t size, void* cookie, bool copyData,
-                       const void* idmap)
+                       const void* idmap, const void* skin)
 {
-    return add(data, size, cookie, NULL, copyData, reinterpret_cast<const Asset*>(idmap));
+    return add(data, size, cookie, NULL, copyData, reinterpret_cast<const Asset*>(idmap),
+               reinterpret_cast<const String16*>(skin));
 }
 
-status_t ResTable::add(Asset* asset, void* cookie, bool copyData, const void* idmap)
+status_t ResTable::add(Asset* asset, void* cookie, bool copyData, const void* idmap,
+                       const void* skin)
 {
     const void* data = asset->getBuffer(true);
     if (data == NULL) {
@@ -1762,7 +1787,8 @@ status_t ResTable::add(Asset* asset, void* cookie, bool copyData, const void* id
         return UNKNOWN_ERROR;
     }
     size_t size = (size_t)asset->getLength();
-    return add(data, size, cookie, asset, copyData, reinterpret_cast<const Asset*>(idmap));
+    return add(data, size, cookie, asset, copyData, reinterpret_cast<const Asset*>(idmap),
+               reinterpret_cast<const String16*>(skin));
 }
 
 status_t ResTable::add(ResTable* src)
@@ -1781,6 +1807,7 @@ status_t ResTable::add(ResTable* src)
         }
         pg->basePackage = srcPg->basePackage;
         pg->typeCount = srcPg->typeCount;
+        pg->updateEnabledPackages();
         mPackageGroups.add(pg);
     }
     
@@ -1790,7 +1817,7 @@ status_t ResTable::add(ResTable* src)
 }
 
 status_t ResTable::add(const void* data, size_t size, void* cookie,
-                       Asset* asset, bool copyData, const Asset* idmap)
+                       Asset* asset, bool copyData, const Asset* idmap, const String16* skin)
 {
     if (!data) return NO_ERROR;
     Header* header = new Header(this);
@@ -1806,6 +1833,9 @@ status_t ResTable::add(const void* data, size_t size, void* cookie,
         }
         memcpy((void*)header->resourceIDMap, idmap_data, idmap_size);
         header->resourceIDMapSize = idmap_size;
+    }
+    if (skin != NULL) {
+        header->skin = *skin;
     }
     mHeaders.add(header);
 
@@ -2031,13 +2061,13 @@ ssize_t ResTable::getResource(uint32_t resID, Res_value* outValue, bool mayBeBag
         LOGW("Bad identifier when getting value for resource number 0x%08x", resID);
         return BAD_INDEX;
     }
-    size_t ip = grp->packages.size();
+    size_t ip = grp->enabledPackages.size();
     while (ip > 0) {
         ip--;
         int T = t;
         int E = e;
 
-        const Package* const package = grp->packages[ip];
+        const Package* const package = grp->enabledPackages[ip];
         if (package->header->resourceIDMap) {
             uint32_t overlayResID = 0x0;
             status_t retval = idmapLookup(package->header->resourceIDMap,
@@ -2301,14 +2331,14 @@ ssize_t ResTable::getBagLocked(uint32_t resID, const bag_entry** outBag,
     ResTable_config bestConfig;
     memset(&bestConfig, 0, sizeof(bestConfig));
 
-    // Now collect all bag attributes from all packages.
-    size_t ip = grp->packages.size();
+    // Now collect all bag attributes from all (enabled) packages.
+    size_t ip = grp->enabledPackages.size();
     while (ip > 0) {
         ip--;
         int T = t;
         int E = e;
 
-        const Package* const package = grp->packages[ip];
+        const Package* const package = grp->enabledPackages[ip];
         if (package->header->resourceIDMap) {
             uint32_t overlayResID = 0x0;
             status_t retval = idmapLookup(package->header->resourceIDMap,
@@ -2499,7 +2529,8 @@ ssize_t ResTable::getBagLocked(uint32_t resID, const bag_entry** outBag,
     return BAD_INDEX;
 }
 
-void ResTable::setParameters(const ResTable_config* params)
+void ResTable::setParameters(const ResTable_config* params, const String16& systemSkin,
+                             const String16& appSkin)
 {
     mLock.lock();
     TABLE_GETENTRY(LOGI("Setting parameters: imsi:%d/%d lang:%c%c cnt:%c%c "
@@ -2521,7 +2552,16 @@ void ResTable::setParameters(const ResTable_config* params)
     for (size_t i=0; i<mPackageGroups.size(); i++) {
         TABLE_NOISY(LOGI("CLEARING BAGS FOR GROUP %d!", i));
         mPackageGroups[i]->clearBagCache();
+
+        if (mPackageGroups[i]->id == 0x01 && mPackageGroups[i]->skin != systemSkin) {
+            mPackageGroups[i]->skin = systemSkin;
+            mPackageGroups[i]->updateEnabledPackages();
+        } else if (mPackageGroups[i]->id == 0x7f && mPackageGroups[i]->skin != appSkin) {
+            mPackageGroups[i]->skin = appSkin;
+            mPackageGroups[i]->updateEnabledPackages();
+        }
     }
+
     mLock.unlock();
 }
 
@@ -4014,6 +4054,7 @@ status_t ResTable::parsePackage(const ResTable_package* const pkg,
         if (err < NO_ERROR) {
             return (mError=err);
         }
+        group->updateEnabledPackages();
     } else {
         LOG_ALWAYS_FATAL("Package id out of range");
         return NO_ERROR;
@@ -4195,7 +4236,7 @@ status_t ResTable::createIdmap(const ResTable& overlay, uint32_t originalCrc, ui
         }
         Vector<uint32_t>& vector = map.editItemAt(mapIndex);
         for (size_t entryIndex = 0; entryIndex < typeConfigs->entryCount; ++entryIndex) {
-            uint32_t resID = (0xff000000 & ((pkg->package->id)<<24))
+            uint32_t resID = pkg_id
                 | (0x00ff0000 & ((typeIndex+1)<<16))
                 | (0x0000ffff & (entryIndex));
             resource_name resName;
@@ -4213,7 +4254,7 @@ status_t ResTable::createIdmap(const ResTable& overlay, uint32_t originalCrc, ui
                                                               overlayPackage.size());
             if (overlayResID != 0) {
                 // overlay package has package ID == 0, use original package's ID instead
-                overlayResID |= pkg_id;
+                overlayResID = pkg_id | (0x00ffffff & overlayResID);
             }
             vector.push(overlayResID);
             if (overlayResID != 0 && offset == -1) {

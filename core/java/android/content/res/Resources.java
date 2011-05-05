@@ -95,6 +95,7 @@ public class Resources {
     
     private CompatibilityInfo mCompatibilityInfo;
     private Display mDefaultDisplay;
+    private String mPackageName;
 
     private static final LongSparseArray<Object> EMPTY_ARRAY = new LongSparseArray<Object>() {
         @Override
@@ -137,7 +138,7 @@ public class Resources {
      */
     public Resources(AssetManager assets, DisplayMetrics metrics,
             Configuration config) {
-        this(assets, metrics, config, (CompatibilityInfo) null);
+        this(assets, metrics, config, (CompatibilityInfo) null, (String) null);
     }
 
     /**
@@ -154,8 +155,17 @@ public class Resources {
      */
     public Resources(AssetManager assets, DisplayMetrics metrics,
             Configuration config, CompatibilityInfo compInfo) {
+        this(assets, metrics, config, compInfo, (String) null);
+    }
+
+    /**
+     * @hide
+     */
+    public Resources(AssetManager assets, DisplayMetrics metrics,
+            Configuration config, CompatibilityInfo compInfo, String packageName) {
         mAssets = assets;
         mMetrics.setToDefaults();
+        mPackageName = packageName;
         if (compInfo == null) {
             mCompatibilityInfo = CompatibilityInfo.DEFAULT_COMPATIBILITY_INFO;
         } else {
@@ -1298,12 +1308,19 @@ public class Resources {
                             == Configuration.HARDKEYBOARDHIDDEN_YES) {
                 keyboardHidden = Configuration.KEYBOARDHIDDEN_SOFT;
             }
+            String systemSkin = null;
+            String appSkin = null;
+            if (mConfiguration.skin != null) {
+                systemSkin = mConfiguration.skin.get("android");
+                appSkin = mConfiguration.skin.get(mPackageName);
+            }
             mAssets.setConfiguration(mConfiguration.mcc, mConfiguration.mnc,
                     locale, mConfiguration.orientation,
                     mConfiguration.touchscreen,
                     (int)(mMetrics.density*160), mConfiguration.keyboard,
                     keyboardHidden, mConfiguration.navigation, width, height,
-                    mConfiguration.screenLayout, mConfiguration.uiMode, sSdkVersion);
+                    mConfiguration.screenLayout, mConfiguration.uiMode, sSdkVersion,
+                    systemSkin, appSkin);
 
             clearDrawableCache(mDrawableCache, configChanges);
             clearDrawableCache(mColorDrawableCache, configChanges);

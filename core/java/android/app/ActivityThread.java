@@ -1199,7 +1199,16 @@ public final class ActivityThread {
 
         //Slog.i(TAG, "Resource: key=" + key + ", display metrics=" + metrics);
         DisplayMetrics metrics = getDisplayMetricsLocked(false);
-        r = new Resources(assets, metrics, getConfiguration(), compInfo);
+        String packageName = null;
+        synchronized (mPackages) {
+            for (WeakReference<LoadedApk> value : mPackages.values()) {
+                if (value.get() != null && resDir.equals(value.get().getResDir())) {
+                    packageName = value.get().getPackageName();
+                    break;
+                }
+            }
+        }
+        r = new Resources(assets, metrics, getConfiguration(), compInfo, packageName);
         if (false) {
             Slog.i(TAG, "Created app resources " + resDir + " " + r + ": "
                     + r.getConfiguration() + " appScale="

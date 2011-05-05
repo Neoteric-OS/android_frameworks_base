@@ -311,6 +311,13 @@ public class ActivityInfo extends ComponentInfo
     public static final int CONFIG_UI_MODE = 0x0200;
     /**
      * Bit in {@link #configChanges} that indicates that the activity
+     * can itself handle changes to the system skin. Set from the
+     * {@link android.R.attr#configChanges} attribute.
+     * @hide
+     */
+    public static final int CONFIG_SKIN = 0x0400;
+    /**
+     * Bit in {@link #configChanges} that indicates that the activity
      * can itself handle changes to the font scaling factor.  Set from the
      * {@link android.R.attr#configChanges} attribute.  This is
      * not a core resource configutation, but a higher-level value, so its

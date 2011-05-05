@@ -1735,9 +1735,9 @@ public:
     ~ResTable();
 
     status_t add(const void* data, size_t size, void* cookie,
-                 bool copyData=false, const void* idmap = NULL);
+                 bool copyData=false, const void* idmap = NULL, const void* skin = NULL);
     status_t add(Asset* asset, void* cookie,
-                 bool copyData=false, const void* idmap = NULL);
+                 bool copyData=false, const void* idmap = NULL, const void* skin = NULL);
     status_t add(ResTable* src);
 
     status_t getError() const;
@@ -1887,7 +1887,8 @@ public:
         package_info*   mPackages[Res_MAXPACKAGE];
     };
 
-    void setParameters(const ResTable_config* params);
+    void setParameters(const ResTable_config* params, const String16& systemSkin,
+                       const String16& appSkin);
     void getParameters(ResTable_config* params) const;
 
     // Retrieve an identifier (which can be passed to getResource)
@@ -2012,7 +2013,7 @@ private:
     struct bag_set;
 
     status_t add(const void* data, size_t size, void* cookie,
-                 Asset* asset, bool copyData, const Asset* idmap);
+                 Asset* asset, bool copyData, const Asset* idmap, const String16* skin);
 
     ssize_t getResourcePackageIndex(uint32_t resID) const;
     ssize_t getEntry(

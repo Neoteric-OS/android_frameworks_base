@@ -97,6 +97,171 @@ namespace {
 
         return path;
     }
+
+    int scanPathForApks(const char* path, Vector<String8>& out)
+    {
+        DIR* dir;
+        struct dirent* dirent;
+
+        if ((dir = opendir(path)) == NULL) {
+            return 1;
+        }
+
+        while ((dirent = readdir(dir)) != NULL) {
+            if (dirent->d_type != DT_REG && dirent->d_type != DT_LNK) {
+                continue;
+            }
+            if (strlen(dirent->d_name) < 4) {
+                continue;
+            }
+            const char* dot = strrchr(dirent->d_name, '.');
+            if (dot == NULL || strcmp(dot, ".apk") != 0) {
+                continue;
+            }
+            String8 apkPath(path);
+            apkPath.appendPath(dirent->d_name);
+            out.add(apkPath);
+        }
+
+        (void)closedir(dir);
+
+        return 0;
+    }
+
+    bool fastForwardToStartTag(ResXMLParser& parser, const String16& tag)
+    {
+        int depth = 0;
+        ResXMLParser::event_code_t type;
+        while ((type = parser.next()) != ResXMLParser::END_DOCUMENT) {
+            size_t len;
+            if (type == ResXMLParser::START_TAG) {
+                ++depth;
+                if (tag == String16(parser.getElementName(&len))) {
+                    return true;
+                }
+            } else if (type == ResXMLParser::END_TAG) {
+                if (--depth == -1) {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+    String16 readPackageName(const char* path)
+    {
+        String16 retval;
+        ZipFileRO zip;
+        ZipEntryRO entry;
+        size_t size;
+        char* buf;
+
+        if (zip.open(path) != NO_ERROR) {
+            goto out;
+        }
+        if ((entry = zip.findEntryByName("AndroidManifest.xml")) == NULL) {
+            goto out;
+        }
+        if (!zip.getEntryInfo(entry, NULL, &size, NULL, NULL, NULL, NULL)) {
+            goto out;
+        }
+        if ((buf = (char*)malloc(size)) == NULL) {
+            goto out;
+        }
+        if (!zip.uncompressEntry(entry, buf)) {
+            goto free;
+        }
+
+        {
+            ResXMLTree parser(buf, size, false);
+            if (!fastForwardToStartTag(parser, String16("manifest"))) {
+                goto free;
+            }
+            const size_t N = parser.getAttributeCount();
+            for (size_t i = 0; i < N; ++i) {
+                size_t len;
+                const uint16_t* key16 = parser.getAttributeName(i, &len);
+                const String16 key(key16, len);
+                if (key == String16("package")) {
+                    const uint16_t* value16 = parser.getAttributeStringValue(i, &len);
+                    const String16 value(value16, len);
+                    retval = value;
+                }
+            }
+        }
+
+free:
+        free(buf);
+out:
+        return retval;
+    }
+
+    // returns 1 if path is an apk which contains a skin targeting packageName,
+    // 2 if the apk contains an overlay targeting packageName, 0 otherwise
+    int isSkinTargetingPackage(const char* path, const String16& packageName)
+    {
+        int retval = 0;
+        int type = 1;
+        ZipFileRO zip;
+        ZipEntryRO entry;
+        size_t size;
+        char* buf;
+
+        if (zip.open(path) != NO_ERROR) {
+            goto out;
+        }
+        if ((entry = zip.findEntryByName("AndroidManifest.xml")) == NULL) {
+            goto out;
+        }
+        if (!zip.getEntryInfo(entry, NULL, &size, NULL, NULL, NULL, NULL)) {
+            goto out;
+        }
+        if ((buf = (char*)malloc(size)) == NULL) {
+            goto out;
+        }
+        if (!zip.uncompressEntry(entry, buf)) {
+            goto free;
+        }
+
+        {
+            ResXMLTree parser(buf, size, false);
+            if (!fastForwardToStartTag(parser, String16("manifest"))) {
+                goto free;
+            }
+            if (!fastForwardToStartTag(parser, String16("skin"))) {
+                // skin tag not found, search for overlay tag instead
+                parser.restart();
+                if (!fastForwardToStartTag(parser, String16("manifest"))) {
+                    goto free;
+                }
+                if (!fastForwardToStartTag(parser, String16("overlay"))) {
+                    goto free;
+                }
+                type = 2;
+            }
+            if (!fastForwardToStartTag(parser, String16("target"))) {
+                goto free;
+            }
+            const size_t N = parser.getAttributeCount();
+            for (size_t i = 0; i < N; ++i) {
+                size_t len;
+                const uint16_t* key16 = parser.getAttributeName(i, &len);
+                const String16 key(key16, len);
+                if (key == String16("name")) {
+                    const uint16_t* value16 = parser.getAttributeStringValue(i, &len);
+                    const String16 value(value16, len);
+                    if (value == packageName) {
+                        retval = type;
+                    }
+                }
+            }
+        }
+
+free:
+        free(buf);
+out:
+        return retval;
+    }
 }
 
 /*
@@ -113,6 +278,7 @@ int32_t AssetManager::getGlobalCount()
 AssetManager::AssetManager(CacheMode cacheMode)
     : mLocale(NULL), mVendor(NULL),
       mResources(NULL), mConfig(new ResTable_config),
+      mSystemSkin(String16()), mAppSkin(String16()),
       mCacheMode(cacheMode), mCacheValid(false)
 {
     int count = android_atomic_inc(&gCount)+1;
@@ -176,18 +342,24 @@ bool AssetManager::addAssetPath(const String8& path, void** cookie)
         *cookie = (void*)mAssetPaths.size();
     }
 
-    // add overlay packages for /system/framework; apps are handled by the
-    // (Java) package manager
-    if (strncmp(path.string(), "/system/framework/", 18) == 0) {
-        // When there is an environment variable for /vendor, this
-        // should be changed to something similar to how ANDROID_ROOT
-        // and ANDROID_DATA are used in this file.
-        String8 overlayPath("/vendor/overlay/framework/");
-        overlayPath.append(path.getPathLeaf());
-        if (TEMP_FAILURE_RETRY(access(overlayPath.string(), R_OK)) == 0) {
+    String16 packageName = readPackageName(path.string());
+    Vector<String8> apkPaths;
+    if (scanPathForApks("/system/app", apkPaths) != 0) {
+        apkPaths.clear();
+    }
+    const int N = apkPaths.size();
+    for (int i = 0; i < N; ++i) {
+        const String8 overlayPath = apkPaths[i];
+        int type;
+        if ((type = isSkinTargetingPackage(overlayPath.string(), packageName)) != 0) {
             asset_path oap;
             oap.path = overlayPath;
             oap.type = ::getFileType(overlayPath.string());
+            if (type == 1) {
+                oap.skin = readPackageName(overlayPath);
+            } else {
+                oap.skin = String16();
+            }
             bool addOverlay = (oap.type == kFileTypeRegular); // only .apks supported as overlay
             if (addOverlay) {
                 oap.idmap = idmapPathForPackagePath(overlayPath);
@@ -197,9 +369,12 @@ bool AssetManager::addAssetPath(const String8& path, void** cookie)
                 }
             }
             if (addOverlay) {
+                LOGD("%s: adding %s package %s (skin name=%s)\n", ap.path.string(),
+                     oap.skin.size() == 0 ? "overlay" : "skin", oap.path.string(),
+                     String8(oap.skin).string());
                 mAssetPaths.add(oap);
             } else {
-                LOGW("failed to add overlay package %s\n", overlayPath.string());
+                LOGW("failed to add skin or overlay package %s\n", overlayPath.string());
             }
         }
     }
@@ -423,10 +598,13 @@ void AssetManager::setVendor(const char* vendor)
     mVendor = strdupNew(vendor);
 }
 
-void AssetManager::setConfiguration(const ResTable_config& config, const char* locale)
+void AssetManager::setConfiguration(const ResTable_config& config, const char* locale,
+                                    const char* systemSkin, const char* appSkin)
 {
     AutoMutex _l(mLock);
     *mConfig = config;
+    mSystemSkin = String16(systemSkin != NULL ? systemSkin : "");
+    mAppSkin = String16(appSkin != NULL ? appSkin : "");
     if (locale) {
         setLocaleLocked(locale);
     } else if (config.language[0] != 0) {
@@ -649,7 +827,8 @@ const ResTable* AssetManager::getResTable(bool required) const
                     // can quickly copy it out for others.
                     LOGV("Creating shared resources for %s", ap.path.string());
                     sharedRes = new ResTable();
-                    sharedRes->add(ass, (void*)(i+1), false, idmap);
+                    sharedRes->add(ass, (void*)(i+1), false, idmap,
+                                   ap.skin.size() > 0 ? &ap.skin : NULL);
                     sharedRes = const_cast<AssetManager*>(this)->
                         mZipSet.setZipResourceTable(ap.path, sharedRes);
                 }
@@ -673,7 +852,7 @@ const ResTable* AssetManager::getResTable(bool required) const
                 rt->add(sharedRes);
             } else {
                 LOGV("Parsing resources for %s", ap.path.string());
-                rt->add(ass, (void*)(i+1), !shared, idmap);
+                rt->add(ass, (void*)(i+1), !shared, idmap, ap.skin.size() > 0 ? &ap.skin : NULL);
             }
 
             if (!shared) {
@@ -686,6 +865,7 @@ const ResTable* AssetManager::getResTable(bool required) const
     if (!rt) {
         mResources = rt = new ResTable();
     }
+    updateResourceParamsLocked();
     return rt;
 }
 
@@ -711,7 +891,7 @@ void AssetManager::updateResourceParamsLocked() const
     }
     mConfig->size = sizeof(*mConfig);
 
-    res->setParameters(mConfig);
+    res->setParameters(mConfig, mSystemSkin, mAppSkin);
 }
 
 Asset* AssetManager::openIdmapLocked(const struct asset_path& ap) const

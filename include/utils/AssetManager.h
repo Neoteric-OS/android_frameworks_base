@@ -127,7 +127,8 @@ public:
     /*
      * Choose screen orientation for resources values returned.
      */
-    void setConfiguration(const ResTable_config& config, const char* locale = NULL);
+    void setConfiguration(const ResTable_config& config, const char* locale = NULL,
+                          const char* systemSkin = NULL, const char* appSkin = NULL);
 
     void getConfiguration(ResTable_config* outConfig) const;
 
@@ -223,6 +224,7 @@ private:
         String8 path;
         FileType type;
         String8 idmap;
+        String16 skin;
     };
 
     Asset* openInPathLocked(const char* fileName, AccessMode mode,
@@ -353,6 +355,8 @@ private:
 
     mutable ResTable* mResources;
     ResTable_config* mConfig;
+    String16         mSystemSkin;
+    String16         mAppSkin;
 
     /*
      * Cached data for "loose" files.  This lets us avoid poking at the

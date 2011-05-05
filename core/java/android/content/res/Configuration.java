@@ -19,7 +19,9 @@ package android.content.res;
 import android.content.pm.ActivityInfo;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -204,6 +206,22 @@ public final class Configuration implements Parcelable, Comparable<Configuration
     public int uiMode;
 
     /**
+     * @hide
+     */
+    public static final HashMap<String, String> SKIN_UNDEFINED = null;
+
+    /**
+     * Currently enabled skins.
+     *
+     * Keys: package names.
+     * Values: enabled skin for key package.
+     * The keys contains an entry for the system skin as well as entries for application skins.
+     *
+     * @hide
+     */
+    public HashMap<String, String> skin = new HashMap<String, String>();
+
+    /**
      * @hide Internal book-keeping.
      */
     public int seq;
@@ -220,6 +238,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
      * Makes a deep copy suitable for modification.
      */
     public Configuration(Configuration o) {
+        setToDefaults();
         setTo(o);
     }
 
@@ -240,11 +259,12 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         orientation = o.orientation;
         screenLayout = o.screenLayout;
         uiMode = o.uiMode;
+        createDeepSkinCopy(o.skin);
         seq = o.seq;
     }
     
     public String toString() {
-        StringBuilder sb = new StringBuilder(128);
+        StringBuilder sb = new StringBuilder(256);
         sb.append("{ scale=");
         sb.append(fontScale);
         sb.append(" imsi=");
@@ -271,6 +291,8 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         sb.append(screenLayout);
         sb.append(" uiMode=");
         sb.append(uiMode);
+        sb.append(" skin=");
+        sb.append(skin);
         if (seq != 0) {
             sb.append(" seq=");
             sb.append(seq);
@@ -296,6 +318,10 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         orientation = ORIENTATION_UNDEFINED;
         screenLayout = SCREENLAYOUT_SIZE_UNDEFINED;
         uiMode = UI_MODE_TYPE_UNDEFINED;
+        if (skin != null) {
+            skin.clear();
+        }
+        skin = SKIN_UNDEFINED;
         seq = 0;
     }
 
@@ -389,11 +415,13 @@ public final class Configuration implements Parcelable, Comparable<Configuration
                         | (delta.uiMode&UI_MODE_NIGHT_MASK);
             }
         }
-        
+        if (delta.skin != SKIN_UNDEFINED && !delta.skin.equals(skin)) {
+            changed |= ActivityInfo.CONFIG_SKIN;
+            createDeepSkinCopy(delta.skin);
+        }
         if (delta.seq != 0) {
             seq = delta.seq;
         }
-        
         return changed;
     }
 
@@ -418,7 +446,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
      * {@link android.content.pm.ActivityInfo#CONFIG_NAVIGATION
      * PackageManager.ActivityInfo.CONFIG_NAVIGATION},
      * {@link android.content.pm.ActivityInfo#CONFIG_ORIENTATION
-     * PackageManager.ActivityInfo.CONFIG_ORIENTATION}, or
+     * PackageManager.ActivityInfo.CONFIG_ORIENTATION},
      * {@link android.content.pm.ActivityInfo#CONFIG_SCREEN_LAYOUT
      * PackageManager.ActivityInfo.CONFIG_SCREEN_LAYOUT}.
      */
@@ -472,6 +500,9 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         if (delta.uiMode != (UI_MODE_TYPE_UNDEFINED|UI_MODE_NIGHT_UNDEFINED)
                 && uiMode != delta.uiMode) {
             changed |= ActivityInfo.CONFIG_UI_MODE;
+        }
+        if (delta.skin != SKIN_UNDEFINED && !delta.skin.equals(skin)) {
+            changed |= ActivityInfo.CONFIG_SKIN;
         }
         
         return changed;
@@ -554,6 +585,21 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         dest.writeInt(orientation);
         dest.writeInt(screenLayout);
         dest.writeInt(uiMode);
+
+        if (skin == SKIN_UNDEFINED) {
+            dest.writeInt(0);
+        } else {
+            dest.writeInt(1);
+            StringBuilder sb = new StringBuilder();
+            for (HashMap.Entry<String, String> e : skin.entrySet()) {
+                sb.append(e.getKey());
+                sb.append(":");
+                sb.append(e.getValue());
+                sb.append(":");
+            }
+            dest.writeString(sb.toString());
+        }
+
         dest.writeInt(seq);
     }
 
@@ -575,6 +621,21 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         orientation = source.readInt();
         screenLayout = source.readInt();
         uiMode = source.readInt();
+
+        int skinAvailable = source.readInt();
+        if (skinAvailable == 0) {
+            skin = null;
+        } else {
+            skin = new HashMap<String, String>();
+            String skinString = source.readString();
+            String[] entries = skinString.split(":");
+            if (entries.length % 2 == 0) {
+                for (int i = 0; i < entries.length; i += 2) {
+                    skin.put(entries[i], entries[i + 1]);
+                }
+            }
+        }
+
         seq = source.readInt();
     }
     
@@ -635,7 +696,14 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         n = this.screenLayout - that.screenLayout;
         if (n != 0) return n;
         n = this.uiMode - that.uiMode;
-        //if (n != 0) return n;
+        if (n != 0) return n;
+        if (this.skin == null && that.skin != null)
+            return -1;
+        if (this.skin != null && that.skin == null)
+            return -1;
+        if (this.skin != null && that.skin != null && !this.skin.equals(that.skin)) {
+            return -1;
+        }
         return n;
     }
 
@@ -659,6 +727,39 @@ public final class Configuration implements Parcelable, Comparable<Configuration
                 + this.touchscreen
                 + this.keyboard + this.keyboardHidden + this.hardKeyboardHidden
                 + this.navigation + this.navigationHidden
-                + this.orientation + this.screenLayout + this.uiMode;
+                + this.orientation + this.screenLayout + this.uiMode
+                + (this.skin != null ? this.skin.hashCode() : 0);
+    }
+
+    private void createDeepSkinCopy(HashMap<String, String> o) {
+        if (o == null) {
+            skin = null;
+        } else {
+            if (skin == null) {
+                skin = new HashMap<String, String>();
+            } else {
+                skin.clear();
+            }
+            for (HashMap.Entry<String, String> e : o.entrySet()) {
+                skin.put(e.getKey(), e.getValue());
+            }
+        }
+    }
+
+    /**
+     * @hide
+     */
+    public void setSkin(String packageName, String skinName)
+    {
+        if (skin == null) {
+            skin = new HashMap<String, String>();
+        }
+        if (TextUtils.isEmpty(skinName)) {
+            if (skin.containsKey(packageName)) {
+                skin.remove(packageName);
+            }
+        } else {
+            skin.put(packageName, skinName);
+        }
     }
 }

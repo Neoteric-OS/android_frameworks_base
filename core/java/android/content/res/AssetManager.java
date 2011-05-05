@@ -645,14 +645,14 @@ public final class AssetManager {
     public native final String[] getLocales();
 
     /**
-     * Change the configuation used when retrieving resources.  Not for use by
+     * Change the configuration used when retrieving resources.  Not for use by
      * applications.
      * {@hide}
      */
     public native final void setConfiguration(int mcc, int mnc, String locale,
             int orientation, int touchscreen, int density, int keyboard,
             int keyboardHidden, int navigation, int screenWidth, int screenHeight,
-            int screenLayout, int uiMode, int majorVersion);
+            int screenLayout, int uiMode, int majorVersion, String systemSkin, String appSkin);
 
     /**
      * Retrieve the resource identifier for the given resource name.
