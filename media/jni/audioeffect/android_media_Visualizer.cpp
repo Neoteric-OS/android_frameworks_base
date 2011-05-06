@@ -104,6 +104,9 @@ class visualizerJniStorage {
     }
 
     ~visualizerJniStorage() {
+        JNIEnv *env = AndroidRuntime::getJNIEnv();
+        env->DeleteGlobalRef(mCallbackData.visualizer_class);
+        env->DeleteGlobalRef(mCallbackData.visualizer_ref);
     }
 };
 

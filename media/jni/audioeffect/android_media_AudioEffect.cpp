@@ -64,6 +64,9 @@ class AudioEffectJniStorage {
     }
 
     ~AudioEffectJniStorage() {
+        JNIEnv *env = AndroidRuntime::getJNIEnv();
+        env->DeleteGlobalRef(mCallbackData.audioEffect_class);
+        env->DeleteGlobalRef(mCallbackData.audioEffect_ref);
     }
 
 };
