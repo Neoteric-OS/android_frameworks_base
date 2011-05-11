@@ -981,6 +981,13 @@ public interface CommandsInterface {
     void iccIO (int command, int fileid, String path, int p1, int p2, int p3,
             String data, String pin2, Message response);
 
+    void iccExchangeAPDU(int cla, int command, int channel, int p1, int p2,
+            int p3, String data, Message response);
+
+    void iccOpenChannel(String AID, Message response);
+
+    void iccCloseChannel(int channel, Message response);
+
     /**
      * (AsyncResult)response.obj).result is an int[] with element [0] set to
      * 1 for "CLIP is provisioned", and 0 for "CLIP is not provisioned".

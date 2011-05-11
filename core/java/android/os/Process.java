@@ -68,6 +68,11 @@ public class Process {
     public static final int PHONE_UID = 1001;
 
     /**
+     * Defines the UID/GID under which the smartcard code runs.
+     */
+    public static final int SMARTCARD_UID = 1028;
+
+    /**
      * Defines the UID/GID for the user shell.
      * @hide
      */

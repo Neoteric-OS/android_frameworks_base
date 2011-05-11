@@ -53,6 +53,8 @@ public interface RILConstants {
     int ILLEGAL_SIM_OR_ME = 15;               /* network selection failure due
                                                  to wrong SIM/ME and no
                                                  retries needed */
+    int MISSING_RESOURCE = 16;
+    int NO_SUCH_ELEMENT = 17;
 
     /* NETWORK_MODE_* See ril.h RIL_REQUEST_SET_PREFERRED_NETWORK_TYPE */
     int NETWORK_MODE_WCDMA_PREF     = 0; /* GSM/WCDMA (WCDMA preferred) */
@@ -167,6 +169,10 @@ cat include/telephony/ril.h | \
     int RIL_REQUEST_SEND_SMS_EXPECT_MORE = 26;
     int RIL_REQUEST_SETUP_DATA_CALL = 27;
     int RIL_REQUEST_SIM_IO = 28;
+    int RIL_REQUEST_SIM_TRANSMIT_BASIC = 104;
+    int RIL_REQUEST_SIM_OPEN_CHANNEL = 105;
+    int RIL_REQUEST_SIM_CLOSE_CHANNEL = 106;
+    int RIL_REQUEST_SIM_TRANSMIT_CHANNEL = 107;
     int RIL_REQUEST_SEND_USSD = 29;
     int RIL_REQUEST_CANCEL_USSD = 30;
     int RIL_REQUEST_GET_CLIR = 31;
