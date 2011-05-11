@@ -84,6 +84,9 @@ public abstract class IccCard {
     private static final int EVENT_CHANGE_ICC_PASSWORD_DONE = 9;
     private static final int EVENT_QUERY_FACILITY_FDN_DONE = 10;
     private static final int EVENT_CHANGE_FACILITY_FDN_DONE = 11;
+    private static final int EVENT_EXCHANGE_APDU_DONE = 12;
+    private static final int EVENT_OPEN_CHANNEL_DONE = 13;
+    private static final int EVENT_CLOSE_CHANNEL_DONE = 14;
 
     /*
       UNKNOWN is a transient state, for example, after uesr inputs ICC pin under
@@ -356,6 +359,21 @@ public abstract class IccCard {
 
      }
 
+    public void exchangeAPDU(int cla, int command, int channel, int p1, int p2,
+            int p3, String data, Message onComplete) {
+        mPhone.mCM.iccExchangeAPDU(cla, command, channel, p1, p2, p3, data,
+                mHandler.obtainMessage(EVENT_EXCHANGE_APDU_DONE, onComplete));
+    }
+
+    public void openLogicalChannel(String AID, Message onComplete) {
+        mPhone.mCM.iccOpenChannel(AID,
+                mHandler.obtainMessage(EVENT_OPEN_CHANNEL_DONE, onComplete));
+    }
+
+    public void closeLogicalChannel(int channel, Message onComplete) {
+        mPhone.mCM.iccCloseChannel(channel,
+                mHandler.obtainMessage(EVENT_CLOSE_CHANNEL_DONE, onComplete));
+    }
 
     /**
      * Returns service provider name stored in ICC card.
@@ -586,6 +604,18 @@ public abstract class IccCard {
                     }
                     AsyncResult.forMessage(((Message)ar.userObj)).exception
                                                         = ar.exception;
+                    ((Message)ar.userObj).sendToTarget();
+                    break;
+                case EVENT_EXCHANGE_APDU_DONE:
+                case EVENT_OPEN_CHANNEL_DONE:
+                case EVENT_CLOSE_CHANNEL_DONE:
+                    ar = (AsyncResult)msg.obj;
+                    if(ar.exception != null) {
+                        Log.e(mLogTag, "Error in SIM access with exception"
+                            + ar.exception);
+                    }
+                    AsyncResult.forMessage(((Message)ar.userObj),
+                            ar.result, ar.exception);
                     ((Message)ar.userObj).sendToTarget();
                     break;
                 default:

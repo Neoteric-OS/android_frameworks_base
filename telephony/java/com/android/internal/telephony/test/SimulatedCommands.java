@@ -1056,6 +1056,19 @@ public final class SimulatedCommands extends BaseCommands
         unimplemented(result);
     }
 
+    public void iccExchangeAPDU (int cla, int command, int channel, int p1,
+                         int p2, int p3, String data, Message result) {
+        unimplemented(result);
+    }
+
+    public void iccOpenChannel(String AID, Message result) {
+        unimplemented(result);
+    }
+
+    public void iccCloseChannel(int channel, Message result) {
+        unimplemented(result);
+    }
+
     /**
      * (AsyncResult)response.obj).result is an int[] with element [0] set to
      * 1 for "CLIP is provisioned", and 0 for "CLIP is not provisioned".
