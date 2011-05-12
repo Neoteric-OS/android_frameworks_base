@@ -548,7 +548,7 @@ public final class GestureUtils {
         float rightside = (float) Math.sqrt(Math.pow(value, 2) - b);
         float lambda1 = -value + rightside;
         float lambda2 = -value - rightside;
-        if (lambda1 == lambda2) {
+        if (Float.compare(lambda1, lambda2) == 0) {
             targetVector[0] = 0;
             targetVector[1] = 0;
         } else {
