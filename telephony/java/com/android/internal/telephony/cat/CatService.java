@@ -121,6 +121,7 @@ public class CatService extends Handler implements AppInterface {
     // Protects singleton instance lazy initialization.
     private static final Object sInstanceLock = new Object();
     private static CatService sInstance;
+    private static HandlerThread mHandlerThread;
     private CommandsInterface mCmdIf;
     private Context mContext;
     private CatCmdMessage mCurrntCmd = null;
@@ -179,13 +180,18 @@ public class CatService extends Handler implements AppInterface {
     }
 
     public void dispose() {
-        mIccRecords.unregisterForRecordsLoaded(this);
-        mCmdIf.unSetOnCatSessionEnd(this);
-        mCmdIf.unSetOnCatProactiveCmd(this);
-        mCmdIf.unSetOnCatEvent(this);
-        mCmdIf.unSetOnCatCallSetUp(this);
+        synchronized (sInstanceLock) {
+            mIccRecords.unregisterForRecordsLoaded(this);
+            mCmdIf.unSetOnCatSessionEnd(this);
+            mCmdIf.unSetOnCatProactiveCmd(this);
+            mCmdIf.unSetOnCatEvent(this);
+            mCmdIf.unSetOnCatCallSetUp(this);
+            sInstance = null;
+            mHandlerThread.quit();
+            mHandlerThread = null;
 
-        this.removeCallbacksAndMessages(null);
+            this.removeCallbacksAndMessages(null);
+        }
     }
 
     protected void finalize() {
@@ -523,8 +529,8 @@ public class CatService extends Handler implements AppInterface {
                         || ic == null) {
                     return null;
                 }
-                HandlerThread thread = new HandlerThread("Cat Telephony service");
-                thread.start();
+                mHandlerThread = new HandlerThread("Cat Telephony service");
+                mHandlerThread.start();
                 sInstance = new CatService(ci, ir, context, fh, ic);
                 CatLog.d(sInstance, "NEW sInstance");
             } else if ((ir != null) && (mIccRecords != ir)) {
