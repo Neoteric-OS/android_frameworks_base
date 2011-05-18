@@ -118,7 +118,7 @@ extern "C"
         L_sum = 32-bit sum of L_var1 and L_var2 (Word32)
     */
 
-    __inline Word32 L_add(register Word32 L_var1, register Word32 L_var2, Flag *pOverflow)
+    static inline Word32 L_add(register Word32 L_var1, register Word32 L_var2, Flag *pOverflow)
     {
         register Word32 ra = L_var1;
         register Word32 rb = L_var2;
@@ -155,7 +155,7 @@ extern "C"
      Returns:
         L_diff = 32-bit difference of L_var1 and L_var2 (Word32)
     */
-    __inline Word32 L_sub(Word32 L_var1, Word32 L_var2, Flag *pOverflow)
+    static inline Word32 L_sub(Word32 L_var1, Word32 L_var2, Flag *pOverflow)
 {
         register Word32 ra = L_var1;
         register Word32 rb = L_var2;
@@ -238,7 +238,7 @@ extern "C"
         L_product = 32-bit product of L_var1 and L_var2 (Word32)
     */
 
-    __inline Word32 L_mult(Word16 var1, Word16 var2, Flag *pOverflow)
+    static inline Word32 L_mult(Word16 var1, Word16 var2, Flag *pOverflow)
 {
         register Word32 ra = var1;
         register Word32 rb = var2;
@@ -283,7 +283,7 @@ extern "C"
      Returns:
         result = 32-bit result of L_var3 - (var1 * var2)
     */
-    __inline Word32 L_msu(Word32 L_var3, Word16 var1, Word16 var2, Flag *pOverflow)
+    static inline Word32 L_msu(Word32 L_var3, Word16 var1, Word16 var2, Flag *pOverflow)
 {
         register Word32 ra = L_var3;
         register Word32 rb = var1;
@@ -474,7 +474,7 @@ extern "C"
      Returns:
         product = 16-bit limited product of var1 and var2 (Word16)
     */
-    __inline Word16 mult(Word16 var1, Word16 var2, Flag *pOverflow)
+    static inline Word16 mult(Word16 var1, Word16 var2, Flag *pOverflow)
 {
         register Word32 ra = var1;
         register Word32 rb = var2;
@@ -498,7 +498,7 @@ extern "C"
         return ((Word16) product);
     }
 
-    __inline Word32 amrnb_fxp_mac_16_by_16bb(Word32 L_var1, Word32 L_var2, Word32 L_var3)
+    static inline Word32 amrnb_fxp_mac_16_by_16bb(Word32 L_var1, Word32 L_var2, Word32 L_var3)
 {
         register Word32 ra = L_var1;
         register Word32 rb = L_var2;
@@ -512,7 +512,7 @@ extern "C"
         return (result);
     }
 
-    __inline Word32 amrnb_fxp_msu_16_by_16bb(Word32 L_var1, Word32 L_var2, Word32 L_var3)
+    static inline Word32 amrnb_fxp_msu_16_by_16bb(Word32 L_var1, Word32 L_var2, Word32 L_var3)
 {
         register Word32 ra = L_var1;
         register Word32 rb = L_var2;
