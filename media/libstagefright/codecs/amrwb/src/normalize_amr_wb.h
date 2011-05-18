@@ -91,7 +91,7 @@ static inline int16 normalize_amr_wb(int32 x)
     register int32 ra = x;
 
 
-    asm volatile(
+    __asm__ volatile(
         "clz %0, %1\n\t"
         "sub %0, %0, #1"
     : "=&r*i"(y)

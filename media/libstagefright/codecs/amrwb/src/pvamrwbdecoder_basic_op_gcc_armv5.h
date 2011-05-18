@@ -63,7 +63,7 @@ extern "C"
         register int32 ra = (int32)var1;
         register int32 rb = (int32)var2;
 
-        asm volatile(
+        __asm__ volatile(
             "mov  %0, %2, lsl #16\n"
             "mov  %1, %3, lsl #16\n"
             "qsub %0, %0, %1\n"
@@ -84,7 +84,7 @@ extern "C"
         register int32 ra = (int32)var1;
         register int32 rb = (int32)var2;
 
-        asm volatile(
+        __asm__ volatile(
             "mov  %0, %2, lsl #16\n"
             "mov  %1, %3, lsl #16\n"
             "qadd %0, %0, %1\n"
@@ -107,7 +107,7 @@ extern "C"
         register int32 rc = (int32)n;
 
 
-        asm volatile(
+        __asm__ volatile(
             "smulbb %0, %2, %4\n"
             "smulbb %1, %3, %4\n"
             "add    %0, %0, %1, asr #15\n"
@@ -128,7 +128,7 @@ extern "C"
         register int32 ra = L_var1;
         register int32 rb = L_var2;
 
-        asm volatile(
+        __asm__ volatile(
             "qsub %0, %1, %2"
     : "=&r*i"(L_var_out)
                     : "r"(ra),
@@ -143,7 +143,7 @@ extern "C"
         register int32 ra = L_var1;
         register int32 rb = L_var2;
 
-        asm volatile(
+        __asm__ volatile(
             "qadd %0, %1, %2"
     : "=&r*i"(L_var_out)
                     : "r"(ra),
@@ -159,7 +159,7 @@ extern "C"
         register int32 rb = (int32)var2;
         register int32 rc = L_var3;
 
-        asm volatile(
+        __asm__ volatile(
             "smulbb %0, %1, %2\n"
             "qdsub %0, %3, %0"
     : "=&r*i"(L_var_out)
@@ -178,7 +178,7 @@ extern "C"
         register int32 rb = (int32)var2;
         register int32 rc = L_var3;
 
-        asm volatile(
+        __asm__ volatile(
             "smulbb %0, %1, %2\n"
             "qdadd %0, %3, %0"
     : "=&r*i"(L_var_out)
@@ -196,7 +196,7 @@ extern "C"
         register int32 ra = (int32)var1;
         register int32 rb = (int32)var2;
 
-        asm volatile(
+        __asm__ volatile(
             "smulbb %0, %1, %2\n"
             "qadd %0, %0, %0"
     : "=&r*i"(L_var_out)
@@ -213,7 +213,7 @@ extern "C"
         register int32 ra = (int32)var1;
         register int32 rb = (int32)var2;
 
-        asm volatile(
+        __asm__ volatile(
             "smulbb %0, %1, %2\n"
             "mov %0, %0, asr #15"
     : "=&r*i"(L_var_out)
@@ -229,7 +229,7 @@ extern "C"
         register int32 ra = (int32)L_var1;
         register int32 rb = (int32)0x00008000L;
 
-        asm volatile(
+        __asm__ volatile(
             "qadd %0, %1, %2\n"
             "mov %0, %0, asr #16"
     : "=&r*i"(L_var_out)
@@ -244,7 +244,7 @@ extern "C"
         register int32 ra = (int32)L_var1;
         register int32 rb = (int32)0x00008000L;
 
-        asm volatile(
+        __asm__ volatile(
             "qadd %0, %1, %1\n"
             "qadd %0, %0, %2\n"
             "mov %0, %0, asr #16"
@@ -262,7 +262,7 @@ extern "C"
         register int32 rb = (int32)L_var2;
         register int32 rc = (int32)L_add;
 
-        asm volatile(
+        __asm__ volatile(
             "smlabb %0, %1, %2, %3"
     : "=&r*i"(tmp)
                     : "r"(ra),
@@ -277,7 +277,7 @@ extern "C"
         register int32 ra = (int32)L_var1;
         register int32 rb = (int32)L_var2;
 
-        asm volatile(
+        __asm__ volatile(
             "smulbb %0, %1, %2"
     : "=&r*i"(tmp)
                     : "r"(ra),
@@ -295,7 +295,7 @@ extern "C"
         register int32 ra = (int32)L_var1;
         register int32 rb = (int32)L_var2;
 
-        asm volatile(
+        __asm__ volatile(
             "smulwb %0, %1, %2"
     : "=&r*i"(tmp)
                     : "r"(ra),
