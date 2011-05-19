@@ -781,6 +781,17 @@ sp<MetaData> MP3Extractor::getMetaData() {
 bool SniffMP3(
         const sp<DataSource> &source, String8 *mimeType,
         float *confidence, sp<AMessage> *meta) {
+   
+    // Check if the file is of .wav and has a WAV RIFF header and could have mp3 codec.
+    // In this case, WAV Extractor would return higher confidence level,
+    // resulting in wrong decoder selection.
+    bool IsWAVheader = false;
+    char WAVheader[12];
+    if (!source->readAt(0, WAVheader, sizeof(WAVheader)) < (ssize_t)sizeof(WAVheader)) {
+       if (! (memcmp(WAVheader, "RIFF", 4) || memcmp(&WAVheader[8], "WAVE", 4)) ) {
+          IsWAVheader = true;
+       }
+    }
     off_t pos = 0;
     uint32_t header;
     if (!Resync(source, 0, &pos, &header)) {
@@ -792,7 +803,16 @@ bool SniffMP3(
     (*meta)->setInt32("header", header);
 
     *mimeType = MEDIA_MIMETYPE_AUDIO_MPEG;
-    *confidence = 0.2f;
+    if (IsWAVheader)
+    {
+      LOGE("Inside MP3Sniff and found WAV hence returning higher confidence than WAV");
+      *confidence = 0.4f;
+      IsWAVheader = false;
+    }
+    else
+    {
+      *confidence = 0.2f;
+    }
 
     return true;
 }
