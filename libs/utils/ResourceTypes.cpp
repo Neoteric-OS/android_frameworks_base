@@ -4195,7 +4195,7 @@ status_t ResTable::createIdmap(const ResTable& overlay, uint32_t originalCrc, ui
         }
         Vector<uint32_t>& vector = map.editItemAt(mapIndex);
         for (size_t entryIndex = 0; entryIndex < typeConfigs->entryCount; ++entryIndex) {
-            uint32_t resID = (0xff000000 & ((pkg->package->id)<<24))
+            uint32_t resID = pkg_id
                 | (0x00ff0000 & ((typeIndex+1)<<16))
                 | (0x0000ffff & (entryIndex));
             resource_name resName;
@@ -4213,8 +4213,7 @@ status_t ResTable::createIdmap(const ResTable& overlay, uint32_t originalCrc, ui
                                                               overlayPackage.string(),
                                                               overlayPackage.size());
             if (overlayResID != 0) {
-                // overlay package has package ID == 0, use original package's ID instead
-                overlayResID |= pkg_id;
+                overlayResID = pkg_id | (0x00ffffff & overlayResID);
             }
             vector.push(overlayResID);
             if (overlayResID != 0 && offset == -1) {
