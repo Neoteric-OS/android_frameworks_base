@@ -113,3 +113,4 @@ int dexopt(const char *apk_path, uid_t uid, int is_public);
 int movefiles();
 int linklib(const char* target, const char* source);
 int unlinklib(const char* libPath);
+int idmap(const char *orig_path, const char *skin_path, uid_t uid);

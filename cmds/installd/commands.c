@@ -524,14 +524,11 @@ static void run_dexopt(int zip_fd, int odex_fd, const char* input_file_name,
     LOGE("execl(%s) failed: %s\n", DEX_OPT_BIN, strerror(errno));
 }
 
-static int wait_dexopt(pid_t pid, const char* apk_path)
+static int wait_child(pid_t pid)
 {
     int status;
     pid_t got_pid;
 
-    /*
-     * Wait for the optimization process to finish.
-     */
     while (1) {
         got_pid = waitpid(pid, &status, 0);
         if (got_pid == -1 && errno == EINTR) {
@@ -547,11 +544,8 @@ static int wait_dexopt(pid_t pid, const char* apk_path)
     }
 
     if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
-        LOGD("DexInv: --- END '%s' (success) ---\n", apk_path);
         return 0;
     } else {
-        LOGW("DexInv: --- END '%s' --- status=0x%04x, process failed\n",
-            apk_path, status);
         return status;      /* always nonzero */
     }
 }
@@ -636,8 +630,12 @@ int dexopt(const char *apk_path, uid_t uid, int is_public)
         run_dexopt(zip_fd, odex_fd, apk_path, dexopt_flags);
         exit(67);   /* only get here on exec failure */
     } else {
-        res = wait_dexopt(pid, apk_path);
-        if (res != 0) {
+        res = wait_child(pid);
+        if (res == 0) {
+            LOGD("DexInv: --- END '%s' (success) ---\n", apk_path);
+        } else {
+            LOGW("DexInv: --- END '%s' --- status=0x%04x, process failed\n",
+                 apk_path, res);
             LOGE("dexopt failed on '%s' res = %d\n", dex_path, res);
             goto fail;
         }
@@ -1087,4 +1085,117 @@ out:
     }
 
     return rc;
+}
+
+static void run_idmap(const char *orig_apk, const char *skin_apk, int idmap_fd)
+{
+    static const char *IDMAP_BIN = "/system/bin/idmap";
+    static const size_t MAX_INT_LEN = 32;
+    char idmap_str[MAX_INT_LEN];
+
+    snprintf(idmap_str, sizeof(idmap_str), "%d", idmap_fd);
+
+    execl(IDMAP_BIN, IDMAP_BIN, "--fd", orig_apk, skin_apk, idmap_str, (char*)NULL);
+    LOGE("execl(%s) failed: %s\n", IDMAP_BIN, strerror(errno));
+}
+
+// Transform string /a/b/c.apk to /data/resource-cache/a@b@c.apk@idmap
+static int generate_idmap_path(const char *skin_path, char *idmap_path, size_t N)
+{
+    static const char *idmap_root = "/data/resource-cache/";
+    static const char *suffix = "@idmap";
+    if (skin_path == NULL || idmap_path == NULL) {
+        return -1;
+    }
+    const size_t len_idmap_root = strlen(idmap_root);
+    const size_t len_skin_path = strlen(skin_path);
+    const size_t len_suffix = strlen(suffix);
+
+    // will access skin_path + 1 further below; also, require path to be absolute
+    if (len_skin_path < 2 || skin_path[0] != '/') {
+        LOGD("idmap path %s is unreasonably short, or relative\n", skin_path);
+        return -1;
+    }
+    if (SIZE_MAX - len_idmap_root < len_skin_path ||
+            SIZE_MAX - (len_idmap_root + len_skin_path) < len_suffix) {
+        // additions below would cause overflow
+        return -1;
+    }
+    if (N < len_idmap_root + len_skin_path + len_suffix) {
+        LOGD("idmap path based on %s would be longer than the allowed %d chars\n", skin_path, N);
+        return -1;
+    }
+    memset(idmap_path, 0, N);
+    snprintf(idmap_path, N, "%s%s%s", idmap_root, skin_path + 1, suffix);
+    char *ch = idmap_path + len_idmap_root;
+    while (*ch != '\0') {
+        if (*ch == '/') {
+            *ch = '@';
+        }
+        ++ch;
+    }
+    return 0;
+}
+
+int idmap(const char *orig_apk, const char *skin_apk, uid_t uid)
+{
+    LOGV("idmap orig_apk=%s skin_apk=%s uid=%d\n", orig_apk, skin_apk, uid);
+
+    int idmap_fd = -1;
+    char idmap_path[PATH_MAX];
+
+    if (generate_idmap_path(skin_apk, idmap_path, sizeof(idmap_path)) == -1) {
+        LOGE("idmap cannot generate idmap path for skin %s\n", skin_apk);
+        goto fail;
+    }
+
+    unlink(idmap_path);
+    idmap_fd = open(idmap_path, O_RDWR | O_CREAT | O_EXCL, 0644);
+    if (idmap_fd < 0) {
+        LOGE("idmap cannot open '%s' for output: %s\n", idmap_path, strerror(errno));
+        goto fail;
+    }
+    if (fchown(idmap_fd, AID_SYSTEM, uid) < 0) {
+        LOGE("idmap cannot chown '%s'\n", idmap_path);
+        goto fail;
+    }
+    if (fchmod(idmap_fd, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH) < 0) {
+        LOGE("idmap cannot chmod '%s'\n", idmap_path);
+        goto fail;
+    }
+
+    pid_t pid;
+    pid = fork();
+    if (pid == 0) {
+        /* child -- drop privileges before continuing */
+        if (setgid(uid) != 0) {
+            LOGE("setgid(%d) failed during idmap\n", uid);
+            exit(1);
+        }
+        if (setuid(uid) != 0) {
+            LOGE("setuid(%d) failed during idmap\n", uid);
+            exit(1);
+        }
+        if (flock(idmap_fd, LOCK_EX | LOCK_NB) != 0) {
+            LOGE("flock(%s) failed during idmap: %s\n", idmap_path, strerror(errno));
+            exit(1);
+        }
+
+        run_idmap(orig_apk, skin_apk, idmap_fd);
+        exit(1); /* only if exec call to idmap failed */
+    } else {
+        int status = wait_child(pid);
+        if (status != 0) {
+            LOGE("idmap failed, status=0x%04x\n", status);
+            goto fail;
+        }
+    }
+    close(idmap_fd);
+    return 0;
+fail:
+    if (idmap_fd >= 0) {
+        close(idmap_fd);
+        unlink(idmap_path);
+    }
+    return -1;
 }

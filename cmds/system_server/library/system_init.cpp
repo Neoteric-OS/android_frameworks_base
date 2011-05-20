@@ -28,7 +28,9 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/time.h>
+#include <sys/wait.h>
 #include <cutils/properties.h>
+#include <private/android_filesystem_config.h>
 
 using namespace android;
 
@@ -49,6 +51,57 @@ public:
 
 } // namespace android
 
+namespace {
+    void exec_idmap() {
+        static const char* IDMAP_BIN = "/system/bin/idmap";
+        static const char* ORIG_APK = "/system/framework/framework-res.apk";
+        static const char* SKIN_APK = "/vendor/overlay/framework/framework-res.apk";
+        static const char* IDMAP_FILE =
+            "/data/resource-cache/vendor@overlay@framework@framework-res.apk@idmap";
+        execl(IDMAP_BIN, IDMAP_BIN, "--path", ORIG_APK, SKIN_APK, IDMAP_FILE, (char*)NULL);
+        LOGE("execl(%s) failed: %s\n", IDMAP_BIN, strerror(errno));
+    }
+
+    int wait_idmap(pid_t pid) {
+        int status;
+        pid_t got_pid;
+
+        while (1) {
+            got_pid = waitpid(pid, &status, 0);
+            if (got_pid == -1 && errno == EINTR) {
+                continue;
+            } else {
+                break;
+            }
+        }
+        if (got_pid != pid) {
+            return -1;
+        }
+        if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
+            return 0;
+        } else {
+            return status;
+        }
+    }
+
+    int verify_system_idmap_file_is_up_to_date() {
+        if (getuid() != AID_SYSTEM || getgid() != AID_SYSTEM) {
+            // not user system -> nothing we can do
+            return 0;
+        }
+        int retval = -1;
+        pid_t pid = fork();
+        if (pid == 0) {
+            // child
+            exec_idmap();
+            exit(1);
+        } else {
+            // parent
+            retval = wait_idmap(pid);
+        }
+        return retval;
+    }
+}
 
 
 extern "C" status_t system_init()
@@ -89,6 +142,8 @@ extern "C" status_t system_init()
         // Start the audio policy service
         AudioPolicyService::instantiate();
     }
+
+    verify_system_idmap_file_is_up_to_date();
 
     // And now start the Android runtime.  We have to do this bit
     // of nastiness because the Android runtime initialization requires

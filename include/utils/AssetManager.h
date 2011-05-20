@@ -217,6 +217,13 @@ public:
      */
     void getLocales(Vector<String8>* locales) const;
 
+    /**
+     * Generate idmap data to translate resources IDs between a package and a
+     * corresponding skin package.
+     */
+    bool createIdmap(const char* origApkPath, const char* skinApkPath, uint32_t origCrc,
+        uint32_t skinCrc, uint32_t** outData, uint32_t* outSize);
+
 private:
     struct asset_path
     {
@@ -263,15 +270,7 @@ private:
     void setLocaleLocked(const char* locale);
     void updateResourceParamsLocked() const;
 
-    bool createIdmapFileLocked(const String8& originalPath, const String8& overlayPath,
-                               const String8& idmapPath);
-
-    bool isIdmapStaleLocked(const String8& originalPath, const String8& overlayPath,
-                            const String8& idmapPath);
-
     Asset* openIdmapLocked(const struct asset_path& ap) const;
-
-    bool getZipEntryCrcLocked(const String8& zipPath, const char* entryFilename, uint32_t* pCrc);
 
     class SharedZip : public RefBase {
     public:
