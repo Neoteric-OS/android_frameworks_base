@@ -111,6 +111,11 @@ static int do_unlinklib(char **arg, char reply[REPLY_MAX])
     return unlinklib(arg[0]);
 }
 
+static int do_idmap(char **arg, char reply[REPLY_MAX])
+{
+    return idmap(arg[0], arg[1], atoi(arg[2]));
+}
+
 struct cmdinfo {
     const char *name;
     unsigned numargs;
@@ -133,6 +138,7 @@ struct cmdinfo cmds[] = {
     { "movefiles",            0, do_movefiles },
     { "linklib",              2, do_linklib },
     { "unlinklib",            1, do_unlinklib },
+    { "idmap",                3, do_idmap },
 };
 
 static int readx(int s, void *_buf, int count)
