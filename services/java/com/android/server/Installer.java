@@ -193,6 +193,17 @@ class Installer {
         return execute(builder.toString());
     }
 
+    public int idmap(String origApkPath, String skinApkPath, int uid) {
+        StringBuilder builder = new StringBuilder("idmap");
+        builder.append(' ');
+        builder.append(origApkPath);
+        builder.append(' ');
+        builder.append(skinApkPath);
+        builder.append(' ');
+        builder.append(uid);
+        return execute(builder.toString());
+    }
+
     public int movedex(String srcPath, String dstPath) {
         StringBuilder builder = new StringBuilder("movedex");
         builder.append(' ');
