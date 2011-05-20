@@ -1,0 +1,8 @@
+Change-Id: I24847f35177fd970670aa1ffdfc6639bbd11d1f5
+Code-Review+1: Evan JIANG <firstfan@gmail.com>
+Code-Review+2: Dianne Hackborn <hackbod@android.com>
+Verified+1: Dianne Hackborn <hackbod@android.com>
+Code-Review+1: Romain Guy <romainguy@android.com>
+Reviewed-on: https://review.source.android.com/1723
+Project: platform/frameworks/base
+Branch: refs/heads/master

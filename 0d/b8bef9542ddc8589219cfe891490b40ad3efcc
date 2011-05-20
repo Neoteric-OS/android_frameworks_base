@@ -1,0 +1,8 @@
+Change-Id: I0db8bef9542ddc8589219cfe891490b40ad3efcc
+Code-Review+2: Dave Sparks <davidsparks@android.com>
+Verified+1: Dave Sparks <davidsparks@android.com>
+Submitted-by: Jean-Baptiste Queru <jbq@google.com>
+Submitted-at: Fri, 21 Aug 2009 06:23:31 -0700
+Reviewed-on: https://review.source.android.com/10274
+Project: platform/frameworks/base
+Branch: refs/heads/master

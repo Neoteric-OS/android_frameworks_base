@@ -1,0 +1,8 @@
+Change-Id: I83387a484c515e5234bd60f741578a6ac894bff5
+Verified+1: Jean-Baptiste Queru <jbq@google.com>
+Code-Review+2: Mike Reed <reed@android.com>
+Submitted-by: Mike Reed <reed@android.com>
+Submitted-at: Tue, 10 Nov 2009 10:59:52 -0700
+Reviewed-on: https://review.source.android.com/12490
+Project: platform/frameworks/base
+Branch: refs/heads/master

@@ -1,0 +1,8 @@
+Change-Id: I914a32b834c244f36a01b4984329b4383e98ed14
+Code-Review+2: Dianne Hackborn <hackbod@android.com>
+Verified+1: Dianne Hackborn <hackbod@android.com>
+Submitted-by: Raphaël Moll <ralf@android.com>
+Submitted-at: Thu, 05 Feb 2009 14:11:41 -0700
+Reviewed-on: https://review.source.android.com/8768
+Project: platform/frameworks/base
+Branch: refs/heads/master

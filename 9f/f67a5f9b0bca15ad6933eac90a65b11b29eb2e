@@ -1,0 +1,11 @@
+Change-Id: I9ff67a5f9b0bca15ad6933eac90a65b11b29eb2e
+Code-Review+1: Brad Larson <bklarson@gmail.com>
+Code-Review+2: Jean-Baptiste Queru <jbq@google.com>
+Verified+1: Jean-Baptiste Queru <jbq@google.com>
+Code-Review+1: Mike Lockwood <lockwood%android.com@gtempaccount.com>
+Code-Review+1: Steve Kondik <shade@chemlab.org>
+Submitted-by: Jean-Baptiste Queru <jbq@google.com>
+Submitted-at: Thu, 05 Nov 2009 12:36:48 -0700
+Reviewed-on: https://review.source.android.com/12110
+Project: platform/frameworks/base
+Branch: refs/heads/master

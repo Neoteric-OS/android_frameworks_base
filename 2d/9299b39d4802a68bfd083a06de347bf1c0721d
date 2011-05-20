@@ -1,0 +1,8 @@
+Change-Id: I2d9299b39d4802a68bfd083a06de347bf1c0721d
+Verified+1: Jean-Baptiste Queru <jbq@google.com>
+Code-Review+2: Jeff Brown <jeffbrown@android.com>
+Submitted-by: Jean-Baptiste Queru <jbq@google.com>
+Submitted-at: Sun, 30 Jan 2011 16:17:33 -0700
+Reviewed-on: https://review.source.android.com/20722
+Project: platform/frameworks/base
+Branch: refs/heads/gingerbread

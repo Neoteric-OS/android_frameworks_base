@@ -1,0 +1,9 @@
+Change-Id: Ibb83adf52822451b4fef36cdf5bd8af59f88b8b4
+Code-Review+2: Jean-Baptiste Queru <jbq@google.com>
+Verified+1: Jean-Baptiste Queru <jbq@google.com>
+Code-Review+1: Jesse Wilson <jessewilson@google.com>
+Submitted-by: Jean-Baptiste Queru <jbq@google.com>
+Submitted-at: Mon, 03 May 2010 11:15:32 -0700
+Reviewed-on: https://review.source.android.com/14512
+Project: platform/frameworks/base
+Branch: refs/heads/eclair

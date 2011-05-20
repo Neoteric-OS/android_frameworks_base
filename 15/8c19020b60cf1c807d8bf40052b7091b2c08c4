@@ -1,0 +1,10 @@
+Change-Id: I80eb4aab503304d735f90eca8e795678f5ffe504
+Code-Review+1: Christopher Tate <ctate@android.com>
+Code-Review+2: Romain Guy <romainguy@android.com>
+Verified+1: Romain Guy <romainguy@android.com>
+Code-Review+1: Joe Bowbeer <joe.bowbeer@gmail.com>
+Submitted-by: Romain Guy <romainguy@android.com>
+Submitted-at: Tue, 09 Jun 2009 12:44:24 -0700
+Reviewed-on: https://review.source.android.com/10314
+Project: platform/frameworks/base
+Branch: refs/heads/master

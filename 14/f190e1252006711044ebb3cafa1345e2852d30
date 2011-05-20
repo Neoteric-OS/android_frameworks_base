@@ -1,0 +1,8 @@
+Change-Id: I14f190e1252006711044ebb3cafa1345e2852d30
+Verified+1: Jean-Baptiste Queru <jbq@google.com>
+Code-Review+2: Joe Onorato <joeo@android.com>
+Submitted-by: Joe Onorato <joeo@android.com>
+Submitted-at: Thu, 13 May 2010 16:33:22 -0700
+Reviewed-on: https://review.source.android.com/14108
+Project: platform/frameworks/base
+Branch: refs/heads/master

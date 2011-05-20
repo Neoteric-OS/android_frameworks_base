@@ -1,0 +1,9 @@
+Code-Review+2: Brad Fitzpatrick <bradfitz@android.com>
+Verified+1: Jean-Baptiste Queru <jbq@google.com>
+Code-Review+1: Jim Huang <jserv@0xlab.org>
+Code-Review+1: Chih-Wei Huang
+Submitted-by: Jean-Baptiste Queru <jbq@google.com>
+Submitted-at: Wed, 03 Nov 2010 10:16:30 -0700
+Reviewed-on: https://review.source.android.com/18743
+Project: platform/frameworks/base
+Branch: refs/heads/master

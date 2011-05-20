@@ -1,0 +1,8 @@
+Change-Id: I8ecc90d00df9ca90dfbf505daa051eb2a05a14de
+Code-Review+2: Mathias Agopian <pixelflinger@gmail.com>
+Verified+1: Conley Owens <cco3@android.com>
+Submitted-by: Conley Owens <cco3@android.com>
+Submitted-at: Wed, 27 Apr 2011 12:28:05 -0700
+Reviewed-on: https://review.source.android.com/22369
+Project: platform/frameworks/base
+Branch: refs/heads/master

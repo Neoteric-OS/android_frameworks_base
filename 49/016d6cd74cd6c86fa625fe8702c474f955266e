@@ -1,0 +1,10 @@
+Code-Review+1: Brad Fitzpatrick <bradfitz@android.com>
+Verified+1: Brad Fitzpatrick <bradfitz@android.com>
+Code-Review+2: Dianne Hackborn <hackbod@android.com>
+Code-Review+1: Keith Deacon <kdeacon@ti.com>
+Code-Review+1: Dan Murphy <dmurphy@ti.com>
+Submitted-by: Jean-Baptiste Queru <jbq@google.com>
+Submitted-at: Wed, 20 Oct 2010 16:35:17 -0700
+Reviewed-on: https://review.source.android.com/17806
+Project: platform/frameworks/base
+Branch: refs/heads/master

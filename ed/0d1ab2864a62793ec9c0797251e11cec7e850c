@@ -1,0 +1,9 @@
+Change-Id: I78fe95879303e7179262380bbbdcb0394c07a8e5
+Code-Review+2: Jean-Baptiste Queru <jbq@google.com>
+Code-Review+1: Nick Pelly <npelly@google.com>
+Verified+1: Nick Pelly <npelly@google.com>
+Submitted-by: Nick Pelly <npelly@google.com>
+Submitted-at: Mon, 22 Mar 2010 07:07:15 -0700
+Reviewed-on: https://review.source.android.com/13900
+Project: platform/frameworks/base
+Branch: refs/heads/master

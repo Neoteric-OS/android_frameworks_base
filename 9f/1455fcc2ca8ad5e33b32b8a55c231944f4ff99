@@ -1,0 +1,8 @@
+Change-Id: I9f1455fcc2ca8ad5e33b32b8a55c231944f4ff99
+Code-Review+2: Jean-Baptiste Queru <jbq@google.com>
+Verified+1: Jean-Baptiste Queru <jbq@google.com>
+Submitted-by: Jean-Baptiste Queru <jbq@google.com>
+Submitted-at: Tue, 31 Mar 2009 16:16:15 -0700
+Reviewed-on: https://review.source.android.com/9448
+Project: platform/frameworks/base
+Branch: refs/heads/master

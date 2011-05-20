@@ -1,0 +1,8 @@
+Change-Id: Ie4f8264844a4723a5e0ee3de62fb58eaca805cfb
+Code-Review+2: Brad Fitzpatrick <bradfitz@android.com>
+Verified+1: Brad Fitzpatrick <bradfitz@android.com>
+Submitted-by: Brad Fitzpatrick <bradfitz@android.com>
+Submitted-at: Wed, 03 Nov 2010 11:38:06 -0700
+Reviewed-on: https://review.source.android.com/18660
+Project: platform/frameworks/base
+Branch: refs/heads/master

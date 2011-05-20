@@ -1,0 +1,9 @@
+Change-Id: I65ed2a45f60314cd7f6b934ec01aa6dcd3ddb122
+Code-Review+1: Cyril Mottier <cyrilmottier@gmail.com>
+Code-Review+2: Adam Powell <adamp@android.com>
+Verified+1: Adam Powell <adamp@android.com>
+Submitted-by: Adam Powell <adamp@android.com>
+Submitted-at: Fri, 05 Feb 2010 14:01:22 -0700
+Reviewed-on: https://review.source.android.com/12945
+Project: platform/frameworks/base
+Branch: refs/heads/master

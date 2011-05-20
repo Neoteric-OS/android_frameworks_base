@@ -1,0 +1,8 @@
+Change-Id: I754270601a268cfe0ab679768aa33423feb1f974
+Code-Review+2: Dianne Hackborn <hackbod@android.com>
+Verified+1: Jean-Baptiste Queru <jbq@google.com>
+Submitted-by: Jean-Baptiste Queru <jbq@google.com>
+Submitted-at: Mon, 02 Mar 2009 11:44:11 -0700
+Reviewed-on: https://review.source.android.com/8875
+Project: platform/frameworks/base
+Branch: refs/heads/master

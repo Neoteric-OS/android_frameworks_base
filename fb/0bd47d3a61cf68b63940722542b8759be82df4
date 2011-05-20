@@ -1,0 +1,10 @@
+Change-Id: I8f67f0929b98e065ccf1c190e8fc086a1c59fab2
+Code-Review+2: Jean-Baptiste Queru <jbq@google.com>
+Verified+1: Jean-Baptiste Queru <jbq@google.com>
+Code-Review+1: Nick Pelly <npelly@google.com>
+Code-Review+1: Steve Kondik <shade@chemlab.org>
+Submitted-by: Jean-Baptiste Queru <jbq@google.com>
+Submitted-at: Thu, 05 Nov 2009 15:08:25 -0700
+Reviewed-on: https://review.source.android.com/9780
+Project: platform/frameworks/base
+Branch: refs/heads/master

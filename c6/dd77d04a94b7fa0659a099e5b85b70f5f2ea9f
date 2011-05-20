@@ -1,0 +1,10 @@
+Change-Id: I35393442c3b7be902e18f2e094ea57d4fb2eadd7
+Code-Review+2: Jean-Baptiste Queru <jbq@google.com>
+Code-Review+1: Wink Saville <wink@google.com>
+Verified+1: Wink Saville <wink@google.com>
+Code-Review+1: Johan Redestig <johan.redestig@sonyericsson.com>
+Submitted-by: Jean-Baptiste Queru <jbq@google.com>
+Submitted-at: Wed, 05 May 2010 13:15:24 -0700
+Reviewed-on: https://review.source.android.com/14203
+Project: platform/frameworks/base
+Branch: refs/heads/master

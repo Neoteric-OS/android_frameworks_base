@@ -1,0 +1,8 @@
+Change-Id: I51207b127bcd6a1eb48141f9f4b2ce86ee3154ae
+Code-Review+2: Romain Guy <romainguy@android.com>
+Verified+1: Romain Guy <romainguy@android.com>
+Submitted-by: Romain Guy <romainguy@android.com>
+Submitted-at: Tue, 22 Dec 2009 15:36:03 -0700
+Reviewed-on: https://review.source.android.com/13047
+Project: platform/frameworks/base
+Branch: refs/heads/master

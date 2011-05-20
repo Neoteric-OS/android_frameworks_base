@@ -1,0 +1,8 @@
+Change-Id: Ic883b143ba2b8bfe2f2033d00dee9ff733f1b59c
+Code-Review+2: John Huang <jsh@android.com>
+Verified+1: John Huang <jsh@android.com>
+Code-Review+1: Rohan Seth <rohan@android.com>
+Code-Review-1: Omari Stephens <xsdg@google.com>
+Reviewed-on: https://review.source.android.com/4604
+Project: platform/frameworks/base
+Branch: refs/heads/cdma-import

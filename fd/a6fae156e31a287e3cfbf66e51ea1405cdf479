@@ -1,0 +1,8 @@
+Change-Id: Ifda6fae156e31a287e3cfbf66e51ea1405cdf479
+Code-Review+1: Christopher Tate <ctate@android.com>
+Code-Review+1: Eric Shienbrood <ers@google.com>
+Code-Review+2: Dianne Hackborn <hackbod@android.com>
+Verified+1: Dianne Hackborn <hackbod@android.com>
+Reviewed-on: https://review.source.android.com/1241
+Project: platform/frameworks/base
+Branch: refs/heads/master
