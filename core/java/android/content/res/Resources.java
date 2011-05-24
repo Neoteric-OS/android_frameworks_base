@@ -1298,6 +1298,10 @@ public class Resources {
                             == Configuration.HARDKEYBOARDHIDDEN_YES) {
                 keyboardHidden = Configuration.KEYBOARDHIDDEN_SOFT;
             }
+
+            // Also include navigation hidden information
+            keyboardHidden |= mConfiguration.navigationHidden << 2;
+
             mAssets.setConfiguration(mConfiguration.mcc, mConfiguration.mnc,
                     locale, mConfiguration.orientation,
                     mConfiguration.touchscreen,
