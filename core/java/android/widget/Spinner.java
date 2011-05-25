@@ -26,7 +26,7 @@ import android.database.DataSetObserver;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.os.Parcelable;
 
 /**
  * A view that displays one child at a time and lets the user pick among them.
@@ -82,13 +82,12 @@ public class Spinner extends AbsSpinner implements OnClickListener {
     }
 
     @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        
+    public Parcelable onSaveInstanceState() {
         if (mPopup != null && mPopup.isShowing()) {
             mPopup.dismiss();
             mPopup = null;
         }
+        return super.onSaveInstanceState();
     }
 
     /**
