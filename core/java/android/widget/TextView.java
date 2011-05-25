@@ -28,6 +28,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -8404,6 +8405,13 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         }
         return mInBatchEditControllers;
     }
+    
+    @Override
+    public Bitmap getDrawingCache(boolean autoScale){
+    	updateCursorControllerPositions();
+    	return super.getDrawingCache(autoScale);
+    }
+
 
     @ViewDebug.ExportedProperty
     private CharSequence            mText;
