@@ -115,6 +115,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -2001,7 +2002,30 @@ class ContextImpl extends Context {
         @Override
         public List<PackageInfo> getInstalledPackages(int flags) {
             try {
-                return mPM.getInstalledPackages(flags);
+                List<PackageInfo> finalList;
+                // If all GET_* flags are activated the list of PackageInfo's
+                // can get to large to fit in the Binder heap.
+                // Instead, get a list with the smallest possible PackageInfo
+                // objects and retrieve all the needed info for each PackageInfo
+                // in separate transactions
+                List<PackageInfo> packages = mPM.getInstalledPackages(flags
+                        & GET_UNINSTALLED_PACKAGES);
+
+                if (flags == 0 || flags == GET_UNINSTALLED_PACKAGES) {
+                    // No extra flags set, no need to get more package info
+                    finalList = packages;
+                } else {
+                    finalList = new LinkedList<PackageInfo>();
+                    for (PackageInfo p : packages) {
+                        if (p.applicationInfo != null) {
+                            PackageInfo pi = mPM.getPackageInfo(p.packageName, flags);
+                            if (pi != null) {
+                                finalList.add(pi);
+                            }
+                        }
+                    }
+                }
+                return finalList;
             } catch (RemoteException e) {
                 throw new RuntimeException("Package manager has died", e);
             }
