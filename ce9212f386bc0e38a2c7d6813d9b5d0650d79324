@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAABBn///hM\u003d",
+        "filename": "core/java/android/widget/TextView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2011-05-26T16:43:08Z",
+      "side": 1,
+      "message": "You can\u0027t just add a ViewTreeObserver in the constructor it must be added/remove when the view is attached/detached to/from the window.",
+      "revId": "ce9212f386bc0e38a2c7d6813d9b5d0650d79324",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
