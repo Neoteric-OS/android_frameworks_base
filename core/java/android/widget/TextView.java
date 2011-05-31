@@ -8142,7 +8142,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 // If the user "closes" the selection entirely they were probably trying to
                 // select a single character. Help them out.
                 if (offset == selectionEnd) {
-                    offset = selectionEnd - 1;
+                    offset = TextUtils.getOffsetBefore(mText, selectionEnd);
                 }
                 selectionStart = offset;
             } else {
@@ -8152,7 +8152,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 // If the user "closes" the selection entirely they were probably trying to
                 // select a single character. Help them out.
                 if (offset == selectionStart) {
-                    offset = selectionStart + 1;
+                    offset = TextUtils.getOffsetAfter(mText, selectionStart);
                 }
                 selectionEnd = offset;
             }

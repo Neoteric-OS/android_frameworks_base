@@ -370,7 +370,7 @@ public class Selection {
             if (line == layout.getLineCount() - 1)
                 return end;
             else
-                return end - 1;
+                return TextUtils.getOffsetBefore(text, end);
         }
     }
 
