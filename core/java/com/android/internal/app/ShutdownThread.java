@@ -74,6 +74,8 @@ public final class ShutdownThread extends Thread {
     private PowerManager.WakeLock mCpuWakeLock;
     private PowerManager.WakeLock mScreenWakeLock;
     private Handler mHandler;
+
+    private static AlertDialog sConfirmDialog;
     
     private ShutdownThread() {
     }
@@ -99,7 +101,10 @@ public final class ShutdownThread extends Thread {
         Log.d(TAG, "Notifying thread to start radio shutdown");
 
         if (confirm) {
-            final AlertDialog dialog = new AlertDialog.Builder(context)
+            if (sConfirmDialog != null) {
+                sConfirmDialog.dismiss();
+            }
+            sConfirmDialog = new AlertDialog.Builder(context)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setTitle(com.android.internal.R.string.power_off)
                     .setMessage(com.android.internal.R.string.shutdown_confirm)
@@ -110,12 +115,12 @@ public final class ShutdownThread extends Thread {
                     })
                     .setNegativeButton(com.android.internal.R.string.no, null)
                     .create();
-            dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
+            sConfirmDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
             if (!context.getResources().getBoolean(
                     com.android.internal.R.bool.config_sf_slowBlur)) {
-                dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+                sConfirmDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
             }
-            dialog.show();
+            sConfirmDialog.show();
         } else {
             beginShutdownSequence(context);
         }
