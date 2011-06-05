@@ -540,7 +540,7 @@ static jstring android_location_GpsLocationProvider_get_internal_state(JNIEnv* e
 }
 
 static void android_location_GpsLocationProvider_update_network_state(JNIEnv* env, jobject obj,
-        jboolean connected, int type, jboolean roaming, jboolean available, jstring extraInfo)
+        jboolean connected, int type, jboolean roaming, jboolean available, jstring extraInfo, jstring apn)
 {
 
     if (sAGpsRilInterface && sAGpsRilInterface->update_network_state) {
@@ -553,7 +553,9 @@ static void android_location_GpsLocationProvider_update_network_state(JNIEnv* en
         }
 
         if (sAGpsRilInterface->update_network_vailability) {
-            sAGpsRilInterface->update_network_vailability(available);
+            const char *c_apn = env->GetStringUTFChars(apn, NULL);
+            sAGpsRilInterface->update_network_vailability(available, c_apn);
+            env->ReleaseStringUTFChars(apn, c_apn);
         }
     }
 }
@@ -583,7 +585,7 @@ static JNINativeMethod sMethods[] = {
     {"native_send_ni_response", "(II)V", (void*)android_location_GpsLocationProvider_send_ni_response},
     {"native_agps_ni_message", "([BI)V", (void *)android_location_GpsLocationProvider_agps_send_ni_message},
     {"native_get_internal_state", "()Ljava/lang/String;", (void*)android_location_GpsLocationProvider_get_internal_state},
-    {"native_update_network_state", "(ZIZZLjava/lang/String;)V", (void*)android_location_GpsLocationProvider_update_network_state },
+    {"native_update_network_state", "(ZIZZLjava/lang/String;Ljava/lang/String;)V", (void*)android_location_GpsLocationProvider_update_network_state },
 };
 
 int register_android_server_location_GpsLocationProvider(JNIEnv* env)
