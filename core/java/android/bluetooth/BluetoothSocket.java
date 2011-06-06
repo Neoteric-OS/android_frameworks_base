@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * A connected or connecting Bluetooth socket.
@@ -96,6 +97,7 @@ public final class BluetoothSocket implements Closeable {
 
     /** prevents all native calls after destroyNative() */
     private boolean mClosed;
+    private AtomicBoolean mClosing = new AtomicBoolean(false);
 
     /** protects mClosed */
     private final ReentrantReadWriteLock mLock;
@@ -213,6 +215,10 @@ public final class BluetoothSocket implements Closeable {
      * throw an IOException.
      */
     public void close() throws IOException {
+        if (mClosing.compareAndSet(false, true) == false) {
+            Log.d(TAG, "socket already in closing state:" + this);
+            return;
+        }
         // abort blocking operations on the socket
         mLock.readLock().lock();
         try {
