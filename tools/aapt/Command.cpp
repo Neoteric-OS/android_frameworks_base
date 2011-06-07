@@ -16,6 +16,7 @@
 #include <fcntl.h>
 #include <errno.h>
 
+
 using namespace android;
 
 /*
@@ -50,7 +51,7 @@ ZipFile* openReadOnly(const char* fileName)
             fprintf(stderr, "ERROR: '%s' access denied\n", fileName);
         else
             fprintf(stderr, "ERROR: failed opening '%s' as Zip file\n",
-                fileName);
+                    fileName);
         delete zip;
         return NULL;
     }
@@ -157,18 +158,18 @@ int doList(Bundle* bundle)
 
             when = entry->getModWhen();
             strftime(dateBuf, sizeof(dateBuf), "%m-%d-%y %H:%M",
-                localtime(&when));
+                     localtime(&when));
 
             printf("%8ld  %-7.7s %7ld %3d%%  %8zd  %s  %08lx  %s\n",
-                (long) entry->getUncompressedLen(),
-                compressionName(entry->getCompressionMethod()),
-                (long) entry->getCompressedLen(),
-                calcPercent(entry->getUncompressedLen(),
-                            entry->getCompressedLen()),
-                (size_t) entry->getLFHOffset(),
-                dateBuf,
-                entry->getCRC32(),
-                entry->getFileName());
+                   (long) entry->getUncompressedLen(),
+                   compressionName(entry->getCompressionMethod()),
+                   (long) entry->getCompressedLen(),
+                   calcPercent(entry->getUncompressedLen(),
+                               entry->getCompressedLen()),
+                   (size_t) entry->getLFHOffset(),
+                   dateBuf,
+                   entry->getCRC32(),
+                   entry->getFileName());
         } else {
             printf("%s\n", entry->getFileName());
         }
@@ -179,12 +180,12 @@ int doList(Bundle* bundle)
 
     if (bundle->getVerbose()) {
         printf(
-        "--------          -------  ---                            -------\n");
+            "--------          -------  ---                            -------\n");
         printf("%8ld          %7ld  %2d%%                            %d files\n",
-            totalUncLen,
-            totalCompLen,
-            calcPercent(totalUncLen, totalCompLen),
-            zip->getNumEntries());
+               totalUncLen,
+               totalCompLen,
+               calcPercent(totalUncLen, totalCompLen),
+               zip->getNumEntries());
     }
 
     if (bundle->getAndroidList()) {
@@ -203,7 +204,7 @@ int doList(Bundle* bundle)
         }
 
         Asset* manifestAsset = assets.openNonAsset("AndroidManifest.xml",
-                                                   Asset::ACCESS_BUFFER);
+                               Asset::ACCESS_BUFFER);
         if (manifestAsset == NULL) {
             printf("\nNo AndroidManifest.xml found.\n");
         } else {
@@ -235,7 +236,7 @@ static ssize_t indexOfAttribute(const ResXMLTree& tree, uint32_t attrRes)
 }
 
 String8 getAttribute(const ResXMLTree& tree, const char* ns,
-                            const char* attr, String8* outError)
+                     const char* attr, String8* outError)
 {
     ssize_t idx = tree.indexOfAttribute(ns, attr);
     if (idx < 0) {
@@ -272,7 +273,7 @@ static String8 getAttribute(const ResXMLTree& tree, uint32_t attrRes, String8* o
 }
 
 static int32_t getIntegerAttribute(const ResXMLTree& tree, uint32_t attrRes,
-        String8* outError, int32_t defValue = -1)
+                                   String8* outError, int32_t defValue = -1)
 {
     ssize_t idx = indexOfAttribute(tree, attrRes);
     if (idx < 0) {
@@ -290,7 +291,7 @@ static int32_t getIntegerAttribute(const ResXMLTree& tree, uint32_t attrRes,
 }
 
 static String8 getResolvedAttribute(const ResTable* resTable, const ResXMLTree& tree,
-        uint32_t attrRes, String8* outError)
+                                    uint32_t attrRes, String8* outError)
 {
     ssize_t idx = indexOfAttribute(tree, attrRes);
     if (idx < 0) {
@@ -378,9 +379,9 @@ static void printCompatibleScreens(ResXMLTree& tree) {
         String8 tag(tree.getElementName(&len));
         if (tag == "screen") {
             int32_t screenSize = getIntegerAttribute(tree,
-                    SCREEN_SIZE_ATTR, NULL, -1);
+                                 SCREEN_SIZE_ATTR, NULL, -1);
             int32_t screenDensity = getIntegerAttribute(tree,
-                    SCREEN_DENSITY_ATTR, NULL, -1);
+                                    SCREEN_DENSITY_ATTR, NULL, -1);
             if (screenSize > 0 && screenDensity > 0) {
                 if (!first) {
                     printf(",");
@@ -485,7 +486,7 @@ int doDump(Bundle* bundle)
     } else {
         ResXMLTree tree;
         asset = assets.openNonAsset("AndroidManifest.xml",
-                                            Asset::ACCESS_BUFFER);
+                                    Asset::ACCESS_BUFFER);
         if (asset == NULL) {
             fprintf(stderr, "ERROR: dump failed because no AndroidManifest.xml found\n");
             goto bail;
@@ -629,8 +630,8 @@ int doDump(Bundle* bundle)
                                 printf("launchable activity name='%s'", aName);
                             }
                             printf("label='%s' icon='%s'\n",
-                                    activityLabel.string(),
-                                    activityIcon.string());
+                                   activityLabel.string(),
+                                   activityIcon.string());
                         }
                         if (!hasIntentFilter) {
                             hasOtherActivities |= withinActivity;
@@ -694,9 +695,9 @@ int doDump(Bundle* bundle)
                     if (tag == "application") {
                         withinApplication = true;
                         String8 label = getResolvedAttribute(&res, tree, LABEL_ATTR, &error);
-                         if (error != "") {
-                             fprintf(stderr, "ERROR getting 'android:label' attribute: %s\n", error.string());
-                             goto bail;
+                        if (error != "") {
+                            fprintf(stderr, "ERROR getting 'android:label' attribute: %s\n", error.string());
+                            goto bail;
                         }
                         printf("application: label='%s' ", label.string());
                         String8 icon = getResolvedAttribute(&res, tree, ICON_ATTR, &error);
@@ -752,15 +753,15 @@ int doDump(Bundle* bundle)
                         }
                     } else if (tag == "uses-configuration") {
                         int32_t reqTouchScreen = getIntegerAttribute(tree,
-                                REQ_TOUCH_SCREEN_ATTR, NULL, 0);
+                                                 REQ_TOUCH_SCREEN_ATTR, NULL, 0);
                         int32_t reqKeyboardType = getIntegerAttribute(tree,
-                                REQ_KEYBOARD_TYPE_ATTR, NULL, 0);
+                                                  REQ_KEYBOARD_TYPE_ATTR, NULL, 0);
                         int32_t reqHardKeyboard = getIntegerAttribute(tree,
-                                REQ_HARD_KEYBOARD_ATTR, NULL, 0);
+                                                  REQ_HARD_KEYBOARD_ATTR, NULL, 0);
                         int32_t reqNavigation = getIntegerAttribute(tree,
-                                REQ_NAVIGATION_ATTR, NULL, 0);
+                                                REQ_NAVIGATION_ATTR, NULL, 0);
                         int32_t reqFiveWayNav = getIntegerAttribute(tree,
-                                REQ_FIVE_WAY_NAV_ATTR, NULL, 0);
+                                                REQ_FIVE_WAY_NAV_ATTR, NULL, 0);
                         printf("uses-configuration:");
                         if (reqTouchScreen != 0) {
                             printf(" reqTouchScreen='%d'", reqTouchScreen);
@@ -780,21 +781,21 @@ int doDump(Bundle* bundle)
                         printf("\n");
                     } else if (tag == "supports-screens") {
                         smallScreen = getIntegerAttribute(tree,
-                                SMALL_SCREEN_ATTR, NULL, 1);
+                                                          SMALL_SCREEN_ATTR, NULL, 1);
                         normalScreen = getIntegerAttribute(tree,
-                                NORMAL_SCREEN_ATTR, NULL, 1);
+                                                           NORMAL_SCREEN_ATTR, NULL, 1);
                         largeScreen = getIntegerAttribute(tree,
-                                LARGE_SCREEN_ATTR, NULL, 1);
+                                                          LARGE_SCREEN_ATTR, NULL, 1);
                         xlargeScreen = getIntegerAttribute(tree,
-                                XLARGE_SCREEN_ATTR, NULL, 1);
+                                                           XLARGE_SCREEN_ATTR, NULL, 1);
                         anyDensity = getIntegerAttribute(tree,
-                                ANY_DENSITY_ATTR, NULL, 1);
+                                                         ANY_DENSITY_ATTR, NULL, 1);
                     } else if (tag == "uses-feature") {
                         String8 name = getAttribute(tree, NAME_ATTR, &error);
 
                         if (name != "" && error == "") {
                             int req = getIntegerAttribute(tree,
-                                    REQUIRED_ATTR, NULL, 1);
+                                                          REQUIRED_ATTR, NULL, 1);
 
                             if (name == "android.hardware.camera") {
                                 specCameraFeature = true;
@@ -836,10 +837,10 @@ int doDump(Bundle* bundle)
                                 reqTelephonySubFeature = true;
                             }
                             printf("uses-feature%s:'%s'\n",
-                                    req ? "" : "-not-required", name.string());
+                                   req ? "" : "-not-required", name.string());
                         } else {
                             int vers = getIntegerAttribute(tree,
-                                    GL_ES_VERSION_ATTR, &error);
+                                                           GL_ES_VERSION_ATTR, &error);
                             if (error == "") {
                                 printf("uses-gl-es:'0x%x'\n", vers);
                             }
@@ -893,7 +894,7 @@ int doDump(Bundle* bundle)
                         } else {
                             fprintf(stderr, "ERROR getting 'android:name' attribute: %s\n",
                                     error.string());
-                                goto bail;
+                            goto bail;
                         }
                     } else if (tag == "original-package") {
                         String8 name = getAttribute(tree, NAME_ATTR, &error);
@@ -902,7 +903,7 @@ int doDump(Bundle* bundle)
                         } else {
                             fprintf(stderr, "ERROR getting 'android:name' attribute: %s\n",
                                     error.string());
-                                goto bail;
+                            goto bail;
                         }
                     } else if (tag == "supports-gl-texture") {
                         String8 name = getAttribute(tree, NAME_ATTR, &error);
@@ -911,7 +912,7 @@ int doDump(Bundle* bundle)
                         } else {
                             fprintf(stderr, "ERROR getting 'android:name' attribute: %s\n",
                                     error.string());
-                                goto bail;
+                            goto bail;
                         }
                     } else if (tag == "compatible-screens") {
                         printCompatibleScreens(tree);
@@ -948,9 +949,9 @@ int doDump(Bundle* bundle)
                             goto bail;
                         }
                         int req = getIntegerAttribute(tree,
-                                REQUIRED_ATTR, NULL, 1);
+                                                      REQUIRED_ATTR, NULL, 1);
                         printf("uses-library%s:'%s'\n",
-                                req ? "" : "-not-required", libraryName.string());
+                               req ? "" : "-not-required", libraryName.string());
                     } else if (tag == "receiver") {
                         withinReceiver = true;
                         receiverName = getAttribute(tree, NAME_ATTR, &error);
@@ -972,7 +973,7 @@ int doDump(Bundle* bundle)
                     hasIntentFilter = true;
                     withinIntentFilter = true;
                     actMainActivity = actWidgetReceivers = actImeService = actWallpaperService = false;
-                } else if ((depth == 5) && withinIntentFilter){
+                } else if ((depth == 5) && withinIntentFilter) {
                     String8 action;
                     if (tag == "action") {
                         action = getAttribute(tree, NAME_ATTR, &error);
@@ -1029,7 +1030,7 @@ int doDump(Bundle* bundle)
                     // request the base camera feature, we infer that it meant to
                     printf("uses-feature:'android.hardware.camera'\n");
                 } else if (hasCameraPermission) {
-                    // if app wants to use camera but didn't request the feature, we infer 
+                    // if app wants to use camera but didn't request the feature, we infer
                     // that it meant to, and further that it wants autofocus
                     // (which was the 1.0 - 1.5 behavior)
                     printf("uses-feature:'android.hardware.camera'\n");
@@ -1041,8 +1042,8 @@ int doDump(Bundle* bundle)
 
             // Location-related back-compatibility logic
             if (!specLocationFeature &&
-                (hasMockLocPermission || hasCoarseLocPermission || hasGpsPermission ||
-                 hasGeneralLocPermission || reqNetworkLocFeature || reqGpsFeature)) {
+                    (hasMockLocPermission || hasCoarseLocPermission || hasGpsPermission ||
+                     hasGeneralLocPermission || reqNetworkLocFeature || reqGpsFeature)) {
                 // if app either takes a location-related permission or requests one of the
                 // sub-features, we infer that it also meant to request the base location feature
                 printf("uses-feature:'android.hardware.location'\n");
@@ -1311,7 +1312,7 @@ int doRemove(Bundle* bundle)
     zip = openReadWrite(zipFileName, false);
     if (zip == NULL) {
         fprintf(stderr, "ERROR: failed opening Zip archive '%s'\n",
-            zipFileName);
+                zipFileName);
         goto bail;
     }
 
@@ -1329,7 +1330,7 @@ int doRemove(Bundle* bundle)
 
         if (result != NO_ERROR) {
             fprintf(stderr, "Unable to delete '%s' from '%s'\n",
-                bundle->getFileSpecEntry(i), zipFileName);
+                    bundle->getFileSpecEntry(i), zipFileName);
             goto bail;
         }
     }
@@ -1379,8 +1380,8 @@ int doPackage(Bundle* bundle)
         type = getFileType(outputAPKFile);
         if (type != kFileTypeNonexistent && type != kFileTypeRegular) {
             fprintf(stderr,
-                "ERROR: output file '%s' exists but is not regular file\n",
-                outputAPKFile);
+                    "ERROR: output file '%s' exists but is not regular file\n",
+                    outputAPKFile);
             goto bail;
         }
     }
@@ -1453,4 +1454,27 @@ bail:
         SourcePos::printErrors(stderr);
     }
     return retVal;
+}
+
+/*
+ * Do PNG Crunching
+ * PRECONDITIONS
+ *  -S flag points to a source directory containing drawable* folders
+ *  -C flag points to destination directory. The folder structure in the
+ *     source directory will be mirrored to the destination (cache) directory
+ *
+ * POSTCONDITIONS
+ *  Destination directory will be updated to match the *.png/*.PNG files in
+ *  the source directory. If the -**d**FIXME flag is set then the update
+ *  will be incremental. Otherwise all png files will be crunched.
+ */
+int doCrunch(Bundle* bundle)
+{
+    fprintf(stdout, "Crunching PNG Files in ");
+    fprintf(stdout, "source dir: %s\n", bundle->getResourceSourceDirs()[0]);
+    fprintf(stdout, "To destination dir: %s\n", bundle->getCrunchedOutputDir());
+
+    updatePreProcessedCache(bundle);
+
+    return NO_ERROR;
 }
