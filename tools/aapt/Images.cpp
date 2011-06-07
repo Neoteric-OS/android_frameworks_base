@@ -72,8 +72,8 @@ static void read_png(const char* imageName,
     png_read_info(read_ptr, read_info);
 
     png_get_IHDR(read_ptr, read_info, &outImageInfo->width,
-       &outImageInfo->height, &bit_depth, &color_type,
-       &interlace_type, &compression_type, NULL);
+                 &outImageInfo->height, &bit_depth, &color_type,
+                 &interlace_type, &compression_type, NULL);
 
     //printf("Image %s:\n", imageName);
     //printf("color_type=%d, bit_depth=%d, interlace_type=%d, compression_type=%d\n",
@@ -102,7 +102,7 @@ static void read_png(const char* imageName,
     png_read_update_info(read_ptr, read_info);
 
     outImageInfo->rows = (png_bytepp)malloc(
-        outImageInfo->height * png_sizeof(png_bytep));
+                             outImageInfo->height * png_sizeof(png_bytep));
     outImageInfo->allocHeight = outImageInfo->height;
     outImageInfo->allocRows = outImageInfo->rows;
 
@@ -111,7 +111,7 @@ static void read_png(const char* imageName,
     for (i = 0; i < (int)outImageInfo->height; i++)
     {
         outImageInfo->rows[i] = (png_bytep)
-            malloc(png_get_rowbytes(read_ptr, read_info));
+                                malloc(png_get_rowbytes(read_ptr, read_info));
     }
 
     png_read_image(read_ptr, outImageInfo->rows);
@@ -125,8 +125,8 @@ static void read_png(const char* imageName,
                  interlace_type, compression_type));
 
     png_get_IHDR(read_ptr, read_info, &outImageInfo->width,
-       &outImageInfo->height, &bit_depth, &color_type,
-       &interlace_type, &compression_type, NULL);
+                 &outImageInfo->height, &bit_depth, &color_type,
+                 &interlace_type, &compression_type, NULL);
 }
 
 static bool is_tick(png_bytep p, bool transparent, const char** outError)
@@ -165,9 +165,9 @@ enum {
 };
 
 static status_t get_horizontal_ticks(
-        png_bytep row, int width, bool transparent, bool required,
-        int32_t* outLeft, int32_t* outRight, const char** outError,
-        uint8_t* outDivs, bool multipleAllowed)
+    png_bytep row, int width, bool transparent, bool required,
+    int32_t* outLeft, int32_t* outRight, const char** outError,
+    uint8_t* outDivs, bool multipleAllowed)
 {
     int i;
     *outLeft = *outRight = -1;
@@ -177,7 +177,7 @@ static status_t get_horizontal_ticks(
     for (i=1; i<width-1; i++) {
         if (is_tick(row+i*4, transparent, outError)) {
             if (state == TICK_START ||
-                (state == TICK_OUTSIDE_1 && multipleAllowed)) {
+                    (state == TICK_OUTSIDE_1 && multipleAllowed)) {
                 *outLeft = i-1;
                 *outRight = width-2;
                 found = true;
@@ -214,9 +214,9 @@ static status_t get_horizontal_ticks(
 }
 
 static status_t get_vertical_ticks(
-        png_bytepp rows, int offset, int height, bool transparent, bool required,
-        int32_t* outTop, int32_t* outBottom, const char** outError,
-        uint8_t* outDivs, bool multipleAllowed)
+    png_bytepp rows, int offset, int height, bool transparent, bool required,
+    int32_t* outTop, int32_t* outBottom, const char** outError,
+    uint8_t* outDivs, bool multipleAllowed)
 {
     int i;
     *outTop = *outBottom = -1;
@@ -226,7 +226,7 @@ static status_t get_vertical_ticks(
     for (i=1; i<height-1; i++) {
         if (is_tick(rows[i]+offset, transparent, outError)) {
             if (state == TICK_START ||
-                (state == TICK_OUTSIDE_1 && multipleAllowed)) {
+                    (state == TICK_OUTSIDE_1 && multipleAllowed)) {
                 *outTop = i-1;
                 *outBottom = height-2;
                 found = true;
@@ -351,7 +351,7 @@ static status_t do_9patch(const char* imageName, image_info* image)
     memset(xDivs, -1, maxSizeXDivs);
     memset(yDivs, -1, maxSizeYDivs);
     image->info9Patch.paddingLeft = image->info9Patch.paddingRight =
-        image->info9Patch.paddingTop = image->info9Patch.paddingBottom = -1;
+                                        image->info9Patch.paddingTop = image->info9Patch.paddingBottom = -1;
 
     png_bytep p = image->rows[0];
     bool transparent = p[3] == 0;
@@ -371,7 +371,7 @@ static status_t do_9patch(const char* imageName, image_info* image)
 
     // Validate frame...
     if (!transparent &&
-        (p[0] != 0xFF || p[1] != 0xFF || p[2] != 0xFF || p[3] != 0xFF)) {
+            (p[0] != 0xFF || p[1] != 0xFF || p[2] != 0xFF || p[3] != 0xFF)) {
         errorMsg = "Must have one-pixel frame that is either transparent or white";
         goto getout;
     }
@@ -497,8 +497,8 @@ static status_t do_9patch(const char* imageName, image_info* image)
     // The initial yDiv and whether the first row is considered stretchable or
     // not depends on whether yDiv[0] was zero or not.
     for (j = (yDivs[0] == 0 ? 1 : 0);
-          j <= numYDivs && top < H;
-          j++) {
+            j <= numYDivs && top < H;
+            j++) {
         if (j == numYDivs) {
             bottom = H;
         } else {
@@ -508,8 +508,8 @@ static status_t do_9patch(const char* imageName, image_info* image)
         // The initial xDiv and whether the first column is considered
         // stretchable or not depends on whether xDiv[0] was zero or not.
         for (i = xDivs[0] == 0 ? 1 : 0;
-              i <= numXDivs && left < W;
-              i++) {
+                i <= numXDivs && left < W;
+                i++) {
             if (i == numXDivs) {
                 right = W;
             } else {
@@ -539,15 +539,15 @@ static status_t do_9patch(const char* imageName, image_info* image)
 getout:
     if (errorMsg) {
         fprintf(stderr,
-            "ERROR: 9-patch image %s malformed.\n"
-            "       %s.\n", imageName, errorMsg);
+                "ERROR: 9-patch image %s malformed.\n"
+                "       %s.\n", imageName, errorMsg);
         if (errorEdge != NULL) {
             if (errorPixel >= 0) {
                 fprintf(stderr,
-                    "       Found at pixel #%d along %s edge.\n", errorPixel, errorEdge);
+                        "       Found at pixel #%d along %s edge.\n", errorPixel, errorEdge);
             } else {
                 fprintf(stderr,
-                    "       Found along %s edge.\n", errorEdge);
+                        "       Found along %s edge.\n", errorEdge);
             }
         }
         return UNKNOWN_ERROR;
@@ -587,13 +587,13 @@ static void checkNinePatchSerialization(Res_png_9patch* inPatch,  void * data)
 
 static bool patch_equals(Res_png_9patch& patch1, Res_png_9patch& patch2) {
     if (!(patch1.numXDivs == patch2.numXDivs &&
-          patch1.numYDivs == patch2.numYDivs &&
-          patch1.numColors == patch2.numColors &&
-          patch1.paddingLeft == patch2.paddingLeft &&
-          patch1.paddingRight == patch2.paddingRight &&
-          patch1.paddingTop == patch2.paddingTop &&
-          patch1.paddingBottom == patch2.paddingBottom)) {
-            return false;
+            patch1.numYDivs == patch2.numYDivs &&
+            patch1.numColors == patch2.numColors &&
+            patch1.paddingLeft == patch2.paddingLeft &&
+            patch1.paddingRight == patch2.paddingRight &&
+            patch1.paddingTop == patch2.paddingTop &&
+            patch1.paddingBottom == patch2.paddingBottom)) {
+        return false;
     }
     for (int i = 0; i < patch1.numColors; i++) {
         if (patch1.colors[i] != patch2.colors[i]) {
@@ -710,8 +710,8 @@ static void analyze_image(const char *imageName, image_info &imageInfo, int gray
             // Check if image is really grayscale
             if (isGrayscale) {
                 if (rr != gg || rr != bb) {
-                     NOISY(printf("Found a non-gray pixel at %d, %d = (%d %d %d %d)\n",
-                                  i, j, rr, gg, bb, aa));
+                    NOISY(printf("Found a non-gray pixel at %d, %d = (%d %d %d %d)\n",
+                                 i, j, rr, gg, bb, aa));
                     isGrayscale = false;
                 }
             }
@@ -820,7 +820,7 @@ static void analyze_image(const char *imageName, image_info &imageInfo, int gray
                 gg = *row++;
                 bb = *row++;
                 aa = *row++;
-                
+
                 if (isGrayscale) {
                     *out++ = rr;
                 } else {
@@ -829,7 +829,7 @@ static void analyze_image(const char *imageName, image_info &imageInfo, int gray
                 if (!isOpaque) {
                     *out++ = aa;
                 }
-           }
+            }
         }
     }
 }
@@ -864,7 +864,7 @@ static void write_png(const char* imageName,
     png_set_compression_level(write_ptr, Z_BEST_COMPRESSION);
 
     NOISY(printf("Writing image %s: w = %d, h = %d\n", imageName,
-          (int) imageInfo.width, (int) imageInfo.height));
+                 (int) imageInfo.width, (int) imageInfo.height));
 
     png_color rgbPalette[256];
     png_byte alphaPalette[256];
@@ -877,7 +877,7 @@ static void write_png(const char* imageName,
     // If the image is a 9-patch, we need to preserve it as a ARGB file to make
     // sure the pixels will not be pre-dithered/clamped until we decide they are
     if (imageInfo.is9Patch && (color_type == PNG_COLOR_TYPE_RGB ||
-            color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_PALETTE)) {
+                               color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_PALETTE)) {
         color_type = PNG_COLOR_TYPE_RGB_ALPHA;
     }
 
@@ -910,9 +910,9 @@ static void write_png(const char* imageName,
         if (hasTransparency) {
             png_set_tRNS(write_ptr, write_info, alphaPalette, paletteEntries, (png_color_16p) 0);
         }
-       png_set_filter(write_ptr, 0, PNG_NO_FILTERS);
+        png_set_filter(write_ptr, 0, PNG_NO_FILTERS);
     } else {
-       png_set_filter(write_ptr, 0, PNG_ALL_FILTERS);
+        png_set_filter(write_ptr, 0, PNG_ALL_FILTERS);
     }
 
     if (imageInfo.is9Patch) {
@@ -956,8 +956,8 @@ static void write_png(const char* imageName,
     free(unknowns[0].data);
 
     png_get_IHDR(write_ptr, write_info, &width, &height,
-       &bit_depth, &color_type, &interlace_type,
-       &compression_type, NULL);
+                 &bit_depth, &color_type, &interlace_type,
+                 &compression_type, NULL);
 
     NOISY(printf("Image written: w=%d, h=%d, d=%d, colors=%d, inter=%d, comp=%d\n",
                  (int)width, (int)height, bit_depth, color_type, interlace_type,
@@ -967,6 +967,7 @@ static void write_png(const char* imageName,
 status_t preProcessImage(Bundle* bundle, const sp<AaptAssets>& assets,
                          const sp<AaptFile>& file, String8* outNewLeafName)
 {
+
     String8 ext(file->getPath().getPathExtension());
 
     // We currently only process PNG images.
@@ -1000,7 +1001,7 @@ status_t preProcessImage(Bundle* bundle, const sp<AaptAssets>& assets,
     }
 
     read_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, 0, (png_error_ptr)NULL,
-                                        (png_error_ptr)NULL);
+                                      (png_error_ptr)NULL);
     if (!read_ptr) {
         goto bail;
     }
@@ -1040,6 +1041,7 @@ status_t preProcessImage(Bundle* bundle, const sp<AaptAssets>& assets,
         goto bail;
     }
 
+
     png_set_write_fn(write_ptr, (void*)file.get(),
                      png_write_aapt_file, png_flush_aapt_file);
 
@@ -1077,10 +1079,132 @@ bail:
         fprintf(stderr, "ERROR: Failure processing PNG image %s\n",
                 file->getPrintableSource().string());
     }
+
     return error;
 }
 
+status_t preProcessImageToCache(Bundle* bundle, String8 source, String8 dest)
+{
+    png_structp read_ptr = NULL;
+    png_infop read_info = NULL;
 
+    FILE* fp;
+
+    image_info imageInfo;
+
+    png_structp write_ptr = NULL;
+    png_infop write_info = NULL;
+
+    status_t error = UNKNOWN_ERROR;
+
+    // Get a file handler to read from
+    fp = fopen(source.string(),"rb");
+    if(fp == NULL) {
+        fprintf(stderr, "%s ERROR: Unable to open PNG file\n",source.string());
+        return error;
+    }
+
+    // Call libpng to get a struct to read image data into
+    read_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING,NULL,NULL,NULL);
+    if(!read_ptr) {
+        fclose(fp);
+        png_destroy_read_struct(&read_ptr,&read_info,NULL);
+        return error;
+    }
+
+    // Call libpng to get a struct to read image info into
+    read_info = png_create_info_struct(read_ptr);
+    if(!read_info) {
+        fclose(fp);
+        png_destroy_read_struct(&read_ptr,&read_info,NULL);
+        return error;
+    }
+
+    // Set a jump point for libpng to long jump back to on error
+    if(setjmp(png_jmpbuf(read_ptr))) {
+        fclose(fp);
+        png_destroy_read_struct(&read_ptr,&read_info,NULL);
+        return error;
+    }
+
+    // Set up libpng to read from our file.
+    png_init_io(read_ptr,fp);
+
+    // Actually read data from the file
+    read_png(source.string(),read_ptr,read_info,&imageInfo);
+
+    // We're done reading so we can clean up
+    // Find old file size before releasing handle
+    fseek(fp,0,SEEK_END);
+    size_t oldSize = (size_t)ftell(fp);
+    fclose(fp);
+    png_destroy_read_struct(&read_ptr,&read_info,NULL);
+
+    // Check to see if we're dealing with a 9-patch
+    // If we are, process appropriately
+    if (source.getBasePath().getPathExtension() == ".9")  {
+        if (do_9patch(source.string(), &imageInfo) != NO_ERROR) {
+            return error;
+        }
+    }
+
+    // Call libpng to create a structure to hold the processed image data
+    // that can be written to disk
+    write_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,NULL,NULL,NULL);
+    if (!write_ptr) {
+        png_destroy_write_struct(&write_ptr,&write_info);
+        return error;
+    }
+
+    // Call libpng to create a structure to hold processed image info that can
+    // be written to disk
+    write_info = png_create_info_struct(write_ptr);
+    if (!write_info) {
+        png_destroy_write_struct(&write_ptr,&write_info);
+        return error;
+    }
+
+    // Open up our destination file for writing
+    fp = fopen(dest.string(),"wb");
+    if (!fp) {
+        fprintf(stderr, "%s ERROR: Unable to open PNG file\n",dest.string());
+        png_destroy_write_struct(&write_ptr,&write_info);
+        return error;
+    }
+
+    // Set up libpng to write to our file
+    png_init_io(write_ptr,fp);
+
+    // Set up a jump for libpng to long jump back on on errors
+    if(setjmp(png_jmpbuf(write_ptr))) {
+        fclose(fp);
+        png_destroy_write_struct(&write_ptr,&write_info);
+        return error;
+    }
+
+    // Actually write out to the new png
+    write_png(dest.string(), write_ptr, write_info, imageInfo,
+              bundle->getGrayscaleTolerance());
+
+    if (bundle->getVerbose()) {
+        // Find the size of our new file
+        FILE* reader = fopen(dest.string(),"rb");
+        fseek(reader,0,SEEK_END);
+        size_t newSize = (size_t)ftell(reader);
+        fclose(reader);
+
+        float factor = ((float)newSize)/oldSize;
+        int percent = (int)(factor*100);
+        printf("  (processed image to cache entry %s: %d%% size of source)\n",
+               dest.string(), percent);
+    }
+
+    //Clean up
+    fclose(fp);
+    png_destroy_write_struct(&write_ptr,&write_info);
+
+    return NO_ERROR;
+}
 
 status_t postProcessImage(const sp<AaptAssets>& assets,
                           ResourceTable* table, const sp<AaptFile>& file)
