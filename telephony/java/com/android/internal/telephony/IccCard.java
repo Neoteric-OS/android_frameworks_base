@@ -36,6 +36,7 @@ import android.view.WindowManager;
 import com.android.internal.telephony.PhoneBase;
 import com.android.internal.telephony.CommandsInterface.RadioState;
 import com.android.internal.telephony.gsm.SIMRecords;
+import com.android.internal.telephony.IccCardStatus.PinState;
 
 import android.os.SystemProperties;
 
@@ -60,7 +61,10 @@ public abstract class IccCard {
     private boolean mIccPinLocked = true; // Default to locked
     private boolean mIccFdnEnabled = false; // Default to disabled.
                                             // Will be updated when SIM_READY.
+    private int mPin1RetryCount = -1;
+    private int mPin2RetryCount = -1;
 
+    private PinState mPin2State;
 
     /* The extra data for broacasting intent INTENT_ICC_STATE_CHANGE */
     static public final String INTENT_KEY_ICC_STATE = "ss";
@@ -91,7 +95,7 @@ public abstract class IccCard {
     protected static final int EVENT_ICC_LOCKED_OR_ABSENT = 1;
     private static final int EVENT_GET_ICC_STATUS_DONE = 2;
     protected static final int EVENT_RADIO_OFF_OR_NOT_AVAILABLE = 3;
-    private static final int EVENT_PINPUK_DONE = 4;
+    private static final int EVENT_PIN1PUK1_DONE = 4;
     private static final int EVENT_REPOLL_STATUS_DONE = 5;
     protected static final int EVENT_ICC_READY = 6;
     private static final int EVENT_QUERY_FACILITY_LOCK_DONE = 7;
@@ -102,6 +106,7 @@ public abstract class IccCard {
     private static final int EVENT_ICC_STATUS_CHANGED = 12;
     private static final int EVENT_CARD_REMOVED = 13;
     private static final int EVENT_CARD_ADDED = 14;
+    private static final int EVENT_PIN2PUK2_DONE = 15;
 
     /*
       UNKNOWN is a transient state, for example, after uesr inputs ICC pin under
@@ -249,27 +254,27 @@ public abstract class IccCard {
      */
 
     public void supplyPin (String pin, Message onComplete) {
-        mPhone.mCM.supplyIccPin(pin, mHandler.obtainMessage(EVENT_PINPUK_DONE, onComplete));
+        mPhone.mCM.supplyIccPin(pin, mHandler.obtainMessage(EVENT_PIN1PUK1_DONE, onComplete));
     }
 
     public void supplyPuk (String puk, String newPin, Message onComplete) {
         mPhone.mCM.supplyIccPuk(puk, newPin,
-                mHandler.obtainMessage(EVENT_PINPUK_DONE, onComplete));
+                mHandler.obtainMessage(EVENT_PIN1PUK1_DONE, onComplete));
     }
 
     public void supplyPin2 (String pin2, Message onComplete) {
         mPhone.mCM.supplyIccPin2(pin2,
-                mHandler.obtainMessage(EVENT_PINPUK_DONE, onComplete));
+                mHandler.obtainMessage(EVENT_PIN2PUK2_DONE, onComplete));
     }
 
     public void supplyPuk2 (String puk2, String newPin2, Message onComplete) {
         mPhone.mCM.supplyIccPuk2(puk2, newPin2,
-                mHandler.obtainMessage(EVENT_PINPUK_DONE, onComplete));
+                mHandler.obtainMessage(EVENT_PIN2PUK2_DONE, onComplete));
     }
 
     public void supplyNetworkDepersonalization (String pin, Message onComplete) {
         mPhone.mCM.supplyNetworkDepersonalization(pin,
-                mHandler.obtainMessage(EVENT_PINPUK_DONE, onComplete));
+                mHandler.obtainMessage(EVENT_PIN1PUK1_DONE, onComplete));
     }
 
     /**
@@ -293,6 +298,20 @@ public abstract class IccCard {
      public boolean getIccFdnEnabled() {
         return mIccFdnEnabled;
      }
+
+    /**
+     * @return No. of Attempts remaining to unlock PIN1/PUK1
+     */
+    public int getIccPin1RetryCount() {
+        return mPin1RetryCount;
+    }
+
+    /**
+     * @return No. of Attempts remaining to unlock PIN2/PUK2
+    */
+    public int getIccPin2RetryCount() {
+        return mPin2RetryCount;
+    }
 
      /**
       * Set the ICC pin lock enabled or disabled
@@ -551,6 +570,23 @@ public abstract class IccCard {
         }
     }
 
+    /**
+     * Parse the error response to obtain No of attempts remaining to unlock PIN1/PUK1
+    */
+    private void parsePinPukErrorResult(AsyncResult ar, boolean isPin1) {
+        int[] intArray = (int[]) ar.result;
+        int length = intArray.length;
+        mPin1RetryCount = -1;
+        mPin2RetryCount = -1;
+        if (length > 0) {
+            if (isPin1) {
+                mPin1RetryCount = intArray[0];
+            } else {
+                mPin2RetryCount = intArray[0];
+            }
+        }
+    }
+
     public void broadcastIccStateChangedIntent(String value, String reason) {
         Intent intent = new Intent(TelephonyIntents.ACTION_SIM_STATE_CHANGED);
         intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
@@ -605,7 +641,8 @@ public abstract class IccCard {
 
                     getIccCardStatusDone(ar);
                     break;
-                case EVENT_PINPUK_DONE:
+                case EVENT_PIN1PUK1_DONE:
+                case EVENT_PIN2PUK2_DONE:
                     // a PIN/PUK/PIN2/PUK2/Network Personalization
                     // request has completed. ar.userObj is the response Message
                     // Repoll before returning
@@ -613,6 +650,14 @@ public abstract class IccCard {
                     // TODO should abstract these exceptions
                     AsyncResult.forMessage(((Message)ar.userObj)).exception
                                                         = ar.exception;
+
+                    if ((ar.exception != null) && (ar.result != null)) {
+                        if (msg.what == EVENT_PIN1PUK1_DONE) {
+                            parsePinPukErrorResult(ar, true);
+                        } else {
+                            parsePinPukErrorResult(ar, false);
+                        }
+                    }
                     mPhone.mCM.getIccCardStatus(
                         obtainMessage(EVENT_REPOLL_STATUS_DONE, ar.userObj));
                     break;
@@ -641,6 +686,9 @@ public abstract class IccCard {
                         if (mDbg) log( "EVENT_CHANGE_FACILITY_LOCK_DONE: " +
                                 "mIccPinLocked= " + mIccPinLocked);
                     } else {
+                        if (ar.result != null) {
+                            parsePinPukErrorResult(ar, true);
+                        }
                         Log.e(mLogTag, "Error change facility lock with exception "
                             + ar.exception);
                     }
@@ -656,6 +704,9 @@ public abstract class IccCard {
                         if (mDbg) log("EVENT_CHANGE_FACILITY_FDN_DONE: " +
                                 "mIccFdnEnabled=" + mIccFdnEnabled);
                     } else {
+                        if (ar.result != null) {
+                            parsePinPukErrorResult(ar, false);
+                        }
                         Log.e(mLogTag, "Error change facility fdn with exception "
                                 + ar.exception);
                     }
@@ -668,6 +719,9 @@ public abstract class IccCard {
                     if(ar.exception != null) {
                         Log.e(mLogTag, "Error in change sim password with exception"
                             + ar.exception);
+                        if (ar.result != null) {
+                            parsePinPukErrorResult(ar, true);
+                        }
                     }
                     AsyncResult.forMessage(((Message)ar.userObj)).exception
                                                         = ar.exception;
@@ -754,6 +808,8 @@ public abstract class IccCard {
             return IccCard.State.ABSENT;
         }
 
+        mPin2State = app.pin2;
+
         // check if PIN required
         if (app.pin1.isPermBlocked()) {
             return IccCard.State.PERM_DISABLED;
@@ -824,6 +880,20 @@ public abstract class IccCard {
             return mIccCardStatus.getCardState().isCardPresent();
         }
     }
+
+     /**
+      * @return true if PIN2 on ICC card is blocked
+      */
+     public boolean isPin2Blocked() {
+         return mPin2State == PinState.PINSTATE_ENABLED_BLOCKED;
+     }
+
+     /**
+      * @return true if PIN2 on ICC card is permanently blocked
+      */
+     public boolean isPin2PermBlocked() {
+         return mPin2State == PinState.PINSTATE_ENABLED_PERM_BLOCKED;
+     }
 
     private void log(String msg) {
         Log.d(mLogTag, "[IccCard] " + msg);
