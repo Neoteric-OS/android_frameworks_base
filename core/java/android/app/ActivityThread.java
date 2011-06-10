@@ -39,6 +39,7 @@ import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDebug;
 import android.database.sqlite.SQLiteDebug.DbStats;
+import android.font.FontManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Build;
@@ -2968,6 +2969,9 @@ public final class ActivityThread {
         if (config.locale != null) {
             Locale.setDefault(config.locale);
         }
+        if (config.font != null) {
+            FontManager.setSelectedDefaultFontName(config.font);
+        }
 
         Resources.updateSystemConfiguration(config, dm);
 
@@ -3140,6 +3144,15 @@ public final class ActivityThread {
         Locale.setDefault(data.config.locale);
 
         /*
+         * Initialize the default font in this process.
+         */
+        if (data.config.font != null) {
+            FontManager.setSelectedDefaultFontName(data.config.font);
+        } else {
+            mConfiguration.font = FontManager.getSelectedDefaultFontName();
+        }
+
+       /*
          * Update the system configuration since its preloaded and might not
          * reflect configuration changes. The configuration object passed
          * in AppBindData can be safely assumed to be up to date

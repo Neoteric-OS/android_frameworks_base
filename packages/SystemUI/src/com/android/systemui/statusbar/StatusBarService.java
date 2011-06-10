@@ -1443,6 +1443,14 @@ public class StatusBarService extends Service implements CommandQueue.Callbacks 
                 animateCollapse();
             }
             else if (Intent.ACTION_CONFIGURATION_CHANGED.equals(action)) {
+                // update clock for changing font
+                if (mStatusBarView != null) {
+                    Clock clock = (Clock)mStatusBarView.findViewById(R.id.clock);
+                    if ( clock != null ) {
+                        clock.invalidate();
+                    }
+                }
+
                 updateResources();
             }
         }
@@ -1462,6 +1470,11 @@ public class StatusBarService extends Service implements CommandQueue.Callbacks 
         mOngoingTitle.setText(getText(R.string.status_bar_ongoing_events_title));
         mLatestTitle.setText(getText(R.string.status_bar_latest_events_title));
         mNoNotificationsTitle.setText(getText(R.string.status_bar_no_notifications_title));
+
+        // update clock for changing font
+        if(mStatusBarView != null && mStatusBarView.mDate != null) {
+            mStatusBarView.mDate.invalidate();
+        }
 
         mEdgeBorder = res.getDimensionPixelSize(R.dimen.status_bar_edge_ignore);
 

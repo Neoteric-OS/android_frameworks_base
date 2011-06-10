@@ -17,8 +17,10 @@
 package android.content.res;
 
 import android.content.pm.ActivityInfo;
+import android.font.FontManager;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import java.util.Locale;
 
@@ -204,6 +206,11 @@ public final class Configuration implements Parcelable, Comparable<Configuration
     public int uiMode;
 
     /**
+     * Current user preference for the default font.
+     */
+    public String font;
+
+    /**
      * @hide Internal book-keeping.
      */
     public int seq;
@@ -240,6 +247,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         orientation = o.orientation;
         screenLayout = o.screenLayout;
         uiMode = o.uiMode;
+        font = o.font;
         seq = o.seq;
     }
     
@@ -271,6 +279,8 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         sb.append(screenLayout);
         sb.append(" uiMode=");
         sb.append(uiMode);
+        sb.append(" font=");
+        sb.append(font);
         if (seq != 0) {
             sb.append(" seq=");
             sb.append(seq);
@@ -296,6 +306,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         orientation = ORIENTATION_UNDEFINED;
         screenLayout = SCREENLAYOUT_SIZE_UNDEFINED;
         uiMode = UI_MODE_TYPE_UNDEFINED;
+        font = null;
         seq = 0;
     }
 
@@ -389,6 +400,11 @@ public final class Configuration implements Parcelable, Comparable<Configuration
                         | (delta.uiMode&UI_MODE_NIGHT_MASK);
             }
         }
+        if (delta.font != null
+                && (font == null || !font.equals(delta.font))) {
+            changed |= ActivityInfo.CONFIG_FONT;
+            font = delta.font;
+        }
         
         if (delta.seq != 0) {
             seq = delta.seq;
@@ -418,9 +434,11 @@ public final class Configuration implements Parcelable, Comparable<Configuration
      * {@link android.content.pm.ActivityInfo#CONFIG_NAVIGATION
      * PackageManager.ActivityInfo.CONFIG_NAVIGATION},
      * {@link android.content.pm.ActivityInfo#CONFIG_ORIENTATION
-     * PackageManager.ActivityInfo.CONFIG_ORIENTATION}, or
+     * PackageManager.ActivityInfo.CONFIG_ORIENTATION},
      * {@link android.content.pm.ActivityInfo#CONFIG_SCREEN_LAYOUT
-     * PackageManager.ActivityInfo.CONFIG_SCREEN_LAYOUT}.
+     * PackageManager.ActivityInfo.CONFIG_SCREEN_LAYOUT}, or
+     * {@link android.content.pm.ActivityInfo#CONFIG_FONT
+     * PackageManager.ActivityInfo.CONFIG_FONT}.
      */
     public int diff(Configuration delta) {
         int changed = 0;
@@ -472,6 +490,10 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         if (delta.uiMode != (UI_MODE_TYPE_UNDEFINED|UI_MODE_NIGHT_UNDEFINED)
                 && uiMode != delta.uiMode) {
             changed |= ActivityInfo.CONFIG_UI_MODE;
+        }
+        if (delta.font != null
+                && (font == null || !font.equals(delta.font))) {
+            changed |= ActivityInfo.CONFIG_FONT;
         }
         
         return changed;
@@ -554,6 +576,11 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         dest.writeInt(orientation);
         dest.writeInt(screenLayout);
         dest.writeInt(uiMode);
+        if (font == null) {
+            dest.writeString("");
+        } else {
+            dest.writeString(font);
+        }
         dest.writeInt(seq);
     }
 
@@ -575,6 +602,8 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         orientation = source.readInt();
         screenLayout = source.readInt();
         uiMode = source.readInt();
+        font = source.readString();
+        if (TextUtils.isEmpty(font)) font = null;
         seq = source.readInt();
     }
     
@@ -635,7 +664,15 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         n = this.screenLayout - that.screenLayout;
         if (n != 0) return n;
         n = this.uiMode - that.uiMode;
-        //if (n != 0) return n;
+        if (n != 0) return n;
+        if (this.font == null) {
+            if (that.font != null) return 1;
+        } else if (that.font == null) {
+            return -1;
+        } else {
+            n = this.font.compareTo(that.font);
+            // if (n != 0) return n;;
+        }
         return n;
     }
 
@@ -659,6 +696,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
                 + this.touchscreen
                 + this.keyboard + this.keyboardHidden + this.hardKeyboardHidden
                 + this.navigation + this.navigationHidden
-                + this.orientation + this.screenLayout + this.uiMode;
+                + this.orientation + this.screenLayout + this.uiMode
+                + (this.font != null ? this.font.hashCode() : 0);
     }
 }
