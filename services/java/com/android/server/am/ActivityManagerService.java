@@ -2569,6 +2569,12 @@ public final class ActivityManagerService extends ActivityManagerNative
                     mMainStack.mHistory.remove(i);
 
                     r.inHistory = false;
+                    final ActivityRecord resultTo = r.resultTo;
+                    if (resultTo != null) {
+                        resultTo.addResultLocked(r, r.resultWho, r.requestCode,
+                                                 Activity.RESULT_CANCELED, null);
+                        r.resultTo = null;
+                    }
                     mWindowManager.removeAppToken(r);
                     if (VALIDATE_TOKENS) {
                         mWindowManager.validateAppTokens(mMainStack.mHistory);
