@@ -19,6 +19,11 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <grp.h>
+#include <sys/prctl.h>
+#include <linux/capability.h>
+#include <string.h>
+
+#define LOG_TAG "mediaserver"
 
 #include <binder/IPCThreadState.h>
 #include <binder/ProcessState.h>
@@ -33,8 +38,53 @@
 
 using namespace android;
 
+static void setup_capabilities()
+{
+    struct __user_cap_header_struct header;
+    struct __user_cap_data_struct data;
+    struct __user_cap_data_struct data_backup;
+
+    header.version = _LINUX_CAPABILITY_VERSION;
+    header.pid = getpid();
+
+    if (capget(&header, &data_backup)) {
+        LOGE("capget failed : %s\n", strerror(errno));
+    }
+
+    // Request not clear capabilities when dropping root
+    // This has the following effect:
+    //   A thread's effective capability set is always cleared when such a credential
+    //   change is made, regardless of the setting of the "keep capabilities" flag.
+    if (prctl(PR_SET_KEEPCAPS, 1, 0, 0, 0)) {
+        LOGE("PR_SET_KEEPCAPS failed for service : %s\n", strerror(errno));
+    }
+
+    // Request back capabilities we had
+    data.effective = data_backup.effective;
+    data.permitted = data_backup.permitted;
+    data.inheritable = data_backup.inheritable;
+
+    if (capset(&header, &data)) {
+        LOGE("capset backup failed : %s\n", strerror(errno));
+    }
+
+    // switch user to "media"; this may fail if we are not root or "media"
+    if (setuid(AID_MEDIA)) {
+        LOGE("setuid failed : %s\n", strerror(errno));
+    }
+
+    if (data_backup.inheritable) {
+        // Setup the expected final capabilities
+        data.effective = data.permitted = data.inheritable = data_backup.inheritable;
+        if (capset(&header, &data)) {
+            LOGE("capset failed : %s\n", strerror(errno));
+        }
+    }
+}
+
 int main(int argc, char** argv)
 {
+    setup_capabilities();
     sp<ProcessState> proc(ProcessState::self());
     sp<IServiceManager> sm = defaultServiceManager();
     LOGI("ServiceManager: %p", sm.get());
