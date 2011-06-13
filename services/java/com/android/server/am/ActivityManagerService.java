@@ -2566,9 +2566,13 @@ public final class ActivityManagerService extends ActivityManagerNative
                     if (localLOGV) Slog.v(
                         TAG, "Removing this entry!  frozen=" + r.haveState
                         + " finishing=" + r.finishing);
-                    mMainStack.mHistory.remove(i);
 
-                    r.inHistory = false;
+                    if (!r.stack.finishActivityLocked(r, i, Activity.RESULT_CANCELED,
+                                                      null, "crashed")) {
+                        mMainStack.mHistory.remove(i);
+                        r.inHistory = false;
+                    }
+
                     mWindowManager.removeAppToken(r);
                     if (VALIDATE_TOKENS) {
                         mWindowManager.validateAppTokens(mMainStack.mHistory);
