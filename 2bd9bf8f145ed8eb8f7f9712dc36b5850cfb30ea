@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAABCX////c\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2570,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2011-06-14T23:03:11Z",
+      "side": 1,
+      "message": "This is changing the semantics of this function to not actually remove the activity in some cases...  it needs to always remove the activity.  My previous comment was just that the finishActivityLocked() call shouldn\u0027t be done if the activity is already finished.",
+      "revId": "2bd9bf8f145ed8eb8f7f9712dc36b5850cfb30ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
