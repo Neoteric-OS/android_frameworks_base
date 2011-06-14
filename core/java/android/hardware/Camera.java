@@ -1505,6 +1505,7 @@ public class Camera {
          */
         @Deprecated
         public void setPreviewFrameRate(int fps) {
+            remove(KEY_PREVIEW_FPS_RANGE);
             set(KEY_PREVIEW_FRAME_RATE, fps);
         }
 
@@ -1547,6 +1548,7 @@ public class Camera {
          * @see #getSupportedPreviewFpsRange()
          */
         public void setPreviewFpsRange(int min, int max) {
+            remove(KEY_PREVIEW_FRAME_RATE);
             set(KEY_PREVIEW_FPS_RANGE, "" + min + "," + max);
         }
 
