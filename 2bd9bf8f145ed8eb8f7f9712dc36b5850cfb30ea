@@ -16,6 +16,24 @@
       "revId": "2bd9bf8f145ed8eb8f7f9712dc36b5850cfb30ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABCX////E\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2570,
+      "author": {
+        "id": 1004254
+      },
+      "writtenOn": "2011-06-14T23:25:51Z",
+      "side": 1,
+      "message": "It still ensures that the activity is removed from mHistory in all cases and relies on the return value of finishActivityLocked().If r.finishing is true, the activity is removed and finishActivityLocked() isn\u0027t invoked.If r.finishing is false, finishActivityLocked() is invoked and it might or might not remove from the activity from mHistory and if it doesn\u0027t, it returns false and removal from the list is handled here.",
+      "parentUuid": "AAABCX////c\u003d",
+      "revId": "2bd9bf8f145ed8eb8f7f9712dc36b5850cfb30ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
