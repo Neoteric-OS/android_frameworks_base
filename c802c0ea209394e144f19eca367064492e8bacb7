@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAABCH//+5g\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2570,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2011-06-14T19:35:26Z",
+      "side": 1,
+      "message": "Only do this if r.finishing !\u003d true so we don\u0027t get bogus warning messages in the log.",
+      "revId": "c802c0ea209394e144f19eca367064492e8bacb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
