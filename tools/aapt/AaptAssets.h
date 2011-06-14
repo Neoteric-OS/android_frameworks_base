@@ -130,6 +130,7 @@ inline int strictly_order_type(const AaptGroupEntry& lhs, const AaptGroupEntry& 
 }
 
 class AaptGroup;
+class ResourceFullPathSet;
 
 /**
  * A single asset file we know about.
@@ -259,7 +260,8 @@ public:
     virtual ssize_t slurpFullTree(Bundle* bundle,
                                   const String8& srcDir,
                                   const AaptGroupEntry& kind,
-                                  const String8& resType);
+                                  const String8& resType,
+                                  sp<ResourceFullPathSet>& fullResPaths);
 
     /*
      * Perform some sanity checks on the names of files and directories here.
@@ -474,6 +476,12 @@ public:
     ResourceTypeSet();
 };
 
+class ResourceFullPathSet : public RefBase,
+                            public Vector<String8>
+{
+public:
+    ResourceFullPathSet();
+};
 
 /**
  * Asset hierarchy being operated on.
@@ -507,7 +515,8 @@ public:
     virtual ssize_t slurpFullTree(Bundle* bundle,
                                   const String8& srcDir,
                                   const AaptGroupEntry& kind,
-                                  const String8& resType);
+                                  const String8& resType,
+                                  sp<ResourceFullPathSet>& fullResPaths);
 
     ssize_t slurpResourceTree(Bundle* bundle, const String8& srcDir);
     ssize_t slurpResourceZip(Bundle* bundle, const char* filename);
@@ -534,6 +543,10 @@ public:
     inline KeyedVector<String8, sp<ResourceTypeSet> >* getResources() { return mRes; }
     inline void 
         setResources(KeyedVector<String8, sp<ResourceTypeSet> >* res) { delete mRes; mRes = res; }
+        
+    inline sp<ResourceFullPathSet>& getFullResPaths() { return mFullResPaths; }
+    inline void 
+        setFullResPaths(sp<ResourceFullPathSet>& res) { mFullResPaths = res; }
 
 private:
     String8 mPackage;
@@ -548,6 +561,8 @@ private:
 
     sp<AaptAssets> mOverlay;
     KeyedVector<String8, sp<ResourceTypeSet> >* mRes;
+    
+    sp<ResourceFullPathSet> mFullResPaths;
 };
 
 #endif // __AAPT_ASSETS_H
