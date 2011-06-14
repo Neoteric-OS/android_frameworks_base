@@ -259,7 +259,8 @@ public:
     virtual ssize_t slurpFullTree(Bundle* bundle,
                                   const String8& srcDir,
                                   const AaptGroupEntry& kind,
-                                  const String8& resType);
+                                  const String8& resType,
+                                  Vector<String8>* fullResPaths);
 
     /*
      * Perform some sanity checks on the names of files and directories here.
@@ -481,8 +482,9 @@ public:
 class AaptAssets : public AaptDir
 {
 public:
-    AaptAssets() : AaptDir(String8(), String8()), mHaveIncludedAssets(false), mRes(NULL) { }
-    virtual ~AaptAssets() { delete mRes; }
+    AaptAssets() : AaptDir(String8(), String8()), mHaveIncludedAssets(false), mRes(NULL),
+                   mFullResPaths(NULL) { }
+    virtual ~AaptAssets() { delete mRes; delete mFullResPaths; }
 
     const String8& getPackage() const { return mPackage; }
     void setPackage(const String8& package) { mPackage = package; mSymbolsPrivatePackage = package; }
@@ -507,7 +509,8 @@ public:
     virtual ssize_t slurpFullTree(Bundle* bundle,
                                   const String8& srcDir,
                                   const AaptGroupEntry& kind,
-                                  const String8& resType);
+                                  const String8& resType,
+                                  Vector<String8>* fullResPaths);
 
     ssize_t slurpResourceTree(Bundle* bundle, const String8& srcDir);
     ssize_t slurpResourceZip(Bundle* bundle, const char* filename);
@@ -534,6 +537,10 @@ public:
     inline KeyedVector<String8, sp<ResourceTypeSet> >* getResources() { return mRes; }
     inline void 
         setResources(KeyedVector<String8, sp<ResourceTypeSet> >* res) { delete mRes; mRes = res; }
+        
+    inline Vector<String8>* getFullResPaths() { return mFullResPaths; }
+    inline void 
+        setFullResPaths(Vector<String8>* res) { delete mFullResPaths; mFullResPaths = res; }
 
 private:
     String8 mPackage;
@@ -548,6 +555,8 @@ private:
 
     sp<AaptAssets> mOverlay;
     KeyedVector<String8, sp<ResourceTypeSet> >* mRes;
+    
+    Vector<String8>* mFullResPaths;
 };
 
 #endif // __AAPT_ASSETS_H

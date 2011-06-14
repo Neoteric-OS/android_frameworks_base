@@ -1393,7 +1393,8 @@ status_t AaptDir::addLeafFile(const String8& leafName, const sp<AaptFile>& file)
 }
 
 ssize_t AaptDir::slurpFullTree(Bundle* bundle, const String8& srcDir,
-                            const AaptGroupEntry& kind, const String8& resType)
+                            const AaptGroupEntry& kind, const String8& resType,
+                            Vector<String8>* fullResPaths)
 {
     Vector<String8> fileNames;
 
@@ -1419,9 +1420,16 @@ ssize_t AaptDir::slurpFullTree(Bundle* bundle, const String8& srcDir,
             if (isHidden(srcDir.string(), entry->d_name))
                 continue;
 
-            fileNames.add(String8(entry->d_name));
+            String8 name(entry->d_name);
+            fprintf(stdout, "Adding %s/%s\n", srcDir.string(), entry->d_name);
+            fileNames.add(name);
+            // Add fully qualified path for dependency purposes
+            // if we're collecting them
+            if (fullResPaths != NULL) {
+                fprintf(stdout, "Adding %s\n", srcDir.appendPathCopy(name).string());
+                fullResPaths->add(srcDir.appendPathCopy(name));
+            }
         }
-
         closedir(dir);
     }
 
@@ -1448,7 +1456,7 @@ ssize_t AaptDir::slurpFullTree(Bundle* bundle, const String8& srcDir,
                 notAdded = true;
             }
             ssize_t res = subdir->slurpFullTree(bundle, pathName, kind,
-                                                resType);
+                                                resType, fullResPaths);
             if (res < NO_ERROR) {
                 return res;
             }
@@ -1680,7 +1688,7 @@ ssize_t AaptAssets::slurpFromArgs(Bundle* bundle)
         sp<AaptDir> assetAaptDir = makeDir(String8(kAssetDir));
         AaptGroupEntry group;
         count = assetAaptDir->slurpFullTree(bundle, assetRoot, group,
-                                            String8());
+                                            String8(), mFullResPaths);
         if (count < 0) {
             totalCount = count;
             goto bail;
@@ -1753,7 +1761,7 @@ ssize_t AaptAssets::slurpFromArgs(Bundle* bundle)
          * guarantees about ordering, so we're okay with an inorder search
          * using whatever order the OS happens to hand back to us.
          */
-        count = slurpFullTree(bundle, assetRoot, AaptGroupEntry(), String8());
+        count = slurpFullTree(bundle, assetRoot, AaptGroupEntry(), String8(), mFullResPaths);
         if (count < 0) {
             /* failure; report error and remove archive */
             totalCount = count;
@@ -1779,9 +1787,10 @@ bail:
 
 ssize_t AaptAssets::slurpFullTree(Bundle* bundle, const String8& srcDir,
                                     const AaptGroupEntry& kind,
-                                    const String8& resType)
+                                    const String8& resType,
+                                    Vector<String8>* fullResPaths)
 {
-    ssize_t res = AaptDir::slurpFullTree(bundle, srcDir, kind, resType);
+    ssize_t res = AaptDir::slurpFullTree(bundle, srcDir, kind, resType, fullResPaths);
     if (res > 0) {
         mGroupEntries.add(kind);
     }
@@ -1843,7 +1852,7 @@ ssize_t AaptAssets::slurpResourceTree(Bundle* bundle, const String8& srcDir)
         if (type == kFileTypeDirectory) {
             sp<AaptDir> dir = makeDir(String8(entry->d_name));
             ssize_t res = dir->slurpFullTree(bundle, subdirName, group,
-                                                resType);
+                                                resType, mFullResPaths);
             if (res < 0) {
                 count = res;
                 goto bail;
