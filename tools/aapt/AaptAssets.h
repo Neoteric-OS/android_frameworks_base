@@ -261,6 +261,10 @@ public:
                                   const AaptGroupEntry& kind,
                                   const String8& resType);
 
+    inline Vector<String8>* getFullResPaths() { return sFullResPaths; }
+    inline void setFullResPaths(Vector<String8>* paths) { delete sFullResPaths;
+                                                          sFullResPaths = paths; }
+
     /*
      * Perform some sanity checks on the names of files and directories here.
      * In particular:
@@ -290,6 +294,11 @@ private:
 
     DefaultKeyedVector<String8, sp<AaptGroup> > mFiles;
     DefaultKeyedVector<String8, sp<AaptDir> > mDirs;
+    
+    // List of all resources encountered while slurping
+    // trees. Static because multiple AaptDirs are spawned
+    // while recursing through file trees.
+    static Vector<String8>* sFullResPaths;
 };
 
 /**
