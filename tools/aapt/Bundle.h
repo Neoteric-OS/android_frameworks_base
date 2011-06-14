@@ -41,11 +41,12 @@ public:
           mCompressionMethod(0), mOutputAPKFile(NULL),
           mManifestPackageNameOverride(NULL), mInstrumentationPackageNameOverride(NULL),
           mIsOverlayPackage(false),
-          mAutoAddOverlay(false), mAssetSourceDir(NULL), mProguardFile(NULL),
+          mAutoAddOverlay(false), mGenDependencies(false),
+          mAssetSourceDir(NULL), mProguardFile(NULL),
           mAndroidManifestFile(NULL), mPublicOutputFile(NULL),
           mRClassDir(NULL), mResourceIntermediatesDir(NULL), mManifestMinSdkVersion(NULL),
           mMinSdkVersion(NULL), mTargetSdkVersion(NULL), mMaxSdkVersion(NULL),
-          mVersionCode(NULL), mVersionName(NULL), mCustomPackage(NULL),
+          mVersionCode(NULL), mVersionName(NULL), mCustomPackage(NULL), mExtraPackages(NULL),
           mMaxResVersion(NULL), mDebugMode(false), mNonConstantId(false), mProduct(NULL),
           mArgc(0), mArgv(NULL)
         {}
@@ -97,6 +98,8 @@ public:
     void setIsOverlayPackage(bool val) { mIsOverlayPackage = val; }
     bool getAutoAddOverlay() { return mAutoAddOverlay; }
     void setAutoAddOverlay(bool val) { mAutoAddOverlay = val; }
+    bool getGenDependencies() { return mGenDependencies; }
+    void setGenDependencies(bool val) { mGenDependencies = val; }
 
     /*
      * Input options.
@@ -138,6 +141,8 @@ public:
     void setVersionName(const char* val) { mVersionName = val; }
     const char* getCustomPackage() const { return mCustomPackage; }
     void setCustomPackage(const char* val) { mCustomPackage = val; }
+    const char* getExtraPackages() const { return mExtraPackages; }
+    void setExtraPackages(const char* val) { mExtraPackages = val; }
     const char* getMaxResVersion() const { return mMaxResVersion; }
     void setMaxResVersion(const char * val) { mMaxResVersion = val; }
     bool getDebugMode() { return mDebugMode; }
@@ -224,6 +229,7 @@ private:
     const char* mInstrumentationPackageNameOverride;
     bool        mIsOverlayPackage;
     bool        mAutoAddOverlay;
+    bool        mGenDependencies;
     const char* mAssetSourceDir;
     const char* mProguardFile;
     const char* mAndroidManifestFile;
@@ -243,6 +249,7 @@ private:
     const char* mVersionCode;
     const char* mVersionName;
     const char* mCustomPackage;
+    const char* mExtraPackages;
     const char* mMaxResVersion;
     bool        mDebugMode;
     bool        mNonConstantId;
