@@ -261,6 +261,10 @@ public:
                                   const AaptGroupEntry& kind,
                                   const String8& resType);
 
+    inline Vector<String8>* getFullResPaths() { return sFullResPaths; }
+    inline void setFullResPaths(Vector<String8>* paths) { delete sFullResPaths;
+                                                          sFullResPaths = paths; }
+
     /*
      * Perform some sanity checks on the names of files and directories here.
      * In particular:
@@ -283,6 +287,9 @@ public:
     void print() const;
 
     String8 getPrintableSource() const;
+
+    // Data storage
+    static Vector<String8>* sFullResPaths;
 
 private:
     String8 mLeaf;

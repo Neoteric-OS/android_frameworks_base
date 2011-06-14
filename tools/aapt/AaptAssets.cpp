@@ -1392,6 +1392,10 @@ status_t AaptDir::addLeafFile(const String8& leafName, const sp<AaptFile>& file)
     return group->addFile(file);
 }
 
+
+// Initialize the static pointer for AaptDir's resource path lookup table
+Vector<String8>* AaptDir::sFullResPaths = NULL;
+
 ssize_t AaptDir::slurpFullTree(Bundle* bundle, const String8& srcDir,
                             const AaptGroupEntry& kind, const String8& resType)
 {
@@ -1419,9 +1423,14 @@ ssize_t AaptDir::slurpFullTree(Bundle* bundle, const String8& srcDir,
             if (isHidden(srcDir.string(), entry->d_name))
                 continue;
 
-            fileNames.add(String8(entry->d_name));
+            String8 name(entry->d_name);
+            fileNames.add(name);
+            // Add fully qualified path for dependency purposes
+            // if we're collecting them
+            if (sFullResPaths != NULL) {
+                sFullResPaths->add(srcDir.appendPathCopy(name));
+            }
         }
-
         closedir(dir);
     }
 
