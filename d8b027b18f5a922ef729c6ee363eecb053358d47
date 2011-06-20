@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAABDX///hw\u003d",
+        "filename": "tools/aapt/AaptAssets.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2011-06-20T23:54:36Z",
+      "side": 0,
+      "message": "Don\u0027t make whitespace changes.",
+      "revId": "d8b027b18f5a922ef729c6ee363eecb053358d47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

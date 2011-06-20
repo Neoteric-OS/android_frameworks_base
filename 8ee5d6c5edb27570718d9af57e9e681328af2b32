@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAABDX///h4\u003d",
+        "filename": "tools/aapt/AaptAssets.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1397,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2011-06-20T23:54:36Z",
+      "side": 1,
+      "message": "A global?  Really?  Please no.",
+      "revId": "8ee5d6c5edb27570718d9af57e9e681328af2b32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABDX///h0\u003d",
+        "filename": "tools/aapt/AaptAssets.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2011-06-20T23:54:36Z",
+      "side": 1,
+      "message": "Please don\u0027t reformat files in a code change.  (Goes for all of the other formatting changes in this file.)",
+      "revId": "8ee5d6c5edb27570718d9af57e9e681328af2b32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
