@@ -210,9 +210,10 @@ class AppWidgetServiceImpl {
 
             synchronized (mAppWidgetIds) {
                 ensureStateLoadedLocked();
-                int N = mInstalledProviders.size();
+                ArrayList<Provider> providers = new ArrayList(mInstalledProviders);
+                int N = providers.size();
                 for (int i = N - 1; i >= 0; i--) {
-                    Provider p = mInstalledProviders.get(i);
+                    Provider p = providers.get(i);
                     String pkgName = p.info.provider.getPackageName();
                     updateProvidersForPackageLocked(pkgName);
                 }
