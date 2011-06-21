@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAABDX///UM\u003d",
+        "filename": "tools/aapt/AaptAssets.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2011-06-21T19:33:39Z",
+      "side": 1,
+      "message": "Statics are generally something that you should be careful of.  In this case, we already have all of this (relatively) nice factoring of the various data into classes...  and then this global gets slapped in to the middle of it.  On top of that, the APIs to access it aren\u0027t even static.\n\nGlobalish data about what overall is being parsed should be in something like AaptAssets.  I really don\u0027t want this implemented as a static.",
+      "revId": "cd184706886ba4c3361309c1a95e387c7a929bc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAABDX///U0\u003d",
         "filename": "tools/aapt/Command.cpp",
         "patchSetId": 10
