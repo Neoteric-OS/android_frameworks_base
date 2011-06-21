@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAABDX///S8\u003d",
+        "filename": "tools/aapt/AaptAssets.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1006444
+      },
+      "writtenOn": "2011-06-21T21:36:00Z",
+      "side": 1,
+      "message": "Understood. Changing to pass as a parameter.",
+      "parentUuid": "AAABDX///UM\u003d",
+      "revId": "cd184706886ba4c3361309c1a95e387c7a929bc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAABDX///U0\u003d",
         "filename": "tools/aapt/Command.cpp",
         "patchSetId": 10
