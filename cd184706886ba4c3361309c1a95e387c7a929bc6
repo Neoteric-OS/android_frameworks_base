@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAABDX///U0\u003d",
+        "filename": "tools/aapt/Command.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1435,
+      "author": {
+        "id": 1001414
+      },
+      "writtenOn": "2011-06-21T18:31:37Z",
+      "side": 1,
+      "message": "Should use : as separator to prevent having to escape it from the command line.",
+      "revId": "cd184706886ba4c3361309c1a95e387c7a929bc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
