@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAABDX///YI\u003d",
+        "filename": "tools/aapt/Command.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1494,
+      "author": {
+        "id": 1006444
+      },
+      "writtenOn": "2011-06-21T17:16:13Z",
+      "side": 1,
+      "message": "Good catch, thanks.",
+      "parentUuid": "AAABDX///eY\u003d",
+      "revId": "1973f6eced49dbda01a67afe951b3f02c8d6ca82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAABDX///eU\u003d",
         "filename": "tools/aapt/Main.cpp",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2011-06-21T02:02:51Z",
       "side": 1,
       "message": "Is this an additional feature not mentioned in the commit description?",
+      "revId": "1973f6eced49dbda01a67afe951b3f02c8d6ca82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABDX///YE\u003d",
+        "filename": "tools/aapt/Main.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1006444
+      },
+      "writtenOn": "2011-06-21T17:16:13Z",
+      "side": 1,
+      "message": "This change depends on (and thus cherry picks from) this change for aapt: https://review.source.android.com//#change,23615",
+      "parentUuid": "AAABDX///eU\u003d",
       "revId": "1973f6eced49dbda01a67afe951b3f02c8d6ca82",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
