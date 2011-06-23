@@ -45,7 +45,6 @@ LOCAL_C_INCLUDES += \
 	$(JNI_H_INCLUDE) \
 	external/libgsm/inc \
 	frameworks/base/media/libstagefright/codecs/amrnb/common/include \
-	frameworks/base/media/libstagefright/codecs/amrnb/common/ \
 	frameworks/base/media/libstagefright/codecs/amrnb/enc/include \
 	frameworks/base/media/libstagefright/codecs/amrnb/enc/src \
 	frameworks/base/media/libstagefright/codecs/amrnb/dec/include \
