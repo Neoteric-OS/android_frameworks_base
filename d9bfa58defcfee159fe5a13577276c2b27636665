@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAABDX//+bo\u003d",
+        "filename": "tools/aapt/AaptAssets.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1001414
+      },
+      "writtenOn": "2011-06-24T20:51:34Z",
+      "side": 1,
+      "message": "quick comment here on what it\u0027s for would be nice. Also I\u0027m not sure about the name. How about FilePathStore (since you call the variable pathStore later). This makes it easier to understand it\u0027s storing file paths",
+      "revId": "d9bfa58defcfee159fe5a13577276c2b27636665",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABDX//+bk\u003d",
+        "filename": "tools/aapt/AaptAssets.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1001414
+      },
+      "writtenOn": "2011-06-24T20:51:34Z",
+      "side": 1,
+      "message": "whitespace issue.",
+      "revId": "d9bfa58defcfee159fe5a13577276c2b27636665",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABDX//+bg\u003d",
+        "filename": "tools/aapt/Main.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001414
+      },
+      "writtenOn": "2011-06-24T20:51:34Z",
+      "side": 1,
+      "message": "I would mention that it\u0027s located in the same folder as R.java.",
+      "revId": "d9bfa58defcfee159fe5a13577276c2b27636665",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABDX//+bc\u003d",
+        "filename": "tools/aapt/ZipFile.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001414
+      },
+      "writtenOn": "2011-06-24T20:51:34Z",
+      "side": 1,
+      "message": "why did you edit this?",
+      "revId": "d9bfa58defcfee159fe5a13577276c2b27636665",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
