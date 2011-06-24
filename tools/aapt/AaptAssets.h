@@ -543,10 +543,14 @@ public:
     inline KeyedVector<String8, sp<ResourceTypeSet> >* getResources() { return mRes; }
     inline void 
         setResources(KeyedVector<String8, sp<ResourceTypeSet> >* res) { delete mRes; mRes = res; }
-        
+
     inline sp<ResourceFullPathSet>& getFullResPaths() { return mFullResPaths; }
     inline void 
         setFullResPaths(sp<ResourceFullPathSet>& res) { mFullResPaths = res; }
+
+    inline sp<ResourceFullPathSet>& getFullAssetPaths() { return mFullAssetPaths; }
+    inline void
+        setFullAssetPaths(sp<ResourceFullPathSet>& res) { mFullAssetPaths = res; }
 
 private:
     String8 mPackage;
@@ -563,6 +567,7 @@ private:
     KeyedVector<String8, sp<ResourceTypeSet> >* mRes;
     
     sp<ResourceFullPathSet> mFullResPaths;
+    sp<ResourceFullPathSet> mFullAssetPaths;
 };
 
 #endif // __AAPT_ASSETS_H
