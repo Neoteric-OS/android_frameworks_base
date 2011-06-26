@@ -41,7 +41,7 @@ public:
           mCompressionMethod(0), mOutputAPKFile(NULL),
           mManifestPackageNameOverride(NULL), mInstrumentationPackageNameOverride(NULL),
           mIsOverlayPackage(false),
-          mAutoAddOverlay(false), mAssetSourceDir(NULL), mProguardFile(NULL),
+          mAutoAddOverlay(false), mProguardFile(NULL),
           mAndroidManifestFile(NULL), mPublicOutputFile(NULL),
           mRClassDir(NULL), mResourceIntermediatesDir(NULL), mManifestMinSdkVersion(NULL),
           mMinSdkVersion(NULL), mTargetSdkVersion(NULL), mMaxSdkVersion(NULL),
@@ -101,8 +101,8 @@ public:
     /*
      * Input options.
      */
-    const char* getAssetSourceDir() const { return mAssetSourceDir; }
-    void setAssetSourceDir(const char* dir) { mAssetSourceDir = dir; }
+    const android::Vector<const char*>& getAssetSourceDirs() const { return mAssetSourceDirs; }
+    void addAssetSourceDir(const char* dir) { mAssetSourceDirs.insertAt(dir,0); }
     const char* getProguardFile() const { return mProguardFile; }
     void setProguardFile(const char* file) { mProguardFile = file; }
     const android::Vector<const char*>& getResourceSourceDirs() const { return mResourceSourceDirs; }
@@ -224,7 +224,6 @@ private:
     const char* mInstrumentationPackageNameOverride;
     bool        mIsOverlayPackage;
     bool        mAutoAddOverlay;
-    const char* mAssetSourceDir;
     const char* mProguardFile;
     const char* mAndroidManifestFile;
     const char* mPublicOutputFile;
@@ -235,6 +234,7 @@ private:
     android::Vector<const char*> mJarFiles;
     android::Vector<const char*> mNoCompressExtensions;
     android::Vector<const char*> mResourceSourceDirs;
+    android::Vector<const char*> mAssetSourceDirs;
 
     const char* mManifestMinSdkVersion;
     const char* mMinSdkVersion;

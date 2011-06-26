@@ -212,6 +212,7 @@ public:
         { return mFiles; }
 
     status_t addFile(const sp<AaptFile>& file);
+    status_t addFile(const sp<AaptFile>& file, bool replaceIfExist);
     void removeFile(size_t index);
 
     void print() const;
@@ -233,12 +234,15 @@ class AaptDir : public RefBase
 {
 public:
     AaptDir(const String8& leaf, const String8& path)
-        : mLeaf(leaf), mPath(path) { }
+        : mLeaf(leaf), mPath(path), mFileOverlay(false) { }
     virtual ~AaptDir() { }
 
     const String8& getLeaf() const { return mLeaf; }
 
     const String8& getPath() const { return mPath; }
+
+    void setFileOverlay(bool enableFileOverlay) { mFileOverlay = enableFileOverlay; }
+    bool getFileOverlay() const { return mFileOverlay; }
 
     const DefaultKeyedVector<String8, sp<AaptGroup> >& getFiles() const { return mFiles; }
     const DefaultKeyedVector<String8, sp<AaptDir> >& getDirs() const { return mDirs; }
@@ -287,6 +291,7 @@ public:
 private:
     String8 mLeaf;
     String8 mPath;
+    bool mFileOverlay;
 
     DefaultKeyedVector<String8, sp<AaptGroup> > mFiles;
     DefaultKeyedVector<String8, sp<AaptDir> > mDirs;

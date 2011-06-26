@@ -1251,9 +1251,18 @@ String8 AaptFile::getPrintableSource() const
 
 status_t AaptGroup::addFile(const sp<AaptFile>& file)
 {
-    if (mFiles.indexOfKey(file->getGroupEntry()) < 0) {
+    return addFile(file, false);
+}
+
+status_t AaptGroup::addFile(const sp<AaptFile>& file, bool replaceIfExist)
+{
+    int index = mFiles.indexOfKey(file->getGroupEntry());
+    if (index < 0) {
         file->mPath = mPath;
         mFiles.add(file->getGroupEntry(), file);
+        return NO_ERROR;
+    } else if (replaceIfExist) {
+        mFiles.replaceValueAt(index, file);
         return NO_ERROR;
     }
 
@@ -1389,7 +1398,7 @@ status_t AaptDir::addLeafFile(const String8& leafName, const sp<AaptFile>& file)
         mFiles.add(leafName, group);
     }
 
-    return group->addFile(file);
+    return group->addFile(file, mFileOverlay);
 }
 
 ssize_t AaptDir::slurpFullTree(Bundle* bundle, const String8& srcDir,
@@ -1447,6 +1456,7 @@ ssize_t AaptDir::slurpFullTree(Bundle* bundle, const String8& srcDir,
                 subdir = new AaptDir(fileNames[i], mPath.appendPathCopy(fileNames[i]));
                 notAdded = true;
             }
+            subdir->setFileOverlay(mFileOverlay);
             ssize_t res = subdir->slurpFullTree(bundle, pathName, kind,
                                                 resType);
             if (res < NO_ERROR) {
@@ -1643,8 +1653,11 @@ ssize_t AaptAssets::slurpFromArgs(Bundle* bundle)
     int count;
     int totalCount = 0;
     FileType type;
+    const Vector<const char *>& assetDirs = bundle->getAssetSourceDirs();
+    const size_t assetDirCount = assetDirs.size();
     const Vector<const char *>& resDirs = bundle->getResourceSourceDirs();
     const size_t dirCount =resDirs.size();
+
     sp<AaptAssets> current = this;
 
     const int N = bundle->getFileSpecCount();
@@ -1663,36 +1676,39 @@ ssize_t AaptAssets::slurpFromArgs(Bundle* bundle)
     /*
      * If a directory of custom assets was supplied, slurp 'em up.
      */
-    if (bundle->getAssetSourceDir()) {
-        const char* assetDir = bundle->getAssetSourceDir();
+    sp<AaptDir> assetAaptDir = makeDir(String8(kAssetDir));
+    assetAaptDir->setFileOverlay(true);
 
-        FileType type = getFileType(assetDir);
-        if (type == kFileTypeNonexistent) {
-            fprintf(stderr, "ERROR: asset directory '%s' does not exist\n", assetDir);
-            return UNKNOWN_ERROR;
-        }
-        if (type != kFileTypeDirectory) {
-            fprintf(stderr, "ERROR: '%s' is not a directory\n", assetDir);
-            return UNKNOWN_ERROR;
-        }
+    for (size_t i=0; i<assetDirCount; i++) {
+        const char *assetDir = assetDirs[i];
+        if (assetDir) {
+            FileType type = getFileType(assetDir);
+            if (type == kFileTypeNonexistent) {
+                fprintf(stderr, "ERROR: asset directory '%s' does not exist\n", assetDir);
+                return UNKNOWN_ERROR;
+            }
+            if (type != kFileTypeDirectory) {
+                fprintf(stderr, "ERROR: '%s' is not a directory\n", assetDir);
+                return UNKNOWN_ERROR;
+            }
+            
+            String8 assetRoot(assetDir);
+            AaptGroupEntry group;
+            count = assetAaptDir->slurpFullTree(bundle, assetRoot, group, String8());
 
-        String8 assetRoot(assetDir);
-        sp<AaptDir> assetAaptDir = makeDir(String8(kAssetDir));
-        AaptGroupEntry group;
-        count = assetAaptDir->slurpFullTree(bundle, assetRoot, group,
-                                            String8());
-        if (count < 0) {
-            totalCount = count;
-            goto bail;
-        }
-        if (count > 0) {
-            mGroupEntries.add(group);
-        }
-        totalCount += count;
+            if (count < 0) {
+                totalCount = count;
+                goto bail;
+            }
+            if (count > 0) {
+                mGroupEntries.add(group);
+            }
+            totalCount += count;
 
-        if (bundle->getVerbose())
-            printf("Found %d custom asset file%s in %s\n",
-                   count, (count==1) ? "" : "s", assetDir);
+            if (bundle->getVerbose())
+                printf("Found %d custom asset file%s in %s\n", 
+                           count, (count==1) ? "" : "s", assetDir);
+            }
     }
 
     /*

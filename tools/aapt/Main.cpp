@@ -115,7 +115,9 @@ void usage(void)
         "   -x  create extending (non-application) resource IDs\n"
         "   -z  require localization of resource attributes marked with\n"
         "       localization=\"suggested\"\n"
-        "   -A  additional directory in which to find raw asset files\n"
+        "   -A  additional directories in which to find raw asset files.\n"
+        "       Multiple directories will be scanned and the first match found(left to right)\n"
+        "       will take precedence.\n"
         "   -G  A file to output proguard options into.\n"
         "   -F  specify the apk file to output\n"
         "   -I  add an existing package to base include set\n"
@@ -314,7 +316,7 @@ int main(int argc, char* const argv[])
                     goto bail;
                 }
                 convertPath(argv[0]);
-                bundle.setAssetSourceDir(argv[0]);
+                bundle.addAssetSourceDir(argv[0]);
                 break;
             case 'G':
                 argc--;
