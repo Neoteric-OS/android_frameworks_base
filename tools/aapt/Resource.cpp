@@ -2187,8 +2187,9 @@ writeProguardFile(Bundle* bundle, const sp<AaptAssets>& assets)
     return err;
 }
 
-status_t
-writeDependencyPreReqs(Bundle* bundle, const sp<AaptAssets>& assets, FILE* fp)
+// Loops through the string paths and writes them to the file pointer
+// Each file path is written on its own line with a terminating backslash.
+status_t writePathsToFile(sp<ResourceFullPathSet> files, FILE* fp)
 {
     status_t deps = -1;
     sp<FilePathStore> files = assets->getFullResPaths();
@@ -2196,6 +2197,17 @@ writeDependencyPreReqs(Bundle* bundle, const sp<AaptAssets>& assets, FILE* fp)
         // Add the full file path to the dependency file
         fprintf(fp, "%s \\\n", files->itemAt(file_i).string());
         deps++;
+    }
+    return deps;
+}
+
+status_t
+writeDependencyPreReqs(Bundle* bundle, const sp<AaptAssets>& assets, FILE* fp, bool includeRaw)
+{
+    status_t deps = -1;
+    deps += writePathsToFile(assets->getFullResPaths(), fp);
+    if (includeRaw) {
+        deps += writePathsToFile(assets->getFullAssetPaths(), fp);
     }
     return deps;
 }
