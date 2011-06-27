@@ -1686,8 +1686,10 @@ status_t MPEG4Source::stop() {
     CHECK(mStarted);
 
     if (mBuffer != NULL) {
-        mBuffer->release();
-        mBuffer = NULL;
+        if(!mUseBufferProvided) {
+            mBuffer->release();
+            mBuffer = NULL;
+        }
     }
 
     delete[] mSrcBuffer;
@@ -1733,7 +1735,8 @@ status_t MPEG4Source::read(
 
     CHECK(mStarted);
 
-    *out = NULL;
+     if(!mUseBufferProvided)
+         *out = NULL;
 
     int64_t targetSampleTimeUs = -1;
 
@@ -1808,7 +1811,7 @@ status_t MPEG4Source::read(
 #endif
 
         mCurrentSampleIndex = syncSampleIndex;
-        if (mBuffer != NULL) {
+        if (mBuffer != NULL && !mUseBufferProvided) {
             mBuffer->release();
             mBuffer = NULL;
         }
@@ -1821,7 +1824,7 @@ status_t MPEG4Source::read(
     uint32_t dts;
     bool isSyncSample;
     bool newBuffer = false;
-    if (mBuffer == NULL) {
+    if (mBuffer == NULL || mUseBufferProvided) {
         newBuffer = true;
 
         status_t err =
@@ -1831,8 +1834,12 @@ status_t MPEG4Source::read(
         if (err != OK) {
             return err;
         }
-
-        err = mGroup->acquire_buffer(&mBuffer);
+        // If video track, use the MediaBuffer object passed as input param,
+        // else use buffer from mediabuffergroup
+        if (!mUseBufferProvided)
+            err = mGroup->acquire_buffer(&mBuffer);
+        else
+            mBuffer = *out;
 
         if (err != OK) {
             CHECK(mBuffer == NULL);
@@ -1846,9 +1853,10 @@ status_t MPEG4Source::read(
                 mDataSource->readAt(offset, (uint8_t *)mBuffer->data(), size);
 
             if (num_bytes_read < (ssize_t)size) {
-                mBuffer->release();
-                mBuffer = NULL;
-
+                if (!mUseBufferProvided) {
+                    mBuffer->release();
+                    mBuffer = NULL;
+                 }
                 return ERROR_IO;
             }
 
@@ -1872,7 +1880,9 @@ status_t MPEG4Source::read(
 
         if (!mIsAVC) {
             *out = mBuffer;
-            mBuffer = NULL;
+            if (!mUseBufferProvided) {
+                mBuffer = NULL;
+            }
 
             return OK;
         }
@@ -1889,8 +1899,10 @@ status_t MPEG4Source::read(
         if (mBuffer->range_length() < mNALLengthSize + nal_size) {
             LOGE("incomplete NAL unit.");
 
-            mBuffer->release();
-            mBuffer = NULL;
+            if (!mUseBufferProvided) {
+                mBuffer->release();
+                mBuffer = NULL;
+            }
 
             return ERROR_MALFORMED;
         }
@@ -1905,8 +1917,10 @@ status_t MPEG4Source::read(
                 mBuffer->range_length() - mNALLengthSize - nal_size);
 
         if (mBuffer->range_length() == 0) {
-            mBuffer->release();
-            mBuffer = NULL;
+            if (!mUseBufferProvided) {
+                mBuffer->release();
+                mBuffer = NULL;
+            }
         }
 
         *out = clone;
@@ -1926,8 +1940,10 @@ status_t MPEG4Source::read(
         }
 
         if (num_bytes_read < (ssize_t)size) {
-            mBuffer->release();
-            mBuffer = NULL;
+            if (!mUseBufferProvided) {
+                mBuffer->release();
+                mBuffer = NULL;
+            }
 
             return ERROR_IO;
         }
@@ -1947,8 +1963,10 @@ status_t MPEG4Source::read(
                 srcOffset += mNALLengthSize;
 
                 if (srcOffset + nalLength > size) {
-                    mBuffer->release();
-                    mBuffer = NULL;
+                    if (!mUseBufferProvided) {
+                        mBuffer->release();
+                        mBuffer = NULL;
+                    }
 
                     return ERROR_MALFORMED;
                 }
@@ -1988,7 +2006,9 @@ status_t MPEG4Source::read(
         ++mCurrentSampleIndex;
 
         *out = mBuffer;
-        mBuffer = NULL;
+        if (!mUseBufferProvided) {
+            mBuffer = NULL;
+        }
 
         return OK;
     }

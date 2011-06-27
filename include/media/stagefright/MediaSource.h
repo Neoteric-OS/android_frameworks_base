@@ -104,6 +104,8 @@ struct MediaSource : public RefBase {
 
         int64_t mSkipFrameUntilTimeUs;
     };
+    // Indicates if the buffer is provided by the caller of read
+    bool mUseBufferProvided;
 
     // Causes this source to suspend pulling data from its upstream source
     // until a subsequent read-with-seek. Currently only supported by
@@ -111,6 +113,7 @@ struct MediaSource : public RefBase {
     virtual status_t pause() {
         return ERROR_UNSUPPORTED;
     }
+    virtual void setUseBufferProvided(bool flag);
 
 protected:
     virtual ~MediaSource();

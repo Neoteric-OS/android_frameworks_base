@@ -18,7 +18,7 @@
 
 namespace android {
 
-MediaSource::MediaSource() {}
+MediaSource::MediaSource() : mUseBufferProvided(false) {}
 
 MediaSource::~MediaSource() {}
 
@@ -75,6 +75,11 @@ void MediaSource::ReadOptions::setLateBy(int64_t lateness_us) {
 
 int64_t MediaSource::ReadOptions::getLateBy() const {
     return mLatenessUs;
+}
+
+void MediaSource::setUseBufferProvided(bool flag)
+{
+   mUseBufferProvided = flag;
 }
 
 }  // namespace android

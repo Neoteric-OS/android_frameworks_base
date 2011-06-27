@@ -2386,7 +2386,7 @@ void OMXCodec::drainInputBuffer(BufferInfo *info) {
     size_t offset = 0;
     int32_t n = 0;
     for (;;) {
-        MediaBuffer *srcBuffer;
+        MediaBuffer *srcBuffer = new MediaBuffer(info->mData,info->mSize);
         MediaSource::ReadOptions options;
         if (mSkipTimeUs >= 0) {
             options.setSkipFrame(mSkipTimeUs);
@@ -2463,9 +2463,6 @@ void OMXCodec::drainInputBuffer(BufferInfo *info) {
                 releaseBuffer = false;
                 info->mMediaBuffer = srcBuffer;
             }
-            memcpy((uint8_t *)info->mData + offset,
-                    (const uint8_t *)srcBuffer->data() + srcBuffer->range_offset(),
-                    srcBuffer->range_length());
         }
 
         int64_t lastBufferTimeUs;
@@ -2917,6 +2914,8 @@ status_t OMXCodec::start(MetaData *meta) {
         }
         params->setInt64(kKeyTime, startTimeUs);
     }
+    // Set Use Buffer provived flag to true
+    mSource->setUseBufferProvided(true);
     status_t err = mSource->start(params.get());
 
     if (err != OK) {
