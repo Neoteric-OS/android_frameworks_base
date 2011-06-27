@@ -67,6 +67,24 @@
       "revId": "d9bfa58defcfee159fe5a13577276c2b27636665",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAABEX///+Y\u003d",
+        "filename": "tools/aapt/ZipFile.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1006444
+      },
+      "writtenOn": "2011-06-27T20:59:04Z",
+      "side": 1,
+      "message": "It was giving me a warning every time I compiled about typedef being ignored. I\u0027ll move this change to a different CL.",
+      "parentUuid": "AAABDX//+bc\u003d",
+      "revId": "d9bfa58defcfee159fe5a13577276c2b27636665",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
