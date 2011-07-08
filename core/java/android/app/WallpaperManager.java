@@ -231,7 +231,7 @@ public class WallpaperManager {
                 public void handleMessage(Message msg) {
                     switch (msg.what) {
                         case MSG_CLEAR_WALLPAPER:
-                            synchronized (this) {
+                            synchronized (Globals.this) {
                                 mWallpaper = null;
                                 mDefaultWallpaper = null;
                             }
