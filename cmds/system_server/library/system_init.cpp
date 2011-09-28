@@ -23,11 +23,14 @@
 
 #include <android_runtime/AndroidRuntime.h>
 
+#include <dirent.h>
 #include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/time.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <sys/wait.h>
 #include <cutils/properties.h>
 #include <private/android_filesystem_config.h>
@@ -52,15 +55,19 @@ public:
 } // namespace android
 
 namespace {
-    void exec_idmap() {
-        static const char* IDMAP_BIN = "/system/bin/idmap";
-        static const char* ORIG_APK = "/system/framework/framework-res.apk";
-        static const char* SKIN_APK = "/vendor/overlay/framework/framework-res.apk";
-        static const char* IDMAP_FILE =
-            "/data/resource-cache/vendor@overlay@framework@framework-res.apk@idmap";
-        execl(IDMAP_BIN, IDMAP_BIN, "--path", ORIG_APK, SKIN_APK, IDMAP_FILE,
-                (char*)NULL);
-        ALOGE("execl(%s) failed: %s\n", IDMAP_BIN, strerror(errno));
+    static const char* SINGLE_SKIN_APK = "/vendor/overlay/framework/framework-res.apk";
+    static const char* SINGLE_IDMAP_FILE =
+        "/data/resource-cache/vendor@overlay@framework@framework-res.apk@idmap";
+    static const char* IDMAP_BIN = "/system/bin/idmap";
+    static const char* ORIG_APK = "/system/framework/framework-res.apk";
+    static const char* MULTIPLE_IDMAP_PREFIX =
+        "/data/resource-cache/vendor@overlay@framework@framework-res.apk@" ;
+    static const char* MULTIPLE_IDMAP_SUFFIX = "@idmap";
+
+    void exec_idmap(const char* idmap_bin, const char* orig_apk,
+            const char* skin_apk, const char* idmap_file) {
+        execl(idmap_bin, idmap_bin, "--path", orig_apk, skin_apk, idmap_file, (char*)NULL);
+        ALOGE("execl(%s) failed: %s\n", idmap_bin, strerror(errno));
     }
 
     int wait_idmap(pid_t pid) {
@@ -85,17 +92,14 @@ namespace {
         }
     }
 
-    int verify_system_idmap_file_is_up_to_date() {
-        if (getuid() != AID_SYSTEM || getgid() != AID_SYSTEM) {
-            // not user system -> nothing we can do
-            ALOGE("Not user system: uid=%d, gid=%d\n", getuid(), getgid());
-            return 0;
-        }
+    int idmap(const char* idmap_bin, const char* orig_apk,
+            const char* skin_apk, const char* idmap_file) {
         int retval = -1;
+
         pid_t pid = fork();
         if (pid == 0) {
             // child
-            exec_idmap();
+            exec_idmap(idmap_bin, orig_apk, skin_apk, idmap_file);
             exit(1);
         } else {
             // parent
@@ -103,14 +107,69 @@ namespace {
         }
         return retval;
     }
-}
 
+    int verify_system_idmap_file_is_up_to_date() {
+        if (getuid() != AID_SYSTEM || getgid() != AID_SYSTEM) {
+            // not user system -> nothing we can do
+            ALOGE("Not user system: uid=%d, gid=%d\n", getuid(), getgid());
+            return -1;
+        }
+
+        struct stat st;
+
+        if (stat(SINGLE_SKIN_APK, &st) == -1) {
+            if (errno == ENOENT) { // No overlay file. Do not create any idmap files.
+                return 0;
+            }
+            ALOGE("Failed to stat %s: %s\n", SINGLE_SKIN_APK, strerror(errno));
+            return -1;
+        }
+        if (S_ISREG(st.st_mode)) {
+            // A single overlay file. Create a single idmap file.
+            (void)idmap(IDMAP_BIN, ORIG_APK, SINGLE_SKIN_APK, SINGLE_IDMAP_FILE);
+        } else if (S_ISDIR(st.st_mode)) {
+            // Several overlay files. SINGLE_SKIN_APK is a directory which contains all
+            // overlay files for framework-res.apk. Create an idmap for each overlay file.
+            DIR* dir = NULL;
+            struct dirent* dirent;
+            char skin_apk[PATH_MAX + 1];
+            char idmap_file[PATH_MAX + 1];
+
+            skin_apk[PATH_MAX] = '\0';
+            idmap_file[PATH_MAX] = '\0';
+
+            if ((dir = opendir(SINGLE_SKIN_APK)) == NULL) {
+                ALOGE("Failed to opendir %s: %s\n", SINGLE_SKIN_APK, strerror(errno));
+                return -1;
+            }
+            while ((dirent = readdir(dir)) != NULL) {
+                struct stat st;
+                snprintf(skin_apk, PATH_MAX, "%s/%s", SINGLE_SKIN_APK, dirent->d_name);
+                if (stat(skin_apk, &st) < 0) { // stat will follow symlink
+                    continue;
+                }
+                if (!S_ISREG(st.st_mode)) {
+                    continue;
+                }
+                snprintf(skin_apk, PATH_MAX, "%s/%s", SINGLE_SKIN_APK, dirent->d_name);
+                snprintf(idmap_file, PATH_MAX, "%s%s%s",
+                        MULTIPLE_IDMAP_PREFIX, dirent->d_name, MULTIPLE_IDMAP_SUFFIX);
+                (void)idmap(IDMAP_BIN, ORIG_APK, skin_apk, idmap_file);
+            }
+            closedir(dir);
+        }
+
+        return 0;
+    }
+}
 
 extern "C" status_t system_init()
 {
     ALOGI("Entered system_init()");
 
-    verify_system_idmap_file_is_up_to_date();
+    if (verify_system_idmap_file_is_up_to_date() < 0) {
+        ALOGI("System server: failed to verify idmap file(s) for framework-res.apk.\n");
+    }
 
     sp<ProcessState> proc(ProcessState::self());
 

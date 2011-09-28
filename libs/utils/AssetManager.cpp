@@ -98,6 +98,11 @@ namespace {
 
         return path;
     }
+
+    int overlay_path_compare(const String8* lhs, const String8* rhs)
+    {
+        return strcmp(lhs->string(), rhs->string());
+    }
 }
 
 /*
@@ -182,23 +187,62 @@ bool AssetManager::addAssetPath(const String8& path, void** cookie)
     // By convention, the corresponding overlay package for a (regular) package
     // /system/<foo/bar.apk> is named /vendor/overlay/<foo/bar.apk>.
     if (strncmp(path.string(), "/system/", 8) == 0) {
+        struct stat st;
         // When there is an environment variable for /vendor, this
         // should be changed to something similar to how ANDROID_ROOT
         // and ANDROID_DATA are used in this file.
         String8 overlayPath("/vendor/overlay/");
         overlayPath.appendPath(path.getPathDir().getPathLeaf()); // "framework" or "app"
         overlayPath.appendPath(path.getPathLeaf());
-        if (access(overlayPath.string(), R_OK) == 0) {
-            asset_path oap;
-            oap.path = overlayPath;
-            oap.type = ::getFileType(overlayPath.string());
-            oap.idmap = idmapPathForPackagePath(overlayPath);
-            if (access(oap.idmap.string(), R_OK) == 0) {
-                // if present, idmap files are assumed to be up-to-date
-                mAssetPaths.add(oap);
+
+
+        if (stat(overlayPath.string(), &st) == -1) {
+            goto no_overlay;
+        }
+
+        if (S_ISREG(st.st_mode)) {
+            addOverlayLocked(overlayPath);
+        } else if (S_ISDIR(st.st_mode)) {
+            DIR* dir;
+            struct dirent* dirent;
+            Vector<String8> overlays;
+
+            if ((dir = opendir(overlayPath.string())) == NULL) {
+                ALOGW("Failed to open overlay directory %s: %s\n",
+                        overlayPath.string(), strerror(errno));
+                goto no_overlay;
             }
+
+            while ((dirent = readdir(dir)) != NULL) {
+                if (dirent->d_type == DT_DIR) {
+                    continue;
+                }
+                struct stat stNoDir;
+                String8 tmp = overlayPath;
+
+                tmp.appendPath(dirent->d_name);
+                if (stat(tmp.string(), &stNoDir) < 0) { // stat will follow symlink
+                    ALOGW("Failed to stat %s: %s\n", tmp.string(), strerror(errno));
+                    continue;
+                }
+
+                if (S_ISREG(stNoDir.st_mode)) {
+                    overlays.add(tmp);
+                }
+            }
+            closedir(dir);
+
+            overlays.sort(overlay_path_compare);
+            const size_t N = overlays.size();
+            for (size_t i = 0; i < N; ++i) {
+                addOverlayLocked(overlays[i]);
+            }
+        } else {
+            ALOGW("Skipping overlay path %s: not a directory nor a regular file\n",
+                    overlayPath.string());
         }
     }
+no_overlay:
 
     return true;
 }
@@ -606,6 +650,24 @@ Asset* AssetManager::openIdmapLocked(const struct asset_path& ap) const
         }
     }
     return ass;
+}
+
+void AssetManager::addOverlayLocked(const String8& path)
+{
+    if (access(path.string(), R_OK) == 0) {
+        asset_path oap;
+        oap.path = path;
+        oap.type = ::getFileType(path.string());
+        oap.idmap = idmapPathForPackagePath(path);
+        if (access(oap.idmap.string(), R_OK) == 0) {
+            // if present, idmap files are assumed to be up-to-date
+#if 0
+            ALOGD("%s:%d: applying overlay: path=%s oap.path=%s oap.idmap=%s\n",
+                    __FUNCTION__, __LINE__, path.string(), oap.path.string(), oap.idmap.string());
+#endif
+            mAssetPaths.add(oap);
+        }
+    }
 }
 
 const ResTable& AssetManager::getResources(bool required) const
