@@ -57,7 +57,14 @@ public final class Configuration implements Parcelable, Comparable<Configuration
      * resource qualifier.  0 if undefined.
      */
     public int mnc;
-    
+
+    /**
+     * Constant used to to represent MNC (Mobile Network Code) zero.
+     * 0 cannot be used, since it is used to represent an undefined MNC.
+     * @hide
+     */
+    public static final int MNC_ZERO = 1000;
+
     /**
      * Current user preference for the locale, corresponding to
      * <a href="{@docRoot}guide/topics/resources/providing-resources.html#LocaleQualifier">locale</a>

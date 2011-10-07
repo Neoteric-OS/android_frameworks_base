@@ -21,6 +21,7 @@ static const char* kValuesDir = "values";
 static const char* kMipmapDir = "mipmap";
 static const char* kInvalidChars = "/\\:";
 static const size_t kMaxAssetFileName = 100;
+static const int kMncZero = 1000;
 
 static const String8 kResString(kResourceDir);
 
@@ -934,6 +935,9 @@ bool AaptGroupEntry::getMncName(const char* name,
 
     if (out) {
         out->mnc = atoi(val);
+        if (out->mnc == 0) {
+            out->mnc = kMncZero;
+        }
     }
 
     return true;
