@@ -859,6 +859,22 @@ public class PhoneNumberUtils
                     ret.append(m.group(4));
                     ret.append(m.group(5));
                     ret.append("+");
+                } else if (m.group(2).length() > 3) {
+                    p = Pattern.compile("(^[#*])(.*)([#*])(.*)([#*])([#*])(.*)(#)$");
+                    m = p.matcher(retString);
+                    if (m.matches()) {
+                        // such as **21*+1234554**15#
+                        ret = new StringBuilder();
+                        ret.append(m.group(1));
+                        ret.append(m.group(2));
+                        ret.append(m.group(3));
+                        ret.append("+");
+                        ret.append(m.group(4));
+                        ret.append(m.group(5));
+                        ret.append(m.group(6));
+                        ret.append(m.group(7));
+                        ret.append(m.group(8));
+                    }
                 } else {
                     // Starts with [#*] and ends with #
                     // Assume group 4 is a dialing number
