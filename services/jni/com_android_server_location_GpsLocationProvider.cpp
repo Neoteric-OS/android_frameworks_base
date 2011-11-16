@@ -459,6 +459,22 @@ static jboolean android_location_GpsLocationProvider_supports_xtra(JNIEnv* env, 
     return (sGpsXtraInterface != NULL);
 }
 
+static jboolean android_location_GpsLocationProvider_inject_raw_command(JNIEnv* env, jobject obj, jbyteArray data, jint length)
+{
+    jboolean result = false;
+
+    if (sGpsDebugInterface &&
+        sGpsDebugInterface->inject_raw_cmd) {
+        if (data != NULL) {
+            jbyte* bytes = env->GetByteArrayElements(data, 0);
+            sGpsDebugInterface->inject_raw_cmd((char *)bytes, length);
+            env->ReleaseByteArrayElements(data, bytes, 0);
+            result = true;
+        }
+    }
+    return result;
+}
+
 static void android_location_GpsLocationProvider_inject_xtra_data(JNIEnv* env, jobject obj,
         jbyteArray data, jint length)
 {
@@ -531,7 +547,8 @@ static void android_location_GpsLocationProvider_send_ni_response(JNIEnv* env, j
 static jstring android_location_GpsLocationProvider_get_internal_state(JNIEnv* env, jobject obj)
 {
     jstring result = NULL;
-    if (sGpsDebugInterface) {
+    if (sGpsDebugInterface &&
+        sGpsDebugInterface->get_internal_state) {
         const size_t maxLength = 2047;
         char buffer[maxLength+1];
         size_t length = sGpsDebugInterface->get_internal_state(buffer, maxLength);
@@ -582,6 +599,7 @@ static JNINativeMethod sMethods[] = {
     {"native_supports_xtra", "()Z", (void*)android_location_GpsLocationProvider_supports_xtra},
     {"native_inject_xtra_data", "([BI)V", (void*)android_location_GpsLocationProvider_inject_xtra_data},
     {"native_agps_data_conn_open", "(Ljava/lang/String;)V", (void*)android_location_GpsLocationProvider_agps_data_conn_open},
+    {"native_inject_raw_command", "([BI)Z", (void*)android_location_GpsLocationProvider_inject_raw_command},
     {"native_agps_data_conn_closed", "()V", (void*)android_location_GpsLocationProvider_agps_data_conn_closed},
     {"native_agps_data_conn_failed", "()V", (void*)android_location_GpsLocationProvider_agps_data_conn_failed},
     {"native_agps_set_id","(ILjava/lang/String;)V",(void*)android_location_GpsLocationProvider_agps_set_id},

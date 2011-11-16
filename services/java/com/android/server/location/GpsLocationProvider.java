@@ -476,7 +476,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
                 LocationManager locManager =
                         (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
                 locManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER,
-                        0, 0, new NetworkLocationListener(), mHandler.getLooper());                
+                        0, 0, new NetworkLocationListener(), mHandler.getLooper());
             }
         });
     }
@@ -907,7 +907,10 @@ public class GpsLocationProvider implements LocationProviderInterface {
                 result = true;
             }
         } else {
-            Log.w(TAG, "sendExtraCommand: unknown command " + command);
+            result = native_inject_raw_command(command.getBytes(), command.length());
+            if (!result) {
+                Log.w(TAG, "sendExtraCommand: unknown command " + command);
+            }
         }
 
         Binder.restoreCallingIdentity(identity);
@@ -1626,6 +1629,9 @@ public class GpsLocationProvider implements LocationProviderInterface {
     private native void native_inject_time(long time, long timeReference, int uncertainty);
     private native boolean native_supports_xtra();
     private native void native_inject_xtra_data(byte[] data, int length);
+
+    // Special Test Command Path
+    private native boolean native_inject_raw_command(byte[] data, int length);
 
     // DEBUG Support
     private native String native_get_internal_state();
