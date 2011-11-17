@@ -211,6 +211,9 @@ class MountService extends IMountService.Stub
     final private Map<IBinder, List<ObbState>> mObbMounts = new HashMap<IBinder, List<ObbState>>();
     final private Map<String, ObbState> mObbPathToStateMap = new HashMap<String, ObbState>();
 
+    final private HandlerThread mWorkerThread;
+    final private Handler mWorkerHandler;
+
     class ObbState implements IBinder.DeathRecipient {
         public ObbState(String filename, int callerUid, IObbActionListener token, int nonce)
                 throws RemoteException {
@@ -484,18 +487,17 @@ class MountService extends IMountService.Stub
             if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
                 mBooted = true;
 
-                /*
-                 * In the simulator, we need to broadcast a volume mounted event
-                 * to make the media scanner run.
-                 */
-                if ("simulator".equals(SystemProperties.get("ro.product.device"))) {
-                    notifyVolumeStateChange(null, "/sdcard", VolumeState.NoMedia,
-                            VolumeState.Mounted);
-                    return;
-                }
                 new Thread() {
-                    @Override
                     public void run() {
+                        /*
+                         * In the simulator, we need to broadcast a volume mounted event
+                         * to make the media scanner run.
+                         */
+                        if ("simulator".equals(SystemProperties.get("ro.product.device"))) {
+                            notifyVolumeStateChange(null, "/sdcard", VolumeState.NoMedia,
+                                    VolumeState.Mounted);
+                            return;
+                        }
                         try {
                             // it is not safe to call vold with mVolumeStates locked
                             // so we make a copy of the paths and states and process them
@@ -643,9 +645,9 @@ class MountService extends IMountService.Stub
     public void onDaemonConnected() {
         /*
          * Since we'll be calling back into the NativeDaemonConnector,
-         * we need to do our work in a new thread.
+         * we need to do our work in the worker thread.
          */
-        new Thread("MountService#onDaemonConnected") {
+        mWorkerHandler.post(new Runnable() {
             @Override
             public void run() {
                 /**
@@ -700,104 +702,102 @@ class MountService extends IMountService.Stub
                 mAsecsScanned.countDown();
                 mAsecsScanned = null;
             }
-        }.start();
+        });
     }
 
     /**
      * Callback from NativeDaemonConnector
      */
-    public boolean onEvent(int code, String raw, String[] cooked) {
-        if (DEBUG_EVENTS) {
-            StringBuilder builder = new StringBuilder();
-            builder.append("onEvent::");
-            builder.append(" raw= " + raw);
-            if (cooked != null) {
-                builder.append(" cooked = " );
-                for (String str : cooked) {
-                    builder.append(" " + str);
-                }
-            }
-            Slog.i(TAG, builder.toString());
-        }
-        if (code == VoldResponseCode.VolumeStateChange) {
-            /*
-             * One of the volumes we're managing has changed state.
-             * Format: "NNN Volume <label> <path> state changed
-             * from <old_#> (<old_str>) to <new_#> (<new_str>)"
-             */
-            notifyVolumeStateChange(
-                    cooked[2], cooked[3], Integer.parseInt(cooked[7]),
-                            Integer.parseInt(cooked[10]));
-        } else if ((code == VoldResponseCode.VolumeDiskInserted) ||
-                   (code == VoldResponseCode.VolumeDiskRemoved) ||
-                   (code == VoldResponseCode.VolumeBadRemoval)) {
-            // FMT: NNN Volume <label> <mountpoint> disk inserted (<major>:<minor>)
-            // FMT: NNN Volume <label> <mountpoint> disk removed (<major>:<minor>)
-            // FMT: NNN Volume <label> <mountpoint> bad removal (<major>:<minor>)
-            String action = null;
-            final String label = cooked[2];
-            final String path = cooked[3];
-            int major = -1;
-            int minor = -1;
-
-            try {
-                String devComp = cooked[6].substring(1, cooked[6].length() -1);
-                String[] devTok = devComp.split(":");
-                major = Integer.parseInt(devTok[0]);
-                minor = Integer.parseInt(devTok[1]);
-            } catch (Exception ex) {
-                Slog.e(TAG, "Failed to parse major/minor", ex);
-            }
-
-            if (code == VoldResponseCode.VolumeDiskInserted) {
-                new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            int rc;
-                            if ((rc = doMountVolume(path)) != StorageResultCode.OperationSucceeded) {
-                                Slog.w(TAG, String.format("Insertion mount failed (%d)", rc));
-                            }
-                        } catch (Exception ex) {
-                            Slog.w(TAG, "Failed to mount media on insertion", ex);
+    public boolean onEvent(final int code, final String raw, final String[] cooked) {
+        mWorkerHandler.post(new Runnable() {
+            public void run() {
+                if (DEBUG_EVENTS) {
+                    StringBuilder builder = new StringBuilder();
+                    builder.append("onEvent::");
+                    builder.append(" raw= " + raw);
+                    if (cooked != null) {
+                        builder.append(" cooked = " );
+                        for (String str : cooked) {
+                            builder.append(" " + str);
                         }
                     }
-                }.start();
-            } else if (code == VoldResponseCode.VolumeDiskRemoved) {
-                /*
-                 * This event gets trumped if we're already in BAD_REMOVAL state
-                 */
-                if (getVolumeState(path).equals(Environment.MEDIA_BAD_REMOVAL)) {
-                    return true;
+                    Slog.i(TAG, builder.toString());
                 }
-                /* Send the media unmounted event first */
-                if (DEBUG_EVENTS) Slog.i(TAG, "Sending unmounted event first");
-                updatePublicVolumeState(path, Environment.MEDIA_UNMOUNTED);
-                sendStorageIntent(Environment.MEDIA_UNMOUNTED, path);
+                if (code == VoldResponseCode.VolumeStateChange) {
+                    /*
+                     * One of the volumes we're managing has changed state.
+                     * Format: "NNN Volume <label> <path> state changed
+                     * from <old_#> (<old_str>) to <new_#> (<new_str>)"
+                     */
+                    notifyVolumeStateChange(cooked[2], cooked[3], Integer.parseInt(cooked[7]),
+                            Integer.parseInt(cooked[10]));
+                } else if ((code == VoldResponseCode.VolumeDiskInserted) ||
+                           (code == VoldResponseCode.VolumeDiskRemoved) ||
+                           (code == VoldResponseCode.VolumeBadRemoval)) {
+                    // FMT: NNN Volume <label> <mountpoint> disk inserted (<major>:<minor>)
+                    // FMT: NNN Volume <label> <mountpoint> disk removed (<major>:<minor>)
+                    // FMT: NNN Volume <label> <mountpoint> bad removal (<major>:<minor>)
+                    String action = null;
+                    final String label = cooked[2];
+                    final String path = cooked[3];
+                    int major = -1;
+                    int minor = -1;
 
-                if (DEBUG_EVENTS) Slog.i(TAG, "Sending media removed");
-                updatePublicVolumeState(path, Environment.MEDIA_REMOVED);
-                action = Intent.ACTION_MEDIA_REMOVED;
-            } else if (code == VoldResponseCode.VolumeBadRemoval) {
-                if (DEBUG_EVENTS) Slog.i(TAG, "Sending unmounted event first");
-                /* Send the media unmounted event first */
-                updatePublicVolumeState(path, Environment.MEDIA_UNMOUNTED);
-                action = Intent.ACTION_MEDIA_UNMOUNTED;
+                    try {
+                        String devComp = cooked[6].substring(1, cooked[6].length() - 1);
+                        String[] devTok = devComp.split(":");
+                        major = Integer.parseInt(devTok[0]);
+                        minor = Integer.parseInt(devTok[1]);
+                    } catch (Exception ex) {
+                        Slog.e(TAG, "Failed to parse major/minor", ex);
+                    }
 
-                if (DEBUG_EVENTS) Slog.i(TAG, "Sending media bad removal");
-                updatePublicVolumeState(path, Environment.MEDIA_BAD_REMOVAL);
-                action = Intent.ACTION_MEDIA_BAD_REMOVAL;
-            } else {
-                Slog.e(TAG, String.format("Unknown code {%d}", code));
+                    if (code == VoldResponseCode.VolumeDiskInserted) {
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    int rc = doMountVolume(path);
+                                    if (rc != StorageResultCode.OperationSucceeded) {
+                                        Slog.w(TAG, "Insertion mount failed : " + rc);
+                                    }
+                                } catch (Exception ex) {
+                                    Slog.w(TAG, "Failed to mount media on insertion", ex);
+                                }
+                            }
+                        }.start();
+                    } else if (code == VoldResponseCode.VolumeDiskRemoved) {
+                        // This event gets trumped if we're already in BAD_REMOVAL state
+                        if (getVolumeState(path).equals(Environment.MEDIA_BAD_REMOVAL)) {
+                            return;
+                        }
+                        // Send the media unmounted event first
+                        if (DEBUG_EVENTS) Slog.i(TAG, "Sending unmounted event first");
+                        updatePublicVolumeState(path, Environment.MEDIA_UNMOUNTED);
+                        sendStorageIntent(Environment.MEDIA_UNMOUNTED, path);
+
+                        if (DEBUG_EVENTS) Slog.i(TAG, "Sending media removed");
+                        updatePublicVolumeState(path, Environment.MEDIA_REMOVED);
+                        action = Intent.ACTION_MEDIA_REMOVED;
+                    } else if (code == VoldResponseCode.VolumeBadRemoval) {
+                        if (DEBUG_EVENTS) Slog.i(TAG, "Sending unmounted event first");
+                        // Send the media unmounted event first
+                        updatePublicVolumeState(path, Environment.MEDIA_UNMOUNTED);
+                        action = Intent.ACTION_MEDIA_UNMOUNTED;
+
+                        if (DEBUG_EVENTS) Slog.i(TAG, "Sending media bad removal");
+                        updatePublicVolumeState(path, Environment.MEDIA_BAD_REMOVAL);
+                        action = Intent.ACTION_MEDIA_BAD_REMOVAL;
+                    } else {
+                        Slog.e(TAG, "Unknown code : " + code);
+                    }
+
+                    if (action != null) {
+                        sendStorageIntent(action, path);
+                    }
+                }
             }
-
-            if (action != null) {
-                sendStorageIntent(action, path);
-            }
-        } else {
-            return false;
-        }
-
+        });
         return true;
     }
 
@@ -1022,23 +1022,18 @@ class MountService extends IMountService.Stub
             /*
              * USB mass storage disconnected while enabled
              */
-            new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        int rc;
-                        Slog.w(TAG, "Disabling UMS after cable disconnect");
-                        doShareUnshareVolume(path, "ums", false);
-                        if ((rc = doMountVolume(path)) != StorageResultCode.OperationSucceeded) {
-                            Slog.e(TAG, String.format(
-                                    "Failed to remount {%s} on UMS enabled-disconnect (%d)",
-                                            path, rc));
-                        }
-                    } catch (Exception ex) {
-                        Slog.w(TAG, "Failed to mount media on UMS enabled-disconnect", ex);
-                    }
+            try {
+                int rc;
+                Slog.w(TAG, "Disabling UMS after cable disconnect");
+                doShareUnshareVolume(path, "ums", false);
+                if ((rc = doMountVolume(path)) != StorageResultCode.OperationSucceeded) {
+                    Slog.e(TAG, String.format(
+                            "Failed to remount {%s} on UMS enabled-disconnect (%d)",
+                                    path, rc));
                 }
-            }.start();
+            } catch (Exception ex) {
+                Slog.w(TAG, "Failed to mount media on UMS enabled-disconnect", ex);
+            }
         }
     }
 
@@ -1180,6 +1175,10 @@ class MountService extends IMountService.Stub
         mHandlerThread = new HandlerThread("MountService");
         mHandlerThread.start();
         mHandler = new MountServiceHandler(mHandlerThread.getLooper());
+
+        mWorkerThread = new HandlerThread("MountService-worker");
+        mWorkerThread.start();
+        mWorkerHandler = new Handler(mWorkerThread.getLooper());
 
         // Add OBB Action Handler to MountService thread.
         mObbActionHandler = new ObbActionHandler(mHandlerThread.getLooper());
