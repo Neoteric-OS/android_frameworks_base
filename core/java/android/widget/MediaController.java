@@ -514,6 +514,18 @@ public class MediaController extends FrameLayout {
                 hide();
             }
             return true;
+        } else if (event.isDown() && keyCode == KeyEvent.KEYCODE_MEDIA_FAST_FORWARD) {
+            fastForward();
+            return true;
+        } else if (event.isDown() && keyCode == KeyEvent.KEYCODE_MEDIA_REWIND) {
+            rewind();
+            return true;
+        } else if (event.isDown() && keyCode == KeyEvent.KEYCODE_MEDIA_NEXT) {
+            next();
+            return true;
+        } else if (event.isDown() && keyCode == KeyEvent.KEYCODE_MEDIA_PREVIOUS) {
+            previous();
+            return true;
         }
 
         show(sDefaultTimeout);
@@ -637,8 +649,8 @@ public class MediaController extends FrameLayout {
         info.setClassName(MediaController.class.getName());
     }
 
-    private View.OnClickListener mRewListener = new View.OnClickListener() {
-        public void onClick(View v) {
+    void rewind() {
+        if (mUseFastForward) {
             int pos = mPlayer.getCurrentPosition();
             pos -= 5000; // milliseconds
             mPlayer.seekTo(pos);
@@ -646,16 +658,40 @@ public class MediaController extends FrameLayout {
 
             show(sDefaultTimeout);
         }
-    };
+    }
 
-    private View.OnClickListener mFfwdListener = new View.OnClickListener() {
-        public void onClick(View v) {
+    void fastForward() {
+        if (mUseFastForward) {
             int pos = mPlayer.getCurrentPosition();
             pos += 15000; // milliseconds
             mPlayer.seekTo(pos);
             setProgress();
 
             show(sDefaultTimeout);
+        }
+    }
+
+    void next() {
+        if (mNextListener != null) {
+            mNextListener.onClick(this);
+        }
+    }
+
+    void previous() {
+        if (mPrevListener != null) {
+            mPrevListener.onClick(this);
+        }
+    }
+
+    private View.OnClickListener mRewListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            rewind();
+        }
+    };
+
+    private View.OnClickListener mFfwdListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            fastForward();
         }
     };
 

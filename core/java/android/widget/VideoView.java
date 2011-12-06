@@ -708,6 +708,14 @@ public class VideoView extends SurfaceView
                     mMediaController.show();
                 }
                 return true;
+            } else if (keyCode == KeyEvent.KEYCODE_MEDIA_FAST_FORWARD) {
+                mMediaController.fastForward();
+            } else if (keyCode == KeyEvent.KEYCODE_MEDIA_REWIND) {
+                mMediaController.rewind();
+            } else if (keyCode == KeyEvent.KEYCODE_MEDIA_NEXT) {
+                mMediaController.next();
+            } else if (keyCode == KeyEvent.KEYCODE_MEDIA_PREVIOUS) {
+                mMediaController.previous();
             } else {
                 toggleMediaControlsVisiblity();
             }
