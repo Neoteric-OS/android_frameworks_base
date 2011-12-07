@@ -707,6 +707,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
             screenHeightDp = delta.screenHeightDp;
         }
         if (delta.smallestScreenWidthDp != SMALLEST_SCREEN_WIDTH_DP_UNDEFINED) {
+            changed |= ActivityInfo.CONFIG_SMALLEST_SCREEN_SIZE;
             smallestScreenWidthDp = delta.smallestScreenWidthDp;
         }
         if (delta.compatScreenWidthDp != SCREEN_WIDTH_DP_UNDEFINED) {
