@@ -982,6 +982,11 @@ public class NotificationManagerService extends INotificationManager.Stub
                     notification.flags |=
                         old.notification.flags&Notification.FLAG_FOREGROUND_SERVICE;
                 }
+
+                // If this was the notification that triggered last sound, it needs to be updated
+                if (mSoundNotification == old) {
+                    mSoundNotification = r;
+                }
             }
 
             // Ensure if this is a foreground service that the proper additional
