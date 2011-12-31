@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.android.internal.R;
 
+import java.io.File;
+
 /**
  * Takes care of unmounting and formatting external storage.
  */
@@ -50,6 +52,34 @@ public class ExternalStorageFormatter extends Service
 
     private boolean mFactoryReset = false;
     private boolean mAlwaysReset = false;
+
+    private static final File EXTERNAL_STORAGE_DIRECTORY_EXT
+             = new File( "/mnt/sdcard_ext");
+
+
+    private boolean supportMultipleStorage(){
+        StorageVolume[] storageVolumes = mStorageManager.getVolumeList();
+
+        if (storageVolumes.length == 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private String getExternalStorageState() {
+        return mStorageManager.getVolumeState( getExternalStoragePath() );
+    }
+
+    private  String getExternalStoragePath() {
+        String storagePath;
+        if (supportMultipleStorage()) {
+            storagePath = EXTERNAL_STORAGE_DIRECTORY_EXT.toString();
+        } else {
+            storagePath = Environment.getExternalStorageDirectory().toString();
+        }
+        return storagePath;
+    }
 
     StorageEventListener mStorageListener = new StorageEventListener() {
         @Override
@@ -122,8 +152,7 @@ public class ExternalStorageFormatter extends Service
     public void onCancel(DialogInterface dialog) {
         IMountService mountService = getMountService();
         String extStoragePath = mStorageVolume == null ?
-                Environment.getExternalStorageDirectory().toString() :
-                mStorageVolume.getPath();
+                getExternalStoragePath(): mStorageVolume.getPath();
         try {
             mountService.mountVolume(extStoragePath);
         } catch (RemoteException e) {
@@ -142,7 +171,7 @@ public class ExternalStorageFormatter extends Service
 
     void updateProgressState() {
         String status = mStorageVolume == null ?
-                Environment.getExternalStorageState() :
+                getExternalStorageState():
                 mStorageManager.getVolumeState(mStorageVolume.getPath());
         if (Environment.MEDIA_MOUNTED.equals(status)
                 || Environment.MEDIA_MOUNTED_READ_ONLY.equals(status)) {
@@ -163,7 +192,7 @@ public class ExternalStorageFormatter extends Service
             updateProgressDialog(R.string.progress_erasing);
             final IMountService mountService = getMountService();
             final String extStoragePath = mStorageVolume == null ?
-                    Environment.getExternalStorageDirectory().toString() :
+                    getExternalStoragePath():
                     mStorageVolume.getPath();
             if (mountService != null) {
                 new Thread() {
