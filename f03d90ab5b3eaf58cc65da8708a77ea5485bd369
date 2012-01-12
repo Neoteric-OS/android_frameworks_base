@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAACAn///8s\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-01-12T23:39:25Z",
+      "side": 1,
+      "message": "Please wrap the change description to about 70 columns.",
+      "revId": "f03d90ab5b3eaf58cc65da8708a77ea5485bd369",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
