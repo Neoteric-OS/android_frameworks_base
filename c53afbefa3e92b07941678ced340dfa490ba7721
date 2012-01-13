@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAACCX///9Q\u003d",
+        "filename": "core/java/android/os/Process.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-01-13T18:55:48Z",
+      "side": 1,
+      "message": "Is this needed as an array? The name isn\u0027t descriptive.\n\nNo tabs.",
+      "revId": "c53afbefa3e92b07941678ced340dfa490ba7721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACCX///9I\u003d",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-01-13T18:55:48Z",
+      "side": 1,
+      "message": "peerSecurityContext would be better",
+      "revId": "c53afbefa3e92b07941678ced340dfa490ba7721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACCX///9E\u003d",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-01-13T18:55:48Z",
+      "side": 1,
+      "message": "This log should be removed or put behind an \"if (DEBUG_SELINUX) { ... }\". I don\u0027t think it\u0027s normally useful outside of debugging.",
+      "revId": "c53afbefa3e92b07941678ced340dfa490ba7721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACCX///9A\u003d",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-01-13T18:55:48Z",
+      "side": 1,
+      "message": "All variables should start with lowercase letters. (and no tabs)",
+      "revId": "c53afbefa3e92b07941678ced340dfa490ba7721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACCX///88\u003d",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-01-13T18:55:48Z",
+      "side": 1,
+      "message": "should be \" + 1\" (with spaces) to match formatting of rest of file.",
+      "revId": "c53afbefa3e92b07941678ced340dfa490ba7721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACCX///84\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1965,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-01-13T18:55:48Z",
+      "side": 1,
+      "message": "This should just be passed as \"systemApp\" or null and the other side should add \"--seinfo\u003d\" itself if it\u0027s not null.",
+      "revId": "c53afbefa3e92b07941678ced340dfa490ba7721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
