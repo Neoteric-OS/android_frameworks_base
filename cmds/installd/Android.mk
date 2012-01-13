@@ -34,6 +34,13 @@ LOCAL_SHARED_LIBRARIES := \
 LOCAL_STATIC_LIBRARIES := \
     libdiskusage
 
+ifeq ($(HAVE_SELINUX),true)
+
+LOCAL_SHARED_LIBRARIES += libselinux
+LOCAL_CFLAGS := -DHAVE_SELINUX
+
+endif # HAVE_SELINUX
+
 LOCAL_MODULE := installd
 
 LOCAL_MODULE_TAGS := optional
