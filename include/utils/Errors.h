@@ -42,22 +42,23 @@ typedef int32_t     status_t;
 # undef NO_ERROR
 #endif
  
+// Cast the constants to status_t to keep the enum size at 4 bytes.
 enum {
     OK                = 0,    // Everything's swell.
     NO_ERROR          = 0,    // No errors.
     
-    UNKNOWN_ERROR       = 0x80000000,
+    UNKNOWN_ERROR       = (status_t)0x80000000,
 
     NO_MEMORY           = -ENOMEM,
     INVALID_OPERATION   = -ENOSYS,
     BAD_VALUE           = -EINVAL,
-    BAD_TYPE            = 0x80000001,
+    BAD_TYPE            = (status_t)0x80000001,
     NAME_NOT_FOUND      = -ENOENT,
     PERMISSION_DENIED   = -EPERM,
     NO_INIT             = -ENODEV,
     ALREADY_EXISTS      = -EEXIST,
     DEAD_OBJECT         = -EPIPE,
-    FAILED_TRANSACTION  = 0x80000002,
+    FAILED_TRANSACTION  = (status_t)0x80000002,
     JPARKS_BROKE_IT     = -EPIPE,
 #if !defined(HAVE_MS_C_RUNTIME)
     BAD_INDEX           = -EOVERFLOW,
@@ -67,12 +68,12 @@ enum {
     UNKNOWN_TRANSACTION = -EBADMSG,
 #else    
     BAD_INDEX           = -E2BIG,
-    NOT_ENOUGH_DATA     = 0x80000003,
-    WOULD_BLOCK         = 0x80000004,
-    TIMED_OUT           = 0x80000005,
-    UNKNOWN_TRANSACTION = 0x80000006,
+    NOT_ENOUGH_DATA     = (status_t)0x80000003,
+    WOULD_BLOCK         = (status_t)0x80000004,
+    TIMED_OUT           = (status_t)0x80000005,
+    UNKNOWN_TRANSACTION = (status_t)0x80000006,
 #endif    
-    FDS_NOT_ALLOWED     = 0x80000007,
+    FDS_NOT_ALLOWED     = (status_t)0x80000007,
 };
 
 // Restore define; enumeration is in "android" namespace, so the value defined
