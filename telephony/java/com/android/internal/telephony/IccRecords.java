@@ -35,6 +35,7 @@ public abstract class IccRecords extends Handler implements IccConstants {
 
     protected PhoneBase phone;
     protected RegistrantList recordsLoadedRegistrants = new RegistrantList();
+    protected RegistrantList mRecordsEventsRegistrants = new RegistrantList();
 
     protected int recordsToLoad;  // number of pending load requests
 
@@ -130,6 +131,15 @@ public abstract class IccRecords extends Handler implements IccConstants {
      */
     public String getIMSI() {
         return null;
+    }
+
+    public synchronized void registerForSIMEFUpdates(Handler h, int what, Object obj) {
+        Registrant r = new Registrant (h, what, obj);
+        mRecordsEventsRegistrants.add(r);
+    }
+
+    public synchronized void unregisterForSIMEFUpdates(Handler h) {
+        mRecordsEventsRegistrants.remove(h);
     }
 
     public String getMsisdnNumber() {

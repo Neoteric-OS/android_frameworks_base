@@ -151,6 +151,7 @@ public class GSMPhone extends PhoneBase {
 
         mCM.registerForAvailable(this, EVENT_RADIO_AVAILABLE, null);
         mIccRecords.registerForRecordsLoaded(this, EVENT_SIM_RECORDS_LOADED, null);
+        mIccRecords.registerForSIMEFUpdates(this, EVENT_ICC_RECORDS_EONS_UPDATED, null);
         mCM.registerForOffOrNotAvailable(this, EVENT_RADIO_OFF_OR_NOT_AVAILABLE, null);
         mCM.registerForOn(this, EVENT_RADIO_ON, null);
         mCM.setOnUSSD(this, EVENT_USSD, null);
@@ -204,6 +205,7 @@ public class GSMPhone extends PhoneBase {
             //Unregister from all former registered events
             mCM.unregisterForAvailable(this); //EVENT_RADIO_AVAILABLE
             mIccRecords.unregisterForRecordsLoaded(this); //EVENT_SIM_RECORDS_LOADED
+            mIccRecords.unregisterForSIMEFUpdates(this); // EVENT_ICC_RECORDS_EONS_UPDATED
             mCM.unregisterForOffOrNotAvailable(this); //EVENT_RADIO_OFF_OR_NOT_AVAILABLE
             mCM.unregisterForOn(this); //EVENT_RADIO_ON
             mSST.unregisterForNetworkAttached(this); //EVENT_REGISTERED_TO_NETWORK
@@ -979,7 +981,9 @@ public class GSMPhone extends PhoneBase {
 
     public void
     getAvailableNetworks(Message response) {
-        mCM.getAvailableNetworks(response);
+        Message msg;
+        msg = obtainMessage(EVENT_GET_NETWORKS_DONE,response);
+        mCM.getAvailableNetworks(msg);
     }
 
     /**
@@ -1189,6 +1193,18 @@ public class GSMPhone extends PhoneBase {
 
             break;
 
+            case EVENT_ICC_RECORDS_EONS_UPDATED:
+                ar = (AsyncResult)msg.obj;
+
+                if (ar.exception != null) {
+                    Log.e(LOG_TAG, "EVENT_ICC_RECORDS_EONS_UPDATED exception "
+                          + ar.exception);
+                    break;
+                }
+
+                processIccEonsRecordsUpdated((Integer)ar.result);
+                break;
+
             case EVENT_GET_BASEBAND_VERSION_DONE:
                 ar = (AsyncResult)msg.obj;
 
@@ -1309,6 +1325,30 @@ public class GSMPhone extends PhoneBase {
                 }
                 break;
 
+            case EVENT_GET_NETWORKS_DONE:
+                ArrayList<OperatorInfo> eonsNetworkNames = null;
+
+                ar = (AsyncResult)msg.obj;
+                if (ar.exception == null) {
+                    eonsNetworkNames = ((SIMRecords) mIccRecords).
+                         getEonsForAvailableNetworks((ArrayList<OperatorInfo>)ar.result);
+                }
+
+                if (eonsNetworkNames != null) {
+                    Log.i(LOG_TAG, "[EONS] Populated EONS for available networks.");
+                } else {
+                    eonsNetworkNames = (ArrayList<OperatorInfo>)ar.result;
+                }
+
+                onComplete = (Message) ar.userObj;
+                if (onComplete != null) {
+                    AsyncResult.forMessage(onComplete, eonsNetworkNames, ar.exception);
+                    onComplete.sendToTarget();
+                } else {
+                    Log.e(LOG_TAG, "[EONS] In EVENT_GET_NETWORKS_DONE, onComplete is null!");
+                }
+                break;
+
              default:
                  super.handleMessage(msg);
         }
@@ -1332,6 +1372,17 @@ public class GSMPhone extends PhoneBase {
             }
         }
         return false;
+    }
+
+    private void processIccEonsRecordsUpdated(int eventCode) {
+        switch (eventCode) {
+            case SIMRecords.EVENT_SPN:
+                mSST.updateSpnDisplay();
+                break;
+            case SIMRecords.EVENT_EONS:
+                mSST.updateEons(1);
+                break;
+        }
     }
 
     /**

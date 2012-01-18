@@ -482,6 +482,37 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
         cm.setRadioPower(false, null);
     }
 
+    boolean updateEons(int reason) {
+        boolean needsUpdate = false;
+        boolean ssUpdated = false;
+        int lac = -1;
+
+        // If updateEons is called as a consequence of EONS realted EFs refresh
+        // (with reason 1), notify ServiceStateChanged registrants.
+        // If updateEons is called as a consequence of Network State Change,
+        // ServiceStateChanged registrants need not be notified here since it
+        // will any way be done in pollStateDone.
+
+        if (cellLoc != null) lac = cellLoc.getLac();
+        needsUpdate =
+            ((SIMRecords) (phone.mIccRecords)).updateEons(ss.getOperatorNumeric(), lac);
+        if (needsUpdate) {
+            String eonsLong = ((SIMRecords) (phone.mIccRecords)).getEons();
+            if (eonsLong != null) {
+                // Update operator long name with EONS Long.
+                ss.setOperatorName(eonsLong, ss.getOperatorAlphaShort(),
+                      ss.getOperatorNumeric());
+                ssUpdated = true;
+            }
+
+            if (reason == 1) {
+                phone.notifyServiceStateChanged(ss);
+            }
+            updateSpnDisplay();
+        }
+        return ssUpdated;
+    }
+
     protected void updateSpnDisplay() {
         int rule = phone.mIccRecords.getDisplayRule(ss.getOperatorNumeric());
         String spn = phone.mIccRecords.getServiceProviderName();
@@ -498,7 +529,8 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
                 || !TextUtils.equals(spn, curSpn)
                 || !TextUtils.equals(plmn, curPlmn)) {
             boolean showSpn = !mEmergencyOnly && !TextUtils.isEmpty(spn)
-                && (rule & SIMRecords.SPN_RULE_SHOW_SPN) == SIMRecords.SPN_RULE_SHOW_SPN;
+                && (rule & SIMRecords.SPN_RULE_SHOW_SPN) == SIMRecords.SPN_RULE_SHOW_SPN
+                && (ss.getState() == ServiceState.STATE_IN_SERVICE);
             boolean showPlmn = !TextUtils.isEmpty(plmn) &&
                 (rule & SIMRecords.SPN_RULE_SHOW_PLMN) == SIMRecords.SPN_RULE_SHOW_PLMN;
 
@@ -836,10 +868,13 @@ final class GsmServiceStateTracker extends ServiceStateTracker {
             mNetworkAttachedRegistrants.notifyRegistrants();
         }
 
+        Log.i(LOG_TAG,"Network State Changed, get EONS and update operator name display");
+        boolean ret = updateEons(2);
+        hasChanged = hasChanged || ret;
+
         if (hasChanged) {
             String operatorNumeric;
 
-            updateSpnDisplay();
 
             phone.setSystemProperty(TelephonyProperties.PROPERTY_OPERATOR_ALPHA,
                 ss.getOperatorAlphaLong());
