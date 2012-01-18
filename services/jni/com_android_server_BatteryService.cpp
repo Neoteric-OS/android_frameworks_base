@@ -78,6 +78,8 @@ struct PowerSupplyPaths {
     char* batteryVoltagePath;
     char* batteryTemperaturePath;
     char* batteryTechnologyPath;
+    char* batteryEnergyNowPath;
+    char* batteryEnergyFullPath;
 };
 static PowerSupplyPaths gPaths;
 
@@ -193,14 +195,40 @@ static void setVoltageField(JNIEnv* env, jobject obj, const char* path, jfieldID
     env->SetIntField(obj, fieldID, value);
 }
 
+static void setEnergyField(JNIEnv* env, jobject obj, const char* path_now, const char* path_full, jfieldID fieldID)
+{
+    const int SIZE = 128;
+    char buf[SIZE];
+    int enow=0, efull=0;
+    int batlevel=0;
+
+    if (readFromFile(path_now, buf, SIZE) >0) {
+        enow = atoi(buf);
+    }
+    if (readFromFile(path_full, buf, SIZE) >0) {
+        efull = atoi(buf);
+    }
+
+    if (efull) {
+        float f = enow;
+
+        batlevel = (f/efull)*100;
+    }
+
+    env->SetIntField(obj, fieldID, batlevel);
+}
 
 static void android_server_BatteryService_update(JNIEnv* env, jobject obj)
 {
     setBooleanField(env, obj, gPaths.acOnlinePath, gFieldIds.mAcOnline);
     setBooleanField(env, obj, gPaths.usbOnlinePath, gFieldIds.mUsbOnline);
     setBooleanField(env, obj, gPaths.batteryPresentPath, gFieldIds.mBatteryPresent);
+   
+    if (gPaths.batteryCapacityPath)
+        setIntField(env, obj, gPaths.batteryCapacityPath, gFieldIds.mBatteryLevel);
+    else 
+        setEnergyField(env, obj, gPaths.batteryEnergyNowPath, gPaths.batteryEnergyFullPath, gFieldIds.mBatteryLevel);
     
-    setIntField(env, obj, gPaths.batteryCapacityPath, gFieldIds.mBatteryLevel);
     setVoltageField(env, obj, gPaths.batteryVoltagePath, gFieldIds.mBatteryVoltage);
     setIntField(env, obj, gPaths.batteryTemperaturePath, gFieldIds.mBatteryTemperature);
     
@@ -274,6 +302,14 @@ int register_android_server_BatteryService(JNIEnv* env)
                 snprintf(path, sizeof(path), "%s/%s/capacity", POWER_SUPPLY_PATH, name);
                 if (access(path, R_OK) == 0)
                     gPaths.batteryCapacityPath = strdup(path);
+                else {
+                    snprintf(path, sizeof(path), "%s/%s/energy_now", POWER_SUPPLY_PATH, name);
+                    if (access(path, R_OK) == 0)
+                        gPaths.batteryEnergyNowPath = strdup(path);
+                    snprintf(path, sizeof(path), "%s/%s/energy_full", POWER_SUPPLY_PATH, name);
+                    if (access(path, R_OK) == 0)
+                        gPaths.batteryEnergyFullPath = strdup(path);
+                }
 
                 snprintf(path, sizeof(path), "%s/%s/voltage_now", POWER_SUPPLY_PATH, name);
                 if (access(path, R_OK) == 0) {
@@ -313,8 +349,14 @@ int register_android_server_BatteryService(JNIEnv* env)
         LOGE("batteryHealthPath not found");
     if (!gPaths.batteryPresentPath)
         LOGE("batteryPresentPath not found");
-    if (!gPaths.batteryCapacityPath)
-        LOGE("batteryCapacityPath not found");
+    if (!gPaths.batteryCapacityPath) {
+        if (!gPaths.batteryEnergyNowPath || !gPaths.batteryEnergyFullPath)
+            LOGE("batteryCapacityPath not found");
+    }
+    if (!gPaths.batteryEnergyNowPath || !gPaths.batteryEnergyFullPath) {
+        if (!gPaths.batteryCapacityPath) 
+            LOGE("batteryEnergyNowPath or batteryEnergyFullPath not found");
+    }
     if (!gPaths.batteryVoltagePath)
         LOGE("batteryVoltagePath not found");
     if (!gPaths.batteryTemperaturePath)
