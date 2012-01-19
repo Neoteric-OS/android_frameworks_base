@@ -283,6 +283,7 @@ iterateOverNativeFiles(JNIEnv *env, jstring javaFilePath, jstring javaCpuAbi, js
     const int N = zipFile.getNumEntries();
 
     char fileName[PATH_MAX];
+    bool bestAbiMateched = false;
 
     for (int i = 0; i < N; i++) {
         const ZipEntryRO entry = zipFile.findEntryByIndex(i);
@@ -318,13 +319,20 @@ iterateOverNativeFiles(JNIEnv *env, jstring javaFilePath, jstring javaCpuAbi, js
         if (cpuAbi.size() == cpuAbiRegionSize
                 && *(cpuAbiOffset + cpuAbi.size()) == '/'
                 && !strncmp(cpuAbiOffset, cpuAbi.c_str(), cpuAbiRegionSize)) {
+            bestAbiMateched = true;
             LOGV("Using ABI %s\n", cpuAbi.c_str());
-        } else if (cpuAbi2.size() == cpuAbiRegionSize
+        } else if ( !bestAbiMateched
+                && cpuAbi2.size() == cpuAbiRegionSize
                 && *(cpuAbiOffset + cpuAbi2.size()) == '/'
                 && !strncmp(cpuAbiOffset, cpuAbi2.c_str(), cpuAbiRegionSize)) {
             LOGV("Using ABI %s\n", cpuAbi2.c_str());
         } else {
-            LOGV("abi didn't match anything: %s (end at %zd)\n", cpuAbiOffset, cpuAbiRegionSize);
+            if (bestAbiMateched) {
+                LOGV("abi didn't apply: %s (best ABI already matched)\n", cpuAbiOffset);
+            }
+            else {
+                LOGV("abi didn't match anything: %s (end at %zd)\n", cpuAbiOffset, cpuAbiRegionSize);
+            }
             continue;
         }
 
