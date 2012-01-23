@@ -1201,12 +1201,25 @@ void CursorScrollAccumulator::finishSync() {
 // --- TouchButtonAccumulator ---
 
 TouchButtonAccumulator::TouchButtonAccumulator() :
-        mHaveBtnTouch(false) {
+        mHaveBtnTouch(false),
+        mHaveBtnMouse(false),
+        mHaveBtnTools(false) {
     clearButtons();
 }
 
 void TouchButtonAccumulator::configure(InputDevice* device) {
     mHaveBtnTouch = device->hasKey(BTN_TOUCH);
+    mHaveBtnMouse = device->hasKey(BTN_MOUSE);
+    mHaveBtnTools = device->hasKey(BTN_TOOL_FINGER)
+                    || device->hasKey(BTN_TOOL_PEN)
+                    || device->hasKey(BTN_TOOL_RUBBER)
+                    || device->hasKey(BTN_TOOL_BRUSH)
+                    || device->hasKey(BTN_TOOL_PENCIL)
+                    || device->hasKey(BTN_TOOL_AIRBRUSH)
+                    || device->hasKey(BTN_TOOL_LENS)
+                    || device->hasKey(BTN_TOOL_DOUBLETAP)
+                    || device->hasKey(BTN_TOOL_TRIPLETAP)
+                    || device->hasKey(BTN_TOOL_QUADTAP);
 }
 
 void TouchButtonAccumulator::reset(InputDevice* device) {
@@ -1224,6 +1237,14 @@ void TouchButtonAccumulator::reset(InputDevice* device) {
     mBtnToolDoubleTap = device->isKeyPressed(BTN_TOOL_DOUBLETAP);
     mBtnToolTripleTap = device->isKeyPressed(BTN_TOOL_TRIPLETAP);
     mBtnToolQuadTap = device->isKeyPressed(BTN_TOOL_QUADTAP);
+    // If this is a touch device with no tool buttons, no true
+    // touch button, and a mouse button, assume it's a mouse-
+    // driven virtual stylus tablet and use BTN_MOUSE as BTN_TOUCH
+    if (!mHaveBtnTools && !mHaveBtnTouch && mHaveBtnMouse) {
+        mBtnToolPen = true;
+        mHaveBtnTouch = true;
+        mBtnTouch = device->isKeyPressed(BTN_MOUSE);
+    }
 }
 
 void TouchButtonAccumulator::clearButtons() {
@@ -1246,6 +1267,7 @@ void TouchButtonAccumulator::clearButtons() {
 void TouchButtonAccumulator::process(const RawEvent* rawEvent) {
     if (rawEvent->type == EV_KEY) {
         switch (rawEvent->scanCode) {
+        case BTN_MOUSE: // for virtual tablets, treat BTN_MOUSE as BTN_TOUCH
         case BTN_TOUCH:
             mBtnTouch = rawEvent->value;
             break;
@@ -4948,7 +4970,6 @@ void TouchInputMapper::dispatchPointerStylus(nsecs_t when, uint32_t policyFlags)
 
         hovering = mCurrentCookedPointerData.hoveringIdBits.hasBit(id);
         down = !hovering;
-
         mPointerController->getPosition(&x, &y);
         mPointerSimple.currentCoords.copyFrom(mCurrentCookedPointerData.pointerCoords[index]);
         mPointerSimple.currentCoords.setAxisValue(AMOTION_EVENT_AXIS_X, x);

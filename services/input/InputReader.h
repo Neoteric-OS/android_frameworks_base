@@ -593,6 +593,8 @@ public:
 
 private:
     bool mHaveBtnTouch;
+    bool mHaveBtnMouse;
+    bool mHaveBtnTools;
 
     bool mBtnTouch;
     bool mBtnStylus;
