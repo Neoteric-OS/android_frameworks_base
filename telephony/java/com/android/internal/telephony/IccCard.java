@@ -33,6 +33,7 @@ import android.os.RegistrantList;
 import android.util.Log;
 import android.view.WindowManager;
 
+import com.android.internal.telephony.IccCardApplication.PersoSubState;
 import com.android.internal.telephony.PhoneBase;
 import com.android.internal.telephony.CommandsInterface.RadioState;
 import com.android.internal.telephony.gsm.SIMRecords;
@@ -54,6 +55,9 @@ public abstract class IccCard {
     private RegistrantList mAbsentRegistrants = new RegistrantList();
     private RegistrantList mPinLockedRegistrants = new RegistrantList();
     private RegistrantList mNetworkLockedRegistrants = new RegistrantList();
+    private RegistrantList mPersoLockedRegistrants = new RegistrantList();
+
+    private PersoSubState mPersoSubState = PersoSubState.PERSOSUBSTATE_UNKNOWN;
 
     private boolean mDesiredPinLocked;
     private boolean mDesiredFdnEnabled;
@@ -84,6 +88,8 @@ public abstract class IccCard {
     static public final String INTENT_VALUE_LOCKED_ON_PUK = "PUK";
     /* NETWORK means ICC is locked on NETWORK PERSONALIZATION */
     static public final String INTENT_VALUE_LOCKED_NETWORK = "NETWORK";
+    /* PERSO means ICC is locked on PERSONALIZATION */
+    static public final String INTENT_VALUE_LOCKED_PERSO = "PERSO";
     /* PERM_DISABLED means ICC is permanently disabled due to puk fails */
     static public final String INTENT_VALUE_ABSENT_ON_PERM_DISABLED = "PERM_DISABLED";
 
@@ -113,7 +119,7 @@ public abstract class IccCard {
         ABSENT,
         PIN_REQUIRED,
         PUK_REQUIRED,
-        NETWORK_LOCKED,
+        PERSO_LOCKED,
         READY,
         NOT_READY,
         PERM_DISABLED;
@@ -124,7 +130,7 @@ public abstract class IccCard {
 
         public boolean iccCardExist() {
             return ((this == PIN_REQUIRED) || (this == PUK_REQUIRED)
-                    || (this == NETWORK_LOCKED) || (this == READY)
+                    || (this == PERSO_LOCKED) || (this == READY)
                     || (this == PERM_DISABLED));
         }
     }
@@ -193,6 +199,7 @@ public abstract class IccCard {
     }
 
     /**
+     * @deprecated use registerForPersoLocked
      * Notifies handler of any transition into State.NETWORK_LOCKED
      */
     public void registerForNetworkLocked(Handler h, int what, Object obj) {
@@ -200,13 +207,31 @@ public abstract class IccCard {
 
         mNetworkLockedRegistrants.add(r);
 
-        if (getState() == State.NETWORK_LOCKED) {
+        if ((getState() == State.PERSO_LOCKED) && (mPersoSubState.isPersoSubStateSimNetwork())) {
             r.notifyRegistrant();
         }
     }
 
     public void unregisterForNetworkLocked(Handler h) {
         mNetworkLockedRegistrants.remove(h);
+    }
+
+    /**
+     * Notifies handler of any transition into State.PERSO_LOCKED
+     */
+    public void registerForPersoLocked(Handler h, int what, Object obj) {
+        Registrant r = new Registrant (h, what, obj);
+
+        mPersoLockedRegistrants.add(r);
+
+        if (getState() == State.PERSO_LOCKED) {
+            AsyncResult ar = new AsyncResult(null, mPersoSubState.ordinal(), null);
+            r.notifyRegistrant(ar);
+        }
+    }
+
+    public void unregisterForPersoLocked(Handler h) {
+        mPersoLockedRegistrants.remove(h);
     }
 
     /**
@@ -267,8 +292,18 @@ public abstract class IccCard {
                 mHandler.obtainMessage(EVENT_PINPUK_DONE, onComplete));
     }
 
+    /*
+     * @deprecated
+     * Use supplyDepersonalization instead.
+     */
     public void supplyNetworkDepersonalization (String pin, Message onComplete) {
         mPhone.mCM.supplyNetworkDepersonalization(pin,
+                mHandler.obtainMessage(EVENT_PINPUK_DONE, onComplete));
+    }
+
+    public void supplyDepersonalization (String pin, int type, Message onComplete) {
+        log("supplyDepersonalization: type "  + type);
+        mPhone.mCM.supplyDepersonalization(pin, type,
                 mHandler.obtainMessage(EVENT_PINPUK_DONE, onComplete));
     }
 
@@ -417,14 +452,16 @@ public abstract class IccCard {
     private void handleIccCardStatus(IccCardStatus newCardStatus) {
         boolean transitionedIntoPinLocked;
         boolean transitionedIntoAbsent;
-        boolean transitionedIntoNetworkLocked;
+        boolean transitionedIntoPersoLocked;
         boolean transitionedIntoPermBlocked;
         boolean isIccCardRemoved;
         boolean isIccCardAdded;
 
         State oldState, newState;
+        PersoSubState oldPersoSubState;
 
         oldState = mState;
+        oldPersoSubState = mPersoSubState;
         mIccCardStatus = newCardStatus;
         newState = getIccCardState();
         mState = newState;
@@ -435,8 +472,8 @@ public abstract class IccCard {
                  (oldState != State.PIN_REQUIRED && newState == State.PIN_REQUIRED)
               || (oldState != State.PUK_REQUIRED && newState == State.PUK_REQUIRED));
         transitionedIntoAbsent = (oldState != State.ABSENT && newState == State.ABSENT);
-        transitionedIntoNetworkLocked = (oldState != State.NETWORK_LOCKED
-                && newState == State.NETWORK_LOCKED);
+        transitionedIntoPersoLocked = ((newState == State.PERSO_LOCKED) &&
+              (mPersoSubState != oldPersoSubState));
         transitionedIntoPermBlocked = (oldState != State.PERM_DISABLED
                 && newState == State.PERM_DISABLED);
         isIccCardRemoved = (oldState != null &&
@@ -454,11 +491,21 @@ public abstract class IccCard {
             if (mDbg) log("Notify SIM missing.");
             mAbsentRegistrants.notifyRegistrants();
             broadcastIccStateChangedIntent(INTENT_VALUE_ICC_ABSENT, null);
-        } else if (transitionedIntoNetworkLocked) {
-            if (mDbg) log("Notify SIM network locked.");
-            mNetworkLockedRegistrants.notifyRegistrants();
+        } else if (transitionedIntoPersoLocked) {
+            if(mDbg) log("Notify SIM Perso locked.");
+            AsyncResult ar = new AsyncResult(null, mPersoSubState.ordinal(), null);
+            mPersoLockedRegistrants.notifyRegistrants(ar);
             broadcastIccStateChangedIntent(INTENT_VALUE_ICC_LOCKED,
-                  INTENT_VALUE_LOCKED_NETWORK);
+                  INTENT_VALUE_LOCKED_PERSO);
+            // This is to support registerForNetworkLocked registrants if any.
+            // This should not be used. Use registerForPersoLocked for any
+            // Personalization notifications.
+            if (mPersoSubState.isPersoSubStateSimNetwork()) {
+                if(mDbg) log("Notify SIM network locked.");
+                mNetworkLockedRegistrants.notifyRegistrants();
+                broadcastIccStateChangedIntent(INTENT_VALUE_ICC_LOCKED,
+                      INTENT_VALUE_LOCKED_NETWORK);
+            }
         } else if (transitionedIntoPermBlocked) {
             if (mDbg) log("Notify SIM permanently disabled.");
             broadcastIccStateChangedIntent(INTENT_VALUE_ICC_ABSENT,
@@ -606,7 +653,7 @@ public abstract class IccCard {
                     getIccCardStatusDone(ar);
                     break;
                 case EVENT_PINPUK_DONE:
-                    // a PIN/PUK/PIN2/PUK2/Network Personalization
+                    // a PIN/PUK/PIN2/PUK2/De-Personalization
                     // request has completed. ar.userObj is the response Message
                     // Repoll before returning
                     ar = (AsyncResult)msg.obj;
@@ -765,7 +812,8 @@ public abstract class IccCard {
             return IccCard.State.PUK_REQUIRED;
         }
         if (app.app_state.isSubscriptionPersoEnabled()) {
-            return IccCard.State.NETWORK_LOCKED;
+            mPersoSubState = app.perso_substate;
+            return IccCard.State.PERSO_LOCKED;
         }
         if (app.app_state.isAppReady()) {
             return IccCard.State.READY;
