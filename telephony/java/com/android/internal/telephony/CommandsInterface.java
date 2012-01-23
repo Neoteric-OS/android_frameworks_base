@@ -776,6 +776,8 @@ public interface CommandsInterface {
 
     void supplyNetworkDepersonalization(String netpin, Message result);
 
+    void supplyDepersonalization(String netpin, int type, Message result);
+
     /**
      *  returned message
      *  retMsg.obj = AsyncResult ar
