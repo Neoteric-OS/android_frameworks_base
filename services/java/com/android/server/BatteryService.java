@@ -33,6 +33,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.UEventObserver;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.util.EventLog;
 import android.util.Slog;
@@ -138,6 +139,9 @@ class BatteryService extends Binder {
                 com.android.internal.R.integer.config_lowBatteryCloseWarningLevel);
 
         mPowerSupplyObserver.startObserving("SUBSYSTEM=power_supply");
+        if (SystemProperties.getInt("status.battery.polling", 0) != 0) {
+            batteryinfo_poll_thread.start();
+        }
 
         // watch for invalid charger messages if the invalid_charger switch exists
         if (new File("/sys/devices/virtual/switch/invalid_charger/state").exists()) {
@@ -190,6 +194,23 @@ class BatteryService extends Binder {
             if (mInvalidCharger != invalidCharger) {
                 mInvalidCharger = invalidCharger;
                 update();
+            }
+        }
+    };
+
+    private Thread batteryinfo_poll_thread = new Thread() {
+        @Override
+        public void run() {
+            int poll_freq;
+
+            poll_freq = SystemProperties.getInt("status.battery.polling_freq", 30) * 1000;
+            try {
+                while (true) {
+                    sleep(poll_freq);
+                    update();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     };
