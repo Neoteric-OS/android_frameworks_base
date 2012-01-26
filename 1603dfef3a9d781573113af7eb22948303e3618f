@@ -33,6 +33,23 @@
       "revId": "1603dfef3a9d781573113af7eb22948303e3618f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACYX////U\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1965,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-01-26T23:46:58Z",
+      "side": 1,
+      "message": "I don\u0027t think we should have a special identify just for apps because they happen to appear on the system image.  Maybe for apps that are running as the system uid or maybe maybe signed with the platform cert, but just running on the system image should not give you any special identity at this level.",
+      "revId": "1603dfef3a9d781573113af7eb22948303e3618f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
