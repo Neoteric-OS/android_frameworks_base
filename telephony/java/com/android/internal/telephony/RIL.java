@@ -3167,17 +3167,17 @@ public final class RIL extends BaseCommands implements CommandsInterface {
        String radioString = SystemProperties.get(
                TelephonyProperties.PROPERTY_DATA_NETWORK_TYPE, "unknown");
        int radioType;
-       if (radioString.equals("GPRS")) {
+       if (radioString.startsWith("GPRS")) {
            radioType = NETWORK_TYPE_GPRS;
-       } else if (radioString.equals("EDGE")) {
+       } else if (radioString.startsWith("EDGE")) {
            radioType = NETWORK_TYPE_EDGE;
-       } else if (radioString.equals("UMTS")) {
+       } else if (radioString.startsWith("UMTS")) {
            radioType = NETWORK_TYPE_UMTS;
-       } else if (radioString.equals("HSDPA")) {
+       } else if (radioString.startsWith("HSDPA")) {
            radioType = NETWORK_TYPE_HSDPA;
-       } else if (radioString.equals("HSUPA")) {
+       } else if (radioString.startsWith("HSUPA")) {
            radioType = NETWORK_TYPE_HSUPA;
-       } else if (radioString.equals("HSPA")) {
+       } else if (radioString.startsWith("HSPA")) {
            radioType = NETWORK_TYPE_HSPA;
        } else {
            radioType = NETWORK_TYPE_UNKNOWN;
