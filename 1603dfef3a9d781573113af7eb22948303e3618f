@@ -50,6 +50,24 @@
       "revId": "1603dfef3a9d781573113af7eb22948303e3618f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACc3////8\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1965,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2012-01-27T14:22:05Z",
+      "side": 1,
+      "message": "We can already distinguish the ones running with system UID.\nWe want to also be able to distinguish platform apps from third party apps.\nWilling to do this based on signature; will change this test to one that checks the signature against the one on the android base package.\nHowever, given that Android already supports signatureOrSystem permissions in its own model, is it unreasonable to also pass down an indicator of whether the app came from the system partition to the policy engine, and leave it up to the policy writer to decide whether/how to use that information?",
+      "parentUuid": "AAACYX////U\u003d",
+      "revId": "1603dfef3a9d781573113af7eb22948303e3618f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
