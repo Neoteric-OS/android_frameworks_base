@@ -935,7 +935,8 @@ public class CalendarView extends FrameLayout {
      */
     private void setMonthDisplayed(Calendar calendar) {
         final int newMonthDisplayed = calendar.get(Calendar.MONTH);
-        if (mCurrentMonthDisplayed != newMonthDisplayed) {
+        if ((mCurrentMonthDisplayed != newMonthDisplayed)
+                || ((mCurrentMonthDisplayed == 0) && (newMonthDisplayed == 0))) {
             mCurrentMonthDisplayed = newMonthDisplayed;
             mAdapter.setFocusMonth(mCurrentMonthDisplayed);
             final int flags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NO_MONTH_DAY
