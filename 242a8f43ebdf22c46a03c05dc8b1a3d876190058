@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAACaX////4\u003d",
+        "filename": "services/java/com/android/server/BatteryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1010147
+      },
+      "writtenOn": "2012-01-27T04:19:39Z",
+      "side": 1,
+      "message": "The above line\u0027s internal spacing seems to be inconsistent with accepted style.",
+      "revId": "242a8f43ebdf22c46a03c05dc8b1a3d876190058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACaX////0\u003d",
+        "filename": "services/java/com/android/server/BatteryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1010147
+      },
+      "writtenOn": "2012-01-27T04:19:39Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "242a8f43ebdf22c46a03c05dc8b1a3d876190058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
