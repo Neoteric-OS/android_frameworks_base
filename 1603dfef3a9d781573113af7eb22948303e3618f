@@ -68,6 +68,24 @@
       "revId": "1603dfef3a9d781573113af7eb22948303e3618f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAACc3////U\u003d",
+        "filename": "services/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1965,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2012-01-30T15:45:42Z",
+      "side": 1,
+      "message": "We experimented with introducing a new ApplicationInfo flag for packages that match the platform package cert, but very few packages seem to be signed by that cert.  What we want is a way to distinguish third party apps.  At the operating system level, there are differences in the typical (and desired) accesses by system apps and third party apps, and we want to be able to allow some accesses only to the system apps.  Right now the system flag seems the best way to do that.  Not sure how to proceed.",
+      "parentUuid": "AAACYX////U\u003d",
+      "revId": "1603dfef3a9d781573113af7eb22948303e3618f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
