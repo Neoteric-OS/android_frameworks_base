@@ -9221,6 +9221,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         if (super.performLongClick()) {
             mDiscardNextActionUp = true;
             handled = true;
+            vibrate = false;
         }
 
         // Long press in empty space moves cursor and shows the Paste affordance if available.
