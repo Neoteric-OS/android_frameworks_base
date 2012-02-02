@@ -808,6 +808,9 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
             case com.android.internal.R.styleable.TextView_inputType:
                 inputType = a.getInt(attr, mInputType);
+                if (editable && inputType == EditorInfo.TYPE_NULL) {
+                    editable = false;
+                }
                 break;
 
             case com.android.internal.R.styleable.TextView_imeOptions:
