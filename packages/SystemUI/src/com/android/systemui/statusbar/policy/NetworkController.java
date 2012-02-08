@@ -630,8 +630,9 @@ public class NetworkController extends BroadcastReceiver {
             }
         } else {
             // CDMA case, mDataActivity can be also DATA_ACTIVITY_DORMANT
-            if (hasService() && mDataState == TelephonyManager.DATA_CONNECTED) {
-                switch (mDataActivity) {
+            if (mSimState == IccCard.State.READY || mSimState == IccCard.State.UNKNOWN) {
+                if (hasService() && mDataState == TelephonyManager.DATA_CONNECTED) {
+                    switch (mDataActivity) {
                     case TelephonyManager.DATA_ACTIVITY_IN:
                         iconId = mDataIconList[1];
                         break;
@@ -645,10 +646,14 @@ public class NetworkController extends BroadcastReceiver {
                     default:
                         iconId = mDataIconList[0];
                         break;
+                    }
+                } else {
+                    iconId = 0;
+                    visible = false;
                 }
             } else {
-                iconId = 0;
-                visible = false;
+                iconId = R.drawable.stat_sys_no_sim;
+                visible = false; // no SIM? no data
             }
         }
 
