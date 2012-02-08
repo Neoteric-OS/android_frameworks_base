@@ -271,7 +271,6 @@ private:
     void updateResourceParamsLocked() const;
 
     Asset* openIdmapLocked(const struct asset_path& ap) const;
-    void addOverlayLocked(const String8& overlayPath);
     void addOverlaysFromIdmapsInDirLocked(const String8& dir);
     bool addOverlayFromIdmapLocked(const String8& idmapPath);
 

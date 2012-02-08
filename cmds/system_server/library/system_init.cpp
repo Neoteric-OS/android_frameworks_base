@@ -70,6 +70,47 @@ namespace {
         ALOGE("execl(%s) failed: %s\n", idmap_bin, strerror(errno));
     }
 
+    int create_idmap_symlink(const char* idmap_file, const char* symlink_name) {
+        static const char* prefix = "/data/system/overlay";
+        static const char* dir = "/data/system/overlay/system@framework@framework-res.apk";
+        static const mode_t mode =
+            S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
+
+        struct stat st;
+        char symlink_path[PATH_MAX + 1];
+
+        memset(symlink_path, 0, sizeof(symlink_path));
+        snprintf(symlink_path, sizeof(symlink_path) - 1, "%s/%s", dir, symlink_name);
+
+        if (stat(prefix, &st) != 0) {
+            if (mkdir(prefix, 0755) != 0) {
+                return -1;
+            }
+            if (chown(prefix, AID_SYSTEM, AID_SYSTEM) == -1) {
+                return -1;
+            }
+            if (chmod(prefix, mode) == -1) {
+                return -1;
+            }
+        }
+
+        if (stat(dir, &st) != 0) {
+            if (mkdir(dir, 0755) != 0) {
+                return -1;
+            }
+            if (chown(dir, AID_SYSTEM, AID_SYSTEM) == -1) {
+                return -1;
+            }
+            if (chmod(dir, mode) == -1) {
+                return -1;
+            }
+        }
+
+        (void)unlink(symlink_path);
+
+        return symlink(idmap_file, symlink_path);
+    }
+
     int wait_idmap(pid_t pid) {
         int status;
         pid_t got_pid;
@@ -95,6 +136,7 @@ namespace {
     int idmap(const char* idmap_bin, const char* orig_apk,
             const char* skin_apk, const char* idmap_file) {
         int retval = -1;
+        const char* symlink_name = NULL;
 
         pid_t pid = fork();
         if (pid == 0) {
@@ -105,6 +147,21 @@ namespace {
             // parent
             retval = wait_idmap(pid);
         }
+
+        if (retval == 0) {
+            if ((symlink_name = strrchr(skin_apk, '/')) != NULL) {
+                symlink_name += 1;
+            } else {
+                retval = -1;
+            }
+        }
+
+        if (retval == 0) {
+            if ((retval = create_idmap_symlink(idmap_file, symlink_name)) != 0) {
+                (void)unlink(idmap_file);
+            }
+        }
+
         return retval;
     }
 
