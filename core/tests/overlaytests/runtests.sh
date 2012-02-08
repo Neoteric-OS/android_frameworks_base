@@ -1,9 +1,51 @@
 #!/bin/bash
 
+function usage()
+{
+	echo "Usage: runtest.sh [-e|-d|-s serial] [-0] [-1] [-2]"
+	echo -e "\t-e  Target emulator (adb -e)"
+	echo -e "\t-d  Target device (adb -d)"
+	echo -e "\t-s serial  Target device with id <serial> (adb -s)"
+	echo -e "\t-0  Execute the no overlay testsuite"
+	echo -e "\t-1  Execute the single overlay testsuite"
+	echo -e "\t-2  Execute the multiple overlay testsuite"
+	echo "By default, all three testsuites are executed."
+	echo "Any combination of -{0,1,2} may be given."
+	echo "Example:"
+	echo -e "\truntest.sh -e -01"
+	echo "Run testsuites for no and single overlays on emulator."
+
+}
+
 adb="adb"
-if [[ $# -gt 0 ]]; then
-	adb="adb $*" # for setting -e, -d or -s <serial>
-fi
+testsuites=""
+while getopts "eds:012" opt; do
+	case "$opt" in
+		e)
+			adb="adb -e"
+			;;
+		d)
+			adb="adb -d"
+			;;
+		s)
+			adb="adb -s ${OPTARG}"
+			;;
+		0)
+			testsuites+="0"
+			;;
+		1)
+			testsuites+="1"
+			;;
+		2)
+			testsuites+="2"
+			;;
+		?)
+			usage
+			exit 1
+			;;
+	esac
+done
+if [[ -z "$testsuites" ]]; then testsuites="012"; fi
 
 function atexit()
 {
@@ -86,30 +128,48 @@ function rm_if_needed()
 function disable_overlay()
 {
 	echo "Disabling all overlays"
-	rm_if_needed "/vendor/overlay/framework/framework-res.apk"
+
 	rm_if_needed "/vendor/overlay/framework/framework-res.apk"
 	rm_if_needed "/data/resource-cache/vendor@overlay@framework@framework-res.apk@idmap"
 	rm_if_needed "/data/resource-cache/vendor@overlay@framework@framework-res.apk@1.apk@idmap"
 	rm_if_needed "/data/resource-cache/vendor@overlay@framework@framework-res.apk@2.apk@idmap"
+
+	rm_if_needed "/vendor/overlay/app/OverlayTest.apk"
+	rm_if_needed "/data/resource-cache/vendor@overlay@app@OverlayTest.apk@idmap"
+	rm_if_needed "/data/resource-cache/vendor@overlay@app@OverlayTest.apk@1.apk@idmap"
+	rm_if_needed "/data/resource-cache/vendor@overlay@app@OverlayTest.apk@2.apk@idmap"
+
+	rm_if_needed "/data/system/overlay"
 }
 
 function enable_overlay()
 {
 	disable_overlay
 	echo "Enabling single overlay"
+
 	mkdir_if_needed "/system/vendor"
+
 	mkdir_if_needed "/vendor/overlay/framework"
 	$adb shell ln -s /data/app/com.android.overlaytest.overlay.apk /vendor/overlay/framework/framework-res.apk
+
+	mkdir_if_needed "/vendor/overlay/app"
+	$adb shell ln -s /data/app/com.android.overlaytest.first_app_overlay.apk /vendor/overlay/app/OverlayTest.apk
 }
 
 function enable_multiple_overlays()
 {
 	disable_overlay
 	echo "Enabling multiple overlays"
+
 	mkdir_if_needed "/system/vendor"
+
 	mkdir_if_needed "/vendor/overlay/framework/framework-res.apk"
 	$adb shell ln -s /data/app/com.android.overlaytest.overlay.apk /vendor/overlay/framework/framework-res.apk/1.apk
 	$adb shell ln -s /data/app/com.android.overlaytest.multipleoverlays.apk /vendor/overlay/framework/framework-res.apk/2.apk
+
+	mkdir_if_needed "/vendor/overlay/app/OverlayTest.apk"
+	$adb shell ln -s /data/app/com.android.overlaytest.first_app_overlay.apk /vendor/overlay/app/OverlayTest.apk/1.apk
+	$adb shell ln -s /data/app/com.android.overlaytest.second_app_overlay.apk /vendor/overlay/app/OverlayTest.apk/2.apk
 }
 
 function instrument()
@@ -129,10 +189,12 @@ function remount()
 function sync()
 {
 	local files=""
-	files+=" /data/app/OverlayTest.apk"
-	files+=" /data/app/OverlayTest.odex"
+	files+=" /system/app/OverlayTest.apk"
+	files+=" /system/app/OverlayTest.odex"
 	files+=" /data/app/com.android.overlaytest.overlay.apk"
 	files+=" /data/app/com.android.overlaytest.multipleoverlays.apk"
+	files+=" /data/app/com.android.overlaytest.first_app_overlay.apk"
+	files+=" /data/app/com.android.overlaytest.second_app_overlay.apk"
 
 	for i in $files; do
 		echo "Syncing $i" | tee -a $log
@@ -150,28 +212,36 @@ remount
 compile_module "$PWD/OverlayTest/Android.mk"
 compile_module "$PWD/OverlayTestOverlay/Android.mk"
 compile_module "$PWD/OverlayTestMultipleOverlays/Android.mk"
+compile_module "$PWD/OverlayAppFirst/Android.mk"
+compile_module "$PWD/OverlayAppSecond/Android.mk"
 sync
 
 # instrument test (without overlay)
-$adb shell stop
-disable_overlay
-$adb shell start
-wait_for_boot_completed
-instrument "com.android.overlaytest.WithoutOverlayTest"
+if [[ "$testsuites" =~ "0" ]]; then
+	$adb shell stop
+	disable_overlay
+	$adb shell start
+	wait_for_boot_completed
+	instrument "com.android.overlaytest.WithoutOverlayTest"
+fi
 
 # instrument test (with overlay)
-$adb shell stop
-enable_overlay
-$adb shell start
-wait_for_boot_completed
-instrument "com.android.overlaytest.WithOverlayTest"
+if [[ "$testsuites" =~ "1" ]]; then
+	$adb shell stop
+	enable_overlay
+	$adb shell start
+	wait_for_boot_completed
+	instrument "com.android.overlaytest.WithOverlayTest"
+fi
 
 # instrument test (with multiple overlays)
-$adb shell stop
-enable_multiple_overlays
-$adb shell start
-wait_for_boot_completed
-instrument "com.android.overlaytest.WithMultipleOverlaysTest"
+if [[ "$testsuites" =~ "2" ]]; then
+	$adb shell stop
+	enable_multiple_overlays
+	$adb shell start
+	wait_for_boot_completed
+	instrument "com.android.overlaytest.WithMultipleOverlaysTest"
+fi
 
 # cleanup
 exit $(grep -c -e '^FAILURES' $log)

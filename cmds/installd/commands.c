@@ -994,6 +994,7 @@ out:
     return rc;
 }
 
+// FIXME: use skin or overlay throughout
 static void run_idmap(const char *orig_apk, const char *skin_apk, int idmap_fd)
 {
     static const char *IDMAP_BIN = "/system/bin/idmap";
@@ -1006,15 +1007,15 @@ static void run_idmap(const char *orig_apk, const char *skin_apk, int idmap_fd)
     ALOGE("execl(%s) failed: %s\n", IDMAP_BIN, strerror(errno));
 }
 
-// Transform string /a/b/c.apk to /data/resource-cache/a@b@c.apk@idmap
-static int generate_idmap_path(const char *skin_path, char *idmap_path, size_t N)
+// Transform string /a/b/c.apk to (prefix)/a@b@c.apk@(suffix)
+// eg /a/b/c.apk to /data/resource-cache/a@b@c.apk@idmap
+static int flatten_path(const char *prefix, const char *suffix,
+        const char *skin_path, char *idmap_path, size_t N)
 {
-    static const char *idmap_root = "/data/resource-cache/";
-    static const char *suffix = "@idmap";
     if (skin_path == NULL || idmap_path == NULL) {
         return -1;
     }
-    const size_t len_idmap_root = strlen(idmap_root);
+    const size_t len_idmap_root = strlen(prefix);
     const size_t len_skin_path = strlen(skin_path);
     const size_t len_suffix = strlen(suffix);
     if (len_skin_path < 2) { // will access skin_path + 1 further below
@@ -1029,7 +1030,7 @@ static int generate_idmap_path(const char *skin_path, char *idmap_path, size_t N
         return -1;
     }
     memset(idmap_path, 0, N);
-    snprintf(idmap_path, N, "%s%s%s", idmap_root, skin_path + 1, suffix);
+    snprintf(idmap_path, N, "%s%s%s", prefix, skin_path + 1, suffix);
     char *ch = idmap_path + len_idmap_root;
     while (*ch != '\0') {
         if (*ch == '/') {
@@ -1040,15 +1041,15 @@ static int generate_idmap_path(const char *skin_path, char *idmap_path, size_t N
     return 0;
 }
 
-int idmap(const char *orig_apk, const char *skin_apk, uid_t uid)
+int idmap(const char *orig_apk, const char *skin_apk, size_t priority, uid_t uid)
 {
     ALOGV("idmap orig_apk=%s skin_apk=%s uid=%d\n", orig_apk, skin_apk, uid);
 
     int idmap_fd = -1;
     char idmap_path[PATH_MAX];
 
-    if (generate_idmap_path(skin_apk, idmap_path, sizeof(idmap_path)) == -1) {
-        ALOGE("idmap cannot generate idmap path for skin %s\n", skin_apk);
+    if (flatten_path(IDMAP_PREFIX, IDMAP_SUFFIX, skin_apk, idmap_path, sizeof(idmap_path)) == -1) {
+        LOGE("idmap cannot generate idmap path for skin %s\n", skin_apk);
         goto fail;
     }
 
@@ -1093,6 +1094,11 @@ int idmap(const char *orig_apk, const char *skin_apk, uid_t uid)
             goto fail;
         }
     }
+    if (enable_overlay(orig_apk, skin_apk, priority) != 0) {
+        close(idmap_fd);
+        unlink(idmap_path);
+        goto fail;
+    }
     close(idmap_fd);
     return 0;
 fail:
@@ -1102,3 +1108,84 @@ fail:
     }
     return -1;
 }
+
+int enable_overlay(const char *orig_path, const char *skin_path, size_t priority)
+{
+    char symlink_target[PATH_MAX];
+    char symlink_name[PATH_MAX];
+    struct stat st;
+
+    if (flatten_path(OVERLAY_PREFIX, OVERLAY_SUFFIX, orig_path,
+                symlink_name, sizeof(symlink_name)) == -1) {
+        ALOGE("failed to generate symlink taket for %s\n", orig_path);
+        goto fail;
+    }
+
+    if (flatten_path(IDMAP_PREFIX, IDMAP_SUFFIX, skin_path,
+                symlink_target, sizeof(symlink_target)) == -1) {
+        ALOGE("failed to generate symlink name for %s\n", skin_path);
+        goto fail;
+    }
+
+    if (stat(OVERLAY_PREFIX, &st) == -1 && errno == ENOENT) {
+        if (mkdir(OVERLAY_PREFIX, 0755) == -1) {
+            ALOGE("failed to create dir %s: %s\n", OVERLAY_PREFIX, strerror(errno));
+            goto fail;
+        }
+        if (chown(OVERLAY_PREFIX, AID_SYSTEM, AID_SYSTEM) == -1) {
+            ALOGE("failed to chown dir %s: %s\n", OVERLAY_PREFIX, strerror(errno));
+            unlink(OVERLAY_PREFIX);
+            goto fail;
+        }
+    }
+
+    if (stat(symlink_name, &st) == -1 && errno == ENOENT) {
+        if (mkdir(symlink_name, 0755) == -1) {
+            ALOGE("failed to create dir %s: %s\n", symlink_name, strerror(errno));
+            goto fail;
+        }
+        if (chown(symlink_name, AID_SYSTEM, AID_SYSTEM) == -1) {
+            ALOGE("failed to chown dir %s: %s\n", symlink_name, strerror(errno));
+            unlink(symlink_name);
+            goto fail;
+        }
+    }
+
+    snprintf(symlink_name, sizeof(symlink_name), "%s/%04d", symlink_name, priority);
+
+    unlink(symlink_name); /* disable previous overlay, if any */
+
+    if (symlink(symlink_target, symlink_name) == -1) {
+        ALOGE("failed to create symlink %s -> %s: %s\n",
+                symlink_name, symlink_target, strerror(errno));
+        goto fail;
+    }
+
+    return 0;
+fail:
+    return -1;
+}
+
+#if 0
+// FIXME: not updated to take dir into account
+// FIXME: if adding disable_overlay, also add rm_idmap (for when packages are upgraded)
+int disable_overlay(const char *orig_path)
+{
+    char symlink_name[PATH_MAX];
+
+    if (flatten_path(OVERLAY_PREFIX, OVERLAY_SUFFIX, orig_path,
+                symlink_name, sizeof(symlink_name)) == -1) {
+        ALOGE("failed to generate symlink taket for %s\n", orig_path);
+        goto fail;
+    }
+
+    if (unlink(symlink_name) == -1) {
+        ALOGE("failed to remove symlink %s: %s\n", symlink_name, strerror(errno));
+        goto fail;
+    }
+
+    return 0;
+fail:
+    return -1;
+}
+#endif

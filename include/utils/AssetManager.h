@@ -272,6 +272,7 @@ private:
 
     Asset* openIdmapLocked(const struct asset_path& ap) const;
     void addOverlayLocked(const String8& overlayPath);
+    void addOverlayPackagesLocked(const String8& dir);
 
     class SharedZip : public RefBase {
     public:

@@ -2,7 +2,10 @@ package com.android.overlaytest;
 
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
 import android.test.AndroidTestCase;
+import android.util.AttributeSet;
+import android.util.Xml;
 import java.io.InputStream;
 import java.util.Locale;
 
@@ -54,6 +57,20 @@ public abstract class OverlayBaseTest extends AndroidTestCase {
     }
 
     private String getExpected(String no, String so, String mo) {
+        switch (mMode) {
+            case MODE_NO_OVERLAY:
+                return no;
+            case MODE_SINGLE_OVERLAY:
+                return so;
+            case MODE_MULTIPLE_OVERLAYS:
+                return mo;
+            default:
+                fail("Unknown mode!");
+                return no;
+        }
+    }
+
+    private int getExpected(int no, int so, int mo) {
         switch (mMode) {
             case MODE_NO_OVERLAY:
                 return no;
@@ -183,6 +200,32 @@ public abstract class OverlayBaseTest extends AndroidTestCase {
             default:
                 fail("Unknown mode!");
         }
+        assertEquals(expected, actual);
+    }
+
+    public void testAppString() throws Throwable {
+        final int resId = R.string.str;
+        assertResource(resId, "none", "single", "multiple");
+    }
+
+    public void testApp2() throws Throwable {
+        final int resId = R.string.str2; // only in base package and first app overlay
+        assertResource(resId, "none", "single", "single");
+    }
+
+    public void testAppXml() throws Throwable {
+        int expected = getExpected(0, 1, 2);
+        int actual = -1;
+        XmlResourceParser parser = mResources.getXml(R.xml.integer);
+        int type = parser.getEventType();
+        while (type != XmlResourceParser.END_DOCUMENT && actual == -1) {
+            if (type == XmlResourceParser.START_TAG && "integer".equals(parser.getName())) {
+                AttributeSet as = Xml.asAttributeSet(parser);
+                actual = as.getAttributeIntValue(null, "value", -1);
+            }
+            type = parser.next();
+        }
+        parser.close();
         assertEquals(expected, actual);
     }
 }

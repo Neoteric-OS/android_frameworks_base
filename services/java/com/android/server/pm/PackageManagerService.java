@@ -162,6 +162,7 @@ public class PackageManagerService extends IPackageManager.Stub {
     private static final boolean DEBUG_PACKAGE_SCANNING = false;
     private static final boolean DEBUG_APP_DIR_OBSERVER = false;
     private static final boolean DEBUG_VERIFY = false;
+    private static final boolean DEBUG_RADO = false;
 
     static final boolean MULTIPLE_APPLICATION_UIDS = true;
     private static final int RADIO_UID = Process.PHONE_UID;
@@ -191,6 +192,7 @@ public class PackageManagerService extends IPackageManager.Stub {
     static final int SCAN_NO_PATHS = 1<<5;
     static final int SCAN_UPDATE_TIME = 1<<6;
     static final int SCAN_DEFER_DEX = 1<<7;
+    static final int SCAN_IS_OVERLAY = 1<<8;
 
     static final int REMOVE_CHATTY = 1<<16;
 
@@ -249,6 +251,9 @@ public class PackageManagerService extends IPackageManager.Stub {
     // This is the object monitoring the system app dir.
     final FileObserver mVendorInstallObserver;
 
+    // This is the object monitoring the vendor overlay package dir.
+    final FileObserver mVendorOverlayInstallObserver;
+
     // This is the object monitoring mAppInstallDir.
     final FileObserver mAppInstallObserver;
 
@@ -262,8 +267,13 @@ public class PackageManagerService extends IPackageManager.Stub {
     final File mFrameworkDir;
     final File mSystemAppDir;
     final File mVendorAppDir;
+    final File mVendorOverlayDir;
     final File mAppInstallDir;
     final File mDalvikCacheDir;
+
+    // Tracks available original package names -> overlay package paths.
+    HashMap<String, HashSet<PackageParser.Package>> mOverlays =
+        new HashMap<String, HashSet<PackageParser.Package>>();
 
     // Directory containing the private parts (e.g. code and non-resource assets) of forward-locked
     // apps.
@@ -1053,6 +1063,15 @@ public class PackageManagerService extends IPackageManager.Stub {
             scanDirLI(mFrameworkDir, PackageParser.PARSE_IS_SYSTEM
                     | PackageParser.PARSE_IS_SYSTEM_DIR,
                     scanMode | SCAN_NO_DEX, 0);
+
+            // Collect vendor overlay packages.
+            // (Do this before scanning any apps.)
+            mVendorOverlayDir = new File("/vendor/overlay/app");
+            mVendorOverlayInstallObserver = new RecursiveAppDirObserver(
+                mVendorOverlayDir.getPath(), OBSERVER_EVENTS, true);
+            mVendorOverlayInstallObserver.startWatching();
+            scanDirLI(mVendorOverlayDir, PackageParser.PARSE_IS_SYSTEM
+                    | PackageParser.PARSE_IS_SYSTEM_DIR, scanMode | SCAN_IS_OVERLAY, 0);
             
             // Collect all system packages.
             mSystemAppDir = new File(Environment.getRootDirectory(), "app");
@@ -3088,6 +3107,22 @@ public class PackageManagerService extends IPackageManager.Stub {
             }
         }
 
+        // Create idmap. This code should first call a function like
+        // isDexOptNeeded to verify the idmap file is not already
+        // up-to-date. Note we cannot rely on isDexOptNeeded, as
+        // that function only looks at one of the two packages
+        // involved in idmap.
+        HashSet<PackageParser.Package> overlays = mOverlays.get(pkg.packageName);
+        if (overlays != null) {
+            for (PackageParser.Package opkg : overlays) {
+                if (mInstaller.idmap(pkg.mScanPath, opkg.mScanPath, opkg.mSkinPriority,
+                            pkg.applicationInfo.uid) != 0) {
+                    Log.w(TAG, "Failed to generate idmap for " + pkg.mScanPath +
+                            " and " + opkg.mScanPath);
+                }
+            }
+        }
+
         return performed ? DEX_OPT_PERFORMED : DEX_OPT_SKIPPED;
     }
 
@@ -3126,6 +3161,16 @@ public class PackageManagerService extends IPackageManager.Stub {
 
     private PackageParser.Package scanPackageLI(PackageParser.Package pkg,
             int parseFlags, int scanMode, long currentTime) {
+        if ((scanMode & SCAN_IS_OVERLAY) != 0) {
+            if (pkg.mSkinTarget != null) {
+                if (!mOverlays.containsKey(pkg.mSkinTarget)) {
+                    mOverlays.put(pkg.mSkinTarget, new HashSet<PackageParser.Package>());
+                }
+                HashSet<PackageParser.Package> set = mOverlays.get(pkg.mSkinTarget);
+                set.add(pkg);
+            }
+        }
+
         File scanFile = new File(pkg.mScanPath);
         if (scanFile == null || pkg.applicationInfo.sourceDir == null ||
                 pkg.applicationInfo.publicSourceDir == null) {
@@ -4851,12 +4896,14 @@ public class PackageManagerService extends IPackageManager.Stub {
 
                 if ((event&ADD_EVENTS) != 0) {
                     if (p == null) {
+                        final int extraScanMode =
+                            mRootDir.indexOf("/vendor/overlay/app", 0) == 0 ? SCAN_IS_OVERLAY : 0;
                         p = scanPackageLI(fullPath,
                                 (mIsRom ? PackageParser.PARSE_IS_SYSTEM
                                         | PackageParser.PARSE_IS_SYSTEM_DIR: 0) |
                                 PackageParser.PARSE_CHATTY |
                                 PackageParser.PARSE_MUST_BE_APK,
-                                SCAN_MONITOR | SCAN_NO_PATHS | SCAN_UPDATE_TIME,
+                                SCAN_MONITOR | SCAN_NO_PATHS | SCAN_UPDATE_TIME | extraScanMode,
                                 System.currentTimeMillis());
                         if (p != null) {
                             /*
@@ -4898,6 +4945,102 @@ public class PackageManagerService extends IPackageManager.Stub {
 
         private final String mRootDir;
         private final boolean mIsRom;
+    }
+
+    private final class RecursiveAppDirObserver extends FileObserver {
+        private static final int DIR_FLAG = 0x40000000;
+        private static final int DIR_REMOVE_EVENTS = REMOVE_EVENTS;
+        private static final int DIR_ADD_EVENTS = ADD_EVENTS | FileObserver.CREATE;
+
+        private final String mRootDir;
+        private int mMask;
+        private final boolean mIsRom;
+        private final AppDirObserver mADO;
+        private final ArrayList<RecursiveAppDirObserver> mChildren;
+
+        private int findChild(String path) {
+            for (int i = 0; i < mChildren.size(); ++i) {
+                RecursiveAppDirObserver child = mChildren.get(i);
+                if (child.mRootDir.equals(path)) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        private void addChild(String path) {
+            if (DEBUG_RADO) {
+                Log.d(TAG, "RecursiveAppDirObserver.addChild path=" + path);
+            }
+            if (findChild(path) == -1) {
+                RecursiveAppDirObserver child = new RecursiveAppDirObserver(path, mMask, mIsRom);
+                child.startWatching();
+                mChildren.add(child);
+            }
+        }
+
+        private void removeChild(String path) {
+            if (DEBUG_RADO) {
+                Log.d(TAG, "RecursiveAppDirObserver.removeChild path=" + path);
+            }
+            int index = findChild(path);
+            if (index != -1) {
+                RecursiveAppDirObserver child = mChildren.get(index);
+                child.stopWatching();
+                mChildren.remove(index);
+            }
+        }
+
+        public RecursiveAppDirObserver(String path, int mask, boolean isrom) {
+            super(path, mask | FileObserver.CREATE);
+
+            if (DEBUG_RADO) {
+                Log.d(TAG, "RecursiveAppDirObserver() path=" + path);
+            }
+
+            mRootDir = path;
+            mMask = mask;
+            mIsRom = isrom;
+            mADO = new AppDirObserver(path, mask, isrom);
+            mChildren = new ArrayList<RecursiveAppDirObserver>();
+
+            // populate mChildren with pre-existing directories
+            File[] ls = new File(path).listFiles();
+            if (ls != null) {
+                for (File f : ls) {
+                    if (f.isDirectory()) {
+                        addChild(f.getAbsolutePath());
+                    } else {
+                        mADO.onEvent(FileObserver.MOVED_TO, f.getName());
+                    }
+                }
+            }
+        }
+
+        public void onEvent(int event, String path) {
+            String fullPathStr = null;
+            File fullPath = null;
+            if (path != null) {
+                fullPath = new File(mRootDir, path);
+                fullPathStr = fullPath.getPath();
+            }
+
+            if (DEBUG_RADO) {
+                Log.d(TAG, "RecursiveAppDirObserver.onEvent path=" + fullPathStr +
+                        " event=0x" + String.format("%08x", event));
+            }
+
+            if ((event & DIR_FLAG) != 0 && (event & DIR_ADD_EVENTS) != 0) {
+                addChild(fullPathStr);
+            } else if ((event & DIR_FLAG) != 0 && (event & DIR_REMOVE_EVENTS) != 0) {
+                removeChild(fullPathStr);
+            } else if ((event & (REMOVE_EVENTS | ADD_EVENTS)) != 0) {
+                if (DEBUG_RADO) {
+                    Log.d(TAG, "RecursiveAppDirObserver.onEvent, offloading event to ADO");
+                }
+                mADO.onEvent(event, path);
+            }
+        }
     }
 
     /* Called when a downloaded package installation has been confirmed by the user */
