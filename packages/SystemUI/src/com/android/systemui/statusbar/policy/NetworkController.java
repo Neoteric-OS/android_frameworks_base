@@ -601,55 +601,31 @@ public class NetworkController extends BroadcastReceiver {
         int iconId;
         boolean visible = true;
 
-        if (!isCdma()) {
-            // GSM case, we have to check also the sim state
-            if (mSimState == IccCard.State.READY || mSimState == IccCard.State.UNKNOWN) {
-                if (hasService() && mDataState == TelephonyManager.DATA_CONNECTED) {
-                    switch (mDataActivity) {
-                        case TelephonyManager.DATA_ACTIVITY_IN:
-                            iconId = mDataIconList[1];
-                            break;
-                        case TelephonyManager.DATA_ACTIVITY_OUT:
-                            iconId = mDataIconList[2];
-                            break;
-                        case TelephonyManager.DATA_ACTIVITY_INOUT:
-                            iconId = mDataIconList[3];
-                            break;
-                        default:
-                            iconId = mDataIconList[0];
-                            break;
-                    }
-                    mDataDirectionIconId = iconId;
-                } else {
-                    iconId = 0;
-                    visible = false;
-                }
-            } else {
-                iconId = R.drawable.stat_sys_no_sim;
-                visible = false; // no SIM? no data
-            }
-        } else {
-            // CDMA case, mDataActivity can be also DATA_ACTIVITY_DORMANT
+        if (mSimState == IccCard.State.READY || mSimState == IccCard.State.UNKNOWN) {
             if (hasService() && mDataState == TelephonyManager.DATA_CONNECTED) {
                 switch (mDataActivity) {
-                    case TelephonyManager.DATA_ACTIVITY_IN:
-                        iconId = mDataIconList[1];
-                        break;
-                    case TelephonyManager.DATA_ACTIVITY_OUT:
-                        iconId = mDataIconList[2];
-                        break;
-                    case TelephonyManager.DATA_ACTIVITY_INOUT:
-                        iconId = mDataIconList[3];
-                        break;
-                    case TelephonyManager.DATA_ACTIVITY_DORMANT:
-                    default:
-                        iconId = mDataIconList[0];
-                        break;
+                case TelephonyManager.DATA_ACTIVITY_IN:
+                    iconId = mDataIconList[1];
+                    break;
+                case TelephonyManager.DATA_ACTIVITY_OUT:
+                    iconId = mDataIconList[2];
+                    break;
+                case TelephonyManager.DATA_ACTIVITY_INOUT:
+                    iconId = mDataIconList[3];
+                    break;
+                default:
+                    // in CDMA case this may be TelephonyManager.DATA_ACTIVITY_DORMANT
+                    iconId = mDataIconList[0];
+                    break;
                 }
+                mDataDirectionIconId = iconId;
             } else {
                 iconId = 0;
                 visible = false;
             }
+        } else {
+            iconId = R.drawable.stat_sys_no_sim;
+            visible = false;
         }
 
         // yuck - this should NOT be done by the status bar
