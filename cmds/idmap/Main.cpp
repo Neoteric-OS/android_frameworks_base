@@ -16,6 +16,7 @@
 
 #include <utils/AssetManager.h>
 #include <utils/ResourceTypes.h>
+#include <utils/String8.h>
 #include <utils/ZipFileRO.h>
 
 #include <errno.h>
@@ -110,7 +111,16 @@ namespace {
         }
 
         uint32_t cached_orig_crc, cached_skin_crc;
-        if (!ResTable::getIdmapInfo(buf, N, &cached_orig_crc, &cached_skin_crc)) {
+        String8 cached_orig_path, cached_skin_path;
+        if (!ResTable::getIdmapInfo(buf, N, &cached_orig_crc, &cached_skin_crc,
+                    &cached_orig_path, &cached_skin_path)) {
+            return true;
+        }
+
+        if (cached_orig_path != orig_apk_path) {
+            return true;
+        }
+        if (cached_skin_path != skin_apk_path) {
             return true;
         }
 

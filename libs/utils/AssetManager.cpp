@@ -99,34 +99,6 @@ namespace {
         return path;
     }
 
-    String8 packagePathForIdmapPath(const String8& idmapPath)
-    {
-        const char* root = getenv("ANDROID_DATA");
-        LOG_ALWAYS_FATAL_IF(root == NULL, "ANDROID_DATA not set");
-        String8 prefix(root);
-        prefix.appendPath(kIdmapCacheDir);
-        prefix.append("/");
-
-
-        if (strncmp(idmapPath.string(), prefix.string(), prefix.size()) != 0) {
-            ALOGW("idmapPath does not start with %s\n", prefix.string());
-            return String8();
-        }
-        // FIXME: check idmapPath ends with @idmap
-
-        char packagePath[PATH_MAX + 1];
-        memset(packagePath, 0, sizeof(packagePath));
-
-        strncpy(packagePath, idmapPath.string() + prefix.size() - 1, sizeof(packagePath) - 1);
-        packagePath[strlen(packagePath) - strlen("@idmap")] = '\0';
-        for (char* p = packagePath; *p; ++p) {
-            if (*p == '@') {
-                *p = '/';
-            }
-        }
-        return String8(packagePath);
-    }
-
     String8 flattenPath(const String8& path)
     {
         assert(path[0] == '/');
@@ -286,9 +258,7 @@ bool AssetManager::addAssetPath(const String8& path, void** cookie)
     }
 no_overlay:
 
-// FIXME: check if framework-res.apk, and if so, do the above, otherwise do the
-// following
-    addOverlayPackagesLocked(String8("/data/system/overlay").appendPath(flattenPath(path)));
+    addOverlaysFromIdmapsInDirLocked(String8("/data/system/overlay").appendPath(flattenPath(path)));
 
     return true;
 }
@@ -314,7 +284,7 @@ bool AssetManager::createIdmap(const char* origApkPath, const char* skinApkPath,
     }
 
     return tables[0].createIdmap(tables[1], origCrc, skinCrc,
-            (void**)outData, outSize) == NO_ERROR;
+            origApkPath, skinApkPath, (void**)outData, outSize) == NO_ERROR;
 }
 
 bool AssetManager::addDefaultAssets()
@@ -716,6 +686,45 @@ void AssetManager::addOverlayLocked(const String8& path)
     }
 }
 
+bool AssetManager::addOverlayFromIdmapLocked(const String8& idmapPath)
+{
+    Asset* idmap = NULL;
+    if ((idmap = openAssetFromFileLocked(idmapPath, Asset::ACCESS_BUFFER)) == NULL) {
+        return false;
+    }
+
+    String8 origPath;
+    String8 skinPath;
+    if (!ResTable::getIdmapInfo(idmap->getBuffer(false), idmap->getLength(),
+                NULL, NULL, &origPath, &skinPath)) {
+        delete idmap;
+        return false;
+    }
+    delete idmap;
+
+    if (TEMP_FAILURE_RETRY(access(origPath.string(), R_OK)) != 0) {
+        return false;
+    }
+    if (TEMP_FAILURE_RETRY(access(idmapPath.string(), R_OK)) != 0) {
+        return false;
+    }
+    if (TEMP_FAILURE_RETRY(access(skinPath.string(), R_OK)) != 0) {
+        return false;
+    }
+
+    asset_path oap;
+    oap.path = skinPath;
+    oap.type = ::getFileType(skinPath.string());
+    oap.idmap = idmapPath;
+#if 0
+    ALOGD("Overlay added: origPath=%s skinPath=%s idmapPath=%s\n",
+            origPath.string(), skinPath.string(), idmapPath.string());
+#endif
+    mAssetPaths.add(oap);
+
+    return true;
+}
+
 /*
  * Load overlay packages from a directory.
  *
@@ -724,7 +733,7 @@ void AssetManager::addOverlayLocked(const String8& path)
  * embedded within the file name of the idmap file. The symlinks are processed
  * in lexicographical order.
  */
-void AssetManager::addOverlayPackagesLocked(const String8& dirPath)
+void AssetManager::addOverlaysFromIdmapsInDirLocked(const String8& dirPath)
 {
     DIR* dir;
     struct dirent* dirent;
@@ -743,14 +752,9 @@ void AssetManager::addOverlayPackagesLocked(const String8& dirPath)
     symlinks.sort(overlay_path_compare);
     const size_t N = symlinks.size();
     for (size_t i = 0; i < N; ++i) {
-        char idmap[PATH_MAX + 1];
-        memset(idmap, 0, sizeof(idmap));
-        if (readlink(symlinks[i].string(), idmap, sizeof(idmap) - 1) == -1) {
-            ALOGW("Failed to read symlink %s: %s\n", symlinks[i].string(), strerror(errno));
-            continue;
+        if (!addOverlayFromIdmapLocked(symlinks[i])) {
+            ALOGW("Failed to add overlay for idmap file %s\n", symlinks[i].string());
         }
-        const String8 pkg = packagePathForIdmapPath(String8(idmap));
-        addOverlayLocked(pkg);
     }
 }
 

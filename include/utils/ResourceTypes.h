@@ -2069,17 +2069,19 @@ public:
     // NO_ERROR; the caller should not free outData.
     status_t createIdmap(const ResTable& overlay,
             uint32_t originalCrc, uint32_t overlayCrc,
+            const char* originalPath, const char* overlayPath,
             void** outData, size_t* outSize) const;
 
     enum {
-        IDMAP_HEADER_SIZE_BYTES = 3 * sizeof(uint32_t),
+        IDMAP_HEADER_SIZE_BYTES = 3 * sizeof(uint32_t) + 2 * 256,
     };
     // Retrieve idmap meta-data.
     //
     // This function only requires the idmap header (the first
     // IDMAP_HEADER_SIZE_BYTES) bytes of an idmap file.
     static bool getIdmapInfo(const void* idmap, size_t size,
-                             uint32_t* pOriginalCrc, uint32_t* pOverlayCrc);
+                             uint32_t* pOriginalCrc, uint32_t* pOverlayCrc,
+                             String8* pOriginalPath, String8* pOverlayPath);
 
 #ifndef HAVE_ANDROID_OS
     void print(bool inclValues) const;
