@@ -2067,8 +2067,9 @@ public:
     // Return value: on success: NO_ERROR; caller is responsible for free-ing
     // outData (using free(3)). On failure, any status_t value other than
     // NO_ERROR; the caller should not free outData.
-    status_t createIdmap(const ResTable& overlay, uint32_t originalCrc, uint32_t overlayCrc,
-                         void** outData, size_t* outSize) const;
+    status_t createIdmap(const ResTable& overlay,
+            uint32_t originalCrc, uint32_t overlayCrc,
+            void** outData, size_t* outSize) const;
 
     enum {
         IDMAP_HEADER_SIZE_BYTES = 3 * sizeof(uint32_t),
