@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAACy3////4\u003d",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10501,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-02-10T02:24:37Z",
+      "side": 1,
+      "message": "No need to destroy the Canvas, just set its bitmap to null. But it shouldn\u0027t be done here, it should be done at the end of buildDrawingCache.",
+      "revId": "53ebecf1b47cae4c2a0a45126302177c4802a736",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
