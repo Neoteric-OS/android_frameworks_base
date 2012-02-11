@@ -356,6 +356,11 @@ public class PhoneStatusBar extends StatusBar {
                 (SignalClusterView)sb.findViewById(R.id.signal_cluster);
         mNetworkController.addSignalCluster(signalCluster);
         signalCluster.setNetworkController(mNetworkController);
+        final ImageView ethernetStatus =
+                (ImageView)sb.findViewById(R.id.ethernet_status);
+        if (ethernetStatus != null) {
+            mNetworkController.addEthernetIconView(ethernetStatus);
+        }
 //        final ImageView wimaxRSSI =
 //                (ImageView)sb.findViewById(R.id.wimax_signal);
 //        if (wimaxRSSI != null) {
