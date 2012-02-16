@@ -76,6 +76,7 @@ import android.util.SparseIntArray;
 import com.android.internal.net.LegacyVpnInfo;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.telephony.Phone;
+import com.android.internal.telephony.Nat464xlatService;
 import com.android.server.am.BatteryStatsService;
 import com.android.server.connectivity.Tethering;
 import com.android.server.connectivity.Vpn;
@@ -125,6 +126,8 @@ public class ConnectivityService extends IConnectivityManager.Stub {
     private boolean mTetheringConfigValid = false;
 
     private Vpn mVpn;
+
+    private Nat464xlatService mNat464xlatService;
 
     /** Lock around {@link #mUidRules} and {@link #mMeteredIfaces}. */
     private Object mRulesLock = new Object();
@@ -529,6 +532,8 @@ public class ConnectivityService extends IConnectivityManager.Stub {
                                  mTethering.getUpstreamIfaceTypes().length != 0);
 
         mVpn = new Vpn(mContext, new VpnCallback());
+
+	mNat464xlatService = new Nat464xlatService(mContext, nmService, this);
 
         try {
             nmService.registerObserver(mTethering);
@@ -1253,11 +1258,11 @@ private NetworkStateTracker makeWimaxStateTracker() {
     }
 
     private boolean addRoute(LinkProperties p, RouteInfo r, boolean toDefaultTable) {
-        return modifyRoute(p.getInterfaceName(), p, r, 0, ADD, toDefaultTable);
+        return modifyRoute(p, r, 0, ADD, toDefaultTable);
     }
 
     private boolean removeRoute(LinkProperties p, RouteInfo r, boolean toDefaultTable) {
-        return modifyRoute(p.getInterfaceName(), p, r, 0, REMOVE, toDefaultTable);
+        return modifyRoute(p, r, 0, REMOVE, toDefaultTable);
     }
 
     private boolean addRouteToAddress(LinkProperties lp, InetAddress addr) {
@@ -1283,13 +1288,13 @@ private NetworkStateTracker makeWimaxStateTracker() {
                 bestRoute = RouteInfo.makeHostRoute(addr, bestRoute.getGateway());
             }
         }
-        return modifyRoute(lp.getInterfaceName(), lp, bestRoute, 0, doAdd, toDefaultTable);
+        return modifyRoute(lp, bestRoute, 0, doAdd, toDefaultTable);
     }
 
-    private boolean modifyRoute(String ifaceName, LinkProperties lp, RouteInfo r, int cycleCount,
+    private boolean modifyRoute(LinkProperties lp, RouteInfo r, int cycleCount,
             boolean doAdd, boolean toDefaultTable) {
-        if ((ifaceName == null) || (lp == null) || (r == null)) {
-            if (DBG) log("modifyRoute got unexpected null: " + ifaceName + ", " + lp + ", " + r);
+        if ((lp == null) || (r == null)) {
+            if (DBG) log("modifyRoute got unexpected null: " + lp + ", " + r);
             return false;
         }
 
@@ -1297,6 +1302,17 @@ private NetworkStateTracker makeWimaxStateTracker() {
             loge("Error modifying route - too much recursion");
             return false;
         }
+
+	String ifaceName;
+	if(r.getDestination().getAddress() instanceof Inet4Address) {
+	    ifaceName = lp.getIPv4InterfaceName();
+	} else {
+	    ifaceName = lp.getIPv6InterfaceName();
+	}
+	if(ifaceName == null) {
+	    loge("Error modifying route - no interface name");
+	    return false;
+	}
 
         if (r.isHostRoute() == false) {
             RouteInfo bestRoute = RouteInfo.selectBestRoute(lp.getRoutes(), r.getGateway());
@@ -1309,7 +1325,7 @@ private NetworkStateTracker makeWimaxStateTracker() {
                     // route to it's gateway
                     bestRoute = RouteInfo.makeHostRoute(r.getGateway(), bestRoute.getGateway());
                 }
-                modifyRoute(ifaceName, lp, bestRoute, cycleCount+1, doAdd, toDefaultTable);
+                modifyRoute(lp, bestRoute, cycleCount+1, doAdd, toDefaultTable);
             }
         }
         if (doAdd) {
