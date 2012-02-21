@@ -229,7 +229,7 @@ status_t AudioTrack::set(
                                   flags,
                                   sharedBuffer,
                                   output,
-                                  true);
+                                  false);
 
     if (status != NO_ERROR) {
         return status;
@@ -767,7 +767,9 @@ status_t AudioTrack::createTrack_l(
                     ALOGE("Invalid buffer size: minFrameCount %d, frameCount %d", minFrameCount, frameCount);
                     return BAD_VALUE;
                 } else {
-                    frameCount = minFrameCount;
+                    LOGW("frameCount (%d) < minFrameCount (%d). If output HAL is not buffered this may cause underruns",
+                         frameCount, minFrameCount);
+                    //frameCount = minFrameCount;
                 }
             }
         } else {
