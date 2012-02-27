@@ -182,4 +182,10 @@ public interface TelephonyProperties
      * in commercial configuration.
      */
     static final String PROPERTY_TEST_CSIM = "persist.radio.test-csim";
+
+    /**
+     * Property to set multi sim feature.
+     * Type: boolean ( true = multi sim feature enabled, false = multi sim disabled)
+     */
+    static final String PROPERTY_MULTI_SIM_ENABLED = "persist.dsds.enabled";
 }
