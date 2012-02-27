@@ -34,6 +34,24 @@
       "revId": "d55da5d452fa20c7c4c4172884e0983bbeb79b6d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADSn///+k\u003d",
+        "filename": "media/libstagefright/codecs/aacenc/basic_op/basic_op.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2012-02-27T21:56:31Z",
+      "side": 1,
+      "message": "duh. misread the SSAT.",
+      "parentUuid": "AAADRH////I\u003d",
+      "revId": "d55da5d452fa20c7c4c4172884e0983bbeb79b6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
