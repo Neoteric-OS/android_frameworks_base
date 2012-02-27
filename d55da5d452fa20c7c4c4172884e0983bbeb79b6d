@@ -16,6 +16,24 @@
       "revId": "d55da5d452fa20c7c4c4172884e0983bbeb79b6d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADRH////I\u003d",
+        "filename": "media/libstagefright/codecs/aacenc/basic_op/basic_op.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1002068
+      },
+      "writtenOn": "2012-02-27T20:19:42Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be needed - just as in https://android-review.googlesource.com/#/c/22467/2/media/libstagefright/codecs/aacenc/basic_op/basic_op.h, only one or the other of the LT/GE conditional instructions will be executed. The last instruction, SSAT, doesn\u0027t use the input registers - thus it shouldn\u0027t matter if result and one of the inputs share registers.",
+      "parentUuid": "AAADSn///+s\u003d",
+      "revId": "d55da5d452fa20c7c4c4172884e0983bbeb79b6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
