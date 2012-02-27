@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAADSn///+s\u003d",
+        "filename": "media/libstagefright/codecs/aacenc/basic_op/basic_op.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2012-02-27T20:14:16Z",
+      "side": 1,
+      "message": "\u003d\u0026?",
+      "revId": "d55da5d452fa20c7c4c4172884e0983bbeb79b6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
