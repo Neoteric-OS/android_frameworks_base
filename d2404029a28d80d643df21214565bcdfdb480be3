@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAADSn///+8\u003d",
+        "filename": "media/libstagefright/codecs/amrwb/src/get_amr_wb_bits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1004395
+      },
+      "writtenOn": "2012-02-27T18:59:09Z",
+      "side": 1,
+      "message": "Can you please split this line, it\u0027s hard to read in the present form (could be easily confused with the \",\" operator, also having a mix of initialized and uninitialized variables is not as nice IMO)",
+      "revId": "d2404029a28d80d643df21214565bcdfdb480be3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADSn///+4\u003d",
+        "filename": "media/libstagefright/codecs/amrwb/src/oversamp_12k8_to_16k.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1004395
+      },
+      "writtenOn": "2012-02-27T18:59:09Z",
+      "side": 1,
+      "message": "this is OK",
+      "revId": "d2404029a28d80d643df21214565bcdfdb480be3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
