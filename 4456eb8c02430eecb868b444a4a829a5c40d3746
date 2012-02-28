@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAADUn////s\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-02-28T21:25:12Z",
+      "side": 1,
+      "message": "Note: we already have a 1035 in Google\u0027s internal tree, this should be bumped up to 1036 (and the subsequent one to 1037).",
+      "revId": "4456eb8c02430eecb868b444a4a829a5c40d3746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
