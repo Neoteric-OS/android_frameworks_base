@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAADS3///+k\u003d",
+        "filename": "services/java/com/android/server/MSimTelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-02-28T18:07:52Z",
+      "side": 1,
+      "message": "I\u0027d very much prefer to only have the AOSP copyright, which already covers all contributors. Having any other copyright notice would cause other companies to worry whether there are specific restrictions attached to this file.",
+      "revId": "3b2c6f79a5db9e363de47a6dd11a288c4488f3ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
