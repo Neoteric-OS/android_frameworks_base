@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAADUn///9g\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-02-28T23:24:49Z",
+      "side": 1,
+      "message": "Let\u0027s keep the constants ordered, even if that forces to shift them all around. Otherwise it\u0027s too easy to add the same constant twice.",
+      "revId": "276c09c92e2be6128ad31ea6b5e81e9f8b7f27d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADUn///9c\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneBase.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-02-28T23:24:49Z",
+      "side": 1,
+      "message": "Google\u0027s internal tree is already using 27. Let\u0027s shift things around to leave a hole at 27 and make the new ones 28 and 29.",
+      "revId": "276c09c92e2be6128ad31ea6b5e81e9f8b7f27d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
