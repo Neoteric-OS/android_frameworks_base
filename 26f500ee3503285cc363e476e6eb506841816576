@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAADS3///+Y\u003d",
+        "filename": "core/java/android/webkit/BrowserFrame.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-02-28T18:10:22Z",
+      "side": 1,
+      "message": "Why strip the last one? Even if we assume that\u0027s not a free-form URI, there could be a ? in the middle of the query string, and that search wouldn\u0027t be finding the ? that starts the query string.",
+      "revId": "26f500ee3503285cc363e476e6eb506841816576",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADS3///+c\u003d",
+        "filename": "core/java/android/webkit/BrowserFrame.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-02-28T18:10:22Z",
+      "side": 1,
+      "message": "This should be indented by 4 spaces.",
+      "revId": "26f500ee3503285cc363e476e6eb506841816576",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
