@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAADQn///+8\u003d",
+        "filename": "core/java/android/widget/Spinner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1003263
+      },
+      "writtenOn": "2012-02-28T18:32:07Z",
+      "side": 1,
+      "message": "measureContentWidth is called both by onMeasure to measure the spinner widget itself and DropdownPopup#show to size the popup window. The change should be made in DropdownPopup#show (or in a new method only called from there) instead of here so as not to affect other callers of this method.",
+      "revId": "003c0b92f43462e552c3c1afdc1bb730c1cff8c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
