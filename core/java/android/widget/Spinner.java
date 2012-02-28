@@ -26,6 +26,7 @@ import android.database.DataSetObserver;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,13 +39,13 @@ import android.view.ViewGroup;
  *
  * <p>See the <a href="{@docRoot}resources/tutorials/views/hello-spinner.html">Spinner
  * tutorial</a>.</p>
- * 
+ *
  * @attr ref android.R.styleable#Spinner_prompt
  */
 @Widget
 public class Spinner extends AbsSpinner implements OnClickListener {
     private static final String TAG = "Spinner";
-    
+
     // Only measure this many items to get a decent max width.
     private static final int MAX_ITEMS_MEASURED = 15;
 
@@ -52,7 +53,7 @@ public class Spinner extends AbsSpinner implements OnClickListener {
      * Use a dialog window for selecting spinner options.
      */
     public static final int MODE_DIALOG = 0;
-    
+
     /**
      * Use a dropdown anchored to the Spinner for selecting spinner options.
      */
@@ -736,9 +737,22 @@ public class Spinner extends AbsSpinner implements OnClickListener {
             if (mDropDownWidth == WRAP_CONTENT) {
                 final int spinnerWidth = Spinner.this.getWidth();
                 final int spinnerPaddingRight = Spinner.this.getPaddingRight();
+
+                int contentWidth =  measureContentWidth((SpinnerAdapter) mAdapter, getBackground());
+                int contentWidthLimit = mContext.getResources().getDisplayMetrics().widthPixels;
+                final Drawable popupBackground = getBackground();
+                if (popupBackground != null) {
+                    Rect tempRect = new Rect();
+                    popupBackground.getPadding(tempRect);
+
+                    contentWidthLimit = contentWidthLimit - tempRect.left - tempRect.right;
+                }
+                if (contentWidth > contentWidthLimit) {
+                    contentWidth = contentWidthLimit;
+                }
+
                 setContentWidth(Math.max(
-                        measureContentWidth((SpinnerAdapter) mAdapter, getBackground()),
-                        spinnerWidth - spinnerPaddingLeft - spinnerPaddingRight));
+                       contentWidth, spinnerWidth - spinnerPaddingLeft - spinnerPaddingRight));
             } else if (mDropDownWidth == MATCH_PARENT) {
                 final int spinnerWidth = Spinner.this.getWidth();
                 final int spinnerPaddingRight = Spinner.this.getPaddingRight();
