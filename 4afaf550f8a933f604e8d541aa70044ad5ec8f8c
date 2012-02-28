@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAADQn///+U\u003d",
+        "filename": "core/java/android/widget/Spinner.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1003263
+      },
+      "writtenOn": "2012-02-28T21:21:15Z",
+      "side": 1,
+      "message": "See note below",
+      "revId": "4afaf550f8a933f604e8d541aa70044ad5ec8f8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADQn///+Y\u003d",
+        "filename": "core/java/android/widget/Spinner.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1003263
+      },
+      "writtenOn": "2012-02-28T21:21:15Z",
+      "side": 1,
+      "message": "This block here already populates mTempRect with the background padding. Move this block up further in the method and use the same results in both places instead of doing the work twice.",
+      "revId": "4afaf550f8a933f604e8d541aa70044ad5ec8f8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
