@@ -644,9 +644,9 @@ int32_t InputReader::getStateLocked(int32_t deviceId, uint32_t sourceMask, int32
         for (size_t i = 0; i < numDevices; i++) {
             InputDevice* device = mDevices.valueAt(i);
             if (! device->isIgnored() && sourcesMatchMask(device->getSources(), sourceMask)) {
-                result = (device->*getStateFunc)(sourceMask, code);
-                if (result >= AKEY_STATE_DOWN) {
-                    return result;
+                int32_t state = (device->*getStateFunc)(sourceMask, code);
+                if (state >= result) {
+                    result = state;
                 }
             }
         }
