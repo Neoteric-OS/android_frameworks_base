@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAADQn///94\u003d",
+        "filename": "core/java/android/widget/Spinner.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1003263
+      },
+      "writtenOn": "2012-02-29T01:26:38Z",
+      "side": 1,
+      "message": "mTempRect will only be populated if background was !\u003d null up above. Otherwise it will contain stale data. While it\u0027s unlikely, it should be accounted for here. Zeroing the fields of mTempRect in an \u0027else\u0027 for the block where getPadding is called above could be one option.",
+      "revId": "99a313f6927020fbbc369679fea9b6477a3a6c1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
