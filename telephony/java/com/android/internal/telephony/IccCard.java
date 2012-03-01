@@ -54,6 +54,7 @@ public abstract class IccCard {
     private RegistrantList mAbsentRegistrants = new RegistrantList();
     private RegistrantList mPinLockedRegistrants = new RegistrantList();
     private RegistrantList mNetworkLockedRegistrants = new RegistrantList();
+    private RegistrantList mIccChangedRegistrants = new RegistrantList();
 
     private boolean mDesiredPinLocked;
     private boolean mDesiredFdnEnabled;
@@ -224,6 +225,23 @@ public abstract class IccCard {
 
     public void unregisterForLocked(Handler h) {
         mPinLockedRegistrants.remove(h);
+    }
+
+    /**
+     * Notifies when card status changes
+     */
+    public void registerForIccChanged(Handler h, int what, Object obj) {
+        Registrant r = new Registrant (h, what, obj);
+
+        mIccChangedRegistrants.add(r);
+
+        //Notify registrant right after registering, so that it will get the latest ICC status,
+        //otherwise which may not happen until there is an actual change in ICC status.
+        r.notifyRegistrant();
+    }
+
+    public void unregisterForIccChanged(Handler h) {
+        mIccChangedRegistrants.remove(h);
     }
 
 
@@ -470,6 +488,9 @@ public abstract class IccCard {
         } else if (isIccCardAdded) {
             mHandler.sendMessage(mHandler.obtainMessage(EVENT_CARD_ADDED, null));
         }
+
+        log("Notifying IccChangedRegistrants");
+        mIccChangedRegistrants.notifyRegistrants();
     }
 
     private void onIccSwap(boolean isAdded) {
@@ -823,6 +844,14 @@ public abstract class IccCard {
             // Returns ICC card status for both GSM and CDMA mode
             return mIccCardStatus.getCardState().isCardPresent();
         }
+    }
+
+    public IccCardStatus getIccCardStatus() {
+        return mIccCardStatus;
+    }
+
+    public IccFileHandler getIccFileHandler(){
+        return mPhone.getIccFileHandler();
     }
 
     private void log(String msg) {

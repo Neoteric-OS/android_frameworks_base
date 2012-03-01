@@ -22,6 +22,7 @@ import android.os.Message;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.CellLocation;
+import android.telephony.MSimTelephonyManager;
 import android.util.Log;
 
 import com.android.internal.telephony.IPhoneStateListener;
@@ -156,7 +157,22 @@ public class PhoneStateListener {
      */
     public static final int LISTEN_OTASP_CHANGED                            = 0x00000200;
 
+    /**
+     * Subscription used to listen to the phone state changes
+     * @hide
+     */
+    protected int mSubscription = 0;
+
     public PhoneStateListener() {
+        // If subscription is not passed set the default subscription.
+        mSubscription = MSimTelephonyManager.getDefault().getDefaultSubscription();
+    }
+
+    /**
+     * @hide
+     */
+    public PhoneStateListener(int subscription) {
+        mSubscription = subscription;
     }
 
     /**

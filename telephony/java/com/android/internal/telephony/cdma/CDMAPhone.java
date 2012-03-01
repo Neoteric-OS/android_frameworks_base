@@ -78,13 +78,13 @@ import static com.android.internal.telephony.TelephonyProperties.PROPERTY_ICC_OP
  */
 public class CDMAPhone extends PhoneBase {
     static final String LOG_TAG = "CDMA";
-    private static final boolean DBG = true;
+    protected static final boolean DBG = true;
 
     // Default Emergency Callback Mode exit timer
     private static final int DEFAULT_ECM_EXIT_TIMER_VALUE = 300000;
 
     static final String VM_COUNT_CDMA = "vm_count_key_cdma";
-    private static final String VM_NUMBER_CDMA = "vm_number_key_cdma";
+    protected static final String VM_NUMBER_CDMA = "vm_number_key_cdma";
     private String mVmNumber = null;
 
     static final int RESTART_ECM_TIMER = 0; // restart Ecm timer
@@ -113,14 +113,14 @@ public class CDMAPhone extends PhoneBase {
     // mEcmExitRespRegistrant is informed after the phone has been exited
     //the emergency callback mode
     //keep track of if phone is in emergency callback mode
-    private boolean mIsPhoneInEcmState;
+    protected boolean mIsPhoneInEcmState;
     private Registrant mEcmExitRespRegistrant;
     protected String mImei;
     protected String mImeiSv;
-    private String mEsn;
-    private String mMeid;
+    protected String mEsn;
+    protected String mMeid;
     // string to define how the carrier specifies its own ota sp number
-    private String mCarrierOtaSpNumSchema;
+    protected String mCarrierOtaSpNumSchema;
 
     // A runnable which is used to automatically exit from Ecm after a period of time.
     private Runnable mExitEcmRunnable = new Runnable() {
@@ -1102,7 +1102,7 @@ public class CDMAPhone extends PhoneBase {
     /**
      * {@inheritDoc}
      */
-    public final void setSystemProperty(String property, String value) {
+    public void setSystemProperty(String property, String value) {
         super.setSystemProperty(property, value);
     }
 
@@ -1379,7 +1379,7 @@ public class CDMAPhone extends PhoneBase {
      * Sets PROPERTY_ICC_OPERATOR_ISO_COUNTRY property
      *
      */
-    private void setIsoCountryProperty(String operatorNumeric) {
+    protected void setIsoCountryProperty(String operatorNumeric) {
         if (TextUtils.isEmpty(operatorNumeric)) {
             setSystemProperty(PROPERTY_ICC_OPERATOR_ISO_COUNTRY, "");
         } else {

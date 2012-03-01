@@ -412,4 +412,11 @@ class SipCommandInterface extends BaseCommands implements CommandsInterface {
 
     public void requestIsimAuthentication(String nonce, Message response) {
     }
+
+    public void setUiccSubscription(int slotId, int appIndex, int subId, int subStatus,
+            Message response) {
+    }
+
+    public void setDataSubscription(Message response) {
+    }
 }

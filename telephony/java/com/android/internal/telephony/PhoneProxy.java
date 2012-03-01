@@ -41,17 +41,17 @@ import java.util.List;
 public class PhoneProxy extends Handler implements Phone {
     public final static Object lockForRadioTechnologyChange = new Object();
 
-    private Phone mActivePhone;
-    private String mOutgoingPhone;
-    private CommandsInterface mCommandsInterface;
-    private IccSmsInterfaceManagerProxy mIccSmsInterfaceManagerProxy;
-    private IccPhoneBookInterfaceManagerProxy mIccPhoneBookInterfaceManagerProxy;
-    private PhoneSubInfoProxy mPhoneSubInfoProxy;
+    protected Phone mActivePhone;
+    protected String mOutgoingPhone;
+    protected CommandsInterface mCommandsInterface;
+    protected IccSmsInterfaceManagerProxy mIccSmsInterfaceManagerProxy;
+    protected IccPhoneBookInterfaceManagerProxy mIccPhoneBookInterfaceManagerProxy;
+    protected PhoneSubInfoProxy mPhoneSubInfoProxy;
 
-    private boolean mResetModemOnRadioTechnologyChange = false;
+    protected boolean mResetModemOnRadioTechnologyChange = false;
 
-    private static final int EVENT_RADIO_TECHNOLOGY_CHANGED = 1;
-    private static final String LOG_TAG = "PHONE";
+    protected static final int EVENT_RADIO_TECHNOLOGY_CHANGED = 1;
+    protected static final String LOG_TAG = "PHONE";
 
     //***** Class Methods
     public PhoneProxy(Phone phone) {
@@ -858,5 +858,10 @@ public class PhoneProxy extends Handler implements Phone {
     @Override
     public UsimServiceTable getUsimServiceTable() {
         return mActivePhone.getUsimServiceTable();
+    }
+
+    @Override
+    public int getSubscription() {
+        return mActivePhone.getSubscription();
     }
 }

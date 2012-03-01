@@ -608,4 +608,13 @@ class UsimDataDownloadCommands extends BaseCommands {
     @Override
     public void requestIsimAuthentication(String nonce, Message response) {
     }
+
+    @Override
+    public void setDataSubscription(Message result) {
+    }
+
+    @Override
+    public void setUiccSubscription(int slotId, int appIndex, int subId,
+            int subStatus, Message result) {
+    }
 }

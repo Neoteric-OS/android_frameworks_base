@@ -19,6 +19,7 @@ package com.android.internal.telephony.gsm;
 import android.util.Log;
 
 import com.android.internal.telephony.IccCard;
+import com.android.internal.telephony.IccFileHandler;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneBase;
 import com.android.internal.telephony.TelephonyProperties;
@@ -71,4 +72,7 @@ public final class SimCard extends IccCard {
         return mPhone.mIccRecords.getServiceProviderName();
     }
 
+    public IccFileHandler getIccFileHandler(){
+        return mPhone.getIccFileHandler();
+    }
 }

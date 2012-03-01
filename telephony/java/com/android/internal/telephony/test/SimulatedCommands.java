@@ -1517,4 +1517,13 @@ public final class SimulatedCommands extends BaseCommands
     public void requestIsimAuthentication(String nonce, Message response) {
         unimplemented(response);
     }
+
+    public void setUiccSubscription(int slotId, int appIndex, int subId, int subStatus,
+            Message response) {
+        unimplemented(response);
+    }
+
+    public void setDataSubscription (Message response) {
+        unimplemented(response);
+    }
 }

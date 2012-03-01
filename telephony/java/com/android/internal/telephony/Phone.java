@@ -1772,4 +1772,9 @@ public interface Phone {
      * @return an interface to the UsimServiceTable record, or null if not available
      */
     UsimServiceTable getUsimServiceTable();
+
+    /**
+     * Returns the subscription id.
+     */
+    public int getSubscription();
 }

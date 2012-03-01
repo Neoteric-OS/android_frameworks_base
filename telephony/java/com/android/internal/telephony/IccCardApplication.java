@@ -206,6 +206,22 @@ public class IccCardApplication {
         return newPinState;
     }
 
+    public AppType getType() {
+        return app_type;
+    }
+
+    public AppState getState() {
+        return app_state;
+    }
+
+    public String getAid() {
+        return aid;
+    }
+
+    public String getAppLabel() {
+        return app_label;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

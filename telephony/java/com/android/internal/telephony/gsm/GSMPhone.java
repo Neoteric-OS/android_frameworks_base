@@ -114,8 +114,8 @@ public class GSMPhone extends PhoneBase {
     Thread debugPortThread;
     ServerSocket debugSocket;
 
-    private String mImei;
-    private String mImeiSv;
+    protected String mImei;
+    protected String mImeiSv;
     private String mVmNumber;
 
 
@@ -136,11 +136,12 @@ public class GSMPhone extends PhoneBase {
 
         mCM.setPhoneType(Phone.PHONE_TYPE_GSM);
         mCT = new GsmCallTracker(this);
-        mSST = new GsmServiceStateTracker (this);
+
+        initSubscriptionSpecifics();
+
         mSMS = new GsmSMSDispatcher(this, mSmsStorageMonitor, mSmsUsageMonitor);
         mIccFileHandler = new SIMFileHandler(this);
         mIccRecords = new SIMRecords(this);
-        mDataConnectionTracker = new GsmDataConnectionTracker (this);
         mIccCard = new SimCard(this);
         if (!unitTestMode) {
             mSimPhoneBookIntManager = new SimPhoneBookInterfaceManager(this);
@@ -190,10 +191,18 @@ public class GSMPhone extends PhoneBase {
                 Log.w(LOG_TAG, "Failure to open com.android.internal.telephony.debug socket", ex);
             }
         }
+        setProperties();
+    }
 
+    protected void setProperties() {
         //Change the system property
         SystemProperties.set(TelephonyProperties.CURRENT_ACTIVE_PHONE,
                 new Integer(Phone.PHONE_TYPE_GSM).toString());
+    }
+
+    protected void initSubscriptionSpecifics() {
+        mSST = new GsmServiceStateTracker (this);
+        mDataConnectionTracker = new GsmDataConnectionTracker (this);
     }
 
     @Override
@@ -415,7 +424,7 @@ public class GSMPhone extends PhoneBase {
     /**
      * {@inheritDoc}
      */
-    public final void
+    public void
     setSystemProperty(String property, String value) {
         super.setSystemProperty(property, value);
     }

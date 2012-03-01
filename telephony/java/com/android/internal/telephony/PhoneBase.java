@@ -1188,4 +1188,13 @@ public abstract class PhoneBase extends Handler implements Phone {
     public UsimServiceTable getUsimServiceTable() {
         return mIccRecords.getUsimServiceTable();
     }
+
+    /**
+     * Returns the subscription id.
+     * Always returns default subscription(ie., 0)
+     */
+    @Override
+    public int getSubscription() {
+        return MSimConstants.DEFAULT_SUBSCRIPTION;
+    }
 }

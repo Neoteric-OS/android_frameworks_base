@@ -240,12 +240,6 @@ interface ITelephonyMSim {
     int getActivePhoneType(int subscription);
 
     /**
-     * Sends a OEM request to the RIL and returns the response back to the
-     * Caller. The returnValue is negative on failure. 0 or length of response on SUCCESS
-     */
-    int sendOemRilRequestRaw(in byte[] request, out byte[] response);
-
-    /**
      * Returns the CDMA ERI icon index to display on particular subscription.
      * @param subscription user preferred subscription.
      */
@@ -302,26 +296,6 @@ interface ITelephonyMSim {
      * or {@link PHone#LTE_ON_CDMA_TRUE}
      */
     int getLteOnCdmaMode(int subscription);
-
-    /**
-     * Gets the number of attempts remaining for PIN1/PUK1 unlock
-     * for a subscription.
-     * @param subscription user preferred subscription.
-     * Gets the number of attempts remaining for PIN1/PUK1 unlock.
-     */
-    int getIccPin1RetryCount(int subscription);
-
-    /**
-     * Modify data readiness checks performed during data call setup
-     *
-     * @param checkConnectivity - check for network state in service,
-                                  roaming and data in roaming enabled.
-     * @param checkSubscription - check for icc/nv ready and icc records loaded.
-     * @param tryDataCalls - set to true to attempt data calls if data call is not already active.
-     *
-     */
-    void setDataReadinessChecks(
-            boolean checkConnectivity, boolean checkSubscription, boolean tryDataCalls);
 
     /**
      * get default subscription
