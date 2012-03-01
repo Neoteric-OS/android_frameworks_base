@@ -2519,7 +2519,7 @@ public class PowerManagerService extends IPowerManager.Stub
                 // we only do this if we are undocked, since lighting should be stable when
                 // stationary in a dock.
                 int lcdValue = getAutoBrightnessValue(
-                        (mIsDocked ? value : mHighestLightSensorValue),
+                        ((!mIsDocked) ? value : mHighestLightSensorValue),
                         mLcdBacklightValues);
                 int buttonValue = getAutoBrightnessValue(value, mButtonBacklightValues);
                 int keyboardValue;
