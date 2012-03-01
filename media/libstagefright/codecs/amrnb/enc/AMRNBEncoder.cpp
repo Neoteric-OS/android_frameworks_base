@@ -16,7 +16,7 @@
 
 #include "AMRNBEncoder.h"
 
-#include "gsmamr_enc.h"
+#include "amrencode.h"
 
 #include <media/stagefright/MediaBufferGroup.h>
 #include <media/stagefright/MediaDebug.h>
