@@ -18,7 +18,7 @@
 
 #include "AudioCodec.h"
 
-#include "gsmamr_dec.h"
+#include "amrdecode.h"
 #include "amrencode.h"
 
 namespace {

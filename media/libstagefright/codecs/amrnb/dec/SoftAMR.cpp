@@ -20,7 +20,7 @@
 
 #include "SoftAMR.h"
 
-#include "gsmamr_dec.h"
+#include "amrdecode.h"
 #include "pvamrwbdecoder.h"
 
 #include <media/stagefright/foundation/ADebug.h>
