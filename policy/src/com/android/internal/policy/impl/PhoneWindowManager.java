@@ -308,8 +308,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     int mRecentAppsDialogHeldModifiers;
 
     private static final int LID_ABSENT = -1;
-    private static final int LID_CLOSED = 0;
-    private static final int LID_OPEN = 1;
+    private static final int LID_CLOSED = 1;
+    private static final int LID_OPEN = 0;
 
     int mLidOpen = LID_ABSENT;
 
@@ -1083,9 +1083,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         try {
             int sw = mWindowManager.getSwitchState(SW_LID);
             if (sw > 0) {
-                mLidOpen = LID_OPEN;
-            } else if (sw == 0) {
                 mLidOpen = LID_CLOSED;
+            } else if (sw == 0) {
+                mLidOpen = LID_OPEN;
             } else {
                 mLidOpen = LID_ABSENT;
             }
