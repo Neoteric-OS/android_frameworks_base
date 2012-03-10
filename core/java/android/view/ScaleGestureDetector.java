@@ -221,7 +221,16 @@ public class ScaleGestureDetector {
                 if (index0 < 0 || index0 == index1) {
                     // Probably someone sending us a broken event stream.
                     index0 = findNewActiveIndex(event, index0 == index1 ? -1 : mActiveId1, index0);
-                    mActiveId0 = event.getPointerId(index0);
+                    if (index0 >= 0) {
+                        mActiveId0 = event.getPointerId(index0);
+                    } else {
+                        mInvalidGesture = true;
+                        Log.e(TAG, "Invalid MotionEvent stream detected.", new Throwable());
+                        if (mGestureInProgress) {
+                            mListener.onScaleEnd(this);
+                        }
+                        return false;
+                    }
                 }
                 mActive0MostRecent = false;
 
@@ -383,7 +392,16 @@ public class ScaleGestureDetector {
                                 "ScaleGestureDetector#onTouchEvent?");
                         index0 = findNewActiveIndex(event,
                                 mActiveId0 == mActiveId1 ? -1 : mActiveId1, index0);
-                        mActiveId0 = event.getPointerId(index0);
+                        if (index0 >= 0) {
+                            mActiveId0 = event.getPointerId(index0);
+                        } else {
+                            mInvalidGesture = true;
+                            Log.e(TAG, "Invalid MotionEvent stream detected.", new Throwable());
+                            if (mGestureInProgress) {
+                                mListener.onScaleEnd(this);
+                            }
+                            return false;
+                        }
                     }
 
                     setContext(event);
