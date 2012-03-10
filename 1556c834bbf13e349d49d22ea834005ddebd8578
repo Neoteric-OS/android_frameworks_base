@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAADxn///6o\u003d",
+        "filename": "drm/drmserver/DrmManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-10T02:55:59Z",
+      "side": 1,
+      "message": "prefer size_t over unsigned int, since plugInIdList.size() also returns size_t, but not a big deal.",
+      "revId": "1556c834bbf13e349d49d22ea834005ddebd8578",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADyH///+4\u003d",
+        "filename": "drm/drmserver/DrmManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-10T02:55:59Z",
+      "side": 1,
+      "message": "could you please use two lines for these two statements?",
+      "revId": "1556c834bbf13e349d49d22ea834005ddebd8578",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADx3///90\u003d",
+        "filename": "drm/drmserver/DrmManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-10T02:55:59Z",
+      "side": 1,
+      "message": "we are using ALOGV now internally, and I am not sure how this will end up with",
+      "revId": "1556c834bbf13e349d49d22ea834005ddebd8578",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADyH///+0\u003d",
+        "filename": "drm/libdrmframework/plugins/common/include/IDrmEngine.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-10T02:55:59Z",
+      "side": 1,
+      "message": "\"String\" is also in other files, but why \"String\"?",
+      "revId": "1556c834bbf13e349d49d22ea834005ddebd8578",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
