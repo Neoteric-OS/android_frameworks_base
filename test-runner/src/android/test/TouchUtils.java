@@ -270,9 +270,8 @@ public class TouchUtils {
         inst.waitForIdleSync();
 
         eventTime = SystemClock.uptimeMillis();
-        final int touchSlop = ViewConfiguration.get(v.getContext()).getScaledTouchSlop();
         event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE,
-                x + (touchSlop / 2.0f), y + (touchSlop / 2.0f), 0);
+                x + 1, y + 1, 0);
         inst.sendPointerSync(event);
         inst.waitForIdleSync();
 
