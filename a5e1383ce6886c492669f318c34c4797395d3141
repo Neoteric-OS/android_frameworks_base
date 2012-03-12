@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAADx3///9Q\u003d",
+        "filename": "drm/common/DrmInfoEvent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-12T15:32:15Z",
+      "side": 1,
+      "message": "this change is not related.",
+      "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADx3///9M\u003d",
+        "filename": "drm/common/DrmInfoEvent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-12T15:32:15Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADx3///9I\u003d",
+        "filename": "drm/common/DrmInfoEvent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-12T15:32:15Z",
+      "side": 1,
+      "message": "and this one.",
+      "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
