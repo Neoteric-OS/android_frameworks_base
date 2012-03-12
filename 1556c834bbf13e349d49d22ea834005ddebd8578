@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAADzn////4\u003d",
+        "filename": "drm/drmserver/DrmManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1010188
+      },
+      "writtenOn": "2012-03-12T06:53:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAADxn///6o\u003d",
+      "revId": "1556c834bbf13e349d49d22ea834005ddebd8578",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAADyH///+4\u003d",
         "filename": "drm/drmserver/DrmManager.cpp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2012-03-10T02:55:59Z",
       "side": 1,
       "message": "could you please use two lines for these two statements?",
+      "revId": "1556c834bbf13e349d49d22ea834005ddebd8578",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADzn////0\u003d",
+        "filename": "drm/drmserver/DrmManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1010188
+      },
+      "writtenOn": "2012-03-12T06:53:43Z",
+      "side": 1,
+      "message": "I changed it. Could we change other openDecryptSession() as well?",
+      "parentUuid": "AAADyH///+4\u003d",
       "revId": "1556c834bbf13e349d49d22ea834005ddebd8578",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAADzn////s\u003d",
+        "filename": "drm/drmserver/DrmManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1010188
+      },
+      "writtenOn": "2012-03-12T06:53:43Z",
+      "side": 1,
+      "message": "I changed LOGV to ALOGV. Was it enough?",
+      "parentUuid": "AAADx3///90\u003d",
+      "revId": "1556c834bbf13e349d49d22ea834005ddebd8578",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAADyH///+0\u003d",
         "filename": "drm/libdrmframework/plugins/common/include/IDrmEngine.h",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2012-03-10T02:55:59Z",
       "side": 1,
       "message": "\"String\" is also in other files, but why \"String\"?",
+      "revId": "1556c834bbf13e349d49d22ea834005ddebd8578",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAADzn////o\u003d",
+        "filename": "drm/libdrmframework/plugins/common/include/IDrmEngine.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1010188
+      },
+      "writtenOn": "2012-03-12T06:53:43Z",
+      "side": 1,
+      "message": "I changed \"String\" to \"Data\" in the following files:\n - IDrmEngine.h (This file)\n - DrmManagerClientImpl.h\n - DrmEngineBase.h\n - DrmManagerClient.h",
+      "parentUuid": "AAADyH///+0\u003d",
       "revId": "1556c834bbf13e349d49d22ea834005ddebd8578",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
