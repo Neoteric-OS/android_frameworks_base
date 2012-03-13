@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAD2n////8\u003d",
+        "filename": "drm/common/DrmInfoEvent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1010188
+      },
+      "writtenOn": "2012-03-13T08:22:48Z",
+      "side": 1,
+      "message": "We added DrmInfoEvent::mDrmBuffer since it is very common for DRM plugins to transmit binary data to applications. Since we want to keep generality, it is a good idea to prepare a way to transmit binary as well as string.\n\nCurrent Java interface is capable of handling binary, as DrmInfoEvent#mAttributes allows an Object for value. So we just added smallest changes on native layer to handle binary.",
+      "parentUuid": "AAADx3///9Q\u003d",
+      "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAADx3///9M\u003d",
         "filename": "drm/common/DrmInfoEvent.cpp",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAD2n////4\u003d",
+        "filename": "drm/common/DrmInfoEvent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1010188
+      },
+      "writtenOn": "2012-03-13T08:22:48Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "AAADx3///9M\u003d",
+      "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAADx3///9I\u003d",
         "filename": "drm/common/DrmInfoEvent.cpp",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2012-03-12T15:32:15Z",
       "side": 1,
       "message": "and this one.",
+      "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAD2n////0\u003d",
+        "filename": "drm/common/DrmInfoEvent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1010188
+      },
+      "writtenOn": "2012-03-13T08:22:48Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "AAADx3///9I\u003d",
       "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
