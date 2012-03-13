@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAD2H////4\u003d",
+        "filename": "drm/common/IDrmManagerService.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-13T06:58:38Z",
+      "side": 1,
+      "message": "ALOGV",
+      "revId": "9346d433d83667b412ebc9a2812601d78884687e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAD2H////w\u003d",
+        "filename": "drm/common/IDrmManagerService.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-13T06:58:38Z",
+      "side": 1,
+      "message": "ALOGV",
+      "revId": "9346d433d83667b412ebc9a2812601d78884687e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAD2H////0\u003d",
+        "filename": "drm/common/IDrmManagerService.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-13T06:58:38Z",
+      "side": 1,
+      "message": "ALOGV",
+      "revId": "9346d433d83667b412ebc9a2812601d78884687e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAD2H////k\u003d",
+        "filename": "drm/common/IDrmManagerService.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-13T06:58:38Z",
+      "side": 1,
+      "message": "should this handle be deleted after clearDecryptHandle?",
+      "revId": "9346d433d83667b412ebc9a2812601d78884687e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAD2H////s\u003d",
+        "filename": "drm/common/IDrmManagerService.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-13T06:58:38Z",
+      "side": 1,
+      "message": "ALOGV",
+      "revId": "9346d433d83667b412ebc9a2812601d78884687e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAD2H////o\u003d",
+        "filename": "drm/drmserver/DrmManagerService.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-13T06:58:38Z",
+      "side": 1,
+      "message": "ALOGV",
+      "revId": "9346d433d83667b412ebc9a2812601d78884687e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
