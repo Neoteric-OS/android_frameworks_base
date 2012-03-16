@@ -104,6 +104,91 @@
       "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAEAX////s\u003d",
+        "filename": "drm/common/IDrmServiceListener.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-16T04:14:41Z",
+      "side": 1,
+      "message": "please put two statements on two separate lines.",
+      "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAEAX////4\u003d",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-16T04:14:41Z",
+      "side": 1,
+      "message": "this is not used at all?",
+      "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAEAX////0\u003d",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-16T04:14:41Z",
+      "side": 1,
+      "message": "this could be an error event type, please rename it to eventType",
+      "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAEAX////k\u003d",
+        "filename": "include/drm/DrmInfoEvent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-16T04:14:41Z",
+      "side": 1,
+      "message": "Why not just return KeyVectors directly?",
+      "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAEAX////o\u003d",
+        "filename": "include/drm/DrmInfoEvent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-16T04:14:41Z",
+      "side": 1,
+      "message": "why do you want to offer setData? Could data be changed for an DrmInfoEvent?",
+      "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
