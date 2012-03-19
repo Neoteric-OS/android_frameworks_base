@@ -406,8 +406,13 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
             } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
                 mScreenOn = false;
                 setImeWindowVisibilityStatusHiddenLocked();
-            } else if (intent.getAction().equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
+            } else if (intent.getAction().equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
+                || intent.getAction().equals(Intent.ACTION_CAMERA_BUTTON)) {
                 hideInputMethodMenu();
+                if (mCurToken != null) {
+                    mInputShown = true;
+                    hideMySoftInput(mCurToken, 0);
+                }
                 return;
             } else {
                 Slog.w(TAG, "Unexpected intent " + intent);
