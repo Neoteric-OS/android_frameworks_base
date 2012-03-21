@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "AAAEAX///+c\u003d",
+        "filename": "drm/common/IDrmServiceListener.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1010188
+      },
+      "writtenOn": "2012-03-21T01:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAEAX////s\u003d",
+      "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAEAX////4\u003d",
         "filename": "drm/java/android/drm/DrmManagerClient.java",
         "patchSetId": 1
@@ -135,6 +153,24 @@
       "writtenOn": "2012-03-16T04:14:41Z",
       "side": 1,
       "message": "this is not used at all?",
+      "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAEDX////4\u003d",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1010188
+      },
+      "writtenOn": "2012-03-21T01:45:24Z",
+      "side": 1,
+      "message": "It is used in drm/jni/android_drm_DrmManagerClient.cpp. We wanted to transmit both string and byte array from native layer to Java layer. The byte array in DrmInfoEvent is stored in this key.",
+      "parentUuid": "AAAEAX////4\u003d",
       "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -158,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "AAAEAX///+Y\u003d",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1010188
+      },
+      "writtenOn": "2012-03-21T01:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAEAX////0\u003d",
+      "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAEAX////k\u003d",
         "filename": "include/drm/DrmInfoEvent.h",
         "patchSetId": 1
@@ -175,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAAEDX////0\u003d",
+        "filename": "include/drm/DrmInfoEvent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1010188
+      },
+      "writtenOn": "2012-03-21T01:45:24Z",
+      "side": 1,
+      "message": "Because the iterator style is a standard style in DRM framework. The same style is used DrmInfo, DrmConstraints and other all DRM FW classes.",
+      "parentUuid": "AAAEAX////k\u003d",
+      "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAEAX////o\u003d",
         "filename": "include/drm/DrmInfoEvent.h",
         "patchSetId": 1
@@ -186,6 +258,24 @@
       "writtenOn": "2012-03-16T04:14:41Z",
       "side": 1,
       "message": "why do you want to offer setData? Could data be changed for an DrmInfoEvent?",
+      "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAEDX////w\u003d",
+        "filename": "include/drm/DrmInfoEvent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1010188
+      },
+      "writtenOn": "2012-03-21T01:45:24Z",
+      "side": 1,
+      "message": "Although data are not changed in DrmInfoEvent, the method is used to restore object in BnDrmServiceListener::onTransact() in \ndrm/common/IDrmServiceListener.cpp.",
+      "parentUuid": "AAAEAX////o\u003d",
       "revId": "a5e1383ce6886c492669f318c34c4797395d3141",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
