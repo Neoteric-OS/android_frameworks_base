@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAEF3////I\u003d",
+        "filename": "drm/common/DrmInfoEvent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-21T01:34:56Z",
+      "side": 1,
+      "message": "what if this function is called multiple times? - possible memory leakage?",
+      "revId": "86e35e04e768c20fd1e7241f433c06687a23f979",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAEF3////E\u003d",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-21T01:34:56Z",
+      "side": 1,
+      "message": "please remove this line, since it is not used.",
+      "revId": "86e35e04e768c20fd1e7241f433c06687a23f979",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAEF3////A\u003d",
+        "filename": "include/drm/DrmInfoEvent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-03-21T01:34:56Z",
+      "side": 1,
+      "message": "any response to my earlier question - why did you add two new classes? Why not just return KeyVector directly?",
+      "revId": "86e35e04e768c20fd1e7241f433c06687a23f979",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
