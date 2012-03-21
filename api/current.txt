@@ -1197,6 +1197,8 @@ package android {
     field public static final int divider_horizontal_dim_dark = 17301525; // 0x1080015
     field public static final int divider_horizontal_textfield = 17301523; // 0x1080013
     field public static final int edit_text = 17301526; // 0x1080016
+    field public static final int edit_text_holo_dark = 17301663; // 0x108009f
+    field public static final int edit_text_holo_light = 17301662; // 0x108009e
     field public static final int editbox_background = 17301528; // 0x1080018
     field public static final int editbox_background_normal = 17301529; // 0x1080019
     field public static final int editbox_dropdown_dark_frame = 17301530; // 0x108001a
