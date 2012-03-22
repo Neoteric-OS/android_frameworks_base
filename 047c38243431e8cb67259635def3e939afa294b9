@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAEGn////A\u003d",
+        "filename": "data/keyboards/Generic.kl",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-03-22T00:35:18Z",
+      "side": 1,
+      "message": "Did you mean to map this key to ZENKAKU_HANKAKU?\n\nI also don\u0027t see any mappings in here for EISU...?",
+      "revId": "047c38243431e8cb67259635def3e939afa294b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAEGn////E\u003d",
+        "filename": "data/keyboards/Generic.kl",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-03-22T00:35:18Z",
+      "side": 1,
+      "message": "While we\u0027re in here...\n\nWould it be useful to define the KATAKANA and HIRAGANA keys as well?",
+      "revId": "047c38243431e8cb67259635def3e939afa294b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
