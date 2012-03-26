@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAETn////4\u003d",
+        "filename": "data/keyboards/Generic.kl",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1005840
+      },
+      "writtenOn": "2012-03-26T04:57:19Z",
+      "side": 1,
+      "message": "In the experience of Windows environment, ZENKAKU_HANKAKU and EISU in a Japanese BT/USB keyboard are sent as GRAVE and CAPS_LOCK respectively. KEYCODE_ZENKAKU_HANKAKU and KEYCODE_EISU are added as the synonyms of KEYCODE_GRAVE and KEYCODE_CAPS_LOCK.\n\nThey can be discussable but for the case of EISU it\u0027s special. EISU and CAPS_LOCK are exact the same physical key but with different behaviors in Japanese keyboard controlling CAPS_LOCK LED light. In Japanese keyboard user has to press SHIFT+EISU to toggle CAPS_LOCK LED light. In Android it\u0027s not doable by IME above Framework. Underlying Android input module has to distinguish if it\u0027s a EISU or CAPS_LOCK to accomplish different behavior. This is done by feeding Android different .kl files (with different keycodes to the same physical Caps Lock key).",
+      "parentUuid": "AAAEGn////A\u003d",
+      "revId": "047c38243431e8cb67259635def3e939afa294b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAEGn////E\u003d",
         "filename": "data/keyboards/Generic.kl",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-03-22T00:35:18Z",
       "side": 1,
       "message": "While we\u0027re in here...\n\nWould it be useful to define the KATAKANA and HIRAGANA keys as well?",
+      "revId": "047c38243431e8cb67259635def3e939afa294b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAETn////0\u003d",
+        "filename": "data/keyboards/Generic.kl",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1005840
+      },
+      "writtenOn": "2012-03-26T04:57:19Z",
+      "side": 1,
+      "message": "They could be but which remain here since they are not observed in the experience of Windows environment. KATAKANA is achieved by pressing SHIFT+KATAKANA_HIRAGANA, and HIRAGANA is achieved by KATAKANA_HIRAGANA itself.",
+      "parentUuid": "AAAEGn////E\u003d",
       "revId": "047c38243431e8cb67259635def3e939afa294b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
