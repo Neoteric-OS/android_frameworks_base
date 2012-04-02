@@ -37,6 +37,7 @@ import android.os.SystemProperties;
 import android.os.WorkSource;
 import android.text.TextUtils;
 import android.text.format.Time;
+import android.util.Log;
 import android.util.Slog;
 import android.util.TimeUtils;
 
@@ -70,7 +71,6 @@ class AlarmManagerService extends IAlarmManager.Stub {
 
     private static final String TAG = "AlarmManager";
     private static final String ClockReceiver_TAG = "ClockReceiver";
-    private static final boolean localLOGV = false;
     private static final int ALARM_EVENT = 1;
     private static final String TIMEZONE_PROPERTY = "persist.sys.timezone";
     
@@ -98,7 +98,8 @@ class AlarmManagerService extends IAlarmManager.Stub {
     private final ResultReceiver mResultReceiver = new ResultReceiver();
     private final PendingIntent mTimeTickSender;
     private final PendingIntent mDateChangeSender;
-    
+    private boolean printIntent = false;
+
     private static final class FilterStats {
         int count;
     }
@@ -177,7 +178,7 @@ class AlarmManagerService extends IAlarmManager.Stub {
             // Remove this alarm if already scheduled.
             removeLocked(operation);
 
-            if (localLOGV) Slog.v(TAG, "set: " + alarm);
+            if (Log.isLoggable(TAG, Log.VERBOSE)) Slog.v(TAG, "set: " + alarm);
 
             int index = addAlarmLocked(alarm);
             if (index == 0) {
@@ -201,7 +202,7 @@ class AlarmManagerService extends IAlarmManager.Stub {
 
         // If the requested interval isn't a multiple of 15 minutes, just treat it as exact
         if (interval % QUANTUM != 0) {
-            if (localLOGV) Slog.v(TAG, "Interval " + interval + " not a quantum multiple");
+            if (Log.isLoggable(TAG, Log.VERBOSE)) Slog.v(TAG, "Interval " + interval + " not a quantum multiple");
             setRepeating(type, triggerAtTime, interval, operation);
             return;
         }
@@ -224,7 +225,7 @@ class AlarmManagerService extends IAlarmManager.Stub {
         }
 
         // Set the alarm based on the quantum-aligned start time
-        if (localLOGV) Slog.v(TAG, "setInexactRepeating: type=" + type + " interval=" + interval
+        if (Log.isLoggable(TAG, Log.VERBOSE)) Slog.v(TAG, "setInexactRepeating: type=" + type + " interval=" + interval
                 + " trigger=" + adjustedTriggerTime + " orig=" + triggerAtTime);
         setRepeating(type, adjustedTriggerTime, interval, operation);
     }
@@ -250,7 +251,7 @@ class AlarmManagerService extends IAlarmManager.Stub {
         synchronized (this) {
             String current = SystemProperties.get(TIMEZONE_PROPERTY);
             if (current == null || !current.equals(zone.getID())) {
-                if (localLOGV) Slog.v(TAG, "timezone changed: " + current + ", new=" + zone.getID());
+                if (Log.isLoggable(TAG, Log.VERBOSE)) Slog.v(TAG, "timezone changed: " + current + ", new=" + zone.getID());
                 timeZoneWasChanged = true; 
                 SystemProperties.set(TIMEZONE_PROPERTY, zone.getID());
             }
@@ -362,10 +363,10 @@ class AlarmManagerService extends IAlarmManager.Stub {
         if (index < 0) {
             index = 0 - index - 1;
         }
-        if (localLOGV) Slog.v(TAG, "Adding alarm " + alarm + " at " + index);
+        if (Log.isLoggable(TAG, Log.VERBOSE)) Slog.v(TAG, "Adding alarm " + alarm + " at " + index);
         alarmList.add(index, alarm);
 
-        if (localLOGV) {
+        if (Log.isLoggable(TAG, Log.VERBOSE)) {
             // Display the list of alarms for this alarm type
             Slog.v(TAG, "alarms: " + alarmList.size() + " type: " + alarm.type);
             int position = 0;
@@ -513,7 +514,7 @@ class AlarmManagerService extends IAlarmManager.Stub {
         {
             Alarm alarm = it.next();
 
-            if (localLOGV) Slog.v(TAG, "Checking active alarm when=" + alarm.when + " " + alarm);
+            if (Log.isLoggable(TAG, Log.VERBOSE)) Slog.v(TAG, "Checking active alarm when=" + alarm.when + " " + alarm);
 
             if (alarm.when > now) {
                 // don't fire alarms in the future
@@ -524,7 +525,7 @@ class AlarmManagerService extends IAlarmManager.Stub {
             // Note that this can happen if the user creates a new event on
             // the Calendar app with a reminder that is in the past. In that
             // case, the reminder alarm will fire immediately.
-            if (localLOGV && now - alarm.when > LATE_ALARM_THRESHOLD) {
+            if (Log.isLoggable(TAG, Log.VERBOSE) && now - alarm.when > LATE_ALARM_THRESHOLD) {
                 Slog.v(TAG, "alarm is late! alarm time: " + alarm.when
                         + " now: " + now + " delay (in seconds): "
                         + (now - alarm.when) / 1000);
@@ -532,7 +533,7 @@ class AlarmManagerService extends IAlarmManager.Stub {
 
             // Recurring alarms may have passed several alarm intervals while the
             // phone was asleep or off, so pass a trigger count when sending them.
-            if (localLOGV) Slog.v(TAG, "Alarm triggering: " + alarm);
+            if (Log.isLoggable(TAG, Log.VERBOSE)) Slog.v(TAG, "Alarm triggering: " + alarm);
             alarm.count = 1;
             if (alarm.repeatInterval > 0) {
                 // this adjustment will be zero if we're late by
@@ -643,7 +644,7 @@ class AlarmManagerService extends IAlarmManager.Stub {
                 synchronized (mLock) {
                     final long nowRTC = System.currentTimeMillis();
                     final long nowELAPSED = SystemClock.elapsedRealtime();
-                    if (localLOGV) Slog.v(
+                    if (Log.isLoggable(TAG, Log.VERBOSE)) Slog.v(
                         TAG, "Checking for alarms... rtc=" + nowRTC
                         + ", elapsed=" + nowELAPSED);
 
@@ -664,7 +665,15 @@ class AlarmManagerService extends IAlarmManager.Stub {
                     while (it.hasNext()) {
                         Alarm alarm = it.next();
                         try {
-                            if (localLOGV) Slog.v(TAG, "sending alarm " + alarm);
+                            if (Log.isLoggable(TAG, Log.VERBOSE)) {
+                                Slog.v(TAG, "sending alarm " + alarm);
+                            }
+
+                            if (alarm.type == AlarmManager.ELAPSED_REALTIME_WAKEUP
+                                    || alarm.type == AlarmManager.RTC_WAKEUP) {
+                                printIntent = true;
+                            }
+
                             alarm.operation.send(mContext, 0,
                                     mBackgroundIntent.putExtra(
                                             Intent.EXTRA_ALARM_COUNT, alarm.count),
@@ -893,6 +902,12 @@ class AlarmManagerService extends IAlarmManager.Stub {
                             bs.filterStats.put(fc, fs);
                         }
                         fs.count++;
+                        if (printIntent || Log.isLoggable(TAG, Log.DEBUG)) {
+                            Slog.d(TAG, "triggered: " +
+                                      intent.toShortString(false, true, false, false) +
+                                      "\nPkg: " + pi.getTargetPackage() + "\n");
+                            printIntent = false;
+                        }
                     }
                 }
                 mInFlight.removeFirst();
