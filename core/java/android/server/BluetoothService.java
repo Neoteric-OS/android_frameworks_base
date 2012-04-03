@@ -971,8 +971,12 @@ public class BluetoothService extends IBluetooth.Stub {
         if (!BluetoothAdapter.checkBluetoothAddress(address)) {
             return false;
         }
+        String objPath = getObjectPathFromAddress(address);
+        if (objPath == null) {
+            return false;
+        }
 
-        return setDevicePropertyStringNative(getObjectPathFromAddress(address),
+        return setDevicePropertyStringNative(objPath,
                                              "Alias", alias);
     }
 
