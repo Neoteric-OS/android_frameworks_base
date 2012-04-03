@@ -36,6 +36,9 @@ import android.net.NetworkInfo;
 import android.net.NetworkUtils;
 import android.net.SntpClient;
 import android.net.Uri;
+import android.net.LinkProperties;
+import android.net.LinkAddress;
+import android.os.BatteryManager;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
@@ -72,7 +75,10 @@ import java.util.Date;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
+import java.util.Collection;
 import java.net.InetAddress;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
 
 /**
  * A GPS implementation of LocationProvider used by LocationManager.
@@ -523,15 +529,24 @@ public class GpsLocationProvider implements LocationProviderInterface {
                         apnName = defaultApn;
                     }
                     agpsConnInfo.mAPN = apnName;
-                    // String ipv4Apn = info.getIpv4Apn();
-                    // String ipv6Apn = info.getIpv6Apn();
-                    // if (null == ipv6Apn || !ipv6Apn.equals(apnName)) {
-                        agpsConnInfo.mBearerType = agpsConnInfo.BEARER_IPV4;
-                    // } else if (null == ipv4Apn || !ipv4Apn.equals(apnName)) {
-                    //     agpsConnInfo.mBearerType = agpsConnInfo.BEARER_IPV6;
-                    // } else {
-                    //     agpsConnInfo.mBearerType = agpsConnInfo.BEARER_IPV4V6;
-                    // }
+
+                    LinkProperties lp = mConnMgr.getLinkProperties(agpsConnInfo.mCMConnType);
+                    Collection<LinkAddress> las = lp.getLinkAddresses();
+                    boolean isV4 = false;
+                    boolean isV6 = false;
+                    for (LinkAddress la : las) {
+                        if (la.getAddress() instanceof Inet6Address) {
+                            agpsConnInfo.mBearerType = agpsConnInfo.BEARER_IPV6;
+                            isV6 = true;
+                        } else {
+                            agpsConnInfo.mBearerType = agpsConnInfo.BEARER_IPV4;
+                            isV4 = true;
+                        }
+                        if (isV4 && isV6) {
+                            agpsConnInfo.mBearerType = agpsConnInfo.BEARER_IPV4V6;
+                            break;
+                        }
+                    }
 
                     if (agpsConnInfo.mIPv4Addr != null) {
                         boolean route_result;
