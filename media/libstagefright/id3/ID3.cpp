@@ -480,15 +480,18 @@ void ID3::Iterator::getString(String8 *id) const {
             return;
         }
 
-        convertISO8859ToString8(mFrameData, mFrameSize, id);
+        id->setTo((const char *)mFrameData, mFrameSize);
         return;
     }
 
     size_t n = mFrameSize - getHeaderLength() - 1;
 
     if (*mFrameData == 0x00) {
-        // ISO 8859-1
-        convertISO8859ToString8(mFrameData + 1, n, id);
+        // ISO 8859-1 or ASCII
+        // In CJK, using local encoding here is also common.
+        // To avoid mojibake, it's better to find original encoding with device's
+        // language setting and convert the string to UTF-8 from client.
+        id->setTo((const char *)(mFrameData + 1), n);
     } else if (*mFrameData == 0x03) {
         // UTF-8
         id->setTo((const char *)(mFrameData + 1), n);
