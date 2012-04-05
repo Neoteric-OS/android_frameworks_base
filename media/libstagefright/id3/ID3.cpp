@@ -419,50 +419,6 @@ void ID3::Iterator::getID(String8 *id) const {
     }
 }
 
-static void convertISO8859ToString8(
-        const uint8_t *data, size_t size,
-        String8 *s) {
-    size_t utf8len = 0;
-    for (size_t i = 0; i < size; ++i) {
-        if (data[i] == '\0') {
-            size = i;
-            break;
-        } else if (data[i] < 0x80) {
-            ++utf8len;
-        } else {
-            utf8len += 2;
-        }
-    }
-
-    if (utf8len == size) {
-        // Only ASCII characters present.
-
-        s->setTo((const char *)data, size);
-        return;
-    }
-
-    char *tmp = new char[utf8len];
-    char *ptr = tmp;
-    for (size_t i = 0; i < size; ++i) {
-        if (data[i] == '\0') {
-            break;
-        } else if (data[i] < 0x80) {
-            *ptr++ = data[i];
-        } else if (data[i] < 0xc0) {
-            *ptr++ = 0xc2;
-            *ptr++ = data[i];
-        } else {
-            *ptr++ = 0xc3;
-            *ptr++ = data[i] - 64;
-        }
-    }
-
-    s->setTo(tmp, utf8len);
-
-    delete[] tmp;
-    tmp = NULL;
-}
-
 void ID3::Iterator::getString(String8 *id) const {
     id->setTo("");
 
@@ -480,15 +436,18 @@ void ID3::Iterator::getString(String8 *id) const {
             return;
         }
 
-        convertISO8859ToString8(mFrameData, mFrameSize, id);
+        id->setTo((const char *)mFrameData, mFrameSize);
         return;
     }
 
     size_t n = mFrameSize - getHeaderLength() - 1;
 
     if (*mFrameData == 0x00) {
-        // ISO 8859-1
-        convertISO8859ToString8(mFrameData + 1, n, id);
+        // ISO 8859-1 or ASCII
+        // In CJK, using native encoding here is also common.
+        // To avoid mojibake, it's better to find original encoding with device's
+        // language setting then convert the string to UTF-8 from client.
+        id->setTo((const char *)(mFrameData + 1), n);
     } else if (*mFrameData == 0x03) {
         // UTF-8
         id->setTo((const char *)(mFrameData + 1), n);
