@@ -17,6 +17,7 @@
 #include <media/mediascanner.h>
 
 #include <utils/StringArray.h>
+#include <utils/Unicode.h>
 
 #include "autodetect.h"
 #include "unicode/ucnv.h"
@@ -64,27 +65,12 @@ void MediaScannerClient::beginFile()
 
 status_t MediaScannerClient::addStringTag(const char* name, const char* value)
 {
-    if (mLocaleEncoding != kEncodingNone) {
-        // don't bother caching strings that are all ASCII.
-        // call handleStringTag directly instead.
-        // check to see if value (which should be utf8) has any non-ASCII characters
-        bool nonAscii = false;
-        const char* chp = value;
-        char ch;
-        while ((ch = *chp++)) {
-            if (ch & 0x80) {
-                nonAscii = true;
-                break;
-            }
-        }
-
-        if (nonAscii) {
-            // save the strings for later so they can be used for native encoding detection
-            mNames->push_back(name);
-            mValues->push_back(value);
-            return OK;
-        }
-        // else fall through
+    // don't bother caching strings that are valid UTF-8
+    if (utf8_length(value) == -1) {
+        // save the strings for later so they can be used for native encoding detection
+        mNames->push_back(name);
+        mValues->push_back(value);
+        return OK;
     }
 
     // autodetection is not necessary, so no need to cache the values
@@ -95,25 +81,22 @@ status_t MediaScannerClient::addStringTag(const char* name, const char* value)
 static uint32_t possibleEncodings(const char* s)
 {
     uint32_t result = kEncodingAll;
-    // if s contains a native encoding, then it was mistakenly encoded in utf8 as if it were latin-1
-    // so we need to reverse the latin-1 -> utf8 conversion to get the native chars back
     uint8_t ch1, ch2;
     uint8_t* chp = (uint8_t *)s;
 
     while ((ch1 = *chp++)) {
         if (ch1 & 0x80) {
             ch2 = *chp++;
-            ch1 = ((ch1 << 6) & 0xC0) | (ch2 & 0x3F);
-            // ch1 is now the first byte of the potential native char
-
-            ch2 = *chp++;
-            if (ch2 & 0x80)
-                ch2 = ((ch2 << 6) & 0xC0) | (*chp++ & 0x3F);
-            // ch2 is now the second byte of the potential native char
-            int ch = (int)ch1 << 8 | (int)ch2;
-            result &= findPossibleEncodings(ch);
+            if (ch2) {
+                int ch = (int)ch1 << 8 | (int)ch2;
+                result &= findPossibleEncodings(ch);
+            } else
+                break;
         }
         // else ASCII character, which could be anything
+
+        if (result == kEncodingNone)
+            break;
     }
 
     return result;
@@ -135,6 +118,9 @@ void MediaScannerClient::convertValues(uint32_t encoding)
         case kEncodingEUCKR:
             enc = "EUC-KR";
             break;
+        default:
+            enc = "iso_8859_1";
+            break;
     }
 
     if (enc) {
@@ -154,23 +140,8 @@ void MediaScannerClient::convertValues(uint32_t encoding)
 
         // for each value string, convert from native encoding to UTF-8
         for (int i = 0; i < mNames->size(); i++) {
-            // first we need to untangle the utf8 and convert it back to the original bytes
-            // since we are reducing the length of the string, we can do this in place
-            uint8_t* src = (uint8_t *)mValues->getEntry(i);
-            int len = strlen((char *)src);
-            uint8_t* dest = src;
-
-            uint8_t uch;
-            while ((uch = *src++)) {
-                if (uch & 0x80)
-                    *dest++ = ((uch << 6) & 0xC0) | (*src++ & 0x3F);
-                else
-                    *dest++ = uch;
-            }
-            *dest = 0;
-
-            // now convert from native encoding to UTF-8
             const char* source = mValues->getEntry(i);
+            int len = strlen(source);
             int targetLength = len * 3 + 1;
             char* buffer = new char[targetLength];
             if (!buffer)
@@ -178,7 +149,7 @@ void MediaScannerClient::convertValues(uint32_t encoding)
             char* target = buffer;
 
             ucnv_convertEx(utf8Conv, conv, &target, target + targetLength,
-                    &source, (const char *)dest, NULL, NULL, NULL, NULL, TRUE, TRUE, &status);
+                    &source, source + len, NULL, NULL, NULL, NULL, TRUE, TRUE, &status);
             if (U_FAILURE(status)) {
                 ALOGE("ucnv_convertEx failed: %d\n", status);
                 mValues->setEntry(i, "???");
@@ -198,26 +169,27 @@ void MediaScannerClient::convertValues(uint32_t encoding)
 
 void MediaScannerClient::endFile()
 {
-    if (mLocaleEncoding != kEncodingNone) {
-        int size = mNames->size();
-        uint32_t encoding = kEncodingAll;
+    int size = mNames->size();
+    uint32_t encoding = kEncodingAll;
 
+    if (mLocaleEncoding != kEncodingNone) {
         // compute a bit mask containing all possible encodings
         for (int i = 0; i < mNames->size(); i++)
             encoding &= possibleEncodings(mValues->getEntry(i));
+    }
 
-        // if the locale encoding matches, then assume we have a native encoding.
-        if (encoding & mLocaleEncoding)
-            convertValues(mLocaleEncoding);
+    // if the locale encoding matches, then assume we have a native encoding.
+    // if not assume it's ISO8859-1.
+    convertValues(encoding & mLocaleEncoding);
 
-        // finally, push all name/value pairs to the client
-        for (int i = 0; i < mNames->size(); i++) {
-            status_t status = handleStringTag(mNames->getEntry(i), mValues->getEntry(i));
-            if (status) {
-                break;
-            }
+    // finally, push all name/value pairs to the client
+    for (int i = 0; i < mNames->size(); i++) {
+        status_t status = handleStringTag(mNames->getEntry(i), mValues->getEntry(i));
+        if (status) {
+            break;
         }
     }
+
     // else addStringTag() has done all the work so we have nothing to do
 
     delete mNames;
