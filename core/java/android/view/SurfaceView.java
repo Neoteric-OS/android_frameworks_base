@@ -530,7 +530,9 @@ public class SurfaceView extends View {
                                 callbacks = getSurfaceCallbacks();
                             }
                             for (SurfaceHolder.Callback c : callbacks) {
-                                c.surfaceCreated(mSurfaceHolder);
+                                if (mSurface.isValid()) {
+                                    c.surfaceCreated(mSurfaceHolder);
+                                }
                             }
                         }
                         if (creating || formatChanged || sizeChanged
@@ -541,7 +543,9 @@ public class SurfaceView extends View {
                                 callbacks = getSurfaceCallbacks();
                             }
                             for (SurfaceHolder.Callback c : callbacks) {
-                                c.surfaceChanged(mSurfaceHolder, mFormat, myWidth, myHeight);
+                                if (mSurface.isValid()) {
+                                    c.surfaceChanged(mSurfaceHolder, mFormat, myWidth, myHeight);
+                                }
                             }
                         }
                         if (redrawNeeded) {
@@ -551,8 +555,10 @@ public class SurfaceView extends View {
                             }
                             for (SurfaceHolder.Callback c : callbacks) {
                                 if (c instanceof SurfaceHolder.Callback2) {
-                                    ((SurfaceHolder.Callback2)c).surfaceRedrawNeeded(
-                                            mSurfaceHolder);
+                                    if (mSurface.isValid()) {
+                                        ((SurfaceHolder.Callback2)c).surfaceRedrawNeeded(
+                                                mSurfaceHolder);
+                                    }
                                 }
                             }
                         }
