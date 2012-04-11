@@ -122,7 +122,11 @@ class BluetoothBondState {
         mState.clear();
         if (DBG) Log.d(TAG, "found " + bonds.length + " bonded devices");
         for (String device : bonds) {
-            mState.put(mService.getAddressFromObjectPath(device).toUpperCase(),
+            String addr = mService.getAddressFromObjectPath(device);
+            if (addr == null) {
+                continue;
+            }
+            mState.put(addr.toUpperCase(),
                     BluetoothDevice.BOND_BONDED);
         }
     }
