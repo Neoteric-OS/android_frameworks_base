@@ -39,7 +39,6 @@ import android.os.FileObserver;
 import android.os.ParcelFileDescriptor;
 import android.os.SystemProperties;
 import android.provider.DrmStore;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -622,7 +621,7 @@ public class SettingsProvider extends ContentProvider {
         /*
          * When a client attempts to openFile the default ringtone or
          * notification setting Uri, we will proxy the call to the current
-         * default ringtone's Uri (if it is in the DRM or media provider).
+         * default ringtone's Uri.
          */
         int ringtoneType = RingtoneManager.getDefaultType(uri);
         // Above call returns -1 if the Uri doesn't match a default type
@@ -633,24 +632,20 @@ public class SettingsProvider extends ContentProvider {
             Uri soundUri = RingtoneManager.getActualDefaultRingtoneUri(context, ringtoneType);
 
             if (soundUri != null) {
-                // Only proxy the openFile call to drm or media providers
                 String authority = soundUri.getAuthority();
                 boolean isDrmAuthority = authority.equals(DrmStore.AUTHORITY);
-                if (isDrmAuthority || authority.equals(MediaStore.AUTHORITY)) {
-
-                    if (isDrmAuthority) {
-                        try {
-                            // Check DRM access permission here, since once we
-                            // do the below call the DRM will be checking our
-                            // permission, not our caller's permission
-                            DrmStore.enforceAccessDrmPermission(context);
-                        } catch (SecurityException e) {
-                            throw new FileNotFoundException(e.getMessage());
-                        }
+                if (isDrmAuthority) {
+                    try {
+                        // Check DRM access permission here, since once we
+                        // do the below call the DRM will be checking our
+                        // permission, not our caller's permission
+                        DrmStore.enforceAccessDrmPermission(context);
+                    } catch (SecurityException e) {
+                        throw new FileNotFoundException(e.getMessage());
                     }
-
-                    return context.getContentResolver().openFileDescriptor(soundUri, mode);
                 }
+
+                return context.getContentResolver().openFileDescriptor(soundUri, mode);
             }
         }
 
@@ -663,7 +658,7 @@ public class SettingsProvider extends ContentProvider {
         /*
          * When a client attempts to openFile the default ringtone or
          * notification setting Uri, we will proxy the call to the current
-         * default ringtone's Uri (if it is in the DRM or media provider).
+         * default ringtone's Uri.
          */
         int ringtoneType = RingtoneManager.getDefaultType(uri);
         // Above call returns -1 if the Uri doesn't match a default type
@@ -674,29 +669,25 @@ public class SettingsProvider extends ContentProvider {
             Uri soundUri = RingtoneManager.getActualDefaultRingtoneUri(context, ringtoneType);
 
             if (soundUri != null) {
-                // Only proxy the openFile call to drm or media providers
                 String authority = soundUri.getAuthority();
                 boolean isDrmAuthority = authority.equals(DrmStore.AUTHORITY);
-                if (isDrmAuthority || authority.equals(MediaStore.AUTHORITY)) {
-
-                    if (isDrmAuthority) {
-                        try {
-                            // Check DRM access permission here, since once we
-                            // do the below call the DRM will be checking our
-                            // permission, not our caller's permission
-                            DrmStore.enforceAccessDrmPermission(context);
-                        } catch (SecurityException e) {
-                            throw new FileNotFoundException(e.getMessage());
-                        }
-                    }
-
-                    ParcelFileDescriptor pfd = null;
+                if (isDrmAuthority) {
                     try {
-                        pfd = context.getContentResolver().openFileDescriptor(soundUri, mode);
-                        return new AssetFileDescriptor(pfd, 0, -1);
-                    } catch (FileNotFoundException ex) {
-                        // fall through and open the fallback ringtone below
+                        // Check DRM access permission here, since once we
+                        // do the below call the DRM will be checking our
+                        // permission, not our caller's permission
+                        DrmStore.enforceAccessDrmPermission(context);
+                    } catch (SecurityException e) {
+                        throw new FileNotFoundException(e.getMessage());
                     }
+                }
+
+                ParcelFileDescriptor pfd = null;
+                try {
+                    pfd = context.getContentResolver().openFileDescriptor(soundUri, mode);
+                    return new AssetFileDescriptor(pfd, 0, -1);
+                } catch (FileNotFoundException ex) {
+                    // fall through and open the fallback ringtone below
                 }
 
                 try {
