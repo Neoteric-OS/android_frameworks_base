@@ -28,6 +28,10 @@ public abstract class Connection {
     public static int PRESENTATION_UNKNOWN = 3;    // no specified or unknown by network
     public static int PRESENTATION_PAYPHONE = 4;   // show pay phone info
 
+    //Caller Name Display
+    String cnapName;
+    int cnapNamePresentation  = Connection.PRESENTATION_ALLOWED;
+
     private static String LOG_TAG = "TelephonyConnection";
 
     public enum DisconnectCause {
@@ -88,7 +92,7 @@ public abstract class Connection {
      * @return cnap name or null if unavailable
      */
     public String getCnapName() {
-        return null;
+        return cnapName;
     }
 
     /**
@@ -105,7 +109,7 @@ public abstract class Connection {
      */
 
     public int getCnapNamePresentation() {
-       return 0;
+       return cnapNamePresentation;
     };
 
     /**
