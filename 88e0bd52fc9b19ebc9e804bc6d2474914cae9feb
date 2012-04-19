@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAE1n///5A\u003d",
+        "filename": "media/libstagefright/id3/ID3.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-04-19T19:15:23Z",
+      "side": 1,
+      "message": "This seems to be assuming that the data is UTF-8, not ISO 8859-1 anymore.  Seems wrong to me.",
+      "revId": "88e0bd52fc9b19ebc9e804bc6d2474914cae9feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
