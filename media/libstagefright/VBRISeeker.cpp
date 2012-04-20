@@ -139,6 +139,15 @@ bool VBRISeeker::getDuration(int64_t *durationUs) {
     return true;
 }
 
+bool VBRISeeker::updateDuration(int64_t *durationUs) {
+    if (mDurationUs <= 0) {
+        mDurationUs = *durationUs;
+        return true;
+    }
+
+    return false;
+}
+
 bool VBRISeeker::getOffsetForTime(int64_t *timeUs, off64_t *pos) {
     if (mDurationUs < 0) {
         return false;

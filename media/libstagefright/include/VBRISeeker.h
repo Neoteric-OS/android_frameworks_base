@@ -32,6 +32,7 @@ struct VBRISeeker : public MP3Seeker {
 
     virtual bool getDuration(int64_t *durationUs);
     virtual bool getOffsetForTime(int64_t *timeUs, off64_t *pos);
+    virtual bool updateDuration(int64_t *durationUs);
 
 private:
     off64_t mBasePos;

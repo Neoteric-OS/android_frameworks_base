@@ -32,6 +32,7 @@ struct MP3Seeker : public RefBase {
     // to that position and return it in "*pos". Update "*timeUs" to reflect
     // the actual time that seekpoint represents.
     virtual bool getOffsetForTime(int64_t *timeUs, off64_t *pos) = 0;
+    virtual bool updateDuration(int64_t *durationUs) = 0;
 
 protected:
     virtual ~MP3Seeker() {}
