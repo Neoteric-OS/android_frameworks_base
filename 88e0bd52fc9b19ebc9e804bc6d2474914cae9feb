@@ -16,6 +16,24 @@
       "revId": "88e0bd52fc9b19ebc9e804bc6d2474914cae9feb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAE03///+w\u003d",
+        "filename": "media/libstagefright/id3/ID3.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1011670
+      },
+      "writtenOn": "2012-04-20T12:57:56Z",
+      "side": 1,
+      "message": "It means the data encoded in native-encoding, It can be any of ISO 8859-1, Shift-JIS, GBK and EUCKR. Assuming It is ISO 8859-1 cause complex routine for find native-encoding from client side and easy to fail which makes mojibake.\n\nIs this function should return the string only in UTF-8?\n\nIs there another client -not MediaScannerClient which I also patched- use it?",
+      "parentUuid": "AAAE1n///5A\u003d",
+      "revId": "88e0bd52fc9b19ebc9e804bc6d2474914cae9feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
