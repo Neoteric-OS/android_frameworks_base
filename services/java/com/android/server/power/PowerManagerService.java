@@ -2070,7 +2070,8 @@ public final class PowerManagerService extends IPowerManager.Stub
         }
 
         // Control light outside of lock.
-        light.setFlashing(color, LightsService.LIGHT_FLASH_HARDWARE, (on ? 3 : 0), 0);
+        light.setFlashing(color, LightsService.LIGHT_FLASH_HARDWARE, (on ? 3 : 0),
+                (on ? 3 : 0));
     }
 
     /**
