@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "AAAFCH///+k\u003d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000701
+      },
+      "writtenOn": "2012-04-26T06:13:29Z",
+      "side": 1,
+      "message": "[API Council]  I don\u0027t think your choice of implementing this with an intent is correct.  And please make sure that you are not allowing malicious apps to send DTMF tones.  But regardless, these constants should not be public.  Please implement a different way or add @hide to the comment so they aren\u0027t in the API.",
+      "revId": "d3215eab58362b0d7dbe8351e2b6392b34bb95aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAA9n///MQ\u003d",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
@@ -47,6 +64,23 @@
       "writtenOn": "2010-11-23T02:12:32Z",
       "side": 1,
       "message": "I think it may handy to keep sendDtmfString(string, on, off, local)\nbut there may not be a piratical way to guarantee the on/off period.\nSo please document this API clearly so that developers know the on/off time is not guaranteed but as best effort.\n\nHere are the reasons,\n\nWhen calling sendDtmf(), you just put the DTMF_START request into the queue. The RIL may or may not get it right way. Similar happens to stopDtmf(). So the sleep(dtmfOn) between sendDtmf and stopDtmf defines the period between putting DTMF requests in QUEUE rather than the period of start and stop the tone. That is why I said \"the tone length can be either shorten or lengthen than API specified\".",
+      "revId": "d3215eab58362b0d7dbe8351e2b6392b34bb95aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFCX///9I\u003d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1000701
+      },
+      "writtenOn": "2012-04-26T06:13:29Z",
+      "side": 1,
+      "message": "[API Council] How long will this block the thread for?  If it is any period of time beyond the IPC, it should not block it.  If it is just for a short IPC to talk over to the telephony process, don\u0027t even mention blocking in the comment.",
       "revId": "d3215eab58362b0d7dbe8351e2b6392b34bb95aa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
