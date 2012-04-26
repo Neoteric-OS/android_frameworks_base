@@ -95,6 +95,8 @@ struct BlockIterator {
     void reset();
     void seek(int64_t seekTimeUs, bool seekToKeyFrame);
 
+    status_t getOffsetFromCue(int64_t *pSeekTimeUs, off64_t *pOffset) const;
+
     const mkvparser::Block *block() const;
     int64_t blockTimeUs() const;
 
@@ -105,6 +107,11 @@ private:
     const mkvparser::Cluster *mCluster;
     const mkvparser::BlockEntry *mBlockEntry;
     long mBlockEntryIndex;
+
+    const mkvparser::Cues *mCues;
+    void loadCues();
+    bool seekCues_l(long long seekTimeUs,
+            const mkvparser::CuePoint*& pCP, const mkvparser::CuePoint::TrackPosition*& pTP) const;
 
     void advance_l();
 
@@ -123,6 +130,9 @@ struct MatroskaSource : public MediaSource {
 
     virtual status_t read(
             MediaBuffer **buffer, const ReadOptions *options);
+
+    virtual status_t getOffsetFromSeek(int64_t *timeUs, off64_t *offset,
+            ReadOptions::SeekMode mode);
 
 protected:
     virtual ~MatroskaSource();
@@ -214,8 +224,11 @@ BlockIterator::BlockIterator(
       mTrackNum(trackNum),
       mCluster(NULL),
       mBlockEntry(NULL),
-      mBlockEntryIndex(0) {
+      mBlockEntryIndex(0),
+      mCues(NULL) {
     reset();
+
+    loadCues();
 }
 
 bool BlockIterator::eos() const {
@@ -303,12 +316,96 @@ void BlockIterator::reset() {
     } while (!eos() && block()->GetTrackNumber() != mTrackNum);
 }
 
+status_t BlockIterator::getOffsetFromCue(int64_t *pSeekTimeUs, off64_t *pOffset) const {
+    Mutex::Autolock autoLock(mExtractor->mLock);
+
+    const mkvparser::CuePoint* pCP;
+    const mkvparser::CuePoint::TrackPosition* pTP;
+    if (seekCues_l(*pSeekTimeUs, pCP, pTP)) {
+        *pOffset = (int64_t) pTP->m_pos;
+        *pSeekTimeUs = pCP->GetTime(mExtractor->mSegment) / 1000;
+        return OK;
+    }
+
+    return NO_INIT;
+}
+
+void BlockIterator::loadCues() {
+    Mutex::Autolock autoLock(mExtractor->mLock);
+    if (mCues != NULL) {
+        return;
+    }
+
+    mCues = mExtractor->mSegment->GetCues();
+    if (!mCues) {
+        const mkvparser::SeekHead *seekHead = mExtractor->mSegment->GetSeekHead();
+        if (seekHead != NULL) {
+            const mkvparser::SeekHead::Entry *seekHeadEntry = NULL;
+            int   entryCount = seekHead->GetCount();
+
+            for (int i = 0; i<entryCount; i++) {
+                seekHeadEntry = seekHead->GetEntry(i);
+                if (seekHeadEntry->id == 0x0C53BB6B) { //Cues ID
+                    long long pos;
+                    long len;
+                    mExtractor->mSegment->ParseCues(seekHeadEntry->pos, pos, len);
+                    mCues = mExtractor->mSegment->GetCues();
+                    break;
+                }
+            }
+        }
+    }
+    if (mCues) {
+        while (mCues->LoadCuePoint());
+    }
+}
+
+bool BlockIterator::seekCues_l(long long seekTimeUs,
+        const mkvparser::CuePoint*& pCP, const mkvparser::CuePoint::TrackPosition*& pTP) const {
+    if (mCues != NULL)
+    {
+        // Cues are mandatory for non-live streaming.
+        const mkvparser::Track* pTrack =
+                mExtractor->mSegment->GetTracks()->GetTrackByNumber(mTrackNum);
+        if (mCues->Find(seekTimeUs * 1000ll, pTrack, pCP, pTP)) {
+            return true;
+        } else {
+            // If we failed to seek because of no Audio cues, try the video cues instead.
+            const mkvparser::Tracks* pTracks = mExtractor->mSegment->GetTracks();
+            unsigned long trackCount = pTracks->GetTracksCount();
+            unsigned long trackIndex = 0;
+            for (; trackIndex < trackCount; trackIndex++) {
+                if (pTracks->GetTrackByIndex(trackIndex)->GetType() == 1) { // Video
+                    break;
+                }
+            }
+
+            if (trackIndex < trackCount) {
+                pTrack = mExtractor->mSegment->GetTracks()->GetTrackByNumber(
+                        pTracks->GetTrackByIndex(trackIndex)->GetNumber());
+                if (mCues->Find(seekTimeUs * 1000ll, pTrack, pCP, pTP)) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
 void BlockIterator::seek(int64_t seekTimeUs, bool seekToKeyFrame) {
     Mutex::Autolock autoLock(mExtractor->mLock);
 
-    mCluster = mExtractor->mSegment->FindCluster(seekTimeUs * 1000ll);
-    mBlockEntry = NULL;
-    mBlockEntryIndex = 0;
+    const mkvparser::CuePoint* pCP;
+    const mkvparser::CuePoint::TrackPosition* pTP;
+    if (seekCues_l(seekTimeUs, pCP, pTP)) {
+        mCluster = mExtractor->mSegment->FindOrPreloadCluster(pTP->m_pos);
+        mBlockEntry = mCluster->GetEntry(*pCP, *pTP);
+        mBlockEntryIndex = pTP->m_block;
+    } else {
+        mCluster = mExtractor->mSegment->FindCluster(seekTimeUs * 1000ll);
+        mBlockEntry = NULL;
+        mBlockEntryIndex = 0;
+    }
 
     do {
         advance_l();
@@ -391,6 +488,11 @@ status_t MatroskaSource::readBlock() {
     mBlockIter.advance();
 
     return OK;
+}
+
+status_t MatroskaSource::getOffsetFromSeek(
+        int64_t *timeUs, off64_t *offset, ReadOptions::SeekMode mode) {
+    return mBlockIter.getOffsetFromCue(timeUs, offset);
 }
 
 status_t MatroskaSource::read(
@@ -520,11 +622,12 @@ MatroskaExtractor::MatroskaExtractor(const sp<DataSource> &source)
       mExtractedThumbnails(false),
       mIsWebm(false) {
     off64_t size;
-    mIsLiveStreaming =
+    mIsStreaming =
         (mDataSource->flags()
             & (DataSource::kWantsPrefetching
-                | DataSource::kIsCachingDataSource))
-        && mDataSource->getSize(&size) != OK;
+                | DataSource::kIsCachingDataSource));
+    mIsLiveStreaming =
+        mIsStreaming && mDataSource->getSize(&size) != OK;
 
     mkvparser::EBMLHeader ebmlHeader;
     long long pos;
@@ -544,7 +647,7 @@ MatroskaExtractor::MatroskaExtractor(const sp<DataSource> &source)
         return;
     }
 
-    if (isLiveStreaming()) {
+    if (mIsStreaming) {
         ret = mSegment->ParseHeaders();
         CHECK_EQ(ret, 0);
 
@@ -598,7 +701,7 @@ sp<MetaData> MatroskaExtractor::getTrackMetaData(
     }
 
     if ((flags & kIncludeExtensiveMetaData) && !mExtractedThumbnails
-            && !isLiveStreaming()) {
+            && !mIsStreaming) {
         findThumbnails();
         mExtractedThumbnails = true;
     }
