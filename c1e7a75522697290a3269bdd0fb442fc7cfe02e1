@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAFK3///sA\u003d",
+        "filename": "core/java/com/android/internal/widget/ScrollingTabContainerView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1003263
+      },
+      "writtenOn": "2012-05-02T22:09:43Z",
+      "side": 1,
+      "message": "This will result in a requestLayout and setTabSelected is called as part of onMeasure in this view. Requesting layout during a layout pass can cause problems.\n\nWe should probably do something something more direct instead of setTabSelected to animate to the currently selected tab after the size has changed to avoid this.",
+      "revId": "c1e7a75522697290a3269bdd0fb442fc7cfe02e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
