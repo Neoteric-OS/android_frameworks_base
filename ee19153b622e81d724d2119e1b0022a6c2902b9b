@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAFLH///pk\u003d",
+        "filename": "telephony/java/android/telephony/cdma/CdmaCellLocation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-02T19:56:51Z",
+      "side": 1,
+      "message": "Please remove the trailing spaces",
+      "revId": "ee19153b622e81d724d2119e1b0022a6c2902b9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFK3///uo\u003d",
+        "filename": "telephony/java/android/telephony/cdma/CdmaCellLocation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-02T19:56:51Z",
+      "side": 1,
+      "message": "Missing a space before the brace",
+      "revId": "ee19153b622e81d724d2119e1b0022a6c2902b9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFK3///uk\u003d",
+        "filename": "telephony/java/android/telephony/cdma/CdmaCellLocation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-02T19:56:51Z",
+      "side": 1,
+      "message": "Please add a space after the double slash",
+      "revId": "ee19153b622e81d724d2119e1b0022a6c2902b9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
