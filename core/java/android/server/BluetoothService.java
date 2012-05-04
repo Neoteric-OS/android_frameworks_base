@@ -645,13 +645,10 @@ public class BluetoothService extends IBluetooth.Stub {
     /*package*/ void initBluetoothAfterTurningOn() {
         String discoverable = getProperty("Discoverable", false);
         String timeout = getProperty("DiscoverableTimeout", false);
-        if (timeout == null) {
-            Log.w(TAG, "Null DiscoverableTimeout property");
-            // assign a number, anything not 0
-            timeout = "1";
-        }
-        if (discoverable.equals("true") && Integer.valueOf(timeout) != 0) {
-            setAdapterPropertyBooleanNative("Discoverable", 0);
+        if ((discoverable != null) && (timeout != null)) {
+            if (discoverable.equals("true") && !timeout.equals("null") && Integer.valueOf(timeout) != 0) {
+                setAdapterPropertyBooleanNative("Discoverable", 0);
+            }
         }
         mBondState.initBondState();
         initProfileState();
