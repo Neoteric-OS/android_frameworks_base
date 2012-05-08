@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAFX3////4\u003d",
+        "filename": "core/java/android/net/EthernetDataTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-08T02:11:06Z",
+      "side": 1,
+      "message": "100 columns.\n\nThis is where we have a conflict with Google\u0027s internal code.",
+      "revId": "2849c56618b455f8cda405a91fd82f8590bbf1ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFYH////4\u003d",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/SignalClusterView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-08T02:11:06Z",
+      "side": 1,
+      "message": "100 columns",
+      "revId": "2849c56618b455f8cda405a91fd82f8590bbf1ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAFYH////0\u003d",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-08T02:11:06Z",
+      "side": 1,
+      "message": "The surrounding code has changed in Google\u0027s internal branches, and this line breaks the build.",
+      "revId": "2849c56618b455f8cda405a91fd82f8590bbf1ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
