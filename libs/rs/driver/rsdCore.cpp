@@ -274,7 +274,7 @@ void Shutdown(Context *rsc) {
     for (uint32_t ct = 0; ct < dc->mWorkers.mCount; ct++) {
         dc->mWorkers.mLaunchSignals[ct].set();
     }
-    int status;
+    int status __attribute__((unused));
     void *res;
     for (uint32_t ct = 0; ct < dc->mWorkers.mCount; ct++) {
         status = pthread_join(dc->mWorkers.mThreadId[ct], &res);
