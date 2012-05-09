@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAFZn///+U\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1004513
+      },
+      "writtenOn": "2012-05-09T14:51:27Z",
+      "side": 1,
+      "message": "Please update the description to make clear this is just clean-up, and reference the WebKit change.",
+      "revId": "45582f8ce6e2e42689f8dfd92646a3e529a799e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
