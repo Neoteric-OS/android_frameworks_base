@@ -234,6 +234,17 @@ void InputReaderConfiguration::setDisplayInfo(int32_t displayId, bool external,
 }
 
 
+// -- TouchAffineTransformation --
+void TouchAffineTransformation::applyTo(float& x, float& y) const {
+    float newX, newY;
+    newX = x * x_scale + y * x_ymix + x_offset;
+    newY = x * y_xmix + y * y_scale + y_offset;
+
+    x = newX;
+    y = newY;
+}
+
+
 // --- InputReader ---
 
 InputReader::InputReader(const sp<EventHubInterface>& eventHub,
@@ -2610,6 +2621,7 @@ void TouchInputMapper::dump(String8& dump) {
     dumpVirtualKeys(dump);
     dumpRawPointerAxes(dump);
     dumpCalibration(dump);
+    dumpAffineTransformation(dump);
     dumpSurface(dump);
 
     dump.appendFormat(INDENT3 "Translation and Scaling Factors:\n");
@@ -3479,6 +3491,17 @@ void TouchInputMapper::dumpCalibration(String8& dump) {
     }
 }
 
+void TouchInputMapper::dumpAffineTransformation(String8& dump) {
+    dump.append(INDENT3 "Affine Transformation:\n");
+
+    dump.appendFormat(INDENT4 "X scale: %0.3f\n", mAffineTransform.x_scale);
+    dump.appendFormat(INDENT4 "X ymix: %0.3f\n", mAffineTransform.x_ymix);
+    dump.appendFormat(INDENT4 "X offset: %0.3f\n", mAffineTransform.x_offset);
+    dump.appendFormat(INDENT4 "Y xmix: %0.3f\n", mAffineTransform.y_xmix);
+    dump.appendFormat(INDENT4 "Y scale: %0.3f\n", mAffineTransform.y_scale);
+    dump.appendFormat(INDENT4 "Y offset: %0.3f\n", mAffineTransform.y_offset);
+}
+
 void TouchInputMapper::reset(nsecs_t when) {
     mCursorButtonAccumulator.reset(getDevice());
     mCursorScrollAccumulator.reset(getDevice());
@@ -4084,34 +4107,39 @@ void TouchInputMapper::cookPointerData() {
         }
 
         // X and Y
+        float x = in.x, y = in.y;
+        mAffineTransform.applyTo(x, y);
+
         // Adjust coords for surface orientation.
-        float x, y;
+        float xout, yout;
         switch (mSurfaceOrientation) {
         case DISPLAY_ORIENTATION_90:
-            x = float(in.y - mRawPointerAxes.y.minValue) * mYScale;
-            y = float(mRawPointerAxes.x.maxValue - in.x) * mXScale;
+            xout = float(y - mRawPointerAxes.y.minValue) * mYScale;
+            yout = float(mRawPointerAxes.x.maxValue - x) * mXScale;
             orientation -= M_PI_2;
             if (orientation < - M_PI_2) {
                 orientation += M_PI;
             }
             break;
         case DISPLAY_ORIENTATION_180:
-            x = float(mRawPointerAxes.x.maxValue - in.x) * mXScale;
-            y = float(mRawPointerAxes.y.maxValue - in.y) * mYScale;
+            xout = float(mRawPointerAxes.x.maxValue - x) * mXScale;
+            yout = float(mRawPointerAxes.y.maxValue - y) * mYScale;
             break;
         case DISPLAY_ORIENTATION_270:
-            x = float(mRawPointerAxes.y.maxValue - in.y) * mYScale;
-            y = float(in.x - mRawPointerAxes.x.minValue) * mXScale;
+            xout = float(mRawPointerAxes.y.maxValue - y) * mYScale;
+            yout = float(x - mRawPointerAxes.x.minValue) * mXScale;
             orientation += M_PI_2;
             if (orientation > M_PI_2) {
                 orientation -= M_PI;
             }
             break;
         default:
-            x = float(in.x - mRawPointerAxes.x.minValue) * mXScale;
-            y = float(in.y - mRawPointerAxes.y.minValue) * mYScale;
+            xout = float(x - mRawPointerAxes.x.minValue) * mXScale;
+            yout = float(y - mRawPointerAxes.y.minValue) * mYScale;
             break;
         }
+        x = xout;
+        y = yout;
 
         // Write output coords.
         PointerCoords& out = mCurrentCookedPointerData.pointerCoords[i];

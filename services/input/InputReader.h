@@ -202,6 +202,23 @@ private:
 };
 
 
+struct TouchAffineTransformation {
+    float x_scale;
+    float x_ymix;
+    float x_offset;
+    float y_xmix;
+    float y_scale;
+    float y_offset;
+
+    TouchAffineTransformation() :
+        x_scale(1.0f), x_ymix(0.0f), x_offset(0.0f),
+        y_xmix(0.0f), y_scale(1.0f), y_offset(0.0f) {
+    }
+
+    void applyTo(float& x, float& y) const;
+};
+
+
 /*
  * Input reader policy interface.
  *
@@ -1217,6 +1234,9 @@ protected:
         }
     } mCalibration;
 
+    // Affine location transformation/calibration
+    struct TouchAffineTransformation mAffineTransform;
+
     // Raw pointer axis information from the driver.
     RawPointerAxes mRawPointerAxes;
 
@@ -1266,6 +1286,7 @@ protected:
     virtual void parseCalibration();
     virtual void resolveCalibration();
     virtual void dumpCalibration(String8& dump);
+    virtual void dumpAffineTransformation(String8& dump);
     virtual bool hasStylus() const = 0;
 
     virtual void syncTouch(nsecs_t when, bool* outHavePointerIds) = 0;
