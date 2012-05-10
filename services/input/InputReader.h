@@ -1217,6 +1217,9 @@ protected:
         }
     } mCalibration;
 
+    // Affine location transformation/calibration
+    float mAffineTransform[6];
+
     // Raw pointer axis information from the driver.
     RawPointerAxes mRawPointerAxes;
 
@@ -1267,6 +1270,7 @@ protected:
     virtual void resolveCalibration();
     virtual void dumpCalibration(String8& dump);
     virtual bool hasStylus() const = 0;
+    virtual void updateLocationCalibration();
 
     virtual void syncTouch(nsecs_t when, bool* outHavePointerIds) = 0;
 
