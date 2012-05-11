@@ -2492,7 +2492,7 @@ void TouchInputMapper::configure(nsecs_t when,
         resolveCalibration();
     }
 
-    if (!changes) {
+    if (!changes || (changes & InputReaderConfiguration::UPDATE_LOCATION_CALIBRATION)) {
         // Update location calibration to reflect current settings
         updateLocationCalibration();
     }

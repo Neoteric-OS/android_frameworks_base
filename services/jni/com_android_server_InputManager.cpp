@@ -188,6 +188,7 @@ public:
     void setSystemUiVisibility(int32_t visibility);
     void setPointerSpeed(int32_t speed);
     void setShowTouches(bool enabled);
+    void updateCalibration();
 
     /* --- InputReaderPolicyInterface implementation --- */
 
@@ -711,6 +712,11 @@ void NativeInputManager::setShowTouches(bool enabled) {
 
     mInputManager->getReader()->requestRefreshConfiguration(
             InputReaderConfiguration::CHANGE_SHOW_TOUCHES);
+}
+
+void NativeInputManager::updateCalibration() {
+    mInputManager->getReader()->requestRefreshConfiguration(
+            InputReaderConfiguration::UPDATE_LOCATION_CALIBRATION);
 }
 
 bool NativeInputManager::isScreenOn() {
@@ -1348,6 +1354,14 @@ static void android_server_InputManager_nativeSetShowTouches(JNIEnv* env,
     gNativeInputManager->setShowTouches(enabled);
 }
 
+static void android_server_InputManager_nativeUpdateCalibration(JNIEnv* env, jclass clazz) {
+    if (checkInputManagerUnitialized(env)) {
+        return;
+    }
+
+    gNativeInputManager->updateCalibration();
+}
+
 static jstring android_server_InputManager_nativeDump(JNIEnv* env, jclass clazz) {
     if (checkInputManagerUnitialized(env)) {
         return NULL;
@@ -1417,6 +1431,8 @@ static JNINativeMethod gInputManagerMethods[] = {
             (void*) android_server_InputManager_nativeSetPointerSpeed },
     { "nativeSetShowTouches", "(Z)V",
             (void*) android_server_InputManager_nativeSetShowTouches },
+    { "nativeUpdateCalibration", "()V",
+            (void*) android_server_InputManager_nativeUpdateCalibration },
     { "nativeDump", "()Ljava/lang/String;",
             (void*) android_server_InputManager_nativeDump },
     { "nativeMonitor", "()V",
