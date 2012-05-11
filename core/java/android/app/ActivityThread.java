@@ -3714,6 +3714,8 @@ public final class ActivityThread {
         for (int i=0; i<N; i++) {
             callbacks.get(i).onTrimMemory(level);
         }
+
+        BinderInternal.forceGc("trim-mem");
     }
 
     private void setupGraphicsSupport(LoadedApk info) {
