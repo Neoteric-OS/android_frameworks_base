@@ -580,7 +580,7 @@ public class BluetoothService extends IBluetooth.Stub {
         mAdapterSdpHandles = addReservedServiceRecordsNative(svcIdentifiers);
     }
 
-    private synchronized void updateSdpRecords() {
+    private void updateSdpRecords() {
         ArrayList<ParcelUuid> uuids = new ArrayList<ParcelUuid>();
 
         Resources R = mContext.getResources();
@@ -617,9 +617,11 @@ public class BluetoothService extends IBluetooth.Stub {
         }
 
         // Cannot cast uuids.toArray directly since ParcelUuid is parcelable
-        mAdapterUuids = new ParcelUuid[uuids.size()];
-        for (int i = 0; i < uuids.size(); i++) {
-            mAdapterUuids[i] = uuids.get(i);
+        synchronized (this) {
+            mAdapterUuids = new ParcelUuid[uuids.size()];
+            for (int i = 0; i < uuids.size(); i++) {
+                mAdapterUuids[i] = uuids.get(i);
+            }
         }
     }
 
