@@ -78,6 +78,7 @@ static struct {
     jmethodID getLongPressTimeout;
     jmethodID getPointerLayer;
     jmethodID getPointerIcon;
+    jmethodID getTouchscreenCalibration;
 } gCallbacksClassInfo;
 
 static struct {
@@ -1488,6 +1489,9 @@ int register_android_server_InputManager(JNIEnv* env) {
 
     GET_METHOD_ID(gCallbacksClassInfo.getPointerIcon, clazz,
             "getPointerIcon", "()Landroid/view/PointerIcon;");
+
+    GET_METHOD_ID(gCallbacksClassInfo.getTouchscreenCalibration, clazz,
+            "getTouchscreenCalibration", "(Ljava/lang/String;)[F");
 
     // KeyEvent
 

@@ -1884,6 +1884,16 @@ public final class Settings {
         public static final String POINTER_SPEED = "pointer_speed";
 
         /**
+         * Touchscreen calibration setting.
+         * Each line stores a calibration as a list [name, a, b, c, d, e, f] where
+         * 'name' is the name of the device to be calibrated and 'a' through 'f' are
+         * its calibration parameters (the six elements of an affine transformation
+         * matrix in row-major order).
+         * @hide
+         */
+        public static final String TOUCHSCREEN_CALIBRATION = "touchscreen_calibration";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *

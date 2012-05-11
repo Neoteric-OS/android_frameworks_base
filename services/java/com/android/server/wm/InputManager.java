@@ -698,5 +698,37 @@ public class InputManager implements Watchdog.Monitor {
         public PointerIcon getPointerIcon() {
             return PointerIcon.getDefaultIcon(mContext);
         }
+
+        @SuppressWarnings("unused")
+        public float[] getTouchscreenCalibration(String device_name) {
+            String setting = Settings.System.getString(mContext.getContentResolver(),
+                               Settings.System.TOUCHSCREEN_CALIBRATION);
+            if (setting == null)
+                setting = "";
+
+            for (String calibration : setting.split(System.getProperty("line.separator"))) {
+                float[] matrix = new float[6];
+                String[] data = calibration.split("(?<!\\\\),"); // Beware of escaped commas
+                data[0] = data[0].replaceAll("\\\\,", ",");      // in the device name...
+
+                if (!data[0].equals(device_name))
+                    continue;
+
+                if (data.length - 1 != matrix.length)
+                    continue;
+
+                try {
+                    for (int i=0; i<matrix.length; i++)
+                        matrix[i] = Float.parseFloat(data[i+1]);
+
+                    return matrix;
+                } catch (NumberFormatException nfe) {
+                    continue;
+                }
+            }
+
+            return new float[] { 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f };
+        }
+
     }
 }
