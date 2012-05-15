@@ -840,6 +840,7 @@ public class MultiWaveView extends View {
             mOuterRing.setX(mWaveCenterX);
             mOuterRing.setY(Math.max(mWaveCenterY, mWaveCenterY));
 
+            moveHandleTo(mWaveCenterX, mWaveCenterY, false);
             updateTargetPositions();
         }
         if (DEBUG) dump();
