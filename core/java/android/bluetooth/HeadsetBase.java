@@ -34,6 +34,7 @@ import android.util.Log;
 public final class HeadsetBase {
     private static final String TAG = "Bluetooth HeadsetBase";
     private static final boolean DBG = false;
+    private static final int WAKELOCK_TIMEOUT = 20 * 1000; /* 20 sec*/
 
     public static final int RFCOMM_DISCONNECTED = 1;
 
@@ -112,7 +113,7 @@ public final class HeadsetBase {
     /* Process an incoming AT command line
      */
     protected void handleInput(String input) {
-        acquireWakeLock();
+        mWakeLock.acquire(WAKELOCK_TIMEOUT);
         long timestamp;
 
         synchronized(HeadsetBase.class) {
@@ -133,8 +134,6 @@ public final class HeadsetBase {
         }
 
         sendURC(result.toString());
-
-        releaseWakeLock();
     }
 
     /**
