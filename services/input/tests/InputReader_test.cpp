@@ -127,12 +127,19 @@ private:
 class FakeInputReaderPolicy : public InputReaderPolicyInterface {
     InputReaderConfiguration mConfig;
     KeyedVector<int32_t, sp<FakePointerController> > mPointerControllers;
+    float transform[6];
 
 protected:
     virtual ~FakeInputReaderPolicy() { }
 
 public:
     FakeInputReaderPolicy() {
+        transform[0] = 1.0f;
+        transform[1] = 0.0f;
+        transform[2] = 0.0f;
+        transform[3] = 0.0f;
+        transform[4] = 1.0f;
+        transform[5] = 0.0f;
     }
 
     void setDisplayInfo(int32_t displayId, int32_t width, int32_t height, int32_t orientation) {
@@ -158,7 +165,13 @@ public:
     }
 
     void getTouchscreenCalibration(const char* device_name, float affineTransform[]) {
-        return;
+        for (int i=0; i<6; i++)
+            affineTransform[i] = transform[i];
+    }
+
+    void setTouchscreenCalibration(const float matrix[]) {
+        for (int i=0; i<6; i++)
+            transform[i] = matrix[i];
     }
 
 private:
@@ -2395,6 +2408,7 @@ protected:
     static const float Y_PRECISION;
 
     static const float GEOMETRIC_SCALE;
+    static const float AFFINE_TRANSFORM[6];
 
     static const VirtualKeyDefinition VIRTUAL_KEYS[2];
 
@@ -2414,8 +2428,11 @@ protected:
 
     void prepareDisplay(int32_t orientation);
     void prepareVirtualKeys();
+    void prepareLocationCalibration();
     int32_t toRawX(float displayX);
     int32_t toRawY(float displayY);
+    float toCookedX(int32_t rawX, int32_t rawY);
+    float toCookedY(int32_t rawX, int32_t rawY);
     float toDisplayX(int32_t rawX);
     float toDisplayY(int32_t rawY);
 };
@@ -2447,6 +2464,8 @@ const float TouchInputMapperTest::GEOMETRIC_SCALE =
         avg(float(DISPLAY_WIDTH) / (RAW_X_MAX - RAW_X_MIN + 1),
                 float(DISPLAY_HEIGHT) / (RAW_Y_MAX - RAW_Y_MIN + 1));
 
+const float TouchInputMapperTest::AFFINE_TRANSFORM[] = { 1.0f, -2.0f, 3.0f, -4.0f, 5.0f, -6.0f };
+
 const VirtualKeyDefinition TouchInputMapperTest::VIRTUAL_KEYS[2] = {
         { KEY_HOME, 60, DISPLAY_HEIGHT + 15, 20, 20 },
         { KEY_MENU, DISPLAY_HEIGHT - 60, DISPLAY_WIDTH + 15, 20, 20 },
@@ -2463,12 +2482,24 @@ void TouchInputMapperTest::prepareVirtualKeys() {
     mFakeEventHub->addKey(DEVICE_ID, KEY_MENU, AKEYCODE_MENU, POLICY_FLAG_WAKE);
 }
 
+void TouchInputMapperTest::prepareLocationCalibration() {
+    mFakePolicy->setTouchscreenCalibration(AFFINE_TRANSFORM);
+}
+
 int32_t TouchInputMapperTest::toRawX(float displayX) {
     return int32_t(displayX * (RAW_X_MAX - RAW_X_MIN + 1) / DISPLAY_WIDTH + RAW_X_MIN);
 }
 
 int32_t TouchInputMapperTest::toRawY(float displayY) {
     return int32_t(displayY * (RAW_Y_MAX - RAW_Y_MIN + 1) / DISPLAY_HEIGHT + RAW_Y_MIN);
+}
+
+float TouchInputMapperTest::toCookedX(int32_t rawX, int32_t rawY) {
+    return rawX * AFFINE_TRANSFORM[0] + rawY * AFFINE_TRANSFORM[1] + AFFINE_TRANSFORM[2];
+}
+
+float TouchInputMapperTest::toCookedY(int32_t rawX, int32_t rawY) {
+    return rawX * AFFINE_TRANSFORM[3] + rawY * AFFINE_TRANSFORM[4] + AFFINE_TRANSFORM[5];
 }
 
 float TouchInputMapperTest::toDisplayX(int32_t rawX) {
@@ -3156,6 +3187,29 @@ TEST_F(SingleTouchInputMapperTest, Process_AllAxes_DefaultCalibration) {
     ASSERT_NO_FATAL_FAILURE(assertPointerCoords(args.pointerCoords[0],
             x, y, pressure, size, tool, tool, tool, tool, orientation, distance));
     ASSERT_EQ(tilt, args.pointerCoords[0].getAxisValue(AMOTION_EVENT_AXIS_TILT));
+}
+
+TEST_F(SingleTouchInputMapperTest, Process_XYAxes_AffineCalibration) {
+    SingleTouchInputMapper* mapper = new SingleTouchInputMapper(mDevice);
+    addConfigurationProperty("touch.deviceType", "touchScreen");
+    prepareDisplay(DISPLAY_ORIENTATION_0);
+    prepareLocationCalibration();
+    prepareButtons();
+    prepareAxes(POSITION);
+    addMapperAndConfigure(mapper);
+
+    int32_t rawX = 100;
+    int32_t rawY = 200;
+
+    float x = toDisplayX(toCookedX(rawX, rawY));
+    float y = toDisplayY(toCookedY(rawX, rawY));
+
+    processDown(mapper, rawX, rawY);
+    processSync(mapper);
+
+    NotifyMotionArgs args;
+    ASSERT_NO_FATAL_FAILURE(mFakeListener->assertNotifyMotionWasCalled(&args));
+    ASSERT_NO_FATAL_FAILURE(assertPointerCoords(args.pointerCoords[0], x, y, 1, 0, 0, 0, 0, 0, 0, 0));
 }
 
 TEST_F(SingleTouchInputMapperTest, Process_ShouldHandleAllButtons) {
