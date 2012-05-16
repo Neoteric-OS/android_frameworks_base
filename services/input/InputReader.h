@@ -209,6 +209,9 @@ public:
 
     /* Gets a pointer controller associated with the specified cursor device (ie. a mouse). */
     virtual sp<PointerControllerInterface> obtainPointerController(int32_t deviceId) = 0;
+
+    /* Gets the calibration associated with the specified device */
+    virtual void getTouchscreenCalibration(const char* device_name, float affineTransform[]) = 0;
 };
 
 

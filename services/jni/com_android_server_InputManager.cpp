@@ -193,6 +193,8 @@ public:
 
     virtual void getReaderConfiguration(InputReaderConfiguration* outConfig);
     virtual sp<PointerControllerInterface> obtainPointerController(int32_t deviceId);
+    void getTouchscreenCalibration(const char* device_name, float affineTransform[]);
+
 
     /* --- InputDispatcherPolicyInterface implementation --- */
 
@@ -717,6 +719,26 @@ bool NativeInputManager::isScreenOn() {
 
 bool NativeInputManager::isScreenBright() {
     return android_server_PowerManagerService_isScreenBright();
+}
+
+void NativeInputManager::getTouchscreenCalibration(const char* device_name, float affineTransform[]) {
+    JNIEnv* env = jniEnv();
+
+    jstring name = env->NewStringUTF(device_name);
+    if (name == NULL)
+        return; /* out of memory */
+
+    jfloatArray matrixArr = (jfloatArray)env->CallObjectMethod(mCallbacksObj,
+                              gCallbacksClassInfo.getTouchscreenCalibration, name);
+    jfloat *matrix = env->GetFloatArrayElements(matrixArr, 0);
+
+    if (env->GetArrayLength(matrixArr) == 6) {
+        for (int i = 0; i < 6; i++) {
+            affineTransform[i] = matrix[i];
+        }
+    }
+
+    env->ReleaseFloatArrayElements(matrixArr, matrix, 0);
 }
 
 bool NativeInputManager::filterInputEvent(const InputEvent* inputEvent, uint32_t policyFlags) {

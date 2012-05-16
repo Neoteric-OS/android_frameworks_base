@@ -157,6 +157,10 @@ public:
         return &mConfig;
     }
 
+    void getTouchscreenCalibration(const char* device_name, float affineTransform[]) {
+        return;
+    }
+
 private:
     virtual void getReaderConfiguration(InputReaderConfiguration* outConfig) {
         *outConfig = mConfig;
