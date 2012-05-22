@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAFoH////U\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/GsmDataConnectionTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1989,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-05-22T15:50:02Z",
+      "side": 1,
+      "message": "Please wrap this line to 100 columns",
+      "revId": "daac33f5ac12f0ede01dc4ddfcd6943daf744a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
