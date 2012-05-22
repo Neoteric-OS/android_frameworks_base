@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAFoH///9k\u003d",
+        "filename": "core/res/res/layout/transient_notification.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003263
+      },
+      "writtenOn": "2012-05-22T16:57:29Z",
+      "side": 1,
+      "message": "Do you want android:layout_gravity here instead?\n\nlayout_gravity influences a view\u0027s position within its parent while gravity influences the position of content within this view. As this TextView is set to wrap_content width it\u0027s likely you want layout_gravity here.",
+      "revId": "9a1b6cb3f26a5244846d400c3427f5329c59af76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
