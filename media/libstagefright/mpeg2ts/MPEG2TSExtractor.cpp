@@ -107,7 +107,10 @@ status_t MPEG2TSSource::read(
         }
 
         status_t err = mExtractor->feedMore();
-        if (err != OK) {
+        if (err == ERROR_MALFORMED) {
+            ALOGE("[%s] Skiping malformed packet", __func__);
+            continue;
+        } else if (err != OK) {
             mImpl->signalEOS(err);
         }
     }
@@ -167,7 +170,18 @@ void MPEG2TSExtractor::init() {
     bool haveVideo = false;
     int numPacketsParsed = 0;
 
-    while (feedMore() == OK) {
+    status_t err = OK;
+
+    while (err == OK) {
+        err = feedMore();
+        if (err == ERROR_MALFORMED){
+            ALOGE("[%s] Detected malformed packet", __func__);
+            err = OK;
+            continue;
+        } else if (err != OK) {
+            ALOGE("[%s] Fatal error");
+            break;
+        }
         ATSParser::SourceType type;
         if (haveAudio && haveVideo) {
             break;
@@ -194,7 +208,7 @@ void MPEG2TSExtractor::init() {
             }
         }
 
-        if (++numPacketsParsed > 10000) {
+        if (++numPacketsParsed > 20000) {
             break;
         }
     }
