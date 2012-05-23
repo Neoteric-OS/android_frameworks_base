@@ -2472,7 +2472,9 @@ public class BluetoothService extends IBluetooth.Stub {
         }
         for (String path : bonds) {
             String address = getAddressFromObjectPath(path);
-            BluetoothDeviceProfileState state = addProfileState(address, false);
+            if (address != null) {
+                BluetoothDeviceProfileState state = addProfileState(address, false);
+            }
         }
     }
 
