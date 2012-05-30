@@ -83,9 +83,9 @@ public class SmsCbHeader implements SmsCbConstants {
 
         if (pdu.length <= PDU_LENGTH_ETWS) {
             format = FORMAT_ETWS_PRIMARY;
-            geographicalScope = -1; //not applicable
-            messageCode = -1;
-            updateNumber = -1;
+            geographicalScope = (pdu[0] & 0xc0) >> 6;
+            messageCode = ((pdu[0] & 0x3f) << 4) | ((pdu[1] & 0xf0) >> 4);
+            updateNumber = pdu[1] & 0x0f;
             messageIdentifier = ((pdu[2] & 0xff) << 8) | (pdu[3] & 0xff);
             dataCodingScheme = -1;
             pageIndex = -1;

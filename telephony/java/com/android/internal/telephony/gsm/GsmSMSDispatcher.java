@@ -42,6 +42,7 @@ import com.android.internal.telephony.SmsStorageMonitor;
 import com.android.internal.telephony.SmsUsageMonitor;
 import com.android.internal.telephony.TelephonyProperties;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -49,6 +50,11 @@ import static android.telephony.SmsMessage.MessageClass;
 
 public final class GsmSMSDispatcher extends SMSDispatcher {
     private static final String TAG = "GSM";
+
+    // Per 3GPP TS 23.041 Section 9.1.2: Duplicate message detection shall be
+    // performed independently for primary and secondary notifications.
+    private byte[] mLastDispatchedCbPrimaryFingerprint;
+    private byte[] mLastDispatchedCbFingerprint;
 
     /** Status report received */
     private static final int EVENT_NEW_SMS_STATUS_REPORT = 100;
@@ -473,5 +479,40 @@ public final class GsmSMSDispatcher extends SMSDispatcher {
         } catch (RuntimeException e) {
             Log.e(TAG, "Error in decoding SMS CB pdu", e);
         }
+    }
+
+    protected void dispatchBroadcastPdus(byte[][] pdus, boolean isEmergencyMessage) {
+        SmsCbMessage message = SmsCbMessage.createFromPdu((byte[]) pdus[0]);
+        if (message == null) {
+            // should never come here
+            Log.e(TAG, "dispatchBroadcastPdus received illegal pdus.");
+            return;
+        }
+        // See if we have a network duplicate broadcast.
+        // Per 3GPP TS 23.041 Section 9.1.2: Duplicate message detection shall be
+        // performed independently for primary and secondary notifications.
+        boolean isPrimary =
+                (SmsCbHeader.FORMAT_ETWS_PRIMARY == message.getMessageFormat()) ? true : false;
+        byte[] fingerPrint = message.getIncomingCbFingerprint();
+        if (isPrimary) {
+            if (mLastDispatchedCbPrimaryFingerprint != null
+                    && Arrays.equals(mLastDispatchedCbPrimaryFingerprint, fingerPrint)) {
+                // found duplicate, ignore.
+                Log.d(TAG, "dispatchBroadcastPdus received duplicate primary cb, ignoring.");
+                return;
+            }
+            mLastDispatchedCbPrimaryFingerprint = fingerPrint;
+        } else {
+            // must be non primary
+            if (mLastDispatchedCbFingerprint != null
+                    && Arrays.equals(mLastDispatchedCbFingerprint, fingerPrint)) {
+                // found duplicate, ignore.
+                Log.d(TAG, "dispatchBroadcastPdus received duplicate cb, ignoring.");
+                return;
+            }
+            mLastDispatchedCbFingerprint = fingerPrint;
+        }
+
+        super.dispatchBroadcastPdus(pdus, isEmergencyMessage);
     }
 }
