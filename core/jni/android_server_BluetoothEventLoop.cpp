@@ -189,9 +189,10 @@ static void cleanupNativeDataNative(JNIEnv* env, jobject object) {
     native_data_t *nat =
             (native_data_t *)env->GetIntField(object, field_mNativeData);
 
-    pthread_mutex_destroy(&(nat->thread_mutex));
-
     if (nat) {
+        if (nat->adapter) free(nat->adapter);
+        nat->adapter = 0;
+        pthread_mutex_destroy(&(nat->thread_mutex));
         free(nat);
     }
 #endif
@@ -309,14 +310,16 @@ static jboolean setUpEventLoop(native_data_t *nat) {
     return JNI_FALSE;
 }
 
-
-const char * get_adapter_path(DBusConnection *conn) {
+// Note: Caller must free() return string.
+char * get_adapter_path(DBusConnection *conn) {
     DBusMessage *msg = NULL, *reply = NULL;
     DBusError err;
-    const char *device_path = NULL;
+    char *device_path = NULL;
     int attempt = 0;
 
     for (attempt = 0; attempt < 1000 && reply == NULL; attempt ++) {
+        if (msg) dbus_message_unref(msg);
+
         msg = dbus_message_new_method_call("org.bluez", "/",
               "org.bluez.Manager", "DefaultAdapter");
         if (!msg) {
@@ -357,12 +360,16 @@ const char * get_adapter_path(DBusConnection *conn) {
         }
         goto failed;
     }
-    dbus_message_unref(msg);
-    return device_path;
+
+    // device_path is currently a pointer into the reply msg. Make it independant.
+    device_path = strdup(device_path);
+
+    // At this point call was successful, but cleanup is same as for failed.
 
 failed:
     dbus_message_unref(msg);
-    return NULL;
+    if (reply) dbus_message_unref(reply);
+    return device_path;
 }
 
 static int register_agent(native_data_t *nat,
@@ -379,6 +386,7 @@ static int register_agent(native_data_t *nat,
         return -1;
     }
 
+    if (nat->adapter) free(nat->adapter);
     nat->adapter = get_adapter_path(nat->conn);
     if (nat->adapter == NULL) {
         return -1;
@@ -922,8 +930,10 @@ static DBusHandlerResult event_filter(DBusConnection *conn, DBusMessage *msg,
                 jstring value =
                     (jstring) env->GetObjectArrayElement(str_array, 1);
                 const char *c_value = env->GetStringUTFChars(value, NULL);
-                if (!strncmp(c_value, "true", strlen("true")))
+                if (!strncmp(c_value, "true", strlen("true"))) {
+                    if (nat->adapter) free(nat->adapter);
                     nat->adapter = get_adapter_path(nat->conn);
+                }
                 env->ReleaseStringUTFChars(value, c_value);
             }
             env->ReleaseStringUTFChars(property, c_property);

@@ -69,7 +69,7 @@ jfieldID get_field(JNIEnv *env,
 
 struct event_loop_native_data_t {
     DBusConnection *conn;
-    const char *adapter;
+    char *adapter;
 
     /* protects the thread */
     pthread_mutex_t thread_mutex;

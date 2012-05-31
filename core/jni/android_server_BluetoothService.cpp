@@ -467,14 +467,13 @@ static jboolean cancelDeviceCreationNative(JNIEnv *env, jobject object,
                 LOG_AND_FREE_DBUS_ERROR(&err);
             } else
                 ALOGE("DBus reply is NULL in function %s", __FUNCTION__);
-            return JNI_FALSE;
         } else {
+            dbus_message_unref(reply);
             result = JNI_TRUE;
         }
-        dbus_message_unref(reply);
     }
 #endif
-    return JNI_FALSE;
+    return result;
 }
 
 static jboolean removeDeviceNative(JNIEnv *env, jobject object, jstring object_path) {
@@ -999,6 +998,7 @@ static jintArray addReservedServiceRecordsNative(JNIEnv *env, jobject object,
     ALOGV("%s", __FUNCTION__);
 #ifdef HAVE_BLUETOOTH
     DBusMessage *reply = NULL;
+    jintArray handleArray = NULL;
 
     native_data_t *nat = get_native_data(env, object);
 
@@ -1012,7 +1012,11 @@ static jintArray addReservedServiceRecordsNative(JNIEnv *env, jobject object,
                             DBUS_TYPE_ARRAY, DBUS_TYPE_UINT32,
                             &svc_classes, len, DBUS_TYPE_INVALID);
     env->ReleaseIntArrayElements(uuids, svc_classes, 0);
-    return reply ? extract_handles(env, reply) : NULL;
+    if (reply) {
+         handleArray = extract_handles(env, reply);
+         dbus_message_unref(reply);
+    }
+    return handleArray;
 
 #endif
     return NULL;
@@ -1036,6 +1040,7 @@ static jboolean removeReservedServiceRecordsNative(JNIEnv *env, jobject object,
                             DBUS_TYPE_ARRAY, DBUS_TYPE_UINT32,
                             &values, len, DBUS_TYPE_INVALID);
     env->ReleaseIntArrayElements(handles, values, 0);
+    if (reply) dbus_message_unref(reply);
     return reply ? JNI_TRUE : JNI_FALSE;
 #endif
     return JNI_FALSE;
@@ -1078,6 +1083,7 @@ static jboolean removeServiceRecordNative(JNIEnv *env, jobject object, jint hand
                            DBUS_ADAPTER_IFACE, "RemoveServiceRecord",
                            DBUS_TYPE_UINT32, &handle,
                            DBUS_TYPE_INVALID);
+        if (reply) dbus_message_unref(reply);
         return reply ? JNI_TRUE : JNI_FALSE;
     }
 #endif
@@ -1098,6 +1104,7 @@ static jboolean setLinkTimeoutNative(JNIEnv *env, jobject object, jstring object
                            DBUS_TYPE_UINT32, &num_slots,
                            DBUS_TYPE_INVALID);
         env->ReleaseStringUTFChars(object_path, c_object_path);
+        if (reply) dbus_message_unref(reply);
         return reply ? JNI_TRUE : JNI_FALSE;
     }
 #endif
@@ -1188,6 +1195,7 @@ static jboolean setBluetoothTetheringNative(JNIEnv *env, jobject object, jboolea
         }
         env->ReleaseStringUTFChars(src_role, c_role);
         env->ReleaseStringUTFChars(bridge, c_bridge);
+        if (reply) dbus_message_unref(reply);
         return reply ? JNI_TRUE : JNI_FALSE;
     }
 #endif
@@ -1442,6 +1450,7 @@ static jboolean unregisterHealthApplicationNative(JNIEnv *env, jobject object,
                 LOG_AND_FREE_DBUS_ERROR(&err);
             }
         } else {
+            dbus_message_unref(reply);
             result = JNI_TRUE;
         }
     }
@@ -1612,6 +1621,7 @@ static jboolean releaseChannelFdNative(JNIEnv *env, jobject object, jstring chan
                                             DBUS_HEALTH_CHANNEL_IFACE, "Release",
                                             DBUS_TYPE_INVALID);
         env->ReleaseStringUTFChars(channelPath, c_channel_path);
+        if (reply) dbus_message_unref(reply);
 
         return reply ? JNI_TRUE : JNI_FALSE;
     }
@@ -1643,6 +1653,7 @@ static jobject getChannelFdNative(JNIEnv *env, jobject object, jstring channelPa
         }
 
         fd = dbus_returns_unixfd(env, reply);
+        dbus_message_unref(reply);
         if (fd == -1) return NULL;
 
         int flags = fcntl(fd, F_GETFL);
