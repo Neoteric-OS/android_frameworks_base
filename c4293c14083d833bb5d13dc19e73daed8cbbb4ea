@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGM3///8U\u003d",
+        "filename": "tools/aapt/ResourceTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2256,
+      "author": {
+        "id": 1002187
+      },
+      "writtenOn": "2012-06-01T08:08:54Z",
+      "side": 1,
+      "message": "Should be as follows?\n\nwhile (pos \u003c\u003d end \u0026\u0026 *pos !\u003d \u0027|\u0027) {\n\nTo compensate for not incrementing \u0027end\u0027, shouldn\u0027t the loop termination be changed to \"\u003c\u003d\" ?  Otherwise, the length in the nameStr constructor on line 2260 will be off by one.",
+      "revId": "c4293c14083d833bb5d13dc19e73daed8cbbb4ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
