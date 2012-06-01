@@ -16,6 +16,24 @@
       "revId": "c4293c14083d833bb5d13dc19e73daed8cbbb4ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGM3///7g\u003d",
+        "filename": "tools/aapt/ResourceTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2256,
+      "author": {
+        "id": 1010049
+      },
+      "writtenOn": "2012-06-01T17:40:44Z",
+      "side": 1,
+      "message": "I believe the loop termination is correct as is. pos will point to a \u0027|\u0027 separator, or will be equal to end. And pos-start will be the correct length of the substring that is being looked at.",
+      "parentUuid": "AAAGM3///8U\u003d",
+      "revId": "c4293c14083d833bb5d13dc19e73daed8cbbb4ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
