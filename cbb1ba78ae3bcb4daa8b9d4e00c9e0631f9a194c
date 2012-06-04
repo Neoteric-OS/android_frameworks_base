@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGP3///7E\u003d",
+        "filename": "services/java/com/android/server/BatteryService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1006779
+      },
+      "writtenOn": "2012-06-04T21:46:56Z",
+      "side": 1,
+      "message": "I don\u0027t think the exception should be swallowed.  See http://www.ibm.com/developerworks/java/library/j-jtp05236/index.html#code3 for a discussion on this.  Recommendation there is to do any local cleanup (which we don\u0027t really have in this case), then call Thread.currentThread().interrupt() rather than catch, log, and discard.",
+      "revId": "cbb1ba78ae3bcb4daa8b9d4e00c9e0631f9a194c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
