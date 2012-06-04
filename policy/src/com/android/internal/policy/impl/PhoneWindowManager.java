@@ -15,6 +15,7 @@
 
 package com.android.internal.policy.impl;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
 import android.app.IUiModeManager;
@@ -230,7 +231,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     static final int APPLICATION_MEDIA_OVERLAY_SUBLAYER = -1;
     static final int APPLICATION_PANEL_SUBLAYER = 1;
     static final int APPLICATION_SUB_PANEL_SUBLAYER = 2;
-    
+
+    // Private intent string for vendor specific button
+    private static final String ACTION_VENDOR_BUTTON =
+            "com.android.intent.action.VENDOR_BUTTON";
+
     static public final String SYSTEM_DIALOG_REASON_KEY = "reason";
     static public final String SYSTEM_DIALOG_REASON_GLOBAL_ACTIONS = "globalactions";
     static public final String SYSTEM_DIALOG_REASON_RECENT_APPS = "recentapps";
@@ -3475,6 +3480,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     }
                 }
                 break;
+             }
+            case KeyEvent.KEYCODE_VENDOR_1:
+            case KeyEvent.KEYCODE_VENDOR_2:
+            case KeyEvent.KEYCODE_VENDOR_3: {
+                mBroadcastWakeLock.acquire();
+                mHandler.post(new PassVendorKey(new KeyEvent(event)));
+                result &= ~ACTION_PASS_TO_USER;
+                break;
             }
         }
         return result;
@@ -3554,6 +3567,30 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
         }
     }
+
+    class PassVendorKey implements Runnable {
+        KeyEvent mKeyEvent;
+
+        PassVendorKey(KeyEvent keyEvent) {
+            mKeyEvent = keyEvent;
+        }
+
+        public void run() {
+            if (ActivityManagerNative.isSystemReady()) {
+                sendCloseSystemWindows();
+                Intent intent = new Intent(ACTION_VENDOR_BUTTON, null);
+                intent.putExtra(Intent.EXTRA_KEY_EVENT, mKeyEvent);
+                mContext.sendOrderedBroadcast(intent, android.Manifest.permission.VENDOR_BUTTON,
+                        mBroadcastDone, mHandler, Activity.RESULT_OK, null, null);
+            }
+        }
+    }
+
+    BroadcastReceiver mBroadcastDone = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            mBroadcastWakeLock.release();
+        }
+    };
 
     BroadcastReceiver mDockReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {

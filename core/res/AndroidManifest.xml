@@ -1567,6 +1567,14 @@
         android:description="@string/permlab_copyProtectedData"
         android:protectionLevel="signature" />
 
+    <!-- Required for vendor specific HW buttons.
+         Not for use by third party apps.
+         @hide -->
+    <permission android:name="android.permission.VENDOR_BUTTON"
+        android:label="@string/permlab_vendorButton"
+        android:description="@string/permdesc_vendorButton"
+        android:protectionLevel="signatureOrSystem" />
+
     <!-- Internal permission protecting access to the encryption methods
         @hide
     -->

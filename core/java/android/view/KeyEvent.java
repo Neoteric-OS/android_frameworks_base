@@ -623,8 +623,18 @@ public class KeyEvent extends InputEvent implements Parcelable {
     /** Key code constant: Assist key.
      * Launches the global assist activity.  Not delivered to applications. */
     public static final int KEYCODE_ASSIST          = 219;
+    /** Key code constant: Vendor specific button 1.
+     * @hide */
+    public static final int KEYCODE_VENDOR_1        = 220;
+    /** Key code constant: Vendor specific button 2.
+     * @hide */
+    public static final int KEYCODE_VENDOR_2        = 221;
+    /** Key code constant: Vendor specific button 3.
+     * @hide */
+    public static final int KEYCODE_VENDOR_3        = 222;
 
-    private static final int LAST_KEYCODE           = KEYCODE_ASSIST;
+
+    private static final int LAST_KEYCODE           = KEYCODE_VENDOR_3;
 
     // NOTE: If you add a new keycode here you must also add it to:
     //  isSystem()
@@ -865,6 +875,9 @@ public class KeyEvent extends InputEvent implements Parcelable {
         names.append(KEYCODE_YEN, "KEYCODE_YEN");
         names.append(KEYCODE_RO, "KEYCODE_RO");
         names.append(KEYCODE_KANA, "KEYCODE_KANA");
+        names.append(KEYCODE_VENDOR_1, "KEYCODE_VENDOR_1");
+        names.append(KEYCODE_VENDOR_2, "KEYCODE_VENDOR_2");
+        names.append(KEYCODE_VENDOR_3, "KEYCODE_VENDOR_3");
         names.append(KEYCODE_ASSIST, "KEYCODE_ASSIST");
     };
 

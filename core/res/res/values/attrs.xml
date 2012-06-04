@@ -1530,6 +1530,9 @@
         <enum name="KEYCODE_YEN" value="216" />
         <enum name="KEYCODE_RO" value="217" />
         <enum name="KEYCODE_KANA" value="218" />
+        <enum name="KEYCODE_VENDOR_1" value="220" />
+        <enum name="KEYCODE_VENDOR_2" value="221" />
+        <enum name="KEYCODE_VENDOR_3" value="222" />
     </attr>
 
     <!-- ***************************************************************** -->
