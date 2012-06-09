@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGfH///9Y\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-06-09T01:47:41Z",
+      "side": 1,
+      "message": "Please organize your commit message starting with a short line (less than 60 characters), followed by a blank line, followed by lines shorter than 70 characters.",
+      "revId": "821b382ba815362a51822f92c9bc1dc28ebc66e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfH///9U\u003d",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4365,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-06-09T01:47:41Z",
+      "side": 1,
+      "message": "Please remove those spaces.",
+      "revId": "821b382ba815362a51822f92c9bc1dc28ebc66e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
