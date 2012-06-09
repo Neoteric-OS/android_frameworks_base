@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGe3///7w\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/cat/CommandDetails.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-06-09T00:11:05Z",
+      "side": 1,
+      "message": "Why not simply compRequired \u003d in.readInt() \u003d\u003d 1?",
+      "revId": "09ae308171f666cf77e866e2bc36d8bb25375f9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
