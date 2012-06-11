@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGfX///5s\u003d",
+        "filename": "media/libstagefright/mpeg2ts/ATSParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-06-11T16:39:24Z",
+      "side": 1,
+      "message": "Please use ALOGE here. LOGE has disappeared from Google\u0027s internal master tree.",
+      "revId": "d870b2ad9786a121ba1fd86ace52cb382126e2bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
