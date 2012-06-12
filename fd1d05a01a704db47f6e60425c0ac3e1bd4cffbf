@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGe3///l8\u003d",
+        "filename": "media/libstagefright/XINGSeeker.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2012-06-12T15:17:04Z",
+      "side": 0,
+      "message": "I think this should be -1, not 0, so that getDuration() will return false when the duration is invalid",
+      "revId": "fd1d05a01a704db47f6e60425c0ac3e1bd4cffbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGe3///l4\u003d",
+        "filename": "media/libstagefright/XINGSeeker.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2012-06-12T15:17:04Z",
+      "side": 0,
+      "message": "all the code from line 168 to 189 should be wrapped in an \"if (U32_AT(buffer)) { }\" block",
+      "revId": "fd1d05a01a704db47f6e60425c0ac3e1bd4cffbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
