@@ -1101,6 +1101,23 @@ public class TelephonyManager {
     }
 
     /**
+     * Return true if the ICC card is valid
+     *
+     * @hide
+     */
+    public boolean isIccCardValid() {
+        try {
+            return getITelephony().isIccCardValid();
+        } catch (RemoteException ex) {
+            // Assume no ICC card if remote exception which shouldn't happen
+            return true;
+        } catch (NullPointerException ex) {
+            // This could happen before phone restarts due to crashing
+            return true;
+        }
+    }
+
+    /**
      * @return true if the current device is "voice capable".
      * <p>
      * "Voice capable" means that this device supports circuit-switched

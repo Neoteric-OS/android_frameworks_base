@@ -278,5 +278,10 @@ interface ITelephony {
      * or {@link PHone#LTE_ON_CDMA_TRUE}
      */
     int getLteOnCdmaMode();
+
+    /**
+     * Return true if an ICC card is valid
+     */
+    boolean isIccCardValid();
 }
 

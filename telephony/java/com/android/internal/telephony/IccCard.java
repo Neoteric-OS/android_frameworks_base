@@ -828,4 +828,13 @@ public abstract class IccCard {
     private void log(String msg) {
         Log.d(mLogTag, "[IccCard] " + msg);
     }
+
+    /**
+     * return true if an ICC card is valid
+     *
+     * @hide
+     */
+    public boolean isIccCardValid() {
+        return mIccCardStatus != null ? mIccCardStatus.getCardState().isCardValid() : false;
+    }
 }
