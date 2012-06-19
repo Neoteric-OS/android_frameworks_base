@@ -792,15 +792,20 @@ public class WebView extends AbsoluteLayout
      * loadDataWithBaseURL()} with an appropriate base URL.
      * <p>
      * If the value of the encoding parameter is 'base64', then the data must
-     * be encoded as base64. Otherwise, the data must use ASCII encoding for
+     * be encoded as base64 US-ASCII data.
+     * If the value of the encoding parameter is a {@code charset} (for example
+     * 'utf-8'), then the data must be encoded as {@code charset} data.
+     * If the value of the encoding parameter is 'charset;base64', then the
+     * data must be encoded as base64 {@code charset} data.
+     * <p>
+     * If the value of encoding parameter is null, then the data
+     * must use US-ASCII encoding for
      * octets inside the range of safe URL characters and use the standard %xx
      * hex encoding of URLs for octets outside that range. For example,
      * '#', '%', '\', '?' should be replaced by %23, %25, %27, %3f respectively.
-     * <p>
      * The 'data' scheme URL formed by this method uses the default US-ASCII
-     * charset. If you need need to set a different charset, you should form a
-     * 'data' scheme URL which explicitly specifies a charset parameter in the
-     * mediatype portion of the URL and call {@link #loadUrl(String)} instead.
+     * charset.
+     * <p>
      * Note that the charset obtained from the mediatype portion of a data URL
      * always overrides that specified in the HTML or XML document itself.
      *
