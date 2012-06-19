@@ -792,4 +792,96 @@ public class TouchUtils {
         inst.sendPointerSync(event);
         inst.waitForIdleSync();
     }
+
+    /**
+     * Simulate touching a specific location and dragging to a new location.
+     * Supports multi touch.
+     *
+     * @param test The test case that is being run
+     * @param fromX X coordinates of the initial touch, in screen coordinates
+     * @param toX X coordinates of the drag destination, in screen coordinates
+     * @param fromY X coordinates of the initial touch, in screen coordinates
+     * @param toY Y coordinates of the drag destination, in screen coordinates
+     * @param stepCount How many move steps to include in the drag
+     */
+    public static void drag(InstrumentationTestCase test, float[] fromX, float[] toX,
+            float[] fromY, float[] toY, int stepCount) {
+        Instrumentation inst = test.getInstrumentation();
+
+        int points = fromX.length;
+
+        // if not multi touch
+        if (points == 1) {
+            drag(test, fromX[0], toX[0], fromY[0], toY[0], stepCount);
+            return;
+        }
+
+        long downTime = SystemClock.uptimeMillis();
+        long eventTime = downTime;
+
+        MotionEvent.PointerCoords[] pointerCoords = new MotionEvent.PointerCoords[points];
+        int[] pointerIds = new int[points];
+
+        // send down event for first pointer
+        MotionEvent event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN,
+                fromX[0], fromY[0], 0);
+        inst.sendPointerSync(event);
+        inst.waitForIdleSync();
+
+        // send pointer down for the rest of the pointers
+        for (int n = 0; n < points; n++) {
+            pointerIds[n] = n;
+            pointerCoords[n] = new MotionEvent.PointerCoords();
+            pointerCoords[n].x = fromX[n];
+            pointerCoords[n].y = fromY[n];
+            pointerCoords[n].pressure = 1.0f;
+            pointerCoords[n].size = 1.0f;
+            pointerCoords[n].touchMajor = 1.0f;
+            pointerCoords[n].touchMinor = 1.0f;
+            pointerCoords[n].toolMajor = 1.0f;
+            pointerCoords[n].toolMinor = 1.0f;
+            pointerCoords[n].orientation = 0;
+        }
+        eventTime = SystemClock.uptimeMillis();
+        for (int n = 1; n < points; n++) {
+            event = MotionEvent.obtain(downTime, eventTime,
+                    MotionEvent.ACTION_POINTER_DOWN | (n << MotionEvent.ACTION_POINTER_INDEX_SHIFT),
+                    points, pointerIds, pointerCoords, 0, 1.0f, 1.0f, 0, 0, 0, 0);
+            inst.sendPointerSync(event);
+        }
+        inst.waitForIdleSync();
+
+        // send move events for all pointers for every step
+        for (int i = 1; i < stepCount; ++i) {
+            for (int n = 0; n < points; n++) {
+                pointerCoords[n].x = fromX[n] + (toX[n] - fromX[n]) * i / stepCount;
+                pointerCoords[n].y = fromY[n] + (toY[n] - fromY[n]) * i / stepCount;
+            }
+            eventTime = SystemClock.uptimeMillis();
+            event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE,
+                    points, pointerIds, pointerCoords, 0, 1.0f, 1.0f, 0, 0, 0, 0);
+            inst.sendPointerSync(event);
+            inst.waitForIdleSync();
+        }
+
+        // send pointer up for all but one pointer
+        for (int n = 0; n < points; n++) {
+            pointerCoords[n].x = toX[n];
+            pointerCoords[n].y = toY[n];
+        }
+        eventTime = SystemClock.uptimeMillis();
+        for (int n = 1; n < points; n++) {
+            event = MotionEvent.obtain(downTime, eventTime,
+                    MotionEvent.ACTION_POINTER_UP | (n << MotionEvent.ACTION_POINTER_INDEX_SHIFT),
+                    points, pointerIds, pointerCoords, 0, 1.0f, 1.0f, 0, 0, 0, 0);
+            inst.sendPointerSync(event);
+        }
+        inst.waitForIdleSync();
+
+        // send up event for last pointer
+        eventTime = SystemClock.uptimeMillis();
+        event = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, toX[0], toY[0], 0);
+        inst.sendPointerSync(event);
+        inst.waitForIdleSync();
+    }
 }

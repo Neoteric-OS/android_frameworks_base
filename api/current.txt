@@ -19642,6 +19642,7 @@ package android.test {
     method public static void clickView(android.test.InstrumentationTestCase, android.view.View);
     method public static deprecated void drag(android.test.ActivityInstrumentationTestCase, float, float, float, float, int);
     method public static void drag(android.test.InstrumentationTestCase, float, float, float, float, int);
+    method public static void drag(android.test.InstrumentationTestCase, float[], float[], float[], float[], int);
     method public static deprecated void dragQuarterScreenDown(android.test.ActivityInstrumentationTestCase);
     method public static void dragQuarterScreenDown(android.test.InstrumentationTestCase, android.app.Activity);
     method public static deprecated void dragQuarterScreenUp(android.test.ActivityInstrumentationTestCase);
