@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAG3n///wc\u003d",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2137,
+      "author": {
+        "id": 1010551
+      },
+      "writtenOn": "2012-06-22T22:54:34Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it be the same as before? i.e. remove \"or base64\" ?",
+      "revId": "058d4f1d4afd8df271033db620f46d1c6c5caeac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
