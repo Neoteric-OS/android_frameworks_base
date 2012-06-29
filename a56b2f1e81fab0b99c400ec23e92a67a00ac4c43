@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHFn////Q\u003d",
+        "filename": "services/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2012-06-29T04:16:43Z",
+      "side": 1,
+      "message": "If disconnected *and* blocked is valid, then this test needs tweaking.",
+      "revId": "a56b2f1e81fab0b99c400ec23e92a67a00ac4c43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
