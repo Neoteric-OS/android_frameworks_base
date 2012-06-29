@@ -263,6 +263,7 @@ public class CallerInfo {
         Uri contactUri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
 
         CallerInfo info = getCallerInfo(context, contactUri);
+        info = doProfileLookupIfNecessary(context, number, info);
         info = doSecondaryLookupIfNecessary(context, number, info);
 
         // if no query results were returned with a viable number,
@@ -294,6 +295,26 @@ public class CallerInfo {
                         Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI,
                                 Uri.encode(username)));
             }
+        }
+        return previousResult;
+    }
+
+    /**
+     * Performs another lookup if previous lookup fails to check if the
+     * caller is the user profile.
+     *
+     * @param context the query context
+     * @param number the original phone number
+     * @param previousResult the result of the previous lookup
+     * @return previousResult if it's not the case
+     */
+    static CallerInfo doProfileLookupIfNecessary(Context context,
+            String number, CallerInfo previousResult) {
+        if (!previousResult.contactExists) {
+            Log.d(TAG, "Looking up profile contact");
+            previousResult = getCallerInfo(context,
+                    Uri.withAppendedPath(PhoneLookup.PROFILE_CONTENT_FILTER_URI,
+                            Uri.encode(number)));
         }
         return previousResult;
     }

@@ -4665,6 +4665,14 @@ public final class ContactsContract {
                 "phone_lookup");
 
         /**
+         * The content:// style URI for this table, specific to the user's profile
+         *
+         * @hide
+         */
+        public static final Uri PROFILE_CONTENT_FILTER_URI =
+                Uri.withAppendedPath(Profile.CONTENT_URI, "phone_lookup");
+
+        /**
          * The MIME type of {@link #CONTENT_FILTER_URI} providing a directory of phone lookup rows.
          *
          * @hide

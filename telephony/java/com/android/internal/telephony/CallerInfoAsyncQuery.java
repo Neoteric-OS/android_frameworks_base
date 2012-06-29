@@ -237,6 +237,8 @@ public class CallerInfoAsyncQuery {
                     mCallerInfo = new CallerInfo().markAsVoiceMail();
                 } else {
                     mCallerInfo = CallerInfo.getCallerInfo(mQueryContext, mQueryUri, cursor);
+                    mCallerInfo = CallerInfo.doProfileLookupIfNecessary(mQueryContext,
+                            cw.number, mCallerInfo);
                     if (DBG) Log.d(LOG_TAG, "==> Got mCallerInfo: " + mCallerInfo);
 
                     CallerInfo newCallerInfo = CallerInfo.doSecondaryLookupIfNecessary(
