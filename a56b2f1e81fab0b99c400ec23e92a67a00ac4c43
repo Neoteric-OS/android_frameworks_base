@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAHFn///uI\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2012-07-02T18:43:00Z",
+      "side": 1,
+      "message": "this change would let intermediate states (like CONNECTED) through to calling apps.\n\nis there a specific use-case where a blocked app needed this intermediate state?\n\ni\u0027d rather just always return BLOCKED to those apps, instead of temporarily misleading them into thinking a connection may become available.  BLOCKED is mapped to DISCONNECTED under the hood anyway.",
+      "revId": "a56b2f1e81fab0b99c400ec23e92a67a00ac4c43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHFn////Q\u003d",
         "filename": "services/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 1
@@ -13,6 +30,24 @@
       "writtenOn": "2012-06-29T04:16:43Z",
       "side": 1,
       "message": "If disconnected *and* blocked is valid, then this test needs tweaking.",
+      "revId": "a56b2f1e81fab0b99c400ec23e92a67a00ac4c43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHFn///uE\u003d",
+        "filename": "services/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2012-07-02T18:43:00Z",
+      "side": 1,
+      "message": "networks should never be BLOCKED inside the system_server; there was a bug where this could occur, but it was fixed in JB:\n\ncommit 5294a2fc2f401cd248a4bc3f0f9ee1e2854f4e9a",
+      "parentUuid": "AAAHFn////Q\u003d",
       "revId": "a56b2f1e81fab0b99c400ec23e92a67a00ac4c43",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
