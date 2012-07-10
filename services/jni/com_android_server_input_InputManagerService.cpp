@@ -84,6 +84,7 @@ static struct {
     jmethodID getPointerIcon;
     jmethodID getKeyboardLayoutOverlay;
     jmethodID getDeviceAlias;
+    jmethodID getCalibrationMatrixForInputDevice;
 } gServiceClassInfo;
 
 static struct {
@@ -1476,6 +1477,9 @@ int register_android_server_InputManager(JNIEnv* env) {
 
     GET_METHOD_ID(gServiceClassInfo.getDeviceAlias, clazz,
             "getDeviceAlias", "(Ljava/lang/String;)Ljava/lang/String;");
+
+    GET_METHOD_ID(gServiceClassInfo.getCalibrationMatrixForInputDevice, clazz,
+            "getCalibrationMatrixForInputDevice", "(Ljava/lang/String;)[F");
 
     // InputDevice
 

@@ -496,6 +496,40 @@ public final class InputManager {
     }
 
     /**
+     * Gets the device calibration matrix.
+     * @hide
+     */
+    public float[] getCalibrationMatrix(String inputDeviceDescriptor) {
+        float[] matrix = {1,0,0,0,1,0};
+        if (inputDeviceDescriptor == null) {
+            throw new IllegalArgumentException("inputDeviceDescriptor must not be null");
+        }
+
+        try {
+            matrix = mIm.getCalibrationMatrixForInputDevice(inputDeviceDescriptor);
+        } catch (RemoteException ex) {
+            Log.w(TAG, "Could not get calibration matrix for input device.", ex);
+        }
+        return matrix;
+    }
+
+    /**
+     * Sets the device calibration matrix.
+     * @hide
+     */
+    public void setCalibrationMatrix(String inputDeviceDescriptor, float[] matrix) {
+        if (inputDeviceDescriptor == null) {
+            throw new IllegalArgumentException("inputDeviceDescriptor must not be null");
+        }
+
+        try {
+            mIm.setCalibrationMatrixForInputDevice(inputDeviceDescriptor, matrix);
+        } catch (RemoteException ex) {
+            Log.w(TAG, "Could not set calibration matrix for input device.", ex);
+        }
+    }
+
+    /**
      * Gets the mouse pointer speed.
      * <p>
      * Only returns the permanent mouse pointer speed.  Ignores any temporary pointer

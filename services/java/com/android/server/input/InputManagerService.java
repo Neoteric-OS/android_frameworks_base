@@ -637,6 +637,40 @@ public class InputManagerService extends IInputManager.Stub implements Watchdog.
         mTempFullKeyboards.clear();
     }
 
+    @Override // Binder call & native callback
+    public float[] getCalibrationMatrixForInputDevice(String inputDeviceDescriptor) {
+        if (inputDeviceDescriptor == null) {
+            throw new IllegalArgumentException("inputDeviceDescriptor must not be null");
+        }
+
+        synchronized (mDataStore) {
+            return mDataStore.getCalibrationMatrix(inputDeviceDescriptor);
+        }
+    }
+
+    @Override // Binder call
+    public void setCalibrationMatrixForInputDevice(String inputDeviceDescriptor,
+            float[] calibration) {
+        if (!checkCallingPermission(android.Manifest.permission.SET_INPUT_CALIBRATION,
+                "setCalibrationMatrixForInputDevice()")) {
+            throw new SecurityException("Requires SET_INPUT_CALIBRATION permission");
+        }
+        if (inputDeviceDescriptor == null) {
+            throw new IllegalArgumentException("inputDeviceDescriptor must not be null");
+        }
+        if (calibration.length != 6) {
+            throw new IllegalArgumentException("calibration matrix must contain 6 elements");
+        }
+
+        synchronized (mDataStore) {
+            try {
+                mDataStore.setCalibrationMatrix(inputDeviceDescriptor, calibration);
+            } finally {
+                mDataStore.saveIfNeeded();
+            }
+        }
+    }
+
     // Must be called on handler.
     private void showMissingKeyboardLayoutNotification() {
         if (!mKeyboardLayoutNotificationShown) {

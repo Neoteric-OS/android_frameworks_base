@@ -38,6 +38,10 @@ interface IInputManager {
     // applications, the caller must have the INJECT_EVENTS permission.
     boolean injectInputEvent(in InputEvent ev, int mode);
 
+    // Calibrate input device position
+    float[] getCalibrationMatrixForInputDevice(String inputDeviceDescriptor);
+    void setCalibrationMatrixForInputDevice(String inputDeviceDescriptor, in float[] calibration);
+
     // Keyboard layouts configuration.
     KeyboardLayout[] getKeyboardLayouts();
     KeyboardLayout getKeyboardLayout(String keyboardLayoutDescriptor);

@@ -296,6 +296,8 @@
     <string name="permdesc_setOrientation" msgid="3046126619316671476">"Allows the app to change the rotation of the screen at any time. Should never be needed for normal apps."</string>
     <string name="permlab_setPointerSpeed" msgid="9175371613322562934">"change pointer speed"</string>
     <string name="permdesc_setPointerSpeed" msgid="6866563234274104233">"Allows the app to change the mouse or touch pad pointer speed at any time. Should never be needed for normal apps."</string>
+    <string name="permlab_setInputCalibration" msgid="9999999999999999999">"change input device calibration"</string>
+    <string name="permdesc_setInputCalibration" msgid="8888888888888888888">"Allows the app to modify the calibration parameters of the touch screen. Should never be needed for normal apps."</string>
     <string name="permlab_setKeyboardLayout" msgid="4778731703600909340">"change keyboard layout"</string>
     <string name="permdesc_setKeyboardLayout" msgid="8480016771134175879">"Allows the app to change the keyboard layout. Should never be needed for normal apps."</string>
     <string name="permlab_signalPersistentProcesses" msgid="4539002991947376659">"send Linux signals to apps"</string>

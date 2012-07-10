@@ -35,6 +35,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -80,6 +81,20 @@ final class PersistentDataStore {
             save();
             mDirty = false;
         }
+    }
+
+    public float[] getCalibrationMatrix(String inputDeviceDescriptor) {
+        InputDeviceState state = getInputDeviceState(inputDeviceDescriptor, false);
+        return state != null ? state.getCalibrationMatrix() : new float[] {1,0,0,0,1,0};
+    }
+
+    public boolean setCalibrationMatrix(String inputDeviceDescriptor, float[] calibration) {
+        InputDeviceState state = getInputDeviceState(inputDeviceDescriptor, true);
+        if (state.setCalibrationMatrix(calibration)) {
+            setDirty();
+            return true;
+        }
+        return false;
     }
 
     public String getCurrentKeyboardLayout(String inputDeviceDescriptor) {
@@ -275,8 +290,35 @@ final class PersistentDataStore {
     }
 
     private static final class InputDeviceState {
+        private enum MatrixTag {
+            X_SCALE(0),
+            X_YMIX(1),
+            X_OFFSET(2),
+            Y_XMIX(3),
+            Y_SCALE(4),
+            Y_OFFSET(5);
+
+            private int index;
+            private MatrixTag(int index) { this.index = index; }
+            public int getIndex() { return index; }
+        }
+
+        private float[] mCalibrationMatrix = new float[] {1,0,0,0,1,0};
         private String mCurrentKeyboardLayout;
         private ArrayList<String> mKeyboardLayouts = new ArrayList<String>();
+
+        public float[] getCalibrationMatrix() {
+            return mCalibrationMatrix;
+        }
+
+        public boolean setCalibrationMatrix(float[] calibration) {
+            if (Arrays.equals(mCalibrationMatrix, calibration))
+                return false;
+            if (calibration.length != 6)
+                return false;
+            mCalibrationMatrix = calibration;
+            return true;
+        }
 
         public String getCurrentKeyboardLayout() {
             return mCurrentKeyboardLayout;
@@ -390,6 +432,26 @@ final class PersistentDataStore {
                         mCurrentKeyboardLayout = descriptor;
                     }
                 }
+                else if (parser.getName().equals("calibration")) {
+                    String format = parser.getAttributeValue(null, "format");
+                    if (format == null) {
+                        throw new XmlPullParserException(
+                                "Missing format attribute on calibration.");
+                    }
+                    if (format.equals("matrix")) {
+                        float[] calibration = new float[] {1,0,0,0,1,0};
+                        int depth = parser.getDepth();
+                        while (XmlUtils.nextElementWithin(parser, depth)) {
+                            MatrixTag tag = MatrixTag.valueOf(parser.getName().toUpperCase());
+                            calibration[tag.getIndex()] = Float.parseFloat(parser.nextText());
+                        }
+                        mCalibrationMatrix = calibration;
+                    }
+                    else {
+                        throw new XmlPullParserException(
+                                "Unsupported format for calibration.");
+                    }
+                }
             }
 
             // Maintain invariant that layouts are sorted.
@@ -411,6 +473,18 @@ final class PersistentDataStore {
                 }
                 serializer.endTag(null, "keyboard-layout");
             }
+
+            serializer.startTag(null, "calibration");
+            serializer.attribute(null, "format", "matrix");
+            for (MatrixTag tag : MatrixTag.values()) {
+                String name = tag.name().toLowerCase();
+                float value = mCalibrationMatrix[tag.getIndex()];
+
+                serializer.startTag(null, name);
+                serializer.text(Float.toString(value));
+                serializer.endTag(null, name);
+            }
+            serializer.endTag(null, "calibration");
         }
     }
 }
