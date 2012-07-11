@@ -15567,12 +15567,15 @@ package android.opengl {
     method public static void perspectiveM(float[], int, float, float, float, float);
     method public static void rotateM(float[], int, float[], int, float, float, float, float);
     method public static void rotateM(float[], int, float, float, float, float);
+    method public static void rotateQuaternionM(float[], int, float, float, float, float);
+    method public static void rotateQuaternionM(float[], int, float[], int, float, float, float, float);
     method public static void scaleM(float[], int, float[], int, float, float, float);
     method public static void scaleM(float[], int, float, float, float);
     method public static void setIdentityM(float[], int);
     method public static void setLookAtM(float[], int, float, float, float, float, float, float, float, float, float);
     method public static void setRotateEulerM(float[], int, float, float, float);
     method public static void setRotateM(float[], int, float, float, float, float);
+    method public static void setRotateQuaternionM(float[], int, float, float, float, float);
     method public static void translateM(float[], int, float[], int, float, float, float);
     method public static void translateM(float[], int, float, float, float);
     method public static void transposeM(float[], int, float[], int);
