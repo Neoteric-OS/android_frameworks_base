@@ -16,6 +16,24 @@
       "revId": "24a9dca27959833193bf04a51b7e0e94e3aa3bb2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHKH///44\u003d",
+        "filename": "core/jni/android_server_BluetoothService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1004424
+      },
+      "writtenOn": "2012-07-12T13:56:56Z",
+      "side": 1,
+      "message": "God catch, this was a rebase error from my side. Thanx, will upload another patchset.",
+      "parentUuid": "AAAHK3///8M\u003d",
+      "revId": "24a9dca27959833193bf04a51b7e0e94e3aa3bb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
