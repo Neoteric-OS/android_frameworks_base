@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHJ3///fU\u003d",
+        "filename": "opengl/java/android/opengl/Matrix.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2012-07-12T05:08:32Z",
+      "side": 1,
+      "message": "please uses spaces, not tabs. also remove extra spaces.",
+      "revId": "b8f0b35b50797707a319ab9d3542fdeb3b276d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJ3///fA\u003d",
+        "filename": "opengl/java/android/opengl/Matrix.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2012-07-12T05:08:32Z",
+      "side": 1,
+      "message": "don\u0027t use \"mOffset\", \"m\" prefix is reserved for class attributes. I realize this is done in other places in this file, but this is wrong; so let\u0027s not continue this trend.",
+      "revId": "b8f0b35b50797707a319ab9d3542fdeb3b276d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJ3///e8\u003d",
+        "filename": "opengl/java/android/opengl/Matrix.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2012-07-12T05:08:32Z",
+      "side": 1,
+      "message": "Unless I\u0027m mistaken, I don\u0027t think we need this function at all, see below.",
+      "revId": "b8f0b35b50797707a319ab9d3542fdeb3b276d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJ3///es\u003d",
+        "filename": "opengl/java/android/opengl/Matrix.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2012-07-12T05:08:32Z",
+      "side": 1,
+      "message": "it\u0027s not the \"matrix\" that\u0027s rotated; the language here is a bit weird.",
+      "revId": "b8f0b35b50797707a319ab9d3542fdeb3b276d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJ3///e4\u003d",
+        "filename": "opengl/java/android/opengl/Matrix.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2012-07-12T05:08:32Z",
+      "side": 1,
+      "message": "don\u0027t use \"mOffset\" as parameter name (see above).",
+      "revId": "b8f0b35b50797707a319ab9d3542fdeb3b276d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJ3///ew\u003d",
+        "filename": "opengl/java/android/opengl/Matrix.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2012-07-12T05:08:32Z",
+      "side": 1,
+      "message": "I would prefer something like multiplyQuaternionM() -- we need to make it clear(er) that what happens is \"rm * quat_to_matrix(w,x,y,z)\".",
+      "revId": "b8f0b35b50797707a319ab9d3542fdeb3b276d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJ3///e0\u003d",
+        "filename": "opengl/java/android/opengl/Matrix.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2012-07-12T05:08:32Z",
+      "side": 1,
+      "message": "you could make this method detect that m \u003d\u003d rm and do \"the right thing\" in that case. no need for the function above.",
+      "revId": "b8f0b35b50797707a319ab9d3542fdeb3b276d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJ3///fI\u003d",
+        "filename": "opengl/java/android/opengl/Matrix.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2012-07-12T05:08:32Z",
+      "side": 1,
+      "message": "parameter should not be called \"mOffset\", this is reserved to class atributes. You can use \"offset\" or \"matrixOffset\".",
+      "revId": "b8f0b35b50797707a319ab9d3542fdeb3b276d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJ3///fE\u003d",
+        "filename": "opengl/java/android/opengl/Matrix.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1001056
+      },
+      "writtenOn": "2012-07-12T05:08:32Z",
+      "side": 1,
+      "message": "setRotateQuaternionM is confusing: \"set\"  should be \"make\" (it\u0027s not setting something on the object).\n\nplease use something like: makeFromQuaternionM().",
+      "revId": "b8f0b35b50797707a319ab9d3542fdeb3b276d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
