@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHK3///8M\u003d",
+        "filename": "core/jni/android_server_BluetoothService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1000635
+      },
+      "writtenOn": "2012-07-12T01:22:38Z",
+      "side": 1,
+      "message": "Why did you delete the releaseIntArrayElements ?",
+      "revId": "24a9dca27959833193bf04a51b7e0e94e3aa3bb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
