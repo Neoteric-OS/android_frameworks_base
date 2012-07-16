@@ -16,6 +16,24 @@
       "revId": "79d95ac74eb825d6dbd9c774dbcc3f03489829eb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHVn///3E\u003d",
+        "filename": "docs/html/guide/practices/performance.jd",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1004689
+      },
+      "writtenOn": "2012-07-16T22:44:27Z",
+      "side": 1,
+      "message": "Ah! Thanks, I\u0027ll tweak the lint rule.",
+      "parentUuid": "AAAHVn///3k\u003d",
+      "revId": "79d95ac74eb825d6dbd9c774dbcc3f03489829eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
