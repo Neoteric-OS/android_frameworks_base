@@ -573,6 +573,7 @@ public final class BluetoothHeadset implements BluetoothProfile {
             try {
                 return mService.cancelConnectThread();
             } catch (RemoteException e) {Log.e(TAG, e.toString());}
+              catch (NullPointerException e) {Log.e(TAG, e.toString());}
         } else {
             Log.w(TAG, "Proxy not attached to service");
             if (DBG) Log.d(TAG, Log.getStackTraceString(new Throwable()));
