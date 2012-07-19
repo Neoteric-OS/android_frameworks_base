@@ -127,6 +127,7 @@ public class PowerManagerService extends IPowerManager.Stub
 
     // For debouncing the proximity sensor in milliseconds
     private static final int PROXIMITY_SENSOR_DELAY = 1000;
+    private static final int PROXIMITY_SENSOR_ACTIVE_DELAY = 500;
 
     // trigger proximity if distance is less than 5 cm
     private static final float PROXIMITY_THRESHOLD = 5.0f;
@@ -3320,10 +3321,18 @@ public class PowerManagerService extends IPowerManager.Stub
                 if (mDebugProximitySensor) {
                     Slog.d(TAG, "mProximityListener.onSensorChanged active: " + active);
                 }
-                if (timeSinceLastEvent < PROXIMITY_SENSOR_DELAY) {
-                    // enforce delaying atleast PROXIMITY_SENSOR_DELAY before processing
+                // if a near event is got, delay PROXIMITY_SENSOR_ACTIVE_DELAY here to avoid
+                // screen going off by an accidental swipe
+                int delay = active ? PROXIMITY_SENSOR_ACTIVE_DELAY : 0;
+
+                // enforce delaying atleast PROXIMITY_SENSOR_DELAY before processing to debounce
+                // the sensor
+                if (timeSinceLastEvent < PROXIMITY_SENSOR_DELAY)
+                    delay = Math.max(delay,
+                            PROXIMITY_SENSOR_DELAY - (int)timeSinceLastEvent);
+                if (delay > 0) {
                     mProximityPendingValue = (active ? 1 : 0);
-                    mHandler.postDelayed(mProximityTask, PROXIMITY_SENSOR_DELAY - timeSinceLastEvent);
+                    mHandler.postDelayed(mProximityTask, delay);
                     proximityTaskQueued = true;
                 } else {
                     // process the value immediately
