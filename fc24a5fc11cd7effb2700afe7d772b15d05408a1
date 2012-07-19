@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHsn////c\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-07-19T23:09:48Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be a different type with potentially larger buffer sizes?  HSPAP has 10x the download bandwidth of HSPA, correct?",
+      "revId": "fc24a5fc11cd7effb2700afe7d772b15d05408a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
