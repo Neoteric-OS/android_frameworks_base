@@ -16,6 +16,24 @@
       "revId": "fc24a5fc11cd7effb2700afe7d772b15d05408a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHs3///1U\u003d",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1003413
+      },
+      "writtenOn": "2012-07-20T00:58:13Z",
+      "side": 1,
+      "message": "The bandwidth part is true. I can add a new case here. Or we can bump up the buffer sizes of hspa as well in init.rc and use it for HSPA and HSPAP.",
+      "parentUuid": "AAAHsn////c\u003d",
+      "revId": "fc24a5fc11cd7effb2700afe7d772b15d05408a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
