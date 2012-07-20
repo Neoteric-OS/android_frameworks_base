@@ -1026,6 +1026,10 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                 combinedLabel = mobileLabel;
                 combinedSignalIconId = mDataSignalIconId; // set by updateDataIcon()
                 mContentDescriptionCombinedSignal = mContentDescriptionDataType;
+            } else {
+                // mobile data is not connected and data icon will set if mDataNetType
+                // changed so reset the data icon
+                mDataTypeIconId = 0;
             }
         }
 
