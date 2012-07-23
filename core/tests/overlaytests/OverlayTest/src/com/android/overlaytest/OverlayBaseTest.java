@@ -97,8 +97,8 @@ public abstract class OverlayBaseTest extends AndroidTestCase {
 
     public void testIntegerArrayOverlay() throws Throwable {
         // config_scrollBarrierVibePattern has overlay (default config)
-        final int resId = com.android.internal.R.array.config_scrollBarrierVibePattern;
-        assertResource(resId, new int[]{0, 15, 10, 10}, new int[]{100, 200, 300});
+        final int resId = com.android.internal.R.array.config_tether_upstream_types;
+        assertResource(resId, new int[]{1, 4}, new int[]{100, 200, 300});
     }
 
     public void testIntegerArray() throws Throwable {
@@ -109,10 +109,10 @@ public abstract class OverlayBaseTest extends AndroidTestCase {
     }
 
     public void testAsset() throws Throwable {
-        // drawable/default_background.jpg has overlay (default config)
+        // drawable-nodpi/default_wallpaper has overlay (default config)
         final int resId = com.android.internal.R.drawable.default_wallpaper;
         int actual = calculateRawResourceChecksum(resId);
-        int expected = mWithOverlay ? 0x000051da : 0x0014ebce;
+        int expected = mWithOverlay ? 0x000051da : 0x0008bc96;
         assertEquals(expected, actual);
     }
 }
