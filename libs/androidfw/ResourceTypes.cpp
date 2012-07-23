@@ -5140,6 +5140,7 @@ status_t ResTable::parsePackage(const ResTable_package* const pkg,
 
 status_t ResTable::createIdmap(const ResTable& overlay,
         uint32_t originalCrc, uint32_t overlayCrc,
+        const char* originalPath, const char* overlayPath,
         void** outData, uint32_t* outSize) const
 {
     // see README for details on the format of map
@@ -5238,6 +5239,20 @@ status_t ResTable::createIdmap(const ResTable& overlay,
     *data++ = htodl(IDMAP_MAGIC);
     *data++ = htodl(originalCrc);
     *data++ = htodl(overlayCrc);
+    const char* paths[] = { originalPath, overlayPath };
+    for (int j = 0; j < 2; ++j) {
+        char* p = (char*)data;
+        const char* path = paths[j];
+        const size_t I = strlen(path);
+        if (I > 255) {
+            ALOGV("path exceeds expected 255 characters: %s\n", path);
+            return UNKNOWN_ERROR;
+        }
+        for (size_t i = 0; i < 256; ++i) {
+            *p++ = i < I ? path[i] : '\0';
+        }
+        data += 256 / sizeof(uint32_t);
+    }
     const size_t mapSize = map.size();
     *data++ = htodl(mapSize);
     size_t offset = mapSize;
@@ -5273,14 +5288,25 @@ status_t ResTable::createIdmap(const ResTable& overlay,
 }
 
 bool ResTable::getIdmapInfo(const void* idmap, size_t sizeBytes,
-                            uint32_t* pOriginalCrc, uint32_t* pOverlayCrc)
+                            uint32_t* pOriginalCrc, uint32_t* pOverlayCrc,
+                            String8* pOriginalPath, String8* pOverlayPath)
 {
     const uint32_t* map = (const uint32_t*)idmap;
     if (!assertIdmapHeader(map, sizeBytes)) {
         return false;
     }
-    *pOriginalCrc = map[1];
-    *pOverlayCrc = map[2];
+    if (pOriginalCrc) {
+        *pOriginalCrc = map[1];
+    }
+    if (pOverlayCrc) {
+        *pOverlayCrc = map[2];
+    }
+    if (pOriginalPath) {
+        pOriginalPath->setTo(reinterpret_cast<const char*>(map + 3));
+    }
+    if (pOverlayPath) {
+        pOverlayPath->setTo(reinterpret_cast<const char*>(map + 3 + 256 / sizeof(uint32_t)));
+    }
     return true;
 }
 
