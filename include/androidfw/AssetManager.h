@@ -273,7 +273,10 @@ private:
 
     Asset* openIdmapLocked(const struct asset_path& ap) const;
     void addOverlayLocked(const String8& overlayPath);
-    void addOverlayPackagesLocked(const String8& dir);
+#ifdef HAVE_ANDROID_OS
+    void addOverlaysFromIdmapsInDirLocked(const String8& dir);
+    bool addOverlayFromIdmapLocked(const String8& idmapPath);
+#endif
 
     class SharedZip : public RefBase {
     public:

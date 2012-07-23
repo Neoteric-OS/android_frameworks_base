@@ -15,7 +15,7 @@
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES := Main.cpp
+LOCAL_SRC_FILES := Main.cpp Inspect.cpp
 
 LOCAL_SHARED_LIBRARIES := libutils libandroidfw
 

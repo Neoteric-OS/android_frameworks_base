@@ -16,6 +16,7 @@
 
 #include <androidfw/AssetManager.h>
 #include <androidfw/ResourceTypes.h>
+#include <utils/String8.h>
 #include <utils/ZipFileRO.h>
 
 #include <private/android_filesystem_config.h> // for AID_SYSTEM
@@ -29,6 +30,8 @@
 #include <unistd.h>
 
 using namespace android;
+
+extern int idmap_inspect(const char* idmap_path);
 
 /*
  * Program to create idmap files.
@@ -113,7 +116,16 @@ namespace {
         }
 
         uint32_t cached_orig_crc, cached_overlay_crc;
-        if (!ResTable::getIdmapInfo(buf, N, &cached_orig_crc, &cached_overlay_crc)) {
+        String8 cached_orig_path, cached_overlay_path;
+        if (!ResTable::getIdmapInfo(buf, N, &cached_orig_crc, &cached_overlay_crc,
+                    &cached_orig_path, &cached_overlay_path)) {
+            return true;
+        }
+
+        if (cached_orig_path != orig_apk_path) {
+            return true;
+        }
+        if (cached_overlay_path != overlay_apk_path) {
             return true;
         }
 
@@ -227,7 +239,7 @@ fail:
  *   idmap_path       : path, idmap output
  *   idmap_fd         : file descriptor, idmap output; opened read-write, locked with flock
  */
-int main(int argc, char* argv[])
+int idmap_create(int argc, char* argv[])
 {
     const char* mode, *orig_apk_path, *overlay_apk_path;
     uint32_t* data = NULL;
@@ -317,4 +329,12 @@ usage:
 fail:
     free(data);
     return retval;
+}
+
+int main(int argc, char* argv[])
+{
+    if (argc == 3 && !strcmp(argv[1], "--inspect")) {
+        return idmap_inspect(argv[2]);
+    }
+    return idmap_create(argc, argv);
 }
