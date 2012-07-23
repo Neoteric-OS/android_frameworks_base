@@ -68,19 +68,48 @@ function mkdir_if_needed()
 	esac
 }
 
+function rm_if_needed()
+{
+	local path="$1"
+
+	if [[ "${path:0:1}" != "/" ]]; then
+		echo "rm_if_needed: error: path '$path' does not begin with /" | tee -a $log
+		exit 1
+	fi
+	local t="$($adb shell ls $path | tr -d '\r' | grep -v 'No such file or directory')"
+
+	if [[ "$t" ]]; then
+		$adb shell rm -r "$path"
+	fi
+}
+
 function disable_overlay()
 {
-	echo "Disabling overlay"
-	$adb shell rm /vendor/overlay/framework/framework-res.apk
-	$adb shell rm /data/resource-cache/vendor@overlay@framework@framework-res.apk@idmap
+	echo "Disabling all overlays"
+	rm_if_needed "/vendor/overlay/framework/framework-res.apk"
+	rm_if_needed "/vendor/overlay/framework/framework-res.apk"
+	rm_if_needed "/data/resource-cache/vendor@overlay@framework@framework-res.apk@idmap"
+	rm_if_needed "/data/resource-cache/vendor@overlay@framework@framework-res.apk@1.apk@idmap"
+	rm_if_needed "/data/resource-cache/vendor@overlay@framework@framework-res.apk@2.apk@idmap"
 }
 
 function enable_overlay()
 {
-	echo "Enabling overlay"
+	disable_overlay
+	echo "Enabling single overlay"
 	mkdir_if_needed "/system/vendor"
 	mkdir_if_needed "/vendor/overlay/framework"
 	$adb shell ln -s /data/app/com.android.overlaytest.overlay.apk /vendor/overlay/framework/framework-res.apk
+}
+
+function enable_multiple_overlays()
+{
+	disable_overlay
+	echo "Enabling multiple overlays"
+	mkdir_if_needed "/system/vendor"
+	mkdir_if_needed "/vendor/overlay/framework/framework-res.apk"
+	$adb shell ln -s /data/app/com.android.overlaytest.overlay.apk /vendor/overlay/framework/framework-res.apk/1.apk
+	$adb shell ln -s /data/app/com.android.overlaytest.multipleoverlays.apk /vendor/overlay/framework/framework-res.apk/2.apk
 }
 
 function instrument()
@@ -99,9 +128,20 @@ function remount()
 
 function sync()
 {
-	echo "Syncing to device"
-	$adb sync data | tee -a $log
+	local files=""
+	files+=" /data/app/OverlayTest.apk"
+	files+=" /data/app/OverlayTest.odex"
+	files+=" /data/app/com.android.overlaytest.overlay.apk"
+	files+=" /data/app/com.android.overlaytest.multipleoverlays.apk"
+
+	for i in $files; do
+		echo "Syncing $i" | tee -a $log
+		$adb push $OUT/$i $i
+	done
 }
+
+# paths below are given relative to this script
+cd $(dirname $(readlink -f "$0"))
 
 # some commands require write access, remount once and for all
 remount
@@ -109,6 +149,7 @@ remount
 # build and sync
 compile_module "$PWD/OverlayTest/Android.mk"
 compile_module "$PWD/OverlayTestOverlay/Android.mk"
+compile_module "$PWD/OverlayTestMultipleOverlays/Android.mk"
 sync
 
 # instrument test (without overlay)
@@ -124,6 +165,13 @@ enable_overlay
 $adb shell start
 wait_for_boot_completed
 instrument "com.android.overlaytest.WithOverlayTest"
+
+# instrument test (with multiple overlays)
+$adb shell stop
+enable_multiple_overlays
+$adb shell start
+wait_for_boot_completed
+instrument "com.android.overlaytest.WithMultipleOverlaysTest"
 
 # cleanup
 exit $(grep -c -e '^FAILURES' $log)

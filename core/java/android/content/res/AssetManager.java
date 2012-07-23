@@ -253,7 +253,9 @@ public final class AssetManager {
     }
 
     /*package*/ final void makeStringBlocks(boolean copyFromSystem) {
-        final int sysNum = copyFromSystem ? sSystem.mStringBlocks.length : 0;
+        // FIXME: investigate if possible to copy from all stringblocks,
+        // including overlay packages
+        final int sysNum = copyFromSystem ? 1 : 0; // copy only from system
         final int num = getStringBlockCount();
         mStringBlocks = new StringBlock[num];
         if (localLOGV) Log.v(TAG, "Making string blocks for " + this
