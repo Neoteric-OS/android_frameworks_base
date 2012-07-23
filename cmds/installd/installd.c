@@ -134,7 +134,7 @@ static int do_unlinklib(char **arg, char reply[REPLY_MAX])
 
 static int do_idmap(char **arg, char reply[REPLY_MAX])
 {
-    return idmap(arg[0], arg[1], atoi(arg[2]));
+    return idmap(arg[0], arg[1], atoi(arg[2]), atoi(arg[3]));
 }
 
 struct cmdinfo {
@@ -163,7 +163,7 @@ struct cmdinfo cmds[] = {
     { "mkuserdata",           3, do_mk_user_data },
     { "rmuser",               1, do_rm_user },
     { "cloneuserdata",        3, do_clone_user_data },
-    { "idmap",                3, do_idmap },
+    { "idmap",                4, do_idmap },
 };
 
 static int readx(int s, void *_buf, int count)

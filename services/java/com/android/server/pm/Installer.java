@@ -209,12 +209,14 @@ class Installer {
         return execute(builder.toString());
     }
 
-    public int idmap(String origApkPath, String overlayApkPath, int uid) {
+    public int idmap(String origApkPath, String overlayApkPath, int priority, int uid) {
         StringBuilder builder = new StringBuilder("idmap");
         builder.append(' ');
         builder.append(origApkPath);
         builder.append(' ');
         builder.append(overlayApkPath);
+        builder.append(' ');
+        builder.append(priority);
         builder.append(' ');
         builder.append(uid);
         return execute(builder.toString());
