@@ -12725,27 +12725,39 @@ public final class ActivityManagerService extends ActivityManagerNative
                 mRegisteredReceivers.put(receiver.asBinder(), rl);
             }
             BroadcastFilter bf = new BroadcastFilter(filter, rl, callerPackage, permission);
-            rl.add(bf);
-            if (!bf.debugCheck()) {
-                Slog.w(TAG, "==> For Dynamic broadast");
-            }
-            mReceiverResolver.addFilter(bf);
 
-            // Enqueue broadcasts for all existing stickies that match
-            // this filter.
-            if (allSticky != null) {
-                ArrayList receivers = new ArrayList();
-                receivers.add(bf);
+            /*
+             * Check for duplicate intent filters in the ReceiverList. Malicious
+             * applications can spam the framework with an attempt to register
+             * a receiver and its corresponding intent filter multiple times
+             * and trigger an android framework reboot caused by OutOfMemory.
+             *    Hence, to avoid excess unnecessary memory usage, do not add
+             * duplicate broadcast filter to the receiver list.
+             */
+            if (!rl.contains(bf)) {
 
-                int N = allSticky.size();
-                for (int i=0; i<N; i++) {
-                    Intent intent = (Intent)allSticky.get(i);
-                    BroadcastQueue queue = broadcastQueueForIntent(intent);
-                    BroadcastRecord r = new BroadcastRecord(queue, intent, null,
-                            null, -1, -1, null, receivers, null, 0, null, null,
-                            false, true, true);
-                    queue.enqueueParallelBroadcastLocked(r);
-                    queue.scheduleBroadcastsLocked();
+                rl.add(bf);
+                if (!bf.debugCheck()) {
+                    Slog.w(TAG, "==> For Dynamic broadast");
+                }
+                mReceiverResolver.addFilter(bf);
+
+                // Enqueue broadcasts for all existing stickies that match
+                // this filter.
+                if (allSticky != null) {
+                    ArrayList receivers = new ArrayList();
+                    receivers.add(bf);
+
+                    int N = allSticky.size();
+                    for (int i=0; i<N; i++) {
+                        Intent intent = (Intent)allSticky.get(i);
+                        BroadcastQueue queue = broadcastQueueForIntent(intent);
+                        BroadcastRecord r = new BroadcastRecord(queue, intent, null,
+                                null, -1, -1, null, receivers, null, 0, null, null,
+                                false, true, true);
+                        queue.enqueueParallelBroadcastLocked(r);
+                        queue.scheduleBroadcastsLocked();
+                    }
                 }
             }
 

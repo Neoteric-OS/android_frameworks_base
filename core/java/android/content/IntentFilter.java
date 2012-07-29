@@ -240,6 +240,30 @@ public class IntentFilter implements Parcelable {
     private ArrayList<String> mDataTypes = null;
     private boolean mHasPartialTypes = false;
 
+    public boolean equals(Object obj) {
+        boolean result = false;
+
+        if (obj == this) {
+            result = true;
+        }
+        else if (obj instanceof IntentFilter) {
+
+            IntentFilter compareObj = (IntentFilter)obj;
+
+            result = (mPriority == compareObj.mPriority) &&
+                     (mHasPartialTypes == compareObj.mHasPartialTypes) &&
+                     (mActions != null ? mActions.equals(compareObj.mActions) : compareObj.mActions == null) &&
+                     (mCategories != null ? mCategories.equals(compareObj.mCategories) : compareObj.mCategories == null) &&
+                     (mDataSchemes != null ? mDataSchemes.equals(compareObj.mDataSchemes) : compareObj.mDataSchemes == null) &&
+                     (mDataTypes != null ? mDataTypes.equals(compareObj.mDataTypes) : compareObj.mDataTypes == null) &&
+                     (mDataAuthorities != null ? mDataAuthorities.equals(compareObj.mDataAuthorities) : compareObj.mDataAuthorities == null) &&
+                     (mDataPaths != null ? mDataPaths.equals(compareObj.mDataPaths) : compareObj.mDataPaths == null);
+
+        }
+
+        return result;
+    }
+
     // These functions are the start of more optimized code for managing
     // the string sets...  not yet implemented.
 
@@ -644,6 +668,25 @@ public class IntentFilter implements Parcelable {
             mHost = src.readString();
             mWild = src.readInt() != 0;
             mPort = src.readInt();
+        }
+
+        public boolean equals(Object obj) {
+            boolean result = false;
+
+            if (obj == this) {
+                result = true;
+            }
+            else if (obj instanceof AuthorityEntry) {
+
+                AuthorityEntry compareObj = (AuthorityEntry)obj;
+
+                result = (mOrigHost != null ? mOrigHost.equals(compareObj.mOrigHost) : compareObj.mOrigHost == null) &&
+                         (mHost != null ? mHost.equals(compareObj.mHost) : compareObj.mHost == null) &&
+                         (mWild == compareObj.mWild) &&
+                         (mPort == compareObj.mPort);
+            }
+
+            return result;
         }
 
         void writeToParcel(Parcel dest) {

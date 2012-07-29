@@ -49,6 +49,25 @@ class BroadcastFilter extends IntentFilter {
         super.dump(pr, prefix);
         dumpBroadcastFilterState(pw, prefix);
     }
+
+    public boolean equals(Object obj) {
+        boolean result = false;
+
+        if (obj == this) {
+            result = true;
+        }
+        else if (obj instanceof BroadcastFilter) {
+
+            BroadcastFilter compareObj = (BroadcastFilter)obj;
+
+            result = (packageName != null ? packageName.equals(compareObj.packageName) : compareObj.packageName == null) &&
+                     (requiredPermission != null ? requiredPermission.equals(compareObj.requiredPermission) : compareObj.requiredPermission == null) &&
+                     (receiverList != null ? receiverList.equals(compareObj.receiverList) : compareObj.receiverList == null) &&
+                     super.equals(obj);
+        }
+
+        return result;
+    }
     
     void dumpBroadcastFilterState(PrintWriter pw, String prefix) {
         if (requiredPermission != null) {

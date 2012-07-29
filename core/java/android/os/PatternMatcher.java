@@ -53,6 +53,23 @@ public class PatternMatcher implements Parcelable {
         mType = type;
     }
 
+    public boolean equals(Object obj) {
+        boolean result = false;
+
+        if (obj == this) {
+            result = true;
+        }
+        else if (obj instanceof PatternMatcher) {
+
+            PatternMatcher compareObj = (PatternMatcher) obj;
+
+            result = (mType == compareObj.mType) &&
+                     (mPattern != null ? mPattern.equals(compareObj.mPattern) : compareObj.mPattern == null);
+        }
+
+        return result;
+    }
+
     public final String getPath() {
         return mPattern;
     }
