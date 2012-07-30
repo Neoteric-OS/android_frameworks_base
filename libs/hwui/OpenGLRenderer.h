@@ -833,6 +833,30 @@ private:
 
 }; // class OpenGLRenderer
 
+/**
+ * A very simple scoped_array class.
+ */
+template <typename T>
+class scoped_array {
+public:
+  explicit scoped_array(T* arr)
+    : _arr(arr) {}
+
+  ~scoped_array() {
+    delete[] _arr;
+  }
+
+  T& operator[](unsigned i) {
+    return _arr[i];
+  }
+
+private:
+  scoped_array(const scoped_array&);
+  scoped_array& operator=(const scoped_array&);
+
+  T* _arr;
+}; // class scoped_array
+
 }; // namespace uirenderer
 }; // namespace android
 

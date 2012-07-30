@@ -2091,7 +2091,7 @@ status_t OpenGLRenderer::drawLines(float* points, int count, SkPaint* paint) {
     Vertex lines[verticesCount];
     Vertex* vertices = &lines[0];
 
-    AAVertex wLines[verticesCount];
+    scoped_array<AAVertex> wLines(new AAVertex[verticesCount]);
     AAVertex* aaVertices = &wLines[0];
 
     if (CC_UNLIKELY(!isAA)) {
