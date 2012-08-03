@@ -111,6 +111,9 @@ import com.android.internal.util.Protocol;
  * resolve is notified on {@link ResolveListener#onServiceResolved} and a failure is notified
  * on {@link ResolveListener#onResolveFailed}.
  *
+ * <p> An application can have a maximum of 10 outstanding requests (regisration and discovery),
+ * and a request to resolve a service isn't considered for the maximum limit.
+ *
  * Applications can reserve for a service type at
  * http://www.iana.org/form/ports-service. Existing services can be found at
  * http://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml
@@ -210,8 +213,6 @@ public final class NsdManager {
     /** Dns based service discovery protocol */
     public static final int PROTOCOL_DNS_SD = 0x0001;
 
-    private Context mContext;
-
     private static final int INVALID_LISTENER_KEY = 0;
     private int mListenerKey = 1;
     private final SparseArray mListenerMap = new SparseArray();
@@ -232,8 +233,7 @@ public final class NsdManager {
      */
     public NsdManager(Context context, INsdManager service) {
         mService = service;
-        mContext = context;
-        init();
+        init(context);
     }
 
     /**
@@ -305,13 +305,22 @@ public final class NsdManager {
             boolean listenerRemove = true;
             switch (message.what) {
                 case AsyncChannel.CMD_CHANNEL_HALF_CONNECTED:
+                    if (message.arg1 != AsyncChannel.STATUS_SUCCESSFUL) {
+                        throw new RuntimeException("Failed to establish async channel");
+                    }
                     mAsyncChannel.sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
+                    // Listner isn't applicable for this message
+                    listenerRemove = false;
                     break;
                 case AsyncChannel.CMD_CHANNEL_FULLY_CONNECTED:
                     mConnected.countDown();
+                    // Ignore, Listner isn't applicable for this message
+                    listenerRemove = false;
                     break;
                 case AsyncChannel.CMD_CHANNEL_DISCONNECTED:
                     Log.e(TAG, "Channel lost");
+                    // Listner isn't applicable for this message
+                    listenerRemove = false;
                     break;
                 case DISCOVER_SERVICES_STARTED:
                     String s = ((NsdServiceInfo) message.obj).getServiceType();
@@ -424,13 +433,13 @@ public final class NsdManager {
     /**
      * Initialize AsyncChannel
      */
-    private void init() {
+    private void init(Context context) {
         final Messenger messenger = getMessenger();
         if (messenger == null) throw new RuntimeException("Failed to initialize");
         HandlerThread t = new HandlerThread("NsdManager");
         t.start();
         mHandler = new ServiceHandler(t.getLooper());
-        mAsyncChannel.connect(mContext, mHandler, messenger);
+        mAsyncChannel.connect(context, mHandler, messenger);
         try {
             mConnected.await();
         } catch (InterruptedException e) {
