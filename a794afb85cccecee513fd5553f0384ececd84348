@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAICn///4M\u003d",
+        "filename": "core/java/com/android/internal/util/AsyncChannel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1004254
+      },
+      "writtenOn": "2012-08-05T22:20:39Z",
+      "side": 1,
+      "message": "The idea is to make sure AsyncChannel is setup properly with all source information before usage of any APIs. If this is acceptable, i can submit another change to update connect APIs to take destination information, remove default constructor and update applications using connect API.",
+      "revId": "a794afb85cccecee513fd5553f0384ececd84348",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
