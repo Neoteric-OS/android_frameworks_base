@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIEX//+p0\u003d",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2012-08-08T22:33:59Z",
+      "side": 1,
+      "message": "TimeZone.setDefault(null) is magic. it causes libcore to call TimezoneGetter.getInstance().getId(), which calls back into frameworks/base. so i\u0027m not sure what you\u0027re trying to do here.",
+      "revId": "99991cf808593d94de2c06f46096c0617c96254c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
