@@ -117,31 +117,45 @@ public class ProviderMap {
     }
 
     void removeProviderByName(String name, int optionalUserId) {
+        ContentProviderRecord removedRecord = null;
+
         if (mGlobalByName.containsKey(name)) {
             if (DBG)
                 Slog.i(TAG, "Removing from globalByName name=" + name);
-            mGlobalByName.remove(name);
+            removedRecord = mGlobalByName.remove(name);
         } else {
             // TODO: Verify this works, i.e., the caller happens to be from the correct user
             if (DBG)
                 Slog.i(TAG,
                         "Removing from providersByName name=" + name + " user="
                         + (optionalUserId == -1 ? Binder.getOrigCallingUser() : optionalUserId));
-            getProvidersByName(optionalUserId).remove(name);
+            removedRecord = getProvidersByName(optionalUserId).remove(name);
+        }
+
+        // Clean up references to external process.
+        if (removedRecord != null) {
+            removedRecord.removeExternalProcessHandles();
         }
     }
 
     void removeProviderByClass(ComponentName name, int optionalUserId) {
+        ContentProviderRecord removedRecord = null;
+
         if (mGlobalByClass.containsKey(name)) {
             if (DBG)
                 Slog.i(TAG, "Removing from globalByClass name=" + name);
-            mGlobalByClass.remove(name);
+            removedRecord = mGlobalByClass.remove(name);
         } else {
             if (DBG)
                 Slog.i(TAG,
                         "Removing from providersByClass name=" + name + " user="
                         + (optionalUserId == -1 ? Binder.getOrigCallingUser() : optionalUserId));
-            getProvidersByClass(optionalUserId).remove(name);
+            removedRecord = getProvidersByClass(optionalUserId).remove(name);
+        }
+
+         // Clean up references to external process.
+        if (removedRecord != null) {
+            removedRecord.removeExternalProcessHandles();
         }
     }
 
