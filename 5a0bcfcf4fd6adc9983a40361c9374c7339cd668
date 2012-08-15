@@ -16,6 +16,24 @@
       "revId": "5a0bcfcf4fd6adc9983a40361c9374c7339cd668",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAId3///7A\u003d",
+        "filename": "cmds/idmap/Inspect.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2012-08-15T19:42:56Z",
+      "side": 1,
+      "message": "Of course. Sorry I missed it and will fix first thing (European) tomorrow morning.",
+      "parentUuid": "AAAIbH///i8\u003d",
+      "revId": "5a0bcfcf4fd6adc9983a40361c9374c7339cd668",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
