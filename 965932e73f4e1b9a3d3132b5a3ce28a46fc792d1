@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIhn///6M\u003d",
+        "filename": "wifi/java/android/net/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-16T23:28:52Z",
+      "side": 1,
+      "message": "There was a code to get \"intended_addr\" in ICS code but it was removed from JB.\nI wrongly moved it from my ICS code.. I\u0027ll removed it.\nThanks",
+      "parentUuid": "AAAIgX///+c\u003d",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIgX///+Y\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroup.java",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIhn///6E\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroupList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-16T23:28:52Z",
+      "side": 1,
+      "message": "Our architecture can have more than one persistent group now.\nAnd, if the target device is different, then the different persistent profile might be created.\nConsidering  the p2p group which multiple clients join, the different persistent profile might be used by the initial setup.\nFor example.\n1. A(to be GO) does go negotiate with B, and then C joins A.\n2. A(to be GO) does go negotiate with C, and then B joins A.\n1 and 2 persistent profiles must be different.\nBased on this, I think it\u0027s better to store the multiple persistent group for one target. \nWhat do you think about ??",
+      "parentUuid": "AAAIgX///+Q\u003d",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIgX///98\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroupList.java",
         "patchSetId": 1
@@ -64,6 +100,24 @@
       "writtenOn": "2012-08-16T18:32:22Z",
       "side": 1,
       "message": "Is this get needed. The caller of this function will likely access this group right ?",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIhn///6A\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroupList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-16T23:28:52Z",
+      "side": 1,
+      "message": "Yes, The caller will use this network id.",
+      "parentUuid": "AAAIgX///98\u003d",
       "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -104,6 +158,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIhn///58\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroupList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-16T23:28:52Z",
+      "side": 1,
+      "message": "I\u0027ll fix the style. Thanks.",
+      "parentUuid": "AAAIgX///9o\u003d",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIgX///8s\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
         "patchSetId": 1
@@ -115,6 +187,24 @@
       "writtenOn": "2012-08-16T18:32:22Z",
       "side": 1,
       "message": "long line",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIhn///54\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-16T23:28:52Z",
+      "side": 1,
+      "message": "I\u0027ll fix it. thanks.",
+      "parentUuid": "AAAIgX///8s\u003d",
       "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -138,6 +228,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIhn///50\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-16T23:28:52Z",
+      "side": 1,
+      "message": "OK. remove it.",
+      "parentUuid": "AAAIgX///8c\u003d",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIgX///8o\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
         "patchSetId": 1
@@ -149,6 +257,24 @@
       "writtenOn": "2012-08-16T18:32:22Z",
       "side": 1,
       "message": "Am ok with having a hidden function like this, but am still not convinced of the use case for apps here.",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIhn///5w\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-16T23:28:52Z",
+      "side": 1,
+      "message": "If we can delete the persistent group from settings app, I think this is not needed.\nSo, remove this.",
+      "parentUuid": "AAAIgX///8o\u003d",
       "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -172,6 +298,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIhn///5s\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-16T23:28:52Z",
+      "side": 1,
+      "message": "Sure, I\u0027ll test it.",
+      "parentUuid": "AAAIgX///8E\u003d",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIgX///7c\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
         "patchSetId": 1
@@ -183,6 +327,24 @@
       "writtenOn": "2012-08-16T18:32:22Z",
       "side": 1,
       "message": "can you clarify when this happens ?\n\nIt appears when we do p2pReinvoke() as well, we already end up in GroupNegotiationState after doing connect() call",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIhn///5o\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-16T23:28:52Z",
+      "side": 1,
+      "message": "If the target device reinvokes the device, p2p group will be started even without connect() call.",
+      "parentUuid": "AAAIgX///7c\u003d",
       "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -206,6 +368,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIhn///5k\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-16T23:28:52Z",
+      "side": 1,
+      "message": "I had no choice to reload the whole configurations because we can\u0027t obtain the network id from p2p-group-started event.",
+      "parentUuid": "AAAIgX///7Y\u003d",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIgX///7U\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
         "patchSetId": 1
@@ -217,6 +397,24 @@
       "writtenOn": "2012-08-16T18:32:22Z",
       "side": 1,
       "message": "Does this happen when we do p2pReinvoke() ?",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIhn///5g\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-16T23:28:52Z",
+      "side": 1,
+      "message": "Yes. If the re-invocation is succeeded, this event happens. And then, p2p-group-started event happens.",
+      "parentUuid": "AAAIgX///7U\u003d",
       "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -240,6 +438,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIhn///5c\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-16T23:28:52Z",
+      "side": 1,
+      "message": "If the target device is group owner, client list in the persistent profile must be empty. So it will be removed in removeClientFromList().",
+      "parentUuid": "AAAIgX///60\u003d",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIgX///6k\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
         "patchSetId": 1
@@ -251,6 +467,24 @@
       "writtenOn": "2012-08-16T18:32:22Z",
       "side": 1,
       "message": "allignment",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIhn///5Y\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1701,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-16T23:28:52Z",
+      "side": 1,
+      "message": "I\u0027ll fix it. thanks.",
+      "parentUuid": "AAAIgX///6k\u003d",
       "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -274,6 +508,23 @@
     },
     {
       "key": {
+        "uuid": "AAAIhn///5U\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-16T23:28:52Z",
+      "side": 1,
+      "message": "Yes, it means that not doing re-invocation.  I\u0027ll fix it.",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIgX///64\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
         "patchSetId": 1
@@ -291,6 +542,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIhn///5Q\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1861,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-16T23:28:52Z",
+      "side": 1,
+      "message": "I\u0027ll fix it. thanks.",
+      "parentUuid": "AAAIgX///64\u003d",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIgX///6Y\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
         "patchSetId": 1
@@ -302,6 +571,24 @@
       "writtenOn": "2012-08-16T18:32:22Z",
       "side": 1,
       "message": "feels like this should belong to WifiP2pGroupList ?",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIhn///5M\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2482,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-16T23:28:52Z",
+      "side": 1,
+      "message": "Make sense. I\u0027ll move it to WifiP2pGroupList.",
+      "parentUuid": "AAAIgX///6Y\u003d",
       "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
