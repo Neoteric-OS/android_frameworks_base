@@ -34,10 +34,10 @@ import android.os.IBinder;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.Messenger;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.WorkSource;
-import android.os.Messenger;
 import android.util.Log;
 
 import com.android.internal.util.AsyncChannel;
@@ -436,6 +436,18 @@ public class WifiP2pManager {
     /** @hide */
     public static final int SHOW_PIN_REQUESTED                      = BASE + 58;
 
+    /** @hide */
+    public static final int DELETE_PERSISTENT_GROUP                 = BASE + 59;
+    /** @hide */
+    public static final int DELETE_PERSISTENT_GROUP_FAILED          = BASE + 60;
+    /** @hide */
+    public static final int DELETE_PERSISTENT_GROUP_SUCCEEDED       = BASE + 61;
+
+    /** @hide */
+    public static final int REQUEST_PERSISTENT_GROUP_INFO           = BASE + 62;
+    /** @hide */
+    public static final int RESPONSE_PERSISTENT_GROUP_INFO          = BASE + 63;
+
     /**
      * Create a new WifiP2pManager instance. Applications use
      * {@link android.content.Context#getSystemService Context.getSystemService()} to retrieve
@@ -657,6 +669,15 @@ public class WifiP2pManager {
         public void onDetached(int reason);
     }
 
+    /** Interface for callback invocation when stored group info list is available {@hide}*/
+    public interface PersistentGroupInfoListener {
+        /**
+         * The requested stored p2p group info list is available
+         * @param groups Wi-Fi p2p group info list
+         */
+        public void onPersistentGroupInfoAvailable(WifiP2pGroupList groups);
+    }
+
     /**
      * A channel that connects the application to the Wifi p2p framework.
      * Most p2p operations require a Channel as an argument. An instance of Channel is obtained
@@ -713,6 +734,7 @@ public class WifiP2pManager {
                     case WifiP2pManager.REMOVE_SERVICE_REQUEST_FAILED:
                     case WifiP2pManager.CLEAR_SERVICE_REQUESTS_FAILED:
                     case WifiP2pManager.SET_DEVICE_NAME_FAILED:
+                    case WifiP2pManager.DELETE_PERSISTENT_GROUP_FAILED:
                         if (listener != null) {
                             ((ActionListener) listener).onFailure(message.arg1);
                         }
@@ -732,6 +754,7 @@ public class WifiP2pManager {
                     case WifiP2pManager.REMOVE_SERVICE_REQUEST_SUCCEEDED:
                     case WifiP2pManager.CLEAR_SERVICE_REQUESTS_SUCCEEDED:
                     case WifiP2pManager.SET_DEVICE_NAME_SUCCEEDED:
+                    case WifiP2pManager.DELETE_PERSISTENT_GROUP_SUCCEEDED:
                         if (listener != null) {
                             ((ActionListener) listener).onSuccess();
                         }
@@ -784,6 +807,12 @@ public class WifiP2pManager {
                         if (mDialogListener != null) {
                             mDialogListener.onDetached(message.arg1);
                             mDialogListener = null;
+                        }
+                        break;
+                    case WifiP2pManager.RESPONSE_PERSISTENT_GROUP_INFO:
+                        WifiP2pGroupList groups = (WifiP2pGroupList) message.obj;
+                        if (listener != null) {
+                            ((PersistentGroupInfoListener) listener).onPersistentGroupInfoAvailable(groups);
                         }
                         break;
                    default:
@@ -990,12 +1019,31 @@ public class WifiP2pManager {
      *
      * <p> Application can request for the group details with {@link #requestGroupInfo}.
      *
+     * <p> If a credential of persistent p2p group is/are in the system settings,
+     * then a first one of the credential list will be used.
+     *
      * @param c is the channel created at {@link #initialize}
      * @param listener for callbacks on success or failure. Can be null.
      */
     public void createGroup(Channel c, ActionListener listener) {
         checkChannel(c);
-        c.mAsyncChannel.sendMessage(CREATE_GROUP, 0, c.putListener(listener));
+        c.mAsyncChannel.sendMessage(CREATE_GROUP, WifiP2pGroup.PERSISTENT_NET_ID,
+                c.putListener(listener));
+    }
+
+    /**
+     * Create a p2p group with the current device as the group owner.
+     *
+     * @param c is the channel created at {@link #initialize}
+     * @param persistent create persistent group if true.
+     * @param listener for callbacks on success or failure. Can be null.
+     * @hide
+     */
+    public void createGroup(Channel c, boolean persistent, ActionListener listener) {
+        checkChannel(c);
+        c.mAsyncChannel.sendMessage(CREATE_GROUP,
+                persistent ? WifiP2pGroup.PERSISTENT_NET_ID : WifiP2pGroup.TEMPORARY_NET_ID,
+                c.putListener(listener));
     }
 
     /**
@@ -1294,6 +1342,40 @@ public class WifiP2pManager {
         msg.what = SET_DIALOG_LISTENER;
         msg.setData(bundle);
         c.mAsyncChannel.sendMessage(msg);
+    }
+
+    /**
+     * Delete a stored persistent group from the system settings.
+     *
+     * <p> The function call immediately returns after sending a persistent group removal request
+     * to the framework. The application is notified of a success or failure to initiate
+     * group removal through listener callbacks {@link ActionListener#onSuccess} or
+     * {@link ActionListener#onFailure}.
+     *
+     * <p>The persistent p2p group list stored in the system can be obtained by
+     * {@link #requestPersistentGroupInfo(Channel, PersistentGroupInfoListener)} and
+     *  a network id can be obtained by {@link WifiP2pGroup#getNetworkId()}.
+     *
+     * @param c is the channel created at {@link #initialize}
+     * @param netId he network id of the p2p group.
+     * @param listener for callbacks on success or failure. Can be null.
+     * @hide
+     */
+    public void deletePersistentGroup(Channel c, int netId, ActionListener listener) {
+        checkChannel(c);
+        c.mAsyncChannel.sendMessage(DELETE_PERSISTENT_GROUP, netId, c.putListener(listener));
+    }
+
+    /**
+     * Request a list of all the persistent p2p groups stored in system.
+     *
+     * @param c is the channel created at {@link #initialize}
+     * @param listener for callback when persistent group info list is available. Can be null.
+     * @hide
+     */
+    public void requestPersistentGroupInfo(Channel c, PersistentGroupInfoListener listener) {
+        checkChannel(c);
+        c.mAsyncChannel.sendMessage(REQUEST_PERSISTENT_GROUP_INFO, 0, c.putListener(listener));
     }
 
     /**
