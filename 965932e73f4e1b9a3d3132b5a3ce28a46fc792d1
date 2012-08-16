@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIgX///+c\u003d",
+        "filename": "wifi/java/android/net/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "Is this really used ?",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///+Y\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "Can you clarify this comment further. And we do not use this now right ? If then, remove",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///+Q\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroupList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "Is it possible to have more than one persistent group with our architecture ? I assume it is not since we would try the existing persistent one and then if it fails, remove it and then retry connecting ?",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///98\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroupList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "Is this get needed. The caller of this function will likely access this group right ?",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///90\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroupList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "see comment at line 116",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///9o\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroupList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "This style should work right ?\n\nfor (WifiP2pGroup group : groups) {\n\n}",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///8s\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "long line",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///8c\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "I wonder if this comment is even necessary for apps since we are trying to keep it transparent",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///8o\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "Am ok with having a hidden function like this, but am still not convinced of the use case for apps here.",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///8E\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "Please verify if every remove results in LruCache doing its call back",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///7c\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "can you clarify when this happens ?\n\nIt appears when we do p2pReinvoke() as well, we already end up in GroupNegotiationState after doing connect() call",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///7Y\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "I wonder if we really need to reload the whole config at this point.\n\nSince we already get the group started event with the details - do we miss anything by just adding this to the mGroups LruCache ?",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///7U\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "Does this happen when we do p2pReinvoke() ?",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///60\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "Is it not possible that group owner has removed credential and then we have to remove the entire group here ?\n\nhow do we handle that case ?",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///6k\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1701,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "allignment",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///7M\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "does noInvitation actually refer to not doing a reinvocation of an existing persistent group ?\n\nIf so, may be this should be noReinvocation ?\n\nActually instead of a boolean, we should do private static define which would make it obvious in the connect() call like:\n\nconnect(.., NO_REINVOCATION);",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///64\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1861,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "spacing",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///6Y\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2482,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-16T18:32:22Z",
+      "side": 1,
+      "message": "feels like this should belong to WifiP2pGroupList ?",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
