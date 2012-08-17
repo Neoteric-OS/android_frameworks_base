@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIhn///5E\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroupList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2012-08-17T00:52:55Z",
+      "side": 1,
+      "message": "The caller call only this function to get use network id and this function gets network id by NOT cache key.\n\nThe cache order is only updated by calling LruCache functions by the cache key.\n\nIt means the cache date is NOT updated if mGroup.get() is NOT called here even though the caller access the network id.",
+      "parentUuid": "AAAIgX///1Q\u003d",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIgX///90\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroupList.java",
         "patchSetId": 1
