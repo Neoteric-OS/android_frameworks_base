@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIk3///5c\u003d",
+        "filename": "core/java/android/hardware/input/InputManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-08-17T09:23:43Z",
+      "side": 1,
+      "message": "Move this closer to point of use, which is probably around where that Log.w is.  No sense creating an array we won\u0027t use.",
+      "revId": "5e7bb7e68df9e033b791517be3d1c3426af4c236",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIk3///5g\u003d",
+        "filename": "core/res/res/values-en-rGB/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-08-17T09:23:43Z",
+      "side": 1,
+      "message": "Don\u0027t put these here.\n\nPut them into the base strings.xml file and leave the msgid off.  The localization team will regenerate the locale-specific variants and add ids post translation.",
+      "revId": "5e7bb7e68df9e033b791517be3d1c3426af4c236",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIk3///5Y\u003d",
+        "filename": "services/java/com/android/server/input/PersistentDataStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-08-17T09:23:43Z",
+      "side": 1,
+      "message": "This default transform should perhaps be given a name somewhere.  I wouldn\u0027t mind having a class for it.\n\nclass TouchAffineTransformation implements Parcelable {\n    public static TouchAffineTransformation IDENTITY \u003d new ...\n}\n\nAlthough the more I look at the plumbing for the affine transformation, the more I think this really should be TouchCalibration and it just happens that we only have an affine transformation in it right now.  That could change.\n\nSo maybe\n\nclass TouchCalibration implements Parcelable {\n    public float mXOffset, mYOffset;\netc..\n}",
+      "revId": "5e7bb7e68df9e033b791517be3d1c3426af4c236",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIk3///5U\u003d",
+        "filename": "services/java/com/android/server/input/PersistentDataStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-08-17T09:23:43Z",
+      "side": 1,
+      "message": "Avoid enums in the framework.  (sigh)",
+      "revId": "5e7bb7e68df9e033b791517be3d1c3426af4c236",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIk3///5Q\u003d",
+        "filename": "services/java/com/android/server/input/PersistentDataStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-08-17T09:23:43Z",
+      "side": 1,
+      "message": "this array sure keeps coming up a lot.",
+      "revId": "5e7bb7e68df9e033b791517be3d1c3426af4c236",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIk3///5M\u003d",
+        "filename": "services/java/com/android/server/input/PersistentDataStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-08-17T09:23:43Z",
+      "side": 1,
+      "message": "hmm good plan",
+      "revId": "5e7bb7e68df9e033b791517be3d1c3426af4c236",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
