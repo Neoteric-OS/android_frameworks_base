@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIk3///54\u003d",
+        "filename": "services/input/tests/InputReader_test.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-08-17T09:15:59Z",
+      "side": 1,
+      "message": "This is where I really start wanting a struct TouchAffineTransformation { ... } type.  Its default constructor can initialize to identity.",
+      "revId": "b589857607d203daf7127ec5b0555c14d68f9bf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIk3///50\u003d",
+        "filename": "services/input/tests/InputReader_test.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-08-17T09:15:59Z",
+      "side": 1,
+      "message": "And likewise we would just do affine \u003d newAffine, done...\n\nNote, we should have braces around all blocks.  (sigh)",
+      "revId": "b589857607d203daf7127ec5b0555c14d68f9bf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIk3///5w\u003d",
+        "filename": "services/input/tests/InputReader_test.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2540,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-08-17T09:15:59Z",
+      "side": 1,
+      "message": "nice, although now I think that struct should have an apply method on it\n\nstruct TouchAffineTransform { ... \n    void applyTo(float\u0026 x, float\u0026 y) const;\n}",
+      "revId": "b589857607d203daf7127ec5b0555c14d68f9bf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
