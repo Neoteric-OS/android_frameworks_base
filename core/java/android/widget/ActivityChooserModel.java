@@ -930,29 +930,29 @@ public class ActivityChooserModel extends DataSetObservable {
     private final class DefaultSorter implements ActivitySorter {
         private static final float WEIGHT_DECAY_COEFFICIENT = 0.95f;
 
-        private final Map<String, ActivityResolveInfo> mPackageNameToActivityMap =
+        private final Map<String, ActivityResolveInfo> mActivityNameToActivityMap =
             new HashMap<String, ActivityResolveInfo>();
 
         public void sort(Intent intent, List<ActivityResolveInfo> activities,
                 List<HistoricalRecord> historicalRecords) {
-            Map<String, ActivityResolveInfo> packageNameToActivityMap =
-                mPackageNameToActivityMap;
-            packageNameToActivityMap.clear();
+            Map<String, ActivityResolveInfo> activityNameToActivityMap =
+                mActivityNameToActivityMap;
+            activityNameToActivityMap.clear();
 
             final int activityCount = activities.size();
             for (int i = 0; i < activityCount; i++) {
                 ActivityResolveInfo activity = activities.get(i);
                 activity.weight = 0.0f;
-                String packageName = activity.resolveInfo.activityInfo.packageName;
-                packageNameToActivityMap.put(packageName, activity);
+                String activityName = activity.resolveInfo.activityInfo.name;
+                activityNameToActivityMap.put(activityName, activity);
             }
 
             final int lastShareIndex = historicalRecords.size() - 1;
             float nextRecordWeight = 1;
             for (int i = lastShareIndex; i >= 0; i--) {
                 HistoricalRecord historicalRecord = historicalRecords.get(i);
-                String packageName = historicalRecord.activity.getPackageName();
-                ActivityResolveInfo activity = packageNameToActivityMap.get(packageName);
+                String activityName = historicalRecord.activity.getClassName();
+                ActivityResolveInfo activity = activityNameToActivityMap.get(activityName);
                 if (activity != null) {
                     activity.weight += historicalRecord.weight * nextRecordWeight;
                     nextRecordWeight = nextRecordWeight * WEIGHT_DECAY_COEFFICIENT;
