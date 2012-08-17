@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIk3///7k\u003d",
+        "filename": "services/java/com/android/server/VibratorService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-08-17T08:49:52Z",
+      "side": 1,
+      "message": "This isn\u0027t the right way to fix this problem.  We shouldn\u0027t be decrementing duration within the loop at all because the timing will drift.\n\nInstead we should have:\n\nlong bedtime \u003d SystemClock.uptimeMillis() + duration;\ndo {\n    try {\n        this.wait(duration);\n    } catch (InterruptedException e) {\n    }\n    duration \u003d bedtime - SystemClock.uptimeMillis();\n} while (duration \u003e 0);",
+      "revId": "679f2dd81919410ffbaa26524b863e73cc713180",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
