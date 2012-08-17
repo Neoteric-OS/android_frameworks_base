@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIgX///1U\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroupList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-17T00:30:21Z",
+      "side": 1,
+      "message": "I see makes sense.",
+      "parentUuid": "AAAIhn///6E\u003d",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIgX///98\u003d",
         "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroupList.java",
         "patchSetId": 1
@@ -118,6 +136,24 @@
       "side": 1,
       "message": "Yes, The caller will use this network id.",
       "parentUuid": "AAAIgX///98\u003d",
+      "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIgX///1Q\u003d",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroupList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-08-17T00:30:21Z",
+      "side": 1,
+      "message": "yeah, so i meant we dont need to do a mGroups.get() right ? The caller will anyway access it",
+      "parentUuid": "AAAIhn///6A\u003d",
       "revId": "965932e73f4e1b9a3d3132b5a3ce28a46fc792d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
