@@ -16,6 +16,24 @@
       "revId": "679f2dd81919410ffbaa26524b863e73cc713180",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIu3///6s\u003d",
+        "filename": "services/java/com/android/server/VibratorService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1004254
+      },
+      "writtenOn": "2012-08-19T02:06:18Z",
+      "side": 1,
+      "message": "I\u0027m sorry, i didn\u0027t get your point based on the code. The loop does decrement value of duration in the loop. Did you mean that the loop shouldn\u0027t reset the value of bedtime in every iteration, there by causing a time drift?",
+      "parentUuid": "AAAIk3///7k\u003d",
+      "revId": "679f2dd81919410ffbaa26524b863e73cc713180",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
