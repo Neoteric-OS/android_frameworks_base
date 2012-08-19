@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIrn///9o\u003d",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4684,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2012-08-19T01:25:46Z",
+      "side": 1,
+      "message": "Remove whitespace.",
+      "revId": "2f9f1a68770f96802a1d33b7ec49ae6d55db7fa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
