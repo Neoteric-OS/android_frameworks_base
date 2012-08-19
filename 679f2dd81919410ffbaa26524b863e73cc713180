@@ -52,6 +52,24 @@
       "revId": "679f2dd81919410ffbaa26524b863e73cc713180",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIrn///9A\u003d",
+        "filename": "services/java/com/android/server/VibratorService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1004254
+      },
+      "writtenOn": "2012-08-19T07:41:52Z",
+      "side": 1,
+      "message": "Isn\u0027t the case that you illustrated (0.9ms being decremented as 0) applicable in both solutions? Yes, the solution you offered ensures that the loop doesn\u0027t spend time on the extra instruction sets (resetting bedtime), however it does risk an Long overflow [long bedtime \u003d SystemClock.uptimeMillis() + duration;] and could cause an early exit from the loop (should the wait be interrupted), although it might not happen often. Considering this as well, which solution would you prefer?",
+      "parentUuid": "AAAIrn///9U\u003d",
+      "revId": "679f2dd81919410ffbaa26524b863e73cc713180",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
