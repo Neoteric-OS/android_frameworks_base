@@ -70,6 +70,24 @@
       "revId": "679f2dd81919410ffbaa26524b863e73cc713180",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///7s\u003d",
+        "filename": "services/java/com/android/server/VibratorService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-08-19T08:09:52Z",
+      "side": 1,
+      "message": "If you look closely, my solution is not prone to the issue I described because errors in computing the duration of the wait do not accumulate over time.  We always compute the duration based on the deadline previously determined outside the loop, which is never updated.\n\nOverflow is a potential issue but highly unlikely.  The duration would have to be excessively large.  If it were to occur, then the vibration would run indefinitely or stop immediately depending on the nature of the overflow.  Either way, it could still be canceled, so it\u0027s pretty harmless.\n\nIf this bothers you, then we could add a range check as a separate patch.",
+      "parentUuid": "AAAIrn///9A\u003d",
+      "revId": "679f2dd81919410ffbaa26524b863e73cc713180",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
