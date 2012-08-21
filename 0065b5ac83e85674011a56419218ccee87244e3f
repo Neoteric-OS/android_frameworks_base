@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIw3///mc\u003d",
+        "filename": "core/java/android/widget/CalendarView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1259,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-21T21:16:58Z",
+      "side": 1,
+      "message": "Code style: we use 8 spaces of indentation when a statement doesn\u0027t fit on a line.",
+      "revId": "0065b5ac83e85674011a56419218ccee87244e3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
