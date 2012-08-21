@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIwn///7g\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-21T16:24:45Z",
+      "side": 1,
+      "message": "Please start with a one-line short description (~60 chars), followed by a blank line, before the long description.",
+      "revId": "0fbe7f9574e29228fdf3141b8c2d363d04f41c1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIw3///70\u003d",
+        "filename": "core/java/android/content/IntentFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-21T16:24:45Z",
+      "side": 1,
+      "message": "\"else\" should be on the same lane as the brace.",
+      "revId": "0fbe7f9574e29228fdf3141b8c2d363d04f41c1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIxn///3c\u003d",
+        "filename": "core/java/android/content/IntentFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-21T16:24:45Z",
+      "side": 1,
+      "message": "Besides the issues with 100 columns, this is essentially unreadable. Let\u0027s break this into a proper set of \"if ... return false\"",
+      "revId": "0fbe7f9574e29228fdf3141b8c2d363d04f41c1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIw3///7s\u003d",
+        "filename": "core/java/android/content/IntentFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-21T16:24:45Z",
+      "side": 1,
+      "message": "See above.",
+      "revId": "0fbe7f9574e29228fdf3141b8c2d363d04f41c1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIw3///7o\u003d",
+        "filename": "core/java/android/content/IntentFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-21T16:24:45Z",
+      "side": 1,
+      "message": "See above.",
+      "revId": "0fbe7f9574e29228fdf3141b8c2d363d04f41c1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIxn///3U\u003d",
+        "filename": "core/java/android/os/PatternMatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-21T16:24:45Z",
+      "side": 1,
+      "message": "Same issues here as in the previous file.",
+      "revId": "0fbe7f9574e29228fdf3141b8c2d363d04f41c1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIwn///7k\u003d",
+        "filename": "services/java/com/android/server/am/BroadcastFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-21T16:24:45Z",
+      "side": 1,
+      "message": "Same issues here as in the first file.",
+      "revId": "0fbe7f9574e29228fdf3141b8c2d363d04f41c1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
