@@ -412,6 +412,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
             }
             mServiceState = state;
             updateTelephonySignalStrength();
+            mDataNetType = mPhone.getNetworkType();
             updateDataNetType();
             updateDataIcon();
             refreshViews();
