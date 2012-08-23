@@ -1037,12 +1037,6 @@ public abstract class ContentProvider implements ComponentCallbacks2 {
      */
     public void attachInfo(Context context, ProviderInfo info) {
         /*
-         * We may be using AsyncTask from binder threads.  Make it init here
-         * so its static handler is on the main thread.
-         */
-        AsyncTask.init();
-
-        /*
          * Only allow it to be set once, so after the content service gives
          * this to us clients can't change it.
          */
