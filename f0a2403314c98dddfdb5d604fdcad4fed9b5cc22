@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6n///9c\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1589,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-25T15:30:47Z",
+      "side": 1,
+      "message": "braces",
+      "revId": "f0a2403314c98dddfdb5d604fdcad4fed9b5cc22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
