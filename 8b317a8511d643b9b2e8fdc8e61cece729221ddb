@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6n///9Y\u003d",
+        "filename": "services/java/com/android/server/pm/ShutdownThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-25T15:33:09Z",
+      "side": 1,
+      "message": "100 columns",
+      "revId": "8b317a8511d643b9b2e8fdc8e61cece729221ddb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
