@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6n///+4\u003d",
+        "filename": "core/java/android/view/SurfaceView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-25T14:43:12Z",
+      "side": 1,
+      "message": "100 columns",
+      "revId": "c15c640085981da7f46aaf7af65db5f14fd288a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
