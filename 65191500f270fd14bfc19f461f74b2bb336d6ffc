@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6X//98s\u003d",
+        "filename": "services/java/com/android/server/Watchdog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2012-08-29T17:56:32Z",
+      "side": 1,
+      "message": "I\u0027d prefer that you test (!Build.TYPE.equals(\"user\")) here rather than hardcoding other variants\u0027 names.",
+      "revId": "65191500f270fd14bfc19f461f74b2bb336d6ffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//98k\u003d",
+        "filename": "services/java/com/android/server/Watchdog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2012-08-29T17:56:32Z",
+      "side": 1,
+      "message": "typo: \"The \u0027sync\u0027 command always succeeds\"",
+      "revId": "65191500f270fd14bfc19f461f74b2bb336d6ffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//98w\u003d",
+        "filename": "services/java/com/android/server/Watchdog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2012-08-29T17:56:32Z",
+      "side": 1,
+      "message": "This is the one part of this change that I think requires some deep consideration.  Is it possible to wind up in a state where we fail to restart the runtime, wedging the watchdog itself, because the \u0027sync\u0027 fails to complete?\n\nIn general if the kernel/filesystems are in such a bad state that \u0027sync\u0027 fails, then the watchdog restart of the Android runtime is not likely to work anyway.  If a failure in \u0027sync\u0027 here would basically be a guarantee that the watchdog restart would fail anyway, then I think this is fine.  (In particular, the watchdog has already done filesystem activity by attempting to capture stack traces to the ANR trace file; if the filesystem were dead then we would already have hit the wall.\n\nThis is a longwinded way of my saying that I\u0027ve thought a little about whether this is safe, and decided that it\u0027s equivalent to the existing implementation in terms of risking data loss or rebootability, so the concept is fine.  :)",
+      "revId": "65191500f270fd14bfc19f461f74b2bb336d6ffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//99U\u003d",
+        "filename": "services/java/com/android/server/Watchdog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2012-08-29T17:56:32Z",
+      "side": 1,
+      "message": "typo/grammar:  Replace the final sentence in this comment with something like \"This function must run the code below to force a crash, even if the sync command failed.\"",
+      "revId": "65191500f270fd14bfc19f461f74b2bb336d6ffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//98g\u003d",
+        "filename": "services/java/com/android/server/Watchdog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2012-08-29T17:56:32Z",
+      "side": 1,
+      "message": "Typo:  \"ignore all exceptions here\"",
+      "revId": "65191500f270fd14bfc19f461f74b2bb336d6ffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//99c\u003d",
+        "filename": "services/java/com/android/server/Watchdog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2012-08-29T17:56:32Z",
+      "side": 1,
+      "message": "Use slightly different text in these \"Failed to execute \u0027sync\u0027\" logs to make it more obvious which point in the code was reached if they\u0027re seen in a bugreport",
+      "revId": "65191500f270fd14bfc19f461f74b2bb336d6ffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//99Y\u003d",
+        "filename": "services/java/com/android/server/Watchdog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2012-08-29T17:56:32Z",
+      "side": 1,
+      "message": "Same as above; please make the log messages textually distinct.",
+      "revId": "65191500f270fd14bfc19f461f74b2bb336d6ffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
