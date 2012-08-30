@@ -245,7 +245,6 @@ public class DrmManagerClient {
     public DrmManagerClient(Context context) {
         mContext = context;
         mReleased = false;
-        createEventThreads();
 
         // save the unique id
         mUniqueId = _initialize();
@@ -296,6 +295,7 @@ public class DrmManagerClient {
     public synchronized void setOnInfoListener(OnInfoListener infoListener) {
         mOnInfoListener = infoListener;
         if (null != infoListener) {
+            createEventThreads();
             createListeners();
         }
     }
@@ -309,6 +309,7 @@ public class DrmManagerClient {
     public synchronized void setOnEventListener(OnEventListener eventListener) {
         mOnEventListener = eventListener;
         if (null != eventListener) {
+            createEventThreads();
             createListeners();
         }
     }
@@ -322,6 +323,7 @@ public class DrmManagerClient {
     public synchronized void setOnErrorListener(OnErrorListener errorListener) {
         mOnErrorListener = errorListener;
         if (null != errorListener) {
+            createEventThreads();
             createListeners();
         }
     }
@@ -489,6 +491,7 @@ public class DrmManagerClient {
             throw new IllegalArgumentException("Given drmInfo is invalid/null");
         }
         int result = ERROR_UNKNOWN;
+        createEventThreads();
         if (null != mEventHandler) {
             Message msg = mEventHandler.obtainMessage(ACTION_PROCESS_DRM_INFO, drmInfo);
             result = (mEventHandler.sendMessage(msg)) ? ERROR_NONE : result;
@@ -716,6 +719,7 @@ public class DrmManagerClient {
      */
     public int removeAllRights() {
         int result = ERROR_UNKNOWN;
+        createEventThreads();
         if (null != mEventHandler) {
             Message msg = mEventHandler.obtainMessage(ACTION_REMOVE_ALL_RIGHTS);
             result = (mEventHandler.sendMessage(msg)) ? ERROR_NONE : result;
@@ -889,7 +893,7 @@ public class DrmManagerClient {
 
     private native DrmSupportInfo[] _getAllSupportInfo(int uniqueId);
 
-    private void createEventThreads() {
+    private synchronized void createEventThreads() {
         if (mEventHandler == null && mInfoHandler == null) {
             mInfoThread = new HandlerThread("DrmManagerClient.InfoHandler");
             mInfoThread.start();
