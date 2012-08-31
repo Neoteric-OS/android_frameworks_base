@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6n//8+A\u003d",
+        "filename": "services/java/com/android/server/MountService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-31T17:22:56Z",
+      "side": 1,
+      "message": "100 columns",
+      "revId": "c99ef0540d2e4f58ef0b91f6f4b9789e8618ff6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8N4\u003d",
+        "filename": "services/java/com/android/server/MountService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1000660
+      },
+      "writtenOn": "2012-08-31T17:22:56Z",
+      "side": 1,
+      "message": "100 columns, maybe by shrinking the text.",
+      "revId": "c99ef0540d2e4f58ef0b91f6f4b9789e8618ff6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
