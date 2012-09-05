@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI33//+aY\u003d",
+        "filename": "core/java/android/database/sqlite/SQLiteQueryBuilder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2012-09-05T10:18:49Z",
+      "side": 1,
+      "message": "this should probably be fixed on the client side. i.e. dont send null here.",
+      "revId": "bbbcd73c38ea5e89a4b77a0d2e14d74243f4ecd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
