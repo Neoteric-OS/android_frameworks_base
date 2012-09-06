@@ -110,6 +110,8 @@ public:
     void setAutoAddOverlay(bool val) { mAutoAddOverlay = val; }
     bool getGenDependencies() { return mGenDependencies; }
     void setGenDependencies(bool val) { mGenDependencies = val; }
+    bool getErrorOnFailedInsert() { return mErrorOnFailedInsert; }
+    void setErrorOnFailedInsert(bool val) { mErrorOnFailedInsert = val; }
 
     bool getUTF16StringsOption() {
         return mWantUTF16 || !isMinSdkAtLeast(SDK_FROYO);
@@ -276,6 +278,7 @@ private:
     bool        mNonConstantId;
     const char* mProduct;
     bool        mUseCrunchCache;
+    bool        mErrorOnFailedInsert;
 
     /* file specification */
     int         mArgc;
