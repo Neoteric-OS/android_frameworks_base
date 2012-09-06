@@ -542,6 +542,8 @@ int main(int argc, char* const argv[])
                     bundle.setInstrumentationPackageNameOverride(argv[0]);
                 } else if (strcmp(cp, "-auto-add-overlay") == 0) {
                     bundle.setAutoAddOverlay(true);
+                } else if (strcmp(cp, "-error-on-failed-insert") == 0) {
+                    bundle.setErrorOnFailedInsert(true);
                 } else if (strcmp(cp, "-product") == 0) {
                     argc--;
                     argv++;
