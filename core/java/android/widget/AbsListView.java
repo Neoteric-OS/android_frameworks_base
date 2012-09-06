@@ -4708,7 +4708,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                     final View lastView = getChildAt(getChildCount() - 1); 
                     if (lastView != null) {
                         final int scrollBy = lastView.getHeight() - (listHeight - lastView.getTop()) + 1; // +1 is important to go to next view
-                        smoothScrollBy(Math.min(scrollBy, distance), duration, true);
+                        smoothScrollBy(Math.max(scrollBy, distance), duration, true);
                     } else {
                         smoothScrollBy(distance, duration, true);
                     }
