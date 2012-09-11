@@ -26,6 +26,7 @@ keylayouts := \
     Vendor_046d_Product_c532.kl \
     Vendor_054c_Product_0268.kl \
     Vendor_05ac_Product_0239.kl \
+    Vendor_25b6_Product_0001.kl \
     Vendor_22b8_Product_093d.kl
 
 keycharmaps := \
