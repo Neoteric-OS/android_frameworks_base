@@ -173,6 +173,8 @@ public:
     void setProduct(const char * val) { mProduct = val; }
     void setUseCrunchCache(bool val) { mUseCrunchCache = val; }
     bool getUseCrunchCache() const { return mUseCrunchCache; }
+    const char* getOutputTextSymbols() const { return mOutputTextSymbols; }
+    void setOutputTextSymbols(const char* val) { mOutputTextSymbols = val; }
 
     /*
      * Set and get the file specification.
@@ -279,6 +281,7 @@ private:
     const char* mProduct;
     bool        mUseCrunchCache;
     bool        mErrorOnFailedInsert;
+    const char* mOutputTextSymbols;
 
     /* file specification */
     int         mArgc;
