@@ -129,6 +129,7 @@ public class DefaultContainerService extends IntentService {
 
             try {
                 copyFile(packageURI, autoOut, encryptionParams);
+                autoOut.close();
                 return PackageManager.INSTALL_SUCCEEDED;
             } catch (FileNotFoundException e) {
                 Slog.e(TAG, "Could not copy URI " + packageURI.toString() + " FNF: "
