@@ -84,6 +84,7 @@ static struct {
     jmethodID getPointerIcon;
     jmethodID getKeyboardLayoutOverlay;
     jmethodID getDeviceAlias;
+    jmethodID getTouchCalibrationForInputDevice;
 } gServiceClassInfo;
 
 static struct {
@@ -176,6 +177,7 @@ public:
     void setSystemUiVisibility(int32_t visibility);
     void setPointerSpeed(int32_t speed);
     void setShowTouches(bool enabled);
+    void reloadCalibration();
 
     /* --- InputReaderPolicyInterface implementation --- */
 
@@ -184,6 +186,7 @@ public:
     virtual void notifyInputDevicesChanged(const Vector<InputDeviceInfo>& inputDevices);
     virtual sp<KeyCharacterMap> getKeyboardLayoutOverlay(const String8& inputDeviceDescriptor);
     virtual String8 getDeviceAlias(const InputDeviceIdentifier& identifier);
+    TouchAffineTransformation getTouchAffineTransformation(const String8& inputDeviceDescriptor);
 
     /* --- InputDispatcherPolicyInterface implementation --- */
 
@@ -728,12 +731,52 @@ void NativeInputManager::setShowTouches(bool enabled) {
             InputReaderConfiguration::CHANGE_SHOW_TOUCHES);
 }
 
+void NativeInputManager::reloadCalibration() {
+    mInputManager->getReader()->requestRefreshConfiguration(
+            InputReaderConfiguration::TOUCH_AFFINE_TRANSFORMATION);
+}
+
 bool NativeInputManager::isScreenOn() {
     return android_server_PowerManagerService_isScreenOn();
 }
 
 bool NativeInputManager::isScreenBright() {
     return android_server_PowerManagerService_isScreenBright();
+}
+
+TouchAffineTransformation NativeInputManager::getTouchAffineTransformation(
+        const String8& inputDeviceDescriptor) {
+    JNIEnv* env = jniEnv();
+
+    jstring descriptor = env->NewStringUTF(inputDeviceDescriptor.string());
+    if (descriptor == NULL) {
+        /* out of memory */
+        return TouchAffineTransformation();
+    }
+
+    jobject cal = env->CallObjectMethod(mServiceObj, gServiceClassInfo.getTouchCalibrationForInputDevice, descriptor);
+    jclass calClass = env->FindClass("android/hardware/input/TouchCalibration");
+    jmethodID affineMethod = env->GetMethodID(calClass, "getAffineTransform", "()[F");
+    jfloatArray matrixArr = jfloatArray(env->CallObjectMethod(cal, affineMethod));
+
+    jfloat *matrix = env->GetFloatArrayElements(matrixArr, 0);
+    assert(env->GetArrayLength(matrixArr) == 6);
+
+    TouchAffineTransformation transform;
+    transform.x_scale  = matrix[0];
+    transform.x_ymix   = matrix[1];
+    transform.x_offset = matrix[2];
+    transform.y_xmix   = matrix[3];
+    transform.y_scale  = matrix[4];
+    transform.y_offset = matrix[5];
+
+    env->ReleaseFloatArrayElements(matrixArr, matrix, 0);
+    env->DeleteLocalRef(matrixArr);
+    env->DeleteLocalRef(calClass);
+    env->DeleteLocalRef(cal);
+    env->DeleteLocalRef(descriptor);
+
+    return transform;
 }
 
 bool NativeInputManager::filterInputEvent(const InputEvent* inputEvent, uint32_t policyFlags) {
@@ -1224,6 +1267,11 @@ static void nativeSetShowTouches(JNIEnv* env,
     im->setShowTouches(enabled);
 }
 
+static void nativeReloadCalibration(JNIEnv* env, jclass clazz, jint ptr) {
+    NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
+    im->reloadCalibration();
+}
+
 static void nativeVibrate(JNIEnv* env,
         jclass clazz, jint ptr, jint deviceId, jlongArray patternObj,
         jint repeat, jint token) {
@@ -1329,6 +1377,8 @@ static JNINativeMethod gInputManagerMethods[] = {
             (void*) nativeSetPointerSpeed },
     { "nativeSetShowTouches", "(IZ)V",
             (void*) nativeSetShowTouches },
+    { "nativeReloadCalibration", "(I)V",
+            (void*) nativeReloadCalibration },
     { "nativeVibrate", "(II[JII)V",
             (void*) nativeVibrate },
     { "nativeCancelVibrate", "(III)V",
@@ -1437,6 +1487,9 @@ int register_android_server_InputManager(JNIEnv* env) {
 
     GET_METHOD_ID(gServiceClassInfo.getDeviceAlias, clazz,
             "getDeviceAlias", "(Ljava/lang/String;)Ljava/lang/String;");
+
+    GET_METHOD_ID(gServiceClassInfo.getTouchCalibrationForInputDevice, clazz,
+            "getTouchCalibrationForInputDevice", "(Ljava/lang/String;)Landroid/hardware/input/TouchCalibration;");
 
     // InputDevice
 

@@ -137,6 +137,9 @@ struct InputReaderConfiguration {
         // The device name alias supplied by the may have changed for some devices.
         CHANGE_DEVICE_ALIAS = 1 << 5,
 
+        // The location calibration matrix changed.
+        TOUCH_AFFINE_TRANSFORMATION = 1 << 6,
+
         // All devices must be reopened.
         CHANGE_MUST_REOPEN = 1 << 31,
     };
@@ -302,6 +305,9 @@ public:
 
     /* Gets a user-supplied alias for a particular input device, or an empty string if none. */
     virtual String8 getDeviceAlias(const InputDeviceIdentifier& identifier) = 0;
+
+    /* Gets the affine calibration associated with the specified device. */
+    virtual TouchAffineTransformation getTouchAffineTransformation(const String8& inputDeviceDescriptor) = 0;
 };
 
 
@@ -532,6 +538,7 @@ public:
     inline int32_t getId() { return mId; }
     inline int32_t getGeneration() { return mGeneration; }
     inline const String8& getName() { return mIdentifier.name; }
+    inline const String8& getDescriptor() { return mIdentifier.descriptor; }
     inline uint32_t getClasses() { return mClasses; }
     inline uint32_t getSources() { return mSources; }
 
@@ -1356,6 +1363,7 @@ protected:
     virtual void dumpCalibration(String8& dump);
     virtual void dumpAffineTransformation(String8& dump);
     virtual bool hasStylus() const = 0;
+    virtual void updateAffineTransformation();
 
     virtual void syncTouch(nsecs_t when, bool* outHavePointerIds) = 0;
 
