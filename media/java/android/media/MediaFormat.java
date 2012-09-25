@@ -49,6 +49,10 @@ import java.util.Map;
  * <tr><td>{@link #KEY_MAX_HEIGHT}</td><td>Integer</td><td><b>decoder-only</b>, optional, max-resolution height</td></tr>
  * <tr><td>{@link #KEY_REPEAT_PREVIOUS_FRAME_AFTER}</td><td>Long</td><td><b>video encoder in surface-mode only</b></td></tr>
  * <tr><td>{@link #KEY_PUSH_BLANK_BUFFERS_ON_STOP}</td><td>Integer(1)</td><td><b>video decoder rendering to a surface only</b></td></tr>
+ * <tr><td>{@link #KEY_CROP_TOP}</td><td>Integer</td><td><b>decoder-only</b></td></tr>
+ * <tr><td>{@link #KEY_CROP_BOTTOM}</td><td>Integer</td><td><b>decoder-only</b></td></tr>
+ * <tr><td>{@link #KEY_CROP_LEFT}</td><td>Integer</td><td><b>decoder-only</b></td></tr>
+ * <tr><td>{@link #KEY_CROP_RIGHT}</td><td>Integer</td><td><b>decoder-only</b></td></tr>
  * </table>
  * Specify both {@link #KEY_MAX_WIDTH} and {@link #KEY_MAX_HEIGHT} to enable
  * adaptive playback (seamless resolution change) for a video decoder that
@@ -235,6 +239,26 @@ public final class MediaFormat {
      * @hide
      */
     public static final String KEY_SLICE_HEIGHT = "slice-height";
+    /**
+     * A key describing the y-coordinate of the topmost visible pixel row of a frame.
+     * The associated value is an integer.
+     */
+    public static final String KEY_CROP_TOP = "crop-top";
+    /**
+     * A key describing the x-coordinate of the leftmost visible pixel column of a frame.
+     * The associated value is an integer.
+     */
+    public static final String KEY_CROP_LEFT = "crop-left";
+    /**
+     * A key describing the x-coordinate of the rightmost visible pixel column of a frame.
+     * The associated value is an integer.
+     */
+    public static final String KEY_CROP_RIGHT = "crop-right";
+    /**
+     * A key describing the y-coordinate of the bottommost visible pixel row of a frame.
+     * The associated value is an integer.
+     */
+    public static final String KEY_CROP_BOTTOM = "crop-bottom";
 
     /**
      * Applies only when configuring a video encoder in "surface-input" mode.
