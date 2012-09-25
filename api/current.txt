@@ -11261,6 +11261,10 @@ package android.media {
     field public static final java.lang.String KEY_CHANNEL_COUNT = "channel-count";
     field public static final java.lang.String KEY_CHANNEL_MASK = "channel-mask";
     field public static final java.lang.String KEY_COLOR_FORMAT = "color-format";
+    field public static final java.lang.String KEY_CROP_BOTTOM = "crop-bottom";
+    field public static final java.lang.String KEY_CROP_LEFT = "crop-left";
+    field public static final java.lang.String KEY_CROP_RIGHT = "crop-right";
+    field public static final java.lang.String KEY_CROP_TOP = "crop-top";
     field public static final java.lang.String KEY_DURATION = "durationUs";
     field public static final java.lang.String KEY_FLAC_COMPRESSION_LEVEL = "flac-compression-level";
     field public static final java.lang.String KEY_FRAME_RATE = "frame-rate";
@@ -11270,6 +11274,8 @@ package android.media {
     field public static final java.lang.String KEY_MAX_INPUT_SIZE = "max-input-size";
     field public static final java.lang.String KEY_MIME = "mime";
     field public static final java.lang.String KEY_SAMPLE_RATE = "sample-rate";
+    field public static final java.lang.String KEY_SLICE_HEIGHT = "slice-height";
+    field public static final java.lang.String KEY_STRIDE = "stride";
     field public static final java.lang.String KEY_WIDTH = "width";
   }
 

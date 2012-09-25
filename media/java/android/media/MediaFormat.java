@@ -43,6 +43,12 @@ import java.util.Map;
  * <tr><td>{@link #KEY_COLOR_FORMAT}</td><td>Integer</td><td><b>encoder-only</b></td></tr>
  * <tr><td>{@link #KEY_FRAME_RATE}</td><td>Integer or Float</td><td><b>encoder-only</b></td></tr>
  * <tr><td>{@link #KEY_I_FRAME_INTERVAL}</td><td>Integer</td><td><b>encoder-only</b></td></tr>
+ * <tr><td>{@link #KEY_STRIDE}</td><td>Integer</td><td></td></tr>
+ * <tr><td>{@link #KEY_SLICE_HEIGHT}</td><td>Integer</td><td></td></tr>
+ * <tr><td>{@link #KEY_CROP_TOP}</td><td>Integer</td><td><b>decoder-only</b></td></tr>
+ * <tr><td>{@link #KEY_CROP_BOTTOM}</td><td>Integer</td><td><b>decoder-only</b></td></tr>
+ * <tr><td>{@link #KEY_CROP_LEFT}</td><td>Integer</td><td><b>decoder-only</b></td></tr>
+ * <tr><td>{@link #KEY_CROP_RIGHT}</td><td>Integer</td><td><b>decoder-only</b></td></tr>
  * </table>
  *
  * Audio formats have the following keys:
@@ -122,13 +128,39 @@ public final class MediaFormat {
     public static final String KEY_I_FRAME_INTERVAL = "i-frame-interval";
 
     /**
-     * @hide
+     * A key describing the distance between the start of one horizontal row of
+     * pixels to the start of the next one, as a number of bytes. For planar formats,
+     * this value describes the first plane.
+     * The associated value is an integer.
      */
     public static final String KEY_STRIDE = "stride";
     /**
-     * @hide
+     * A key describing the number of rows of pixels in one color component plane.
+     * This is the distance, in pixel rows, between the start of the first plane
+     * and the second plane.
+     * The associated value is an integer.
      */
     public static final String KEY_SLICE_HEIGHT = "slice-height";
+    /**
+     * A key describing the number of extra rows of pixels at the top of a frame.
+     * The associated value is an integer.
+     */
+    public static final String KEY_CROP_TOP = "crop-top";
+    /**
+     * A key describing the number of extra pixels at the left edge of a frame.
+     * The associated value is an integer.
+     */
+    public static final String KEY_CROP_LEFT = "crop-left";
+    /**
+     * A key describing the number of extra pixels at the right edge of a frame.
+     * The associated value is an integer.
+     */
+    public static final String KEY_CROP_RIGHT = "crop-right";
+    /**
+     * A key describing the number of extra rows of pixels at the bottom of a frame.
+     * The associated value is an integer.
+     */
+    public static final String KEY_CROP_BOTTOM = "crop-bottom";
 
     /**
      * A key describing the duration (in microseconds) of the content.
