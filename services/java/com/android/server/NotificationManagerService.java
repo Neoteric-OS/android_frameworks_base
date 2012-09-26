@@ -116,7 +116,6 @@ public class NotificationManagerService extends INotificationManager.Stub
     private WorkerHandler mHandler;
     private StatusBarManagerService mStatusBar;
     private LightsService.Light mNotificationLight;
-    private LightsService.Light mAttentionLight;
 
     private int mDefaultNotificationColor;
     private int mDefaultNotificationLedOn;
@@ -591,7 +590,6 @@ public class NotificationManagerService extends INotificationManager.Stub
         statusBar.setNotificationCallbacks(mNotificationCallbacks);
 
         mNotificationLight = lights.getLight(LightsService.LIGHT_ID_NOTIFICATIONS);
-        mAttentionLight = lights.getLight(LightsService.LIGHT_ID_ATTENTION);
 
         Resources resources = mContext.getResources();
         mDefaultNotificationColor = resources.getColor(
@@ -988,9 +986,6 @@ public class NotificationManagerService extends INotificationManager.Stub
                     long identity = Binder.clearCallingIdentity();
                     try {
                         r.statusBarKey = mStatusBar.addNotification(n);
-                        if ((n.notification.flags & Notification.FLAG_SHOW_LIGHTS) != 0) {
-                            mAttentionLight.pulse();
-                        }
                     }
                     finally {
                         Binder.restoreCallingIdentity(identity);
