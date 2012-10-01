@@ -118,6 +118,9 @@ public class GlowPadView extends View {
     private boolean mDragging;
     private int mNewTargetResources;
 
+    protected static final int INVALID_POINTER = -1;
+    private int mActivePointerId = INVALID_POINTER;
+
     private class AnimationBundle extends ArrayList<Tweener> {
         private static final long serialVersionUID = 0xA84D78726F127468L;
         private boolean mSuspended;
@@ -737,14 +740,25 @@ public class GlowPadView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        final int action = event.getAction();
+        final int maskedAction = event.getActionMasked();
         boolean handled = false;
-        switch (action) {
+        switch (maskedAction) {
             case MotionEvent.ACTION_DOWN:
                 if (DEBUG) Log.v(TAG, "*** DOWN ***");
+                mActivePointerId = event.getPointerId(0);
                 handleDown(event);
                 handleMove(event);
                 handled = true;
+                break;
+
+            case MotionEvent.ACTION_POINTER_DOWN:
+                if( mActivePointerId == INVALID_POINTER) {
+                    if (DEBUG) Log.v(TAG, "*** P-DOWN ***");
+                    mActivePointerId = event.getPointerId(event.getActionIndex());
+                    handleDown(event);
+                    handleMove(event);
+                    handled = true;
+                }
                 break;
 
             case MotionEvent.ACTION_MOVE:
@@ -758,6 +772,15 @@ public class GlowPadView extends View {
                 handleMove(event);
                 handleUp(event);
                 handled = true;
+                break;
+
+            case MotionEvent.ACTION_POINTER_UP:
+                if( event.getPointerId(event.getActionIndex()) == mActivePointerId ) {
+                    if (DEBUG) Log.v(TAG, "*** P-UP ***");
+                    handleMove(event);
+                    handleUp(event);
+                    handled = true;
+                }
                 break;
 
             case MotionEvent.ACTION_CANCEL:
@@ -777,8 +800,10 @@ public class GlowPadView extends View {
     }
 
     private void handleDown(MotionEvent event) {
-        float eventX = event.getX();
-        float eventY = event.getY();
+        int pointerIndex = event.findPointerIndex(mActivePointerId);
+        if( pointerIndex < 0) pointerIndex = 0;
+        float eventX = event.getX(pointerIndex);
+        float eventY = event.getY(pointerIndex);
         switchToState(STATE_START, eventX, eventY);
         if (!trySwitchToFirstTouchState(eventX, eventY)) {
             mDragging = false;
@@ -789,7 +814,10 @@ public class GlowPadView extends View {
 
     private void handleUp(MotionEvent event) {
         if (DEBUG && mDragging) Log.v(TAG, "** Handle RELEASE");
-        switchToState(STATE_FINISH, event.getX(), event.getY());
+        int pointerIndex = event.findPointerIndex(mActivePointerId);
+        if( pointerIndex < 0) pointerIndex = 0;
+        switchToState(STATE_FINISH, event.getX(pointerIndex), event.getY(pointerIndex));
+        mActivePointerId = INVALID_POINTER;
     }
 
     private void handleCancel(MotionEvent event) {
@@ -803,9 +831,15 @@ public class GlowPadView extends View {
         // mActiveTarget = -1; // Drop the active target if canceled.
 
         switchToState(STATE_FINISH, event.getX(), event.getY());
+        mActivePointerId = INVALID_POINTER;
     }
 
     private void handleMove(MotionEvent event) {
+        int pointerIndex = event.findPointerIndex(mActivePointerId);
+        if( pointerIndex < 0) {
+            // ignore to prevent palm touch click
+            return;
+        }
         int activeTarget = -1;
         final int historySize = event.getHistorySize();
         ArrayList<TargetDrawable> targets = mTargetDrawables;
@@ -813,8 +847,8 @@ public class GlowPadView extends View {
         float x = 0.0f;
         float y = 0.0f;
         for (int k = 0; k < historySize + 1; k++) {
-            float eventX = k < historySize ? event.getHistoricalX(k) : event.getX();
-            float eventY = k < historySize ? event.getHistoricalY(k) : event.getY();
+            float eventX = k < historySize ? event.getHistoricalX(pointerIndex, k) : event.getX(pointerIndex);
+            float eventY = k < historySize ? event.getHistoricalY(pointerIndex, k) : event.getY(pointerIndex);
             // tx and ty are relative to wave center
             float tx = eventX - mWaveCenterX;
             float ty = eventY - mWaveCenterY;
