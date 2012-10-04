@@ -120,6 +120,9 @@ class BlockingAudioTrack {
     }
 
     public void waitAndRelease() {
+        if (mAudioTrack == null) {
+            return;
+        }
         // For "small" audio tracks, we have to stop() them to make them mixable,
         // else the audio subsystem will wait indefinitely for us to fill the buffer
         // before rendering the track mixable.
