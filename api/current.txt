@@ -13073,6 +13073,7 @@ package android.net {
     method public boolean isActiveNetworkMetered();
     method public static boolean isNetworkTypeValid(int);
     method public boolean requestRouteToHost(int, int);
+    method public boolean requestRouteToHostAddress(int, java.net.InetAddress);
     method public void setNetworkPreference(int);
     method public int startUsingNetworkFeature(int, java.lang.String);
     method public int stopUsingNetworkFeature(int, java.lang.String);
