@@ -557,11 +557,12 @@ public class ConnectivityManager {
      * Ensure that a network route exists to deliver traffic to the specified
      * host via the specified network interface. An attempt to add a route that
      * already exists is ignored, but treated as successful.
+     * <p>This method requires the caller to hold the permission
+     * {@link android.Manifest.permission#CHANGE_NETWORK_STATE}.
      * @param networkType the type of the network over which traffic to the specified
      * host is to be routed
      * @param hostAddress the IP address of the host to which the route is desired
      * @return {@code true} on success, {@code false} on failure
-     * @hide
      */
     public boolean requestRouteToHostAddress(int networkType, InetAddress hostAddress) {
         byte[] address = hostAddress.getAddress();
