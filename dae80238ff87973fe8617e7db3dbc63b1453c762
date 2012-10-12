@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAKKH///wE\u003d",
+        "filename": "cmds/interrupter/interrupter.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2012-10-12T22:08:54Z",
+      "side": 1,
+      "message": "bool",
+      "revId": "dae80238ff87973fe8617e7db3dbc63b1453c762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAKKH///v0\u003d",
+        "filename": "cmds/interrupter/interrupter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2012-10-12T22:08:54Z",
+      "side": 1,
+      "message": "why not do with without the macros? it seems like a lot of unnecessary complexity compared to just writing out the handful of functions (currently 2) by hand.",
+      "revId": "dae80238ff87973fe8617e7db3dbc63b1453c762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
