@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "AAAKaH///3Y\u003d",
+        "filename": "cmds/installd/commands.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2012-10-17T16:48:14Z",
+      "side": 1,
+      "message": "The first call sets the context on the libdir, the second call sets the context on the pkgdir.  So you can\u0027t just combine them.  You could move the setfilecon of the pkgdir to this same point however, prior to the chown.",
+      "parentUuid": "AAAKdX///8U\u003d",
+      "revId": "c9a1aabc49d31370e3bf41f85b805499640230b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAKdn////g\u003d",
         "filename": "cmds/installd/commands.c",
         "patchSetId": 1
