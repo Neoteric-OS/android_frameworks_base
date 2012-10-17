@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AAAKaH///3g\u003d",
+        "filename": "cmds/installd/commands.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2012-10-17T16:41:56Z",
+      "side": 1,
+      "message": "I don\u0027t think it matters.  installd has the necessary permissions to chown and setfilecon (setxattr security.selinux) to the file in either order.  However, why was the subsequent selinux_android_setfilecon(pkgdir...) removed?",
+      "parentUuid": "AAAKdn////k\u003d",
+      "revId": "c9a1aabc49d31370e3bf41f85b805499640230b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAKdn////g\u003d",
         "filename": "cmds/installd/commands.c",
         "patchSetId": 1
