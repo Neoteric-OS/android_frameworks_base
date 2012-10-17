@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAKdn////k\u003d",
+        "filename": "cmds/installd/commands.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2012-10-17T16:10:13Z",
+      "side": 1,
+      "message": "does the order matter? (do you want to do the chown first?)",
+      "revId": "c9a1aabc49d31370e3bf41f85b805499640230b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAKdn////g\u003d",
+        "filename": "cmds/installd/commands.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2012-10-17T16:10:13Z",
+      "side": 1,
+      "message": "maybe not, if you\u0027re deliberately moving this one...",
+      "revId": "c9a1aabc49d31370e3bf41f85b805499640230b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
