@@ -51,6 +51,24 @@
       "revId": "c9a1aabc49d31370e3bf41f85b805499640230b1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAKdX///84\u003d",
+        "filename": "cmds/installd/commands.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-10-17T16:35:33Z",
+      "side": 1,
+      "message": "Really the goal is to be able to run installd with only CAP_CHOWN and not root. Setting an xattr after a chown in that case won\u0027t work, but doing it the other way will.",
+      "parentUuid": "AAAKdn////g\u003d",
+      "revId": "c9a1aabc49d31370e3bf41f85b805499640230b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
