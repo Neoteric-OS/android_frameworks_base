@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "AAAKdX///8U\u003d",
+        "filename": "cmds/installd/commands.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-10-17T16:44:13Z",
+      "side": 1,
+      "message": "I commented below about this, but the subsequent setfilecon doesn\u0027t work if installd only has CAP_CHOWN and not root. I just moved the uid argument up to this one and removed the previous one. If this won\u0027t work, we\u0027ll have to figure something else out.",
+      "parentUuid": "AAAKaH///3g\u003d",
+      "revId": "c9a1aabc49d31370e3bf41f85b805499640230b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAKdn////g\u003d",
         "filename": "cmds/installd/commands.c",
         "patchSetId": 1
