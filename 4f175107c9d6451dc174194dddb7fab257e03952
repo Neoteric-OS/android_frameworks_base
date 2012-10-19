@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAKgH///8U\u003d",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2012-10-19T21:39:09Z",
+      "side": 1,
+      "message": "if you\u0027re prepared to use JniConstants.h, you can share libcore\u0027s String.class global reference.",
+      "revId": "4f175107c9d6451dc174194dddb7fab257e03952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAKgH///8E\u003d",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2012-10-19T21:39:09Z",
+      "side": 1,
+      "message": "this seems like a bad/misleading idea (in the old code too).",
+      "revId": "4f175107c9d6451dc174194dddb7fab257e03952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAKgH///78\u003d",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2012-10-19T21:39:09Z",
+      "side": 1,
+      "message": "if you\u0027re going to do this, you need to make a global reference. is this actually worth caching? is getBooleanNames performance critical?",
+      "revId": "4f175107c9d6451dc174194dddb7fab257e03952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
