@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAKgH///60\u003d",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2012-10-19T21:50:41Z",
+      "side": 1,
+      "message": "do you actually need this cast?",
+      "revId": "313362bdb8fc0e6a33d56b6e9d583b185fcf263e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
