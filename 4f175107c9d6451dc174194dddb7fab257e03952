@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAKgX///hs\u003d",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-10-19T21:45:03Z",
+      "side": 1,
+      "message": "That\u0027s buried so deep in luni! :-)",
+      "parentUuid": "AAAKgH///8U\u003d",
+      "revId": "4f175107c9d6451dc174194dddb7fab257e03952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAKgH///8E\u003d",
         "filename": "core/jni/android_os_SELinux.cpp",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAKgX///ho\u003d",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-10-19T21:45:03Z",
+      "side": 1,
+      "message": "Yeah, the library needs to be fixed for const correctness. Some of the headers even declare \"char *\" but the source itself says \"const char*\"",
+      "parentUuid": "AAAKgH///8E\u003d",
+      "revId": "4f175107c9d6451dc174194dddb7fab257e03952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAKgH///78\u003d",
         "filename": "core/jni/android_os_SELinux.cpp",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2012-10-19T21:39:09Z",
       "side": 1,
       "message": "if you\u0027re going to do this, you need to make a global reference. is this actually worth caching? is getBooleanNames performance critical?",
+      "revId": "4f175107c9d6451dc174194dddb7fab257e03952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAKgX///hk\u003d",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-10-19T21:45:03Z",
+      "side": 1,
+      "message": "Oh, whoops. No, it\u0027s not performance critical. I\u0027ll just put it back.",
+      "parentUuid": "AAAKgH///78\u003d",
       "revId": "4f175107c9d6451dc174194dddb7fab257e03952",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
