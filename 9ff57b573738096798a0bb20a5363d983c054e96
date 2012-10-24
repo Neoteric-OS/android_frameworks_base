@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAKtX///8s\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1016843
+      },
+      "writtenOn": "2012-10-24T15:59:44Z",
+      "side": 1,
+      "message": "Did you mean \"pulse\"?",
+      "revId": "9ff57b573738096798a0bb20a5363d983c054e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
