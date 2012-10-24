@@ -20,6 +20,8 @@ import com.android.internal.widget.LockPatternUtils;
 
 import android.content.Context;
 import com.android.internal.telephony.IccCardConstants;
+import android.telephony.MSimTelephonyManager;
+import android.telephony.TelephonyManager;
 
 /**
  * Knows how to create a lock pattern keyguard view, and answer questions about
@@ -46,8 +48,13 @@ public class LockPatternKeyguardViewProperties implements KeyguardViewProperties
             KeyguardViewCallback callback,
             KeyguardUpdateMonitor updateMonitor,
             KeyguardWindowController controller) {
-        return new LockPatternKeyguardView(context, callback, updateMonitor,
-                mLockPatternUtils, controller);
+        if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
+            return new MSimLockPatternKeyguardView(context, callback, updateMonitor,
+                    mLockPatternUtils, controller);
+        } else {
+            return new LockPatternKeyguardView(context, callback, updateMonitor,
+                    mLockPatternUtils, controller);
+        }
     }
 
     public boolean isSecure() {
@@ -55,11 +62,20 @@ public class LockPatternKeyguardViewProperties implements KeyguardViewProperties
     }
 
     private boolean isSimPinSecure() {
-        final IccCardConstants.State simState = mUpdateMonitor.getSimState();
-        return (simState == IccCardConstants.State.PIN_REQUIRED
-                || simState == IccCardConstants.State.PUK_REQUIRED
-                || simState == IccCardConstants.State.ABSENT
-                || simState == IccCardConstants.State.PERM_DISABLED);
+        final IccCardConstants.State[] simState;
+        boolean isSimPinSecure = false;
+        int numPhones = MSimTelephonyManager.getDefault().getPhoneCount();
+
+        simState = new IccCardConstants.State[numPhones];
+        for (int i = 0; i < numPhones; i++) {
+            simState[i] = mUpdateMonitor.getSimState(i);
+            // isPinLocked returns true if SIM is PIN/PUK Locked.
+            isSimPinSecure = isSimPinSecure || (simState[i].isPinLocked()
+                    || simState[i] == IccCardConstants.State.ABSENT
+                    || simState[i] == IccCardConstants.State.PERM_DISABLED);
+            if (isSimPinSecure) break;
+        }
+        return isSimPinSecure;
     }
 
 }

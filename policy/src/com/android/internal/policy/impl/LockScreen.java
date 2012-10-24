@@ -35,6 +35,8 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Vibrator;
+import android.telephony.MSimTelephonyManager;
+import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,14 +101,17 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
 
         @Override
         public void onDevicePolicyManagerStateChanged() {
-            updateTargets();
+            updateTargets(MSimTelephonyManager.getDefault().getDefaultSubscription());
         }
 
     };
 
     SimStateCallback mSimStateCallback = new SimStateCallback() {
         public void onSimStateChanged(IccCardConstants.State simState) {
-            updateTargets();
+            updateTargets(MSimTelephonyManager.getDefault().getDefaultSubscription());
+        }
+        public void onSimStateChanged(IccCardConstants.State simState, int subscription) {
+            updateTargets(subscription);
         }
     };
 
@@ -462,8 +467,13 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
             inflater.inflate(R.layout.keyguard_screen_tab_unlock_land, this, true);
         }
 
-        mStatusViewManager = new KeyguardStatusViewManager(this, mUpdateMonitor, mLockPatternUtils,
-                mCallback, false);
+        if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
+            mStatusViewManager = new MSimKeyguardStatusViewManager(this, mUpdateMonitor,
+                    mLockPatternUtils, mCallback, false);
+        } else {
+            mStatusViewManager = new KeyguardStatusViewManager(this, mUpdateMonitor,
+                    mLockPatternUtils, mCallback, false);
+        }
 
         setFocusable(true);
         setFocusableInTouchMode(true);
@@ -508,10 +518,10 @@ class LockScreen extends LinearLayout implements KeyguardScreen {
         }
     }
 
-    private void updateTargets() {
+    private void updateTargets(int subscription) {
         boolean disabledByAdmin = mLockPatternUtils.getDevicePolicyManager()
                 .getCameraDisabled(null);
-        boolean disabledBySimState = mUpdateMonitor.isSimLocked();
+        boolean disabledBySimState = mUpdateMonitor.isSimLocked(subscription);
         boolean cameraTargetPresent = (mUnlockWidgetMethods instanceof GlowPadViewMethods)
                 ? ((GlowPadViewMethods) mUnlockWidgetMethods)
                         .isTargetPresent(com.android.internal.R.drawable.ic_lockscreen_camera)

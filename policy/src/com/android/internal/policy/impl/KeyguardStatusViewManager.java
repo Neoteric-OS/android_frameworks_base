@@ -55,13 +55,13 @@ class KeyguardStatusViewManager implements OnClickListener {
     private static final long INSTRUCTION_RESET_DELAY = 2000; // time until instruction text resets
 
     private static final int INSTRUCTION_TEXT = 10;
-    private static final int CARRIER_TEXT = 11;
+    protected static final int CARRIER_TEXT = 11;
     private static final int CARRIER_HELP_TEXT = 12;
     private static final int HELP_MESSAGE_TEXT = 13;
     private static final int OWNER_INFO = 14;
-    private static final int BATTERY_INFO = 15;
+    protected static final int BATTERY_INFO = 15;
 
-    private StatusMode mStatus;
+    protected StatusMode mStatus;
     private String mDateFormatString;
     private TransientTextManager mTransientTextManager;
 
@@ -78,24 +78,24 @@ class KeyguardStatusViewManager implements OnClickListener {
     private View mContainer;
 
     // are we showing battery information?
-    private boolean mShowingBatteryInfo = false;
+    protected boolean mShowingBatteryInfo = false;
 
     // last known plugged in state
-    private boolean mPluggedIn = false;
+    protected boolean mPluggedIn = false;
 
     // last known battery level
-    private int mBatteryLevel = 100;
+    protected int mBatteryLevel = 100;
 
     // last known SIM state
     protected IccCardConstants.State mSimState;
 
-    private LockPatternUtils mLockPatternUtils;
-    private KeyguardUpdateMonitor mUpdateMonitor;
+    protected LockPatternUtils mLockPatternUtils;
+    protected KeyguardUpdateMonitor mUpdateMonitor;
     private Button mEmergencyCallButton;
-    private boolean mEmergencyButtonEnabledBecauseSimLocked;
+    protected boolean mEmergencyButtonEnabledBecauseSimLocked;
 
     // Shadowed text values
-    private CharSequence mCarrierText;
+    protected CharSequence mCarrierText;
     private CharSequence mCarrierHelpText;
     private String mHelpMessageText;
     private String mInstructionText;
@@ -103,10 +103,10 @@ class KeyguardStatusViewManager implements OnClickListener {
     private boolean mShowingStatus;
     private KeyguardScreenCallback mCallback;
     private final boolean mEmergencyCallButtonEnabledInScreen;
-    private CharSequence mPlmn;
-    private CharSequence mSpn;
+    protected CharSequence mPlmn;
+    protected CharSequence mSpn;
     protected int mPhoneState;
-    private DigitalClock mDigitalClock;
+    protected DigitalClock mDigitalClock;
 
     private class TransientTextManager {
         private TextView mTextView;
@@ -198,10 +198,7 @@ class KeyguardStatusViewManager implements OnClickListener {
 
         mTransientTextManager = new TransientTextManager(mCarrierView);
 
-        mUpdateMonitor.registerInfoCallback(mInfoCallback);
-        mUpdateMonitor.registerSimStateCallback(mSimStateCallback);
-
-        resetStatusInfo();
+        registerInfoCallback();
         refreshDate();
         updateOwnerInfo();
 
@@ -213,6 +210,12 @@ class KeyguardStatusViewManager implements OnClickListener {
                 v.setSelected(true);
             }
         }
+    }
+
+    protected void registerInfoCallback() {
+        mUpdateMonitor.registerInfoCallback(mInfoCallback);
+        mUpdateMonitor.registerSimStateCallback(mSimStateCallback);
+        resetStatusInfo();
     }
 
     private boolean inWidgetMode() {
@@ -262,7 +265,7 @@ class KeyguardStatusViewManager implements OnClickListener {
         update(HELP_MESSAGE_TEXT, mHelpMessageText);
     }
 
-    private void update(int what, CharSequence string) {
+    protected void update(int what, CharSequence string) {
         if (inWidgetMode()) {
             if (DEBUG) Log.v(TAG, "inWidgetMode() is true");
             // Use Transient text for messages shown while widget is shown.
@@ -372,7 +375,7 @@ class KeyguardStatusViewManager implements OnClickListener {
         }
     }
 
-    private CharSequence getAltTextMessage(MutableInt icon) {
+    protected CharSequence getAltTextMessage(MutableInt icon) {
         // If we have replaced the status area with a single widget, then this code
         // prioritizes what to show in that space when all transient messages are gone.
         CharSequence string = null;
@@ -467,7 +470,7 @@ class KeyguardStatusViewManager implements OnClickListener {
         return StatusMode.SimMissing;
     }
 
-    private Context getContext() {
+    protected Context getContext() {
         return mContainer.getContext();
     }
 
@@ -550,7 +553,7 @@ class KeyguardStatusViewManager implements OnClickListener {
     /*
      * Add emergencyCallMessage to carrier string only if phone supports emergency calls.
      */
-    private CharSequence makeCarrierStringOnEmergencyCapable(
+    protected CharSequence makeCarrierStringOnEmergencyCapable(
             CharSequence simMessage, CharSequence emergencyCallMessage) {
         if (mLockPatternUtils.isEmergencyCallCapable()) {
             return makeCarierString(simMessage, emergencyCallMessage);
@@ -618,7 +621,7 @@ class KeyguardStatusViewManager implements OnClickListener {
         }
     }
 
-    private void updateEmergencyCallButtonState(int phoneState) {
+    protected void updateEmergencyCallButtonState(int phoneState) {
         if (mEmergencyCallButton != null) {
             boolean enabledBecauseSimLocked =
                     mLockPatternUtils.isEmergencyCallEnabledWhileSimLocked()
@@ -629,7 +632,7 @@ class KeyguardStatusViewManager implements OnClickListener {
         }
     }
 
-    private InfoCallbackImpl mInfoCallback = new InfoCallbackImpl() {
+    protected InfoCallbackImpl mInfoCallback = new InfoCallbackImpl() {
 
         @Override
         public void onRefreshBatteryInfo(boolean showBatteryInfo, boolean pluggedIn,
@@ -654,6 +657,14 @@ class KeyguardStatusViewManager implements OnClickListener {
         }
 
         @Override
+        public void onRefreshCarrierInfo(CharSequence plmn, CharSequence spn, int subscription) {
+            // ignored
+        }
+
+        public void onRingerModeChanged(int state) {
+
+        }
+
         public void onPhoneStateChanged(int phoneState) {
             mPhoneState = phoneState;
             updateEmergencyCallButtonState(phoneState);
@@ -665,6 +676,10 @@ class KeyguardStatusViewManager implements OnClickListener {
 
         public void onSimStateChanged(IccCardConstants.State simState) {
             updateCarrierStateWithSimStatus(simState);
+        }
+
+        public void onSimStateChanged(IccCardConstants.State simState, int subscription) {
+            // ignored
         }
     };
 
@@ -680,7 +695,7 @@ class KeyguardStatusViewManager implements OnClickListener {
      * @param spn
      * @return
      */
-    private static CharSequence makeCarierString(CharSequence plmn, CharSequence spn) {
+    protected static CharSequence makeCarierString(CharSequence plmn, CharSequence spn) {
         final boolean plmnValid = !TextUtils.isEmpty(plmn);
         final boolean spnValid = !TextUtils.isEmpty(spn);
         if (plmnValid && spnValid) {

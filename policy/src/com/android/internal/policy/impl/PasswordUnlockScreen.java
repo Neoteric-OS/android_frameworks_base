@@ -30,6 +30,8 @@ import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.security.KeyStore;
+import android.telephony.MSimTelephonyManager;
+import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -100,8 +102,13 @@ public class PasswordUnlockScreen extends LinearLayout implements KeyguardScreen
             layoutInflater.inflate(R.layout.keyguard_screen_password_landscape, this, true);
         }
 
-        mStatusViewManager = new KeyguardStatusViewManager(this, mUpdateMonitor, mLockPatternUtils,
-                mCallback, true);
+        if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
+            mStatusViewManager = new MSimKeyguardStatusViewManager(this, mUpdateMonitor,
+                    mLockPatternUtils, mCallback, true);
+        } else {
+            mStatusViewManager = new KeyguardStatusViewManager(this, mUpdateMonitor,
+                    mLockPatternUtils, mCallback, true);
+        }
 
         final int quality = lockPatternUtils.getKeyguardStoredPasswordQuality();
         mIsAlpha = DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC == quality
