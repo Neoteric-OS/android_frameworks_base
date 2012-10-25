@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAKzX////g\u003d",
+        "filename": "core/java/android/database/sqlite/SQLiteSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1016878
+      },
+      "writtenOn": "2012-10-25T06:02:53Z",
+      "side": 1,
+      "message": "Maybe change to below is better:\nif (hasNestedTransaction()) {",
+      "revId": "a6569c3167e88948c9462dbe535d145f8d66f02c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
