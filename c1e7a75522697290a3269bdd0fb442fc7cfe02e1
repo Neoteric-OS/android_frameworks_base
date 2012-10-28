@@ -16,6 +16,24 @@
       "revId": "c1e7a75522697290a3269bdd0fb442fc7cfe02e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALD3////M\u003d",
+        "filename": "core/java/com/android/internal/widget/ScrollingTabContainerView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001115
+      },
+      "writtenOn": "2012-10-28T10:39:27Z",
+      "side": 1,
+      "message": "When during an onMeasure(int,int) the collapsed state is active canCollapse should be true (line 104). This implies lockedExpanded to be false (line 102). Then the conditional on line 120 will make sure the setTabSelected(int) will never be called during a measurement in collapsed state.\n\nWhen collapsed during onMeasure(int,int) and executing the performExpand() the call to setTabSelected(int) will occur after the Spinner is removed from the View. The isCollapsed() is false thus avoiding a call to the mTabSpinner.\n\nMy reading of the code and comment leads me to the conclusion that the patch will work and the aforementioned requestLayout during onMeasure will not occur.",
+      "parentUuid": "AAAFK3///sA\u003d",
+      "revId": "c1e7a75522697290a3269bdd0fb442fc7cfe02e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
