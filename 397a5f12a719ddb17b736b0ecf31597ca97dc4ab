@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALG3///+0\u003d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsCbHeader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1010410
+      },
+      "writtenOn": "2012-10-29T22:29:46Z",
+      "side": 1,
+      "message": "if (isEtwsMessage(messageIdentifier) \u0026\u0026 pdu.length \u003c\u003d PDU_LENGTH_ETWS )\n\nfor etws primary vs etws secondary gsm",
+      "revId": "397a5f12a719ddb17b736b0ecf31597ca97dc4ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
