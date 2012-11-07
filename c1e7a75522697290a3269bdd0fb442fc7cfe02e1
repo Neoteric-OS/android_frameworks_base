@@ -34,6 +34,24 @@
       "revId": "c1e7a75522697290a3269bdd0fb442fc7cfe02e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALR3//+5g\u003d",
+        "filename": "core/java/com/android/internal/widget/ScrollingTabContainerView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-11-07T00:46:42Z",
+      "side": 1,
+      "message": "Even if that\u0027s the case, it seems too subtle to rely on it. Future patches might affect this. It would be better to make a call that explicitly avoids layout requests.",
+      "parentUuid": "AAALD3////M\u003d",
+      "revId": "c1e7a75522697290a3269bdd0fb442fc7cfe02e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
