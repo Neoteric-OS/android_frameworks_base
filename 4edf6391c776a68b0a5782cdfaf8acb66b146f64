@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALUX///0g\u003d",
+        "filename": "core/java/android/widget/ImageView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-11-07T17:23:04Z",
+      "side": 1,
+      "message": "Add { and } around the body of the if and the else",
+      "revId": "4edf6391c776a68b0a5782cdfaf8acb66b146f64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
