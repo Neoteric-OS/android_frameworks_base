@@ -416,7 +416,7 @@ public class ResolverActivity extends AlertActivity implements AdapterView.OnIte
             final int oldItemCount = getCount();
             rebuildList();
             notifyDataSetChanged();
-            if (mList.size() <= 0) {
+            if (mCurrentResolveList != 0 && mCurrentResolveList.size() <= 0) {
                 // We no longer have any items...  just finish the activity.
                 finish();
             }
