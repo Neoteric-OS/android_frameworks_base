@@ -43,6 +43,10 @@ public class DrmInfoRequest {
      * Acquires the progress of the rights acquisition.
      */
     public static final int TYPE_RIGHTS_ACQUISITION_PROGRESS_INFO = 4;
+    /**
+     * Acquires vendor specific information.
+     */
+    public static final int TYPE_VENDOR_SPECIFIC_INFO = 5;
 
     /**
      * Key that is used to pass the unique session ID for the account or the user.
@@ -154,6 +158,7 @@ public class DrmInfoRequest {
         case TYPE_UNREGISTRATION_INFO:
         case TYPE_RIGHTS_ACQUISITION_INFO:
         case TYPE_RIGHTS_ACQUISITION_PROGRESS_INFO:
+        case TYPE_VENDOR_SPECIFIC_INFO:
             isValid = true;
             break;
         }

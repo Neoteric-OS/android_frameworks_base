@@ -25,6 +25,7 @@
 
 #include <drm/DrmInfo.h>
 #include <drm/DrmRights.h>
+#include <drm/DrmErrorEvent.h>
 #include <drm/DrmInfoEvent.h>
 #include <drm/DrmInfoStatus.h>
 #include <drm/DrmInfoRequest.h>
@@ -213,6 +214,87 @@ void JNIOnInfoListener::onInfo(const DrmInfoEvent& event) {
     env->DeleteLocalRef(message);
 }
 
+class JNIOnErrorListener : public DrmManagerClient::OnErrorListener {
+public:
+    JNIOnErrorListener(JNIEnv* env, jobject thiz, jobject weak_thiz);
+
+    virtual ~JNIOnErrorListener();
+    void onError(const DrmErrorEvent& event);
+
+private:
+    JNIOnErrorListener();
+    jclass mClass;
+    jobject mObject;
+};
+
+JNIOnErrorListener::JNIOnErrorListener(JNIEnv* env, jobject thiz, jobject weak_thiz) {
+    jclass clazz = env->GetObjectClass(thiz);
+
+    if (clazz == NULL) {
+        ALOGE("Can't find android/drm/DrmManagerClient");
+        jniThrowException(env, "java/lang/Exception", NULL);
+        return;
+    }
+    mClass = (jclass)env->NewGlobalRef(clazz);
+    mObject  = env->NewGlobalRef(weak_thiz);
+}
+
+JNIOnErrorListener::~JNIOnErrorListener() {
+    JNIEnv *env = AndroidRuntime::getJNIEnv();
+    env->DeleteGlobalRef(mObject);
+    env->DeleteGlobalRef(mClass);
+}
+
+void JNIOnErrorListener::onError(const DrmErrorEvent& event) {
+    jint uniqueId = event.getUniqueId();
+    jint type = event.getType();
+    JNIEnv *env = AndroidRuntime::getJNIEnv();
+    jstring message = env->NewStringUTF(event.getMessage().string());
+    ALOGV("JNIOnErrorListener::onError => %d | %d | %s", uniqueId, type, event.getMessage().string());
+    const DrmBuffer& drmBuffer = event.getData();
+    if (event.getCount() > 0 || drmBuffer.length > 0) {
+        jclass hashMapClazz = env->FindClass("java/util/HashMap");
+        jmethodID hashMapInitId = env->GetMethodID(hashMapClazz, "<init>", "()V");
+        jmethodID hashMapPutId = env->GetMethodID(hashMapClazz, "put",
+                "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
+        jobject hashMapObject = env->NewObject(hashMapClazz, hashMapInitId);
+        env->DeleteLocalRef(hashMapClazz);
+
+        if (0 < drmBuffer.length) {
+            jfieldID fid = env->GetStaticFieldID(mClass, "EXTEND_INFO_DATA", "Ljava/lang/String;");
+            jstring key = (jstring) env->GetStaticObjectField(mClass, fid);
+
+            jbyteArray valueByte = env->NewByteArray(drmBuffer.length);
+            env->SetByteArrayRegion(valueByte, 0, drmBuffer.length, (jbyte*) drmBuffer.data);
+            env->CallObjectMethod(hashMapObject, hashMapPutId, key, valueByte);
+            env->DeleteLocalRef(valueByte);
+            env->DeleteLocalRef(key);
+        }
+        DrmErrorEvent::KeyIterator keyIt = event.keyIterator();
+        while (keyIt.hasNext()) {
+            String8 mapKey = keyIt.next();
+            jstring key = env->NewStringUTF(mapKey.string());
+            jstring value = env->NewStringUTF(event.get(mapKey).string());
+            env->CallObjectMethod(hashMapObject, hashMapPutId, key, value);
+            env->DeleteLocalRef(value);
+            env->DeleteLocalRef(key);
+        }
+        env->CallStaticVoidMethod(
+                mClass,
+                env->GetStaticMethodID(mClass, "notifyError",
+                        "(Ljava/lang/Object;IILjava/lang/String;Ljava/util/HashMap;)V"),
+                mObject, uniqueId, type, message, hashMapObject);
+        env->DeleteLocalRef(hashMapObject);
+    } else {
+        env->CallStaticVoidMethod(
+                mClass,
+                env->GetStaticMethodID(mClass, "notifyError",
+                        "(Ljava/lang/Object;IILjava/lang/String;)V"),
+                mObject, uniqueId, type, message);
+    }
+    env->DeleteLocalRef(message);
+}
+
 static Mutex sLock;
 
 static sp<DrmManagerClientImpl> setDrmManagerClientImpl(
@@ -261,6 +343,10 @@ static void android_drm_DrmManagerClient_setListeners(
     // Set the listener to DrmManager
     sp<DrmManagerClient::OnInfoListener> listener = new JNIOnInfoListener(env, thiz, weak_thiz);
     getDrmManagerClientImpl(env, thiz)->setOnInfoListener(uniqueId, listener);
+
+    // Set the Errorlistener to DrmManager
+    sp<DrmManagerClient::OnErrorListener> errorlistener = new JNIOnErrorListener(env, thiz, weak_thiz);
+    getDrmManagerClientImpl(env, thiz)->setOnErrorListener(uniqueId, errorlistener);
 
     ALOGV("setListeners - Exit");
 }

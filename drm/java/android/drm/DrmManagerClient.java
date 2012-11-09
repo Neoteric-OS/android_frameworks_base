@@ -199,8 +199,34 @@ public class DrmManagerClient {
         }
     }
 
+    public static void notifyError(
+            Object thisReference, int uniqueId, int infoType, String message) {
+        DrmManagerClient instance = (DrmManagerClient)((WeakReference)thisReference).get();
+
+        if (null != instance && null != instance.mInfoHandler) {
+            DrmErrorEvent event = new DrmErrorEvent(uniqueId, infoType, message);
+            Message m = instance.mInfoHandler.obtainMessage(
+                    InfoHandler.ERROR_EVENT_TYPE, event);
+            instance.mInfoHandler.sendMessage(m);
+        }
+    }
+
+    private static void notifyError(
+            Object thisReference, int uniqueId, int infoType, String message,
+            HashMap<String, Object> attributes) {
+        DrmManagerClient instance = (DrmManagerClient)((WeakReference)thisReference).get();
+
+        if (null != instance && null != instance.mInfoHandler) {
+            DrmErrorEvent event = new DrmErrorEvent(uniqueId, infoType, message, attributes);
+            Message m = instance.mInfoHandler.obtainMessage(
+                    InfoHandler.ERROR_EVENT_TYPE, event);
+            instance.mInfoHandler.sendMessage(m);
+        }
+    }
+
     private class InfoHandler extends Handler {
         public static final int INFO_EVENT_TYPE = 1;
+        public static final int ERROR_EVENT_TYPE = 2;
 
         public InfoHandler(Looper looper) {
             super(looper);
@@ -233,18 +259,24 @@ public class DrmManagerClient {
                 case DrmInfoEvent.TYPE_RIGHTS_INSTALLED:
                 case DrmInfoEvent.TYPE_WAIT_FOR_RIGHTS:
                 case DrmInfoEvent.TYPE_ACCOUNT_ALREADY_REGISTERED:
-                case DrmInfoEvent.TYPE_RIGHTS_REMOVED: {
+                case DrmInfoEvent.TYPE_RIGHTS_REMOVED:
+                case DrmInfoEvent.TYPE_VENDOR_SPECIFIC: {
                     info = (DrmInfoEvent)msg.obj;
                     break;
                 }
-                default:
-                    error = new DrmErrorEvent(uniqueId, eventType, message);
-                    break;
                 }
 
                 if (null != mOnInfoListener && null != info) {
                     mOnInfoListener.onInfo(DrmManagerClient.this, info);
                 }
+                return;
+            case InfoHandler.ERROR_EVENT_TYPE:
+                uniqueId = ((DrmErrorEvent)msg.obj).getUniqueId();
+                eventType = ((DrmErrorEvent)msg.obj).getType();
+                message = ((DrmErrorEvent)msg.obj).getMessage();
+
+                error = (DrmErrorEvent)msg.obj;
+
                 if (null != mOnErrorListener && null != error) {
                     mOnErrorListener.onError(DrmManagerClient.this, error);
                 }
@@ -801,6 +833,7 @@ public class DrmManagerClient {
         case DrmInfoRequest.TYPE_REGISTRATION_INFO:
         case DrmInfoRequest.TYPE_UNREGISTRATION_INFO:
         case DrmInfoRequest.TYPE_RIGHTS_ACQUISITION_INFO:
+        case DrmInfoRequest.TYPE_VENDOR_SPECIFIC_INFO:
             eventType = DrmEvent.TYPE_DRM_INFO_PROCESSED;
             break;
         }
@@ -814,6 +847,7 @@ public class DrmManagerClient {
         case DrmInfoRequest.TYPE_REGISTRATION_INFO:
         case DrmInfoRequest.TYPE_UNREGISTRATION_INFO:
         case DrmInfoRequest.TYPE_RIGHTS_ACQUISITION_INFO:
+        case DrmInfoRequest.TYPE_VENDOR_SPECIFIC_INFO:
             error = DrmErrorEvent.TYPE_PROCESS_DRM_INFO_FAILED;
             break;
         }

@@ -63,14 +63,10 @@ public class DrmErrorEvent extends DrmEvent {
      * {@link DrmManagerClient#acquireDrmInfo acquireDrmInfo()} call fails.
      */
     public static final int TYPE_ACQUIRE_DRM_INFO_FAILED = 2008;
-
-    // Add more type constants here...
-
-    // FIXME:
-    // We may want to add a user-defined type constant, such as
-    // TYPE_VENDOR_SPECIFIC_FAILED, to take care vendor specific use
-    // cases.
-
+    /**
+     * Vendor specific error occurs.
+     */
+    public static final int TYPE_VENDOR_SPECIFIC_ERROR = 2009;
 
     /**
      * Creates a <code>DrmErrorEvent</code> object with the specified parameters.
@@ -101,7 +97,7 @@ public class DrmErrorEvent extends DrmEvent {
 
     private void checkTypeValidity(int type) {
         if (type < TYPE_RIGHTS_NOT_INSTALLED ||
-            type > TYPE_ACQUIRE_DRM_INFO_FAILED) {
+            type > TYPE_VENDOR_SPECIFIC_ERROR) {
             final String msg = "Unsupported type: " + type;
             throw new IllegalArgumentException(msg);
         }

@@ -53,13 +53,10 @@ public class DrmInfoEvent extends DrmEvent {
      * The rights have been removed.
      */
     public static final int TYPE_RIGHTS_REMOVED = 6;
-
-    // Add more type constants here...
-
-    // FIXME:
-    // We may want to add a user-defined type constant, such as
-    // TYPE_VENDOR_SPECIFIC, to take care vendor specific use
-    // cases.
+    /**
+     * DRM vendor specific event.
+     */
+    public static final int TYPE_VENDOR_SPECIFIC = 7;
 
     /**
      * Creates a <code>DrmInfoEvent</code> object with the specified parameters.
@@ -97,7 +94,7 @@ public class DrmInfoEvent extends DrmEvent {
      */
     private void checkTypeValidity(int type) {
         if (type < TYPE_ALREADY_REGISTERED_BY_ANOTHER_ACCOUNT ||
-            type > TYPE_RIGHTS_REMOVED) {
+            type > TYPE_VENDOR_SPECIFIC) {
 
             if (type != TYPE_ALL_RIGHTS_REMOVED &&
                 type != TYPE_DRM_INFO_PROCESSED) {
