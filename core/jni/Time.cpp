@@ -80,8 +80,8 @@ static inline int days_this_month(int year, int month)
 void 
 Time::switchTimezone(const char* timezone)
 {
-    time_t seconds = mktime_tz(&(this->t), this->timezone);
-    localtime_tz(&seconds, &(this->t), timezone);
+    time64_t seconds = mktime64_tz(&(this->t), this->timezone);
+    localtime64_tz(&seconds, &(this->t), timezone);
 }
 
 String8 
@@ -171,6 +171,7 @@ Time::toString() const
 void 
 Time::setToNow()
 {
+    // FIXME: should be changed until 2038
     time_t seconds;
     time(&seconds);
     localtime_tz(&seconds, &(this->t), this->timezone);
@@ -182,7 +183,7 @@ Time::toMillis(bool ignoreDst)
     if (ignoreDst) {
         this->t.tm_isdst = -1;
     }
-    int64_t r = mktime_tz(&(this->t), this->timezone);
+    int64_t r = mktime64_tz(&(this->t), this->timezone);
     if (r == -1)
         return -1;
     return r * 1000;
@@ -191,8 +192,8 @@ Time::toMillis(bool ignoreDst)
 void 
 Time::set(int64_t millis)
 {
-    time_t seconds = millis / 1000;
-    localtime_tz(&seconds, &(this->t), this->timezone);
+    time64_t seconds = millis / 1000;
+    localtime64_tz(&seconds, &(this->t), this->timezone);
 }
 
 }; // namespace android
