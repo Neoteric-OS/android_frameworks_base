@@ -16,6 +16,24 @@
       "revId": "23fc2f89ba84e3b12788d98dbf96d29ea39065d2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALin///6Q\u003d",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2012-11-13T22:13:46Z",
+      "side": 1,
+      "message": "Yeah, getmtime was already in the other side.",
+      "parentUuid": "AAALin///7o\u003d",
+      "revId": "23fc2f89ba84e3b12788d98dbf96d29ea39065d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
