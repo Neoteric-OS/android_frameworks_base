@@ -24,6 +24,7 @@ import android.os.INetworkManagementService;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.SystemProperties;
 import android.util.Log;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -45,6 +46,7 @@ public class EthernetDataTracker implements NetworkStateTracker {
     private AtomicBoolean mDefaultRouteSet = new AtomicBoolean(false);
 
     private static boolean mLinkUp;
+    private static boolean mClearIp;
     private LinkProperties mLinkProperties;
     private LinkCapabilities mLinkCapabilities;
     private NetworkInfo mNetworkInfo;
@@ -77,6 +79,7 @@ public class EthernetDataTracker implements NetworkStateTracker {
             if (mIface.equals(iface) && mLinkUp != up) {
                 Log.d(TAG, "Interface " + iface + " link " + (up ? "up" : "down"));
                 mLinkUp = up;
+                mClearIp = "yes".equals(SystemProperties.get("ro.ethernet.clear.ip", "yes"));
                 mTracker.mNetworkInfo.setIsAvailable(up);
 
                 // use DHCP
@@ -145,13 +148,15 @@ public class EthernetDataTracker implements NetworkStateTracker {
         msg = mCsHandler.obtainMessage(EVENT_STATE_CHANGED, mNetworkInfo);
         msg.sendToTarget();
 
-        IBinder b = ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE);
-        INetworkManagementService service = INetworkManagementService.Stub.asInterface(b);
-        try {
-            service.clearInterfaceAddresses(mIface);
-        } catch (Exception e) {
-            Log.e(TAG, "Failed to clear addresses or disable ipv6" + e);
-        }
+	if (mClearIp) {
+            IBinder b = ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE);
+            INetworkManagementService service = INetworkManagementService.Stub.asInterface(b);
+            try {
+                service.clearInterfaceAddresses(mIface);
+	        } catch (Exception e) {
+                    Log.e(TAG, "Failed to clear addresses or disable ipv6" + e);
+		}
+	}
     }
 
     private void interfaceRemoved(String iface) {
