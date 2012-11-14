@@ -81,6 +81,12 @@
 #define PER_USER_RANGE ((uid_t)100000)   /* range of uids per user
                                             uid = persona * PER_USER_RANGE + appid */
 
+/* Used to determine labeling mechanism for user data dirs */
+enum selinux_label_kind {
+    SEINFO,
+    SCTX
+};
+
 /* data structures */
 
 typedef struct {
@@ -197,7 +203,8 @@ int uninstall(const char *pkgname, uid_t persona);
 int renamepkg(const char *oldpkgname, const char *newpkgname);
 int fix_uid(const char *pkgname, uid_t uid, gid_t gid);
 int delete_user_data(const char *pkgname, uid_t persona);
-int make_user_data(const char *pkgname, uid_t uid, uid_t persona);
+int make_user_data(const char *pkgname, uid_t uid, uid_t persona,
+                   char* value, enum selinux_label_kind);
 int delete_persona(uid_t persona);
 int clone_persona_data(uid_t src_persona, uid_t target_persona, int copy);
 int delete_cache(const char *pkgname, uid_t persona);

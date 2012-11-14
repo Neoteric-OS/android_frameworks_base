@@ -18,6 +18,7 @@
 #include "installd.h"
 #include <diskusage/dirsize.h>
 #include <selinux/android.h>
+#include <selinux/selinux.h>
 
 /* Directory records that are used in execution of commands. */
 dir_rec_t android_data_dir;
@@ -184,7 +185,8 @@ int delete_user_data(const char *pkgname, uid_t persona)
     return delete_dir_contents(pkgdir, 0, "lib");
 }
 
-int make_user_data(const char *pkgname, uid_t uid, uid_t persona)
+int make_user_data(const char *pkgname, uid_t uid, uid_t persona,
+                   char* value, enum selinux_label_kind kind)
 {
     char pkgdir[PKG_PATH_MAX];
     char applibdir[PKG_PATH_MAX];
@@ -245,11 +247,22 @@ int make_user_data(const char *pkgname, uid_t uid, uid_t persona)
         return -1;
     }
 
-    if (selinux_android_setfilecon(pkgdir, pkgname, uid) < 0) {
-        ALOGE("cannot setfilecon dir '%s': %s\n", pkgdir, strerror(errno));
-        unlink(libsymlink);
-        unlink(pkgdir);
-        return -errno;
+    // When kind == SEINFO we are labeling based on seinfo string, when
+    // kind == SCTX we label based on security context.
+    if (kind == SEINFO) {
+        if (selinux_android_setfilecon2(pkgdir, pkgname, value, uid) < 0) {
+            unlink(libsymlink);
+            ALOGE("cannot setfilecon dir '%s': %s\n", pkgdir, strerror(errno));
+            unlink(pkgdir);
+            return -errno;
+        }
+    } else if (kind == SCTX) {
+        if (setfilecon(pkgdir, value) < 0) {
+            ALOGE("cannot setfilecon dir '%s': %s\n", pkgdir, strerror(errno));
+            unlink(libsymlink);
+            unlink(pkgdir);
+            return -errno;
+        }
     }
 
     if (chown(pkgdir, uid, uid) < 0) {
@@ -287,6 +300,7 @@ int clone_persona_data(uid_t src_persona, uid_t target_persona, int copy)
 {
     char src_data_dir[PKG_PATH_MAX];
     char pkg_path[PKG_PATH_MAX];
+    char *ctx_str = NULL;
     DIR *d;
     struct dirent *de;
     struct stat s;
@@ -315,9 +329,15 @@ int clone_persona_data(uid_t src_persona, uid_t target_persona, int copy)
                 /* Get the uid of the package */
                 ALOGI("Adding datadir for uid = %lu\n", s.st_uid);
                 uid = (uid_t) s.st_uid % PER_USER_RANGE;
+                if (getfilecon(pkg_path, &ctx_str) < 0) {
+                    ALOGE("Cannot getfilecon on %s (%s)", pkg_path, strerror(errno));
+                    goto err;
+                }
                 /* Create the directory for the target */
                 make_user_data(name, uid + target_persona * PER_USER_RANGE,
-                               target_persona);
+                               target_persona, ctx_str, SCTX);
+            err:
+                if (ctx_str) freecon(ctx_str);
             }
         }
         closedir(d);
