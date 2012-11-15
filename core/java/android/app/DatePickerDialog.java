@@ -100,7 +100,8 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         mCalendar = Calendar.getInstance();
 
         Context themeContext = getContext();
-        setButton(BUTTON_POSITIVE, themeContext.getText(R.string.date_time_done), this);
+        setButton(BUTTON_POSITIVE, themeContext.getText(R.string.date_time_set), this);
+        setButton(BUTTON_NEGATIVE, themeContext.getText(R.string.cancel), (OnClickListener) null);
         setIcon(0);
 
         LayoutInflater inflater =
@@ -148,12 +149,6 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
             mCallBack.onDateSet(mDatePicker, mDatePicker.getYear(),
                     mDatePicker.getMonth(), mDatePicker.getDayOfMonth());
         }
-    }
-
-    @Override
-    protected void onStop() {
-        tryNotifyDateSet();
-        super.onStop();
     }
 
     private void updateTitle(int year, int month, int day) {

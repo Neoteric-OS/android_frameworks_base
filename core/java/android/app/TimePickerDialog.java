@@ -96,7 +96,8 @@ public class TimePickerDialog extends AlertDialog
         setTitle(R.string.time_picker_dialog_title);
 
         Context themeContext = getContext();
-        setButton(BUTTON_POSITIVE, themeContext.getText(R.string.date_time_done), this);
+        setButton(BUTTON_POSITIVE, themeContext.getText(R.string.date_time_set), this);
+        setButton(BUTTON_NEGATIVE, themeContext.getText(R.string.cancel), (OnClickListener) null);
 
         LayoutInflater inflater =
                 (LayoutInflater) themeContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -130,12 +131,6 @@ public class TimePickerDialog extends AlertDialog
             mCallback.onTimeSet(mTimePicker, mTimePicker.getCurrentHour(),
                     mTimePicker.getCurrentMinute());
         }
-    }
-
-    @Override
-    protected void onStop() {
-        tryNotifyTimeSet();
-        super.onStop();
     }
 
     @Override
