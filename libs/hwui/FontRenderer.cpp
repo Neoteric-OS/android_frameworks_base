@@ -45,10 +45,10 @@ FontRenderer::FontRenderer() {
     mInitialized = false;
     mMaxNumberOfQuads = 1024;
     mCurrentQuadIndex = 0;
+    mLastQuadIndex = 0;
 
     mTextMesh = NULL;
     mCurrentCacheTexture = NULL;
-    mLastCacheTexture = NULL;
 
     mLinearFiltering = false;
 
@@ -116,7 +116,6 @@ FontRenderer::~FontRenderer() {
 void FontRenderer::flushAllAndInvalidate() {
     if (mCurrentQuadIndex != 0) {
         issueDrawCommand();
-        mCurrentQuadIndex = 0;
     }
 
     for (uint32_t i = 0; i < mActiveFonts.size(); i++) {
@@ -321,7 +320,7 @@ void FontRenderer::checkInit() {
 }
 
 void FontRenderer::checkTextureUpdate() {
-    if (!mUploadTexture && mLastCacheTexture == mCurrentCacheTexture) {
+    if (!mUploadTexture) {
         return;
     }
 
@@ -355,16 +354,14 @@ void FontRenderer::checkTextureUpdate() {
         }
     }
 
-    caches.activeTexture(0);
-    glBindTexture(GL_TEXTURE_2D, mCurrentCacheTexture->getTextureId());
-
-    mCurrentCacheTexture->setLinearFiltering(mLinearFiltering, false);
-    mLastCacheTexture = mCurrentCacheTexture;
-
     mUploadTexture = false;
 }
 
 void FontRenderer::issueDrawCommand() {
+    mDrawOffsets.add((uint16_t*)(mLastQuadIndex * sizeof(uint16_t) * 6));
+    mDrawCounts.add(mCurrentQuadIndex - mLastQuadIndex);
+    mDrawCacheTextures.add(mCurrentCacheTexture);
+
     checkTextureUpdate();
 
     Caches& caches = Caches::getInstance();
@@ -378,9 +375,26 @@ void FontRenderer::issueDrawCommand() {
         caches.bindTexCoordsVertexPointer(force, buffer + offset);
     }
 
-    glDrawElements(GL_TRIANGLES, mCurrentQuadIndex * 6, GL_UNSIGNED_SHORT, NULL);
+    for (uint32_t i = 0; i < mDrawOffsets.size(); i++) {
+        uint16_t* offset = mDrawOffsets[i];
+        uint32_t count = mDrawCounts[i];
+        CacheTexture* texture = mDrawCacheTextures[i];
+
+        caches.activeTexture(0);
+        glBindTexture(GL_TEXTURE_2D, texture->getTextureId());
+
+        texture->setLinearFiltering(mLinearFiltering, false);
+
+        glDrawElements(GL_TRIANGLES, count * 6, GL_UNSIGNED_SHORT, offset);
+    }
 
     mDrawn = true;
+
+    mCurrentQuadIndex = 0;
+    mLastQuadIndex = 0;
+    mDrawOffsets.clear();
+    mDrawCounts.clear();
+    mDrawCacheTextures.clear();
 }
 
 void FontRenderer::appendMeshQuadNoClip(float x1, float y1, float u1, float v1,
@@ -388,9 +402,10 @@ void FontRenderer::appendMeshQuadNoClip(float x1, float y1, float u1, float v1,
         float x4, float y4, float u4, float v4, CacheTexture* texture) {
     if (texture != mCurrentCacheTexture) {
         if (mCurrentQuadIndex != 0) {
-            // First, draw everything stored already which uses the previous texture
-            issueDrawCommand();
-            mCurrentQuadIndex = 0;
+            mDrawOffsets.add((uint16_t*)(mLastQuadIndex * sizeof(uint16_t) * 6));
+            mDrawCounts.add(mCurrentQuadIndex - mLastQuadIndex);
+            mDrawCacheTextures.add(mCurrentCacheTexture);
+            mLastQuadIndex = mCurrentQuadIndex;
         }
         // Now use the new texture id
         mCurrentCacheTexture = texture;
@@ -443,7 +458,6 @@ void FontRenderer::appendMeshQuad(float x1, float y1, float u1, float v1,
 
     if (mCurrentQuadIndex == mMaxNumberOfQuads) {
         issueDrawCommand();
-        mCurrentQuadIndex = 0;
     }
 }
 
@@ -462,7 +476,6 @@ void FontRenderer::appendRotatedMeshQuad(float x1, float y1, float u1, float v1,
 
     if (mCurrentQuadIndex == mMaxNumberOfQuads) {
         issueDrawCommand();
-        mCurrentQuadIndex = 0;
     }
 }
 
@@ -544,7 +557,6 @@ void FontRenderer::finishRender() {
 
     if (mCurrentQuadIndex != 0) {
         issueDrawCommand();
-        mCurrentQuadIndex = 0;
     }
 }
 
