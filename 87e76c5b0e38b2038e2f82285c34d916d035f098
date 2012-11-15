@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALoX///gA\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-11-15T23:00:16Z",
+      "side": 1,
+      "message": "you only want to do this if the user hasn\u0027t manually set a network preference (which you\u0027d overwrite here).  How about change getPersistedNetworkPreference to actually return -1 if it\u0027s not found and then after the mPriorityList is built, if you have -1 you can traverse mPriorityList looking for the highest priority default network?",
+      "revId": "87e76c5b0e38b2038e2f82285c34d916d035f098",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
