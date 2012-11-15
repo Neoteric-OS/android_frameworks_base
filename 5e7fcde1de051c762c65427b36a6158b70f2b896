@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALoX///l0\u003d",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-11-15T22:34:05Z",
+      "side": 1,
+      "message": "trailing white space.  This could use some additional comments.  Perhaps and example of why this might be used.",
+      "revId": "5e7fcde1de051c762c65427b36a6158b70f2b896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALoX///lo\u003d",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-11-15T22:34:05Z",
+      "side": 1,
+      "message": "Not sure yet how this is used, but it may be useful to\n1) do this when addresses are set/added so the getter just checks a precomputed value\n2) include v4 route is present (that would be a name change too)",
+      "revId": "5e7fcde1de051c762c65427b36a6158b70f2b896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALoX///kE\u003d",
+        "filename": "core/java/android/os/INetworkManagementService.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-11-15T22:34:05Z",
+      "side": 1,
+      "message": "are you missing the getClatdStatus?",
+      "revId": "5e7fcde1de051c762c65427b36a6158b70f2b896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALoX///jo\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2266,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-11-15T22:34:05Z",
+      "side": 1,
+      "message": "I would prefer not to special case this.",
+      "revId": "5e7fcde1de051c762c65427b36a6158b70f2b896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALoX///jA\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2277,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-11-15T22:34:05Z",
+      "side": 1,
+      "message": "I think I\u0027d rather have this in the handleConnect code.\n\nIt seems like we really need async unsolicited notifications.  They have to funnel back in the ip addr and routes and stuff so we can deal with it properly.",
+      "revId": "5e7fcde1de051c762c65427b36a6158b70f2b896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALoX///ig\u003d",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2287,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-11-15T22:34:05Z",
+      "side": 1,
+      "message": "This should be in the handleDisconnect.\n\nWe may also want to track what we\u0027ve started - or make sure the clatd will clean up if we start it multiple times on the same interface.",
+      "revId": "5e7fcde1de051c762c65427b36a6158b70f2b896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALoX///lY\u003d",
+        "filename": "services/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1514,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-11-15T22:34:05Z",
+      "side": 1,
+      "message": "spaces, not tabs - be consistent with the rest of the file.",
+      "revId": "5e7fcde1de051c762c65427b36a6158b70f2b896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALoX///k8\u003d",
+        "filename": "services/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1515,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-11-15T22:34:05Z",
+      "side": 1,
+      "message": "Use CONNECTIVITY_INTERNAL permission instead - it\u0027s what we\u0027ve switched to.",
+      "revId": "5e7fcde1de051c762c65427b36a6158b70f2b896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALoX///k4\u003d",
+        "filename": "services/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1529,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-11-15T22:34:05Z",
+      "side": 1,
+      "message": "lets also pass the interface so we can support multiple clatd\u0027s at a time and be specific about which is being shutdown.",
+      "revId": "5e7fcde1de051c762c65427b36a6158b70f2b896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALoX///ko\u003d",
+        "filename": "services/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1535,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2012-11-15T22:34:05Z",
+      "side": 1,
+      "message": "this leads to polling.  Could clatd shutting down be detected and turned into an unsolicited notification?",
+      "revId": "5e7fcde1de051c762c65427b36a6158b70f2b896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
