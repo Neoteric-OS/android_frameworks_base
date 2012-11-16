@@ -1801,6 +1801,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
                 if (!checkInfo.isConnectedOrConnecting() || checkTracker.isTeardownRequested()) {
                     checkInfo.setFailover(true);
                     checkTracker.reconnect();
+                    handleConnectivityChange(checkInfo.getType(), false);
                 }
                 if (DBG) log("Attempting to switch to " + checkInfo.getTypeName());
             }
