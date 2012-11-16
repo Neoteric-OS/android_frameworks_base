@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALoX///Ko\u003d",
+        "filename": "media/jni/android_media_MediaCodec.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1014088
+      },
+      "writtenOn": "2012-11-16T17:01:32Z",
+      "side": 1,
+      "message": "Make sure to submit this change _after_ submitting the API change that adds MediaCodec::getName!",
+      "revId": "056ef2ed5ff92b742fe53f2498c596ec1f6bed3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
