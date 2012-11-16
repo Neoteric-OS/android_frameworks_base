@@ -534,6 +534,10 @@
     <string name="permgroupdesc_storage" product="nosdcard">Access the USB storage.</string>
     <!-- Description of a category of application permissions, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permgroupdesc_storage" product="default">Access the SD card.</string>
+    <!-- Title of a group of permissions that are related to the screenlock, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permgrouplab_screenlock">Screen Lock</string>
+    <!-- Description of a group of permissions that are related to the screenlock, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permgroupdesc_screenlock">Change the device screen lock.</string>
 
     <!--  Permissions -->
 
