@@ -1064,6 +1064,9 @@ static int videoEditor_renderMediaItemPreviewFrame(JNIEnv* pEnv,
     /* get thumbnail*/
     result = ThumbnailOpen(&tnContext,(const M4OSA_Char*)pString, M4OSA_TRUE);
     if (result != M4NO_ERROR || tnContext  == M4OSA_NULL) {
+        if (pString != NULL) {
+            pEnv->ReleaseStringUTFChars(filePath, pString);
+        }
         return timeMs;
     }
 
@@ -1077,6 +1080,9 @@ static int videoEditor_renderMediaItemPreviewFrame(JNIEnv* pEnv,
         ThumbnailClose(tnContext);
         pMessage = videoEditJava_getErrorName(M4ERR_ALLOC);
         jniThrowException(pEnv, "java/lang/RuntimeException", pMessage);
+        if (pString != NULL) {
+            pEnv->ReleaseStringUTFChars(filePath, pString);
+        }
         return timeMs;
     }
 
@@ -1086,6 +1092,9 @@ static int videoEditor_renderMediaItemPreviewFrame(JNIEnv* pEnv,
     if (result != M4NO_ERROR) {
         free(pixelArray);
         ThumbnailClose(tnContext);
+        if (pString != NULL) {
+            pEnv->ReleaseStringUTFChars(filePath, pString);
+        }
         return fromMs;
     }
 
