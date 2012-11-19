@@ -377,6 +377,13 @@ status_t postProcessImages(const sp<AaptAssets>& assets,
 static void collect_files(const sp<AaptDir>& dir,
         KeyedVector<String8, sp<ResourceTypeSet> >* resources)
 {
+    const DefaultKeyedVector<String8, sp<AaptDir> >& subDirs = dir->getDirs();
+    int n = subDirs.size();
+    for(int i = 0; i < n; i++){
+        const sp<AaptDir>& subDir = subDirs.valueAt(i);
+        collect_files(subDir, resources);
+    }
+    
     const DefaultKeyedVector<String8, sp<AaptGroup> >& groups = dir->getFiles();
     int N = groups.size();
     for (int i=0; i<N; i++) {
