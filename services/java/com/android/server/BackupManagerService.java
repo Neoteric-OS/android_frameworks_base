@@ -5116,8 +5116,14 @@ class BackupManagerService extends IBackupManager.Stub {
                         long delay = transport.requestBackupTime();
                         if (DEBUG) Slog.w(TAG, "init failed on "
                                 + transportName + " resched in " + delay);
-                        mAlarmManager.set(AlarmManager.RTC_WAKEUP,
-                                System.currentTimeMillis() + delay, mRunInitIntent);
+
+                        long when = System.currentTimeMillis() + delay;
+                        if (when < 0) {
+                            Slog.w(TAG, "alarm time overflow when setting mRunInitIntent " +
+                                    "with delay: " + delay + ", skip alarm");
+                        } else {
+                            mAlarmManager.set(AlarmManager.RTC_WAKEUP, when, mRunInitIntent);
+                        }
                     }
                 }
             } catch (RemoteException e) {
@@ -5632,8 +5638,14 @@ class BackupManagerService extends IBackupManager.Stub {
         Random random = new Random();
         long when = System.currentTimeMillis() + delayBeforeFirstBackup +
                 random.nextInt(FUZZ_MILLIS);
-        mAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, when,
-                BACKUP_INTERVAL + random.nextInt(FUZZ_MILLIS), mRunBackupIntent);
+        if (when < 0) {
+            when = Long.MAX_VALUE;
+            Slog.w(TAG, "alarm time overflow when setting mRunBackupIntent " +
+                    "with delay: " + delayBeforeFirstBackup + ", skip alarm");
+        } else {
+            mAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, when,
+                    BACKUP_INTERVAL + random.nextInt(FUZZ_MILLIS), mRunBackupIntent);
+        }
         mNextBackupPass = when;
     }
 
