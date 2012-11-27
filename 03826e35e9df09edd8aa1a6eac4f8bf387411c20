@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALvH//+lA\u003d",
+        "filename": "libs/hwui/FontRenderer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1017638
+      },
+      "writtenOn": "2012-11-27T14:59:08Z",
+      "side": 1,
+      "message": "I believe this should be (mCurrentQuadIndex !\u003d mLastQuadIndex)",
+      "revId": "03826e35e9df09edd8aa1a6eac4f8bf387411c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALvH//+k8\u003d",
+        "filename": "libs/hwui/FontRenderer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1017638
+      },
+      "writtenOn": "2012-11-27T14:59:08Z",
+      "side": 1,
+      "message": "I\u0027d put this block, including the check for (current !\u003d last) into a separate function (e.g., updateQuads()). Then put the first three lines from issueDrawCommand() into that function and call it from there as well.",
+      "revId": "03826e35e9df09edd8aa1a6eac4f8bf387411c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
