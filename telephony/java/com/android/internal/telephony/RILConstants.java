@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
+ * Copyright (c) 2012, The Linux Foundation. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -152,6 +153,12 @@ cat include/telephony/ril.h | \
     public static final int DATA_PROFILE_CBS       = 4;
     public static final int DATA_PROFILE_OEM_BASE  = 1000;
 
+    /**
+     * Tethered mode on/off indication for RIL_UNSOL_TETHERED_MODE_STATE_CHANGED
+     */
+    int RIL_TETHERED_MODE_ON = 1;
+    int RIL_TETHERED_MODE_OFF = 0;
+
     int RIL_REQUEST_GET_SIM_STATUS = 1;
     int RIL_REQUEST_ENTER_SIM_PIN = 2;
     int RIL_REQUEST_ENTER_SIM_PUK = 3;
@@ -297,4 +304,5 @@ cat include/telephony/ril.h | \
     int RIL_UNSOL_EXIT_EMERGENCY_CALLBACK_MODE = 1033;
     int RIL_UNSOL_RIL_CONNECTED = 1034;
     int RIL_UNSOL_VOICE_RADIO_TECH_CHANGED = 1035;
+    int RIL_UNSOL_TETHERED_MODE_STATE_CHANGED = 1037;
 }
