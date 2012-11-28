@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL/X///sE\u003d",
+        "filename": "tools/aapt/ResourceIdCache.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2012-11-28T02:28:39Z",
+      "side": 1,
+      "message": "K9 winds up using \u003e 760 slots here, so I\u0027m going to kick it up a bit.  The underlying implementation uses as much as is needed to hold the cached IDs, so a modest amount of generosity here isn\u0027t much of a problem.",
+      "revId": "c1d7374e340cf3faf82bcf174a4c2e1968557b5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
