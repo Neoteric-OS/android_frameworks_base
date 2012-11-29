@@ -2085,6 +2085,7 @@ public final class ActivityManagerService extends ActivityManagerNative
                     }
                 } catch (PackageManager.NameNotFoundException e) {
                     Slog.w(TAG, "Unable to retrieve gids", e);
+                    return;
                 }
 
                 /*
