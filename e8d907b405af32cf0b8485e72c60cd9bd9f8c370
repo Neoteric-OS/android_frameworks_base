@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "MJR1WU1s",
+        "filename": "wifi/java/android/net/wifi/WifiConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2012-11-29T17:12:51Z",
+      "side": 1,
+      "message": "Can you define the 2 alongside the other modes and use it ?",
+      "revId": "e8d907b405af32cf0b8485e72c60cd9bd9f8c370",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
