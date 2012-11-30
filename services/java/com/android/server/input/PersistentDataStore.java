@@ -24,6 +24,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
+import android.view.Surface;
 import android.hardware.input.TouchCalibration;
 import android.util.AtomicFile;
 import android.util.Slog;
@@ -83,22 +84,27 @@ final class PersistentDataStore {
         }
     }
 
-    public TouchCalibration getTouchCalibration(String inputDeviceDescriptor) {
+    public TouchCalibration getTouchCalibration(String inputDeviceDescriptor, int surfaceRotation) {
         InputDeviceState state = getInputDeviceState(inputDeviceDescriptor, false);
         if (state == null) {
             return TouchCalibration.IDENTITY;
         }
-        else {
-            return state.getTouchCalibration();
+
+        TouchCalibration cal = state.getTouchCalibration(surfaceRotation);
+        if (cal == null) {
+            return TouchCalibration.IDENTITY;
         }
+        return cal;
     }
 
-    public boolean setTouchCalibration(String inputDeviceDescriptor, TouchCalibration calibration) {
+    public boolean setTouchCalibration(String inputDeviceDescriptor, int surfaceRotation, TouchCalibration calibration) {
         InputDeviceState state = getInputDeviceState(inputDeviceDescriptor, true);
-        if (state.setTouchCalibration(calibration)) {
+
+        if (state.setTouchCalibration(surfaceRotation, calibration)) {
             setDirty();
             return true;
         }
+
         return false;
     }
 
@@ -297,19 +303,55 @@ final class PersistentDataStore {
     private static final class InputDeviceState {
         private static final String[] CALIBRATION_NAME = { "x_scale", "x_ymix", "x_offset", "y_xmix", "y_scale", "y_offset" };
 
-        private TouchCalibration mTouchCalibration = TouchCalibration.IDENTITY;
+        private Map<String,TouchCalibration> mTouchCalibration = new HashMap<String,TouchCalibration>();
         private String mCurrentKeyboardLayout;
         private ArrayList<String> mKeyboardLayouts = new ArrayList<String>();
 
-        public TouchCalibration getTouchCalibration() {
-            return mTouchCalibration;
+        private String surfaceRotationToString(int surfaceRotation) {
+            switch (surfaceRotation) {
+                case Surface.ROTATION_0:   return "0";
+                case Surface.ROTATION_90:  return "90";
+                case Surface.ROTATION_180: return "180";
+                case Surface.ROTATION_270: return "270";
+            }
+            throw new IllegalArgumentException("Unsupported surface rotation value" + surfaceRotation);
         }
 
-        public boolean setTouchCalibration(TouchCalibration calibration) {
-            if (calibration.equals(mTouchCalibration))
+        private int stringToSurfaceRotation(String s) {
+            if (s.equals("0")) {
+                return Surface.ROTATION_0;
+            }
+            if (s.equals("90")) {
+                return Surface.ROTATION_90;
+            }
+            if (s.equals("180")) {
+                return Surface.ROTATION_180;
+            }
+            if (s.equals("270")) {
+                return Surface.ROTATION_270;
+            }
+            throw new IllegalArgumentException("Unsupported surface rotation string '" + s + "'");
+        }
+
+        public TouchCalibration getTouchCalibration(int surfaceRotation) {
+            try {
+                return mTouchCalibration.get(surfaceRotationToString(surfaceRotation));
+            }
+            catch (IllegalArgumentException ex) {
+                Slog.w(InputManagerService.TAG, "Cannot get touch calibration.", ex);
+                return null;
+            }
+        }
+
+        public boolean setTouchCalibration(int surfaceRotation, TouchCalibration calibration) {
+            try {
+                TouchCalibration old = mTouchCalibration.put(surfaceRotationToString(surfaceRotation), calibration);
+                return !calibration.equals(old);
+            }
+            catch (IllegalArgumentException ex) {
+                Slog.w(InputManagerService.TAG, "Cannot set touch calibration.", ex);
                 return false;
-            mTouchCalibration = calibration;
-            return true;
+            }
         }
 
         public String getCurrentKeyboardLayout() {
@@ -426,31 +468,43 @@ final class PersistentDataStore {
                 }
                 else if (parser.getName().equals("calibration")) {
                     String format = parser.getAttributeValue(null, "format");
+                    String rotation = parser.getAttributeValue(null, "rotation");
                     if (format == null) {
                         throw new XmlPullParserException(
                                 "Missing format attribute on calibration.");
                     }
-                    if (format.equals("affine")) {
-                        float[] matrix = TouchCalibration.IDENTITY.getAffineTransform();
-                        int depth = parser.getDepth();
-                        while (XmlUtils.nextElementWithin(parser, depth)) {
-                            String tag = parser.getName().toLowerCase();
-                            String value = parser.nextText();
-
-                            for (int i = 0; i < matrix.length && i < CALIBRATION_NAME.length; i++) {
-                                if (tag.equals(CALIBRATION_NAME[i])) {
-                                    matrix[i] = Float.parseFloat(value);
-                                    break;
-                                }
-                            }
-                        }
-                        mTouchCalibration = new TouchCalibration(matrix[0], matrix[1], matrix[2],
-                                matrix[3], matrix[4], matrix[5]);
+                    if (rotation == null) {
+                        throw new XmlPullParserException(
+                                "Missing rotation attribute on calibration.");
                     }
-                    else {
+                    if (!format.equals("affine")) {
                         throw new XmlPullParserException(
                                 "Unsupported format for calibration.");
                     }
+                    try {
+                        stringToSurfaceRotation(rotation);
+                    }
+                    catch (Exception e) {
+                        throw new XmlPullParserException(
+                                "Unsupported rotation for calibration.");
+                    }
+
+                    float[] matrix = TouchCalibration.IDENTITY.getAffineTransform();
+                    int depth = parser.getDepth();
+                    while (XmlUtils.nextElementWithin(parser, depth)) {
+                        String tag = parser.getName().toLowerCase();
+                        String value = parser.nextText();
+
+                        for (int i = 0; i < matrix.length && i < CALIBRATION_NAME.length; i++) {
+                            if (tag.equals(CALIBRATION_NAME[i])) {
+                                matrix[i] = Float.parseFloat(value);
+                                break;
+                            }
+                        }
+                    }
+
+                    mTouchCalibration.put(rotation, new TouchCalibration(matrix[0],
+                        matrix[1], matrix[2], matrix[3], matrix[4], matrix[5]));
                 }
             }
 
@@ -474,15 +528,18 @@ final class PersistentDataStore {
                 serializer.endTag(null, "keyboard-layout");
             }
 
-            serializer.startTag(null, "calibration");
-            serializer.attribute(null, "format", "affine");
-            float[] transform = mTouchCalibration.getAffineTransform();
-            for (int i = 0; i < transform.length && i < CALIBRATION_NAME.length; i++) {
-                serializer.startTag(null, CALIBRATION_NAME[i]);
-                serializer.text(Float.toString(transform[i]));
-                serializer.endTag(null, CALIBRATION_NAME[i]);
+            for (String key : mTouchCalibration.keySet()) {
+                serializer.startTag(null, "calibration");
+                serializer.attribute(null, "format", "affine");
+                serializer.attribute(null, "rotation", key);
+                float[] transform = mTouchCalibration.get(key).getAffineTransform();
+                for (int i = 0; i < transform.length && i < CALIBRATION_NAME.length; i++) {
+                    serializer.startTag(null, CALIBRATION_NAME[i]);
+                    serializer.text(Float.toString(transform[i]));
+                    serializer.endTag(null, CALIBRATION_NAME[i]);
+                }
+                serializer.endTag(null, "calibration");
             }
-            serializer.endTag(null, "calibration");
         }
     }
 }

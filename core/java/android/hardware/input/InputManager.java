@@ -508,13 +508,13 @@ public final class InputManager {
      *
      * @hide
      */
-    public TouchCalibration getTouchCalibration(String inputDeviceDescriptor) {
+    public TouchCalibration getTouchCalibration(String inputDeviceDescriptor, int surfaceRotation) {
         if (inputDeviceDescriptor == null) {
             throw new IllegalArgumentException("inputDeviceDescriptor must not be null");
         }
 
         try {
-            return mIm.getTouchCalibrationForInputDevice(inputDeviceDescriptor);
+            return mIm.getTouchCalibrationForInputDevice(inputDeviceDescriptor, surfaceRotation);
         } catch (RemoteException ex) {
             Log.w(TAG, "Could not get calibration matrix for input device.", ex);
             return TouchCalibration.IDENTITY;
@@ -533,16 +533,17 @@ public final class InputManager {
      *
      * @hide
      */
-    public void setTouchCalibration(String inputDeviceDescriptor, TouchCalibration calibration) {
+    public void setTouchCalibration(String inputDeviceDescriptor, int surfaceRotation, TouchCalibration calibration) {
         if (inputDeviceDescriptor == null) {
             throw new IllegalArgumentException("inputDeviceDescriptor must not be null");
         }
 
         try {
-            mIm.setTouchCalibrationForInputDevice(inputDeviceDescriptor, calibration);
+            mIm.setTouchCalibrationForInputDevice(inputDeviceDescriptor, surfaceRotation, calibration);
         } catch (RemoteException ex) {
             Log.w(TAG, "Could not set calibration matrix for input device.", ex);
         }
+
     }
 
     /**

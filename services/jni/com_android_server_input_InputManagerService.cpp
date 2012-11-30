@@ -186,7 +186,7 @@ public:
     virtual void notifyInputDevicesChanged(const Vector<InputDeviceInfo>& inputDevices);
     virtual sp<KeyCharacterMap> getKeyboardLayoutOverlay(const String8& inputDeviceDescriptor);
     virtual String8 getDeviceAlias(const InputDeviceIdentifier& identifier);
-    TouchAffineTransformation getTouchAffineTransformation(const String8& inputDeviceDescriptor);
+    TouchAffineTransformation getTouchAffineTransformation(const String8& inputDeviceDescriptor, int32_t surfaceRotation);
 
     /* --- InputDispatcherPolicyInterface implementation --- */
 
@@ -745,7 +745,7 @@ bool NativeInputManager::isScreenBright() {
 }
 
 TouchAffineTransformation NativeInputManager::getTouchAffineTransformation(
-        const String8& inputDeviceDescriptor) {
+        const String8& inputDeviceDescriptor, int32_t surfaceRotation) {
     JNIEnv* env = jniEnv();
 
     jstring descriptor = env->NewStringUTF(inputDeviceDescriptor.string());
@@ -754,7 +754,7 @@ TouchAffineTransformation NativeInputManager::getTouchAffineTransformation(
         return TouchAffineTransformation();
     }
 
-    jobject cal = env->CallObjectMethod(mServiceObj, gServiceClassInfo.getTouchCalibrationForInputDevice, descriptor);
+    jobject cal = env->CallObjectMethod(mServiceObj, gServiceClassInfo.getTouchCalibrationForInputDevice, descriptor, surfaceRotation);
     jclass calClass = env->FindClass("android/hardware/input/TouchCalibration");
     jmethodID affineMethod = env->GetMethodID(calClass, "getAffineTransform", "()[F");
     jfloatArray matrixArr = jfloatArray(env->CallObjectMethod(cal, affineMethod));
@@ -1489,7 +1489,7 @@ int register_android_server_InputManager(JNIEnv* env) {
             "getDeviceAlias", "(Ljava/lang/String;)Ljava/lang/String;");
 
     GET_METHOD_ID(gServiceClassInfo.getTouchCalibrationForInputDevice, clazz,
-            "getTouchCalibrationForInputDevice", "(Ljava/lang/String;)Landroid/hardware/input/TouchCalibration;");
+            "getTouchCalibrationForInputDevice", "(Ljava/lang/String;I)Landroid/hardware/input/TouchCalibration;");
 
     // InputDevice
 

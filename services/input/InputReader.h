@@ -313,7 +313,7 @@ public:
     virtual String8 getDeviceAlias(const InputDeviceIdentifier& identifier) = 0;
 
     /* Gets the affine calibration associated with the specified device. */
-    virtual TouchAffineTransformation getTouchAffineTransformation(const String8& inputDeviceDescriptor) = 0;
+    virtual TouchAffineTransformation getTouchAffineTransformation(const String8& inputDeviceDescriptor, int32_t surfaceRotation) = 0;
 };
 
 

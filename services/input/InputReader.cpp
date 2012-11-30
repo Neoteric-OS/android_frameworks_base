@@ -3272,6 +3272,9 @@ void TouchInputMapper::configureSurface(nsecs_t when, bool* outResetNeeded) {
             break;
         }
 
+        // Location
+        updateAffineTransformation();
+
         if (mDeviceMode == DEVICE_MODE_POINTER) {
             // Compute pointer gesture detection parameters.
             float rawDiagonal = hypotf(rawWidth, rawHeight);
@@ -3650,7 +3653,7 @@ void TouchInputMapper::dumpAffineTransformation(String8& dump) {
 }
 
 void TouchInputMapper::updateAffineTransformation() {
-    mAffineTransform = getPolicy()->getTouchAffineTransformation(mDevice->getDescriptor());
+    mAffineTransform = getPolicy()->getTouchAffineTransformation(mDevice->getDescriptor(), mSurfaceOrientation);
 }
 
 void TouchInputMapper::reset(nsecs_t when) {
