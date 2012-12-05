@@ -1834,7 +1834,7 @@ static status_t writeLayoutClasses(
                     }
                 }
                 fprintf(fp, "%s  @attr name %s:%s\n", indentStr,
-                        "android", String8(name).string());
+                        assets->getPackage().string(), String8(name).string());
                 fprintf(fp, "%s*/\n", indentStr);
                 if (deprecated) {
                     fprintf(fp, "%s@Deprecated\n", indentStr);
