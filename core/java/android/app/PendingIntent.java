@@ -200,10 +200,15 @@ public final class PendingIntent implements Parcelable {
      * existing activity, so you must use the {@link Intent#FLAG_ACTIVITY_NEW_TASK
      * Intent.FLAG_ACTIVITY_NEW_TASK} launch flag in the Intent.
      *
+     * If called multiple times with Intents that only differ in their extras,
+     * both PendingIntents will refer to the second Intent. To solve this use
+     * different values in the requestCode parameter for each call. See the
+     * introduction for more information.
+     *
      * @param context The Context in which this PendingIntent should start
      * the activity.
      * @param requestCode Private request code for the sender (currently
-     * not used).
+     * not used, except to force the creation of a new PendingIntent).
      * @param intent Intent of the activity to be launched.
      * @param flags May be {@link #FLAG_ONE_SHOT}, {@link #FLAG_NO_CREATE},
      * {@link #FLAG_CANCEL_CURRENT}, {@link #FLAG_UPDATE_CURRENT},
@@ -227,10 +232,15 @@ public final class PendingIntent implements Parcelable {
      * existing activity, so you must use the {@link Intent#FLAG_ACTIVITY_NEW_TASK
      * Intent.FLAG_ACTIVITY_NEW_TASK} launch flag in the Intent.
      *
+     * If called multiple times with Intents that only differ in their extras,
+     * both PendingIntents will refer to the second Intent. To solve this use
+     * different values in the requestCode parameter for each call. See the
+     * introduction for more information.
+     *
      * @param context The Context in which this PendingIntent should start
      * the activity.
      * @param requestCode Private request code for the sender (currently
-     * not used).
+     * not used, except to force the creation of a new PendingIntent).
      * @param intent Intent of the activity to be launched.
      * @param flags May be {@link #FLAG_ONE_SHOT}, {@link #FLAG_NO_CREATE},
      * {@link #FLAG_CANCEL_CURRENT}, {@link #FLAG_UPDATE_CURRENT},
@@ -316,7 +326,7 @@ public final class PendingIntent implements Parcelable {
      * @param context The Context in which this PendingIntent should start
      * the activity.
      * @param requestCode Private request code for the sender (currently
-     * not used).
+     * not used, except to force the creation of a new PendingIntent).
      * @param intents Array of Intents of the activities to be launched.
      * @param flags May be {@link #FLAG_ONE_SHOT}, {@link #FLAG_NO_CREATE},
      * {@link #FLAG_CANCEL_CURRENT}, {@link #FLAG_UPDATE_CURRENT},
@@ -362,7 +372,7 @@ public final class PendingIntent implements Parcelable {
      * @param context The Context in which this PendingIntent should start
      * the activity.
      * @param requestCode Private request code for the sender (currently
-     * not used).
+     * not used, except to force the creation of a new PendingIntent).
      * @param intents Array of Intents of the activities to be launched.
      * @param flags May be {@link #FLAG_ONE_SHOT}, {@link #FLAG_NO_CREATE},
      * {@link #FLAG_CANCEL_CURRENT}, {@link #FLAG_UPDATE_CURRENT},
@@ -423,10 +433,15 @@ public final class PendingIntent implements Parcelable {
      * Retrieve a PendingIntent that will perform a broadcast, like calling
      * {@link Context#sendBroadcast(Intent) Context.sendBroadcast()}.
      *
+     * If called multiple times with Intents that only differ in their extras,
+     * both PendingIntents will refer to the second Intent. To solve this use
+     * different values in the requestCode parameter for each call. See the
+     * introduction for more information.
+     *
      * @param context The Context in which this PendingIntent should perform
      * the broadcast.
      * @param requestCode Private request code for the sender (currently
-     * not used).
+     * not used, except to force the creation of a new PendingIntent).
      * @param intent The Intent to be broadcast.
      * @param flags May be {@link #FLAG_ONE_SHOT}, {@link #FLAG_NO_CREATE},
      * {@link #FLAG_CANCEL_CURRENT}, {@link #FLAG_UPDATE_CURRENT},
@@ -473,10 +488,15 @@ public final class PendingIntent implements Parcelable {
      * {@link Context#startService Context.startService()}.  The start
      * arguments given to the service will come from the extras of the Intent.
      *
+     * If called multiple times with Intents that only differ in their extras,
+     * both PendingIntents will refer to the second Intent. To solve this use
+     * different values in the requestCode parameter for each call. See the
+     * introduction for more information.
+     *
      * @param context The Context in which this PendingIntent should start
      * the service.
      * @param requestCode Private request code for the sender (currently
-     * not used).
+     * not used, except to force the creation of a new PendingIntent).
      * @param intent An Intent describing the service to be started.
      * @param flags May be {@link #FLAG_ONE_SHOT}, {@link #FLAG_NO_CREATE},
      * {@link #FLAG_CANCEL_CURRENT}, {@link #FLAG_UPDATE_CURRENT},
