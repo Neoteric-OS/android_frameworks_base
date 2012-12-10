@@ -60,9 +60,12 @@ import android.widget.ImageView;
 import com.android.systemui.R;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import libcore.io.IoUtils;
 
 /**
  * POD used in the AsyncTask which saves an image in the background.
@@ -193,9 +196,17 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
         Bitmap image = params[0].image;
         Resources r = context.getResources();
 
+        OutputStream os = null;
         try {
+            File file = new File(mImageFilePath);
+
             // Create screenshot directory if it doesn't exist
             mScreenshotDir.mkdirs();
+
+            os = new FileOutputStream(file);
+            image.compress(Bitmap.CompressFormat.PNG, 100, os);
+            os.flush();
+            os.close();
 
             // Save the screenshot to the MediaStore
             ContentValues values = new ContentValues();
@@ -209,6 +220,7 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
             values.put(MediaStore.Images.ImageColumns.MIME_TYPE, "image/png");
             values.put(MediaStore.Images.ImageColumns.WIDTH, mImageWidth);
             values.put(MediaStore.Images.ImageColumns.HEIGHT, mImageHeight);
+            values.put(MediaStore.Images.ImageColumns.SIZE, file.length());
             Uri uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
             String subjectDate = new SimpleDateFormat("hh:mma, MMM dd, yyyy")
@@ -228,16 +240,6 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
                      PendingIntent.getActivity(context, 0, chooserIntent, 
                              PendingIntent.FLAG_CANCEL_CURRENT));
 
-            OutputStream out = resolver.openOutputStream(uri);
-            image.compress(Bitmap.CompressFormat.PNG, 100, out);
-            out.flush();
-            out.close();
-
-            // update file size in the database
-            values.clear();
-            values.put(MediaStore.Images.ImageColumns.SIZE, new File(mImageFilePath).length());
-            resolver.update(uri, values, null, null);
-
             params[0].imageUri = uri;
             params[0].image = null;
             params[0].result = 0;
@@ -246,6 +248,8 @@ class SaveImageInBackgroundTask extends AsyncTask<SaveImageInBackgroundData, Voi
             // mounted
             params[0].clearImage();
             params[0].result = 1;
+        } finally {
+            IoUtils.closeQuietly(os);
         }
 
         // Recycle the bitmap data
