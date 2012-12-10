@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "M1erePjw",
+        "filename": "core/java/android/widget/Editor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-12-10T17:44:58Z",
+      "side": 0,
+      "message": "What if ellipsizing is enabled? Shouldn\u0027t the display lists be invalidated in this case?",
+      "revId": "be5316e012d98cd3e74f8aff628c88845cc3fb13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
