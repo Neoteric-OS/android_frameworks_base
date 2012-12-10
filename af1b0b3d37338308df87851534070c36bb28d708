@@ -19,6 +19,92 @@
     },
     {
       "key": {
+        "uuid": "M1OQZU4Y",
+        "filename": "core/java/android/text/DynamicLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1005088
+      },
+      "writtenOn": "2012-12-10T20:37:53Z",
+      "side": 1,
+      "message": "This kind of comment should be inserting into the code directly",
+      "parentUuid": "M5pHjZr8",
+      "revId": "af1b0b3d37338308df87851534070c36bb28d708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1GQHIyM",
+        "filename": "core/java/android/text/DynamicLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1005088
+      },
+      "writtenOn": "2012-12-10T20:37:53Z",
+      "side": 1,
+      "message": "Naming is awkward. Should be probably \"getIndexFirstChangedBlock()\"",
+      "revId": "af1b0b3d37338308df87851534070c36bb28d708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1EQEpxw",
+        "filename": "core/java/android/text/DynamicLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1005088
+      },
+      "writtenOn": "2012-12-10T20:37:53Z",
+      "side": 1,
+      "message": "I really dont like a getter method to have some \"side effects\" and especially changing its own value.\n\nI would prefer a simple:\n\npublic int getIndexFirstChangedBlock() {\n    return mIndexFirstChangedBlocks;\n}",
+      "revId": "af1b0b3d37338308df87851534070c36bb28d708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1EQrB4M",
+        "filename": "core/java/android/text/DynamicLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1005088
+      },
+      "writtenOn": "2012-12-10T20:37:53Z",
+      "side": 1,
+      "message": "Awkward naming. I would call it \"mIndexFirstChangedBlock\"",
+      "revId": "af1b0b3d37338308df87851534070c36bb28d708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1ASmHxM",
+        "filename": "core/java/android/widget/Editor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1005088
+      },
+      "writtenOn": "2012-12-10T20:37:53Z",
+      "side": 1,
+      "message": "Extract \"!blockDisplayList.isValid()\".\n\nfinal boolean blockDisplayListIsValid \u003d !blockDisplayList.isValid();\n\nand reuse it later with the \"second if\".\n\nBTW, it seems that we have \"final boolean blockIsInvalid\" so maybe there is a better way: \n\ncan we just replace \"!blockDisplayList.isValid()\" with \"blockIsInvalid\" ???",
+      "revId": "af1b0b3d37338308df87851534070c36bb28d708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "M5lE4-j8",
         "filename": "core/java/android/widget/Editor.java",
         "patchSetId": 1
@@ -36,6 +122,24 @@
     },
     {
       "key": {
+        "uuid": "M1IRTLwU",
+        "filename": "core/java/android/widget/Editor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 1005088
+      },
+      "writtenOn": "2012-12-10T20:37:53Z",
+      "side": 1,
+      "message": "Add comment to the code",
+      "parentUuid": "M5lE4-j8",
+      "revId": "af1b0b3d37338308df87851534070c36bb28d708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "M5nFF.q4",
         "filename": "core/java/android/widget/Editor.java",
         "patchSetId": 1
@@ -47,6 +151,24 @@
       "writtenOn": "2012-12-10T12:14:20Z",
       "side": 1,
       "message": "However, valid display list whose index is \u003e\u003d firstOfChangedBlocks only needs to update its drawing location.",
+      "revId": "af1b0b3d37338308df87851534070c36bb28d708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1OSWc6s",
+        "filename": "core/java/android/widget/Editor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1325,
+      "author": {
+        "id": 1005088
+      },
+      "writtenOn": "2012-12-10T20:37:53Z",
+      "side": 1,
+      "message": "Add comment to the code",
+      "parentUuid": "M5nFF.q4",
       "revId": "af1b0b3d37338308df87851534070c36bb28d708",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false

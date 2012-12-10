@@ -16,6 +16,41 @@
       "revId": "be5316e012d98cd3e74f8aff628c88845cc3fb13",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1ORAMzg",
+        "filename": "core/java/android/widget/Editor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 1005088
+      },
+      "writtenOn": "2012-12-10T20:37:53Z",
+      "side": 0,
+      "message": "Yes, I feel that this code should stay",
+      "parentUuid": "M1erePjw",
+      "revId": "be5316e012d98cd3e74f8aff628c88845cc3fb13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1KQ-S7Y",
+        "filename": "core/java/android/widget/TextView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6326,
+      "author": {
+        "id": 1005088
+      },
+      "writtenOn": "2012-12-10T20:37:53Z",
+      "side": 0,
+      "message": "I would probably keep this code but tune it this way:\n\nif (changed \u0026\u0026 mEditor !\u003d null \u0026\u0026 mEditor.isBlockDisplayListValid()) mEditor.invalidateTextDisplayList();\n\nand create a new method for Editor:\n\n@hide\npublic boolean Editor.isBlockDisplayListValid() {\n return \"false\" if there is one invalid block display list; return \"true\" if all block display lists are valid.\n}",
+      "revId": "be5316e012d98cd3e74f8aff628c88845cc3fb13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
