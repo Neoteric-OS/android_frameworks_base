@@ -172,6 +172,23 @@
       "revId": "af1b0b3d37338308df87851534070c36bb28d708",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1141lNY",
+        "filename": "core/java/android/widget/Editor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1325,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-12-10T20:41:38Z",
+      "side": 1,
+      "message": "When the display list is recorded, the following translate operation is inserted:\n\nhardwareCanvas.translate(-left, -top);\n\nIf setLefTopRightBottom() is modified this translate() should also be modified. Another way of doing it would be to call setLeftTopRightBottom() with the delta between the old position and the new position.",
+      "revId": "af1b0b3d37338308df87851534070c36bb28d708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
