@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "M1wbMYrk",
+        "filename": "core/jni/android_net_LocalSocketImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2012-12-11T17:34:51Z",
+      "side": 1,
+      "message": "enh, is the right fix to use ScopedUtfChars?",
+      "revId": "084b7e31fe89ec98d8fd19fde7055bd7b0c682cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
