@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "M153goRw",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2012-12-11T00:41:54Z",
+      "side": 1,
+      "message": "This change is unnecessary.  WAL is disabled automatically when the database is opened even if the database was previously opened in WAL mode.\n\nThe correct change is to remove the call to setWriteAheadLoggingEnabled in the DatabaseHelper constructor.",
+      "revId": "3b6c9e8ddd5cdb67db82e272b3903e74bf1a9ed7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
