@@ -16,6 +16,24 @@
       "revId": "bbbcd73c38ea5e89a4b77a0d2e14d74243f4ecd3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI5n//+6M\u003d",
+        "filename": "core/java/android/database/sqlite/SQLiteQueryBuilder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1015614
+      },
+      "writtenOn": "2012-12-11T10:28:18Z",
+      "side": 1,
+      "message": "You\u0027re right, the deal is to call this method with db !\u003d null\nWe made this change only to satisfy the tool (klocwork)",
+      "parentUuid": "AAAI33//+aY\u003d",
+      "revId": "bbbcd73c38ea5e89a4b77a0d2e14d74243f4ecd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
