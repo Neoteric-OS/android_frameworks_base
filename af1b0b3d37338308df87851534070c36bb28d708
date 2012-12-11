@@ -105,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "M4GzcROA",
+        "filename": "core/java/android/widget/Editor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1017028
+      },
+      "writtenOn": "2012-12-11T05:07:21Z",
+      "side": 1,
+      "message": "While testing it, I found some cases when blockIsInvalid was false but !blockDisplayList.isValid() is true and it caused IllegalStateException in an application.\n\nSo we cannot just replace \"!blockDisplayList.isValid()\" with \"blockIsInvalid\".",
+      "parentUuid": "M1ASmHxM",
+      "revId": "af1b0b3d37338308df87851534070c36bb28d708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "M5lE4-j8",
         "filename": "core/java/android/widget/Editor.java",
         "patchSetId": 1
