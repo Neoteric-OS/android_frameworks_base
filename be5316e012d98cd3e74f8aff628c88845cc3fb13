@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "M1PpmDuI",
+        "filename": "core/java/android/widget/Editor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-12-11T01:13:30Z",
+      "side": 0,
+      "message": "This comment mentions the optimization you\u0027ve implemented but I don\u0027t think your patch will work with ellipsizing. I\u0027m not suggesting this code should stay as is, just that display lists would still need to be invalidated in some situations.",
+      "parentUuid": "M4Ez9wKc",
+      "revId": "be5316e012d98cd3e74f8aff628c88845cc3fb13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "M1KQ-S7Y",
         "filename": "core/java/android/widget/TextView.java",
         "patchSetId": 1

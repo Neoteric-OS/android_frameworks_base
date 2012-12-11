@@ -207,6 +207,24 @@
       "revId": "af1b0b3d37338308df87851534070c36bb28d708",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1HpTPgY",
+        "filename": "core/java/android/widget/Editor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1325,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2012-12-11T01:13:30Z",
+      "side": 1,
+      "message": "Yes, I originally suggested that optimization to the author of this change. I also need to check whether changing left/top/right/bottom directly won\u0027t cause the display list object to get early clipped by the rendering system.",
+      "parentUuid": "M4GwhpFA",
+      "revId": "af1b0b3d37338308df87851534070c36bb28d708",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
