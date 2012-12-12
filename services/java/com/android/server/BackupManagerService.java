@@ -1976,7 +1976,7 @@ class BackupManagerService extends IBackupManager.Stub {
             // package's backup agent.
             try {
                 mCurrentPackage = mPackageManager.getPackageInfo(request.packageName,
-                        PackageManager.GET_SIGNATURES);
+                        PackageManager.GET_SIGNATURES | PackageManager.GET_SHARED_LIBRARY_FILES);
                 if (mCurrentPackage.applicationInfo.backupAgentName == null) {
                     // The manifest has changed but we had a stale backup request pending.
                     // This won't happen again because the app won't be requesting further
