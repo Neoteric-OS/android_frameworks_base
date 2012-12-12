@@ -492,6 +492,24 @@ class WifiConfigStore {
     }
 
     /**
+     * Start WPS OOB
+     * @return WpsResult indicating status
+     */
+    WpsResult startWpsNfc(WpsInfo config) {
+        WpsResult result = new WpsResult();
+        if (mWifiNative.startWpsNfc(config)) {
+            loge("Success to start WPS OOB");
+            /* WPS leaves all networks disabled */
+            markAllNetworksDisabled();
+            result.status = WpsResult.Status.SUCCESS;
+        } else {
+            loge("Failed to start WPS OOB");
+            result.status = WpsResult.Status.FAILURE;
+        }
+        return result;
+    }
+
+    /**
      * Fetch the link properties for a given network id
      * @return LinkProperties for the given network id
      */
@@ -1599,5 +1617,13 @@ class WifiConfigStore {
 
     private void log(String s) {
         Log.d(TAG, s);
+    }
+
+    public byte[] wpsNfcTokenGen(int wpsMethod) {
+        return mWifiNative.wpsNfcTokenGen(wpsMethod);
+    }
+
+    public boolean wpsNfcTagRead(byte[] payload) {
+        return mWifiNative.wpsNfcTagRead(payload);
     }
 }

@@ -1148,6 +1148,34 @@ public final class NfcAdapter {
         }
     }
 
+	/**
+     * Enable Android Beam.
+     * <p>This API is for the Settings application.
+     * @hide
+     */
+    public boolean enableAndroidBeam() {
+        try {
+            return sService.enableAndroidBeam();
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+            return false;
+        }
+    }
+
+	/**
+     * Enable WPS NFC.
+     * <p>This API is for the Settings application.
+     * @hide
+     */
+    public boolean enableWpsNfc() {
+        try {
+            return sService.enableWpsNfc();
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+            return false;
+        }
+    }
+
     /**
      * Disable NDEF Push feature.
      * <p>This API is for the Settings application.
@@ -1156,6 +1184,52 @@ public final class NfcAdapter {
     public boolean disableNdefPush() {
         try {
             return sService.disableNdefPush();
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+            return false;
+        }
+    }
+
+	/**
+     * Disable Android Beam feature.
+     * <p>This API is for the Settings application.
+     * @hide
+     */
+    public boolean disableAndroidBeam() {
+        try {
+            return sService.disableAndroidBeam();
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+            return false;
+        }
+    }
+
+	/**
+     * Disable WPS NFC feature.
+     * <p>This API is for the Settings application.
+     * @hide
+     */
+    public boolean disableWpsNfc() {
+        try {
+            return sService.disableWpsNfc();
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+            return false;
+        }
+    }
+
+    public boolean isWpsNfcEnabled() {
+        try {
+            return sService.isWpsNfcEnabled();
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+            return false;
+        }
+    }
+
+	public boolean isAndroidBeamEnabled() {
+        try {
+            return sService.isAndroidBeamEnabled();
         } catch (RemoteException e) {
             attemptDeadServiceRecovery(e);
             return false;

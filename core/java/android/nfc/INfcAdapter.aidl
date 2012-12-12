@@ -47,4 +47,16 @@ interface INfcAdapter
     void dispatch(in Tag tag);
 
     void setP2pModes(int initatorModes, int targetModes);
+
+    boolean enableWpsNfc();
+
+    boolean disableWpsNfc();
+
+    boolean isWpsNfcEnabled();
+
+    boolean enableAndroidBeam();
+
+    boolean disableAndroidBeam();
+
+    boolean isAndroidBeamEnabled();
 }

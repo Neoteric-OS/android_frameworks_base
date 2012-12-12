@@ -79,6 +79,89 @@ public class WifiNative {
 
     private native String doStringCommand(String iface, String command);
 
+    /**
+     * Convert char to byte
+     * @param c char
+     * @return byte
+     */
+    private byte charToByte(char c) {
+        return (byte) "0123456789ABCDEF".indexOf(c);
+    }
+
+    /**
+     * Convert byte[] to hex string
+     * @param bs the byte[]
+     * @return String
+     */
+    private String bytesToHexString(byte[] bs) {
+        if (bs == null) return null;
+        StringBuilder s = new StringBuilder();
+        for (byte b : bs) {
+            s.append(Byte.toHexString(b, true));
+        }
+        return s.toString();
+    }
+
+    /**
+     * Convert hex string to byte[]
+     * @param hexString the hex string
+     * @return byte[]
+     */
+    public byte[] hexStringToBytes(String hexString) {
+        if (hexString == null || hexString.equals("")) {
+            return null;
+        }
+        hexString = hexString.toUpperCase();
+        int length = hexString.length() / 2;
+        char[] hexChars = hexString.toCharArray();
+        byte[] d = new byte[length];
+        for (int i = 0; i < length; i++) {
+            int pos = i * 2;
+			if (charToByte(hexChars[pos]) == -1 || charToByte(hexChars[pos + 1]) == -1)
+				return null;
+            d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
+        }
+        return d;
+    }
+
+	public boolean wpsNfcTagRead(byte[] tag) {
+        String method;
+
+        if (tag == null) {
+            Log.e(mTAG, "wpsNfcTagRead: tag is null!");
+            return false;
+        }
+
+        String command = "WPS_NFC_TAG_READ " + bytesToHexString(tag);
+        if (DBG) Log.d(mTAG, "wpsNfcTagRead " + command);
+
+        return doBooleanCommand(command);
+    }
+
+	
+	public byte[] wpsNfcTokenGen(int wpsMethod) {
+			String command;
+	
+			switch (wpsMethod) {
+				case WpsInfo.NFC_CRED:
+					command = "WPS_NFC_CONFIG_TOKEN WPS";
+					break;
+				case WpsInfo.NFC_PWD:
+					command = "WPS_NFC_TOKEN WPS";
+					break;
+				default:
+					Log.e(mTAG, "wpsNfcTokenGen: Invalid OOB method!");
+					return null;
+			}
+			if (DBG) Log.d(mTAG, "wpsNfcTokenGen " + command);
+			String reply_str = doStringCommand(command);
+			Log.d(mTAG, "doStringCommand reply = " + reply_str);
+			byte[] reply_byte = hexStringToBytes(reply_str);
+
+			return reply_byte;
+	}
+
+
     public WifiNative(String iface) {
         mInterface = iface;
         mTAG = "WifiNative-" + iface;
@@ -440,6 +523,21 @@ public class WifiNative {
     public boolean startWpsRegistrar(String bssid, String pin) {
         if (TextUtils.isEmpty(bssid) || TextUtils.isEmpty(pin)) return false;
         return doBooleanCommand("WPS_REG " + bssid + " " + pin);
+    }
+
+    public boolean startWpsNfc(WpsInfo config) {
+		if (DBG) Log.d(mTAG, "startWpsNfc :" + config.setup);
+        switch (config.setup) {
+            case WpsInfo.NFC_CRED :
+				/* Nothing to do */
+                return true;
+            case WpsInfo.NFC_PWD :
+                String command = "WPS_NFC";
+                return doBooleanCommand(command);
+            default:
+                Log.e(mTAG, "startWpsNfc: Invalid OOB method!");
+                return false;
+        }
     }
 
     public boolean cancelWps() {

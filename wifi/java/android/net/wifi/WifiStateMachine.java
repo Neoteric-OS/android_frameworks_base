@@ -3220,6 +3220,10 @@ public class WifiStateMachine extends StateMachine {
                         case WpsInfo.DISPLAY:
                             result = mWifiConfigStore.startWpsWithPinFromDevice(wpsInfo);
                             break;
+                        case WpsInfo.NFC_CRED :
+                        case WpsInfo.NFC_PWD :
+                            result = mWifiConfigStore.startWpsNfc(wpsInfo);
+                            break;
                         default:
                             result = new WpsResult(Status.FAILURE);
                             Log.e(TAG, "Invalid setup for WPS");
@@ -3228,6 +3232,10 @@ public class WifiStateMachine extends StateMachine {
                     if (result.status == Status.SUCCESS) {
                         replyToMessage(message, WifiManager.START_WPS_SUCCEEDED, result);
                         transitionTo(mWpsRunningState);
+                        if (wpsInfo.setup == WpsInfo.NFC_CRED) {
+                            /* Assume NFC_CRED is commpleted when startWpsNfc return success */
+                            sendMessage(WifiMonitor.WPS_SUCCESS_EVENT);
+                        }
                     } else {
                         Log.e(TAG, "Failed to start WPS with config " + wpsInfo.toString());
                         replyToMessage(message, WifiManager.WPS_FAILED, WifiManager.ERROR);
@@ -3965,6 +3973,28 @@ public class WifiStateMachine extends StateMachine {
                         transitionTo(mTetheringState);
                     }
                     break;
+                case WifiManager.START_WPS:
+                    WpsInfo wpsInfo = (WpsInfo) message.obj;
+                    WpsResult result;
+                    switch (wpsInfo.setup) {
+                        case WpsInfo.NFC_CRED :
+                        case WpsInfo.NFC_PWD :
+                            result = mWifiConfigStore.startWpsNfc(wpsInfo);
+                            break;
+                        default:
+                            result = new WpsResult(Status.FAILURE);
+                            Log.e(TAG, "Invalid setup for SoftAp WPS");
+                            break;
+                    }
+
+                    if (result.status == Status.SUCCESS) {
+                        Log.d(TAG, "Success to start WPS-NFC with config " + wpsInfo.toString());
+                        replyToMessage(message, WifiManager.START_WPS_SUCCEEDED, result);
+                    } else {
+                        Log.e(TAG, "Failed to start WPS-NFC with config " + wpsInfo.toString());
+                        replyToMessage(message, WifiManager.WPS_FAILED, WifiManager.ERROR);
+                    }
+                    break;
                 default:
                     return NOT_HANDLED;
             }
@@ -4148,5 +4178,13 @@ public class WifiStateMachine extends StateMachine {
 
     private void loge(String s) {
         Log.e(TAG, s);
+    }
+
+    public byte[] wpsNfcTokenGen(int wpsMethod) {
+        return mWifiConfigStore.wpsNfcTokenGen(wpsMethod);
+    }
+
+    public boolean wpsNfcTagRead(byte[] payload) {
+        return mWifiConfigStore.wpsNfcTagRead(payload);
     }
 }

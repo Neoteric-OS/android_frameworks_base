@@ -301,6 +301,11 @@ public class WifiConfiguration implements Parcelable {
      * string otherwise.
      */
     public String preSharedKey;
+    // MRVL WPS ++
+    /** @hide */
+    public boolean wpsNfcEnabled;
+    // MRVL WPS --
+
     /**
      * Up to four WEP keys. Either an ASCII string enclosed in double
      * quotation marks (e.g., {@code "abcdef"} or a string
@@ -404,6 +409,7 @@ public class WifiConfiguration implements Parcelable {
         SSID = null;
         BSSID = null;
         priority = 0;
+        wpsNfcEnabled = false;
         hiddenSSID = false;
         disableReason = DISABLED_UNKNOWN_REASON;
         allowedKeyManagement = new BitSet();
@@ -593,6 +599,7 @@ public class WifiConfiguration implements Parcelable {
             BSSID = source.BSSID;
             preSharedKey = source.preSharedKey;
 
+            wpsNfcEnabled = source.wpsNfcEnabled;
             wepKeys = new String[4];
             for (int i = 0; i < wepKeys.length; i++)
                 wepKeys[i] = source.wepKeys[i];
@@ -623,6 +630,7 @@ public class WifiConfiguration implements Parcelable {
         dest.writeString(SSID);
         dest.writeString(BSSID);
         dest.writeString(preSharedKey);
+		dest.writeInt(wpsNfcEnabled ? 1 : 0);
         for (String wepKey : wepKeys)
             dest.writeString(wepKey);
         dest.writeInt(wepTxKeyIndex);
@@ -654,6 +662,7 @@ public class WifiConfiguration implements Parcelable {
                 config.SSID = in.readString();
                 config.BSSID = in.readString();
                 config.preSharedKey = in.readString();
+                config.wpsNfcEnabled = in.readInt() != 0;
                 for (int i = 0; i < config.wepKeys.length; i++)
                     config.wepKeys[i] = in.readString();
                 config.wepTxKeyIndex = in.readInt();
