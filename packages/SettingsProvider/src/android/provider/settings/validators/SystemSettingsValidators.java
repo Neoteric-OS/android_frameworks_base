@@ -224,5 +224,12 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.QS_SHOW_BRIGHTNESS, new InclusiveIntegerRangeValidator(0, 2));
         VALIDATORS.put(System.QS_BRIGHTNESS_POSITION_BOTTOM, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.QS_SHOW_AUTO_BRIGHTNESS_BUTTON, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.STATUSBAR_CLOCK, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.STATUSBAR_CLOCK_STYLE, new InclusiveIntegerRangeValidator(0, 2));
+        VALIDATORS.put(System.STATUSBAR_CLOCK_SECONDS, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.STATUSBAR_CLOCK_AM_PM_STYLE, new InclusiveIntegerRangeValidator(0, 2));
+        VALIDATORS.put(System.STATUSBAR_CLOCK_DATE_DISPLAY, new InclusiveIntegerRangeValidator(0, 2));
+        VALIDATORS.put(System.STATUSBAR_CLOCK_DATE_STYLE, new InclusiveIntegerRangeValidator(0, 2));
+        VALIDATORS.put(System.STATUSBAR_CLOCK_DATE_POSITION, BOOLEAN_VALIDATOR);
     }
 }

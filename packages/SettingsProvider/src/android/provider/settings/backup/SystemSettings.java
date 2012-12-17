@@ -102,5 +102,13 @@ public class SystemSettings {
         Settings.System.QS_SHOW_BRIGHTNESS,
         Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM,
 	Settings.System.QS_SHOW_AUTO_BRIGHTNESS_BUTTON,
+        Settings.System.STATUSBAR_CLOCK,
+        Settings.System.STATUSBAR_CLOCK_STYLE,
+        Settings.System.STATUSBAR_CLOCK_SECONDS,
+        Settings.System.STATUSBAR_CLOCK_AM_PM_STYLE,
+        Settings.System.STATUSBAR_CLOCK_DATE_DISPLAY,
+        Settings.System.STATUSBAR_CLOCK_DATE_STYLE,
+        Settings.System.STATUSBAR_CLOCK_DATE_FORMAT,
+        Settings.System.STATUSBAR_CLOCK_DATE_POSITION,
     };
 }

@@ -13,4 +13,7 @@
     <dimen name="qs_bottom_brightness_margin_bottom">12dp</dimen>
     <dimen name="quick_qs_top_brightness_margin_top">0dp</dimen>
     <dimen name="quick_qs_bottom_brightness_margin_bottom">0dp</dimen>
+
+    <!-- The starting padding for the right clock in the status bar -->
+    <dimen name="status_bar_right_clock_starting_padding">4dp</dimen>
 </resources>

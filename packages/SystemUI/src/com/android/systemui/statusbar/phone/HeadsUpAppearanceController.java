@@ -73,7 +73,7 @@ public class HeadsUpAppearanceController extends ViewController<HeadsUpStatusBar
     private final CommandQueue mCommandQueue;
     private final NotificationWakeUpCoordinator mWakeUpCoordinator;
 
-    private final View mClockView;
+    private final Clock mClockView;
     private final Optional<View> mOperatorNameViewOptional;
 
     @VisibleForTesting
@@ -217,7 +217,11 @@ public class HeadsUpAppearanceController extends ViewController<HeadsUpStatusBar
                 hide(mClockView, View.INVISIBLE);
                 mOperatorNameViewOptional.ifPresent(view -> hide(view, View.INVISIBLE));
             } else {
-                show(mClockView);
+                if (mClockView.getClockStyle() == 0 && mClockView.getShowClock()) {
+                    show(mClockView);
+                } else {
+                    mClockView.setVisibility(View.GONE);
+                }
                 mOperatorNameViewOptional.ifPresent(this::show);
                 hide(mView, View.GONE, () -> {
                     updateParentClipping(true /* shouldClip */);
