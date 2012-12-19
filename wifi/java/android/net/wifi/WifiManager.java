@@ -2001,4 +2001,20 @@ public class WifiManager {
             super.finalize();
         }
     }
+
+    public byte[] wpsNfcTokenGen(int wpsMethod) {
+        try {
+            return mService.wpsNfcTokenGen(wpsMethod);
+        } catch (RemoteException e) {
+            return null;
+        }
+    }
+
+    public boolean wpsNfcTagRead(byte[] payload) {
+        try {
+            return mService.wpsNfcTagRead(payload);
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
 }

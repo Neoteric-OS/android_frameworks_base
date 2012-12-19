@@ -1563,6 +1563,14 @@ public class WifiService extends IWifiManager.Stub {
         }
     }
 
+    public byte[] wpsNfcTokenGen(int wpsMethod) {
+        return mWifiStateMachine.wpsNfcTokenGen(wpsMethod);
+    }
+
+    public boolean wpsNfcTagRead(byte[] payload) {
+        return mWifiStateMachine.wpsNfcTagRead(payload);
+    }
+
     public void acquireMulticastLock(IBinder binder, String tag) {
         enforceMulticastChangePermission();
 

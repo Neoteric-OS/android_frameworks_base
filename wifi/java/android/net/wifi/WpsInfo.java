@@ -36,8 +36,15 @@ public class WpsInfo implements Parcelable {
     public static final int KEYPAD  = 2;
     /** Label pin method configuration - pin is labelled on device */
     public static final int LABEL   = 3;
+    /** WPS - NFC */
+    /** @hide */
+    public static final int  NFC_CRED          = 5;
+    /** @hide */
+    public static final int  NFC_PWD     = 6;
     /** Invalid configuration */
     public static final int INVALID = 4;
+
+    public static final String EXTRA_WPS_OOB_METHOD = "android.net.wifi.WpsInfo.OobMethod";
 
     /** Wi-Fi Protected Setup. www.wi-fi.org/wifi-protected-setup has details */
     public int setup;

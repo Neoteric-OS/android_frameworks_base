@@ -79,6 +79,10 @@ interface IWifiManager
 
     void initializeMulticastFiltering();
 
+    boolean wpsNfcTagRead(in byte[] payload);
+
+    byte[] wpsNfcTokenGen(in int type);
+
     boolean isMulticastEnabled();
 
     void acquireMulticastLock(IBinder binder, String tag);

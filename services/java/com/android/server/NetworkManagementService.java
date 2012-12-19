@@ -1065,7 +1065,9 @@ public class NetworkManagementService extends INetworkManagementService.Stub
                 mConnector.execute("softap", "set", wlanIface);
             } else {
                 mConnector.execute("softap", "set", wlanIface, wifiConfig.SSID,
-                        getSecurityType(wifiConfig), wifiConfig.preSharedKey);
+                        getSecurityType(wifiConfig), wifiConfig.preSharedKey,
+                        wifiConfig.wpsNfcEnabled ? "wps_state=2" : "",
+                        wifiConfig.wpsNfcEnabled ? "eap_server=1" : "");
             }
         } catch (NativeDaemonConnectorException e) {
             throw e.rethrowAsParcelableException();

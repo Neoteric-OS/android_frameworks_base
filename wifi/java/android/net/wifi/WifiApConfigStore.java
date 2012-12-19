@@ -156,6 +156,7 @@ class WifiApConfigStore extends StateMachine {
             if (authType != KeyMgmt.NONE) {
                 config.preSharedKey = in.readUTF();
             }
+            config.wpsNfcEnabled = in.readBoolean();
             mWifiApConfig = config;
         } catch (IOException ignore) {
             setDefaultApConfiguration();
@@ -185,6 +186,7 @@ class WifiApConfigStore extends StateMachine {
             if(authType != KeyMgmt.NONE) {
                 out.writeUTF(config.preSharedKey);
             }
+            out.writeBoolean(config.wpsNfcEnabled);
         } catch (IOException e) {
             Log.e(TAG, "Error writing hotspot configuration" + e);
         } finally {
@@ -207,6 +209,7 @@ class WifiApConfigStore extends StateMachine {
         String randomUUID = UUID.randomUUID().toString();
         //first 12 chars from xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx
         config.preSharedKey = randomUUID.substring(0, 8) + randomUUID.substring(9,13);
+        config.wpsNfcEnabled = true;
         sendMessage(WifiStateMachine.CMD_SET_AP_CONFIG, config);
     }
 }
