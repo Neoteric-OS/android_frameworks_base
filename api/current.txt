@@ -13456,6 +13456,8 @@ package android.net.wifi {
     method public boolean setWifiEnabled(boolean);
     method public boolean startScan();
     method public int updateNetwork(android.net.wifi.WifiConfiguration);
+    method public boolean wpsNfcTagRead(byte[]);
+    method public byte[] wpsNfcTokenGen(int);
     field public static final java.lang.String ACTION_PICK_WIFI_NETWORK = "android.net.wifi.PICK_WIFI_NETWORK";
     field public static final int ERROR_AUTHENTICATING = 1; // 0x1
     field public static final java.lang.String EXTRA_BSSID = "bssid";
@@ -13506,6 +13508,7 @@ package android.net.wifi {
     method public void writeToParcel(android.os.Parcel, int);
     field public static final android.os.Parcelable.Creator CREATOR;
     field public static final int DISPLAY = 1; // 0x1
+    field public static final java.lang.String EXTRA_WPS_OOB_METHOD = "android.net.wifi.WpsInfo.OobMethod";
     field public static final int INVALID = 4; // 0x4
     field public static final int KEYPAD = 2; // 0x2
     field public static final int LABEL = 3; // 0x3
