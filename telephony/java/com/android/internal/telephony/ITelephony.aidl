@@ -66,6 +66,16 @@ interface ITelephony {
      */
     boolean showCallScreenWithDialpad(boolean showDialpad);
 
+   	/**
+     * Dials the given character as a DTMF tone for the current active call. The tone automatically stops after a short time.
+     * while a DTMF tone is in play dial requests are queued.
+     * If the active call ends or gets inactive before the tone could be played, then the request will be canceled.
+     * 
+     * @param c The DTMF character to be send over the network. Valid characters are the the digits 0 to 9, # and *.
+     * @return true in the case the given character is a valid DTMF twelve key character and an active call was found.
+     */
+	boolean dialDTMFTwelveKeyCharacter(char c);
+	
     /**
      * End call if there is a call in progress, otherwise does nothing.
      *
