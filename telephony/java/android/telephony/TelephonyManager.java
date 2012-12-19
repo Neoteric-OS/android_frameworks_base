@@ -122,7 +122,7 @@ public class TelephonyManager {
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_PHONE_STATE_CHANGED =
-            "android.intent.action.PHONE_STATE";
+    "android.intent.action.PHONE_STATE";
 
     /**
      * The lookup key used with the {@link #ACTION_PHONE_STATE_CHANGED} broadcast
@@ -342,8 +342,8 @@ public class TelephonyManager {
 
     private int getPhoneTypeFromProperty() {
         int type =
-            SystemProperties.getInt(TelephonyProperties.CURRENT_ACTIVE_PHONE,
-                    getPhoneTypeFromNetworkType());
+                SystemProperties.getInt(TelephonyProperties.CURRENT_ACTIVE_PHONE,
+                        getPhoneTypeFromNetworkType());
         return type;
     }
 
@@ -379,7 +379,7 @@ public class TelephonyManager {
         case RILConstants.NETWORK_MODE_GSM_UMTS:
             return PhoneConstants.PHONE_TYPE_GSM;
 
-        // Use CDMA Phone for the global mode including CDMA
+            // Use CDMA Phone for the global mode including CDMA
         case RILConstants.NETWORK_MODE_GLOBAL:
         case RILConstants.NETWORK_MODE_LTE_CDMA_EVDO:
         case RILConstants.NETWORK_MODE_LTE_CMDA_EVDO_GSM_WCDMA:
@@ -429,11 +429,11 @@ public class TelephonyManager {
 
     /** Pattern for selecting the product type from the kernel command line */
     private static final Pattern sProductTypePattern =
-        Pattern.compile("\\sproduct_type\\s*=\\s*(\\w+)");
+            Pattern.compile("\\sproduct_type\\s*=\\s*(\\w+)");
 
     /** The ProductType used for LTE on CDMA devices */
     private static final String sLteOnCdmaProductType =
-        SystemProperties.get(TelephonyProperties.PROPERTY_LTE_ON_CDMA_PRODUCT_TYPE, "");
+            SystemProperties.get(TelephonyProperties.PROPERTY_LTE_ON_CDMA_PRODUCT_TYPE, "");
 
     /**
      * Return if the current radio is LTE on CDMA. This
@@ -451,7 +451,7 @@ public class TelephonyManager {
         String productType = "";
 
         curVal = SystemProperties.getInt(TelephonyProperties.PROPERTY_LTE_ON_CDMA_DEVICE,
-                    PhoneConstants.LTE_ON_CDMA_UNKNOWN);
+                PhoneConstants.LTE_ON_CDMA_UNKNOWN);
         retVal = curVal;
         if (retVal == PhoneConstants.LTE_ON_CDMA_UNKNOWN) {
             Matcher matcher = sProductTypePattern.matcher(sKernelCmdLine);
@@ -613,26 +613,26 @@ public class TelephonyManager {
      */
     public static int getNetworkClass(int networkType) {
         switch (networkType) {
-            case NETWORK_TYPE_GPRS:
-            case NETWORK_TYPE_EDGE:
-            case NETWORK_TYPE_CDMA:
-            case NETWORK_TYPE_1xRTT:
-            case NETWORK_TYPE_IDEN:
-                return NETWORK_CLASS_2_G;
-            case NETWORK_TYPE_UMTS:
-            case NETWORK_TYPE_EVDO_0:
-            case NETWORK_TYPE_EVDO_A:
-            case NETWORK_TYPE_HSDPA:
-            case NETWORK_TYPE_HSUPA:
-            case NETWORK_TYPE_HSPA:
-            case NETWORK_TYPE_EVDO_B:
-            case NETWORK_TYPE_EHRPD:
-            case NETWORK_TYPE_HSPAP:
-                return NETWORK_CLASS_3_G;
-            case NETWORK_TYPE_LTE:
-                return NETWORK_CLASS_4_G;
-            default:
-                return NETWORK_CLASS_UNKNOWN;
+        case NETWORK_TYPE_GPRS:
+        case NETWORK_TYPE_EDGE:
+        case NETWORK_TYPE_CDMA:
+        case NETWORK_TYPE_1xRTT:
+        case NETWORK_TYPE_IDEN:
+            return NETWORK_CLASS_2_G;
+        case NETWORK_TYPE_UMTS:
+        case NETWORK_TYPE_EVDO_0:
+        case NETWORK_TYPE_EVDO_A:
+        case NETWORK_TYPE_HSDPA:
+        case NETWORK_TYPE_HSUPA:
+        case NETWORK_TYPE_HSPA:
+        case NETWORK_TYPE_EVDO_B:
+        case NETWORK_TYPE_EHRPD:
+        case NETWORK_TYPE_HSPAP:
+            return NETWORK_CLASS_3_G;
+        case NETWORK_TYPE_LTE:
+            return NETWORK_CLASS_4_G;
+        default:
+            return NETWORK_CLASS_UNKNOWN;
         }
     }
 
@@ -650,38 +650,38 @@ public class TelephonyManager {
     /** {@hide} */
     public static String getNetworkTypeName(int type) {
         switch (type) {
-            case NETWORK_TYPE_GPRS:
-                return "GPRS";
-            case NETWORK_TYPE_EDGE:
-                return "EDGE";
-            case NETWORK_TYPE_UMTS:
-                return "UMTS";
-            case NETWORK_TYPE_HSDPA:
-                return "HSDPA";
-            case NETWORK_TYPE_HSUPA:
-                return "HSUPA";
-            case NETWORK_TYPE_HSPA:
-                return "HSPA";
-            case NETWORK_TYPE_CDMA:
-                return "CDMA";
-            case NETWORK_TYPE_EVDO_0:
-                return "CDMA - EvDo rev. 0";
-            case NETWORK_TYPE_EVDO_A:
-                return "CDMA - EvDo rev. A";
-            case NETWORK_TYPE_EVDO_B:
-                return "CDMA - EvDo rev. B";
-            case NETWORK_TYPE_1xRTT:
-                return "CDMA - 1xRTT";
-            case NETWORK_TYPE_LTE:
-                return "LTE";
-            case NETWORK_TYPE_EHRPD:
-                return "CDMA - eHRPD";
-            case NETWORK_TYPE_IDEN:
-                return "iDEN";
-            case NETWORK_TYPE_HSPAP:
-                return "HSPA+";
-            default:
-                return "UNKNOWN";
+        case NETWORK_TYPE_GPRS:
+            return "GPRS";
+        case NETWORK_TYPE_EDGE:
+            return "EDGE";
+        case NETWORK_TYPE_UMTS:
+            return "UMTS";
+        case NETWORK_TYPE_HSDPA:
+            return "HSDPA";
+        case NETWORK_TYPE_HSUPA:
+            return "HSUPA";
+        case NETWORK_TYPE_HSPA:
+            return "HSPA";
+        case NETWORK_TYPE_CDMA:
+            return "CDMA";
+        case NETWORK_TYPE_EVDO_0:
+            return "CDMA - EvDo rev. 0";
+        case NETWORK_TYPE_EVDO_A:
+            return "CDMA - EvDo rev. A";
+        case NETWORK_TYPE_EVDO_B:
+            return "CDMA - EvDo rev. B";
+        case NETWORK_TYPE_1xRTT:
+            return "CDMA - 1xRTT";
+        case NETWORK_TYPE_LTE:
+            return "LTE";
+        case NETWORK_TYPE_EHRPD:
+            return "CDMA - eHRPD";
+        case NETWORK_TYPE_IDEN:
+            return "iDEN";
+        case NETWORK_TYPE_HSPAP:
+            return "HSPA+";
+        default:
+            return "UNKNOWN";
         }
     }
 
@@ -1041,8 +1041,8 @@ public class TelephonyManager {
      *  already active. */
     public static final int CALL_STATE_RINGING = 1;
     /** Device call state: Off-hook. At least one call exists
-      * that is dialing, active, or on hold, and no calls are ringing
-      * or waiting. */
+     * that is dialing, active, or on hold, and no calls are ringing
+     * or waiting. */
     public static final int CALL_STATE_OFFHOOK = 2;
 
     /**
@@ -1055,9 +1055,9 @@ public class TelephonyManager {
             // the phone process is restarting.
             return CALL_STATE_IDLE;
         } catch (NullPointerException ex) {
-          // the phone process is restarting.
-          return CALL_STATE_IDLE;
-      }
+            // the phone process is restarting.
+            return CALL_STATE_IDLE;
+        }
     }
 
     /** Data connection activity: No traffic. */
@@ -1091,9 +1091,9 @@ public class TelephonyManager {
             // the phone process is restarting.
             return DATA_ACTIVITY_NONE;
         } catch (NullPointerException ex) {
-          // the phone process is restarting.
-          return DATA_ACTIVITY_NONE;
-      }
+            // the phone process is restarting.
+            return DATA_ACTIVITY_NONE;
+        }
     }
 
     /** Data connection state: Unknown.  Used before we know the state.
@@ -1128,6 +1128,65 @@ public class TelephonyManager {
             return DATA_DISCONNECTED;
         } catch (NullPointerException ex) {
             return DATA_DISCONNECTED;
+        }
+    }
+
+    /**
+     * Dials the given character as a DTMF tone for the current active call. The tone automatically stops after a short time.
+     * while a DTMF tone is in play dial requests are queued.
+     * If the active call ends or gets inactive before the tone could be played, then the request will be canceled.
+     *
+     * @param c The DTMF character to be send over the network. Valid characters are the the digits 0 to 9, # and *.
+     * @return True in the case the given character is a valid DTMF twelve key character and an active call exists.
+     * <p>
+     * Requires Permission:
+     *   {@link android.Manifest.permission#MANAGE_PHONE_CALLS MANAGE_PHONE_CALLS}
+     */
+    public boolean dialDTMFTwelveKeyCharacter(char c) {
+        try {
+            return getITelephony().dialDTMFTwelveKeyCharacter(c);
+        } catch (RemoteException ex) {
+            // the phone process is restarting.
+            return false;
+        } catch (NullPointerException ex) {
+            // the phone process is restarting.
+            return false;
+        }
+    }
+
+    /**
+     * Answers the currently-ringing call if existing, otherwise does nothing.
+     *
+     * If there's already a current active call, that call will be
+     * automatically put on hold.  If both lines are currently in use, the
+     * current active call will be ended.
+     * <p>
+     * Requires Permission:
+     *   {@link android.Manifest.permission#MANAGE_PHONE_CALLS MANAGE_PHONE_CALLS}
+     */
+    public void answerRingingCall() {
+        try {
+            getITelephony().answerRingingCall();
+        } catch (RemoteException ex) {
+            // the phone process is restarting.
+        } catch (NullPointerException ex) {
+            // the phone process is restarting.
+        }
+    }
+
+    /**
+     * Ends the currently-active call if there is one, otherwise does nothing.
+     * <p>
+     * Requires Permission:
+     *   {@link android.Manifest.permission#MANAGE_PHONE_CALLS MANAGE_PHONE_CALLS}
+     */
+    public void endCall() {
+        try {
+            getITelephony().endCall();
+        } catch (RemoteException ex) {
+            // the phone process is restarting.
+        } catch (NullPointerException ex) {
+            // the phone process is restarting.
         }
     }
 
