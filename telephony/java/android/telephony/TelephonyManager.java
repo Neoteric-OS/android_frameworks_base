@@ -1131,6 +1131,65 @@ public class TelephonyManager {
         }
     }
 
+    /**
+     * Dials the given character as a DTMF tone for the current active call. The tone automatically stops after a short time.
+     * while a DTMF tone is in play dial requests are queued.
+     * If the active call ends or gets inactive before the tone could be played, then the request will be canceled.
+     *
+     * @param c The DTMF character to be send over the network. Valid characters are the the digits 0 to 9, # and *.
+     * @return True in the case the given character is a valid DTMF twelve key character and an active call exists.
+     * <p>
+     * Requires Permission:
+     *   {@link android.Manifest.permission#MANAGE_PHONE_CALLS MANAGE_PHONE_CALLS}
+     */
+    public boolean dialDTMFTwelveKeyCharacter(char c) {
+        try {
+            return getITelephony().dialDTMFTwelveKeyCharacter(c);
+        } catch (RemoteException ex) {
+            // the phone process is restarting.
+            return false;
+        } catch (NullPointerException ex) {
+            // the phone process is restarting.
+            return false;
+        }
+    }
+
+    /**
+     * Answers the currently-ringing call if existing, otherwise does nothing.
+     *
+     * If there's already a current active call, that call will be
+     * automatically put on hold.  If both lines are currently in use, the
+     * current active call will be ended.
+    * <p>
+     * Requires Permission:
+     *   {@link android.Manifest.permission#MANAGE_PHONE_CALLS MANAGE_PHONE_CALLS}
+     */
+    public void answerRingingCall() {
+        try {
+            getITelephony().answerRingingCall();
+        } catch (RemoteException ex) {
+            // the phone process is restarting.
+        } catch (NullPointerException ex) {
+          // the phone process is restarting.
+      }
+    }
+
+    /**
+     * Ends the currently-active call if there is one, otherwise does nothing.
+     * <p>
+     * Requires Permission:
+     *   {@link android.Manifest.permission#MANAGE_PHONE_CALLS MANAGE_PHONE_CALLS}
+     */
+    public void endCall() {
+        try {
+            getITelephony().endCall();
+        } catch (RemoteException ex) {
+            // the phone process is restarting.
+        } catch (NullPointerException ex) {
+          // the phone process is restarting.
+      }
+    }
+
     private ITelephony getITelephony() {
         return ITelephony.Stub.asInterface(ServiceManager.getService(Context.TELEPHONY_SERVICE));
     }
