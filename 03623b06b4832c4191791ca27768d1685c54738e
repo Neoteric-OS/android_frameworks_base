@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "NFkK7u90",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2012-12-20T21:23:06Z",
+      "side": 1,
+      "message": "1. Sounds it is more logical to createEventThreads in createListeners(). In addition, we should remove the threads if the listeners are set to null. This could reduce the copy and copy code.\n\n2. This won\u0027t be able to resolve the issue whether the application uses too many resources. This patch helps, but I would like to know why in the first place so many instances needs to be opened leading to out-of file descriptor problem?",
+      "revId": "03623b06b4832c4191791ca27768d1685c54738e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
