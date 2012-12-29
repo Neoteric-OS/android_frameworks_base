@@ -95,6 +95,12 @@ public final class MediaCodecInfo {
         public final static int COLOR_TI_FormatYUV420PackedSemiPlanar = 0x7f000100;
         public final static int COLOR_QCOM_FormatYUV420SemiPlanar     = 0x7fa30c00;
 
+        // from OMX_AUDIO_AACPROFILETYPE
+        public final static int AUDIO_AACObjectMain                 = 1;
+        public final static int AUDIO_AACObjectLC                   = 2;
+        public final static int AUDIO_AACObjectHE                   = 5;
+        public final static int AUDIO_AACObjectELD                  = 39;
+
         /**
          * Defined in the OpenMAX IL specs, color format values are drawn from
          * OMX_COLOR_FORMATTYPE.

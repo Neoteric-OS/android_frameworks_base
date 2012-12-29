@@ -11258,6 +11258,10 @@ package android.media {
 
   public static final class MediaCodecInfo.CodecCapabilities {
     ctor public MediaCodecInfo.CodecCapabilities();
+    field public static final int AUDIO_AACObjectELD = 39; // 0x27
+    field public static final int AUDIO_AACObjectHE = 5; // 0x5
+    field public static final int AUDIO_AACObjectLC = 2; // 0x2
+    field public static final int AUDIO_AACObjectMain = 1; // 0x1
     field public static final int COLOR_Format12bitRGB444 = 3; // 0x3
     field public static final int COLOR_Format16bitARGB1555 = 5; // 0x5
     field public static final int COLOR_Format16bitARGB4444 = 4; // 0x4
