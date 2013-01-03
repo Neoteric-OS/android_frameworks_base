@@ -16,6 +16,24 @@
       "revId": "6e6221256693c8e56faa50e7498e1e10e115ffd7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NlsxtL8I",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 5045,
+      "author": {
+        "id": 1016953
+      },
+      "writtenOn": "2013-01-03T02:04:16Z",
+      "side": 1,
+      "message": "OK I see.",
+      "parentUuid": "NlW0GNSk",
+      "revId": "6e6221256693c8e56faa50e7498e1e10e115ffd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
