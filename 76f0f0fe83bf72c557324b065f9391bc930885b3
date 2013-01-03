@@ -16,6 +16,24 @@
       "revId": "76f0f0fe83bf72c557324b065f9391bc930885b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NgGWdIHI",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5046,
+      "author": {
+        "id": 1016953
+      },
+      "writtenOn": "2013-01-03T01:27:35Z",
+      "side": 1,
+      "message": "First of all,  \u003c NO_ERROR is already satisfied. Because adding for vector returns index, BAD_INDEX, or NO_MEMORY. BTW, BAD_INDEX and NO_MEMORY are \u003c 0.\n\nSecond, \"delete group\" is done.",
+      "parentUuid": "Nfgfe2Dw",
+      "revId": "76f0f0fe83bf72c557324b065f9391bc930885b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
