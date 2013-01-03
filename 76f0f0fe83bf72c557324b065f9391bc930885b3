@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Nfgfe2Dw",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5046,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2013-01-03T00:52:57Z",
+      "side": 1,
+      "message": "shouldn\u0027t there be a \"delete group\" here too?\n\n(and why is this \u003c NO_ERROR rather than !\u003d NO_ERROR?)",
+      "revId": "76f0f0fe83bf72c557324b065f9391bc930885b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
