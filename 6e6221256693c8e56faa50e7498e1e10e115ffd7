@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "NlW0GNSk",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 5045,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2013-01-03T01:49:54Z",
+      "side": 1,
+      "message": "i still think \u003c is less clear than !\u003d, especially because the other tests are mostly !\u003d.",
+      "revId": "6e6221256693c8e56faa50e7498e1e10e115ffd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
