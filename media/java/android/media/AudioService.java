@@ -932,22 +932,29 @@ public class AudioService extends IAudioService.Stub implements OnFinished {
                 return;
             }
 
-            // setting volume on master stream type also controls silent mode
-            if (((flags & AudioManager.FLAG_ALLOW_RINGER_MODES) != 0) ||
-                    (mStreamVolumeAlias[streamType] == getMasterStreamType())) {
-                int newRingerMode;
-                if (index == 0) {
-                    newRingerMode = mHasVibrator ? AudioManager.RINGER_MODE_VIBRATE
-                                                  : AudioManager.RINGER_MODE_SILENT;
-                    setStreamVolumeInt(mStreamVolumeAlias[streamType],
-                                       index,
-                                       device,
-                                       false,
-                                       true);
-                } else {
-                    newRingerMode = AudioManager.RINGER_MODE_NORMAL;
+            if( oldIndex != index) {
+                // setting volume on master stream type also controls silent mode
+                if (((flags & AudioManager.FLAG_ALLOW_RINGER_MODES) != 0) ||
+                        (mStreamVolumeAlias[streamType] == getMasterStreamType())) {
+                    int newRingerMode;
+                        if (index == 0) {
+                        newRingerMode = mHasVibrator ? AudioManager.RINGER_MODE_VIBRATE
+                                                      : AudioManager.RINGER_MODE_SILENT;
+    
+                        if(getRingerMode() == AudioManager.RINGER_MODE_SILENT) {
+                            newRingerMode = AudioManager.RINGER_MODE_SILENT;
+                        }
+
+                        setStreamVolumeInt(mStreamVolumeAlias[streamType],
+                                           index,
+                                           device,
+                                           false,
+                                           true);
+                    } else {
+                        newRingerMode = AudioManager.RINGER_MODE_NORMAL;
+                    }
+                    setRingerMode(newRingerMode);
                 }
-                setRingerMode(newRingerMode);
             }
 
             setStreamVolumeInt(mStreamVolumeAlias[streamType], index, device, false, true);
