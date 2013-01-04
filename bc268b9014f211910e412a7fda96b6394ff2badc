@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "NpJO.TgI",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5031,
+      "author": {
+        "id": 1014554
+      },
+      "writtenOn": "2013-01-04T02:25:17Z",
+      "side": 0,
+      "message": "delete group;\ndelete package;\nI coufused you were talking about this line.",
+      "revId": "bc268b9014f211910e412a7fda96b6394ff2badc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "NoprV-UU",
         "filename": "libs/androidfw/ResourceTypes.cpp",
         "patchSetId": 1
@@ -49,6 +66,23 @@
       "side": 0,
       "message": "yes, though we\u0027d still (sometimes) be leaking a PackageGroup. i think this code needs to be rewritten.",
       "parentUuid": "Nonp32WE",
+      "revId": "bc268b9014f211910e412a7fda96b6394ff2badc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NpDNYmvk",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5047,
+      "author": {
+        "id": 1014554
+      },
+      "writtenOn": "2013-01-04T02:25:17Z",
+      "side": 0,
+      "message": "delete group is not needed. 1) if groud is new group\ngroud is already added to mPackageGroups and group will be deleted in ResTable::uninit",
       "revId": "bc268b9014f211910e412a7fda96b6394ff2badc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
