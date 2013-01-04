@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Nov1tIPo",
+        "filename": "packages/SystemUI/res/values-sv/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1018026
+      },
+      "writtenOn": "2013-01-04T14:53:30Z",
+      "side": 1,
+      "message": "Ditto\n\nhttps://tc.corp.google.com/btviewer/edittranslation?project\u003dAndroidPlatform\u0026msgId\u003d8159652146149219937\u0026language\u003dsv",
+      "revId": "33bbb5b8bfa83d166fe0b5896bb2766bb51df76e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
