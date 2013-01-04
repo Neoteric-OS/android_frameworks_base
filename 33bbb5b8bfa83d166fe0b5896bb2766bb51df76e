@@ -16,6 +16,40 @@
       "revId": "33bbb5b8bfa83d166fe0b5896bb2766bb51df76e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NpgUq.JE",
+        "filename": "packages/SystemUI/res/values-sv/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1018508
+      },
+      "writtenOn": "2013-01-04T15:40:18Z",
+      "side": 1,
+      "message": "I think the \"a\" in \"av\" should be lower case.",
+      "revId": "33bbb5b8bfa83d166fe0b5896bb2766bb51df76e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NpqUepHg",
+        "filename": "packages/SystemUI/res/values-sv/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1018508
+      },
+      "writtenOn": "2013-01-04T15:40:18Z",
+      "side": 1,
+      "message": "I think the \"a\" in \"av\" should be lower case.",
+      "revId": "33bbb5b8bfa83d166fe0b5896bb2766bb51df76e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
