@@ -34,6 +34,24 @@
       "revId": "bc268b9014f211910e412a7fda96b6394ff2badc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Nonryecs",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5046,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2013-01-04T02:01:47Z",
+      "side": 0,
+      "message": "yes, though we\u0027d still (sometimes) be leaking a PackageGroup. i think this code needs to be rewritten.",
+      "parentUuid": "Nonp32WE",
+      "revId": "bc268b9014f211910e412a7fda96b6394ff2badc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
