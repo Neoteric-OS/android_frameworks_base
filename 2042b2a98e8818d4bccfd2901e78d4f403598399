@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "Noq9WhVk",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 5031,
+      "author": {
+        "id": 1016953
+      },
+      "writtenOn": "2013-01-04T00:57:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Nqfk.l44",
+      "revId": "2042b2a98e8818d4bccfd2901e78d4f403598399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Nqdk5U6k",
         "filename": "libs/androidfw/ResourceTypes.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2013-01-03T15:08:50Z",
       "side": 1,
       "message": "Same here.",
+      "revId": "2042b2a98e8818d4bccfd2901e78d4f403598399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Nos9byYA",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 5045,
+      "author": {
+        "id": 1016953
+      },
+      "writtenOn": "2013-01-04T00:57:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Nqdk5U6k",
       "revId": "2042b2a98e8818d4bccfd2901e78d4f403598399",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
