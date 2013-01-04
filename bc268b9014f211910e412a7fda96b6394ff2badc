@@ -16,6 +16,24 @@
       "revId": "bc268b9014f211910e412a7fda96b6394ff2badc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Nonp32WE",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5046,
+      "author": {
+        "id": 1016953
+      },
+      "writtenOn": "2013-01-04T01:51:26Z",
+      "side": 0,
+      "message": "I wonder it, too.\nBTW, how about \"delete package\"? I think it need to \"delete package\" for potential memory leak.",
+      "parentUuid": "NoprV-UU",
+      "revId": "bc268b9014f211910e412a7fda96b6394ff2badc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
