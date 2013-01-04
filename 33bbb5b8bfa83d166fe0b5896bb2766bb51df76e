@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "NqMOmPGQ",
+        "filename": "packages/SystemUI/res/values-sv/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1005571
+      },
+      "writtenOn": "2013-01-04T15:45:04Z",
+      "side": 1,
+      "message": "I considered that but decided to match how the English string looked. The only place these strings are used currently they are all uppercase though so I don\u0027t know if it matters.",
+      "parentUuid": "NpgUq.JE",
+      "revId": "33bbb5b8bfa83d166fe0b5896bb2766bb51df76e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "NpqUepHg",
         "filename": "packages/SystemUI/res/values-sv/strings.xml",
         "patchSetId": 1
