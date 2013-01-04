@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "NoprV-UU",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5046,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2013-01-04T01:40:54Z",
+      "side": 0,
+      "message": "i\u0027ve changed my mind. i think at this point either group is a new group that we should delete _but_ we\u0027ve added it to mPackageGroups (so that would be a bug) or group is an existing group from mPackageGroups (so that\u0027s a bug).",
+      "revId": "bc268b9014f211910e412a7fda96b6394ff2badc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
