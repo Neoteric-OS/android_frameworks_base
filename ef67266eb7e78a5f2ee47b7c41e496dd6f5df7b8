@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "N3Azve94",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2013-01-07T16:31:43Z",
+      "side": 1,
+      "message": "wrap at \u003c 80 columns",
+      "revId": "ef67266eb7e78a5f2ee47b7c41e496dd6f5df7b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "N3KzGJ2k",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2013-01-07T16:31:43Z",
+      "side": 1,
+      "message": "long lines",
+      "revId": "ef67266eb7e78a5f2ee47b7c41e496dd6f5df7b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "N3Gz8L5o",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2013-01-07T16:31:43Z",
+      "side": 1,
+      "message": "fix long lines",
+      "revId": "ef67266eb7e78a5f2ee47b7c41e496dd6f5df7b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
