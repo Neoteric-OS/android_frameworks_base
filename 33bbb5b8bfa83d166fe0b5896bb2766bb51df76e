@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "N59uf07w",
+        "filename": "packages/SystemUI/res/values-sv/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2013-01-07T12:12:00Z",
+      "side": 1,
+      "message": "Definitely lower case, thanks for spotting this Tobias. English tends to use Title Case a lot more than Swedish does.",
+      "parentUuid": "NqMOmPGQ",
+      "revId": "33bbb5b8bfa83d166fe0b5896bb2766bb51df76e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "NpqUepHg",
         "filename": "packages/SystemUI/res/values-sv/strings.xml",
         "patchSetId": 1
@@ -65,6 +83,41 @@
       "writtenOn": "2013-01-04T15:40:18Z",
       "side": 1,
       "message": "I think the \"a\" in \"av\" should be lower case.",
+      "revId": "33bbb5b8bfa83d166fe0b5896bb2766bb51df76e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "N5-ukjw0",
+        "filename": "packages/SystemUI/res/values-sv/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2013-01-07T12:12:00Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "NpqUepHg",
+      "revId": "33bbb5b8bfa83d166fe0b5896bb2766bb51df76e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "N5xuqG9c",
+        "filename": "packages/SystemUI/res/values-sv/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2013-01-07T12:12:00Z",
+      "side": 1,
+      "message": "Uppercase D is fine here I think, since it seems like a name",
       "revId": "33bbb5b8bfa83d166fe0b5896bb2766bb51df76e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
