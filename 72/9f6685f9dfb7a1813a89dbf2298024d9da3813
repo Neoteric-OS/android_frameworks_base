@@ -1,0 +1,9 @@
+Code-Review+2: Dianne Hackborn <hackbod@android.com>
+Verified+1: Deckard Autoverifier <deckard@android.com>
+Code-Review+1: Sergii Iegorov <x0155539@ti.com>
+Code-Review+1: Dmytro Dubovyk <x0185493@ti.com>
+Submitted-by: Dianne Hackborn <hackbod@android.com>
+Submitted-at: Mon, 07 Jan 2013 12:17:25 -0800
+Reviewed-on: https://android-review.googlesource.com/48166
+Project: platform/frameworks/base
+Branch: refs/heads/master
