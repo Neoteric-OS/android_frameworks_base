@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "N88rlGZ0",
+        "filename": "packages/SystemUI/src/com/android/systemui/screenshot/GlobalScreenshot.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2013-01-10T23:32:46Z",
+      "side": 1,
+      "message": "Good catch.  We can\u0027t really throw IOException from the SystemUI, so we should also wrap the delete() in a try catch and just set params[0].result \u003d 1 to indicate failure...",
+      "revId": "6e7d3c4b5abdaa4f232316cb39f0afca184934a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
