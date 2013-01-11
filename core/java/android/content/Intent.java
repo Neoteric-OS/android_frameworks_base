@@ -601,8 +601,8 @@ public class Intent implements Parcelable, Cloneable {
     /**
      *  Activity Action: Start as a main entry point, does not expect to
      *  receive data.
-     *  <p>Input: nothing
-     *  <p>Output: nothing
+     *  <p>Input: Nothing
+     *  <p>Output: Nothing
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_MAIN = "android.intent.action.MAIN";
@@ -616,7 +616,7 @@ public class Intent implements Parcelable, Cloneable {
      * supplied by the URI; when used with a tel: URI it will invoke the
      * dialer.
      * <p>Input: {@link #getData} is URI from which to retrieve data.
-     * <p>Output: nothing.
+     * <p>Output: Nothing.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_VIEW = "android.intent.action.VIEW";
@@ -633,7 +633,7 @@ public class Intent implements Parcelable, Cloneable {
      * to the recipient to decide where the data should be attached; the intent
      * does not specify the ultimate destination.
      * <p>Input: {@link #getData} is URI of data to be attached.
-     * <p>Output: nothing.
+     * <p>Output: Nothing.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_ATTACH_DATA = "android.intent.action.ATTACH_DATA";
@@ -641,7 +641,7 @@ public class Intent implements Parcelable, Cloneable {
     /**
      * Activity Action: Provide explicit editable access to the given data.
      * <p>Input: {@link #getData} is URI of data to be edited.
-     * <p>Output: nothing.
+     * <p>Output: Nothing.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_EDIT = "android.intent.action.EDIT";
@@ -936,7 +936,7 @@ public class Intent implements Parcelable, Cloneable {
      * <p>Input: If nothing, an empty dialer is started; else {@link #getData}
      * is URI of a phone number to be dialed or a tel: URI of an explicit phone
      * number.
-     * <p>Output: nothing.
+     * <p>Output: Nothing.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_DIAL = "android.intent.action.DIAL";
@@ -945,7 +945,7 @@ public class Intent implements Parcelable, Cloneable {
      * <p>Input: If nothing, an empty dialer is started; else {@link #getData}
      * is URI of a phone number to be dialed or a tel: URI of an explicit phone
      * number.
-     * <p>Output: nothing.
+     * <p>Output: Nothing.
      *
      * <p>Note: there will be restrictions on which applications can initiate a
      * call; most applications should use the {@link #ACTION_DIAL}.
@@ -960,7 +960,7 @@ public class Intent implements Parcelable, Cloneable {
      * data.
      * <p>Input: {@link #getData} is URI of a phone number to be dialed or a
      * tel: URI of an explicit phone number.
-     * <p>Output: nothing.
+     * <p>Output: Nothing.
      * @hide
      */
     public static final String ACTION_CALL_EMERGENCY = "android.intent.action.CALL_EMERGENCY";
@@ -969,14 +969,14 @@ public class Intent implements Parcelable, Cloneable {
      * specified by the data.
      * <p>Input: {@link #getData} is URI of a phone number to be dialed or a
      * tel: URI of an explicit phone number.
-     * <p>Output: nothing.
+     * <p>Output: Nothing.
      * @hide
      */
     public static final String ACTION_CALL_PRIVILEGED = "android.intent.action.CALL_PRIVILEGED";
     /**
      * Activity Action: Send a message to someone specified by the data.
      * <p>Input: {@link #getData} is URI describing the target.
-     * <p>Output: nothing.
+     * <p>Output: Nothing.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_SENDTO = "android.intent.action.SENDTO";
@@ -1013,7 +1013,7 @@ public class Intent implements Parcelable, Cloneable {
      * appropriate, are: {@link #EXTRA_EMAIL}, {@link #EXTRA_CC},
      * {@link #EXTRA_BCC}, {@link #EXTRA_SUBJECT}.
      * <p>
-     * Output: nothing.
+     * Output: Nothing.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_SEND = "android.intent.action.SEND";
@@ -1051,14 +1051,14 @@ public class Intent implements Parcelable, Cloneable {
      * appropriate, are: {@link #EXTRA_EMAIL}, {@link #EXTRA_CC},
      * {@link #EXTRA_BCC}, {@link #EXTRA_SUBJECT}.
      * <p>
-     * Output: nothing.
+     * Output: Nothing.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_SEND_MULTIPLE = "android.intent.action.SEND_MULTIPLE";
     /**
      * Activity Action: Handle an incoming phone call.
-     * <p>Input: nothing.
-     * <p>Output: nothing.
+     * <p>Input: Nothing.
+     * <p>Output: Nothing.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_ANSWER = "android.intent.action.ANSWER";
@@ -1082,14 +1082,14 @@ public class Intent implements Parcelable, Cloneable {
     /**
      * Activity Action: Delete the given data from its container.
      * <p>Input: {@link #getData} is URI of data to be deleted.
-     * <p>Output: nothing.
+     * <p>Output: Nothing.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_DELETE = "android.intent.action.DELETE";
     /**
      * Activity Action: Run the data, whatever that means.
      * <p>Input: ?  (Note: this is currently specific to the test harness.)
-     * <p>Output: nothing.
+     * <p>Output: Nothing.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_RUN = "android.intent.action.RUN";
@@ -1115,7 +1115,7 @@ public class Intent implements Parcelable, Cloneable {
      * <p>Input: {@link android.app.SearchManager#QUERY getStringExtra(SearchManager.QUERY)}
      * is the text to search for.  If empty, simply
      * enter your search results Activity with the search UI activated.
-     * <p>Output: nothing.
+     * <p>Output: Nothing.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_SEARCH = "android.intent.action.SEARCH";
@@ -1124,7 +1124,7 @@ public class Intent implements Parcelable, Cloneable {
      * <p>Input: {@link android.app.SearchManager#QUERY getStringExtra(SearchManager.QUERY)}
      * is the text to search for.  If empty, simply
      * enter your search results Activity with the search UI activated.
-     * <p>Output: nothing.
+     * <p>Output: Nothing.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_SYSTEM_TUTORIAL = "android.intent.action.SYSTEM_TUTORIAL";
@@ -1136,22 +1136,23 @@ public class Intent implements Parcelable, Cloneable {
      * a url starts with http or https, the site will be opened. If it is plain
      * text, Google search will be applied.
      * <p>
-     * Output: nothing.
+     * Output: Nothing.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_WEB_SEARCH = "android.intent.action.WEB_SEARCH";
     /**
      * Activity Action: Perform assist action.
      * <p>
-     * Input: nothing
-     * Output: nothing.
+     * Input: Nothing
+     * <p>
+     * Output: Nothing.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_ASSIST = "android.intent.action.ASSIST";
     /**
      * Activity Action: List all available applications
      * <p>Input: Nothing.
-     * <p>Output: nothing.
+     * <p>Output: Nothing.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_ALL_APPS = "android.intent.action.ALL_APPS";
