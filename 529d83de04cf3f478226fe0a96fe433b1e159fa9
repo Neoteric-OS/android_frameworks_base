@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "N-i40CNw",
+        "filename": "packages/SystemUI/src/com/android/systemui/screenshot/GlobalScreenshot.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1004424
+      },
+      "writtenOn": "2013-01-11T10:30:58Z",
+      "side": 1,
+      "message": "will also remove this, since it should not be needed any more. That is what you pay for not using an IDE that automatically fixes your imports.",
+      "revId": "529d83de04cf3f478226fe0a96fe433b1e159fa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
