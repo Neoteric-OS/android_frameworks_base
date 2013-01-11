@@ -1369,6 +1369,33 @@ public class Intent implements Parcelable, Cloneable {
      */
     public static final String METADATA_SETUP_VERSION = "android.SETUP_VERSION";
 
+    /**
+     * Activity Action: Start visual countdown.
+     * <p>Input: {@link #getType} is either <code>application/relative-milliseconds</code> or
+     * <code>application/absolute-milliseconds</code>. If the former, {@link #getData} is the time
+     * to count down and the countdown process will have to be explicitly started by the user. If
+     * the latter, {@link #getData} is the end time of the count down in the
+     * {@link android.os.SystemClock#elapsedRealtime} time base and the countdown process will
+     * start immediately.
+     * If {@link #getType} is <code>application/relative-milliseconds</code> an example of a value
+     * for {@link #getData} is <code>480000</code> (8 minutes). If {@link #getType} is
+     * <code>application/absolute-milliseconds</code> an example of a value for {@link #getData} is
+     * <code>SystemClock.elapsedRealtime() + 480000</code>.
+     * <p>Output: Nothing
+     * <p>Note: Not every device might support this action.
+     */
+    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+    public static final String ACTION_COUNTDOWN = "android.intent.action.COUNTDOWN";
+
+    /**
+     * Activity Action: Start visual countup (stopwatch).
+     * <p>Input: Nothing
+     * <p>Output: Nothing
+     * <p>Note: Not every device might support this action.
+     */
+    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+    public static final String ACTION_COUNTUP = "android.intent.action.COUNTUP";
+
     // ---------------------------------------------------------------------
     // ---------------------------------------------------------------------
     // Standard intent broadcast actions (see action variable).
