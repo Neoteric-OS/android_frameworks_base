@@ -16,6 +16,24 @@
       "revId": "6e7d3c4b5abdaa4f232316cb39f0afca184934a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "N-ksttqs",
+        "filename": "packages/SystemUI/src/com/android/systemui/screenshot/GlobalScreenshot.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1004424
+      },
+      "writtenOn": "2013-01-11T09:45:59Z",
+      "side": 1,
+      "message": "Why wrap the file.delete() call, documentation states that it does not throw any IOException, is try / catch meaningful?\n\nI\u0027ll add if / else and set the correct return value.",
+      "parentUuid": "N88rlGZ0",
+      "revId": "6e7d3c4b5abdaa4f232316cb39f0afca184934a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
