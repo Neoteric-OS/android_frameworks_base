@@ -16,6 +16,24 @@
       "revId": "03623b06b4832c4191791ca27768d1685c54738e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "OnwodSW0",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1004910
+      },
+      "writtenOn": "2013-01-22T07:26:52Z",
+      "side": 1,
+      "message": "Lets discuss how to solve no 1.\n\nWhen it comes to item 2.\nThe application calls utility methods for handling the DRM files.\nThese common utility methods may create a DMC and call canhandle and checkrights.\nRight now the it\u0027s not enough to do the release() call. The fd:s are not released until the application terminates. If you are running i.e. the media player for a long time you will leak fd:s for each utility call and will crash eventually.",
+      "parentUuid": "NFkK7u90",
+      "revId": "03623b06b4832c4191791ca27768d1685c54738e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
