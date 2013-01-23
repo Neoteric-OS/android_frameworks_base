@@ -34,6 +34,24 @@
       "revId": "03623b06b4832c4191791ca27768d1685c54738e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "OvYI5AkU",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1006668
+      },
+      "writtenOn": "2013-01-23T23:41:58Z",
+      "side": 1,
+      "message": "I think in this particular case, when you said that the fds, you actually meant to say \"threads\". could you confirm? We should be able to terminate these threads also without the need to wait until the application itself terminates, in the release() call.\n\nFor actual file descriptors, if the application opening the file calls close on the file descriptors, the file descriptors should be closed without the need to wait until the application itself terminates. If this is not the case, this must be a bug.",
+      "parentUuid": "OnwodSW0",
+      "revId": "03623b06b4832c4191791ca27768d1685c54738e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
