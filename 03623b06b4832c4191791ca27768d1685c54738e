@@ -52,6 +52,24 @@
       "revId": "03623b06b4832c4191791ca27768d1685c54738e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "OvO8feHM",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1004910
+      },
+      "writtenOn": "2013-01-24T11:54:09Z",
+      "side": 1,
+      "message": "If I understood the problem correctly the thread has a looper object. The native looper object uses fd:s for communication. These fd:s are not garbage collected until the application is closed down since the destructor of the native looper(?) isn\u0027t called until that time.",
+      "parentUuid": "OvYI5AkU",
+      "revId": "03623b06b4832c4191791ca27768d1685c54738e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
