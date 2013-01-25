@@ -40,6 +40,7 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -278,6 +279,24 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
         }  else {
             throw new IllegalArgumentException("missing Recents[Horizontal]ScrollView");
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // Send to container so it can handle listbased events
+        return mRecentsContainer.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_ESCAPE)
+                && !event.isCanceled() && mContext instanceof RecentsActivity) {
+            ((RecentsActivity) mContext).dismissAndGoBack();
+            return true;
+        }
+
+        // Send to container so it can handle listbased events
+        return mRecentsContainer.onKeyUp(keyCode, event);
     }
 
     private boolean pointInside(int x, int y, View v) {
@@ -802,7 +821,11 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
         });
         popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
             public void onDismiss(PopupMenu menu) {
-                thumbnailView.setSelected(false);
+                // When selectedView is selected with directional keys thumbnailView should still
+                // be selected.
+                if (!selectedView.isSelected()) {
+                    thumbnailView.setSelected(false);
+                }
                 mPopup = null;
             }
         });
