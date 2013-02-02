@@ -14497,6 +14497,18 @@ package android.net.wifi {
     enum_constant public static final android.net.wifi.SupplicantState UNINITIALIZED;
   }
 
+  public class WifiChannel implements android.os.Parcelable {
+    ctor public WifiChannel();
+    ctor public WifiChannel(int, int, boolean);
+    ctor public WifiChannel(android.net.wifi.WifiChannel);
+    method public int describeContents();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator CREATOR;
+    field public int channel;
+    field public int frequency;
+    field public boolean ibssAllowed;
+  }
+
   public class WifiConfiguration implements android.os.Parcelable {
     ctor public WifiConfiguration();
     method public int describeContents();
@@ -14510,6 +14522,8 @@ package android.net.wifi {
     field public java.util.BitSet allowedProtocols;
     field public android.net.wifi.WifiEnterpriseConfig enterpriseConfig;
     field public boolean hiddenSSID;
+    field public boolean isIBSS;
+    field public int frequency;
     field public int networkId;
     field public java.lang.String preSharedKey;
     field public int priority;
@@ -14636,9 +14650,11 @@ package android.net.wifi {
     method public android.net.wifi.WifiInfo getConnectionInfo();
     method public android.net.DhcpInfo getDhcpInfo();
     method public java.util.List<android.net.wifi.ScanResult> getScanResults();
+    method public java.util.List<android.net.wifi.WifiChannel> getSupportedChannels();
     method public int getWifiState();
     method public boolean isScanAlwaysAvailable();
     method public boolean isWifiEnabled();
+    method public boolean isIbssSupported();
     method public boolean pingSupplicant();
     method public boolean reassociate();
     method public boolean reconnect();
