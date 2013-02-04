@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "PT-kgb1A",
+        "filename": "services/java/com/android/server/WifiService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2013-02-04T17:48:12Z",
+      "side": 1,
+      "message": "what is ac assigned to at this point ? It was used for a \"full connection\" and you can have several such full connections.\n\nWhat is the issue exactly that you are trying to fix ?",
+      "revId": "674c3c08f2bdc27b7b143efb943e3e1df19a2404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PT5kjO1w",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2008,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2013-02-04T17:48:12Z",
+      "side": 1,
+      "message": "We cannot add a public API like this. This needs to be fixed internally.",
+      "revId": "674c3c08f2bdc27b7b143efb943e3e1df19a2404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
