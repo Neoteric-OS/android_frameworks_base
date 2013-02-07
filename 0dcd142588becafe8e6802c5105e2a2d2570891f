@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Pq5dkBOA",
+        "filename": "core/java/android/webkit/WebViewClassic.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1002017
+      },
+      "writtenOn": "2013-02-07T22:50:03Z",
+      "side": 1,
+      "message": "fix this .. no whitespaces ..",
+      "revId": "0dcd142588becafe8e6802c5105e2a2d2570891f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
