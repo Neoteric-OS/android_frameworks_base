@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "Pqdnl0zU",
+        "filename": "packages/SystemUI/src/com/android/systemui/ImageWallpaper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1019523
+      },
+      "writtenOn": "2013-02-08T09:03:43Z",
+      "side": 1,
+      "message": "The error that was happening was an EGL_BAD_ALLOC caused by eglCreateWindowSurface in initGL on line 651.\n\nI\u0027ll redo the fix by adding an additional return false after line 658 if you prefer.\n\nThe reason I originally used the try-catch is because this is not a transient error, and it will fail every time, means openGL initialization etc will be retried in vain every time the wallpaper needs to be redrawn.\n\nPlease let me know which approach you prefer.",
+      "parentUuid": "PpeZUtCQ",
+      "revId": "df4b0b84b85b85b707b5ebd51db0c4e03d89d18e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "PpUaHqLI",
         "filename": "packages/SystemUI/src/com/android/systemui/ImageWallpaper.java",
         "patchSetId": 1
