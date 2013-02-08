@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "PpmO0EdA",
+        "filename": "packages/SystemUI/src/com/android/systemui/ImageWallpaper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-02-08T20:01:26Z",
+      "side": 1,
+      "message": "It would be much better to not even call eglCreateWindowSurface(). Instead, after the call to createContext() the code should query the max texture size and return if the surface\u0027s dimensions are larger (and destroy the context + eglTerminate in that case.)",
+      "revId": "17a3632b5ceb3c0a3781f9750ab16bf68138369f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
