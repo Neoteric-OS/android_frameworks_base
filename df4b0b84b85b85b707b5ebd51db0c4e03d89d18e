@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "PpeZUtCQ",
+        "filename": "packages/SystemUI/src/com/android/systemui/ImageWallpaper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-02-08T06:57:55Z",
+      "side": 1,
+      "message": "What RuntimeException are you catching exactly? I\u0027d rather the exception was caught in drawWallpaperWithOpenGL(). If OpenGL is unavailable or if the desired wallpaper size is \u003e max texture size, the method should return false (and it should not throw an exception but do a size check first.)",
+      "revId": "df4b0b84b85b85b707b5ebd51db0c4e03d89d18e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PpUaHqLI",
+        "filename": "packages/SystemUI/src/com/android/systemui/ImageWallpaper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-02-08T06:57:55Z",
+      "side": 1,
+      "message": "No need to use + Log.getStackTraceString(e), you can just pass e as the 3rd argument instead.",
+      "revId": "df4b0b84b85b85b707b5ebd51db0c4e03d89d18e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
