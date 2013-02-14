@@ -515,6 +515,7 @@ void TextLayoutShaper::computeRunValues(const SkPaint* paint, const UChar* chars
         // We cannot shape an empty run.
         return;
     }
+    size_t startAdvances = outAdvances->size();
 
     // To be filled in later
     for (size_t i = 0; i < count; i++) {
@@ -689,7 +690,7 @@ void TextLayoutShaper::computeRunValues(const SkPaint* paint, const UChar* chars
                     advance += HBFixedToFloat(mShaperItem.advances[j]);
                 }
                 totalFontRunAdvance += advance;
-                outAdvances->replaceAt(advance, startScriptRun + clusterStart);
+                outAdvances->replaceAt(advance, startAdvances + startScriptRun + clusterStart);
                 clusterStart = i + 1;
             }
         }
