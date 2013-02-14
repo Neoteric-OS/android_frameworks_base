@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "P36Y9qOM",
+        "filename": "core/java/android/webkit/WebViewClassic.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1263,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2013-02-14T00:12:33Z",
+      "side": 1,
+      "message": "This should only be called if sChannelDistance hasn\u0027t already been initialized as it is static. No reason to re-calculate the same value every time.",
+      "revId": "deb53e7ca780dbc9dcf3b74df6b728a78cab6f03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3yaAmJw",
+        "filename": "core/java/android/webkit/WebViewClassic.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1272,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2013-02-14T00:12:33Z",
+      "side": 1,
+      "message": "Remove the ? please.",
+      "revId": "deb53e7ca780dbc9dcf3b74df6b728a78cab6f03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P30aHlLI",
+        "filename": "core/java/android/webkit/WebViewClassic.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2013-02-14T00:12:33Z",
+      "side": 1,
+      "message": "Say instead \"channel distance is adjusted for density\"",
+      "revId": "deb53e7ca780dbc9dcf3b74df6b728a78cab6f03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P34n0-RY",
+        "filename": "core/java/android/webkit/WebViewClassic.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5767,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2013-02-14T00:12:33Z",
+      "side": 1,
+      "message": "Remove ANGLE_VERT, ANGLE_HORIZ, and MMA_WEIGHT_N as they are now unused.",
+      "revId": "deb53e7ca780dbc9dcf3b74df6b728a78cab6f03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P38ZThDc",
+        "filename": "core/java/android/webkit/WebViewClassic.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5770,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2013-02-14T00:12:33Z",
+      "side": 1,
+      "message": "Call this sChannelDistance instead as it isn\u0027t a constant.",
+      "revId": "deb53e7ca780dbc9dcf3b74df6b728a78cab6f03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3yk2qeM",
+        "filename": "core/java/android/webkit/WebViewClassic.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6109,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2013-02-14T00:12:33Z",
+      "side": 1,
+      "message": "Do you need to reset these? Initialize mDistanceX/Y in ACTION_DOWN and I don\u0027t think you need this. Otherwise if this does need to be reset you need to handle ACTION_CANCELED as well.",
+      "revId": "deb53e7ca780dbc9dcf3b74df6b728a78cab6f03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
