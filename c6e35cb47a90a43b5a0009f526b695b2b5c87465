@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "P37iYEyE",
+        "filename": "libs/androidfw/StreamingZipInflater.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2013-02-15T19:10:04Z",
+      "side": 1,
+      "message": "damn the mac!",
+      "revId": "c6e35cb47a90a43b5a0009f526b695b2b5c87465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
