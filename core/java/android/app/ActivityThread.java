@@ -2720,6 +2720,7 @@ public final class ActivityThread {
                 r.activity.mStartedActivity = false;
             }
             try {
+            	//+ 4.2.1 Patch
                 r.activity.mFragments.noteStateNotSaved();
                 if (r.pendingIntents != null) {
                     deliverNewIntents(r, r.pendingIntents);
