@@ -1493,7 +1493,9 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
                 if (mStatusBar != null) {
                     mStatusBar.setImeWindowStatus(token, vis, backDisposition);
                 }
-                final boolean iconVisibility = (vis & InputMethodService.IME_ACTIVE) != 0;
+                final boolean iconVisibility = (mWindowManagerService.isHardKeyboardAvailable())
+                        ? (vis & (InputMethodService.IME_ACTIVE)) != 0
+                        : (vis == (InputMethodService.IME_ACTIVE | InputMethodService.IME_VISIBLE));
                 final InputMethodInfo imi = mMethodMap.get(mCurMethodId);
                 if (imi != null && iconVisibility && needsToShowImeSwitchOngoingNotification()) {
                     // Used to load label
