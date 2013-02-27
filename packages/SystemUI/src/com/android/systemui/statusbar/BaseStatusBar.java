@@ -412,6 +412,10 @@ public abstract class BaseStatusBar extends SystemUI implements
         mHandler.removeMessages(msg);
         mHandler.sendEmptyMessage(msg);
     }
+	
+    protected void blockSearchPanel() {
+    	mSearchPanelView.block();
+    }
 
     @Override
     public void hideSearchPanel() {

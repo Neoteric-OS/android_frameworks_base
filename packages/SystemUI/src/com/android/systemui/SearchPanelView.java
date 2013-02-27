@@ -65,6 +65,7 @@ public class SearchPanelView extends FrameLayout implements
     private View mSearchTargetsContainer;
     private GlowPadView mGlowPadView;
     private IWindowManager mWm;
+    private boolean mIsBlockSearchPanel;
 
     public SearchPanelView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -141,6 +142,7 @@ public class SearchPanelView extends FrameLayout implements
             final int resId = mGlowPadView.getResourceIdForTarget(target);
             switch (resId) {
                 case com.android.internal.R.drawable.ic_action_assist_generic:
+		    if (true == mIsBlockSearchPanel) return;
                     mWaitingForLaunch = true;
                     startAssistActivity();
                     vibrate();
@@ -247,6 +249,13 @@ public class SearchPanelView extends FrameLayout implements
         } else {
             setVisibility(View.INVISIBLE);
         }
+	if (true == mIsBlockSearchPanel) {
+	    mIsBlockSearchPanel = false;
+	}
+    }
+	
+    public void block() {
+        mIsBlockSearchPanel = true;
     }
 
     public void hide(boolean animate) {

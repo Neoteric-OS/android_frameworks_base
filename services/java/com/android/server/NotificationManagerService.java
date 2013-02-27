@@ -541,11 +541,15 @@ public class NotificationManagerService extends INotificationManager.Stub
                     }
                     if (packageChanged) {
                         // We cancel notifications for packages which have just been disabled
+                        try{
                         final int enabled = mContext.getPackageManager()
-                                .getApplicationEnabledSetting(pkgName);
+                                 .getApplicationEnabledSetting(pkgName);
                         if (enabled == PackageManager.COMPONENT_ENABLED_STATE_ENABLED
                                 || enabled == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT) {
                             return;
+                        }
+                        } catch(IllegalArgumentException e) {
+                          Slog.e(TAG, "The package was removed, We will cancel notifications - " + e);
                         }
                     }
                     pkgList = new String[]{pkgName};

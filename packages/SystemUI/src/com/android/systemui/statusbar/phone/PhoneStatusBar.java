@@ -746,6 +746,21 @@ public class PhoneStatusBar extends BaseStatusBar {
         return false;
         }
     };
+	
+    private View.OnClickListener mBackClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            blockSearchPanel();
+            return;
+        }
+    };
+
+    private View.OnTouchListener mBackTouchListener = new View.OnTouchListener() {
+        public boolean onTouch(View v, MotionEvent event) {
+            blockSearchPanel();
+            animateCollapse();
+            return false;
+        }
+    };
 
     private void awakenDreams() {
         if (mDreamManager != null) {
@@ -764,6 +779,8 @@ public class PhoneStatusBar extends BaseStatusBar {
         mNavigationBarView.getRecentsButton().setOnTouchListener(mRecentsPreloadOnTouchListener);
         mNavigationBarView.getHomeButton().setOnTouchListener(mHomeSearchActionListener);
         mNavigationBarView.getSearchLight().setOnTouchListener(mHomeSearchActionListener);
+        mNavigationBarView.getBackButton().setOnClickListener(mBackClickListener);
+        mNavigationBarView.getBackButton().setOnTouchListener(mBackTouchListener);
         updateSearchPanel();
     }
 
