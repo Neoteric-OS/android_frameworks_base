@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "QXuS3GuE",
+        "filename": "core/java/android/content/res/Configuration.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2013-02-27T21:25:20Z",
+      "side": 1,
+      "message": "We touched on this a long time ago and I remember we thought it was best to leave undefined as 0 but I don\u0027t recall why. So want to suggest we contemplate fixing this \"right\" and change undefined to be -1 or MAX_INT? Probably do the same thing for mcc.\n\nWe could discuss this on android-cell if it we thought it was feasible if \"everyone\" knew it was happening.",
+      "revId": "74cce9ea155411c65cffde4a1ec1d5342445f6a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QWwfFFoE",
         "filename": "core/java/android/content/res/Configuration.java",
         "patchSetId": 5
