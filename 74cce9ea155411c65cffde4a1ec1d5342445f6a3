@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "QWwfFFoE",
+        "filename": "core/java/android/content/res/Configuration.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-02-27T19:54:29Z",
+      "side": 1,
+      "message": "Should be MNC_ZERO, and made public.  Also, why 1000?  Why not the maximum mnc value?  (0xffff)?  And the documentation for mnc above should be extended to explain this.",
+      "revId": "74cce9ea155411c65cffde4a1ec1d5342445f6a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QW8fT-k8",
+        "filename": "core/tests/coretests/src/android/content/res/ResourcesTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-02-27T19:54:29Z",
+      "side": 1,
+      "message": "Please put these tests in the current CTS resource tests instead of here (so they will be covered by CTS).  You can find the current config tests to add them to under: cts/tests/tests/content/src/android/content/res/cts/",
+      "revId": "74cce9ea155411c65cffde4a1ec1d5342445f6a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QW4ew5hs",
+        "filename": "tools/aapt/AaptAssets.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-02-27T19:54:29Z",
+      "side": 1,
+      "message": "This constant should be ACONFIGURATION_MNC_ZERO in frameworks/native/include/android/configuration.h.",
+      "revId": "74cce9ea155411c65cffde4a1ec1d5342445f6a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
