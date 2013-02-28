@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "QZhw9NdE",
+        "filename": "core/java/android/content/res/Configuration.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2013-02-28T07:04:47Z",
+      "side": 1,
+      "message": "The reason to leave 0 as undefined is that this is the public API. Making 0 a valid MNC could potentially cause problems for existing applications. I dont really think that it would cause alot of problems for existing applications though. One could argue that those applications are already broken for networks codes zero. It is questionable how many applications will be written correctly in the future to take MNC_ZERO properly into account.\n\nIt comes down to a judgement call from you.",
+      "parentUuid": "QXuS3GuE",
+      "revId": "74cce9ea155411c65cffde4a1ec1d5342445f6a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QWwfFFoE",
         "filename": "core/java/android/content/res/Configuration.java",
         "patchSetId": 5
