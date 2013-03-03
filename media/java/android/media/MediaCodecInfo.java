@@ -206,8 +206,14 @@ public final class MediaCodecInfo {
         public int level;
     };
 
+    /**
+     * Gets CodecCapabilities that corresponded to the specified the media type.
+     * @param type The media type supported by the codec.
+     * @return CodecCapabilities Object correspond to the media type, or null if there is no valid CodecCapabilities with the given media type.
+     * @throws IllegalArgumentException if argument is null.
+     */
     public final CodecCapabilities getCapabilitiesForType(
-            String type) {
+            String type) throws IllegalArgumentException{
         return MediaCodecList.getCodecCapabilities(mIndex, type);
     }
 }
