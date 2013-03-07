@@ -703,6 +703,27 @@ public class WifiNative {
         return gc;
     }
 
+    public int getConfigMethods(String deviceAddress) {
+        int cm = 0;
+        if (TextUtils.isEmpty(deviceAddress)) return cm;
+        String peerInfo = p2pPeer(deviceAddress);
+        if (TextUtils.isEmpty(peerInfo)) return cm;
+
+        String[] tokens = peerInfo.split("\n");
+        for (String token : tokens) {
+            if (token.startsWith("config_methods=")) {
+                String[] nameValue = token.split("=");
+                if (nameValue.length != 2) break;
+                try {
+                    return Integer.decode(nameValue[1]);
+                } catch(NumberFormatException e) {
+                    return cm;
+                }
+            }
+        }
+        return cm;
+    }
+
     public String p2pPeer(String deviceAddress) {
         return doStringCommand("P2P_PEER " + deviceAddress);
     }

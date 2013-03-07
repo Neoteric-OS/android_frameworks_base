@@ -980,6 +980,21 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                     /* Update group capability before connect */
                     int gc = mWifiNative.getGroupCapability(config.deviceAddress);
                     mPeers.updateGroupCapability(config.deviceAddress, gc);
+
+                    /* Update config methods before connect*/
+                    int cm = mWifiNative.getConfigMethods(config.deviceAddress);
+                    mPeers.updateConfigMethods(config.deviceAddress, cm);
+
+                    if (mPeers.wpsPbcSupport) {
+                         config.wps.setup = WpsInfo.PBC;
+                    } else if (mPeers.wpsKeypadSupport) {
+                         config.wps.setup = WpsInfo.KEYPAD;
+                    } else if (mPeers.wpsKeypadSupport) {
+                         config.wps.setup = WpsInfo.DISPLAY;
+                    } else {
+                         config.wps.setup = WpsInfo.PBC;
+                    }
+
                     int connectRet = connect(config, TRY_REINVOCATION);
                     if (connectRet == CONNECT_FAILURE) {
                         replyToMessage(message, WifiP2pManager.CONNECT_FAILED);
