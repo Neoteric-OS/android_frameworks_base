@@ -37,6 +37,24 @@ public class WifiP2pDeviceList implements Parcelable {
 
     private final HashMap<String, WifiP2pDevice> mDevices = new HashMap<String, WifiP2pDevice>();
 
+    /**
+     * Flag indicating WPS PBC Support
+     * @hide
+     */
+    public static boolean wpsPbcSupport = false;
+
+    /**
+     * Flag indicating WPS Keypad Support
+     * @hide
+     */
+    public static boolean wpsKeypadSupport = false;
+
+    /**
+     * Flag indicating WPS Display Support
+     * @hide
+     */
+    public static boolean wpsDisplaySupport = false;
+
     public WifiP2pDeviceList() {
     }
 
@@ -93,6 +111,18 @@ public class WifiP2pDeviceList implements Parcelable {
     }
 
     /** @hide */
+    public void updateConfigMethods(String deviceAddress, int config_method) {
+        if (TextUtils.isEmpty(deviceAddress)) return;
+        WifiP2pDevice d = mDevices.get(deviceAddress);
+        if (d != null) {
+            d.wpsConfigMethodsSupported = config_method;
+            if(d.wpsPbcSupported()) wpsPbcSupport = true;
+            else if(d.wpsKeypadSupported()) wpsKeypadSupport = true;
+            else if(d.wpsDisplaySupported()) wpsDisplaySupport = true;
+        }
+    }
+
+    /** @hide */
     public void updateStatus(String deviceAddress, int status) {
         if (TextUtils.isEmpty(deviceAddress)) return;
         WifiP2pDevice d = mDevices.get(deviceAddress);
@@ -111,6 +141,9 @@ public class WifiP2pDeviceList implements Parcelable {
     /** @hide */
     public boolean remove(WifiP2pDevice device) {
         if (device == null || device.deviceAddress == null) return false;
+        wpsPbcSupport = false;
+        wpsKeypadSupport = false;
+        wpsDisplaySupport = false;
         return mDevices.remove(device.deviceAddress) != null;
     }
 
