@@ -93,6 +93,15 @@ public class WifiP2pDeviceList implements Parcelable {
     }
 
     /** @hide */
+    public void updateConfigMethods(String deviceAddress, int config_method) {
+        if (TextUtils.isEmpty(deviceAddress)) return;
+        WifiP2pDevice d = mDevices.get(deviceAddress);
+        if (d != null) {
+            d.wpsConfigMethodsSupported = config_method;
+        }
+    }
+
+    /** @hide */
     public void updateStatus(String deviceAddress, int status) {
         if (TextUtils.isEmpty(deviceAddress)) return;
         WifiP2pDevice d = mDevices.get(deviceAddress);

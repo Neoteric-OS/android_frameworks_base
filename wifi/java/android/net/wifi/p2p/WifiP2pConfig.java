@@ -63,7 +63,7 @@ public class WifiP2pConfig implements Parcelable {
     public WifiP2pConfig() {
         //set defaults
         wps = new WpsInfo();
-        wps.setup = WpsInfo.PBC;
+        wps.setup = WpsInfo.DEFAULT;
     }
 
     /** P2P-GO-NEG-REQUEST 42:fc:89:a8:96:09 dev_passwd_id=4 {@hide}*/
