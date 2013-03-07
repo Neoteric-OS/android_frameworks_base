@@ -38,6 +38,8 @@ public class WpsInfo implements Parcelable {
     public static final int LABEL   = 3;
     /** Invalid configuration */
     public static final int INVALID = 4;
+    /** Default configuration */
+    public static final int DEFAULT = 5;
 
     /** Wi-Fi Protected Setup. www.wi-fi.org/wifi-protected-setup has details */
     public int setup;
