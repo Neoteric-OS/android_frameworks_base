@@ -14020,6 +14020,7 @@ package android.net.wifi {
     method public int getWifiState();
     method public boolean isScanAlwaysAvailable();
     method public boolean isWifiEnabled();
+    method public boolean isIbssSupported();
     method public boolean pingSupplicant();
     method public boolean reassociate();
     method public boolean reconnect();

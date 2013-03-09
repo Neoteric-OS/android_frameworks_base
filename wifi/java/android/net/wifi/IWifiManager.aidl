@@ -67,6 +67,8 @@ interface IWifiManager
 
     boolean isDualBandSupported();
 
+    boolean isIbssSupported();
+
     boolean saveConfiguration();
 
     DhcpInfo getDhcpInfo();
