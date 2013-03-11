@@ -4439,4 +4439,10 @@
 
     <!-- Label used by Telephony code, assigned as the display name for conference calls [CHAR LIMIT=60] -->
     <string name="conference_call">Conference Call</string>
+
+    <!-- Title of notification when UE fails to register network with MM reject cause code. -->
+    <string name="mmcc_authentication_reject">SIM not allowed</string>
+    <string name="mmcc_imsi_unknown_in_hlr">SIM not provisioned</string>
+    <string name="mmcc_illegal_ms">SIM not allowed</string>
+    <string name="mmcc_illegal_me">Phone not allowed</string>
 </resources>
