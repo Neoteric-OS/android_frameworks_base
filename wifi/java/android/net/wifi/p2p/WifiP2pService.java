@@ -1408,6 +1408,9 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                         }
                     } else if (status == P2pStatus.NO_COMMON_CHANNEL) {
                         transitionTo(mFrequencyConflictState);
+                    } else if (status == INFORMATION_IS_CURRENTLY_UNAVAILABLE) {
+                        mWifiNative.p2pListen(DISCOVER_TIMEOUT_S);
+                        transitionTo(mInactiveState);
                     } else {
                         handleGroupCreationFailure();
                         transitionTo(mInactiveState);
