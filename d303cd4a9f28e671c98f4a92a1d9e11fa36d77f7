@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "RUNUh7qw",
+        "filename": "wifi/java/android/net/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2013-03-11T09:14:30Z",
+      "side": 1,
+      "message": "invalid space",
+      "revId": "d303cd4a9f28e671c98f4a92a1d9e11fa36d77f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RUDU8utM",
+        "filename": "wifi/java/android/net/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2013-03-11T09:14:30Z",
+      "side": 1,
+      "message": "invalid space",
+      "revId": "d303cd4a9f28e671c98f4a92a1d9e11fa36d77f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RUBVBtk0",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2013-03-11T09:14:30Z",
+      "side": 1,
+      "message": "should be private",
+      "revId": "d303cd4a9f28e671c98f4a92a1d9e11fa36d77f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
