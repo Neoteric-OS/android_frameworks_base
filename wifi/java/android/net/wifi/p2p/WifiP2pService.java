@@ -1376,32 +1376,13 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                         // invocation was succeeded.
                         // wait P2P_GROUP_STARTED_EVENT.
                         break;
-                    } else if (status == P2pStatus.UNKNOWN_P2P_GROUP) {
-                        // target device has already removed the credential.
-                        // So, remove this credential accordingly.
-                        int netId = mSavedPeerConfig.netId;
-                        if (netId >= 0) {
-                            if (DBG) logd("Remove unknown client from the list");
-                            removeClientFromList(netId, mSavedPeerConfig.deviceAddress, true);
-                        }
-
-                        // invocation is failed. Try another way to connect.
-                        mSavedPeerConfig.netId = WifiP2pGroup.PERSISTENT_NET_ID;
-                        if (connect(mSavedPeerConfig, NO_REINVOCATION) == CONNECT_FAILURE) {
-                            handleGroupCreationFailure();
-                            transitionTo(mInactiveState);
-                        }
                     } else if (status == P2pStatus.INFORMATION_IS_CURRENTLY_UNAVAILABLE) {
 
-                        // Devices setting persistent_reconnect to 0 in wpa_supplicant
-                        // always defer the invocation request and return
-                        // "information is currently unable" error.
-                        // So, try another way to connect for interoperability.
-                        mSavedPeerConfig.netId = WifiP2pGroup.PERSISTENT_NET_ID;
-                        if (connect(mSavedPeerConfig, NO_REINVOCATION) == CONNECT_FAILURE) {
-                            handleGroupCreationFailure();
-                            transitionTo(mInactiveState);
-                        }
+                        // When invitation result is 1, start listen
+                        // for 120 sec since the other peer would send
+                        // p2p_invite
+                        mWifiNative.p2pListen(DISCOVER_TIMEOUT_S);
+                        transitionTo(mInactiveState);
                     } else if (status == P2pStatus.NO_COMMON_CHANNEL) {
                         transitionTo(mFrequencyConflictState);
                     } else {
