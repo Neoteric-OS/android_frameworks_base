@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "RZOHpwKQ",
+        "filename": "core/java/android/text/format/DateFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-03-11T20:01:10Z",
+      "side": 1,
+      "message": "why deprecate? you still use them within the class",
+      "revId": "9a2ada418b0a53cb10e009398116ff8cd914d71e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
