@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "RULUqaog",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1411,
+      "author": {
+        "id": 1014552
+      },
+      "writtenOn": "2013-03-11T08:56:18Z",
+      "side": 1,
+      "message": "INFORMATION_IS_CURRENTLY_UNAVAILABLE is already handled in above scope, and p2p connect command is issued in the scope.\nSo, you don\u0027t need to listen here.",
+      "revId": "1d602335af5996d59f1141b66d8fc00764de5424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
