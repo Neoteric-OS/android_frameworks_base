@@ -12,6 +12,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Portions of this file are:
+ * Copyright (C) 2013 Motorola Mobility LLC All Rights Reserved.
  */
 
 package com.android.systemui.statusbar.policy;
@@ -135,6 +138,9 @@ public class DeadZone extends View {
         mLastPokeTime = event.getEventTime();
         if (DEBUG)
             Slog.v(TAG, "poked! size=" + getSize(mLastPokeTime));
+        if (!shouldDraw()) {
+            return;
+        }
         postInvalidate();
     }
 
@@ -147,9 +153,13 @@ public class DeadZone extends View {
         return mFlashFrac;
     }
 
+    private boolean shouldDraw() {
+        return (mShouldFlash && mFlashFrac > 0f);
+    }
+
     @Override
     public void onDraw(Canvas can) {
-        if (!mShouldFlash || mFlashFrac <= 0f) {
+        if (!shouldDraw()) {
             return;
         }
 
