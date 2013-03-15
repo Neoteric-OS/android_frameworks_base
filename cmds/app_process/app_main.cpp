@@ -149,6 +149,8 @@ int main(int argc, char* const argv[])
     if (strcmp(value, "1") != 0) {
         int current = personality(0xFFFFFFFF);
         if ((current & ADDR_COMPAT_LAYOUT) == 0) {
+            ALOGW("Respawning app_process with personality(ADDR_COMPAT_LAYOUT)"
+                  " to work around buggy programs");
             personality(current | ADDR_COMPAT_LAYOUT);
             execv("/system/bin/app_process", argv);
             return -1;
