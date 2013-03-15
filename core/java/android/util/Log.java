@@ -29,9 +29,26 @@ import java.net.UnknownHostException;
  * methods.
  *
  * <p>The order in terms of verbosity, from least to most is
- * ERROR, WARN, INFO, DEBUG, VERBOSE.  Verbose should never be compiled
- * into an application except during development.  Debug logs are compiled
- * in but stripped at runtime.  Error, warning and info logs are always kept.
+ * ERROR, WARN, INFO, DEBUG, VERBOSE.</p>
+ *
+ * <p>To prevent log spam, you should wrap every logging call with a call to
+ * {@link Log#isLoggable(String, int)} to check if the statement should be
+ * logged. For example:
+ *
+ * <pre>
+ * if (Log.isLoggable("MyActivity", Log.DEBUG)) {
+ *     Log.d("MyActivity", "Log message");
+ * }
+ * </pre></p>
+ *
+ * <p>To enable a tag at a certain verbosity, use:
+ *
+ * <pre>adb shell setprop log.tag.&lt;YOUR_LOG_TAG> &lt;LEVEL></pre>
+ *
+ * As an example, to ensure the above message is output, run:
+ *
+ * <pre>adb shell setprop log.tag.MyActivity DEBUG</pre>
+ * </p>
  *
  * <p><b>Tip:</b> A good convention is to declare a <code>TAG</code> constant
  * in your class:
