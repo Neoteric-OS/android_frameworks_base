@@ -304,6 +304,8 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         int mDrawableSaved = DRAWABLE_NONE;
 
         public void resolveWithLayoutDirection(int layoutDirection) {
+            // If a start/end drawable is present, reset left and right before resolving start/end.
+            resetResolvedDrawablesIfNeeded();
             switch(layoutDirection) {
                 case LAYOUT_DIRECTION_RTL:
                     if (mDrawableStart != null) {
@@ -338,6 +340,16 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             }
             applyErrorDrawableIfNeeded(layoutDirection);
             updateDrawablesLayoutDirection(layoutDirection);
+        }
+
+        private void resetResolvedDrawablesIfNeeded() {
+            if ((mDrawableStart != null || mDrawableEnd != null) &&
+                    (mDrawableLeft != null || mDrawableRight != null)) {
+                mDrawableHeightLeft = mDrawableSizeLeft = 0;
+                mDrawableLeft = null;
+                mDrawableHeightRight = mDrawableSizeRight = 0;
+                mDrawableRight = null;
+            }
         }
 
         private void updateDrawablesLayoutDirection(int layoutDirection) {
@@ -2024,10 +2036,16 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                     dr.mDrawableEnd = null;
                     if (dr.mDrawableBottom != null) dr.mDrawableBottom.setCallback(null);
                     dr.mDrawableBottom = null;
+                    if (dr.mDrawableLeft != null) dr.mDrawableLeft.setCallback(null);
+                    dr.mDrawableLeft = null;
+                    if (dr.mDrawableRight != null) dr.mDrawableRight.setCallback(null);
+                    dr.mDrawableRight = null;
                     dr.mDrawableSizeStart = dr.mDrawableHeightStart = 0;
                     dr.mDrawableSizeEnd = dr.mDrawableHeightEnd = 0;
                     dr.mDrawableSizeTop = dr.mDrawableWidthTop = 0;
                     dr.mDrawableSizeBottom = dr.mDrawableWidthBottom = 0;
+                    dr.mDrawableSizeLeft = dr.mDrawableHeightLeft = 0;
+                    dr.mDrawableSizeRight = dr.mDrawableHeightRight = 0;
                 }
             }
         } else {
@@ -2099,6 +2117,8 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             } else {
                 dr.mDrawableSizeBottom = dr.mDrawableWidthBottom = 0;
             }
+
+            resetResolvedDrawables();
         }
 
         resolveDrawables();
@@ -4597,6 +4617,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         super.onAttachedToWindow();
 
         mTemporaryDetach = false;
+        resetResolvedDrawables();
 
         if (mEditor != null) mEditor.onAttachedToWindow();
     }
