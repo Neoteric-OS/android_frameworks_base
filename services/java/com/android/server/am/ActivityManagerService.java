@@ -14433,6 +14433,7 @@ public final class ActivityManagerService extends ActivityManagerNative
 
         if (app.foregroundServices) {
             interesting = true;
+            schedGroup = Process.THREAD_GROUP_DEFAULT;
         }
 
         if (app == mHeavyWeightProcess) {
