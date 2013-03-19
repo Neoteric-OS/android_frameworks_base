@@ -1685,7 +1685,6 @@ public class WifiStateMachine extends StateMachine {
         return mNetworkInfo.getDetailedState();
     }
 
-
     private SupplicantState handleSupplicantStateChange(Message message) {
         StateChangeResult stateChangeResult = (StateChangeResult) message.obj;
         SupplicantState state = stateChangeResult.state;
@@ -1982,6 +1981,10 @@ public class WifiStateMachine extends StateMachine {
                 case WifiWatchdogStateMachine.GOOD_LINK_DETECTED:
                 case CMD_NO_NETWORKS_PERIODIC_SCAN:
                     break;
+	        case WifiMonitor.SUPPLICANT_INFO_EVENT:
+		    SupplicantInfo supInfo = (SupplicantInfo)message.obj;
+		    mSupplicantStateTracker.sendMessage(mSupplicantStateTracker.obtainMessage(WifiMonitor.SUPPLICANT_INFO_EVENT, new SupplicantInfo(supInfo.infoType, supInfo.infoMsg)));
+		    break;
                 case DhcpStateMachine.CMD_ON_QUIT:
                     mDhcpStateMachine = null;
                     break;
@@ -3095,6 +3098,7 @@ public class WifiStateMachine extends StateMachine {
                 case WifiMonitor.AUTHENTICATION_FAILURE_EVENT:
                     mSupplicantStateTracker.sendMessage(WifiMonitor.AUTHENTICATION_FAILURE_EVENT);
                     break;
+
                 case WifiMonitor.SUPPLICANT_STATE_CHANGE_EVENT:
                     SupplicantState state = handleSupplicantStateChange(message);
                     // A driver/firmware hang can now put the interface in a down state.

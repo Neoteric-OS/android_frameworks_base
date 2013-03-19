@@ -25,6 +25,7 @@ import android.net.wifi.p2p.WifiP2pService.P2pStatus;
 import android.net.wifi.p2p.WifiP2pProvDiscEvent;
 import android.net.wifi.p2p.nsd.WifiP2pServiceResponse;
 import android.net.wifi.StateChangeResult;
+import android.net.wifi.SupplicantInfo;
 import android.os.Message;
 import android.util.Log;
 
@@ -48,15 +49,19 @@ public class WifiMonitor {
 
     /** Events we receive from the supplicant daemon */
 
-    private static final int CONNECTED    = 1;
-    private static final int DISCONNECTED = 2;
-    private static final int STATE_CHANGE = 3;
-    private static final int SCAN_RESULTS = 4;
-    private static final int LINK_SPEED   = 5;
-    private static final int TERMINATING  = 6;
-    private static final int DRIVER_STATE = 7;
-    private static final int EAP_FAILURE  = 8;
-    private static final int UNKNOWN      = 9;
+    private static final int CONNECTED        = 1;
+    private static final int DISCONNECTED     = 2;
+    private static final int STATE_CHANGE     = 3;
+    private static final int SCAN_RESULTS     = 4;
+    private static final int LINK_SPEED       = 5;
+    private static final int TERMINATING      = 6;
+    private static final int DRIVER_STATE     = 7;
+    private static final int EAP_FAILURE      = 8;
+    private static final int UNKNOWN          = 9;
+    private static final int EAP_TLS_ERROR    = 10;
+    private static final int EAP_PEER_CERT    = 11;
+    private static final int EAP_NOTIFICATION = 12;
+    private static final int EAP_TLS_ALERT    = 13;
 
     /** All events coming from the supplicant start with this prefix */
     private static final String EVENT_PREFIX_STR = "CTRL-EVENT-";
@@ -146,6 +151,34 @@ public class WifiMonitor {
      * </pre>
      */
     private static final String EAP_FAILURE_STR = "EAP-FAILURE";
+
+    /**
+     * <pre>
+     * CTRL-EVENT-EAP-TLS-CERT-ERROR errorstring
+     * </pre>
+     */
+    private static final String EAP_TLS_ERROR_STR = "EAP-TLS-CERT-ERROR";
+
+    /**
+     * <pre>
+     * CTRL-EVENT-EAP-PEER-CERT errorstring
+     * </pre>
+     */
+    private static final String EAP_PEER_CERT_STR = "EAP-PEER-CERT";
+
+    /**
+     * <pre>
+     * CTRL-EVENT-EAP-NOTIFICATION notificationstring
+     * </pre>
+     */
+    private static final String EAP_NOTIFICATION_STR = "NOTIFICATION";
+
+    /**
+     * <pre>
+     * CTRL-EVENT-EAP-TLS-ALERT alertstring
+     * </pre>
+     */
+    private static final String EAP_TLS_ALERT_STR = "EAP-TLS-ALERT";
 
     /**
      * This indicates an authentication failure on EAP FAILURE event
@@ -303,6 +336,8 @@ public class WifiMonitor {
     public static final int WPS_TIMEOUT_EVENT                    = BASE + 11;
     /* Driver was hung */
     public static final int DRIVER_HUNG_EVENT                    = BASE + 12;
+    /* Supplicant information (errors, notifications, etc) */
+    public static final int SUPPLICANT_INFO_EVENT                = BASE + 13;
 
     /* P2P events */
     public static final int P2P_DEVICE_FOUND_EVENT               = BASE + 21;
@@ -381,6 +416,7 @@ public class WifiMonitor {
                 if (false && eventStr.indexOf(SCAN_RESULTS_STR) == -1) {
                     Log.d(TAG, "Event [" + eventStr + "]");
                 }
+		Log.d(TAG, "Event : " + eventStr);
                 if (!eventStr.startsWith(EVENT_PREFIX_STR)) {
                     if (eventStr.startsWith(WPA_EVENT_PREFIX_STR) &&
                             0 < eventStr.indexOf(PASSWORD_MAY_BE_INCORRECT_STR)) {
@@ -429,13 +465,21 @@ public class WifiMonitor {
                     event = DRIVER_STATE;
                 else if (eventName.equals(EAP_FAILURE_STR))
                     event = EAP_FAILURE;
+		else if (eventName.equals(EAP_TLS_ERROR_STR))
+		    event = EAP_TLS_ERROR;
+		else if (eventName.equals(EAP_PEER_CERT_STR))
+		    event = EAP_PEER_CERT;
+		else if (eventName.equals(EAP_NOTIFICATION_STR))
+		    event = EAP_NOTIFICATION;
+		else if (eventName.equals(EAP_TLS_ALERT_STR))
+		    event = EAP_TLS_ALERT;
                 else
                     event = UNKNOWN;
 
                 String eventData = eventStr;
                 if (event == DRIVER_STATE || event == LINK_SPEED)
                     eventData = eventData.split(" ")[1];
-                else if (event == STATE_CHANGE || event == EAP_FAILURE) {
+                else if (event == STATE_CHANGE || event == EAP_FAILURE || event == EAP_TLS_ERROR) {
                     int ind = eventStr.indexOf(" ");
                     if (ind != -1) {
                         eventData = eventStr.substring(ind + 1);
@@ -473,6 +517,14 @@ public class WifiMonitor {
                     if (eventData.startsWith(EAP_AUTH_FAILURE_STR)) {
                         mStateMachine.sendMessage(AUTHENTICATION_FAILURE_EVENT);
                     }
+		} else if (event == EAP_TLS_ERROR) {
+		    handleEapTlsErrorEvent(eventData);
+		} else if (event == EAP_PEER_CERT) {
+		    handleEapPeerCertEvent(eventData);
+		} else if (event == EAP_NOTIFICATION) {
+		    handleEapNotificationEvent(eventData);
+		} else if (event == EAP_TLS_ALERT) {
+		    handleEapTlsAlertEvent(eventData);
                 } else {
                     handleEvent(event, eventData);
                 }
@@ -495,6 +547,38 @@ public class WifiMonitor {
             }
             return false;
         }
+
+	private void handleEapTlsAlertEvent(String alert) {
+	    if (alert == null) {
+		return;
+	    }
+	    Log.d(TAG, "* TLS ALERT : " + alert);
+	    notifySupplicantInfo(WifiManager.INFO_TLS_ALERT, alert);
+	}
+
+	private void handleEapNotificationEvent(String notification) {
+	    if (notification == null) {
+		return;
+	    }
+	    Log.d(TAG, "* NOTIFICATION : " + notification);
+	    notifySupplicantInfo(WifiManager.INFO_NOTIFICATION, notification);
+	}
+
+	private void handleEapPeerCertEvent(String peerCert) {
+	    if (peerCert == null) {
+		return;
+	    }
+	    Log.d(TAG, "* EAP-PEER-CERT : " + peerCert);
+	    notifySupplicantInfo(WifiManager.INFO_EAP_PEER, peerCert);
+	}
+
+	private void handleEapTlsErrorEvent(String error) {
+	    if (error == null) {
+		return;
+	    }
+	    Log.d(TAG, "* EAP-TLS-ERROR : " + error);
+	    notifySupplicantInfo(WifiManager.INFO_EAP_TLS_CERT_ERROR, error);
+	}
 
         private void handleDriverEvent(String state) {
             if (state == null) {
@@ -752,6 +836,16 @@ public class WifiMonitor {
                     netId, 0, BSSID);
             mStateMachine.sendMessage(m);
         }
+    }
+
+    /**
+     * Send the state machine a notification that the supplicant provided us
+     * an informational message.
+     * @param infoType one of the INFO_ values from WifiManager.java.
+     * @param infoMsg the string that was provided by the supplicant.
+     */
+    void notifySupplicantInfo(int infoType, String infoMsg) {
+	mStateMachine.sendMessage(mStateMachine.obtainMessage(SUPPLICANT_INFO_EVENT, new SupplicantInfo(infoType, infoMsg)));
     }
 
     /**

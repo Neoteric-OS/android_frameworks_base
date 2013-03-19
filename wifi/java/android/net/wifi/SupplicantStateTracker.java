@@ -136,6 +136,15 @@ class SupplicantStateTracker extends StateMachine {
         }
     }
 
+    private void sendSupplicantInfoBroadcast(SupplicantInfo info) {
+	Intent intent = new Intent(WifiManager.SUPPLICANT_INFO_ACTION);
+        intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
+	intent.putExtra(WifiManager.EXTRA_SUPPLICANT_INFO_ID, info.infoType);
+	if (info.infoMsg != null)
+	    intent.putExtra(WifiManager.EXTRA_SUPPLICANT_INFO_STR, info.infoMsg);
+	mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
+    }
+
     private void sendSupplicantStateChangedBroadcast(SupplicantState state, boolean failedAuth) {
         Intent intent = new Intent(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
         intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT
@@ -166,6 +175,10 @@ class SupplicantStateTracker extends StateMachine {
                     mAuthenticationFailuresCount++;
                     mAuthFailureInSupplicantBroadcast = true;
                     break;
+	    case WifiMonitor.SUPPLICANT_INFO_EVENT:
+		SupplicantInfo infoResult = (SupplicantInfo) message.obj;
+		sendSupplicantInfoBroadcast(infoResult);
+		break;
                 case WifiMonitor.SUPPLICANT_STATE_CHANGE_EVENT:
                     StateChangeResult stateChangeResult = (StateChangeResult) message.obj;
                     SupplicantState state = stateChangeResult.state;

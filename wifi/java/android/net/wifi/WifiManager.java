@@ -69,6 +69,28 @@ public class WifiManager {
      */
     public static final int ERROR_AUTHENTICATING = 1;
 
+    // Supplicant info codes:
+    /**
+     * An EAP notification message was sent.
+     * @hide
+     */
+    public static final int INFO_NOTIFICATION = 1;
+    /**
+     * An EAP peer cert message was sent.
+     * @hide
+     */
+    public static final int INFO_EAP_PEER = 2;
+    /**
+     * An EAP TLS certificate error message was sent.
+     * @hide
+     */
+    public static final int INFO_EAP_TLS_CERT_ERROR = 3;
+    /**
+     * A TLS alert message was sent.
+     * @hide
+     */
+    public static final int INFO_TLS_ALERT = 4;
+
     /**
      * Broadcast intent action indicating that Wi-Fi has been enabled, disabled,
      * enabling, disabling, or unknown. One extra provides this state as an int.
@@ -296,6 +318,34 @@ public class WifiManager {
      * @see #ERROR_AUTHENTICATING
      */
     public static final String EXTRA_SUPPLICANT_ERROR = "supplicantError";
+
+    /**
+     * Broadcast intent action indicating that the supplicant provided an
+     * informational message.  Two extras provide an int and
+     * a string containg the message from the supplicant.
+     * @see #EXTRA_SUPPLICANT_INFO_STR
+     * @see #EXTRA_SUPPLICANT_INFO_ID
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+        public static final String SUPPLICANT_INFO_ACTION =
+        "android.net.wifi.supplicant.INFO";
+    /**
+     * The lookup key describing the type of informational
+     * message contained in the event.
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String, int)}.
+     * @hide
+     */
+    public static final String EXTRA_SUPPLICANT_INFO_ID = "supplicantInfoId";
+    /**
+     * The lookup key for a string that contains the informational message
+     * returned by the supplicant.
+     * Retrieve with
+     * {@link android.content.Intent#getStringExtra(String)}.
+     * @hide
+     */
+    public static final String EXTRA_SUPPLICANT_INFO_STR = "supplicantInfoString";
 
     /**
      * Broadcast intent action indicating that the configured networks changed.
