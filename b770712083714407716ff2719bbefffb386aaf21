@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "R-WVBxhc",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-03-19T16:39:23Z",
+      "side": 1,
+      "message": "couldn\u0027t this by\n\"(^[#*])(.*)([#*])(.*)([#*][#*])(.*)(#)$\"\n\nand combine groups 5 and 6, with one fewer append, etc?\n\nIs this number format defined anywhere?  It\u0027s tough to evaluate the correctness of your matcher without knowing the rules/format.",
+      "revId": "b770712083714407716ff2719bbefffb386aaf21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
