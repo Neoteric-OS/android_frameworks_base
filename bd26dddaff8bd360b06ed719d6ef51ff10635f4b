@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "SHSgOY0A",
+        "filename": "core/java/android/widget/DatePicker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2013-03-20T17:11:30Z",
+      "side": 1,
+      "message": "or just:\n\n  if (Character.isDigit(displayedValues[mMonthSpinner.getValue()].charAt(0)) {\n\n(which is also future-proof against locales using non-ASCII digits.)",
+      "revId": "bd26dddaff8bd360b06ed719d6ef51ff10635f4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
