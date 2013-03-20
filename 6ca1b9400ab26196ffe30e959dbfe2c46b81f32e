@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "SHUUvSrE",
+        "filename": "core/java/android/security/IKeystoreService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-03-20T16:47:10Z",
+      "side": 1,
+      "message": "Eek. Apparently this didn\u0027t explode even though it should have.",
+      "revId": "6ca1b9400ab26196ffe30e959dbfe2c46b81f32e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
