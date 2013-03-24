@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Sbj1IM5M",
+        "filename": "packages/InputDevices/res/raw/keyboard_layout_english_us_colemak.kcm",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2013-03-24T04:09:14Z",
+      "side": 1,
+      "message": "map key 58 DEL",
+      "revId": "aa3196a94c7b8a4b7bcce9424d1dbd26bfb7e998",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
