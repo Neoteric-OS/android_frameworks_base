@@ -16,6 +16,24 @@
       "revId": "bd26dddaff8bd360b06ed719d6ef51ff10635f4b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SXcUeWmg",
+        "filename": "core/java/android/widget/DatePicker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1019634
+      },
+      "writtenOn": "2013-03-25T00:36:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "SHSgOY0A",
+      "revId": "bd26dddaff8bd360b06ed719d6ef51ff10635f4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
