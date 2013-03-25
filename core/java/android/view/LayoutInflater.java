@@ -19,6 +19,7 @@ package android.view;
 import android.graphics.Canvas;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.widget.FrameLayout;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -80,8 +81,35 @@ public abstract class LayoutInflater {
     static final Class<?>[] mConstructorSignature = new Class[] {
             Context.class, AttributeSet.class};
 
-    private static final HashMap<String, Constructor<? extends View>> sConstructorMap =
-            new HashMap<String, Constructor<? extends View>>();
+    private class CachedClassKey {
+        private String mName;
+        private ClassLoader mLoader;
+
+        public CachedClassKey (String name, ClassLoader loader) {
+            mName = name;
+            mLoader = loader;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            boolean isLoaderMatch = false;
+
+            if (o == null || o instanceof CachedClassKey == false) return false;
+
+            CachedClassKey classKey = (CachedClassKey)o;
+
+            return TextUtils.equals(mName, classKey.mName) &&
+                   mLoader != null && mLoader.equals(classKey.mLoader);
+        }
+
+        @Override
+        public int hashCode() {
+            return (mName + mLoader.toString()).hashCode();
+        }
+    }
+
+    private static final HashMap<CachedClassKey, Constructor<? extends View>> sConstructorMap =
+            new HashMap<CachedClassKey, Constructor<? extends View>>();
     
     private HashMap<String, Boolean> mFilterMap;
 
@@ -524,6 +552,20 @@ public abstract class LayoutInflater {
         }
     }
 
+    private Constructor<? extends View> findCachedConstructor(String name, ClassLoader classLoader) {
+        ClassLoader loader = classLoader;
+        Constructor<? extends View> constructor = null;
+
+        while(loader != null) {
+            constructor = sConstructorMap.get(new CachedClassKey(name, loader));
+            if (constructor != null) {
+                break;
+            }
+            loader = loader.getParent();
+        }
+        return constructor;
+    }
+
     /**
      * Low-level function for instantiating a view by name. This attempts to
      * instantiate a view class of the given <var>name</var> found in this
@@ -543,7 +585,8 @@ public abstract class LayoutInflater {
      */
     public final View createView(String name, String prefix, AttributeSet attrs)
             throws ClassNotFoundException, InflateException {
-        Constructor<? extends View> constructor = sConstructorMap.get(name);
+        Constructor<? extends View> constructor = findCachedConstructor(name,
+                                                   mContext.getClassLoader());
         Class<? extends View> clazz = null;
 
         try {
@@ -559,7 +602,7 @@ public abstract class LayoutInflater {
                     }
                 }
                 constructor = clazz.getConstructor(mConstructorSignature);
-                sConstructorMap.put(name, constructor);
+                sConstructorMap.put(new CachedClassKey(name, clazz.getClassLoader()), constructor);
             } else {
                 // If we have a filter, apply it to cached constructor
                 if (mFilter != null) {
