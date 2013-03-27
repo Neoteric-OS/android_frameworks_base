@@ -543,7 +543,8 @@ class MountService extends IMountService.Stub
         synchronized (mVolumesLock) {
             for (StorageVolume volume : mVolumes) {
                 if (volume.isEmulated()) {
-                    updatePublicVolumeState(volume, Environment.MEDIA_MOUNTED);
+                    notifyVolumeStateChange(null, volume.getPath(), VolumeState.NoMedia,
+                            VolumeState.Mounted);
                 }
             }
         }
