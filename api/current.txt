@@ -13876,6 +13876,18 @@ package android.net.wifi {
     enum_constant public static final android.net.wifi.SupplicantState UNINITIALIZED;
   }
 
+  public class WifiChannel implements android.os.Parcelable {
+    ctor public WifiChannel();
+    ctor public WifiChannel(int, int, boolean);
+    ctor public WifiChannel(android.net.wifi.WifiChannel);
+    method public int describeContents();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator CREATOR;
+    field public int channel;
+    field public int frequency;
+    field public boolean ibssAllowed;
+  }
+
   public class WifiConfiguration implements android.os.Parcelable {
     ctor public WifiConfiguration();
     method public int describeContents();
@@ -14017,6 +14029,7 @@ package android.net.wifi {
     method public android.net.wifi.WifiInfo getConnectionInfo();
     method public deprecated android.net.DhcpInfo getDhcpInfo();
     method public java.util.List<android.net.wifi.ScanResult> getScanResults();
+    method public java.util.List<android.net.wifi.WifiChannel> getSupportedChannels();
     method public int getWifiState();
     method public boolean isScanAlwaysAvailable();
     method public boolean isWifiEnabled();
