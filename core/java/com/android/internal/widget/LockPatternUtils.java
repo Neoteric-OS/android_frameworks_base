@@ -1277,7 +1277,7 @@ public class LockPatternUtils {
     }
 
     /**
-     * @deprecated
+     * @deprecated @see #updateEmergencyCallButtonState(Button, int, boolean, boolean, boolean)
      * @param button
      * @param phoneState
      * @param shown
