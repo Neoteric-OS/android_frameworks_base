@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "SlJW2AxU",
+        "filename": "keystore/java/android/security/AndroidKeyPairGeneratorSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-03-28T23:01:29Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "Sk8SU3PU",
+      "revId": "6c23b3533b70884fc8b5720da783b10a61aceba2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Sk8QZfOY",
         "filename": "keystore/java/android/security/AndroidKeyPairGeneratorSpec.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-03-28T22:52:55Z",
       "side": 1,
       "message": "Rather than use \"new\" to create an instance of the Builder class, perhaps it would be better to have a builder() function.\n\nAndroidKeyPairGeneratorSpec spec \u003d AndroidKeyPairGeneratorSpec.builder(mContext)\n    .setAlias(...)\n\nFactory methods are generally preferred over new object creation, and allows you to dynamically change the builder object as necessary.",
+      "revId": "6c23b3533b70884fc8b5720da783b10a61aceba2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SwUEBMhM",
+        "filename": "keystore/java/android/security/AndroidKeyPairGeneratorSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-03-28T23:01:29Z",
+      "side": 1,
+      "message": "I\u0027m not sure what scenario this would provide more flexibility. Both would be set in stone by API.\n\nI was trying to be consistent with the Notification.Builder and Uri.Builder APIs.",
+      "parentUuid": "Sk8QZfOY",
       "revId": "6c23b3533b70884fc8b5720da783b10a61aceba2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "SwSH.ru4",
+        "filename": "keystore/java/android/security/AndroidKeyPairGeneratorSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-03-28T23:01:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Sk2QxsFw",
+      "revId": "6c23b3533b70884fc8b5720da783b10a61aceba2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Sk0QurAA",
         "filename": "keystore/java/android/security/AndroidKeyPairGeneratorSpec.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2013-03-28T22:52:55Z",
       "side": 1,
       "message": "nulls?",
+      "revId": "6c23b3533b70884fc8b5720da783b10a61aceba2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SwYELOjM",
+        "filename": "keystore/java/android/security/AndroidKeyPairGeneratorSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-03-28T23:01:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Sk0QurAA",
       "revId": "6c23b3533b70884fc8b5720da783b10a61aceba2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "SwWEItjY",
+        "filename": "keystore/java/android/security/AndroidKeyPairGeneratorSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-03-28T23:01:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "SkyQrqPA",
+      "revId": "6c23b3533b70884fc8b5720da783b10a61aceba2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "SkwSLBNs",
         "filename": "keystore/java/android/security/AndroidKeyPairGeneratorSpec.java",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2013-03-28T22:52:55Z",
       "side": 1,
       "message": "nulls?",
+      "revId": "6c23b3533b70884fc8b5720da783b10a61aceba2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SwcETgmU",
+        "filename": "keystore/java/android/security/AndroidKeyPairGeneratorSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-03-28T23:01:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "SkwSLBNs",
       "revId": "6c23b3533b70884fc8b5720da783b10a61aceba2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
