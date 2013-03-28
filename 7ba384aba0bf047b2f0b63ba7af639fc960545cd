@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "SkyR7qIY",
+        "filename": "media/jni/audioeffect/android_media_AudioEffect.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2013-03-28T20:49:16Z",
+      "side": 1,
+      "message": "i think we need to give this class a constructor to zero-initialize these fields...",
+      "revId": "7ba384aba0bf047b2f0b63ba7af639fc960545cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SkwTbBHE",
+        "filename": "media/jni/audioeffect/android_media_AudioEffect.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2013-03-28T20:49:16Z",
+      "side": 1,
+      "message": "...for these calls to be safe.",
+      "revId": "7ba384aba0bf047b2f0b63ba7af639fc960545cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Sk2TMELQ",
+        "filename": "media/jni/audioeffect/android_media_Visualizer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2013-03-28T20:49:16Z",
+      "side": 1,
+      "message": "likewise.",
+      "revId": "7ba384aba0bf047b2f0b63ba7af639fc960545cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
