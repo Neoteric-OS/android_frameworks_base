@@ -72,6 +72,23 @@
     },
     {
       "key": {
+        "uuid": "SwcE.4so",
+        "filename": "keystore/java/android/security/AndroidKeyPairGeneratorSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-03-28T23:04:55Z",
+      "side": 1,
+      "message": "whoops.. forgot closing paren here",
+      "revId": "6c23b3533b70884fc8b5720da783b10a61aceba2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Sk2QxsFw",
         "filename": "keystore/java/android/security/AndroidKeyPairGeneratorSpec.java",
         "patchSetId": 1
