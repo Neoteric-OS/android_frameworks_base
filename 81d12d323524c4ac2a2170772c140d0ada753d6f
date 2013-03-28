@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "SkymzgfU",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-03-28T15:54:49Z",
+      "side": 1,
+      "message": "Regex is pretty heavyweight. It uses native resources and this would create a new one every call.\n\nWhy don\u0027t we just limit it to similar rules to Java class names with something cheesy like:\n\n final int N \u003d name.length();\n for (int i \u003d 0; i \u003c N; i++) {\n   final char c \u003d name.charAt(i);\n   if ((c \u003c \u0027a\u0027 || c \u003e \u0027z\u0027) \u0026\u0026 (c \u003c \u0027A\u0027 || c \u003e \u0027Z\u0027) \u0026\u0026 (c !\u003d \u0027_\u0027) {\n     return false;\n   }\n }\n return true;",
+      "revId": "81d12d323524c4ac2a2170772c140d0ada753d6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
