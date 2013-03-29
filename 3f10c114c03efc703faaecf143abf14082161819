@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "SwQf5.ng",
+        "filename": "core/java/android/database/DatabaseUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-03-29T22:48:19Z",
+      "side": 1,
+      "message": "@hide\n\nWe can\u0027t add API from AOSP.",
+      "revId": "3f10c114c03efc703faaecf143abf14082161819",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Swef99mQ",
+        "filename": "core/java/android/database/DatabaseUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2013-03-29T22:48:19Z",
+      "side": 1,
+      "message": "space after comma\n\nremove semicolon from within the query",
+      "revId": "3f10c114c03efc703faaecf143abf14082161819",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
