@@ -12959,7 +12959,7 @@ package android.net.http {
     field public static long DEFAULT_SYNC_MIN_GZIP_BYTES;
   }
 
-  public final class HttpResponseCache extends java.net.ResponseCache implements java.io.Closeable {
+  public class HttpResponseCache extends java.net.ResponseCache implements java.io.Closeable {
     method public void close() throws java.io.IOException;
     method public void delete() throws java.io.IOException;
     method public void flush();

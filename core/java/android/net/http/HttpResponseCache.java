@@ -17,21 +17,21 @@
 package android.net.http;
 
 import android.content.Context;
+import com.android.okhttp.OkResponseCache;
+import com.android.okhttp.ResponseSource;
+import com.android.okhttp.internal.DiskLruCache;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.net.CacheRequest;
 import java.net.CacheResponse;
-import java.net.ExtendedResponseCache;
 import java.net.HttpURLConnection;
 import java.net.ResponseCache;
-import java.net.ResponseSource;
 import java.net.URI;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
-import libcore.io.DiskLruCache;
 import libcore.io.IoUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -151,13 +151,13 @@ import org.apache.http.impl.client.DefaultHttpClient;
  *       } catch (Exception httpResponseCacheNotAvailable) {
  *       }}</pre>
  */
-public final class HttpResponseCache extends ResponseCache
-        implements Closeable, ExtendedResponseCache {
+public class HttpResponseCache extends ResponseCache implements Closeable {
 
-    private final libcore.net.http.HttpResponseCache delegate;
+    private final com.android.okhttp.internal.http.HttpResponseCache delegate;
 
     private HttpResponseCache(File directory, long maxSize) throws IOException {
-        this.delegate = new libcore.net.http.HttpResponseCache(directory, maxSize);
+        this.delegate = new com.android.okhttp.internal.http.HttpResponseCache(
+                directory, maxSize);
     }
 
     /**
@@ -194,7 +194,7 @@ public final class HttpResponseCache extends ResponseCache
             }
         }
 
-        HttpResponseCache result = new HttpResponseCache(directory, maxSize);
+        HttpResponseCache result = new FullHttpResponseCache(directory, maxSize);
         ResponseCache.setDefault(result);
         return result;
     }
@@ -263,21 +263,6 @@ public final class HttpResponseCache extends ResponseCache
         return delegate.getRequestCount();
     }
 
-    /** @hide */
-    @Override public void trackResponse(ResponseSource source) {
-        delegate.trackResponse(source);
-    }
-
-    /** @hide */
-    @Override public void trackConditionalCacheHit() {
-        delegate.trackConditionalCacheHit();
-    }
-
-    /** @hide */
-    @Override public void update(CacheResponse conditionalCacheHit, HttpURLConnection connection) {
-        delegate.update(conditionalCacheHit, connection);
-    }
-
     /**
      * Uninstalls the cache and releases any active resources. Stored contents
      * will remain on the filesystem.
@@ -297,5 +282,29 @@ public final class HttpResponseCache extends ResponseCache
             ResponseCache.setDefault(null);
         }
         delegate.getCache().delete();
+    }
+
+    /**
+     * Use a subclass to implement extended methods for {@link OkResponseCache}.
+     * This class exists to avoid leaking implementation details into the public
+     * API.
+     */
+    static class FullHttpResponseCache extends HttpResponseCache implements OkResponseCache {
+        FullHttpResponseCache(File directory, long maxSize) throws IOException {
+            super(directory, maxSize);
+        }
+
+        @Override public void trackResponse(ResponseSource source) {
+            super.delegate.trackResponse(source);
+        }
+
+        @Override public void trackConditionalCacheHit() {
+            super.delegate.trackConditionalCacheHit();
+        }
+
+        @Override public void update(CacheResponse conditionalCacheHit,
+                HttpURLConnection connection) throws IOException {
+            super.delegate.update(conditionalCacheHit, connection);
+        }
     }
 }
