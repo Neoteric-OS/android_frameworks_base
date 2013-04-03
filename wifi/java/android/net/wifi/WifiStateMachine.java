@@ -1677,6 +1677,10 @@ public class WifiStateMachine extends StateMachine {
                 //Allow 2s for suspend optimizations to be set
                 mSuspendWakeLock.acquire(2000);
                 sendMessage(CMD_SET_SUSPEND_OPT_ENABLED, 1, 0);
+                if (!mP2pConnecting.get())
+                    sendMessage(obtainMessage(CMD_SET_SUSPEND_OPT_ENABLED, 1, 0));
+                else
+                    logd("P2P connecting ongoing discard SET_SUSPEND");
             }
         }
         mScreenBroadcastReceived.set(true);
@@ -4058,6 +4062,15 @@ public class WifiStateMachine extends StateMachine {
                         sendMessageDelayed(obtainMessage(CMD_NO_NETWORKS_PERIODIC_SCAN,
                                     ++mPeriodicScanToken, 0), mSupplicantScanIntervalMs);
                     }
+<<<<<<< HEAD
+=======
+                    mWifiNative.setScanInterval((int) (scanIntervalMs/1000));
+                    /* When P2P Disconnects, launch a scan in order to */
+                    /* restart supplicant from a fresh scan interval. */
+                    if (!mP2pConnected.get() && !mP2pConnecting.get())
+                        sendMessage(CMD_START_SCAN);
+
+>>>>>>> 90a35a9... [PORT FROM MAIN JB-MR2] WIDI: make wifiDisplay connection works when display turns off at same time
                 case CMD_RECONNECT:
                 case CMD_REASSOCIATE:
                     if (mTemporarilyDisconnectWifi) {
