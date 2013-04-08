@@ -122,12 +122,22 @@ public class Ringtone {
 
             if (Settings.AUTHORITY.equals(authority)) {
                 if (followSettingsUri) {
-                    Uri actualUri = RingtoneManager.getActualDefaultRingtoneUri(context,
-                            RingtoneManager.getDefaultType(uri));
+                    int ringtoneType = RingtoneManager.getDefaultType(uri);
+                    Uri actualUri = RingtoneManager.getActualDefaultRingtoneUri(context, ringtoneType);
                     String actualTitle = getTitle(context, actualUri, false);
-                    title = context
-                            .getString(com.android.internal.R.string.ringtone_default_with_actual,
-                                    actualTitle);
+                    if (ringtoneType == RingtoneManager.TYPE_NOTIFICATION) {
+                        title = context.getString(
+                                com.android.internal.R.string.notification_sound_default_with_actual,
+                                actualTitle);
+                    } else if (ringtoneType == RingtoneManager.TYPE_ALARM) {
+                        title = context.getString(
+                                com.android.internal.R.string.alarm_sound_default_with_actual,
+                                actualTitle);
+                    } else {
+                        title = context.getString(
+                                com.android.internal.R.string.ringtone_default_with_actual,
+                                actualTitle);
+                    }
                 }
             } else {
                 try {
