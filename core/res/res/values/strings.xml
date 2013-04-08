@@ -3101,6 +3101,10 @@
     <string name="ringtone_picker_title">Ringtones</string>
     <!-- If there is ever a ringtone set for some setting, but that ringtone can no longer be resolved, t his is shown instead.  For example, if the ringtone was on a SD card and it had been removed, this woudl be shown for ringtones on that SD card. -->
     <string name="ringtone_unknown">Unknown ringtone</string>
+    <!-- Choice in the notification sound picker.  If chosen, the default notification sound will be used. -->
+    <string name="notification_sound_default">Default notification sound</string>
+    <!-- Choice in the notification sound picker.  If chosen, the default notification sound will be used. This fills in the actual notification sound's title into the message. -->
+    <string name="notification_sound_default_with_actual">Default notification sound (<xliff:g id="actual_notification_sound">%1$s</xliff:g>)</string>
 
     <!-- A notification is shown when there are open wireless networks nearby.  This is the notification's title. -->
     <plurals name="wifi_available">
