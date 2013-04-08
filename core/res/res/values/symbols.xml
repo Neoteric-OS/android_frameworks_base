@@ -709,6 +709,10 @@
   <java-symbol type="string" name="ringtone_picker_title" />
   <java-symbol type="string" name="ringtone_silent" />
   <java-symbol type="string" name="ringtone_unknown" />
+  <java-symbol type="string" name="notification_sound_default" />
+  <java-symbol type="string" name="notification_sound_default_with_actual" />
+  <java-symbol type="string" name="alarm_sound_default" />
+  <java-symbol type="string" name="alarm_sound_default_with_actual" />
   <java-symbol type="string" name="roamingText0" />
   <java-symbol type="string" name="roamingText1" />
   <java-symbol type="string" name="roamingText10" />
