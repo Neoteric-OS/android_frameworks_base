@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TJTFMmKU",
+        "filename": "core/java/android/app/DownloadManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2013-04-09T18:49:17Z",
+      "side": 1,
+      "message": "could you describe more about what causes this to happen?  is it an invalid set of Request arguments, or is the DownloadProvider disabled?",
+      "revId": "44704945d38e01febe959c2e7c3548b8880225e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
