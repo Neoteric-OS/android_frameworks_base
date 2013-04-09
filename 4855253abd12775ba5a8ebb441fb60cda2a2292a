@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "TH.OvUnM",
+        "filename": "core/java/android/widget/DatePicker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1019634
+      },
+      "writtenOn": "2013-04-09T05:07:06Z",
+      "side": 1,
+      "message": "When locale is non-English like korean, chinese, etc.,\nmonth displayed string is started with number. (1월, 1月, etc)\nWith a qwerty to be able to type just strings, we can\u0027t select other month.\nSo I tried to be able to type numbers to change a month.",
+      "parentUuid": "TJd2FSwI",
+      "revId": "4855253abd12775ba5a8ebb441fb60cda2a2292a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "TJX2hl4o",
         "filename": "core/java/android/widget/DatePicker.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2013-04-09T01:53:13Z",
       "side": 1,
       "message": "if (Character.isDigit(displayedValues[0].charAt(0))) {\n       mMonthSpinnerInput.setRawInputType(InputType.TYPE_CLASS_NUMBER);\n}",
+      "revId": "4855253abd12775ba5a8ebb441fb60cda2a2292a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TH8OsVoE",
+        "filename": "core/java/android/widget/DatePicker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1019634
+      },
+      "writtenOn": "2013-04-09T05:07:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "TJX2hl4o",
       "revId": "4855253abd12775ba5a8ebb441fb60cda2a2292a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
