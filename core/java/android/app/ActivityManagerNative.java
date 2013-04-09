@@ -1091,7 +1091,7 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
 
         case OPEN_CONTENT_URI_TRANSACTION: {
             data.enforceInterface(IActivityManager.descriptor);
-            Uri uri = Uri.parse(data.readString());
+            Uri uri = Uri.CREATOR.createFromParcel(data);
             ParcelFileDescriptor pfd = openContentUri(uri);
             reply.writeNoException();
             if (pfd != null) {
@@ -3196,6 +3196,7 @@ class ActivityManagerProxy implements IActivityManager
         Parcel data = Parcel.obtain();
         Parcel reply = Parcel.obtain();
         data.writeInterfaceToken(IActivityManager.descriptor);
+        uri.writeToParcel(data, 0);
         mRemote.transact(OPEN_CONTENT_URI_TRANSACTION, data, reply, 0);
         reply.readException();
         ParcelFileDescriptor pfd = null;
