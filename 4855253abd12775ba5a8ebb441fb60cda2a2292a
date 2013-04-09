@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TJd2FSwI",
+        "filename": "core/java/android/widget/DatePicker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1010257
+      },
+      "writtenOn": "2013-04-09T01:53:13Z",
+      "side": 1,
+      "message": "Why checking the mMonthSpinner.getValue() element? It seems that all months should be either digits or not, right?",
+      "revId": "4855253abd12775ba5a8ebb441fb60cda2a2292a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TJX2hl4o",
+        "filename": "core/java/android/widget/DatePicker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1010257
+      },
+      "writtenOn": "2013-04-09T01:53:13Z",
+      "side": 1,
+      "message": "if (Character.isDigit(displayedValues[0].charAt(0))) {\n       mMonthSpinnerInput.setRawInputType(InputType.TYPE_CLASS_NUMBER);\n}",
+      "revId": "4855253abd12775ba5a8ebb441fb60cda2a2292a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
