@@ -980,6 +980,8 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
             return;
         }
 
+        boolean positionValueChanged = false;
+
         // Start selection mode if needed. We don't need to if we're unchecking something.
         if (value && mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL && mChoiceActionMode == null) {
             if (mMultiChoiceModeCallback == null ||
@@ -1002,19 +1004,24 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                 }
             }
             if (oldValue != value) {
+                positionValueChanged = true;
                 if (value) {
                     mCheckedItemCount++;
                 } else {
                     mCheckedItemCount--;
                 }
-            }
-            if (mChoiceActionMode != null) {
-                final long id = mAdapter.getItemId(position);
-                mMultiChoiceModeCallback.onItemCheckedStateChanged(mChoiceActionMode,
-                        position, id, value);
+                if (mChoiceActionMode != null) {
+                    final long id = mAdapter.getItemId(position);
+                    mMultiChoiceModeCallback.onItemCheckedStateChanged(mChoiceActionMode,
+                            position, id, value);
+                }
             }
         } else {
             boolean updateIds = mCheckedIdStates != null && mAdapter.hasStableIds();
+            boolean oldValue = mCheckStates.get(position);
+            if (oldValue != value) {
+                positionValueChanged = true;
+            }
             // Clear all values if we're checking something, or unchecking the currently
             // selected item
             if (value || isItemChecked(position)) {
@@ -1037,7 +1044,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         }
 
         // Do not generate a data change while we are in the layout phase
-        if (!mInLayout && !mBlockLayoutRequests) {
+        if (positionValueChanged && !mInLayout && !mBlockLayoutRequests) {
             mDataChanged = true;
             rememberSyncState();
             requestLayout();
