@@ -212,6 +212,20 @@ public final class UserHandle implements Parcelable {
         return getUserId(Process.myUid());
     }
 
+    /**
+      * Returns a UserHandle of the user of the current process
+      * @return UserHandle of the user of the current process
+      * @hide
+      */
+    public static final UserHandle myUserHandle() {
+        int myUserId = myUserId();
+        if (myUserId == UserHandle.USER_OWNER) {
+            return UserHandle.OWNER;
+        } else {
+            return new UserHandle(myUserId);
+        }
+    }
+
     /** @hide */
     public UserHandle(int h) {
         mHandle = h;
