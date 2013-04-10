@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TQMLpQuk",
+        "filename": "wifi/java/android/net/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1003988
+      },
+      "writtenOn": "2013-04-10T17:24:43Z",
+      "side": 1,
+      "message": "nit: code style requires braces around |if| body.",
+      "revId": "5733b48ef8713ca44721f1e91c47f2ff80124b69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
