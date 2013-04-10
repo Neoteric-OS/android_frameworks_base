@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TQMJgIrc",
+        "filename": "wifi/java/android/net/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1003988
+      },
+      "writtenOn": "2013-04-10T17:20:40Z",
+      "side": 1,
+      "message": "nit: code style requires braces",
+      "revId": "f6f3dda13a8946f4e1f015635f512c7a88ba5b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TQKJdHvc",
+        "filename": "wifi/java/android/net/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1003988
+      },
+      "writtenOn": "2013-04-10T17:20:40Z",
+      "side": 1,
+      "message": "nit: line over 100 chars",
+      "revId": "f6f3dda13a8946f4e1f015635f512c7a88ba5b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TQAJbKgE",
+        "filename": "wifi/java/android/net/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1003988
+      },
+      "writtenOn": "2013-04-10T17:20:40Z",
+      "side": 1,
+      "message": "nit: code style requires braces",
+      "revId": "f6f3dda13a8946f4e1f015635f512c7a88ba5b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
