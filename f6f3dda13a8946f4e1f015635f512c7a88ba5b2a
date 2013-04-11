@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "TOHDFSFs",
+        "filename": "wifi/java/android/net/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1020464
+      },
+      "writtenOn": "2013-04-11T08:48:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "TQMJgIrc",
+      "revId": "f6f3dda13a8946f4e1f015635f512c7a88ba5b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "TQKJdHvc",
         "filename": "wifi/java/android/net/wifi/WifiNative.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "TOBDKzGo",
+        "filename": "wifi/java/android/net/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1020464
+      },
+      "writtenOn": "2013-04-11T08:48:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "TQKJdHvc",
+      "revId": "f6f3dda13a8946f4e1f015635f512c7a88ba5b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "TQAJbKgE",
         "filename": "wifi/java/android/net/wifi/WifiNative.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2013-04-10T17:20:40Z",
       "side": 1,
       "message": "nit: code style requires braces",
+      "revId": "f6f3dda13a8946f4e1f015635f512c7a88ba5b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TODDP0Hs",
+        "filename": "wifi/java/android/net/wifi/WifiNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1020464
+      },
+      "writtenOn": "2013-04-11T08:48:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "TQAJbKgE",
       "revId": "f6f3dda13a8946f4e1f015635f512c7a88ba5b2a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
