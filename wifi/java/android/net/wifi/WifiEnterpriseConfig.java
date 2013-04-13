@@ -18,18 +18,13 @@ package android.net.wifi;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.security.Credentials;
+import android.security.KeyStore;
 import android.text.TextUtils;
 import android.util.Log;
-
-import com.android.org.bouncycastle.asn1.ASN1InputStream;
-import com.android.org.bouncycastle.asn1.ASN1Sequence;
-import com.android.org.bouncycastle.asn1.DEROctetString;
-import com.android.org.bouncycastle.asn1.x509.BasicConstraints;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.KeyFactory;
-import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
@@ -459,7 +454,8 @@ public class WifiEnterpriseConfig implements Parcelable {
         String caCertName = Credentials.CA_CERTIFICATE + name;
         if (mClientCertificate != null) {
             byte[] privKeyData = mClientPrivateKey.getEncoded();
-            ret = keyStore.importKey(privKeyName, privKeyData);
+            ret = keyStore.importKey(privKeyName, privKeyData, Process.WIFI_UID,
+                            KeyStore.FLAG_ENCRYPTED);
             if (ret == false) {
                 return ret;
             }
@@ -503,7 +499,7 @@ public class WifiEnterpriseConfig implements Parcelable {
             Certificate cert) {
         try {
             byte[] certData = Credentials.convertToPem(cert);
-            return keyStore.put(name, certData);
+            return keyStore.put(name, certData, Process.WIFI_UID, KeyStore.FLAG_ENCRYPTED);
         } catch (IOException e1) {
             return false;
         } catch (CertificateException e2) {
@@ -511,7 +507,7 @@ public class WifiEnterpriseConfig implements Parcelable {
         }
     }
 
-    void removeKeys(android.security.KeyStore keyStore) {
+    void removeKeys(KeyStore keyStore) {
         String client = getFieldValue(CLIENT_CERT_KEY, CLIENT_CERT_PREFIX);
         // a valid client certificate is configured
         if (!TextUtils.isEmpty(client)) {
