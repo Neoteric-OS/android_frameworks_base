@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TUjOIUms",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1021200
+      },
+      "writtenOn": "2013-04-15T21:06:11Z",
+      "side": 1,
+      "message": "should the commit message be refined?",
+      "revId": "9d25a8b9d358d8646a5d41db12d8df6abf4858c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TUpNXfgY",
+        "filename": "core/java/android/content/res/Configuration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1021200
+      },
+      "writtenOn": "2013-04-15T21:06:11Z",
+      "side": 1,
+      "message": "not necessary to wrap the line.",
+      "revId": "9d25a8b9d358d8646a5d41db12d8df6abf4858c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TUlNmtgM",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1021200
+      },
+      "writtenOn": "2013-04-15T21:06:11Z",
+      "side": 1,
+      "message": "Please remove the trailing white space.",
+      "revId": "9d25a8b9d358d8646a5d41db12d8df6abf4858c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
