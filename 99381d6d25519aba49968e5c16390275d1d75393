@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TTLy8Kcc",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2013-04-15T18:26:11Z",
+      "side": 1,
+      "message": "this is going to create a *lot* of GC pressure.\n\ninstead, could you consider a two-level cache?\n\nor maybe just wrap in a ThreadLocal, since most layout inflation is happening on the main ActivityThread in each app.",
+      "revId": "99381d6d25519aba49968e5c16390275d1d75393",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
