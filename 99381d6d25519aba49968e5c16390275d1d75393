@@ -16,6 +16,24 @@
       "revId": "99381d6d25519aba49968e5c16390275d1d75393",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TXgo9Hz0",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1003263
+      },
+      "writtenOn": "2013-04-16T18:17:32Z",
+      "side": 1,
+      "message": "Agree with Jeff. This is a high-traffic, performance-sensitive code path. We should not allocate here.",
+      "parentUuid": "TTLy8Kcc",
+      "revId": "99381d6d25519aba49968e5c16390275d1d75393",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
