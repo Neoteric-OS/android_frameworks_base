@@ -185,7 +185,10 @@ public class PhoneNumberUtils
         if (c != null) {
             try {
                 if (c.moveToFirst()) {
-                    number = c.getString(c.getColumnIndex(phoneColumn));
+                    int columnIndex = c.getColumnIndex(phoneColumn);
+                    if (columnIndex >= 0) {
+                        number = c.getString(columnIndex);
+                    }
                 }
             } finally {
                 c.close();
