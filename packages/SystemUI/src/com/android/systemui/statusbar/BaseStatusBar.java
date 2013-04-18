@@ -13,6 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Portions of this file are:
+ * Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
  */
 
 package com.android.systemui.statusbar;
@@ -1037,15 +1040,12 @@ public abstract class BaseStatusBar extends SystemUI implements
                     && oldBigContentView.getPackage().equals(bigContentView.getPackage())
                     && oldBigContentView.getLayoutId() == bigContentView.getLayoutId());
         ViewGroup rowParent = (ViewGroup) oldEntry.row.getParent();
-        boolean orderUnchanged = notification.notification.when==oldNotification.notification.when
-                && notification.score == oldNotification.score;
-                // score now encompasses/supersedes isOngoing()
+        boolean orderUnchanged = mNotificationData.isOrderUnchanged(oldEntry, notification);
 
         boolean updateTicker = notification.notification.tickerText != null
                 && !TextUtils.equals(notification.notification.tickerText,
                         oldEntry.notification.notification.tickerText);
-        boolean isTopAnyway = isTopNotification(rowParent, oldEntry);
-        if (contentsUnchanged && bigContentsUnchanged && (orderUnchanged || isTopAnyway)) {
+        if (contentsUnchanged && bigContentsUnchanged && orderUnchanged) {
             if (DEBUG) Slog.d(TAG, "reusing notification for key: " + key);
             oldEntry.notification = notification;
             try {
@@ -1085,7 +1085,6 @@ public abstract class BaseStatusBar extends SystemUI implements
             if (DEBUG) Slog.d(TAG, "not reusing notification for key: " + key);
             if (DEBUG) Slog.d(TAG, "contents was " + (contentsUnchanged ? "unchanged" : "changed"));
             if (DEBUG) Slog.d(TAG, "order was " + (orderUnchanged ? "unchanged" : "changed"));
-            if (DEBUG) Slog.d(TAG, "notification is " + (isTopAnyway ? "top" : "not top"));
             final boolean wasExpanded = oldEntry.userExpanded();
             removeNotificationViews(key);
             addNotificationViews(key, notification);

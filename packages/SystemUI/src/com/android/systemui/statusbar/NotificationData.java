@@ -12,6 +12,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Portions of this file are:
+ * Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
  */
 
 package com.android.systemui.statusbar;
@@ -112,6 +115,26 @@ public class NotificationData {
             }
         }
         return null;
+    }
+
+    // Determine whether the entry order would be unchanged if the given entry were
+    // to be updated with the new notification.  Assumes the given entry is already
+    // in the list.
+    public boolean isOrderUnchanged(Entry entry, StatusBarNotification newNotification) {
+        boolean result = true;
+        int i = mEntries.indexOf(entry);
+        StatusBarNotification saved = entry.notification;
+        entry.notification = newNotification;
+        // Check order compared to the previous entry in the list, if any.
+        if (i > 0 && mEntryCmp.compare(mEntries.get(i-1), entry) > 0) {
+            result = false;
+        }
+        // Check order compared to the next entry in the list, if any.
+        if (i < (mEntries.size() - 1) && mEntryCmp.compare(entry, mEntries.get(i+1)) > 0) {
+            result = false;
+        }
+        entry.notification = saved;
+        return result;
     }
 
     public int add(Entry entry) {
