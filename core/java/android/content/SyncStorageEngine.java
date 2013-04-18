@@ -1901,78 +1901,93 @@ public class SyncStorageEngine extends Handler {
             qb.setProjectionMap(map);
             qb.appendWhere("stats._id = status.stats_id");
             Cursor c = qb.query(db, null, null, null, null, null, null);
-            while (c.moveToNext()) {
-                String accountName = c.getString(c.getColumnIndex("account"));
-                String accountType = hasType
-                        ? c.getString(c.getColumnIndex("account_type")) : null;
-                if (accountType == null) {
-                    accountType = "com.google";
-                }
-                String authorityName = c.getString(c.getColumnIndex("authority"));
-                AuthorityInfo authority = this.getOrCreateAuthorityLocked(
-                        new Account(accountName, accountType), 0 /* legacy is single-user */,
-                        authorityName, -1, false);
-                if (authority != null) {
-                    int i = mSyncStatus.size();
-                    boolean found = false;
-                    SyncStatusInfo st = null;
-                    while (i > 0) {
-                        i--;
-                        st = mSyncStatus.valueAt(i);
-                        if (st.authorityId == authority.ident) {
-                            found = true;
-                            break;
+            try {
+                while (c.moveToNext()) {
+                    String accountName = c.getString(c.getColumnIndex("account"));
+                    String accountType = hasType
+                            ? c.getString(c.getColumnIndex("account_type")) : null;
+                    if (accountType == null) {
+                        accountType = "com.google";
+                    }
+                    String authorityName = c.getString(c.getColumnIndex("authority"));
+                    AuthorityInfo authority = this.getOrCreateAuthorityLocked(
+                            new Account(accountName, accountType), 0 /* legacy is single-user */,
+                            authorityName, -1, false);
+                    if (authority != null) {
+                        int i = mSyncStatus.size();
+                        boolean found = false;
+                        SyncStatusInfo st = null;
+                        while (i > 0) {
+                            i--;
+                            st = mSyncStatus.valueAt(i);
+                            if (st.authorityId == authority.ident) {
+                                found = true;
+                                break;
+                            }
                         }
+                        if (!found) {
+                            st = new SyncStatusInfo(authority.ident);
+                            mSyncStatus.put(authority.ident, st);
+                        }
+                        st.totalElapsedTime = getLongColumn(c, "totalElapsedTime");
+                        st.numSyncs = getIntColumn(c, "numSyncs");
+                        st.numSourceLocal = getIntColumn(c, "numSourceLocal");
+                        st.numSourcePoll = getIntColumn(c, "numSourcePoll");
+                        st.numSourceServer = getIntColumn(c, "numSourceServer");
+                        st.numSourceUser = getIntColumn(c, "numSourceUser");
+                        st.numSourcePeriodic = 0;
+                        st.lastSuccessSource = getIntColumn(c, "lastSuccessSource");
+                        st.lastSuccessTime = getLongColumn(c, "lastSuccessTime");
+                        st.lastFailureSource = getIntColumn(c, "lastFailureSource");
+                        st.lastFailureTime = getLongColumn(c, "lastFailureTime");
+                        st.lastFailureMesg = c.getString(c.getColumnIndex("lastFailureMesg"));
+                        st.pending = getIntColumn(c, "pending") != 0;
                     }
-                    if (!found) {
-                        st = new SyncStatusInfo(authority.ident);
-                        mSyncStatus.put(authority.ident, st);
-                    }
-                    st.totalElapsedTime = getLongColumn(c, "totalElapsedTime");
-                    st.numSyncs = getIntColumn(c, "numSyncs");
-                    st.numSourceLocal = getIntColumn(c, "numSourceLocal");
-                    st.numSourcePoll = getIntColumn(c, "numSourcePoll");
-                    st.numSourceServer = getIntColumn(c, "numSourceServer");
-                    st.numSourceUser = getIntColumn(c, "numSourceUser");
-                    st.numSourcePeriodic = 0;
-                    st.lastSuccessSource = getIntColumn(c, "lastSuccessSource");
-                    st.lastSuccessTime = getLongColumn(c, "lastSuccessTime");
-                    st.lastFailureSource = getIntColumn(c, "lastFailureSource");
-                    st.lastFailureTime = getLongColumn(c, "lastFailureTime");
-                    st.lastFailureMesg = c.getString(c.getColumnIndex("lastFailureMesg"));
-                    st.pending = getIntColumn(c, "pending") != 0;
+                }
+            } catch (NullPointerException e) {
+                Log.e(LOGTAG, "readAndDeleteLegacyAccountInfoLocked", e);
+            } catch (IllegalStateException e) {
+                Log.e(LOGTAG, "readAndDeleteLegacyAccountInfoLocked", e);
+            } finally {
+                if (c != null) {
+                    c.close();
                 }
             }
-
-            c.close();
 
             // Retrieve the settings.
             qb = new SQLiteQueryBuilder();
             qb.setTables("settings");
             c = qb.query(db, null, null, null, null, null, null);
-            while (c.moveToNext()) {
-                String name = c.getString(c.getColumnIndex("name"));
-                String value = c.getString(c.getColumnIndex("value"));
-                if (name == null) continue;
-                if (name.equals("listen_for_tickles")) {
-                    setMasterSyncAutomatically(value == null || Boolean.parseBoolean(value), 0);
-                } else if (name.startsWith("sync_provider_")) {
-                    String provider = name.substring("sync_provider_".length(),
-                            name.length());
-                    int i = mAuthorities.size();
-                    while (i > 0) {
-                        i--;
-                        AuthorityInfo authority = mAuthorities.valueAt(i);
-                        if (authority.authority.equals(provider)) {
-                            authority.enabled = value == null || Boolean.parseBoolean(value);
-                            authority.syncable = 1;
+            try {
+                while (c.moveToNext()) {
+                    String name = c.getString(c.getColumnIndex("name"));
+                    String value = c.getString(c.getColumnIndex("value"));
+                    if (name == null) continue;
+                    if (name.equals("listen_for_tickles")) {
+                        setMasterSyncAutomatically(value == null || Boolean.parseBoolean(value), 0);
+                    } else if (name.startsWith("sync_provider_")) {
+                        String provider = name.substring("sync_provider_".length(),
+                                name.length());
+                        int i = mAuthorities.size();
+                        while (i > 0) {
+                            i--;
+                            AuthorityInfo authority = mAuthorities.valueAt(i);
+                            if (authority.authority.equals(provider)) {
+                                authority.enabled = value == null || Boolean.parseBoolean(value);
+                                authority.syncable = 1;
+                            }
                         }
                     }
                 }
+            } catch (NullPointerException e) {
+                Log.e(LOGTAG, "readAndDeleteLegacyAccountInfoLocked", e);
+            } catch (IllegalStateException e) {
+                Log.e(LOGTAG, "readAndDeleteLegacyAccountInfoLocked", e);
+            } finally {
+                if (c != null) {
+                    c.close();
+                }
             }
-
-            c.close();
-
             db.close();
 
             (new File(path)).delete();
