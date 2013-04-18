@@ -156,6 +156,8 @@ class WebIconDatabaseClassic extends WebIconDatabase {
                         requestIconAndSendResult(url, listener);
                     } while (c.moveToNext());
                 }
+            } catch (NullPointerException e) {
+                Log.e(LOGTAG, "BulkRequestIcons", e);
             } catch (IllegalStateException e) {
                 Log.e(LOGTAG, "BulkRequestIcons", e);
             } finally {

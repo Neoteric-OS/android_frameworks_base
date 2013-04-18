@@ -192,15 +192,24 @@ final class WebViewDatabaseClassic extends WebViewDatabase {
         // Update form autocomplete  URLs to match new ICS formatting.
         Cursor c = sDatabase.query(mTableNames[TABLE_FORMURL_ID], null, null,
                 null, null, null, null);
-        while (c.moveToNext()) {
-            String urlId = Long.toString(c.getLong(c.getColumnIndex(ID_COL)));
-            String url = c.getString(c.getColumnIndex(FORMURL_URL_COL));
-            ContentValues cv = new ContentValues(1);
-            cv.put(FORMURL_URL_COL, WebTextView.urlForAutoCompleteData(url));
-            sDatabase.update(mTableNames[TABLE_FORMURL_ID], cv, ID_COL + "=?",
-                    new String[] { urlId });
+        try {
+            while (c.moveToNext()) {
+                String urlId = Long.toString(c.getLong(c.getColumnIndex(ID_COL)));
+                String url = c.getString(c.getColumnIndex(FORMURL_URL_COL));
+                ContentValues cv = new ContentValues(1);
+                cv.put(FORMURL_URL_COL, WebTextView.urlForAutoCompleteData(url));
+                sDatabase.update(mTableNames[TABLE_FORMURL_ID], cv, ID_COL + "=?",
+                        new String[] { urlId });
+            }
+        } catch (NullPointerException e) {
+            Log.e(LOGTAG, "upgradeDatabaseFromV10ToV11 ", e);
+        } catch (IllegalStateException e) {
+            Log.e(LOGTAG, "upgradeDatabaseFromV10ToV11 ", e);
+        } finally {
+            if (c != null) {
+                c.close();
+            }
         }
-        c.close();
     }
 
     private static void upgradeDatabaseToV10() {
@@ -299,6 +308,8 @@ final class WebViewDatabaseClassic extends WebViewDatabase {
             cursor = sDatabase.query(mTableNames[tableId], ID_PROJECTION,
                     null, null, null, null, null);
             ret = cursor.moveToFirst() == true;
+        } catch (NullPointerException e) {
+            Log.e(LOGTAG, "hasEntries", e);
         } catch (IllegalStateException e) {
             Log.e(LOGTAG, "hasEntries", e);
         } finally {
@@ -365,6 +376,8 @@ final class WebViewDatabaseClassic extends WebViewDatabase {
                     ret[1] = cursor.getString(
                             cursor.getColumnIndex(PASSWORD_PASSWORD_COL));
                 }
+            } catch (NullPointerException e) {
+                Log.e(LOGTAG, "getUsernamePassword", e);
             } catch (IllegalStateException e) {
                 Log.e(LOGTAG, "getUsernamePassword", e);
             } finally {
@@ -462,6 +475,8 @@ final class WebViewDatabaseClassic extends WebViewDatabase {
                     ret[1] = cursor.getString(
                             cursor.getColumnIndex(HTTPAUTH_PASSWORD_COL));
                 }
+            } catch (NullPointerException e) {
+                Log.e(LOGTAG, "getHttpAuthUsernamePassword", e);
             } catch (IllegalStateException e) {
                 Log.e(LOGTAG, "getHttpAuthUsernamePassword", e);
             } finally {
@@ -527,6 +542,8 @@ final class WebViewDatabaseClassic extends WebViewDatabase {
                     urlid = sDatabase.insert(
                             mTableNames[TABLE_FORMURL_ID], null, c);
                 }
+            } catch (NullPointerException e) {
+                Log.e(LOGTAG, "setFormData", e);
             } catch (IllegalStateException e) {
                 Log.e(LOGTAG, "setFormData", e);
             } finally {
@@ -586,12 +603,16 @@ final class WebViewDatabaseClassic extends WebViewDatabase {
                                 values.add(dataCursor.getString(valueCol));
                             } while (dataCursor.moveToNext());
                         }
+                    } catch (NullPointerException e) {
+                        Log.e(LOGTAG, "getFormData dataCursor", e);
                     } catch (IllegalStateException e) {
                         Log.e(LOGTAG, "getFormData dataCursor", e);
                     } finally {
                         if (dataCursor != null) dataCursor.close();
                     }
                 }
+            } catch (NullPointerException e) {
+                Log.e(LOGTAG, "getFormData cursor", e);
             } catch (IllegalStateException e) {
                 Log.e(LOGTAG, "getFormData cursor", e);
             } finally {
