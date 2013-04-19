@@ -1658,7 +1658,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                             replyToMessage(message, WifiP2pManager.CONNECT_FAILED,
                                     WifiP2pManager.ERROR);
                         }
-                    }
+                    //}
                     // TODO: figure out updating the status to declined when invitation is rejected
                     break;
                 case WifiMonitor.P2P_INVITATION_RESULT_EVENT:
@@ -1699,8 +1699,12 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                     } else {
                         mSavedPeerConfig.wps.setup = WpsInfo.PBC;
                     }
-                    if (!sendConnectNoticeToApp(mSavedProvDiscDevice, mSavedPeerConfig)) {
-                        transitionTo(mUserAuthorizingJoinState);
+                    Slog.d(TAG, "mGroup.isGroupOwner()" + mGroup.isGroupOwner());
+                    if (mGroup.isGroupOwner()) {
+                        Slog.d(TAG, "Local device is Group Owner, transiting to mUserAuthorizingJoinState");
+                        if (!sendConnectNoticeToApp(mSavedProvDiscDevice, mSavedPeerConfig)) {
+                            transitionTo(mUserAuthorizingJoinState);
+                        }
                     }
                     break;
                 case WifiMonitor.P2P_GROUP_STARTED_EVENT:
