@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ToGUpgJc",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pGroup.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2013-04-19T14:38:19Z",
+      "side": 1,
+      "message": "Not necessary since u use isGroupOwner",
+      "revId": "d4f585f23173b9c495d6c5d503c4b54b792c1821",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ToMUTrGM",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1661,
+      "author": {
+        "id": 1003344
+      },
+      "writtenOn": "2013-04-19T14:38:19Z",
+      "side": 1,
+      "message": "This wont compile. Please test stuff before uploading.",
+      "revId": "d4f585f23173b9c495d6c5d503c4b54b792c1821",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
