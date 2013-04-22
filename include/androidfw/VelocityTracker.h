@@ -12,6 +12,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Portions of this file are:
+ * Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
  */
 
 #ifndef _ANDROIDFW_VELOCITY_TRACKER_H
@@ -249,6 +252,54 @@ private:
 
     // The minimum duration between samples when estimating velocity.
     static const nsecs_t MIN_DURATION = 10 * 1000000; // 10 ms
+
+    struct Movement {
+        nsecs_t eventTime;
+        BitSet32 idBits;
+        VelocityTracker::Position positions[MAX_POINTERS];
+
+        inline const VelocityTracker::Position& getPosition(uint32_t id) const {
+            return positions[idBits.getIndexOfBit(id)];
+        }
+    };
+
+    uint32_t mIndex;
+    Movement mMovements[HISTORY_SIZE];
+};
+
+/*
+ * Velocity tracker strategy that spefically identifies acceleration and
+ * deceleration phases, and favors acceleration.
+ */
+class PhasedVelocityTrackerStrategy : public VelocityTrackerStrategy {
+public:
+    PhasedVelocityTrackerStrategy();
+    virtual ~PhasedVelocityTrackerStrategy();
+
+    virtual void clear();
+    virtual void clearPointers(BitSet32 idBits);
+    virtual void addMovement(nsecs_t eventTime, BitSet32 idBits,
+            const VelocityTracker::Position* positions);
+    virtual bool getEstimator(uint32_t id, VelocityTracker::Estimator* outEstimator) const;
+
+private:
+    // Oldest sample to consider when calculating the velocity.
+    static const nsecs_t HORIZON = 100 * 1000000; // 100 ms
+
+    // Number of samples to keep.
+    static const uint32_t HISTORY_SIZE = 20;
+
+    // The minimum duration between samples when estimating velocity.
+    static const nsecs_t MIN_DURATION = 3 * 1000000; // 3 ms
+
+    // A velocity value small enough to be considered insignificant.
+    static const float VELOCITY_EPSILON = 0.1;
+
+    // Exponent of force applied in acceleration phase.
+    static const float ACCELERATION_EXP = 2.0;
+
+    // Exponent of force applied in deceleration phase.
+    static const float DECELERATION_EXP = 1.4;
 
     struct Movement {
         nsecs_t eventTime;

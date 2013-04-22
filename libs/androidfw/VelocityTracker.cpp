@@ -12,6 +12,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Portions of this file are:
+ * Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
  */
 
 #define LOG_TAG "VelocityTracker"
@@ -196,6 +199,13 @@ VelocityTrackerStrategy* VelocityTracker::createStrategy(const char* strategy) {
         // old data points, consistently underestimates velocity and takes a very long
         // time to adjust to changes in direction.
         return new LegacyVelocityTrackerStrategy();
+    }
+    if (!strcmp("phased", strategy)) {
+        // Phased velocity tracker algorithm.  Quality: EXPERIMENTAL.
+        // Models an acceleration force based on the difference between finger
+        // velocity and surface velocity, with a larger force applied for
+        // acceleration phase versus deceleration phase.
+        return new PhasedVelocityTrackerStrategy();
     }
     return NULL;
 }
@@ -922,6 +932,185 @@ bool LegacyVelocityTrackerStrategy::getEstimator(uint32_t id,
     } else {
         outEstimator->degree = 0;
     }
+    return true;
+}
+
+// --- PhasedVelocityTrackerStrategy ---
+
+const nsecs_t PhasedVelocityTrackerStrategy::HORIZON;
+const uint32_t PhasedVelocityTrackerStrategy::HISTORY_SIZE;
+const nsecs_t PhasedVelocityTrackerStrategy::MIN_DURATION;
+const float PhasedVelocityTrackerStrategy::VELOCITY_EPSILON;
+const float PhasedVelocityTrackerStrategy::ACCELERATION_EXP;
+const float PhasedVelocityTrackerStrategy::DECELERATION_EXP;
+
+PhasedVelocityTrackerStrategy::PhasedVelocityTrackerStrategy() {
+    clear();
+}
+
+PhasedVelocityTrackerStrategy::~PhasedVelocityTrackerStrategy() {
+}
+
+void PhasedVelocityTrackerStrategy::clear() {
+    mIndex = 0;
+    mMovements[0].idBits.clear();
+}
+
+void PhasedVelocityTrackerStrategy::clearPointers(BitSet32 idBits) {
+    BitSet32 remainingIdBits(mMovements[mIndex].idBits.value & ~idBits.value);
+    mMovements[mIndex].idBits = remainingIdBits;
+}
+
+void PhasedVelocityTrackerStrategy::addMovement(nsecs_t eventTime, BitSet32 idBits,
+        const VelocityTracker::Position* positions) {
+    if (++mIndex == HISTORY_SIZE) {
+        mIndex = 0;
+    }
+
+    Movement& movement = mMovements[mIndex];
+    movement.eventTime = eventTime;
+    movement.idBits = idBits;
+    uint32_t count = idBits.count();
+    for (uint32_t i = 0; i < count; i++) {
+        movement.positions[i] = positions[i];
+    }
+}
+
+bool PhasedVelocityTrackerStrategy::getEstimator(uint32_t id,
+        VelocityTracker::Estimator* outEstimator) const {
+    outEstimator->clear();
+
+    const Movement& newestMovement = mMovements[mIndex];
+    if (!newestMovement.idBits.hasBit(id)) {
+        return false; // no data
+    }
+
+    // Find the oldest sample that contains the pointer and that is not older than HORIZON.
+    nsecs_t minTime = newestMovement.eventTime - HORIZON;
+    uint32_t oldestIndex = mIndex;
+    uint32_t numTouches = 1;
+    do {
+        uint32_t nextOldestIndex = (oldestIndex == 0 ? HISTORY_SIZE : oldestIndex) - 1;
+        const Movement& nextOldestMovement = mMovements[nextOldestIndex];
+        if (!nextOldestMovement.idBits.hasBit(id)
+                || nextOldestMovement.eventTime < minTime) {
+            break;
+        }
+        oldestIndex = nextOldestIndex;
+    } while (++numTouches < HISTORY_SIZE);
+
+
+    uint32_t index = oldestIndex;
+    uint32_t samplesUsed = 0;
+    const Movement& oldestMovement = mMovements[oldestIndex];
+    const VelocityTracker::Position& oldestPosition =
+            oldestMovement.positions[oldestMovement.idBits.getIndexOfBit(id)];
+    nsecs_t lastDuration = 0;
+
+    const Movement *lastMovement = &oldestMovement;
+    const VelocityTracker::Position *lastPosition = &oldestPosition;
+
+    float vxs = 0;
+    float vxs0 = 0;
+    float vys = 0;
+    float vys0 = 0;
+#if DEBUG_STRATEGY
+    ALOGD("Phased: oldest x,y=(%f,%f), nt=%d", oldestPosition.x, oldestPosition.y, numTouches);
+#endif
+    while (numTouches-- > 1) {
+        if (++index == HISTORY_SIZE) {
+            index = 0;
+        }
+        const Movement& movement = mMovements[index];
+        nsecs_t duration = movement.eventTime - lastMovement->eventTime;
+
+        // If the duration between samples is small, we may significantly overestimate
+        // the velocity.  Consequently, we impose a minimum duration constraint on the
+        // samples that we include in the calculation.
+        if (duration >= MIN_DURATION) {
+            const VelocityTracker::Position& position = movement.positions[movement.idBits.getIndexOfBit(id)];
+
+            const float t = (float)duration / 1000000000.0; // time is duration in seconds
+
+            const float vxf = (position.x - lastPosition->x) / t;
+            const float vyf = (position.y - lastPosition->y) / t;
+            // Is direction of surface velocity negative?  If surface velocity is near zero,
+            // base this on finger velocity instead.
+            const bool vxneg = (fabs(vxs0) < VELOCITY_EPSILON) ? (vxf < 0.0) : (vxs0 < 0.0);
+            const bool vyneg = (fabs(vys0) < VELOCITY_EPSILON) ? (vyf < 0.0) : (vys0 < 0.0);
+            const float vxsign = vxneg ? -1.0 : 1.0;
+            const float vysign = vyneg ? -1.0 : 1.0;
+
+            // Delta between surface velocity and finger velocity.
+            const float dvx0 = vxf - vxs0;
+            const float dvy0 = vyf - vys0;
+            const float dvxsign = (dvx0 < 0.0) ? -1.0 : 1.0;
+            const float dvysign = (dvy0 < 0.0) ? -1.0 : 1.0;
+
+            // Model a system in which a force is applied to the surface based on the delta_velocity:
+            //   force = (delta_velocity)^n
+            //
+            // Favor acceleration by using a larger value for n when accelerating.  This will apply
+            // a relatively larger force when velocity and delta-velocity are in the same direction.
+            // xdeg and ydeg represent (1-n).
+            const float xdeg = ((vxsign * dvxsign) > 0.0) ? (1.0 - ACCELERATION_EXP) : (1.0 - DECELERATION_EXP);
+            const float ydeg = ((vysign * dvysign) > 0.0) ? (1.0 - ACCELERATION_EXP) : (1.0 - DECELERATION_EXP);
+
+            // Compute the new velocity of the surface.  Using the above force and an arbitrary
+            // mass of 1, we have the differential equation:
+            //   v'(t) = (Vf - v(t))^n
+            // Where v'=acceleration, v=velocity, and Vf=finger-velocity
+            //
+            // The solution for v is:
+            //   v(t) = Vf - ((Vf-v(0))^(1-n) - t*(1-n))^(1/(1-n))
+            if (fabs(dvx0) > VELOCITY_EPSILON) {
+                vxs = vxf - pow(pow(fabs(dvx0), xdeg) - t * (xdeg), 1/xdeg) * dvxsign;
+            } else {
+                vxs = vxs0;
+            }
+            if (fabs(dvy0) > VELOCITY_EPSILON) {
+                vys = vyf - pow(pow(fabs(dvy0), ydeg) - t * (ydeg), 1/ydeg) * dvysign;
+            } else {
+                vys = vys0;
+            }
+
+            samplesUsed += 1;
+
+            lastMovement = &movement;
+            lastPosition = &position;
+            vxs0 = vxs;
+            vys0 = vys;
+#if DEBUG_STRATEGY
+            ALOGD("Phased: phased nt=%d, t=%f, v(x,y)sign=(%f,%f), dv(x,y)sign=(%f,%f)",
+                numTouches, t, vxsign, vysign, dvxsign, dvysign);
+            ALOGD("Phased:    dvx0,dvy0=(%4.0f,%4.0f), xdeg,ydeg=(%7.2f,%7.2f)",
+                dvx0, dvy0, xdeg, ydeg);
+            ALOGD("Phased:    vxf,vyf=(%7.2f,%7.2f), xf,yf=(%4.0f,%4.0f)",
+                vxf, vyf, position.x, position.y);
+            ALOGD("Phased:    vxs,vys=(%7.2f,%7.2f)",
+                vxs, vys);
+        } else {
+            ALOGD("Phased: skipped for duration=%lld", duration);
+        }
+#else
+        }
+#endif
+    }
+
+    // Report velocity.
+    const VelocityTracker::Position& newestPosition = newestMovement.getPosition(id);
+    outEstimator->time = newestMovement.eventTime;
+    outEstimator->confidence = 1;
+    outEstimator->xCoeff[0] = newestPosition.x;
+    outEstimator->yCoeff[0] = newestPosition.y;
+    if (samplesUsed) {
+        outEstimator->xCoeff[1] = vxs;
+        outEstimator->yCoeff[1] = vys;
+        outEstimator->degree = 1;
+    } else {
+        outEstimator->degree = 0;
+    }
+
     return true;
 }
 
