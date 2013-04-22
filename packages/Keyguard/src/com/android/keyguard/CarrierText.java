@@ -155,8 +155,9 @@ public class CarrierText extends TextView {
                 break;
 
             case SimPermDisabled:
-                carrierText = getContext().getText(
-                        R.string.keyguard_permanent_disabled_sim_message_short);
+                carrierText = makeCarrierStringOnEmergencyCapable(
+                        getContext().getText(
+                                R.string.keyguard_permanent_disabled_sim_message_short), plmn);
                 break;
 
             case SimMissingLocked:
