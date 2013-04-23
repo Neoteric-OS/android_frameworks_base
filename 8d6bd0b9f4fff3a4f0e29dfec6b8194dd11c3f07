@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "T9qxCw1I",
+        "filename": "cmds/app_process/app_main.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2013-04-23T22:35:57Z",
+      "side": 1,
+      "message": "maybe \"bool is_qemu \u003d strcmp...\" above, and !is_qemu here?",
+      "revId": "8d6bd0b9f4fff3a4f0e29dfec6b8194dd11c3f07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
