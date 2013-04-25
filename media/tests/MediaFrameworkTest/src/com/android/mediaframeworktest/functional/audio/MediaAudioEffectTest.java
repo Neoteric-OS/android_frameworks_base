@@ -153,17 +153,25 @@ public class MediaAudioEffectTest extends ActivityInstrumentationTestCase2<Media
         String msg = "test1_0ConstructorFromType()";
         AudioEffect.Descriptor[] desc = AudioEffect.queryEffects();
         assertTrue(msg+": no effects found", (desc.length != 0));
+        // Since some effects are defined as EFFECT_TYPE_NULL we need to find the
+        // first effect that is not of this type.
+        int validEffect;
+        for (validEffect = 0; validEffect < desc.length; validEffect++) {
+            if (!desc[validEffect].type.equals(AudioEffect.EFFECT_TYPE_NULL)) {
+                break;
+            }
+        }
         try {
             int sessionId;
             AudioRecord ar = null;
-            if (AudioEffect.EFFECT_PRE_PROCESSING.equals(desc[0].connectMode)) {
+            if (AudioEffect.EFFECT_PRE_PROCESSING.equals(desc[validEffect].connectMode)) {
                 ar = getAudioRecord();
                 sessionId = ar.getAudioSessionId();
             } else {
                 sessionId = 0;
             }
 
-            AudioEffect effect = new AudioEffect(desc[0].type,
+            AudioEffect effect = new AudioEffect(desc[validEffect].type,
                     AudioEffect.EFFECT_TYPE_NULL,
                     0,
                     sessionId);
@@ -180,7 +188,7 @@ public class MediaAudioEffectTest extends ActivityInstrumentationTestCase2<Media
                 }
             }
         } catch (IllegalArgumentException e) {
-            msg = msg.concat(": Effect not found: "+desc[0].name);
+            msg = msg.concat(": Effect not found: "+desc[validEffect].name);
             result = false;
         } catch (UnsupportedOperationException e) {
             msg = msg.concat(": Effect library not loaded");
