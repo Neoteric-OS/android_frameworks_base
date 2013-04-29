@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ULPZPAOk",
+        "filename": "keystore/java/android/security/SystemKeyStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1005255
+      },
+      "writtenOn": "2013-04-29T06:58:55Z",
+      "side": 1,
+      "message": "Formatting issue: please replace tabs with spaces.\n\nAlso, the comment is not very clear. Would you mind to rephrase it?",
+      "revId": "175798a32f380d1c0c87e264fd65f8df9fe5bb0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ULFYm9Cc",
+        "filename": "keystore/java/android/security/SystemKeyStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1005255
+      },
+      "writtenOn": "2013-04-29T06:58:55Z",
+      "side": 1,
+      "message": "Formatting issue: please add space after if; and before and after equals operator.",
+      "revId": "175798a32f380d1c0c87e264fd65f8df9fe5bb0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
