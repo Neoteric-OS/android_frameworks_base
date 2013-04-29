@@ -211,6 +211,7 @@ status_t NativeInputEventReceiver::consumeEvents(JNIEnv* env,
                     ALOGE("Exception dispatching input event.");
                     skipCallbacks = true;
                 }
+                env->DeleteLocalRef(inputEventObj);
             } else {
                 ALOGW("channel '%s' ~ Failed to obtain event object.", getInputChannelName());
                 skipCallbacks = true;
