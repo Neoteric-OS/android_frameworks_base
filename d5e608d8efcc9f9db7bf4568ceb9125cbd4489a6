@@ -52,6 +52,24 @@
       "revId": "d5e608d8efcc9f9db7bf4568ceb9125cbd4489a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UQHFJIj8",
+        "filename": "core/java/android/widget/DatePicker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2013-04-30T23:15:52Z",
+      "side": 1,
+      "message": "i wondered about that too, but this is the test the @lge.com change for setting the numeric IME used, so i did the same. (it seems like a reasonable assumption that we want the same behavior for other locales with numeric month \"names\", but if that turns out not to be the case, we can come back and change both.) i can factor both tests out into a usesNumericMonths() helper if you like?\n\ndo you want me to move this code off the deprecated getMonthString API.",
+      "parentUuid": "UQHEywso",
+      "revId": "d5e608d8efcc9f9db7bf4568ceb9125cbd4489a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
