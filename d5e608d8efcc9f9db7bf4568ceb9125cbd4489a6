@@ -16,6 +16,24 @@
       "revId": "d5e608d8efcc9f9db7bf4568ceb9125cbd4489a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UQNGJDmg",
+        "filename": "core/java/android/widget/DatePicker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2013-04-30T22:51:20Z",
+      "side": 1,
+      "message": "no, DateUtils is giving us the right answer to the question we asked. we\u0027re just asking a bad question for these locales.\n\nregular code should _never_ be using those APIs (which is why they\u0027re already @deprecated). regular code should use DateFormat.getBestDateTimeFormat and then use the resulting pattern with SimpleDateFormat.\n\nDatePicker is probably the only valid user of the lower-level stuff!",
+      "parentUuid": "UQBEJtjw",
+      "revId": "d5e608d8efcc9f9db7bf4568ceb9125cbd4489a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
