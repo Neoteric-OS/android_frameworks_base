@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "UQBEJtjw",
+        "filename": "core/java/android/widget/DatePicker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2013-04-30T22:14:37Z",
+      "side": 1,
+      "message": "It seems that we have to fix DataUtils if that is the case, right? DateUtils is using the strings from the LocaleDate which should already contain the correct values - well it obviously does not. This seems like a workaround. What if some other code needs to show a date in kr/ja/zh format - it would have to do the same trick.",
+      "revId": "d5e608d8efcc9f9db7bf4568ceb9125cbd4489a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
