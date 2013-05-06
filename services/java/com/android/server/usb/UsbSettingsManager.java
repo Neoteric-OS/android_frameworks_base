@@ -1044,6 +1044,7 @@ class UsbSettingsManager {
       if (hasPermission(device)) {
             intent.putExtra(UsbManager.EXTRA_DEVICE, device);
             intent.putExtra(UsbManager.EXTRA_PERMISSION_GRANTED, true);
+            intent.setPackage(packageName);
             try {
                 pi.send(mUserContext, 0, intent);
             } catch (PendingIntent.CanceledException e) {
@@ -1064,6 +1065,7 @@ class UsbSettingsManager {
         if (hasPermission(accessory)) {
             intent.putExtra(UsbManager.EXTRA_ACCESSORY, accessory);
             intent.putExtra(UsbManager.EXTRA_PERMISSION_GRANTED, true);
+            intent.setPackage(packageName);
             try {
                 pi.send(mUserContext, 0, intent);
             } catch (PendingIntent.CanceledException e) {
