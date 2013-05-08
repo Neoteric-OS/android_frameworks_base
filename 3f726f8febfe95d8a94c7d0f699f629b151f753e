@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "UaZzaKTw",
+        "filename": "wifi/java/android/net/wifi/WifiEnterpriseConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-05-08T18:16:19Z",
+      "side": 1,
+      "message": "is this opportunistic or proactive?  the key value should match the key label better.",
+      "revId": "3f726f8febfe95d8a94c7d0f699f629b151f753e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaRzH.Wc",
+        "filename": "wifi/java/android/net/wifi/WifiEnterpriseConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-05-08T18:16:19Z",
+      "side": 1,
+      "message": "please use spaces instead of tabs.",
+      "revId": "3f726f8febfe95d8a94c7d0f699f629b151f753e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
