@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "UaeKSnEk",
+        "filename": "wifi/java/android/net/wifi/WifiChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-05-09T20:07:00Z",
+      "side": 1,
+      "message": "should WifiInfo structure include a WifiChannel to indicate what channel it\u0027s using?",
+      "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UacK.eLw",
+        "filename": "wifi/java/android/net/wifi/WifiChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-05-09T20:07:00Z",
+      "side": 1,
+      "message": "would it make sense to make these final and the whole object is immutable?  Do you envision needing to change these?",
+      "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaYKkgKQ",
+        "filename": "wifi/java/android/net/wifi/WifiChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-05-09T20:07:00Z",
+      "side": 1,
+      "message": "should we have other properties like \"passive Scanning\" and \"radar detection\"?\n\nShould this also include what band this channel is in?",
+      "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaaLBhEc",
+        "filename": "wifi/java/android/net/wifi/WifiChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-05-09T20:07:00Z",
+      "side": 1,
+      "message": "organizationally, can we put the constructor and copy constructor at the top, the to-string and equals next and the parcelable stuff at the bottom?",
+      "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaQK5UNE",
+        "filename": "wifi/java/android/net/wifi/WifiChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-05-09T20:07:00Z",
+      "side": 1,
+      "message": "if you override equals you should override hashcode",
+      "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaSKVdDg",
+        "filename": "wifi/java/android/net/wifi/WifiChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-05-09T20:07:00Z",
+      "side": 1,
+      "message": "I think if we make them final we should also remove this constructor",
+      "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaaKu5HE",
+        "filename": "wifi/java/android/net/wifi/WifiNative.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-05-09T20:07:00Z",
+      "side": 1,
+      "message": "can we put a comment here giving an example line?",
+      "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UacKr2GA",
+        "filename": "wifi/java/android/net/wifi/WifiNative.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-05-09T20:07:00Z",
+      "side": 1,
+      "message": "none of param 5 has spaces that\u0027ll get messed up by this split?",
+      "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaSLC1C4",
+        "filename": "wifi/java/android/net/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2417,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-05-09T20:07:00Z",
+      "side": 1,
+      "message": "when would this need to change?  when we changed regulatory domains?  What if the user drives from one domain to another?",
+      "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
