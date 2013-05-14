@@ -379,6 +379,12 @@ public class ActivityManager {
      * @hide
      */
     static public boolean isHighEndGfx() {
+        if (!HardwareRenderer.isAvailable()) {
+            // If USE_OPENGL_RENDERER is set to false in configuration file,
+            // applications should not use APIs of OpenGL ES2.0.
+            return false;
+        }
+
         MemInfoReader reader = new MemInfoReader();
         reader.readMemInfo();
         if (reader.getTotalSize() >= (512*1024*1024)) {
