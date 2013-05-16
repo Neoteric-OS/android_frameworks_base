@@ -3932,8 +3932,18 @@ public final class ActivityManagerService extends ActivityManagerNative
                     r.app = null;
                 }
                 lastTask = r.task;
+                int lastHistorySize = mMainStack.mHistory.size();
                 if (r.stack.finishActivityLocked(r, i, Activity.RESULT_CANCELED,
                         null, "force-stop", true)) {
+                    int currentHistorySize = mMainStack.mHistory.size();
+                    // If lastHistorySize before finishing the activity is
+                    // equal to currentHistorySize and also it is the last
+                    // record in the stack then we should skip decrement of
+                    // index to avoid an infinite loop.
+                    if (lastHistorySize == currentHistorySize
+                            && i == currentHistorySize - 1) {
+                        continue;
+                    }
                     i--;
                 }
             }
