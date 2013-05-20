@@ -31,17 +31,20 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
+import android.os.Process;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.view.Display;
 import android.view.DisplayInfo;
+import android.view.Surface;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Arrays;
 
 /**
  * Manages attached displays.
@@ -166,6 +169,9 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
 
     // The Wifi display adapter, or null if not registered.
     private WifiDisplayAdapter mWifiDisplayAdapter;
+
+    // The surface display adapter, or null if not registered.
+    private SurfaceDisplayAdapter mSurfaceDisplayAdapter;
 
     // Viewports of the default display and the display that should receive touch
     // input from an external source.  Used by the input system.
@@ -313,7 +319,8 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
                 mTempDisplayInfo.copyFrom(display.getDisplayInfoLocked());
                 display.setDisplayInfoOverrideFromWindowManagerLocked(info);
                 if (!mTempDisplayInfo.equals(display.getDisplayInfoLocked())) {
-                    sendDisplayEventLocked(displayId, DisplayManagerGlobal.EVENT_DISPLAY_CHANGED);
+                    sendDisplayEventLocked(displayId, DisplayManagerGlobal.EVENT_DISPLAY_CHANGED, 
+                            display.getOwningUidLocked());
                     scheduleTraversalLocked(false);
                 }
             }
@@ -378,6 +385,28 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
         }
     }
 
+    public boolean checkDisplayPermissionLocked(LogicalDisplay display, int uid) {
+        if (display == null) return false;
+        int owningUid = display.getOwningUidLocked();
+        if ((display != null) && (
+                (owningUid == -1) ||
+                (uid == Process.SYSTEM_UID) || 
+                (uid == owningUid))) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkDisplayPermissionLocked(int displayId, int uid) {
+        return checkDisplayPermissionLocked(mLogicalDisplays.get(displayId), uid);
+    }
+
+    public boolean checkDisplayPermission(int displayId, int uid) {
+        synchronized (mSyncRoot) {
+            return checkDisplayPermissionLocked(displayId, uid);
+        }
+    }
+
     /**
      * Returns information about the specified logical display.
      *
@@ -387,13 +416,14 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
      */
     @Override // Binder call
     public DisplayInfo getDisplayInfo(int displayId) {
+        final int callingUid = Binder.getCallingUid();
         synchronized (mSyncRoot) {
             LogicalDisplay display = mLogicalDisplays.get(displayId);
-            if (display != null) {
+            if ((display != null) && checkDisplayPermissionLocked(display,callingUid)) {
                 return display.getDisplayInfoLocked();
             }
-            return null;
         }
+        return null;
     }
 
     /**
@@ -401,13 +431,18 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
      */
     @Override // Binder call
     public int[] getDisplayIds() {
+        final int callingUid = Binder.getCallingUid();
         synchronized (mSyncRoot) {
             final int count = mLogicalDisplays.size();
             int[] displayIds = new int[count];
+            int len = 0;
             for (int i = 0; i < count; i++) {
-                displayIds[i] = mLogicalDisplays.keyAt(i);
+                LogicalDisplay display = mLogicalDisplays.valueAt(i);
+                if (checkDisplayPermissionLocked(display,callingUid)) {
+                    displayIds[len++] = mLogicalDisplays.keyAt(i);
+                }
             }
-            return displayIds;
+            return Arrays.copyOf(displayIds,len);
         }
     }
 
@@ -419,12 +454,13 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
 
         synchronized (mSyncRoot) {
             int callingPid = Binder.getCallingPid();
+            int callingUid = Binder.getCallingUid();
             if (mCallbacks.get(callingPid) != null) {
                 throw new SecurityException("The calling process has already "
                         + "registered an IDisplayManagerCallback.");
             }
 
-            CallbackRecord record = new CallbackRecord(callingPid, callback);
+            CallbackRecord record = new CallbackRecord(callingPid, callingUid, callback);
             try {
                 IBinder binder = callback.asBinder();
                 binder.linkToDeath(record, 0);
@@ -439,6 +475,28 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
 
     private void onCallbackDied(int pid) {
         synchronized (mSyncRoot) {
+            // Remove any devices tied to this PID
+            boolean removedAny = false;
+            int count = mDisplayDevices.size();
+            for (int i = 0; i < count;) {
+                DisplayDevice device = mDisplayDevices.get(i);
+                int creatorPid = device.getCreatorPidLocked();
+                if (creatorPid == pid) {
+                    Slog.i(TAG, "Removing display device on client death (pid="+pid+"): " + device.getDisplayDeviceInfoLocked());
+                    mDisplayDevices.remove(i);
+                    device.releaseLocked();
+                    mRemovedDisplayDevices.add(device);
+                    removedAny = true;
+                    count--;
+                } else {
+                    i++;
+                }
+            }
+
+            if (removedAny) {
+                updateLogicalDisplaysLocked();
+                scheduleTraversalLocked(false);
+            }
             mCallbacks.remove(pid);
         }
     }
@@ -550,6 +608,46 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
         }
     }
 
+    @Override // Binder call
+    public String createSurfaceDisplay(int width, int height, float xdpi, float ydpi, float density, Surface surface, int owningUid) {
+        synchronized (mSyncRoot) {
+            final int creatorPid = Binder.getCallingPid();
+            if (mCallbacks.get(creatorPid) == null) {
+                throw new SecurityException("The calling process must first "
+                        + "register an IDisplayManagerCallback.");
+            }
+
+            final int callingUid = Binder.getCallingUid();
+            if (owningUid == 0) owningUid = callingUid;
+            if ((callingUid != Process.SYSTEM_UID) && (owningUid != callingUid)) {
+                throw new SecurityException("Surface displays can only be owned by the creating UID.");
+            }
+
+            final long token = Binder.clearCallingIdentity();
+            String name = null;
+            try {
+                name = mSurfaceDisplayAdapter.addSurfaceDisplayLocked(
+                        width,height,xdpi,ydpi,density,surface,owningUid,creatorPid);
+            } finally {
+                Binder.restoreCallingIdentity(token);
+            }
+            return name;
+        }
+    }
+
+    @Override // Binder call
+    public int removeSurfaceDisplay(int displayId) {
+        final int callingUid = Binder.getCallingUid();
+        synchronized (mSyncRoot) {
+            LogicalDisplay display = mLogicalDisplays.get(displayId);
+            if ((display != null) && checkDisplayPermissionLocked(display,callingUid)) {
+                mSurfaceDisplayAdapter.removeSurfaceDisplayLocked(display.getPrimaryDisplayDeviceLocked());
+                return 0;
+            }
+        }
+        return -1;
+    }
+
     private boolean canCallerConfigureWifiDisplay() {
         return mContext.checkCallingPermission(android.Manifest.permission.CONFIGURE_WIFI_DISPLAY)
                 == PackageManager.PERMISSION_GRANTED;
@@ -572,9 +670,16 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
         synchronized (mSyncRoot) {
             if (shouldRegisterNonEssentialDisplayAdaptersLocked()) {
                 registerOverlayDisplayAdapterLocked();
+                registerSurfaceDisplayAdapterLocked();
                 registerWifiDisplayAdapterLocked();
             }
         }
+    }
+
+    private void registerSurfaceDisplayAdapterLocked() {
+    	mSurfaceDisplayAdapter = new SurfaceDisplayAdapter(
+                mSyncRoot, mContext, mHandler, mDisplayAdapterListener);
+        registerDisplayAdapterLocked(mSurfaceDisplayAdapter);
     }
 
     private void registerOverlayDisplayAdapterLocked() {
@@ -614,6 +719,21 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
                 Slog.w(TAG, "Attempted to add already added display device: "
                         + device.getDisplayDeviceInfoLocked());
                 return;
+            }
+
+            int creatorPid = device.getCreatorPidLocked();
+            if (creatorPid != -1) {
+                // If this device is tied to a particular PID (usually this means it is
+                // a surface display, but not necessarily), verify that the creator
+                // is still alive before we add it.  This will make sure that a device added
+                // by a process that dies between calling createSurfaceDisplay and the 
+                // display getting added asynchronously doesn't get orphaned.
+                CallbackRecord record = mCallbacks.get(creatorPid);
+                if (record == null) {
+                    Slog.w(TAG, "Attempted to add already orphaned display device: "
+                            + device.getDisplayDeviceInfoLocked());
+                    return;
+                }
             }
 
             Slog.i(TAG, "Display device added: " + device.getDisplayDeviceInfoLocked());
@@ -662,6 +782,7 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
 
             Slog.i(TAG, "Display device removed: " + device.getDisplayDeviceInfoLocked());
 
+            device.releaseLocked();
             mRemovedDisplayDevices.add(device);
             updateLogicalDisplaysLocked();
             scheduleTraversalLocked(false);
@@ -704,7 +825,8 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
             mSyncRoot.notifyAll();
         }
 
-        sendDisplayEventLocked(displayId, DisplayManagerGlobal.EVENT_DISPLAY_ADDED);
+        sendDisplayEventLocked(displayId, DisplayManagerGlobal.EVENT_DISPLAY_ADDED,
+                device.getOwningUidLocked());
     }
 
     private int assignDisplayIdLocked(boolean isDefault) {
@@ -730,10 +852,12 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
             display.updateLocked(mDisplayDevices);
             if (!display.isValidLocked()) {
                 mLogicalDisplays.removeAt(i);
-                sendDisplayEventLocked(displayId, DisplayManagerGlobal.EVENT_DISPLAY_REMOVED);
+                sendDisplayEventLocked(displayId, DisplayManagerGlobal.EVENT_DISPLAY_REMOVED,
+                        display.getOwningUidLocked());
                 changed = true;
             } else if (!mTempDisplayInfo.equals(display.getDisplayInfoLocked())) {
-                sendDisplayEventLocked(displayId, DisplayManagerGlobal.EVENT_DISPLAY_CHANGED);
+                sendDisplayEventLocked(displayId, DisplayManagerGlobal.EVENT_DISPLAY_CHANGED,
+                        display.getOwningUidLocked());
                 changed = true;
             }
         }
@@ -806,6 +930,8 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
             display = mLogicalDisplays.get(Display.DEFAULT_DISPLAY);
         }
 
+        DisplayDeviceInfo info = device.getDisplayDeviceInfoLocked();
+
         // Apply the logical display configuration to the display device.
         if (display == null) {
             // TODO: no logical display for the device, blank it
@@ -813,13 +939,13 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
                     + device.getDisplayDeviceInfoLocked());
             return;
         } else {
-            boolean isBlanked = (mAllDisplayBlankStateFromPowerManager
-                    == DISPLAY_BLANK_STATE_BLANKED);
+            boolean isBlanked = 
+                    (mAllDisplayBlankStateFromPowerManager == DISPLAY_BLANK_STATE_BLANKED) &&
+                    (info.type != Display.TYPE_SURFACE); // Surface displays do not get blanked
             display.configureDisplayInTransactionLocked(device, isBlanked);
         }
 
         // Update the viewports if needed.
-        DisplayDeviceInfo info = device.getDisplayDeviceInfoLocked();
         if (!mDefaultViewport.valid
                 && (info.flags & DisplayDeviceInfo.FLAG_DEFAULT_DISPLAY) != 0) {
             setViewportLocked(mDefaultViewport, display, device);
@@ -848,8 +974,9 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
         return null;
     }
 
-    private void sendDisplayEventLocked(int displayId, int event) {
-        Message msg = mHandler.obtainMessage(MSG_DELIVER_DISPLAY_EVENT, displayId, event);
+    private void sendDisplayEventLocked(int displayId, int event, int uidRestriction) {
+        Message msg = mHandler.obtainMessage(MSG_DELIVER_DISPLAY_EVENT, 
+                displayId, event, Integer.valueOf(uidRestriction));
         mHandler.sendMessage(msg);
     }
 
@@ -866,10 +993,10 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
 
     // Runs on Handler thread.
     // Delivers display event notifications to callbacks.
-    private void deliverDisplayEvent(int displayId, int event) {
+    private void deliverDisplayEvent(int displayId, int event, int uidRestriction) {
         if (DEBUG) {
             Slog.d(TAG, "Delivering display event: displayId="
-                    + displayId + ", event=" + event);
+                    + displayId + ", event=" + event+", uid="+uidRestriction);
         }
 
         // Grab the lock and copy the callbacks.
@@ -884,7 +1011,13 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
 
         // After releasing the lock, send the notifications out.
         for (int i = 0; i < count; i++) {
-            mTempCallbacks.get(i).notifyDisplayEventAsync(displayId, event);
+            CallbackRecord cb = mTempCallbacks.get(i);
+            int uid = cb.getUid();
+            if ((uidRestriction == -1) ||
+                (uid == Process.SYSTEM_UID) || 
+                (uid == uidRestriction)) {
+                mTempCallbacks.get(i).notifyDisplayEventAsync(displayId, event);
+            }
         }
         mTempCallbacks.clear();
     }
@@ -992,7 +1125,11 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
                     break;
 
                 case MSG_DELIVER_DISPLAY_EVENT:
-                    deliverDisplayEvent(msg.arg1, msg.arg2);
+                    int uid = -1;
+                    if (msg.obj instanceof Integer) {
+                        uid = ((Integer)msg.obj).intValue();
+                    }
+                    deliverDisplayEvent(msg.arg1, msg.arg2, uid);
                     break;
 
                 case MSG_REQUEST_TRAVERSAL:
@@ -1039,11 +1176,12 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
     }
 
     private final class CallbackRecord implements DeathRecipient {
-        private final int mPid;
+        private final int mPid, mUid;
         private final IDisplayManagerCallback mCallback;
 
-        public CallbackRecord(int pid, IDisplayManagerCallback callback) {
+        public CallbackRecord(int pid, int uid, IDisplayManagerCallback callback) {
             mPid = pid;
+            mUid = uid;
             mCallback = callback;
         }
 
@@ -1053,6 +1191,10 @@ public final class DisplayManagerService extends IDisplayManager.Stub {
                 Slog.d(TAG, "Display listener for pid " + mPid + " died.");
             }
             onCallbackDied(mPid);
+        }
+
+        public int getUid() {
+            return mUid;
         }
 
         public void notifyDisplayEventAsync(int displayId, int event) {

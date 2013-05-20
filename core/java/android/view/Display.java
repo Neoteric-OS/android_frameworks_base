@@ -173,6 +173,12 @@ public final class Display {
     public static final int TYPE_OVERLAY = 4;
 
     /**
+     * Display type: Surface display.
+     * @hide
+     */
+    public static final int TYPE_SURFACE = 5;
+
+    /**
      * Internal method to create a display.
      * Applications should use {@link android.view.WindowManager#getDefaultDisplay()}
      * or {@link android.hardware.display.DisplayManager#getDisplay}
@@ -610,6 +616,8 @@ public final class Display {
                 return "WIFI";
             case TYPE_OVERLAY:
                 return "OVERLAY";
+            case TYPE_SURFACE:
+                return "SURFACE";
             default:
                 return Integer.toString(type);
         }

@@ -29,6 +29,7 @@ import android.util.SparseArray;
 import android.view.CompatibilityInfoHolder;
 import android.view.Display;
 import android.view.DisplayInfo;
+import android.view.Surface;
 
 import java.util.ArrayList;
 
@@ -68,6 +69,19 @@ public final class DisplayManagerGlobal {
 
     private final SparseArray<DisplayInfo> mDisplayInfoCache = new SparseArray<DisplayInfo>();
     private int[] mDisplayIdCache;
+
+    private class PendingPrivateDisplay {
+        String name;
+        Display display;
+        Object syncObj;
+    	
+        PendingPrivateDisplay(String name) {
+            this.name = name;
+            this.syncObj = new Object();
+        }
+    }
+    
+    private ArrayList<PendingPrivateDisplay> mPendingPrivateDisplays = new ArrayList<PendingPrivateDisplay>();
 
     private DisplayManagerGlobal(IDisplayManager dm) {
         mDm = dm;
@@ -315,11 +329,76 @@ public final class DisplayManagerGlobal {
         }
     }
 
+    public Display createSurfaceDisplay(int width, int height, float xdpi, float ydpi, float density, Surface surface, int uid) {
+        synchronized (mLock) {
+            // Must have a callback registered before adding a surface display,
+            // so that we can receive notification of the display having been added,
+            // and so that the DisplayManagerService can clean up if we die
+            registerCallbackIfNeededLocked();
+        }
+
+        PendingPrivateDisplay pendingDisplay = null;
+        synchronized (mPendingPrivateDisplays) {
+            String name = null;
+            try {
+                name = mDm.createSurfaceDisplay(width,height,xdpi,ydpi,density,surface,uid);
+            } catch (RemoteException ex) {
+                Log.e(TAG, "createSurfaceDisplay got remote exception", ex);
+            }
+
+            if (name == null) {
+                Log.e(TAG, "Failed to create new surface display");
+                return null;
+            }
+
+            pendingDisplay = new PendingPrivateDisplay(name);
+            mPendingPrivateDisplays.add(pendingDisplay);
+        }
+
+        synchronized (pendingDisplay.syncObj) {
+            try {
+                while (pendingDisplay.display == null) {
+                    pendingDisplay.syncObj.wait();
+                }
+            } catch (java.lang.InterruptedException e) {}
+        }
+
+        return pendingDisplay.display;
+    }
+
+    public int removeSurfaceDisplay(int displayId) {
+        try {
+            return mDm.removeSurfaceDisplay(displayId);
+        } catch (RemoteException ex) {
+            Log.e(TAG, "Failed to remove surface display "+displayId+".", ex);
+            return -1;
+        }
+    }
+    
     private final class DisplayManagerCallback extends IDisplayManagerCallback.Stub {
         @Override
         public void onDisplayEvent(int displayId, int event) {
             if (DEBUG) {
                 Log.d(TAG, "onDisplayEvent: displayId=" + displayId + ", event=" + event);
+            }
+            if (event == EVENT_DISPLAY_ADDED) {
+                synchronized (mPendingPrivateDisplays) {
+                    if (mPendingPrivateDisplays.size() > 0) {
+                        Display display = getRealDisplay(displayId);
+                        DisplayInfo displayInfo = new DisplayInfo();
+                        display.getDisplayInfo(displayInfo);
+                        for (PendingPrivateDisplay pendingDisplay : mPendingPrivateDisplays) {
+                            if (pendingDisplay.name.equals(displayInfo.name)) {
+                                mPendingPrivateDisplays.remove(pendingDisplay);
+                                synchronized (pendingDisplay.syncObj) {
+                                    pendingDisplay.display = display;
+                                    pendingDisplay.syncObj.notifyAll();
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
             }
             handleDisplayEvent(displayId, event);
         }

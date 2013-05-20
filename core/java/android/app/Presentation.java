@@ -23,6 +23,7 @@ import android.hardware.display.DisplayManager.DisplayListener;
 import android.view.ContextThemeWrapper;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.WindowManager;
 import android.view.WindowManagerImpl;
 import android.os.Handler;
 import android.os.Message;
@@ -175,6 +176,14 @@ public class Presentation extends Dialog {
      */
     public Presentation(Context outerContext, Display display, int theme) {
         super(createPresentationContext(outerContext, display, theme), theme, false);
+
+        // This appears to be necessary in order to allow SurfaceView and the like
+        // to work when placing this Presentation on a surface display.  Not sure if
+        // this is the right way to enable this this, or if it will have any
+        // side-effects...
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED, 
+                WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
 
         mDisplay = display;
         mDisplayManager = (DisplayManager)getContext().getSystemService(Context.DISPLAY_SERVICE);

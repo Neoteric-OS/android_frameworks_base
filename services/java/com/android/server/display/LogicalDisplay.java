@@ -76,10 +76,17 @@ final class LogicalDisplay {
     private final Rect mTempLayerStackRect = new Rect();
     private final Rect mTempDisplayRect = new Rect();
 
+    // If not -1, the single UID for which this Display is visible and accessible
+    // Mirrors mOwningUid of the primary display device, for use in the case where
+    // we invalidate the display during removal, before we can check permissions
+    // to send the removal event.
+    private int mOwningUid;
+
     public LogicalDisplay(int displayId, int layerStack, DisplayDevice primaryDisplayDevice) {
         mDisplayId = displayId;
         mLayerStack = layerStack;
         mPrimaryDisplayDevice = primaryDisplayDevice;
+        mOwningUid = mPrimaryDisplayDevice.getOwningUidLocked();
     }
 
     /**
@@ -98,6 +105,13 @@ final class LogicalDisplay {
      */
     public DisplayDevice getPrimaryDisplayDeviceLocked() {
         return mPrimaryDisplayDevice;
+    }
+
+    /**
+     * Gets the owning UID.
+     */
+    public final int getOwningUidLocked() {
+        return mOwningUid;
     }
 
     /**

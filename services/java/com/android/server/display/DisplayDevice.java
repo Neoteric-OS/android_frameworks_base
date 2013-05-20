@@ -43,6 +43,13 @@ abstract class DisplayDevice {
     // The display device owns its surface, but it should only set it
     // within a transaction from performTraversalInTransactionLocked.
     private Surface mCurrentSurface;
+    
+    // If not -1, the single UID for which this Display is visible and accessible
+    private int mOwningUid = -1;
+
+    // If not -1, the PID of the process to which this device's lifecycle is tied
+    // On the death of this process, this device will be removed
+    private int mCreatorPid = -1;
 
     public DisplayDevice(DisplayAdapter displayAdapter, IBinder displayToken) {
         mDisplayAdapter = displayAdapter;
@@ -75,6 +82,34 @@ abstract class DisplayDevice {
      */
     public final String getNameLocked() {
         return getDisplayDeviceInfoLocked().name;
+    }
+
+    /**
+     * Gets the owning UID.
+     */
+    public final int getOwningUidLocked() {
+        return mOwningUid;
+    }
+
+    /**
+     * Sets the owning UID.
+     */
+    public final void setOwningUidLocked(int uid) {
+        mOwningUid = uid;
+    }
+
+    /**
+     * Gets the creator's PID.
+     */
+    public final int getCreatorPidLocked() {
+        return mCreatorPid;
+    }
+
+    /**
+     * Sets the creator's PID.
+     */
+    public final void setCreatorPidLocked(int pid) {
+        mCreatorPid = pid;
     }
 
     /**
@@ -114,6 +149,14 @@ abstract class DisplayDevice {
      * Unblanks the display, if supported.
      */
     public void unblankLocked() {
+    }
+
+    /**
+     * Called when a display device is about to be removed.
+     * Can be used to free resources and prepare for the final transaction
+     * that will occur after this call.
+     */
+    public void releaseLocked() {
     }
 
     /**

@@ -20,6 +20,7 @@ import android.hardware.display.IDisplayManagerCallback;
 import android.hardware.display.WifiDisplay;
 import android.hardware.display.WifiDisplayStatus;
 import android.view.DisplayInfo;
+import android.view.Surface;
 
 /** @hide */
 interface IDisplayManager {
@@ -46,4 +47,11 @@ interface IDisplayManager {
 
     // No permissions required.
     WifiDisplayStatus getWifiDisplayStatus();
+
+    // No permissions required
+    String createSurfaceDisplay(int width, int height, float xdpi, float ydpi, float density, in Surface surface, int uid);
+
+    // No permissions required
+    int removeSurfaceDisplay(int displayId);
+
 }

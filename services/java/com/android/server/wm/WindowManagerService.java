@@ -2123,6 +2123,13 @@ public class WindowManagerService extends IWindowManager.Stub
             return res;
         }
 
+        /* Check that this UID can access this display.  Needed because 
+         * surface displays are usually private to a specific UID. */
+        int callingUid = Binder.getCallingUid();
+        if (!mDisplayManagerService.checkDisplayPermission(displayId,callingUid)) {
+            return WindowManagerGlobal.ADD_INVALID_DISPLAY;
+        }
+
         boolean reportNewConfig = false;
         WindowState attachedWindow = null;
         WindowState win = null;
@@ -2138,7 +2145,7 @@ public class WindowManagerService extends IWindowManager.Stub
             if (displayContent == null) {
                 return WindowManagerGlobal.ADD_INVALID_DISPLAY;
             }
-
+            
             if (mWindowMap.containsKey(client.asBinder())) {
                 Slog.w(TAG, "Window " + client + " is already added");
                 return WindowManagerGlobal.ADD_DUPLICATE_ADD;
@@ -2187,9 +2194,16 @@ public class WindowManagerService extends IWindowManager.Stub
             } else if (type >= FIRST_APPLICATION_WINDOW && type <= LAST_APPLICATION_WINDOW) {
                 AppWindowToken atoken = token.appWindowToken;
                 if (atoken == null) {
-                    Slog.w(TAG, "Attempted to add window with non-application token "
-                          + token + ".  Aborting.");
-                    return WindowManagerGlobal.ADD_NOT_APP_TOKEN;
+                    // We allow non-subordinate windows to be added only if this is a surface display.
+                    // (That is, a Presentation has been placed on a private Surface.)
+                    // In this case, there is no problem with detaching the lifecycle of this
+                    // window from the main application window.  This is needed for the automotive
+                    // projection use case.
+                    if (displayContent.getDisplayInfo().type != Display.TYPE_SURFACE) {
+                        Slog.w(TAG, "Attempted to add window with non-application token "
+                                + token + ".  Aborting.");
+                        return WindowManagerGlobal.ADD_NOT_APP_TOKEN;
+                    }
                 } else if (atoken.removed) {
                     Slog.w(TAG, "Attempted to add window with exiting application token "
                           + token + ".  Aborting.");
@@ -7300,7 +7314,8 @@ public class WindowManagerService extends IWindowManager.Stub
         final AllWindowsIterator iterator = new AllWindowsIterator();
         while (iterator.hasNext()) {
             try {
-                iterator.next().mClient.dispatchScreenState(on);
+                WindowState state = iterator.next();
+                state.mClient.dispatchScreenState(on || state.isSurfaceDisplay());
             } catch (RemoteException e) {
                 // Ignored
             }
@@ -9327,7 +9342,11 @@ public class WindowManagerService extends IWindowManager.Stub
                 }
 
                 final boolean hasUniqueContent;
-                switch (mInnerFields.mDisplayHasContent) {
+                if (displayInfo.type == Display.TYPE_SURFACE) {
+                    // Surface displays never mirror
+                    hasUniqueContent = true;
+                } else {
+                    switch (mInnerFields.mDisplayHasContent) {
                     case LayoutFields.DISPLAY_CONTENT_MIRROR:
                         hasUniqueContent = isDefaultDisplay;
                         break;
@@ -9338,6 +9357,7 @@ public class WindowManagerService extends IWindowManager.Stub
                     default:
                         hasUniqueContent = false;
                         break;
+                    }
                 }
                 mDisplayManagerService.setDisplayHasContent(displayId, hasUniqueContent,
                         true /* inTraversal, must call performTraversalInTrans... below */);

@@ -20,6 +20,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.SparseArray;
 import android.view.Display;
+import android.view.Surface;
 
 import java.util.ArrayList;
 
@@ -134,6 +135,7 @@ public final class DisplayManager {
                     addMatchingDisplaysLocked(mTempDisplays, displayIds, Display.TYPE_WIFI);
                     addMatchingDisplaysLocked(mTempDisplays, displayIds, Display.TYPE_HDMI);
                     addMatchingDisplaysLocked(mTempDisplays, displayIds, Display.TYPE_OVERLAY);
+                    addMatchingDisplaysLocked(mTempDisplays, displayIds, Display.TYPE_SURFACE);
                 }
                 return mTempDisplays.toArray(new Display[mTempDisplays.size()]);
             } finally {
@@ -272,6 +274,38 @@ public final class DisplayManager {
      */
     public WifiDisplayStatus getWifiDisplayStatus() {
         return mGlobal.getWifiDisplayStatus();
+    }
+
+    /**
+     * Creates a new surface display.  Waits for the display to be added and assigned a displayId.
+     * Displays created with this call are private to the specified UID and will be removed
+     * if the creating process dies.
+     *
+     * @param width The width of the surface display.
+     * @param height The height of the surface display.
+     * @param xdpi The horizontal DPI on the surface display.
+     * @param ydpi The vertical DPI on the surface display.
+     * @param density The Android density metric for the surface display.
+     * @param surface The surface on which to create the display.
+     * @param owningUid The UID which is allowed access to this display.
+     *                  Must be the UID of the caller when not called by the system.
+     *                  If zero, the caller's UID will be used.
+     * @return The new Display
+     * @hide
+     */
+    public Display createSurfaceDisplay(int width, int height, float xdpi, float ydpi, float density, Surface surface, int owningUid) {
+        return mGlobal.createSurfaceDisplay(width,height,xdpi,ydpi,density,surface,owningUid);
+    }
+    
+    /**
+     * Removes a surface display.  The caller must have the same UID as the creator.
+     *
+     * @param displayId The ID of the surface display.
+     * @return Zero if successful
+     * @hide
+     */
+    public int removeSurfaceDisplay(int displayId) {
+        return mGlobal.removeSurfaceDisplay(displayId);
     }
 
     /**

@@ -37,6 +37,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.util.Slog;
+import android.view.Display;
 import android.view.DisplayInfo;
 import android.view.Gravity;
 import android.view.IApplicationToken;
@@ -1050,6 +1051,10 @@ final class WindowState implements WindowManagerPolicy.WindowState {
     @Override
     public boolean isDefaultDisplay() {
         return mDisplayContent.isDefaultDisplay;
+    }
+
+    public boolean isSurfaceDisplay() {
+        return mDisplayContent.getDisplayInfo().type == Display.TYPE_SURFACE;
     }
 
     public void setShowToOwnerOnlyLocked(boolean showToOwnerOnly) {
