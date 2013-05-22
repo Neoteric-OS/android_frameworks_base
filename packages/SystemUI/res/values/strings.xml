@@ -2,17 +2,18 @@
 <!--
 /**
  * Copyright (c) 2009, The Android Open Source Project
+ * Portions Copyright (C) 2010-2013 Motorola Mobility LLC All Rights Reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0 
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software 
- * distributed under the License is distributed on an "AS IS" BASIS, 
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
- * See the License for the specific language governing permissions and 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
  * limitations under the License.
  */
 -->
@@ -117,7 +118,7 @@
     </string>
 
     <!-- Separator for PLMN and SPN in network name. -->
-    <string name="status_bar_network_name_separator" translatable="false">|</string>
+    <string name="status_bar_network_name_separator" translatable="false">&#xa0;|&#xa0;</string>
 
     <!-- Network connection string for Bluetooth Reverse Tethering -->
     <string name="bluetooth_tethered">Bluetooth tethered</string>
@@ -516,4 +517,42 @@
     <string name="status_bar_help_title">Notifications appear here</string>
     <!-- Body of help text shown when the notification panel is pulled down for the very first time. [CHAR LIMIT=NONE] -->
     <string name="status_bar_help_text">Access them anytime by swiping down.\nSwipe down again for system controls.</string>
+
+
+<!-- BEGIN Carrier Customization of Statusbar -->
+    <!-- Content description of the data signal when it is 4, 5, or 6 bars (but not max max). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_data_four_bars">Data four bars.</string>
+    <string name="accessibility_data_five_bars">Data five bars.</string>
+    <string name="accessibility_data_six_bars">Data six bars.</string>
+
+    <!-- Content description of the phone signal when it is 4, 5, or 6 bars (but not max max). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_phone_four_bars">Phone four bars.</string>
+    <string name="accessibility_phone_five_bars">Phone five bars.</string>
+    <string name="accessibility_phone_six_bars">Phone six bars.</string>
+
+    <!-- Content descriptions of the wimax status and signal strength. [CHAR LIMIT=NONE] -->
+    <string name="accessibility_wimax_off">Wimax off.</string>
+    <string name="accessibility_wimax_dormant">Wimax dormant.</string>
+    <string name="accessibility_wimax_scanning">Wimax scanning.</string>
+    <string name="accessibility_wimax_not_connected">Wimax not connected.</string>
+    <string name="accessibility_wimax_no_bars">Wimax no signal.</string>
+    <string name="accessibility_wimax_four_bars">Wimax signal four bars.</string>
+    <string name="accessibility_wimax_five_bars">Wimax signal five bars.</string>
+    <string name="accessibility_wimax_full">Wimax signal full strength.</string>
+
+    <!-- Content description of the phone signal when it is "emergency call only". [CHAR LIMIT=NONE] -->
+    <string name="accessibility_emergency_calls_only">Emergency calls only.</string>
+
+    <!-- Content description of the phone signal when it is "no service" mode. [CHAR LIMIT=NONE] -->
+    <string name="accessibility_roaming_no_service">No service.</string>
+
+    <!-- Content description of the phone signal when it is "not roaming" mode. [CHAR LIMIT=NONE] -->
+    <string name="accessibility_roaming_off">Not roaming.</string>
+
+    <!-- Content description of the phone signal when it is "roaming" mode (text not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_roaming">Roaming.</string>
+
+    <!-- Differentiated messages for missing vs invalid Sim. [CHAR LIMIT=NONE] -->
+    <string name="accessibility_corrupt_sim">SIM card is invalid or corrupted.</string>
+<!-- END Carrier Customization of Statusbar -->
 </resources>

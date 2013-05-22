@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
+ * Portions Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -187,4 +188,14 @@ public interface TelephonyProperties
      * Ignore RIL_UNSOL_NITZ_TIME_RECEIVED completely, used for debugging/testing.
      */
     static final String PROPERTY_IGNORE_NITZ = "telephony.test.ignore.nitz";
+
+    /**
+     * Set to true to indicates support for simultaneous voice and data(LTE).
+     */
+    static final String PROPERTY_SVLTE = "ro.ril.svlte1x";
+
+    /**
+     * Set to true to indicates support for simultaneous voice and data(EVDO).
+     */
+    static final String PROPERTY_SVDO = "ro.ril.svdo";
 }

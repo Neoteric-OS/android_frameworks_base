@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2012 The Android Open Source Project
+ * Portions Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -461,27 +462,50 @@ class QuickSettings {
                     startSettingsActivity(intent);
                 }
             });
-            mModel.addRSSITile(rssiTile, new QuickSettingsModel.RefreshCallback() {
-                @Override
-                public void refreshView(QuickSettingsTileView view, State state) {
-                    RSSIState rssiState = (RSSIState) state;
-                    ImageView iv = (ImageView) view.findViewById(R.id.rssi_image);
-                    ImageView iov = (ImageView) view.findViewById(R.id.rssi_overlay_image);
-                    TextView tv = (TextView) view.findViewById(R.id.rssi_textview);
-                    iv.setImageResource(rssiState.signalIconId);
 
-                    if (rssiState.dataTypeIconId > 0) {
-                        iov.setImageResource(rssiState.dataTypeIconId);
-                    } else {
-                        iov.setImageDrawable(null);
+
+            mModel.addRSSITile(
+                rssiTile, new QuickSettingsModel.RefreshCallback() {
+                    @Override
+                    public void refreshView(QuickSettingsTileView view, State state) {
+                        RSSIState rssiState = (RSSIState) state;
+                        ImageView iv = (ImageView) view.findViewById(R.id.rssi_image);
+                        ImageView iov = (ImageView) view.findViewById(R.id.rssi_overlay_image);
+                        ImageView iRoam = (ImageView) view.findViewById(R.id.rssi_roaming_image);      // Added
+                        ImageView iActivity = (ImageView) view.findViewById(R.id.rssi_activity_image); // Added
+                        TextView tv = (TextView) view.findViewById(R.id.rssi_textview);
+                        iv.setImageResource(rssiState.signalIconId);
+
+                        if (rssiState.dataTypeIconId > 0) {
+                            iov.setImageResource(rssiState.dataTypeIconId);
+                        } else {
+                            iov.setImageDrawable(null);
+                        }
+
+                        if (rssiState.signalRoamingIconId != 0) {
+                            iRoam.setImageResource(rssiState.signalRoamingIconId);
+                        } else {
+                            iRoam.setImageDrawable(null);
+                        }
+
+                        if (rssiState.dataActivityIconId != 0) {
+                            iActivity.setImageResource(rssiState.dataActivityIconId);
+                        } else {
+                            iActivity.setImageDrawable(null);
+                        }
+
+                        tv.setText(state.label);
+                        view.setContentDescription(
+                            mContext.getResources().getString(
+                                R.string.accessibility_quick_settings_mobile,
+                                rssiState.signalContentDescription,
+                                rssiState.dataContentDescription,
+                                state.label
+                            )
+                        );
                     }
-                    tv.setText(state.label);
-                    view.setContentDescription(mContext.getResources().getString(
-                            R.string.accessibility_quick_settings_mobile,
-                            rssiState.signalContentDescription, rssiState.dataContentDescription,
-                            state.label));
                 }
-            });
+            );
             parent.addView(rssiTile);
         }
 

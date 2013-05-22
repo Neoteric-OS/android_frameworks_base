@@ -2,6 +2,7 @@
 <!--
 /*
 ** Copyright 2009, The Android Open Source Project
+** Portions Copyright (C) 2010-2013 Motorola Mobility LLC All Rights Reserved.
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -76,7 +77,7 @@
     <!-- decay duration (from size_max -> size), in ms -->
     <integer name="navigation_bar_deadzone_hold">333</integer>
     <integer name="navigation_bar_deadzone_decay">333</integer>
-    
+
     <bool name="config_dead_zone_flash">false</bool>
 
     <!-- Min alpha % that recent items will fade to while being dismissed -->
@@ -102,5 +103,25 @@
 
     <!-- Enable the "flip settings" panel -->
     <bool name="config_hasFlipSettingsPanel">true</bool>
+
+<!-- BEGIN Carrier Customization of Statusbar -->
+    <!--  Disable separate status for voice (base service) and data  -->
+    <bool name="config_show_signal_bars_when_data_only_service">true</bool>
+    <bool name="config_show_network_type_when_voice_only_service">true</bool>
+
+    <!-- Show differing icons for sim missing vs sim invalid or error -->
+    <!-- VERIZON ONLY: Show "stat_sys_corrupt_sim" icon for SIM error conditions. -->
+    <bool name="config_differing_icon_for_sim_error">false</bool>
+
+    <!-- set true to smooth signal strength -->
+    <bool name="config_signal_strength_smoothing">false</bool>
+
+    <!-- When mobile data type is available and wifi is connected,   -->
+    <!--  show a "suspended" variation of the mobile data type icon. -->
+    <bool name="config_show_both_wifi_and_mobile_network">true</bool>
+    <!-- Show EmergencyCallsOnly icon is statusbar (Australia) -->
+    <bool name="config_show_emergency_calls_only_icon">true</bool>
+<!-- END Carrier Customization of Statusbar -->
+
 </resources>
 

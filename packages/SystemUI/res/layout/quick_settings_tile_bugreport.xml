@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2012 The Android Open Source Project
+     Portions Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -18,8 +19,9 @@
     style="@style/TextAppearance.QuickSettings.TileView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
+    android:layout_gravity="bottom|center_horizontal"
     android:gravity="center"
     android:drawableTop="@*android:drawable/stat_sys_adb"
     android:text="@*android:string/bugreport_title"
+    android:layout_marginBottom="20dp"
     />

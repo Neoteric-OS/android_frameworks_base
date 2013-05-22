@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2012 The Android Open Source Project
+ * Portions Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +29,8 @@ public class IccCardConstants {
     public static final String INTENT_VALUE_ICC_NOT_READY = "NOT_READY";
     /* ABSENT means ICC is missing */
     public static final String INTENT_VALUE_ICC_ABSENT = "ABSENT";
+    /* IO_ERROR means SIM_STATUS get CARD_ERROR state */
+    static public final String INTENT_VALUE_ICC_IO_ERROR = "IO_ERROR";
     /* LOCKED means ICC is locked by pin or by network */
     public static final String INTENT_VALUE_ICC_LOCKED = "LOCKED";
     /* READY means ICC is ready to access */
@@ -63,7 +66,8 @@ public class IccCardConstants {
         NETWORK_LOCKED,
         READY,
         NOT_READY,
-        PERM_DISABLED;
+        PERM_DISABLED,
+        IO_ERROR;
 
         public boolean isPinLocked() {
             return ((this == PIN_REQUIRED) || (this == PUK_REQUIRED));
@@ -72,7 +76,7 @@ public class IccCardConstants {
         public boolean iccCardExist() {
             return ((this == PIN_REQUIRED) || (this == PUK_REQUIRED)
                     || (this == NETWORK_LOCKED) || (this == READY)
-                    || (this == PERM_DISABLED));
+                    || (this == PERM_DISABLED) || (this == IO_ERROR));
         }
     }
 }
