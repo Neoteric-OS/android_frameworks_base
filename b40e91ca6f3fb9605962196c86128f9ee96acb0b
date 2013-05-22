@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "U6F2yzx8",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1667,
+      "author": {
+        "id": 1000414
+      },
+      "writtenOn": "2013-05-22T17:02:58Z",
+      "side": 1,
+      "message": "Please fix string formatting.",
+      "revId": "b40e91ca6f3fb9605962196c86128f9ee96acb0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
