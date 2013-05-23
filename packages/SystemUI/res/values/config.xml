@@ -116,11 +116,39 @@
     <!-- set true to smooth signal strength -->
     <bool name="config_signal_strength_smoothing">false</bool>
 
+    <!-- Show "No service" in carrier label field                 -->
+    <!--  when not connected to network.                          -->
+    <!--                                                          -->
+    <!-- config_display_no_service_text:                          -->
+    <!--   Set to true for:                                       -->
+    <!--      (all carriers except AT&T, Rogers, Bell, & TELUS);  -->
+    <!--   Set to false for:                                      -->
+    <!--      AT&T and Canada (Rogers, Bell, & TELUS);            -->
+    <!--   Unknown how to set for other carriers, assume true.    -->
+    <bool name="config_display_no_service_text">true</bool>
+
+    <!-- Display "attached" NetworkType icon when mobile data        -->
+    <!--  type is known, but has not yet connected,                  -->
+    <!--  show an "attached" variation of the mobile data type icon. -->
+    <bool name="config_show_gprs_attached_icon">false</bool>
+
     <!-- When mobile data type is available and wifi is connected,   -->
     <!--  show a "suspended" variation of the mobile data type icon. -->
     <bool name="config_show_both_wifi_and_mobile_network">true</bool>
+
+    <!-- Display "disabled" variation of the mobile data type icon -->
+    <!--  when Settings>DataUsage=off.                             -->
+    <bool name="config_show_data_disabled_icon">false</bool>
+
+    <!-- Show H+ status icon for Cat 10 (HSPA+) and above support -->
+    <bool name="config_hspap_data_distinguishable">false</bool>
+
     <!-- Show EmergencyCallsOnly icon is statusbar (Australia) -->
     <bool name="config_show_emergency_calls_only_icon">true</bool>
+
+    <!-- Show cell broadcast messages in notification pulldown -->
+    <!-- (same layout as Brazil CB) -->
+    <bool name="show_brazil_settings">false</bool>
 <!-- END Carrier Customization of Statusbar -->
 
 </resources>

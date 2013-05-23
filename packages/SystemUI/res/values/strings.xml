@@ -520,6 +520,13 @@
 
 
 <!-- BEGIN Carrier Customization of Statusbar -->
+    <!--   Accessibility notices to reflect carrier differentiation for connection type -->
+    <string name="accessibility_data_connection_4g_lte">4 G L T E</string>
+    <string name="accessibility_data_connection_lte">L T E</string>
+    <string name="accessibility_data_connection_3g_plus">3 G plus</string>
+    <string name="accessibility_data_connection_h">H</string>
+    <string name="accessibility_data_connection_hplus">H plus</string>
+
     <!-- Content description of the data signal when it is 4, 5, or 6 bars (but not max max). [CHAR LIMIT=NONE] -->
     <string name="accessibility_data_four_bars">Data four bars.</string>
     <string name="accessibility_data_five_bars">Data five bars.</string>
@@ -551,6 +558,9 @@
 
     <!-- Content description of the phone signal when it is "roaming" mode (text not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_roaming">Roaming.</string>
+
+    <!-- Content description of the phone signal when it is "roaming on femtocell" mode (text not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_roaming_femtocell">Roaming using femtocell.</string>
 
     <!-- Differentiated messages for missing vs invalid Sim. [CHAR LIMIT=NONE] -->
     <string name="accessibility_corrupt_sim">SIM card is invalid or corrupted.</string>

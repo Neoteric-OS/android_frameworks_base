@@ -1026,6 +1026,10 @@
 
 
 <!-- BEGIN - Carrier Customization of Statusbar -->
+    <!-- Identify operator by name (att, tmo, etc.,)             -->
+    <!--   to customize networkType and related features.        -->
+    <string name="config_operator_name">@null</string>
+
     <!-- Do not display roaming icon when device is roaming (AT&T). -->
     <bool name="config_no_roaming_icon">false</bool>
 

@@ -18,13 +18,13 @@
 -->
 
 <TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"    
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/carrier_label"
     android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Network"
     android:layout_height="@dimen/carrier_label_height"
     android:layout_width="match_parent"
-    android:layout_gravity="bottom"
-    android:layout_marginBottom="@dimen/close_handle_height"
+    android:layout_gravity="center_horizontal"
     android:gravity="center"
-    android:visibility="invisible"
+    android:singleLine="true"
+    android:visibility="gone"
     />

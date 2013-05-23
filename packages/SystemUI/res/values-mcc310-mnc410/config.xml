@@ -22,6 +22,13 @@
      for different hardware and product builds. -->
 <resources>
 
+    <!-- Control whether status bar should distinguish HSPA data icon form UMTS
+    data icon on devices -->
+    <bool name="config_hspa_data_distinguishable">false</bool>
+
+    <!-- When true, show 1/2G networks as 3G. -->
+    <bool name="config_showMin3G">false</bool>
+
     <!-- Show phone (voice) signal strength instead of data in mobile RSSI. -->
     <bool name="config_showPhoneRSSIForData">false</bool>
 
@@ -37,8 +44,71 @@
     <!-- set true to smooth signal strength -->
     <bool name="config_signal_strength_smoothing">false</bool>
 
+    <!-- config_show_carrier_name_in_statusbar:                   -->
+    <!-- Show PLMN or SPN info on left side of status bar.        -->
+    <!--  (see config_spn_priority_over_plmn for control over     -->
+    <!--   which is shown when both are supplied)                 -->
+    <!--                                                          -->
+    <!--   Set to true for:                                       -->
+    <!--      AT&T and Canada (Rogers, Bell, & TELUS);            -->
+    <!--      LATAM;                                              -->
+    <!--      EMEA;                                               -->
+    <!--        Poland;                                           -->
+    <!--   Set to false for:                                      -->
+    <!--      China: (CMCC, CU, CT);                              -->
+    <!--      IRD (Middle East, SE Asia, Australia & New Zealand) -->
+    <!--      VZW, Sprint;                                        -->
+    <!--   Unknown how to set for other carriers, assume false.   -->
+    <bool name="config_show_carrier_name_in_statusbar">true</bool>
+
+    <!-- config_spn_priority_over_plmn:                           -->
+    <!-- If both PLMN & SPN are supplied,                         -->
+    <!--  show SPN info on left side of status bar.               -->
+    <!--                                                          -->
+    <!--   Set to true for:                                       -->
+    <!--   Set to false for:                                      -->
+    <!--      AT&T and Canada (Rogers, Bell, & TELUS);            -->
+    <!--      VZW, Sprint;                                        -->
+    <!--      LATAM;                                              -->
+    <!--      EMEA;                                               -->
+    <!--      China (all carriers);                               -->
+    <!--   Unknown how to set for other carriers, assume false.   -->
+    <bool name="config_spn_priority_over_plmn">false</bool>
+
+    <!-- config_display_no_service_text:                          -->
+    <!-- Show "No service" in carrier label field                 -->
+    <!--  when not connected to network.                          -->
+    <!--                                                          -->
+    <!--   Set to true for:                                       -->
+    <!--      (all carriers except AT&T, Rogers, Bell, & TELUS);  -->
+    <!--   Set to false for:                                      -->
+    <!--      AT&T and Canada (Rogers, Bell, & TELUS);            -->
+    <!--   Unknown how to set for other carriers, assume true.    -->
+    <bool name="config_display_no_service_text">false</bool>
+
+    <!-- Display "attached" NetworkType icon when mobile data        -->
+    <!--  type is known, but has not yet connected,                  -->
+    <!--  show an "attached" variation of the mobile data type icon. -->
+    <bool name="config_show_gprs_attached_icon">true</bool>
+
+    <!-- When mobile data type is available and wifi is connected,   -->
+    <!--  show a "suspended" variation of the mobile data type icon. -->
+    <bool name="config_show_both_wifi_and_mobile_network">false</bool>
+
+    <!-- Display "disabled" variation of the mobile data type icon -->
+    <!--  when Settings>DataUsage=off.                             -->
+    <bool name="config_show_data_disabled_icon">false</bool>
+
+    <!-- Show H+ status icon for Cat 10 (HSPA+) and above support    -->
+    <!-- (requires config_hspa_data_distinguishable to also be true) -->
+    <bool name="config_hspap_data_distinguishable">true</bool>
+
     <!-- Show EmergencyCallsOnly icon is statusbar (Australia) -->
     <bool name="config_show_emergency_calls_only_icon">true</bool>
+
+    <!-- Show cell broadcast messages in notification pulldown -->
+    <!-- (same layout as Brazil CB) -->
+    <bool name="show_brazil_settings">false</bool>
 
 <!-- END Carrier Customization of Statusbar -->
 

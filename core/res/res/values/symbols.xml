@@ -1822,6 +1822,7 @@
   <!-- define the thresholds of signal level -->
   <java-symbol type="xml" name="signal_level" />
 
+  <java-symbol type="string" name="config_operator_name" />
   <java-symbol type="bool" name="config_no_roaming_icon" />
   <java-symbol type="bool" name="config_show_roaming_icon_when_roaming_but_no_data" />
 <!-- END - Carrier Customization of Statusbar -->

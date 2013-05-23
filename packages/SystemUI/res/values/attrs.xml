@@ -13,7 +13,10 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-
+<!--
+** Portions of this file are:
+** Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
+-->
 <resources>
     <declare-styleable name="KeyButtonView">
         <!-- key code to send when pressed; if absent or 0, no key is sent -->
@@ -47,5 +50,44 @@
         <enum name="horizontal" value="0" />
         <enum name="vertical" value="1" />
     </attr>
+
+<!-- BEGIN Carrier Customization of Statusbar -->
+    <declare-styleable name="TelephonyIconMappingXML">
+        <attr name="CarrierName" format="string" />
+        <attr name="LookupMobileDataTypeKey" format="string" />
+        <attr name="IconDataStateUnknown" format="reference|integer" />
+        <attr name="IconDataStateDisabled" format="reference|integer" />
+        <attr name="IconDataStateDisconnected" format="reference|integer" />
+        <attr name="IconDataStateAttached" format="reference|integer" />
+        <attr name="IconDataStateConnecting" format="reference|integer" />
+        <attr name="IconDataStateSuspended" format="reference|integer" />
+        <attr name="IconDataStateConnected" format="reference|integer" />
+        <attr name="IconDataStateFullyConnected" format="reference|integer" />
+        <attr name="DescriptionDataStateUnknown" format="reference|integer" />
+        <attr name="DescriptionDataStateDisabled" format="reference|integer" />
+        <attr name="DescriptionDataStateDisconnected" format="reference|integer" />
+        <attr name="DescriptionDataStateAttached" format="reference|integer" />
+        <attr name="DescriptionDataStateConnecting" format="reference|integer" />
+        <attr name="DescriptionDataStateSuspended" format="reference|integer" />
+        <attr name="DescriptionDataStateConnected" format="reference|integer" />
+        <attr name="DescriptionDataStateFullyConnected" format="reference|integer" />
+        <attr name="IconDataActivityUnknown" format="reference|integer" />
+        <attr name="IconDataActivityDisabled" format="reference|integer" />
+        <attr name="IconDataActivityDisconnected" format="reference|integer" />
+        <attr name="IconDataActivityAttached" format="reference|integer" />
+        <attr name="IconDataActivityConnecting" format="reference|integer" />
+        <attr name="IconDataActivitySuspended" format="reference|integer" />
+        <attr name="IconDataActivityConnectedIdle" format="reference|integer" />
+        <attr name="IconDataActivityConnectedIn" format="reference|integer" />
+        <attr name="IconDataActivityConnectedOut" format="reference|integer" />
+        <attr name="IconDataActivityConnectedInOut" format="reference|integer" />
+        <attr name="IconDataActivityConnectedDormant" format="reference|integer" />
+        <attr name="IconDataActivityFullyConnectedIdle" format="reference|integer" />
+        <attr name="IconDataActivityFullyConnectedIn" format="reference|integer" />
+        <attr name="IconDataActivityFullyConnectedOut" format="reference|integer" />
+        <attr name="IconDataActivityFullyConnectedInOut" format="reference|integer" />
+        <attr name="IconDataActivityFullyConnectedDormant" format="reference|integer" />
+    </declare-styleable>
+<!-- END Carrier Customization of Statusbar -->
 </resources>
 

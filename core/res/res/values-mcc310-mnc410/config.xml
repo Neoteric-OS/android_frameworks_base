@@ -23,6 +23,10 @@
 
 <!-- SystemUI-related features for AT&T -->
 <resources>
+    <!-- Identify operator by name (att, tmo, etc.,)             -->
+    <!--   to customize networkType and related features.        -->
+    <string name="config_operator_name">att</string>
+
     <!-- Do not display roaming icon when device is roaming (AT&T). -->
     <bool name="config_no_roaming_icon">true</bool>
 

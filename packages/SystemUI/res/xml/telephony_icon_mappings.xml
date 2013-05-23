@@ -1,0 +1,2188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+** Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
+-->
+<!--
+/*
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+
+<TelephonyIconMappings
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"
+    >
+
+    <!-- This is the "generic" base table -->
+
+    <!-- Mapping tables for all other carriers start with this table, -->
+    <!--   then overlay their differences.                            -->
+    <!-- "_DEFAULT_GENERIC_" Must be the first mapping table in the   -->
+    <!--   file and must be complete.                                 -->
+    <!-- All other tables in this file may contain only the           -->
+    <!--   differences between the carrier's icons/descriptions and   -->
+    <!--   this default table.                                        -->
+
+    <!-- It should be noted: ATT, VZW, & SPRINT each have custom      -->
+    <!--   (trademarked/copyrighted) icon sets. These icon designs    -->
+    <!--   may not be used by other carriers.                         -->
+
+    <IconSuite systemui:CarrierName="_DEFAULT_GENERIC_">
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_UNKNOWN"
+
+            systemui:IconDataStateUnknown="0"
+            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateDisconnected="0"
+            systemui:IconDataStateAttached="0"
+            systemui:IconDataStateConnecting="0"
+            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateConnected="0"
+            systemui:IconDataStateFullyConnected="0"
+
+            systemui:DescriptionDataStateUnknown="0"
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateDisconnected="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_gprs"
+
+            systemui:IconDataActivityUnknown="0"
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisconnected="0"
+            systemui:IconDataActivityAttached="0"
+            systemui:IconDataActivityConnecting="0"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="0"
+            systemui:IconDataActivityConnectedIn="0"
+            systemui:IconDataActivityConnectedOut="0"
+            systemui:IconDataActivityConnectedInOut="0"
+            systemui:IconDataActivityConnectedDormant="0"
+            systemui:IconDataActivityFullyConnectedIdle="0"
+            systemui:IconDataActivityFullyConnectedIn="0"
+            systemui:IconDataActivityFullyConnectedOut="0"
+            systemui:IconDataActivityFullyConnectedInOut="0"
+            systemui:IconDataActivityFullyConnectedDormant="0"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_GPRS"
+
+            systemui:IconDataStateUnknown="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_g_null"
+            systemui:IconDataStateDisconnected="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_g"
+
+            systemui:DescriptionDataStateUnknown="0"
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateDisconnected="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_gprs"
+
+            systemui:IconDataActivityUnknown="0"
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisconnected="0"
+            systemui:IconDataActivityAttached="0"
+            systemui:IconDataActivityConnecting="0"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_connected_signal_in"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_connected_signal_out"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_connected_signal_inout"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_connected_signal_in"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_connected_signal_out"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_connected_signal_inout"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_signal_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_EDGE"
+
+            systemui:IconDataStateUnknown="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_e_null"
+            systemui:IconDataStateDisconnected="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_e"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_e"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_e"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_e"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_e"
+
+            systemui:DescriptionDataStateUnknown="0"
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateDisconnected="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_edge"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_edge"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_edge"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_edge"
+
+            systemui:IconDataActivityUnknown="0"
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisconnected="0"
+            systemui:IconDataActivityAttached="0"
+            systemui:IconDataActivityConnecting="0"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_connected_signal_in"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_connected_signal_out"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_connected_signal_inout"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_connected_signal_in"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_connected_signal_out"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_connected_signal_inout"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_signal_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_UMTS"
+
+            systemui:IconDataStateUnknown="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateDisconnected="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateUnknown="0"
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateDisconnected="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+
+            systemui:IconDataActivityUnknown="0"
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisconnected="0"
+            systemui:IconDataActivityAttached="0"
+            systemui:IconDataActivityConnecting="0"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_connected_signal_in"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_connected_signal_out"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_connected_signal_inout"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_connected_signal_in"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_connected_signal_out"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_connected_signal_inout"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_signal_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H"
+
+            systemui:IconDataStateUnknown="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateDisconnected="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateUnknown="0"
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateDisconnected="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+
+            systemui:IconDataActivityUnknown="0"
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisconnected="0"
+            systemui:IconDataActivityAttached="0"
+            systemui:IconDataActivityConnecting="0"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_connected_signal_in"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_connected_signal_out"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_connected_signal_inout"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_connected_signal_in"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_connected_signal_out"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_connected_signal_inout"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_signal_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H__H_DISTINGUISHED"
+
+            systemui:IconDataStateUnknown="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_h_null"
+            systemui:IconDataStateDisconnected="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_h"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_h"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_h"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_h"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_h"
+
+            systemui:DescriptionDataStateUnknown="0"
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateDisconnected="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_h"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_h"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_h"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_h"
+
+            systemui:IconDataActivityUnknown="0"
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisconnected="0"
+            systemui:IconDataActivityAttached="0"
+            systemui:IconDataActivityConnecting="0"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_connected_signal_in"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_connected_signal_out"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_connected_signal_inout"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_connected_signal_in"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_connected_signal_out"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_connected_signal_inout"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_signal_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS"
+
+            systemui:IconDataStateUnknown="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateDisconnected="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateUnknown="0"
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateDisconnected="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+
+            systemui:IconDataActivityUnknown="0"
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisconnected="0"
+            systemui:IconDataActivityAttached="0"
+            systemui:IconDataActivityConnecting="0"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_connected_signal_in"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_connected_signal_out"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_connected_signal_inout"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_connected_signal_in"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_connected_signal_out"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_connected_signal_inout"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_signal_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__H_DISTINGUISHED"
+
+            systemui:IconDataStateUnknown="0"
+            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateDisconnected="0"
+            systemui:IconDataStateAttached="0"
+            systemui:IconDataStateConnecting="0"
+            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateConnected="0"
+            systemui:IconDataStateFullyConnected="0"
+
+            systemui:DescriptionDataStateUnknown="0"
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateDisconnected="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_gprs"
+
+            systemui:IconDataActivityUnknown="0"
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisconnected="0"
+            systemui:IconDataActivityAttached="0"
+            systemui:IconDataActivityConnecting="0"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_connected_signal_in"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_connected_signal_out"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_connected_signal_inout"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_connected_signal_in"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_connected_signal_out"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_connected_signal_inout"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_signal_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__HPLUS_DISTINGUISHED"
+
+            systemui:IconDataStateUnknown="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateDisconnected="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateUnknown="0"
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateDisconnected="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+
+            systemui:IconDataActivityUnknown="0"
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisconnected="0"
+            systemui:IconDataActivityAttached="0"
+            systemui:IconDataActivityConnecting="0"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_connected_signal_in"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_connected_signal_out"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_connected_signal_inout"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_connected_signal_in"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_connected_signal_out"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_connected_signal_inout"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_signal_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_CDMA"
+
+            systemui:IconDataStateUnknown="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_1x_null"
+            systemui:IconDataStateDisconnected="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_1x"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_1x"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_1x"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_1x"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_1x"
+
+            systemui:DescriptionDataStateUnknown="0"
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateDisconnected="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_cdma"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_cdma"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_cdma"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_cdma"
+
+            systemui:IconDataActivityUnknown="0"
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisconnected="0"
+            systemui:IconDataActivityAttached="0"
+            systemui:IconDataActivityConnecting="0"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_connected_signal_in"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_connected_signal_out"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_connected_signal_inout"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_connected_signal_in"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_connected_signal_out"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_connected_signal_inout"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_signal_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_1xRTT"
+
+            systemui:IconDataStateUnknown="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_1x_null"
+            systemui:IconDataStateDisconnected="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_1x"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_1x"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_1x"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_1x"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_1x"
+
+            systemui:DescriptionDataStateUnknown="0"
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateDisconnected="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_cdma"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_cdma"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_cdma"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_cdma"
+
+            systemui:IconDataActivityUnknown="0"
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisconnected="0"
+            systemui:IconDataActivityAttached="0"
+            systemui:IconDataActivityConnecting="0"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_connected_signal_in"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_connected_signal_out"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_connected_signal_inout"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_connected_signal_in"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_connected_signal_out"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_connected_signal_inout"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_signal_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_EVDO"
+
+            systemui:IconDataStateUnknown="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateDisconnected="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateUnknown="0"
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateDisconnected="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+
+            systemui:IconDataActivityUnknown="0"
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisconnected="0"
+            systemui:IconDataActivityAttached="0"
+            systemui:IconDataActivityConnecting="0"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_connected_signal_in"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_connected_signal_out"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_connected_signal_inout"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_connected_signal_in"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_connected_signal_out"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_connected_signal_inout"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_signal_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_EHRPD"
+
+            systemui:IconDataStateUnknown="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateDisconnected="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateUnknown="0"
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateDisconnected="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+
+            systemui:IconDataActivityUnknown="0"
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisconnected="0"
+            systemui:IconDataActivityAttached="0"
+            systemui:IconDataActivityConnecting="0"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_connected_signal_in"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_connected_signal_out"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_connected_signal_inout"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_connected_signal_in"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_connected_signal_out"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_connected_signal_inout"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_signal_none"
+       />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_LTE"
+
+            systemui:IconDataStateUnknown="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_4g_null"
+            systemui:IconDataStateDisconnected="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g"
+
+            systemui:DescriptionDataStateUnknown="0"
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateDisconnected="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
+
+            systemui:IconDataActivityUnknown="0"
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisconnected="0"
+            systemui:IconDataActivityAttached="0"
+            systemui:IconDataActivityConnecting="0"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_connected_signal_in"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_connected_signal_out"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_connected_signal_inout"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_signal_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_connected_signal_in"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_connected_signal_out"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_connected_signal_inout"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_signal_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_IDEN"
+
+            systemui:IconDataStateUnknown="0"
+            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateDisconnected="0"
+            systemui:IconDataStateAttached="0"
+            systemui:IconDataStateConnecting="0"
+            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateConnected="0"
+            systemui:IconDataStateFullyConnected="0"
+
+            systemui:DescriptionDataStateUnknown="0"
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateDisconnected="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="0"
+            systemui:DescriptionDataStateSuspended="0"
+            systemui:DescriptionDataStateConnected="0"
+            systemui:DescriptionDataStateFullyConnected="0"
+
+            systemui:IconDataActivityUnknown="0"
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisconnected="0"
+            systemui:IconDataActivityAttached="0"
+            systemui:IconDataActivityConnecting="0"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="0"
+            systemui:IconDataActivityConnectedIn="0"
+            systemui:IconDataActivityConnectedOut="0"
+            systemui:IconDataActivityConnectedInOut="0"
+            systemui:IconDataActivityConnectedDormant="0"
+            systemui:IconDataActivityFullyConnectedIdle="0"
+            systemui:IconDataActivityFullyConnectedIn="0"
+            systemui:IconDataActivityFullyConnectedOut="0"
+            systemui:IconDataActivityFullyConnectedInOut="0"
+            systemui:IconDataActivityFullyConnectedDormant="0"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_INVALID"
+
+            systemui:IconDataStateUnknown="0"
+            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateDisconnected="0"
+            systemui:IconDataStateAttached="0"
+            systemui:IconDataStateConnecting="0"
+            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateConnected="0"
+            systemui:IconDataStateFullyConnected="0"
+
+            systemui:DescriptionDataStateUnknown="0"
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateDisconnected="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="0"
+            systemui:DescriptionDataStateSuspended="0"
+            systemui:DescriptionDataStateConnected="0"
+            systemui:DescriptionDataStateFullyConnected="0"
+
+            systemui:IconDataActivityUnknown="0"
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisconnected="0"
+            systemui:IconDataActivityAttached="0"
+            systemui:IconDataActivityConnecting="0"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="0"
+            systemui:IconDataActivityConnectedIn="0"
+            systemui:IconDataActivityConnectedOut="0"
+            systemui:IconDataActivityConnectedInOut="0"
+            systemui:IconDataActivityConnectedDormant="0"
+            systemui:IconDataActivityFullyConnectedIdle="0"
+            systemui:IconDataActivityFullyConnectedIn="0"
+            systemui:IconDataActivityFullyConnectedOut="0"
+            systemui:IconDataActivityFullyConnectedInOut="0"
+            systemui:IconDataActivityFullyConnectedDormant="0"
+        />
+    </IconSuite>
+
+    <!-- "att" AT&T (USA) -->
+    <IconSuite systemui:CarrierName="att">
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_UNKNOWN"
+
+            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateAttached="0"
+            systemui:IconDataStateConnecting="0"
+            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_g_waves"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_connected_g_waves"
+
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="0"
+            systemui:DescriptionDataStateSuspended="0"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_gprs"
+
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityAttached="0"
+            systemui:IconDataActivityConnecting="0"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_connected_waves_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_GPRS"
+
+            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_g_waves"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_g_waves"
+            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_g_waves"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_g_waves"
+
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateSuspended="0"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_gprs"
+
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_inandout_waves_animation"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_in_waves_animation"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_out_waves_animation"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_inandout_waves_animation"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_waves_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_EDGE"
+
+            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_e_waves"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_e_waves"
+            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_e_waves"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_e_waves"
+
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_edge"
+            systemui:DescriptionDataStateSuspended="0"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_edge"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_edge"
+
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_inandout_waves_animation"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_in_waves_animation"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_out_waves_animation"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_inandout_waves_animation"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_waves_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_UMTS"
+
+            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g_waves"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g_waves"
+            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g_waves"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g_waves"
+
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateSuspended="0"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
+
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_inandout_waves_animation"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_in_waves_animation"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_out_waves_animation"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_inandout_waves_animation"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_waves_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H"
+
+            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g_waves"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g_waves"
+            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g_waves"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g_waves"
+
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateSuspended="0"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
+
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_inandout_waves_animation"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_in_waves_animation"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_out_waves_animation"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_inandout_waves_animation"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_waves_none"
+       />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H__H_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g_waves"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g_waves"
+            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g_waves"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g_waves"
+
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateSuspended="0"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
+
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_inandout_waves_animation"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_in_waves_animation"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_out_waves_animation"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_inandout_waves_animation"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_waves_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS"
+
+            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g_waves"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g_waves"
+            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g_waves"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g_waves"
+
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateSuspended="0"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
+
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_inandout_waves_animation"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_in_waves_animation"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_out_waves_animation"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_inandout_waves_animation"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_waves_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__H_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g_waves"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g_waves"
+            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g_waves"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g_waves"
+
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateSuspended="0"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
+
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_inandout_waves_animation"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_in_waves_animation"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_out_waves_animation"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_inandout_waves_animation"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_waves_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__HPLUS_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g_waves"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g_waves"
+            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g_waves"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g_waves"
+
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateSuspended="0"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
+
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_inandout_waves_animation"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_in_waves_animation"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_out_waves_animation"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_inandout_waves_animation"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_waves_none"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_LTE"
+
+            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g_lte_waves"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g_lte_waves"
+            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g_lte_waves"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g_lte_waves"
+
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g_lte"
+            systemui:DescriptionDataStateSuspended="0"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g_lte"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g_lte"
+
+            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
+            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
+            systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"
+            systemui:IconDataActivityConnectedInOut="@drawable/stat_sys_data_inandout_waves_animation"
+            systemui:IconDataActivityConnectedDormant="@drawable/stat_sys_data_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIdle="@drawable/stat_sys_data_fully_connected_waves_none"
+            systemui:IconDataActivityFullyConnectedIn="@drawable/stat_sys_data_fully_in_waves_animation"
+            systemui:IconDataActivityFullyConnectedOut="@drawable/stat_sys_data_fully_out_waves_animation"
+            systemui:IconDataActivityFullyConnectedInOut="@drawable/stat_sys_data_fully_inandout_waves_animation"
+            systemui:IconDataActivityFullyConnectedDormant="@drawable/stat_sys_data_fully_connected_waves_none"
+        />
+    </IconSuite>
+
+    <!-- "bellca" (Bell Canada) -->
+    <IconSuite systemui:CarrierName="bellca">
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_UMTS"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H__H_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__H_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__HPLUS_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_LTE"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_lte_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_lte"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_lte"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_lte"
+        />
+
+    </IconSuite>
+
+    <!-- "claroPR" Claro (Puerto Rico) -->
+    <IconSuite systemui:CarrierName="claroPR">
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_h_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_h"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_h"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_h"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_h"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_h"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_h"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_h"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_h"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_h"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H__H_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_h_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_h"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_h"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_h"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_h"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_h"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_h"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_h"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_h"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_h"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_4g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
+       />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__H_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_4g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__HPLUS_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_4g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
+        />
+
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_LTE"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_lte_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_lte"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_lte"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_lte"
+        />
+    </IconSuite>
+
+    <!-- "fido" (a subsidiary of rogers - LATAM) -->
+    <IconSuite systemui:CarrierName="fido">
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_UMTS"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H__H_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__H_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__HPLUS_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_LTE"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_lte_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_lte"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_lte"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_lte"
+        />
+
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_UMTS__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+       />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H__H_DISTINGUISHED__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__H_DISTINGUISHED__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__HPLUS_DISTINGUISHED__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+       />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_LTE__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_lte_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_lte"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_lte"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_lte"
+        />
+    </IconSuite>
+
+    <!-- "kt" (Korea) -->
+    <IconSuite systemui:CarrierName="kt">
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_LTE"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_lte_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_lte"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_lte"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_lte"
+        />
+    </IconSuite>
+
+    <!-- "o2de" O2 (Germany) -->
+    <IconSuite systemui:CarrierName="o2de">
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_LTE"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_lte_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_lte"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_lte"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_lte"
+        />
+    </IconSuite>
+
+    <!-- "orange" (EMARA & LATAM?)-->
+    <IconSuite systemui:CarrierName="orange">
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_plus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g_plus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_not_connected_3g_plus"
+
+            systemui:DescriptionDataStateUnknown="0"
+            systemui:DescriptionDataStateDisabled="0"
+            systemui:DescriptionDataStateDisconnected="0"
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g_plus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H__H_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_plus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g_plus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_not_connected_3g_plus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g_plus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__H_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__HPLUS_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+    </IconSuite>
+
+    <!-- "rogers" (Canada) -->
+    <IconSuite systemui:CarrierName="rogers">
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_UMTS"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H__H_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__H_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__HPLUS_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_hplus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_hplus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_hplus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_hplus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_hplus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_hplus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_LTE"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_lte_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_lte"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_lte"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_lte"
+        />
+
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_UMTS__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H__H_DISTINGUISHED__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__H_DISTINGUISHED__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__HPLUS_DISTINGUISHED__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+       />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_LTE__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_lte_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_lte"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_lte"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_lte"
+        />
+    </IconSuite>
+
+    <!-- "sfr" Vodafone (France) -->
+    <IconSuite systemui:CarrierName="sfr">
+         <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_UNKNOWN"
+
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_2g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_2g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_gprs"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_GPRS"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_2g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_2g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_2g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_2g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_2g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_2g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_gprs"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_gprs"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_plus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g_plus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_not_connected_3g_plus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g_plus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H__H_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_plus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g_plus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_not_connected_3g_plus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g_plus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_plus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g_plus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_not_connected_3g_plus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g_plus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__H_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_plus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g_plus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_not_connected_3g_plus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g_plus"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__HPLUS_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_plus_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g_plus"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g_plus"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_not_connected_3g_plus"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g_plus"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g_plus"
+        />
+   </IconSuite>
+
+    <!-- "skt" Korea -->
+    <IconSuite systemui:CarrierName="skt">
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_LTE"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_lte_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_lte"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_lte"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_lte"
+        />
+    </IconSuite>
+
+    <!-- "telus" Canada -->
+    <IconSuite systemui:CarrierName="telus">
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_LTE"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_lte_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_lte"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_lte"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_lte"
+        />
+    </IconSuite>
+
+    <!-- "tmo" T-Mobile (USA) -->
+    <IconSuite systemui:CarrierName="tmo">
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_UMTS"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_4g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_4g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H__H_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_4g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_4g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
+       />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__H_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_4g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__HPLUS_DISTINGUISHED"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_4g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
+        />
+
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_UMTS__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H__H_DISTINGUISHED__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__H_DISTINGUISHED__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+        />
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__HPLUS_DISTINGUISHED__ROAMING"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_3g_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_3g"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_3g"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_3g"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_3g"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_3g"
+        />
+    </IconSuite>
+
+    <!-- "tmo-intl" TMobile (International) -->
+    <IconSuite systemui:CarrierName="tmo-intl">
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_LTE"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_lte_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_lte"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_lte"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_lte"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_lte"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_lte"
+        />
+    </IconSuite>
+
+    <!-- "usc" U.S. Cellular (USA) -->
+    <IconSuite systemui:CarrierName="usc">
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_LTE"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_4g_lte_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g_lte"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g_lte"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g_lte"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g_lte"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g_lte"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g_lte"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_4g_lte"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g_lte"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g_lte"
+        />
+    </IconSuite>
+
+    <!-- "vzw" Verizon Wireless -->
+    <IconSuite systemui:CarrierName="vzw">
+        <IconSet
+            systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_LTE"
+
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_4g_lte_null"
+            systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g_lte"
+            systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g_lte"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g_lte"
+            systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g_lte"
+            systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g_lte"
+
+            systemui:DescriptionDataStateAttached="0"
+            systemui:DescriptionDataStateConnecting="@string/accessibility_data_connection_4g_lte"
+            systemui:DescriptionDataStateSuspended="@string/accessibility_data_connection_4g_lte"
+            systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g_lte"
+            systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g_lte"
+        />
+    </IconSuite>
+
+</TelephonyIconMappings>
