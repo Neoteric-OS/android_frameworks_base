@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2012 The Android Open Source Project
+ * Portions Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,6 +76,8 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
         String signalContentDescription;
         int dataTypeIconId;
         String dataContentDescription;
+        int signalRoamingIconId;
+        int dataActivityIconId;
     }
     static class WifiState extends State {
         String signalContentDescription;
@@ -387,7 +390,7 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
         if (string == null) return null;
         final int length = string.length();
         if (string.endsWith(".")) {
-            string.substring(0, length - 1);
+            string = string.substring(0, length - 1);
         }
         return string;
     }
@@ -431,8 +434,15 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
     // NetworkSignalChanged callback
     @Override
     public void onMobileDataSignalChanged(
-            boolean enabled, int mobileSignalIconId, String signalContentDescription,
-            int dataTypeIconId, String dataContentDescription, String enabledDesc) {
+            boolean enabled,
+            int mobileSignalIconId,
+            String signalContentDescription,
+            int dataTypeIconId,
+            String dataContentDescription,
+            String enabledDesc,
+            int      mobileRoamingIconId, // Added
+            int      dataActivityIconId   // Added
+    ) {
         if (deviceHasMobileData()) {
             // TODO: If view is in awaiting state, disable
             Resources r = mContext.getResources();
@@ -440,17 +450,20 @@ class QuickSettingsModel implements BluetoothStateChangeCallback,
                     ? mobileSignalIconId
                     : R.drawable.ic_qs_signal_no_signal;
             mRSSIState.signalContentDescription = enabled && (mobileSignalIconId > 0)
-                    ? signalContentDescription
-                    : r.getString(R.string.accessibility_no_signal);
-            mRSSIState.dataTypeIconId = enabled && (dataTypeIconId > 0) && !mWifiState.enabled
+                    ? removeTrailingPeriod( signalContentDescription )
+                    : removeTrailingPeriod( r.getString(R.string.accessibility_no_signal) );
+            mRSSIState.dataTypeIconId = enabled && (dataTypeIconId > 0)
                     ? dataTypeIconId
                     : 0;
-            mRSSIState.dataContentDescription = enabled && (dataTypeIconId > 0) && !mWifiState.enabled
-                    ? dataContentDescription
-                    : r.getString(R.string.accessibility_no_data);
+            mRSSIState.dataContentDescription = enabled && (dataTypeIconId > 0)
+                    ? removeTrailingPeriod( dataContentDescription )
+                    : removeTrailingPeriod( r.getString(R.string.accessibility_no_data) );
             mRSSIState.label = enabled
-                    ? removeTrailingPeriod(enabledDesc)
-                    : r.getString(R.string.quick_settings_rssi_emergency_only);
+                    ? removeTrailingPeriod( enabledDesc )
+                    : removeTrailingPeriod( r.getString(R.string.quick_settings_rssi_emergency_only) );
+            mRSSIState.signalRoamingIconId = mobileRoamingIconId;
+            mRSSIState.dataActivityIconId = dataActivityIconId;
+
             mRSSICallback.refreshView(mRSSITile, mRSSIState);
         }
     }

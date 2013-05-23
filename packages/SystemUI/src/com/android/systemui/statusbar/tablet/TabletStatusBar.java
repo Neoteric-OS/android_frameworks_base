@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2010 The Android Open Source Project
+ * Portions Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -264,16 +265,25 @@ public class TabletStatusBar extends BaseStatusBar implements
         if (mobileRSSI != null) {
             mNetworkController.addPhoneSignalIconView(mobileRSSI);
         }
+
         final ImageView wifiRSSI =
                 (ImageView)mNotificationPanel.findViewById(R.id.wifi_signal);
         if (wifiRSSI != null) {
             mNetworkController.addWifiIconView(wifiRSSI);
         }
+
+        mNetworkController.addRoamingIconView(
+            (ImageView)mNotificationPanel.findViewById(R.id.mobile_roaming));
+
         mNetworkController.addWifiLabelView(
                 (TextView)mNotificationPanel.findViewById(R.id.wifi_text));
 
         mNetworkController.addDataTypeIconView(
                 (ImageView)mNotificationPanel.findViewById(R.id.mobile_type));
+
+        mNetworkController.addWifiDataActivityIconView(
+                (ImageView)mNotificationPanel.findViewById(R.id.wifi_direction));
+
         mNetworkController.addMobileLabelView(
                 (TextView)mNotificationPanel.findViewById(R.id.mobile_text));
         mNetworkController.addCombinedLabelView(

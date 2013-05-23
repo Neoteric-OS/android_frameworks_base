@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2012 The Android Open Source Project
+     Portions Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -16,35 +17,54 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="vertical">
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_weight="1"
+    />
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:paddingBottom="10dp"
+    >
         <ImageView
             android:id="@+id/rssi_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingBottom="10dp"
+            android:layout_gravity="right|bottom"
             />
         <ImageView
             android:id="@+id/rssi_overlay_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingBottom="10dp"
+            android:layout_gravity="left|bottom"
+            />
+        <com.android.systemui.statusbar.AnimatedImageView
+            android:id="@+id/rssi_roaming_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            />
+        <com.android.systemui.statusbar.AnimatedImageView
+            android:id="@+id/rssi_activity_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
             />
     </FrameLayout>
     <TextView
         style="@style/TextAppearance.QuickSettings.TileView"
+        android:textAllCaps="false"
         android:id="@+id/rssi_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:text="@string/quick_settings_rssi_label"
+        android:layout_marginBottom="20dp"
         />
 </LinearLayout>

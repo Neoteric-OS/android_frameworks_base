@@ -1,6 +1,7 @@
 
 /*
  * Copyright (C) 2010 The Android Open Source Project
+ * Portions Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1139,6 +1140,9 @@ public abstract class BaseStatusBar extends SystemUI implements
                     if ("android.system.update".equals(aKind)) return true;
                 }
             }
+        } else if ("com.android.phone".equals(sbn.pkg)) {
+            // Allow InCall notification during setup - Must be able to end EmergencyCall in background
+            if ( sbn.id == 2 ) return true; // IN_CALL_NOTIFICATION
         }
         return false;
     }

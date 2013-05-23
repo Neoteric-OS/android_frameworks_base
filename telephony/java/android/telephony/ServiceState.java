@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
+ * Portions Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -123,6 +124,7 @@ public class ServiceState implements Parcelable {
     public static final int REGISTRATION_STATE_ROAMING = 5;
 
     private int mState = STATE_OUT_OF_SERVICE;
+    private int mDataServiceState = STATE_OUT_OF_SERVICE;
     private boolean mRoaming;
     private String mOperatorAlphaLong;
     private String mOperatorAlphaShort;
@@ -189,6 +191,7 @@ public class ServiceState implements Parcelable {
         mCdmaEriIconIndex = s.mCdmaEriIconIndex;
         mCdmaEriIconMode = s.mCdmaEriIconMode;
         mIsEmergencyOnly = s.mIsEmergencyOnly;
+        mDataServiceState = s.mDataServiceState;
     }
 
     /**
@@ -210,6 +213,7 @@ public class ServiceState implements Parcelable {
         mCdmaEriIconIndex = in.readInt();
         mCdmaEriIconMode = in.readInt();
         mIsEmergencyOnly = in.readInt() != 0;
+        mDataServiceState = in.readInt();
     }
 
     public void writeToParcel(Parcel out, int flags) {
@@ -228,6 +232,7 @@ public class ServiceState implements Parcelable {
         out.writeInt(mCdmaEriIconIndex);
         out.writeInt(mCdmaEriIconMode);
         out.writeInt(mIsEmergencyOnly ? 1 : 0);
+        out.writeInt(mDataServiceState);
     }
 
     public int describeContents() {
@@ -255,6 +260,19 @@ public class ServiceState implements Parcelable {
      */
     public int getState() {
         return mState;
+    }
+
+    /**
+     * Get current data service state of phone
+     * #STATE_EMERGENCY_ONLY has no meaning for data service state
+     *
+     * @see #STATE_IN_SERVICE
+     * @see #STATE_OUT_OF_SERVICE
+     * @see #STATE_POWER_OFF
+     * @hide
+     */
+    public int getDataServiceState() {
+        return mDataServiceState;
     }
 
     /**
@@ -392,7 +410,8 @@ public class ServiceState implements Parcelable {
                 && equalsHandlesNulls(mCdmaRoamingIndicator, s.mCdmaRoamingIndicator)
                 && equalsHandlesNulls(mCdmaDefaultRoamingIndicator,
                         s.mCdmaDefaultRoamingIndicator)
-                && mIsEmergencyOnly == s.mIsEmergencyOnly);
+                && mIsEmergencyOnly == s.mIsEmergencyOnly
+                && mDataServiceState == s.mDataServiceState);
     }
 
     /**
@@ -479,6 +498,7 @@ public class ServiceState implements Parcelable {
                 + " " + (mCssIndicator ? "CSS supported" : "CSS not supported")
                 + " " + mNetworkId
                 + " " + mSystemId
+                + " mDataServiceState=" + mDataServiceState
                 + " RoamInd=" + mCdmaRoamingIndicator
                 + " DefRoamInd=" + mCdmaDefaultRoamingIndicator
                 + " EmergOnly=" + mIsEmergencyOnly);
@@ -486,6 +506,7 @@ public class ServiceState implements Parcelable {
 
     private void setNullState(int state) {
         mState = state;
+        mDataServiceState = state;
         mRoaming = false;
         mOperatorAlphaLong = null;
         mOperatorAlphaShort = null;
@@ -512,6 +533,11 @@ public class ServiceState implements Parcelable {
 
     public void setState(int state) {
         mState = state;
+    }
+
+    /** @hide */
+    public void setDataServiceState(int serviceState) {
+        mDataServiceState = serviceState;
     }
 
     public void setRoaming(boolean roaming) {

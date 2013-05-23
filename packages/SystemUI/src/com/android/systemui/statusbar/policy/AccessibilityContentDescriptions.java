@@ -1,4 +1,5 @@
 // Copyright 2011 Google Inc. All Rights Reserved.
+// Portions Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
 
 package com.android.systemui.statusbar.policy;
 
@@ -10,11 +11,15 @@ import com.android.systemui.R;
 public class AccessibilityContentDescriptions {
 
     private AccessibilityContentDescriptions() {}
+
     static final int[] PHONE_SIGNAL_STRENGTH = {
         R.string.accessibility_no_phone,
         R.string.accessibility_phone_one_bar,
         R.string.accessibility_phone_two_bars,
         R.string.accessibility_phone_three_bars,
+        R.string.accessibility_phone_four_bars,
+        R.string.accessibility_phone_five_bars,
+        R.string.accessibility_phone_six_bars,
         R.string.accessibility_phone_signal_full
     };
 
@@ -23,6 +28,9 @@ public class AccessibilityContentDescriptions {
         R.string.accessibility_data_one_bar,
         R.string.accessibility_data_two_bars,
         R.string.accessibility_data_three_bars,
+        R.string.accessibility_data_four_bars,
+        R.string.accessibility_data_five_bars,
+        R.string.accessibility_data_six_bars,
         R.string.accessibility_data_signal_full
     };
 
@@ -33,11 +41,14 @@ public class AccessibilityContentDescriptions {
         R.string.accessibility_wifi_three_bars,
         R.string.accessibility_wifi_signal_full
     };
+
     static final int[] WIMAX_CONNECTION_STRENGTH = {
         R.string.accessibility_no_wimax,
         R.string.accessibility_wimax_one_bar,
         R.string.accessibility_wimax_two_bars,
         R.string.accessibility_wimax_three_bars,
-        R.string.accessibility_wimax_signal_full
+        R.string.accessibility_wimax_four_bars,
+        R.string.accessibility_wimax_five_bars,
+        R.string.accessibility_wimax_full
     };
 }

@@ -2,6 +2,7 @@
 <!--
 /*
 ** Copyright 2009, The Android Open Source Project
+** Portions Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -1022,4 +1023,14 @@
 
     <!-- Flag indicating if the speed up audio on mt call code should be executed -->
     <bool name="config_speed_up_audio_on_mt_calls">false</bool>
+
+
+<!-- BEGIN - Carrier Customization of Statusbar -->
+    <!-- Do not display roaming icon when device is roaming (AT&T). -->
+    <bool name="config_no_roaming_icon">false</bool>
+
+    <!-- Display roaming icon when roaming and there is no data connection on tablet (AT&T). -->
+    <bool name="config_show_roaming_icon_when_roaming_but_no_data">false</bool>
+<!-- END - Carrier Customization of Statusbar -->
+
 </resources>
