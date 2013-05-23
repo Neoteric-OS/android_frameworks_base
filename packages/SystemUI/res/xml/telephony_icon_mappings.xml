@@ -686,10 +686,10 @@
         <IconSet
             systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_GPRS"
 
-            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_null"
             systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_g_waves"
             systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_g_waves"
-            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_g_waves"
             systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_g_waves"
             systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_g_waves"
 
@@ -700,10 +700,10 @@
             systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_gprs"
             systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_gprs"
 
-            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisabled="@drawable/stat_sys_data_null"
             systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
             systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
-            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivitySuspended="@drawable/stat_sys_wifi_signal_0"
             systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
             systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
             systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"
@@ -718,10 +718,10 @@
         <IconSet
             systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_EDGE"
 
-            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_not_connected_e_waves"
             systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_e_waves"
             systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_e_waves"
-            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_e_waves"
             systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_e_waves"
             systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_e_waves"
 
@@ -732,10 +732,10 @@
             systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_edge"
             systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_edge"
 
-            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisabled="@drawable/stat_sys_data_null"
             systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
             systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
-            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivitySuspended="@drawable/stat_sys_wifi_signal_0"
             systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
             systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
             systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"
@@ -750,10 +750,10 @@
         <IconSet
             systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_UMTS"
 
-            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g_waves"
-            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g_waves"
             systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g_waves"
 
@@ -764,10 +764,10 @@
             systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
             systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
 
-            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisabled="@drawable/stat_sys_data_null"
             systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
             systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
-            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivitySuspended="@drawable/stat_sys_wifi_signal_0"
             systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
             systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
             systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"
@@ -782,10 +782,10 @@
         <IconSet
             systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H"
 
-            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g_waves"
-            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g_waves"
             systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g_waves"
 
@@ -796,10 +796,10 @@
             systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
             systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
 
-            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisabled="@drawable/stat_sys_data_null"
             systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
             systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
-            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivitySuspended="@drawable/stat_sys_wifi_signal_0"
             systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
             systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
             systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"
@@ -814,10 +814,10 @@
         <IconSet
             systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_H__H_DISTINGUISHED"
 
-            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g_waves"
-            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g_waves"
             systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g_waves"
 
@@ -828,10 +828,10 @@
             systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
             systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
 
-            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisabled="@drawable/stat_sys_data_null"
             systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
             systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
-            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivitySuspended="@drawable/stat_sys_wifi_signal_0"
             systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
             systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
             systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"
@@ -846,10 +846,10 @@
         <IconSet
             systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS"
 
-            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g_waves"
-            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g_waves"
             systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g_waves"
 
@@ -860,10 +860,10 @@
             systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
             systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
 
-            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisabled="@drawable/stat_sys_data_null"
             systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
             systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
-            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivitySuspended="@drawable/stat_sys_wifi_signal_0"
             systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
             systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
             systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"
@@ -878,10 +878,10 @@
         <IconSet
             systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__H_DISTINGUISHED"
 
-            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g_waves"
-            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g_waves"
             systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g_waves"
 
@@ -892,10 +892,10 @@
             systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
             systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
 
-            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisabled="@drawable/stat_sys_data_null"
             systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
             systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
-            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivitySuspended="@drawable/stat_sys_wifi_signal_0"
             systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
             systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
             systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"
@@ -910,10 +910,10 @@
         <IconSet
             systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_HPLUS__HPLUS_DISTINGUISHED"
 
-            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g_waves"
-            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g_waves"
             systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g_waves"
             systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g_waves"
 
@@ -924,10 +924,10 @@
             systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g"
             systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g"
 
-            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisabled="@drawable/stat_sys_data_null"
             systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
             systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
-            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivitySuspended="@drawable/stat_sys_wifi_signal_0"
             systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
             systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
             systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"
@@ -942,10 +942,10 @@
         <IconSet
             systemui:LookupMobileDataTypeKey="LOOKUP_DATA_TYPE_LTE"
 
-            systemui:IconDataStateDisabled="0"
+            systemui:IconDataStateDisabled="@drawable/stat_sys_data_not_connected_4g_lte_waves"
             systemui:IconDataStateAttached="@drawable/stat_sys_data_not_connected_4g_lte_waves"
             systemui:IconDataStateConnecting="@drawable/stat_sys_data_not_connected_4g_lte_waves"
-            systemui:IconDataStateSuspended="0"
+            systemui:IconDataStateSuspended="@drawable/stat_sys_data_not_connected_4g_lte_waves"
             systemui:IconDataStateConnected="@drawable/stat_sys_data_connected_4g_lte_waves"
             systemui:IconDataStateFullyConnected="@drawable/stat_sys_data_fully_connected_4g_lte_waves"
 
@@ -956,10 +956,10 @@
             systemui:DescriptionDataStateConnected="@string/accessibility_data_connection_4g_lte"
             systemui:DescriptionDataStateFullyConnected="@string/accessibility_data_connection_4g_lte"
 
-            systemui:IconDataActivityDisabled="0"
+            systemui:IconDataActivityDisabled="@drawable/stat_sys_data_null"
             systemui:IconDataActivityAttached="@drawable/stat_sys_data_not_connected_waves_none"
             systemui:IconDataActivityConnecting="@drawable/stat_sys_data_not_connected_waves_none"
-            systemui:IconDataActivitySuspended="0"
+            systemui:IconDataActivitySuspended="@drawable/stat_sys_wifi_signal_0"
             systemui:IconDataActivityConnectedIdle="@drawable/stat_sys_data_connected_waves_none"
             systemui:IconDataActivityConnectedIn="@drawable/stat_sys_data_in_waves_animation"
             systemui:IconDataActivityConnectedOut="@drawable/stat_sys_data_out_waves_animation"

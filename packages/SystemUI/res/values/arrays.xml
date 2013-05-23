@@ -52,6 +52,12 @@
 
         <!-- Add additional {full plmn/spn name, abbrev} pairs here -->
 
+<!-- 4 LINES BELOW ADDED FOR DEBUG + TESTING ONLY -->
+        <item>AT&amp;T</item>
+        <item>AT&amp;T-Mot</item>
+        <item>Verizon Wireless</item>
+        <item>VZW-Mot</item>
+
     </string-array>
 <!-- END Carrier Customization of Statusbar -->
 </resources>

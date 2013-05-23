@@ -111,7 +111,7 @@
 
     <!-- Show differing icons for sim missing vs sim invalid or error -->
     <!-- VERIZON ONLY: Show "stat_sys_corrupt_sim" icon for SIM error conditions. -->
-    <bool name="config_differing_icon_for_sim_error">false</bool>
+    <bool name="config_differing_icon_for_sim_error">true</bool>
 
     <!-- set true to smooth signal strength -->
     <bool name="config_signal_strength_smoothing">false</bool>
@@ -131,7 +131,8 @@
     <!--      IRD (Middle East, SE Asia, Australia & New Zealand) -->
     <!--      VZW, Sprint;                                        -->
     <!--   Unknown how to set for other carriers, assume false.   -->
-    <bool name="config_show_carrier_name_in_statusbar">false</bool>
+<!-- <bool name="config_show_carrier_name_in_statusbar">false</bool> -->
+    <bool name="config_show_carrier_name_in_statusbar">true</bool>
 
     <!-- If both PLMN & SPN are supplied,                         -->
     <!--  show SPN info on left side of status bar.               -->
@@ -161,7 +162,7 @@
     <!-- Display "attached" NetworkType icon when mobile data        -->
     <!--  type is known, but has not yet connected,                  -->
     <!--  show an "attached" variation of the mobile data type icon. -->
-    <bool name="config_show_gprs_attached_icon">false</bool>
+    <bool name="config_show_gprs_attached_icon">true</bool>
 
     <!-- When mobile data type is available and wifi is connected,   -->
     <!--  show a "suspended" variation of the mobile data type icon. -->
@@ -169,10 +170,10 @@
 
     <!-- Display "disabled" variation of the mobile data type icon -->
     <!--  when Settings>DataUsage=off.                             -->
-    <bool name="config_show_data_disabled_icon">false</bool>
+    <bool name="config_show_data_disabled_icon">true</bool>
 
     <!-- Show H+ status icon for Cat 10 (HSPA+) and above support -->
-    <bool name="config_hspap_data_distinguishable">false</bool>
+    <bool name="config_hspap_data_distinguishable">true</bool>
 
     <!-- Show EmergencyCallsOnly icon is statusbar (Australia) -->
     <bool name="config_show_emergency_calls_only_icon">true</bool>

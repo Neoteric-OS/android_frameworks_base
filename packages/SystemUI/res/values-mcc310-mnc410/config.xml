@@ -39,7 +39,7 @@
 
     <!-- Show differing icons for sim missing vs sim invalid or error -->
     <!-- VERIZON ONLY: Show "stat_sys_corrupt_sim" icon for SIM error conditions. -->
-    <bool name="config_differing_icon_for_sim_error">false</bool>
+    <bool name="config_differing_icon_for_sim_error">true</bool>
 
     <!-- set true to smooth signal strength -->
     <bool name="config_signal_strength_smoothing">false</bool>
@@ -93,11 +93,11 @@
 
     <!-- When mobile data type is available and wifi is connected,   -->
     <!--  show a "suspended" variation of the mobile data type icon. -->
-    <bool name="config_show_both_wifi_and_mobile_network">false</bool>
+    <bool name="config_show_both_wifi_and_mobile_network">true</bool>
 
     <!-- Display "disabled" variation of the mobile data type icon -->
     <!--  when Settings>DataUsage=off.                             -->
-    <bool name="config_show_data_disabled_icon">false</bool>
+    <bool name="config_show_data_disabled_icon">true</bool>
 
     <!-- Show H+ status icon for Cat 10 (HSPA+) and above support    -->
     <!-- (requires config_hspa_data_distinguishable to also be true) -->

@@ -3254,6 +3254,10 @@ public class NetworkController extends BroadcastReceiver {
             : 0
         );
 
+if( DEBUG ) {
+    inetCondition = 1;
+}
+
         if (INFO) {
             logConnectivityStatus(
                 intent.getAction(),
