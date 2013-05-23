@@ -116,6 +116,37 @@
     <!-- set true to smooth signal strength -->
     <bool name="config_signal_strength_smoothing">false</bool>
 
+    <!-- Show PLMN or SPN info on left side of status bar.        -->
+    <!--  (see config_spn_priority_over_plmn for control over     -->
+    <!--   which is shown when both are supplied)                 -->
+    <!--                                                          -->
+    <!-- config_show_carrier_name_in_statusbar:                   -->
+    <!--   Set to true for:                                       -->
+    <!--      AT&T and Canada (Rogers, Bell, & TELUS);            -->
+    <!--      LATAM;                                              -->
+    <!--      EMEA;                                               -->
+    <!--        Poland;                                           -->
+    <!--   Set to false for:                                      -->
+    <!--      China: (CMCC, CU, CT);                              -->
+    <!--      IRD (Middle East, SE Asia, Australia & New Zealand) -->
+    <!--      VZW, Sprint;                                        -->
+    <!--   Unknown how to set for other carriers, assume false.   -->
+    <bool name="config_show_carrier_name_in_statusbar">false</bool>
+
+    <!-- If both PLMN & SPN are supplied,                         -->
+    <!--  show SPN info on left side of status bar.               -->
+    <!--                                                          -->
+    <!-- config_spn_priority_over_plmn:                           -->
+    <!--   Set to true for:                                       -->
+    <!--   Set to false for:                                      -->
+    <!--      AT&T and Canada (Rogers, Bell, & TELUS);            -->
+    <!--      VZW, Sprint;                                        -->
+    <!--      LATAM;                                              -->
+    <!--      EMEA;                                               -->
+    <!--      China (all carriers);                               -->
+    <!--   Unknown how to set for other carriers, assume false.   -->
+    <bool name="config_spn_priority_over_plmn">false</bool>
+
     <!-- Show "No service" in carrier label field                 -->
     <!--  when not connected to network.                          -->
     <!--                                                          -->

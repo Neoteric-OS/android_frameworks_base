@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2010 The Android Open Source Project
+ * Portions Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,16 +42,22 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.inputmethodservice.InputMethodService;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
+
 import android.os.UserHandle;
+
 import android.provider.Settings;
+
 import android.service.dreams.DreamService;
 import android.service.dreams.IDreamManager;
+import android.telephony.CellBroadcastMessage;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Slog;
@@ -76,6 +83,9 @@ import android.widget.TextView;
 
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.statusbar.StatusBarNotification;
+
+import com.android.internal.telephony.TelephonyIntents;
+
 import com.android.systemui.R;
 import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.CommandQueue;
@@ -100,10 +110,17 @@ import java.util.ArrayList;
 
 public class PhoneStatusBar extends BaseStatusBar {
     static final String TAG = "PhoneStatusBar";
-    public static final boolean DEBUG = BaseStatusBar.DEBUG;
+    public static final boolean DEBUG = (BaseStatusBar.DEBUG || true);
     public static final boolean SPEW = DEBUG;
     public static final boolean DUMPTRUCK = true; // extra dumpsys info
     public static final boolean DEBUG_GESTURES = false;
+
+    // Regulatory Requirement for LATAM -
+    //   Must show CellBroadcast if feature is enabled, even when curtain is full.
+    static final boolean DEBUG_CELL_BROADCAST = false;
+    static final String DEBUG_CELL_BROADCAST_TEST_TEXT = "CellBroadcast test text";
+    // static final String DEBUG_CELL_BROADCAST_TEST_TEXT =
+    //     "CellBroadcast test text is way-way too wide to fit on screen, and I mean it";
 
     public static final boolean DEBUG_CLINGS = false;
 
@@ -142,7 +159,7 @@ public class PhoneStatusBar extends BaseStatusBar {
     private float mExpandAccelPx; // classic value: 2000px/s/s
     private float mCollapseAccelPx; // classic value: 2000px/s/s (will be negated to collapse "up")
 
-    private float mFlingGestureMaxOutputVelocityPx; // how fast can it really go? (should be a little 
+    private float mFlingGestureMaxOutputVelocityPx; // how fast can it really go? (should be a little
                                                     // faster than mSelfCollapseVelocityPx)
 
     PhoneStatusBarPolicy mIconPolicy;
@@ -169,11 +186,11 @@ public class PhoneStatusBar extends BaseStatusBar {
 
     // viewgroup containing the normal contents of the statusbar
     LinearLayout mStatusBarContents;
-    
+
     // right-hand icons
     LinearLayout mSystemIconArea;
-    
-    // left-hand icons 
+
+    // left-hand icons
     LinearLayout mStatusIcons;
     // the icons themselves
     IconMerger mNotificationIcons;
@@ -183,6 +200,7 @@ public class PhoneStatusBar extends BaseStatusBar {
     // expanded notifications
     NotificationPanelView mNotificationPanel; // the sliding/resizing panel within the notification window
     ScrollView mScrollView;
+    FrameLayout mContentAreaView;
     View mExpandedContents;
     int mNotificationPanelGravity;
     int mNotificationPanelMarginBottomPx, mNotificationPanelMarginPx;
@@ -200,14 +218,18 @@ public class PhoneStatusBar extends BaseStatusBar {
 
     // top bar
     View mNotificationPanelHeader;
-    View mDateTimeView; 
+    View mDateTimeView;
     View mClearButton;
     ImageView mSettingsButton, mNotificationButton;
 
     // carrier/wifi label
     private TextView mCarrierLabel;
+    private View mCarrierLabelGroup;
+
     private boolean mCarrierLabelVisible = false;
-    private int mCarrierLabelHeight;
+
+    // Changed layout, so ScrollView height already excludes CarrierLabelHeight
+
     private TextView mEmergencyCallLabel;
     private int mNotificationHeaderHeight;
 
@@ -219,6 +241,8 @@ public class PhoneStatusBar extends BaseStatusBar {
 
     // the date view
     DateView mDateView;
+
+    TextView mStatusBarOnsText;
 
     // for immersive activities
     private IntruderAlertView mIntruderAlertView;
@@ -260,6 +284,28 @@ public class PhoneStatusBar extends BaseStatusBar {
     private Animator mLightsOutAnimation;
     private Animator mLightsOnAnimation;
 
+    // Regulatory Requirement for LATAM -
+    //    Must show CellBroadcast if feature is enabled, even when curtain is full.
+    //    (PT:PR: Cell broadcast message is not displayed when there are
+    //    more than seven notifications.)
+    // Changed layout to include the curtain handle and CarrierLabel &
+    //    CellBroadcast notices as part of the linearLayout.
+    // When CellBroadcast feture is enabled: changed behavior to not
+    //    suppress CarrierLabel & CellBroadcast when curtain is
+    //    filled/overfilled.
+    private boolean isCellBroadcastSupported = false;
+    TextView mCellBroadcastLabel;
+
+    static final String ACTION_ENABLE_CB_INFO_ON_SYSTEMUI =
+            "com.motorola.cellbroadcastreceiver.CB_INFO_ON_SYSTEMUI";
+    static final String CB_AREA_INFO_RECEIVED_ACTION =
+            "android.cellbroadcastreceiver.CB_AREA_INFO_RECEIVED";
+    static final String CB_AREA_INFO_SENDER_PERMISSION =
+            "android.permission.RECEIVE_EMERGENCY_BROADCAST";
+    static final String CB_ENABLE_SENDER_PERMISSION =
+            "com.motorola.permission.CB_ENABLE";
+
+
     // for disabling the status bar
     int mDisabled = 0;
 
@@ -270,7 +316,7 @@ public class PhoneStatusBar extends BaseStatusBar {
 
     // XXX: gesture research
     private final GestureRecorder mGestureRec = DEBUG_GESTURES
-        ? new GestureRecorder("/sdcard/statusbar_gestures.dat") 
+        ? new GestureRecorder("/sdcard/statusbar_gestures.dat")
         : null;
 
     private int mNavigationIconHints = 0;
@@ -339,6 +385,20 @@ public class PhoneStatusBar extends BaseStatusBar {
         Resources res = context.getResources();
 
         updateDisplaySize(); // populates mDisplayMetrics
+
+        // Show the geographic area using Cell Broadcast
+        TelephonyManager tm = (TelephonyManager) context
+                .getSystemService(Context.TELEPHONY_SERVICE);
+        isCellBroadcastSupported = res.getBoolean(R.bool.show_brazil_settings) ||
+                "br".equals(tm.getSimCountryIso());
+
+        if ( DEBUG_CELL_BROADCAST ) {
+            isCellBroadcastSupported = true;
+        }
+        if (DEBUG) {
+            Slog.i(TAG, "  isCellBroadcastSupported = " + isCellBroadcastSupported);
+        }
+
         loadDimens();
 
         mIconSize = res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_icon_size);
@@ -359,7 +419,6 @@ public class PhoneStatusBar extends BaseStatusBar {
 
         mStatusBarView = (PhoneStatusBarView) mStatusBarWindow.findViewById(R.id.status_bar);
         mStatusBarView.setBar(this);
-        
 
         PanelHolder holder = (PanelHolder) mStatusBarWindow.findViewById(R.id.panel_holder);
         mStatusBarView.setPanelHolder(holder);
@@ -434,6 +493,37 @@ public class PhoneStatusBar extends BaseStatusBar {
         mClearButton.setEnabled(false);
         mDateView = (DateView)mStatusBarWindow.findViewById(R.id.date);
 
+        // Display ONS in the status bar
+        mCarrierLabel = (TextView)mStatusBarWindow.findViewById(R.id.carrier_label);
+
+        // Regulatory Requirement for LATAM - Must show CellBroadcast if feature is enabled
+        mCarrierLabelGroup = (View)mStatusBarWindow.findViewById(R.id.carrier_label_group);
+        mCarrierLabel.setVisibility(mCarrierLabelVisible ? View.VISIBLE : View.GONE);
+        mCarrierLabelGroup.setVisibility(mCarrierLabelVisible ? View.VISIBLE : View.GONE);
+
+        if( isCellBroadcastSupported ) {
+            mCellBroadcastLabel = (TextView)mStatusBarWindow.findViewById(R.id.cell_broadcast_label);
+            if (mCellBroadcastLabel != null) {
+                mCellBroadcastLabel.setText ("");
+                mCellBroadcastLabel.setVisibility(View.GONE);
+            }
+        }
+
+        if ( DEBUG_CELL_BROADCAST ) {
+            if(
+                isCellBroadcastSupported
+                &&
+                ( mCellBroadcastLabel != null )
+                &&
+                ( mCellBroadcastLabel.length() == 0 )
+            ) {
+                mCellBroadcastLabel.setText (DEBUG_CELL_BROADCAST_TEST_TEXT);
+                mCellBroadcastLabel.setVisibility(View.VISIBLE);
+                mCellBroadcastLabel.setSelected(true);
+            }
+        }
+
+
         mHasSettingsPanel = res.getBoolean(R.bool.config_hasSettingsPanel);
         mHasFlipSettings = res.getBoolean(R.bool.config_hasFlipSettingsPanel);
 
@@ -473,6 +563,7 @@ public class PhoneStatusBar extends BaseStatusBar {
         }
 
         mScrollView = (ScrollView)mStatusBarWindow.findViewById(R.id.scroll);
+        mContentAreaView = (FrameLayout)mStatusBarWindow.findViewById(R.id.content_area);
         mScrollView.setVerticalScrollBarEnabled(false); // less drawing during pulldowns
         if (!mNotificationPanelIsFullScreenWidth) {
             mScrollView.setSystemUiVisibility(
@@ -521,7 +612,11 @@ public class PhoneStatusBar extends BaseStatusBar {
         mShowCarrierInPanel = (mCarrierLabel != null);
         if (DEBUG) Slog.v(TAG, "carrierlabel=" + mCarrierLabel + " show=" + mShowCarrierInPanel);
         if (mShowCarrierInPanel) {
-            mCarrierLabel.setVisibility(mCarrierLabelVisible ? View.VISIBLE : View.INVISIBLE);
+
+            // Regulatory Requirement for LATAM - Must show CellBroadcast if feature is enabled
+            mCarrierLabel.setVisibility(mCarrierLabelVisible ? View.VISIBLE : View.GONE);
+            mCarrierLabelGroup.setVisibility(mCarrierLabelVisible ? View.VISIBLE : View.GONE);
+
 
             // for mobile devices, we always show mobile connection info here (SPN/PLMN)
             // for other devices, we show whatever network is connected
@@ -538,7 +633,13 @@ public class PhoneStatusBar extends BaseStatusBar {
                     updateCarrierLabelVisibility(false);
                 }
             });
+            mNetworkController.addSignalCluster(signalCluster);
+
         }
+
+        // Display ONS (short-form Carrier Label) in the status bar
+        mStatusBarOnsText = (TextView)mStatusBarView.findViewById(R.id.onsText);
+        mNetworkController.addMobileLabelShortFormView(mStatusBarOnsText);
 
         // Quick Settings (where available, some restrictions apply)
         if (mHasSettingsPanel) {
@@ -591,7 +692,7 @@ public class PhoneStatusBar extends BaseStatusBar {
             }
         }
 
-        mClingShown = ! (DEBUG_CLINGS 
+        mClingShown = ! (DEBUG_CLINGS
             || !Prefs.read(mContext).getBoolean(Prefs.SHOWN_QUICK_SETTINGS_HELP, false));
 
         if (!ENABLE_NOTIFICATION_PANEL_CLING || ActivityManager.isRunningInTestHarness()) {
@@ -610,6 +711,17 @@ public class PhoneStatusBar extends BaseStatusBar {
         filter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_SCREEN_ON);
+
+        if (isCellBroadcastSupported) {
+            context.registerReceiver(mCBEnableReceiver,
+                    new IntentFilter(ACTION_ENABLE_CB_INFO_ON_SYSTEMUI),
+                    CB_ENABLE_SENDER_PERMISSION, null);
+
+            context.registerReceiver(mCBInfoReceiver,
+                    new IntentFilter(CB_AREA_INFO_RECEIVED_ACTION),
+                    CB_AREA_INFO_SENDER_PERMISSION, null);
+        }
+
         context.registerReceiver(mBroadcastReceiver, filter);
 
         // listen for USER_SETUP_COMPLETE setting (per-user)
@@ -1046,28 +1158,80 @@ public class PhoneStatusBar extends BaseStatusBar {
 
     protected void updateCarrierLabelVisibility(boolean force) {
         if (!mShowCarrierInPanel) return;
-        // The idea here is to only show the carrier label when there is enough room to see it, 
+        // The idea here is to only show the carrier label when there is enough room to see it,
         // i.e. when there aren't enough notifications to fill the panel.
+
         if (DEBUG) {
-            Slog.d(TAG, String.format("pileh=%d scrollh=%d carrierh=%d",
-                    mPile.getHeight(), mScrollView.getHeight(), mCarrierLabelHeight));
+            // Regulatory Requirement for LATAM -
+            //   Changed layout, so ScrollView height already excludes CarrierLableHeight
+            Slog.d(TAG, String.format("pileh=%d scrollh=%d",
+                    mPile.getHeight(), mScrollView.getHeight()));
         }
 
         final boolean emergencyCallsShownElsewhere = mEmergencyCallLabel != null;
-        final boolean makeVisible =
-            !(emergencyCallsShownElsewhere && mNetworkController.isEmergencyOnly())
-            && mPile.getHeight() < (mNotificationPanel.getHeight() - mCarrierLabelHeight - mNotificationHeaderHeight)
-            && mScrollView.getVisibility() == View.VISIBLE;
-        
+        final boolean makeVisible;
+        makeVisible = (
+            (
+                ! (
+                    emergencyCallsShownElsewhere
+                    &&
+                    mNetworkController.isEmergencyOnly()
+                )
+            )
+            &&
+            (
+                //  Must show CellBroadcast if feature is enabled, even when curtain is full.
+                //   Changed layout, so ScrollView height already excludes CarrierLabelHeight
+                //   Added override to retain label if Cell Broadcast is enabled
+                (
+                    ( mScrollView.getVisibility() == View.VISIBLE )  // Google added in 4.2
+                )
+                ||
+                (
+                    isCellBroadcastSupported
+                    &&
+                    ( mCellBroadcastLabel != null )
+                )
+            )
+        );
+
+        if (DEBUG) {
+            Slog.d(TAG, "updateCarrierLabelVisibility: makeVisible=" + makeVisible );
+            Slog.d(TAG, "    emergencyCallsShownElsewhere=" + emergencyCallsShownElsewhere );
+            Slog.d(TAG, "    mNetworkController.isEmergencyOnly()=" + mNetworkController.isEmergencyOnly() );
+            Slog.d(TAG, "    (! ( emergencyCallsShownElsewhere && mNetworkController.isEmergencyOnly() ) )="
+                + (! ( emergencyCallsShownElsewhere && mNetworkController.isEmergencyOnly() )) );
+            Slog.d(TAG, "    mPile.getHeight()=" + mPile.getHeight()
+                + " mScrollView.getHeight()=" + mScrollView.getHeight()
+                + " mContentAreaView.getHeight()=" + mContentAreaView.getHeight() );
+            Slog.d(TAG, "    ( mPile.getHeight() <= ( mScrollView.getHeight() /* - mCarrierLabelHeight */ ) )="
+                + ( mPile.getHeight() <= ( mScrollView.getHeight() /* - mCarrierLabelHeight */ ) ) );
+            Slog.d(TAG, "    ( mScrollView.getVisibility() == View.VISIBLE )=" + ( mScrollView.getVisibility() == View.VISIBLE ) );
+            Slog.d(TAG, "    isCellBroadcastSupported=" + isCellBroadcastSupported );
+            Slog.d(TAG, "    ( mCellBroadcastLabel != null )=" + ( mCellBroadcastLabel != null ) );
+        }
+
         if (force || mCarrierLabelVisible != makeVisible) {
             mCarrierLabelVisible = makeVisible;
+            //   Must show CellBroadcast if feature is enabled, even when curtain is full.
+            //   Changed visibility from INVISIBLE to GONE
+            //   Apply visibility to mCarrierLabelGroup (vs mCarrierLabel).
+            //   Eliminated animation which would previously fade/hide CarrierLabel.
+
             if (DEBUG) {
-                Slog.d(TAG, "making carrier label " + (makeVisible?"visible":"invisible"));
+                Slog.d(TAG, "updateCarrierLabelVisibility: making carrier label " + (makeVisible?"visible":"gone"));
             }
-            mCarrierLabel.animate().cancel();
+
+            //mCarrierLabel.animate().cancel();
+
             if (makeVisible) {
                 mCarrierLabel.setVisibility(View.VISIBLE);
+                mCarrierLabelGroup.setVisibility(View.VISIBLE);
+            } else {
+                mCarrierLabel.setVisibility(View.GONE);
+                mCarrierLabelGroup.setVisibility(View.GONE);
             }
+            /* Removed animation: Changed visibility from INVISIBLE to GONE -------------
             mCarrierLabel.animate()
                 .alpha(makeVisible ? 1f : 0f)
                 //.setStartDelay(makeVisible ? 500 : 0)
@@ -1077,12 +1241,13 @@ public class PhoneStatusBar extends BaseStatusBar {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         if (!mCarrierLabelVisible) { // race
-                            mCarrierLabel.setVisibility(View.INVISIBLE);
+                            mCarrierLabel.setVisibility(View.GONE);
                             mCarrierLabel.setAlpha(0f);
                         }
                     }
                 })
                 .start();
+            ------Removed animation--------- */
         }
     }
 
@@ -1097,10 +1262,11 @@ public class PhoneStatusBar extends BaseStatusBar {
                     + " any=" + any + " clearable=" + clearable);
         }
 
-        if (mHasFlipSettings 
-                && mFlipSettingsView != null 
+        if (mHasFlipSettings
+                && mFlipSettingsView != null
                 && mFlipSettingsView.getVisibility() == View.VISIBLE
-                && mScrollView.getVisibility() != View.VISIBLE) {
+                && mScrollView.getVisibility() != View.VISIBLE
+        ) {
             // the flip settings panel is unequivocally showing; we should not be shown
             mClearButton.setVisibility(View.INVISIBLE);
         } else if (mClearButton.isShown()) {
@@ -1412,7 +1578,7 @@ public class PhoneStatusBar extends BaseStatusBar {
         a.setStartDelay(d);
         return a;
     }
-    
+
     public Animator start(Animator a) {
         a.start();
         return a;
@@ -1429,7 +1595,7 @@ public class PhoneStatusBar extends BaseStatusBar {
 
     @Override
     public void animateExpandNotificationsPanel() {
-        if (SPEW) Slog.d(TAG, "animateExpand: mExpandedVisible=" + mExpandedVisible);
+        if (SPEW) Slog.d(TAG, "animateExpandNotificationsPanel: mExpandedVisible=" + mExpandedVisible);
         if ((mDisabled & StatusBarManager.DISABLE_EXPAND) != 0) {
             return ;
         }
@@ -1484,7 +1650,7 @@ public class PhoneStatusBar extends BaseStatusBar {
 
     @Override
     public void animateExpandSettingsPanel() {
-        if (SPEW) Slog.d(TAG, "animateExpand: mExpandedVisible=" + mExpandedVisible);
+        if (SPEW) Slog.d(TAG, "animateExpandSettingsPanel: mExpandedVisible=" + mExpandedVisible);
         if ((mDisabled & StatusBarManager.DISABLE_EXPAND) != 0) {
             return;
         }
@@ -1541,7 +1707,7 @@ public class PhoneStatusBar extends BaseStatusBar {
                 interpolator(mAccelerateInterpolator,
                         ObjectAnimator.ofFloat(mScrollView, View.SCALE_X, 1f, 0f)
                         )
-                    .setDuration(FLIP_DURATION_OUT), 
+                    .setDuration(FLIP_DURATION_OUT),
                 mScrollView, View.INVISIBLE));
         mSettingsButtonAnim = start(
             setVisibilityWhenDone(
@@ -1639,13 +1805,13 @@ public class PhoneStatusBar extends BaseStatusBar {
 
     /**
      * Enables or disables layers on the children of the notifications pile.
-     * 
+     *
      * When layers are enabled, this method attempts to enable layers for the minimal
      * number of children. Only children visible when the notification area is fully
      * expanded will receive a layer. The technique used in this method might cause
      * more children than necessary to get a layer (at most one extra child with the
      * current UI.)
-     * 
+     *
      * @param layerType {@link View#LAYER_TYPE_NONE} or {@link View#LAYER_TYPE_HARDWARE}
      */
     private void setPileLayers(int layerType) {
@@ -1658,7 +1824,7 @@ public class PhoneStatusBar extends BaseStatusBar {
                 }
                 break;
             case View.LAYER_TYPE_HARDWARE:
-                final int[] location = new int[2]; 
+                final int[] location = new int[2];
                 mNotificationPanel.getLocationInWindow(location);
 
                 final int left = location[0];
@@ -1760,9 +1926,9 @@ public class PhoneStatusBar extends BaseStatusBar {
 
         // Cling (first-run help) handling.
         // The cling is supposed to show the first time you drag, or even tap, the status bar.
-        // It should show the notification panel, then fade in after half a second, giving you 
+        // It should show the notification panel, then fade in after half a second, giving you
         // an explanation of what just happened, as well as teach you how to access quick
-        // settings (another drag). The user can dismiss the cling by clicking OK or by 
+        // settings (another drag). The user can dismiss the cling by clicking OK or by
         // dragging quick settings into view.
         final int act = event.getActionMasked();
         if (mSuppressStatusBarDrags) {
@@ -1991,9 +2157,9 @@ public class PhoneStatusBar extends BaseStatusBar {
                     + ", mTrackingPosition=" + mTrackingPosition);
             pw.println("  mTicking=" + mTicking);
             pw.println("  mTracking=" + mTracking);
-            pw.println("  mNotificationPanel=" + 
-                    ((mNotificationPanel == null) 
-                            ? "null" 
+            pw.println("  mNotificationPanel=" +
+                    ((mNotificationPanel == null)
+                            ? "null"
                             : (mNotificationPanel + " params=" + mNotificationPanel.getLayoutParams().debug(""))));
             pw.println("  mAnimating=" + mAnimating
                     + ", mAnimY=" + mAnimY + ", mAnimVel=" + mAnimVel
@@ -2139,7 +2305,7 @@ public class PhoneStatusBar extends BaseStatusBar {
     void updateDisplaySize() {
         mDisplay.getMetrics(mDisplayMetrics);
         if (DEBUG_GESTURES) {
-            mGestureRec.tag("display", 
+            mGestureRec.tag("display",
                     String.format("%dx%d", mDisplayMetrics.widthPixels, mDisplayMetrics.heightPixels));
         }
     }
@@ -2257,6 +2423,49 @@ public class PhoneStatusBar extends BaseStatusBar {
         }
     };
 
+    private BroadcastReceiver mCBInfoReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            if (DEBUG)
+                Slog.v(TAG, "onReceive: " + intent);
+            String action = intent.getAction();
+
+            if ((isCellBroadcastSupported && (mCellBroadcastLabel != null))
+                    && (CB_AREA_INFO_RECEIVED_ACTION.equals(action))) {
+                String cbMsg = null;
+                Bundle extras = intent.getExtras();
+                if (extras != null) {
+                    CellBroadcastMessage cbMessage = (CellBroadcastMessage) extras.get("message");
+                    cbMsg = cbMessage.getMessageBody();
+                }
+                mCellBroadcastLabel.setVisibility(View.VISIBLE);
+                mCellBroadcastLabel.setSelected(true);
+                mCellBroadcastLabel.setText("");
+                if (cbMsg != null) {
+                    mCellBroadcastLabel.append(cbMsg);
+                }
+            }
+        }
+    };
+
+    private BroadcastReceiver mCBEnableReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            if (DEBUG)
+                Slog.v(TAG, "onReceive: " + intent);
+            String action = intent.getAction();
+
+            if ((isCellBroadcastSupported && (mCellBroadcastLabel != null))
+                    && (ACTION_ENABLE_CB_INFO_ON_SYSTEMUI.equals(action))) {
+                boolean enable = intent.getBooleanExtra("enable", false);
+                if (!enable) {
+                    mCellBroadcastLabel.setText("");
+                    mCellBroadcastLabel.setVisibility(View.GONE);
+                    mCellBroadcastLabel.setSelected(false);
+                }
+            }
+        }
+    };
+    // END IKJBXLINE-6219
+
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             if (DEBUG) Slog.v(TAG, "onReceive: " + intent);
@@ -2292,6 +2501,7 @@ public class PhoneStatusBar extends BaseStatusBar {
                 repositionNavigationBar();
                 notifyNavigationBarScreenOn(true);
             }
+
         }
     };
 
@@ -2402,7 +2612,9 @@ public class PhoneStatusBar extends BaseStatusBar {
             mSettingsPanelGravity = Gravity.RIGHT | Gravity.TOP;
         }
 
-        mCarrierLabelHeight = res.getDimensionPixelSize(R.dimen.carrier_label_height);
+        // Regulatory Requirement for LATAM -
+        //   Changed RelativeLayout to LinearLayout, so ScrollView height already excludes CarrierLableHeight
+
         mNotificationHeaderHeight = res.getDimensionPixelSize(R.dimen.notification_panel_header_height);
 
         mNotificationPanelMinHeightFrac = res.getFraction(R.dimen.notification_panel_min_height_frac, 1, 1);

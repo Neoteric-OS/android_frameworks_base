@@ -65,7 +65,7 @@ public class NetworkController extends BroadcastReceiver {
 
     // Logging & debugging
     static final String TAG = "SBar.NetworkController"; // Shortened name for isLoggable
-    static final boolean CHATTY =  Log.isLoggable( TAG, Log.VERBOSE ) || true; // additional diagnostics, but not logspew
+    static final boolean CHATTY =  Log.isLoggable( TAG, Log.VERBOSE ); // additional diagnostics, but not logspew
     static final boolean DEBUG = ( Log.isLoggable( TAG, Log.DEBUG ) || CHATTY );
     static final boolean INFO = ( true || DEBUG );
 
@@ -149,12 +149,25 @@ public class NetworkController extends BroadcastReceiver {
     TelephonyIcons mTelephonyIcons;
 
     // Split network status messages ("No service", "Searching for service", "Emergency calls only",
-    //       "No internet connection", etc) to a separate label field
-    //       - overlaying CarrierLabel violates carrier agreements & certification.
-    String mNetworkName;           // CarrierLabel (PLMN + SPN)
-    String mNetworkNameDefault;    // "No service" message
-    String mNetworkNameSeparator;  // Divider (text character) between plmn & spn, when both are shown
+    //       "No internet connection", etc) to a separate label field - overlaying CarrierLabel violates carrier
+    //       agreements & certification.
+    String mMobileDataNetworkName;           // CarrierLabel (PLMN + SPN)
+    String mMobileDataNetworkNameShortForm = sEmptyString;  // CarrierLabel for display in ONSText field of Statusbar
+    String mMobileDataNetworkNameDefault;    // "No service" message
+    String mMobileDataNetworkNameSeparator;  // Divider (text character) between plmn & spn, when both are shown
+    private boolean mMobileDataNetworkNameCachedIsShowSpn;
+    private String mMobileDataNetworkNameCachedSpn;
+    private boolean mMobileDataNetworkNameCachedIsShowPlmn;
+    private String mMobileDataNetworkNameCachedPlmn;
+    private String[] mMobileDataNetworkNameShortFormAbbreviationsTable;
+    private boolean mConfigMobileNetworkNameShortFormSupported;
+    private boolean mConfigMobileNetworkNameSpnHasPriority;
+    private boolean mConfigMobileNetworkNameShowBothPlmnAndSpnInExpanded;
     private boolean mConfigMobileNetworkNameShowNoService;
+    private boolean mIsMobileNetworkNameShortFormVisible;
+
+    String mMobileDataNetworkInfo;           // ("No service", "Searching for service", "Emergency calls only",
+    //                                           "No internet connection", etc)
 
     boolean mConfigMobileDataTypeShowAtLeastThreeGees = false;
     boolean mConfigMobileDataSignalShowPhoneRSSIForData = false;
@@ -252,8 +265,9 @@ public class NetworkController extends BroadcastReceiver {
     ArrayList<ImageView> mMobileDataActivityIconViews = new ArrayList<ImageView>();
     ArrayList<TextView> mCombinedLabelViews = new ArrayList<TextView>();
     ArrayList<TextView> mMobileLabelViews = new ArrayList<TextView>();
+    ArrayList<TextView> mMobileLabelShortFormViews = new ArrayList<TextView>();
     ArrayList<TextView> mWifiLabelViews = new ArrayList<TextView>();
-    ArrayList<TextView> mEmergencyLabelViews = new ArrayList<TextView>();
+    ArrayList<TextView> mNoticeTextViews = new ArrayList<TextView>();
     ArrayList<SignalCluster> mSignalClusters = new ArrayList<SignalCluster>();
     ArrayList<NetworkSignalChangedCallback> mSignalsChangedCallbacks =
         new ArrayList<NetworkSignalChangedCallback>();
@@ -270,6 +284,7 @@ public class NetworkController extends BroadcastReceiver {
     int mLastMobileDataActivityIconId = -1;
     String mLastCombinedLabel = sEmptyString;
     String mLastMobileLabel = sEmptyString;
+    String mLastMobileShortLabel = sEmptyString;
 
     private boolean mHasMobileDataFeature;
 
@@ -348,6 +363,7 @@ public class NetworkController extends BroadcastReceiver {
     public NetworkController(Context context) {
 
         mContext = context;
+        final Resources res = context.getResources();
 
         mTelephonyIcons = new TelephonyIcons(mContext);
 
@@ -367,9 +383,18 @@ public class NetworkController extends BroadcastReceiver {
         // telephony
         registerPhoneStateListener(context);
 
-        mNetworkName = sEmptyString; // Do not set to "No service" here.
 
-        updateNetworkName(false, null, false, null);
+
+        mMobileDataNetworkName = sEmptyString; // Do not set to "No service" here.
+        mMobileDataNetworkNameShortForm = sEmptyString;
+        mIsMobileNetworkNameShortFormVisible = false;
+
+        mMobileDataNetworkNameCachedIsShowSpn = false;
+        mMobileDataNetworkNameCachedSpn = null;
+        mMobileDataNetworkNameCachedIsShowPlmn = false;
+        mMobileDataNetworkNameCachedPlmn = null;
+
+        updateMobileNetworkName(false, null, false, null);
 
         // wifi
         createWifiHandler();
@@ -490,13 +515,23 @@ public class NetworkController extends BroadcastReceiver {
             R.bool.config_differing_icon_for_sim_error
         );
 
+        // Carrier name (both in statusbar and on notification panel)
+        mConfigMobileNetworkNameShortFormSupported = res.getBoolean(
+            R.bool.config_show_carrier_name_in_statusbar
+        );
+        mConfigMobileNetworkNameSpnHasPriority = res.getBoolean(
+            R.bool.config_spn_priority_over_plmn
+        );
         mConfigMobileNetworkNameShowNoService = res.getBoolean(
             R.bool.config_display_no_service_text
         );
-        mNetworkNameSeparator = mContext.getString(
+        mMobileDataNetworkNameShortFormAbbreviationsTable = res.getStringArray(
+            R.array.config_carrier_label_abbreviated_names_table
+        );
+        mMobileDataNetworkNameSeparator = mContext.getString(
             R.string.status_bar_network_name_separator
         );
-        mNetworkNameDefault = mContext.getString(
+        mMobileDataNetworkNameDefault = mContext.getString(
             com.android.internal.R.string.lockscreen_carrier_default
         );
 
@@ -570,16 +605,43 @@ public class NetworkController extends BroadcastReceiver {
                 + mConfigMobileSimDifferingIconForSimError
             );
             Slog.d(TAG,
+                "loadConfigOptions: config_show_carrier_name_in_statusbar="
+                + mConfigMobileNetworkNameShortFormSupported
+            );
+            Slog.d(TAG,
+                "loadConfigOptions: config_spn_priority_over_plmn="
+                + mConfigMobileNetworkNameSpnHasPriority
+            );
+            Slog.d(TAG,
                 "loadConfigOptions: config_display_no_service_text="
                 + mConfigMobileNetworkNameShowNoService
             );
             Slog.d(TAG,
+                "loadConfigOptions: config_carrier_label_abbreviated_names_table:"
+            );
+            if( mMobileDataNetworkNameShortFormAbbreviationsTable.length != 0 ) {
+                for (
+                    int iDebugIndex = 0;
+                    iDebugIndex < mMobileDataNetworkNameShortFormAbbreviationsTable.length;
+                    iDebugIndex += 2
+                ) {
+                    Slog.d(TAG,
+                        "   [" + (iDebugIndex/2) + "]: map \""
+                        + mMobileDataNetworkNameShortFormAbbreviationsTable[iDebugIndex]
+                        + "\" to \""
+                        + mMobileDataNetworkNameShortFormAbbreviationsTable[iDebugIndex+1]
+                    );
+                }
+            } else {
+                    Slog.d(TAG, "   (array is empty)" );
+            }
+            Slog.d(TAG,
                 "loadConfigOptions: status_bar_network_name_separator=\""
-                + mNetworkNameSeparator +"\""
+                + mMobileDataNetworkNameSeparator +"\""
             );
             Slog.d(TAG,
                 "loadConfigOptions: lockscreen_carrier_default=\""
-                + mNetworkNameDefault +"\""
+                + mMobileDataNetworkNameDefault +"\""
             );
         }
     }
@@ -684,6 +746,12 @@ public class NetworkController extends BroadcastReceiver {
 
     //================================================================================================================
 
+    public void addMobileLabelShortFormView(TextView v) {
+        mMobileLabelShortFormViews.add(v);
+    }
+
+    //================================================================================================================
+
     public void addWifiLabelView(TextView v) {
         mWifiLabelViews.add(v);
     }
@@ -691,7 +759,7 @@ public class NetworkController extends BroadcastReceiver {
     //================================================================================================================
 
     public void addEmergencyLabelView(TextView v) {
-        mEmergencyLabelViews.add(v);
+        mNoticeTextViews.add(v);
     }
 
     //================================================================================================================
@@ -1028,7 +1096,7 @@ public class NetworkController extends BroadcastReceiver {
                     mMobilePhoneSignalContentDescription,
                     mMobileDataTypeQSIconId,
                     mWimaxContentDescription,
-                    mNetworkName,
+                    mMobileDataNetworkName,
                     mMobileRoamingQSIconId,
                     mMobileDataActivityQSIconId
                 );
@@ -1040,7 +1108,7 @@ public class NetworkController extends BroadcastReceiver {
                     mMobilePhoneSignalContentDescription,
                     mMobileDataTypeQSIconId,
                     mMobileDataTypeContentDescription,
-                    mNetworkName,
+                    mMobileDataNetworkName,
                     mMobileRoamingQSIconId,
                     mMobileDataActivityQSIconId
                 );
@@ -1094,10 +1162,26 @@ public class NetworkController extends BroadcastReceiver {
 
             if (INFO) Slog.i(TAG, "onReceive: TelephonyIntents.SPN_STRINGS_UPDATED_ACTION Received");
 
-            updateNetworkName(intent.getBooleanExtra(TelephonyIntents.EXTRA_SHOW_SPN, false),
-                        intent.getStringExtra(TelephonyIntents.EXTRA_SPN),
-                        intent.getBooleanExtra(TelephonyIntents.EXTRA_SHOW_PLMN, false),
-                        intent.getStringExtra(TelephonyIntents.EXTRA_PLMN));
+            mMobileDataNetworkNameCachedIsShowSpn = intent.getBooleanExtra(
+                TelephonyIntents.EXTRA_SHOW_SPN,
+                false
+            );
+            mMobileDataNetworkNameCachedSpn = intent.getStringExtra(
+                TelephonyIntents.EXTRA_SPN
+            );
+            mMobileDataNetworkNameCachedIsShowPlmn = intent.getBooleanExtra(
+                TelephonyIntents.EXTRA_SHOW_PLMN,
+                false
+            );
+            mMobileDataNetworkNameCachedPlmn = intent.getStringExtra(
+                TelephonyIntents.EXTRA_PLMN
+            );
+            updateMobileNetworkName(
+                mMobileDataNetworkNameCachedIsShowSpn,
+                mMobileDataNetworkNameCachedSpn,
+                mMobileDataNetworkNameCachedIsShowPlmn,
+                mMobileDataNetworkNameCachedPlmn
+            );
             refreshViews();
 
         } else if ( action.equals(ConnectivityManager.CONNECTIVITY_ACTION) ) {
@@ -1251,6 +1335,13 @@ public class NetworkController extends BroadcastReceiver {
             }
 
             mMobileDataNetType = serviceStateMobileDataType;
+
+            updateMobileNetworkName(
+                mMobileDataNetworkNameCachedIsShowSpn,
+                mMobileDataNetworkNameCachedSpn,
+                mMobileDataNetworkNameCachedIsShowPlmn,
+                mMobileDataNetworkNameCachedPlmn
+            );
 
             refreshViews();
         }
@@ -2630,7 +2721,7 @@ public class NetworkController extends BroadcastReceiver {
 
     //================================================================================================================
 
-    void updateNetworkName(
+    void updateMobileNetworkName(
         boolean showSpn,
         String spn,
         boolean showPlmn,
@@ -2639,10 +2730,10 @@ public class NetworkController extends BroadcastReceiver {
 
         // Always log this: DO NOT wrap in "if(INFO)"
         Slog.i(TAG,
-            "updateNetworkName: "
+            "updateMobileNetworkName: "
             + "showSpn=" + showSpn + " spn=\"" + spn + "\" "
             + "showPlmn=" + showPlmn + " plmn=\"" + plmn + "\" "
-            );
+            + "mConfigMobileNetworkNameShortFormSupported=" + mConfigMobileNetworkNameShortFormSupported);
 
         if( DEBUG && false ) {
                 spn="TestSpn";
@@ -2672,15 +2763,152 @@ public class NetworkController extends BroadcastReceiver {
             ? true
             : false;
 
+        String short_spn = spn;
+        String short_plmn = plmn;
+
+        if (
+            ( plmn != null )
+            &&
+            plmn.equals(mMobileDataNetworkNameDefault)
+        ) {
+            short_plmn = null; // Suppress "No Service." in statusbar OnsText field
+            mMobileDataNetworkNameShortForm = sEmptyString;
+        }
+
+        if (
+            ( plmn != null )
+            &&
+            plmn.equals(
+                Resources.getSystem().getText( com.android.internal.R.string.emergency_calls_only ).toString()
+            )
+        ) {
+            short_plmn = null; // Suppress "Emergency calls only" in statusbar OnsText field
+            mMobileDataNetworkNameShortForm = sEmptyString;
+        }
+
+        if (
+            ( short_spn != null )
+            &&
+            ( mMobileDataNetworkNameShortFormAbbreviationsTable.length != 0 )
+        ) {
+            for(
+                int i=0;
+                i < mMobileDataNetworkNameShortFormAbbreviationsTable.length;
+                i += 2
+            ) {
+                if( short_spn.equalsIgnoreCase(mMobileDataNetworkNameShortFormAbbreviationsTable[i]) ) {
+                    short_spn = mMobileDataNetworkNameShortFormAbbreviationsTable[i+1];
+                    break;
+                }
+            }
+        }
+
+        if (
+            ( short_plmn != null )
+            &&
+            ( mMobileDataNetworkNameShortFormAbbreviationsTable.length != 0 )
+        ) {
+            for(
+                int i=0;
+                i < mMobileDataNetworkNameShortFormAbbreviationsTable.length;
+                i+= 2
+            ) {
+                if( short_plmn.equalsIgnoreCase( mMobileDataNetworkNameShortFormAbbreviationsTable[i] ) ) {
+                    short_plmn = mMobileDataNetworkNameShortFormAbbreviationsTable[i+1];
+                    break;
+                }
+            }
+        }
 
         if( DEBUG ) {
             Slog.d(TAG,
-                "updateNetworkName:   mConfigMobileNetworkNameShowNoService is "
+                "updateMobileNetworkName:   mConfigMobileNetworkNameShortFormSupported is "
+                + mConfigMobileNetworkNameShortFormSupported);
+            Slog.d(TAG,
+                "updateMobileNetworkName:   mConfigMobileNetworkNameShowBothPlmnAndSpnInExpanded is "
+                + mConfigMobileNetworkNameShowBothPlmnAndSpnInExpanded);
+            Slog.d(TAG,
+                "updateMobileNetworkName:   mConfigMobileNetworkNameShowNoService is "
                 + mConfigMobileNetworkNameShowNoService);
+
+            Slog.d(TAG,
+                "updateMobileNetworkName:   updateMobileNetworkName after fixups: "
+                + "showSpn=" + showSpn + " spn=\"" + spn + "\" " + " short_spn=\"" + short_spn + "\" \n"
+                + "showPlmn=" + showPlmn + " plmn=\"" + plmn + "\" " + " short_plmn=\"" + short_plmn + "\" "
+                );
         }
 
         StringBuilder str = new StringBuilder();
         boolean isSomethingEmitted = false;
+        boolean isShortFormDone = false;
+
+        if (mConfigMobileNetworkNameShortFormSupported) {
+            if (
+                mConfigMobileNetworkNameSpnHasPriority
+                &&
+                (
+                    mServiceState != null
+                    &&
+                    ( ! mServiceState.getRoaming() )
+                )
+                &&
+                showSpn
+                &&
+                ( ! plmn.equals(
+                        Resources.getSystem().getText( com.android.internal.R.string.emergency_calls_only ).toString()
+                    )
+                )
+                &&
+                ( short_spn != null )
+            ) {
+                mIsMobileNetworkNameShortFormVisible = true;
+                mMobileDataNetworkNameShortForm = short_spn;
+                isShortFormDone = true;
+            }
+
+            if(
+                ( ! isShortFormDone )
+                &&
+                showPlmn
+                &&
+                ( ! plmn.equals(
+                        Resources.getSystem().getText(com.android.internal.R.string.emergency_calls_only).toString()
+                    )
+                )
+                &&
+                ( short_plmn != null )
+            ) {
+                mIsMobileNetworkNameShortFormVisible = true;
+                mMobileDataNetworkNameShortForm = short_plmn;
+                isShortFormDone = true;
+            }
+            if (
+                ( ! isShortFormDone )
+                &&
+                showSpn
+                &&
+                ( short_spn != null )
+            ) {
+                mIsMobileNetworkNameShortFormVisible = true;
+                mMobileDataNetworkNameShortForm = short_spn;
+                isShortFormDone = true;
+            }
+
+            if ( ! isShortFormDone ) {
+                mMobileDataNetworkNameShortForm = sEmptyString;
+                mIsMobileNetworkNameShortFormVisible = false;
+            }
+
+        } else {
+            mMobileDataNetworkNameShortForm = sEmptyString;
+            mIsMobileNetworkNameShortFormVisible = false;
+        }
+
+        if( DEBUG ) {
+            Slog.d(TAG, "updateMobileNetworkName:   isShortFormDone is "+ isShortFormDone);
+            Slog.d(TAG, "updateMobileNetworkName:   false is "+ false);
+            Slog.d(TAG, "updateMobileNetworkName:   false is "+ false);
+        }
 
         if (
             showPlmn // plmn is supplied
@@ -2706,14 +2934,14 @@ public class NetworkController extends BroadcastReceiver {
                 )
             ) {
                 if ( isSomethingEmitted ) {
-                    str.append(mNetworkNameSeparator);
+                    str.append(mMobileDataNetworkNameSeparator);
                 }
                 str.append(spn);
                 isSomethingEmitted = true;
             }
         }
 
-        mNetworkName = str.toString(); // Set text or erase last content
+        mMobileDataNetworkName = str.toString(); // Set text or erase last content
 
         if ( ! isSomethingEmitted ) {
             if (
@@ -2726,19 +2954,24 @@ public class NetworkController extends BroadcastReceiver {
                 )
             ) {
                 if( DEBUG ) {
-                    Slog.d(TAG,"updateNetworkName:  Display \"No service\"");
+                    Slog.d(TAG,"updateMobileNetworkName:  Display \"No service\"");
                 }
-                mNetworkName = mNetworkNameDefault;
+                mMobileDataNetworkName = mMobileDataNetworkNameDefault;
             } else {
-                Slog.d(TAG,"updateNetworkName:  Display nothing - Do not display \"No service\"");
-                mNetworkName = sEmptyString;
+                Slog.d(TAG,"updateMobileNetworkName:  Display nothing - Do not display \"No service\"");
+                mMobileDataNetworkName = sEmptyString;
             }
         }
 
         if( DEBUG ) {
+            if( mIsMobileNetworkNameShortFormVisible ) {
+                Slog.i(TAG,
+                    "updateMobileNetworkName:   mMobileDataNetworkNameShortForm = \""
+                    + mMobileDataNetworkNameShortForm + "\"" );
+            }
             Slog.i(TAG,
-                "updateNetworkName:   mNetworkName = \""
-                + mNetworkName + "\"");
+                "updateMobileNetworkName:   mMobileDataNetworkName = \""
+                + mMobileDataNetworkName + "\"");
         }
 
     }
@@ -3234,8 +3467,8 @@ public class NetworkController extends BroadcastReceiver {
         String combinedLabel = sEmptyString;
         String wifiLabel = sEmptyString;
         String mobileLabel = sEmptyString;
-        String EmergencyLabel = "";
-        boolean isDisplayEmergencyLabelVisible = false;
+        String noticeText = "";
+        boolean isDisplayNoticeTextVisible = false;
         int N;
         final boolean emergencyOnly = isEmergencyOnly();
 
@@ -3319,7 +3552,7 @@ public class NetworkController extends BroadcastReceiver {
             // Otherwise (nothing connected) we show "No internet connection".
 
             if (mMobileDataIsConnected) {
-                mobileLabel = mNetworkName;
+                mobileLabel = mMobileDataNetworkName;
             } else if (
                 mIsConnectedToMobileOrWifiOrWimax
                 ||
@@ -3331,19 +3564,19 @@ public class NetworkController extends BroadcastReceiver {
                     emergencyOnly
                 ) {
                     // The isEmergencyOnly test covers the case of a phone with no SIM
-                    mobileLabel = mNetworkName;
+                    mobileLabel = mMobileDataNetworkName;
                     if( emergencyOnly ) {
-                        EmergencyLabel = mNetworkName;
-                        isDisplayEmergencyLabelVisible = true;
+                        noticeText = mMobileDataNetworkName;
+                        isDisplayNoticeTextVisible = true;
                     }
                 } else {
                     // Tablets, basically
                     mobileLabel = sEmptyString;
                 }
             } else {
-                mobileLabel = mNetworkName;
-                EmergencyLabel = context.getString(R.string.status_bar_settings_signal_meter_disconnected);
-                isDisplayEmergencyLabelVisible = true;
+                mobileLabel = mMobileDataNetworkName;
+                noticeText = context.getString(R.string.status_bar_settings_signal_meter_disconnected);
+                isDisplayNoticeTextVisible = true;
             }
 
             // Now for things that should only be shown when actually using mobile data.
@@ -3881,7 +4114,7 @@ public class NetworkController extends BroadcastReceiver {
                 + "\n  mobileLabel=\"" + mobileLabel + "\""
                 + "\n  wifiLabel=\"" + wifiLabel + "\""
                 + "\n  combinedLabel=\"" + combinedLabel + "\""
-                + "\n  isDisplayEmergencyLabelVisible=" + isDisplayEmergencyLabelVisible + " EmergencyLabel=\"" + EmergencyLabel + "\""
+                + "\n  isDisplayNoticeTextVisible=" + isDisplayNoticeTextVisible + " noticeText=\"" + noticeText + "\""
             );
         }
 
@@ -4185,20 +4418,45 @@ public class NetworkController extends BroadcastReceiver {
             }
         }
 
+        // mobile label short form
+        if ( ! mLastMobileShortLabel.equals(mMobileDataNetworkNameShortForm) ) {
+
+            Slog.d( TAG, "mLastMobileShortLabel=" + mLastMobileShortLabel
+                + ", mMobileDataNetworkNameShortForm="+  mMobileDataNetworkNameShortForm
+            );
+
+            mLastMobileShortLabel = mMobileDataNetworkNameShortForm;
+            N = mMobileLabelShortFormViews.size();
+            for (
+                    int i=0;
+                    i<N;
+                    i++
+            ) {
+                TextView v = mMobileLabelShortFormViews.get(i);
+                if (v != null) {
+                    if ( ! mIsMobileNetworkNameShortFormVisible ) {
+                        v.setVisibility(View.GONE);
+                    } else {
+                        v.setText(mMobileDataNetworkNameShortForm);
+                        v.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        }
 
         // e-call label
-        N = mEmergencyLabelViews.size();
+        N = mNoticeTextViews.size();
         for (
                 int i=0;
                 i<N;
                 i++
         ) {
-            TextView v = mEmergencyLabelViews.get(i);
+            TextView v = mNoticeTextViews.get(i);
             if (v != null) {
-                if ( ! isDisplayEmergencyLabelVisible ) {
+                if ( ! isDisplayNoticeTextVisible ) {
                     v.setVisibility(View.GONE);
                 } else {
-                    v.setText(EmergencyLabel);
+                    v.setText(noticeText);
                     v.setVisibility(View.VISIBLE);
                 }
             }
@@ -4248,12 +4506,12 @@ public class NetworkController extends BroadcastReceiver {
         pw.println(mSignalStrength);
         pw.print("  mLastSignalLevel=");
         pw.println(mLastSignalLevel);
-        pw.print("  mNetworkName=");
-        pw.println(mNetworkName);
-        pw.print("  mNetworkNameDefault=");
-        pw.println(mNetworkNameDefault);
-        pw.print("  mNetworkNameSeparator=");
-        pw.println(mNetworkNameSeparator.replace("\n","\\n"));
+        pw.print("  mMobileDataNetworkName=");
+        pw.println(mMobileDataNetworkName);
+        pw.print("  mMobileDataNetworkNameDefault=");
+        pw.println(mMobileDataNetworkNameDefault);
+        pw.print("  mMobileDataNetworkNameSeparator=");
+        pw.println(mMobileDataNetworkNameSeparator.replace("\n","\\n"));
         pw.print("  mMobilePhoneSignalIconId=0x");
         pw.print(Integer.toHexString(mMobilePhoneSignalIconId));
         pw.print("/");

@@ -17,8 +17,12 @@
 ** limitations under the License.
 */
 -->
+<!--
+** Portions of this file are:
+** Copyright (C) 2012-2013 Motorola Mobility LLC All Rights Reserved.
+-->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    
+
     <array name="navbar_search_targets">
         <item>@null</item>
         <item>@*android:drawable/ic_action_assist_generic</item>
@@ -40,4 +44,14 @@
         <item>@null</item>
     </array>
 
+<!-- BEGIN Carrier Customization of Statusbar -->
+    <string-array name="config_carrier_label_abbreviated_names_table">
+
+        <item>SKTelecom</item>
+        <item>SKT</item>
+
+        <!-- Add additional {full plmn/spn name, abbrev} pairs here -->
+
+    </string-array>
+<!-- END Carrier Customization of Statusbar -->
 </resources>
