@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "VA6gdv3I",
+        "filename": "core/java/android/content/res/Configuration.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-05-26T06:48:40Z",
+      "side": 1,
+      "message": "MNC 0 means \"I don\u0027t care about the MNC value for this configuration, I will match any,\" like the other resources.  It needs to stay that way.",
+      "parentUuid": "QZhw9NdE",
+      "revId": "74cce9ea155411c65cffde4a1ec1d5342445f6a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QWwfFFoE",
         "filename": "core/java/android/content/res/Configuration.java",
         "patchSetId": 5
