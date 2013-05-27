@@ -190,6 +190,306 @@ public class TelephonyManager {
      */
     public static final String EXTRA_INCOMING_NUMBER = "incoming_number";
 
+    /**
+     * Broadcast intent action indicating that a precise call state
+     * (cellular) on the device has changed.
+     *
+     * <p>
+     * The {@link #EXTRA_RC_STATE} extra indicates the ringing call state.
+     * The {@link #EXTRA_FC_STATE} extra indicates the foreground call state.
+     * The {@link #EXTRA_BC_STATE} extra indicates the background call state.
+     * The {@link #EXTRA_DISCONNECT_CAUSE} extra indicates the disconnect cause.
+     * The {@link #EXTRA_PRECISE_DISCONNECT_CAUSE} extra indicates the precise disconnect cause.
+     *
+     * <p class="note">
+     * Requires the READ_PRECISE_PHONE_STATE permission.
+     *
+     * @see #EXTRA_RC_STATE
+     * @see #EXTRA_FC_STATE
+     * @see #EXTRA_BC_STATE
+     * @see #EXTRA_DISCONNECT_CAUSE
+     * @see #EXTRA_PRECISE_DISCONNECT_CAUSE
+     *
+     * <p class="note">
+     * Requires the READ_PRECISE_PHONE_STATE permission.
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_PRECISE_CALL_STATE_CHANGED =
+            "android.intent.action.PRECISE_CALL_STATE";
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_CALL_STATE_CHANGED} broadcast
+     * for an integer containing the new ringing call state.
+     *
+     * @see PreciseCallState#PRECISE_CALL_STATE_NOT_VALID
+     * @see PreciseCallState#PRECISE_CALL_STATE_IDLE
+     * @see PreciseCallState#PRECISE_CALL_STATE_ACTIVE
+     * @see PreciseCallState#PRECISE_CALL_STATE_HOLDING
+     * @see PreciseCallState#PRECISE_CALL_STATE_DIALING
+     * @see PreciseCallState#PRECISE_CALL_STATE_ALERTING
+     * @see PreciseCallState#PRECISE_CALL_STATE_INCOMING
+     * @see PreciseCallState#PRECISE_CALL_STATE_WAITING
+     * @see PreciseCallState#PRECISE_CALL_STATE_DISCONNECTED
+     * @see PreciseCallState#PRECISE_CALL_STATE_DISCONNECTING
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     */
+    public static final String EXTRA_RC_STATE = "ringing_state";
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_CALL_STATE_CHANGED} broadcast
+     * for an integer containing the new foreground call state.
+     *
+     * @see PreciseCallState#PRECISE_CALL_STATE_NOT_VALID
+     * @see PreciseCallState#PRECISE_CALL_STATE_IDLE
+     * @see PreciseCallState#PRECISE_CALL_STATE_ACTIVE
+     * @see PreciseCallState#PRECISE_CALL_STATE_HOLDING
+     * @see PreciseCallState#PRECISE_CALL_STATE_DIALING
+     * @see PreciseCallState#PRECISE_CALL_STATE_ALERTING
+     * @see PreciseCallState#PRECISE_CALL_STATE_INCOMING
+     * @see PreciseCallState#PRECISE_CALL_STATE_WAITING
+     * @see PreciseCallState#PRECISE_CALL_STATE_DISCONNECTED
+     * @see PreciseCallState#PRECISE_CALL_STATE_DISCONNECTING
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     */
+    public static final String EXTRA_FC_STATE = "foreground_state";
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_CALL_STATE_CHANGED} broadcast
+     * for an integer containing the new background call state.
+     *
+     * @see PreciseCallState#PRECISE_CALL_STATE_NOT_VALID
+     * @see PreciseCallState#PRECISE_CALL_STATE_IDLE
+     * @see PreciseCallState#PRECISE_CALL_STATE_ACTIVE
+     * @see PreciseCallState#PRECISE_CALL_STATE_HOLDING
+     * @see PreciseCallState#PRECISE_CALL_STATE_DIALING
+     * @see PreciseCallState#PRECISE_CALL_STATE_ALERTING
+     * @see PreciseCallState#PRECISE_CALL_STATE_INCOMING
+     * @see PreciseCallState#PRECISE_CALL_STATE_WAITING
+     * @see PreciseCallState#PRECISE_CALL_STATE_DISCONNECTED
+     * @see PreciseCallState#PRECISE_CALL_STATE_DISCONNECTING
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     */
+    public static final String EXTRA_BC_STATE = "background_state";
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_CALL_STATE_CHANGED} broadcast
+     * for an integer containing the disconnect cause.
+     *
+     * @see PreciseCallState#DISCONNECT_CAUSE_NOT_VALID
+     * @see PreciseCallState#DISCONNECT_CAUSE_NOT_DISCONNECTED
+     * @see PreciseCallState#DISCONNECT_CAUSE_INCOMING_MISSED
+     * @see PreciseCallState#DISCONNECT_CAUSE_NORMAL
+     * @see PreciseCallState#DISCONNECT_CAUSE_LOCAL
+     * @see PreciseCallState#DISCONNECT_CAUSE_BUSY
+     * @see PreciseCallState#DISCONNECT_CAUSE_CONGESTION
+     * @see PreciseCallState#DISCONNECT_CAUSE_MMI
+     * @see PreciseCallState#DISCONNECT_CAUSE_INVALID_NUMBER
+     * @see PreciseCallState#DISCONNECT_CAUSE_NUMBER_UNREACHABLE
+     * @see PreciseCallState#DISCONNECT_CAUSE_SERVER_UNREACHABLE
+     * @see PreciseCallState#DISCONNECT_CAUSE_INVALID_CREDENTIALS
+     * @see PreciseCallState#DISCONNECT_CAUSE_OUT_OF_NETWORK
+     * @see PreciseCallState#DISCONNECT_CAUSE_SERVER_ERROR
+     * @see PreciseCallState#DISCONNECT_CAUSE_TIMED_OUT
+     * @see PreciseCallState#DISCONNECT_CAUSE_LOST_SIGNAL
+     * @see PreciseCallState#DISCONNECT_CAUSE_LIMIT_EXCEEDED
+     * @see PreciseCallState#DISCONNECT_CAUSE_INCOMING_REJECTED
+     * @see PreciseCallState#DISCONNECT_CAUSE_POWER_OFF
+     * @see PreciseCallState#DISCONNECT_CAUSE_OUT_OF_SERVICE
+     * @see PreciseCallState#DISCONNECT_CAUSE_ICC_ERROR
+     * @see PreciseCallState#DISCONNECT_CAUSE_CALL_BARRED
+     * @see PreciseCallState#DISCONNECT_CAUSE_FDN_BLOCKED
+     * @see PreciseCallState#DISCONNECT_CAUSE_CS_RESTRICTED
+     * @see PreciseCallState#DISCONNECT_CAUSE_CS_RESTRICTED_NORMAL
+     * @see PreciseCallState#DISCONNECT_CAUSE_CS_RESTRICTED_EMERGENCY
+     * @see PreciseCallState#DISCONNECT_CAUSE_UNOBTAINABLE_NUMBER
+     * @see PreciseCallState#DISCONNECT_CAUSE_CDMA_LOCKED_UNTIL_POWER_CYCLE
+     * @see PreciseCallState#DISCONNECT_CAUSE_CDMA_DROP
+     * @see PreciseCallState#DISCONNECT_CAUSE_CDMA_INTERCEPT
+     * @see PreciseCallState#DISCONNECT_CAUSE_CDMA_REORDER
+     * @see PreciseCallState#DISCONNECT_CAUSE_CDMA_SO_REJECT
+     * @see PreciseCallState#DISCONNECT_CAUSE_CDMA_RETRY_ORDER
+     * @see PreciseCallState#DISCONNECT_CAUSE_CDMA_ACCESS_FAILURE
+     * @see PreciseCallState#DISCONNECT_CAUSE_CDMA_PREEMPTED
+     * @see PreciseCallState#DISCONNECT_CAUSE_CDMA_NOT_EMERGENCY
+     * @see PreciseCallState#DISCONNECT_CAUSE_CDMA_ACCESS_BLOCKED
+     * @see PreciseCallState#DISCONNECT_CAUSE_ERROR_UNSPECIFIED
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     */
+    public static final String EXTRA_DISCONNECT_CAUSE = "disconnect_cause";
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_CALL_STATE_CHANGED} broadcast
+     * for an integer containing the disconnect cause provided by the RIL.
+     *
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_NOT_VALID
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_NO_DISCONNECT_CAUSE_AVAILABLE
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_UNOBTAINABLE_NUMBER
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_NORMAL
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_BUSY
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_NUMBER_CHANGED
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_STATUS_ENQUIRY
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_NORMAL_UNSPECIFIED
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_NO_CIRCUIT_AVAIL
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_TEMPORARY_FAILURE
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_SWITCHING_CONGESTION
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_CHANNEL_NOT_AVAIL
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_QOS_NOT_AVAIL
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_BEARER_NOT_AVAIL
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_ACM_LIMIT_EXCEEDED
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_CALL_BARRED
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_FDN_BLOCKED
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_IMSI_UNKNOWN_IN_VLR
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_IMEI_NOT_ACCEPTED
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_CDMA_LOCKED_UNTIL_POWER_CYCLE
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_CDMA_DROP
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_CDMA_INTERCEPT
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_CDMA_REORDER
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_CDMA_SO_REJECT
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_CDMA_RETRY_ORDER
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_CDMA_ACCESS_FAILURE
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_CDMA_PREEMPTED
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_CDMA_NOT_EMERGENCY
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_CDMA_ACCESS_BLOCKED
+     * @see PreciseCallState#PRECISE_DISCONNECT_CAUSE_ERROR_UNSPECIFIED
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     */
+    public static final String EXTRA_PRECISE_DISCONNECT_CAUSE = "precise_disconnect_cause";
+
+    /**
+     * Broadcast intent action indicating a data connection has changed,
+     * providing precise information about the connection.
+     *
+     * <p>
+     * The {@link #EXTRA_DATA_STATE} extra indicates the connection state.
+     * The {@link #EXTRA_DATA_NETWORK_TYPE} extra indicates the connection network type.
+     * The {@link #EXTRA_DATA_APN_TYPE} extra indicates the APN type.
+     * The {@link #EXTRA_DATA_APN} extra indicates the APN.
+     * The {@link #EXTRA_DATA_CHANGE_REASON} extra indicates the connection change reason.
+     * The {@link #EXTRA_DATA_IFACE_PROPERTIES} extra indicates the connection interface.
+     * The {@link #EXTRA_DATA_FAILURE_CAUSE} extra indicates the connection fail cause.
+     *
+     * <p class="note">
+     * Requires the READ_PRECISE_PHONE_STATE permission.
+     *
+     * @see #EXTRA_DATA_STATE
+     * @see #EXTRA_DATA_NETWORK_TYPE
+     * @see #EXTRA_DATA_APN_TYPE
+     * @see #EXTRA_DATA_APN
+     * @see #EXTRA_DATA_CHANGE_REASON
+     * @see #EXTRA_DATA_IFACE
+     * @see #EXTRA_DATA_FAILURE_CAUSE
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED =
+            "android.intent.action.PRECISE_DATA_CONNECTION_STATE_CHANGED";
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for an integer containing the new data connection state.
+     *
+     * @see TelephonyManager#DATA_UNKNOWN
+     * @see TelephonyManager#DATA_DISCONNECTED
+     * @see TelephonyManager#DATA_CONNECTING
+     * @see TelephonyManager#DATA_CONNECTED
+     * @see TelephonyManager#DATA_SUSPENDED
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     */
+    public static final String EXTRA_DATA_STATE = PhoneConstants.STATE_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for an integer containing the network type.
+     *
+     * @see TelephonyManager#NETWORK_TYPE_UNKNOWN
+     * @see TelephonyManager#NETWORK_TYPE_GPRS
+     * @see TelephonyManager#NETWORK_TYPE_EDGE
+     * @see TelephonyManager#NETWORK_TYPE_UMTS
+     * @see TelephonyManager#NETWORK_TYPE_CDMA
+     * @see TelephonyManager#NETWORK_TYPE_EVDO_0
+     * @see TelephonyManager#NETWORK_TYPE_EVDO_A
+     * @see TelephonyManager#NETWORK_TYPE_1xRTT
+     * @see TelephonyManager#NETWORK_TYPE_HSDPA
+     * @see TelephonyManager#NETWORK_TYPE_HSUPA
+     * @see TelephonyManager#NETWORK_TYPE_HSPA
+     * @see TelephonyManager#NETWORK_TYPE_IDEN
+     * @see TelephonyManager#NETWORK_TYPE_EVDO_B
+     * @see TelephonyManager#NETWORK_TYPE_LTE
+     * @see TelephonyManager#NETWORK_TYPE_EHRPD
+     * @see TelephonyManager#NETWORK_TYPE_HSPAP
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     */
+    public static final String EXTRA_DATA_NETWORK_TYPE = PhoneConstants.DATA_NETWORK_TYPE_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for an String containing the data APN type.
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getStringExtra(String name)}.
+     */
+    public static final String EXTRA_DATA_APN_TYPE = PhoneConstants.DATA_APN_TYPE_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for an String containing the data APN.
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getStringExtra(String name)}.
+     */
+    public static final String EXTRA_DATA_APN = PhoneConstants.DATA_APN_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for an String representation of the change reason.
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getStringExtra(String name)}.
+     */
+    public static final String EXTRA_DATA_CHANGE_REASON = PhoneConstants.STATE_CHANGE_REASON_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for an String representation of the data interface.
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getStringExtra(String name)}.
+     */
+    public static final String EXTRA_DATA_IFACE_PROPERTIES = PhoneConstants.DATA_IFACE_NAME_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for the data connection fail cause.
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getStringExtra(String name)}.
+     */
+    public static final String EXTRA_DATA_FAILURE_CAUSE = PhoneConstants.DATA_FAILURE_CAUSE_KEY;
 
     //
     //
