@@ -95,6 +95,7 @@ package android {
     field public static final deprecated java.lang.String READ_INPUT_STATE = "android.permission.READ_INPUT_STATE";
     field public static final java.lang.String READ_LOGS = "android.permission.READ_LOGS";
     field public static final java.lang.String READ_PHONE_STATE = "android.permission.READ_PHONE_STATE";
+    field public static final java.lang.String READ_PRECISE_PHONE_STATE = "android.permission.READ_PRECISE_PHONE_STATE";
     field public static final java.lang.String READ_PROFILE = "android.permission.READ_PROFILE";
     field public static final java.lang.String READ_SMS = "android.permission.READ_SMS";
     field public static final java.lang.String READ_SOCIAL_STREAM = "android.permission.READ_SOCIAL_STREAM";
@@ -23171,6 +23172,48 @@ package android.telephony {
     field public static final android.os.Parcelable.Creator CREATOR;
   }
 
+  public class DisconnectCause {
+    ctor public DisconnectCause();
+    field public static final int DISCONNECT_CAUSE_BUSY = 4; // 0x4
+    field public static final int DISCONNECT_CAUSE_CALL_BARRED = 20; // 0x14
+    field public static final int DISCONNECT_CAUSE_CDMA_ACCESS_BLOCKED = 35; // 0x23
+    field public static final int DISCONNECT_CAUSE_CDMA_ACCESS_FAILURE = 32; // 0x20
+    field public static final int DISCONNECT_CAUSE_CDMA_DROP = 27; // 0x1b
+    field public static final int DISCONNECT_CAUSE_CDMA_INTERCEPT = 28; // 0x1c
+    field public static final int DISCONNECT_CAUSE_CDMA_LOCKED_UNTIL_POWER_CYCLE = 26; // 0x1a
+    field public static final int DISCONNECT_CAUSE_CDMA_NOT_EMERGENCY = 34; // 0x22
+    field public static final int DISCONNECT_CAUSE_CDMA_PREEMPTED = 33; // 0x21
+    field public static final int DISCONNECT_CAUSE_CDMA_REORDER = 29; // 0x1d
+    field public static final int DISCONNECT_CAUSE_CDMA_RETRY_ORDER = 31; // 0x1f
+    field public static final int DISCONNECT_CAUSE_CDMA_SO_REJECT = 30; // 0x1e
+    field public static final int DISCONNECT_CAUSE_CONGESTION = 5; // 0x5
+    field public static final int DISCONNECT_CAUSE_CS_RESTRICTED = 22; // 0x16
+    field public static final int DISCONNECT_CAUSE_CS_RESTRICTED_EMERGENCY = 24; // 0x18
+    field public static final int DISCONNECT_CAUSE_CS_RESTRICTED_NORMAL = 23; // 0x17
+    field public static final int DISCONNECT_CAUSE_ERROR_UNSPECIFIED = 36; // 0x24
+    field public static final int DISCONNECT_CAUSE_FDN_BLOCKED = 21; // 0x15
+    field public static final int DISCONNECT_CAUSE_ICC_ERROR = 19; // 0x13
+    field public static final int DISCONNECT_CAUSE_INCOMING_MISSED = 1; // 0x1
+    field public static final int DISCONNECT_CAUSE_INCOMING_REJECTED = 16; // 0x10
+    field public static final int DISCONNECT_CAUSE_INVALID_CREDENTIALS = 10; // 0xa
+    field public static final int DISCONNECT_CAUSE_INVALID_NUMBER = 7; // 0x7
+    field public static final int DISCONNECT_CAUSE_LIMIT_EXCEEDED = 15; // 0xf
+    field public static final int DISCONNECT_CAUSE_LOCAL = 3; // 0x3
+    field public static final int DISCONNECT_CAUSE_LOST_SIGNAL = 14; // 0xe
+    field public static final int DISCONNECT_CAUSE_MMI = 6; // 0x6
+    field public static final int DISCONNECT_CAUSE_NORMAL = 2; // 0x2
+    field public static final int DISCONNECT_CAUSE_NOT_DISCONNECTED = 0; // 0x0
+    field public static final int DISCONNECT_CAUSE_NOT_VALID = -1; // 0xffffffff
+    field public static final int DISCONNECT_CAUSE_NUMBER_UNREACHABLE = 8; // 0x8
+    field public static final int DISCONNECT_CAUSE_OUT_OF_NETWORK = 11; // 0xb
+    field public static final int DISCONNECT_CAUSE_OUT_OF_SERVICE = 18; // 0x12
+    field public static final int DISCONNECT_CAUSE_POWER_OFF = 17; // 0x11
+    field public static final int DISCONNECT_CAUSE_SERVER_ERROR = 12; // 0xc
+    field public static final int DISCONNECT_CAUSE_SERVER_UNREACHABLE = 9; // 0x9
+    field public static final int DISCONNECT_CAUSE_TIMED_OUT = 13; // 0xd
+    field public static final int DISCONNECT_CAUSE_UNOBTAINABLE_NUMBER = 25; // 0x19
+  }
+
   public class NeighboringCellInfo implements android.os.Parcelable {
     ctor public deprecated NeighboringCellInfo();
     ctor public deprecated NeighboringCellInfo(int, int);
@@ -23249,6 +23292,8 @@ package android.telephony {
     method public void onDataConnectionStateChanged(int);
     method public void onDataConnectionStateChanged(int, int);
     method public void onMessageWaitingIndicatorChanged(boolean);
+    method public void onPreciseCallStateChanged(android.telephony.PreciseCallState);
+    method public void onPreciseDataConnectionStateChanged(android.telephony.PreciseDataConnectionState);
     method public void onServiceStateChanged(android.telephony.ServiceState);
     method public deprecated void onSignalStrengthChanged(int);
     method public void onSignalStrengthsChanged(android.telephony.SignalStrength);
@@ -23260,9 +23305,79 @@ package android.telephony {
     field public static final int LISTEN_DATA_CONNECTION_STATE = 64; // 0x40
     field public static final int LISTEN_MESSAGE_WAITING_INDICATOR = 4; // 0x4
     field public static final int LISTEN_NONE = 0; // 0x0
+    field public static final int LISTEN_PRECISE_CALL_STATE = 2048; // 0x800
+    field public static final int LISTEN_PRECISE_DATA_CONNECTION_STATE = 4096; // 0x1000
     field public static final int LISTEN_SERVICE_STATE = 1; // 0x1
     field public static final deprecated int LISTEN_SIGNAL_STRENGTH = 2; // 0x2
     field public static final int LISTEN_SIGNAL_STRENGTHS = 256; // 0x100
+  }
+
+  public class PreciseCallState implements android.os.Parcelable {
+    method public int describeContents();
+    method public int getBackgroundCallState();
+    method public int getDisconnectCause();
+    method public int getForegroundCallState();
+    method public int getPreciseDisconnectCause();
+    method public int getRingingCallState();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator CREATOR;
+    field public static final int PRECISE_CALL_STATE_ACTIVE = 1; // 0x1
+    field public static final int PRECISE_CALL_STATE_ALERTING = 4; // 0x4
+    field public static final int PRECISE_CALL_STATE_DIALING = 3; // 0x3
+    field public static final int PRECISE_CALL_STATE_DISCONNECTED = 7; // 0x7
+    field public static final int PRECISE_CALL_STATE_DISCONNECTING = 8; // 0x8
+    field public static final int PRECISE_CALL_STATE_HOLDING = 2; // 0x2
+    field public static final int PRECISE_CALL_STATE_IDLE = 0; // 0x0
+    field public static final int PRECISE_CALL_STATE_INCOMING = 5; // 0x5
+    field public static final int PRECISE_CALL_STATE_NOT_VALID = -1; // 0xffffffff
+    field public static final int PRECISE_CALL_STATE_WAITING = 6; // 0x6
+  }
+
+  public class PreciseDataConnectionState implements android.os.Parcelable {
+    method public int describeContents();
+    method public java.lang.String getDataConnectionAPNType();
+    method public java.lang.String getDataConnectionChangeReason();
+    method public java.lang.String getDataConnectionFailCause();
+    method public java.lang.String getDataConnectionInterface();
+    method public int getDataConnectionNetworkType();
+    method public int getDataConnectionState();
+    method public java.lang.String getDataConnectionmAPN();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator CREATOR;
+  }
+
+  public class PreciseDisconnectCause {
+    ctor public PreciseDisconnectCause();
+    field public static final int PRECISE_DISCONNECT_CAUSE_ACM_LIMIT_EXCEEDED = 68; // 0x44
+    field public static final int PRECISE_DISCONNECT_CAUSE_BEARER_NOT_AVAIL = 58; // 0x3a
+    field public static final int PRECISE_DISCONNECT_CAUSE_BUSY = 17; // 0x11
+    field public static final int PRECISE_DISCONNECT_CAUSE_CALL_BARRED = 240; // 0xf0
+    field public static final int PRECISE_DISCONNECT_CAUSE_CDMA_ACCESS_BLOCKED = 1009; // 0x3f1
+    field public static final int PRECISE_DISCONNECT_CAUSE_CDMA_ACCESS_FAILURE = 1006; // 0x3ee
+    field public static final int PRECISE_DISCONNECT_CAUSE_CDMA_DROP = 1001; // 0x3e9
+    field public static final int PRECISE_DISCONNECT_CAUSE_CDMA_INTERCEPT = 1002; // 0x3ea
+    field public static final int PRECISE_DISCONNECT_CAUSE_CDMA_LOCKED_UNTIL_POWER_CYCLE = 1000; // 0x3e8
+    field public static final int PRECISE_DISCONNECT_CAUSE_CDMA_NOT_EMERGENCY = 1008; // 0x3f0
+    field public static final int PRECISE_DISCONNECT_CAUSE_CDMA_PREEMPTED = 1007; // 0x3ef
+    field public static final int PRECISE_DISCONNECT_CAUSE_CDMA_REORDER = 1003; // 0x3eb
+    field public static final int PRECISE_DISCONNECT_CAUSE_CDMA_RETRY_ORDER = 1005; // 0x3ed
+    field public static final int PRECISE_DISCONNECT_CAUSE_CDMA_SO_REJECT = 1004; // 0x3ec
+    field public static final int PRECISE_DISCONNECT_CAUSE_CHANNEL_NOT_AVAIL = 44; // 0x2c
+    field public static final int PRECISE_DISCONNECT_CAUSE_ERROR_UNSPECIFIED = 65535; // 0xffff
+    field public static final int PRECISE_DISCONNECT_CAUSE_FDN_BLOCKED = 241; // 0xf1
+    field public static final int PRECISE_DISCONNECT_CAUSE_IMEI_NOT_ACCEPTED = 243; // 0xf3
+    field public static final int PRECISE_DISCONNECT_CAUSE_IMSI_UNKNOWN_IN_VLR = 242; // 0xf2
+    field public static final int PRECISE_DISCONNECT_CAUSE_NORMAL = 16; // 0x10
+    field public static final int PRECISE_DISCONNECT_CAUSE_NORMAL_UNSPECIFIED = 31; // 0x1f
+    field public static final int PRECISE_DISCONNECT_CAUSE_NOT_VALID = -1; // 0xffffffff
+    field public static final int PRECISE_DISCONNECT_CAUSE_NO_CIRCUIT_AVAIL = 34; // 0x22
+    field public static final int PRECISE_DISCONNECT_CAUSE_NO_DISCONNECT_CAUSE_AVAILABLE = 0; // 0x0
+    field public static final int PRECISE_DISCONNECT_CAUSE_NUMBER_CHANGED = 22; // 0x16
+    field public static final int PRECISE_DISCONNECT_CAUSE_QOS_NOT_AVAIL = 49; // 0x31
+    field public static final int PRECISE_DISCONNECT_CAUSE_STATUS_ENQUIRY = 30; // 0x1e
+    field public static final int PRECISE_DISCONNECT_CAUSE_SWITCHING_CONGESTION = 42; // 0x2a
+    field public static final int PRECISE_DISCONNECT_CAUSE_TEMPORARY_FAILURE = 41; // 0x29
+    field public static final int PRECISE_DISCONNECT_CAUSE_UNOBTAINABLE_NUMBER = 1; // 0x1
   }
 
   public class ServiceState implements android.os.Parcelable {
@@ -23409,6 +23524,8 @@ package android.telephony {
     method public boolean isNetworkRoaming();
     method public void listen(android.telephony.PhoneStateListener, int);
     field public static final java.lang.String ACTION_PHONE_STATE_CHANGED = "android.intent.action.PHONE_STATE";
+    field public static final java.lang.String ACTION_PRECISE_CALL_STATE_CHANGED = "android.intent.action.PRECISE_CALL_STATE";
+    field public static final java.lang.String ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED = "android.intent.action.PRECISE_DATA_CONNECTION_STATE_CHANGED";
     field public static final java.lang.String ACTION_RESPOND_VIA_MESSAGE = "android.intent.action.RESPOND_VIA_MESSAGE";
     field public static final int CALL_STATE_IDLE = 0; // 0x0
     field public static final int CALL_STATE_OFFHOOK = 2; // 0x2
@@ -23422,7 +23539,19 @@ package android.telephony {
     field public static final int DATA_CONNECTING = 1; // 0x1
     field public static final int DATA_DISCONNECTED = 0; // 0x0
     field public static final int DATA_SUSPENDED = 3; // 0x3
+    field public static final java.lang.String EXTRA_BACKGROUND_CALL_STATE = "background_state";
+    field public static final java.lang.String EXTRA_DATA_APN = "apn";
+    field public static final java.lang.String EXTRA_DATA_APN_TYPE = "apnType";
+    field public static final java.lang.String EXTRA_DATA_CHANGE_REASON = "reason";
+    field public static final java.lang.String EXTRA_DATA_FAILURE_CAUSE = "failCause";
+    field public static final java.lang.String EXTRA_DATA_IFACE_PROPERTIES = "iface";
+    field public static final java.lang.String EXTRA_DATA_NETWORK_TYPE = "networkType";
+    field public static final java.lang.String EXTRA_DATA_STATE = "state";
+    field public static final java.lang.String EXTRA_DISCONNECT_CAUSE = "disconnect_cause";
+    field public static final java.lang.String EXTRA_FOREGROUND_CALL_STATE = "foreground_state";
     field public static final java.lang.String EXTRA_INCOMING_NUMBER = "incoming_number";
+    field public static final java.lang.String EXTRA_PRECISE_DISCONNECT_CAUSE = "precise_disconnect_cause";
+    field public static final java.lang.String EXTRA_RINGING_CALL_STATE = "ringing_state";
     field public static final java.lang.String EXTRA_STATE = "state";
     field public static final java.lang.String EXTRA_STATE_IDLE;
     field public static final java.lang.String EXTRA_STATE_OFFHOOK;
@@ -42714,11 +42843,11 @@ package java.util.concurrent {
   }
 
   public class ConcurrentHashMap extends java.util.AbstractMap implements java.util.concurrent.ConcurrentMap java.io.Serializable {
-    ctor public ConcurrentHashMap(int, float, int);
-    ctor public ConcurrentHashMap(int, float);
-    ctor public ConcurrentHashMap(int);
     ctor public ConcurrentHashMap();
+    ctor public ConcurrentHashMap(int);
     ctor public ConcurrentHashMap(java.util.Map<? extends K, ? extends V>);
+    ctor public ConcurrentHashMap(int, float);
+    ctor public ConcurrentHashMap(int, float, int);
     method public boolean contains(java.lang.Object);
     method public java.util.Enumeration<V> elements();
     method public java.util.Set<java.util.Map.Entry<K, V>> entrySet();
