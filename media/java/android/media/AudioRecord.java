@@ -304,7 +304,7 @@ public class AudioRecord
         // audio format
         switch (audioFormat) {
         case AudioFormat.ENCODING_DEFAULT:
-            mAudioFormat = AudioFormat.ENCODING_PCM_16BIT;
+            mAudioFormat = AudioFormat.ENCODING_DEFAULT_VALUE;
             break;
         case AudioFormat.ENCODING_PCM_16BIT:
         case AudioFormat.ENCODING_PCM_8BIT:
@@ -474,7 +474,10 @@ public class AudioRecord
             loge("getMinBufferSize(): Invalid channel configuration.");
             return AudioRecord.ERROR_BAD_VALUE;
         }
-        
+
+        if (audioFormat == AudioFormat.ENCODING_DEFAULT) {
+            audioFormat = AudioFormat.ENCODING_DEFAULT_VALUE;
+        }
         // PCM_8BIT is not supported at the moment
         if (audioFormat != AudioFormat.ENCODING_PCM_16BIT) {
             loge("getMinBufferSize(): Invalid audio format.");

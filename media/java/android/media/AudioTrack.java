@@ -417,7 +417,7 @@ public class AudioTrack
         // audio format
         switch (audioFormat) {
         case AudioFormat.ENCODING_DEFAULT:
-            mAudioFormat = AudioFormat.ENCODING_PCM_16BIT;
+            mAudioFormat = AudioFormat.ENCODING_DEFAULT_VALUE;
             break;
         case AudioFormat.ENCODING_PCM_16BIT:
         case AudioFormat.ENCODING_PCM_8BIT:
