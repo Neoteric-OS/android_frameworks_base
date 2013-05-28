@@ -5,7 +5,7 @@
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
-** You my obtain a copy of the License at
+** You may obtain a copy of the License at
 **
 **     http://www.apache.org/licenses/LICENSE-2.0
 **
@@ -33,8 +33,13 @@
 
     <!-- String containing the apn value for tethering.  May be overriden by secure settings
          TETHER_DUN_APN.  Value is a comma separated series of strings:
-         "name,apn,proxy,port,username,password,server,mmsc,mmsproxy,mmsport,mcc,mnc,auth,type"
+         "name,apn,proxy,port,username,password,server,mmsc,mmsproxy,mmsport,mcc,mnc,auth,type",
+         Or string format of ApnSettingV2.
          note that empty fields can be ommitted: "name,apn,,,,,,,,,310,260,,DUN" -->
-    <string translatable="false" name="config_tether_apndata">1O1O tethering,lte.internet,,,,,,,,,454,00,3,DUN</string>
+    <string-array translatable="false" name="config_tether_apndata">
+        <item>[ApnSettingV2]TELUS ISP,isp.telus.com,,,,,,,,,302,221,,DUN,,,true,0,gid,54</item>
+        <item>[ApnSettingV2]Tethered PC Mobile,isp.mb.com,,,,,,,,,302,221,,DUN,,,true,0,gid,50</item>
+        <item>[ApnSettingV2]Koodo,sp.koodo.com,,,,,,,,,302,221,,DUN,,,true,0,gid,4B</item>
+    </string-array>
 
 </resources>
