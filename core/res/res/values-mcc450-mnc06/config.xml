@@ -37,7 +37,7 @@
          Or string format of ApnSettingV2.
          note that empty fields can be ommitted: "name,apn,,,,,,,,,310,260,,DUN" -->
     <string-array translatable="false" name="config_tether_apndata">
-      <item>3 Share,share.lte.three.com.hk,,,,,,,,,454,03,1,DUN</item>
+      <item>LG uplus Tethering,tethering.lguplus.co.kr,,,,,,,,,450,06,,DUN</item>
     </string-array>
 
 </resources>
