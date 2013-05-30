@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d4915a3_247bd8d0",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2013-05-30T20:22:02Z",
+      "side": 1,
+      "message": "no need to reassign; just change arg name to \"loader\"",
+      "revId": "86ebaede3db0fd36b11143173b28f84dcdd3a721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d4915a3_4476e4ea",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2013-05-30T20:22:02Z",
+      "side": 1,
+      "message": "the typical case will be a single ClassLoader with many cached classes, so your design here will result in a new HashMap for every single Constructor (!!).\n\ncould you rearrange the key ordering so the ClassLoader is the top level key?\n\nHashMap\u003cClassLoader, HashMap\u003cString, Constructor...\u003e\u003e\n\nthis new key ordering will only result in two HashMaps in the typical case.",
+      "revId": "86ebaede3db0fd36b11143173b28f84dcdd3a721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d4915a3_6485e093",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2013-05-30T20:22:02Z",
+      "side": 1,
+      "message": "could a ClassLoader return itself as its parent?  that could result in an infinite loop.\n\nsince this is a cache, i think its fine to just test once use the leaf ClassLoader; no need to traverse the parent loaders.",
+      "revId": "86ebaede3db0fd36b11143173b28f84dcdd3a721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
