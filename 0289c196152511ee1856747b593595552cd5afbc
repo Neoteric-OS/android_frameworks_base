@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7db419fc_bc0a219b",
+        "filename": "policy/src/com/android/internal/policy/impl/keyguard/KeyguardHostView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1011641
+      },
+      "writtenOn": "2013-06-02T22:45:05Z",
+      "side": 1,
+      "message": "Relocation needed for mDisabledFeatures to be initialized.",
+      "revId": "0289c196152511ee1856747b593595552cd5afbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
