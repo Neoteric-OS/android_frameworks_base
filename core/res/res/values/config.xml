@@ -1142,4 +1142,6 @@
         <item>com.android.inputmethod.latin</item>
     </string-array>
 
+    <!-- Flag indicating if explicit call transfer is allowed -->
+    <bool name="config_allowExplicitCallTransfer">false</bool>
 </resources>
