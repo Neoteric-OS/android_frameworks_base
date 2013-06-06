@@ -36,4 +36,6 @@
          note that empty fields can be ommitted: "name,apn,,,,,,,,,310,260,,DUN" -->
     <string translatable="false" name="config_tether_apndata">Conexión Compartida,movistar.es,,,MOVISTAR,MOVISTAR,,,,,214,07,1,DUN</string>
 
+    <!-- Flag indicating if explicit call transfer is allowed -->
+    <bool name="config_allowExplicitCallTransfer">true</bool>
 </resources>
