@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd072998_484fdfe9",
+        "filename": "core/res/res/values-mcc204-mnc04/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1016953
+      },
+      "writtenOn": "2013-06-07T23:04:42Z",
+      "side": 1,
+      "message": "I\u0027ll change..",
+      "revId": "489075622c12dcacb8806dd8b549a69caf5f034f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
