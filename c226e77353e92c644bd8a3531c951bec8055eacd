@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd1bf126_bc12e967",
+        "filename": "core/java/android/net/http/HttpResponseCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-06-11T16:55:35Z",
+      "side": 1,
+      "message": "Didn\u0027t this change package? Indeed I get a compilation error.",
+      "revId": "c226e77353e92c644bd8a3531c951bec8055eacd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
