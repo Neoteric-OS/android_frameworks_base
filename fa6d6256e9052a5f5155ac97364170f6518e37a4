@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd1bf126_1c24bdb8",
+        "filename": "core/java/android/net/http/HttpResponseCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-06-11T17:01:42Z",
+      "side": 0,
+      "message": "This, too.",
+      "revId": "fa6d6256e9052a5f5155ac97364170f6518e37a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd1bf126_7c2171a8",
+        "filename": "core/java/android/net/http/HttpResponseCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-06-11T17:01:42Z",
+      "side": 0,
+      "message": "And here.",
+      "revId": "fa6d6256e9052a5f5155ac97364170f6518e37a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
