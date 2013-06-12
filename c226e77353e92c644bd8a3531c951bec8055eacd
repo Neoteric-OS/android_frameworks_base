@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3dd62183_19cdf7b0",
+        "filename": "core/java/android/net/http/HttpResponseCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2013-06-12T15:01:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd1bf126_bc12e967",
+      "revId": "c226e77353e92c644bd8a3531c951bec8055eacd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dd62183_130cb683",
         "filename": "core/java/android/net/http/HttpResponseCache.java",
         "patchSetId": 1
