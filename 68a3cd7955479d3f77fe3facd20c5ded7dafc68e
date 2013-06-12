@@ -16,6 +16,24 @@
       "revId": "68a3cd7955479d3f77fe3facd20c5ded7dafc68e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd1bf126_0a80eb83",
+        "filename": "core/java/android/net/http/HttpResponseCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2013-06-12T16:45:33Z",
+      "side": 1,
+      "message": "Hm, I can\u0027t really think of a sane reason to do that, but I\u0027m not an expert on use of these Java classes. In the worst case it seems like they would do extra work and not break as long as operations are idempotent.",
+      "parentUuid": "3dd62183_197057df",
+      "revId": "68a3cd7955479d3f77fe3facd20c5ded7dafc68e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
