@@ -16,6 +16,23 @@
       "revId": "c226e77353e92c644bd8a3531c951bec8055eacd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3dd62183_130cb683",
+        "filename": "core/java/android/net/http/HttpResponseCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2013-06-12T09:42:46Z",
+      "side": 1,
+      "message": "Also, with the latest okhttp update, this breaks caching in a very roundabout way (sigh...)\n\nSee OkHttpClient line 129 and OkResponseCacheAdapter from https://android-review.googlesource.com/#/c/59985/3.\n\nSince this object isn\u0027t an instance of c.a.okhttp.HttpResponseCache, it\u0027s wrapped in an OkResponseCacheAdapter, which means that update / trackConditionalHit / trackResponse will never be called on it. That\u0027s not good.\n\nThere\u0027s the obvious workaround of always calling ResponseCache.setDefault( ) with c.a.okhttp.HttpResponseCache objects and using this class as a wrapper, but that will break API users that relied on \u003d\u003d checks.",
+      "revId": "c226e77353e92c644bd8a3531c951bec8055eacd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
