@@ -756,6 +756,9 @@ public class RecentsPanelView extends FrameLayout implements OnItemClickListener
 
     public void handleLongPress(
             final View selectedView, final View anchorView, final View thumbnailView) {
+        if (mPopup != null) {
+            return;
+        }
         thumbnailView.setSelected(true);
         final PopupMenu popup =
             new PopupMenu(mContext, anchorView == null ? selectedView : anchorView);
