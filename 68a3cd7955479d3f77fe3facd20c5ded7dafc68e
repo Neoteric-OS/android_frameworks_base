@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dd62183_197057df",
+        "filename": "core/java/android/net/http/HttpResponseCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2013-06-12T16:30:04Z",
+      "side": 1,
+      "message": "Kenny, what do you think about this ? It might break clients who were doing something like\n\nif (HttpResponseCache.getInstalled() !\u003d \u003csome response cache\u003e) {\n  do stuff;\n  ...\n  ...\n}\n\nEarlier, HttpResponseCache.getInstalled would return the same object for every invocation, as long as there were no interleaving calls to install( ) or ResponseCache.setDefault( );",
+      "revId": "68a3cd7955479d3f77fe3facd20c5ded7dafc68e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
