@@ -34,6 +34,24 @@
       "revId": "68a3cd7955479d3f77fe3facd20c5ded7dafc68e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3dd62183_79423373",
+        "filename": "core/java/android/net/http/HttpResponseCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2013-06-12T16:49:30Z",
+      "side": 1,
+      "message": "There\u0027s no good reason to do that. I\u0027m just being paranoid. \n\nI expect most users would simply call HttpResonseCache.install( ) as part of their app initialization and not care about the return value.\n\nA code search from apps inside google users aligns with my expectations.",
+      "parentUuid": "bd1bf126_0a80eb83",
+      "revId": "68a3cd7955479d3f77fe3facd20c5ded7dafc68e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
