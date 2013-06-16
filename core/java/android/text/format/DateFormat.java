@@ -248,10 +248,24 @@ public class DateFormat {
 
         /*
          * The setting is not set; use the default.
-         * We use a resource string here instead of just DateFormat.SHORT
-         * so that we get a four-digit year instead a two-digit year.
+         * Get the locale pattern from ICU and (if need be) convert it from a
+         * two-digit year to four-digit year
          */
-        value = context.getString(R.string.numeric_date_format);
+        
+        LocaleData d = LocaleData.get(context.getResources().getConfiguration().locale);
+        value = d.getDateFormat(java.text.DateFormat.SHORT);
+
+        if (!value.contains("yyyy")) {
+            // we need to convert the 'yy' in the pattern to 'yyyy'
+            final int iLen = value.length();
+            final int i = value.lastIndexOf( 'y' ) + 1;
+            value = value.substring(  0, i ) + 
+                "yy" + 
+                ( i < iLen 
+                  ?  value.substring( i, iLen )
+                  :  "" );
+        }
+        
         return value;
     }
 
