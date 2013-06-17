@@ -27,6 +27,7 @@ import com.android.org.bouncycastle.asn1.DEROctetString;
 import com.android.org.bouncycastle.asn1.x509.BasicConstraints;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.KeyFactory;
 import java.security.KeyStore;
@@ -90,7 +91,7 @@ public class WifiEnterpriseConfig implements Parcelable {
     private static final String OPP_KEY_CACHING     = "proactive_key_caching";
 
     private HashMap<String, String> mFields = new HashMap<String, String>();
-    private X509Certificate mCaCert;
+    private X509Certificate[] mCaCerts;
     private PrivateKey mClientPrivateKey;
     private X509Certificate mClientCertificate;
 
@@ -127,7 +128,7 @@ public class WifiEnterpriseConfig implements Parcelable {
             dest.writeString(entry.getValue());
         }
 
-        writeCertificate(dest, mCaCert);
+        writeCertificateChain(dest, mCaCerts);
 
         if (mClientPrivateKey != null) {
             String algorithm = mClientPrivateKey.getAlgorithm();
@@ -140,6 +141,23 @@ public class WifiEnterpriseConfig implements Parcelable {
         }
 
         writeCertificate(dest, mClientCertificate);
+    }
+
+    private void writeCertificateChain(Parcel dest, X509Certificate[] certs) {
+	if (certs != null) {
+	    dest.writeInt(certs.length);
+	    for (int i = 0; i < certs.length; i++) {
+		try {
+		    byte[] certBytes = certs[i].getEncoded();
+		    dest.writeInt(certBytes.length);
+		    dest.writeByteArray(certBytes);
+		} catch (CertificateEncodingException e) {
+		    dest.writeInt(0);
+		}
+	    }
+	} else {
+	    dest.writeInt(0);
+	}
     }
 
     private void writeCertificate(Parcel dest, X509Certificate cert) {
@@ -167,7 +185,7 @@ public class WifiEnterpriseConfig implements Parcelable {
                         enterpriseConfig.mFields.put(key, value);
                     }
 
-                    enterpriseConfig.mCaCert = readCertificate(in);
+                    enterpriseConfig.mCaCerts = readCertificateChain(in);
 
                     PrivateKey userKey = null;
                     int len = in.readInt();
@@ -189,6 +207,18 @@ public class WifiEnterpriseConfig implements Parcelable {
                     enterpriseConfig.mClientCertificate = readCertificate(in);
                     return enterpriseConfig;
                 }
+
+		private X509Certificate[] readCertificateChain(Parcel in) {
+		    X509Certificate[] certs = null;
+
+		    int certCount = in.readInt();
+		    certs = new X509Certificate[certCount];
+		    for (int i = 0; i < certCount; i++) {
+			certs[i] = readCertificate(in);
+		    }
+
+		    return certs;
+		}
 
                 private X509Certificate readCertificate(Parcel in) {
                     X509Certificate cert = null;
@@ -384,12 +414,14 @@ public class WifiEnterpriseConfig implements Parcelable {
      * @param cert X.509 CA certificate
      * @throws IllegalArgumentException if not a CA certificate
      */
-    public void setCaCertificate(X509Certificate cert) {
-        if (cert.getBasicConstraints() >= 0) {
-            mCaCert = cert;
-        } else {
-            throw new IllegalArgumentException("Not a CA certificate");
+    public void setCaCertificate(X509Certificate[] certs) {
+	for (int i = 0; i < certs.length; i++) {
+	    if (certs[i].getBasicConstraints() < 0) {
+		throw new IllegalArgumentException("Not a CA certificate");
+	    }
         }
+
+	mCaCerts = certs;
     }
 
     /**
@@ -450,7 +482,8 @@ public class WifiEnterpriseConfig implements Parcelable {
 
     boolean needsKeyStore() {
         // Has no keys to be installed
-        if (mClientCertificate == null && mCaCert == null) return false;
+        if (mClientCertificate == null && ((mCaCerts == null) || (mCaCerts.length <= 0))) return false;
+
         return true;
     }
 
@@ -474,8 +507,8 @@ public class WifiEnterpriseConfig implements Parcelable {
             }
         }
 
-        if (mCaCert != null) {
-            ret = putCertInKeyStore(keyStore, caCertName, mCaCert);
+        if (mCaCerts != null) {
+            ret = putCaChainInKeyStore(keyStore, caCertName, mCaCerts);
             if (ret == false) {
                 if (mClientCertificate != null) {
                     // Remove client key+cert
@@ -493,24 +526,45 @@ public class WifiEnterpriseConfig implements Parcelable {
             mClientCertificate = null;
         }
 
-        if (mCaCert != null) {
+        if (mCaCerts != null) {
             setCaCertificateAlias(name);
-            mCaCert = null;
+            mCaCerts = null;
         }
 
         return ret;
+    }
+
+    private boolean putCaChainInKeyStore(android.security.KeyStore keyStore, String name,
+					 Certificate[] certs) {
+	ByteArrayOutputStream caCertChain = new ByteArrayOutputStream();
+
+	for (int i = 0; i < certs.length; i++) {
+	    try {
+		caCertChain.write(Credentials.convertToPem(certs[i]));
+	    } catch (IOException e1) {
+		return false;
+	    } catch (CertificateException e2) {
+		return false;
+	    }
+	}
+
+	return putCertInKeyStore(keyStore, name, caCertChain.toByteArray());
     }
 
     private boolean putCertInKeyStore(android.security.KeyStore keyStore, String name,
             Certificate cert) {
         try {
             byte[] certData = Credentials.convertToPem(cert);
-            return keyStore.put(name, certData);
+            return putCertInKeyStore(keyStore, name, certData);
         } catch (IOException e1) {
             return false;
         } catch (CertificateException e2) {
             return false;
         }
+    }
+
+    private boolean putCertInKeyStore(android.security.KeyStore keyStore, String name, byte[] cert) {
+	return keyStore.put(name, cert);
     }
 
     void removeKeys(android.security.KeyStore keyStore) {
