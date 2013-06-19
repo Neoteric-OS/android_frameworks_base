@@ -154,7 +154,9 @@ public class TextServicesManagerService extends ITextServicesManager.Stub {
                         mContext, mSpellCheckerList, mSpellCheckerMap, mSettings);
                 // TODO: Update for each locale
                 SpellCheckerInfo sci = getCurrentSpellChecker(null);
-                if (sci == null) return;
+                if (sci == null) {
+                    sci = findAvailSpellCheckerLocked(null, null);
+                }
                 final String packageName = sci.getPackageName();
                 final int change = isPackageDisappearing(packageName);
                 if (// Package disappearing
