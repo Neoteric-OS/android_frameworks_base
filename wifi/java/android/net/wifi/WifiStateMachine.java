@@ -3414,6 +3414,8 @@ public class WifiStateMachine extends StateMachine {
                   break;
                   /* Defer scan request since we should not switch to other channels at DHCP */
               case CMD_START_SCAN:
+              case WifiP2pManager.DISCOVER_PEERS:
+                  if (DBG) log("Defer scan while obtaining IP address");
                   deferMessage(message);
                   break;
               default:
