@@ -16,6 +16,24 @@
       "revId": "d1305125fd9eb589ae5834d7ccb377be43d82cff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea891da9_6239b8d8",
+        "filename": "core/java/android/widget/FrameLayout.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2013-06-27T01:30:04Z",
+      "side": 1,
+      "message": "I agree with Chris. The bug is somewhere else, this is not the proper fix.",
+      "parentUuid": "ca77f97c_761b307d",
+      "revId": "d1305125fd9eb589ae5834d7ccb377be43d82cff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
