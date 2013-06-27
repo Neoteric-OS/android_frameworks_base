@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca77f97c_761b307d",
+        "filename": "core/java/android/widget/FrameLayout.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2013-06-27T01:28:45Z",
+      "side": 1,
+      "message": "How is it possible for \u0027child\u0027 to be null here, when \u0027i\u0027 is within the range reported by getChildCount()?  Why are you certain that this is not an application bug?\n\nDo you have exact repro steps for demonstrating this on a device running AOSP?",
+      "revId": "d1305125fd9eb589ae5834d7ccb377be43d82cff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
