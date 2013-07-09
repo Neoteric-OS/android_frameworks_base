@@ -688,14 +688,28 @@ class WallpaperManagerService extends IWallpaperManager.Stub {
 
     public int getWidthHint() throws RemoteException {
         synchronized (mLock) {
-            WallpaperData wallpaper = mWallpaperMap.get(UserHandle.getCallingUserId());
+            int userId = UserHandle.getCallingUserId();
+            WallpaperData wallpaper = mWallpaperMap.get(userId);
+            if (wallpaper == null) {
+                // User hasn't started yet, so load her settings to set desired size.
+                Slog.w(TAG, "Wallpaper not yet initialized, loading settings for user " + userId);
+                loadSettingsLocked(userId);
+                wallpaper = mWallpaperMap.get(userId);
+            }
             return wallpaper.width;
         }
     }
 
     public int getHeightHint() throws RemoteException {
         synchronized (mLock) {
-            WallpaperData wallpaper = mWallpaperMap.get(UserHandle.getCallingUserId());
+            int userId = UserHandle.getCallingUserId();
+            WallpaperData wallpaper = mWallpaperMap.get(userId);
+            if (wallpaper == null) {
+                // User hasn't started yet, so load her settings to set desired size.
+                Slog.w(TAG, "Wallpaper not yet initialized, loading settings for user " + userId);
+                loadSettingsLocked(userId);
+                wallpaper = mWallpaperMap.get(userId);
+            }
             return wallpaper.height;
         }
     }
@@ -713,6 +727,9 @@ class WallpaperManagerService extends IWallpaperManager.Stub {
                 wallpaperUserId = UserHandle.getUserId(callingUid);
             }
             WallpaperData wallpaper = mWallpaperMap.get(wallpaperUserId);
+            if (wallpaper == null) {
+                return null;
+            }
             try {
                 if (outParams != null) {
                     outParams.putInt("width", wallpaper.width);
@@ -736,7 +753,7 @@ class WallpaperManagerService extends IWallpaperManager.Stub {
         int userId = UserHandle.getCallingUserId();
         synchronized (mLock) {
             WallpaperData wallpaper = mWallpaperMap.get(userId);
-            if (wallpaper.connection != null) {
+            if (wallpaper != null && wallpaper.connection != null) {
                 return wallpaper.connection.mInfo;
             }
             return null;
