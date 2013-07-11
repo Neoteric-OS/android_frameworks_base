@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8757bcb3_c4107e61",
+        "filename": "core/res/res/values-mcc204-mnc08/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1016953
+      },
+      "writtenOn": "2013-07-11T01:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27c53079_f9455781",
+      "revId": "7f7b5cba7a5f7ddbd77c1b54ccc5558bf7c15ae8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27c53079_d94a938f",
         "filename": "core/res/res/values-mcc204-mnc08/config.xml",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-07-10T15:36:25Z",
       "side": 1,
       "message": "\"allows or not\" -\u003e \"is allowed\"",
+      "revId": "7f7b5cba7a5f7ddbd77c1b54ccc5558bf7c15ae8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8757bcb3_e4157a4e",
+        "filename": "core/res/res/values-mcc204-mnc08/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1016953
+      },
+      "writtenOn": "2013-07-11T01:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27c53079_d94a938f",
       "revId": "7f7b5cba7a5f7ddbd77c1b54ccc5558bf7c15ae8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
