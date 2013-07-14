@@ -66,6 +66,12 @@ public class NotificationData {
             return NotificationData.getUserExpanded(row);
         }
         /**
+         * Return whether the entry has been manually dismissed by the user.
+         */
+        public boolean userDismissed() {
+            return NotificationData.getUserDismissed(row);
+        }
+        /**
          * Set the flag indicating that this was manually expanded by the user.
          */
         public boolean setUserExpanded(boolean userExpanded) {
@@ -222,5 +228,19 @@ public class NotificationData {
      */
     public static boolean setUserLocked(View row, boolean userLocked) {
         return writeBooleanTag(row, R.id.user_lock_tag, userLocked);
+    }
+
+    /**
+     * Return whether the entry was dismissed by the user.
+     */
+    public static boolean getUserDismissed(View row) {
+        return readBooleanTag(row, R.id.user_dismissed_tag);
+    }
+
+    /**
+     * Set whether the entry was dismissed by the user.
+     */
+    public static boolean setUserDismissed(View row) {
+        return writeBooleanTag(row, R.id.user_dismissed_tag, true);
     }
 }
