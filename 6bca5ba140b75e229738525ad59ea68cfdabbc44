@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b365e72b_348150be",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1691,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2013-07-19T19:18:14Z",
+      "side": 1,
+      "message": "Replaced by populating ApplicationInfo.resourceDirs during package \ninstallation.",
+      "parentUuid": "f342ff7b_1e29cd51",
+      "revId": "6bca5ba140b75e229738525ad59ea68cfdabbc44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f342ff7b_7e1e1129",
         "filename": "core/java/android/content/pm/PackageParser.java",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2013-07-19T01:52:14Z",
       "side": 1,
       "message": "Declare these as attribute resources, and parse like we do other attributes.  (In fact we already have an attribute resources for priority.)  See for example how uses-permission parses its attribute below.",
+      "revId": "6bca5ba140b75e229738525ad59ea68cfdabbc44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9349c3a6_a1ceba48",
+        "filename": "core/java/android/content/pm/PackageParser.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2013-07-19T19:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f342ff7b_7e1e1129",
       "revId": "6bca5ba140b75e229738525ad59ea68cfdabbc44",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9362a322_d374748f",
+        "filename": "core/java/android/content/pm/PackageParser.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3364,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2013-07-19T19:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f342ff7b_5e23556f",
+      "revId": "6bca5ba140b75e229738525ad59ea68cfdabbc44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f342ff7b_be17f907",
         "filename": "core/jni/android_util_AssetManager.cpp",
         "patchSetId": 9
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9362a322_33d16848",
+        "filename": "core/jni/android_util_AssetManager.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2013-07-19T19:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f342ff7b_be17f907",
+      "revId": "6bca5ba140b75e229738525ad59ea68cfdabbc44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f342ff7b_febfc1c1",
         "filename": "services/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 9
@@ -81,6 +153,24 @@
       "writtenOn": "2013-07-19T01:52:14Z",
       "side": 1,
       "message": "This is way too much work to be doing as part of each load of a resources object.  We should have this data all prepared and ready to go.  Actually we really should have it in the ApplicationInfo -- consider launcher, we needs to go through and open the resources for all of the apps it is showing icons for, we are going to end up in this code for every one of those.",
+      "revId": "6bca5ba140b75e229738525ad59ea68cfdabbc44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9349c3a6_01ccce4f",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10286,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2013-07-19T19:18:14Z",
+      "side": 1,
+      "message": "Replaced by populating ApplicationInfo.resourceDirs during package \ninstallation.",
+      "parentUuid": "f342ff7b_febfc1c1",
       "revId": "6bca5ba140b75e229738525ad59ea68cfdabbc44",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
