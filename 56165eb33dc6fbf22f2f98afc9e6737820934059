@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b365e72b_34e79060",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1004910
+      },
+      "writtenOn": "2013-07-19T06:03:54Z",
+      "side": 1,
+      "message": "what about https?",
+      "revId": "56165eb33dc6fbf22f2f98afc9e6737820934059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9349c3a6_7bf1ff18",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1004910
+      },
+      "writtenOn": "2013-07-19T06:03:54Z",
+      "side": 1,
+      "message": "how about passing on a fd for this one as well?",
+      "revId": "56165eb33dc6fbf22f2f98afc9e6737820934059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b365e72b_14ec1441",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1004910
+      },
+      "writtenOn": "2013-07-19T06:03:54Z",
+      "side": 1,
+      "message": "what about https?",
+      "revId": "56165eb33dc6fbf22f2f98afc9e6737820934059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9362a322_33e7a860",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1004910
+      },
+      "writtenOn": "2013-07-19T06:03:54Z",
+      "side": 1,
+      "message": "How about adding fd for this one as well?",
+      "revId": "56165eb33dc6fbf22f2f98afc9e6737820934059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9349c3a6_5bf6c312",
+        "filename": "drm/jni/android_drm_DrmManagerClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1004910
+      },
+      "writtenOn": "2013-07-19T06:03:54Z",
+      "side": 1,
+      "message": "Too long line. Try to keep within 100 chars.",
+      "revId": "56165eb33dc6fbf22f2f98afc9e6737820934059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9349c3a6_bbfa67f3",
+        "filename": "drm/jni/android_drm_DrmManagerClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1004910
+      },
+      "writtenOn": "2013-07-19T06:03:54Z",
+      "side": 1,
+      "message": "Too long line. Try to keep within 100 chars.",
+      "revId": "56165eb33dc6fbf22f2f98afc9e6737820934059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b365e72b_74f10819",
+        "filename": "drm/jni/android_drm_DrmManagerClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1004910
+      },
+      "writtenOn": "2013-07-19T06:03:54Z",
+      "side": 1,
+      "message": "Too long line. Try to keep within 100 chars.",
+      "revId": "56165eb33dc6fbf22f2f98afc9e6737820934059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
