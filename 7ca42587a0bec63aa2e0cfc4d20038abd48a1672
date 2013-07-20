@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1325d3ee_c7be5e56",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1733,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-07-20T00:37:38Z",
+      "side": 1,
+      "message": "Is it valid to do this without passing in the overlayDirs?  It seems like any code paths that end up here will initialize the asset manager incorrectly  because it is missing this info?",
+      "revId": "7ca42587a0bec63aa2e0cfc4d20038abd48a1672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
