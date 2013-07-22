@@ -16,6 +16,24 @@
       "revId": "7ca42587a0bec63aa2e0cfc4d20038abd48a1672",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b365e72b_3b2809f8",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1733,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2013-07-22T15:42:16Z",
+      "side": 1,
+      "message": "We were thinking about it, but based on test runs decided to update only where it was absolutely necessary for overlays to get loaded properly (https://android-review.googlesource.com/#/c/46739/10/core/java/android/app/LoadedApk.java). Afterwards they\u0027re part of active resources.\n\nDo you want us to investigate further into benefits of making the call from ContextImpl and ApplicationPackageManager as well? (Provided mActiveResources are not rebuilt, which they won\u0027t be on account of overlays, since they are preloaded, updating LoadedApk should be enough.)",
+      "parentUuid": "1325d3ee_c7be5e56",
+      "revId": "7ca42587a0bec63aa2e0cfc4d20038abd48a1672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
