@@ -6105,6 +6105,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             case KeyEvent.KEYCODE_VOLUME_UP:
             case KeyEvent.KEYCODE_VOLUME_DOWN:
             case KeyEvent.KEYCODE_VOLUME_MUTE:
+                // Special policy:
+                // Wake by volume keys if phone is ringing or in-call now.
+                if (isPhoneRingingOrInCall()) {
+                    return true;
+                }
+                // In normal conditions (phone is idle), ignore volume keys
+                // unless docked.
                 return mDockMode != Intent.EXTRA_DOCK_STATE_UNDOCKED;
 
             // ignore media and camera keys
@@ -6126,6 +6133,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         return true;
     }
 
+    // Return true if phone is ringing or in-call.
+    private boolean isPhoneRingingOrInCall() {
+        TelecomManager telecomManager = getTelecommService();
+        if (telecomManager != null) {
+            return telecomManager.isInCall();
+        }
+        return false;
+    }
 
     /** {@inheritDoc} */
     @Override
