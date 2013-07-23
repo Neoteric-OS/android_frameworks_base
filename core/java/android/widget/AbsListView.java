@@ -931,6 +931,41 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
     }
 
     /**
+     * Returns the set of checked items positions. The result is only valid if
+     * the choice mode has not been set to {@link #CHOICE_MODE_NONE}.
+     *
+     * @return A new array which contains the position of each checked item in
+     *         the list.
+     */
+    public int[] getAllCheckedItemPositions() {
+        if (mChoiceMode == CHOICE_MODE_NONE || mCheckStates == null) {
+            return new int[0];
+        }
+
+        final SparseBooleanArray states = mCheckStates;
+        final int count = states.size();
+        final int[] positions = new int[count];
+
+        int checkedCount = 0;
+        for (int i = 0; i < count; i++) {
+            if (states.valueAt(i)) {
+                positions[checkedCount++] = states.keyAt(i);
+            }
+        }
+
+        // Trim array if needed. mCheckStates may contain false values
+        // resulting in checkedCount being smaller than count.
+        if (checkedCount == count) {
+            return positions;
+        } else {
+            final int[] result = new int[checkedCount];
+            System.arraycopy(positions, 0, result, 0, checkedCount);
+
+            return result;
+        }
+    }
+
+    /**
      * Returns the set of checked items ids. The result is only valid if the
      * choice mode has not been set to {@link #CHOICE_MODE_NONE} and the adapter
      * has stable IDs. ({@link ListAdapter#hasStableIds()} == {@code true})
