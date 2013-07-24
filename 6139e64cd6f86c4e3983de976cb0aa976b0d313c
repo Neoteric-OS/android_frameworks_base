@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "934d4312_848cccc2",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-07-24T22:09:27Z",
+      "side": 1,
+      "message": "so our assumption here is that people weren\u0027t really using these?",
+      "revId": "6139e64cd6f86c4e3983de976cb0aa976b0d313c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
