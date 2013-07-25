@@ -34,6 +34,24 @@
       "revId": "7ca42587a0bec63aa2e0cfc4d20038abd48a1672",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "934d4312_b5d49006",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1733,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2013-07-25T19:11:28Z",
+      "side": 1,
+      "message": "I would definitely feel more comfortable if we always got the asset manager initialized with the set of overlays it should have.  Having these paths through the code where that doesn\u0027t happen is surely going to lead to subtle bugs that are terrible to debug.",
+      "parentUuid": "b365e72b_3b2809f8",
+      "revId": "7ca42587a0bec63aa2e0cfc4d20038abd48a1672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
