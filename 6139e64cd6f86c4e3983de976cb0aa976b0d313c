@@ -51,6 +51,24 @@
       "revId": "6139e64cd6f86c4e3983de976cb0aa976b0d313c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "934d4312_0a0203d2",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2013-07-25T17:22:40Z",
+      "side": 1,
+      "message": "gah. what were the chances of you commenting just as i hit submit?!\n\nthere are plenty of other places that take a Context they don\u0027t use, plus we might decide we need it again in future. \"unused\" sounds like a stronger guarantee than i\u0027m prepared to make :-)",
+      "parentUuid": "934d4312_ea5557cc",
+      "revId": "6139e64cd6f86c4e3983de976cb0aa976b0d313c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
