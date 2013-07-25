@@ -52,6 +52,24 @@
       "revId": "d40acfb89e3222e8da516254341a9489de7fd07b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "934d4312_10355206",
+        "filename": "core/java/android/view/ViewPropertyAnimator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1017638
+      },
+      "writtenOn": "2013-07-25T21:49:28Z",
+      "side": 1,
+      "message": "I see. True enough, but given the combination of (a) VPA (like other View-related classes) should be used on the UI thread as a general rule, (b) the getters should not be commonly called anyway, and (c) multiple ValueAnimators might be created but would always return the same result, it doesn\u0027t seem worth the added complexity of storing this object in TLS.\nAnyway, good fix, thanks.",
+      "parentUuid": "53210b30_df7ff31f",
+      "revId": "d40acfb89e3222e8da516254341a9489de7fd07b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
