@@ -34,6 +34,23 @@
       "revId": "6139e64cd6f86c4e3983de976cb0aa976b0d313c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "934d4312_ea5557cc",
+        "filename": "core/java/android/text/format/DateUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1022243
+      },
+      "writtenOn": "2013-07-25T17:19:48Z",
+      "side": 1,
+      "message": "Context unused_context, ...?",
+      "revId": "6139e64cd6f86c4e3983de976cb0aa976b0d313c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
