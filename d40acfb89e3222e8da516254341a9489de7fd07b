@@ -16,6 +16,24 @@
       "revId": "d40acfb89e3222e8da516254341a9489de7fd07b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "934d4312_8f2145c7",
+        "filename": "core/java/android/view/ViewPropertyAnimator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1017638
+      },
+      "writtenOn": "2013-07-25T15:39:08Z",
+      "side": 1,
+      "message": "Nothing that touches views should be used off the UI thread. Any of the actions that a VPA takes will be on the correct thread because it uses a ValueAnimator internally, whose events are only processed on the UI thread. For the purposes of your temp animator (just retrieving default values), there is no dependency on the UI thread, so having it lazily created and possibly accessed from other threads is OK.",
+      "parentUuid": "53210b30_5f18c338",
+      "revId": "d40acfb89e3222e8da516254341a9489de7fd07b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
