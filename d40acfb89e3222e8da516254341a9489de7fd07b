@@ -34,6 +34,24 @@
       "revId": "d40acfb89e3222e8da516254341a9489de7fd07b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53210b30_df7ff31f",
+        "filename": "core/java/android/view/ViewPropertyAnimator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001698
+      },
+      "writtenOn": "2013-07-25T17:00:45Z",
+      "side": 1,
+      "message": "Thanks for the clarification.\n\nWhat was annoying me actually is the fact we may create two different ValueAnimators but only keep one (T1 checks for null, T2 checks for null, T1 creates VA1 and assigns it to mTempValueAnimator, T1 creates VA2 and assigns it to mTempValueAnimator). This is not crucial and will never happen if the VPA is correctly used.",
+      "parentUuid": "934d4312_8f2145c7",
+      "revId": "d40acfb89e3222e8da516254341a9489de7fd07b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
