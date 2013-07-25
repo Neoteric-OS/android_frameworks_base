@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53210b30_5f18c338",
+        "filename": "core/java/android/view/ViewPropertyAnimator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001698
+      },
+      "writtenOn": "2013-07-25T12:47:49Z",
+      "side": 1,
+      "message": "ViewPropertyAnimator being in the android.view package, I assumed it is not meant to be used outside of the UI Thread.\n\nCan you elaborate on this, please? A ThreadLocal\u003cValueAnimator\u003e may be a better idea in case ViewPropertyAnimator can be used from everywhere.",
+      "revId": "d40acfb89e3222e8da516254341a9489de7fd07b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
