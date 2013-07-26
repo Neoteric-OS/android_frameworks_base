@@ -37341,7 +37341,7 @@ package java.util.concurrent {
     method public abstract java.util.concurrent.Future<V> take() throws java.lang.InterruptedException;
   }
 
-  public class ConcurrentHashMap extends java.util.AbstractMap implements java.util.concurrent.ConcurrentMap java.io.Serializable {
+  public class ConcurrentHashMap implements java.util.concurrent.ConcurrentMap java.io.Serializable {
     ctor public ConcurrentHashMap(int, float, int);
     ctor public ConcurrentHashMap(int, float);
     ctor public ConcurrentHashMap(int);

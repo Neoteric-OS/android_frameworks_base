@@ -39813,20 +39813,60 @@ package java.util.concurrent {
     method public abstract java.util.concurrent.Future<V> take() throws java.lang.InterruptedException;
   }
 
-  public class ConcurrentHashMap extends java.util.AbstractMap implements java.util.concurrent.ConcurrentMap java.io.Serializable {
-    ctor public ConcurrentHashMap(int, float, int);
-    ctor public ConcurrentHashMap(int, float);
-    ctor public ConcurrentHashMap(int);
+  public class ConcurrentHashMap implements java.util.concurrent.ConcurrentMap java.io.Serializable {
     ctor public ConcurrentHashMap();
+    ctor public ConcurrentHashMap(int);
     ctor public ConcurrentHashMap(java.util.Map<? extends K, ? extends V>);
-    method public boolean contains(java.lang.Object);
+    ctor public ConcurrentHashMap(int, float);
+    ctor public ConcurrentHashMap(int, float, int);
+    method public void clear();
+    method public deprecated boolean contains(java.lang.Object);
+    method public boolean containsKey(java.lang.Object);
+    method public boolean containsValue(java.lang.Object);
     method public java.util.Enumeration<V> elements();
     method public java.util.Set<java.util.Map.Entry<K, V>> entrySet();
+    method public V get(java.lang.Object);
+    method public boolean isEmpty();
+    method public java.util.concurrent.ConcurrentHashMap.KeySetView<K, V> keySet();
+    method public java.util.concurrent.ConcurrentHashMap.KeySetView<K, V> keySet(V);
     method public java.util.Enumeration<K> keys();
+    method public long mappingCount();
+    method public static java.util.concurrent.ConcurrentHashMap.KeySetView<K, java.lang.Boolean> newKeySet();
+    method public static java.util.concurrent.ConcurrentHashMap.KeySetView<K, java.lang.Boolean> newKeySet(int);
+    method public V put(K, V);
+    method public void putAll(java.util.Map<? extends K, ? extends V>);
     method public V putIfAbsent(K, V);
+    method public V remove(java.lang.Object);
     method public boolean remove(java.lang.Object, java.lang.Object);
     method public boolean replace(K, V, V);
     method public V replace(K, V);
+    method public int size();
+    method public java.util.Collection<V> values();
+  }
+
+   static abstract class ConcurrentHashMap.CollectionView implements java.util.Collection java.io.Serializable {
+    method public final void clear();
+    method public abstract boolean contains(java.lang.Object);
+    method public final boolean containsAll(java.util.Collection<?>);
+    method public java.util.concurrent.ConcurrentHashMap<K, V> getMap();
+    method public final boolean isEmpty();
+    method public abstract java.util.Iterator<E> iterator();
+    method public abstract boolean remove(java.lang.Object);
+    method public final boolean removeAll(java.util.Collection<?>);
+    method public final boolean retainAll(java.util.Collection<?>);
+    method public final int size();
+    method public final java.lang.Object[] toArray();
+    method public final T[] toArray(T[]);
+    method public final java.lang.String toString();
+  }
+
+  public static class ConcurrentHashMap.KeySetView extends java.util.concurrent.ConcurrentHashMap.CollectionView implements java.io.Serializable java.util.Set {
+    method public boolean add(K);
+    method public boolean addAll(java.util.Collection<? extends K>);
+    method public boolean contains(java.lang.Object);
+    method public V getMappedValue();
+    method public java.util.Iterator<K> iterator();
+    method public boolean remove(java.lang.Object);
   }
 
   public class ConcurrentLinkedQueue extends java.util.AbstractQueue implements java.util.Queue java.io.Serializable {
