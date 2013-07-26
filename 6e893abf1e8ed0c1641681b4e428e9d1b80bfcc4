@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3189b2e_b5232072",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/CarrierLabel.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2013-07-26T20:51:12Z",
+      "side": 1,
+      "message": "Should this code be done for KeyguardStatusView too? I\u0027m asking this because of the comment below \"match logic ..\"",
+      "revId": "6e893abf1e8ed0c1641681b4e428e9d1b80bfcc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
