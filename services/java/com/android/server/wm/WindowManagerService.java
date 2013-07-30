@@ -2209,8 +2209,9 @@ public class WindowManagerService extends IWindowManager.Stub
 
             if (type == TYPE_APPLICATION_STARTING && token.appWindowToken != null) {
                 token.appWindowToken.startingWindow = win;
+                token.appWindowToken.startingTime = AnimationUtils.currentAnimationTimeMillis();
                 if (DEBUG_STARTING_WINDOW) Slog.v (TAG, "addWindow: " + token.appWindowToken
-                        + " startingWindow=" + win);
+                        + " startingWindow=" + win + " startingTime=" + token.appWindowToken.startingTime);
             }
 
             boolean imMayMove = true;
@@ -8725,6 +8726,16 @@ public class WindowManagerService extends IWindowManager.Stub
 
                     //Slog.i(TAG, "Window " + this + " clearing mContentChanged - done placing");
                     w.mContentChanged = false;
+
+                    final AppWindowToken token = w.mAppToken;
+                    if (token != null && !w.isOnScreen() && w == token.startingWindow &&
+                            AnimationUtils.currentAnimationTimeMillis() - token.startingTime > MAX_ANIMATION_DURATION) {
+                        if (DEBUG_STARTING_WINDOW) {
+                            Slog.d(TAG, "Force removing starting window " + w + " that was not on screen for long time");
+                        }
+                        Message m = mH.obtainMessage(H.REMOVE_STARTING, token);
+                        mH.sendMessage(m);
+                    }
 
                     // Moved from updateWindowsAndWallpaperLocked().
                     if (w.mHasSurface) {

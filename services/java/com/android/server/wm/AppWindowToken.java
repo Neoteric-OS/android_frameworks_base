@@ -92,6 +92,7 @@ class AppWindowToken extends WindowToken {
     // Information about an application starting window if displayed.
     StartingData startingData;
     WindowState startingWindow;
+    long startingTime;
     View startingView;
     boolean startingDisplayed;
     boolean startingMoved;
