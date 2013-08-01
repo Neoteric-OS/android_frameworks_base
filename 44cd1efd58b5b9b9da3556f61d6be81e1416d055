@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7349af4c_7ba333dc",
+        "filename": "obex/javax/obex/HeaderSet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1005450
+      },
+      "writtenOn": "2013-08-01T20:28:51Z",
+      "side": 1,
+      "message": "\"Target\" \u003d\u003e \"Connection ID\"",
+      "revId": "44cd1efd58b5b9b9da3556f61d6be81e1416d055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
