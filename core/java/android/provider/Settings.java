@@ -5320,7 +5320,8 @@ public final class Settings {
         public static final String CALL_AUTO_RETRY = "call_auto_retry";
 
         /**
-         * The preferred network mode   12 = LTE / WCDMA
+         * The preferred network mode   13 = LTE / GSM
+         *                              12 = LTE / WCDMA
          *                              11 = LTE only
          *                              10 = LTE / CDMA / EvDo / GSM / WCDMA
          *                              9 = LTE / GSM / WCDMA
