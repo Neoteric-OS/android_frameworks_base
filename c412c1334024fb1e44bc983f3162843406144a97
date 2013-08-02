@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b804e402_50da5c63",
+        "filename": "core/java/android/net/MailTo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2013-08-02T18:00:56Z",
+      "side": 1,
+      "message": "WS",
+      "revId": "c412c1334024fb1e44bc983f3162843406144a97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
