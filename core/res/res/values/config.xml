@@ -151,6 +151,11 @@
         <item>"wifi_p2p,13,1,0,-1,true"</item>
     </string-array>
 
+    <!-- Whether device should be limited to only one data call at a time. -->
+    <!-- This option is intended to be overlayed in the configs for the mccmnc of the networks
+         that allow only one data call at a time. -->
+    <bool name="config_onlySingleDcAllowed">false</bool>
+
     <!-- Array of ConnectivityManager.TYPE_xxxx constants for networks that may only
          be controlled by systemOrSignature apps.  -->
     <integer-array translatable="false" name="config_protectedNetworks">
