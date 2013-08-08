@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.telephony.Rlog;
+import android.content.res.Resources;
 
 /**
  * Contains phone signal strength related information.
@@ -744,8 +745,8 @@ public class SignalStrength implements Parcelable {
          * dB= Number of Resource blocksxRSRP/RSSI SNR = gain=signal/noise ratio
          * = -10log P1/P2 dB
          */
-        int rssiIconLevel = SIGNAL_STRENGTH_NONE_OR_UNKNOWN, rsrpIconLevel = -1, snrIconLevel = -1;
-
+        int rssiIconLevel = SIGNAL_STRENGTH_NONE_OR_UNKNOWN, rsrpIconLevel = -1, secondMetricIconLevel = -1, secondMetric = 0;
+        int mQuantity = 0, threshSecondMetric4Bars = 0, threshSecondMetric3Bars = 0, threshSecondMetric2Bars = 0, threshSecondMetric1Bar = 0, threshSecondMetricNoBar = 0, threshSecondMetricOutOfBounds = 0;
         if (mLteRsrp > -44) rsrpIconLevel = -1;
         else if (mLteRsrp >= -85) rsrpIconLevel = SIGNAL_STRENGTH_GREAT;
         else if (mLteRsrp >= -95) rsrpIconLevel = SIGNAL_STRENGTH_GOOD;
@@ -753,34 +754,68 @@ public class SignalStrength implements Parcelable {
         else if (mLteRsrp >= -115) rsrpIconLevel = SIGNAL_STRENGTH_POOR;
         else if (mLteRsrp >= -140) rsrpIconLevel = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
 
+        Resources r = Resources.getSystem();
+        secondMetric = r.getInteger(com.android.internal.R.integer.config_LTE_antenna_bar_quantity_metric);
+
+        if (secondMetric == 0){
+           mQuantity = mLteRssnr;
+         /*
+          * Values are -200 dB to +300 (SNR*10dB) RS_SNR >= 13.0 dB =>4 bars 4.5
+          * dB <= RS_SNR < 13.0 dB => 3 bars 1.0 dB <= RS_SNR < 4.5 dB => 2 bars
+          * -3.0 dB <= RS_SNR < 1.0 dB 1 bar RS_SNR < -3.0 dB/No Service Antenna
+          * Icon Only
+          */
+           threshSecondMetric4Bars = 130;
+           threshSecondMetric3Bars = 45;
+           threshSecondMetric2Bars = 10;
+           threshSecondMetric1Bar = -30;
+           threshSecondMetricNoBar = -200;
+           threshSecondMetricOutOfBounds = 300;
+        }
+        else if (secondMetric == 1){
+           mQuantity = mLteRsrq;
         /*
-         * Values are -200 dB to +300 (SNR*10dB) RS_SNR >= 13.0 dB =>4 bars 4.5
-         * dB <= RS_SNR < 13.0 dB => 3 bars 1.0 dB <= RS_SNR < 4.5 dB => 2 bars
-         * -3.0 dB <= RS_SNR < 1.0 dB 1 bar RS_SNR < -3.0 dB/No Service Antenna
+         * Values are -34 dB to -3dB RSRQ >= -12dB =>4 bars -14
+         * dB <= RSRQ < -12 dB => 3 bars -17 dB <= RSRQ < -14 dB => 2 bars
+         * -19 dB <= RSRQ < -17 dB 1 bar RS_SNR < -34 dB/No Service Antenna
          * Icon Only
          */
-        if (mLteRssnr > 300) snrIconLevel = -1;
-        else if (mLteRssnr >= 130) snrIconLevel = SIGNAL_STRENGTH_GREAT;
-        else if (mLteRssnr >= 45) snrIconLevel = SIGNAL_STRENGTH_GOOD;
-        else if (mLteRssnr >= 10) snrIconLevel = SIGNAL_STRENGTH_MODERATE;
-        else if (mLteRssnr >= -30) snrIconLevel = SIGNAL_STRENGTH_POOR;
-        else if (mLteRssnr >= -200)
-            snrIconLevel = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
+           threshSecondMetric4Bars = -12;
+           threshSecondMetric3Bars = -14;
+           threshSecondMetric2Bars = -17;
+           threshSecondMetric1Bar = -19;
+           threshSecondMetricNoBar = -34;
+           threshSecondMetricOutOfBounds = -3;
+        }
+ 
+        if (mQuantity > threshSecondMetricOutOfBounds) secondMetricIconLevel = -1;
+        else if (mQuantity >= threshSecondMetric4Bars) secondMetricIconLevel = SIGNAL_STRENGTH_GREAT;
+        else if (mQuantity >= threshSecondMetric3Bars) secondMetricIconLevel = SIGNAL_STRENGTH_GOOD;
+        else if (mQuantity >= threshSecondMetric2Bars) secondMetricIconLevel = SIGNAL_STRENGTH_MODERATE;
+        else if (mQuantity >= threshSecondMetric1Bar) secondMetricIconLevel = SIGNAL_STRENGTH_POOR;
+        else if (mQuantity >= threshSecondMetricNoBar)
+            secondMetricIconLevel = SIGNAL_STRENGTH_NONE_OR_UNKNOWN;
 
-        if (DBG) log("getLTELevel - rsrp:" + mLteRsrp + " snr:" + mLteRssnr + " rsrpIconLevel:"
-                + rsrpIconLevel + " snrIconLevel:" + snrIconLevel);
+        if (secondMetric == 0){
+             if (DBG) log("getLTELevel - rsrp:" + mLteRsrp + " snr:" + mQuantity + " rsrpIconLevel:"
+                + rsrpIconLevel + " snrIconLevel:" + secondMetricIconLevel);
+        } 
+        else {
+             if (DBG) log("getLTELevel - rsrp:" + mLteRsrp + " rsrq:" + mQuantity + " rsrpIconLevel:"
+                + rsrpIconLevel + " rsrqIconLevel:" + secondMetricIconLevel);
+        }
 
         /* Choose a measurement type to use for notification */
-        if (snrIconLevel != -1 && rsrpIconLevel != -1) {
+        if (secondMetricIconLevel != -1 && rsrpIconLevel != -1) {
             /*
              * The number of bars displayed shall be the smaller of the bars
              * associated with LTE RSRP and the bars associated with the LTE
-             * RS_SNR
+             * RS_SNR/RSRQ
              */
-            return (rsrpIconLevel < snrIconLevel ? rsrpIconLevel : snrIconLevel);
+            return (rsrpIconLevel < secondMetricIconLevel ? rsrpIconLevel : secondMetricIconLevel);
         }
 
-        if (snrIconLevel != -1) return snrIconLevel;
+        if (secondMetricIconLevel != -1) return secondMetricIconLevel;
 
         if (rsrpIconLevel != -1) return rsrpIconLevel;
 
