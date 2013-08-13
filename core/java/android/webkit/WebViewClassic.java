@@ -773,6 +773,7 @@ public final class WebViewClassic implements WebViewProvider, WebViewProvider.Sc
 
     // Used to display in full screen mode
     PluginFullScreenHolder mFullScreenHolder;
+    private final Object mFullScreenHolderLock = new Object();
 
     /**
      * Position of the last touch event in pixels.
@@ -5762,14 +5763,18 @@ public final class WebViewClassic implements WebViewProvider, WebViewProvider.Sc
     private int mDistanceY = 0;
 
     private boolean inFullScreenMode() {
-        return mFullScreenHolder != null;
+        synchronized(mFullScreenHolderLock) {
+            return mFullScreenHolder != null;
+        }
     }
 
     private void dismissFullScreenMode() {
-        if (inFullScreenMode()) {
-            mFullScreenHolder.hide();
-            mFullScreenHolder = null;
-            invalidate();
+        synchronized(mFullScreenHolderLock) {
+            if (inFullScreenMode()) {
+                mFullScreenHolder.hide();
+                mFullScreenHolder = null;
+                invalidate();
+            }
         }
     }
 
@@ -7434,14 +7439,17 @@ public final class WebViewClassic implements WebViewProvider, WebViewProvider.Sc
                     int orientation = msg.arg1;
                     int npp = msg.arg2;
 
-                    if (inFullScreenMode()) {
-                        Log.w(LOGTAG, "Should not have another full screen.");
-                        dismissFullScreenMode();
+                    synchronized(mFullScreenHolderLock) {
+                        if (inFullScreenMode()) {
+                            Log.w(LOGTAG, "Should not have another full screen.");
+                            dismissFullScreenMode();
+                        }
+                        mFullScreenHolder = new PluginFullScreenHolder(WebViewClassic.this,
+                                                orientation, npp);
+                        mFullScreenHolder.setContentView(view);
+                        mFullScreenHolder.show();
+                        invalidate();
                     }
-                    mFullScreenHolder = new PluginFullScreenHolder(WebViewClassic.this, orientation, npp);
-                    mFullScreenHolder.setContentView(view);
-                    mFullScreenHolder.show();
-                    invalidate();
 
                     break;
                 }
