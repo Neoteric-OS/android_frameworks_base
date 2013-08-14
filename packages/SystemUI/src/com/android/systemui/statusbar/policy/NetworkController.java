@@ -1120,6 +1120,7 @@ public class NetworkController extends BroadcastReceiver {
         }
 
         if (mBluetoothTethered) {
+            mDataTypeIconId =0;
             combinedLabel = mContext.getString(R.string.bluetooth_tethered);
             combinedSignalIconId = mBluetoothTetherIconId;
             mContentDescriptionCombinedSignal = mContext.getString(
