@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "edc77c62_363218d6",
+        "filename": "wifi/java/android/net/wifi/WifiChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1020464
+      },
+      "writtenOn": "2013-08-21T10:13:52Z",
+      "side": 1,
+      "message": "This has nothing to do with IBSS mode directly and I consider this additional work that can be done by Google after accepting my patch.",
+      "parentUuid": "UaeKSnEk",
+      "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UacK.eLw",
         "filename": "wifi/java/android/net/wifi/WifiChannel.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2013-05-09T20:07:00Z",
       "side": 1,
       "message": "would it make sense to make these final and the whole object is immutable?  Do you envision needing to change these?",
+      "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edc77c62_563794c4",
+        "filename": "wifi/java/android/net/wifi/WifiChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1020464
+      },
+      "writtenOn": "2013-08-21T10:13:52Z",
+      "side": 1,
+      "message": "I don\u0027t think they have to be changed, so yes may be better",
+      "parentUuid": "UacK.eLw",
       "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "edc77c62_d64ac42e",
+        "filename": "wifi/java/android/net/wifi/WifiChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1020464
+      },
+      "writtenOn": "2013-08-21T10:13:52Z",
+      "side": 1,
+      "message": "Yes \"passive scanning\" and \"radar\" could be added here, as well as channel width.\n\nAs this is not necessary for IBSS mode at the moment I have left this out.",
+      "parentUuid": "UaYKkgKQ",
+      "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UaaLBhEc",
         "filename": "wifi/java/android/net/wifi/WifiChannel.java",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2013-05-09T20:07:00Z",
       "side": 1,
       "message": "organizationally, can we put the constructor and copy constructor at the top, the to-string and equals next and the parcelable stuff at the bottom?",
+      "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edc77c62_16543ccd",
+        "filename": "wifi/java/android/net/wifi/WifiChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1020464
+      },
+      "writtenOn": "2013-08-21T10:13:52Z",
+      "side": 1,
+      "message": "Can do, but I\u0027m only willing to spend more time on this if I see a chance of getting it merged",
+      "parentUuid": "UaaLBhEc",
       "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "edc77c62_36593806",
+        "filename": "wifi/java/android/net/wifi/WifiChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1020464
+      },
+      "writtenOn": "2013-08-21T10:13:52Z",
+      "side": 1,
+      "message": "True",
+      "parentUuid": "UaQK5UNE",
+      "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UaSKVdDg",
         "filename": "wifi/java/android/net/wifi/WifiChannel.java",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2013-05-09T20:07:00Z",
       "side": 1,
       "message": "I think if we make them final we should also remove this constructor",
+      "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edc77c62_564eb440",
+        "filename": "wifi/java/android/net/wifi/WifiChannel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1020464
+      },
+      "writtenOn": "2013-08-21T10:13:52Z",
+      "side": 1,
+      "message": "True",
+      "parentUuid": "UaSKVdDg",
       "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "edc77c62_d6fc849f",
+        "filename": "wifi/java/android/net/wifi/WifiNative.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1020464
+      },
+      "writtenOn": "2013-08-21T10:13:52Z",
+      "side": 1,
+      "message": "so far not as we control the output of wpa_supplicant get_capability freq which was added by another patch in this series",
+      "parentUuid": "UacKr2GA",
+      "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UaSLC1C4",
         "filename": "wifi/java/android/net/wifi/WifiStateMachine.java",
         "patchSetId": 2
@@ -149,6 +275,24 @@
       "writtenOn": "2013-05-09T20:07:00Z",
       "side": 1,
       "message": "when would this need to change?  when we changed regulatory domains?  What if the user drives from one domain to another?",
+      "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edc77c62_96192c3d",
+        "filename": "wifi/java/android/net/wifi/WifiStateMachine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2417,
+      "author": {
+        "id": 1020464
+      },
+      "writtenOn": "2013-08-21T10:13:52Z",
+      "side": 1,
+      "message": "It can change when the regulatory domain changes. \n\nSo far I don\u0027t see any other code in Android which handles this case, so I don\u0027t think this needs to be addressed in the initial patch for IBSS mode",
+      "parentUuid": "UaSLC1C4",
       "revId": "67072a6279dd345f75ba66d2198d2041921635a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
