@@ -65,6 +65,7 @@ public class LinkProperties implements Parcelable {
     private String mDomains;
     private Collection<RouteInfo> mRoutes = new ArrayList<RouteInfo>();
     private ProxyProperties mHttpProxy;
+    private int mMtu;
 
     // Stores the properties of links that are "stacked" above this link.
     // Indexed by interface name to allow modification and to prevent duplicates being added.
@@ -103,6 +104,7 @@ public class LinkProperties implements Parcelable {
             for (LinkProperties l: source.mStackedLinks.values()) {
                 addStackedLink(l);
             }
+            setMtu(source.getMtu());
         }
     }
 
@@ -158,6 +160,14 @@ public class LinkProperties implements Parcelable {
 
     public void setDomains(String domains) {
         mDomains = domains;
+    }
+
+    public void setMtu(int mtu) {
+        mMtu = mtu;
+    }
+
+    public int getMtu() {
+        return mMtu;
     }
 
     private RouteInfo routeWithInterface(RouteInfo route) {
@@ -277,6 +287,8 @@ public class LinkProperties implements Parcelable {
 
         String domainName = "Domains: " + mDomains;
 
+        String mtu = "MTU: " + mMtu;
+
         String routes = " Routes: [";
         for (RouteInfo route : mRoutes) routes += route.toString() + ",";
         routes += "] ";
@@ -290,7 +302,7 @@ public class LinkProperties implements Parcelable {
             }
             stacked += "] ";
         }
-        return "{" + ifaceName + linkAddresses + routes + dns + domainName + proxy + stacked + "}";
+        return "{" + ifaceName + linkAddresses + routes + dns + domainName + mMtu + proxy + stacked + "}";
     }
 
     /**
@@ -530,7 +542,8 @@ public class LinkProperties implements Parcelable {
                 + ((null == mDomains) ? 0 : mDomains.hashCode())
                 + mRoutes.size() * 41
                 + ((null == mHttpProxy) ? 0 : mHttpProxy.hashCode())
-                + mStackedLinks.hashCode() * 47);
+                + mStackedLinks.hashCode() * 47)
+                + mMtu * 51;
     }
 
     /**
