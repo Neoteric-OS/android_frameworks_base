@@ -36,4 +36,9 @@
          note that empty fields can be ommitted: "name,apn,,,,,,,,,310,260,,DUN" -->
     <string translatable="false" name="config_tether_apndata">Rogers LTE Tethering,ltedata.apn,,,,,,,,,302,720,,DUN</string>
 
+
+    <!-- Configure network specific MTU size. Normally the default size of MTU is 1500.
+    -->
+    <integer name="config_mtu_size">1430</integer>
+
 </resources>
