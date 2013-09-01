@@ -1041,6 +1041,10 @@
     players. -->
     <integer name="config_safe_media_volume_index">10</integer>
 
+    <!-- Configure network specific MTU size. Normally, the default size of MTU is 1500.
+    -->
+    <integer name="config_mtu_size">1500</integer>
+
     <!-- Whether WiFi display is supported by this device.
          There are many prerequisites for this feature to work correctly.
          Here are a few of them:

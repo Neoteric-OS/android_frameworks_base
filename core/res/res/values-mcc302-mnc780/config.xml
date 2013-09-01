@@ -37,4 +37,8 @@
          note that empty fields can be ommitted: "name,apn,,,,,,,,,310,260,,DUN" -->
     <string translatable="false" name="config_tether_apndata">SaskTel Tethering,inet.stm.sk.ca,,,,,,,,,302,780,,DUN</string>
 
+    <!-- Configure network specific MTU size. Normally the default size of MTU is 1500.
+    -->
+    <integer name="config_mtu_size">1358</integer>
+
 </resources>

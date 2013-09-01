@@ -762,6 +762,16 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     }
 
     @Override
+    public void setMtu(String iface, int mtu) {
+        final NativeDaemonEvent event;
+        try {
+            event = mConnector.execute("interface", "setmtu", iface, mtu);
+        } catch (NativeDaemonConnectorException e) {
+            throw e.rethrowAsParcelableException();
+        }
+    }
+
+    @Override
     public void shutdown() {
         // TODO: remove from aidl if nobody calls externally
         mContext.enforceCallingOrSelfPermission(SHUTDOWN, TAG);
