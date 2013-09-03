@@ -1817,7 +1817,7 @@ public class NotificationManagerService extends INotificationManager.Stub
                     // do not play notifications if stream volume is 0
                     // (typically because ringer mode is silent) or if speech recognition is active.
                     if ((audioManager.getStreamVolume(audioStreamType) != 0)
-                            && !audioManager.isSpeechRecognitionActive()) {
+                            && !audioManager.isNoiseFreeRequiredSourceActive()) {
                         final long identity = Binder.clearCallingIdentity();
                         try {
                             final IRingtonePlayer player = mAudioService.getRingtonePlayer();
@@ -1850,7 +1850,8 @@ public class NotificationManagerService extends INotificationManager.Stub
                         && !(audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT)) {
                     mVibrateNotification = r;
 
-                    if (useDefaultVibrate || convertSoundToVibration) {
+                    if ((useDefaultVibrate || convertSoundToVibration)
+                            && !audioManager.isNoiseFreeRequiredSourceActive()) {
                         // Escalate privileges so we can use the vibrator even if the notifying app
                         // does not have the VIBRATE permission.
                         long identity = Binder.clearCallingIdentity();

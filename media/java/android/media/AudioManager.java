@@ -1543,12 +1543,14 @@ public class AudioManager {
 
     /**
      * @hide
-     * Checks whether speech recognition is active
+     * Checks whether noise-free required recording source(speech recognition or camcorder) is active
      * @return true if a recording with source {@link MediaRecorder.AudioSource#VOICE_RECOGNITION}
+     *    or {@link MediaRecorder.AudioSource#CAMCORDER}
      *    is underway.
      */
-    public boolean isSpeechRecognitionActive() {
-        return AudioSystem.isSourceActive(MediaRecorder.AudioSource.VOICE_RECOGNITION);
+    public boolean isNoiseFreeRequiredSourceActive() {
+        return AudioSystem.isSourceActive(MediaRecorder.AudioSource.VOICE_RECOGNITION)
+            || AudioSystem.isSourceActive(MediaRecorder.AudioSource.CAMCORDER);
     }
 
     /**
