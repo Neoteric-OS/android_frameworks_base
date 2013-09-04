@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32649599_2ee373f0",
+        "filename": "core/java/android/net/MobileDataStateTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2013-09-04T22:12:20Z",
+      "side": 1,
+      "message": "Have it a separate value to be consistent.",
+      "revId": "04ef11ddf025ba4c0f4347d3144d03edcb65bf0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32649599_ae1763b7",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2013-09-04T22:12:20Z",
+      "side": 1,
+      "message": "I think we need to add CellSignalStrengthTscdma?",
+      "revId": "04ef11ddf025ba4c0f4347d3144d03edcb65bf0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
