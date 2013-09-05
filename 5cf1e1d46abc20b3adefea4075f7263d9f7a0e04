@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b29885f6_3c5c3180",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-09-05T20:46:47Z",
+      "side": 1,
+      "message": "Indicate this is intended to be overlaid per carrier:\n\n\"Configure mobile network MTU.  The standard default is set here but each carrier may have a specific value set in an overlay config.xml file.\"",
+      "revId": "5cf1e1d46abc20b3adefea4075f7263d9f7a0e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b29885f6_bc6f612e",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-09-05T20:46:47Z",
+      "side": 1,
+      "message": "This name is not specific enough.  Perhaps change to:\n\nconfig_mobile_mtu",
+      "revId": "5cf1e1d46abc20b3adefea4075f7263d9f7a0e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b29885f6_7ca95924",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2451,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-09-05T20:46:47Z",
+      "side": 1,
+      "message": "please add mtu to LinkProperties.  Set it in the MobileDataStateTracker using the code you have here.  Then this code would just read the LinkProperties and set the MTU.",
+      "revId": "5cf1e1d46abc20b3adefea4075f7263d9f7a0e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b29885f6_5cfadd31",
+        "filename": "services/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-09-05T20:46:47Z",
+      "side": 1,
+      "message": "please enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);",
+      "revId": "5cf1e1d46abc20b3adefea4075f7263d9f7a0e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
