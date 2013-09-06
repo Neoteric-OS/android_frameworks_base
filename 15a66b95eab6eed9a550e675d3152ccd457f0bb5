@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f23cbda4_b42be84a",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-09-06T02:06:25Z",
+      "side": 1,
+      "message": "clear mtu",
+      "revId": "15a66b95eab6eed9a550e675d3152ccd457f0bb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f23cbda4_141bdc33",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-09-06T02:06:25Z",
+      "side": 1,
+      "message": "check mtu",
+      "revId": "15a66b95eab6eed9a550e675d3152ccd457f0bb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
