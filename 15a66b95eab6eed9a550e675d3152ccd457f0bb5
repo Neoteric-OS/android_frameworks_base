@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f28e7db0_7e56b161",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1021143
+      },
+      "writtenOn": "2013-09-06T07:47:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f23cbda4_b42be84a",
+      "revId": "15a66b95eab6eed9a550e675d3152ccd457f0bb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b271658e_9468c4b9",
         "filename": "core/java/android/net/LinkProperties.java",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f28e7db0_7e7dd1e5",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1021143
+      },
+      "writtenOn": "2013-09-06T07:47:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b271658e_9468c4b9",
+      "revId": "15a66b95eab6eed9a550e675d3152ccd457f0bb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f23cbda4_141bdc33",
         "filename": "core/java/android/net/LinkProperties.java",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2013-09-06T02:06:25Z",
       "side": 1,
       "message": "check mtu",
+      "revId": "15a66b95eab6eed9a550e675d3152ccd457f0bb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f28e7db0_9e6a9d1f",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1021143
+      },
+      "writtenOn": "2013-09-06T07:47:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f23cbda4_141bdc33",
       "revId": "15a66b95eab6eed9a550e675d3152ccd457f0bb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
