@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b271658e_d406bc2e",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1021143
+      },
+      "writtenOn": "2013-09-06T00:48:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b29885f6_3c5c3180",
+      "revId": "5cf1e1d46abc20b3adefea4075f7263d9f7a0e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b29885f6_bc6f612e",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2013-09-05T20:46:47Z",
       "side": 1,
       "message": "This name is not specific enough.  Perhaps change to:\n\nconfig_mobile_mtu",
+      "revId": "5cf1e1d46abc20b3adefea4075f7263d9f7a0e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b271658e_f40bb833",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1021143
+      },
+      "writtenOn": "2013-09-06T00:48:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b29885f6_bc6f612e",
       "revId": "5cf1e1d46abc20b3adefea4075f7263d9f7a0e04",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b271658e_541b8c80",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2451,
+      "author": {
+        "id": 1021143
+      },
+      "writtenOn": "2013-09-06T00:48:23Z",
+      "side": 1,
+      "message": "I\u0027ve fixed this but I didn\u0027t understand fully, please review the new patchset. and please guide. Thanks.",
+      "parentUuid": "b29885f6_7ca95924",
+      "revId": "5cf1e1d46abc20b3adefea4075f7263d9f7a0e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b29885f6_5cfadd31",
         "filename": "services/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2013-09-05T20:46:47Z",
       "side": 1,
       "message": "please enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);",
+      "revId": "5cf1e1d46abc20b3adefea4075f7263d9f7a0e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b271658e_142114b9",
+        "filename": "services/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1021143
+      },
+      "writtenOn": "2013-09-06T00:48:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b29885f6_5cfadd31",
       "revId": "5cf1e1d46abc20b3adefea4075f7263d9f7a0e04",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
