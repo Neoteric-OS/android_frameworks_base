@@ -16,6 +16,24 @@
       "revId": "e63aeb5ceda84e39e1b51f81ff0d2379b4995cef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b271658e_54346cec",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1021143
+      },
+      "writtenOn": "2013-09-06T01:44:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f23cbda4_319f0af7",
+      "revId": "e63aeb5ceda84e39e1b51f81ff0d2379b4995cef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
