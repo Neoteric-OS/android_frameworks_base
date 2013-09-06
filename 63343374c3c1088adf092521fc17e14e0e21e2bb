@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f23cbda4_b1877a0b",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-09-06T00:53:57Z",
+      "side": 1,
+      "message": "long line",
+      "revId": "63343374c3c1088adf092521fc17e14e0e21e2bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
