@@ -58,9 +58,9 @@ public class GpsXtraDownloader {
         String server1 = properties.getProperty("XTRA_SERVER_1");
         String server2 = properties.getProperty("XTRA_SERVER_2");
         String server3 = properties.getProperty("XTRA_SERVER_3");
-        if (server1 != null) count++;
-        if (server2 != null) count++;
-        if (server3 != null) count++;
+        if (server1 != null && server1.length() != 0) count++;
+        if (server2 != null && server2.length() != 0) count++;
+        if (server3 != null && server3.length() != 0) count++;
         
         if (count == 0) {
             Log.e(TAG, "No XTRA servers were specified in the GPS configuration");
@@ -68,9 +68,9 @@ public class GpsXtraDownloader {
         } else {
             mXtraServers = new String[count];
             count = 0;
-            if (server1 != null) mXtraServers[count++] = server1;
-            if (server2 != null) mXtraServers[count++] = server2;
-            if (server3 != null) mXtraServers[count++] = server3;
+            if (server1 != null && server1.length() != 0) mXtraServers[count++] = server1;
+            if (server2 != null && server2.length() != 0) mXtraServers[count++] = server2;
+            if (server3 != null && server3.length() != 0) mXtraServers[count++] = server3;
 
             // randomize first server
             Random random = new Random();
