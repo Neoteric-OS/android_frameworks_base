@@ -30818,6 +30818,8 @@ package android.widget {
   }
 
   public static class TextView.SavedState extends android.view.View.BaseSavedState {
+    ctor public TextView.SavedState(android.os.Parcelable);
+    ctor public TextView.SavedState(android.os.Parcel);
     field public static final android.os.Parcelable.Creator CREATOR;
   }
 
@@ -40922,11 +40924,11 @@ package java.util.concurrent {
   }
 
   public class ConcurrentHashMap extends java.util.AbstractMap implements java.util.concurrent.ConcurrentMap java.io.Serializable {
-    ctor public ConcurrentHashMap(int, float, int);
-    ctor public ConcurrentHashMap(int, float);
-    ctor public ConcurrentHashMap(int);
     ctor public ConcurrentHashMap();
+    ctor public ConcurrentHashMap(int);
     ctor public ConcurrentHashMap(java.util.Map<? extends K, ? extends V>);
+    ctor public ConcurrentHashMap(int, float);
+    ctor public ConcurrentHashMap(int, float, int);
     method public boolean contains(java.lang.Object);
     method public java.util.Enumeration<V> elements();
     method public java.util.Set<java.util.Map.Entry<K, V>> entrySet();
