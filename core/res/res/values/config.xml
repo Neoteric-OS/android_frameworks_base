@@ -1141,4 +1141,7 @@
         <item>com.android.inputmethod.latin</item>
     </string-array>
 
+    <!-- For some operators, PDU has garbages. To fix it, need to use valid index -->
+    <integer name="config_valid_wappush_index">-1</integer>
+
 </resources>
