@@ -301,6 +301,7 @@ public final class NsdManager {
 
         @Override
         public void handleMessage(Message message) {
+          try {
             switch (message.what) {
                 case AsyncChannel.CMD_CHANNEL_HALF_CONNECTED:
                     mAsyncChannel.sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
@@ -377,6 +378,9 @@ public final class NsdManager {
             if (listenerRemove) {
                 removeListener(message.arg2);
             }
+          } catch (Exception e) {
+              Log.e(TAG, "handleMessage: message: " + message + " exception: " + e);
+          }
         }
     }
 
