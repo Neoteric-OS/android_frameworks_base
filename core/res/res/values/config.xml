@@ -1141,4 +1141,7 @@
         <item>com.android.inputmethod.latin</item>
     </string-array>
 
+    <!-- Some operators redirect the call barring MMI code to other purpose.
+         If this flag is true, the MMI code is not processed for call barring service -->
+    <bool name="config_redirectCallBarringMMI">false</bool>
 </resources>
