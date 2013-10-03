@@ -155,6 +155,7 @@ class ServerThread {
         CommonTimeManagementService commonTimeMgmtService = null;
         InputManagerService inputManager = null;
         TelephonyRegistry telephonyRegistry = null;
+        MSimTelephonyRegistry msimTelephonyRegistry = null;
         ConsumerIrService consumerIr = null;
 
         // Create a handler thread just for the window manager to enjoy.
@@ -216,6 +217,12 @@ class ServerThread {
             Slog.i(TAG, "Telephony Registry");
             telephonyRegistry = new TelephonyRegistry(context);
             ServiceManager.addService("telephony.registry", telephonyRegistry);
+
+            if (android.telephony.MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
+                Slog.i(TAG, "MSimTelephony Registry");
+                msimTelephonyRegistry = new MSimTelephonyRegistry(context);
+                ServiceManager.addService("telephony.msim.registry", msimTelephonyRegistry);
+            }
 
             Slog.i(TAG, "Scheduling Policy");
             ServiceManager.addService("scheduling_policy", new SchedulingPolicyService());
@@ -927,6 +934,7 @@ class ServerThread {
         final AssetAtlasService atlasF = atlas;
         final InputManagerService inputManagerF = inputManager;
         final TelephonyRegistry telephonyRegistryF = telephonyRegistry;
+        final MSimTelephonyRegistry msimTelephonyRegistryF = msimTelephonyRegistry;
         final PrintManagerService printManagerF = printManager;
         final MediaRouterService mediaRouterF = mediaRouter;
 
@@ -1067,6 +1075,12 @@ class ServerThread {
 
                 try {
                     if (telephonyRegistryF != null) telephonyRegistryF.systemRunning();
+                } catch (Throwable e) {
+                    reportWtf("Notifying TelephonyRegistry running", e);
+                }
+
+                try {
+                    if (msimTelephonyRegistryF != null) msimTelephonyRegistryF.systemRunning();
                 } catch (Throwable e) {
                     reportWtf("Notifying TelephonyRegistry running", e);
                 }
