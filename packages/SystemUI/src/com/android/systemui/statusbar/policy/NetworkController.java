@@ -505,6 +505,9 @@ public class NetworkController extends BroadcastReceiver {
             else {
                 mSimState = IccCardConstants.State.NETWORK_LOCKED;
             }
+        }
+        else if (IccCardConstants.INTENT_VALUE_ICC_CARD_IO_ERROR.equals(stateExtra)) {
+            mSimState = IccCardConstants.State.CARD_IO_ERROR;
         } else {
             mSimState = IccCardConstants.State.UNKNOWN;
         }
@@ -1042,6 +1045,9 @@ public class NetworkController extends BroadcastReceiver {
 
             if (mDataConnected) {
                 mobileLabel = mNetworkName;
+            } else if (mSimState == IccCardConstants.State.CARD_IO_ERROR) {
+                mobileLabel
+                    = context.getString(R.string.status_bar_sim_error);
             } else if (mConnected || emergencyOnly) {
                 if (hasService() || emergencyOnly) {
                     // The isEmergencyOnly test covers the case of a phone with no SIM
