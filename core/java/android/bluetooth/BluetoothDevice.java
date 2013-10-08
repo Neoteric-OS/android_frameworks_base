@@ -947,6 +947,10 @@ public final class BluetoothDevice implements Parcelable {
       *               was started.
       */
      public boolean fetchUuidsWithSdp() {
+        if (sService == null) {
+            Log.e(TAG, "BT not enabled. Cannot fetch remote device Uuids");
+            return false;
+        }
         try {
             return sService.fetchRemoteUuids(this);
         } catch (RemoteException e) {Log.e(TAG, "", e);}
