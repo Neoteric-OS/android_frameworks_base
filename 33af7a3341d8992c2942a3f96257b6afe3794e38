@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e15442f_5cc4b183",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthCdma.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2013-10-11T15:32:25Z",
+      "side": 1,
+      "message": "cdmaDbm and cdmaEcio are being passed as Integer.MAX_VALUE and then being converted to negative, not wrong, as ril.h doesn\u0027t specify what an unknown value should be. But evodDbm and evdoEcio are both zero which implies a nice strong signal. What is it you\u0027re trying to return in these cases?\n\n10-11 08:11:44.916  1070  1170 D RILJ    : [3721]\u003c RIL_REQUEST_GET_CELL_INFO_LIST [CellInfoCdma:{mRegistered\u003dYES mTimeStampType\u003doem_ril mTimeStamp\u003d46288642225ns CellIdentityCdma:{ mNetworkId\u003d2852 mSystemId\u003d26736 mBasestationId\u003d26752 mLongitude\u003d186935400 mLatitude\u003d0} CellSignalStrengthCdma: cdmaDbm\u003d-2147483647 cdmaEcio\u003d-2147483647 evdoDbm\u003d0 evdoEcio\u003d0 evdoSnr\u003d0}]",
+      "revId": "33af7a3341d8992c2942a3f96257b6afe3794e38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
