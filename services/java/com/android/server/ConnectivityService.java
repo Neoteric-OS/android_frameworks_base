@@ -2842,6 +2842,19 @@ public class ConnectivityService extends IConnectivityManager.Stub {
                 }
             }
             flushVmDnsCache();
+        } else {
+            //reset default interface for dns
+            if (!nt.getNetworkInfo().isConnectedOrConnecting() &&
+                    mNetConfigs[netType].isDefault() &&
+                    mActiveDefaultNetwork == -1) {
+                synchronized (mDnsLock) {
+                    try {
+                        mNetd.setDefaultInterfaceForDns("lo");
+                    } catch (Exception e) {
+                        if (DBG) loge("exception setting default dns interface: " + e);
+                    }
+                }
+            }
         }
     }
 
