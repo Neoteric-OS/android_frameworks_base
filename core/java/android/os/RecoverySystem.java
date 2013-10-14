@@ -35,7 +35,6 @@ import java.security.SignatureException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
-import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -48,7 +47,6 @@ import org.apache.harmony.security.asn1.BerInputStream;
 import org.apache.harmony.security.pkcs7.ContentInfo;
 import org.apache.harmony.security.pkcs7.SignedData;
 import org.apache.harmony.security.pkcs7.SignerInfo;
-import org.apache.harmony.security.provider.cert.X509CertImpl;
 
 /**
  * RecoverySystem contains methods for interacting with the Android
@@ -201,21 +199,23 @@ public class RecoverySystem {
             if (signedData == null) {
                 throw new IOException("signedData is null");
             }
-            Collection encCerts = signedData.getCertificates();
+            List<org.apache.harmony.security.x509.Certificate> encCerts = signedData.getCertificates();
             if (encCerts.isEmpty()) {
                 throw new IOException("encCerts is empty");
             }
             // Take the first certificate from the signature (packages
             // should contain only one).
-            Iterator it = encCerts.iterator();
+            Iterator<org.apache.harmony.security.x509.Certificate> it = encCerts.iterator();
             X509Certificate cert = null;
             if (it.hasNext()) {
-                cert = new X509CertImpl((org.apache.harmony.security.x509.Certificate)it.next());
+                CertificateFactory cf = CertificateFactory.getInstance("X.509");
+                InputStream is = new ByteArrayInputStream(it.next().getEncoded());
+                cert = (X509Certificate) cf.generateCertificate(is);
             } else {
                 throw new SignatureException("signature contains no certificates");
             }
 
-            List sigInfos = signedData.getSignerInfos();
+            List<SignerInfo> sigInfos = signedData.getSignerInfos();
             SignerInfo sigInfo;
             if (!sigInfos.isEmpty()) {
                 sigInfo = (SignerInfo)sigInfos.get(0);
