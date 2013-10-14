@@ -912,6 +912,8 @@ public abstract class PreferenceActivity extends ListActivity implements
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        //Can not perform FragmentManagerImpl.popBackStack after onSaveInstanceState
+        mHandler.removeMessages(MSG_BUILD_HEADERS);
         super.onSaveInstanceState(outState);
 
         if (mHeaders.size() > 0) {
