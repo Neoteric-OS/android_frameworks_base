@@ -1525,6 +1525,12 @@
                 android:description="@string/permdesc_writeApnSettings"
                 android:label="@string/permlab_writeApnSettings" />
 
+    <!-- Allows applications to read the apn settings. -->
+    <permission android:name="android.permission.READ_APN_SETTINGS"
+                android:protectionLevel="dangerous"
+                android:description="@string/permdesc_readApnSettings"
+                android:label="@string/permlab_readApnSettings" />
+
     <!-- Allows an application to allow access the subscribed feeds
          ContentProvider. -->
     <permission android:name="android.permission.SUBSCRIBED_FEEDS_READ"

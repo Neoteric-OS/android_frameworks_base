@@ -1649,6 +1649,10 @@
     <string name="permdesc_writeApnSettings">Allows the app to change network settings and to intercept and inspect all network traffic,
       for example to change the proxy and port of any APN. Malicious apps may monitor, redirect, or modify network
       packets without your knowledge.</string>
+    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_readApnSettings">read network settings</string>
+    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_readApnSettings">Allows the app to read network settings</string>
 
     <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permlab_changeNetworkState">change network connectivity</string>
