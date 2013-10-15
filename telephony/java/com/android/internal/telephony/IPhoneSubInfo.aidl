@@ -16,6 +16,9 @@
 
 package com.android.internal.telephony;
 
+import java.util.List;
+import android.telephony.ApnSettings;
+
 /**
  * Interface used to retrieve various phone-related subscriber information.
  *
@@ -96,4 +99,16 @@ interface IPhoneSubInfo {
      *      not present or not loaded
      */
     String[] getIsimImpu();
+
+    /**
+     * Returns ApnSettings of the specific mcc and mnc.
+     * @return List of ApnSettings specified by the mcc and mnc
+     */
+    List<ApnSettings> getApns(String mcc, String mnc);
+
+    /**
+     * Returns ApnSettings for specific type of usage.
+     * @return the List of ApnSettings specified by type
+     */
+    List<ApnSettings> getApnsForType(String type);
 }

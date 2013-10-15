@@ -1400,4 +1400,42 @@ public class TelephonyManager {
         } catch (NullPointerException ex) {
         }
     }
+
+    /**
+     * Returns a List of ApnSettings specific for the APN type
+     * of usage
+     *
+     * @param  type identify the type of the APN to retrieve
+     *
+     * @return List of ApnSettings or null if info unavailable.
+     * <p>Requires Permission: {@link android.Manifest.permission#READ_APN_SETTINGS}
+     */
+    public List<ApnSettings> getApnsForType(String type) {
+        try {
+            return getSubscriberInfo().getApnsForType(type);
+        } catch (RemoteException ex) {
+            return null;
+        } catch (NullPointerException ex) {
+            return null;
+        }
+    }
+
+    /**
+     * Returns a List of ApnSettings for specific MCC and MNC
+     *
+     * @param mcc the mcc of the APN to retrieve
+     * @param mnc the mnc of the APN to retrieve
+     *
+     * @return List of ApnSettings or null if info unavailable.
+     * <p>Requires Permission: {@link android.Manifest.permission#READ_APN_SETTINGS}
+     */
+    public List<ApnSettings> getApns(String mcc, String mnc) {
+        try {
+            return getSubscriberInfo().getApns(mcc, mnc);
+        } catch (RemoteException ex) {
+            return null;
+        } catch (NullPointerException ex) {
+            return null;
+        }
+    }
 }
