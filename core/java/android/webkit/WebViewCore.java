@@ -760,9 +760,9 @@ public final class WebViewCore {
                                 break;
 
                             case REDUCE_PRIORITY:
-                                // 3 is an adjustable number.
+                                // 10 is an adjustable number.
                                 Process.setThreadPriority(
-                                        Process.THREAD_PRIORITY_DEFAULT + 3 *
+                                        Process.THREAD_PRIORITY_DEFAULT + 10 *
                                         Process.THREAD_PRIORITY_LESS_FAVORABLE);
                                 break;
 
@@ -1699,9 +1699,15 @@ public final class WebViewCore {
                             nativeInsertText(mNativeClass, (String) msg.obj);
                             break;
                         case SELECT_TEXT: {
-                            int handleId = (Integer) msg.obj;
-                            nativeSelectText(mNativeClass, handleId,
-                                    msg.arg1, msg.arg2);
+                            //if it's message from clear selection
+                            if(msg.obj == null) {
+                                nativeClearTextSelection(mNativeClass);
+                            }
+                            else {
+                                int handleId = (Integer) msg.obj;
+                                nativeSelectText(mNativeClass, handleId,
+                                msg.arg1, msg.arg2);
+                            }
                             break;
                         }
                         case SELECT_WORD_AT: {
@@ -2531,8 +2537,13 @@ public final class WebViewCore {
         // adjust the default scale to match the densityDpi
         float adjust = 1.0f;
         if (mViewportDensityDpi == -1) {
-            adjust = getFixedDisplayDensity(mContext);
-        } else if (mViewportDensityDpi > 0) {
+            if( mWebViewClassic != null && mWebViewClassic.getDefaultZoomScale() *
+                mSettings.getDefaultZoom().value != mContext.getResources().getDisplayMetrics().density * 100)
+        mWebViewClassic.adjustDefaultZoomDensity( mSettings.getDefaultZoom().value);
+                if( mWebViewClassic != null && (int)( mWebViewClassic.getDefaultZoomScale() * 100) != 100) {
+                    adjust = mWebViewClassic.getDefaultZoomScale();
+                }
+            } else if (mViewportDensityDpi > 0) {
             adjust = (float) mContext.getResources().getDisplayMetrics().densityDpi
                     / mViewportDensityDpi;
             adjust = ((int) (adjust * 100)) / 100.0f;
