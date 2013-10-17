@@ -28,6 +28,13 @@
     android:layout_alignParentBottom="true"
     android:clickable="true">
 
+    <!-- Used only for Multi Sim case -->
+    <ViewStub android:id="@+id/stub_msim_carrier_text"
+        android:inflatedId="@+id/msim_keyguard_carrier_area"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout="@layout/msim_keyguard_carrier_area" />
+
     <com.android.keyguard.CarrierText
         android:id="@+id/carrier_text"
         android:layout_width="wrap_content"

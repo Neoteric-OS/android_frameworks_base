@@ -46,8 +46,10 @@ import android.os.UserHandle;
 import android.provider.Settings;
 
 import com.android.internal.telephony.IccCardConstants;
+import com.android.internal.telephony.MSimConstants;
 import com.android.internal.telephony.TelephonyIntents;
 
+import android.telephony.TelephonyManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import com.google.android.collect.Lists;
@@ -100,9 +102,9 @@ public class KeyguardUpdateMonitor {
     private final Context mContext;
 
     // Telephony state
-    private IccCardConstants.State mSimState = IccCardConstants.State.READY;
-    private CharSequence mTelephonyPlmn;
-    private CharSequence mTelephonySpn;
+    private IccCardConstants.State []mSimState;
+    private CharSequence []mTelephonyPlmn;
+    private CharSequence []mTelephonySpn;
     private int mRingMode;
     private int mPhoneState;
     private boolean mKeyguardIsVisible;
@@ -129,6 +131,8 @@ public class KeyguardUpdateMonitor {
     private boolean mSwitchingUser;
 
     private boolean mScreenOn;
+    public static final boolean
+            sIsMultiSimEnabled = TelephonyManager.getDefault().isMultiSimEnabled();
 
     private final Handler mHandler = new Handler() {
         @Override
@@ -141,7 +145,7 @@ public class KeyguardUpdateMonitor {
                     handleBatteryUpdate((BatteryStatus) msg.obj);
                     break;
                 case MSG_CARRIER_INFO_UPDATE:
-                    handleCarrierInfoUpdate();
+                    handleCarrierInfoUpdate(msg.arg1);
                     break;
                 case MSG_SIM_STATE_CHANGE:
                     handleSimStateChange((SimArgs) msg.obj);
@@ -264,9 +268,15 @@ public class KeyguardUpdateMonitor {
                     || Intent.ACTION_TIMEZONE_CHANGED.equals(action)) {
                 mHandler.sendEmptyMessage(MSG_TIME_UPDATE);
             } else if (TelephonyIntents.SPN_STRINGS_UPDATED_ACTION.equals(action)) {
-                mTelephonyPlmn = getTelephonyPlmnFrom(intent);
-                mTelephonySpn = getTelephonySpnFrom(intent);
-                mHandler.sendEmptyMessage(MSG_CARRIER_INFO_UPDATE);
+                // Get the subscription from the intent.
+                final int subscription = intent.getIntExtra(MSimConstants.SUBSCRIPTION_KEY, 0);
+                Log.d(TAG, "Received SPN update on sub :" + subscription);
+                // Update PLMN and SPN for corresponding subscriptions.
+                mTelephonyPlmn[subscription] = getTelephonyPlmnFrom(intent);
+                mTelephonySpn[subscription] = getTelephonySpnFrom(intent);
+                final Message msg = mHandler.obtainMessage(MSG_CARRIER_INFO_UPDATE);
+                msg.arg1 = subscription;
+                mHandler.sendMessage(msg);
             } else if (Intent.ACTION_BATTERY_CHANGED.equals(action)) {
                 final int status = intent.getIntExtra(EXTRA_STATUS, BATTERY_STATUS_UNKNOWN);
                 final int plugged = intent.getIntExtra(EXTRA_PLUGGED, 0);
@@ -320,16 +330,22 @@ public class KeyguardUpdateMonitor {
      */
     private static class SimArgs {
         public final IccCardConstants.State simState;
+        public int subscription;
 
-        SimArgs(IccCardConstants.State state) {
+        SimArgs(IccCardConstants.State state, int sub) {
             simState = state;
+            subscription = sub;
         }
 
         static SimArgs fromIntent(Intent intent) {
             IccCardConstants.State state;
+            int subscription;
             if (!TelephonyIntents.ACTION_SIM_STATE_CHANGED.equals(intent.getAction())) {
                 throw new IllegalArgumentException("only handles intent ACTION_SIM_STATE_CHANGED");
             }
+            subscription = intent.getIntExtra(MSimConstants.SUBSCRIPTION_KEY, 0);
+            Log.d(TAG,"ACTION_SIM_STATE_CHANGED intent received on sub = " + subscription);
+
             String stateExtra = intent.getStringExtra(IccCardConstants.INTENT_KEY_ICC_STATE);
             if (IccCardConstants.INTENT_VALUE_ICC_ABSENT.equals(stateExtra)) {
                 final String absentReason = intent
@@ -363,7 +379,7 @@ public class KeyguardUpdateMonitor {
             } else {
                 state = IccCardConstants.State.UNKNOWN;
             }
-            return new SimArgs(state);
+            return new SimArgs(state, subscription);
         }
 
         public String toString() {
@@ -506,9 +522,19 @@ public class KeyguardUpdateMonitor {
         }
 
         // Take a guess at initial SIM state, battery status and PLMN until we get an update
-        mSimState = IccCardConstants.State.NOT_READY;
         mBatteryStatus = new BatteryStatus(BATTERY_STATUS_UNKNOWN, 100, 0, 0);
-        mTelephonyPlmn = getDefaultPlmn();
+        // TelephonyManager.getDefault().getPhoneCount() returns '1' for single SIM
+        // mode and '2' for dual SIM mode.
+        int numPhones = TelephonyManager.getDefault().getPhoneCount();
+        // Initialize PLMN, SPN strings and SIM states for the subscriptions.
+        mTelephonyPlmn = new CharSequence[numPhones];
+        mTelephonySpn = new CharSequence[numPhones];
+        mSimState = new IccCardConstants.State[numPhones];
+        for (int i = 0; i < numPhones; i++) {
+            mTelephonyPlmn[i] = getDefaultPlmn();
+            mTelephonySpn[i] = null;
+            mSimState[i] = IccCardConstants.State.NOT_READY;
+        }
 
         // Watch for interesting updates
         final IntentFilter filter = new IntentFilter();
@@ -758,14 +784,19 @@ public class KeyguardUpdateMonitor {
     /**
      * Handle {@link #MSG_CARRIER_INFO_UPDATE}
      */
-    private void handleCarrierInfoUpdate() {
-        if (DEBUG) Log.d(TAG, "handleCarrierInfoUpdate: plmn = " + mTelephonyPlmn
-            + ", spn = " + mTelephonySpn);
-
+    private void handleCarrierInfoUpdate(int subscription) {
+        if (DEBUG) Log.d(TAG, "handleCarrierInfoUpdate: plmn = " + mTelephonyPlmn[subscription]
+                + ", spn = " + mTelephonySpn[subscription] + ", subscription = " + subscription);
         for (int i = 0; i < mCallbacks.size(); i++) {
             KeyguardUpdateMonitorCallback cb = mCallbacks.get(i).get();
             if (cb != null) {
-                cb.onRefreshCarrierInfo(mTelephonyPlmn, mTelephonySpn);
+                if (sIsMultiSimEnabled) {
+                    cb.onRefreshCarrierInfo(mTelephonyPlmn[subscription],
+                            mTelephonySpn[subscription], subscription);
+                } else {
+                    cb.onRefreshCarrierInfo(mTelephonyPlmn[subscription],
+                            mTelephonySpn[subscription]);
+                }
             }
         }
     }
@@ -775,18 +806,25 @@ public class KeyguardUpdateMonitor {
      */
     private void handleSimStateChange(SimArgs simArgs) {
         final IccCardConstants.State state = simArgs.simState;
+        final int subscription = simArgs.subscription;
 
-        if (DEBUG) {
-            Log.d(TAG, "handleSimStateChange: intentValue = " + simArgs + " "
-                    + "state resolved to " + state.toString());
-        }
+        Log.d(TAG, "handleSimStateChange: intentValue = " + simArgs + " "
+                + "state resolved to " + state.toString() + " "
+                + "subscription =" + subscription);
 
-        if (state != IccCardConstants.State.UNKNOWN && state != mSimState) {
-            mSimState = state;
+        if (state != IccCardConstants.State.UNKNOWN && state != mSimState[subscription]) {
+            if (DEBUG_SIM_STATES) Log.v(TAG, "dispatching state: " + state
+                    + "subscription: " + subscription);
+
+            mSimState[subscription] = state;
             for (int i = 0; i < mCallbacks.size(); i++) {
                 KeyguardUpdateMonitorCallback cb = mCallbacks.get(i).get();
                 if (cb != null) {
-                    cb.onSimStateChanged(state);
+                    if (sIsMultiSimEnabled) {
+                        cb.onSimStateChanged(state, subscription);
+                    } else {
+                        cb.onSimStateChanged(state);
+                    }
                 }
             }
         }
@@ -937,9 +975,18 @@ public class KeyguardUpdateMonitor {
         callback.onTimeChanged();
         callback.onRingerModeChanged(mRingMode);
         callback.onPhoneStateChanged(mPhoneState);
-        callback.onRefreshCarrierInfo(mTelephonyPlmn, mTelephonySpn);
         callback.onClockVisibilityChanged();
-        callback.onSimStateChanged(mSimState);
+        int subscription = TelephonyManager.getDefault().getDefaultSubscription();
+        if (sIsMultiSimEnabled) {
+            for (int i=0; i < TelephonyManager.getDefault().getPhoneCount(); i++) {
+                callback.onRefreshCarrierInfo(mTelephonyPlmn[i], mTelephonySpn[i], i);
+                callback.onSimStateChanged(mSimState[i], i);
+            }
+        } else {
+            callback.onRefreshCarrierInfo(mTelephonyPlmn[subscription],
+                   mTelephonySpn[subscription]);
+            callback.onSimStateChanged(mSimState[subscription]);
+        }
         callback.onMusicClientIdChanged(
                 mDisplayClientState.clientGeneration,
                 mDisplayClientState.clearing,
@@ -961,7 +1008,33 @@ public class KeyguardUpdateMonitor {
     }
 
     public IccCardConstants.State getSimState() {
-        return mSimState;
+        return getSimState(TelephonyManager.getDefault().getDefaultSubscription());
+    }
+
+    public IccCardConstants.State getSimState(int subscription) {
+        return mSimState[subscription];
+    }
+
+    public int getPinLockedSubscription() {
+        int sub = -1;
+        for (int i = 0; i < mSimState.length; i++) {
+            if (mSimState[i] == IccCardConstants.State.PIN_REQUIRED) {
+                sub = i;
+                break;
+            }
+        }
+        return sub;
+    }
+
+    public int getPukLockedSubscription() {
+        int sub = -1;
+        for (int i = 0; i < mSimState.length; i++) {
+            if (mSimState[i] == IccCardConstants.State.PUK_REQUIRED) {
+                sub = i;
+                break;
+            }
+        }
+        return sub;
     }
 
     /**
@@ -973,7 +1046,13 @@ public class KeyguardUpdateMonitor {
      * through mHandler, this *must* be called from the UI thread.
      */
     public void reportSimUnlocked() {
-        handleSimStateChange(new SimArgs(IccCardConstants.State.READY));
+        reportSimUnlocked(TelephonyManager.getDefault().getDefaultSubscription());
+    }
+
+    public void reportSimUnlocked(int subscription) {
+        if (DEBUG) Log.d(TAG, "reportSimUnlocked(" + subscription + ")");
+        mSimState[subscription] = IccCardConstants.State.READY;
+        handleSimStateChange(new SimArgs(mSimState[subscription], subscription));
     }
 
     /**
@@ -993,11 +1072,19 @@ public class KeyguardUpdateMonitor {
     }
 
     public CharSequence getTelephonyPlmn() {
-        return mTelephonyPlmn;
+        return getTelephonyPlmn(TelephonyManager.getDefault().getDefaultSubscription());
+    }
+
+    public CharSequence getTelephonyPlmn(int subscription) {
+        return mTelephonyPlmn[subscription];
     }
 
     public CharSequence getTelephonySpn() {
-        return mTelephonySpn;
+        return getTelephonySpn(TelephonyManager.getDefault().getDefaultSubscription());
+    }
+
+    public CharSequence getTelephonySpn(int subscription) {
+        return mTelephonySpn[subscription];
     }
 
     /**
@@ -1046,7 +1133,18 @@ public class KeyguardUpdateMonitor {
     }
 
     public boolean isSimLocked() {
-        return isSimLocked(mSimState);
+        boolean isLocked = false;
+        for (IccCardConstants.State simState : mSimState) {
+            if (isSimLocked(simState)) {
+                isLocked = true;
+                break;
+            }
+        }
+        return isLocked;
+    }
+
+    public boolean isSimLocked(int subscription) {
+        return isSimLocked(mSimState[subscription]);
     }
 
     public static boolean isSimLocked(IccCardConstants.State state) {
@@ -1056,7 +1154,17 @@ public class KeyguardUpdateMonitor {
     }
 
     public boolean isSimPinSecure() {
-        return isSimPinSecure(mSimState);
+        boolean isSecure = false;
+        for (IccCardConstants.State simState : mSimState) {
+            if (isSimPinSecure(simState)) {
+                isSecure = true;
+                break;
+            }
+        }
+        return isSecure;
+    }
+    public boolean isSimPinSecure(int subscription) {
+        return isSimPinSecure(mSimState[subscription]);
     }
 
     public static boolean isSimPinSecure(IccCardConstants.State state) {
