@@ -30,6 +30,12 @@ import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.content.DialogInterface;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.os.Message;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView.OnEditorActionListener;
@@ -43,23 +49,24 @@ import com.android.internal.telephony.PhoneConstants;
  */
 public class KeyguardSimPukView extends KeyguardAbsKeyInputView
         implements KeyguardSecurityView, OnEditorActionListener, TextWatcher {
-    private static final String LOG_TAG = "KeyguardSimPukView";
+    public static final String LOG_TAG = "KeyguardSimPukView";
     private static final boolean DEBUG = KeyguardViewMediator.DEBUG;
     public static final String TAG = "KeyguardSimPukView";
 
-    private ProgressDialog mSimUnlockProgressDialog = null;
-    private CheckSimPuk mCheckSimPukThread;
-    private String mPukText;
-    private String mPinText;
-    private StateMachine mStateMachine = new StateMachine();
-    private AlertDialog mRemainingAttemptsDialog;
+    protected ProgressDialog mSimUnlockProgressDialog = null;
+    protected CheckSimPuk mCheckSimPukThread;
+    protected String mPukText;
+    protected String mPinText;
+    protected StateMachine mStateMachine = new StateMachine();
+    protected AlertDialog mRemainingAttemptsDialog;
+    protected  int mSubscription = -1;
 
-    private class StateMachine {
+    protected class StateMachine {
         final int ENTER_PUK = 0;
         final int ENTER_PIN = 1;
         final int CONFIRM_PIN = 2;
         final int DONE = 3;
-        private int state = ENTER_PUK;
+        protected int state = ENTER_PUK;
 
         public void next() {
             int msg = 0;
@@ -89,7 +96,7 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
             }
             mPasswordEntry.setText(null);
             if (msg != 0) {
-                mSecurityMessageDisplay.setMessage(msg, true);
+                mSecurityMessageDisplay.setMessage(getSecurityMessageDisplay(msg), true);
             }
         }
 
@@ -97,12 +104,13 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
             mPinText="";
             mPukText="";
             state = ENTER_PUK;
-            mSecurityMessageDisplay.setMessage(R.string.kg_puk_enter_puk_hint, true);
+            mSecurityMessageDisplay.setMessage(
+                    getSecurityMessageDisplay(R.string.kg_puk_enter_puk_hint), true);
             mPasswordEntry.requestFocus();
         }
     }
 
-    private String getPukPasswordErrorMessage(int attemptsRemaining) {
+    protected String getPukPasswordErrorMessage(int attemptsRemaining) {
         String displayMessage;
 
         if (attemptsRemaining == 0) {
@@ -216,14 +224,18 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
             mPin = pin;
         }
 
+        protected CheckSimPuk(String puk, String pin, int sub) {
+            mPuk = puk;
+            mPin = pin;
+            mSubscription = sub;
+        }
         abstract void onSimLockChangedResponse(final int result, final int attemptsRemaining);
 
         @Override
         public void run() {
             try {
-                Log.v(TAG, "call supplyPukReportResult()");
-                final int[] result = ITelephony.Stub.asInterface(ServiceManager
-                        .checkService("phone")).supplyPukReportResult(mPuk, mPin);
+                final int[] result = ITelephony.Stub.asInterface(ServiceManager.checkService
+                        ("phone")).supplyPukReportResultUsingSub(mSubscription, mPuk, mPin);
                 Log.v(TAG, "supplyPukReportResult returned: " + result[0] + " " + result[1]);
                 post(new Runnable() {
                     public void run() {
@@ -241,7 +253,7 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
         }
     }
 
-    private Dialog getSimUnlockProgressDialog() {
+    protected Dialog getSimUnlockProgressDialog() {
         if (mSimUnlockProgressDialog == null) {
             mSimUnlockProgressDialog = new ProgressDialog(mContext);
             mSimUnlockProgressDialog.setMessage(
@@ -256,23 +268,23 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
         return mSimUnlockProgressDialog;
     }
 
-    private Dialog getPukRemainingAttemptsDialog(int remaining) {
+    protected Dialog getPukRemainingAttemptsDialog(int remaining) {
         String msg = getPukPasswordErrorMessage(remaining);
         if (mRemainingAttemptsDialog == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-            builder.setMessage(msg);
+            builder.setMessage(getSecurityMessageDisplay(msg));
             builder.setCancelable(false);
             builder.setNeutralButton(R.string.ok, null);
             mRemainingAttemptsDialog = builder.create();
             mRemainingAttemptsDialog.getWindow().setType(
                     WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
         } else {
-            mRemainingAttemptsDialog.setMessage(msg);
+            mRemainingAttemptsDialog.setMessage(getSecurityMessageDisplay(msg));
         }
         return mRemainingAttemptsDialog;
     }
 
-    private boolean checkPuk() {
+    protected boolean checkPuk() {
         // make sure the puk is at least 8 digits long.
         if (mPasswordEntry.getText().length() == 8) {
             mPukText = mPasswordEntry.getText().toString();
@@ -281,7 +293,7 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
         return false;
     }
 
-    private boolean checkPin() {
+    protected boolean checkPin() {
         // make sure the PIN is between 4 and 8 digits
         int length = mPasswordEntry.getText().length();
         if (length >= 4 && length <= 8) {
@@ -295,11 +307,13 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
         return mPinText.equals(mPasswordEntry.getText().toString());
     }
 
-    private void updateSim() {
+    protected void updateSim() {
         getSimUnlockProgressDialog().show();
 
         if (mCheckSimPukThread == null) {
-            mCheckSimPukThread = new CheckSimPuk(mPukText, mPinText) {
+
+            mCheckSimPukThread = new CheckSimPuk(mPukText, mPinText,
+                    KeyguardUpdateMonitor.getInstance(mContext).getPukLockedSubscription()) {
                 void onSimLockChangedResponse(final int result, final int attemptsRemaining) {
                     post(new Runnable() {
                         public void run() {
@@ -316,12 +330,12 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
                                         getPukRemainingAttemptsDialog(attemptsRemaining).show();
                                     } else {
                                         // show message
-                                        mSecurityMessageDisplay.setMessage(
-                                                getPukPasswordErrorMessage(attemptsRemaining), true);
+                                        mSecurityMessageDisplay.setMessage(getSecurityMessageDisplay
+                                                (getPukPasswordErrorMessage(attemptsRemaining)), true);
                                     }
                                 } else {
-                                    mSecurityMessageDisplay.setMessage(getContext().getString(
-                                            R.string.kg_password_puk_failed), true);
+                                    mSecurityMessageDisplay.setMessage(getSecurityMessageDisplay
+                                            (R.string.kg_password_puk_failed), true);
                                 }
                                 if (DEBUG) Log.d(LOG_TAG, "verifyPasswordAndUnlock "
                                         + " UpdateSim.onSimCheckResponse: "
@@ -340,6 +354,20 @@ public class KeyguardSimPukView extends KeyguardAbsKeyInputView
     @Override
     protected void verifyPasswordAndUnlock() {
         mStateMachine.next();
+    }
+
+    protected CharSequence getSecurityMessageDisplay(int resId) {
+        // Returns the String in the format
+        // "SUB:%d : %s", sub, msg
+        return getContext().getString(R.string.msim_kg_sim_pin_msg_format,
+                KeyguardUpdateMonitor.getInstance(mContext).getPukLockedSubscription()+1,
+                getContext().getResources().getText(resId));
+    }
+    protected CharSequence getSecurityMessageDisplay(String msg) {
+        // Returns the String in the format
+        // "SUB:%d : %s", sub, msg
+        return getContext().getString(R.string.msim_kg_sim_pin_msg_format,
+                KeyguardUpdateMonitor.getInstance(mContext).getPinLockedSubscription()+1,msg);
     }
 }
 

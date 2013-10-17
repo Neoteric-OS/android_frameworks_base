@@ -27,12 +27,19 @@ import com.android.internal.telephony.IccCardConstants;
 import com.android.internal.telephony.IccCardConstants.State;
 import com.android.internal.widget.LockPatternUtils;
 
+import android.telephony.TelephonyManager;
+
 import java.util.Locale;
 
 public class CarrierText extends TextView {
     private static CharSequence mSeparator;
 
     private LockPatternUtils mLockPatternUtils;
+
+    private CharSequence []mPlmnSub;
+    private CharSequence []mSpnSub;
+    private State []mSimStateSub;
+
 
     private KeyguardUpdateMonitorCallback mCallback = new KeyguardUpdateMonitorCallback() {
         private CharSequence mPlmn;
@@ -47,9 +54,22 @@ public class CarrierText extends TextView {
         }
 
         @Override
+        public void onRefreshCarrierInfo(CharSequence plmn, CharSequence spn, int sub) {
+            mPlmnSub[sub] = plmn;
+            mSpnSub[sub] = spn;
+            updateCarrierText(mSimStateSub, mPlmnSub, mSpnSub);
+        }
+
+        @Override
         public void onSimStateChanged(IccCardConstants.State simState) {
             mSimState = simState;
             updateCarrierText(mSimState, mPlmn, mSpn);
+        }
+
+        @Override
+        public void onSimStateChanged(IccCardConstants.State simState, int sub) {
+            mSimStateSub[sub] = simState;
+            updateCarrierText(mSimStateSub, mPlmnSub, mSpnSub);
         }
 
         public void onScreenTurnedOff(int why) {
@@ -83,10 +103,33 @@ public class CarrierText extends TextView {
         mLockPatternUtils = new LockPatternUtils(mContext);
         boolean useAllCaps = mContext.getResources().getBoolean(R.bool.kg_use_all_caps);
         setTransformationMethod(new CarrierTextTransformationMethod(mContext, useAllCaps));
+        initialize();
     }
+
+    private void initialize() {
+        int numPhones = TelephonyManager.getDefault().getPhoneCount();
+        mPlmnSub = new CharSequence[numPhones];
+        mSpnSub = new CharSequence[numPhones];
+        mSimStateSub = new State[numPhones];
+    }
+
 
     protected void updateCarrierText(State simState, CharSequence plmn, CharSequence spn) {
         setText(getCarrierTextForSimState(simState, plmn, spn));
+    }
+
+    protected void updateCarrierText(State []simState, CharSequence []plmn, CharSequence []spn) {
+        CharSequence text = "";
+        for (int i = 0; i < simState.length; i++) {
+            CharSequence displayText = getCarrierTextForSimState(simState[i], plmn[i], spn[i]);
+            if (mContext.getResources().getBoolean(R.bool.kg_use_all_caps)) {
+                displayText = (displayText != null ? displayText.toString().toUpperCase() : "");
+            }
+            text = (TextUtils.isEmpty(text)
+                    ? displayText
+                    : getContext().getString(R.string.msim_carrier_text_format, text, displayText));
+        }
+        setText(text);
     }
 
     @Override
@@ -100,6 +143,9 @@ public class CarrierText extends TextView {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+        if (KeyguardUpdateMonitor.sIsMultiSimEnabled) {
+            return;
+        }
         KeyguardUpdateMonitor.getInstance(mContext).registerCallback(mCallback);
     }
 
@@ -118,7 +164,7 @@ public class CarrierText extends TextView {
      * @param spn
      * @return
      */
-    private CharSequence getCarrierTextForSimState(IccCardConstants.State simState,
+    protected CharSequence getCarrierTextForSimState(IccCardConstants.State simState,
             CharSequence plmn, CharSequence spn) {
         CharSequence carrierText = null;
         StatusMode status = getStatusForIccState(simState);
