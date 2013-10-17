@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 **
-** Copyright 2012, The Android Open Source Project
+** Copyright (C) 2014, The Android Open Source Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License")
 ** you may not use this file except in compliance with the License.
@@ -16,18 +16,24 @@
 ** limitations under the License.
 */
 -->
-
-<com.android.keyguard.KeyguardPINView
+<!-- This is the SIM PUK view that allows the user to recover their device by entering the
+    carrier-provided PUK code and entering a new SIM PIN for it. -->
+<com.android.keyguard.MSimKeyguardSimPukView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:androidprv="http://schemas.android.com/apk/res/com.android.keyguard"
-    android:id="@+id/keyguard_pin_view"
+    android:id="@+id/msim_keyguard_sim_puk_view"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     androidprv:layout_maxWidth="@dimen/keyguard_security_width"
     androidprv:layout_maxHeight="@dimen/keyguard_security_height"
-    android:orientation="vertical"
-    android:contentDescription="@string/keyguard_accessibility_pin_unlock"
-    >
+    android:gravity="center_horizontal">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_lockscreen_sim"/>
+
     <include layout="@layout/keyguard_message_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,18 +48,18 @@
        android:layoutDirection="ltr"
        >
        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:orientation="horizontal"
-          android:layout_weight="1"
-          >
-          <TextView android:id="@+id/pinEntry"
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:orientation="horizontal"
+           android:layout_weight="1"
+           >
+           <TextView android:id="@+id/pinEntry"
                android:editable="true"
                android:layout_width="0dip"
                android:layout_height="match_parent"
                android:layout_weight="1"
                android:gravity="center"
-               android:layout_marginStart="@dimen/keyguard_lockscreen_pin_margin_left"
+               android:layout_marginStart="@*android:dimen/keyguard_lockscreen_pin_margin_left"
                android:singleLine="true"
                android:cursorVisible="false"
                android:background="@null"
@@ -64,7 +70,7 @@
                android:layout_width="wrap_content"
                android:layout_height="match_parent"
                android:gravity="center_vertical"
-               android:src="@drawable/ic_input_delete"
+               android:src="@*android:drawable/ic_input_delete"
                android:clickable="true"
                android:paddingTop="8dip"
                android:paddingBottom="8dip"
@@ -187,15 +193,10 @@
            android:layout_weight="1"
            android:orientation="horizontal"
            >
-           <ImageButton
-               android:id="@+id/key_cancel"
-               style="@style/Widget.Button.NumPadKey"
+           <Space
                android:layout_width="0px"
                android:layout_height="match_parent"
                android:layout_weight="1"
-               android:paddingRight="30dp"
-               android:src="@drawable/sym_keyboard_cancel"
-               android:contentDescription="@string/keyboardview_keycode_cancel"
                />
            <view class="com.android.keyguard.NumPadKey"
                android:id="@+id/key0"
@@ -218,6 +219,7 @@
                />
        </LinearLayout>
     </LinearLayout>
+
     <include layout="@layout/keyguard_eca"
                    android:id="@+id/keyguard_selector_fade_container"
                    android:layout_width="match_parent"
@@ -225,5 +227,4 @@
                    android:orientation="vertical"
                    android:layout_gravity="bottom|center_horizontal"
                    android:gravity="center_horizontal" />
-
-</com.android.keyguard.KeyguardPINView>
+</com.android.keyguard.MSimKeyguardSimPukView>
