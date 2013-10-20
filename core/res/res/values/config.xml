@@ -1031,6 +1031,14 @@
          autodetected from the Configuration. -->
     <bool name="config_showNavigationBar">false</bool>
 
+    <!-- If this flag is true, then config_hasPermanentMenuKey will determin
+         whether a device has a permanent menu key or not. -->
+    <bool name="config_forceSetPermanentMenuKey">false</bool>
+
+    <!-- Whether a device has a permanent menu key or not. This flag is valid only
+         when config_forceSetPermanentMenuKey is set to true. -->
+    <bool name="config_hasPermanentMenuKey">false</bool>
+
     <!-- Whether action menu items should be displayed in ALLCAPS or not.
          Defaults to true. If this is not appropriate for specific locales
          it should be disabled in that locale's resources. -->
