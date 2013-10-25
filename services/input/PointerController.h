@@ -105,6 +105,10 @@ public:
 
     /* Removes all spots. */
     virtual void clearSpots() = 0;
+
+    virtual void setCursorVisibility(bool visible) = 0;
+
+    virtual bool getCursorVisibility() const = 0;
 };
 
 
@@ -170,6 +174,9 @@ public:
             const uint32_t* spotIdToIndex, BitSet32 spotIdBits);
     virtual void clearSpots();
 
+    virtual void setCursorVisibility(bool visible);
+    virtual bool getCursorVisibility() const;
+
     void setDisplayViewport(int32_t width, int32_t height, int32_t orientation);
     void setPointerIcon(const SpriteIcon& icon);
     void setInactivityTimeout(InactivityTimeout inactivityTimeout);
@@ -210,6 +217,9 @@ private:
     sp<WeakMessageHandler> mHandler;
 
     PointerResources mResources;
+
+    //control visibility of the mouse
+    bool mCursorVisibility;
 
     struct Locked {
         bool animationPending;

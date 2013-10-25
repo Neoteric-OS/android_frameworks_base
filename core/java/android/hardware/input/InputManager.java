@@ -741,6 +741,20 @@ public final class InputManager {
     }
 
     /**
+     * Set cursor visibility. By default the cursor is visible but it can be hidden
+     * by calling this method. The cursor settings are not saved when an activity is
+     * paused. For this reason, an app must call this method everytime it is resumed.
+     * @hide
+     */
+    public void setCursorVisibility(boolean visible) {
+        try {
+            mIm.setCursorVisibility(visible);
+        } catch (RemoteException ex) {
+            Log.w(TAG, "Could not set Cursor visibility.", ex);
+        }
+    }
+
+    /**
      * Listens for changes in input devices.
      */
     public interface InputDeviceListener {

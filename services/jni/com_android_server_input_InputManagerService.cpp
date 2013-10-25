@@ -176,6 +176,7 @@ public:
     void setInputDispatchMode(bool enabled, bool frozen);
     void setSystemUiVisibility(int32_t visibility);
     void setPointerSpeed(int32_t speed);
+    void SetCursorVisibility(bool visible);
     void setShowTouches(bool enabled);
 
     /* --- InputReaderPolicyInterface implementation --- */
@@ -717,6 +718,17 @@ void NativeInputManager::setPointerSpeed(int32_t speed) {
             InputReaderConfiguration::CHANGE_POINTER_SPEED);
 }
 
+
+void NativeInputManager::SetCursorVisibility(bool visible) {
+    if(visible) {
+        mInputManager->getReader()->requestRefreshConfiguration(
+                InputReaderConfiguration::SET_CURSOR_VISIBLE);
+    } else {
+        mInputManager->getReader()->requestRefreshConfiguration(
+                InputReaderConfiguration::SET_CURSOR_INVISIBLE);
+    }
+}
+
 void NativeInputManager::setShowTouches(bool enabled) {
     { // acquire lock
         AutoMutex _l(mLock);
@@ -1230,6 +1242,13 @@ static void nativeSetPointerSpeed(JNIEnv* env,
     im->setPointerSpeed(speed);
 }
 
+static void nativeSetCursorVisibility(JNIEnv* env,
+        jclass clazz, jint ptr, jboolean visible) {
+    NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
+
+    im->SetCursorVisibility(visible);
+}
+
 static void nativeSetShowTouches(JNIEnv* env,
         jclass clazz, jlong ptr, jboolean enabled) {
     NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
@@ -1342,6 +1361,8 @@ static JNINativeMethod gInputManagerMethods[] = {
             (void*) nativeSetPointerSpeed },
     { "nativeSetShowTouches", "(JZ)V",
             (void*) nativeSetShowTouches },
+    {"nativeSetCursorVisibility", "(IZ)V",
+            (void*) nativeSetCursorVisibility},
     { "nativeVibrate", "(JI[JII)V",
             (void*) nativeVibrate },
     { "nativeCancelVibrate", "(JII)V",

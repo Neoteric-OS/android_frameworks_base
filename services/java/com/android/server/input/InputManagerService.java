@@ -109,6 +109,7 @@ public class InputManagerService extends IInputManager.Stub
     // Pointer to native input manager service object.
     private final long mPtr;
 
+    private boolean mCursorVisible = true;
     private final Context mContext;
     private final InputManagerHandler mHandler;
 
@@ -181,6 +182,9 @@ public class InputManagerService extends IInputManager.Stub
     private static native void nativeSetShowTouches(long ptr, boolean enabled);
     private static native void nativeVibrate(long ptr, int deviceId, long[] pattern,
             int repeat, int token);
+
+    private static native void nativeSetCursorVisibility(int ptr, boolean visible);
+
     private static native void nativeCancelVibrate(long ptr, int deviceId, int token);
     private static native void nativeReloadKeyboardLayouts(long ptr);
     private static native void nativeReloadDeviceAliases(long ptr);
@@ -378,7 +382,7 @@ public class InputManagerService extends IInputManager.Stub
     public int getScanCodeState(int deviceId, int sourceMask, int scanCode) {
         return nativeGetScanCodeState(mPtr, deviceId, sourceMask, scanCode);
     }
-    
+
     /**
      * Gets the current state of a switch by switch code.
      * @param deviceId The input device id, or -1 to consult all devices.
@@ -413,10 +417,10 @@ public class InputManagerService extends IInputManager.Stub
             throw new IllegalArgumentException("keyExists must not be null and must be at "
                     + "least as large as keyCodes.");
         }
-        
+
         return nativeHasKeys(mPtr, deviceId, sourceMask, keyCodes, keyExists);
     }
-    
+
     /**
      * Creates an input channel that will receive all input from the input dispatcher.
      * @param inputChannelName The input channel name.
@@ -426,7 +430,7 @@ public class InputManagerService extends IInputManager.Stub
         if (inputChannelName == null) {
             throw new IllegalArgumentException("inputChannelName must not be null.");
         }
-        
+
         InputChannel[] inputChannels = InputChannel.openInputChannelPair(inputChannelName);
         nativeRegisterInputChannel(mPtr, inputChannels[0], null, true);
         inputChannels[0].dispose(); // don't need to retain the Java object reference
@@ -444,10 +448,10 @@ public class InputManagerService extends IInputManager.Stub
         if (inputChannel == null) {
             throw new IllegalArgumentException("inputChannel must not be null.");
         }
-        
+
         nativeRegisterInputChannel(mPtr, inputChannel, inputWindowHandle, false);
     }
-    
+
     /**
      * Unregisters an input channel.
      * @param inputChannel The input channel to unregister.
@@ -456,7 +460,7 @@ public class InputManagerService extends IInputManager.Stub
         if (inputChannel == null) {
             throw new IllegalArgumentException("inputChannel must not be null.");
         }
-        
+
         nativeUnregisterInputChannel(mPtr, inputChannel);
     }
 
@@ -1042,11 +1046,11 @@ public class InputManagerService extends IInputManager.Stub
     public void setInputWindows(InputWindowHandle[] windowHandles) {
         nativeSetInputWindows(mPtr, windowHandles);
     }
-    
+
     public void setFocusedApplication(InputApplicationHandle application) {
         nativeSetFocusedApplication(mPtr, application);
     }
-    
+
     public void setInputDispatchMode(boolean enabled, boolean frozen) {
         nativeSetInputDispatchMode(mPtr, enabled, frozen);
     }
@@ -1122,6 +1126,13 @@ public class InputManagerService extends IInputManager.Stub
         } catch (SettingNotFoundException snfe) {
         }
         return speed;
+    }
+
+    public void setCursorVisibility(boolean visible) {
+        if(mCursorVisible != visible) {
+            nativeSetCursorVisibility(mPtr, visible);
+            mCursorVisible = visible;
+        }
     }
 
     public void updateShowTouchesFromSettings() {

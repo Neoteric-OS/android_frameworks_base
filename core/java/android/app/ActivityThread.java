@@ -44,6 +44,7 @@ import android.database.sqlite.SQLiteDebug.DbStats;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.hardware.display.DisplayManagerGlobal;
+import android.hardware.input.InputManager;
 import android.net.IConnectivityManager;
 import android.net.Proxy;
 import android.net.ProxyProperties;
@@ -2813,6 +2814,15 @@ public final class ActivityThread {
     public final ActivityClientRecord performResumeActivity(IBinder token,
             boolean clearHide) {
         ActivityClientRecord r = mActivities.get(token);
+
+        if(r != null) {
+            //Force the cursor visibility and position type to the default before resuming an activity
+            //because a rogue activity might have changed these props earlier
+            Context c = r.activity.getBaseContext();
+            InputManager im = (InputManager) c.getSystemService(Context.INPUT_SERVICE);
+            im.setCursorVisibility(true);
+        }
+
         if (localLOGV) Slog.v(TAG, "Performing resume of " + r
                 + " finished=" + r.activity.mFinished);
         if (r != null && !r.activity.mFinished) {
@@ -2868,7 +2878,6 @@ public final class ActivityThread {
         // If we are getting ready to gc after going to the background, well
         // we are back active so skip it.
         unscheduleGcIdler();
-
         ActivityClientRecord r = performResumeActivity(token, clearHide);
 
         if (r != null) {

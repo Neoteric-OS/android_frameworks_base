@@ -2289,6 +2289,8 @@ void CursorInputMapper::configure(nsecs_t when,
         const InputReaderConfiguration* config, uint32_t changes) {
     InputMapper::configure(when, config, changes);
 
+    mConfig = *config;
+
     if (!changes) { // first time only
         mCursorScrollAccumulator.configure(getDevice());
 
@@ -2316,6 +2318,15 @@ void CursorInputMapper::configure(nsecs_t when,
 
         mVWheelScale = 1.0f;
         mHWheelScale = 1.0f;
+
+
+    }
+
+    mPointerController = getPolicy()->obtainPointerController(getDeviceId());
+    if(changes & InputReaderConfiguration::SET_CURSOR_VISIBLE) {
+        mPointerController->setCursorVisibility(true);
+    } else if(changes & InputReaderConfiguration::SET_CURSOR_INVISIBLE) {
+        mPointerController->setCursorVisibility(false);
     }
 
     if (!changes || (changes & InputReaderConfiguration::CHANGE_POINTER_SPEED)) {
@@ -2470,10 +2481,15 @@ void CursorInputMapper::sync(nsecs_t when) {
             mPointerController->unfade(PointerControllerInterface::TRANSITION_IMMEDIATE);
         }
 
+        pointerCoords.setAxisValue(AMOTION_EVENT_AXIS_RELATIVE_X, deltaX);
+        pointerCoords.setAxisValue(AMOTION_EVENT_AXIS_RELATIVE_Y, deltaY);
+
         float x, y;
         mPointerController->getPosition(&x, &y);
+
         pointerCoords.setAxisValue(AMOTION_EVENT_AXIS_X, x);
         pointerCoords.setAxisValue(AMOTION_EVENT_AXIS_Y, y);
+
         displayId = ADISPLAY_ID_DEFAULT;
     } else {
         pointerCoords.setAxisValue(AMOTION_EVENT_AXIS_X, deltaX);

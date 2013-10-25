@@ -137,6 +137,10 @@ struct InputReaderConfiguration {
         // The device name alias supplied by the may have changed for some devices.
         CHANGE_DEVICE_ALIAS = 1 << 5,
 
+        // Current state of cursor visibility
+        SET_CURSOR_INVISIBLE = 1 << 9,
+        SET_CURSOR_VISIBLE = 1 << 10,
+
         // All devices must be reopened.
         CHANGE_MUST_REOPEN = 1 << 31,
     };
@@ -224,6 +228,10 @@ struct InputReaderConfiguration {
     // True to show the location of touches on the touch screen as spots.
     bool showTouches;
 
+
+    // True (default) to show the mouse, false to hide it.
+    bool cursorVisible;
+
     InputReaderConfiguration() :
             virtualKeyQuietTime(0),
             pointerVelocityControlParameters(1.0f, 500.0f, 3000.0f, 3.0f),
@@ -240,7 +248,9 @@ struct InputReaderConfiguration {
             pointerGestureSwipeMaxWidthRatio(0.25f),
             pointerGestureMovementSpeedRatio(0.8f),
             pointerGestureZoomSpeedRatio(0.3f),
-            showTouches(false) { }
+            showTouches(false),
+            cursorVisible(true)
+ { }
 
     bool getDisplayInfo(bool external, DisplayViewport* outViewport) const;
     void setDisplayInfo(bool external, const DisplayViewport& viewport);
@@ -1117,6 +1127,8 @@ private:
 
     float mVWheelScale;
     float mHWheelScale;
+
+    InputReaderConfiguration mConfig;
 
     // Velocity controls for mouse pointer and wheel movements.
     // The controls for X and Y wheel movements are separate to keep them decoupled.

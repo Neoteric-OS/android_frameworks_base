@@ -119,6 +119,14 @@ private:
 
     virtual void clearSpots() {
     }
+public:
+
+    virtual void setCursorVisibility(bool visible) {
+    }
+
+    virtual bool getCursorVisibility() const {
+        return true;
+    }
 };
 
 

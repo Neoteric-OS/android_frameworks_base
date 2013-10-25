@@ -53,7 +53,8 @@ static const nsecs_t POINTER_FADE_DURATION = 500 * 1000000LL; // 500 ms
 
 PointerController::PointerController(const sp<PointerControllerPolicyInterface>& policy,
         const sp<Looper>& looper, const sp<SpriteController>& spriteController) :
-        mPolicy(policy), mLooper(looper), mSpriteController(spriteController) {
+        mPolicy(policy), mLooper(looper), mSpriteController(spriteController),
+        mCursorVisibility(true) {
     mHandler = new WeakMessageHandler(this);
 
     AutoMutex _l(mLock);
@@ -298,6 +299,14 @@ void PointerController::clearSpots() {
     fadeOutAndReleaseAllSpotsLocked();
 }
 
+void PointerController::setCursorVisibility(bool visible) {
+    mCursorVisibility = visible;
+}
+
+bool PointerController::getCursorVisibility() const {
+    return mCursorVisibility;
+}
+
 void PointerController::setInactivityTimeout(InactivityTimeout inactivityTimeout) {
     AutoMutex _l(mLock);
 
@@ -486,7 +495,7 @@ void PointerController::updatePointerLocked() {
     mLocked.pointerSprite->setLayer(Sprite::BASE_LAYER_POINTER);
     mLocked.pointerSprite->setPosition(mLocked.pointerX, mLocked.pointerY);
 
-    if (mLocked.pointerAlpha > 0) {
+    if ((mLocked.pointerAlpha > 0) && mCursorVisibility) {
         mLocked.pointerSprite->setAlpha(mLocked.pointerAlpha);
         mLocked.pointerSprite->setVisible(true);
     } else {

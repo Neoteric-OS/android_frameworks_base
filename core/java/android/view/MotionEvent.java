@@ -1093,6 +1093,11 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      */
     public static final int AXIS_GENERIC_16 = 47;
 
+    /** @hide */
+    public static final int AXIS_RELATIVE_X = 48;
+    /** @hide */
+    public static final int AXIS_RELATIVE_Y = 49;
+
     // NOTE: If you add a new axis here you must also add it to:
     //  native/include/android/input.h
     //  frameworks/base/include/ui/KeycodeLabels.h
@@ -1143,6 +1148,8 @@ public final class MotionEvent extends InputEvent implements Parcelable {
         names.append(AXIS_GENERIC_14, "AXIS_GENERIC_14");
         names.append(AXIS_GENERIC_15, "AXIS_GENERIC_15");
         names.append(AXIS_GENERIC_16, "AXIS_GENERIC_16");
+        names.append(AXIS_RELATIVE_X , "AXIS_RELATIVE_X");
+        names.append(AXIS_RELATIVE_Y , "AXIS_RELATIVE_Y");
     }
 
     /**
@@ -3210,6 +3217,20 @@ public final class MotionEvent extends InputEvent implements Parcelable {
         public float y;
         
         /**
+         * The relative X component of the pointer movement.
+         *
+         * @hide
+         **/
+        public float relativeX;
+
+        /**
+         * The relative Y component of the pointer movement.
+         *
+         * @hide
+         **/
+        public float relativeY;
+
+        /**
          * A normalized value that describes the pressure applied to the device
          * by a finger or other tool.
          * The pressure generally ranges from 0 (no pressure at all) to 1 (normal pressure),
@@ -3299,6 +3320,8 @@ public final class MotionEvent extends InputEvent implements Parcelable {
 
             x = 0;
             y = 0;
+            relativeX = 0;
+            relativeY = 0;
             pressure = 0;
             size = 0;
             touchMajor = 0;
@@ -3329,6 +3352,8 @@ public final class MotionEvent extends InputEvent implements Parcelable {
 
             x = other.x;
             y = other.y;
+            relativeX = other.relativeX;
+            relativeY = other.relativeY;
             pressure = other.pressure;
             size = other.size;
             touchMajor = other.touchMajor;
@@ -3367,6 +3392,10 @@ public final class MotionEvent extends InputEvent implements Parcelable {
                     return toolMinor;
                 case AXIS_ORIENTATION:
                     return orientation;
+                case AXIS_RELATIVE_X:
+                    return relativeX;
+                case AXIS_RELATIVE_Y:
+                    return relativeY;
                 default: {
                     if (axis < 0 || axis > 63) {
                         throw new IllegalArgumentException("Axis out of range.");
@@ -3419,6 +3448,12 @@ public final class MotionEvent extends InputEvent implements Parcelable {
                     break;
                 case AXIS_ORIENTATION:
                     orientation = value;
+                    break;
+                case AXIS_RELATIVE_X:
+                    relativeX = value;
+                    break;
+                case AXIS_RELATIVE_Y:
+                    relativeY = value;
                     break;
                 default: {
                     if (axis < 0 || axis > 63) {
