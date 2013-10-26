@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ed67883_cdb39dfb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1016558
+      },
+      "writtenOn": "2013-10-26T19:38:05Z",
+      "side": 1,
+      "message": "This line should be placed after the Change-Id line, or at least put in the last paragraph.",
+      "revId": "16374ad9c2fd70fa84a9552cceec3fb5226ec0ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
