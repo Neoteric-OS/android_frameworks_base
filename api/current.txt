@@ -126,6 +126,7 @@ package android {
     field public static final java.lang.String SET_WALLPAPER = "android.permission.SET_WALLPAPER";
     field public static final java.lang.String SET_WALLPAPER_HINTS = "android.permission.SET_WALLPAPER_HINTS";
     field public static final java.lang.String SIGNAL_PERSISTENT_PROCESSES = "android.permission.SIGNAL_PERSISTENT_PROCESSES";
+    field public static final java.lang.String SIM_COMMUNICATION = "android.permission.SIM_COMMUNICATION";
     field public static final java.lang.String STATUS_BAR = "android.permission.STATUS_BAR";
     field public static final java.lang.String SUBSCRIBED_FEEDS_READ = "android.permission.SUBSCRIBED_FEEDS_READ";
     field public static final java.lang.String SUBSCRIBED_FEEDS_WRITE = "android.permission.SUBSCRIBED_FEEDS_WRITE";
@@ -17583,7 +17584,7 @@ package android.os {
 
   public abstract class CountDownTimer {
     ctor public CountDownTimer(long, long);
-    method public final void cancel();
+    method public final synchronized void cancel();
     method public abstract void onFinish();
     method public abstract void onTick(long);
     method public final synchronized android.os.CountDownTimer start();
