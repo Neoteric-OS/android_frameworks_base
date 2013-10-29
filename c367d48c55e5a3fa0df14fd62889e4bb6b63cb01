@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e5ec0fd_7e7697d3",
+        "filename": "libs/androidfw/ObbFile.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2013-10-29T20:18:52Z",
+      "side": 1,
+      "message": "this is only 8 bytes, so a 64-bit pointer to it takes the same amount of stack.",
+      "revId": "c367d48c55e5a3fa0df14fd62889e4bb6b63cb01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
