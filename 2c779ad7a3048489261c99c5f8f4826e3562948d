@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e524123_e6e99e9f",
+        "filename": "core/java/android/webkit/WebViewClassic.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5757,
+      "author": {
+        "id": 1022919
+      },
+      "writtenOn": "2013-11-05T07:27:32Z",
+      "side": 1,
+      "message": "Trailing whitespace.",
+      "range": {
+        "startLine": 5757,
+        "startChar": 0,
+        "endLine": 5757,
+        "endChar": 4
+      },
+      "revId": "2c779ad7a3048489261c99c5f8f4826e3562948d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
