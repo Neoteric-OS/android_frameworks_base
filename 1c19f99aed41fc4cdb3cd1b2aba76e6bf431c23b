@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e583941_884b1798",
+        "filename": "core/java/android/webkit/HTML5WebSocket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1022919
+      },
+      "writtenOn": "2013-11-05T07:28:23Z",
+      "side": 1,
+      "message": "Trailing whitespace.",
+      "range": {
+        "startLine": 399,
+        "startChar": 17,
+        "endLine": 399,
+        "endChar": 18
+      },
+      "revId": "1c19f99aed41fc4cdb3cd1b2aba76e6bf431c23b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
