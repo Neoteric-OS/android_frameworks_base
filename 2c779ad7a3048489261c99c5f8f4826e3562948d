@@ -40,6 +40,24 @@
       "revId": "2c779ad7a3048489261c99c5f8f4826e3562948d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be621522_33e7a898",
+        "filename": "core/java/android/webkit/WebViewClassic.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5757,
+      "author": {
+        "id": 1022919
+      },
+      "writtenOn": "2013-11-07T07:17:42Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is more of a feature or a bug. The whitespace is rendered by an addon of CodeMirror, which is unaware of the difference between two files. The current highlighting might be helpful even though it\u0027s inconsistent with the old view.",
+      "parentUuid": "3e0c6577_afd85941",
+      "revId": "2c779ad7a3048489261c99c5f8f4826e3562948d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
