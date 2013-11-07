@@ -22,6 +22,24 @@
       "revId": "2c779ad7a3048489261c99c5f8f4826e3562948d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e0c6577_afd85941",
+        "filename": "core/java/android/webkit/WebViewClassic.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5757,
+      "author": {
+        "id": 1015668
+      },
+      "writtenOn": "2013-11-07T06:11:13Z",
+      "side": 1,
+      "message": "The trailing whitespace here is not added by this change, and is only visible in the review if you\u0027re using the new changescreen in Gerrit 2.8\n\nI\u0027ve filed a bug report on Gerrit for this [1]\n\n[1] https://code.google.com/p/gerrit/issues/detail?id\u003d2245",
+      "parentUuid": "1e524123_e6e99e9f",
+      "revId": "2c779ad7a3048489261c99c5f8f4826e3562948d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
