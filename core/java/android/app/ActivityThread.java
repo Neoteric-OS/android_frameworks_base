@@ -74,6 +74,8 @@ import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.Log;
 import android.util.LogPrinter;
+import android.util.LogWriter;
+import android.util.MessageLog;
 import android.util.PrintWriterPrinter;
 import android.util.Slog;
 import android.util.SuperNotCalledException;
@@ -190,6 +192,7 @@ public final class ActivityThread {
     String mInstrumentedAppLibraryDir = null;
     boolean mSystemThread = false;
     boolean mJitEnabled = false;
+    static MessageLog sMessageLog;
 
     // These can be accessed by multiple threads; mPackages is the lock.
     // XXX For now we keep around information about all packages we have
@@ -1090,6 +1093,25 @@ public final class ActivityThread {
         public void scheduleInstallProvider(ProviderInfo provider) {
             sendMessage(H.INSTALL_PROVIDER, provider);
         }
+
+        public void dumpLooperHistory() {
+            if (sMessageLog == null) return;
+            Log.d(TAG, "===Dispatch history of the mainLooper begin===");
+            PrintWriter pw = new PrintWriter(new LogWriter(Log.DEBUG, TAG));
+            sMessageLog.dump(pw);
+            pw.close();
+            Log.d(TAG, "===Dispatch history of the mainLooper end===");
+        }
+
+        public void dumpANRInfo() {
+            // dump pending messages in message queue.
+            Log.d(TAG, "===MessageQueue.dump() of the mainLooper begin===");
+            getLooper().dump(new LogPrinter(Log.DEBUG, TAG), "");
+            Log.d(TAG, "===MessageQueue.dump() of the mainLooper end===");
+
+            // dump history messages which are already handled.
+            dumpLooperHistory();
+        }
     }
 
     private class H extends Handler {
@@ -1139,6 +1161,7 @@ public final class ActivityThread {
         public static final int REQUEST_ASSIST_CONTEXT_EXTRAS = 143;
         public static final int TRANSLUCENT_CONVERSION_COMPLETE = 144;
         public static final int INSTALL_PROVIDER        = 145;
+
         String codeToString(int code) {
             if (DEBUG_MESSAGES) {
                 switch (code) {
@@ -5020,6 +5043,10 @@ public final class ActivityThread {
         if (false) {
             Looper.myLooper().setMessageLogging(new
                     LogPrinter(Log.DEBUG, "ActivityThread"));
+        }
+        if (!"user".equals(android.os.Build.TYPE)) {
+            sMessageLog = new MessageLog();
+            Looper.myLooper().setMessageLogging(sMessageLog);
         }
 
         Looper.loop();
