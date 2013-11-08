@@ -61,6 +61,7 @@ public final class Looper {
     final Thread mThread;
 
     private Printer mLogging;
+    private MessageLog mMessageLog;
 
      /** Initialize the current thread as a looper.
       * This gives you a chance to create handlers that then reference
@@ -133,10 +134,19 @@ public final class Looper {
                         msg.callback + ": " + msg.what);
             }
 
+            MessageLog messageLog = me.mMessageLog;
+            if (messageLog != null) {
+                messageLog.logBegin(msg, SystemClock.uptimeMillis());
+            }
+
             msg.target.dispatchMessage(msg);
 
             if (logging != null) {
                 logging.println("<<<<< Finished to " + msg.target + " " + msg.callback);
+            }
+
+            if (messageLog != null) {
+                messageLog.logEnd(msg, SystemClock.uptimeMillis());
             }
 
             // Make sure that during the course of dispatching the
@@ -173,6 +183,11 @@ public final class Looper {
      */
     public void setMessageLogging(Printer printer) {
         mLogging = printer;
+    }
+
+    /** @hide */
+    public void setMessageLogging(MessageLog messageLog) {
+        mMessageLog = messageLog;
     }
     
     /**
