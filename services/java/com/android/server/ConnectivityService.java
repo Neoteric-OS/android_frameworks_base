@@ -1432,7 +1432,9 @@ public class ConnectivityService extends IConnectivityManager.Stub {
             return false;
         }
         NetworkStateTracker tracker = mNetTrackers[networkType];
-        DetailedState netState = tracker.getNetworkInfo().getDetailedState();
+        DetailedState netState = null;
+        if (tracker != null)
+            netState = tracker.getNetworkInfo().getDetailedState();
 
         if (tracker == null || (netState != DetailedState.CONNECTED &&
                 netState != DetailedState.CAPTIVE_PORTAL_CHECK) ||
