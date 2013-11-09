@@ -85,9 +85,6 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
     int mAirplaneIconId;
     boolean mDataActive;
     int mLastSignalLevel;
-    boolean mShowPhoneRSSIForData = false;
-    boolean mShowAtLeastThreeGees = false;
-    boolean mAlwaysShowCdmaRssi = false;
 
     String mContentDescriptionPhoneSignal;
     String mContentDescriptionWifi;
@@ -184,11 +181,6 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
         ConnectivityManager cm = (ConnectivityManager)mContext.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
         mHasMobileDataFeature = cm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE);
-
-        mShowPhoneRSSIForData = res.getBoolean(R.bool.config_showPhoneRSSIForData);
-        mShowAtLeastThreeGees = res.getBoolean(R.bool.config_showMin3G);
-        mAlwaysShowCdmaRssi = res.getBoolean(
-                com.android.internal.R.bool.config_alwaysUseCdmaRssi);
 
         // set up the default wifi icon, used when no radios have ever appeared
         updateWifiIcons();
@@ -291,18 +283,22 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                 mContentDescriptionWifi);
 
         if (mIsWimaxEnabled && mWimaxConnected) {
+            boolean alwaysShowCdmaRssi = mContext.getResources().getBoolean(
+                    com.android.internal.R.bool.config_alwaysUseCdmaRssi);
             // wimax is special
             cluster.setMobileDataIndicators(
                     true,
-                    mAlwaysShowCdmaRssi ? mPhoneSignalIconId : mWimaxIconId,
+                    alwaysShowCdmaRssi ? mPhoneSignalIconId : mWimaxIconId,
                     mDataTypeIconId,
                     mContentDescriptionWimax,
                     mContentDescriptionDataType);
         } else {
+            boolean showPhoneRSSIForData = mContext.getResources().getBoolean(
+                    R.bool.config_showPhoneRSSIForData);
             // normal mobile data
             cluster.setMobileDataIndicators(
                     mHasMobileDataFeature,
-                    mShowPhoneRSSIForData ? mPhoneSignalIconId : mDataSignalIconId,
+                    showPhoneRSSIForData ? mPhoneSignalIconId : mDataSignalIconId,
                     mDataTypeIconId,
                     mContentDescriptionPhoneSignal,
                     mContentDescriptionDataType);
@@ -528,9 +524,11 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
             } else {
                 int iconLevel;
                 int[] iconList;
-                if (isCdma() && mAlwaysShowCdmaRssi) {
+                boolean alwaysShowCdmaRssi = mContext.getResources().getBoolean(
+                        com.android.internal.R.bool.config_alwaysUseCdmaRssi);
+                if (isCdma() && alwaysShowCdmaRssi) {
                     mLastSignalLevel = iconLevel = mSignalStrength.getCdmaLevel();
-                    if(DEBUG) Log.d(TAG, "mAlwaysShowCdmaRssi=" + mAlwaysShowCdmaRssi
+                    if(DEBUG) Log.d(TAG, "alwaysShowCdmaRssi=" + alwaysShowCdmaRssi
                             + " set to cdmaLevel=" + mSignalStrength.getCdmaLevel()
                             + " instead of level=" + mSignalStrength.getLevel());
                 } else {
@@ -570,9 +568,10 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
             mContentDescriptionDataType = mContext.getString(
                     R.string.accessibility_data_connection_4g);
         } else {
+            boolean showAtLeastThreeGees = mContext.getResources().getBoolean(R.bool.config_showMin3G);
             switch (mDataNetType) {
                 case TelephonyManager.NETWORK_TYPE_UNKNOWN:
-                    if (!mShowAtLeastThreeGees) {
+                    if (!showAtLeastThreeGees) {
                         mDataIconList = TelephonyIcons.DATA_G[mInetCondition];
                         mDataTypeIconId = 0;
                         mQSDataTypeIconId = 0;
@@ -583,7 +582,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                         // fall through
                     }
                 case TelephonyManager.NETWORK_TYPE_EDGE:
-                    if (!mShowAtLeastThreeGees) {
+                    if (!showAtLeastThreeGees) {
                         mDataIconList = TelephonyIcons.DATA_E[mInetCondition];
                         mDataTypeIconId = R.drawable.stat_sys_data_fully_connected_e;
                         mQSDataTypeIconId = TelephonyIcons.QS_DATA_E[mInetCondition];
@@ -619,7 +618,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                     }
                     break;
                 case TelephonyManager.NETWORK_TYPE_CDMA:
-                    if (!mShowAtLeastThreeGees) {
+                    if (!showAtLeastThreeGees) {
                         // display 1xRTT for IS95A/B
                         mDataIconList = TelephonyIcons.DATA_1X[mInetCondition];
                         mDataTypeIconId = R.drawable.stat_sys_data_fully_connected_1x;
@@ -631,7 +630,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                         // fall through
                     }
                 case TelephonyManager.NETWORK_TYPE_1xRTT:
-                    if (!mShowAtLeastThreeGees) {
+                    if (!showAtLeastThreeGees) {
                         mDataIconList = TelephonyIcons.DATA_1X[mInetCondition];
                         mDataTypeIconId = R.drawable.stat_sys_data_fully_connected_1x;
                         mQSDataTypeIconId = TelephonyIcons.QS_DATA_1X[mInetCondition];
@@ -668,7 +667,7 @@ public class NetworkController extends BroadcastReceiver implements DemoMode {
                     }
                     break;
                 default:
-                    if (!mShowAtLeastThreeGees) {
+                    if (!showAtLeastThreeGees) {
                         mDataIconList = TelephonyIcons.DATA_G[mInetCondition];
                         mDataTypeIconId = R.drawable.stat_sys_data_fully_connected_g;
                         mQSDataTypeIconId = TelephonyIcons.QS_DATA_G[mInetCondition];
