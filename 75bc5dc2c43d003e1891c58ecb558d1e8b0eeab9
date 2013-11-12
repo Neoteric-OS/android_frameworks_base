@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e570543_3252eff8",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3118,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-11-12T22:30:25Z",
+      "side": 1,
+      "message": "move to ProxyProperties class.  isValid returns a bool rather than throwing exceptions",
+      "revId": "75bc5dc2c43d003e1891c58ecb558d1e8b0eeab9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e5dfd5e_dfd3b844",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3121,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-11-12T22:30:25Z",
+      "side": 1,
+      "message": "include the proxyProperties.toString in the log so we now its values.",
+      "revId": "75bc5dc2c43d003e1891c58ecb558d1e8b0eeab9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe680d04_b44ef950",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3190,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-11-12T22:30:25Z",
+      "side": 1,
+      "message": "This incoming proxy should be validated before it\u0027s accepted.",
+      "revId": "75bc5dc2c43d003e1891c58ecb558d1e8b0eeab9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe680d04_54e5e5fc",
+        "filename": "services/java/com/android/server/DevicePolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2163,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-11-12T22:30:25Z",
+      "side": 1,
+      "message": "create a ProxyProperties and use its validate.",
+      "revId": "75bc5dc2c43d003e1891c58ecb558d1e8b0eeab9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
