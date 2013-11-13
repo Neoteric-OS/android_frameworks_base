@@ -240,7 +240,7 @@ public class EthernetDataTracker implements NetworkStateTracker {
                     NetworkUtils.stopDhcp(mIface);
 
                     reconnect();
-                    break;
+                    //break;
                 }
             }
         } catch (RemoteException e) {
