@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3edaa533_a217c0cf",
+        "filename": "drm/java/android/drm/DrmManagerClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1004910
+      },
+      "writtenOn": "2013-11-13T06:42:40Z",
+      "side": 1,
+      "message": "Not the same as getOriginalMimeType. Might be better but I think in that case getOriginalMimeType perphaps should be changed as well. Google need to decide how  they want it.",
+      "revId": "8e3d706bdad69d010b0cf3ae149c276b224483be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
