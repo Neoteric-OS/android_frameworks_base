@@ -22,6 +22,7 @@ import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -30,6 +31,14 @@ import android.net.LinkAddress;
 import android.os.Parcel;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
+
+import static libcore.io.OsConstants.IFA_F_DEPRECATED;
+import static libcore.io.OsConstants.IFA_F_PERMANENT;
+import static libcore.io.OsConstants.IFA_F_TENTATIVE;
+import static libcore.io.OsConstants.RT_SCOPE_HOST;
+import static libcore.io.OsConstants.RT_SCOPE_LINK;
+import static libcore.io.OsConstants.RT_SCOPE_SITE;
+import static libcore.io.OsConstants.RT_SCOPE_UNIVERSE;
 
 /**
  * Tests for {@link LinkAddress}.
@@ -41,6 +50,10 @@ public class LinkAddressTest extends AndroidTestCase {
     private static final InetAddress V4_ADDRESS = NetworkUtils.numericToInetAddress(V4);
     private static final InetAddress V6_ADDRESS = NetworkUtils.numericToInetAddress(V6);
 
+    private InetAddress Address(String address) {
+        return InetAddress.parseNumericAddress(address);
+    }
+
     public void testConstructors() throws SocketException {
         LinkAddress address;
 
@@ -48,18 +61,27 @@ public class LinkAddressTest extends AndroidTestCase {
         address = new LinkAddress(V4_ADDRESS, 25);
         assertEquals(V4_ADDRESS, address.getAddress());
         assertEquals(25, address.getNetworkPrefixLength());
+        assertEquals(0, address.getFlags());
+        assertEquals(RT_SCOPE_UNIVERSE, address.getScope());
 
         address = new LinkAddress(V6_ADDRESS, 127);
         assertEquals(V6_ADDRESS, address.getAddress());
         assertEquals(127, address.getNetworkPrefixLength());
+        assertEquals(0, address.getFlags());
+        assertEquals(RT_SCOPE_UNIVERSE, address.getScope());
 
-        address = new LinkAddress(V6 + "/64");
+        // Nonsensical flags/scopes or combinations thereof are acceptable.
+        address = new LinkAddress(V6 + "/64", IFA_F_DEPRECATED | IFA_F_PERMANENT, RT_SCOPE_LINK);
         assertEquals(V6_ADDRESS, address.getAddress());
         assertEquals(64, address.getNetworkPrefixLength());
+        assertEquals(IFA_F_DEPRECATED | IFA_F_PERMANENT, address.getFlags());
+        assertEquals(RT_SCOPE_LINK, address.getScope());
 
-        address = new LinkAddress(V4 + "/23");
+        address = new LinkAddress(V4 + "/23", 123, 456);
         assertEquals(V4_ADDRESS, address.getAddress());
         assertEquals(23, address.getNetworkPrefixLength());
+        assertEquals(123, address.getFlags());
+        assertEquals(456, address.getScope());
 
         // InterfaceAddress doesn't have a constructor. Fetch some from an interface.
         List<InterfaceAddress> addrs = NetworkInterface.getByName("lo").getInterfaceAddresses();
@@ -88,7 +110,7 @@ public class LinkAddressTest extends AndroidTestCase {
         } catch(IllegalArgumentException expected) {}
 
         try {
-            address = new LinkAddress((String) null);
+            address = new LinkAddress((String) null, IFA_F_PERMANENT, RT_SCOPE_UNIVERSE);
             fail("Null string should cause IllegalArgumentException");
         } catch(IllegalArgumentException expected) {}
 
@@ -99,24 +121,63 @@ public class LinkAddressTest extends AndroidTestCase {
 
         // Invalid prefix lengths are rejected.
         try {
-            address = new LinkAddress(V4 + "/-1");
+            address = new LinkAddress(V4_ADDRESS, -1);
             fail("Negative IPv4 prefix length should cause IllegalArgumentException");
         } catch(IllegalArgumentException expected) {}
 
         try {
-            address = new LinkAddress(V6 + "/-1");
+            address = new LinkAddress(V6_ADDRESS, -1);
             fail("Negative IPv6 prefix length should cause IllegalArgumentException");
         } catch(IllegalArgumentException expected) {}
 
         try {
-            address = new LinkAddress(V4 + "/33");
+            address = new LinkAddress(V4_ADDRESS, 33);
             fail("/35 IPv4 prefix length should cause IllegalArgumentException");
         } catch(IllegalArgumentException expected) {}
 
         try {
-            address = new LinkAddress(V6 + "/129");
+            address = new LinkAddress(V4 + "/33", IFA_F_PERMANENT, RT_SCOPE_UNIVERSE);
+            fail("/35 IPv4 prefix length should cause IllegalArgumentException");
+        } catch(IllegalArgumentException expected) {}
+
+
+        try {
+            address = new LinkAddress(V6_ADDRESS + "/129", IFA_F_PERMANENT, RT_SCOPE_UNIVERSE);
             fail("/129 IPv6 prefix length should cause IllegalArgumentException");
         } catch(IllegalArgumentException expected) {}
+
+        try {
+            address = new LinkAddress(V6_ADDRESS + "/129", IFA_F_PERMANENT, RT_SCOPE_UNIVERSE);
+            fail("/129 IPv6 prefix length should cause IllegalArgumentException");
+        } catch(IllegalArgumentException expected) {}
+
+        // Multicast addresses are rejected.
+        try {
+            address = new LinkAddress("224.0.0.2/32");
+            fail("IPv4 multicast address should cause IllegalArgumentException");
+        } catch(IllegalArgumentException expected) {}
+
+        try {
+            address = new LinkAddress("ff02::1/128");
+            fail("IPv6 multicast address should cause IllegalArgumentException");
+        } catch(IllegalArgumentException expected) {}
+    }
+
+    public void testAddressScopes() {
+        assertEquals(RT_SCOPE_HOST, new LinkAddress("::/128").getScope());
+        assertEquals(RT_SCOPE_HOST, new LinkAddress("0.0.0.0/32").getScope());
+
+        assertEquals(RT_SCOPE_LINK, new LinkAddress("::1/128").getScope());
+        assertEquals(RT_SCOPE_LINK, new LinkAddress("127.0.0.5/8").getScope());
+        assertEquals(RT_SCOPE_LINK, new LinkAddress("fe80::ace:d00d/64").getScope());
+        assertEquals(RT_SCOPE_LINK, new LinkAddress("169.254.5.12/16").getScope());
+
+        assertEquals(RT_SCOPE_SITE, new LinkAddress("fec0::dead/64").getScope());
+        assertEquals(RT_SCOPE_SITE, new LinkAddress("10.1.2.3/21").getScope());
+
+        assertEquals(RT_SCOPE_UNIVERSE, new LinkAddress("192.0.2.1/25").getScope());
+        assertEquals(RT_SCOPE_UNIVERSE, new LinkAddress("2001:db8::/64").getScope());
+        assertEquals(RT_SCOPE_UNIVERSE, new LinkAddress("5000::/127").getScope());
     }
 
     private void assertLinkAddressesEqual(LinkAddress l1, LinkAddress l2) {
@@ -151,11 +212,32 @@ public class LinkAddressTest extends AndroidTestCase {
         l2 = new LinkAddress("192.0.2.2/24");
         assertLinkAddressesNotEqual(l1, l2);
 
-        // Addresses with the same start or end bytes aren't equal between families.
-        l1 = new LinkAddress("255.255.255.255/24");
-        l2 = new LinkAddress("ffff:ffff::/24");
+        // Check addresses with different flags aren't equal.
+        l1 = new LinkAddress(V6_ADDRESS, 64);
+        l2 = new LinkAddress(V6_ADDRESS, 64, 0, RT_SCOPE_UNIVERSE);
+        assertLinkAddressesEqual(l1, l2);
+        l2 = new LinkAddress(V6_ADDRESS, 64, IFA_F_DEPRECATED, RT_SCOPE_UNIVERSE);
+
+        // Check addresses with different scope aren't equal.
+        l1 = new LinkAddress(V4_ADDRESS, 24);
+        l2 = new LinkAddress(V4_ADDRESS, 24, 0, RT_SCOPE_UNIVERSE);
+        assertLinkAddressesEqual(l1, l2);
+        l2 = new LinkAddress(V4_ADDRESS, 24, 0, RT_SCOPE_HOST);
         assertLinkAddressesNotEqual(l1, l2);
-        l2 = new LinkAddress("::ffff:ffff/24");
+
+        // Addresses with the same start or end bytes aren't equal between families.
+        byte[] equalBytes = { 0x20, 0x01, 0x0d, (byte) 0xb8 };
+        l1 = new LinkAddress("32.1.13.184/24");
+        l2 = new LinkAddress("2001:db8::1/24");
+        assertTrue(Arrays.equals(
+                l1.getAddress().getAddress(),
+                Arrays.copyOf(l2.getAddress().getAddress(), 4)));
+        assertLinkAddressesNotEqual(l1, l2);
+
+        l2 = new LinkAddress("::2001:db8/24");
+        assertTrue(Arrays.equals(
+                l1.getAddress().getAddress(),
+                Arrays.copyOfRange(l2.getAddress().getAddress(), 12, 16)));
         assertLinkAddressesNotEqual(l1, l2);
 
         // Because we use InetAddress, an IPv4 address is equal to its IPv4-mapped address.
@@ -172,6 +254,9 @@ public class LinkAddressTest extends AndroidTestCase {
         l = new LinkAddress(V4_ADDRESS, 23);
         assertEquals(-982787, l.hashCode());
 
+        l = new LinkAddress(V4_ADDRESS, 23, 0, RT_SCOPE_HOST);
+        assertEquals(-971865, l.hashCode());
+
         l = new LinkAddress(V4_ADDRESS, 27);
         assertEquals(-982743, l.hashCode());
 
@@ -180,6 +265,9 @@ public class LinkAddressTest extends AndroidTestCase {
 
         l = new LinkAddress(V6_ADDRESS, 128);
         assertEquals(1076523630, l.hashCode());
+
+        l = new LinkAddress(V6_ADDRESS, 128, IFA_F_TENTATIVE, RT_SCOPE_UNIVERSE);
+        assertEquals(1076524846, l.hashCode());
     }
 
     private LinkAddress passThroughParcel(LinkAddress l) {
@@ -204,10 +292,10 @@ public class LinkAddressTest extends AndroidTestCase {
     public void testParceling() {
         LinkAddress l;
 
-        l = new LinkAddress(V6_ADDRESS, 64);
+        l = new LinkAddress(V6_ADDRESS, 64, 123, 456);
         assertParcelingIsLossless(l);
 
-        l = new LinkAddress(V4 + "/28");
+        l = new LinkAddress(V4 + "/28", IFA_F_PERMANENT, RT_SCOPE_LINK);
         assertParcelingIsLossless(l);
     }
 }
