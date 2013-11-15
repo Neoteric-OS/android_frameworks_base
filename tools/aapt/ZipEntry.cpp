@@ -147,7 +147,7 @@ status_t ZipEntry::initFromExternal(const ZipFile* pZipFile,
     /*
      * Copy everything in the CDE over, then fix up the hairy bits.
      */
-    memcpy(&mCDE, &pEntry->mCDE, sizeof(mCDE));
+    memcpy((void*) &mCDE, &pEntry->mCDE, sizeof(mCDE));
 
     if (mCDE.mFileNameLength > 0) {
         mCDE.mFileName = new unsigned char[mCDE.mFileNameLength+1];
