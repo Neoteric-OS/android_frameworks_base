@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe71ed53_41280298",
+        "filename": "core/java/android/net/EthernetDataTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2013-11-18T20:22:46Z",
+      "side": 1,
+      "message": "how is the interface getting set?  The isn\u0027t supposed to be a root user setting this behind the scenes.  THIS code is supposed to configure the iface if we\u0027re in a static config.  You should modify the settings app to record the users pref for ethernet (dhcp vs static config and the details of the static config if selected).  It can record the settings to the settings database.  Then when EthernetDataTracker is told to setup it can read the settings and decide to either run dhcp or set the ip addr statically, etc.",
+      "revId": "9e9bd1ee69935eebb97e8b35efecf153bf1bc843",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
