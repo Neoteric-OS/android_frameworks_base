@@ -1,0 +1,327 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e78816e_967fecf8",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "I wonder if we really need separate permissions for READ_PHONE_STATE and READ_PRECISE_PHONE_STATE. It\u0027s a pretty subtle distinction and probably not one that makes sense to end users?",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e8fa1ae_a123b839",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "If the \"precise\" data connection changed event can be delivered through onPreciseDataConnectionStateChanged then it would be logical to deliver the existing event through onDataConnectionStateChanged. I guess we can\u0027t change that, though.",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e8fa1ae_61fb7060",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "Should this and the other newly added broadcasts be sticky?",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e5e79fe_185f85aa",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "Make private? Also LOG_TAG and DBG not used. Remove?",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e78816e_b61228b2",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "I\u0027m proposing we move DISCONNECT_CAUSE_* to a new class  android.telephony.DisconnectCause -- more natural when the same disc codes are used elsewhere, e.g. in call log.",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e78816e_d6a2444c",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "The values defined in CallFailCause.java are not in ril.h so can/will the RIL actually use them?",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bec055c0_867fcc8f",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "Add @Override",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1eca41de_89319d0d",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "Add @Override",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fec64dd8_052912b6",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "Add braces around if body when on own line (http://source.android.com/source/code-style.html#use-standard-brace-style).",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e6385c5_97b4446d",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "Could be simpler:\nreturn a \u003d\u003d other.a\n    \u0026\u0026 b \u003d\u003d other.b\n    ...;",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e6385c5_77c7b0d3",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "LOG_TAG and DBG not used.",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e8aa59d_e5e87227",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "The returned String encodes info from LinkProperties. It seems likely that someone will parse the string to get to the underlying attributes. Maybe we should expose the LinkProperties as part of the API. Or not expose through this string.",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e5e79fe_388a89bf",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "The common convention is for constructors to come after the definition of class and instance variables.",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e8aa59d_a5de6a7f",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "@Override",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e6385c5_77b09071",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "@Override",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e5e79fe_d8a26d4c",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "Braces around body (also below).",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e6385c5_17a9140f",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "s/StringBuffer/StringBuilder/",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e78816e_d6f08450",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "\"new\" assumes the reader is familiar with Android history... Also in other javadoc comments below.",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e5e79fe_3871a927",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-11-22T03:34:56Z",
+      "side": 1,
+      "message": "The const names are a bit obscure. Maybe expand:\nEXTRA_RINGING_CALL_STATE\nEXTRA_FOREGROUND_CALL_STATE\nEXTRA_BACKGROUND_CALL_STATE",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
