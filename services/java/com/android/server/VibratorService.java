@@ -594,6 +594,14 @@ public class VibratorService extends IVibratorService.Stub
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
                 synchronized (mVibrations) {
+                    /*
+                     * A pattern vibration without repeats isn’t tracked in mVibrations,
+                     * yet has a link registered for death notifications.
+                     */
+                    if (mCurrentVibration != null && mCurrentVibration.mRepeat < 0) {
+                        unlinkVibration(mCurrentVibration);
+                    }
+
                     doCancelVibrateLocked();
 
                     int size = mVibrations.size();
