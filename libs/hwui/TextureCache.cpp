@@ -301,21 +301,47 @@ void TextureCache::uploadLoFiTexture(bool resize, SkBitmap* bitmap,
 
 void TextureCache::uploadToTexture(bool resize, GLenum format, GLsizei stride,
         GLsizei width, GLsizei height, GLenum type, const GLvoid * data) {
-    // TODO: With OpenGL ES 2.0 we need to copy the bitmap in a temporary buffer
-    //       if the stride doesn't match the width
     const bool useStride = stride != width && Extensions::getInstance().hasUnpackRowLength();
-    if (useStride) {
-        glPixelStorei(GL_UNPACK_ROW_LENGTH, stride);
-    }
+    if ((stride == width) || useStride) {
+        if (useStride) {
+            glPixelStorei(GL_UNPACK_ROW_LENGTH, stride);
+        }
 
-    if (resize) {
-        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, type, data);
+        if (resize) {
+            glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, type, data);
+        } else {
+            glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, format, type, data);
+        }
+
+        if (useStride) {
+            glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+        }
     } else {
-        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, format, type, data);
-    }
+        //  With OpenGL ES 2.0 we need to copy the bitmap in a temporary buffer
+        //  if the stride doesn't match the width
 
-    if (useStride) {
-        glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+        // Get bytesPerPixel from the GL_UNPACK_ALIGNMENT parameter
+        GLint bpp = 0;
+        glGetIntegerv(GL_UNPACK_ALIGNMENT, &bpp);
+
+        GLvoid * temp = (GLvoid *) malloc(width * height * bpp);
+        if (!temp) return;
+
+        uint8_t * pDst = (uint8_t *)temp;
+        uint8_t * pSrc = (uint8_t *)data;
+        for (GLsizei i = 0; i < height; i++) {
+            memcpy(pDst, pSrc, width * bpp);
+            pDst += width * bpp;
+            pSrc += stride * bpp;
+        }
+
+        if (resize) {
+            glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, type, temp);
+        } else {
+            glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, format, type, temp);
+        }
+
+        free(temp);
     }
 }
 
