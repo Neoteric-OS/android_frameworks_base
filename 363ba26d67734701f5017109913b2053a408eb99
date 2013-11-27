@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "835dfa61_19dc4bfe",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "We consider appropriate to make a distinction between the old events with the information they currently expose and the new ones that offer a finer coarse info about the phone/data connection events.\nSome users should be aware of the new information gathered by the apps when the update goes live.\nAnyway, we understand the overload of having a new permission with the effort of maintaining all the translations and so on, so if you consider appropriate to merge it with the existing one it could be ok too.",
+      "parentUuid": "1e78816e_967fecf8",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e8fa1ae_a123b839",
         "filename": "services/java/com/android/server/TelephonyRegistry.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2013-11-22T03:34:56Z",
       "side": 1,
       "message": "If the \"precise\" data connection changed event can be delivered through onPreciseDataConnectionStateChanged then it would be logical to deliver the existing event through onDataConnectionStateChanged. I guess we can\u0027t change that, though.",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6352c652_1801e595",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "Using onDataConnectionStateChanged we cannot obtain the DataConnection fail event because it does not provide any fail reason.",
+      "parentUuid": "1e8fa1ae_a123b839",
       "revId": "363ba26d67734701f5017109913b2053a408eb99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6352c652_780621af",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "We created those broadcast like the existing one on TelephonyManager.broadcastCallStateChanged which is not sticky.\nAlso it is not so clear for us if the sticky broadcast does the permission check to ensure the app has requested the READ_PRECISE_PHONE_STATE/READ_PHONE_STATE permission.",
+      "parentUuid": "1e8fa1ae_61fb7060",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e5e79fe_185f85aa",
         "filename": "telephony/java/android/telephony/PreciseCallState.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2013-11-22T03:34:56Z",
       "side": 1,
       "message": "Make private? Also LOG_TAG and DBG not used. Remove?",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "835dfa61_b9ea7f90",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "Both removed.",
+      "parentUuid": "5e5e79fe_185f85aa",
       "revId": "363ba26d67734701f5017109913b2053a408eb99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6352c652_580b5db3",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "Created android.telephony.DisconnectCause with DISCONNECT_CAUSE_* constants.\nCreated android.telephony.PreciseDisconnectCause with PRECISE_DISCONNECT_CAUSE_* constants.\nRemoved constants from android.telephony.PreciseCallState",
+      "parentUuid": "1e78816e_b61228b2",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e78816e_d6a2444c",
         "filename": "telephony/java/android/telephony/PreciseCallState.java",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2013-11-22T03:34:56Z",
       "side": 1,
       "message": "The values defined in CallFailCause.java are not in ril.h so can/will the RIL actually use them?",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6352c652_b8ef199a",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "As per comments on ril.h, the RIL implementation can return other exact cause codes despite of they are not defined on ril.h.\n\"* If the implementation does not have access to the exact cause codes,\n * then it should return one of the values listed in RIL_LastCallFailCause,\n * as the UI layer needs to distinguish these cases for tone generation or\n * error notification.\"\n \nAlso we have observed that vendor implementation of RIL often use codes not listed neither in ril.h nor CallFailCause.java, even out of value range defined in the 3GPP TS 24.008\nSo our intention is to propagate the exact code returned by RIL implementation to the app level so the developers can use them discretionally.",
+      "parentUuid": "1e78816e_d6a2444c",
       "revId": "363ba26d67734701f5017109913b2053a408eb99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "6352c652_f8f99166",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bec055c0_867fcc8f",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1eca41de_89319d0d",
         "filename": "telephony/java/android/telephony/PreciseCallState.java",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2013-11-22T03:34:56Z",
       "side": 1,
       "message": "Add @Override",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3583e70_fa9509e0",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eca41de_89319d0d",
       "revId": "363ba26d67734701f5017109913b2053a408eb99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "6352c652_d8f64d76",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fec64dd8_052912b6",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e6385c5_97b4446d",
         "filename": "telephony/java/android/telephony/PreciseCallState.java",
         "patchSetId": 3
@@ -166,6 +328,24 @@
       "writtenOn": "2013-11-22T03:34:56Z",
       "side": 1,
       "message": "Could be simpler:\nreturn a \u003d\u003d other.a\n    \u0026\u0026 b \u003d\u003d other.b\n    ...;",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "835dfa61_f9e4f7c6",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e6385c5_97b4446d",
       "revId": "363ba26d67734701f5017109913b2053a408eb99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "a3583e70_da92c5f5",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e6385c5_77c7b0d3",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e8aa59d_e5e87227",
         "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
         "patchSetId": 3
@@ -200,6 +398,24 @@
       "writtenOn": "2013-11-22T03:34:56Z",
       "side": 1,
       "message": "The returned String encodes info from LinkProperties. It seems likely that someone will parse the string to get to the underlying attributes. Maybe we should expose the LinkProperties as part of the API. Or not expose through this string.",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3583e70_1a86fdb6",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "Our first intention was to expose the LinkProperties class to the API, removing the @hide annotation, but this implies to propagate\nthe remove of @hide from other inner classes used in LinkProperties (like LinkAddress.java) and potentially creating a chain of dependencies.",
+      "parentUuid": "3e8aa59d_e5e87227",
       "revId": "363ba26d67734701f5017109913b2053a408eb99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "a3583e70_7a7bb90a",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e5e79fe_388a89bf",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e8aa59d_a5de6a7f",
         "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
         "patchSetId": 3
@@ -234,6 +468,24 @@
       "writtenOn": "2013-11-22T03:34:56Z",
       "side": 1,
       "message": "@Override",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "835dfa61_b9ef1f9a",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e8aa59d_a5de6a7f",
       "revId": "363ba26d67734701f5017109913b2053a408eb99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "835dfa61_99ecdba6",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e6385c5_77b09071",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e5e79fe_d8a26d4c",
         "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
         "patchSetId": 3
@@ -268,6 +538,24 @@
       "writtenOn": "2013-11-22T03:34:56Z",
       "side": 1,
       "message": "Braces around body (also below).",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6352c652_5824fd3f",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e5e79fe_d8a26d4c",
       "revId": "363ba26d67734701f5017109913b2053a408eb99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "6352c652_b818b900",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e6385c5_17a9140f",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e78816e_d6f08450",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 3
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "6352c652_d80f6db2",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "\"New\" makes reference to a new call instance like used in other comments like \"The lookup key used with the {@link #ACTION_PHONE_STATE_CHANGED} broadcast for a String containing the new call state.\".\n\nAnyway, we updated it to make it clearer.",
+      "parentUuid": "1e78816e_d6f08450",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e5e79fe_3871a927",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 3
@@ -319,6 +643,24 @@
       "writtenOn": "2013-11-22T03:34:56Z",
       "side": 1,
       "message": "The const names are a bit obscure. Maybe expand:\nEXTRA_RINGING_CALL_STATE\nEXTRA_FOREGROUND_CALL_STATE\nEXTRA_BACKGROUND_CALL_STATE",
+      "revId": "363ba26d67734701f5017109913b2053a408eb99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6352c652_384ae9ea",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2013-11-27T15:57:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e5e79fe_3871a927",
       "revId": "363ba26d67734701f5017109913b2053a408eb99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
