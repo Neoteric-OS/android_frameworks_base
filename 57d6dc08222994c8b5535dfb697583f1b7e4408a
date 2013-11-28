@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "03dcaa2e_ddc58b76",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2013-11-28T08:48:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3e532f4_9b1a2b87",
+      "revId": "57d6dc08222994c8b5535dfb697583f1b7e4408a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3e532f4_5b36e304",
         "filename": "core/tests/coretests/src/android/net/LinkAddressTest.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2013-11-28T08:28:59Z",
       "side": 1,
       "message": "This example is additionally different in one respect in comparison to the ways the IPv4 addresses are different below (you changed the prefix length as well).  Is this intentional?",
+      "revId": "57d6dc08222994c8b5535dfb697583f1b7e4408a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03dcaa2e_fdc2476b",
+        "filename": "core/tests/coretests/src/android/net/LinkAddressTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2013-11-28T08:48:15Z",
+      "side": 1,
+      "message": "Actually, this one looks correct. The reference address is always 2001:db8::1/64, and the addresses I compare it to are first 2001:db8::1/65 (same address, different prefix) and then 2001:db8::2/64 (different address, same prefix).\n\nThe IPv4 one is incorrect though - one test only changes the address, but the other changes both the address and the prefix. I\u0027ve fixed that one.",
+      "parentUuid": "c3e532f4_5b36e304",
       "revId": "57d6dc08222994c8b5535dfb697583f1b7e4408a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
