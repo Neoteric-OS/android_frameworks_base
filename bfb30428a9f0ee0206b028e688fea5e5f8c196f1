@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3e532f4_db975376",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2013-11-28T08:57:01Z",
+      "side": 1,
+      "message": "[nit] an InterfaceAddress",
+      "revId": "bfb30428a9f0ee0206b028e688fea5e5f8c196f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
