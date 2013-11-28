@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3e532f4_9b1a2b87",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2013-11-28T08:28:59Z",
+      "side": 1,
+      "message": "[nit] from an InetAddress?",
+      "revId": "57d6dc08222994c8b5535dfb697583f1b7e4408a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3e532f4_5b36e304",
+        "filename": "core/tests/coretests/src/android/net/LinkAddressTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2013-11-28T08:28:59Z",
+      "side": 1,
+      "message": "This example is additionally different in one respect in comparison to the ways the IPv4 addresses are different below (you changed the prefix length as well).  Is this intentional?",
+      "revId": "57d6dc08222994c8b5535dfb697583f1b7e4408a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
