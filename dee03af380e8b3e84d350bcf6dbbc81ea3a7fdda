@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4325c2ed_4d0e0d8d",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-12-02T20:18:17Z",
+      "side": 1,
+      "message": "Please resolve this TODO.",
+      "revId": "dee03af380e8b3e84d350bcf6dbbc81ea3a7fdda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "632006df_d13f36c8",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-12-02T20:18:17Z",
+      "side": 1,
+      "message": "Trailing whitespace here and a couple places below.",
+      "revId": "dee03af380e8b3e84d350bcf6dbbc81ea3a7fdda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "632006df_11442e35",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-12-02T20:18:17Z",
+      "side": 1,
+      "message": "Add private constructor.",
+      "revId": "dee03af380e8b3e84d350bcf6dbbc81ea3a7fdda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "832b3ac2_92be6296",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-12-02T20:18:17Z",
+      "side": 1,
+      "message": "As mentioned for PreciseDisconnectCause, since all constants belong to the same namespace we can drop \"DISCONNECT_CAUSE_\" from the constant names.",
+      "revId": "dee03af380e8b3e84d350bcf6dbbc81ea3a7fdda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "832b3ac2_d2e1fab4",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-12-02T20:18:17Z",
+      "side": 1,
+      "message": "I believe this really isn\u0027t used (as the comment sugggests) so can we just drop it?",
+      "revId": "dee03af380e8b3e84d350bcf6dbbc81ea3a7fdda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4325c2ed_0db9b562",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-12-02T20:18:17Z",
+      "side": 1,
+      "message": "Should add something for the javadoc. Same for couple of fields below. Actually the javadoc should be cleaned up everwhere - e.g., terminate sentences with periods.",
+      "revId": "dee03af380e8b3e84d350bcf6dbbc81ea3a7fdda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "832b3ac2_1201d295",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-12-02T20:18:17Z",
+      "side": 1,
+      "message": "Should add something for the javadoc.",
+      "revId": "dee03af380e8b3e84d350bcf6dbbc81ea3a7fdda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "632006df_71848a45",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-12-02T20:18:17Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "dee03af380e8b3e84d350bcf6dbbc81ea3a7fdda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "632006df_b1bba2f7",
+        "filename": "telephony/java/android/telephony/PreciseDisconnectCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-12-02T20:18:17Z",
+      "side": 1,
+      "message": "Add a private constructor for good measure.",
+      "revId": "dee03af380e8b3e84d350bcf6dbbc81ea3a7fdda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4325c2ed_cd3ddd42",
+        "filename": "telephony/java/android/telephony/PreciseDisconnectCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1034265
+      },
+      "writtenOn": "2013-12-02T20:18:17Z",
+      "side": 1,
+      "message": "Given that constants defined in this class all belong to the same namespace my preference would be to drop the PRECISE_DISCONNECT_CAUSE_ prefix everywhere.",
+      "revId": "dee03af380e8b3e84d350bcf6dbbc81ea3a7fdda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
