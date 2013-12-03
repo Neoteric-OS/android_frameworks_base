@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63d566ff_46e2866f",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2013-12-03T10:34:40Z",
+      "side": 1,
+      "message": "@Override after the comment. Also, this comment isn\u0027t javadoc (/* vs /**)",
+      "revId": "99e27c6ab62a7f4f3db6b40de874f514da16d770",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
