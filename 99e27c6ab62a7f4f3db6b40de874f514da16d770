@@ -16,6 +16,24 @@
       "revId": "99e27c6ab62a7f4f3db6b40de874f514da16d770",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3e876cd_f040a8be",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2013-12-03T10:49:45Z",
+      "side": 1,
+      "message": "Wow, well spotted! Fixed.",
+      "parentUuid": "63d566ff_46e2866f",
+      "revId": "99e27c6ab62a7f4f3db6b40de874f514da16d770",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
