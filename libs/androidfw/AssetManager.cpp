@@ -1487,11 +1487,16 @@ bool AssetManager::scanAndMergeZipLocked(SortedVector<AssetDir::FileInfo>* pMerg
      * semantics.
      */
     int dirNameLen = dirName.length();
-    for (int i = 0; i < pZip->getNumEntries(); i++) {
-        ZipEntryRO entry;
+    void *iterationCookie;
+    if (!pZip->startIteration(&iterationCookie)) {
+        ALOGW("ZipFileRO::startIteration returned false");
+        return false;
+    }
+
+    ZipEntryRO entry;
+    while ((entry = pZip->nextEntry(iterationCookie)) != NULL) {
         char nameBuf[256];
 
-        entry = pZip->findEntryByIndex(i);
         if (pZip->getEntryFileName(entry, nameBuf, sizeof(nameBuf)) != 0) {
             // TODO: fix this if we expect to have long names
             ALOGE("ARGH: name too long?\n");
@@ -1540,6 +1545,8 @@ bool AssetManager::scanAndMergeZipLocked(SortedVector<AssetDir::FileInfo>* pMerg
             }
         }
     }
+
+    pZip->endIteration(iterationCookie);
 
     /*
      * Add the set of unique directories.
@@ -1814,12 +1821,10 @@ AssetManager::SharedZip::SharedZip(const String8& path, time_t modWhen)
       mResourceTableAsset(NULL), mResourceTable(NULL)
 {
     //ALOGI("Creating SharedZip %p %s\n", this, (const char*)mPath);
-    mZipFile = new ZipFileRO;
     ALOGV("+++ opening zip '%s'\n", mPath.string());
-    if (mZipFile->open(mPath.string()) != NO_ERROR) {
+    mZipFile = ZipFileRO::open(mPath.string());
+    if (mZipFile == NULL) {
         ALOGD("failed to open Zip archive '%s'\n", mPath.string());
-        delete mZipFile;
-        mZipFile = NULL;
     }
 }
 
