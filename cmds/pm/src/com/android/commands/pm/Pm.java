@@ -270,6 +270,7 @@ public final class Pm {
         boolean listDisabled = false, listEnabled = false;
         boolean listSystem = false, listThirdParty = false;
         boolean listInstaller = false;
+        boolean listVersionName = false;
         int userId = UserHandle.USER_OWNER;
         try {
             String opt;
@@ -290,6 +291,8 @@ public final class Pm {
                     listThirdParty = true;
                 } else if (opt.equals("-i")) {
                     listInstaller = true;
+                } else if (opt.equals("-v")) {
+                    listVersionName = true;
                 } else if (opt.equals("--user")) {
                     userId = Integer.parseInt(nextArg());
                 } else if (opt.equals("-u")) {
@@ -330,6 +333,10 @@ public final class Pm {
                     if (listInstaller) {
                         System.out.print("  installer=");
                         System.out.print(mPm.getInstallerPackageName(info.packageName));
+                    }
+                    if (listVersionName) {
+                        System.out.print("  version=");
+                        System.out.print(info.versionName);
                     }
                     System.out.println();
                 }
@@ -1504,7 +1511,7 @@ public final class Pm {
     }
 
     private static void showUsage() {
-        System.err.println("usage: pm list packages [-f] [-d] [-e] [-s] [-3] [-i] [-u] [--user USER_ID] [FILTER]");
+        System.err.println("usage: pm list packages [-f] [-d] [-e] [-s] [-3] [-i] [-v] [-u] [--user USER_ID] [FILTER]");
         System.err.println("       pm list permission-groups");
         System.err.println("       pm list permissions [-g] [-f] [-d] [-u] [GROUP]");
         System.err.println("       pm list instrumentation [-f] [TARGET-PACKAGE]");
@@ -1542,6 +1549,7 @@ public final class Pm {
         System.err.println("    -s: filter to only show system packages.");
         System.err.println("    -3: filter to only show third party packages.");
         System.err.println("    -i: see the installer for the packages.");
+        System.err.println("    -v: see the version string of packages.");
         System.err.println("    -u: also include uninstalled packages.");
         System.err.println("");
         System.err.println("pm list permission-groups: prints all known permission groups.");
