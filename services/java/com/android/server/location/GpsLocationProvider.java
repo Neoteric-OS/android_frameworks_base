@@ -1036,13 +1036,10 @@ public class GpsLocationProvider implements LocationProviderInterface {
             mSingleShot = singleShot;
             mPositionMode = GPS_POSITION_MODE_STANDALONE;
 
-             if (Settings.Global.getInt(mContext.getContentResolver(),
-                    Settings.Global.ASSISTED_GPS_ENABLED, 1) != 0) {
-                if (singleShot && hasCapability(GPS_CAPABILITY_MSA)) {
-                    mPositionMode = GPS_POSITION_MODE_MS_ASSISTED;
-                } else if (hasCapability(GPS_CAPABILITY_MSB)) {
-                    mPositionMode = GPS_POSITION_MODE_MS_BASED;
-                }
+            if (singleShot && hasCapability(GPS_CAPABILITY_MSA)) {
+                mPositionMode = GPS_POSITION_MODE_MS_ASSISTED;
+            } else if (hasCapability(GPS_CAPABILITY_MSB)) {
+                mPositionMode = GPS_POSITION_MODE_MS_BASED;
             }
 
             if (DEBUG) {
