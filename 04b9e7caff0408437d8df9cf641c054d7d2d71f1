@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e813f39e_473b90b0",
+        "filename": "core/java/com/android/internal/util/FileRotator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2013-12-13T17:36:51Z",
+      "side": 1,
+      "message": "no need to log, just return.  it\u0027s okay for it to have return null around first boot.",
+      "revId": "04b9e7caff0408437d8df9cf641c054d7d2d71f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e813f39e_874c685d",
+        "filename": "core/tests/coretests/src/com/android/internal/util/FileRotatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2013-12-13T17:36:51Z",
+      "side": 1,
+      "message": "it might surface as a permissions issue, but it\u0027s probably just that the directory hasn\u0027t been mkdir\u0027ed yet.\n\nit should be enough to test with a directory that doesn\u0027t exist.",
+      "revId": "04b9e7caff0408437d8df9cf641c054d7d2d71f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e813f39e_07ecf8ea",
+        "filename": "e813f39e_07ecf8ea",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2013-12-13T17:36:51Z",
+      "side": 1,
+      "message": "instead of try/catching, just let the exception throw up to the caller, so it shows up in the test log.  it\u0027s much more informative than the bland pass/fail message below.\n\nno need for tcSuccessfull in that case.\n\nyou can use a pattern like this to try cleaning up; a cleanup failure doesn\u0027t feel like a test failure.  (in fact, could it ever delete a directory that had been chmod\u0027ed to 000?)\n\n try {\n   ...\n } finally {\n   dir.delete();\n }",
+      "revId": "04b9e7caff0408437d8df9cf641c054d7d2d71f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
