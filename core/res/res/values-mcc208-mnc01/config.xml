@@ -36,12 +36,10 @@
          Or string format of ApnSettingV2.
          note that empty fields can be ommitted: "name,apn,,,,,,,,,310,260,,DUN" -->
     <string-array translatable="false" name="config_tether_apndata">
-        <item>Rogers LTE Tethering,ltedata.apn,,,,,,,,,302,720,,DUN</item>
-        <item>[ApnSettingV2]chatr Tethering,chatrisp.apn,,,,,,,,,302,720,,DUN,,,true,0,imsi,302720x94</item>
+        <item>Orange Internet,orange.fr,,,orange,orange,,,,,208,01,1,DUN</item>
+        <item>[ApnSettingV2]Carrefour WAP,ofnew.fr,,,orange,orange,,,,,208,01,1,DUN,,,true,0,gid,33</item>
+        <item>[ApnSettingV2]VM WAP,ofnew.fr,,,orange,orange,,,,,208,01,1,DUN,,,true,0,gid,52</item>
+        <item>[ApnSettingV2]NRJWEB,ofnew.fr,,,orange,orange,,,,,208,01,1,DUN,,,true,0,gid,4E</item>
     </string-array>
-
-    <!-- Configure mobile network MTU. Carrier specific value is set here.
-    -->
-    <integer name="config_mobile_mtu">1430</integer>
 
 </resources>
