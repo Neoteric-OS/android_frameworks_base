@@ -204,7 +204,7 @@ jobject videoEditProp_getProperties(
                 result = getClipProperties(
                         pEnv, thiz, pFile, clipType, pClipProperties);
 
-                if (M4MCS_ERR_FILE_DRM_PROTECTED == result) {
+                if ((M4OSA_ERR)M4MCS_ERR_FILE_DRM_PROTECTED == result) {
                     // Check if the creation succeeded.
                     videoEditJava_checkAndThrowIllegalArgumentException(
                             &gotten, pEnv,(M4NO_ERROR != result),
