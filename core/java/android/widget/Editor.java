@@ -3444,7 +3444,10 @@ public class Editor {
 
             // Handles can not cross and selection is at least one character
             final int selectionEnd = mTextView.getSelectionEnd();
-            if (offset >= selectionEnd) offset = Math.max(0, selectionEnd - 1);
+            if (offset >= selectionEnd) {
+                int max = selectionEnd - getSurrogateAdjCharSize(selectionEnd - 2);
+                offset = Math.max(0, max);
+            }
 
             positionAtCursorOffset(offset, false);
         }
@@ -3488,7 +3491,8 @@ public class Editor {
             // Handles can not cross and selection is at least one character
             final int selectionStart = mTextView.getSelectionStart();
             if (offset <= selectionStart) {
-                offset = Math.min(selectionStart + 1, mTextView.getText().length());
+                int min = selectionStart + getSurrogateAdjCharSize(selectionStart);
+                offset = Math.min(min, mTextView.getText().length());
             }
 
             positionAtCursorOffset(offset, false);
@@ -3497,6 +3501,17 @@ public class Editor {
         public void setActionPopupWindow(ActionPopupWindow actionPopupWindow) {
             mActionPopupWindow = actionPopupWindow;
         }
+    }
+
+    private int getSurrogateAdjCharSize(int offset) {
+        if (offset >= 0 && offset < mTextView.getText().length() - 1) {
+            final char highChar = mTextView.getText().charAt(offset);
+            final char lowChar = mTextView.getText().charAt(offset + 1);
+            if (Character.isSurrogatePair(highChar, lowChar)) {
+                return 2;
+            }
+        }
+        return 1;
     }
 
     /**
