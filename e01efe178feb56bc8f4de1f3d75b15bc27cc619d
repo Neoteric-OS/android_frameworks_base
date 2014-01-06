@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d7db99f_6ffead54",
+        "filename": "media/jni/android_mtp_MtpDatabase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-01-06T22:50:05Z",
+      "side": 1,
+      "message": "unnecessary cast.",
+      "revId": "e01efe178feb56bc8f4de1f3d75b15bc27cc619d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
