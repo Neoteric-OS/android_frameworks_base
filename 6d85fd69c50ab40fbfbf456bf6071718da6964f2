@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08abe757_0b92a140",
+        "filename": "api/current.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 23175,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-06T23:20:39Z",
+      "side": 1,
+      "message": "Why is this public now?",
+      "range": {
+        "startLine": 23175,
+        "startChar": 2,
+        "endLine": 23175,
+        "endChar": 8
+      },
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28aeeb65_2c81b79c",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-06T23:20:39Z",
+      "side": 1,
+      "message": "remove commnet",
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08abe757_8b5771b4",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-06T23:20:39Z",
+      "side": 1,
+      "message": "2013",
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08abe757_eb5aa5dd",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-06T23:20:39Z",
+      "side": 1,
+      "message": "2013",
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08abe757_6bd9d50c",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-06T23:20:39Z",
+      "side": 1,
+      "message": "Do we need both sets? Also, these are not the only values that the RIL can return potentially any value can be returned.",
+      "range": {
+        "startLine": 203,
+        "startChar": 22,
+        "endLine": 203,
+        "endChar": 27
+      },
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a82f3bb4_e52450df",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-06T23:20:39Z",
+      "side": 1,
+      "message": "remove blank comment lines",
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08abe757_6bb235cf",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-06T23:20:39Z",
+      "side": 1,
+      "message": "Why is this needed and there is no definition on what is what. My initial reaction is that this isn\u0027t needed. If it is this format is useless except for detecting changes. Should we just use LinkProperties. Maybe they aren\u0027t public.",
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08abe757_0b20612c",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-06T23:20:39Z",
+      "side": 1,
+      "message": "This is only a partial list other values can be returned, we need to document that. We might remove this extensive list and just point at DisconnectCause.",
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28aeeb65_ac9b67df",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-06T23:20:39Z",
+      "side": 1,
+      "message": "Other values can be returned and maybe point at PreciseDisconnectCause.",
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
