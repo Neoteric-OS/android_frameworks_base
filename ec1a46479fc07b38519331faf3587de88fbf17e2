@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dee99c6_2dcaad8c",
+        "filename": "services/java/com/android/server/input/PersistentDataStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-01-07T01:21:12Z",
+      "side": 1,
+      "message": "There\u0027s no need for this to be a Map. Surface is public API so you can just use a TouchCalibration array of size 4 with the Surface constant as the key and only convert to a String when serializing.",
+      "revId": "ec1a46479fc07b38519331faf3587de88fbf17e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edfa2581_ec2b8b94",
+        "filename": "services/java/com/android/server/input/PersistentDataStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-01-07T01:21:12Z",
+      "side": 1,
+      "message": "This method should be static and static methods typically go at the bottom of the class.",
+      "revId": "ec1a46479fc07b38519331faf3587de88fbf17e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edfa2581_2c57531d",
+        "filename": "services/java/com/android/server/input/PersistentDataStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-01-07T01:21:12Z",
+      "side": 1,
+      "message": "This method should be static as well. Also, comparisons of the form \"0\".equals(s) are preferred over s.equals(\"0\") since if s is null the former won\u0027t throw a NPE while the latter will. I\u0027m aware that the rest of this file doesn\u0027t follow this convention, but there\u0027s no reason not to fix it for new patches... :)",
+      "revId": "ec1a46479fc07b38519331faf3587de88fbf17e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edfa2581_0c7d3795",
+        "filename": "services/java/com/android/server/input/PersistentDataStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-01-07T01:21:12Z",
+      "side": 1,
+      "message": "This is going to be need to be backwards compatible if the prior patches get merged before this, meaning rotation being null has to be handled. Otherwise users will unnecessarily lose their settings.\n\nThis is only really an error if there is more than one calibration since if there\u0027s only one it\u0027s just the calibration for all of the rotations.",
+      "revId": "ec1a46479fc07b38519331faf3587de88fbf17e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cdf72198_2b57391d",
+        "filename": "services/java/com/android/server/input/PersistentDataStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-01-07T01:21:12Z",
+      "side": 1,
+      "message": "This really should only catch the exceptions it cares about.",
+      "revId": "ec1a46479fc07b38519331faf3587de88fbf17e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
