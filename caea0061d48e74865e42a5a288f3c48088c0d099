@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d435d82_8121fc34",
+        "filename": "core/jni/android_hardware_Camera.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2014-01-07T01:30:53Z",
+      "side": 1,
+      "message": "please remove the \"// should never happen\" comment if you\u0027ve actually observed this codepath occurring.\n\nCan you elaborate on when you see this occur? From the comment here it sounds like there\u0027s a race condition somewhere in the camera stack in which video recording buffers are delivered late(?) in some cases. I\u0027d like to understand this better.\n\nCurrently, the camera device HAL v1 interface documentation specifies that after the framework calls camera-\u003edisable_msg_type(CAMERA_MSG_VIDEO_FRAME), the HAL may not rely on calls to release_recording_frame for any image buffers that are subsequently sent to the framework code by the HAL:\n\n    /**\n     * Release a record frame previously returned by CAMERA_MSG_VIDEO_FRAME.\n     *\n     * It is camera HAL client\u0027s responsibility to release video recording\n     * frames sent out by the camera HAL before the camera HAL receives a call\n     * to disableMsgType(CAMERA_MSG_VIDEO_FRAME). After it receives the call to\n     * disableMsgType(CAMERA_MSG_VIDEO_FRAME), it is the camera HAL\u0027s\n     * responsibility to manage the life-cycle of the video recording frames.\n     */\n\nSo if you\u0027re seeing this issue because your HAL implementation is sending out recording buffers _after_ disableMsgType(CAMERA_MSG_VIDEO_FRAME) is received, then you need to fix that in your HAL.",
+      "revId": "caea0061d48e74865e42a5a288f3c48088c0d099",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
