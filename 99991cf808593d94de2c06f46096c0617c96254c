@@ -16,6 +16,23 @@
       "revId": "99991cf808593d94de2c06f46096c0617c96254c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4db331fa_172ef4ac",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2234,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-01-07T10:00:56Z",
+      "side": 1,
+      "message": "This comment seems to be the crux of this change. \"it might not have been updated yet\". Why not ? Is that well understood ? That\u0027s what we should be fixing.",
+      "revId": "99991cf808593d94de2c06f46096c0617c96254c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
