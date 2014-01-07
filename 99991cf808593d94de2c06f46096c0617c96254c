@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6dae3595_d87f4d37",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1006299
+      },
+      "writtenOn": "2014-01-07T14:24:17Z",
+      "side": 1,
+      "message": "Previously the TimeZone was set to null, thereby forcing it to be read from system properties and stored in TimeZone.defaultTimeZone the next time we call TimeZone.getDefault().\n\nThe problem is the timezone from system properties might not have been updated yet since changes to system properties is not instantly visible to all active processes. If we read the defaultTimeZone before the system property has been updated for this process, we will have a stale defaultTimeZone for the rest of the process life or until the next timezone change.\n\nSince we have the new timezone in this process when we call updateTimeZone() we might as well pass it as a parameter and  set it to the defaultTimeZone directly, removing the need to read it from system properties.\n\nThis is executed in the process updating the timezone and will set the default timezone for that process.\n\nWe want to avoid calling TimeZone.setDefault(null), and in reality we should never have to since the timeZone argument should in general never be null. TimeZone.setDefault(null) is kept in the else statement to avoid an NPE in the conversion from timeZone String to a TimeZone instance (TimeZone.getTimeZone(timeZone))",
+      "parentUuid": "AAAIEX//+p0\u003d",
+      "revId": "99991cf808593d94de2c06f46096c0617c96254c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4db331fa_172ef4ac",
         "filename": "core/java/android/app/ActivityThread.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2014-01-07T10:00:56Z",
       "side": 1,
       "message": "This comment seems to be the crux of this change. \"it might not have been updated yet\". Why not ? Is that well understood ? That\u0027s what we should be fixing.",
+      "revId": "99991cf808593d94de2c06f46096c0617c96254c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6dae3595_d8582de6",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2234,
+      "author": {
+        "id": 1006299
+      },
+      "writtenOn": "2014-01-07T14:24:17Z",
+      "side": 1,
+      "message": "In this code block we are about to deliver an ACTION_TIMEZONE_CHANGED broadcast. This is executed in the BroadcastReceiver\u0027s process.\n\nThe problem is that changes to system properties are not instantly visible to all active processes. \n\nInstead of relying on getting the new timezone value from system properties (by calling TimeZone.getDefault() with a null default timezone), we explicitly set it to the value found in extras. The value in extras was added from the value passed in updateTimeZone from the originating process above.\n\nYou are correct that this is a work around for an underlying problem. It could be fixed by:\n* Making changes to system properties synchronized across processes. (Might not even be desirable in all cases)\n* Have the timezone be backed by something other than system properties.\n* Something else...\n\nI made the decision at the time that this change was the best alternative for us.",
+      "parentUuid": "4db331fa_172ef4ac",
       "revId": "99991cf808593d94de2c06f46096c0617c96254c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
