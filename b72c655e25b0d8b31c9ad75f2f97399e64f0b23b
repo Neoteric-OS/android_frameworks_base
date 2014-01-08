@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed96a557_6cbbfba7",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1874,
+      "author": {
+        "id": 1003403
+      },
+      "writtenOn": "2014-01-08T14:39:32Z",
+      "side": 1,
+      "message": "Don\u0027t we typically use framework resources for defaults of this sort?",
+      "range": {
+        "startLine": 1874,
+        "startChar": 20,
+        "endLine": 1874,
+        "endChar": 36
+      },
+      "revId": "b72c655e25b0d8b31c9ad75f2f97399e64f0b23b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
