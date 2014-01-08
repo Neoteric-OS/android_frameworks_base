@@ -16,6 +16,24 @@
       "revId": "5d6332e3744e37ced079e5360f1fa3e0e5681d57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad82ed16_6a6af776",
+        "filename": "core/res/res/values-mcc425-mnc01/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021975
+      },
+      "writtenOn": "2014-01-08T08:26:36Z",
+      "side": 0,
+      "message": "IL Orange operator use default type (APN:uwap.orange.co.il) for dun service. This is operator\u0027s requirement. \nSo I delete dun type.",
+      "parentUuid": "4da89190_ef9d217c",
+      "revId": "5d6332e3744e37ced079e5360f1fa3e0e5681d57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
