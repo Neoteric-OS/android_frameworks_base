@@ -694,18 +694,18 @@ public class InputManagerService extends IInputManager.Stub
     }
 
     @Override // Binder call & native callback
-    public TouchCalibration getTouchCalibrationForInputDevice(String inputDeviceDescriptor) {
+    public TouchCalibration getTouchCalibrationForInputDevice(String inputDeviceDescriptor, int surfaceRotation) {
         if (inputDeviceDescriptor == null) {
             throw new IllegalArgumentException("inputDeviceDescriptor must not be null");
         }
 
         synchronized (mDataStore) {
-            return mDataStore.getTouchCalibration(inputDeviceDescriptor);
+            return mDataStore.getTouchCalibration(inputDeviceDescriptor, surfaceRotation);
         }
     }
 
     @Override // Binder call
-    public void setTouchCalibrationForInputDevice(String inputDeviceDescriptor,
+    public void setTouchCalibrationForInputDevice(String inputDeviceDescriptor, int surfaceRotation,
             TouchCalibration calibration) {
         if (!checkCallingPermission(android.Manifest.permission.SET_INPUT_CALIBRATION,
                 "setTouchCalibrationForInputDevice()")) {
@@ -718,9 +718,10 @@ public class InputManagerService extends IInputManager.Stub
             throw new IllegalArgumentException("calibration must not be null");
         }
 
+
         synchronized (mDataStore) {
             try {
-                if (mDataStore.setTouchCalibration(inputDeviceDescriptor, calibration))
+                if (mDataStore.setTouchCalibration(inputDeviceDescriptor, surfaceRotation, calibration))
                     nativeReloadCalibration(mPtr);
             } finally {
                 mDataStore.saveIfNeeded();

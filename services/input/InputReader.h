@@ -314,7 +314,7 @@ public:
 
     /* Gets the affine calibration associated with the specified device. */
     virtual TouchAffineTransformation getTouchAffineTransformation(
-            const String8& inputDeviceDescriptor) = 0;
+            const String8& inputDeviceDescriptor, int32_t surfaceRotation) = 0;
 };
 
 

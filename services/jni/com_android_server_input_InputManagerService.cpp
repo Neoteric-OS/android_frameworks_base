@@ -193,7 +193,7 @@ public:
     virtual void notifyInputDevicesChanged(const Vector<InputDeviceInfo>& inputDevices);
     virtual sp<KeyCharacterMap> getKeyboardLayoutOverlay(const String8& inputDeviceDescriptor);
     virtual String8 getDeviceAlias(const InputDeviceIdentifier& identifier);
-    TouchAffineTransformation getTouchAffineTransformation(const String8& inputDeviceDescriptor);
+    TouchAffineTransformation getTouchAffineTransformation(const String8& inputDeviceDescriptor, int32_t surfaceRotation);
 
     /* --- InputDispatcherPolicyInterface implementation --- */
 
@@ -756,13 +756,14 @@ bool NativeInputManager::isScreenBright() {
 }
 
 TouchAffineTransformation NativeInputManager::getTouchAffineTransformation(
-        const String8& inputDeviceDescriptor) {
+        const String8& inputDeviceDescriptor, int32_t surfaceRotation) {
     JNIEnv* env = jniEnv();
 
     ScopedLocalRef<jstring> descriptorObj(env, env->NewStringUTF(inputDeviceDescriptor.string()));
 
     jobject cal = env->CallObjectMethod(mServiceObj,
-            gServiceClassInfo.getTouchCalibrationForInputDevice, descriptorObj.get());
+            gServiceClassInfo.getTouchCalibrationForInputDevice, descriptorObj.get(),
+            surfaceRotation);
 
     jfloatArray matrixArr = jfloatArray(env->CallObjectMethod(cal,
             gTouchCalibrationClassInfo.getAffineTransform);
@@ -1504,7 +1505,7 @@ int register_android_server_InputManager(JNIEnv* env) {
 
     GET_METHOD_ID(gServiceClassInfo.getTouchCalibrationForInputDevice, clazz,
             "getTouchCalibrationForInputDevice",
-            "(Ljava/lang/String;)Landroid/hardware/input/TouchCalibration;");
+            "(Ljava/lang/String;I)Landroid/hardware/input/TouchCalibration;");
 
     // InputDevice
 
