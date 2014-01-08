@@ -102,7 +102,7 @@ static jobject createBitmapRegionDecoder(JNIEnv* env, SkStream* stream) {
 }
 
 static jobject nativeNewInstanceFromByteArray(JNIEnv* env, jobject, jbyteArray byteArray,
-                                     int offset, int length, jboolean isShareable) {
+                                     jint offset, jint length, jboolean isShareable) {
     /*  If isShareable we could decide to just wrap the java array and
         share it, but that means adding a globalref to the java array object
         For now we just always copy the array's data if isShareable.
@@ -170,8 +170,9 @@ static jobject nativeNewInstanceFromAsset(JNIEnv* env, jobject clazz,
  * purgeable not supported
  * reportSizeToVM not supported
  */
-static jobject nativeDecodeRegion(JNIEnv* env, jobject, SkBitmapRegionDecoder *brd,
-                                int start_x, int start_y, int width, int height, jobject options) {
+static jobject nativeDecodeRegion(JNIEnv* env, jobject, jlong brdHandle,
+                                jint start_x, jint start_y, jint width, jint height, jobject options) {
+    SkBitmapRegionDecoder *brd = (SkBitmapRegionDecoder *) brdHandle;
     jobject tileBitmap = NULL;
     SkImageDecoder *decoder = brd->getDecoder();
     int sampleSize = 1;
@@ -256,12 +257,14 @@ static jobject nativeDecodeRegion(JNIEnv* env, jobject, SkBitmapRegionDecoder *b
     return GraphicsJNI::createBitmap(env, bitmap, buff, bitmapCreateFlags, NULL, NULL, -1);
 }
 
-static int nativeGetHeight(JNIEnv* env, jobject, SkBitmapRegionDecoder *brd) {
-    return brd->getHeight();
+static jint nativeGetHeight(JNIEnv* env, jobject, jlong brdHandle) {
+    SkBitmapRegionDecoder *brd = (SkBitmapRegionDecoder *) brdHandle;
+    return (jint) brd->getHeight();
 }
 
-static int nativeGetWidth(JNIEnv* env, jobject, SkBitmapRegionDecoder *brd) {
-    return brd->getWidth();
+static jint nativeGetWidth(JNIEnv* env, jobject, jlong brdHandle) {
+    SkBitmapRegionDecoder *brd = (SkBitmapRegionDecoder *) brdHandle;
+    return (jint) brd->getWidth();
 }
 
 static void nativeClean(JNIEnv* env, jobject, SkBitmapRegionDecoder *brd) {
@@ -274,14 +277,14 @@ static void nativeClean(JNIEnv* env, jobject, SkBitmapRegionDecoder *brd) {
 
 static JNINativeMethod gBitmapRegionDecoderMethods[] = {
     {   "nativeDecodeRegion",
-        "(IIIIILandroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;",
+        "(JIIIILandroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;",
         (void*)nativeDecodeRegion},
 
-    {   "nativeGetHeight", "(I)I", (void*)nativeGetHeight},
+    {   "nativeGetHeight", "(J)I", (void*)nativeGetHeight},
 
-    {   "nativeGetWidth", "(I)I", (void*)nativeGetWidth},
+    {   "nativeGetWidth", "(J)I", (void*)nativeGetWidth},
 
-    {   "nativeClean", "(I)V", (void*)nativeClean},
+    {   "nativeClean", "(J)V", (void*)nativeClean},
 
     {   "nativeNewInstance",
         "([BIIZ)Landroid/graphics/BitmapRegionDecoder;",
