@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dd1393f_8f28496d",
+        "filename": "services/java/com/android/server/MountService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2014-01-09T18:59:27Z",
+      "side": 1,
+      "message": "can you use the existing mHandler thread instead of creating another thread?",
+      "revId": "2b9adc44bfcef76a91d534b6de8c055ad0a35913",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
