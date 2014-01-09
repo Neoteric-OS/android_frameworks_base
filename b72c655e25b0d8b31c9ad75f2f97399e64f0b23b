@@ -22,6 +22,24 @@
       "revId": "b72c655e25b0d8b31c9ad75f2f97399e64f0b23b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d1369db_a9509d21",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1874,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2014-01-09T01:53:43Z",
+      "side": 1,
+      "message": "Because this is not a common requirement but Verizon\u0027s, it would not be good to define a new variable in framework resource.\nTo define it in system prop, OEMs who have products for Verizon can avoid extra patch while other OEMs can expect default behavior by not having this entry in system prop.\n\nIn frameworks/base, we have already similar solution in below commit,\n\nsha1: 5982013cfc8274ff0bafaba83c676b3a8890cba9\n\nChange the number of volume steps from 6 to 7 per Verizon Requirements",
+      "parentUuid": "ed96a557_6cbbfba7",
+      "revId": "b72c655e25b0d8b31c9ad75f2f97399e64f0b23b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
