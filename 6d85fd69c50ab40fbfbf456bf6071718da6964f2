@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad33cd7d_426c72dc",
+        "filename": "api/current.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 23175,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2014-01-10T10:57:33Z",
+      "side": 1,
+      "message": "As Anders suggested we move the DISCONNECT_CAUSE_* constants to this new class to consolidate the duplicate definitions in a single place.\nWe will add the @hide annotation to hide this class also.",
+      "parentUuid": "08abe757_0b92a140",
+      "range": {
+        "startLine": 23175,
+        "startChar": 2,
+        "endLine": 23175,
+        "endChar": 8
+      },
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28aeeb65_2c81b79c",
         "filename": "services/java/com/android/server/TelephonyRegistry.java",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2014-01-06T23:20:39Z",
       "side": 1,
       "message": "remove commnet",
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad33cd7d_e2c90699",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2014-01-10T10:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28aeeb65_2c81b79c",
       "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "0dd6993f_ad341d11",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2014-01-10T10:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08abe757_8b5771b4",
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08abe757_eb5aa5dd",
         "filename": "telephony/java/android/telephony/PreciseCallState.java",
         "patchSetId": 5
@@ -70,6 +130,24 @@
       "writtenOn": "2014-01-06T23:20:39Z",
       "side": 1,
       "message": "2013",
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ede2251a_4f7251bc",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2014-01-10T10:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08abe757_eb5aa5dd",
       "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "ede2251a_2f6f05d4",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2014-01-10T10:57:33Z",
+      "side": 1,
+      "message": "They are necessary as the former groups multiple PreciseDisconnectCause in a single DisconnectCause, losing the detail/precise information about the disconnect cause. The PreciseDisconnectCause list is set as a reference like proposed in ril.h which establishes the \"standarized\" values, even if other values can be returned.",
+      "parentUuid": "08abe757_6bd9d50c",
+      "range": {
+        "startLine": 203,
+        "startChar": 22,
+        "endLine": 203,
+        "endChar": 27
+      },
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a82f3bb4_e52450df",
         "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
         "patchSetId": 5
@@ -110,6 +212,24 @@
       "writtenOn": "2014-01-06T23:20:39Z",
       "side": 1,
       "message": "remove blank comment lines",
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ede2251a_cfce419f",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2014-01-10T10:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a82f3bb4_e52450df",
       "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "0dd6993f_2d294db6",
+        "filename": "telephony/java/android/telephony/PreciseDataConnectionState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2014-01-10T10:57:33Z",
+      "side": 1,
+      "message": "We have changed the \"mIface\" attribute to a LinkProperties as suggested. Thus we have removed all \"mIface\" references, auxiliary methods and imports that are no longer necessary. Note that it will be necessary to expose LinkProperties class to the API to make this class public.",
+      "parentUuid": "08abe757_6bb235cf",
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08abe757_0b20612c",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 5
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "0dd6993f_0d2691e6",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2014-01-10T10:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08abe757_0b20612c",
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28aeeb65_ac9b67df",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 5
@@ -161,6 +317,24 @@
       "writtenOn": "2014-01-06T23:20:39Z",
       "side": 1,
       "message": "Other values can be returned and maybe point at PreciseDisconnectCause.",
+      "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ede2251a_afd3f544",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1021495
+      },
+      "writtenOn": "2014-01-10T10:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28aeeb65_ac9b67df",
       "revId": "6d85fd69c50ab40fbfbf456bf6071718da6964f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
