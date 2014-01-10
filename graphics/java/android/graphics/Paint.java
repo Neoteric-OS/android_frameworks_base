@@ -943,7 +943,7 @@ public class Paint {
      * @return       shader
      */
     public Shader setShader(Shader shader) {
-        int shaderNative = 0;
+        long shaderNative = 0;
         if (shader != null)
             shaderNative = shader.native_instance;
         native_setShader(mNativePaint, shaderNative);
@@ -2220,7 +2220,7 @@ public class Paint {
                                                     int join);
     private static native boolean native_getFillPath(int native_object,
                                                      int src, int dst);
-    private static native int native_setShader(int native_object, int shader);
+    private static native long native_setShader(long native_object, long shader);
     private static native int native_setColorFilter(int native_object,
                                                     int filter);
     private static native int native_setXfermode(int native_object,

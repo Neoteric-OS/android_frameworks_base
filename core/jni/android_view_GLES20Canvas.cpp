@@ -554,7 +554,9 @@ static void android_view_GLES20Canvas_resetModifiers(JNIEnv* env, jobject clazz,
 }
 
 static void android_view_GLES20Canvas_setupShader(JNIEnv* env, jobject clazz,
-        OpenGLRenderer* renderer, SkiaShader* shader) {
+        jlong rendererHandle, jlong shaderHandle) {
+    OpenGLRenderer* renderer = reinterpret_cast<OpenGLRenderer*>(rendererHandle);
+    SkiaShader* shader = reinterpret_cast<SkiaShader*>(shaderHandle);
     renderer->setupShader(shader);
 }
 
@@ -1076,7 +1078,7 @@ static JNINativeMethod gMethods[] = {
     { "nDrawLines",         "(I[FIII)V",       (void*) android_view_GLES20Canvas_drawLines },
 
     { "nResetModifiers",    "(II)V",           (void*) android_view_GLES20Canvas_resetModifiers },
-    { "nSetupShader",       "(II)V",           (void*) android_view_GLES20Canvas_setupShader },
+    { "nSetupShader",       "(JJ)V",           (void*) android_view_GLES20Canvas_setupShader },
     { "nSetupColorFilter",  "(II)V",           (void*) android_view_GLES20Canvas_setupColorFilter },
     { "nSetupShadow",       "(IFFFI)V",        (void*) android_view_GLES20Canvas_setupShadow },
 

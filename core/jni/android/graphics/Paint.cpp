@@ -224,8 +224,10 @@ public:
         return obj->getFillPath(*src, dst);
     }
 
-    static SkShader* setShader(JNIEnv* env, jobject clazz, SkPaint* obj, SkShader* shader) {
-        return obj->setShader(shader);
+    static jlong setShader(JNIEnv* env, jobject clazz, jlong objHandle, jlong shaderHandle) {
+        SkPaint* obj = reinterpret_cast<SkPaint*>(objHandle);
+        SkShader* shader = reinterpret_cast<SkShader*>(shaderHandle);
+        return reinterpret_cast<jlong>(obj->setShader(shader));
     }
 
     static SkColorFilter* setColorFilter(JNIEnv* env, jobject clazz, SkPaint* obj, SkColorFilter* filter) {
@@ -826,7 +828,7 @@ static JNINativeMethod methods[] = {
     {"native_getStrokeJoin","(I)I", (void*) SkPaintGlue::getStrokeJoin},
     {"native_setStrokeJoin","(II)V", (void*) SkPaintGlue::setStrokeJoin},
     {"native_getFillPath","(III)Z", (void*) SkPaintGlue::getFillPath},
-    {"native_setShader","(II)I", (void*) SkPaintGlue::setShader},
+    {"native_setShader","(JJ)J", (void*) SkPaintGlue::setShader},
     {"native_setColorFilter","(II)I", (void*) SkPaintGlue::setColorFilter},
     {"native_setXfermode","(II)I", (void*) SkPaintGlue::setXfermode},
     {"native_setPathEffect","(II)I", (void*) SkPaintGlue::setPathEffect},

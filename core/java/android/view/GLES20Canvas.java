@@ -1466,7 +1466,7 @@ class GLES20Canvas extends HardwareCanvas {
         return MODIFIER_NONE;
     }
 
-    private static native void nSetupShader(int renderer, int shader);
+    private static native void nSetupShader(long renderer, long shader);
     private static native void nSetupColorFilter(int renderer, int colorFilter);
     private static native void nSetupShadow(int renderer, float radius,
             float dx, float dy, int color);
