@@ -42,6 +42,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import com.android.gallery3d.common.Utils;
 import com.android.gallery3d.exif.ExifInterface;
@@ -70,7 +71,6 @@ public class WallpaperCropActivity extends Activity {
      */
     public static final int MAX_BMAP_IN_INTENT = 750000;
     private static final float WALLPAPER_SCREENS_SPAN = 2f;
-
     protected CropView mCropView;
     protected Uri mUri;
 
@@ -120,6 +120,9 @@ public class WallpaperCropActivity extends Activity {
                             getString(R.string.wallpaper_load_fail),
                             Toast.LENGTH_LONG).show();
                     finish();
+                } else {
+                    final TextView mWallpaperSettingView = (TextView) findViewById(R.id.wallpaper_instructions);
+			                    mWallpaperSettingView.setVisibility(View.VISIBLE);
                 }
             }
         };
