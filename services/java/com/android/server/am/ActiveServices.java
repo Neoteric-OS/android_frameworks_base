@@ -1246,9 +1246,7 @@ public final class ActiveServices {
                 }
             }
             if (!stillTracking) {
-                r.restartTracker.setRestarting(false, mAm.mProcessStats.getMemFactorLocked(),
-                        SystemClock.uptimeMillis());
-                r.restartTracker = null;
+                r.clearRestarting(mAm.mProcessStats.getMemFactorLocked(), SystemClock.uptimeMillis());
             }
         }
     }

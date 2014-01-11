@@ -328,7 +328,7 @@ final class ServiceRecord extends Binder {
         }
         if ((serviceInfo.applicationInfo.flags&ApplicationInfo.FLAG_PERSISTENT) == 0) {
             tracker = ams.mProcessStats.getServiceStateLocked(serviceInfo.packageName,
-                    serviceInfo.applicationInfo.uid, serviceInfo.processName, serviceInfo.name);
+                    serviceInfo.applicationInfo.uid, serviceInfo.processName, serviceInfo.name, true);
             tracker.applyNewOwner(this);
         }
         return tracker;
@@ -345,13 +345,26 @@ final class ServiceRecord extends Binder {
         if (restartTracker == null) {
             if ((serviceInfo.applicationInfo.flags&ApplicationInfo.FLAG_PERSISTENT) == 0) {
                 restartTracker = ams.mProcessStats.getServiceStateLocked(serviceInfo.packageName,
-                        serviceInfo.applicationInfo.uid, serviceInfo.processName, serviceInfo.name);
+                        serviceInfo.applicationInfo.uid, serviceInfo.processName, serviceInfo.name, true);
             }
             if (restartTracker == null) {
                 return;
             }
         }
         restartTracker.setRestarting(true, memFactor, now);
+    }
+
+    public void clearRestarting(int memFactor, long now) {
+        ProcessStats.ServiceState ss = null;
+        if ((serviceInfo.applicationInfo.flags&ApplicationInfo.FLAG_PERSISTENT) == 0) {
+            ss = ams.mProcessStats.getServiceStateLocked(serviceInfo.packageName,
+                     serviceInfo.applicationInfo.uid, serviceInfo.processName, serviceInfo.name, false);
+        }
+        if (ss == restartTracker) {
+            // Still alive
+            restartTracker.setRestarting(false, memFactor, now);
+        }
+        restartTracker = null;
     }
 
     public AppBindRecord retrieveAppBindingLocked(Intent intent,
