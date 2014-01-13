@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dea89ed_3ae060b1",
+        "filename": "services/java/com/android/server/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1030849
+      },
+      "writtenOn": "2014-01-13T15:48:19Z",
+      "side": 1,
+      "message": "How about to catch the IllegalArgumentException when calling the PackageManager.getAppliationEnabledSetting ? \n\nBased on the API description of PackageManager.getApplicationEnabledSetting, it will throw the IllegalArgumentException if the package is not exist.",
+      "range": {
+        "startLine": 544,
+        "startChar": 0,
+        "endLine": 544,
+        "endChar": 24
+      },
+      "revId": "d1da43a6721048e7f32a0927f3d95f9dbdf0dec6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
