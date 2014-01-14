@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d1635de_0ceb07d5",
+        "filename": "core/java/android/widget/NumberPicker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1948,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2014-01-14T02:14:01Z",
+      "side": 1,
+      "message": "I trust these are correct :)",
+      "range": {
+        "startLine": 1948,
+        "startChar": 4,
+        "endLine": 1948,
+        "endChar": 52
+      },
+      "revId": "962dde734b7e347948a1624571e8c180260bae85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
