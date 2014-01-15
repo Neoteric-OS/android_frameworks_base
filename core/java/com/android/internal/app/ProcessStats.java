@@ -259,7 +259,7 @@ public final class ProcessStats implements Parcelable {
                     if (DEBUG) Slog.d(TAG, "Adding pkg " + pkgName + " uid " + uid
                             + " service " + otherSvc.mName);
                     ServiceState thisSvc = getServiceStateLocked(pkgName, uid,
-                            otherSvc.mProcessName, otherSvc.mName);
+                            otherSvc.mProcessName, otherSvc.mName, true);
                     thisSvc.add(otherSvc);
                 }
             }
@@ -1707,10 +1707,10 @@ public final class ProcessStats implements Parcelable {
     }
 
     public ProcessStats.ServiceState getServiceStateLocked(String packageName, int uid,
-            String processName, String className) {
+            String processName, String className, boolean createIfNeeded) {
         final ProcessStats.PackageState as = getPackageStateLocked(packageName, uid);
         ProcessStats.ServiceState ss = as.mServices.get(className);
-        if (ss != null) {
+        if (!createIfNeeded|| ss != null) {
             if (DEBUG) Slog.d(TAG, "GETSVC: returning existing " + ss);
             return ss;
         }

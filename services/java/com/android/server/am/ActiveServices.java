@@ -1246,8 +1246,17 @@ public final class ActiveServices {
                 }
             }
             if (!stillTracking) {
-                r.restartTracker.setRestarting(false, mAm.mProcessStats.getMemFactorLocked(),
-                        SystemClock.uptimeMillis());
+                ProcessStats.ServiceState ss = null;
+                if ((r.serviceInfo.applicationInfo.flags & ApplicationInfo.FLAG_PERSISTENT) == 0) {
+                    ss = mAm.mProcessStats.getServiceStateLocked(r.serviceInfo.packageName,
+                            r.serviceInfo.applicationInfo.uid, r.serviceInfo.processName,
+                            r.serviceInfo.name, false);
+                }
+                if (ss == r.restartTracker) {
+                    // Still alive.
+                    r.restartTracker.setRestarting(false, mAm.mProcessStats.getMemFactorLocked(),
+                            SystemClock.uptimeMillis());
+                }
                 r.restartTracker = null;
             }
         }

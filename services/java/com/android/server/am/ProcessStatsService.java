@@ -116,8 +116,9 @@ public final class ProcessStatsService extends IProcessStats.Stub {
     }
 
     public ProcessStats.ServiceState getServiceStateLocked(String packageName, int uid,
-            String processName, String className) {
-        return mProcessStats.getServiceStateLocked(packageName, uid, processName, className);
+            String processName, String className, boolean createIfNeeded) {
+        return mProcessStats.getServiceStateLocked(packageName, uid, processName,
+                                                   className, createIfNeeded);
     }
 
     public boolean isMemFactorLowered() {
