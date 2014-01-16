@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ede2251a_92f29c53",
+        "filename": "core/java/android/view/GLES20Canvas.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-01-16T09:25:26Z",
+      "side": 1,
+      "message": "Don\u0027t the rest of these functions need a \"long renderer\" too ?",
+      "revId": "22615c59ce10a0592d51bcf660efeea6f5472ff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
