@@ -16,6 +16,24 @@
       "revId": "22615c59ce10a0592d51bcf660efeea6f5472ff3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd6e41b0_b332380d",
+        "filename": "core/java/android/view/GLES20Canvas.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-16T09:36:02Z",
+      "side": 1,
+      "message": "Yes, rest of functions need a long renderer too. However, we have only changed shader related functions in this patch. This is to avoid a huge patch of few thousand lines, with all the graphics changes and to keep each patch to a manageable size. We will submit other changes in GLES20Canvas in a future patch. This is also mentioned in the commit message.",
+      "parentUuid": "ede2251a_92f29c53",
+      "revId": "22615c59ce10a0592d51bcf660efeea6f5472ff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
