@@ -16,6 +16,24 @@
       "revId": "7994a067586f2700811050528a98876978eee89d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd6e41b0_f33cb0e0",
+        "filename": "core/java/android/view/GLES20Canvas.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1471,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-01-16T09:37:24Z",
+      "side": 1,
+      "message": "Yes they do. We will do it as part of later patch. This has been done to avoid one huge patch with all the graphics changes and has been mentioned in the commit message as well.",
+      "parentUuid": "cd6e41b0_33162863",
+      "revId": "7994a067586f2700811050528a98876978eee89d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
