@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dd5f177_21ed2233",
+        "filename": "services/java/com/android/server/MSimTelephonyRegistry.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-16T21:18:20Z",
+      "side": 1,
+      "message": "Move to services/core/java/com/android/server/MSimTelephonyRegistry.java so its colocated with TelephonyRegistry.java.",
+      "revId": "313817bc5af7d2a54f96997f9ce4f4879a021594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4dd5f177_81fa0ee7",
+        "filename": "services/java/com/android/server/MSimTelephonyRegistry.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-16T21:18:20Z",
+      "side": 1,
+      "message": "2014",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "313817bc5af7d2a54f96997f9ce4f4879a021594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
