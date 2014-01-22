@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "127dda9f_58e141ec",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-01-22T03:14:51Z",
+      "side": 1,
+      "message": "The real issue here is the use of 0x80000000 as the constant value in \"system/core/include/utils/Errors.h\". This should be represented as \"(status_t) 0x80000000\" instead. I would say to use a static_cast there, but this header may be included in C builds as well.",
+      "range": {
+        "startLine": 641,
+        "startChar": 35,
+        "endLine": 641,
+        "endChar": 48
+      },
+      "revId": "1fdad71af7c1df9ddb437193ceb7859953ab961f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32801ec4_f9193390",
+        "filename": "media/jni/mediaeditor/VideoEditorOsal.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-01-22T03:14:51Z",
+      "side": 1,
+      "message": "This is likely the same problem with the definition of M4OSA_ERR. Please create the cast on the hex value instead of on each call here.",
+      "range": {
+        "startLine": 56,
+        "startChar": 43,
+        "endLine": 56,
+        "endChar": 52
+      },
+      "revId": "1fdad71af7c1df9ddb437193ceb7859953ab961f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
