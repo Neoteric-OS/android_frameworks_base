@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2f7c297_ba1c0d82",
+        "filename": "services/java/com/android/server/MountService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2014-01-27T22:26:34Z",
+      "side": 1,
+      "message": "could you put into a wrapper class that will only call through to IMountShutdownObserver.onShutDownComplete() once its count goes to 0?\n\ni\u0027d say it\u0027s fine to just keep an int count \u003d mVolumeStates.size() and decrement along the way.  maybe something like this:\n\n  static class MountShutdownLatch {\n    int count;\n    MountShutdownLatch(IMSO o, int count) { ... }\n    void countDown() { ... }\n  }",
+      "revId": "dc78112b976eba9f0abf3be922486fb4721bee2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
