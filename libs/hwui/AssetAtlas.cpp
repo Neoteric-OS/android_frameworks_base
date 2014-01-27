@@ -28,7 +28,7 @@ namespace uirenderer {
 // Lifecycle
 ///////////////////////////////////////////////////////////////////////////////
 
-void AssetAtlas::init(sp<GraphicBuffer> buffer, int* map, int count) {
+void AssetAtlas::init(sp<GraphicBuffer> buffer, long* map, int count) {
     if (mImage) {
         return;
     }
@@ -108,14 +108,14 @@ private:
 /**
  * TODO: This method does not take the rotation flag into account
  */
-void AssetAtlas::createEntries(Caches& caches, int* map, int count) {
+void AssetAtlas::createEntries(Caches& caches, long* map, int count) {
     const float width = float(mTexture->width);
     const float height = float(mTexture->height);
 
     for (int i = 0; i < count; ) {
         SkBitmap* bitmap = (SkBitmap*) map[i++];
-        int x = map[i++];
-        int y = map[i++];
+        int x = (int)map[i++];
+        int y = (int)map[i++];
         bool rotated = map[i++] > 0;
 
         // Bitmaps should never be null, we're just extra paranoid

@@ -118,14 +118,17 @@ static void android_view_GLES20Canvas_terminateCaches(JNIEnv* env, jobject clazz
 // ----------------------------------------------------------------------------
 
 static void android_view_GLES20Canvas_initAtlas(JNIEnv* env, jobject clazz,
-        jobject graphicBuffer, jintArray atlasMapArray, jint count) {
+        jobject graphicBuffer, jlongArray atlasMapArray, jint count) {
 
     sp<GraphicBuffer> buffer = graphicBufferForJavaObject(env, graphicBuffer);
-    jint* atlasMap = env->GetIntArrayElements(atlasMapArray, NULL);
-
+    jlong* jAtlasMap = env->GetLongArrayElements(atlasMapArray, NULL);
+    long* atlasMap = new long[count];
+    for(int i = 0; i < count; ++i){
+        atlasMap[i] = static_cast<long>(jAtlasMap[i]);
+    }
     Caches::getInstance().assetAtlas.init(buffer, atlasMap, count);
-
-    env->ReleaseIntArrayElements(atlasMapArray, atlasMap, 0);
+    delete [] atlasMap;
+    env->ReleaseLongArrayElements(atlasMapArray, jAtlasMap, 0);
 }
 
 // ----------------------------------------------------------------------------
@@ -1163,7 +1166,7 @@ static JNINativeMethod gMethods[] = {
     { "nInitCaches",        "()Z",             (void*) android_view_GLES20Canvas_initCaches },
     { "nTerminateCaches",   "()V",             (void*) android_view_GLES20Canvas_terminateCaches },
 
-    { "nInitAtlas",         "(Landroid/view/GraphicBuffer;[II)V",
+    { "nInitAtlas",         "(Landroid/view/GraphicBuffer;[JI)V",
             (void*) android_view_GLES20Canvas_initAtlas },
 
     { "nCreateRenderer",    "()J",             (void*) android_view_GLES20Canvas_createRenderer },
