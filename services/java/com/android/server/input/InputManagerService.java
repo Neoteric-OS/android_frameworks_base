@@ -48,6 +48,7 @@ import android.hardware.input.IInputDevicesChangedListener;
 import android.hardware.input.IInputManager;
 import android.hardware.input.InputManager;
 import android.hardware.input.KeyboardLayout;
+import android.hardware.input.TouchCalibration;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Environment;
@@ -689,6 +690,40 @@ public class InputManagerService extends IInputManager.Stub
             }
         }
         mTempFullKeyboards.clear();
+    }
+
+    @Override // Binder call
+    public TouchCalibration getTouchCalibrationForInputDevice(String inputDeviceDescriptor) {
+        if (inputDeviceDescriptor == null) {
+            throw new IllegalArgumentException("inputDeviceDescriptor must not be null");
+        }
+
+        synchronized (mDataStore) {
+            return mDataStore.getTouchCalibration(inputDeviceDescriptor);
+        }
+    }
+
+    @Override // Binder call
+    public void setTouchCalibrationForInputDevice(String inputDeviceDescriptor,
+            TouchCalibration calibration) {
+        if (!checkCallingPermission(android.Manifest.permission.SET_INPUT_CALIBRATION,
+                "setTouchCalibrationForInputDevice()")) {
+            throw new SecurityException("Requires SET_INPUT_CALIBRATION permission");
+        }
+        if (inputDeviceDescriptor == null) {
+            throw new IllegalArgumentException("inputDeviceDescriptor must not be null");
+        }
+        if (calibration == null) {
+            throw new IllegalArgumentException("calibration must not be null");
+        }
+
+        synchronized (mDataStore) {
+            try {
+                mDataStore.setTouchCalibration(inputDeviceDescriptor, calibration);
+            } finally {
+                mDataStore.saveIfNeeded();
+            }
+        }
     }
 
     // Must be called on handler.
