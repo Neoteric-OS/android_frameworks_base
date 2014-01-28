@@ -16,6 +16,24 @@
       "revId": "dc78112b976eba9f0abf3be922486fb4721bee2f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92d0ea10_0a24ffbd",
+        "filename": "services/java/com/android/server/MountService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2014-01-28T09:37:12Z",
+      "side": 1,
+      "message": "Thanks for your review. That sounds good though it may become a bit larger diff than as it is now. Let me think new implementation according to your suggestion and get back to you with the result.",
+      "parentUuid": "d2f7c297_ba1c0d82",
+      "revId": "dc78112b976eba9f0abf3be922486fb4721bee2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
