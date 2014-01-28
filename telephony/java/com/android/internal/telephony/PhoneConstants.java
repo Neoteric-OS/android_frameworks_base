@@ -130,4 +130,11 @@ public class PhoneConstants {
     /** APN type for IA Initial Attach APN */
     public static final String APN_TYPE_IA = "ia";
 
+
+    public static final int SIM_ID_1 = 0;
+    public static final int SIM_ID_2 = 1;
+    public static final int SIM_ID_3 = 2;
+    public static final int SIM_ID_4 = 3;
+    public static final String SIM_ID_KEY = "simId";
+
 }

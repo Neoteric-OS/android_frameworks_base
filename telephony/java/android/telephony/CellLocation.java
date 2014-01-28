@@ -27,6 +27,7 @@ import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 import com.android.internal.telephony.ITelephony;
 import com.android.internal.telephony.PhoneConstants;
+import android.telephony.TelephonyManager;
 
 /**
  * Abstract class that represents the location of the device.  {@more}
@@ -42,7 +43,7 @@ public abstract class CellLocation {
         try {
             ITelephony phone = ITelephony.Stub.asInterface(ServiceManager.getService("phone"));
             if (phone != null) {
-                phone.updateServiceLocation();
+                phone.updateServiceLocation(TelephonyManager.getDefaultSim());
             }
         } catch (RemoteException ex) {
             // ignore it

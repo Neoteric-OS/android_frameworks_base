@@ -215,12 +215,13 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
                     ACTION_DATA_CONNECTION_CONNECTED_TO_PROVISIONING_APN)) {
                 String apnName = intent.getStringExtra(PhoneConstants.DATA_APN_KEY);
                 String apnType = intent.getStringExtra(PhoneConstants.DATA_APN_TYPE_KEY);
+                int simId = intent.getIntExtra(PhoneConstants.SIM_ID_KEY, PhoneConstants.SIM_ID_1);
                 if (!TextUtils.equals(mApnType, apnType)) {
                     return;
                 }
                 if (DBG) {
                     log("Broadcast received: " + intent.getAction() + " apnType=" + apnType
-                            + " apnName=" + apnName);
+                            + " apnName=" + apnName + " simId=" + simId);
                 }
 
                 // Make us in the connecting state until we make a new TYPE_MOBILE_PROVISIONING
@@ -230,14 +231,15 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
 
                 // Change state to SUSPENDED so setDetailedState
                 // sends EVENT_STATE_CHANGED to connectivityService
-                setDetailedState(DetailedState.SUSPENDED, "", apnName);
+                setDetailedState(DetailedState.SUSPENDED, "", apnName, simId);
             } else if (intent.getAction().equals(TelephonyIntents.
                     ACTION_ANY_DATA_CONNECTION_STATE_CHANGED)) {
                 String apnType = intent.getStringExtra(PhoneConstants.DATA_APN_TYPE_KEY);
+                int simId = intent.getIntExtra(PhoneConstants.SIM_ID_KEY, PhoneConstants.SIM_ID_1);
                 if (VDBG) {
                     log(String.format("Broadcast received: ACTION_ANY_DATA_CONNECTION_STATE_CHANGED"
-                        + "mApnType=%s %s received apnType=%s", mApnType,
-                        TextUtils.equals(apnType, mApnType) ? "==" : "!=", apnType));
+                        + "mApnType=%s %s received apnType=%s simId=%d", mApnType,
+                        TextUtils.equals(apnType, mApnType) ? "==" : "!=", apnType, simId));
                 }
                 if (!TextUtils.equals(apnType, mApnType)) {
                     return;
@@ -245,12 +247,21 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
                 // Assume this isn't a provisioning network.
                 mNetworkInfo.setIsConnectedToProvisioningNetwork(false);
                 if (DBG) {
-                    log("Broadcast received: " + intent.getAction() + " apnType=" + apnType);
+                    log("Broadcast received: " + intent.getAction() + " apnType=" + apnType + " simId=" + simId);
+                }
+
+                if (mMobileDataState == PhoneConstants.DataState.CONNECTED ||
+                        mMobileDataState == PhoneConstants.DataState.SUSPENDED)
+                {
+                    if (simId != mNetworkInfo.getSimId()) {
+                        log("Receive peer SIM data state.ignore!");
+                        return;
+                    }
                 }
 
                 int oldSubtype = mNetworkInfo.getSubtype();
-                int newSubType = TelephonyManager.getDefault().getNetworkType();
-                String subTypeName = TelephonyManager.getDefault().getNetworkTypeName();
+                int newSubType = TelephonyManager.getDefault().getNetworkType(simId);
+                String subTypeName = TelephonyManager.getDefault().getNetworkTypeName(newSubType);
                 mNetworkInfo.setSubtype(newSubType, subTypeName);
                 if (newSubType != oldSubtype && mNetworkInfo.isConnected()) {
                     Message msg = mTarget.obtainMessage(EVENT_NETWORK_SUBTYPE_CHANGED,
@@ -283,7 +294,7 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
                                 setTeardownRequested(false);
                             }
 
-                            setDetailedState(DetailedState.DISCONNECTED, reason, apnName);
+                            setDetailedState(DetailedState.DISCONNECTED, reason, apnName, simId);
                             // can't do this here - ConnectivityService needs it to clear stuff
                             // it's ok though - just leave it to be refreshed next time
                             // we connect.
@@ -292,14 +303,14 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
                             //mInterfaceName = null;
                             break;
                         case CONNECTING:
-                            setDetailedState(DetailedState.CONNECTING, reason, apnName);
+                            setDetailedState(DetailedState.CONNECTING, reason, apnName, simId);
                             break;
                         case SUSPENDED:
-                            setDetailedState(DetailedState.SUSPENDED, reason, apnName);
+                            setDetailedState(DetailedState.SUSPENDED, reason, apnName, simId);
                             break;
                         case CONNECTED:
                             updateLinkProperitesAndCapatilities(intent);
-                            setDetailedState(DetailedState.CONNECTED, reason, apnName);
+                            setDetailedState(DetailedState.CONNECTED, reason, apnName, simId);
                             break;
                     }
 
@@ -337,7 +348,7 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
                         }
                         // Just update reason field in this NetworkInfo
                         mNetworkInfo.setDetailedState(mNetworkInfo.getDetailedState(), reason,
-                                                      mNetworkInfo.getExtraInfo());
+                                                      mNetworkInfo.getExtraInfo(), simId);
                         Message msg = mTarget.obtainMessage(EVENT_CONFIGURATION_CHANGED,
                                                             mNetworkInfo);
                         msg.sendToTarget();
@@ -346,11 +357,12 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
             } else if (intent.getAction().
                     equals(TelephonyIntents.ACTION_DATA_CONNECTION_FAILED)) {
                 String apnType = intent.getStringExtra(PhoneConstants.DATA_APN_TYPE_KEY);
+                int simId = intent.getIntExtra(PhoneConstants.SIM_ID_KEY, PhoneConstants.SIM_ID_1);
                 if (!TextUtils.equals(apnType, mApnType)) {
                     if (DBG) {
                         log(String.format(
                                 "Broadcast received: ACTION_ANY_DATA_CONNECTION_FAILED ignore, " +
-                                "mApnType=%s != received apnType=%s", mApnType, apnType));
+                                "mApnType=%s != received apnType=%s simId=%d", mApnType, apnType, simId));
                     }
                     return;
                 }
@@ -362,7 +374,7 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
                     log("Broadcast received: " + intent.getAction() +
                                 " reason=" + reason == null ? "null" : reason);
                 }
-                setDetailedState(DetailedState.FAILED, reason, apnName);
+                setDetailedState(DetailedState.FAILED, reason, apnName, simId);
             } else {
                 if (DBG) log("Broadcast received: ignore " + intent.getAction());
             }
@@ -390,7 +402,7 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
         String networkTypeStr = "unknown";
         TelephonyManager tm = new TelephonyManager(mContext);
         //TODO We have to edit the parameter for getNetworkType regarding CDMA
-        switch(tm.getNetworkType()) {
+        switch(tm.getNetworkType(mNetworkInfo.getSimId())) {
         case TelephonyManager.NETWORK_TYPE_GPRS:
             networkTypeStr = "gprs";
             break;
@@ -448,8 +460,12 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
      * TODO - make async and return nothing?
      */
     public boolean teardown() {
+        return teardown(PhoneConstants.SIM_ID_1);
+    }
+
+    public boolean teardown(int simId) {
         setTeardownRequested(true);
-        return (setEnableApn(mApnType, false) != PhoneConstants.APN_REQUEST_FAILED);
+        return (setEnableApn(mApnType, false, simId) != PhoneConstants.APN_REQUEST_FAILED);
     }
 
     /**
@@ -483,9 +499,9 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
      * @param extraInfo optional {@code String} providing extra information about the state change
      */
     private void setDetailedState(NetworkInfo.DetailedState state, String reason,
-            String extraInfo) {
+            String extraInfo, int simId) {
         if (DBG) log("setDetailed state, old ="
-                + mNetworkInfo.getDetailedState() + " and new state=" + state);
+                + mNetworkInfo.getDetailedState() + ", new state=" + state + ", simId=" + simId);
         if (state != mNetworkInfo.getDetailedState()) {
             boolean wasConnecting = (mNetworkInfo.getState() == NetworkInfo.State.CONNECTING);
             String lastReason = mNetworkInfo.getReason();
@@ -497,7 +513,7 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
             if (wasConnecting && state == NetworkInfo.DetailedState.CONNECTED && reason == null
                     && lastReason != null)
                 reason = lastReason;
-            mNetworkInfo.setDetailedState(state, reason, extraInfo);
+            mNetworkInfo.setDetailedState(state, reason, extraInfo, simId);
             Message msg = mTarget.obtainMessage(EVENT_STATE_CHANGED, new NetworkInfo(mNetworkInfo));
             msg.sendToTarget();
         }
@@ -516,16 +532,20 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
      * TODO - make async and always get a notification?
      */
     public boolean reconnect() {
+        return reconnect(PhoneConstants.SIM_ID_1);
+    }
+
+    public boolean reconnect(int simId) {
         boolean retValue = false; //connected or expect to be?
         setTeardownRequested(false);
-        switch (setEnableApn(mApnType, true)) {
+        switch (setEnableApn(mApnType, true, simId)) {
             case PhoneConstants.APN_ALREADY_ACTIVE:
                 // need to set self to CONNECTING so the below message is handled.
                 retValue = true;
                 break;
             case PhoneConstants.APN_REQUEST_STARTED:
                 // set IDLE here , avoid the following second FAILED not sent out
-                mNetworkInfo.setDetailedState(DetailedState.IDLE, null, null);
+                mNetworkInfo.setDetailedState(DetailedState.IDLE, null, null, simId);
                 retValue = true;
                 break;
             case PhoneConstants.APN_REQUEST_FAILED:
@@ -556,7 +576,7 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
             }
 
             try {
-                return mPhoneService.setRadio(turnOn);
+                return mPhoneService.setRadio(turnOn, mNetworkInfo.getSimId());
             } catch (RemoteException e) {
                 if (retry == 0) getPhoneService(true);
             }
@@ -578,6 +598,13 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
         if (VDBG) log("setUserDataEnable: X enabled=" + enabled);
     }
 
+    public void setUserDataEnable(boolean enabled, int simId) {
+        if (DBG) log("setUserDataEnable: E enabled=" + enabled + ", simId=" + simId);
+        reconnect(simId);
+        mUserDataEnabled = enabled;
+        if (VDBG) log("setUserDataEnable: X enabled=" + enabled + ", simId=" + simId);
+    }
+
     @Override
     public void setPolicyDataEnable(boolean enabled) {
         if (DBG) log("setPolicyDataEnable(enabled=" + enabled + ")");
@@ -586,6 +613,17 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
             channel.sendMessage(DctConstants.CMD_SET_POLICY_DATA_ENABLE,
                     enabled ? DctConstants.ENABLED : DctConstants.DISABLED);
             mPolicyDataEnabled = enabled;
+        }
+    }
+
+    public void setPolicyDataEnable(boolean enabled, int simId) {
+        if (DBG) log("setPolicyDataEnable: E enabled=" + enabled + ", simId=" + simId);
+        mPolicyDataEnabled = enabled;
+        getPhoneService(true);
+        try {
+            mPhoneService.setPolicyDataEnable(enabled, simId);
+        } catch (RemoteException e) {
+            loge("setPolicyDataEnable remote exception");
         }
     }
 
@@ -682,7 +720,7 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
      * {@code false} to disable it.
      * @return an integer value representing the outcome of the request.
      */
-    private int setEnableApn(String apnType, boolean enable) {
+    private int setEnableApn(String apnType, boolean enable, int simId) {
         getPhoneService(false);
         /*
          * If the phone process has crashed in the past, we'll get a
@@ -695,17 +733,19 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
             }
 
             try {
+                log("set apn [" + apnType + "] enable=" + enable + ", simId=" + simId);
                 if (enable) {
-                    return mPhoneService.enableApnType(apnType);
+                    return mPhoneService.enableApnType(apnType, simId);
                 } else {
-                    return mPhoneService.disableApnType(apnType);
+                    return mPhoneService.disableApnType(apnType, simId);
                 }
             } catch (RemoteException e) {
                 if (retry == 0) getPhoneService(true);
             }
         }
 
-        loge("Could not " + (enable ? "enable" : "disable") + " APN type \"" + apnType + "\"");
+        loge("Could not " + (enable ? "enable" : "disable") + " APN type \"" + apnType +
+                "\", simId=" + simId);
         return PhoneConstants.APN_REQUEST_FAILED;
     }
 

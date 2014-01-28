@@ -45,6 +45,10 @@ public interface TelephonyProperties
      *  CDMA networks.
      */
     static final String PROPERTY_OPERATOR_ALPHA = "gsm.operator.alpha";
+    static final String PROPERTY_OPERATOR_ALPHA_2 = "gsm.operator.alpha.2";    
+    static final String PROPERTY_OPERATOR_ALPHA_3 = "gsm.operator.alpha.3";    
+    static final String PROPERTY_OPERATOR_ALPHA_4 = "gsm.operator.alpha.4";    
+	
     //TODO: most of these properties are generic, substitute gsm. with phone. bug 1856959
 
     /** Numeric name (MCC+MNC) of current registered operator.<p>
@@ -52,18 +56,27 @@ public interface TelephonyProperties
      *  CDMA networks.
      */
     static final String PROPERTY_OPERATOR_NUMERIC = "gsm.operator.numeric";
+    static final String PROPERTY_OPERATOR_NUMERIC_2 = "gsm.operator.numeric.2";    
+    static final String PROPERTY_OPERATOR_NUMERIC_3 = "gsm.operator.numeric.3";    
+    static final String PROPERTY_OPERATOR_NUMERIC_4 = "gsm.operator.numeric.4";    
 
     /** 'true' if the device is on a manually selected network
      *
      *  Availability: when registered to a network
      */
     static final String PROPERTY_OPERATOR_ISMANUAL = "operator.ismanual";
+    static final String PROPERTY_OPERATOR_ISMANUAL_2 = "operator.ismanual.2";    
+    static final String PROPERTY_OPERATOR_ISMANUAL_3 = "operator.ismanual.3";    
+    static final String PROPERTY_OPERATOR_ISMANUAL_4 = "operator.ismanual.4";    
 
     /** 'true' if the device is considered roaming on this network for GSM
      *  purposes.
      *  Availability: when registered to a network
      */
     static final String PROPERTY_OPERATOR_ISROAMING = "gsm.operator.isroaming";
+    static final String PROPERTY_OPERATOR_ISROAMING_2 = "gsm.operator.isroaming.2";    
+    static final String PROPERTY_OPERATOR_ISROAMING_3 = "gsm.operator.isroaming.3";    
+    static final String PROPERTY_OPERATOR_ISROAMING_4 = "gsm.operator.isroaming.4";    
 
     /** The ISO country code equivalent of the current registered operator's
      *  MCC (Mobile Country Code)<p>
@@ -71,6 +84,9 @@ public interface TelephonyProperties
      *  CDMA networks.
      */
     static final String PROPERTY_OPERATOR_ISO_COUNTRY = "gsm.operator.iso-country";
+    static final String PROPERTY_OPERATOR_ISO_COUNTRY_2 = "gsm.operator.iso-country.2";    
+    static final String PROPERTY_OPERATOR_ISO_COUNTRY_3 = "gsm.operator.iso-country.3";    
+    static final String PROPERTY_OPERATOR_ISO_COUNTRY_4 = "gsm.operator.iso-country.4";    
 
     /**
      * The contents of this property is the value of the kernel command line
@@ -96,26 +112,41 @@ public interface TelephonyProperties
      * <code>"PUK_REQUIRED"</code> <code>"NETWORK_LOCKED"</code> or <code>"READY"</code>
      */
     static String PROPERTY_SIM_STATE = "gsm.sim.state";
+    static String PROPERTY_SIM_STATE_2 = "gsm.sim.state.2";
+    static String PROPERTY_SIM_STATE_3 = "gsm.sim.state.3";
+    static String PROPERTY_SIM_STATE_4 = "gsm.sim.state.4";
 
     /** The MCC+MNC (mobile country code+mobile network code) of the
      *  provider of the SIM. 5 or 6 decimal digits.
      *  Availability: SIM state must be "READY"
      */
     static String PROPERTY_ICC_OPERATOR_NUMERIC = "gsm.sim.operator.numeric";
+    static String PROPERTY_ICC_OPERATOR_NUMERIC_2 = "gsm.sim.operator.numeric.2";
+    static String PROPERTY_ICC_OPERATOR_NUMERIC_3 = "gsm.sim.operator.numeric.3";
+    static String PROPERTY_ICC_OPERATOR_NUMERIC_4 = "gsm.sim.operator.numeric.4";
 
     /** PROPERTY_ICC_OPERATOR_ALPHA is also known as the SPN, or Service Provider Name.
      *  Availability: SIM state must be "READY"
      */
     static String PROPERTY_ICC_OPERATOR_ALPHA = "gsm.sim.operator.alpha";
+    static String PROPERTY_ICC_OPERATOR_ALPHA_2 = "gsm.sim.operator.alpha.2";
+    static String PROPERTY_ICC_OPERATOR_ALPHA_3 = "gsm.sim.operator.alpha.3";
+    static String PROPERTY_ICC_OPERATOR_ALPHA_4 = "gsm.sim.operator.alpha.4";
 
     /** ISO country code equivalent for the SIM provider's country code*/
     static String PROPERTY_ICC_OPERATOR_ISO_COUNTRY = "gsm.sim.operator.iso-country";
+    static String PROPERTY_ICC_OPERATOR_ISO_COUNTRY_2 = "gsm.sim.operator.iso-country.2";
+    static String PROPERTY_ICC_OPERATOR_ISO_COUNTRY_3 = "gsm.sim.operator.iso-country.3";
+    static String PROPERTY_ICC_OPERATOR_ISO_COUNTRY_4 = "gsm.sim.operator.iso-country.4";
 
     /**
      * Indicates the available radio technology.  Values include: <code>"unknown"</code>,
      * <code>"GPRS"</code>, <code>"EDGE"</code> and <code>"UMTS"</code>.
      */
     static String PROPERTY_DATA_NETWORK_TYPE = "gsm.network.type";
+    static String PROPERTY_DATA_NETWORK_TYPE_2 = "gsm.network.type.2";
+    static String PROPERTY_DATA_NETWORK_TYPE_3 = "gsm.network.type.3";
+    static String PROPERTY_DATA_NETWORK_TYPE_4 = "gsm.network.type.4";
 
     /** Indicate if phone is in emergency callback mode */
     static final String PROPERTY_INECM_MODE = "ril.cdma.inecmmode";
@@ -187,4 +218,15 @@ public interface TelephonyProperties
      * Ignore RIL_UNSOL_NITZ_TIME_RECEIVED completely, used for debugging/testing.
      */
     static final String PROPERTY_IGNORE_NITZ = "telephony.test.ignore.nitz";
+
+    /**
+     * Set to the sim count.
+     */
+    static final String PROPERTY_SIM_COUNT = "ro.telephony.sim.count";
+
+    /**
+     * Set the default sim value. 
+     * 0, 1, 2 represent the sim_1, sim_2 and sim_3 respectively.
+     */
+    static final String PROPERTY_DEFAULT_SIM = "telephony.default.sim";
 }

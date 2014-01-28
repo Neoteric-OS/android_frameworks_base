@@ -112,6 +112,7 @@ import com.android.internal.net.VpnProfile;
 import com.android.internal.telephony.DctConstants;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneConstants;
+import com.android.internal.telephony.TelephonyProperties;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.XmlUtils;
 import com.android.server.am.BatteryStatsService;
@@ -1192,11 +1193,13 @@ public class ConnectivityService extends IConnectivityManager.Stub {
         int mPid;
         int mUid;
         long mCreateTime;
+        int mSimId;
 
-        FeatureUser(int type, String feature, IBinder binder) {
+        FeatureUser(int type, String feature, int simId, IBinder binder) {
             super();
             mNetworkType = type;
             mFeature = feature;
+            mSimId = simId;
             mBinder = binder;
             mPid = getCallingPid();
             mUid = getCallingUid();
@@ -1232,26 +1235,31 @@ public class ConnectivityService extends IConnectivityManager.Stub {
         public boolean isSameUser(FeatureUser u) {
             if (u == null) return false;
 
-            return isSameUser(u.mPid, u.mUid, u.mNetworkType, u.mFeature);
+            return isSameUser(u.mPid, u.mUid, u.mNetworkType, u.mFeature, u.mSimId);
         }
 
-        public boolean isSameUser(int pid, int uid, int networkType, String feature) {
+        public boolean isSameUser(int pid, int uid, int networkType, String feature, int simId) {
             if ((mPid == pid) && (mUid == uid) && (mNetworkType == networkType) &&
-                TextUtils.equals(mFeature, feature)) {
+                TextUtils.equals(mFeature, feature) && (mSimId == simId)) {
                 return true;
             }
             return false;
         }
 
         public String toString() {
-            return "FeatureUser("+mNetworkType+","+mFeature+","+mPid+","+mUid+"), created " +
+            return "FeatureUser("+mNetworkType+","+mFeature+","+mPid+","+mUid+","+mSimId+"), created " +
                     (System.currentTimeMillis() - mCreateTime) + " mSec ago";
         }
     }
 
     // javadoc from interface
     public int startUsingNetworkFeature(int networkType, String feature,
-            IBinder binder) {
+            int simId, IBinder binder) {
+        if (!isValidSimId(simId)) {
+            loge("startUsingNetworkFeature but simId is invalid, simId=" + simId);
+            return PhoneConstants.APN_REQUEST_FAILED; 
+        }
+
         long startTime = 0;
         if (DBG) {
             startTime = SystemClock.elapsedRealtime();
@@ -1267,7 +1275,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
                 return PhoneConstants.APN_REQUEST_FAILED;
             }
 
-            FeatureUser f = new FeatureUser(networkType, feature, binder);
+            FeatureUser f = new FeatureUser(networkType, feature, simId, binder);
 
             // TODO - move this into individual networktrackers
             int usedNetworkType = convertFeatureToNetworkType(networkType, feature);
@@ -1340,7 +1348,8 @@ public class ConnectivityService extends IConnectivityManager.Stub {
                     }
 
                     if ((ni.isConnectedOrConnecting() == true) &&
-                            !network.isTeardownRequested()) {
+                            !network.isTeardownRequested() &&
+                            ni.getSimId() == simId) {
                         if (ni.isConnected() == true) {
                             final long token = Binder.clearCallingIdentity();
                             try {
@@ -1363,7 +1372,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
                         log("startUsingNetworkFeature reconnecting to " + networkType + ": " +
                                 feature);
                     }
-                    if (network.reconnect()) {
+                    if (((MobileDataStateTracker)network).reconnect(simId)) {
                         if (DBG) log("startUsingNetworkFeature X: return APN_REQUEST_STARTED");
                         return PhoneConstants.APN_REQUEST_STARTED;
                     } else {
@@ -1385,7 +1394,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
             }
             if (DBG) log("startUsingNetworkFeature X: return APN_TYPE_NOT_AVAILABLE");
             return PhoneConstants.APN_TYPE_NOT_AVAILABLE;
-         } finally {
+        } finally {
             if (DBG) {
                 final long execTime = SystemClock.elapsedRealtime() - startTime;
                 if (execTime > 250) {
@@ -1394,12 +1403,17 @@ public class ConnectivityService extends IConnectivityManager.Stub {
                     if (VDBG) log("startUsingNetworkFeature took " + execTime + "ms");
                 }
             }
-         }
+        }
     }
 
     // javadoc from interface
-    public int stopUsingNetworkFeature(int networkType, String feature) {
+    public int stopUsingNetworkFeature(int networkType, String feature, int simId) {
         enforceChangePermission();
+
+        if (!isValidSimId(simId)) {
+            loge("startUsingNetworkFeature but simId is invalid, simId=" + simId);
+            return -1; 
+        }
 
         int pid = getCallingPid();
         int uid = getCallingUid();
@@ -1409,7 +1423,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
 
         synchronized(this) {
             for (FeatureUser x : mFeatureUsers) {
-                if (x.isSameUser(pid, uid, networkType, feature)) {
+                if (x.isSameUser(pid, uid, networkType, feature, simId)) {
                     u = x;
                     found = true;
                     break;
@@ -1432,12 +1446,13 @@ public class ConnectivityService extends IConnectivityManager.Stub {
         String feature = u.mFeature;
         int pid = u.mPid;
         int uid = u.mUid;
+        int simId = u.mSimId;
 
         NetworkStateTracker tracker = null;
         boolean callTeardown = false;  // used to carry our decision outside of sync block
 
         if (VDBG) {
-            log("stopUsingNetworkFeature: net " + networkType + ": " + feature);
+            log("stopUsingNetworkFeature: net " + networkType + ": " + feature + ", simId=" + simId);
         }
 
         if (!ConnectivityManager.isNetworkTypeValid(networkType)) {
@@ -1519,7 +1534,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
             if (DBG) {
                 log("stopUsingNetworkFeature: teardown net " + networkType + ": " + feature);
             }
-            tracker.teardown();
+            ((MobileDataStateTracker)tracker).teardown(simId);
             return 1;
         } else {
             return -1;
@@ -1567,12 +1582,9 @@ public class ConnectivityService extends IConnectivityManager.Stub {
             return false;
         }
         NetworkStateTracker tracker = mNetTrackers[networkType];
-        DetailedState netState = DetailedState.DISCONNECTED;
-        if (tracker != null) {
-            netState = tracker.getNetworkInfo().getDetailedState();
-        }
+        DetailedState netState = tracker.getNetworkInfo().getDetailedState();
 
-        if ((netState != DetailedState.CONNECTED &&
+        if (tracker == null || (netState != DetailedState.CONNECTED &&
                 netState != DetailedState.CAPTIVE_PORTAL_CHECK) ||
                 tracker.isTeardownRequested()) {
             if (VDBG) {
@@ -1735,13 +1747,13 @@ public class ConnectivityService extends IConnectivityManager.Stub {
     /**
      * @see ConnectivityManager#getMobileDataEnabled()
      */
-    public boolean getMobileDataEnabled() {
+    public boolean getMobileDataEnabled(int simId) {
         // TODO: This detail should probably be in DataConnectionTracker's
         //       which is where we store the value and maybe make this
         //       asynchronous.
         enforceAccessPermission();
         boolean retVal = Settings.Global.getInt(mContext.getContentResolver(),
-                Settings.Global.MOBILE_DATA, 1) == 1;
+                Settings.Global.MOBILE_DATA, -1) == simId;
         if (VDBG) log("getMobileDataEnabled returning " + retVal);
         return retVal;
     }
@@ -1821,20 +1833,20 @@ public class ConnectivityService extends IConnectivityManager.Stub {
     /**
      * @see ConnectivityManager#setMobileDataEnabled(boolean)
      */
-    public void setMobileDataEnabled(boolean enabled) {
+    public void setMobileDataEnabled(boolean enabled, int simId) {
         enforceChangePermission();
         if (DBG) log("setMobileDataEnabled(" + enabled + ")");
 
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_SET_MOBILE_DATA,
-                (enabled ? ENABLED : DISABLED), 0));
+                (enabled ? ENABLED : DISABLED), simId));
     }
 
-    private void handleSetMobileData(boolean enabled) {
+    private void handleSetMobileData(boolean enabled, int simId) {
         if (mNetTrackers[ConnectivityManager.TYPE_MOBILE] != null) {
             if (VDBG) {
                 log(mNetTrackers[ConnectivityManager.TYPE_MOBILE].toString() + enabled);
             }
-            mNetTrackers[ConnectivityManager.TYPE_MOBILE].setUserDataEnable(enabled);
+            ((MobileDataStateTracker)mNetTrackers[ConnectivityManager.TYPE_MOBILE]).setUserDataEnable(enabled, simId);
         }
         if (mNetTrackers[ConnectivityManager.TYPE_WIMAX] != null) {
             if (VDBG) {
@@ -3091,7 +3103,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
                 }
                 case EVENT_SET_MOBILE_DATA: {
                     boolean enabled = (msg.arg1 == ENABLED);
-                    handleSetMobileData(enabled);
+                    handleSetMobileData(enabled, msg.arg2);
                     break;
                 }
                 case EVENT_APPLY_GLOBAL_HTTP_PROXY: {
@@ -4259,7 +4271,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
                 Binder binder = new Binder();
                 while(SystemClock.elapsedRealtime() < endTime) {
                     int ret = mCs.startUsingNetworkFeature(ConnectivityManager.TYPE_MOBILE,
-                            Phone.FEATURE_ENABLE_HIPRI, binder);
+                            Phone.FEATURE_ENABLE_HIPRI, PhoneConstants.SIM_ID_1, binder);
                     if ((ret == PhoneConstants.APN_ALREADY_ACTIVE)
                         || (ret == PhoneConstants.APN_REQUEST_STARTED)) {
                             log("isMobileOk: hipri started");
@@ -4453,7 +4465,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
                 log("isMobileOk: F stop hipri");
                 mCs.setEnableFailFastMobileData(DctConstants.DISABLED);
                 mCs.stopUsingNetworkFeature(ConnectivityManager.TYPE_MOBILE,
-                        Phone.FEATURE_ENABLE_HIPRI);
+                        Phone.FEATURE_ENABLE_HIPRI, PhoneConstants.SIM_ID_1);
 
                 // Wait for hipri to disconnect.
                 long endTime = SystemClock.elapsedRealtime() + 5000;
@@ -4926,5 +4938,9 @@ public class ConnectivityService extends IConnectivityManager.Stub {
     void setAlarm(int timeoutInMilliseconds, PendingIntent intent) {
         long wakeupTime = SystemClock.elapsedRealtime() + timeoutInMilliseconds;
         mAlarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, wakeupTime, intent);
+    }
+
+    private boolean isValidSimId(int simid) {
+        return simid >= PhoneConstants.SIM_ID_1 && simid <= SystemProperties.getInt(TelephonyProperties.PROPERTY_SIM_COUNT, 1);
     }
 }

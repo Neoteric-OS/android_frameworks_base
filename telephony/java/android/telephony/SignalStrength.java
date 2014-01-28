@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.telephony.Rlog;
+import android.telephony.TelephonyManager;
 
 /**
  * Contains phone signal strength related information.
@@ -65,6 +66,8 @@ public class SignalStrength implements Parcelable {
 
     private boolean isGsm; // This value is set by the ServiceStateTracker onSignalStrengthResult
 
+    private int mSimId; 
+
     /**
      * Create a new SignalStrength from a intent notifier Bundle
      *
@@ -89,19 +92,7 @@ public class SignalStrength implements Parcelable {
      * @hide
      */
     public SignalStrength() {
-        mGsmSignalStrength = 99;
-        mGsmBitErrorRate = -1;
-        mCdmaDbm = -1;
-        mCdmaEcio = -1;
-        mEvdoDbm = -1;
-        mEvdoEcio = -1;
-        mEvdoSnr = -1;
-        mLteSignalStrength = 99;
-        mLteRsrp = INVALID;
-        mLteRsrq = INVALID;
-        mLteRssnr = INVALID;
-        mLteCqi = INVALID;
-        isGsm = true;
+        this(TelephonyManager.getDefaultSim());
     }
 
     /**
@@ -126,6 +117,32 @@ public class SignalStrength implements Parcelable {
         mLteRssnr = INVALID;
         mLteCqi = INVALID;
         isGsm = gsmFlag;
+    }
+
+  /**
+     * This constructor is used to create SignalStrength with default
+     * values and set the isGsmFlag with the value passed in the input
+     *
+     * @param gsmFlag true if Gsm Phone,false if Cdma phone
+     *         simId The indicated sim id
+     * @return newly created SignalStrength
+     * @hide
+     */
+    public SignalStrength(boolean gsmFlag,int simId) {
+        mGsmSignalStrength = 99;
+        mGsmBitErrorRate = -1;
+        mCdmaDbm = -1;
+        mCdmaEcio = -1;
+        mEvdoDbm = -1;
+        mEvdoEcio = -1;
+        mEvdoSnr = -1;
+        mLteSignalStrength = 99;
+        mLteRsrp = INVALID;
+        mLteRsrq = INVALID;
+        mLteRssnr = INVALID;
+        mLteCqi = INVALID;
+        isGsm = gsmFlag;
+        mSimId = simId;				
     }
 
     /**
@@ -167,6 +184,59 @@ public class SignalStrength implements Parcelable {
     public SignalStrength(SignalStrength s) {
         copyFrom(s);
     }
+
+    /**
+     * Constructor
+     *
+     * @param simId int specified the SIM identifier
+     *     
+     * @hide
+     */
+    public SignalStrength(int simId) {
+        mGsmSignalStrength = 99;
+        mGsmBitErrorRate = -1;
+        mCdmaDbm = -1;
+        mCdmaEcio = -1;
+        mEvdoDbm = -1;
+        mEvdoEcio = -1;
+        mEvdoSnr = -1;
+        mLteSignalStrength = 99;
+        mLteRsrp = INVALID;
+        mLteRsrq = INVALID;
+        mLteRssnr = INVALID;
+        mLteCqi = INVALID;
+        isGsm = true;
+        mSimId = simId;
+    }
+
+    /**
+     * Constructor
+     *     
+     * @param simId int specified the SIM identifier
+     *     
+     * @hide
+     */
+    public SignalStrength(int simId, int gsmSignalStrength, int gsmBitErrorRate,
+            int cdmaDbm, int cdmaEcio,
+            int evdoDbm, int evdoEcio, int evdoSnr,
+            int lteSignalStrength, int lteRsrp, int lteRsrq, int lteRssnr, int lteCqi,
+            boolean gsm) {
+        mSimId = simId;
+        mGsmSignalStrength = gsmSignalStrength;
+        mGsmBitErrorRate = gsmBitErrorRate;
+        mCdmaDbm = cdmaDbm;
+        mCdmaEcio = cdmaEcio;
+        mEvdoDbm = evdoDbm;
+        mEvdoEcio = evdoEcio;
+        mEvdoSnr = evdoSnr;
+        mLteSignalStrength = lteSignalStrength;
+        mLteRsrp = lteRsrp;
+        mLteRsrq = lteRsrq;
+        mLteRssnr = lteRssnr;
+        mLteCqi = lteCqi;
+        isGsm = gsm;
+    }
+
 
     /**
      * Initialize gsm/cdma values, sets lte values to defaults.
@@ -248,6 +318,7 @@ public class SignalStrength implements Parcelable {
         mLteRssnr = s.mLteRssnr;
         mLteCqi = s.mLteCqi;
         isGsm = s.isGsm;
+        mSimId = s.mSimId;		
     }
 
     /**
@@ -271,6 +342,7 @@ public class SignalStrength implements Parcelable {
         mLteRssnr = in.readInt();
         mLteCqi = in.readInt();
         isGsm = (in.readInt() != 0);
+        mSimId = in.readInt();		
     }
 
     /**
@@ -296,6 +368,7 @@ public class SignalStrength implements Parcelable {
         ss.mLteRsrq = in.readInt();
         ss.mLteRssnr = in.readInt();
         ss.mLteCqi = in.readInt();
+        ss.mSimId = in.readInt();
 
         return ss;
     }
@@ -317,6 +390,8 @@ public class SignalStrength implements Parcelable {
         out.writeInt(mLteRssnr);
         out.writeInt(mLteCqi);
         out.writeInt(isGsm ? 1 : 0);
+        out.writeInt(mSimId);
+		
     }
 
     /**
@@ -387,6 +462,28 @@ public class SignalStrength implements Parcelable {
         isGsm = gsmFlag;
     }
 
+    /**
+     * @param int - SIM ID
+     *
+     * set SIM identifier
+     *      
+     * @hide
+     */
+    public void setSimId(int simId) {
+        mSimId = simId;
+    }
+
+  /**
+     * Get the SIM identifier 
+     *
+     * return the simId for which the SignalStrength object be created.
+     *
+     * @hide
+     */
+    public int getSimId() {
+        return this.mSimId;
+    }
+	
     /**
      * Get the GSM Signal Strength, valid values are (0-31, 99) as defined in TS
      * 27.007 8.5

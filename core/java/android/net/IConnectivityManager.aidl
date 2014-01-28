@@ -66,17 +66,17 @@ interface IConnectivityManager
 
     boolean setRadio(int networkType, boolean turnOn);
 
-    int startUsingNetworkFeature(int networkType, in String feature,
-            in IBinder binder);
+    int startUsingNetworkFeature(int networkType, in String feature, int simId, in IBinder binder);
 
-    int stopUsingNetworkFeature(int networkType, in String feature);
+    int stopUsingNetworkFeature(int networkType, in String feature, int simId);
 
     boolean requestRouteToHost(int networkType, int hostAddress);
 
     boolean requestRouteToHostAddress(int networkType, in byte[] hostAddress);
 
-    boolean getMobileDataEnabled();
-    void setMobileDataEnabled(boolean enabled);
+    boolean getMobileDataEnabled(int simId);
+
+    void setMobileDataEnabled(boolean enabled, int simId);
 
     /** Policy control over specific {@link NetworkStateTracker}. */
     void setPolicyDataEnable(int networkType, boolean enabled);

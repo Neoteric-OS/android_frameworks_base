@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.telephony.Rlog;
+import android.telephony.TelephonyManager;
 
 /**
  * Contains phone state and service related information.
@@ -184,6 +185,8 @@ public class ServiceState implements Parcelable {
     private int mCdmaEriIconIndex;
     private int mCdmaEriIconMode;
 
+    private int mSimId;
+
     /**
      * Create a new ServiceState from a intent notifier Bundle
      *
@@ -205,6 +208,7 @@ public class ServiceState implements Parcelable {
      * Empty constructor
      */
     public ServiceState() {
+        this(TelephonyManager.getDefaultSim());
     }
 
     /**
@@ -234,12 +238,14 @@ public class ServiceState implements Parcelable {
         mCdmaEriIconIndex = s.mCdmaEriIconIndex;
         mCdmaEriIconMode = s.mCdmaEriIconMode;
         mIsEmergencyOnly = s.mIsEmergencyOnly;
+        mSimId = s.mSimId;		
     }
 
     /**
      * Construct a ServiceState object from the given parcel.
      */
     public ServiceState(Parcel in) {
+        mSimId = in.readInt();    
         mVoiceRegState = in.readInt();
         mDataRegState = in.readInt();
         mRoaming = in.readInt() != 0;
@@ -260,6 +266,7 @@ public class ServiceState implements Parcelable {
     }
 
     public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(mSimId);		
         out.writeInt(mVoiceRegState);
         out.writeInt(mDataRegState);
         out.writeInt(mRoaming ? 1 : 0);
@@ -546,7 +553,8 @@ public class ServiceState implements Parcelable {
         String radioTechnology = rilRadioTechnologyToString(mRilVoiceRadioTechnology);
         String dataRadioTechnology = rilRadioTechnologyToString(mRilDataRadioTechnology);
 
-        return (mVoiceRegState + " " + mDataRegState + " " + (mRoaming ? "roaming" : "home")
+        return ("SIM"+ (mSimId+1)
+                + mVoiceRegState + " " + mDataRegState + " " + (mRoaming ? "roaming" : "home")
                 + " " + mOperatorAlphaLong
                 + " " + mOperatorAlphaShort
                 + " " + mOperatorNumeric
@@ -685,6 +693,7 @@ public class ServiceState implements Parcelable {
      * @hide
      */
     private void setFromNotifierBundle(Bundle m) {
+        mSimId = m.getInt("simId");    
         mVoiceRegState = m.getInt("voiceRegState");
         mDataRegState = m.getInt("dataRegState");
         mRoaming = m.getBoolean("roaming");
@@ -709,6 +718,7 @@ public class ServiceState implements Parcelable {
      * @hide
      */
     public void fillInNotifierBundle(Bundle m) {
+        m.putInt("simId", mSimId);    
         m.putInt("voiceRegState", mVoiceRegState);
         m.putInt("dataRegState", mDataRegState);
         m.putBoolean("roaming", Boolean.valueOf(mRoaming));
@@ -859,4 +869,31 @@ public class ServiceState implements Parcelable {
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_EVDO_B
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_EHRPD;
     }
+
+  /**
+     * Create a new ServiceState for specified SIM
+     *
+     * This method is added for Gemini.
+     *
+     * @param simId  0 for SIM_1, 1 for SIM2
+     * @return newly created ServiceState
+     *
+     * @hide
+     */
+    public ServiceState(int simId) {
+        mSimId = simId;
+    }
+
+  /**
+     * Get the SIM identifier 
+     *
+     * This method is added for Gemini.
+     * @return the simId for which the ServiceState object be created.
+     *
+     * @hide
+     * @internal
+     */
+    public int getSimId() {
+        return mSimId;
+    }  
 }

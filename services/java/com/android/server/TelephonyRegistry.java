@@ -62,6 +62,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
     private static final String TAG = "TelephonyRegistry";
     private static final boolean DBG = false;
     private static final boolean DBG_LOC = false;
+    private int mySimId;
 
     private static class Record {
         String pkgForDebug;
@@ -165,6 +166,10 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
     // calls go through a oneway interface and local calls going through a
     // handler before they get to app code.
 
+    TelephonyRegistry(Context context, int simId) {
+        this(context);
+        mySimId = simId; 
+    }
     TelephonyRegistry(Context context) {
         CellLocation  location = CellLocation.getEmpty();
 
@@ -176,6 +181,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
         mContext = context;
         mBatteryStats = BatteryStatsService.getService();
         mConnectedApns = new ArrayList<String>();
+        mySimId = 0;//PhoneConstants.SIM_ID_1;
     }
 
     public void systemRunning() {
@@ -728,6 +734,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
         intent.putExtra(PhoneConstants.DATA_APN_KEY, apn);
         intent.putExtra(PhoneConstants.DATA_APN_TYPE_KEY, apnType);
+        intent.putExtra(PhoneConstants.SIM_ID_KEY, mySimId);
         mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
     }
 
@@ -735,6 +742,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
         Intent intent = new Intent(TelephonyIntents.ACTION_DATA_CONNECTION_FAILED);
         intent.putExtra(PhoneConstants.FAILURE_REASON_KEY, reason);
         intent.putExtra(PhoneConstants.DATA_APN_TYPE_KEY, apnType);
+        intent.putExtra(PhoneConstants.SIM_ID_KEY, mySimId);
         mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
     }
 

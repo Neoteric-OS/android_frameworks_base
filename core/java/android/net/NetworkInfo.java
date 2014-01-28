@@ -20,6 +20,7 @@ import android.os.Parcelable;
 import android.os.Parcel;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.telephony.PhoneConstants;
 
 import java.util.EnumMap;
 
@@ -121,6 +122,7 @@ public class NetworkInfo implements Parcelable {
     private boolean mIsFailover;
     private boolean mIsRoaming;
     private boolean mIsConnectedToProvisioningNetwork;
+    private int mSimId;	
 
     /**
      * Indicates whether network connectivity is possible:
@@ -151,6 +153,7 @@ public class NetworkInfo implements Parcelable {
         mIsAvailable = false; // until we're told otherwise, assume unavailable
         mIsRoaming = false;
         mIsConnectedToProvisioningNetwork = false;
+        mSimId = PhoneConstants.SIM_ID_1;
     }
 
     /** {@hide} */
@@ -168,6 +171,7 @@ public class NetworkInfo implements Parcelable {
             mIsRoaming = source.mIsRoaming;
             mIsAvailable = source.mIsAvailable;
             mIsConnectedToProvisioningNetwork = source.mIsConnectedToProvisioningNetwork;
+            mSimId = source.mSimId;
         }
     }
 
@@ -427,7 +431,8 @@ public class NetworkInfo implements Parcelable {
             append(", failover: ").append(mIsFailover).
             append(", isAvailable: ").append(mIsAvailable).
             append(", isConnectedToProvisioningNetwork: ").
-                    append(mIsConnectedToProvisioningNetwork);
+                    append(mIsConnectedToProvisioningNetwork).
+            append(", simId: ").append(mSimId);
             return builder.toString();
         }
     }
@@ -458,6 +463,7 @@ public class NetworkInfo implements Parcelable {
             dest.writeInt(mIsConnectedToProvisioningNetwork ? 1 : 0);
             dest.writeString(mReason);
             dest.writeString(mExtraInfo);
+            dest.writeInt(mSimId);
         }
     }
 
@@ -481,6 +487,7 @@ public class NetworkInfo implements Parcelable {
                 netInfo.mIsConnectedToProvisioningNetwork = in.readInt() != 0;
                 netInfo.mReason = in.readString();
                 netInfo.mExtraInfo = in.readString();
+                netInfo.mSimId = in.readInt();
                 return netInfo;
             }
 
@@ -488,4 +495,22 @@ public class NetworkInfo implements Parcelable {
                 return new NetworkInfo[size];
             }
         };
+
+    /**
+     * Return a sim IDm fir exanoke SIM1 or SIM2
+     * @return the id of SIM
+     * @hide
+     * @internal
+     */
+    public int getSimId(){
+        return mSimId;
+    }
+
+    void setDetailedState(DetailedState detailedState, String reason, String extraInfo, int simId) {
+        mDetailedState = detailedState;
+        mState = stateMap.get(detailedState);
+        mReason = reason;
+        mExtraInfo = extraInfo;
+        mSimId = simId;
+    }
 }

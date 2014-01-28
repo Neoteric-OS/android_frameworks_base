@@ -155,6 +155,9 @@ class ServerThread {
         CommonTimeManagementService commonTimeMgmtService = null;
         InputManagerService inputManager = null;
         TelephonyRegistry telephonyRegistry = null;
+        TelephonyRegistry telephonyRegistry2 = null;
+        TelephonyRegistry telephonyRegistry3 = null;
+        TelephonyRegistry telephonyRegistry4 = null;
         ConsumerIrService consumerIr = null;
 
         // Create a handler thread just for the window manager to enjoy.
@@ -213,9 +216,18 @@ class ServerThread {
             display = new DisplayManagerService(context, wmHandler);
             ServiceManager.addService(Context.DISPLAY_SERVICE, display, true);
 
-            Slog.i(TAG, "Telephony Registry");
+            Slog.i(TAG, "Telephony Registry Phone1");
             telephonyRegistry = new TelephonyRegistry(context);
             ServiceManager.addService("telephony.registry", telephonyRegistry);
+            Slog.i(TAG, "Telephony Registry Phone2");
+            telephonyRegistry2 =  new TelephonyRegistry(context, 1);
+            ServiceManager.addService("telephony.registry2", telephonyRegistry2);
+            Slog.i(TAG, "Telephony Registry Phone3");
+            telephonyRegistry3 = new TelephonyRegistry(context, 2);
+            ServiceManager.addService("telephony.registry3", telephonyRegistry3);
+            Slog.i(TAG, "Telephony Registry Phone4");
+            telephonyRegistry4 = new TelephonyRegistry(context, 3);
+            ServiceManager.addService("telephony.registry4", telephonyRegistry4);
 
             Slog.i(TAG, "Scheduling Policy");
             ServiceManager.addService("scheduling_policy", new SchedulingPolicyService());
@@ -927,6 +939,9 @@ class ServerThread {
         final AssetAtlasService atlasF = atlas;
         final InputManagerService inputManagerF = inputManager;
         final TelephonyRegistry telephonyRegistryF = telephonyRegistry;
+        final TelephonyRegistry telephonyRegistryF2 = telephonyRegistry2;
+        final TelephonyRegistry telephonyRegistryF3 = telephonyRegistry3;
+        final TelephonyRegistry telephonyRegistryF4 = telephonyRegistry4;
         final PrintManagerService printManagerF = printManager;
         final MediaRouterService mediaRouterF = mediaRouter;
 
@@ -1067,6 +1082,9 @@ class ServerThread {
 
                 try {
                     if (telephonyRegistryF != null) telephonyRegistryF.systemRunning();
+                    if (telephonyRegistryF2 != null) telephonyRegistryF2.systemRunning();
+                    if (telephonyRegistryF3 != null) telephonyRegistryF3.systemRunning();
+                    if (telephonyRegistryF4 != null) telephonyRegistryF4.systemRunning();
                 } catch (Throwable e) {
                     reportWtf("Notifying TelephonyRegistry running", e);
                 }
