@@ -22,6 +22,24 @@
       "revId": "962dde734b7e347948a1624571e8c180260bae85",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32df3e25_1e4fed00",
+        "filename": "core/java/android/widget/NumberPicker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1948,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2014-01-28T09:30:06Z",
+      "side": 1,
+      "message": "Yes they are :)",
+      "parentUuid": "6d1635de_0ceb07d5",
+      "revId": "962dde734b7e347948a1624571e8c180260bae85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
