@@ -777,6 +777,7 @@ public class MediaFocusControl implements OnFinished {
     private void dispatchMediaKeyEventForCalls(KeyEvent keyEvent, boolean needWakeLock) {
         Intent keyIntent = new Intent(Intent.ACTION_MEDIA_BUTTON, null);
         keyIntent.putExtra(Intent.EXTRA_KEY_EVENT, keyEvent);
+        keyIntent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         keyIntent.setPackage(mMediaReceiverForCalls.getPackageName());
         if (needWakeLock) {
             mMediaEventWakeLock.acquire();
@@ -804,6 +805,7 @@ public class MediaFocusControl implements OnFinished {
         }
         Intent keyIntent = new Intent(Intent.ACTION_MEDIA_BUTTON, null);
         keyIntent.putExtra(Intent.EXTRA_KEY_EVENT, keyEvent);
+        keyIntent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         synchronized(mRCStack) {
             if (!mRCStack.empty()) {
                 // send the intent that was registered by the client
