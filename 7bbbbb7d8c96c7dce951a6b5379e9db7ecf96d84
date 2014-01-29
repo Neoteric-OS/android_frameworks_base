@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "d26c224a_23dd8ab0",
+        "filename": "telephony/java/com/android/internal/telephony/IPhoneSubInfo.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-01-29T18:17:36Z",
+      "side": 1,
+      "message": "getDeviceId returns IMEI, in dsds IMEI per sub is possible.",
+      "parentUuid": "92870a29_afa4fdc9",
+      "revId": "7bbbbb7d8c96c7dce951a6b5379e9db7ecf96d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52811216_ed2d2175",
         "filename": "telephony/java/com/android/internal/telephony/IPhoneSubInfo.aidl",
         "patchSetId": 2
@@ -133,6 +151,24 @@
       "writtenOn": "2014-01-29T17:07:16Z",
       "side": 1,
       "message": "void dialUsingSub(int subscription, String number)",
+      "revId": "7bbbbb7d8c96c7dce951a6b5379e9db7ecf96d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d26c224a_43d2869f",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-01-29T18:17:36Z",
+      "side": 1,
+      "message": "ok.",
+      "parentUuid": "52811216_add16920",
       "revId": "7bbbbb7d8c96c7dce951a6b5379e9db7ecf96d84",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
