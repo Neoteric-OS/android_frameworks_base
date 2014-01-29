@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "92870a29_6f3be5fe",
+        "filename": "telephony/java/com/android/internal/telephony/IPhoneSubInfo.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-29T18:30:00Z",
+      "side": 1,
+      "message": "If IMEI is associated with a device then why would it change based on something in the SIM?\n\nAccording to this page (http://en.wikipedia.org/wiki/International_Mobile_Station_Equipment_Identity) I don\u0027t think it should.\n\n\"The IMEI is only used for identifying the device and has no permanent or semi-permanent relation to the subscriber\"",
+      "parentUuid": "d26c224a_23dd8ab0",
+      "revId": "7bbbbb7d8c96c7dce951a6b5379e9db7ecf96d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52811216_ed2d2175",
         "filename": "telephony/java/com/android/internal/telephony/IPhoneSubInfo.aidl",
         "patchSetId": 2
