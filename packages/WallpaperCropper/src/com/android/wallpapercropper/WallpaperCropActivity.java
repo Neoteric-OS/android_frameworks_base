@@ -367,7 +367,9 @@ public class WallpaperCropActivity extends Activity {
 
         // ADJUST CROP HEIGHT
         if (isPortrait) {
-            cropRect.bottom = cropRect.top + defaultWallpaperSize.y / cropScale;
+            //adjust height and make sure crop rectangle is within image bounds.
+            cropRect.bottom = Math.min(cropRect.top + defaultWallpaperSize.y / cropScale,
+                    rotatedInSize[1]);
         } else { // LANDSCAPE
             float extraPortraitHeight =
                     defaultWallpaperSize.y / cropScale - cropRect.height();
