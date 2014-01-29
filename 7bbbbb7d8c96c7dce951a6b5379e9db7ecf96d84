@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52811216_4d346dbe",
+        "filename": "telephony/java/com/android/internal/telephony/IPhoneSubInfo.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-29T17:07:16Z",
+      "side": 1,
+      "message": "I think rather than \"OnSubscription\" we should use \"UsingSub\":\n\n   /**\n     * Retrieves the unique subscriber ID for a given subscription, e.g., IMSI for GSM phones.\n     */\n    String getSubscriberIdUsingSub(int subscription);",
+      "revId": "7bbbbb7d8c96c7dce951a6b5379e9db7ecf96d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92870a29_afa4fdc9",
+        "filename": "telephony/java/com/android/internal/telephony/IPhoneSubInfo.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-29T17:07:16Z",
+      "side": 1,
+      "message": "We need to discuss this, if this is \"device\" specific then this method shouldn\u0027t be needed.",
+      "revId": "7bbbbb7d8c96c7dce951a6b5379e9db7ecf96d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52811216_ed2d2175",
+        "filename": "telephony/java/com/android/internal/telephony/IPhoneSubInfo.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-29T17:07:16Z",
+      "side": 1,
+      "message": "This too doesn\u0027t feel right but not sure what it should be yet, need to see how \"getDeviceSvn\" is used.",
+      "range": {
+        "startLine": 47,
+        "startChar": 11,
+        "endLine": 47,
+        "endChar": 37
+      },
+      "revId": "7bbbbb7d8c96c7dce951a6b5379e9db7ecf96d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92870a29_ef2d1575",
+        "filename": "telephony/java/com/android/internal/telephony/IPhoneSubInfo.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-29T17:07:16Z",
+      "side": 1,
+      "message": "for",
+      "range": {
+        "startLine": 55,
+        "startChar": 42,
+        "endLine": 55,
+        "endChar": 44
+      },
+      "revId": "7bbbbb7d8c96c7dce951a6b5379e9db7ecf96d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2b4c6fd_fff89b66",
+        "filename": "telephony/java/com/android/internal/telephony/IPhoneSubInfo.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-29T17:07:16Z",
+      "side": 1,
+      "message": "UsingSub",
+      "range": {
+        "startLine": 57,
+        "startChar": 26,
+        "endLine": 57,
+        "endChar": 40
+      },
+      "revId": "7bbbbb7d8c96c7dce951a6b5379e9db7ecf96d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92870a29_af4a3d40",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-29T17:07:16Z",
+      "side": 1,
+      "message": "\"UsingSub\" rather than \"OnSubscription\" and subscription parameter first.",
+      "revId": "7bbbbb7d8c96c7dce951a6b5379e9db7ecf96d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52811216_add16920",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-29T17:07:16Z",
+      "side": 1,
+      "message": "void dialUsingSub(int subscription, String number)",
+      "revId": "7bbbbb7d8c96c7dce951a6b5379e9db7ecf96d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52811216_cdde9d2f",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-29T17:07:16Z",
+      "side": 1,
+      "message": "\"UsingSub\" instead of \"OnSubscription\", have subscription parameter first.",
+      "revId": "7bbbbb7d8c96c7dce951a6b5379e9db7ecf96d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92870a29_0f08a9f5",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-29T17:07:16Z",
+      "side": 1,
+      "message": "Using also have subscription as first parameter:\n\n  void notifyCallStateUsingSub(in int subscription, int state, String incomingNumber);",
+      "range": {
+        "startLine": 31,
+        "startChar": 24,
+        "endLine": 31,
+        "endChar": 26
+      },
+      "revId": "7bbbbb7d8c96c7dce951a6b5379e9db7ecf96d84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
