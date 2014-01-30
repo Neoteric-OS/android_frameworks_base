@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12731a25_28b003c2",
+        "filename": "packages/Keyguard/src/com/android/keyguard/KeyguardStatusView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1004017
+      },
+      "writtenOn": "2014-01-30T02:54:37Z",
+      "side": 1,
+      "message": "This should explicitly call refresh() since the time will be stale until the minute changes.",
+      "range": {
+        "startLine": 67,
+        "startChar": 20,
+        "endLine": 67,
+        "endChar": 36
+      },
+      "revId": "68e3112c4b291b4788f11c51be77b321cb1dce53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
