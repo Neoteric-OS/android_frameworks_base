@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52811216_ba5fd0d4",
+        "filename": "telephony/java/android/telephony/MSimTelephonyManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-31T18:09:24Z",
+      "side": 1,
+      "message": "This should probably return a class with configuration information and configuration rather than two calls.\n\nAlso, I\u0027m thinking this should be a runtime call through to the service and so other implementations are possible for determining the number of sims and their configuration. We might need to expose more detail too, for example on a triple sim there could be one, two or three radios with combinations for active and standby. Maybe not possible but should be discussed.",
+      "revId": "96e7df455dfba772735e3c2f9d691444c0d21e6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92870a29_97b3c714",
+        "filename": "telephony/java/android/telephony/MSimTelephonyManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-01-31T18:09:24Z",
+      "side": 1,
+      "message": "Aren\u0027t methods without subscription already implemented in the base class?",
+      "revId": "96e7df455dfba772735e3c2f9d691444c0d21e6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
