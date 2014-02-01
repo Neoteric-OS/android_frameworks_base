@@ -33,6 +33,24 @@
       "revId": "96e7df455dfba772735e3c2f9d691444c0d21e6d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32473eee_fe2d21aa",
+        "filename": "telephony/java/android/telephony/MSimTelephonyManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-02-01T04:53:38Z",
+      "side": 1,
+      "message": "Systemproperty is updated with as \"\u003csub1 value\u003e, \u003csub2 value\u003e\".\n\nIn a case where a third party app access legacy getNetworkOperatorName(), MSimTelephonyManager should be able to return value of default sub only.\n\ngetTelephonyProperty() utility method parses the property value and returns the value of default sub.",
+      "parentUuid": "92870a29_97b3c714",
+      "revId": "96e7df455dfba772735e3c2f9d691444c0d21e6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
