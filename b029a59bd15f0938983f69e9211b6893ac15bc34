@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b20eceb3_39d51bfa",
+        "filename": "core/java/android/preference/VolumePreference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2014-02-03T16:41:42Z",
+      "side": 1,
+      "message": "please use quitSafely() so that the stop message sent above is processed.",
+      "range": {
+        "startLine": 351,
+        "startChar": 20,
+        "endLine": 351,
+        "endChar": 24
+      },
+      "revId": "b029a59bd15f0938983f69e9211b6893ac15bc34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
