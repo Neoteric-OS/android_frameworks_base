@@ -40,6 +40,24 @@
       "revId": "962dde734b7e347948a1624571e8c180260bae85",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b20eceb3_79827374",
+        "filename": "core/java/android/widget/NumberPicker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1948,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-02-03T18:32:59Z",
+      "side": 1,
+      "message": "how about a new CTS test so no one has to trust anyone?\n\n  for (char c : ....getAcceptedChars()) {\n    assertTrue(Character.isDigit(c));\n  }\n\n(we could even go further and have a CTS test that checks that getAcceptedChars includes every code point for which isDigit returns true.)",
+      "parentUuid": "32df3e25_1e4fed00",
+      "revId": "962dde734b7e347948a1624571e8c180260bae85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
