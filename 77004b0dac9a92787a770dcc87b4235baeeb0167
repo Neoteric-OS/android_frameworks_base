@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e2061a_7624bd90",
+        "filename": "core/jni/android_opengl_EGL14.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000483
+      },
+      "writtenOn": "2014-02-03T23:42:32Z",
+      "side": 1,
+      "message": "My Java-induced reflex is to worry about sign-extending the 32-bit value, but since we know it\u0027s getting cast back down to a 32-bit pointer that shouldn\u0027t matter.",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 58
+      },
+      "revId": "77004b0dac9a92787a770dcc87b4235baeeb0167",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2dfc254_94a5e52f",
+        "filename": "opengl/java/android/opengl/EGL14.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000483
+      },
+      "writtenOn": "2014-02-03T23:42:32Z",
+      "side": 1,
+      "message": "Should be \"long\" now, to match eglGetDisplay() arg?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 59
+      },
+      "revId": "77004b0dac9a92787a770dcc87b4235baeeb0167",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2e2061a_d63371d5",
+        "filename": "opengl/java/android/opengl/EGL14.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000483
+      },
+      "writtenOn": "2014-02-03T23:42:32Z",
+      "side": 1,
+      "message": "We\u0027ll want to @Deprecate this eventually.  Since that\u0027s a change to the public API, it\u0027s reasonable to do that in a later CL.",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 159,
+        "endChar": 50
+      },
+      "revId": "77004b0dac9a92787a770dcc87b4235baeeb0167",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b20eceb3_94fcc98d",
+        "filename": "opengl/java/android/opengl/EGL14.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000483
+      },
+      "writtenOn": "2014-02-03T23:42:32Z",
+      "side": 1,
+      "message": "This is part of the EGL spec, so we can\u0027t hide it.  We\u0027ll want to deprecate the \"int\" version in a future CL.\n\nIt looks like this is only for use with OpenVG VGImage objects, so we probably don\u0027t have any code that exercises it.\n\nFWIW, it looks like the other use of EGLClientBuffer (eglCreateImageKHR) doesn\u0027t have a Java binding.",
+      "range": {
+        "startLine": 342,
+        "startChar": 0,
+        "endLine": 345,
+        "endChar": 69
+      },
+      "revId": "77004b0dac9a92787a770dcc87b4235baeeb0167",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2e2061a_d665b1a0",
+        "filename": "opengl/java/android/opengl/EGLObjectHandle.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000483
+      },
+      "writtenOn": "2014-02-03T23:42:32Z",
+      "side": 1,
+      "message": "Add to the \"to be deprecated\" list.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "77004b0dac9a92787a770dcc87b4235baeeb0167",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2e2061a_365755bb",
+        "filename": "opengl/java/android/opengl/EGLObjectHandle.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000483
+      },
+      "writtenOn": "2014-02-03T23:42:32Z",
+      "side": 1,
+      "message": "Deprecate this too.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "77004b0dac9a92787a770dcc87b4235baeeb0167",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
