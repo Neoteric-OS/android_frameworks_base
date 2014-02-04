@@ -48,6 +48,24 @@
     },
     {
       "key": {
+        "uuid": "f25766b2_24f63202",
+        "filename": "opengl/java/android/opengl/EGL14.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-02-04T11:36:45Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "d2dfc254_94a5e52f",
+      "revId": "77004b0dac9a92787a770dcc87b4235baeeb0167",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2e2061a_d63371d5",
         "filename": "opengl/java/android/opengl/EGL14.java",
         "patchSetId": 1
@@ -65,6 +83,24 @@
         "endLine": 159,
         "endChar": 50
       },
+      "revId": "77004b0dac9a92787a770dcc87b4235baeeb0167",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "125b1ae2_657746a8",
+        "filename": "opengl/java/android/opengl/EGL14.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-02-04T11:36:45Z",
+      "side": 1,
+      "message": "How about adding a TODO comment for now?",
+      "parentUuid": "f2e2061a_d63371d5",
       "revId": "77004b0dac9a92787a770dcc87b4235baeeb0167",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -94,6 +130,24 @@
     },
     {
       "key": {
+        "uuid": "125b1ae2_057452a0",
+        "filename": "opengl/java/android/opengl/EGL14.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-02-04T11:36:45Z",
+      "side": 1,
+      "message": "We cannot change or add an API. However we could add a TODO comment.",
+      "parentUuid": "b20eceb3_94fcc98d",
+      "revId": "77004b0dac9a92787a770dcc87b4235baeeb0167",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2e2061a_d665b1a0",
         "filename": "opengl/java/android/opengl/EGLObjectHandle.java",
         "patchSetId": 1
@@ -117,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "f25766b2_e406da38",
+        "filename": "opengl/java/android/opengl/EGLObjectHandle.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-02-04T11:36:45Z",
+      "side": 1,
+      "message": "Will add a TODO comment if that\u0027s okay.",
+      "parentUuid": "f2e2061a_d665b1a0",
+      "revId": "77004b0dac9a92787a770dcc87b4235baeeb0167",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2e2061a_365755bb",
         "filename": "opengl/java/android/opengl/EGLObjectHandle.java",
         "patchSetId": 1
@@ -134,6 +206,24 @@
         "endLine": 44,
         "endChar": 28
       },
+      "revId": "77004b0dac9a92787a770dcc87b4235baeeb0167",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f25766b2_c4015e23",
+        "filename": "opengl/java/android/opengl/EGLObjectHandle.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-02-04T11:36:45Z",
+      "side": 1,
+      "message": "Will add a TODO comment if that\u0027s okay.",
+      "parentUuid": "f2e2061a_365755bb",
       "revId": "77004b0dac9a92787a770dcc87b4235baeeb0167",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
