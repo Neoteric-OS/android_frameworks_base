@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "123a3aa9_8df8a166",
+        "filename": "core/jni/android_database_SQLiteGlobal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2014-02-07T16:05:58Z",
+      "side": 1,
+      "message": "should be outside the \u0027if (verboseLog)\u0027 (hierarchy of Boolean will optimize for later if(false), but the optimal intent should be clear?).\n\nWhy not change ALOG to ALOGV instead?",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "e994652c6ab8046e5b8dff0a010f218be9fe3ecb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
