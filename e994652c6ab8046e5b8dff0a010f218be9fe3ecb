@@ -46,6 +46,41 @@
       "revId": "e994652c6ab8046e5b8dff0a010f218be9fe3ecb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2468641_2f1a4585",
+        "filename": "core/jni/android_database_SQLiteGlobal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T18:01:43Z",
+      "side": 1,
+      "message": "I don\u0027t remember there being an IF_ALOG macro, is it new?  I guess it must test a system property.  I see in log/log.h that it calls android_testLog but that\u0027s #defined to true as if it has been incompletely implemented.\n\nAnyhow, assuming we have a working IF_ALOG macro that behaves identically to android_util_Log_isVerboseLogEnabled, then we can simplify this function somewhat.\n\nRemove the verboseLog variable altogether and write:\n\nIF_ALOG(LOG_VERBOSE, SQLITE_LOG_TAG) {\n    ALOG(LOG_VERBOSE, SQLITE_LOG_TAG, ....);\n}",
+      "parentUuid": "123a3aa9_addc7db4",
+      "revId": "e994652c6ab8046e5b8dff0a010f218be9fe3ecb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "123a3aa9_30be26e5",
+        "filename": "core/jni/android_database_SQLiteGlobal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T18:01:43Z",
+      "side": 1,
+      "message": "Also remove this line and pass NULL as the callback data.\n\nCan probably remove the include for android_util_Log.h also as a result.",
+      "revId": "e994652c6ab8046e5b8dff0a010f218be9fe3ecb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
