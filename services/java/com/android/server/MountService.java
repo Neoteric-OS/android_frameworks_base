@@ -384,18 +384,41 @@ class MountService extends IMountService.Stub
     }
 
     class ShutdownCallBack extends UnmountCallBack {
-        IMountShutdownObserver observer;
-        ShutdownCallBack(String path, IMountShutdownObserver observer) {
+        MountShutdownLatch mountShutdownLatch;
+        ShutdownCallBack(String path, final MountShutdownLatch mountShutdownLatch) {
             super(path, true, false);
-            this.observer = observer;
+            this.mountShutdownLatch = mountShutdownLatch;
         }
 
         @Override
         void handleFinished() {
             int ret = doUnmountVolume(path, true, removeEncryption);
-            if (observer != null) {
+            Slog.i(TAG, "Unmount completed: " + path + ", result code: " + ret);
+            this.mountShutdownLatch.countDown();
+        }
+    }
+
+    static class MountShutdownLatch {
+        private int count;
+        private IMountShutdownObserver observer;
+        private final Object countLock = new Object();
+
+        MountShutdownLatch(final IMountShutdownObserver observer, int count) {
+            this.observer = observer;
+            this.count = count;
+        }
+
+        void countDown() {
+            boolean sendShutdown = false;
+            synchronized(countLock) {
+                this.count--;
+                if (this.count == 0) {
+                    sendShutdown = true;
+                }
+            }
+            if (sendShutdown && observer != null) {
                 try {
-                    observer.onShutDownComplete(ret);
+                    this.observer.onShutDownComplete(StorageResultCode.OperationSucceeded);
                 } catch (RemoteException e) {
                     Slog.w(TAG, "RemoteException when shutting down");
                 }
@@ -1426,6 +1449,10 @@ class MountService extends IMountService.Stub
 
         Slog.i(TAG, "Shutting down");
         synchronized (mVolumesLock) {
+            // Get all volumes to be unmounted.
+            MountShutdownLatch mountShutdownLatch = new MountShutdownLatch(observer,
+                                                            mVolumeStates.size());
+
             for (String path : mVolumeStates.keySet()) {
                 String state = mVolumeStates.get(path);
 
@@ -1461,19 +1488,16 @@ class MountService extends IMountService.Stub
 
                 if (state.equals(Environment.MEDIA_MOUNTED)) {
                     // Post a unmount message.
-                    ShutdownCallBack ucb = new ShutdownCallBack(path, observer);
+                    ShutdownCallBack ucb = new ShutdownCallBack(path, mountShutdownLatch);
                     mHandler.sendMessage(mHandler.obtainMessage(H_UNMOUNT_PM_UPDATE, ucb));
                 } else if (observer != null) {
                     /*
-                     * Observer is waiting for onShutDownComplete when we are done.
-                     * Since nothing will be done send notification directly so shutdown
-                     * sequence can continue.
+                     * Count down, since nothing will be done. The observer will be
+                     * notified when we are done so shutdown sequence can continue.
                      */
-                    try {
-                        observer.onShutDownComplete(StorageResultCode.OperationSucceeded);
-                    } catch (RemoteException e) {
-                        Slog.w(TAG, "RemoteException when shutting down");
-                    }
+                    mountShutdownLatch.countDown();
+                    Slog.i(TAG, "Unmount completed: " + path +
+                        ", result code: " + StorageResultCode.OperationSucceeded);
                 }
             }
         }
