@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2496e4f_dbba5f53",
+        "filename": "rs/java/android/renderscript/RenderScript.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1004537
+      },
+      "writtenOn": "2014-02-07T01:05:00Z",
+      "side": 1,
+      "message": "Needs to be final",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 10
+      },
+      "revId": "8fee449712de150d9d6f8f093c68b5ed5bafd010",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
