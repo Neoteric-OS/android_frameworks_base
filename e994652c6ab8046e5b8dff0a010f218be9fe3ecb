@@ -85,6 +85,30 @@
     },
     {
       "key": {
+        "uuid": "f2468641_8f65f9f3",
+        "filename": "core/jni/android_database_SQLiteGlobal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2014-02-07T21:56:03Z",
+      "side": 1,
+      "message": "When you have a string of evals in order, it is generally accepted you place the constants ahead of the variables. IF_ALOG is a constant (evaluating to either true or false constants).\n\nI do understand that once IF_ALOG does its dirty work:\n\nif (verboseLog) {\n   ;\n}\n\nreduces in the optimizer to nothing. But it evaluates to something when optimization is off.\n\nI am not sure if anyone is concerned today with optimization turned off (debugging optimization issues)?",
+      "parentUuid": "123a3aa9_addc7db4",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "e994652c6ab8046e5b8dff0a010f218be9fe3ecb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "123a3aa9_30be26e5",
         "filename": "core/jni/android_database_SQLiteGlobal.cpp",
         "patchSetId": 1
