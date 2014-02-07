@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2468641_322d48be",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:25:17Z",
+      "side": 1,
+      "message": "@hide isn\u0027t needed here",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "123a3aa9_36137e79",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:25:17Z",
+      "side": 1,
+      "message": "main looper",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2468641_f23ae0f9",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:25:17Z",
+      "side": 1,
+      "message": "This stuff really shouldn\u0027t just get dumped out to the log.  If you want it in a bug report then it should go into dumpsys.",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "123a3aa9_d6495a82",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5054,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:25:17Z",
+      "side": 1,
+      "message": "We do *not* want to turn this on for all userdebug devices.  The overhead is huge!",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2468641_32462896",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:25:17Z",
+      "side": 1,
+      "message": "private",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "323d7e9f_b7892a14",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:25:17Z",
+      "side": 1,
+      "message": "These 3 members can all be local variables of the loop() function.",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "323d7e9f_7780a2df",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:25:17Z",
+      "side": 1,
+      "message": "these should all just be local variables, I don\u0027t see why you declared fields for them (although it would show up in a core dump but so would the code that\u0027s running)",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "323d7e9f_17791e55",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:25:17Z",
+      "side": 1,
+      "message": "don\u0027t horizontally align, indent 8 spaces instead",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2468641_b2405876",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-02-07T20:25:17Z",
+      "side": 1,
+      "message": "You probably want a space here.",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
