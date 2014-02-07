@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "123a3aa9_966512f4",
+        "filename": "services/java/com/android/server/MountService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2014-02-07T20:35:17Z",
+      "side": 1,
+      "message": "use \"mLatch\" style syntax, and mark as private to prevent accidental external mutation.",
+      "revId": "6b08dd988f3556f7141724e04929348706288c8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "323d7e9f_f71e52f1",
+        "filename": "services/java/com/android/server/MountService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2014-02-07T20:35:17Z",
+      "side": 1,
+      "message": "i\u0027d suggest:\n\n  synchronized (this) {\n    if (mLatch !\u003d null) {\n      mLatch.countDown();\n    }\n    mLatch \u003d null;\n  }\n\nthis prevents accidental double-handleFinished() invocations from counting down too many times.  (it defensively forces the 1:1 mapping.)",
+      "revId": "6b08dd988f3556f7141724e04929348706288c8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2468641_95018624",
+        "filename": "services/java/com/android/server/MountService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2014-02-07T20:35:17Z",
+      "side": 1,
+      "message": "please use mCount and mObserver style syntax to match conventions.\n\nconsider using AtomicInteger to avoid the need for a separate lock.  then below you could:\n\n  if (mCount.decrementAndGet() \u003d\u003d 0) {\n    // do things\n  }",
+      "revId": "6b08dd988f3556f7141724e04929348706288c8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
