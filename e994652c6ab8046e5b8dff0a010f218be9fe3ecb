@@ -67,6 +67,24 @@
     },
     {
       "key": {
+        "uuid": "cf01d9f4_1bf19b4d",
+        "filename": "core/jni/android_database_SQLiteGlobal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2014-02-07T21:22:17Z",
+      "side": 1,
+      "message": "IF_ALOG is always true.  To maintain the current behavior I would have change IF_ALOG to IF_ALOGV, but that is probably not what you want.\n\nThere are two verbose log enabling mechanisms, LOG_NDEBUG\u003d0, and the log.tag.SQLiteLog property.  The existing code uses both - ALOGV gets compiled out when LOG_NDEBUG is not set.  I\u0027m guessing that\u0027s not actually what you want, you want to control everything based on android_util_Log_isVerboseLogEnabled, in which case changing ALOGV to ALOG is all that is necessary.",
+      "parentUuid": "f2468641_2f1a4585",
+      "revId": "e994652c6ab8046e5b8dff0a010f218be9fe3ecb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "123a3aa9_30be26e5",
         "filename": "core/jni/android_database_SQLiteGlobal.cpp",
         "patchSetId": 1
