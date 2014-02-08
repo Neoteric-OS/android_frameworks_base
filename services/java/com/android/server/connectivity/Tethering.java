@@ -699,6 +699,10 @@ public class Tethering extends BaseNetworkObserver {
         return retVal;
     }
 
+    public String[] getTetheredDhcpRanges() {
+        return mDhcpRange;
+    }
+
     public String[] getErroredIfaces() {
         ArrayList<String> list = new ArrayList<String>();
         synchronized (mPublicSync) {

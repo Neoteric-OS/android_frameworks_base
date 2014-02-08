@@ -13687,6 +13687,7 @@ package android.net {
     method public deprecated boolean getBackgroundDataSetting();
     method public android.net.NetworkInfo getNetworkInfo(int);
     method public int getNetworkPreference();
+    method public java.lang.String[] getTetheredDhcpRanges();
     method public boolean isActiveNetworkMetered();
     method public static boolean isNetworkTypeValid(int);
     method public boolean requestRouteToHost(int, int);

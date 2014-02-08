@@ -109,6 +109,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
 
     INetworkManagementService mNwService;
     private DhcpStateMachine mDhcpStateMachine;
+    private ConnectivityManager mCm;
 
     private P2pStateMachine mP2pStateMachine;
     private AsyncChannel mReplyChannel = new AsyncChannel();
@@ -2058,26 +2059,53 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
         mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
     }
 
+    private void checkAndSetConnectivityInstance() {
+        if (mCm == null) {
+            mCm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        }
+    }
+
+    private String[] concat(String[] a, String[] b) {
+        String[] c= new String[a.length+b.length];
+        System.arraycopy(a, 0, c, 0, a.length);
+        System.arraycopy(b, 0, c, a.length, b.length);
+        return c;
+    }
+
     private void startDhcpServer(String intf) {
         InterfaceConfiguration ifcg = null;
+        checkAndSetConnectivityInstance();
         try {
             ifcg = mNwService.getInterfaceConfig(intf);
             ifcg.setLinkAddress(new LinkAddress(NetworkUtils.numericToInetAddress(
                         SERVER_ADDRESS), 24));
             ifcg.setInterfaceUp();
             mNwService.setInterfaceConfig(intf, ifcg);
+            String[] tetheringDhcpRanges = mCm.getTetheredDhcpRanges();
+            if (mNwService.isTetheringStarted()) {
+                if (DBG) logd("stop exist tethering and will restart it");
+                mNwService.stopTethering();
+                mNwService.tetherInterface(intf);
+            }
             /* This starts the dnsmasq server */
-            mNwService.startTethering(DHCP_RANGE);
+            mNwService.startTethering(concat(tetheringDhcpRanges, DHCP_RANGE));
         } catch (Exception e) {
             loge("Error configuring interface " + intf + ", :" + e);
             return;
         }
-
         logd("Started Dhcp server on " + intf);
    }
 
     private void stopDhcpServer(String intf) {
         try {
+            for (String temp : mNwService.listTetheredInterfaces()) {
+                logd("list all interfaces " + temp);
+                if (temp.compareTo(intf) != 0 ) {
+                    logd("found other tethering interface so keep tethering alive");
+                    mNwService.untetherInterface(intf);
+                    return;
+                }
+            }
             mNwService.stopTethering();
         } catch (Exception e) {
             loge("Error stopping Dhcp server" + e);

@@ -3223,6 +3223,11 @@ public class ConnectivityService extends IConnectivityManager.Stub {
         return mTethering.getTetherableIfaces();
     }
 
+    public String[] getTetheredDhcpRanges() {
+        enforceTetherAccessPermission();
+        return mTethering.getTetheredDhcpRanges();
+    }
+
     public String[] getTetheredIfaces() {
         enforceTetherAccessPermission();
         return mTethering.getTetheredIfaces();
