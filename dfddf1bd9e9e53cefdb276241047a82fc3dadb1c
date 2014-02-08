@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef4bfd71_44406e25",
+        "filename": "core/java/android/hardware/input/InputManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-02-08T23:11:08Z",
+      "side": 1,
+      "message": "nit: line length",
+      "range": {
+        "startLine": 532,
+        "startChar": 0,
+        "endLine": 532,
+        "endChar": 4
+      },
+      "revId": "dfddf1bd9e9e53cefdb276241047a82fc3dadb1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf48f97a_e3c99266",
+        "filename": "core/java/android/hardware/input/InputManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-02-08T23:11:08Z",
+      "side": 1,
+      "message": "nit: extra line",
+      "revId": "dfddf1bd9e9e53cefdb276241047a82fc3dadb1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef4bfd71_243572bb",
+        "filename": "services/input/InputReader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3659,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-02-08T23:11:08Z",
+      "side": 1,
+      "message": "nit: line length",
+      "revId": "dfddf1bd9e9e53cefdb276241047a82fc3dadb1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef4bfd71_043a76a9",
+        "filename": "services/input/tests/InputReader_test.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-02-08T23:11:08Z",
+      "side": 1,
+      "message": "nit: line length",
+      "revId": "dfddf1bd9e9e53cefdb276241047a82fc3dadb1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af83c5c3_420872f2",
+        "filename": "services/java/com/android/server/input/InputManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-02-08T23:11:08Z",
+      "side": 1,
+      "message": "nit: line length",
+      "revId": "dfddf1bd9e9e53cefdb276241047a82fc3dadb1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af83c5c3_a2f61eaa",
+        "filename": "services/java/com/android/server/input/InputManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-02-08T23:11:08Z",
+      "side": 1,
+      "message": "You should probably check that the surface rotation value is valid here.",
+      "revId": "dfddf1bd9e9e53cefdb276241047a82fc3dadb1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf48f97a_c3c69656",
+        "filename": "services/java/com/android/server/input/InputManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-02-08T23:11:08Z",
+      "side": 1,
+      "message": "nit: extra new line",
+      "revId": "dfddf1bd9e9e53cefdb276241047a82fc3dadb1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf48f97a_a3d39a16",
+        "filename": "services/java/com/android/server/input/InputManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-02-08T23:11:08Z",
+      "side": 1,
+      "message": "nit: wrap in braces",
+      "revId": "dfddf1bd9e9e53cefdb276241047a82fc3dadb1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef4bfd71_e44e3a56",
+        "filename": "services/java/com/android/server/input/PersistentDataStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-02-08T23:11:08Z",
+      "side": 1,
+      "message": "This can\u0027t actually be thrown. I think you meant ArrayIndexOutOfBoundsException.\n\nnit: extra newline, catch should be one the same line as the brace",
+      "revId": "dfddf1bd9e9e53cefdb276241047a82fc3dadb1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf48f97a_83d09e0a",
+        "filename": "services/java/com/android/server/input/PersistentDataStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-02-08T23:11:08Z",
+      "side": 1,
+      "message": "Same as above.",
+      "revId": "dfddf1bd9e9e53cefdb276241047a82fc3dadb1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf48f97a_639fe251",
+        "filename": "services/java/com/android/server/input/PersistentDataStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-02-08T23:11:08Z",
+      "side": 1,
+      "message": "nit: catch should be on the same line as the brace",
+      "revId": "dfddf1bd9e9e53cefdb276241047a82fc3dadb1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
