@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f3f0db6_335812c5",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1012357
+      },
+      "writtenOn": "2014-02-08T05:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2468641_322d48be",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "123a3aa9_36137e79",
         "filename": "core/java/android/app/ActivityThread.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2014-02-07T20:25:17Z",
       "side": 1,
       "message": "main looper",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf1ab966_7903ff2b",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1012357
+      },
+      "writtenOn": "2014-02-08T05:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "123a3aa9_36137e79",
       "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6f3f0db6_533cb646",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1012357
+      },
+      "writtenOn": "2014-02-08T05:05:30Z",
+      "side": 1,
+      "message": "Sometimes the faulty process will be killed soon after ANR is detected, e.g. background ANR. If the process was killed, then dumpsys cannot print these debugging logs. So it\u0027s better to print them in logcat as soon as possible.",
+      "parentUuid": "f2468641_f23ae0f9",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "123a3aa9_d6495a82",
         "filename": "core/java/android/app/ActivityThread.java",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2014-02-07T20:25:17Z",
       "side": 1,
       "message": "We do *not* want to turn this on for all userdebug devices.  The overhead is huge!",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf1ab966_79677ffc",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5054,
+      "author": {
+        "id": 1012357
+      },
+      "writtenOn": "2014-02-08T05:05:30Z",
+      "side": 1,
+      "message": "Yes, the overhead is huge for Looper.loop(). But it\u0027s possible to reduce the overhead to the least by optimizing the implementation of LocalLog.\nBecause MTBF runs on userdebug devices, many ANRs are reported without reproducible steps. They cost a lot of time and resources to reproduce. That\u0027s why enable it for all userdebug devices.",
+      "parentUuid": "123a3aa9_d6495a82",
       "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6f3f0db6_73e21a85",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1012357
+      },
+      "writtenOn": "2014-02-08T05:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2468641_32462896",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "323d7e9f_b7892a14",
         "filename": "core/java/android/os/Looper.java",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2014-02-07T20:25:17Z",
       "side": 1,
       "message": "These 3 members can all be local variables of the loop() function.",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f3f0db6_93fc5e22",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1012357
+      },
+      "writtenOn": "2014-02-08T05:05:30Z",
+      "side": 1,
+      "message": "It may be inefficient to new StringBuilder again and again.",
+      "parentUuid": "323d7e9f_b7892a14",
       "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "6f3f0db6_d39666c0",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1012357
+      },
+      "writtenOn": "2014-02-08T05:05:30Z",
+      "side": 1,
+      "message": "First, mDispatching stores more information than the stack in anr/traces.txt. Second, dump(traces.txt) and Looper.dump() are done in different background threads.  If main looper starts the process of new message between these two dump, then mismatch would happen. More logs would be helpful.",
+      "parentUuid": "323d7e9f_7780a2df",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "323d7e9f_17791e55",
         "filename": "core/java/android/os/Looper.java",
         "patchSetId": 2
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "6f3f0db6_130aae7b",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1012357
+      },
+      "writtenOn": "2014-02-08T05:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "323d7e9f_17791e55",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2468641_b2405876",
         "filename": "core/java/android/os/Looper.java",
         "patchSetId": 2
@@ -149,6 +293,24 @@
       "writtenOn": "2014-02-07T20:25:17Z",
       "side": 1,
       "message": "You probably want a space here.",
+      "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f0fa924_7d852fae",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1012357
+      },
+      "writtenOn": "2014-02-08T05:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2468641_b2405876",
       "revId": "f3bfbe78fad8ca939baeead9f6189f9ea185fff3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
