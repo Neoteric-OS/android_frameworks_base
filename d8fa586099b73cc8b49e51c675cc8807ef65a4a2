@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afbae599_8a7c4bcb",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2014-02-11T17:16:51Z",
+      "side": 1,
+      "message": "Shouldnt we use the macro for this:\n\nselinux_android_restorecon()",
+      "revId": "d8fa586099b73cc8b49e51c675cc8807ef65a4a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
