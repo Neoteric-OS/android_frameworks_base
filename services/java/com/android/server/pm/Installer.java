@@ -222,6 +222,13 @@ public final class Installer {
         return execute(builder.toString());
     }
 
+    public int removeIdmap(String overlayApkPath) {
+        StringBuilder builder = new StringBuilder("rmidmap");
+        builder.append(' ');
+        builder.append(overlayApkPath);
+        return execute(builder.toString());
+    }
+
     public int movedex(String srcPath, String dstPath) {
         StringBuilder builder = new StringBuilder("movedex");
         builder.append(' ');

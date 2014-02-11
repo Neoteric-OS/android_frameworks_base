@@ -3516,9 +3516,10 @@ public class PackageManagerService extends IPackageManager.Stub {
 
     private boolean createIdmapForPackagePairLI(PackageParser.Package pkg,
             PackageParser.Package opkg) {
-        if (!opkg.mTrustedOverlay) {
+        if (!opkg.mTrustedOverlay && compareSignatures(pkg.mSignatures, opkg.mSignatures) !=
+                PackageManager.SIGNATURE_MATCH) {
             Slog.w(TAG, "Skipping target and overlay pair " + pkg.mScanPath + " and " +
-                    opkg.mScanPath + ": overlay not trusted");
+                    opkg.mScanPath + ": signatures do not match");
             return false;
         }
         HashMap<String, PackageParser.Package> overlaySet = mOverlays.get(pkg.packageName);
@@ -3536,7 +3537,26 @@ public class PackageManagerService extends IPackageManager.Stub {
             overlaySet.values().toArray(new PackageParser.Package[0]);
         Comparator<PackageParser.Package> cmp = new Comparator<PackageParser.Package>() {
             public int compare(PackageParser.Package p1, PackageParser.Package p2) {
-                return p1.mOverlayPriority - p2.mOverlayPriority;
+                if (!p1.mTrustedOverlay && !p2.mTrustedOverlay) {
+                    PackageSetting ps1;
+                    PackageSetting ps2;
+                    synchronized (mPackages) {
+                        ps1 = mSettings.peekPackageLPr(p1.packageName);
+                        if (ps1 == null) {
+                            return 0;
+                        }
+                        ps2 = mSettings.peekPackageLPr(p2.packageName);
+                        if (ps2 == null) {
+                            return 0;
+                        }
+                    }
+                    long diff = ps1.lastUpdateTime - ps2.lastUpdateTime;
+                    return diff == 0 ? 0 : (diff < 0 ? -1 : 1); // long to int, no loss of precision
+                }
+                if (p1.mTrustedOverlay && p2.mTrustedOverlay) {
+                    return p1.mOverlayPriority - p2.mOverlayPriority;
+                }
+                return p1.mTrustedOverlay ? -1 : 1;
             }
         };
         Arrays.sort(overlayArray, cmp);
@@ -3714,6 +3734,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                     synchronized (mPackages) {
                         // Just remove the loaded entries from package lists.
                         mPackages.remove(ps.name);
+                        removeFromOverlaysLP(ps.pkg);
                     }
                     Slog.w(TAG, "Package " + ps.name + " at " + scanFile
                             + "reverting from " + ps.codePathString
@@ -5173,6 +5194,11 @@ public class PackageManagerService extends IPackageManager.Stub {
                         return null;
                     }
                 }
+                PackageParser.Package targetPkg = mPackages.get(pkg.mOverlayTarget);
+                if (targetPkg != null) {
+                    killApplication(pkg.mOverlayTarget, targetPkg.applicationInfo.uid,
+                            "overlay package installed");
+                }
             } else if (mOverlays.containsKey(pkg.packageName) &&
                     !pkg.packageName.equals("android")) {
                 // This is a regular package, with one or more known overlay packages.
@@ -5270,6 +5296,7 @@ public class PackageManagerService extends IPackageManager.Stub {
 
             final PackageParser.Package pkg = ps.pkg;
             if (pkg != null) {
+                removeFromOverlaysLP(pkg);
                 cleanPackageDataStructuresLILPw(pkg, chatty);
             }
         }
@@ -5284,6 +5311,7 @@ public class PackageManagerService extends IPackageManager.Stub {
         // writer
         synchronized (mPackages) {
             mPackages.remove(pkg.applicationInfo.packageName);
+            removeFromOverlaysLP(pkg);
             if (pkg.mPath != null) {
                 mAppDirs.remove(pkg.mPath);
             }
@@ -11682,6 +11710,41 @@ public class PackageManagerService extends IPackageManager.Stub {
             return dsm.isMemoryLow();
         } finally {
             Binder.restoreCallingIdentity(token);
+        }
+    }
+
+    private void removeFromOverlaysLP(PackageParser.Package pkg) {
+        if (pkg == null) {
+            return;
+        }
+        if (pkg.mOverlayTarget == null) {
+            // regular package
+            HashMap<String, PackageParser.Package> map = mOverlays.get(pkg.mOverlayTarget);
+            if (map != null) {
+                for (PackageParser.Package opkg : map.values()) {
+                    mInstaller.removeIdmap(opkg.mScanPath);
+                }
+            }
+            mOverlays.remove(pkg.packageName);
+        } else {
+            // overlay package
+            PackageParser.Package target = mPackages.get(pkg.mOverlayTarget);
+            if (target != null && target.applicationInfo.resourceDirs != null) {
+                killApplication(pkg.mOverlayTarget, target.applicationInfo.uid,
+                        "overlay package removed");
+                ArrayList<String> tmp =
+                    new ArrayList<String>(Arrays.asList(target.applicationInfo.resourceDirs));
+                tmp.remove(pkg.applicationInfo.sourceDir);
+                target.applicationInfo.resourceDirs = tmp.toArray(new String[0]);
+            }
+
+            mInstaller.removeIdmap(pkg.mScanPath);
+
+            for (HashMap<String, PackageParser.Package> map : mOverlays.values()) {
+                if (map.containsKey(pkg.packageName)) {
+                    map.remove(pkg.packageName);
+                }
+            }
         }
     }
 }
