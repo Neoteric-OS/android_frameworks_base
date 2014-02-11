@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af2f45b4_c244a269",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1020241
+      },
+      "writtenOn": "2014-02-11T04:26:58Z",
+      "side": 1,
+      "message": "static variable  should be initialized to NULL",
+      "revId": "53069e45d74625d8f6303960130986d585563329",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f344108_c11b0287",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1020241
+      },
+      "writtenOn": "2014-02-11T04:26:58Z",
+      "side": 1,
+      "message": "this is synchronized method, maybe blocked, better to use message queue to log",
+      "revId": "53069e45d74625d8f6303960130986d585563329",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
