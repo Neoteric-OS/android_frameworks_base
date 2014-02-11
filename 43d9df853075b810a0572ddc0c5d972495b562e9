@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af83c5c3_7c3d19f3",
+        "filename": "core/jni/android_opengl_EGL14.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000483
+      },
+      "writtenOn": "2014-02-11T00:12:07Z",
+      "side": 1,
+      "message": "Style nit (here and elsewhere): space after \"if\".",
+      "range": {
+        "startLine": 159,
+        "startChar": 4,
+        "endLine": 159,
+        "endChar": 43
+      },
+      "revId": "43d9df853075b810a0572ddc0c5d972495b562e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf48f97a_fdfc878d",
+        "filename": "opengl/java/android/opengl/EGL14.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000483
+      },
+      "writtenOn": "2014-02-11T00:12:07Z",
+      "side": 1,
+      "message": "N.B.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 46
+      },
+      "revId": "43d9df853075b810a0572ddc0c5d972495b562e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
