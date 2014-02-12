@@ -1464,9 +1464,11 @@ public class MediaPlayer implements SubtitleController.Listener
         mOnInfoListener = null;
         mOnVideoSizeChangedListener = null;
         mOnTimedTextListener = null;
-        if (mTimeProvider != null) {
-            mTimeProvider.close();
-            mTimeProvider = null;
+        synchronized (mTimeProviderLock) {
+            if (mTimeProvider != null) {
+                mTimeProvider.close();
+                mTimeProvider = null;
+            }
         }
         mOnSubtitleDataListener = null;
         _release();
@@ -1495,9 +1497,11 @@ public class MediaPlayer implements SubtitleController.Listener
         if (mSubtitleController != null) {
             mSubtitleController.reset();
         }
-        if (mTimeProvider != null) {
-            mTimeProvider.close();
-            mTimeProvider = null;
+        synchronized (mTimeProviderLock) {
+            if (mTimeProvider != null) {
+                mTimeProvider.close();
+                mTimeProvider = null;
+            }
         }
 
         stayAwake(false);
@@ -2492,13 +2496,16 @@ public class MediaPlayer implements SubtitleController.Listener
     private static final int MEDIA_SUBTITLE_DATA = 201;
 
     private TimeProvider mTimeProvider;
+    private final Object mTimeProviderLock = new Object();
 
     /** @hide */
     public MediaTimeProvider getMediaTimeProvider() {
-        if (mTimeProvider == null) {
-            mTimeProvider = new TimeProvider(this);
+        synchronized (mTimeProviderLock) {
+            if (mTimeProvider == null) {
+                mTimeProvider = new TimeProvider(this);
+            }
+            return mTimeProvider;
         }
-        return mTimeProvider;
     }
 
     private class EventHandler extends Handler
@@ -2530,15 +2537,19 @@ public class MediaPlayer implements SubtitleController.Listener
                 return;
 
             case MEDIA_STOPPED:
-                if (mTimeProvider != null) {
-                    mTimeProvider.onStopped();
+                synchronized (mTimeProviderLock) {
+                    if (mTimeProvider != null) {
+                        mTimeProvider.onStopped();
+                    }
                 }
                 break;
 
             case MEDIA_STARTED:
             case MEDIA_PAUSED:
-                if (mTimeProvider != null) {
-                    mTimeProvider.onPaused(msg.what == MEDIA_PAUSED);
+                synchronized (mTimeProviderLock) {
+                    if (mTimeProvider != null) {
+                        mTimeProvider.onPaused(msg.what == MEDIA_PAUSED);
+                    }
                 }
                 break;
 
@@ -2554,8 +2565,10 @@ public class MediaPlayer implements SubtitleController.Listener
               // fall through
 
             case MEDIA_SKIPPED:
-              if (mTimeProvider != null) {
-                  mTimeProvider.onSeekComplete(mMediaPlayer);
+              synchronized (mTimeProviderLock) {
+                  if (mTimeProvider != null) {
+                      mTimeProvider.onSeekComplete(mMediaPlayer);
+                  }
               }
               return;
 
