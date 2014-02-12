@@ -568,8 +568,8 @@ int write_tarfile(const String8& packageName, const String8& domain,
 
     // [ 108 :   8 ] uid -- ignored in Android format; uids are remapped at restore time
     // [ 116 :   8 ] gid -- ignored in Android format
-    snprintf(buf + 108, 8, "0%lo", s.st_uid);
-    snprintf(buf + 116, 8, "0%lo", s.st_gid);
+    snprintf(buf + 108, 8, "0%lo", (unsigned long) s.st_uid);
+    snprintf(buf + 116, 8, "0%lo", (unsigned long) s.st_gid);
 
     // [ 124 :  12 ] file size in bytes
     if (s.st_size > 077777777777LL) {
@@ -681,7 +681,7 @@ int write_tarfile(const String8& packageName, const String8& domain,
     if (!isdir) {
         off64_t toWrite = s.st_size;
         while (toWrite > 0) {
-            size_t toRead = (toWrite < BUFSIZE) ? toWrite : BUFSIZE;
+            size_t toRead = ((size_t) toWrite < BUFSIZE) ? (size_t) toWrite : BUFSIZE;
             ssize_t nRead = read(fd, buf, toRead);
             if (nRead < 0) {
                 err = errno;
@@ -1095,8 +1095,8 @@ backup_helper_test_four()
         if (name != filenames[i] || states[i].modTime_sec != state.modTime_sec
                 || states[i].modTime_nsec != state.modTime_nsec || states[i].mode != state.mode
                 || states[i].size != state.size || states[i].crc32 != states[i].crc32) {
-            fprintf(stderr, "state %zu expected={%d/%d, 0x%08x, %04o, 0x%08x, %3d} '%s'\n"
-                            "          actual={%d/%d, 0x%08x, %04o, 0x%08x, %3zu} '%s'\n", i,
+            fprintf(stderr, "state %zu expected={%d/%d, %04o, 0x%08x, 0x%08x, %3zu} '%s'\n"
+                            "          actual={%d/%d, %04o, 0x%08x, 0x%08x, %3d} '%s'\n", i,
                     states[i].modTime_sec, states[i].modTime_nsec, states[i].mode, states[i].size,
                     states[i].crc32, name.length(), filenames[i].string(),
                     state.modTime_sec, state.modTime_nsec, state.mode, state.size, state.crc32,
@@ -1194,7 +1194,7 @@ int
 test_read_header_and_entity(BackupDataReader& reader, const char* str)
 {
     int err;
-    int bufSize = strlen(str)+1;
+    size_t bufSize = strlen(str)+1;
     char* buf = (char*)malloc(bufSize);
     String8 string;
     int cookie = 0x11111111;
@@ -1229,9 +1229,9 @@ test_read_header_and_entity(BackupDataReader& reader, const char* str)
         err = EINVAL;
         goto finished;
     }
-    if ((int)actualSize != bufSize) {
-        fprintf(stderr, "ReadEntityHeader expected dataSize 0x%08x got 0x%08zx\n", bufSize,
-                actualSize);
+    if (actualSize != bufSize) {
+        fprintf(stderr, "ReadEntityHeader expected dataSize %zu got %zu\n",
+                bufSize, actualSize);
         err = EINVAL;
         goto finished;
     }
