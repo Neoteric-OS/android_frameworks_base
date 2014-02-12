@@ -2032,7 +2032,7 @@ public final class ActiveServices {
             synchronized (sr.stats.getBatteryStats()) {
                 sr.stats.stopLaunchedLocked();
             }
-            if (sr.app != null) {
+            if (sr.app != null && !sr.app.persistent && sr.stopIfKilled) {
                 sr.app.services.remove(sr);
             }
             sr.app = null;
