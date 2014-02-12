@@ -16,6 +16,24 @@
       "revId": "d8fa586099b73cc8b49e51c675cc8807ef65a4a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef65bd2a_54632c24",
+        "filename": "core/jni/android_os_SELinux.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2014-02-12T15:31:18Z",
+      "side": 1,
+      "message": "You can\u0027t.  I tried doing this when I had the macro definition in libselinux and it doesn\u0027t compile - you cannot define multiple macros with the same name and different args apparently.  I didn\u0027t see a way to support such overloading in C.\nAnyway, the corresponding libselinux change with the same change-id as this one removes the macros entirely and renames the API.  They all have to get merged together or not at all.",
+      "parentUuid": "afbae599_8a7c4bcb",
+      "revId": "d8fa586099b73cc8b49e51c675cc8807ef65a4a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
