@@ -28,15 +28,33 @@ interface IPhoneSubInfo {
     String getDeviceId();
 
     /**
+     * Retrieves the unique device ID of a subscription for the device, e.g., IMEI
+     * for GSM phones.
+     */
+    String getDeviceIdUsingSub(int subscription);
+
+
+    /**
      * Retrieves the software version number for the device, e.g., IMEI/SV
      * for GSM phones.
      */
     String getDeviceSvn();
 
     /**
+     * Retrieves the software version number of a subscription for the device, e.g., IMEI/SV
+     * for GSM phones.
+     */
+    String getDeviceSvnUsingSub(int subscription);
+
+    /**
      * Retrieves the unique sbuscriber ID, e.g., IMSI for GSM phones.
      */
     String getSubscriberId();
+
+    /**
+     * Retrieves the unique subscriber ID of a given subscription, e.g., IMSI for GSM phones.
+     */
+    String getSubscriberIdUsingSub(int subscription);
 
     /**
      * Retrieves the Group Identifier Level1 for GSM phones.
@@ -49,9 +67,20 @@ interface IPhoneSubInfo {
     String getIccSerialNumber();
 
     /**
+     * Retrieves the serial number of a given subscription.
+     */
+    String getIccSerialNumberUsingSub(int subscription);
+
+    /**
      * Retrieves the phone number string for line 1.
      */
     String getLine1Number();
+
+    /**
+     * Retrieves the phone number string for line 1 of a subcription.
+     */
+    String getLine1NumberUsingSub(int subscription);
+
 
     /**
      * Retrieves the alpha identifier for line 1.
@@ -59,9 +88,20 @@ interface IPhoneSubInfo {
     String getLine1AlphaTag();
 
     /**
+     * Retrieves the alpha identifier for line 1 of a subscription.
+     */
+    String getLine1AlphaTagUsingSub(int subscription);
+
+
+    /**
      * Retrieves MSISDN Number.
      */
     String getMsisdn();
+
+    /**
+     * Retrieves the Msisdn of a subscription.
+     */
+    String getMsisdnUsingSub(int subscription);
 
     /**
      * Retrieves the voice mail number.
@@ -69,14 +109,30 @@ interface IPhoneSubInfo {
     String getVoiceMailNumber();
 
     /**
+     * Retrieves the voice mail number of a given subscription.
+     */
+    String getVoiceMailNumberUsingSub(int subscription);
+
+    /**
      * Retrieves the complete voice mail number.
      */
     String getCompleteVoiceMailNumber();
 
     /**
+     * Retrieves the complete voice mail number for particular subscription
+     */
+    String getCompleteVoiceMailNumberUsingSub(int subscription);
+
+    /**
      * Retrieves the alpha identifier associated with the voice mail number.
      */
     String getVoiceMailAlphaTag();
+
+    /**
+     * Retrieves the alpha identifier associated with the voice mail number
+     * of a subscription.
+     */
+    String getVoiceMailAlphaTagUsingSub(int subscription);
 
     /**
      * Returns the IMS private user identity (IMPI) that was loaded from the ISIM.
