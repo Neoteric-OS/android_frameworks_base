@@ -24,6 +24,8 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.telephony.Rlog;
+import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
 
 import com.android.internal.telephony.IPhoneSubInfo;
 import com.android.internal.telephony.ITelephony;
@@ -62,6 +64,21 @@ public class TelephonyManager {
     private static ITelephonyRegistry sRegistry;
     private final Context mContext;
 
+    private static String multiSimConfig =
+            SystemProperties.get(TelephonyProperties.PROPERTY_MULTI_SIM_CONFIG);
+
+    /** Enum indicating multisim variants
+     *  DSDS - Dual SIM Dual Standby
+     *  DSDA - Dual SIM Dual Active
+     *  TSTS - Triple SIM Triple Standby
+     **/
+    public enum MultiSimVariants {
+        DSDS,
+        DSDA,
+        TSTS,
+        UNKNOWN
+    };
+
     /** @hide */
     public TelephonyManager(Context context) {
         Context appContext = context.getApplicationContext();
@@ -90,9 +107,56 @@ public class TelephonyManager {
         return sInstance;
     }
 
+
+    /**
+     * Returns the multi SIM variant
+     * Returns DSDS for Dual SIM Dual Standby
+     * Returns DSDA for Dual SIM Dual Active
+     * Returns TSTS for Triple SIM Triple Standby
+     * Returns UNKNOWN for others
+     */
+    public MultiSimVariants getMultiSimConfiguration() {
+        String mSimConfig =
+            SystemProperties.get(TelephonyProperties.PROPERTY_MULTI_SIM_CONFIG);
+        if (mSimConfig.equals("dsds")) {
+            return MultiSimVariants.DSDS;
+        } else if (mSimConfig.equals("dsda")) {
+            return MultiSimVariants.DSDA;
+        } else if (mSimConfig.equals("tsts")) {
+            return MultiSimVariants.TSTS;
+        } else {
+            return MultiSimVariants.UNKNOWN;
+        }
+    }
+
+
+    /**
+     * Returns the number of phones available.
+     * Returns 1 for Single standby mode (Single SIM functionality)
+     * Returns 2 for Dual standby mode.(Dual SIM functionality)
+     */
+    public int getPhoneCount() {
+        int phoneCount = 1;
+        switch (getMultiSimConfiguration()) {
+            case DSDS:
+            case DSDA:
+                phoneCount = MSimConstants.MAX_PHONE_COUNT_DUAL_SIM;
+                break;
+            case TSTS:
+                phoneCount = MSimConstants.MAX_PHONE_COUNT_TRI_SIM;
+                break;
+        }
+        return phoneCount;
+    }
+
     /** {@hide} */
     public static TelephonyManager from(Context context) {
         return (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+    }
+
+    public boolean isMultiSimEnabled() {
+        return (multiSimConfig.equals("dsds") || multiSimConfig.equals("dsda") ||
+            multiSimConfig.equals("tsts"));
     }
 
     //
@@ -211,6 +275,267 @@ public class TelephonyManager {
      */
     public static final String EXTRA_INCOMING_NUMBER = "incoming_number";
 
+    /**
+     * Broadcast intent action indicating that a precise call state
+     * (cellular) on the device has changed.
+     *
+     * <p>
+     * The {@link #EXTRA_RINGING_CALL_STATE} extra indicates the ringing call state.
+     * The {@link #EXTRA_FOREGROUND_CALL_STATE} extra indicates the foreground call state.
+     * The {@link #EXTRA_BACKGROUND_CALL_STATE} extra indicates the background call state.
+     * The {@link #EXTRA_DISCONNECT_CAUSE} extra indicates the disconnect cause.
+     * The {@link #EXTRA_PRECISE_DISCONNECT_CAUSE} extra indicates the precise disconnect cause.
+     *
+     * <p class="note">
+     * Requires the READ_PRECISE_PHONE_STATE permission.
+     *
+     * @see #EXTRA_RINGING_CALL_STATE
+     * @see #EXTRA_FOREGROUND_CALL_STATE
+     * @see #EXTRA_BACKGROUND_CALL_STATE
+     * @see #EXTRA_DISCONNECT_CAUSE
+     * @see #EXTRA_PRECISE_DISCONNECT_CAUSE
+     *
+     * <p class="note">
+     * Requires the READ_PRECISE_PHONE_STATE permission.
+     *
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_PRECISE_CALL_STATE_CHANGED =
+            "android.intent.action.PRECISE_CALL_STATE";
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_CALL_STATE_CHANGED} broadcast
+     * for an integer containing the state of the current ringing call.
+     *
+     * @see PreciseCallState#PRECISE_CALL_STATE_NOT_VALID
+     * @see PreciseCallState#PRECISE_CALL_STATE_IDLE
+     * @see PreciseCallState#PRECISE_CALL_STATE_ACTIVE
+     * @see PreciseCallState#PRECISE_CALL_STATE_HOLDING
+     * @see PreciseCallState#PRECISE_CALL_STATE_DIALING
+     * @see PreciseCallState#PRECISE_CALL_STATE_ALERTING
+     * @see PreciseCallState#PRECISE_CALL_STATE_INCOMING
+     * @see PreciseCallState#PRECISE_CALL_STATE_WAITING
+     * @see PreciseCallState#PRECISE_CALL_STATE_DISCONNECTED
+     * @see PreciseCallState#PRECISE_CALL_STATE_DISCONNECTING
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     *
+     * @hide
+     */
+    public static final String EXTRA_RINGING_CALL_STATE = "ringing_state";
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_CALL_STATE_CHANGED} broadcast
+     * for an integer containing the state of the current foreground call.
+     *
+     * @see PreciseCallState#PRECISE_CALL_STATE_NOT_VALID
+     * @see PreciseCallState#PRECISE_CALL_STATE_IDLE
+     * @see PreciseCallState#PRECISE_CALL_STATE_ACTIVE
+     * @see PreciseCallState#PRECISE_CALL_STATE_HOLDING
+     * @see PreciseCallState#PRECISE_CALL_STATE_DIALING
+     * @see PreciseCallState#PRECISE_CALL_STATE_ALERTING
+     * @see PreciseCallState#PRECISE_CALL_STATE_INCOMING
+     * @see PreciseCallState#PRECISE_CALL_STATE_WAITING
+     * @see PreciseCallState#PRECISE_CALL_STATE_DISCONNECTED
+     * @see PreciseCallState#PRECISE_CALL_STATE_DISCONNECTING
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     *
+     * @hide
+     */
+    public static final String EXTRA_FOREGROUND_CALL_STATE = "foreground_state";
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_CALL_STATE_CHANGED} broadcast
+     * for an integer containing the state of the current background call.
+     *
+     * @see PreciseCallState#PRECISE_CALL_STATE_NOT_VALID
+     * @see PreciseCallState#PRECISE_CALL_STATE_IDLE
+     * @see PreciseCallState#PRECISE_CALL_STATE_ACTIVE
+     * @see PreciseCallState#PRECISE_CALL_STATE_HOLDING
+     * @see PreciseCallState#PRECISE_CALL_STATE_DIALING
+     * @see PreciseCallState#PRECISE_CALL_STATE_ALERTING
+     * @see PreciseCallState#PRECISE_CALL_STATE_INCOMING
+     * @see PreciseCallState#PRECISE_CALL_STATE_WAITING
+     * @see PreciseCallState#PRECISE_CALL_STATE_DISCONNECTED
+     * @see PreciseCallState#PRECISE_CALL_STATE_DISCONNECTING
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     *
+     * @hide
+     */
+    public static final String EXTRA_BACKGROUND_CALL_STATE = "background_state";
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_CALL_STATE_CHANGED} broadcast
+     * for an integer containing the disconnect cause.
+     *
+     * @see DisconnectCause
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     *
+     * @hide
+     */
+    public static final String EXTRA_DISCONNECT_CAUSE = "disconnect_cause";
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_CALL_STATE_CHANGED} broadcast
+     * for an integer containing the disconnect cause provided by the RIL.
+     *
+     * @see PreciseDisconnectCause
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     *
+     * @hide
+     */
+    public static final String EXTRA_PRECISE_DISCONNECT_CAUSE = "precise_disconnect_cause";
+
+    /**
+     * Broadcast intent action indicating a data connection has changed,
+     * providing precise information about the connection.
+     *
+     * <p>
+     * The {@link #EXTRA_DATA_STATE} extra indicates the connection state.
+     * The {@link #EXTRA_DATA_NETWORK_TYPE} extra indicates the connection network type.
+     * The {@link #EXTRA_DATA_APN_TYPE} extra indicates the APN type.
+     * The {@link #EXTRA_DATA_APN} extra indicates the APN.
+     * The {@link #EXTRA_DATA_CHANGE_REASON} extra indicates the connection change reason.
+     * The {@link #EXTRA_DATA_IFACE_PROPERTIES} extra indicates the connection interface.
+     * The {@link #EXTRA_DATA_FAILURE_CAUSE} extra indicates the connection fail cause.
+     *
+     * <p class="note">
+     * Requires the READ_PRECISE_PHONE_STATE permission.
+     *
+     * @see #EXTRA_DATA_STATE
+     * @see #EXTRA_DATA_NETWORK_TYPE
+     * @see #EXTRA_DATA_APN_TYPE
+     * @see #EXTRA_DATA_APN
+     * @see #EXTRA_DATA_CHANGE_REASON
+     * @see #EXTRA_DATA_IFACE
+     * @see #EXTRA_DATA_FAILURE_CAUSE
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED =
+            "android.intent.action.PRECISE_DATA_CONNECTION_STATE_CHANGED";
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for an integer containing the state of the current data connection.
+     *
+     * @see TelephonyManager#DATA_UNKNOWN
+     * @see TelephonyManager#DATA_DISCONNECTED
+     * @see TelephonyManager#DATA_CONNECTING
+     * @see TelephonyManager#DATA_CONNECTED
+     * @see TelephonyManager#DATA_SUSPENDED
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     *
+     * @hide
+     */
+    public static final String EXTRA_DATA_STATE = PhoneConstants.STATE_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for an integer containing the network type.
+     *
+     * @see TelephonyManager#NETWORK_TYPE_UNKNOWN
+     * @see TelephonyManager#NETWORK_TYPE_GPRS
+     * @see TelephonyManager#NETWORK_TYPE_EDGE
+     * @see TelephonyManager#NETWORK_TYPE_UMTS
+     * @see TelephonyManager#NETWORK_TYPE_CDMA
+     * @see TelephonyManager#NETWORK_TYPE_EVDO_0
+     * @see TelephonyManager#NETWORK_TYPE_EVDO_A
+     * @see TelephonyManager#NETWORK_TYPE_1xRTT
+     * @see TelephonyManager#NETWORK_TYPE_HSDPA
+     * @see TelephonyManager#NETWORK_TYPE_HSUPA
+     * @see TelephonyManager#NETWORK_TYPE_HSPA
+     * @see TelephonyManager#NETWORK_TYPE_IDEN
+     * @see TelephonyManager#NETWORK_TYPE_EVDO_B
+     * @see TelephonyManager#NETWORK_TYPE_LTE
+     * @see TelephonyManager#NETWORK_TYPE_EHRPD
+     * @see TelephonyManager#NETWORK_TYPE_HSPAP
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getIntExtra(String name, int defaultValue)}.
+     *
+     * @hide
+     */
+    public static final String EXTRA_DATA_NETWORK_TYPE = PhoneConstants.DATA_NETWORK_TYPE_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for an String containing the data APN type.
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getStringExtra(String name)}.
+     *
+     * @hide
+     */
+    public static final String EXTRA_DATA_APN_TYPE = PhoneConstants.DATA_APN_TYPE_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for an String containing the data APN.
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getStringExtra(String name)}.
+     *
+     * @hide
+     */
+    public static final String EXTRA_DATA_APN = PhoneConstants.DATA_APN_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for an String representation of the change reason.
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getStringExtra(String name)}.
+     *
+     * @hide
+     */
+    public static final String EXTRA_DATA_CHANGE_REASON = PhoneConstants.STATE_CHANGE_REASON_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for an String representation of the data interface.
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getParcelableExtra(String name)}.
+     *
+     * @hide
+     */
+    public static final String EXTRA_DATA_LINK_PROPERTIES_KEY = PhoneConstants.DATA_LINK_PROPERTIES_KEY;
+
+    /**
+     * The lookup key used with the {@link #ACTION_PRECISE_DATA_CONNECTION_STATE_CHANGED} broadcast
+     * for the data connection fail cause.
+     *
+     * <p class="note">
+     * Retrieve with
+     * {@link android.content.Intent#getStringExtra(String name)}.
+     *
+     * @hide
+     */
+    public static final String EXTRA_DATA_FAILURE_CAUSE = PhoneConstants.DATA_FAILURE_CAUSE_KEY;
 
     //
     //
@@ -227,8 +552,12 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public String getDeviceSoftwareVersion() {
+        return getDeviceSoftwareVersion(getDefaultSubscription());
+    }
+
+    public String getDeviceSoftwareVersion(int subscription) {
         try {
-            return getSubscriberInfo().getDeviceSvn();
+            return getSubscriberInfo().getDeviceSvnUsingSub(subscription);
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
@@ -244,8 +573,13 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public String getDeviceId() {
+        return getDeviceId(getDefaultSubscription());
+    }
+
+    public String getDeviceId(int subscription) {
+
         try {
-            return getSubscriberInfo().getDeviceId();
+            return getSubscriberInfo().getDeviceIdUsingSub(subscription);
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
@@ -359,22 +693,27 @@ public class TelephonyManager {
      * {@hide}
      */
     public int getCurrentPhoneType() {
+        return getCurrentPhoneType(getDefaultSubscription());
+    }
+
+    public int getCurrentPhoneType(int subscription) {
+
         try{
             ITelephony telephony = getITelephony();
             if (telephony != null) {
-                return telephony.getActivePhoneType();
+                return telephony.getActivePhoneTypeUsingSub(subscription);
             } else {
                 // This can happen when the ITelephony interface is not up yet.
-                return getPhoneTypeFromProperty();
+                return getPhoneTypeFromProperty(subscription);
             }
         } catch (RemoteException ex) {
             // This shouldn't happen in the normal case, as a backup we
             // read from the system property.
-            return getPhoneTypeFromProperty();
+            return getPhoneTypeFromProperty(subscription);
         } catch (NullPointerException ex) {
             // This shouldn't happen in the normal case, as a backup we
             // read from the system property.
-            return getPhoneTypeFromProperty();
+            return getPhoneTypeFromProperty(subscription);
         }
     }
 
@@ -395,20 +734,33 @@ public class TelephonyManager {
     }
 
     private int getPhoneTypeFromProperty() {
-        int type =
-            SystemProperties.getInt(TelephonyProperties.CURRENT_ACTIVE_PHONE,
-                    getPhoneTypeFromNetworkType());
-        return type;
+        return getPhoneTypeFromProperty(getDefaultSubscription());
+    }
+
+    private int getPhoneTypeFromProperty(int subscription) {
+        String type =
+            getTelephonyProperty
+                (TelephonyProperties.CURRENT_ACTIVE_PHONE, subscription, null);
+        if (type != null) {
+            return (Integer.parseInt(type));
+        } else {
+            return getPhoneTypeFromNetworkType(subscription);
+        }
     }
 
     private int getPhoneTypeFromNetworkType() {
+        return getPhoneTypeFromNetworkType(getDefaultSubscription());
+    }
+
+    private int getPhoneTypeFromNetworkType(int subscription) {
         // When the system property CURRENT_ACTIVE_PHONE, has not been set,
         // use the system property for default network type.
         // This is a fail safe, and can only happen at first boot.
-        int mode = SystemProperties.getInt("ro.telephony.default_network", -1);
-        if (mode == -1)
-            return PHONE_TYPE_NONE;
-        return getPhoneType(mode);
+        String mode = getTelephonyProperty("ro.telephony.default_network", subscription, null);
+        if (mode != null) {
+            return TelephonyManager.getPhoneType(Integer.parseInt(mode));
+        }
+        return TelephonyManager.PHONE_TYPE_NONE;
     }
 
     /**
@@ -543,7 +895,13 @@ public class TelephonyManager {
      * on a CDMA network).
      */
     public String getNetworkOperatorName() {
-        return SystemProperties.get(TelephonyProperties.PROPERTY_OPERATOR_ALPHA);
+        return getNetworkOperatorName(getDefaultSubscription());
+    }
+
+    public String getNetworkOperatorName(int subscription) {
+
+        return getTelephonyProperty(TelephonyProperties.PROPERTY_OPERATOR_ALPHA,
+                subscription, "");
     }
 
     /**
@@ -554,8 +912,14 @@ public class TelephonyManager {
      * on a CDMA network).
      */
     public String getNetworkOperator() {
-        return SystemProperties.get(TelephonyProperties.PROPERTY_OPERATOR_NUMERIC);
+        return getNetworkOperator(getDefaultSubscription());
     }
+
+   public String getNetworkOperator(int subscription) {
+
+        return getTelephonyProperty(TelephonyProperties.PROPERTY_OPERATOR_NUMERIC,
+                subscription, "");
+     }
 
     /**
      * Returns true if the device is considered roaming on the current
@@ -564,7 +928,12 @@ public class TelephonyManager {
      * Availability: Only when user registered to a network.
      */
     public boolean isNetworkRoaming() {
-        return "true".equals(SystemProperties.get(TelephonyProperties.PROPERTY_OPERATOR_ISROAMING));
+        return isNetworkRoaming(getDefaultSubscription());
+    }
+
+    public boolean isNetworkRoaming(int subscription) {
+        return "true".equals(getTelephonyProperty(TelephonyProperties.PROPERTY_OPERATOR_ISROAMING,
+                subscription, null));
     }
 
     /**
@@ -576,7 +945,12 @@ public class TelephonyManager {
      * on a CDMA network).
      */
     public String getNetworkCountryIso() {
-        return SystemProperties.get(TelephonyProperties.PROPERTY_OPERATOR_ISO_COUNTRY);
+        return getTelephonyProperty(getDefaultSubscription());
+    }
+
+    public String getNetworkCountryIso(int subscription) {
+        return getTelephonyProperty(TelephonyProperties.PROPERTY_OPERATOR_ISO_COUNTRY,
+                subscription, "");
     }
 
     /** Network type is unknown */
@@ -644,10 +1018,14 @@ public class TelephonyManager {
      * @hide
      */
     public int getDataNetworkType() {
+        return getDataNetworkType(getDefaultSubscription());
+    }
+
+    public int getDataNetworkType(int subscription) {
         try{
             ITelephony telephony = getITelephony();
             if (telephony != null) {
-                return telephony.getDataNetworkType();
+                return telephony.getDataNetworkTypeUsingSub(subscription);
             } else {
                 // This can happen when the ITelephony interface is not up yet.
                 return NETWORK_TYPE_UNKNOWN;
@@ -667,10 +1045,14 @@ public class TelephonyManager {
      * @hide
      */
     public int getVoiceNetworkType() {
+        return getVoiceNetworkType(getDefaultSubscription());
+    }
+
+    public int getVoiceNetworkType(int subscription) {
         try{
             ITelephony telephony = getITelephony();
             if (telephony != null) {
-                return telephony.getVoiceNetworkType();
+                return telephony.getVoiceNetworkTypeUsingSub(subscription);
             } else {
                 // This can happen when the ITelephony interface is not up yet.
                 return NETWORK_TYPE_UNKNOWN;
@@ -799,8 +1181,13 @@ public class TelephonyManager {
      * @return true if a ICC card is present
      */
     public boolean hasIccCard() {
+        return hasIccCard(getDefaultSubscription());
+    }
+
+    public boolean hasIccCard(int subscription) {
+
         try {
-            return getITelephony().hasIccCard();
+            return getITelephony().hasIccCardUsingSub(subscription);
         } catch (RemoteException ex) {
             // Assume no ICC card if remote exception which shouldn't happen
             return false;
@@ -822,7 +1209,12 @@ public class TelephonyManager {
      * @see #SIM_STATE_READY
      */
     public int getSimState() {
-        String prop = SystemProperties.get(TelephonyProperties.PROPERTY_SIM_STATE);
+        return getSimState(getDefaultSubscription());
+    }
+
+    public int getSimState(int slotId) {
+        String prop =
+            getTelephonyProperty(TelephonyProperties.PROPERTY_SIM_STATE, slotId, "");
         if ("ABSENT".equals(prop)) {
             return SIM_STATE_ABSENT;
         }
@@ -852,7 +1244,12 @@ public class TelephonyManager {
      * @see #getSimState
      */
     public String getSimOperator() {
-        return SystemProperties.get(TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC);
+        return getSimOperator(getDefaultSubscription());
+    }
+
+    public String getSimOperator(int subscription) {
+        return getTelephonyProperty(TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC,
+                subscription, "");
     }
 
     /**
@@ -863,14 +1260,24 @@ public class TelephonyManager {
      * @see #getSimState
      */
     public String getSimOperatorName() {
-        return SystemProperties.get(TelephonyProperties.PROPERTY_ICC_OPERATOR_ALPHA);
+        return getSimOperatorName(getDefaultSubscription());
+    }
+
+    public String getSimOperatorName(int subscription) {
+        return getTelephonyProperty(TelephonyProperties.PROPERTY_ICC_OPERATOR_ALPHA,
+                subscription, "");
     }
 
     /**
      * Returns the ISO country code equivalent for the SIM provider's country code.
      */
     public String getSimCountryIso() {
-        return SystemProperties.get(TelephonyProperties.PROPERTY_ICC_OPERATOR_ISO_COUNTRY);
+        return getSimCountryIso(getDefaultSubscription());
+    }
+
+    public String getSimCountryIso(int subscription) {
+        return getTelephonyProperty(TelephonyProperties.PROPERTY_ICC_OPERATOR_ISO_COUNTRY,
+                subscription, "");
     }
 
     /**
@@ -881,8 +1288,12 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public String getSimSerialNumber() {
+         return getSimSerialNumber(getDefaultSubscription());
+    }
+
+    public String getSimSerialNumber(int subscription) {
         try {
-            return getSubscriberInfo().getIccSerialNumber();
+            return getSubscriberInfo().getIccSerialNumberUsingSub(subscription);
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
@@ -902,8 +1313,12 @@ public class TelephonyManager {
      * @hide
      */
     public int getLteOnCdmaMode() {
+        return getLteOnCdmaMode(getDefaultSubscription());
+    }
+
+    public int getLteOnCdmaMode(int subscription) {
         try {
-            return getITelephony().getLteOnCdmaMode();
+            return getITelephony().getLteOnCdmaModeUsingSub(subscription);
         } catch (RemoteException ex) {
             // Assume no ICC card if remote exception which shouldn't happen
             return PhoneConstants.LTE_ON_CDMA_UNKNOWN;
@@ -927,8 +1342,12 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public String getSubscriberId() {
+        return getSubscriberId(getDefaultSubscription());
+    }
+
+    public String getSubscriberId(int subscription) {
         try {
-            return getSubscriberInfo().getSubscriberId();
+            return getSubscriberInfo().getSubscriberIdUsingSub(subscription);
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
@@ -962,9 +1381,13 @@ public class TelephonyManager {
      * Requires Permission:
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
-    public String getLine1Number() {
+    public String getLine1Number(getDefaultSubscription()) {
+        return getLine1Number();
+    }
+
+    public String getLine1Number(int subscription) {
         try {
-            return getSubscriberInfo().getLine1Number();
+            return getSubscriberInfo().getLine1NumberUsingSub(subscription);
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
@@ -983,8 +1406,12 @@ public class TelephonyManager {
      * nobody seems to call this.
      */
     public String getLine1AlphaTag() {
+        return getLine1AlphaTag(getDefaultSubscription());
+    }
+
+    public String getLine1AlphaTag(int subscription) {
         try {
-            return getSubscriberInfo().getLine1AlphaTag();
+            return getSubscriberInfo().getLine1AlphaTagUsingSub(subscription);
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
@@ -1003,8 +1430,12 @@ public class TelephonyManager {
      * @hide
      */
     public String getMsisdn() {
+        return getMsisdn(getDefaultSubscription());
+    }
+
+    public String getMsisdn(int subscription) {
         try {
-            return getSubscriberInfo().getMsisdn();
+            return getSubscriberInfo().getMsisdnUsingSub(subscription);
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
@@ -1020,8 +1451,12 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public String getVoiceMailNumber() {
+        return getVoiceMailNumber(getDefaultSubscription());
+    }
+
+    public String getVoiceMailNumber(int subscription) {
         try {
-            return getSubscriberInfo().getVoiceMailNumber();
+            return getSubscriberInfo().getVoiceMailNumberUsingSub(subscription);
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
@@ -1039,8 +1474,12 @@ public class TelephonyManager {
      * @hide
      */
     public String getCompleteVoiceMailNumber() {
+        return getCompleteVoiceMailNumber(getDefaultSubscription());
+    }
+
+    public String getCompleteVoiceMailNumber(int subscription) {
         try {
-            return getSubscriberInfo().getCompleteVoiceMailNumber();
+            return getSubscriberInfo().getCompleteVoiceMailNumberUsingSub(subscription);
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
@@ -1057,8 +1496,12 @@ public class TelephonyManager {
      * @hide
      */
     public int getVoiceMessageCount() {
+        getVoiceMessageCount(getDefaultSubscription());
+    }
+
+    public int getVoiceMessageCount(int subscription) {
         try {
-            return getITelephony().getVoiceMessageCount();
+            return getITelephony().getVoiceMessageCountUsingSub(subscription);
         } catch (RemoteException ex) {
             return 0;
         } catch (NullPointerException ex) {
@@ -1075,8 +1518,12 @@ public class TelephonyManager {
      *   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
      */
     public String getVoiceMailAlphaTag() {
+        return getVoiceMailAlphaTag(getDefaultSubscription());
+    }
+
+    public String getVoiceMailAlphaTag(int subscription) {
         try {
-            return getSubscriberInfo().getVoiceMailAlphaTag();
+            return getSubscriberInfo().getVoiceMailAlphaTagUsingSub(subscription);
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
@@ -1084,6 +1531,7 @@ public class TelephonyManager {
             return null;
         }
     }
+
 
     /**
      * Returns the IMS private user identity (IMPI) that was loaded from the ISIM.
@@ -1139,7 +1587,6 @@ public class TelephonyManager {
         return IPhoneSubInfo.Stub.asInterface(ServiceManager.getService("iphonesubinfo"));
     }
 
-
     /** Device call state: No activity. */
     public static final int CALL_STATE_IDLE = 0;
     /** Device call state: Ringing. A new call arrived and is
@@ -1155,8 +1602,12 @@ public class TelephonyManager {
      * Returns a constant indicating the call state (cellular) on the device.
      */
     public int getCallState() {
+        return getCallState(getDefaultSubscription());
+    }
+
+    public int getCallState(int subscription) {
         try {
-            return getITelephony().getCallState();
+            return getITelephony().getCallStateUsingSub(subscription);
         } catch (RemoteException ex) {
             // the phone process is restarting.
             return CALL_STATE_IDLE;
@@ -1273,8 +1724,8 @@ public class TelephonyManager {
     public void listen(PhoneStateListener listener, int events) {
         String pkgForDebug = mContext != null ? mContext.getPackageName() : "<unknown>";
         try {
-            Boolean notifyNow = true;
-            sRegistry.listen(pkgForDebug, listener.callback, events, notifyNow);
+            Boolean notifyNow = (getITelephony() != null);
+            sRegistry.listenUsingSub(listener.mSubscription, pkgForDebug, listener.callback, events, notifyNow);
         } catch (RemoteException ex) {
             // system process dead
         } catch (NullPointerException ex) {
@@ -1288,8 +1739,12 @@ public class TelephonyManager {
      * @hide
      */
     public int getCdmaEriIconIndex() {
+        return getCdmaEriIconIndex(getDefaultSubscription());
+    }
+
+    public int getCdmaEriIconIndex(int subscription) {
         try {
-            return getITelephony().getCdmaEriIconIndex();
+            return getITelephony().getCdmaEriIconIndexUsingSub(subscription);
         } catch (RemoteException ex) {
             // the phone process is restarting.
             return -1;
@@ -1306,8 +1761,12 @@ public class TelephonyManager {
      * @hide
      */
     public int getCdmaEriIconMode() {
+        return getCdmaEriIconMode(getDefaultSubscription());
+    }
+
+    public int getCdmaEriIconMode(int subscription) {
         try {
-            return getITelephony().getCdmaEriIconMode();
+            return getITelephony().getCdmaEriIconModeUsingSub(subscription);
         } catch (RemoteException ex) {
             // the phone process is restarting.
             return -1;
@@ -1322,8 +1781,12 @@ public class TelephonyManager {
      * @hide
      */
     public String getCdmaEriText() {
+        return getCdmaEriText(getDefaultSubscription());
+    }
+
+    public String getCdmaEriText(int subscription) {
         try {
-            return getITelephony().getCdmaEriText();
+            return getITelephony().getCdmaEriTextUsingSub(subscription);
         } catch (RemoteException ex) {
             // the phone process is restarting.
             return null;
@@ -1439,4 +1902,191 @@ public class TelephonyManager {
         return mContext.getResources().getString(
                 com.android.internal.R.string.config_mms_user_agent_profile_url);
     }
+
+    /**
+     * Returns Default subscription.
+     * Returns default value 0, if default subscription is not available
+     */
+    public static int getDefaultSubscription() {
+        try {
+            return getITelephony().getDefaultSubscription();
+        } catch (RemoteException ex) {
+            return MSimConstants.DEFAULT_SUBSCRIPTION;
+        } catch (NullPointerException ex) {
+            return MSimConstants.DEFAULT_SUBSCRIPTION;
+        }
+    }
+
+    /**
+     * Sets the telephony property with the value specified.
+     *
+     * @hide
+     */
+    public static void setTelephonyProperty(String property, int index, String value) {
+        String propVal = "";
+        String p[] = null;
+        String prop = SystemProperties.get(property);
+
+        if (prop != null) {
+            p = prop.split(",");
+        }
+
+        if (index < 0) return;
+
+        for (int i = 0; i < index; i++) {
+            String str = "";
+            if ((p != null) && (i < p.length)) {
+                str = p[i];
+            }
+            propVal = propVal + str + ",";
+        }
+
+        propVal = propVal + value;
+        if (p != null) {
+            for (int i = index+1; i < p.length; i++) {
+                propVal = propVal + "," + p[i];
+            }
+        }
+        SystemProperties.set(property, propVal);
+    }
+
+    /**
+     * Returns the designated data subscription.
+     */
+    public int getPreferredDataSubscription() {
+        try {
+            return getITelephony().getPreferredDataSubscription();
+        } catch (RemoteException ex) {
+            return MSimConstants.DEFAULT_SUBSCRIPTION;
+        } catch (NullPointerException ex) {
+            return MSimConstants.DEFAULT_SUBSCRIPTION;
+        }
+    }
+
+    /**
+     * Sets the designated data subscription.
+     */
+    public boolean setPreferredDataSubscription(int subscription) {
+        try {
+            return getITelephony().setPreferredDataSubscription(subscription);
+        } catch (RemoteException ex) {
+            return false;
+        } catch (NullPointerException ex) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns the preferred voice subscription.
+     */
+    public int getPreferredVoiceSubscription() {
+        try {
+            return getITelephony().getPreferredVoiceSubscription();
+        } catch (RemoteException ex) {
+            return MSimConstants.DEFAULT_SUBSCRIPTION;
+        } catch (NullPointerException ex) {
+            return MSimConstants.DEFAULT_SUBSCRIPTION;
+        }
+    }
+
+    /**
+     * Convenience function for retrieving a value from the secure settings
+     * value list as an integer.  Note that internally setting values are
+     * always stored as strings; this function converts the string to an
+     * integer for you.
+     * <p>
+     * This version does not take a default value.  If the setting has not
+     * been set, or the string value is not a number,
+     * it throws {@link SettingNotFoundException}.
+     *
+     * @param cr The ContentResolver to access.
+     * @param name The name of the setting to retrieve.
+     * @param index The index of the list
+     *
+     * @throws SettingNotFoundException Thrown if a setting by the given
+     * name can't be found or the setting value is not an integer.
+     *
+     * @return The value at the given index of settings.
+     * @hide
+     */
+    public static int getIntAtIndex(android.content.ContentResolver cr,
+            String name, int index)
+            throws android.provider.Settings.SettingNotFoundException {
+        String v = android.provider.Settings.Global.getString(cr, name);
+        if (v != null) {
+            String valArray[] = v.split(",");
+            if ((index >= 0) && (index < valArray.length) && (valArray[index] != null)) {
+                try {
+                    return Integer.parseInt(valArray[index]);
+                } catch (NumberFormatException e) {
+                    //Log.e(TAG, "Exception while parsing Integer: ", e);
+                }
+            }
+        }
+        throw new android.provider.Settings.SettingNotFoundException(name);
+    }
+
+    /**
+     * Convenience function for updating settings value as coma separated
+     * integer values. This will either create a new entry in the table if the
+     * given name does not exist, or modify the value of the existing row
+     * with that name.  Note that internally setting values are always
+     * stored as strings, so this function converts the given value to a
+     * string before storing it.
+     *
+     * @param cr The ContentResolver to access.
+     * @param name The name of the setting to modify.
+     * @param index The index of the list
+     * @param value The new value for the setting to be added to the list.
+     * @return true if the value was set, false on database errors
+     * @hide
+     */
+    public static boolean putIntAtIndex(android.content.ContentResolver cr,
+            String name, int index, int value) {
+        String data = "";
+        String valArray[] = null;
+        String v = android.provider.Settings.Global.getString(cr, name);
+
+        if (v != null) {
+            valArray = v.split(",");
+        }
+
+        // Copy the elements from valArray till index
+        for (int i = 0; i < index; i++) {
+            String str = "";
+            if ((valArray != null) && (i < valArray.length)) {
+                str = valArray[i];
+            }
+            data = data + str + ",";
+        }
+
+        data = data + value;
+
+        // Copy the remaining elements from valArray if any.
+        if (valArray != null) {
+            for (int i = index+1; i < valArray.length; i++) {
+                data = data + "," + valArray[i];
+            }
+        }
+        return android.provider.Settings.Global.putString(cr, name, data);
+    }
+
+    /**
+     * Gets the telephony property.
+     *
+     * @hide
+     */
+    public static String getTelephonyProperty(String property, int index, String defaultVal) {
+        String propVal = null;
+        String prop = SystemProperties.get(property);
+         if ((prop != null) && (prop.length() > 0)) {
+            String values[] = prop.split(",");
+            if ((index >= 0) && (index < values.length) && (values[index] != null)) {
+                propVal = values[index];
+            }
+        }
+        return propVal == null ? defaultVal : propVal;
+    }
+
 }
+
