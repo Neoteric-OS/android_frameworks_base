@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf10f997_8c112be2",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1004552
+      },
+      "writtenOn": "2014-02-13T02:35:24Z",
+      "side": 1,
+      "message": "when sub changes, dont we need to update mDefaultSub?",
+      "revId": "aee0984b79f2d1808a810ab6b081f4900018b246",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef13fd9e_4d0a917c",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1004552
+      },
+      "writtenOn": "2014-02-13T02:35:24Z",
+      "side": 1,
+      "message": "why two times sub key is passed?",
+      "revId": "aee0984b79f2d1808a810ab6b081f4900018b246",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
