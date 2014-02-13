@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef13fd9e_9e778da8",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1004552
+      },
+      "writtenOn": "2014-02-13T18:31:12Z",
+      "side": 1,
+      "message": "May be we need to add notifyDataActivityUsingSub",
+      "revId": "d0050424e41667df22510c308a7ab157690badc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
