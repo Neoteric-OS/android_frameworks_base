@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fdcd12e_c3968ac0",
+        "filename": "packages/Keyguard/src/com/android/keyguard/KeyguardStatusView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1016558
+      },
+      "writtenOn": "2014-02-14T01:35:41Z",
+      "side": 1,
+      "message": "s/keygard/keyguard/g",
+      "range": {
+        "startLine": 44,
+        "startChar": 25,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "f343cac27a93d95b27df7f7c8eba72970c5ddc22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
