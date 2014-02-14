@@ -70,6 +70,30 @@
       "revId": "8ac949242532658f2b16db8c95eaecbe5bdd2d05",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efc13d53_178436fa",
+        "filename": "packages/Keyguard/src/com/android/keyguard/KeyguardStatusView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1021243
+      },
+      "writtenOn": "2014-02-14T02:29:37Z",
+      "side": 1,
+      "message": "Thank, add in patch2.",
+      "parentUuid": "afb4a5de_8002ba22",
+      "range": {
+        "startLine": 76,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 34
+      },
+      "revId": "8ac949242532658f2b16db8c95eaecbe5bdd2d05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
