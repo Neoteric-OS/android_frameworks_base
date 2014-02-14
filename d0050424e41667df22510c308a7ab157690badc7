@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "afcbc564_9d8e9417",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-02-14T01:52:12Z",
+      "side": 1,
+      "message": "why protected, I assume this isn\u0027t a base class anymore?",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 13
+      },
+      "revId": "d0050424e41667df22510c308a7ab157690badc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "afcbc564_dd773c60",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-02-14T01:52:12Z",
+      "side": 1,
+      "message": "I don\u0027t like this I think we\u0027ll need something more general in the final solution, but maybe good enough for now.",
+      "range": {
+        "startLine": 120,
+        "startChar": 28,
+        "endLine": 120,
+        "endChar": 52
+      },
+      "revId": "d0050424e41667df22510c308a7ab157690badc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef13fd9e_9e778da8",
         "filename": "telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl",
         "patchSetId": 4
