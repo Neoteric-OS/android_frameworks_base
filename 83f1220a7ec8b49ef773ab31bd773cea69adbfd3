@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af81054e_78f37955",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-02-18T19:14:27Z",
+      "side": 1,
+      "message": "infinite",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 24
+      },
+      "revId": "83f1220a7ec8b49ef773ab31bd773cea69adbfd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f860164_177d5cc5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-02-18T19:14:27Z",
+      "side": 1,
+      "message": "bug: https:/....",
+      "revId": "83f1220a7ec8b49ef773ab31bd773cea69adbfd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f860164_377ae0ce",
+        "filename": "core/java/android/util/JsonReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-02-18T19:14:27Z",
+      "side": 1,
+      "message": "Remove whitespaces.",
+      "revId": "83f1220a7ec8b49ef773ab31bd773cea69adbfd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
