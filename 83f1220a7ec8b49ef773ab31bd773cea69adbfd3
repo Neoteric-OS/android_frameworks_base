@@ -56,6 +56,24 @@
       "revId": "83f1220a7ec8b49ef773ab31bd773cea69adbfd3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f646d9a_4e79070b",
+        "filename": "core/java/android/util/JsonReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-02-18T19:19:54Z",
+      "side": 1,
+      "message": "sorry about it. I change the editor and forgot to configure the setting.",
+      "parentUuid": "8f860164_377ae0ce",
+      "revId": "83f1220a7ec8b49ef773ab31bd773cea69adbfd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
