@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cff9d9ff_84c7ccd8",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1023068
+      },
+      "writtenOn": "2014-02-19T20:19:23Z",
+      "side": 1,
+      "message": "Since this is not sub specific, I don\u0027t think there needs to be any change here.",
+      "range": {
+        "startLine": 558,
+        "startChar": 15,
+        "endLine": 558,
+        "endChar": 39
+      },
+      "revId": "0e6c91a255bcea41a0ea87346161b0c02f0d2fec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "effcddee_eb365dfd",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1023068
+      },
+      "writtenOn": "2014-02-19T20:19:23Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this. Please remove it.",
+      "range": {
+        "startLine": 562,
+        "startChar": 18,
+        "endLine": 562,
+        "endChar": 42
+      },
+      "revId": "0e6c91a255bcea41a0ea87346161b0c02f0d2fec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cff9d9ff_e494d0bb",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1023068
+      },
+      "writtenOn": "2014-02-19T20:19:23Z",
+      "side": 1,
+      "message": "The device ID is not sub specific. So having a getDeviceIdUsingSub might not be appropriate. \nHowever a device might have multiple IMEIs. \nNeed a way to address that.",
+      "revId": "0e6c91a255bcea41a0ea87346161b0c02f0d2fec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ff0510e_6670c41e",
+        "filename": "telephony/java/com/android/internal/telephony/MSimConstants.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1023068
+      },
+      "writtenOn": "2014-02-19T20:19:23Z",
+      "side": 1,
+      "message": "Should these be moved to PhoneConstants?",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 26
+      },
+      "revId": "0e6c91a255bcea41a0ea87346161b0c02f0d2fec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
