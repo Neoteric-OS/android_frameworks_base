@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef293d20_11a47b9c",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-02-19T02:09:59Z",
+      "side": 1,
+      "message": "this notifyCallState may not be required , pls check.",
+      "revId": "c0eaf1f1788e284fdcc4033bf3295e7379346c0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef293d20_71612f92",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-02-19T02:09:59Z",
+      "side": 1,
+      "message": "do we need this function, subscription not used anywhere.",
+      "revId": "c0eaf1f1788e284fdcc4033bf3295e7379346c0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef293d20_f1d21ff1",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-02-19T02:09:59Z",
+      "side": 1,
+      "message": "why change is seen here.",
+      "revId": "c0eaf1f1788e284fdcc4033bf3295e7379346c0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
