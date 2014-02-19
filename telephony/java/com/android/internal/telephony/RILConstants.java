@@ -57,6 +57,7 @@ public interface RILConstants {
                                                  retries needed */
     int MISSING_RESOURCE = 16;                /* no logical channel available */
     int NO_SUCH_ELEMENT = 17;                 /* application not found on SIM */
+    int SUBSCRIPTION_NOT_SUPPORTED = 26;      /* Subscription not supported */
 
     /* NETWORK_MODE_* See ril.h RIL_REQUEST_SET_PREFERRED_NETWORK_TYPE */
     int NETWORK_MODE_WCDMA_PREF     = 0; /* GSM/WCDMA (WCDMA preferred) */
@@ -271,6 +272,9 @@ cat include/telephony/ril.h | \
     int RIL_REQUEST_SIM_OPEN_CHANNEL = 115;
     int RIL_REQUEST_SIM_CLOSE_CHANNEL = 116;
     int RIL_REQUEST_SIM_TRANSMIT_APDU_CHANNEL = 117;
+    int RIL_REQUEST_SET_UICC_SUBSCRIPTION = 118;
+    int RIL_REQUEST_SET_DATA_SUBSCRIPTION = 119;
+
     int RIL_UNSOL_RESPONSE_BASE = 1000;
     int RIL_UNSOL_RESPONSE_RADIO_STATE_CHANGED = 1000;
     int RIL_UNSOL_RESPONSE_CALL_STATE_CHANGED = 1001;
@@ -310,4 +314,5 @@ cat include/telephony/ril.h | \
     int RIL_UNSOL_VOICE_RADIO_TECH_CHANGED = 1035;
     int RIL_UNSOL_CELL_INFO_LIST = 1036;
     int RIL_UNSOL_RESPONSE_IMS_NETWORK_STATE_CHANGED = 1037;
+    int RIL_UNSOL_UICC_SUBSCRIPTION_STATUS_CHANGED = 1040;
 }
