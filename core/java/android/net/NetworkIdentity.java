@@ -148,13 +148,12 @@ public class NetworkIdentity {
         boolean roaming = false;
 
         if (isNetworkTypeMobile(type)) {
-            final TelephonyManager telephony = (TelephonyManager) context.getSystemService(
-                    Context.TELEPHONY_SERVICE);
-            roaming = telephony.isNetworkRoaming();
+            roaming = isDdsRoaming();
             if (state.subscriberId != null) {
                 subscriberId = state.subscriberId;
             } else {
-                subscriberId = telephony.getSubscriberId();
+                //used for dual sim data traffic statistics
+                subscriberId = getDdsSubscriberId();
             }
 
         } else if (type == TYPE_WIFI) {
@@ -169,5 +168,36 @@ public class NetworkIdentity {
         }
 
         return new NetworkIdentity(type, subType, subscriberId, networkId, roaming);
+    }
+
+    private static boolean isDdsRoaming() {
+        TelephonyManager mtm = TelephonyManager.getDefault();
+        TelephonyManager tm = TelephonyManager.getDefault();
+        if (mtm.isMultiSimEnabled()) {
+            return mtm.isNetworkRoaming(mtm.getPreferredDataSubscription());
+        } else {
+            return tm.isNetworkRoaming();
+        }
+    }
+
+    public static String getDdsSubscriberId() {
+        TelephonyManager mtm = TelephonyManager.getDefault();
+        TelephonyManager tm = TelephonyManager.getDefault();
+        if (mtm.isMultiSimEnabled()) {
+            return mtm.getSubscriberId(mtm.getPreferredDataSubscription());
+        } else {
+            return tm.getSubscriberId();
+        }
+    }
+
+    public static boolean isDdsReady() {
+        TelephonyManager mtm = TelephonyManager.getDefault();
+        TelephonyManager tm = TelephonyManager.getDefault();
+        if (mtm.isMultiSimEnabled()) {
+            return mtm.getSimState(mtm.getPreferredDataSubscription())
+                    == TelephonyManager.SIM_STATE_READY;
+        } else {
+            return tm.getSimState() == TelephonyManager.SIM_STATE_READY;
+        }
     }
 }
