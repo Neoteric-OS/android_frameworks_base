@@ -556,7 +556,11 @@ public class MobileDataStateTracker extends BaseNetworkStateTracker {
             }
 
             try {
-                return mPhoneService.setRadio(turnOn);
+                    boolean result = true;
+                    for (int i = 0; i < TelephonyManager.getDefault().getPhoneCount(); i++) {
+                        result = result && mPhoneService.setRadioUsingSub(i, turnOn);
+                    }
+                    return result;
             } catch (RemoteException e) {
                 if (retry == 0) getPhoneService(true);
             }

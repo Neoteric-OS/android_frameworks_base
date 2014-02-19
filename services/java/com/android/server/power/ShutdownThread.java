@@ -42,6 +42,7 @@ import android.os.Vibrator;
 import android.os.SystemVibrator;
 import android.os.storage.IMountService;
 import android.os.storage.IMountShutdownObserver;
+import android.telephony.TelephonyManager;
 
 import com.android.internal.telephony.ITelephony;
 
@@ -415,10 +416,15 @@ public final class ShutdownThread extends Thread {
                 }
 
                 try {
-                    radioOff = phone == null || !phone.isRadioOn();
-                    if (!radioOff) {
-                        Log.w(TAG, "Turning off radio...");
-                        phone.setRadio(false);
+                    radioOff = phone == null;
+                    if (phone != null) {
+                        for (int i = 0; i < TelephonyManager.getDefault().getPhoneCount(); i++) {
+                            radioOff = radioOff && !phone.isRadioOnUsingSub(i);
+                            if (phone.isRadioOnUsingSub(i)) {
+                                Log.w(TAG, "Turning off radio on Subscription :" + i);
+                                phone.setRadioUsingSub(i, false);
+                            }
+                        }
                     }
                 } catch (RemoteException ex) {
                     Log.e(TAG, "RemoteException during radio shutdown", ex);
@@ -441,7 +447,11 @@ public final class ShutdownThread extends Thread {
                     }
                     if (!radioOff) {
                         try {
-                            radioOff = !phone.isRadioOn();
+                            boolean subRadioOff = true;
+                            for (int i = 0; i < TelephonyManager.getDefault().getPhoneCount(); i++) {
+                                subRadioOff = subRadioOff && !phone.isRadioOnUsingSub(i);
+                            }
+                            radioOff = subRadioOff;
                         } catch (RemoteException ex) {
                             Log.e(TAG, "RemoteException during radio shutdown", ex);
                             radioOff = true;
