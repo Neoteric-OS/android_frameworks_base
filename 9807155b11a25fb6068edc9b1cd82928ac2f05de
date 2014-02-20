@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efaa1deb_0c75b757",
+        "filename": "rs/java/android/renderscript/Type.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-02-20T13:21:21Z",
+      "side": 1,
+      "message": "This cast to a narrower type needs an explanatory comment. (i.e, why is this safe ?)",
+      "revId": "9807155b11a25fb6068edc9b1cd82928ac2f05de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
