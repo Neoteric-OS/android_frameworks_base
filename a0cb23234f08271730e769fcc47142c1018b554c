@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf9559be_1bee9b2a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-02-20T19:37:13Z",
+      "side": 1,
+      "message": "I\u0027d mention the compiler flag you\u0027re using that warns above this.\n\nAlso, I\u0027d say \"pointer types\" instead of \"pointers\" some of the things in this code that are \"pointer types\" (like mergeid_t are not necessarily pointers...)",
+      "revId": "a0cb23234f08271730e769fcc47142c1018b554c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
