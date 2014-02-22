@@ -338,7 +338,7 @@ public final class BluetoothSocket implements Closeable {
      * so that BluetoothAdapter can check the error code for EADDRINUSE
      */
     /*package*/ int bindListen() {
-        int ret;
+        int ret = 0;
         if (mSocketState == SocketState.CLOSED) return EBADFD;
         IBluetooth bluetoothProxy = BluetoothAdapter.getDefaultAdapter().getBluetoothService(null);
         if (bluetoothProxy == null) {
@@ -353,7 +353,6 @@ public final class BluetoothSocket implements Closeable {
             return -1;
         }
 
-        // read out port number
         try {
             synchronized(this) {
                 if (VDBG) Log.d(TAG, "bindListen(), SocketState: " + mSocketState + ", mPfd: " +
@@ -367,16 +366,19 @@ public final class BluetoothSocket implements Closeable {
                 mSocketIS = mSocket.getInputStream();
                 mSocketOS = mSocket.getOutputStream();
             }
-            if (VDBG) Log.d(TAG, "bindListen(), readInt mSocketIS: " + mSocketIS);
-            int channel = readInt(mSocketIS);
+            if (mType == TYPE_RFCOMM) {
+                // read out port number
+                if (VDBG) Log.d(TAG, "bindListen(), readInt mSocketIS: " + mSocketIS);
+                int channel = readInt(mSocketIS);
+                if (VDBG) Log.d(TAG, "channel: " + channel);
+                if (mPort == -1) {
+                    mPort = channel;
+                } // else ASSERT(mPort == channel)
+            }
             synchronized(this) {
                 if(mSocketState == SocketState.INIT)
                     mSocketState = SocketState.LISTENING;
             }
-            if (VDBG) Log.d(TAG, "channel: " + channel);
-            if (mPort == -1) {
-                mPort = channel;
-            } // else ASSERT(mPort == channel)
             ret = 0;
         } catch (IOException e) {
             Log.e(TAG, "bindListen, fail to get port number, exception: " + e);
