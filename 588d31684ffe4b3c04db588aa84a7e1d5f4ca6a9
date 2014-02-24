@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef469d41_013c78f3",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-02-24T09:15:09Z",
+      "side": 1,
+      "message": "Regarding to TelephonyRegistry and IPhoneStateListener/PhoneStateListener multiple sim design, there are some queries as following: \n\n1.If there is an APP caller need to listen multiple sim\u0027s event, does it need to create multiple PhoneStateListener instance for each sim? \n\n2.If the answer of question\"1\" is yes, could you help to design an architecture which supporting APP caller uses single listener instance to register multiple sim\u0027s event? \n\n3.If the answer of question\"1\" is no, could you help to provide APP sample code which satisfied this requirement.",
+      "range": {
+        "startLine": 273,
+        "startChar": 0,
+        "endLine": 273,
+        "endChar": 4
+      },
+      "revId": "588d31684ffe4b3c04db588aa84a7e1d5f4ca6a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f3a11a9_6cc8ce40",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1373,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-02-24T09:15:09Z",
+      "side": 1,
+      "message": "slotId or subscription?",
+      "revId": "588d31684ffe4b3c04db588aa84a7e1d5f4ca6a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef469d41_b3d9379e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-02-24T09:15:09Z",
+      "side": 1,
+      "message": "slotId or subscription?",
+      "range": {
+        "startLine": 1383,
+        "startChar": 31,
+        "endLine": 1383,
+        "endChar": 37
+      },
+      "revId": "588d31684ffe4b3c04db588aa84a7e1d5f4ca6a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
