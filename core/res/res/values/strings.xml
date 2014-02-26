@@ -3570,6 +3570,7 @@
     <string name="ext_media_checking_notification_title" product="nosdcard">Preparing USB storage</string>
     <!-- Shown when external media is being checked -->
     <string name="ext_media_checking_notification_title" product="default">Preparing SD card</string>
+    <string translatable="false" name="ext_media_usb_checking_notification_title">Preparing USB storage</string>
     <string name="ext_media_checking_notification_message">Checking for errors.</string>
 
     <!-- Shown when external media is blank (or unsupported filesystem) [CHAR LIMIT=30] -->
@@ -3592,9 +3593,13 @@
     <string name="ext_media_badremoval_notification_title" product="nosdcard">USB storage unexpectedly removed</string>
     <!-- Shown when external media is unsafely removed -->
     <string name="ext_media_badremoval_notification_title" product="default">SD card unexpectedly removed</string>
+    <!-- Shown when USB external media is unsafely removed -->
+    <string translatable="false" name="ext_media_usb_badremoval_notification_title">USB storage unexpectedly removed</string>
+
     <!-- Shown when external media is unsafely removed.  [CHAR LIMIT=NONE] -->
     <string name="ext_media_badremoval_notification_message" product="nosdcard">Unmount USB storage before removing to avoid data loss.</string>
     <string name="ext_media_badremoval_notification_message" product="default">Unmount SD card before removing to avoid data loss.</string>
+    <string translatable="false" name="ext_media_usb_badremoval_notification_message">Unmount USB storage before removing to avoid data loss.</string>
 
     <!-- Shown when external media has been safely removed [CHAR LIMIT=30] -->
     <string name="ext_media_safe_unmount_notification_title" product="nosdcard">USB storage safe to remove</string>
