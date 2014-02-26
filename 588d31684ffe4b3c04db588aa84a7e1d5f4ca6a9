@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "3cfb9535_bb64d5f8",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-02-26T17:56:52Z",
+      "side": 1,
+      "message": "In the current patch sets uploaded, app needs to create multiple phonestate listener objects and use it for each sub. App can get call back indications for each sub.\n\nYou can refer some sample code here.\nhttps://android-review.googlesource.com/#/c/82911/1/src/com/android/settings/deviceinfo/msim/MSimSubscriptionStatus.java\n\n\nNow we are thinking of modifying PhoneStateListener such that it will have overloaded apis in it.\ne.g. onCallStateChanged() and onCallStateChanged(int sub, ...)\nWith this approach app need not created multiple phone state listener objects for multi sim.\n\nwith this approach app can override the desired PhoneStateListener call back (legacy or overloaded call back) and get the information.",
+      "parentUuid": "ef469d41_013c78f3",
+      "revId": "588d31684ffe4b3c04db588aa84a7e1d5f4ca6a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f3a11a9_6cc8ce40",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 6
@@ -59,6 +77,24 @@
         "endLine": 1383,
         "endChar": 37
       },
+      "revId": "588d31684ffe4b3c04db588aa84a7e1d5f4ca6a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cf89137_91021e65",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-02-26T17:56:52Z",
+      "side": 1,
+      "message": "getSimState should be per slot only. It talks about card state present in the slot. (absent, present, unknown)\n\nmay be PIN_REQUIRED, PUK_REQUIRED, NETWORK_LOCKED values mentioned should not be handled in this api.\n\nMay be there should be one more api talking about actual subState \n\ngetSubState(int subscription) ?",
+      "parentUuid": "ef469d41_b3d9379e",
       "revId": "588d31684ffe4b3c04db588aa84a7e1d5f4ca6a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
