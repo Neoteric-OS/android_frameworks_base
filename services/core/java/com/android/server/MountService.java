@@ -1363,12 +1363,13 @@ class MountService extends IMountService.Stub
                     // resource parser does not support longs, so XML value is in megabytes
                     long maxFileSize = a.getInt(
                             com.android.internal.R.styleable.Storage_maxFileSize, 0) * 1024L * 1024L;
+                    boolean isMassStorageDevice = mContext.getResources().getString(descriptionId).contains("USB");
 
                     Slog.d(TAG, "got storage path: " + path + " description: " + description +
                             " primary: " + primary + " removable: " + removable +
                             " emulated: " + emulated +  " mtpReserve: " + mtpReserve +
                             " allowMassStorage: " + allowMassStorage +
-                            " maxFileSize: " + maxFileSize);
+                            " maxFileSize: " + maxFileSize + "isMasStorageDevice: " + isMassStorageDevice);
 
                     if (emulated) {
                         // For devices with emulated storage, we create separate
@@ -1388,6 +1389,7 @@ class MountService extends IMountService.Stub
                             final StorageVolume volume = new StorageVolume(new File(path),
                                     descriptionId, primary, removable, emulated, mtpReserve,
                                     allowMassStorage, maxFileSize, null);
+                            volume.setMassStorageDevice(isMassStorageDevice);
                             addVolumeLocked(volume);
 
                             // Until we hear otherwise, treat as unmounted

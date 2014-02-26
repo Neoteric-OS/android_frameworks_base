@@ -3943,6 +3943,8 @@
     <string name="ext_media_checking_notification_title" product="nosdcard">Preparing USB storage</string>
     <!-- Shown when external media is being checked -->
     <string name="ext_media_checking_notification_title" product="default">Preparing SD card</string>
+    <!-- Shown when external media is being checked -->
+    <string name="ext_media_usb_checking_notification_title">Preparing USB storage</string>
     <string name="ext_media_checking_notification_message">Checking for errors.</string>
 
     <!-- Shown when external media is blank (or unsupported filesystem) [CHAR LIMIT=30] -->
@@ -3965,9 +3967,13 @@
     <string name="ext_media_badremoval_notification_title" product="nosdcard">USB storage unexpectedly removed</string>
     <!-- Shown when external media is unsafely removed -->
     <string name="ext_media_badremoval_notification_title" product="default">SD card unexpectedly removed</string>
+    <!-- Shown when USB external media is unsafely removed -->
+    <string name="ext_media_usb_badremoval_notification_title">USB storage unexpectedly removed</string>
+
     <!-- Shown when external media is unsafely removed.  [CHAR LIMIT=NONE] -->
     <string name="ext_media_badremoval_notification_message" product="nosdcard">Unmount USB storage before removing to avoid data loss.</string>
     <string name="ext_media_badremoval_notification_message" product="default">Unmount SD card before removing to avoid data loss.</string>
+    <string name="ext_media_usb_badremoval_notification_message">Unmount USB storage before removing to avoid data loss.</string>
 
     <!-- Shown when external media has been safely removed [CHAR LIMIT=30] -->
     <string name="ext_media_safe_unmount_notification_title" product="nosdcard">USB storage safe to remove</string>
@@ -3979,11 +3985,13 @@
 
     <!-- Shown when external media is missing [CHAR LIMIT=30] -->
     <string name="ext_media_nomedia_notification_title" product="nosdcard">Removed USB storage</string>
+    <string name="ext_media_usb_nomedia_notification_title">Removed USB storage</string>
     <!-- Shown when external media is missing -->
     <string name="ext_media_nomedia_notification_title" product="default">Removed SD card</string>
     <!-- Shown when external media is missing.  [CHAR LIMIT=NONE] -->
     <string name="ext_media_nomedia_notification_message" product="nosdcard">USB storage removed. Insert new media.</string>
     <string name="ext_media_nomedia_notification_message" product="default">SD card removed. Insert a new one.</string>
+    <string name="ext_media_usb_nomedia_notification_message">USB storage removed. Insert new media.</string>
 
     <!-- Shown in LauncherActivity when the requested target Intent didn't return any matching Activities, leaving the list empty. -->
     <string name="activity_list_empty">No matching activities found.</string>

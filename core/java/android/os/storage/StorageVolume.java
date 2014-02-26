@@ -52,6 +52,7 @@ public class StorageVolume implements Parcelable {
     private String mUuid;
     private String mUserLabel;
     private String mState;
+    private boolean mMassStorageDevice;
 
     // StorageVolume extra for ACTION_MEDIA_REMOVED, ACTION_MEDIA_UNMOUNTED, ACTION_MEDIA_CHECKING,
     // ACTION_MEDIA_NOFS, ACTION_MEDIA_MOUNTED, ACTION_MEDIA_SHARED, ACTION_MEDIA_UNSHARED,
@@ -86,6 +87,7 @@ public class StorageVolume implements Parcelable {
         mUuid = in.readString();
         mUserLabel = in.readString();
         mState = in.readString();
+        mMassStorageDevice = in.readInt() != 0;
     }
 
     public static StorageVolume fromTemplate(StorageVolume template, File path, UserHandle owner) {
@@ -238,6 +240,16 @@ public class StorageVolume implements Parcelable {
         return mState;
     }
 
+    public boolean isMassStorageDevice() {
+        return mMassStorageDevice;
+    }
+
+    public void setMassStorageDevice(boolean isMassStorageDevice) {
+        mMassStorageDevice = isMassStorageDevice;
+    }
+
+
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof StorageVolume && mPath != null) {
@@ -275,6 +287,7 @@ public class StorageVolume implements Parcelable {
         pw.printPair("mUuid", mUuid);
         pw.printPair("mUserLabel", mUserLabel);
         pw.printPair("mState", mState);
+        pw.printPair("mMassStorageDevice", mMassStorageDevice);
         pw.decreaseIndent();
     }
 
@@ -310,5 +323,6 @@ public class StorageVolume implements Parcelable {
         parcel.writeString(mUuid);
         parcel.writeString(mUserLabel);
         parcel.writeString(mState);
+        parcel.writeInt(mMassStorageDevice ? 1 : 0);
     }
 }
