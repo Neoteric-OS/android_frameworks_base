@@ -45,6 +45,23 @@
       "revId": "d0cf6813e62f1f1299c47c96605fd308875835b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c5da930_fc136d74",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-02-28T19:12:09Z",
+      "side": 1,
+      "message": "I think we\u0027ll need to unhide this, lets create a bug for unhiding this.",
+      "revId": "d0cf6813e62f1f1299c47c96605fd308875835b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
