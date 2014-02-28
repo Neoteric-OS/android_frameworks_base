@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c0a6d15_12461c71",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1021496
+      },
+      "writtenOn": "2014-02-28T09:47:16Z",
+      "side": 1,
+      "message": "Change TAB char with spaces",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 1
+      },
+      "revId": "d0cf6813e62f1f1299c47c96605fd308875835b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc0199f4_caa23b16",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1021496
+      },
+      "writtenOn": "2014-02-28T09:47:16Z",
+      "side": 1,
+      "message": "Trailing whitespace",
+      "range": {
+        "startLine": 299,
+        "startChar": 10,
+        "endLine": 299,
+        "endChar": 11
+      },
+      "revId": "d0cf6813e62f1f1299c47c96605fd308875835b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
