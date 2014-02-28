@@ -62,6 +62,13 @@ typedef enum {
     INSTALL_FAILED_INTERNAL_ERROR = -110,
 } install_status_t;
 
+// A value of 1 or higher indicates success
+typedef enum {
+    CPUABI_SEARCH_FAILED = -1,
+    CPUABI_NOT_FOUND = 0,
+    CPUABI_FOUND = 1,
+} cpuabi_search_status_t;
+
 typedef install_status_t (*iterFunc)(JNIEnv*, void*, ZipFileRO*, ZipEntryRO, const char*);
 
 // Equivalent to isFilenameSafe
@@ -362,6 +369,66 @@ iterateOverNativeFiles(JNIEnv *env, jstring javaFilePath, jstring javaCpuAbi, js
     return INSTALL_SUCCEEDED;
 }
 
+static cpuabi_search_status_t
+searchCpuAbis(JNIEnv *env, jstring javaApkFilePath, jstring javaCpuAbiToSearch) {
+    ScopedUtfChars filePath(env, javaApkFilePath);
+    ScopedUtfChars cpuAbi(env, javaCpuAbiToSearch);
+
+    UniquePtr<ZipFileRO> zipFile(ZipFileRO::open(filePath.c_str()));
+    if (zipFile.get() == NULL) {
+        ALOGI("Couldn't open APK %s\n", filePath.c_str());
+        return CPUABI_SEARCH_FAILED;
+    }
+
+    char fileName[PATH_MAX];
+
+    void* cookie = NULL;
+    if (!zipFile->startIteration(&cookie)) {
+        ALOGI("Couldn't iterate over APK%s\n", filePath.c_str());
+        return CPUABI_SEARCH_FAILED;
+    }
+
+    ZipEntryRO entry = NULL;
+    while ((entry = zipFile->nextEntry(cookie)) != NULL) {
+        // Make sure this entry has a filename.
+        if (zipFile->getEntryFileName(entry, fileName, sizeof(fileName))) {
+            continue;
+        }
+
+        // Make sure we're in the lib directory of the ZIP.
+        if (strncmp(fileName, APK_LIB, APK_LIB_LEN)) {
+            continue;
+        }
+
+        // Make sure the filename is at least to the minimum library name size.
+        const size_t fileNameLen = strlen(fileName);
+        static const size_t minLength = APK_LIB_LEN + 2 + LIB_PREFIX_LEN + 1 + LIB_SUFFIX_LEN;
+        if (fileNameLen < minLength) {
+            continue;
+        }
+
+        const char* lastSlash = strrchr(fileName, '/');
+        ALOG_ASSERT(lastSlash != NULL, "last slash was null somehow for %s\n", fileName);
+
+        // Check to see if this CPU ABI matches what we are looking for.
+        const char* cpuAbiOffset = fileName + APK_LIB_LEN;
+        const size_t cpuAbiRegionSize = lastSlash - cpuAbiOffset;
+
+        ALOGV("Comparing ABI %s versus %s\n", cpuAbi.c_str(), cpuAbiOffset);
+        if (cpuAbi.size() == cpuAbiRegionSize
+                && *(cpuAbiOffset + cpuAbi.size()) == '/'
+                && !strncmp(cpuAbiOffset, cpuAbi.c_str(), cpuAbiRegionSize)) {
+            ALOGV("Found a matching ABI for %s in %s\n", cpuAbi.c_str(), filePath.c_str());
+            return CPUABI_FOUND;
+        }
+    }
+
+    zipFile->endIteration(cookie);
+
+    ALOGV("Searching for the ABI %s didn't match anything in %s\n", cpuAbi.c_str(), filePath.c_str());
+    return CPUABI_NOT_FOUND;
+}
+
 static jint
 com_android_internal_content_NativeLibraryHelper_copyNativeBinaries(JNIEnv *env, jclass clazz,
         jstring javaFilePath, jstring javaNativeLibPath, jstring javaCpuAbi, jstring javaCpuAbi2)
@@ -381,6 +448,13 @@ com_android_internal_content_NativeLibraryHelper_sumNativeBinaries(JNIEnv *env, 
     return totalSize;
 }
 
+static jint
+com_android_internal_content_NativeLibraryHelper_hasCpuAbi(JNIEnv *env, jclass clazz,
+        jstring javaApkFilePath, jstring javaCpuAbiToSearch)
+{
+    return (jint) searchCpuAbis(env, javaApkFilePath, javaCpuAbiToSearch);
+}
+
 static JNINativeMethod gMethods[] = {
     {"nativeCopyNativeBinaries",
             "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I",
@@ -388,6 +462,9 @@ static JNINativeMethod gMethods[] = {
     {"nativeSumNativeBinaries",
             "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)J",
             (void *)com_android_internal_content_NativeLibraryHelper_sumNativeBinaries},
+    {"nativeHasCpuAbi",
+            "(Ljava/lang/String;Ljava/lang/String;)I",
+            (void *)com_android_internal_content_NativeLibraryHelper_hasCpuAbi},
 };
 
 

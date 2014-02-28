@@ -63,6 +63,22 @@ public class NativeLibraryHelper {
                 cpuAbi2);
     }
 
+    private native static int nativeHasCpuAbi(String apkFilePath, String cpuAbiToSearch);
+
+    /**
+     * Searches an APK file for a specific CPU ABI.
+     * This method can be used to check whether an App requires
+     * support for a specific CPU ABI.
+     *
+     * @param apkFilePath APK file path to scan for native libraries
+     * @param cpuAbiToSearch the CPU ABI string to search for
+     * @return whether the APK file includes the specified CPU ABI -
+     *         a value of 1 or higher indicates success
+     */
+    public static int searchApkForCpuAbi(String apkFilePath, String cpuAbiToSearch) {
+        return nativeHasCpuAbi(apkFilePath, cpuAbiToSearch);
+    }
+
     // Convenience method to call removeNativeBinariesFromDirLI(File)
     public static boolean removeNativeBinariesLI(String nativeLibraryPath) {
         return removeNativeBinariesFromDirLI(new File(nativeLibraryPath));
