@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c52b523_29fae9e1",
+        "filename": "core/jni/android_media_AudioRecord.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1004395
+      },
+      "writtenOn": "2014-02-28T16:04:35Z",
+      "side": 1,
+      "message": "Why do we do this instead of %p ?",
+      "revId": "98d748d7e317aa971d66340ff372207e13285ea6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
