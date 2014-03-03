@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3c52b523_a186e5ba",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-03-03T16:52:02Z",
+      "side": 1,
+      "message": "Agree in framework definitely the usage of this can be minimized/removed. In apps side this isMultiSIMEnabled() utility may be required to show differnt layouts for single/muliti sim.",
+      "parentUuid": "3c52b523_2609ebf9",
+      "revId": "2caa4a1232d6054a4e75f9665b3c4296bdd7b160",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c52b523_66e803d4",
         "filename": "telephony/java/com/android/internal/telephony/MSimConstants.java",
         "patchSetId": 9
