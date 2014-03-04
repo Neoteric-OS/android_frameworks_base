@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "dc76f9c4_07ba869e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-04T14:31:22Z",
+      "side": 1,
+      "message": "I\u0027m thinking rather than a boolean it will probably be Number of X. After yesterday\u0027s one roof I\u0027m not sure if X is sim slots, sims, modems, max standby\u0027s, subscriptions, or logical phones ... \n\nAt the moment I\u0027m guessing it depends on what the actual question is on what X might be, but I suspect this by it self won\u0027t help UX very much.",
+      "parentUuid": "3c52b523_a186e5ba",
+      "revId": "2caa4a1232d6054a4e75f9665b3c4296bdd7b160",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c52b523_66e803d4",
         "filename": "telephony/java/com/android/internal/telephony/MSimConstants.java",
         "patchSetId": 9
