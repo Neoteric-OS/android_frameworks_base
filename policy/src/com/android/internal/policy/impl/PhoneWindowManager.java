@@ -476,6 +476,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private static final int MSG_DISPATCH_MEDIA_KEY_WITH_WAKE_LOCK = 3;
     private static final int MSG_DISPATCH_MEDIA_KEY_REPEAT_WITH_WAKE_LOCK = 4;
 
+    private boolean mVolumeDownWithScreenOff;
+    private boolean mVolumeUpWithScreenOff;
+    private static final int LONGPRESS_VOLUME_KEY_INTERVAL = 200; // Key process interval 200ms
+
     private class PolicyHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -711,6 +715,48 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private void cancelPendingScreenshotChordAction() {
         mHandler.removeCallbacks(mScreenshotRunnable);
     }
+
+    private int getStreamActive() {
+        int stream = -1;
+        if (isVoiceActive()) {
+            stream = AudioManager.STREAM_VOICE_CALL;
+        } else if (isMusicActive()) {
+            stream = AudioManager.STREAM_MUSIC;
+        }
+        return stream;
+    }
+
+    private void cancelVolumeUpDownRunnable() {
+        mVolumeUpWithScreenOff = false;
+        mVolumeDownWithScreenOff = false;
+        mHandler.removeCallbacks(mVolumeUpDownRunnable);
+    }
+
+    private final Runnable mVolumeUpDownRunnable = new Runnable() {
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    int stream = getStreamActive();
+                    if (stream >= 0) {
+                        if (mVolumeUpWithScreenOff) {
+                            handleVolumeKey(stream, KeyEvent.KEYCODE_VOLUME_UP);
+                        } else if (mVolumeDownWithScreenOff) {
+                            handleVolumeKey(stream, KeyEvent.KEYCODE_VOLUME_DOWN);
+                        } else {
+                            break;
+                        }
+                        Thread.sleep(LONGPRESS_VOLUME_KEY_INTERVAL);
+                    } else {
+                        // no active stream
+                        break;
+                    }
+                } catch (InterruptedException ex) {
+                    Log.e(TAG, "Cannot sleep when process long press volume button.");
+                }
+            }
+        }
+    };
 
     private final Runnable mPowerLongPress = new Runnable() {
         @Override
@@ -3682,6 +3728,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     /**
+     * @return Whether voice call is being played right now.
+     */
+    boolean isVoiceActive() {
+        final AudioManager am = (AudioManager)mContext.getSystemService(Context.AUDIO_SERVICE);
+        if (am == null) {
+            Log.w(TAG, "isVoiceActive: couldn't get AudioManager reference");
+            return false;
+        }
+        return am.isVoiceActive();
+    }
+
+    /**
      * Tell the audio service to adjust the volume appropriate to the event.
      * @param keycode
      */
@@ -3872,6 +3930,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         }
                     } else {
                         mVolumeDownKeyTriggered = false;
+                        cancelVolumeUpDownRunnable();
                         cancelPendingScreenshotChordAction();
                     }
                 } else if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
@@ -3884,6 +3943,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         }
                     } else {
                         mVolumeUpKeyTriggered = false;
+                        cancelVolumeUpDownRunnable();
                         cancelPendingScreenshotChordAction();
                     }
                 }
@@ -3922,11 +3982,17 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         }
                     }
 
-                    if (isMusicActive() && (result & ACTION_PASS_TO_USER) == 0) {
-                        // If music is playing but we decided not to pass the key to the
-                        // application, handle the volume change here.
-                        handleVolumeKey(AudioManager.STREAM_MUSIC, keyCode);
-                        break;
+                    if ((result & ACTION_PASS_TO_USER) == 0) {
+                        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+                            cancelVolumeUpDownRunnable();
+                            mVolumeDownWithScreenOff = true;
+                            mHandler.post(mVolumeUpDownRunnable);
+                        }
+                        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+                            cancelVolumeUpDownRunnable();
+                            mVolumeUpWithScreenOff = true;
+                            mHandler.post(mVolumeUpDownRunnable);
+                        }
                     }
                 }
                 break;

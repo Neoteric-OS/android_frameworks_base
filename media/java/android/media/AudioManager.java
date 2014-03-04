@@ -1572,6 +1572,16 @@ public class AudioManager {
 
     /**
      * @hide
+     * Checks whether any voice call  is active.
+     *
+     * @return true if any voice call tracks are active.
+     */
+    public boolean isVoiceActive() {
+        return AudioSystem.isStreamActive(STREAM_VOICE_CALL, 0);
+    }
+
+    /**
+     * @hide
      * Checks whether any local or remote media playback is active.
      * Local playback refers to playback for instance on the device's speakers or wired headphones.
      * Remote playback refers to playback for instance on a wireless display mirroring the
