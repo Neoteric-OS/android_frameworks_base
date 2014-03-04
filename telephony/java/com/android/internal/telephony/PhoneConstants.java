@@ -132,4 +132,17 @@ public class PhoneConstants {
     /** APN type for IA Initial Attach APN */
     public static final String APN_TYPE_IA = "ia";
 
+    /**
+     * Return code for updateAdnBySearch API.
+     * FAILURE = The ADN-like record update operation failed.
+     * SUCCESS = The AND-like record was successfully updated
+     * ERROR_PIN2_PASSWORD_INCORRECT = The EF_FDN record update operation failed due to an
+     * incorrect PIN2.
+     * ERROR_PIN2_SIM_PUK2 = The EF_FDN record update operation failed because the
+     * PIN2 is blocked.
+     */
+     public static final int FAILURE = 0;
+     public static final int SUCCESS = 1;
+     public static final int ERROR_PIN2_PASSWORD_INCORRECT = 2;
+     public static final int ERROR_PIN2_SIM_PUK2 = 3;
 }
