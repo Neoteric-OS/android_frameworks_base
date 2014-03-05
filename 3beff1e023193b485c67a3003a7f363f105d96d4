@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc79fdb5_1abdfd48",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2014-03-05T18:07:14Z",
+      "side": 1,
+      "message": "Is this only working by coincidence? This seems very wrong.",
+      "range": {
+        "startLine": 422,
+        "startChar": 0,
+        "endLine": 422,
+        "endChar": 36
+      },
+      "revId": "3beff1e023193b485c67a3003a7f363f105d96d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
