@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c7df19f_a364d8f8",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1331,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-05T19:39:53Z",
+      "side": 1,
+      "message": "hasIccCard should be SIM-base, not subscription-base",
+      "range": {
+        "startLine": 1331,
+        "startChar": 26,
+        "endLine": 1331,
+        "endChar": 48
+      },
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cae3566_75d45231",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-05T19:39:53Z",
+      "side": 1,
+      "message": "hasIccCard should be SIM-base, not subscription-base",
+      "range": {
+        "startLine": 1340,
+        "startChar": 35,
+        "endLine": 1340,
+        "endChar": 47
+      },
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
