@@ -293,6 +293,29 @@
     },
     {
       "key": {
+        "uuid": "fca73d88_9984a7f7",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 13
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-06T09:48:05Z",
+      "side": 1,
+      "message": "Will supplyPin and supplyPuk related APIs and SIM_STATE_CHANGED intent apply sim-based or slot-based?\nI think they should apply the same concept.",
+      "range": {
+        "startLine": 201,
+        "startChar": 12,
+        "endLine": 201,
+        "endChar": 29
+      },
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c7df19f_d8fe9b19",
         "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
         "patchSetId": 13
