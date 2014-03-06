@@ -65,6 +65,52 @@
     },
     {
       "key": {
+        "uuid": "fca73d88_336b5208",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-06T05:25:24Z",
+      "side": 1,
+      "message": "It should be passing SIM slot id to get IMEI",
+      "range": {
+        "startLine": 576,
+        "startChar": 27,
+        "endLine": 576,
+        "endChar": 51
+      },
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fca73d88_d37f5ebe",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-06T05:25:24Z",
+      "side": 1,
+      "message": "It should be passing SIM slot id to get IMEI",
+      "range": {
+        "startLine": 589,
+        "startChar": 30,
+        "endLine": 589,
+        "endChar": 47
+      },
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c7df19f_a364d8f8",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 13
