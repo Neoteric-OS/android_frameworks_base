@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "fca73d88_8a73ef27",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-06T01:46:12Z",
+      "side": 1,
+      "message": "By discussion in previous, we need to provide the Listener for App just need to create one. So I think registry should dispatch event with subscription info and we need notify both original interface with default subscription\u0027s event and new interface having \u0027UsingSub\u0027 with specific subscription\u0027s event",
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dca43989_e6bf40dd",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-06T01:46:12Z",
+      "side": 1,
+      "message": "Could you help to introduce why some variables are not extended to array under your registry architecture.",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 42
+      },
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fca73d88_4a873701",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-06T01:46:12Z",
+      "side": 1,
+      "message": "By discussion in previous, we need to provide the Listener for App just need to create one. So I think there is should not be  subscription info in this class, the subscription info should be carried with each event pass in",
+      "range": {
+        "startLine": 196,
+        "startChar": 18,
+        "endLine": 196,
+        "endChar": 31
+      },
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c7df19f_a364d8f8",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 13
@@ -41,6 +104,29 @@
         "startChar": 35,
         "endLine": 1340,
         "endChar": 47
+      },
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dca43989_862e8c72",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2032,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-06T01:46:12Z",
+      "side": 1,
+      "message": "By discussion in previous, we need to provide the Listener for App just need to create one. So I think listener should register for all subscriptions and then event will carry subscription info and then Apps can check the event by subscription info",
+      "range": {
+        "startLine": 2032,
+        "startChar": 22,
+        "endLine": 2032,
+        "endChar": 36
       },
       "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
