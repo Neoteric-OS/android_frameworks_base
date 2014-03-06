@@ -8790,7 +8790,7 @@ public class WindowManagerService extends IWindowManager.Stub
             mInnerFields.mObscured = true;
         }
 
-        if (w.mHasSurface) {
+        if (w.mHasSurface && w.mWinAnimator.mSurfaceShown) {
             if ((attrFlags&FLAG_KEEP_SCREEN_ON) != 0) {
                 mInnerFields.mHoldScreen = w.mSession;
             }
