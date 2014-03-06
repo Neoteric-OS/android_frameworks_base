@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "1c7df19f_b85cff6a",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-03-06T07:30:27Z",
+      "side": 1,
+      "message": "The data related to variables are not extended for array considering that only one sub will have data active at any point.\n\nMay be considering DSDA it may need to be changed.",
+      "parentUuid": "dca43989_e6bf40dd",
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fca73d88_4a873701",
         "filename": "telephony/java/android/telephony/PhoneStateListener.java",
         "patchSetId": 13
@@ -59,6 +77,24 @@
         "endLine": 196,
         "endChar": 31
       },
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c7df19f_3848efa2",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-03-06T07:30:27Z",
+      "side": 1,
+      "message": "I heard this is still being discussed once that is concluded it can be modified.",
+      "parentUuid": "fca73d88_4a873701",
       "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -134,6 +170,24 @@
     },
     {
       "key": {
+        "uuid": "fca73d88_7eae716a",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1331,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-03-06T07:30:27Z",
+      "side": 1,
+      "message": "yes we will change this.",
+      "parentUuid": "1c7df19f_a364d8f8",
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cae3566_75d45231",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 13
@@ -157,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "fca73d88_3eb8f9a6",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-03-06T07:30:27Z",
+      "side": 1,
+      "message": "yes we will change this.",
+      "parentUuid": "3cae3566_75d45231",
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dca43989_ccfd8388",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 13
@@ -174,6 +246,24 @@
         "endLine": 1365,
         "endChar": 49
       },
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dca43989_2c077777",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-03-06T07:30:27Z",
+      "side": 1,
+      "message": "Yes we will change this.",
+      "parentUuid": "dca43989_ccfd8388",
       "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -226,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "1c7df19f_58384b00",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 13
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-03-06T07:30:27Z",
+      "side": 1,
+      "message": "I think this api would be deprecated thats why sub api not added.\n\nPlease let us know if you any dependency on this for N5 working?",
+      "parentUuid": "1c7df19f_d8fe9b19",
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dca43989_6c39ef54",
         "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
         "patchSetId": 13
@@ -243,6 +351,24 @@
         "endLine": 372,
         "endChar": 52
       },
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c7df19f_983ee3ee",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 13
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-03-06T07:30:27Z",
+      "side": 1,
+      "message": "Do you think this is sub based? when getNeighboringCellInfo is called by an app it could get information of all subs.\n\nMay be once Telephony APIs categorization is concluded we can modify this.\n\nHope you are not blocked on this.",
+      "parentUuid": "dca43989_6c39ef54",
       "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -272,6 +398,24 @@
     },
     {
       "key": {
+        "uuid": "1c7df19f_783d07ef",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneConstants.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-03-06T07:30:27Z",
+      "side": 1,
+      "message": "Agree.",
+      "parentUuid": "dca43989_4c7d1392",
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fca73d88_fed34123",
         "filename": "telephony/java/com/android/internal/telephony/PhoneConstants.java",
         "patchSetId": 13
@@ -289,6 +433,24 @@
         "endLine": 155,
         "endChar": 32
       },
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c7df19f_1832d31e",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneConstants.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-03-06T07:30:27Z",
+      "side": 1,
+      "message": "it would be removed.",
+      "parentUuid": "fca73d88_fed34123",
       "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
