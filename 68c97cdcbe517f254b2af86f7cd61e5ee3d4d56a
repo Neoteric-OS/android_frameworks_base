@@ -293,6 +293,29 @@
     },
     {
       "key": {
+        "uuid": "fca73d88_99dd87fb",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2230,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-06T10:38:26Z",
+      "side": 1,
+      "message": "It should be a getDefaultSim() API since some API is sim-based and some API is sub-based.",
+      "range": {
+        "startLine": 2230,
+        "startChar": 22,
+        "endLine": 2230,
+        "endChar": 44
+      },
+      "revId": "68c97cdcbe517f254b2af86f7cd61e5ee3d4d56a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fca73d88_9984a7f7",
         "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
         "patchSetId": 13
