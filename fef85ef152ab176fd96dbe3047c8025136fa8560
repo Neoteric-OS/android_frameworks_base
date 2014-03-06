@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcce5d4a_758c5a24",
+        "filename": "media/jni/android_media_MediaCodec.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-03-06T13:48:22Z",
+      "side": 1,
+      "message": "Should the java side have been changed to long ? I\u0027m thinking the answer\u0027s no, because offset \u0026 size don\u0027t have to be more than 32 bits wide.\n\nAlso, it looks like MediaCodec.BufferInfo is public API, so it\u0027s not like we can change it anyway.",
+      "revId": "fef85ef152ab176fd96dbe3047c8025136fa8560",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
