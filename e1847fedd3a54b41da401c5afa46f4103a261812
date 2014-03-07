@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc586570_fda22315",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1036868
+      },
+      "writtenOn": "2014-03-07T18:19:32Z",
+      "side": 1,
+      "message": "Kevin, sorry I don\u0027t have too much background on the gid 1021. Can you provide more details about when/where gid 1021 is introduced? And how does it communicate with native gps daemon before?",
+      "range": {
+        "startLine": 500,
+        "startChar": 80,
+        "endLine": 500,
+        "endChar": 84
+      },
+      "revId": "e1847fedd3a54b41da401c5afa46f4103a261812",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
