@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dca43989_9b39f657",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-07T04:34:12Z",
+      "side": 1,
+      "message": "Pls add public static boolean isVoiceMailNumber(long subId, String number).",
+      "range": {
+        "startLine": 1846,
+        "startChar": 26,
+        "endLine": 1846,
+        "endChar": 43
+      },
+      "revId": "876dc62030dd88f05fb454861e76e74660f9704d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
