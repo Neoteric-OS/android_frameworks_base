@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c526d52_9b7ccfcb",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 2242,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-07T19:20:12Z",
+      "side": 1,
+      "message": "It should be getDefaultSim()",
+      "range": {
+        "startLine": 2242,
+        "startChar": 15,
+        "endLine": 2242,
+        "endChar": 28
+      },
+      "revId": "2d118f143d9be5a327c3ed5194b405ee794a1353",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc4c9db4_16f88c93",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneConstants.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-07T19:20:12Z",
+      "side": 1,
+      "message": "Need to change name of SLOT_1, SLOT_2, SLOT_3 for SLOT_KEY.\nFor Subscription, it is gotten via SubscriptionController.",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 157,
+        "endChar": 37
+      },
+      "revId": "2d118f143d9be5a327c3ed5194b405ee794a1353",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
