@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c526d52_3ee13180",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1025864
+      },
+      "writtenOn": "2014-03-07T20:03:57Z",
+      "side": 1,
+      "message": "I think SLOT_KEY is better name, even if SIM is absent we send intent with \"absent\" information considering slot related card is absent.",
+      "revId": "2b71fd087dad97a4ae21c9c7a7df4539af7a0532",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
