@@ -747,6 +747,10 @@ public class ConnectivityManager {
         }
     }
 
+   /** @hide */
+    public int startUsingNetworkFeature(long subscription, int networkType, String feature) {
+           return startUsingNetworkFeature(networkType, feature);
+    }
     /**
      * Tells the underlying networking system that the caller is finished
      * using the named feature. The interpretation of {@code feature}
@@ -766,6 +770,11 @@ public class ConnectivityManager {
         } catch (RemoteException e) {
             return -1;
         }
+    }
+
+   /** @hide */
+    public int stopUsingNetworkFeature(long subscription, int networkType, String feature) {
+        return stopUsingNetworkFeature(networkType, feature);
     }
 
     /**
@@ -879,6 +888,11 @@ public class ConnectivityManager {
         } catch (RemoteException e) {
             return true;
         }
+    }
+
+   /** @hide */
+    public boolean getMobileDataEnabled(long subscription) {
+        return getMobileDataEnabled();
     }
 
     /**

@@ -33,6 +33,7 @@ import android.os.RemoteException;
 import android.os.UserHandle;
 import android.telephony.CellLocation;
 import android.telephony.TelephonyManager;
+import android.telephony.SubscriptionManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
@@ -309,20 +310,21 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                     mRecords.add(r);
                     if (DBG) Slog.i(TAG, "listen: add new record=" + r);
                 }
+                int phoneId = SubscriptionManager.getPhoneId(subscription);
                 int send = events & (events ^ r.events);
                 r.events = events;
                 if (notifyNow) {
                     if ((events & PhoneStateListener.LISTEN_SERVICE_STATE) != 0) {
                         try {
                             r.callback.onServiceStateChanged(
-                                    new ServiceState(mServiceState[(int)subscription]));
+                                    new ServiceState(mServiceState[phoneId]));
                         } catch (RemoteException ex) {
                             remove(r.binder);
                         }
                     }
                     if ((events & PhoneStateListener.LISTEN_SIGNAL_STRENGTH) != 0) {
                         try {
-                            int gsmSignalStrength = mSignalStrength[(int)subscription]
+                            int gsmSignalStrength = mSignalStrength[phoneId]
                                     .getGsmSignalStrength();
                             r.callback.onSignalStrengthChanged((gsmSignalStrength == 99 ? -1
                                     : gsmSignalStrength));
@@ -333,7 +335,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                     if ((events & PhoneStateListener.LISTEN_MESSAGE_WAITING_INDICATOR) != 0) {
                         try {
                             r.callback.onMessageWaitingIndicatorChanged(
-                                    mMessageWaiting[(int)subscription]);
+                                    mMessageWaiting[phoneId]);
                         } catch (RemoteException ex) {
                             remove(r.binder);
                         }
@@ -341,7 +343,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                     if ((events & PhoneStateListener.LISTEN_CALL_FORWARDING_INDICATOR) != 0) {
                         try {
                             r.callback.onCallForwardingIndicatorChanged(
-                                    mCallForwarding[(int)subscription]);
+                                    mCallForwarding[phoneId]);
                         } catch (RemoteException ex) {
                             remove(r.binder);
                         }
@@ -349,17 +351,17 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                     if (validateEventsAndUserLocked(r, PhoneStateListener.LISTEN_CELL_LOCATION)) {
                         try {
                             if (DBG_LOC) Slog.d(TAG, "listen: mCellLocation = "
-                                    + mCellLocation[(int)subscription]);
+                                    + mCellLocation[phoneId]);
                             r.callback.onCellLocationChanged(
-                                    new Bundle(mCellLocation[(int)subscription]));
+                                    new Bundle(mCellLocation[phoneId]));
                         } catch (RemoteException ex) {
                             remove(r.binder);
                         }
                     }
                     if ((events & PhoneStateListener.LISTEN_CALL_STATE) != 0) {
                         try {
-                            r.callback.onCallStateChanged(mCallState[(int)subscription],
-                                     mCallIncomingNumber[(int)subscription]);
+                            r.callback.onCallStateChanged(mCallState[phoneId],
+                                     mCallIncomingNumber[phoneId]);
                         } catch (RemoteException ex) {
                             remove(r.binder);
                         }
@@ -381,7 +383,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                     }
                     if ((events & PhoneStateListener.LISTEN_SIGNAL_STRENGTHS) != 0) {
                         try {
-                            r.callback.onSignalStrengthsChanged(mSignalStrength[(int)subscription]);
+                            r.callback.onSignalStrengthsChanged(mSignalStrength[phoneId]);
                         } catch (RemoteException ex) {
                             remove(r.binder);
                         }
@@ -395,9 +397,9 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                     }
                     if (validateEventsAndUserLocked(r, PhoneStateListener.LISTEN_CELL_INFO)) {
                         try {
-                            if (DBG_LOC) Slog.d(TAG, "listen: mCellInfo[" + subscription + "] = "
-                                    + mCellInfo.get((int)subscription));
-                            r.callback.onCellInfoChanged(mCellInfo.get((int)subscription));
+                            if (DBG_LOC) Slog.d(TAG, "listen: mCellInfo[" + phoneId + "] = "
+                                    + mCellInfo.get(phoneId));
+                            r.callback.onCellInfoChanged(mCellInfo.get(phoneId));
                         } catch (RemoteException ex) {
                             remove(r.binder);
                         }
@@ -461,8 +463,9 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
             return;
         }
         synchronized (mRecords) {
-            mCallState[(int)subscription] = state;
-            mCallIncomingNumber[(int)subscription] = incomingNumber;
+            int phoneId = SubscriptionManager.getPhoneId(subscription);
+            mCallState[phoneId] = state;
+            mCallIncomingNumber[phoneId] = incomingNumber;
             for (Record r : mRecords) {
                 if (((r.events & PhoneStateListener.LISTEN_CALL_STATE) != 0) &&
                     (r.subscription == subscription) && (r.isLegacyApp == false)) {
@@ -488,7 +491,8 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
         }
         Slog.i(TAG, "notifyServiceState: " + state);
         synchronized (mRecords) {
-            mServiceState[(int)subscription] = state;
+            int phoneId = SubscriptionManager.getPhoneId(subscription);
+            mServiceState[phoneId] = state;
             for (Record r : mRecords) {
                 if (((r.events & PhoneStateListener.LISTEN_SERVICE_STATE) != 0) &&
                         (r.subscription == subscription)) {
@@ -513,7 +517,8 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
             return;
         }
         synchronized (mRecords) {
-            mSignalStrength[(int)subscription] = signalStrength;
+            int phoneId = SubscriptionManager.getPhoneId(subscription);
+            mSignalStrength[phoneId] = signalStrength;
             for (Record r : mRecords) {
                 if (((r.events & PhoneStateListener.LISTEN_SIGNAL_STRENGTHS) != 0) &&
                     (r.subscription == subscription)){
@@ -549,7 +554,8 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
         }
 
         synchronized (mRecords) {
-            mCellInfo.set((int)subscription, cellInfo);
+            int phoneId = SubscriptionManager.getPhoneId(subscription);
+            mCellInfo.set(phoneId, cellInfo);
             for (Record r : mRecords) {
                 if (validateEventsAndUserLocked(r, PhoneStateListener.LISTEN_CELL_INFO)
                         && r.subscription == subscription) {
@@ -576,7 +582,8 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
             return;
         }
         synchronized (mRecords) {
-            mMessageWaiting[(int)subscription] = mwi;
+            int phoneId = SubscriptionManager.getPhoneId(subscription);
+            mMessageWaiting[phoneId] = mwi;
             for (Record r : mRecords) {
                 if (((r.events & PhoneStateListener.LISTEN_MESSAGE_WAITING_INDICATOR) != 0) &&
                     (r.subscription == subscription)) {
@@ -600,7 +607,8 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
             return;
         }
         synchronized (mRecords) {
-            mCallForwarding[(int)subscription] = cfi;
+            int phoneId = SubscriptionManager.getPhoneId(subscription);
+            mCallForwarding[phoneId] = cfi;
             for (Record r : mRecords) {
                 if (((r.events & PhoneStateListener.LISTEN_CALL_FORWARDING_INDICATOR) != 0) &&
                     (r.subscription == subscription)) {
@@ -762,7 +770,8 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
             return;
         }
         synchronized (mRecords) {
-            mCellLocation[(int)subscription] = cellLocation;
+            int phoneId = SubscriptionManager.getPhoneId(subscription);
+            mCellLocation[phoneId] = cellLocation;
             for (Record r : mRecords) {
                 if (validateEventsAndUserLocked(r, PhoneStateListener.LISTEN_CELL_LOCATION)
                         && r.subscription == subscription) {

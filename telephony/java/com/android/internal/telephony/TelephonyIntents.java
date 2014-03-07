@@ -16,6 +16,8 @@
 
 package com.android.internal.telephony;
 
+import android.content.Intent;
+
 /**
  * The intents that the telephony services broadcast.
  *
@@ -48,7 +50,7 @@ public class TelephonyIntents {
      *
      * <p class="note">
      * Requires the READ_PHONE_STATE permission.
-     * 
+     *
      * <p class="note">This is a protected intent that can only be sent
      * by the system.
      */
@@ -69,7 +71,7 @@ public class TelephonyIntents {
      *
      * <p class="note">
      * Requires no permission.
-     * 
+     *
      * <p class="note">This is a protected intent that can only be sent
      * by the system.
      */
@@ -88,7 +90,7 @@ public class TelephonyIntents {
      *
      * <p class="note">
      * Requires no permission.
-     * 
+     *
      * <p class="note">This is a protected intent that can only be sent
      * by the system.
      */
@@ -114,7 +116,7 @@ public class TelephonyIntents {
      *
      * <p class="note">
      * Requires the READ_PHONE_STATE permission.
-     * 
+     *
      * <p class="note">This is a protected intent that can only be sent
      * by the system.
      */
@@ -138,7 +140,7 @@ public class TelephonyIntents {
      *
      * <p class="note">
      * Requires the READ_PHONE_STATE permission.
-     * 
+     *
      * <p class="note">This is a protected intent that can only be sent
      * by the system.
      */
@@ -181,7 +183,7 @@ public class TelephonyIntents {
      *
      * <p class="note">
      * Requires the READ_PHONE_STATE permission.
-     * 
+     *
      * <p class="note">This is a protected intent that can only be sent
      * by the system.
      */
@@ -205,7 +207,7 @@ public class TelephonyIntents {
      *
      * <p class="note">
      * Requires the READ_PHONE_STATE permission.
-     * 
+     *
      * <p class="note">This is a protected intent that can only be sent
      * by the system.
      */
@@ -223,7 +225,7 @@ public class TelephonyIntents {
      *
      * <p class="note">
      * Requires the READ_PHONE_STATE permission.
-     * 
+     *
      * <p class="note">This is a protected intent that can only be sent
      * by the system.
      */
@@ -241,7 +243,7 @@ public class TelephonyIntents {
      *
      * <p class="note">
      * Requires the READ_PHONE_STATE permission.
-     * 
+     *
      * <p class="note">This is a protected intent that can only be sent
      * by the system.
      */
@@ -325,5 +327,46 @@ public class TelephonyIntents {
      */
     public static final String ACTION_DEFAULT_SUBSCRIPTION_CHANGED
             = "org.codeaurora.intent.action.ACTION_DEFAULT_SUBSCRIPTION_CHANGED";
+
+    /**
+     * <p>Broadcast Action: It indicates one column of a siminfo record has been changed
+     * The intent will have the following extra values:</p>
+     * <ul>
+     *   <li><em>columnName</em> - The siminfo column that is updated.</li>
+     *   <li><em>stringContent</em> - The string value of the updated column.</li>
+     *   <li><em>intContent</em> - The int value of the updated column.</li>
+     * </ul>
+     * <p class="note">This is a protected intent that can only be sent
+     * by the system.
+     */
+    public static final String ACTION_SIMINFO_CONTENT_CHANGE
+            = "android.intent.action.ACTION_SIMINFO_CONTENT_CHANGE";
+
+    /**
+     * <p>Broadcast Action: It indicates one column of a subinfo record has been changed
+     * The intent will have the following extra values:</p>
+     * <ul>
+     *   <li><em>columnName</em> - The siminfo column that is updated.</li>
+     *   <li><em>stringContent</em> - The string value of the updated column.</li>
+     *   <li><em>intContent</em> - The int value of the updated column.</li>
+     * </ul>
+     * <p class="note">This is a protected intent that can only be sent
+     * by the system.
+     */
+    public static final String ACTION_SUBINFO_CONTENT_CHANGE
+            = "android.intent.action.ACTION_SUBINFO_CONTENT_CHANGE";
+
+    /**
+     * <p>Broadcast Action: It indicates siminfo update is completed when SIM inserted state change
+     * The intent will have the following extra values:</p>
+     * <p class="note">This is a protected intent that can only be sent
+     * by the system.
+     */
+    public static final String ACTION_SIMINFO_UPDATED
+            = "android.intent.action.ACTION_SIMINFO_UPDATED";
+
+    public static final String EXTRA_COLUMN_NAME = "columnName";
+    public static final String EXTRA_INT_CONTENT = "intContent";
+    public static final String EXTRA_STRING_CONTENT = "stringContent";
 
 }
