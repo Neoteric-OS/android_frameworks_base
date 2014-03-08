@@ -267,6 +267,7 @@ LOCAL_SRC_FILES += \
 	telephony/java/com/android/internal/telephony/ISms.aidl \
 	telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl \
 	telephony/java/com/android/internal/telephony/IWapPushManager.aidl \
+	telephony/java/com/android/internal/telephony/ISub.aidl \
 	wifi/java/android/net/wifi/IWifiManager.aidl \
 	wifi/java/android/net/wifi/p2p/IWifiP2pManager.aidl \
 	packages/services/PacProcessor/com/android/net/IProxyService.aidl \
@@ -462,8 +463,8 @@ html_dirs := \
 # Common sources for doc check and api check
 common_src_files := \
 	$(call find-other-html-files, $(html_dirs)) \
-	$(addprefix ../../libcore/, $(libcore_to_document)) \
-	$(addprefix ../../external/junit/, $(junit_to_document))
+	$(addprefix ../../libcore/, $(call libcore_to_document, $(LOCAL_PATH)/../../libcore)) \
+	$(addprefix ../../external/junit/, $(call junit_to_document, $(LOCAL_PATH)/../../external/junit))
 
 # These are relative to frameworks/base
 framework_docs_LOCAL_SRC_FILES := \
@@ -622,9 +623,9 @@ web_docs_sample_code_flags := \
 		-samplecode $(sample_dir)/BasicSyncAdapter \
  		            samples/BasicSyncAdapter "" \
 		-samplecode $(sample_dir)/StorageClient \
- 		            samples/StorageClient "" \
-		-samplecode $(sample_dir)/StorageProvider \
- 		            samples/StorageProvider ""
+ 		            samples/StorageClient "" 
+#		-samplecode $(sample_dir)/StorageProvider \
+# 		            samples/StorageProvider "" 
 #       -samplecode $(sample_dir)/AndroidBeamDemo \
 # 		            samples/AndroidBeamDemo "Android Beam Demo" \
 # 		-samplecode $(sample_dir)/ApiDemos \

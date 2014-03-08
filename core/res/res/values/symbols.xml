@@ -690,6 +690,7 @@
   <java-symbol type="string" name="mobile_provisioning_apn" />
   <java-symbol type="string" name="mobile_provisioning_url" />
   <java-symbol type="string" name="mobile_redirected_provisioning_url" />
+  <java-symbol type="string" name="quick_contacts_not_available" />
   <java-symbol type="string" name="reboot_safemode_confirm" />
   <java-symbol type="string" name="reboot_safemode_title" />
   <java-symbol type="string" name="relationTypeAssistant" />
@@ -1105,6 +1106,15 @@
   <java-symbol type="drawable" name="cling_button" />
   <java-symbol type="drawable" name="cling_arrow_up" />
   <java-symbol type="drawable" name="cling_bg" />
+
+  <java-symbol type="drawable" name="sim_light_blue" />
+  <java-symbol type="drawable" name="sim_light_green" />
+  <java-symbol type="drawable" name="sim_light_orange" />
+  <java-symbol type="drawable" name="sim_light_purple" />
+  <java-symbol type="drawable" name="sim_dark_blue" />
+  <java-symbol type="drawable" name="sim_dark_green" />
+  <java-symbol type="drawable" name="sim_dark_orange" />
+  <java-symbol type="drawable" name="sim_dark_purple" />
 
   <java-symbol type="layout" name="action_bar_home" />
   <java-symbol type="layout" name="action_bar_title_item" />
