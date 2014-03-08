@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "9c2ba1c2_8c48074d",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-08T21:06:04Z",
+      "side": 1,
+      "message": "Actually I see these are duplicated in SubscriptionController, so in the short term I guess we move these and the resources to SubscriptionController.",
+      "parentUuid": "3cf1d5a2_f1dd22fa",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 98
+      },
+      "revId": "3af49c077564801a42227dc4abdcce734774cfae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cf1d5a2_11d54ed5",
         "filename": "telephony/java/android/telephony/SubscriptionManager.java",
         "patchSetId": 1
