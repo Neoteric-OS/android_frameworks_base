@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cf1d5a2_31d04ae5",
+        "filename": "telephony/java/android/telephony/SubInfoRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-08T20:53:55Z",
+      "side": 1,
+      "message": "fix white space",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 1
+      },
+      "revId": "3af49c077564801a42227dc4abdcce734774cfae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cf1d5a2_f1dd22fa",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-08T20:53:55Z",
+      "side": 1,
+      "message": "I don\u0027t think these should not be in the SubscriptionManager, instead I think they should be in the application which calls \"setColor\". So please remove these and hopefully the resources.",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 98
+      },
+      "revId": "3af49c077564801a42227dc4abdcce734774cfae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cf1d5a2_11d54ed5",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-08T20:53:55Z",
+      "side": 1,
+      "message": "fix white space",
+      "range": {
+        "startLine": 142,
+        "startChar": 44,
+        "endLine": 142,
+        "endChar": 48
+      },
+      "revId": "3af49c077564801a42227dc4abdcce734774cfae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcf7d997_aee337bb",
+        "filename": "telephony/java/com/android/internal/telephony/TelephonyIntents.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-08T20:53:55Z",
+      "side": 1,
+      "message": "whitespace here and else where.",
+      "range": {
+        "startLine": 350,
+        "startChar": 0,
+        "endLine": 350,
+        "endChar": 12
+      },
+      "revId": "3af49c077564801a42227dc4abdcce734774cfae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c2ba1c2_cc2b1f61",
+        "filename": "telephony/java/com/android/internal/telephony/TelephonyIntents.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-03-08T20:53:55Z",
+      "side": 1,
+      "message": "Move these back up with SPN_STRINGS_UPDATED_ACTION above.",
+      "range": {
+        "startLine": 361,
+        "startChar": 0,
+        "endLine": 364,
+        "endChar": 56
+      },
+      "revId": "3af49c077564801a42227dc4abdcce734774cfae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
