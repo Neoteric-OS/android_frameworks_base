@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "dcf7d997_71913037",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-10T01:59:21Z",
+      "side": 1,
+      "message": "Pls add public static boolean isVoiceMailNumber(long subId, String number).\nBecause different SIMs will have different voice mail number.\nWe\u0027ll need this additional api to check if the number is voice mail number for specific SIM.",
+      "range": {
+        "startLine": 1846,
+        "startChar": 26,
+        "endLine": 1846,
+        "endChar": 43
+      },
+      "revId": "2d118f143d9be5a327c3ed5194b405ee794a1353",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c526d52_9b7ccfcb",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 15
