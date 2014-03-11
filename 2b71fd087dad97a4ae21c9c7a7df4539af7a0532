@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "fce81dcd_859488b8",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1004552
+      },
+      "writtenOn": "2014-03-11T09:49:51Z",
+      "side": 1,
+      "message": "As per our existing design, the data is supposed to be only one one sub. \n\nI think we need to re-visit these data related variables and add support.",
+      "parentUuid": "9c2ba1c2_0177b5e4",
+      "revId": "2b71fd087dad97a4ae21c9c7a7df4539af7a0532",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fce81dcd_25d9f49a",
         "filename": "services/java/com/android/server/TelephonyRegistry.java",
         "patchSetId": 2
@@ -59,6 +77,24 @@
         "endLine": 313,
         "endChar": 74
       },
+      "revId": "2b71fd087dad97a4ae21c9c7a7df4539af7a0532",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fce81dcd_658f7ca8",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1004552
+      },
+      "writtenOn": "2014-03-11T09:49:51Z",
+      "side": 1,
+      "message": "PhoneId identifies logical phone, ir-respective of SIM present or not number of logical phone I think should be same.\n\nEven though SIM absent in the device emergency call etc should go through via logical phones.\n\nI agree for SUB ID it may not be valid if SIM is absent, we may need to introduce some \"dummy\" subscription concept.",
+      "parentUuid": "fce81dcd_25d9f49a",
       "revId": "2b71fd087dad97a4ae21c9c7a7df4539af7a0532",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
