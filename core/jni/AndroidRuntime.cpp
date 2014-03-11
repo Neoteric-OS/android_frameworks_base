@@ -395,16 +395,16 @@ static void readLocale(char* language, char* region)
  *
  * This will cut up "extraOptsBuf" as we chop it into individual options.
  *
+ * If "quotingArg" is non-null, it is passed before each extra option in mOptions.
+ *
  * Adds the strings, if any, to mOptions.
  */
-void AndroidRuntime::parseExtraOpts(char* extraOptsBuf)
+void AndroidRuntime::parseExtraOpts(char* extraOptsBuf, const char* quotingArg)
 {
     JavaVMOption opt;
-    char* start;
-    char* end;
-
     memset(&opt, 0, sizeof(opt));
-    start = extraOptsBuf;
+    char* start = extraOptsBuf;
+    char* end = NULL;
     while (*start != '\0') {
         while (*start == ' ')                   /* skip leading whitespace */
             start++;
@@ -418,6 +418,11 @@ void AndroidRuntime::parseExtraOpts(char* extraOptsBuf)
             *end++ = '\0';          /* mark end, advance to indicate more */
 
         opt.optionString = start;
+        if (quotingArg != NULL) {
+            JavaVMOption quotingOpt;
+            quotingOpt.optionString = quotingArg;
+            mOptions.add(quotingOpt);
+        }
         mOptions.add(opt);
         start = end;
     }
@@ -449,6 +454,9 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
     char gctypeOptsBuf[sizeof("-Xgc:")-1 + PROPERTY_VALUE_MAX];
     char heaptargetutilizationOptsBuf[sizeof("-XX:HeapTargetUtilization=")-1 + PROPERTY_VALUE_MAX];
     char jitcodecachesizeOptsBuf[sizeof("-Xjitcodecachesize:")-1 + PROPERTY_VALUE_MAX];
+    char dalvikVmLibBuf[PROPERTY_VALUE_MAX];
+    char dex2oatFlagsBuf[PROPERTY_VALUE_MAX];
+    char dex2oatImageFlagsBuf[PROPERTY_VALUE_MAX];
     char extraOptsBuf[PROPERTY_VALUE_MAX];
     char* stackTraceFile = NULL;
     bool checkJni = false;
@@ -741,9 +749,23 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
         mOptions.add(opt);
     }
 
+    // libart tolerates libdvm flags, but not vice versa, so only pass some options if libart.
+    property_get("persist.sys.dalvik.vm.lib.1", dalvikVmLibBuf, "libdvm.so");
+    bool libart = (strncmp(dalvikVmLibBuf, "libart", 6) == 0);
+
+    if (libart) {
+        // Extra options for DexClassLoader.
+        property_get("dalvik.vm.dex2oat-flags", dex2oatFlagsBuf, "");
+        parseExtraOpts(dex2oatFlagsBuf, "-Xcompiler-option");
+
+        // Extra options for boot.art/boot.oat image generation.
+        property_get("dalvik.vm.image-dex2oat-flags", dex2oatImageFlagsBuf, "");
+        parseExtraOpts(dex2oatImageFlagsBuf, "-Ximage-compiler-option");
+    }
+
     /* extra options; parse this late so it overrides others */
     property_get("dalvik.vm.extra-opts", extraOptsBuf, "");
-    parseExtraOpts(extraOptsBuf);
+    parseExtraOpts(extraOptsBuf, NULL);
 
     /* Set the properties for locale */
     {
@@ -757,6 +779,42 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
         mOptions.add(opt);
         opt.optionString = regionOption;
         mOptions.add(opt);
+    }
+
+    /*
+     * Set profiler options
+     */
+    if (libart) {
+      char period[sizeof("-Xprofile-period:") + PROPERTY_VALUE_MAX];
+      char duration[sizeof("-Xprofile-duration:") + PROPERTY_VALUE_MAX];
+      char interval[sizeof("-Xprofile-interval:") + PROPERTY_VALUE_MAX];
+      char backoff[sizeof("-Xprofile-backoff:") + PROPERTY_VALUE_MAX];
+
+      // Number of seconds during profile runs.
+      strcpy(period, "-Xprofile-period:");
+      property_get("dalvik.vm.profile.period_secs", period+17, "10");
+      opt.optionString = period;
+      mOptions.add(opt);
+
+      // Length of each profile run (seconds).
+      strcpy(duration, "-Xprofile-duration:");
+      property_get("dalvik.vm.profile.duration_secs", duration+19, "30");
+      opt.optionString = duration;
+      mOptions.add(opt);
+
+
+      // Polling interval during profile run (microseconds).
+      strcpy(interval, "-Xprofile-interval:");
+      property_get("dalvik.vm.profile.interval_us", interval+19, "10000");
+      opt.optionString = interval;
+      mOptions.add(opt);
+
+      // Coefficient for period backoff.  The the period is multiplied
+      // by this value after each profile run.
+      strcpy(backoff, "-Xprofile-backoff:");
+      property_get("dalvik.vm.profile.backoff_coeff", backoff+18, "2.0");
+      opt.optionString = backoff;
+      mOptions.add(opt);
     }
 
     initArgs.version = JNI_VERSION_1_4;
