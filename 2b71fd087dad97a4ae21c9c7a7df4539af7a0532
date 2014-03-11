@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "9c2ba1c2_0177b5e4",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-11T05:47:31Z",
+      "side": 1,
+      "message": "Why some variables will be array but others not?",
+      "range": {
+        "startLine": 132,
+        "startChar": 16,
+        "endLine": 132,
+        "endChar": 42
+      },
+      "revId": "2b71fd087dad97a4ae21c9c7a7df4539af7a0532",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c526d52_3ee13180",
         "filename": "telephony/java/com/android/internal/telephony/PhoneConstants.java",
         "patchSetId": 2
