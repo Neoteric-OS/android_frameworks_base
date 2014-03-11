@@ -9,7 +9,6 @@
 status_t
 ResourceFilter::parse(const char* arg)
 {
-
     if (arg == NULL) {
         return 0;
     }

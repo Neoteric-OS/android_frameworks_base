@@ -25,7 +25,7 @@ status_t compileXmlFile(const sp<AaptAssets>& assets,
     if (root == NULL) {
         return UNKNOWN_ERROR;
     }
-    
+
     return compileXmlFile(assets, root, target, table, options);
 }
 
