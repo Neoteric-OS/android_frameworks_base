@@ -2322,7 +2322,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                 if (mHasFeature) {
                     int max = getMaximumFailedPasswordsForWipe(null, userHandle);
                     if (max > 0 && policy.mFailedPasswordAttempts >= max) {
-                        wipeDeviceOrUserLocked(0, userHandle);
+                        wipeDeviceOrUserLocked(1, userHandle);
                     }
                     sendAdminCommandLocked(DeviceAdminReceiver.ACTION_PASSWORD_FAILED,
                             DeviceAdminInfo.USES_POLICY_WATCH_LOGIN, userHandle);
