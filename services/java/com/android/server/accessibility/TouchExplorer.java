@@ -25,6 +25,7 @@ import android.gesture.GestureStore;
 import android.gesture.GestureStroke;
 import android.gesture.Prediction;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Slog;
@@ -66,6 +67,7 @@ import java.util.List;
 class TouchExplorer implements EventStreamTransformation {
 
     private static final boolean DEBUG = false;
+    private static final boolean DEBUG_BUILD = Build.IS_DEBUGGABLE;
 
     // Tag for logging received events.
     private static final String LOG_TAG = "TouchExplorer";
@@ -310,7 +312,7 @@ class TouchExplorer implements EventStreamTransformation {
 
     @Override
     public void onMotionEvent(MotionEvent event, MotionEvent rawEvent, int policyFlags) {
-        if (DEBUG) {
+        if (DEBUG_BUILD) {
             Slog.d(LOG_TAG, "Received event: " + event + ", policyFlags=0x"
                     + Integer.toHexString(policyFlags));
             Slog.d(LOG_TAG, getStateSymbolicName(mCurrentState));
@@ -645,8 +647,14 @@ class TouchExplorer implements EventStreamTransformation {
         final int pointerIdBits = (1 << mDraggingPointerId);
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN: {
-                throw new IllegalStateException("Dragging state can be reached only if two "
-                        + "pointers are already down");
+                if (DEBUG_BUILD) {
+                    throw new IllegalStateException("Dragging state can be reached only if two "
+                            + "pointers are already down");
+                } else {
+                    Slog.e(LOG_TAG, "Delegating state can only be reached if two"
+                            + "pointers are already down");
+                }
+                return;
             }
             case MotionEvent.ACTION_POINTER_DOWN: {
                 // We are in dragging state so we have two pointers and another one
@@ -737,8 +745,14 @@ class TouchExplorer implements EventStreamTransformation {
     private void handleMotionEventStateDelegating(MotionEvent event, int policyFlags) {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN: {
-                throw new IllegalStateException("Delegating state can only be reached if "
-                        + "there is at least one pointer down!");
+                if (DEBUG) {
+                    throw new IllegalStateException("Delegating state can only be reached if "
+                            + "there is at least one pointer down!");
+                } else {
+                    Slog.e(LOG_TAG, "Delegating state can only be reached if "
+                            + "there is at least one pointer down!");
+                }
+                return;
             }
             case MotionEvent.ACTION_UP: {
                 // Offset the event if we are doing a long press as the
