@@ -22,6 +22,30 @@
       "revId": "e1847fedd3a54b41da401c5afa46f4103a261812",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cc8f574_908ccc73",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2014-03-13T23:10:48Z",
+      "side": 1,
+      "message": "Hi Tsuwei, system/core/include/private/android_filesystem_config.h defines these gid numbers, and 1021 is GPS.  That is the only one that is dedicated for GPS / Location features.  Without this gid, system_server process is unable to access system resources that are limited only gps.  We have no problem accessing modem because system_server has radio gid, but there is obviously a co-incidence.  Other resources include sockets for IPC, process launch configs etc.  Historically we configure those resources with system gid.  And that wouldn\u0027t be the best apparently.",
+      "parentUuid": "bc586570_fda22315",
+      "range": {
+        "startLine": 500,
+        "startChar": 80,
+        "endLine": 500,
+        "endChar": 84
+      },
+      "revId": "e1847fedd3a54b41da401c5afa46f4103a261812",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
