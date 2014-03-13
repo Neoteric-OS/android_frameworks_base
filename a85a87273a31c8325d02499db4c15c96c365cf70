@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cc8f574_b95e1bd5",
+        "filename": "api/current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 13690,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2014-03-13T18:27:35Z",
+      "side": 1,
+      "message": "with @hide, this should not appear here.",
+      "range": {
+        "startLine": 13690,
+        "startChar": 0,
+        "endLine": 13690,
+        "endChar": 61
+      },
+      "revId": "a85a87273a31c8325d02499db4c15c96c365cf70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cc8f574_d9c67736",
+        "filename": "services/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3227,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2014-03-13T18:27:35Z",
+      "side": 1,
+      "message": "since this is just used internally, use enforceConnectivityInternalPermission()",
+      "range": {
+        "startLine": 3227,
+        "startChar": 8,
+        "endLine": 3227,
+        "endChar": 37
+      },
+      "revId": "a85a87273a31c8325d02499db4c15c96c365cf70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cb3e9f9_bdf1a74a",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2090,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2014-03-13T18:27:35Z",
+      "side": 1,
+      "message": "don\u0027t do this - put the p2p range into tethering so if tethering comes up after p2p p2p still works and vice versa.  There needs to be a single source of truth for this.\n\nEventually  I\u0027d like callers to startTethering to specify just their range and have netd manage/merge them.  Also it should be renamed.  I think that\u0027s out of scope for what you need, but hopefully the next major release we can do that..",
+      "range": {
+        "startLine": 2090,
+        "startChar": 0,
+        "endLine": 2090,
+        "endChar": 83
+      },
+      "revId": "a85a87273a31c8325d02499db4c15c96c365cf70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
