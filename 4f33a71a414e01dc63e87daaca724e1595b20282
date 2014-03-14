@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ca891a1_fd866703",
+        "filename": "tools/aapt/Bundle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-03-14T13:55:06Z",
+      "side": 1,
+      "message": "This is C++, prefer enum { }",
+      "revId": "4f33a71a414e01dc63e87daaca724e1595b20282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cba6def_989ad55b",
+        "filename": "tools/aapt/ResourceTable.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1423,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-03-14T13:55:06Z",
+      "side": 1,
+      "message": "Remove this commented out code.",
+      "revId": "4f33a71a414e01dc63e87daaca724e1595b20282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
