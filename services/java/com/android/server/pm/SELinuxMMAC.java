@@ -25,6 +25,8 @@ import android.util.Xml;
 
 import com.android.internal.util.XmlUtils;
 
+import libcore.io.IoUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -48,17 +50,25 @@ public final class SELinuxMMAC {
     private static final boolean DEBUG_POLICY_INSTALL = DEBUG_POLICY || false;
 
     // Signature seinfo values read from policy.
-    private static HashMap<Signature, Policy> sSigSeinfo =
-        new HashMap<Signature, Policy>();
+    private static HashMap<Signature, Policy> sSigSeinfo = new HashMap<Signature, Policy>();
 
     // Default seinfo read from policy.
     private static String sDefaultSeinfo = null;
 
-    // Locations of potential install policy files.
-    private static final File[] INSTALL_POLICY_FILE = {
-        new File(Environment.getDataDirectory(), "security/mac_permissions.xml"),
-        new File(Environment.getRootDirectory(), "etc/security/mac_permissions.xml"),
-        null};
+    // Data policy override version file.
+    private static final String DATA_VERSION_FILE =
+            Environment.getDataDirectory() + "/security/current/selinux_version";
+
+    // Base policy version file.
+    private static final String BASE_VERSION_FILE = "/selinux_version";
+
+    // Data override mac_permissions.xml policy file.
+    private static final String DATA_MAC_PERMISSIONS =
+            Environment.getDataDirectory() + "/security/mac_permissions.xml";
+
+    // Base mac_permissions.xml policy file.
+    private static final String BASE_MAC_PERMISSIONS =
+            Environment.getRootDirectory() + "/etc/security/mac_permissions.xml";
 
     // Signature policy stanzas
     static class Policy {
@@ -101,50 +111,23 @@ public final class SELinuxMMAC {
         sDefaultSeinfo = null;
     }
 
-    /**
-     * Parses an MMAC install policy from a predefined list of locations.
-     * @param none
-     * @return boolean indicating whether an install policy was correctly parsed.
-     */
     public static boolean readInstallPolicy() {
-
-        return readInstallPolicy(INSTALL_POLICY_FILE);
-    }
-
-    /**
-     * Parses an MMAC install policy given as an argument.
-     * @param File object representing the path of the policy.
-     * @return boolean indicating whether the install policy was correctly parsed.
-     */
-    public static boolean readInstallPolicy(File policyFile) {
-
-        return readInstallPolicy(new File[]{policyFile,null});
-    }
-
-    private static boolean readInstallPolicy(File[] policyFiles) {
         // Temp structures to hold the rules while we parse the xml file.
         // We add all the rules together once we know there's no structural problems.
         HashMap<Signature, Policy> sigSeinfo = new HashMap<Signature, Policy>();
         String defaultSeinfo = null;
 
-        FileReader policyFile = null;
-        int i = 0;
-        while (policyFile == null && policyFiles != null && policyFiles[i] != null) {
-            try {
-                policyFile = new FileReader(policyFiles[i]);
-                break;
-            } catch (FileNotFoundException e) {
-                Slog.d(TAG,"Couldn't find install policy " + policyFiles[i].getPath());
-            }
-            i++;
-        }
-
+        FileReader policyFile = grabOverridePolicy();
+        // If no override policy then grab base policy.
         if (policyFile == null) {
-            Slog.d(TAG, "No policy file found. All seinfo values will be null.");
-            return false;
+            try {
+                policyFile = new FileReader(BASE_MAC_PERMISSIONS);
+                Slog.d(TAG, "Using base policy file " + BASE_MAC_PERMISSIONS);
+            } catch (FileNotFoundException fnfe) {
+                Slog.e(TAG, "No mac_permissions.xml file found. All seinfo values will be null.");
+                return false;
+            }
         }
-
-        Slog.d(TAG, "Using install policy file " + policyFiles[i].getPath());
 
         try {
             XmlPullParser parser = Xml.newPullParser();
@@ -390,5 +373,22 @@ public final class SELinuxMMAC {
                    + (sDefaultSeinfo == null ? "null" : sDefaultSeinfo));
 
         return (sDefaultSeinfo != null);
+    }
+
+    private static FileReader grabOverridePolicy() {
+        try {
+            final FileReader policyFile = new FileReader(DATA_MAC_PERMISSIONS);
+            final String overrideVersion = IoUtils.readFileAsString(DATA_VERSION_FILE);
+            final String baseVersion = IoUtils.readFileAsString(BASE_VERSION_FILE);
+            if (overrideVersion.equals(baseVersion)) {
+                Slog.d(TAG, "Using override policy file " + DATA_MAC_PERMISSIONS);
+                return policyFile;
+            }
+            Slog.e(TAG, "Override policy version '" + overrideVersion + "' doesn't match " +
+                   "base version '" + baseVersion + "'. Skipping " + DATA_MAC_PERMISSIONS);
+        } catch (IOException e) {
+            Slog.e(TAG, "Skipping override policy. " + e.getMessage());
+        }
+        return null;
     }
 }
