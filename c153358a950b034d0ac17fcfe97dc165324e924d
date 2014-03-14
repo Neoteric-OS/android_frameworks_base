@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cd6d13f_adf9bdee",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1013157
+      },
+      "writtenOn": "2014-03-14T16:33:34Z",
+      "side": 1,
+      "message": "I\u0027m thinking that we should probably move this to /data/security/current/mac_permissions.xml to stay consistent with the other policy files.",
+      "revId": "c153358a950b034d0ac17fcfe97dc165324e924d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

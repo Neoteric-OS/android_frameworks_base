@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fccd7da7_348510f2",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1013157
+      },
+      "writtenOn": "2014-03-14T16:33:34Z",
+      "side": 0,
+      "message": "This function is never used in AOSP so I dropped it.",
+      "revId": "629daddd03b598616de7c30a13b1f9f9b11b98fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
