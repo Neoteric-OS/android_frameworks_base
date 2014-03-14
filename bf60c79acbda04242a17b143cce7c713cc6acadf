@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cbf69de_d7ddbc86",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1039969
+      },
+      "writtenOn": "2014-03-14T09:12:58Z",
+      "side": 1,
+      "message": "Because the array size of variables in telephonyRegistry is depend on size of phones and Apps will register event with phone id for multi sim, the \"subscription\" should be replaced by phoneId \n\nThe naming of \"r.subscription\" should also be renamed to \"r.phoneId\"",
+      "range": {
+        "startLine": 574,
+        "startChar": 45,
+        "endLine": 574,
+        "endChar": 57
+      },
+      "revId": "bf60c79acbda04242a17b143cce7c713cc6acadf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
