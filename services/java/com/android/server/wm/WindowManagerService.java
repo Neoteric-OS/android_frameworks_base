@@ -4696,7 +4696,9 @@ public class WindowManagerService extends IWindowManager.Stub
         final WindowList windows = win.getWindowList();
         final int NCW = win.mChildWindows.size();
         boolean added = false;
-        for (int j=0; j<NCW; j++) {
+        // child window ard temparary removed in descending order in tmpRemoveWindowLocked
+        // so, child windows should be added in descnding order
+        for (int j= NCW-1; j>=0; j--) {
             WindowState cwin = win.mChildWindows.get(j);
             if (!added && cwin.mSubLayer >= 0) {
                 if (DEBUG_WINDOW_MOVEMENT) Slog.v(TAG, "Re-adding child window at "
