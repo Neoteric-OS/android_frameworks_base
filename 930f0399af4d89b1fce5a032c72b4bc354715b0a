@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc29fd1f_b420202a",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2014-03-20T16:30:02Z",
+      "side": 1,
+      "message": "Let\u0027s move this under current too and make it part of the policy update bundle.",
+      "revId": "930f0399af4d89b1fce5a032c72b4bc354715b0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
