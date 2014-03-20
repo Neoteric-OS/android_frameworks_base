@@ -34,6 +34,24 @@
       "revId": "c39bc9a81884a4cedca4512817dd5f44e9bba840",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc81454e_7245d8d1",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2014-03-20T17:21:56Z",
+      "side": 1,
+      "message": "I thought it was confusing to see this log message in logcat on boot when there was no /data/security directory at all...",
+      "parentUuid": "7c8b4d70_90563497",
+      "revId": "c39bc9a81884a4cedca4512817dd5f44e9bba840",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
