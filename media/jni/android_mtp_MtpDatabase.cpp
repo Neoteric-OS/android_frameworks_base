@@ -388,7 +388,7 @@ MtpResponseCode MyMtpDatabase::getObjectPropertyValue(MtpObjectHandle handle,
         // release date is stored internally as just the year
         if (property == MTP_PROPERTY_ORIGINAL_RELEASE_DATE) {
             char    date[20];
-            snprintf(date, sizeof(date), "%04lld0101T000000", longValue);
+            snprintf(date, sizeof(date), "%04lld0101T000000", (long long)longValue);
             packet.putString(date);
             goto out;
         }
@@ -645,7 +645,7 @@ MtpResponseCode MyMtpDatabase::setDevicePropertyValue(MtpDeviceProperty property
     return result;
 }
 
-MtpResponseCode MyMtpDatabase::resetDeviceProperty(MtpDeviceProperty property) {
+MtpResponseCode MyMtpDatabase::resetDeviceProperty(MtpDeviceProperty /*property*/) {
     return -1;
 }
 
@@ -1090,7 +1090,7 @@ android_mtp_MtpDatabase_finalize(JNIEnv *env, jobject thiz)
 }
 
 static jstring
-android_mtp_MtpPropertyGroup_format_date_time(JNIEnv *env, jobject thiz, jlong seconds)
+android_mtp_MtpPropertyGroup_format_date_time(JNIEnv *env, jobject /*thiz*/, jlong seconds)
 {
     char    date[20];
     formatDateTime(seconds, date, sizeof(date));
