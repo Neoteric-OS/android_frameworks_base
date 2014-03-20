@@ -52,6 +52,24 @@
       "revId": "c39bc9a81884a4cedca4512817dd5f44e9bba840",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c8b4d70_104244cb",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1013157
+      },
+      "writtenOn": "2014-03-20T17:28:09Z",
+      "side": 1,
+      "message": "Not a big deal to change. Done.",
+      "parentUuid": "bc81454e_7245d8d1",
+      "revId": "c39bc9a81884a4cedca4512817dd5f44e9bba840",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
