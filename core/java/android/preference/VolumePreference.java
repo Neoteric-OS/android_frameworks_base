@@ -26,6 +26,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.Looper;
 import android.os.Message;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -347,6 +348,11 @@ public class VolumePreference extends SeekBarDialogPreference implements
             postStopSample();
             mContext.getContentResolver().unregisterContentObserver(mVolumeObserver);
             mSeekBar.setOnSeekBarChangeListener(null);
+            Looper looper = mHandler.getLooper();
+            if (looper != null) {
+                looper.quitSafely();
+            }
+
         }
 
         public void revertVolume() {
