@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c8b4d70_b020182a",
+        "filename": "services/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2014-03-20T17:11:18Z",
+      "side": 1,
+      "message": "Should only log this if there was a DATA_MAC_PERMISSIONS file, right?",
+      "revId": "c39bc9a81884a4cedca4512817dd5f44e9bba840",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
