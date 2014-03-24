@@ -61,6 +61,7 @@ public class X509TrustManagerExtensions {
      */
     public List<X509Certificate> checkServerTrusted(X509Certificate[] chain, String authType,
                                                     String host) throws CertificateException {
-        return mDelegate.checkServerTrusted(chain, authType, host);
+        return mDelegate.checkServerTrusted(chain, authType,
+                new DelegatingSSLSession.HostnameWrap(host));
     }
 }
