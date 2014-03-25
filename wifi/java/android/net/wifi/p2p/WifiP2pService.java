@@ -1349,7 +1349,12 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
             switch (message.what) {
                 case PEER_CONNECTION_USER_ACCEPT:
                     mWifiNative.p2pStopFind();
-                    p2pConnectWithPinDisplay(mSavedPeerConfig);
+                    boolean result = p2pConnectWithPinDisplay(mSavedPeerConfig);
+                    if (!result) {
+                        handleGroupCreationFailure();
+                        transitionTo(mInactiveState);
+                        if (DBG) logd("Invalid pin is entered, moving to inactive state");
+                    }
                     mPeers.updateStatus(mSavedPeerConfig.deviceAddress, WifiP2pDevice.INVITED);
                     sendPeersChangedBroadcast();
                     transitionTo(mGroupNegotiationState);
@@ -2336,17 +2341,22 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
     /**
      * Start a p2p group negotiation and display pin if necessary
      * @param config for the peer
+     * @return true on success, false on failure
      */
-    private void p2pConnectWithPinDisplay(WifiP2pConfig config) {
+    private boolean p2pConnectWithPinDisplay(WifiP2pConfig config) {
         WifiP2pDevice dev = fetchCurrentDeviceDetails(config);
 
         String pin = mWifiNative.p2pConnect(config, dev.isGroupOwner());
+        if (pin == null) {
+            return false;
+        }
         try {
             Integer.parseInt(pin);
             notifyInvitationSent(pin, config.deviceAddress);
         } catch (NumberFormatException ignore) {
             // do nothing if p2pConnect did not return a pin
         }
+        return true;
     }
 
     /**
