@@ -39,6 +39,7 @@ public class UriMatcherTest extends TestCase {
     static final int CALLERID_TEXT = 12;
     static final int FILTERRECENT = 13;
     static final int ANOTHER_PATH_SEGMENT = 13;
+    static final int ASDF = 14;
 
     @SmallTest
     public void testContentUris() {
@@ -80,6 +81,13 @@ public class UriMatcherTest extends TestCase {
         matcher.addURI("filter-recent", null, FILTERRECENT);
         matcher.addURI("auth", "/another/path/segment", ANOTHER_PATH_SEGMENT);
         checkAll(matcher);
+    }
+
+    @SmallTest
+    public void testContentUrisWithSlashOnly() {
+        UriMatcher matcher = new UriMatcher(ROOT);
+        matcher.addURI("asdf", "/", ASDF);
+        check("content://asdf/", ASDF, matcher);
     }
 
     private void checkAll(UriMatcher matcher) {
