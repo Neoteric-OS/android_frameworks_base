@@ -16,6 +16,24 @@
       "revId": "587a9455ded22165127e1a91cba5057f7c59a6fc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "590f7b24_d7765c62",
+        "filename": "core/java/android/net/http/CertificateChainValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2014-03-26T16:43:56Z",
+      "side": 1,
+      "message": "This code is what I expected. To check:\n\npublic class TrustManagerFactoryImpl extends TrustManagerFactorySpi {\n\n    private KeyStore keyStore;\n\n    /**\n     * @see javax.net.ssl.TrustManagerFactorySpi#engineInit(KeyStore)\n     */\n    @Override\n    public void engineInit(KeyStore ks) throws KeyStoreException {\n        if (ks !\u003d null) {\n            keyStore \u003d ks;\n        } else {\n            keyStore \u003d KeyStore.getInstance(\"AndroidCAStore\");\n            try {\n                keyStore.load(null, null);\n            } catch (IOException e) {\n                throw new KeyStoreException(e);\n            } catch (CertificateException e) {\n                throw new KeyStoreException(e);\n            } catch (NoSuchAlgorithmException e) {\n                throw new KeyStoreException(e);\n            }\n        }\n    }",
+      "parentUuid": "590f7b24_572feca3",
+      "revId": "587a9455ded22165127e1a91cba5057f7c59a6fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
