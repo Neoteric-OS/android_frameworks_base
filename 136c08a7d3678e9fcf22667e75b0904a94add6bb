@@ -16,6 +16,24 @@
       "revId": "136c08a7d3678e9fcf22667e75b0904a94add6bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c23318f_1a930900",
+        "filename": "media/jni/android_media_MediaExtractor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2014-03-26T14:57:07Z",
+      "side": 1,
+      "message": "That would require changing the Java DataSource object too, right?. We could do that because it\u0027s not part of the SDK API, but it\u0027s not needed (we\u0027ll never read more than 2GB at a time), and it seems simpler to just ensure we actually pass an int.",
+      "parentUuid": "99ec937b_011eca76",
+      "revId": "136c08a7d3678e9fcf22667e75b0904a94add6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
