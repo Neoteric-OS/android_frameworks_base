@@ -34,6 +34,24 @@
       "revId": "587a9455ded22165127e1a91cba5057f7c59a6fc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99157331_1c00791c",
+        "filename": "core/java/android/net/http/CertificateChainValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2014-03-26T16:50:02Z",
+      "side": 1,
+      "message": "It seems like system-default should check the properties like DefaultSSLContextImpl does, but I don\u0027t think there are any tests for this. SSLParametersImpl probably needs to use that as well.\n\nSince this code is not a system default class, it\u0027s fine to initialize using null.",
+      "parentUuid": "590f7b24_572feca3",
+      "revId": "587a9455ded22165127e1a91cba5057f7c59a6fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
