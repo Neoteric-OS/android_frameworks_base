@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "590f7b24_572feca3",
+        "filename": "core/java/android/net/http/CertificateChainValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2014-03-26T16:22:50Z",
+      "side": 1,
+      "message": "Is this the correct setup for the platform-default trust manager? Conscrypt\u0027s default SSLContext (and thus platform-default SSLSockets/SSLEngines) use quite a different setup (see DefaultSSLContextImpl.getTrustManagers). At the same time, other Conscrypt-backed SSLContext instances use the setup you have here. Which one\u0027s the correct one?",
+      "revId": "587a9455ded22165127e1a91cba5057f7c59a6fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
