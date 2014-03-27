@@ -34,6 +34,24 @@
       "revId": "136c08a7d3678e9fcf22667e75b0904a94add6bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99ec937b_a413acb3",
+        "filename": "media/jni/android_media_MediaExtractor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-03-27T12:32:39Z",
+      "side": 1,
+      "message": "Yeah, sure. My main worry about these casts is that they fix a very subtle problem (and they look unnecessary on the surface).\n\nI\u0027m worried that someone will \"clean up\" this unnecessary cast and reintroduce an issue that will show up only a 64 bit platform.",
+      "parentUuid": "1c23318f_1a930900",
+      "revId": "136c08a7d3678e9fcf22667e75b0904a94add6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
