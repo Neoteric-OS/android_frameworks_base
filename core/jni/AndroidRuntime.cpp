@@ -227,9 +227,10 @@ int register_com_android_internal_os_RuntimeInit(JNIEnv* env)
 
 /*static*/ JavaVM* AndroidRuntime::mJavaVM = NULL;
 
-
-AndroidRuntime::AndroidRuntime() :
-        mExitWithoutCleanup(false)
+AndroidRuntime::AndroidRuntime(char* argv0, const size_t argv0Size) :
+        mExitWithoutCleanup(false),
+        mArgv0(argv0),
+        mArgv0Size(argv0Size)
 {
     SkGraphics::Init();
     // this sets our preference for 16bit images during decode
@@ -262,6 +263,13 @@ AndroidRuntime::~AndroidRuntime()
     const char* className, const JNINativeMethod* gMethods, int numMethods)
 {
     return jniRegisterNativeMethods(env, className, gMethods, numMethods);
+}
+
+void AndroidRuntime::setArgv0(const char* argv0) {
+    // We need to overwrite the original argv0 because that's what the
+    // kernel uses to populate /proc/<pid>/cmdline etc, and lots of tools
+    // use that for the "nice name" of the process.
+    strlcpy(mArgv0, argv0, mArgv0Size);
 }
 
 status_t AndroidRuntime::callMain(const char* className,

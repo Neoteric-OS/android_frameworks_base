@@ -30,8 +30,9 @@ void app_usage()
 class AppRuntime : public AndroidRuntime
 {
 public:
-    AppRuntime()
-        : mParentDir(NULL)
+    AppRuntime(char* argv0, const size_t argv0Size)
+        : AndroidRuntime(argv0, argv0Size)
+        , mParentDir(NULL)
         , mClassName(NULL)
         , mClass(NULL)
         , mArgC(0)
@@ -125,29 +126,9 @@ public:
 
 using namespace android;
 
-/*
- * sets argv0 to as much of newArgv0 as will fit
- */
-static void setArgv0(const char *argv0, const char *newArgv0)
-{
-    strlcpy(const_cast<char *>(argv0), newArgv0, strlen(argv0));
-}
-
 int main(int argc, char* const argv[])
 {
-    // These are global variables in ProcessState.cpp
-    mArgC = argc;
-    mArgV = argv;
-
-    mArgLen = 0;
-    for (int i=0; i<argc; i++) {
-        mArgLen += strlen(argv[i]) + 1;
-    }
-    mArgLen--;
-
-    AppRuntime runtime;
-    const char* argv0 = argv[0];
-
+    AppRuntime runtime(argv[0], reinterpret_cast<uintptr_t>(argv[argc]) - 1);
     // Process command line arguments
     // ignore argv[0]
     argc--;
@@ -184,7 +165,7 @@ int main(int argc, char* const argv[])
     }
 
     if (niceName && *niceName) {
-        setArgv0(argv0, niceName);
+        runtime.setArgv0(niceName);
         set_process_name(niceName);
     }
 
