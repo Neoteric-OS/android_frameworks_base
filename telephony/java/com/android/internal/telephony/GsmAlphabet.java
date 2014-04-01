@@ -27,6 +27,8 @@ import java.nio.charset.Charset;
 import com.android.internal.telephony.SmsConstants;
 import com.android.internal.R;
 
+import java.lang; /* Test only */
+
 import java.util.ArrayList;
 import java.util.List;
 
