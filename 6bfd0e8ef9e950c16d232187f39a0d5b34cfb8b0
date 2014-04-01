@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39ae4766_d03d11cc",
+        "filename": "services/java/com/android/server/print/RemotePrintSpooler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2014-04-01T17:54:30Z",
+      "side": 1,
+      "message": "This is not fixing the root cause which is that clearClientLocked is called after the mRemoteInstance has already been cleared :)\n\nCan you post the stack trace? This state should never be reached and we have to fix the root cause instead of the effects of it.",
+      "range": {
+        "startLine": 425,
+        "startChar": 9,
+        "endLine": 425,
+        "endChar": 43
+      },
+      "revId": "6bfd0e8ef9e950c16d232187f39a0d5b34cfb8b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
