@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99d653da_14d87a62",
+        "filename": "tools/aapt/ResourceTable.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1437,
+      "author": {
+        "id": 1043034
+      },
+      "writtenOn": "2014-04-01T02:07:27Z",
+      "side": 1,
+      "message": "Is there a reason a string can not be formatted if it is not translatable?",
+      "revId": "16e788d7f69ef866a1928bd53a9f45210c84d17e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59e05baf_f8760562",
+        "filename": "tools/aapt/ResourceTable.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1575,
+      "author": {
+        "id": 1043034
+      },
+      "writtenOn": "2014-04-01T02:07:27Z",
+      "side": 1,
+      "message": "I know these were here before but can you remove these pre-processor statements?",
+      "revId": "16e788d7f69ef866a1928bd53a9f45210c84d17e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39c56724_b1c89a91",
+        "filename": "tools/aapt/XMLNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1043034
+      },
+      "writtenOn": "2014-04-01T02:07:27Z",
+      "side": 1,
+      "message": "I would prefer to use an enum type here to differentiate from the earlier bitmasking use of pseudolocalization types.",
+      "revId": "16e788d7f69ef866a1928bd53a9f45210c84d17e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39c56724_f1a702cf",
+        "filename": "tools/aapt/pseudolocalize.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1043034
+      },
+      "writtenOn": "2014-04-01T02:07:27Z",
+      "side": 1,
+      "message": "If these are not used anywhere but in XMLNode.cpp, can we have these methods use the String16 class directly? (or String8 at the very least, but it seems like the result is always converted to unicode)",
+      "revId": "16e788d7f69ef866a1928bd53a9f45210c84d17e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
