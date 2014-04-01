@@ -761,7 +761,8 @@ public class GestureOverlayView extends FrameLayout {
             } else if (resetMultipleStrokes) {
                 mResetGesture = true;
             } else {
-                fireOnGesturePerformed();
+                if (mCurrentGesture != null)
+                    fireOnGesturePerformed();
 
                 mFadingHasStarted = false;
                 mPath.rewind();
