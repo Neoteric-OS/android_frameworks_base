@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "198a632f_eda1a5ba",
+        "filename": "media/jni/android_media_MediaMetadataRetriever.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2014-04-04T15:08:13Z",
+      "side": 1,
+      "message": "I\u0027m wondering whether this should also clear any pending exceptions before returning, since MediaMetadataRetriever.getFrameAtTime() is defined to return null if the frame cannot be retrieved.",
+      "revId": "379c283416a4184ea2be49b4727116fa808df5a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
