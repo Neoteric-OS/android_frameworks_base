@@ -57,5 +57,6 @@ int main(int argc, char** argv)
         IPCThreadState::self()->joinThreadPool();
 
     }
+    ALOGI("Boot animation finished");
     return 0;
 }
