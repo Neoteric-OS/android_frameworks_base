@@ -1700,4 +1700,26 @@ public class TelephonyManager {
         return mContext.getResources().getString(
                 com.android.internal.R.string.config_mms_user_agent_profile_url);
     }
+
+    /**
+     * Send ENVELOPE to the SIM and return the response.
+     *
+     * <p>Requires Permission:
+     *   {@link android.Manifest.permission#SIM_COMMUNICATION SIM_COMMUNICATION}
+     *
+     * @param content String containing SAT/USAT response in hexadecimal
+     *                format starting with command tag. See TS 102 223 for
+     *                details.
+     * @return The APDU response from the ICC card, with the last 4 bytes
+     *         being the status word. If the command fails, returns an empty
+     *         string.
+     */
+    public String sendEnvelopeWithStatus(String content) {
+        try {
+            return getITelephony().sendEnvelopeWithStatus(content);
+        } catch (RemoteException ex) {
+        } catch (NullPointerException ex) {
+        }
+        return "";
+    }
 }

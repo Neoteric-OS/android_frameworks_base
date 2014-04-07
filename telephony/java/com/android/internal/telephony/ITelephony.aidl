@@ -324,5 +324,17 @@ interface ITelephony {
      * Sets minimum time in milli-seconds between onCellInfoChanged
      */
     void setCellInfoListRate(int rateInMillis);
+
+    /**
+     * Send ENVELOPE to the SIM and returns the response.
+     *
+     * @param contents  String containing SAT/USAT response in hexadecimal
+     *                  format starting with command tag. See TS 102 223 for
+     *                  details.
+     * @return The APDU response from the ICC card, with the last 4 bytes
+     *         being the status word. If the command fails, returns an empty
+     *         string.
+     */
+    String sendEnvelopeWithStatus(String content);
 }
 
