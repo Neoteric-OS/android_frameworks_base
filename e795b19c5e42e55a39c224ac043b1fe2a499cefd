@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59a69bd4_2e97f779",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-04-07T20:51:02Z",
+      "side": 1,
+      "message": "s/apk/shared library/?",
+      "revId": "e795b19c5e42e55a39c224ac043b1fe2a499cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19734325_a4c7b754",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-04-07T20:51:02Z",
+      "side": 1,
+      "message": "you\u0027re allowed to put gdbserver binaries in apks?",
+      "revId": "e795b19c5e42e55a39c224ac043b1fe2a499cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59a69bd4_aedc2757",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-04-07T20:51:02Z",
+      "side": 1,
+      "message": "if (cpuAbi.get() \u003d\u003d NULL) {\n    // this will have thrown...\n    return ?\n  }",
+      "revId": "e795b19c5e42e55a39c224ac043b1fe2a499cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
