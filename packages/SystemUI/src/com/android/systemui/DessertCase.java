@@ -21,7 +21,7 @@ import android.content.ComponentName;
 import android.content.pm.PackageManager;
 import android.util.Slog;
 
-public class DessertCase extends Activity {
+public class DessertCase extends Activity implements Runnable {
     DessertCaseView mView;
 
     @Override
@@ -49,16 +49,17 @@ public class DessertCase extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        mView.postDelayed(new Runnable() {
-            public void run() {
-                mView.start();
-            }
-        }, 1000);
+        mView.postDelayed(this, 1000);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        mView.removeCallbacks(this);
         mView.stop();
+    }
+
+    public void run() {
+        mView.start();
     }
 }

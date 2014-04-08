@@ -18,7 +18,7 @@ package com.android.systemui;
 
 import android.service.dreams.DreamService;
 
-public class DessertCaseDream extends DreamService {
+public class DessertCaseDream extends DreamService implements Runnable {
     private DessertCaseView mView;
     private DessertCaseView.RescalingContainer mContainer;
 
@@ -39,16 +39,17 @@ public class DessertCaseDream extends DreamService {
     @Override
     public void onDreamingStarted() {
         super.onDreamingStarted();
-        mView.postDelayed(new Runnable() {
-            public void run() {
-                mView.start();
-            }
-        }, 1000);
+        mView.postDelayed(this, 1000);
     }
 
     @Override
     public void onDreamingStopped() {
         super.onDreamingStopped();
+        mView.removeCallbacks(this);
         mView.stop();
+    }
+
+    public void run() {
+        mView.start();
     }
 }
