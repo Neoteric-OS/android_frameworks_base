@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79ba7fef_feb65906",
+        "filename": "packages/DefaultContainerService/src/com/android/defcontainer/DefaultContainerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1040283
+      },
+      "writtenOn": "2014-04-08T11:57:18Z",
+      "side": 1,
+      "message": "Thanks, this looks good. I think in relation to all these changes it is worth mentioning that, in general, this automatic selection method is all we need really for not involving App developers or the end users in the choice of the architecture.\n\nThose other cases, if ever needed, can of course be added in the future through some sort of Application Manifest element, a generic App settings item, or a device to store communication method. In terms of the App settings, change #89651 can come in handy.",
+      "revId": "e70ae3bff4a39e69e3a86ba68f918281cf6dfbab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
