@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9e2ef19_8c6de78a",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-04-08T10:44:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59a69bd4_2e97f779",
+      "revId": "e795b19c5e42e55a39c224ac043b1fe2a499cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19734325_a4c7b754",
         "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "19d6e33f_2de02de6",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-04-08T10:44:22Z",
+      "side": 1,
+      "message": "Looks like it :)",
+      "parentUuid": "19734325_a4c7b754",
+      "revId": "e795b19c5e42e55a39c224ac043b1fe2a499cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59a69bd4_aedc2757",
         "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2014-04-07T20:51:02Z",
       "side": 1,
       "message": "if (cpuAbi.get() \u003d\u003d NULL) {\n    // this will have thrown...\n    return ?\n  }",
+      "revId": "e795b19c5e42e55a39c224ac043b1fe2a499cefd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19d6e33f_ed0a25f0",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-04-08T10:44:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59a69bd4_aedc2757",
       "revId": "e795b19c5e42e55a39c224ac043b1fe2a499cefd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
