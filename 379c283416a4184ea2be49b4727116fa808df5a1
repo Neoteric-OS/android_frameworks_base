@@ -16,6 +16,24 @@
       "revId": "379c283416a4184ea2be49b4727116fa808df5a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39d4872d_316f5786",
+        "filename": "media/jni/android_media_MediaMetadataRetriever.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1018229
+      },
+      "writtenOn": "2014-04-09T11:04:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "198a632f_eda1a5ba",
+      "revId": "379c283416a4184ea2be49b4727116fa808df5a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
