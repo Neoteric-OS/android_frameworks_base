@@ -213,7 +213,16 @@ int main(int argc, char* const argv[])
         }
 
         char prop[PROP_VALUE_MAX];
-        if (property_get(ABI_LIST_PROPERTY, prop, NULL) == 0) {
+        int returnedProp = 0;
+        ALOGE("Using zygote hack, startSystemServer implies 32 bit.");
+
+        if (startSystemServer) {
+          returnedProp = property_get("ro.product.cpu.abilist32", prop, NULL);
+        } else {
+          returnedProp = property_get("ro.product.cpu.abilist64", prop, NULL);
+        }
+
+        if (returnedProp == 0) {
             LOG_ALWAYS_FATAL("app_process: Unable to deterimine ABI list from property %s.",
                 ABI_LIST_PROPERTY);
             return 11;
