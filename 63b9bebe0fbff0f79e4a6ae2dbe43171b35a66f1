@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9d6b780_eaebe7cc",
+        "filename": "core/java/android/os/Process.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-04-11T17:52:13Z",
+      "side": 1,
+      "message": "include the bug in the comment?",
+      "revId": "63b9bebe0fbff0f79e4a6ae2dbe43171b35a66f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
