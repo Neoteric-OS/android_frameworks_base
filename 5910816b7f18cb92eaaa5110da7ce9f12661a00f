@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59bcdb31_af3e19ec",
+        "filename": "core/java/android/widget/TextView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5332,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2014-04-11T04:48:41Z",
+      "side": 1,
+      "message": "It seems that this is missing to add KeyEvent.KEYCODE_NUMPAD_ENTER to the switch statement in onKeyUp whether the handling to advance focus happens.\n\nMaybe the code when the change was submitted was different. I am looking at the latest source.",
+      "range": {
+        "startLine": 5332,
+        "startChar": 12,
+        "endLine": 5332,
+        "endChar": 47
+      },
+      "revId": "5910816b7f18cb92eaaa5110da7ce9f12661a00f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
