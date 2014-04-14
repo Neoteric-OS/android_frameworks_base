@@ -81,7 +81,10 @@ static void SigChldHandler(int /*signal_number*/) {
   pid_t pid;
   int status;
 
+  int num_reaped = 0;
   while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
+     ++num_reaped;
+
      // Log process-death status that we care about.  In general it is
      // not safe to call LOG(...) from a signal handler because of
      // possible reentrancy.  However, we know a priori that the
@@ -92,14 +95,10 @@ static void SigChldHandler(int /*signal_number*/) {
     if (WIFEXITED(status)) {
       if (WEXITSTATUS(status)) {
         ALOGI("Process %d exited cleanly (%d)", pid, WEXITSTATUS(status));
-      } else if (false) {
-        ALOGI("Process %d exited cleanly (%d)", pid, WEXITSTATUS(status));
       }
     } else if (WIFSIGNALED(status)) {
       if (WTERMSIG(status) != SIGKILL) {
-        ALOGI("Process %d exited cleanly (%d)", pid, WTERMSIG(status));
-      } else if (false) {
-        ALOGI("Process %d exited cleanly (%d)", pid, WTERMSIG(status));
+        ALOGI("Process %d exited due to signal (%d)", pid, WTERMSIG(status));
       }
 #ifdef WCOREDUMP
       if (WCOREDUMP(status)) {
@@ -117,8 +116,12 @@ static void SigChldHandler(int /*signal_number*/) {
     }
   }
 
-  if (pid < 0) {
-    ALOGW("Zygote SIGCHLD error in waitpid: %d", errno);
+  if (num_reaped == 0) {
+    if (pid < 0) {
+      ALOGW("Zygote SIGCHLD error in waitpid: %d", errno);
+    } else {
+      ALOGW("Zygote SIGCHLD handler had no children to reap");
+    }
   }
 }
 
