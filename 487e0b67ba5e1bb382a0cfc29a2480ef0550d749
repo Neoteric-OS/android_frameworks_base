@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9980137b_ea859b47",
+        "filename": "opengl/java/android/opengl/GLSurfaceView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1016663
+      },
+      "writtenOn": "2014-04-14T20:04:07Z",
+      "side": 1,
+      "message": "Can you use EGL14.EGL_OPENGL_ES2_BIT?",
+      "range": {
+        "startLine": 896,
+        "startChar": 37,
+        "endLine": 896,
+        "endChar": 40
+      },
+      "revId": "487e0b67ba5e1bb382a0cfc29a2480ef0550d749",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9980137b_2a47836e",
+        "filename": "opengl/java/android/opengl/GLSurfaceView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1016663
+      },
+      "writtenOn": "2014-04-14T20:04:07Z",
+      "side": 1,
+      "message": "Can you use EGLExt.EGL_OPENGL_ES3_BIT_KHR",
+      "range": {
+        "startLine": 898,
+        "startChar": 37,
+        "endLine": 898,
+        "endChar": 41
+      },
+      "revId": "487e0b67ba5e1bb382a0cfc29a2480ef0550d749",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
