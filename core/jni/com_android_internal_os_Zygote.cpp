@@ -92,14 +92,10 @@ static void SigChldHandler(int /*signal_number*/) {
     if (WIFEXITED(status)) {
       if (WEXITSTATUS(status)) {
         ALOGI("Process %d exited cleanly (%d)", pid, WEXITSTATUS(status));
-      } else if (false) {
-        ALOGI("Process %d exited cleanly (%d)", pid, WEXITSTATUS(status));
       }
     } else if (WIFSIGNALED(status)) {
       if (WTERMSIG(status) != SIGKILL) {
-        ALOGI("Process %d exited cleanly (%d)", pid, WTERMSIG(status));
-      } else if (false) {
-        ALOGI("Process %d exited cleanly (%d)", pid, WTERMSIG(status));
+        ALOGI("Process %d exited due to signal (%d)", pid, WTERMSIG(status));
       }
 #ifdef WCOREDUMP
       if (WCOREDUMP(status)) {
@@ -117,7 +113,9 @@ static void SigChldHandler(int /*signal_number*/) {
     }
   }
 
-  if (pid < 0) {
+  // Note that we shouldn't consider ECHILD an error because
+  // the secondary zygote might have no children left to wait for.
+  if (pid < 0 && errno != ECHILD) {
     ALOGW("Zygote SIGCHLD error in waitpid: %d", errno);
   }
 }
