@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "198c23b9_664a9f45",
+        "filename": "packages/SystemUI/res/values-ru/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-04-15T17:54:03Z",
+      "side": 0,
+      "message": "i think this means we need to fix the tool, or this will keep getting clobbered.",
+      "revId": "909a6a0e2b5815332618b2cf731d27824a76d042",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
