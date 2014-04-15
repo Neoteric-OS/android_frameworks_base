@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "198c23b9_4cb947a8",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2014-04-15T06:53:12Z",
+      "side": 1,
+      "message": "since you are currently testing without a 32 vs 64 distinction between primary/secondary and we might need to support \u003e2 abis per device, perhaps we should just go the path of /data/dalvik-cache/\u003cabi\u003e/ ?",
+      "range": {
+        "startLine": 1222,
+        "startChar": 54,
+        "endLine": 1222,
+        "endChar": 78
+      },
+      "revId": "0fdc8eac55723bda5843e19f125b90a32d29c79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
