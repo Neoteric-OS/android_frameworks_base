@@ -22,6 +22,30 @@
       "revId": "0fdc8eac55723bda5843e19f125b90a32d29c79a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9c3cfc8_e755dc8d",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-04-15T11:23:12Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s what I\u0027d prefer to do as well. \n\n(Keep in mind that these were hacks that I uploaded :) )",
+      "parentUuid": "198c23b9_4cb947a8",
+      "range": {
+        "startLine": 1222,
+        "startChar": 54,
+        "endLine": 1222,
+        "endChar": 78
+      },
+      "revId": "0fdc8eac55723bda5843e19f125b90a32d29c79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
