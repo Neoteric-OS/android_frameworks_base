@@ -6965,6 +6965,12 @@ public class WindowManagerService extends IWindowManager.Stub
     public void displayReady() {
         displayReady(Display.DEFAULT_DISPLAY);
 
+        IBinder displayToken = SurfaceControl.getBuiltInDisplay(
+                SurfaceControl.BUILT_IN_DISPLAY_ID_HDMI);
+        if (displayToken != null) {
+            displayReady(SurfaceControl.BUILT_IN_DISPLAY_ID_HDMI);
+        }
+
         synchronized(mWindowMap) {
             final DisplayContent displayContent = getDefaultDisplayContentLocked();
             readForcedDisplaySizeAndDensityLocked(displayContent);
