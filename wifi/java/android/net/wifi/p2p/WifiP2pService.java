@@ -20,6 +20,7 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -60,7 +61,9 @@ import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.view.KeyEvent;
@@ -113,7 +116,8 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
     private P2pStateMachine mP2pStateMachine;
     private AsyncChannel mReplyChannel = new AsyncChannel();
     private AsyncChannel mWifiChannel;
-
+    private AlertDialog  mPinEntryDialog;
+    private Boolean mConnectionUserReject = false;
     private static final Boolean JOIN_GROUP = true;
     private static final Boolean FORM_GROUP = false;
 
@@ -1232,7 +1236,9 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                         transitionTo(mGroupNegotiationState);
                     } else {
                         loge("Unexpected group creation, remove " + mGroup);
-                        mWifiNative.p2pGroupRemove(mGroup.getInterface());
+                        if (mGroup.getNetworkId() != -1) {
+                            mWifiNative.p2pGroupRemove(mGroup.getInterface());
+                        }
                     }
                     break;
                 case WifiP2pManager.START_LISTEN:
@@ -1343,13 +1349,20 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
             switch (message.what) {
                 case PEER_CONNECTION_USER_ACCEPT:
                     mWifiNative.p2pStopFind();
-                    p2pConnectWithPinDisplay(mSavedPeerConfig);
+                    boolean result = p2pConnectWithPinDisplay(mSavedPeerConfig);
+                    if (!result) {
+                        handleGroupCreationFailure();
+                        transitionTo(mInactiveState);
+                        if (DBG) logd("Invalid pin is entered, moving to inactive state");
+                    }
                     mPeers.updateStatus(mSavedPeerConfig.deviceAddress, WifiP2pDevice.INVITED);
                     sendPeersChangedBroadcast();
                     transitionTo(mGroupNegotiationState);
                    break;
                 case PEER_CONNECTION_USER_REJECT:
                     if (DBG) logd("User rejected negotiation " + mSavedPeerConfig);
+                    mConnectionUserReject = true;
+                    handleGroupCreationFailure();
                     transitionTo(mInactiveState);
                     break;
                 default:
@@ -2137,8 +2150,24 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
                 mSavedPeerConfig.deviceAddress));
 
         final EditText pin = (EditText) textEntryView.findViewById(R.id.wifi_p2p_wps_pin);
+        pin.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (pin.getText().toString().length() >= 8 ) {
+                    mPinEntryDialog.getButton(mPinEntryDialog.BUTTON_POSITIVE).setEnabled(true);
+                } else {
+                    mPinEntryDialog.getButton(mPinEntryDialog.BUTTON_POSITIVE).setEnabled(false);
+                }
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,int count) {
+            }
+        });
 
-        AlertDialog dialog = new AlertDialog.Builder(mContext)
+        mPinEntryDialog = new AlertDialog.Builder(mContext)
             .setTitle(r.getString(R.string.wifi_p2p_invitation_to_connect_title))
             .setView(textEntryView)
             .setPositiveButton(r.getString(R.string.accept), new OnClickListener() {
@@ -2183,7 +2212,7 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
         if ((r.getConfiguration().uiMode & Configuration.UI_MODE_TYPE_APPLIANCE) ==
                 Configuration.UI_MODE_TYPE_APPLIANCE) {
             // For appliance devices, add a key listener which accepts.
-            dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            mPinEntryDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
 
                 @Override
                 public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
@@ -2199,9 +2228,17 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
             // TODO: add timeout for this dialog.
             // TODO: update UI in appliance mode to tell user what to do.
         }
-
-        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        dialog.show();
+        //Window of type 'TYPE_SYSTEM_ALERT' can be shown only on primary user. So in case
+        //of secondary user we are modifying the window type.
+        if (ActivityManager.getCurrentUser() == UserHandle.USER_OWNER) {
+            mPinEntryDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        } else {
+            mPinEntryDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
+        }
+        mPinEntryDialog.show();
+        if (wps.setup == WpsInfo.KEYPAD) {
+            mPinEntryDialog.getButton(mPinEntryDialog.BUTTON_POSITIVE).setEnabled(false);
+        }
     }
 
     /**
@@ -2304,17 +2341,22 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
     /**
      * Start a p2p group negotiation and display pin if necessary
      * @param config for the peer
+     * @return true on success, false on failure
      */
-    private void p2pConnectWithPinDisplay(WifiP2pConfig config) {
+    private boolean p2pConnectWithPinDisplay(WifiP2pConfig config) {
         WifiP2pDevice dev = fetchCurrentDeviceDetails(config);
 
         String pin = mWifiNative.p2pConnect(config, dev.isGroupOwner());
+        if (pin == null) {
+            return false;
+        }
         try {
             Integer.parseInt(pin);
             notifyInvitationSent(pin, config.deviceAddress);
         } catch (NumberFormatException ignore) {
             // do nothing if p2pConnect did not return a pin
         }
+        return true;
     }
 
     /**
@@ -2575,8 +2617,15 @@ public class WifiP2pService extends IWifiP2pManager.Stub {
 
     private void handleGroupCreationFailure() {
         resetWifiP2pInfo();
-        mNetworkInfo.setDetailedState(NetworkInfo.DetailedState.FAILED, null, null);
+        if (mConnectionUserReject) {
+            mNetworkInfo.setDetailedState(NetworkInfo.DetailedState.FAILED, WifiP2pManager.WIFI_P2P_CONNECTION_USER_REJECT, null);
+        } else {
+            mNetworkInfo.setDetailedState(NetworkInfo.DetailedState.FAILED, null, null);
+        }
         sendP2pConnectionChangedBroadcast();
+        if (mPinEntryDialog != null) {
+            mPinEntryDialog.dismiss();
+        }
 
         // Remove only the peer we failed to connect to so that other devices discovered
         // that have not timed out still remain in list for connection

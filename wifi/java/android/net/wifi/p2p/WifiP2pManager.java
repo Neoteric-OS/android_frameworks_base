@@ -206,6 +206,13 @@ public class WifiP2pManager {
     public static final String EXTRA_WIFI_P2P_GROUP = "p2pGroupInfo";
 
     /**
+     * The lookup key for a {@link android.net.NetworkInfo.getReason()} object associated with the
+     * Wi-Fi network. Retrieve with
+     * {@link android.content.Intent#getParcelableExtra(String).getReason()}.
+     */
+    public static final String WIFI_P2P_CONNECTION_USER_REJECT = "connectionUserReject";
+
+    /**
      * Broadcast intent action indicating that the available peer list has changed. This
      * can be sent as a result of peers being found, lost or updated.
      *
