@@ -137,6 +137,12 @@ public interface BluetoothProfile {
     public static final int PBAP_CLIENT = 17;
 
     /**
+     * HID device
+     * @hide
+     */
+    static public final int HID_DEVICE = 18;
+
+    /**
      * Default priority for devices that we try to auto-connect to and
      * and allow incoming connections for the profile
      * @hide
