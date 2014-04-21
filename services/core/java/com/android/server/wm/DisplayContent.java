@@ -36,6 +36,7 @@ import static android.view.WindowManager.DOCKED_TOP;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+import static android.view.WindowManager.LayoutParams.FLAG_SHOW_ON_INTERNAL_ONLY;
 import static android.view.WindowManager.LayoutParams.FLAG_SECURE;
 import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER;
 import static android.view.WindowManager.LayoutParams.NEEDS_MENU_SET_TRUE;
@@ -1618,6 +1619,13 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
             mTmpMatrix.mapRect(mTmpRectF);
             mTmpRectF.round(out);
         }
+    }
+
+    boolean hasInternalOnlyWindowOnScreen() {
+        final WindowState win = getWindow(
+                w -> w.isOnScreen() && (w.mAttrs.extensionFlags
+                    & FLAG_SHOW_ON_INTERNAL_ONLY) != 0);
+        return win != null;
     }
 
     /**

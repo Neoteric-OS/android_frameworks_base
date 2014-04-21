@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2013 The Android Open Source Project
- *
+  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -191,6 +191,16 @@ public class SurfaceControl {
      * Surface creation flag: Window represents a cursor glyph.
      */
     public static final int CURSOR_WINDOW = 0x00002000;
+
+    /**
+     * Surface flag: Restrict to the internal display only.
+     */
+    public static final int INTERNAL_DISPLAY_ONLY = 0x40000000;
+
+    /**
+     * Surface flag for ScreenshotSurface: Restrict to the internal display only.
+     */
+    public static final int INTERNAL_DISPLAY_ONLY_FOR_SS = 0x80000000;
 
     /**
      * Surface creation flag: Creates a normal surface.

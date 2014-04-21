@@ -5991,13 +5991,15 @@ public class WindowManagerService extends IWindowManager.Stub
             // Check whether the current screen contains any secure content.
             boolean isSecure = displayContent.hasSecureWindowOnScreen();
 
+            // Check whether the current screen contains any internal only content.
+            boolean isInternalOnly = displayContent.hasInternalOnlyWindowOnScreen();
+
             // TODO(multidisplay): rotation on main screen only.
             displayContent.updateDisplayInfo();
             screenRotationAnimation = new ScreenRotationAnimation(mContext, displayContent,
                     mFxSession, inTransaction, mPolicy.isDefaultOrientationForced(), isSecure,
-                    this);
-            mAnimator.setScreenRotationAnimationLocked(mFrozenDisplayId,
-                    screenRotationAnimation);
+                    isInternalOnly, this);
+            mAnimator.setScreenRotationAnimationLocked(mFrozenDisplayId, screenRotationAnimation);
         }
     }
 

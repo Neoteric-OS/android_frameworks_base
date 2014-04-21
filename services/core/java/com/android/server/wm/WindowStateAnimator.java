@@ -647,6 +647,10 @@ class WindowStateAnimator {
             flags |= SurfaceControl.SECURE;
         }
 
+        if ((attrs.extensionFlags&WindowManager.LayoutParams.FLAG_SHOW_ON_INTERNAL_ONLY) != 0) {
+            flags |= SurfaceControl.INTERNAL_DISPLAY_ONLY;
+        }
+
         mTmpSize.set(w.mFrame.left + w.mXOffset, w.mFrame.top + w.mYOffset, 0, 0);
         calculateSurfaceBounds(w, attrs);
         final int width = mTmpSize.width();

@@ -218,7 +218,7 @@ class ScreenRotationAnimation {
 
     public ScreenRotationAnimation(Context context, DisplayContent displayContent,
             SurfaceSession session, boolean inTransaction, boolean forceDefaultOrientation,
-            boolean isSecure, WindowManagerService service) {
+            boolean isSecure, boolean isInternalOnly, WindowManagerService service) {
         mService = service;
         mContext = context;
         mDisplayContent = displayContent;
@@ -266,6 +266,9 @@ class ScreenRotationAnimation {
                     flags |= SurfaceControl.SECURE;
                 }
 
+                if (isInternalOnly) {
+                    flags |= SurfaceControl.INTERNAL_DISPLAY_ONLY_FOR_SS;
+                }
                 if (DEBUG_SURFACE_TRACE) {
                     mSurfaceControl = new SurfaceTrace(session, "ScreenshotSurface",
                             mWidth, mHeight,

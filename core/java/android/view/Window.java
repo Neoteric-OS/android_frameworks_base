@@ -1114,6 +1114,22 @@ public abstract class Window {
         dispatchWindowAttributesChanged(attrs);
     }
 
+    /**
+     * Set the extension flags of the window, as per the
+     * {@link WindowManager.LayoutParams WindowManager.LayoutParams}
+     * flags.
+     *
+     * @param flags The extension flags (see WindowManager.LayoutParams).
+     * @param mask Which of the extension flag bits to modify.
+     *
+     * @hide
+     */
+    public void setExtensionFlags(int flags, int mask) {
+        final WindowManager.LayoutParams attrs = getAttributes();
+        attrs.extensionFlags = (attrs.extensionFlags & ~mask) | (flags & mask);
+        dispatchWindowAttributesChanged(attrs);
+    }
+
     private void setPrivateFlags(int flags, int mask) {
         final WindowManager.LayoutParams attrs = getAttributes();
         attrs.privateFlags = (attrs.privateFlags & ~mask) | (flags & mask);

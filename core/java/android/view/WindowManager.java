@@ -1231,6 +1231,21 @@ public interface WindowManager extends ViewManager {
         public int flags;
 
         /**
+         * Window flag: Window for showing to default display only. If external
+         * display is connected, this type of layer does not output to external
+         * display.
+         *
+         * @hide
+         */
+        public static final int FLAG_SHOW_ON_INTERNAL_ONLY = 0x00000001;
+
+        /**
+         * Window extension flags.
+         * @hide
+         */
+        public int extensionFlags;
+
+        /**
          * If the window has requested hardware acceleration, but this is not
          * allowed in the process it is in, then still render it as if it is
          * hardware accelerated.  This is used for the starting preview windows
@@ -2055,6 +2070,7 @@ public interface WindowManager extends ViewManager {
             out.writeInt(y);
             out.writeInt(type);
             out.writeInt(flags);
+            out.writeInt(extensionFlags);
             out.writeInt(privateFlags);
             out.writeInt(softInputMode);
             out.writeInt(gravity);
@@ -2109,6 +2125,7 @@ public interface WindowManager extends ViewManager {
             y = in.readInt();
             type = in.readInt();
             flags = in.readInt();
+            extensionFlags = in.readInt();
             privateFlags = in.readInt();
             softInputMode = in.readInt();
             gravity = in.readInt();
@@ -2186,6 +2203,8 @@ public interface WindowManager extends ViewManager {
         @TestApi
         public static final int ACCESSIBILITY_TITLE_CHANGED = 1 << 25;
         /** {@hide} */
+        public static final int EXTENSION_FLAGS_CHANGED = 1 << 31;
+        /** {@hide} */
         public static final int EVERYTHING_CHANGED = 0xffffffff;
 
         // internal buffer to backup/restore parameters under compatibility mode.
@@ -2237,6 +2256,10 @@ public interface WindowManager extends ViewManager {
                 }
                 flags = o.flags;
                 changes |= FLAGS_CHANGED;
+            }
+            if (extensionFlags != o.extensionFlags) {
+                extensionFlags = o.extensionFlags;
+                changes |= EXTENSION_FLAGS_CHANGED;
             }
             if (privateFlags != o.privateFlags) {
                 privateFlags = o.privateFlags;
