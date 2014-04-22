@@ -208,6 +208,19 @@ public final class Installer {
         builder.append(' ');
         builder.append(uid);
         builder.append(isPublic ? " 1" : " 0");
+        builder.append(" *");         // No pkgName arg present
+        return execute(builder.toString());
+    }
+
+    public int dexopt(String apkPath, int uid, boolean isPublic, String pkgName) {
+        StringBuilder builder = new StringBuilder("dexopt");
+        builder.append(' ');
+        builder.append(apkPath);
+        builder.append(' ');
+        builder.append(uid);
+        builder.append(isPublic ? " 1" : " 0");
+        builder.append(' ');
+        builder.append(pkgName);
         return execute(builder.toString());
     }
 
@@ -382,5 +395,16 @@ public final class Installer {
         builder.append(userId);
 
         return execute(builder.toString());
+    }
+
+    public boolean restoreconData(String pkgName, String seinfo, int uid) {
+        StringBuilder builder = new StringBuilder("restorecondata");
+        builder.append(' ');
+        builder.append(pkgName);
+        builder.append(' ');
+        builder.append(seinfo != null ? seinfo : "!");
+        builder.append(' ');
+        builder.append(uid);
+        return (execute(builder.toString()) == 0);
     }
 }

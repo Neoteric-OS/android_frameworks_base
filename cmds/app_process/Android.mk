@@ -1,4 +1,6 @@
 LOCAL_PATH:= $(call my-dir)
+
+# 32-bit app_process
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES:= \
@@ -12,9 +14,10 @@ LOCAL_SHARED_LIBRARIES := \
 	libandroid_runtime
 
 LOCAL_MODULE:= app_process
-
+LOCAL_MULTILIB := both
+LOCAL_MODULE_STEM_32 := app_process
+LOCAL_MODULE_STEM_64 := app_process64
 include $(BUILD_EXECUTABLE)
-
 
 # Build a variant of app_process binary linked with ASan runtime.
 # ARM-only at the moment.

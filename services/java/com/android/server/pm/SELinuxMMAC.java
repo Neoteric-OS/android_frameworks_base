@@ -25,11 +25,16 @@ import android.util.Xml;
 
 import com.android.internal.util.XmlUtils;
 
+import libcore.io.IoUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import java.util.HashMap;
 
@@ -59,6 +64,13 @@ public final class SELinuxMMAC {
         new File(Environment.getDataDirectory(), "security/mac_permissions.xml"),
         new File(Environment.getRootDirectory(), "etc/security/mac_permissions.xml"),
         null};
+
+    // Location of seapp_contexts policy file.
+    private static final String SEAPP_CONTEXTS_FILE = "/seapp_contexts";
+
+    // Stores the hash of the last used seapp_contexts file.
+    private static final String SEAPP_HASH_FILE =
+            Environment.getDataDirectory().toString() + "/system/seapp_hash";
 
     // Signature policy stanzas
     static class Policy {
@@ -103,7 +115,6 @@ public final class SELinuxMMAC {
 
     /**
      * Parses an MMAC install policy from a predefined list of locations.
-     * @param none
      * @return boolean indicating whether an install policy was correctly parsed.
      */
     public static boolean readInstallPolicy() {
@@ -113,7 +124,7 @@ public final class SELinuxMMAC {
 
     /**
      * Parses an MMAC install policy given as an argument.
-     * @param File object representing the path of the policy.
+     * @param policyFile object representing the path of the policy.
      * @return boolean indicating whether the install policy was correctly parsed.
      */
     public static boolean readInstallPolicy(File policyFile) {
@@ -345,8 +356,7 @@ public final class SELinuxMMAC {
     /**
      * Labels a package based on an seinfo tag from install policy.
      * The label is attached to the ApplicationInfo instance of the package.
-     * @param PackageParser.Package object representing the package
-     *         to labeled.
+     * @param pkg object representing the package to be labeled.
      * @return boolean which determines whether a non null seinfo label
      *         was assigned to the package. A null value simply meaning that
      *         no policy matched.
@@ -390,5 +400,90 @@ public final class SELinuxMMAC {
                    + (sDefaultSeinfo == null ? "null" : sDefaultSeinfo));
 
         return (sDefaultSeinfo != null);
+    }
+
+    /**
+     * Determines if a recursive restorecon on /data/data and /data/user is needed.
+     * It does this by comparing the SHA-1 of the seapp_contexts file against the
+     * stored hash at /data/system/seapp_hash.
+     *
+     * @return Returns true if the restorecon should occur or false otherwise.
+     */
+    public static boolean shouldRestorecon() {
+        // Any error with the seapp_contexts file should be fatal
+        byte[] currentHash = null;
+        try {
+            currentHash = returnHash(SEAPP_CONTEXTS_FILE);
+        } catch (IOException ioe) {
+            Slog.e(TAG, "Error with hashing seapp_contexts.", ioe);
+            return false;
+        }
+
+        // Push past any error with the stored hash file
+        byte[] storedHash = null;
+        try {
+            storedHash = IoUtils.readFileAsByteArray(SEAPP_HASH_FILE);
+        } catch (IOException ioe) {
+            Slog.w(TAG, "Error opening " + SEAPP_HASH_FILE + ". Assuming first boot.");
+        }
+
+        return (storedHash == null || !MessageDigest.isEqual(storedHash, currentHash));
+    }
+
+    /**
+     * Stores the SHA-1 of the seapp_contexts to /data/system/seapp_hash.
+     */
+    public static void setRestoreconDone() {
+        try {
+            final byte[] currentHash = returnHash(SEAPP_CONTEXTS_FILE);
+            dumpHash(new File(SEAPP_HASH_FILE), currentHash);
+        } catch (IOException ioe) {
+            Slog.e(TAG, "Error with saving hash to " + SEAPP_HASH_FILE, ioe);
+        }
+    }
+
+    /**
+     * Dump the contents of a byte array to a specified file.
+     *
+     * @param file The file that receives the byte array content.
+     * @param content A byte array that will be written to the specified file.
+     * @throws IOException if any failed I/O operation occured.
+     *         Included is the failure to atomically rename the tmp
+     *         file used in the process.
+     */
+    private static void dumpHash(File file, byte[] content) throws IOException {
+        FileOutputStream fos = null;
+        File tmp = null;
+        try {
+            tmp = File.createTempFile("seapp_hash", ".journal", file.getParentFile());
+            tmp.setReadable(true);
+            fos = new FileOutputStream(tmp);
+            fos.write(content);
+            fos.getFD().sync();
+            if (!tmp.renameTo(file)) {
+                throw new IOException("Failure renaming " + file.getCanonicalPath());
+            }
+        } finally {
+            if (tmp != null) {
+                tmp.delete();
+            }
+            IoUtils.closeQuietly(fos);
+        }
+    }
+
+    /**
+     * Return the SHA-1 of a file.
+     *
+     * @param file The path to the file given as a string.
+     * @return Returns the SHA-1 of the file as a byte array.
+     * @throws IOException if any failed I/O operations occured.
+     */
+    private static byte[] returnHash(String file) throws IOException {
+        try {
+            final byte[] contents = IoUtils.readFileAsByteArray(file);
+            return MessageDigest.getInstance("SHA-1").digest(contents);
+        } catch (NoSuchAlgorithmException nsae) {
+            throw new RuntimeException(nsae);  // impossible
+        }
     }
 }

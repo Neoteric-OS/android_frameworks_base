@@ -131,7 +131,6 @@ extern int register_android_database_CursorWindow(JNIEnv* env);
 extern int register_android_database_SQLiteConnection(JNIEnv* env);
 extern int register_android_database_SQLiteGlobal(JNIEnv* env);
 extern int register_android_database_SQLiteDebug(JNIEnv* env);
-extern int register_android_debug_JNITest(JNIEnv* env);
 extern int register_android_nio_utils(JNIEnv* env);
 extern int register_android_text_format_Time(JNIEnv* env);
 extern int register_android_os_Debug(JNIEnv* env);
@@ -178,6 +177,7 @@ extern int register_android_content_res_Configuration(JNIEnv* env);
 extern int register_android_animation_PropertyValuesHolder(JNIEnv *env);
 extern int register_com_android_internal_content_NativeLibraryHelper(JNIEnv *env);
 extern int register_com_android_internal_net_NetworkStatsFactory(JNIEnv *env);
+extern int register_com_android_internal_os_Zygote(JNIEnv *env);
 
 static AndroidRuntime* gCurRuntime = NULL;
 
@@ -228,9 +228,10 @@ int register_com_android_internal_os_RuntimeInit(JNIEnv* env)
 
 /*static*/ JavaVM* AndroidRuntime::mJavaVM = NULL;
 
-
-AndroidRuntime::AndroidRuntime() :
-        mExitWithoutCleanup(false)
+AndroidRuntime::AndroidRuntime(char* argBlockStart, const size_t argBlockLength) :
+        mExitWithoutCleanup(false),
+        mArgBlockStart(argBlockStart),
+        mArgBlockLength(argBlockLength)
 {
     SkGraphics::Init();
     // this sets our preference for 16bit images during decode
@@ -265,13 +266,17 @@ AndroidRuntime::~AndroidRuntime()
     return jniRegisterNativeMethods(env, className, gMethods, numMethods);
 }
 
-status_t AndroidRuntime::callMain(const char* className,
-    jclass clazz, int argc, const char* const argv[])
+void AndroidRuntime::setArgv0(const char* argv0) {
+    strlcpy(mArgBlockStart, argv0, mArgBlockLength);
+}
+
+status_t AndroidRuntime::callMain(const String8& className, jclass clazz,
+    const Vector<String8>& args)
 {
     JNIEnv* env;
     jmethodID methodId;
 
-    ALOGD("Calling main entry %s", className);
+    ALOGD("Calling main entry %s", className.string());
 
     env = getJNIEnv();
     if (clazz == NULL || env == NULL) {
@@ -280,7 +285,7 @@ status_t AndroidRuntime::callMain(const char* className,
 
     methodId = env->GetStaticMethodID(clazz, "main", "([Ljava/lang/String;)V");
     if (methodId == NULL) {
-        ALOGE("ERROR: could not find method %s.main(String[])\n", className);
+        ALOGE("ERROR: could not find method %s.main(String[])\n", className.string());
         return UNKNOWN_ERROR;
     }
 
@@ -291,11 +296,12 @@ status_t AndroidRuntime::callMain(const char* className,
     jclass stringClass;
     jobjectArray strArray;
 
+    const size_t numArgs = args.size();
     stringClass = env->FindClass("java/lang/String");
-    strArray = env->NewObjectArray(argc, stringClass, NULL);
+    strArray = env->NewObjectArray(numArgs, stringClass, NULL);
 
-    for (int i = 0; i < argc; i++) {
-        jstring argStr = env->NewStringUTF(argv[i]);
+    for (size_t i = 0; i < numArgs; i++) {
+        jstring argStr = env->NewStringUTF(args[i].string());
         env->SetObjectArrayElement(strArray, i, argStr);
     }
 
@@ -396,16 +402,16 @@ static void readLocale(char* language, char* region)
  *
  * This will cut up "extraOptsBuf" as we chop it into individual options.
  *
+ * If "quotingArg" is non-null, it is passed before each extra option in mOptions.
+ *
  * Adds the strings, if any, to mOptions.
  */
-void AndroidRuntime::parseExtraOpts(char* extraOptsBuf)
+void AndroidRuntime::parseExtraOpts(char* extraOptsBuf, const char* quotingArg)
 {
     JavaVMOption opt;
-    char* start;
-    char* end;
-
     memset(&opt, 0, sizeof(opt));
-    start = extraOptsBuf;
+    char* start = extraOptsBuf;
+    char* end = NULL;
     while (*start != '\0') {
         while (*start == ' ')                   /* skip leading whitespace */
             start++;
@@ -419,6 +425,11 @@ void AndroidRuntime::parseExtraOpts(char* extraOptsBuf)
             *end++ = '\0';          /* mark end, advance to indicate more */
 
         opt.optionString = start;
+        if (quotingArg != NULL) {
+            JavaVMOption quotingOpt;
+            quotingOpt.optionString = quotingArg;
+            mOptions.add(quotingOpt);
+        }
         mOptions.add(opt);
         start = end;
     }
@@ -429,6 +440,14 @@ void AndroidRuntime::parseExtraOpts(char* extraOptsBuf)
  *
  * Various arguments, most determined by system properties, are passed in.
  * The "mOptions" vector is updated.
+ *
+ * CAUTION: when adding options in here, be careful not to put the
+ * char buffer inside a nested scope.  Adding the buffer to the
+ * options using mOptions.add() does not copy the buffer, so if the
+ * buffer goes out of scope the option may be overwritten.  It's best
+ * to put the buffer at the top of the function so that it is more
+ * unlikely that someone will surround it in a scope at a later time
+ * and thus introduce a bug.
  *
  * Returns 0 on success.
  */
@@ -450,6 +469,9 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
     char gctypeOptsBuf[sizeof("-Xgc:")-1 + PROPERTY_VALUE_MAX];
     char heaptargetutilizationOptsBuf[sizeof("-XX:HeapTargetUtilization=")-1 + PROPERTY_VALUE_MAX];
     char jitcodecachesizeOptsBuf[sizeof("-Xjitcodecachesize:")-1 + PROPERTY_VALUE_MAX];
+    char dalvikVmLibBuf[PROPERTY_VALUE_MAX];
+    char dex2oatFlagsBuf[PROPERTY_VALUE_MAX];
+    char dex2oatImageFlagsBuf[PROPERTY_VALUE_MAX];
     char extraOptsBuf[PROPERTY_VALUE_MAX];
     char* stackTraceFile = NULL;
     bool checkJni = false;
@@ -461,7 +483,15 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
       kEMIntFast,
       kEMJitCompiler,
     } executionMode = kEMDefault;
-
+    char profile_period[sizeof("-Xprofile-period:") + PROPERTY_VALUE_MAX];
+    char profile_duration[sizeof("-Xprofile-duration:") + PROPERTY_VALUE_MAX];
+    char profile_interval[sizeof("-Xprofile-interval:") + PROPERTY_VALUE_MAX];
+    char profile_backoff[sizeof("-Xprofile-backoff:") + PROPERTY_VALUE_MAX];
+    char langOption[sizeof("-Duser.language=") + 3];
+    char regionOption[sizeof("-Duser.region=") + 3];
+    char lockProfThresholdBuf[sizeof("-Xlockprofthreshold:") + sizeof(propBuf)];
+    char jitOpBuf[sizeof("-Xjitop:") + PROPERTY_VALUE_MAX];
+    char jitMethodBuf[sizeof("-Xjitmethod:") + PROPERTY_VALUE_MAX];
 
     property_get("dalvik.vm.checkjni", propBuf, "");
     if (strcmp(propBuf, "true") == 0) {
@@ -662,7 +692,6 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
         //mOptions.add(opt);
     }
 
-    char lockProfThresholdBuf[sizeof("-Xlockprofthreshold:") + sizeof(propBuf)];
     property_get("dalvik.vm.lockprof.threshold", propBuf, "");
     if (strlen(propBuf) > 0) {
       strcpy(lockProfThresholdBuf, "-Xlockprofthreshold:");
@@ -672,7 +701,6 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
     }
 
     /* Force interpreter-only mode for selected opcodes. Eg "1-0a,3c,f1-ff" */
-    char jitOpBuf[sizeof("-Xjitop:") + PROPERTY_VALUE_MAX];
     property_get("dalvik.vm.jit.op", propBuf, "");
     if (strlen(propBuf) > 0) {
         strcpy(jitOpBuf, "-Xjitop:");
@@ -682,7 +710,6 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
     }
 
     /* Force interpreter-only mode for selected methods */
-    char jitMethodBuf[sizeof("-Xjitmethod:") + PROPERTY_VALUE_MAX];
     property_get("dalvik.vm.jit.method", propBuf, "");
     if (strlen(propBuf) > 0) {
         strcpy(jitMethodBuf, "-Xjitmethod:");
@@ -742,14 +769,26 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
         mOptions.add(opt);
     }
 
+    // libart tolerates libdvm flags, but not vice versa, so only pass some options if libart.
+    property_get("persist.sys.dalvik.vm.lib.1", dalvikVmLibBuf, "libdvm.so");
+    bool libart = (strncmp(dalvikVmLibBuf, "libart", 6) == 0);
+
+    if (libart) {
+        // Extra options for DexClassLoader.
+        property_get("dalvik.vm.dex2oat-flags", dex2oatFlagsBuf, "");
+        parseExtraOpts(dex2oatFlagsBuf, "-Xcompiler-option");
+
+        // Extra options for boot.art/boot.oat image generation.
+        property_get("dalvik.vm.image-dex2oat-flags", dex2oatImageFlagsBuf, "");
+        parseExtraOpts(dex2oatImageFlagsBuf, "-Ximage-compiler-option");
+    }
+
     /* extra options; parse this late so it overrides others */
     property_get("dalvik.vm.extra-opts", extraOptsBuf, "");
-    parseExtraOpts(extraOptsBuf);
+    parseExtraOpts(extraOptsBuf, NULL);
 
     /* Set the properties for locale */
     {
-        char langOption[sizeof("-Duser.language=") + 3];
-        char regionOption[sizeof("-Duser.region=") + 3];
         strcpy(langOption, "-Duser.language=");
         strcpy(regionOption, "-Duser.region=");
         readLocale(langOption, regionOption);
@@ -758,6 +797,37 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
         mOptions.add(opt);
         opt.optionString = regionOption;
         mOptions.add(opt);
+    }
+
+    /*
+     * Set profiler options
+     */
+    if (libart) {
+      // Number of seconds during profile runs.
+      strcpy(profile_period, "-Xprofile-period:");
+      property_get("dalvik.vm.profile.period_secs", profile_period+17, "10");
+      opt.optionString = profile_period;
+      mOptions.add(opt);
+
+      // Length of each profile run (seconds).
+      strcpy(profile_duration, "-Xprofile-duration:");
+      property_get("dalvik.vm.profile.duration_secs", profile_duration+19, "30");
+      opt.optionString = profile_duration;
+      mOptions.add(opt);
+
+
+      // Polling interval during profile run (microseconds).
+      strcpy(profile_interval, "-Xprofile-interval:");
+      property_get("dalvik.vm.profile.interval_us", profile_interval+19, "10000");
+      opt.optionString = profile_interval;
+      mOptions.add(opt);
+
+      // Coefficient for period backoff.  The the period is multiplied
+      // by this value after each profile run.
+      strcpy(profile_backoff, "-Xprofile-backoff:");
+      property_get("dalvik.vm.profile.backoff_coeff", profile_backoff+18, "2.0");
+      opt.optionString = profile_backoff;
+      mOptions.add(opt);
     }
 
     initArgs.version = JNI_VERSION_1_4;
@@ -803,20 +873,23 @@ char* AndroidRuntime::toSlashClassName(const char* className)
  * Passes the main function two arguments, the class name and the specified
  * options string.
  */
-void AndroidRuntime::start(const char* className, const char* options)
+void AndroidRuntime::start(const char* className, const Vector<String8>& options)
 {
     ALOGD("\n>>>>>> AndroidRuntime START %s <<<<<<\n",
             className != NULL ? className : "(unknown)");
+
+    static const String8 startSystemServer("start-system-server");
 
     /*
      * 'startSystemServer == true' means runtime is obsolete and not run from
      * init.rc anymore, so we print out the boot start event here.
      */
-    if (strcmp(options, "start-system-server") == 0) {
-        /* track our progress through the boot sequence */
-        const int LOG_BOOT_PROGRESS_START = 3000;
-        LOG_EVENT_LONG(LOG_BOOT_PROGRESS_START,
-                       ns2ms(systemTime(SYSTEM_TIME_MONOTONIC)));
+    for (size_t i = 0; i < options.size(); ++i) {
+        if (options[i] == startSystemServer) {
+           /* track our progress through the boot sequence */
+           const int LOG_BOOT_PROGRESS_START = 3000;
+           LOG_EVENT_LONG(LOG_BOOT_PROGRESS_START,  ns2ms(systemTime(SYSTEM_TIME_MONOTONIC)));
+        }
     }
 
     const char* rootDir = getenv("ANDROID_ROOT");
@@ -857,17 +930,20 @@ void AndroidRuntime::start(const char* className, const char* options)
     jclass stringClass;
     jobjectArray strArray;
     jstring classNameStr;
-    jstring optionsStr;
 
     stringClass = env->FindClass("java/lang/String");
     assert(stringClass != NULL);
-    strArray = env->NewObjectArray(2, stringClass, NULL);
+    strArray = env->NewObjectArray(options.size() + 1, stringClass, NULL);
     assert(strArray != NULL);
     classNameStr = env->NewStringUTF(className);
     assert(classNameStr != NULL);
     env->SetObjectArrayElement(strArray, 0, classNameStr);
-    optionsStr = env->NewStringUTF(options);
-    env->SetObjectArrayElement(strArray, 1, optionsStr);
+
+    for (size_t i = 0; i < options.size(); ++i) {
+        jstring optionsStr = env->NewStringUTF(options.itemAt(i).string());
+        assert(optionsStr != NULL);
+        env->SetObjectArrayElement(strArray, i + 1, optionsStr);
+    }
 
     /*
      * Start VM.  This thread becomes the main thread of the VM, and will
@@ -1093,7 +1169,6 @@ static void register_jam_procs(const RegJAMProc array[], size_t count)
 }
 
 static const RegJNIRec gRegJNI[] = {
-    REG_JNI(register_android_debug_JNITest),
     REG_JNI(register_com_android_internal_os_RuntimeInit),
     REG_JNI(register_android_os_SystemClock),
     REG_JNI(register_android_util_EventLog),
@@ -1179,6 +1254,7 @@ static const RegJNIRec gRegJNI[] = {
     REG_JNI(register_android_net_wifi_WifiNative),
     REG_JNI(register_android_os_MemoryFile),
     REG_JNI(register_com_android_internal_os_ZygoteInit),
+    REG_JNI(register_com_android_internal_os_Zygote),
     REG_JNI(register_android_hardware_Camera),
     REG_JNI(register_android_hardware_camera2_CameraMetadata),
     REG_JNI(register_android_hardware_SensorManager),

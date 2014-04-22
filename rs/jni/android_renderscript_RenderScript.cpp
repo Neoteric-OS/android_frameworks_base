@@ -50,24 +50,29 @@
 
 using namespace android;
 
-#define PER_ARRAY_TYPE(flag, fnc, ...) {                                                \
+#define PER_ARRAY_TYPE(flag, fnc, readonly, ...) {                                      \
     jint len = 0;                                                                       \
     void *ptr = NULL;                                                                   \
     size_t typeBytes = 0;                                                               \
+    jint relFlag = 0;                                                                   \
+    if (readonly) {                                                                     \
+        /* The on-release mode should only be JNI_ABORT for read-only accesses. */      \
+        relFlag = JNI_ABORT;                                                            \
+    }                                                                                   \
     switch(dataType) {                                                                  \
     case RS_TYPE_FLOAT_32:                                                              \
         len = _env->GetArrayLength((jfloatArray)data);                                  \
         ptr = _env->GetFloatArrayElements((jfloatArray)data, flag);                     \
         typeBytes = 4;                                                                  \
         fnc(__VA_ARGS__);                                                               \
-        _env->ReleaseFloatArrayElements((jfloatArray)data, (jfloat *)ptr, JNI_ABORT);   \
+        _env->ReleaseFloatArrayElements((jfloatArray)data, (jfloat *)ptr, relFlag);     \
         return;                                                                         \
     case RS_TYPE_FLOAT_64:                                                              \
         len = _env->GetArrayLength((jdoubleArray)data);                                 \
         ptr = _env->GetDoubleArrayElements((jdoubleArray)data, flag);                   \
         typeBytes = 8;                                                                  \
         fnc(__VA_ARGS__);                                                               \
-        _env->ReleaseDoubleArrayElements((jdoubleArray)data, (jdouble *)ptr, JNI_ABORT);\
+        _env->ReleaseDoubleArrayElements((jdoubleArray)data, (jdouble *)ptr, relFlag);  \
         return;                                                                         \
     case RS_TYPE_SIGNED_8:                                                              \
     case RS_TYPE_UNSIGNED_8:                                                            \
@@ -75,7 +80,7 @@ using namespace android;
         ptr = _env->GetByteArrayElements((jbyteArray)data, flag);                       \
         typeBytes = 1;                                                                  \
         fnc(__VA_ARGS__);                                                               \
-        _env->ReleaseByteArrayElements((jbyteArray)data, (jbyte*)ptr, JNI_ABORT);       \
+        _env->ReleaseByteArrayElements((jbyteArray)data, (jbyte*)ptr, relFlag);         \
         return;                                                                         \
     case RS_TYPE_SIGNED_16:                                                             \
     case RS_TYPE_UNSIGNED_16:                                                           \
@@ -83,7 +88,7 @@ using namespace android;
         ptr = _env->GetShortArrayElements((jshortArray)data, flag);                     \
         typeBytes = 2;                                                                  \
         fnc(__VA_ARGS__);                                                               \
-        _env->ReleaseShortArrayElements((jshortArray)data, (jshort *)ptr, JNI_ABORT);   \
+        _env->ReleaseShortArrayElements((jshortArray)data, (jshort *)ptr, relFlag);     \
         return;                                                                         \
     case RS_TYPE_SIGNED_32:                                                             \
     case RS_TYPE_UNSIGNED_32:                                                           \
@@ -91,7 +96,7 @@ using namespace android;
         ptr = _env->GetIntArrayElements((jintArray)data, flag);                         \
         typeBytes = 4;                                                                  \
         fnc(__VA_ARGS__);                                                               \
-        _env->ReleaseIntArrayElements((jintArray)data, (jint *)ptr, JNI_ABORT);         \
+        _env->ReleaseIntArrayElements((jintArray)data, (jint *)ptr, relFlag);           \
         return;                                                                         \
     case RS_TYPE_SIGNED_64:                                                             \
     case RS_TYPE_UNSIGNED_64:                                                           \
@@ -99,7 +104,7 @@ using namespace android;
         ptr = _env->GetLongArrayElements((jlongArray)data, flag);                       \
         typeBytes = 8;                                                                  \
         fnc(__VA_ARGS__);                                                               \
-        _env->ReleaseLongArrayElements((jlongArray)data, (jlong *)ptr, JNI_ABORT);      \
+        _env->ReleaseLongArrayElements((jlongArray)data, (jlong *)ptr, relFlag);        \
         return;                                                                         \
     default:                                                                            \
         break;                                                                          \
@@ -412,13 +417,21 @@ nElementCreate(JNIEnv *_env, jobject _this, jlong con, jlong type, jint kind, jb
 
 static jlong
 nElementCreate2(JNIEnv *_env, jobject _this, jlong con,
-                jintArray _ids, jobjectArray _names, jintArray _arraySizes)
+                jlongArray _ids, jobjectArray _names, jintArray _arraySizes)
 {
     int fieldCount = _env->GetArrayLength(_ids);
     LOG_API("nElementCreate2, con(%p)", (RsContext)con);
 
-    jint *ids = _env->GetIntArrayElements(_ids, NULL);
-    jint *arraySizes = _env->GetIntArrayElements(_arraySizes, NULL);
+    jlong *jIds = _env->GetLongArrayElements(_ids, NULL);
+    jint *jArraySizes = _env->GetIntArrayElements(_arraySizes, NULL);
+
+    RsElement *ids = (RsElement*)malloc(fieldCount * sizeof(RsElement));
+    uint32_t *arraySizes = (uint32_t *)malloc(fieldCount * sizeof(uint32_t));
+
+    for(int i = 0; i < fieldCount; i ++) {
+        ids[i] = (RsElement)jIds[i];
+        arraySizes[i] = (uint32_t)jArraySizes[i];
+    }
 
     AutoJavaStringArrayToUTF8 names(_env, _names, fieldCount);
 
@@ -426,12 +439,15 @@ nElementCreate2(JNIEnv *_env, jobject _this, jlong con,
     size_t *sizeArray = names.c_str_len();
 
     jlong id = (jlong)rsElementCreate2((RsContext)con,
-                                     (RsElement *)ids, fieldCount,
+                                     (const RsElement *)ids, fieldCount,
                                      nameArray, fieldCount * sizeof(size_t),  sizeArray,
                                      (const uint32_t *)arraySizes, fieldCount);
 
-    _env->ReleaseIntArrayElements(_ids, ids, JNI_ABORT);
-    _env->ReleaseIntArrayElements(_arraySizes, arraySizes, JNI_ABORT);
+    free(ids);
+    free(arraySizes);
+    _env->ReleaseLongArrayElements(_ids, jIds, JNI_ABORT);
+    _env->ReleaseIntArrayElements(_arraySizes, jArraySizes, JNI_ABORT);
+
     return (jlong)id;
 }
 
@@ -444,34 +460,37 @@ nElementGetNativeData(JNIEnv *_env, jobject _this, jlong con, jlong id, jintArra
     // we will pack mType; mKind; mNormalized; mVectorSize; NumSubElements
     assert(dataSize == 5);
 
-    uint32_t elementData[5];
+    uintptr_t elementData[5];
     rsaElementGetNativeData((RsContext)con, (RsElement)id, elementData, dataSize);
 
     for(jint i = 0; i < dataSize; i ++) {
-        _env->SetIntArrayRegion(_elementData, i, 1, (const jint*)&elementData[i]);
+        const jint data = (jint)elementData[i];
+        _env->SetIntArrayRegion(_elementData, i, 1, &data);
     }
 }
 
 
 static void
 nElementGetSubElements(JNIEnv *_env, jobject _this, jlong con, jlong id,
-                       jintArray _IDs,
+                       jlongArray _IDs,
                        jobjectArray _names,
                        jintArray _arraySizes)
 {
-    int dataSize = _env->GetArrayLength(_IDs);
+    uint32_t dataSize = _env->GetArrayLength(_IDs);
     LOG_API("nElementGetSubElements, con(%p)", (RsContext)con);
 
-    uint32_t *ids = (uint32_t *)malloc((uint32_t)dataSize * sizeof(uint32_t));
-    const char **names = (const char **)malloc((uint32_t)dataSize * sizeof(const char *));
-    uint32_t *arraySizes = (uint32_t *)malloc((uint32_t)dataSize * sizeof(uint32_t));
+    uintptr_t *ids = (uintptr_t*)malloc(dataSize * sizeof(uintptr_t));
+    const char **names = (const char **)malloc(dataSize * sizeof(const char *));
+    uint32_t *arraySizes = (uint32_t *)malloc(dataSize * sizeof(uint32_t));
 
     rsaElementGetSubElements((RsContext)con, (RsElement)id, ids, names, arraySizes, (uint32_t)dataSize);
 
-    for(jint i = 0; i < dataSize; i++) {
+    for(uint32_t i = 0; i < dataSize; i++) {
+        const jlong id = (jlong)ids[i];
+        const jint arraySize = (jint)arraySizes[i];
         _env->SetObjectArrayElement(_names, i, _env->NewStringUTF(names[i]));
-        _env->SetIntArrayRegion(_IDs, i, 1, (const jint*)&ids[i]);
-        _env->SetIntArrayRegion(_arraySizes, i, 1, (const jint*)&arraySizes[i]);
+        _env->SetLongArrayRegion(_IDs, i, 1, &id);
+        _env->SetIntArrayRegion(_arraySizes, i, 1, &arraySize);
     }
 
     free(ids);
@@ -492,7 +511,7 @@ nTypeCreate(JNIEnv *_env, jobject _this, jlong con, jlong eid,
 }
 
 static void
-nTypeGetNativeData(JNIEnv *_env, jobject _this, jlong con, jlong id, jintArray _typeData)
+nTypeGetNativeData(JNIEnv *_env, jobject _this, jlong con, jlong id, jlongArray _typeData)
 {
     // We are packing 6 items: mDimX; mDimY; mDimZ;
     // mDimLOD; mDimFaces; mElement; into typeData
@@ -501,21 +520,22 @@ nTypeGetNativeData(JNIEnv *_env, jobject _this, jlong con, jlong id, jintArray _
     assert(elementCount == 6);
     LOG_API("nTypeGetNativeData, con(%p)", (RsContext)con);
 
-    uint32_t typeData[6];
+    uintptr_t typeData[6];
     rsaTypeGetNativeData((RsContext)con, (RsType)id, typeData, 6);
 
     for(jint i = 0; i < elementCount; i ++) {
-        _env->SetIntArrayRegion(_typeData, i, 1, (const jint*)&typeData[i]);
+        const jlong data = (jlong)typeData[i];
+        _env->SetLongArrayRegion(_typeData, i, 1, &data);
     }
 }
 
 // -----------------------------------
 
 static jlong
-nAllocationCreateTyped(JNIEnv *_env, jobject _this, jlong con, jlong type, jint mips, jint usage, jint pointer)
+nAllocationCreateTyped(JNIEnv *_env, jobject _this, jlong con, jlong type, jint mips, jint usage, jlong pointer)
 {
     LOG_API("nAllocationCreateTyped, con(%p), type(%p), mip(%i), usage(%i), ptr(%p)", (RsContext)con, (RsElement)type, mips, usage, (void *)pointer);
-    return (jlong) rsAllocationCreateTyped((RsContext)con, (RsType)type, (RsAllocationMipmapControl)mips, (uint32_t)usage, (uint32_t)pointer);
+    return (jlong) rsAllocationCreateTyped((RsContext)con, (RsType)type, (RsAllocationMipmapControl)mips, (uint32_t)usage, (uintptr_t)pointer);
 }
 
 static void
@@ -601,7 +621,7 @@ nAllocationCreateBitmapBackedAllocation(JNIEnv *_env, jobject _this, jlong con, 
     const void* ptr = bitmap.getPixels();
     jlong id = (jlong)rsAllocationCreateTyped((RsContext)con,
                                             (RsType)type, (RsAllocationMipmapControl)mip,
-                                            (uint32_t)usage, (size_t)ptr);
+                                            (uint32_t)usage, (uintptr_t)ptr);
     bitmap.unlockPixels();
     return id;
 }
@@ -660,6 +680,7 @@ static void ReleaseBitmapCallback(void *bmp)
 }
 
 
+// Copies from the Java object data into the Allocation pointed to by _alloc.
 static void
 nAllocationData1D(JNIEnv *_env, jobject _this, jlong con, jlong _alloc, jint offset, jint lod,
                   jint count, jobject data, jint sizeBytes, jint dataType)
@@ -667,9 +688,10 @@ nAllocationData1D(JNIEnv *_env, jobject _this, jlong con, jlong _alloc, jint off
     RsAllocation *alloc = (RsAllocation *)_alloc;
     LOG_API("nAllocation1DData, con(%p), adapter(%p), offset(%i), count(%i), sizeBytes(%i), dataType(%i)",
             (RsContext)con, (RsAllocation)alloc, offset, count, sizeBytes, dataType);
-    PER_ARRAY_TYPE(NULL, rsAllocation1DData, (RsContext)con, alloc, offset, lod, count, ptr, sizeBytes);
+    PER_ARRAY_TYPE(NULL, rsAllocation1DData, true, (RsContext)con, alloc, offset, lod, count, ptr, sizeBytes);
 }
 
+// Copies from the Java array data into the Allocation pointed to by alloc.
 static void
 //    native void rsnAllocationElementData1D(long con, long id, int xoff, int compIdx, byte[] d, int sizeBytes);
 nAllocationElementData1D(JNIEnv *_env, jobject _this, jlong con, jlong alloc, jint offset, jint lod, jint compIdx, jbyteArray data, jint sizeBytes)
@@ -681,6 +703,7 @@ nAllocationElementData1D(JNIEnv *_env, jobject _this, jlong con, jlong alloc, ji
     _env->ReleaseByteArrayElements(data, ptr, JNI_ABORT);
 }
 
+// Copies from the Java object data into the Allocation pointed to by _alloc.
 static void
 nAllocationData2D(JNIEnv *_env, jobject _this, jlong con, jlong _alloc, jint xoff, jint yoff, jint lod, jint _face,
                   jint w, jint h, jobject data, jint sizeBytes, jint dataType)
@@ -689,9 +712,11 @@ nAllocationData2D(JNIEnv *_env, jobject _this, jlong con, jlong _alloc, jint xof
     RsAllocationCubemapFace face = (RsAllocationCubemapFace)_face;
     LOG_API("nAllocation2DData, con(%p), adapter(%p), xoff(%i), yoff(%i), w(%i), h(%i), len(%i) type(%i)",
             (RsContext)con, alloc, xoff, yoff, w, h, sizeBytes, dataType);
-    PER_ARRAY_TYPE(NULL, rsAllocation2DData, (RsContext)con, alloc, xoff, yoff, lod, face, w, h, ptr, sizeBytes, 0);
+    PER_ARRAY_TYPE(NULL, rsAllocation2DData, true, (RsContext)con, alloc, xoff, yoff, lod, face, w, h, ptr, sizeBytes, 0);
 }
 
+// Copies from the Allocation pointed to by srcAlloc into the Allocation
+// pointed to by dstAlloc.
 static void
 nAllocationData2D_alloc(JNIEnv *_env, jobject _this, jlong con,
                         jlong dstAlloc, jint dstXoff, jint dstYoff,
@@ -716,6 +741,7 @@ nAllocationData2D_alloc(JNIEnv *_env, jobject _this, jlong con,
                             srcMip, srcFace);
 }
 
+// Copies from the Java object data into the Allocation pointed to by _alloc.
 static void
 nAllocationData3D(JNIEnv *_env, jobject _this, jlong con, jlong _alloc, jint xoff, jint yoff, jint zoff, jint lod,
                     jint w, jint h, jint d, jobject data, int sizeBytes, int dataType)
@@ -723,9 +749,11 @@ nAllocationData3D(JNIEnv *_env, jobject _this, jlong con, jlong _alloc, jint xof
     RsAllocation *alloc = (RsAllocation *)_alloc;
     LOG_API("nAllocation3DData, con(%p), alloc(%p), xoff(%i), yoff(%i), zoff(%i), lod(%i), w(%i), h(%i), d(%i), sizeBytes(%i)",
             (RsContext)con, (RsAllocation)alloc, xoff, yoff, zoff, lod, w, h, d, sizeBytes);
-    PER_ARRAY_TYPE(NULL, rsAllocation3DData, (RsContext)con, alloc, xoff, yoff, zoff, lod, w, h, d, ptr, sizeBytes, 0);
+    PER_ARRAY_TYPE(NULL, rsAllocation3DData, true, (RsContext)con, alloc, xoff, yoff, zoff, lod, w, h, d, ptr, sizeBytes, 0);
 }
 
+// Copies from the Allocation pointed to by srcAlloc into the Allocation
+// pointed to by dstAlloc.
 static void
 nAllocationData3D_alloc(JNIEnv *_env, jobject _this, jlong con,
                         jlong dstAlloc, jint dstXoff, jint dstYoff, jint dstZoff,
@@ -749,14 +777,16 @@ nAllocationData3D_alloc(JNIEnv *_env, jobject _this, jlong con,
 }
 
 
+// Copies from the Allocation pointed to by _alloc into the Java object data.
 static void
 nAllocationRead(JNIEnv *_env, jobject _this, jlong con, jlong _alloc, jobject data, int dataType)
 {
     RsAllocation *alloc = (RsAllocation *)_alloc;
     LOG_API("nAllocationRead, con(%p), alloc(%p)", (RsContext)con, (RsAllocation)alloc);
-    PER_ARRAY_TYPE(0, rsAllocationRead, (RsContext)con, alloc, ptr, len * typeBytes);
+    PER_ARRAY_TYPE(0, rsAllocationRead, false, (RsContext)con, alloc, ptr, len * typeBytes);
 }
 
+// Copies from the Allocation pointed to by _alloc into the Java object data.
 static void
 nAllocationRead1D(JNIEnv *_env, jobject _this, jlong con, jlong _alloc, jint offset, jint lod,
                   jint count, jobject data, int sizeBytes, int dataType)
@@ -764,9 +794,10 @@ nAllocationRead1D(JNIEnv *_env, jobject _this, jlong con, jlong _alloc, jint off
     RsAllocation *alloc = (RsAllocation *)_alloc;
     LOG_API("nAllocation1DRead, con(%p), adapter(%p), offset(%i), count(%i), sizeBytes(%i), dataType(%i)",
             (RsContext)con, alloc, offset, count, sizeBytes, dataType);
-    PER_ARRAY_TYPE(0, rsAllocation1DRead, (RsContext)con, alloc, offset, lod, count, ptr, sizeBytes);
+    PER_ARRAY_TYPE(0, rsAllocation1DRead, false, (RsContext)con, alloc, offset, lod, count, ptr, sizeBytes);
 }
 
+// Copies from the Allocation pointed to by _alloc into the Java object data.
 static void
 nAllocationRead2D(JNIEnv *_env, jobject _this, jlong con, jlong _alloc, jint xoff, jint yoff, jint lod, jint _face,
                   jint w, jint h, jobject data, int sizeBytes, int dataType)
@@ -775,7 +806,7 @@ nAllocationRead2D(JNIEnv *_env, jobject _this, jlong con, jlong _alloc, jint xof
     RsAllocationCubemapFace face = (RsAllocationCubemapFace)_face;
     LOG_API("nAllocation2DRead, con(%p), adapter(%p), xoff(%i), yoff(%i), w(%i), h(%i), len(%i) type(%i)",
             (RsContext)con, alloc, xoff, yoff, w, h, sizeBytes, dataType);
-    PER_ARRAY_TYPE(0, rsAllocation2DRead, (RsContext)con, alloc, xoff, yoff, lod, face, w, h, ptr, sizeBytes, 0);
+    PER_ARRAY_TYPE(0, rsAllocation2DRead, false, (RsContext)con, alloc, xoff, yoff, lod, face, w, h, ptr, sizeBytes, 0);
 }
 
 static jlong
@@ -1011,7 +1042,7 @@ nScriptGetVarV(JNIEnv *_env, jobject _this, jlong con, jlong script, jint slot, 
     jint len = _env->GetArrayLength(data);
     jbyte *ptr = _env->GetByteArrayElements(data, NULL);
     rsScriptGetVarV((RsContext)con, (RsScript)script, slot, ptr, len);
-    _env->ReleaseByteArrayElements(data, ptr, JNI_ABORT);
+    _env->ReleaseByteArrayElements(data, ptr, 0);
 }
 
 static void
@@ -1196,34 +1227,63 @@ nScriptFieldIDCreate(JNIEnv *_env, jobject _this, jlong con, jlong sid, jint slo
 }
 
 static jlong
-nScriptGroupCreate(JNIEnv *_env, jobject _this, jlong con, jintArray _kernels, jintArray _src,
-    jintArray _dstk, jintArray _dstf, jintArray _types)
+nScriptGroupCreate(JNIEnv *_env, jobject _this, jlong con, jlongArray _kernels, jlongArray _src,
+    jlongArray _dstk, jlongArray _dstf, jlongArray _types)
 {
     LOG_API("nScriptGroupCreate, con(%p)", (RsContext)con);
 
-    jint kernelsLen = _env->GetArrayLength(_kernels) * sizeof(int);
-    jint *kernelsPtr = _env->GetIntArrayElements(_kernels, NULL);
-    jint srcLen = _env->GetArrayLength(_src) * sizeof(int);
-    jint *srcPtr = _env->GetIntArrayElements(_src, NULL);
-    jint dstkLen = _env->GetArrayLength(_dstk) * sizeof(int);
-    jint *dstkPtr = _env->GetIntArrayElements(_dstk, NULL);
-    jint dstfLen = _env->GetArrayLength(_dstf) * sizeof(int);
-    jint *dstfPtr = _env->GetIntArrayElements(_dstf, NULL);
-    jint typesLen = _env->GetArrayLength(_types) * sizeof(int);
-    jint *typesPtr = _env->GetIntArrayElements(_types, NULL);
+    jint kernelsLen = _env->GetArrayLength(_kernels);
+    jlong *jKernelsPtr = _env->GetLongArrayElements(_kernels, NULL);
+    RsScriptKernelID* kernelsPtr = (RsScriptKernelID*) malloc(sizeof(RsScriptKernelID) * kernelsLen);
+    for(int i = 0; i < kernelsLen; ++i) {
+        kernelsPtr[i] = (RsScriptKernelID)jKernelsPtr[i];
+    }
 
-    int id = (int)rsScriptGroupCreate((RsContext)con,
-                               (RsScriptKernelID *)kernelsPtr, kernelsLen,
-                               (RsScriptKernelID *)srcPtr, srcLen,
-                               (RsScriptKernelID *)dstkPtr, dstkLen,
-                               (RsScriptFieldID *)dstfPtr, dstfLen,
-                               (RsType *)typesPtr, typesLen);
+    jint srcLen = _env->GetArrayLength(_src);
+    jlong *jSrcPtr = _env->GetLongArrayElements(_src, NULL);
+    RsScriptKernelID* srcPtr = (RsScriptKernelID*) malloc(sizeof(RsScriptKernelID) * srcLen);
+    for(int i = 0; i < srcLen; ++i) {
+        srcPtr[i] = (RsScriptKernelID)jSrcPtr[i];
+    }
 
-    _env->ReleaseIntArrayElements(_kernels, kernelsPtr, 0);
-    _env->ReleaseIntArrayElements(_src, srcPtr, 0);
-    _env->ReleaseIntArrayElements(_dstk, dstkPtr, 0);
-    _env->ReleaseIntArrayElements(_dstf, dstfPtr, 0);
-    _env->ReleaseIntArrayElements(_types, typesPtr, 0);
+    jint dstkLen = _env->GetArrayLength(_dstk);
+    jlong *jDstkPtr = _env->GetLongArrayElements(_dstk, NULL);
+    RsScriptKernelID* dstkPtr = (RsScriptKernelID*) malloc(sizeof(RsScriptKernelID) * dstkLen);
+    for(int i = 0; i < dstkLen; ++i) {
+        dstkPtr[i] = (RsScriptKernelID)jDstkPtr[i];
+    }
+
+    jint dstfLen = _env->GetArrayLength(_dstf);
+    jlong *jDstfPtr = _env->GetLongArrayElements(_dstf, NULL);
+    RsScriptKernelID* dstfPtr = (RsScriptKernelID*) malloc(sizeof(RsScriptKernelID) * dstfLen);
+    for(int i = 0; i < dstfLen; ++i) {
+        dstfPtr[i] = (RsScriptKernelID)jDstfPtr[i];
+    }
+
+    jint typesLen = _env->GetArrayLength(_types);
+    jlong *jTypesPtr = _env->GetLongArrayElements(_types, NULL);
+    RsType* typesPtr = (RsType*) malloc(sizeof(RsType) * typesLen);
+    for(int i = 0; i < typesLen; ++i) {
+        typesPtr[i] = (RsType)jTypesPtr[i];
+    }
+
+    jlong id = (jlong)rsScriptGroupCreate((RsContext)con,
+                               (RsScriptKernelID *)kernelsPtr, kernelsLen * sizeof(RsScriptKernelID),
+                               (RsScriptKernelID *)srcPtr, srcLen * sizeof(RsScriptKernelID),
+                               (RsScriptKernelID *)dstkPtr, dstkLen * sizeof(RsScriptKernelID),
+                               (RsScriptFieldID *)dstfPtr, dstfLen * sizeof(RsScriptKernelID),
+                               (RsType *)typesPtr, typesLen * sizeof(RsType));
+
+    free(kernelsPtr);
+    free(srcPtr);
+    free(dstkPtr);
+    free(dstfPtr);
+    free(typesPtr);
+    _env->ReleaseLongArrayElements(_kernels, jKernelsPtr, 0);
+    _env->ReleaseLongArrayElements(_src, jSrcPtr, 0);
+    _env->ReleaseLongArrayElements(_dstk, jDstkPtr, 0);
+    _env->ReleaseLongArrayElements(_dstf, jDstfPtr, 0);
+    _env->ReleaseLongArrayElements(_types, jTypesPtr, 0);
     return id;
 }
 
@@ -1292,10 +1352,10 @@ nProgramBindSampler(JNIEnv *_env, jobject _this, jlong con, jlong vpf, jint slot
 
 static jlong
 nProgramFragmentCreate(JNIEnv *_env, jobject _this, jlong con, jstring shader,
-                       jobjectArray texNames, jintArray params)
+                       jobjectArray texNames, jlongArray params)
 {
     AutoJavaStringToUTF8 shaderUTF(_env, shader);
-    jint *paramPtr = _env->GetIntArrayElements(params, NULL);
+    jlong *jParamPtr = _env->GetLongArrayElements(params, NULL);
     jint paramLen = _env->GetArrayLength(params);
 
     int texCount = _env->GetArrayLength(texNames);
@@ -1305,11 +1365,16 @@ nProgramFragmentCreate(JNIEnv *_env, jobject _this, jlong con, jstring shader,
 
     LOG_API("nProgramFragmentCreate, con(%p), paramLen(%i)", (RsContext)con, paramLen);
 
+    uintptr_t * paramPtr = (uintptr_t*) malloc(sizeof(uintptr_t) * paramLen);
+    for(int i = 0; i < paramLen; ++i) {
+        paramPtr[i] = (uintptr_t)jParamPtr[i];
+    }
     jlong ret = (jlong)rsProgramFragmentCreate((RsContext)con, shaderUTF.c_str(), shaderUTF.length(),
                                              nameArray, texCount, sizeArray,
-                                             (uint32_t *)paramPtr, paramLen);
+                                             paramPtr, paramLen);
 
-    _env->ReleaseIntArrayElements(params, paramPtr, JNI_ABORT);
+    free(paramPtr);
+    _env->ReleaseLongArrayElements(params, jParamPtr, JNI_ABORT);
     return ret;
 }
 
@@ -1318,10 +1383,10 @@ nProgramFragmentCreate(JNIEnv *_env, jobject _this, jlong con, jstring shader,
 
 static jlong
 nProgramVertexCreate(JNIEnv *_env, jobject _this, jlong con, jstring shader,
-                     jobjectArray texNames, jintArray params)
+                     jobjectArray texNames, jlongArray params)
 {
     AutoJavaStringToUTF8 shaderUTF(_env, shader);
-    jint *paramPtr = _env->GetIntArrayElements(params, NULL);
+    jlong *jParamPtr = _env->GetLongArrayElements(params, NULL);
     jint paramLen = _env->GetArrayLength(params);
 
     LOG_API("nProgramVertexCreate, con(%p), paramLen(%i)", (RsContext)con, paramLen);
@@ -1331,11 +1396,17 @@ nProgramVertexCreate(JNIEnv *_env, jobject _this, jlong con, jstring shader,
     const char ** nameArray = names.c_str();
     size_t* sizeArray = names.c_str_len();
 
+    uintptr_t * paramPtr = (uintptr_t*) malloc(sizeof(uintptr_t) * paramLen);
+    for(int i = 0; i < paramLen; ++i) {
+        paramPtr[i] = (uintptr_t)jParamPtr[i];
+    }
+
     jlong ret = (jlong)rsProgramVertexCreate((RsContext)con, shaderUTF.c_str(), shaderUTF.length(),
                                            nameArray, texCount, sizeArray,
-                                           (uint32_t *)paramPtr, paramLen);
+                                           paramPtr, paramLen);
 
-    _env->ReleaseIntArrayElements(params, paramPtr, JNI_ABORT);
+    free(paramPtr);
+    _env->ReleaseLongArrayElements(params, jParamPtr, JNI_ABORT);
     return ret;
 }
 
@@ -1352,35 +1423,35 @@ nProgramRasterCreate(JNIEnv *_env, jobject _this, jlong con, jboolean pointSprit
 // ---------------------------------------------------------------------------
 
 static void
-nContextBindRootScript(JNIEnv *_env, jobject _this, jlong con, jint script)
+nContextBindRootScript(JNIEnv *_env, jobject _this, jlong con, jlong script)
 {
     LOG_API("nContextBindRootScript, con(%p), script(%p)", (RsContext)con, (RsScript)script);
     rsContextBindRootScript((RsContext)con, (RsScript)script);
 }
 
 static void
-nContextBindProgramStore(JNIEnv *_env, jobject _this, jlong con, jint pfs)
+nContextBindProgramStore(JNIEnv *_env, jobject _this, jlong con, jlong pfs)
 {
     LOG_API("nContextBindProgramStore, con(%p), pfs(%p)", (RsContext)con, (RsProgramStore)pfs);
     rsContextBindProgramStore((RsContext)con, (RsProgramStore)pfs);
 }
 
 static void
-nContextBindProgramFragment(JNIEnv *_env, jobject _this, jlong con, jint pf)
+nContextBindProgramFragment(JNIEnv *_env, jobject _this, jlong con, jlong pf)
 {
     LOG_API("nContextBindProgramFragment, con(%p), pf(%p)", (RsContext)con, (RsProgramFragment)pf);
     rsContextBindProgramFragment((RsContext)con, (RsProgramFragment)pf);
 }
 
 static void
-nContextBindProgramVertex(JNIEnv *_env, jobject _this, jlong con, jint pf)
+nContextBindProgramVertex(JNIEnv *_env, jobject _this, jlong con, jlong pf)
 {
     LOG_API("nContextBindProgramVertex, con(%p), pf(%p)", (RsContext)con, (RsProgramVertex)pf);
     rsContextBindProgramVertex((RsContext)con, (RsProgramVertex)pf);
 }
 
 static void
-nContextBindProgramRaster(JNIEnv *_env, jobject _this, jlong con, jint pf)
+nContextBindProgramRaster(JNIEnv *_env, jobject _this, jlong con, jlong pf)
 {
     LOG_API("nContextBindProgramRaster, con(%p), pf(%p)", (RsContext)con, (RsProgramRaster)pf);
     rsContextBindProgramRaster((RsContext)con, (RsProgramRaster)pf);
@@ -1416,24 +1487,36 @@ nPathCreate(JNIEnv *_env, jobject _this, jlong con, jint prim, jboolean isStatic
 }
 
 static jlong
-nMeshCreate(JNIEnv *_env, jobject _this, jlong con, jintArray _vtx, jintArray _idx, jintArray _prim)
+nMeshCreate(JNIEnv *_env, jobject _this, jlong con, jlongArray _vtx, jlongArray _idx, jintArray _prim)
 {
     LOG_API("nMeshCreate, con(%p)", (RsContext)con);
 
     jint vtxLen = _env->GetArrayLength(_vtx);
-    jint *vtxPtr = _env->GetIntArrayElements(_vtx, NULL);
+    jlong *jVtxPtr = _env->GetLongArrayElements(_vtx, NULL);
+    RsAllocation* vtxPtr = (RsAllocation*) malloc(sizeof(RsAllocation) * vtxLen);
+    for(int i = 0; i < vtxLen; ++i) {
+        vtxPtr[i] = (RsAllocation)(uintptr_t)jVtxPtr[i];
+    }
+
     jint idxLen = _env->GetArrayLength(_idx);
-    jint *idxPtr = _env->GetIntArrayElements(_idx, NULL);
+    jlong *jIdxPtr = _env->GetLongArrayElements(_idx, NULL);
+    RsAllocation* idxPtr = (RsAllocation*) malloc(sizeof(RsAllocation) * idxLen);
+    for(int i = 0; i < idxLen; ++i) {
+        idxPtr[i] = (RsAllocation)(uintptr_t)jIdxPtr[i];
+    }
+
     jint primLen = _env->GetArrayLength(_prim);
     jint *primPtr = _env->GetIntArrayElements(_prim, NULL);
 
-    int id = (int)rsMeshCreate((RsContext)con,
+    jlong id = (jlong)rsMeshCreate((RsContext)con,
                                (RsAllocation *)vtxPtr, vtxLen,
                                (RsAllocation *)idxPtr, idxLen,
                                (uint32_t *)primPtr, primLen);
 
-    _env->ReleaseIntArrayElements(_vtx, vtxPtr, 0);
-    _env->ReleaseIntArrayElements(_idx, idxPtr, 0);
+    free(vtxPtr);
+    free(idxPtr);
+    _env->ReleaseLongArrayElements(_vtx, jVtxPtr, 0);
+    _env->ReleaseLongArrayElements(_idx, jIdxPtr, 0);
     _env->ReleaseIntArrayElements(_prim, primPtr, 0);
     return id;
 }
@@ -1457,7 +1540,7 @@ nMeshGetIndexCount(JNIEnv *_env, jobject _this, jlong con, jlong mesh)
 }
 
 static void
-nMeshGetVertices(JNIEnv *_env, jobject _this, jlong con, jlong mesh, jintArray _ids, int numVtxIDs)
+nMeshGetVertices(JNIEnv *_env, jobject _this, jlong con, jlong mesh, jlongArray _ids, jint numVtxIDs)
 {
     LOG_API("nMeshGetVertices, con(%p), Mesh(%p)", (RsContext)con, (RsMesh)mesh);
 
@@ -1465,14 +1548,15 @@ nMeshGetVertices(JNIEnv *_env, jobject _this, jlong con, jlong mesh, jintArray _
     rsaMeshGetVertices((RsContext)con, (RsMesh)mesh, allocs, (uint32_t)numVtxIDs);
 
     for(jint i = 0; i < numVtxIDs; i ++) {
-        _env->SetIntArrayRegion(_ids, i, 1, (const jint*)&allocs[i]);
+        const jlong alloc = (jlong)allocs[i];
+        _env->SetLongArrayRegion(_ids, i, 1, &alloc);
     }
 
     free(allocs);
 }
 
 static void
-nMeshGetIndices(JNIEnv *_env, jobject _this, jlong con, jlong mesh, jintArray _idxIds, jintArray _primitives, int numIndices)
+nMeshGetIndices(JNIEnv *_env, jobject _this, jlong con, jlong mesh, jlongArray _idxIds, jintArray _primitives, jint numIndices)
 {
     LOG_API("nMeshGetVertices, con(%p), Mesh(%p)", (RsContext)con, (RsMesh)mesh);
 
@@ -1482,8 +1566,10 @@ nMeshGetIndices(JNIEnv *_env, jobject _this, jlong con, jlong mesh, jintArray _i
     rsaMeshGetIndices((RsContext)con, (RsMesh)mesh, allocs, prims, (uint32_t)numIndices);
 
     for(jint i = 0; i < numIndices; i ++) {
-        _env->SetIntArrayRegion(_idxIds, i, 1, (const jint*)&allocs[i]);
-        _env->SetIntArrayRegion(_primitives, i, 1, (const jint*)&prims[i]);
+        const jlong alloc = (jlong)allocs[i];
+        const jint prim = (jint)prims[i];
+        _env->SetLongArrayRegion(_idxIds, i, 1, &alloc);
+        _env->SetIntArrayRegion(_primitives, i, 1, &prim);
     }
 
     free(allocs);
@@ -1536,14 +1622,14 @@ static JNINativeMethod methods[] = {
 {"rsnFontCreateFromAsset",        "(JLandroid/content/res/AssetManager;Ljava/lang/String;FI)J",            (void*)nFontCreateFromAsset },
 
 {"rsnElementCreate",                 "(JJIZI)J",                              (void*)nElementCreate },
-{"rsnElementCreate2",                "(J[I[Ljava/lang/String;[I)J",           (void*)nElementCreate2 },
+{"rsnElementCreate2",                "(J[J[Ljava/lang/String;[I)J",           (void*)nElementCreate2 },
 {"rsnElementGetNativeData",          "(JJ[I)V",                               (void*)nElementGetNativeData },
-{"rsnElementGetSubElements",         "(JJ[I[Ljava/lang/String;[I)V",          (void*)nElementGetSubElements },
+{"rsnElementGetSubElements",         "(JJ[J[Ljava/lang/String;[I)V",          (void*)nElementGetSubElements },
 
 {"rsnTypeCreate",                    "(JJIIIZZI)J",                           (void*)nTypeCreate },
-{"rsnTypeGetNativeData",             "(JJ[I)V",                               (void*)nTypeGetNativeData },
+{"rsnTypeGetNativeData",             "(JJ[J)V",                               (void*)nTypeGetNativeData },
 
-{"rsnAllocationCreateTyped",         "(JJIII)J",                               (void*)nAllocationCreateTyped },
+{"rsnAllocationCreateTyped",         "(JJIIJ)J",                               (void*)nAllocationCreateTyped },
 {"rsnAllocationCreateFromBitmap",    "(JJILandroid/graphics/Bitmap;I)J",      (void*)nAllocationCreateFromBitmap },
 {"rsnAllocationCreateBitmapBackedAllocation",    "(JJILandroid/graphics/Bitmap;I)J",      (void*)nAllocationCreateBitmapBackedAllocation },
 {"rsnAllocationCubeCreateFromBitmap","(JJILandroid/graphics/Bitmap;I)J",      (void*)nAllocationCubeCreateFromBitmap },
@@ -1594,7 +1680,7 @@ static JNINativeMethod methods[] = {
 {"rsnScriptIntrinsicCreate",         "(JIJ)J",                                (void*)nScriptIntrinsicCreate },
 {"rsnScriptKernelIDCreate",          "(JJII)J",                               (void*)nScriptKernelIDCreate },
 {"rsnScriptFieldIDCreate",           "(JJI)J",                                (void*)nScriptFieldIDCreate },
-{"rsnScriptGroupCreate",             "(J[I[I[I[I[I)J",                        (void*)nScriptGroupCreate },
+{"rsnScriptGroupCreate",             "(J[J[J[J[J[J)J",                        (void*)nScriptGroupCreate },
 {"rsnScriptGroupSetInput",           "(JJJJ)V",                               (void*)nScriptGroupSetInput },
 {"rsnScriptGroupSetOutput",          "(JJJJ)V",                               (void*)nScriptGroupSetOutput },
 {"rsnScriptGroupExecute",            "(JJ)V",                                 (void*)nScriptGroupExecute },
@@ -1605,25 +1691,25 @@ static JNINativeMethod methods[] = {
 {"rsnProgramBindTexture",            "(JJIJ)V",                               (void*)nProgramBindTexture },
 {"rsnProgramBindSampler",            "(JJIJ)V",                               (void*)nProgramBindSampler },
 
-{"rsnProgramFragmentCreate",         "(JLjava/lang/String;[Ljava/lang/String;[I)J",              (void*)nProgramFragmentCreate },
+{"rsnProgramFragmentCreate",         "(JLjava/lang/String;[Ljava/lang/String;[J)J",              (void*)nProgramFragmentCreate },
 {"rsnProgramRasterCreate",           "(JZI)J",                                (void*)nProgramRasterCreate },
-{"rsnProgramVertexCreate",           "(JLjava/lang/String;[Ljava/lang/String;[I)J",              (void*)nProgramVertexCreate },
+{"rsnProgramVertexCreate",           "(JLjava/lang/String;[Ljava/lang/String;[J)J",              (void*)nProgramVertexCreate },
 
-{"rsnContextBindRootScript",         "(JI)V",                                 (void*)nContextBindRootScript },
-{"rsnContextBindProgramStore",       "(JI)V",                                 (void*)nContextBindProgramStore },
-{"rsnContextBindProgramFragment",    "(JI)V",                                 (void*)nContextBindProgramFragment },
-{"rsnContextBindProgramVertex",      "(JI)V",                                 (void*)nContextBindProgramVertex },
-{"rsnContextBindProgramRaster",      "(JI)V",                                 (void*)nContextBindProgramRaster },
+{"rsnContextBindRootScript",         "(JJ)V",                                 (void*)nContextBindRootScript },
+{"rsnContextBindProgramStore",       "(JJ)V",                                 (void*)nContextBindProgramStore },
+{"rsnContextBindProgramFragment",    "(JJ)V",                                 (void*)nContextBindProgramFragment },
+{"rsnContextBindProgramVertex",      "(JJ)V",                                 (void*)nContextBindProgramVertex },
+{"rsnContextBindProgramRaster",      "(JJ)V",                                 (void*)nContextBindProgramRaster },
 
 {"rsnSamplerCreate",                 "(JIIIIIF)J",                            (void*)nSamplerCreate },
 
 {"rsnPathCreate",                    "(JIZJJF)J",                             (void*)nPathCreate },
-{"rsnMeshCreate",                    "(J[I[I[I)J",                            (void*)nMeshCreate },
+{"rsnMeshCreate",                    "(J[J[J[I)J",                            (void*)nMeshCreate },
 
 {"rsnMeshGetVertexBufferCount",      "(JJ)I",                                 (void*)nMeshGetVertexBufferCount },
 {"rsnMeshGetIndexCount",             "(JJ)I",                                 (void*)nMeshGetIndexCount },
-{"rsnMeshGetVertices",               "(JJ[II)V",                              (void*)nMeshGetVertices },
-{"rsnMeshGetIndices",                "(JJ[I[II)V",                            (void*)nMeshGetIndices },
+{"rsnMeshGetVertices",               "(JJ[JI)V",                              (void*)nMeshGetVertices },
+{"rsnMeshGetIndices",                "(JJ[J[II)V",                            (void*)nMeshGetIndices },
 
 };
 

@@ -46,6 +46,7 @@ import android.view.WindowManager;
 
 import com.android.internal.R;
 import com.android.internal.os.BinderInternal;
+import com.android.internal.os.Zygote;
 import com.android.internal.os.SamplingProfilerIntegration;
 import com.android.server.accessibility.AccessibilityManagerService;
 import com.android.server.accounts.AccountManagerService;
@@ -71,7 +72,6 @@ import com.android.server.wifi.WifiService;
 import com.android.server.wm.WindowManagerService;
 
 import dalvik.system.VMRuntime;
-import dalvik.system.Zygote;
 
 import java.io.File;
 import java.util.Timer;
@@ -824,7 +824,7 @@ class ServerThread {
         if (safeMode) {
             ActivityManagerService.self().enterSafeMode();
             // Post the safe mode state in the Zygote class
-            Zygote.systemInSafeMode = true;
+            SystemServer.inSafeMode = true;
             // Disable the JIT for the system_server process
             VMRuntime.getRuntime().disableJitCompilation();
         } else {
@@ -1116,6 +1116,11 @@ public class SystemServer {
     // The earliest supported time.  We pick one day into 1970, to
     // give any timezone code room without going into negative time.
     private static final long EARLIEST_SUPPORTED_TIME = 86400 * 1000;
+
+   /**
+    * When set, all subsequent apps will be launched in safe mode.
+    */
+    public static boolean inSafeMode;
 
     /**
      * Called to initialize native system services.

@@ -24,6 +24,7 @@
 
 #include <cutils/log.h>
 #include <fcntl.h>
+#include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -800,7 +801,7 @@ static void dumpNativeHeap(FILE* fp)
     fprintf(fp, "Total memory: %zu\n", totalMemory);
     fprintf(fp, "Allocation records: %zd\n", recordCount);
     if (backtraceSize != BACKTRACE_SIZE) {
-        fprintf(fp, "WARNING: mismatched backtrace sizes (%d vs. %d)\n",
+        fprintf(fp, "WARNING: mismatched backtrace sizes (%zu vs. %d)\n",
             backtraceSize, BACKTRACE_SIZE);
     }
     fprintf(fp, "\n");
@@ -823,7 +824,11 @@ static void dumpNativeHeap(FILE* fp)
             if (backtrace[bt] == 0) {
                 break;
             } else {
-                fprintf(fp, " %08x", backtrace[bt]);
+#ifdef __LP64__
+                fprintf(fp, " %016" PRIxPTR, backtrace[bt]);
+#else
+                fprintf(fp, " %08" PRIxPTR, backtrace[bt]);
+#endif
             }
         }
         fprintf(fp, "\n");
