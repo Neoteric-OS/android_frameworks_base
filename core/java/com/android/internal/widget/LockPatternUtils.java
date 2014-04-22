@@ -1002,11 +1002,11 @@ public class LockPatternUtils {
      * @return the hash of the pattern in a byte array.
      */
     public static byte[] patternToHash(List<LockPatternView.Cell> pattern) {
-        if (pattern == null) {
+        if (pattern == null || pattern.size() == 0) {
             return null;
         }
-
         final int patternSize = pattern.size();
+
         byte[] res = new byte[patternSize];
         for (int i = 0; i < patternSize; i++) {
             LockPatternView.Cell cell = pattern.get(i);
