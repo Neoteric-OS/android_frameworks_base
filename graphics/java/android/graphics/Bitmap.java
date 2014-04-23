@@ -303,7 +303,7 @@ public final class Bitmap implements Parcelable {
      */
     public void recycle() {
         if (!mRecycled) {
-            if (nativeRecycle(mNativeBitmap)) {
+            if (mFinalizer.isFinalized() || nativeRecycle(mNativeBitmap)) {
                 // return value indicates whether native pixel object was actually recycled.
                 // false indicates that it is still in use at the native level and these
                 // objects should not be collected now. They will be collected later when the
@@ -1546,9 +1546,14 @@ public final class Bitmap implements Parcelable {
 
     private static class BitmapFinalizer {
         private final long mNativeBitmap;
+        private boolean mFinalized = false;
 
         BitmapFinalizer(long nativeBitmap) {
             mNativeBitmap = nativeBitmap;
+        }
+
+        public final boolean isFinalized() {
+            return mFinalized;
         }
 
         @Override
@@ -1559,6 +1564,7 @@ public final class Bitmap implements Parcelable {
                 // Ignore
             } finally {
                 nativeDestructor(mNativeBitmap);
+                mFinalized = true;
             }
         }
     }
