@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85cb4765_22f56e68",
+        "filename": "core/res/res/values/symbols.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-04-23T23:21:52Z",
+      "side": 1,
+      "message": "I don\u0027t see this used or defined.",
+      "revId": "a60f2a5cdec9c7fa9ec6816be3699989e877a3be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85cb4765_42fa7259",
+        "filename": "core/res/res/values/symbols.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1392,
+      "author": {
+        "id": 1001401
+      },
+      "writtenOn": "2014-04-23T23:21:52Z",
+      "side": 1,
+      "message": "I see this being used but not defined?",
+      "revId": "a60f2a5cdec9c7fa9ec6816be3699989e877a3be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
