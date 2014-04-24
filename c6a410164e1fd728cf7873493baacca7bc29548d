@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "659e536e_54b162d0",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2014-04-24T22:03:04Z",
+      "side": 1,
+      "message": "NB: This fragment of code is not in Internal, and as a result will cause a merge issue downstream.",
+      "range": {
+        "startLine": 353,
+        "startChar": 25,
+        "endLine": 353,
+        "endChar": 27
+      },
+      "revId": "c6a410164e1fd728cf7873493baacca7bc29548d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
