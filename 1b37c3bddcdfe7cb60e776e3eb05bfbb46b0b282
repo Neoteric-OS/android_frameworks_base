@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85b427df_bdb7ebc2",
+        "filename": "media/java/android/media/MediaScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2014-04-24T14:50:10Z",
+      "side": 1,
+      "message": "if seems like it would be cleaner to put the finally {} block that releases the DRM resources here, since mDrmManagerClient is only assigned in getFileTypeFromDrm(), which is only called from beginFile(), which is only called from line 529 above.",
+      "revId": "1b37c3bddcdfe7cb60e776e3eb05bfbb46b0b282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
