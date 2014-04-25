@@ -69,6 +69,7 @@ import android.os.SystemProperties;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.security.AndroidJSSEProvider;
 import android.util.AndroidRuntimeException;
 import android.util.ArrayMap;
 import android.util.DisplayMetrics;
@@ -5055,6 +5056,7 @@ public final class ActivityThread {
         EventLogger.setReporter(new EventLoggingReporter());
 
         Security.addProvider(new AndroidKeyStoreProvider());
+        Security.addProvider(new AndroidJSSEProvider());
 
         Process.setArgV0("<pre-initialized>");
 
