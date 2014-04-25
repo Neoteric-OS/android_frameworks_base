@@ -16,6 +16,24 @@
       "revId": "1b37c3bddcdfe7cb60e776e3eb05bfbb46b0b282",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2581bb17_db0c93a3",
+        "filename": "media/java/android/media/MediaScanner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2014-04-25T08:35:13Z",
+      "side": 1,
+      "message": "If we put releaseResources() here, DrmManagerClient is created and deleted for every DRM file in the directory during scanDirectories(). It affects performance of media scanning. We want to keep single instance of DrmManagerClient during scanDirectories() to avoid bad effect of performance. Therefore, releaseResources() should be located at finally {} block of scanDirectories().",
+      "parentUuid": "85b427df_bdb7ebc2",
+      "revId": "1b37c3bddcdfe7cb60e776e3eb05bfbb46b0b282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
