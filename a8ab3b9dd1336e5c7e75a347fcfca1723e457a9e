@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8581874e_b5cfaa8f",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5059,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2014-04-28T18:36:21Z",
+      "side": 1,
+      "message": "Can\u0027t you just do the setDefaultUserDirectory call here instead of a new provider?\n\n  TrustedCertificateStore.setDefaultUserDirectory(configDir);",
+      "range": {
+        "startLine": 5059,
+        "startChar": 0,
+        "endLine": 5059,
+        "endChar": 56
+      },
+      "revId": "a8ab3b9dd1336e5c7e75a347fcfca1723e457a9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
