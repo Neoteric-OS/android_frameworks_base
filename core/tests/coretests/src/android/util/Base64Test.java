@@ -18,7 +18,6 @@ package android.util;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import junit.framework.TestCase;
 
 import java.io.ByteArrayInputStream;
@@ -26,7 +25,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.Random;
 
 public class Base64Test extends TestCase {
-    private static final String TAG = "Base64Test";
 
     /** Decodes a string, returning a string. */
     private String decodeString(String in) throws Exception {
@@ -96,9 +94,11 @@ public class Base64Test extends TestCase {
         // padding 1
         assertEquals("hello, world?!", decodeString("aGVsbG8sIHdvcmxkPyE="));
         assertEquals("hello, world?!", decodeString("aGVsbG8sIHdvcmxkPyE"));
-        assertBad("aGVsbG8sIHdvcmxkPyE==");
-        assertBad("aGVsbG8sIHdvcmxkPyE ==");
-        assertBad("aGVsbG8sIHdvcmxkPyE = = ");
+        assertBad("aGVsbG8sIHdvcmxkPyE=X");
+        assertEquals("hello, world?!", decodeString("aGVsbG8sIHdvcmxkPyE=="));
+        assertEquals("hello, world?!", decodeString("aGVsbG8sIHdvcmxkPyE =="));
+        assertEquals("hello, world?!", decodeString("aGVsbG8sIHdvcmxkPyE== "));
+        assertEquals("hello, world?!", decodeString("aGVsbG8sIHdvcmxkPyE = ="));
         assertEquals("hello, world?!", decodeString("aGVsbG8sIHdvcmxkPy E="));
         assertEquals("hello, world?!", decodeString("aGVsbG8sIHdvcmxkPy E"));
         assertEquals("hello, world?!", decodeString("aGVsbG8sIHdvcmxkPy E ="));
@@ -109,6 +109,7 @@ public class Base64Test extends TestCase {
         // padding 2
         assertEquals("hello, world.", decodeString("aGVsbG8sIHdvcmxkLg=="));
         assertEquals("hello, world.", decodeString("aGVsbG8sIHdvcmxkLg"));
+        assertBad("aGVsbG8sIHdvcmxkLg==X");
         assertBad("aGVsbG8sIHdvcmxkLg=");
         assertBad("aGVsbG8sIHdvcmxkLg =");
         assertBad("aGVsbG8sIHdvcmxkLg = ");
@@ -116,7 +117,8 @@ public class Base64Test extends TestCase {
         assertEquals("hello, world.", decodeString("aGVsbG8sIHdvcmxkL g"));
         assertEquals("hello, world.", decodeString("aGVsbG8sIHdvcmxkL g =="));
         assertEquals("hello, world.", decodeString("aGVsbG8sIHdvcmxkL g "));
-        assertEquals("hello, world.", decodeString("aGVsbG8sIHdvcmxkL g = = "));
+        assertEquals("hello, world.", decodeString("aGVsbG8sIHdvcmxkL g== "));
+        assertEquals("hello, world.", decodeString("aGVsbG8sIHdvcmxkL g= ="));
         assertEquals("hello, world.", decodeString("aGVsbG8sIHdvcmxkL g   "));
     }
 
@@ -227,58 +229,6 @@ public class Base64Test extends TestCase {
         assertEquals(out_59.replaceAll("\n", ""), encodeToString(in_59, Base64.NO_WRAP));
         assertEquals(out_60.replaceAll("\n", ""), encodeToString(in_60, Base64.NO_WRAP));
         assertEquals(out_61.replaceAll("\n", ""), encodeToString(in_61, Base64.NO_WRAP));
-    }
-
-    /**
-     * Tests that Base64.Encoder.encode() does correct handling of the
-     * tail for each call.
-     *
-     * This test is disabled because while it passes if you can get it
-     * to run, android's test infrastructure currently doesn't allow
-     * us to get at package-private members (Base64.Encoder in
-     * this case).
-     */
-    public void XXXtestEncodeInternal() throws Exception {
-        byte[] input = { (byte) 0x61, (byte) 0x62, (byte) 0x63 };
-        byte[] output = new byte[100];
-
-        Base64.Encoder encoder = new Base64.Encoder(Base64.NO_PADDING | Base64.NO_WRAP,
-                                                    output);
-
-        encoder.process(input, 0, 3, false);
-        assertEquals("YWJj".getBytes(), 4, encoder.output, encoder.op);
-        assertEquals(0, encoder.tailLen);
-
-        encoder.process(input, 0, 3, false);
-        assertEquals("YWJj".getBytes(), 4, encoder.output, encoder.op);
-        assertEquals(0, encoder.tailLen);
-
-        encoder.process(input, 0, 1, false);
-        assertEquals(0, encoder.op);
-        assertEquals(1, encoder.tailLen);
-
-        encoder.process(input, 0, 1, false);
-        assertEquals(0, encoder.op);
-        assertEquals(2, encoder.tailLen);
-
-        encoder.process(input, 0, 1, false);
-        assertEquals("YWFh".getBytes(), 4, encoder.output, encoder.op);
-        assertEquals(0, encoder.tailLen);
-
-        encoder.process(input, 0, 2, false);
-        assertEquals(0, encoder.op);
-        assertEquals(2, encoder.tailLen);
-
-        encoder.process(input, 0, 2, false);
-        assertEquals("YWJh".getBytes(), 4, encoder.output, encoder.op);
-        assertEquals(1, encoder.tailLen);
-
-        encoder.process(input, 0, 2, false);
-        assertEquals("YmFi".getBytes(), 4, encoder.output, encoder.op);
-        assertEquals(0, encoder.tailLen);
-
-        encoder.process(input, 0, 1, true);
-        assertEquals("YQ".getBytes(), 2, encoder.output, encoder.op);
     }
 
     private static final String lipsum =

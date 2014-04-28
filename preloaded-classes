@@ -923,10 +923,6 @@ android.text.style.WrapTogetherSpan
 android.util.AndroidException
 android.util.AndroidRuntimeException
 android.util.AttributeSet
-android.util.Base64
-android.util.Base64$Coder
-android.util.Base64$Decoder
-android.util.Base64$Encoder
 android.util.DisplayMetrics
 android.util.EventLog
 android.util.EventLog$Event
@@ -2346,6 +2342,10 @@ libcore.icu.NativePluralRules
 libcore.icu.RuleBasedCollatorICU
 libcore.icu.TimeZoneNames
 libcore.icu.Transliterator
+libcore.io.Base64
+libcore.io.Base64$Coder
+libcore.io.Base64$Decoder
+libcore.io.Base64$Encoder
 libcore.internal.StringPool
 libcore.io.AsynchronousCloseMonitor
 libcore.io.BlockGuardOs

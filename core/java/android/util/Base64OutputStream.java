@@ -25,13 +25,6 @@ import java.io.OutputStream;
  * it, writing the resulting data to another OutputStream.
  */
 public class Base64OutputStream extends FilterOutputStream {
-    private final Base64.Coder coder;
-    private final int flags;
-
-    private byte[] buffer = null;
-    private int bpos = 0;
-
-    private static byte[] EMPTY = new byte[0];
 
     /**
      * Performs Base64 encoding on the data written to the stream,
@@ -42,7 +35,7 @@ public class Base64OutputStream extends FilterOutputStream {
      *        constants in {@link Base64}
      */
     public Base64OutputStream(OutputStream out, int flags) {
-        this(out, flags, true);
+        super(createWrappedStream(out, flags, true /* encode */));
     }
 
     /**
@@ -58,98 +51,38 @@ public class Base64OutputStream extends FilterOutputStream {
      * @hide
      */
     public Base64OutputStream(OutputStream out, int flags, boolean encode) {
-        super(out);
-        this.flags = flags;
+        super(createWrappedStream(out, flags, encode));
+    }
+
+    @Override
+    public void write(byte[] buffer, int offset, int length) throws IOException {
+        try {
+            super.write(buffer, offset, length);
+        } catch (libcore.util.Base64DataException e) {
+            // Convert to the specific public API exception type callers might be expecting.
+            throw new Base64DataException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void write(int oneByte) throws IOException {
+        try {
+            super.write(oneByte);
+        } catch (libcore.util.Base64DataException e) {
+            // Convert to the specific public API exception type callers might be expecting.
+            throw new Base64DataException(e.getMessage());
+        }
+    }
+
+    private static OutputStream createWrappedStream(OutputStream out, int flags, boolean encode) {
+        libcore.util.Base64.Coder coder;
         if (encode) {
-            coder = new Base64.Encoder(flags, null);
+            coder = Base64.createLibcoreEncoder(flags);
         } else {
-            coder = new Base64.Decoder(flags, null);
+            coder = Base64.createLibcoreDecoder(flags);
         }
+        boolean mustCloseOut = !((flags & Base64.NO_CLOSE) == 0);
+        return new libcore.util.Base64OutputStream(out, coder, mustCloseOut);
     }
 
-    public void write(int b) throws IOException {
-        // To avoid invoking the encoder/decoder routines for single
-        // bytes, we buffer up calls to write(int) in an internal
-        // byte array to transform them into writes of decently-sized
-        // arrays.
-
-        if (buffer == null) {
-            buffer = new byte[1024];
-        }
-        if (bpos >= buffer.length) {
-            // internal buffer full; write it out.
-            internalWrite(buffer, 0, bpos, false);
-            bpos = 0;
-        }
-        buffer[bpos++] = (byte) b;
-    }
-
-    /**
-     * Flush any buffered data from calls to write(int).  Needed
-     * before doing a write(byte[], int, int) or a close().
-     */
-    private void flushBuffer() throws IOException {
-        if (bpos > 0) {
-            internalWrite(buffer, 0, bpos, false);
-            bpos = 0;
-        }
-    }
-
-    public void write(byte[] b, int off, int len) throws IOException {
-        if (len <= 0) return;
-        flushBuffer();
-        internalWrite(b, off, len, false);
-    }
-
-    public void close() throws IOException {
-        IOException thrown = null;
-        try {
-            flushBuffer();
-            internalWrite(EMPTY, 0, 0, true);
-        } catch (IOException e) {
-            thrown = e;
-        }
-
-        try {
-            if ((flags & Base64.NO_CLOSE) == 0) {
-                out.close();
-            } else {
-                out.flush();
-            }
-        } catch (IOException e) {
-            if (thrown != null) {
-                thrown = e;
-            }
-        }
-
-        if (thrown != null) {
-            throw thrown;
-        }
-    }
-
-    /**
-     * Write the given bytes to the encoder/decoder.
-     *
-     * @param finish true if this is the last batch of input, to cause
-     *        encoder/decoder state to be finalized.
-     */
-    private void internalWrite(byte[] b, int off, int len, boolean finish) throws IOException {
-        coder.output = embiggen(coder.output, coder.maxOutputSize(len));
-        if (!coder.process(b, off, len, finish)) {
-            throw new Base64DataException("bad base-64");
-        }
-        out.write(coder.output, 0, coder.op);
-    }
-
-    /**
-     * If b.length is at least len, return b.  Otherwise return a new
-     * byte array of length len.
-     */
-    private byte[] embiggen(byte[] b, int len) {
-        if (b == null || b.length < len) {
-            return new byte[len];
-        } else {
-            return b;
-        }
-    }
 }

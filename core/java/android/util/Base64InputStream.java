@@ -25,16 +25,6 @@ import java.io.InputStream;
  * it.
  */
 public class Base64InputStream extends FilterInputStream {
-    private final Base64.Coder coder;
-
-    private static byte[] EMPTY = new byte[0];
-
-    private static final int BUFFER_SIZE = 2048;
-    private boolean eof;
-    private byte[] inputBuffer;
-    private int outputStart;
-    private int outputEnd;
-
     /**
      * An InputStream that performs Base64 decoding on the data read
      * from the wrapped stream.
@@ -44,7 +34,7 @@ public class Base64InputStream extends FilterInputStream {
      *        constants in {@link Base64}
      */
     public Base64InputStream(InputStream in, int flags) {
-        this(in, flags, false);
+        super(createWrappedStream(in, flags, false /* encode */));
     }
 
     /**
@@ -59,95 +49,36 @@ public class Base64InputStream extends FilterInputStream {
      * @hide
      */
     public Base64InputStream(InputStream in, int flags, boolean encode) {
-        super(in);
-        eof = false;
-        inputBuffer = new byte[BUFFER_SIZE];
-        if (encode) {
-            coder = new Base64.Encoder(flags, null);
-        } else {
-            coder = new Base64.Decoder(flags, null);
-        }
-        coder.output = new byte[coder.maxOutputSize(BUFFER_SIZE)];
-        outputStart = 0;
-        outputEnd = 0;
+        super(createWrappedStream(in, flags, encode));
     }
 
-    public boolean markSupported() {
-        return false;
-    }
-
-    public void mark(int readlimit) {
-        throw new UnsupportedOperationException();
-    }
-
-    public void reset() {
-        throw new UnsupportedOperationException();
-    }
-
-    public void close() throws IOException {
-        in.close();
-        inputBuffer = null;
-    }
-
-    public int available() {
-        return outputEnd - outputStart;
-    }
-
-    public long skip(long n) throws IOException {
-        if (outputStart >= outputEnd) {
-            refill();
-        }
-        if (outputStart >= outputEnd) {
-            return 0;
-        }
-        long bytes = Math.min(n, outputEnd-outputStart);
-        outputStart += bytes;
-        return bytes;
-    }
-
+    @Override
     public int read() throws IOException {
-        if (outputStart >= outputEnd) {
-            refill();
-        }
-        if (outputStart >= outputEnd) {
-            return -1;
-        } else {
-            return coder.output[outputStart++] & 0xff;
+        try {
+            return super.read();
+        } catch (libcore.util.Base64DataException e) {
+            // Convert to the specific public API exception type callers might be expecting.
+            throw new Base64DataException(e.getMessage());
         }
     }
 
-    public int read(byte[] b, int off, int len) throws IOException {
-        if (outputStart >= outputEnd) {
-            refill();
+    @Override
+    public int read(byte[] buffer, int byteOffset, int byteCount) throws IOException {
+        try {
+            return super.read(buffer, byteOffset, byteCount);
+        } catch (libcore.util.Base64DataException e) {
+            // Convert to the specific public API exception type callers might be expecting.
+            throw new Base64DataException(e.getMessage());
         }
-        if (outputStart >= outputEnd) {
-            return -1;
-        }
-        int bytes = Math.min(len, outputEnd-outputStart);
-        System.arraycopy(coder.output, outputStart, b, off, bytes);
-        outputStart += bytes;
-        return bytes;
     }
 
-    /**
-     * Read data from the input stream into inputBuffer, then
-     * decode/encode it into the empty coder.output, and reset the
-     * outputStart and outputEnd pointers.
-     */
-    private void refill() throws IOException {
-        if (eof) return;
-        int bytesRead = in.read(inputBuffer);
-        boolean success;
-        if (bytesRead == -1) {
-            eof = true;
-            success = coder.process(EMPTY, 0, 0, true);
+    private static InputStream createWrappedStream(InputStream in, int flags, boolean encode) {
+        libcore.util.Base64.Coder coder;
+        if (encode) {
+            coder = Base64.createLibcoreEncoder(flags);
         } else {
-            success = coder.process(inputBuffer, 0, bytesRead, false);
+            coder = Base64.createLibcoreDecoder(flags);
         }
-        if (!success) {
-            throw new Base64DataException("bad base-64");
-        }
-        outputEnd = coder.op;
-        outputStart = 0;
+        return new libcore.util.Base64InputStream(in, coder);
     }
 }
