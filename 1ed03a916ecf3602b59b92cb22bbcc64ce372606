@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05caf7dd_6f8f01d6",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-04-29T18:34:54Z",
+      "side": 1,
+      "message": "this has now moved to android.system.",
+      "revId": "1ed03a916ecf3602b59b92cb22bbcc64ce372606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45d06f88_5c659de5",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-04-29T18:34:54Z",
+      "side": 1,
+      "message": "this should just be Os.prctl now.",
+      "revId": "1ed03a916ecf3602b59b92cb22bbcc64ce372606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
