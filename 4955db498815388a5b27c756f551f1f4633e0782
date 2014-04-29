@@ -34,6 +34,24 @@
       "revId": "4955db498815388a5b27c756f551f1f4633e0782",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "857b475f_a5f4a86c",
+        "filename": "core/java/android/os/Environment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2014-04-29T18:50:57Z",
+      "side": 1,
+      "message": "And a separate CL for migrating keychain:\n\nhttps://android-review.googlesource.com/#/c/92663/",
+      "parentUuid": "857b475f_85e884c9",
+      "revId": "4955db498815388a5b27c756f551f1f4633e0782",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
