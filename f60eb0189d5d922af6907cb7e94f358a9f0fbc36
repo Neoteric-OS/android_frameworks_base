@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6569f3a1_19eb0b19",
+        "filename": "core/java/android/app/WallpaperManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2014-04-29T22:43:10Z",
+      "side": 1,
+      "message": "Check this in a separate block so you can throw an IAE with a more relevant message (\"Image URI must not be null\").",
+      "revId": "f60eb0189d5d922af6907cb7e94f358a9f0fbc36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
