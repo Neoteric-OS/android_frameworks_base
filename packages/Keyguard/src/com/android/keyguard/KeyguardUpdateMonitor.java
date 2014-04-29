@@ -332,15 +332,7 @@ public class KeyguardUpdateMonitor {
             }
             String stateExtra = intent.getStringExtra(IccCardConstants.INTENT_KEY_ICC_STATE);
             if (IccCardConstants.INTENT_VALUE_ICC_ABSENT.equals(stateExtra)) {
-                final String absentReason = intent
-                    .getStringExtra(IccCardConstants.INTENT_KEY_LOCKED_REASON);
-
-                if (IccCardConstants.INTENT_VALUE_ABSENT_ON_PERM_DISABLED.equals(
-                        absentReason)) {
-                    state = IccCardConstants.State.PERM_DISABLED;
-                } else {
-                    state = IccCardConstants.State.ABSENT;
-                }
+                state = IccCardConstants.State.ABSENT;
             } else if (IccCardConstants.INTENT_VALUE_ICC_READY.equals(stateExtra)) {
                 state = IccCardConstants.State.READY;
             } else if (IccCardConstants.INTENT_VALUE_ICC_LOCKED.equals(stateExtra)) {
@@ -350,6 +342,9 @@ public class KeyguardUpdateMonitor {
                     state = IccCardConstants.State.PIN_REQUIRED;
                 } else if (IccCardConstants.INTENT_VALUE_LOCKED_ON_PUK.equals(lockedReason)) {
                     state = IccCardConstants.State.PUK_REQUIRED;
+                } else if (IccCardConstants.INTENT_VALUE_ABSENT_ON_PERM_DISABLED.equals
+                        (lockedReason)) {
+                    state = IccCardConstants.State.PERM_DISABLED;
                 } else {
                     state = IccCardConstants.State.UNKNOWN;
                 }
