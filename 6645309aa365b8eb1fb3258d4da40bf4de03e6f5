@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45d06f88_1c54c581",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2014-04-29T18:57:06Z",
+      "side": 1,
+      "message": "This line is already present in Google\u0027s internal tree. I suspect the automerger will handle this cleanly, but not sure...",
+      "revId": "6645309aa365b8eb1fb3258d4da40bf4de03e6f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
