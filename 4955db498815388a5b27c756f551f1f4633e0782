@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45d06f88_eb948dbf",
+        "filename": "core/java/android/os/Environment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2014-04-29T17:02:58Z",
+      "side": 1,
+      "message": "Keep in mind that if any service starts to use this, it should ensure that existing files are migrated to the new locations on first boot, to handle OTA upgrades.\n\nWhere do you set the permissions? Are they correct by default?\n\nHow is the per-user permission enforced?",
+      "revId": "4955db498815388a5b27c756f551f1f4633e0782",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
