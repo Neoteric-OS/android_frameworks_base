@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+// NOTE: THIS WILL ACTUALLY BE IN libcore.util
 package android.util;
 
 import java.io.FilterOutputStream;
@@ -21,56 +22,37 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * An OutputStream that does Base64 encoding on the data written to
- * it, writing the resulting data to another OutputStream.
+ * An OutputStream that does Base64 encoding on the data written to it, writing the resulting data
+ * to another OutputStream.
  */
 public class Base64OutputStream extends FilterOutputStream {
     private final Base64.Coder coder;
-    private final int flags;
 
     private byte[] buffer = null;
     private int bpos = 0;
 
     private static byte[] EMPTY = new byte[0];
 
-    /**
-     * Performs Base64 encoding on the data written to the stream,
-     * writing the encoded data to another OutputStream.
-     *
-     * @param out the OutputStream to write the encoded data to
-     * @param flags bit flags for controlling the encoder; see the
-     *        constants in {@link Base64}
-     */
-    public Base64OutputStream(OutputStream out, int flags) {
-        this(out, flags, true);
-    }
+    private byte[] coderBuffer;
+    private boolean mustCloseOut;
 
     /**
-     * Performs Base64 encoding or decoding on the data written to the
-     * stream, writing the encoded/decoded data to another
-     * OutputStream.
+     * Performs Base64 encoding or decoding on the data written to the stream, writing the
+     * encoded/decoded data to another OutputStream.
      *
      * @param out the OutputStream to write the encoded data to
-     * @param flags bit flags for controlling the encoder; see the
-     *        constants in {@link Base64}
-     * @param encode true to encode, false to decode
-     *
-     * @hide
+     * @param coder the encoder/decoder to use to process the written data
+     * @param mustCloseOut true if closing this stream should close the wrapped stream
      */
-    public Base64OutputStream(OutputStream out, int flags, boolean encode) {
+    public Base64OutputStream(OutputStream out, Base64.Coder coder, boolean mustCloseOut) {
         super(out);
-        this.flags = flags;
-        if (encode) {
-            coder = new Base64.Encoder(flags, null);
-        } else {
-            coder = new Base64.Decoder(flags, null);
-        }
+        this.coder = coder;
+        this.mustCloseOut = mustCloseOut;
     }
 
     public void write(int b) throws IOException {
-        // To avoid invoking the encoder/decoder routines for single
-        // bytes, we buffer up calls to write(int) in an internal
-        // byte array to transform them into writes of decently-sized
+        // To avoid invoking the encoder/decoder routines for single bytes, we buffer up calls to
+        // write(int) in an internal byte array to transform them into writes of decently-sized
         // arrays.
 
         if (buffer == null) {
@@ -85,8 +67,8 @@ public class Base64OutputStream extends FilterOutputStream {
     }
 
     /**
-     * Flush any buffered data from calls to write(int).  Needed
-     * before doing a write(byte[], int, int) or a close().
+     * Flush any buffered data from calls to write(int).  Needed before doing a
+     * write(byte[], int, int) or a close().
      */
     private void flushBuffer() throws IOException {
         if (bpos > 0) {
@@ -111,7 +93,7 @@ public class Base64OutputStream extends FilterOutputStream {
         }
 
         try {
-            if ((flags & Base64.NO_CLOSE) == 0) {
+            if (mustCloseOut) {
                 out.close();
             } else {
                 out.flush();
@@ -130,20 +112,17 @@ public class Base64OutputStream extends FilterOutputStream {
     /**
      * Write the given bytes to the encoder/decoder.
      *
-     * @param finish true if this is the last batch of input, to cause
-     *        encoder/decoder state to be finalized.
+     * @param finish true if this is the last batch of input, to cause encoder/decoder state to be
+     *      finalized.
      */
     private void internalWrite(byte[] b, int off, int len, boolean finish) throws IOException {
-        coder.output = embiggen(coder.output, coder.maxOutputSize(len));
-        if (!coder.process(b, off, len, finish)) {
-            throw new Base64DataException("bad base-64");
-        }
-        out.write(coder.output, 0, coder.op);
+        coderBuffer = embiggen(coderBuffer, coder.maxOutputSize(len));
+        int op = coder.process(b, off, len, coderBuffer, finish);
+        out.write(coderBuffer, 0, op);
     }
 
     /**
-     * If b.length is at least len, return b.  Otherwise return a new
-     * byte array of length len.
+     * If b.length is at least len, return b.  Otherwise return a new byte array of length len.
      */
     private byte[] embiggen(byte[] b, int len) {
         if (b == null || b.length < len) {
