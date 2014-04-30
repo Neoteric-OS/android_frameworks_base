@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ae7d493_28788f03",
+        "filename": "services/java/com/android/server/accessibility/AccessibilityManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2958,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2014-04-30T18:05:11Z",
+      "side": 1,
+      "message": "Use the existing mLock as it guards the internal state. Adding another one does not prevent another thread that does not use the lock added here to say change mUiAutomationServiceOwner.",
+      "range": {
+        "startLine": 2957,
+        "startChar": 52,
+        "endLine": 2958,
+        "endChar": 7
+      },
+      "revId": "458c5a0ca9931d35530a4b4a96485dc6357180e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4af15c4f_29fbf59a",
+        "filename": "services/java/com/android/server/accessibility/AccessibilityManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2965,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2014-04-30T18:05:11Z",
+      "side": 1,
+      "message": "Good catch!",
+      "range": {
+        "startLine": 2965,
+        "startChar": 15,
+        "endLine": 2965,
+        "endChar": 38
+      },
+      "revId": "458c5a0ca9931d35530a4b4a96485dc6357180e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ae7d493_c8b92367",
+        "filename": "services/java/com/android/server/accessibility/AccessibilityManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3023,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2014-04-30T18:05:11Z",
+      "side": 1,
+      "message": "The synchronized block does not encompass all state mutating statements :) You really, do not need a lock here as this method is always called with a lock held. Can you please rename the method to destroyUiAutomationServiceLocked, so callers know they have to hold the lock?",
+      "range": {
+        "startLine": 3023,
+        "startChar": 12,
+        "endLine": 3023,
+        "endChar": 34
+      },
+      "revId": "458c5a0ca9931d35530a4b4a96485dc6357180e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
