@@ -2105,6 +2105,21 @@ public class ActivityManager {
         }
     }
 
+    public static int getPackageUsageCount(String packageName) {
+        try {
+            IUsageStats usageStatsService = IUsageStats.Stub.asInterface(
+                    ServiceManager.getService("usagestats"));
+            if (usageStatsService == null) {
+                return 0;
+            }
+            int usageCount = usageStatsService.getPkgUsageStat(packageName);
+            return usageCount;
+        } catch (RemoteException e) {
+            Log.w(TAG, "Could not query usage counts", e);
+            return 0;
+        }
+    }
+
     /** @hide */
     public static int checkComponentPermission(String permission, int uid,
             int owningUid, boolean exported) {

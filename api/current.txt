@@ -2937,6 +2937,7 @@ package android.app {
     method public int getMemoryClass();
     method public void getMemoryInfo(android.app.ActivityManager.MemoryInfo);
     method public static void getMyMemoryState(android.app.ActivityManager.RunningAppProcessInfo);
+    method public static int getPackageUsageCount(java.lang.String);
     method public android.os.Debug.MemoryInfo[] getProcessMemoryInfo(int[]);
     method public java.util.List<android.app.ActivityManager.ProcessErrorStateInfo> getProcessesInErrorState();
     method public java.util.List<android.app.ActivityManager.RecentTaskInfo> getRecentTasks(int, int) throws java.lang.SecurityException;
@@ -17583,7 +17584,7 @@ package android.os {
 
   public abstract class CountDownTimer {
     ctor public CountDownTimer(long, long);
-    method public final void cancel();
+    method public final synchronized void cancel();
     method public abstract void onFinish();
     method public abstract void onTick(long);
     method public final synchronized android.os.CountDownTimer start();

@@ -103,8 +103,12 @@ public final class UsageStatsService extends IUsageStats.Stub {
     // Maintains the last time any component was resumed, for all time.
     final private ArrayMap<String, ArrayMap<String, Long>> mLastResumeTimes
             = new ArrayMap<String, ArrayMap<String, Long>>();
+    // Maintains the usage count for any component that was resumed, for all time.
+    final private ArrayMap<String, ArrayMap<String, Integer>> mUsageCount;
+    // Maintains the usage count of all components for each package
+    final private ArrayMap<String, Integer> mPkgUsage;
 
-    // To remove last-resume time stats when a pacakge is removed.
+    // To remove last-resume time stats when a package is removed.
     private PackageMonitor mPackageMonitor;
 
     // Lock to update package stats. Methods suffixed by SLOCK should invoked with
@@ -276,6 +280,12 @@ public final class UsageStatsService extends IUsageStats.Stub {
 
     UsageStatsService(String dir) {
         if (localLOGV) Slog.v(TAG, "UsageStatsService: " + dir);
+        mStats = new ArrayMap<String, PkgUsageStatsExtended>();
+        mLastResumeTimes = new ArrayMap<String, ArrayMap<String, Long>>();
+        mUsageCount = new ArrayMap<String, ArrayMap<String, Integer>>();
+        mPkgUsage = new ArrayMap<String, Integer>();
+        mStatsLock = new Object();
+        mFileLock = new Object();
         mDir = new File(dir);
         mDir.mkdir();
 
@@ -390,6 +400,7 @@ public final class UsageStatsService extends IUsageStats.Stub {
     }
 
     private void readHistoryStatsFLOCK() {
+    // Read usage stats from usage-history.xml
         FileInputStream fis = null;
         try {
             fis = mHistoryFile.openRead();
@@ -405,6 +416,8 @@ public final class UsageStatsService extends IUsageStats.Stub {
             }
 
             String tagName = parser.getName();
+            // read usage history of currently installed pkgs
+            // read <usage-history>
             if ("usage-history".equals(tagName)) {
                 String pkg = null;
                 do {
@@ -412,12 +425,19 @@ public final class UsageStatsService extends IUsageStats.Stub {
                     if (eventType == XmlPullParser.START_TAG) {
                         tagName = parser.getName();
                         int depth = parser.getDepth();
+
                         if ("pkg".equals(tagName) && depth == 2) {
+                            // read <pkg name="com.android.pkgName">
                             pkg = parser.getAttributeValue(null, "name");
                         } else if ("comp".equals(tagName) && depth == 3 && pkg != null) {
+                            // read details of individual components
+                            // read <comp name="com.android.pkgName.compName" usageCount="i" lrt="j" />
                             String comp = parser.getAttributeValue(null, "name");
                             String lastResumeTimeStr = parser.getAttributeValue(null, "lrt");
+                            String useCountStr = parser.getAttributeValue(null, "usageCount");
+
                             if (comp != null && lastResumeTimeStr != null) {
+                                // read last resume time of each component in a package
                                 try {
                                     long lastResumeTime = Long.parseLong(lastResumeTimeStr);
                                     synchronized (mStatsLock) {
@@ -431,13 +451,65 @@ public final class UsageStatsService extends IUsageStats.Stub {
                                 } catch (NumberFormatException e) {
                                 }
                             }
+
+                            if (comp != null && useCountStr != null) {
+                                //read usage count of each component in a package
+                                try {
+                                    Integer useCount = Integer.parseInt(useCountStr);
+                                    synchronized (mStatsLock) {
+                                        ArrayMap<String, Integer> uc = mUsageCount.get(pkg);
+                                        if (uc == null) {
+                                                uc = new ArrayMap<String, Integer>();
+                                                mUsageCount.put(pkg, uc);
+                                        }
+                                        uc.put(comp, useCount);
+                                    }
+                                } catch (NumberFormatException e) {
+                                }
+                            }
+                        }
+                    } else if (eventType == XmlPullParser.END_TAG) {
+                        int depth = parser.getDepth();
+                        if ("pkg".equals(parser.getName())) {
+                            pkg = null;
+                        }
+                    }
+                    tagName = parser.getName();
+                } while ((eventType != XmlPullParser.END_DOCUMENT) && (("installation-history".equals(tagName)) == false));
+            }// End reading usage history of currently installed pkgs
+
+            tagName = parser.getName();
+            if ("installation-history".equals(tagName)) {
+                // read installation history of currently installed
+                // and previously installed packages
+                String pkg = null;
+                do {
+                    eventType = parser.next();
+                    if (eventType == XmlPullParser.START_TAG) {
+                        tagName = parser.getName();
+                        int depth = parser.getDepth();
+                        if ("pkg".equals(tagName) && depth == 2) {
+                            // read <pkg name="com.android.pkgName"  usageTotal="k">
+                            pkg = parser.getAttributeValue(null, "name");
+                            String useCountStr = parser.getAttributeValue(null, "usageTotal");
+                            if (pkg != null && useCountStr != null) {
+                                try {
+                                    Integer useCount = Integer.parseInt(useCountStr);
+                                    synchronized (mStatsLock) {
+                                        mPkgUsage.put(pkg, useCount);
+                                    }
+                                } catch (NumberFormatException e){
+                                }
+                            }
                         }
                     } else if (eventType == XmlPullParser.END_TAG) {
                         if ("pkg".equals(parser.getName())) {
                             pkg = null;
                         }
                     }
+
                 } while (eventType != XmlPullParser.END_DOCUMENT);
+                // End reading installation history of packages, both current and previous
             }
         } catch (XmlPullParserException e) {
             Slog.w(TAG,"Error reading history stats: " + e);
@@ -632,6 +704,7 @@ public final class UsageStatsService extends IUsageStats.Stub {
                 try {
                     if (pm.getPackageUid(pkg, 0) < 0) {
                         mLastResumeTimes.removeAt(i);
+                        mUsageCount.removeAt(i);
                         i--;
                     }
                 } catch (RemoteException e) {
@@ -651,19 +724,34 @@ public final class UsageStatsService extends IUsageStats.Stub {
             out.startTag(null, "usage-history");
             synchronized (mStatsLock) {
                 for (int i=0; i<mLastResumeTimes.size(); i++) {
+                    //write package name
                     out.startTag(null, "pkg");
                     out.attribute(null, "name", mLastResumeTimes.keyAt(i));
-                    ArrayMap<String, Long> comp = mLastResumeTimes.valueAt(i);
-                    for (int j=0; j<comp.size(); j++) {
+                    ArrayMap<String, Long> compLrt = mLastResumeTimes.valueAt(i);
+                    ArrayMap<String, Integer> compUc = mUsageCount.valueAt(i);
+                    for (int j=0; j<compLrt.size(); j++) {
+                        //write component name, usage count and last resume time
                         out.startTag(null, "comp");
-                        out.attribute(null, "name", comp.keyAt(j));
-                        out.attribute(null, "lrt", comp.valueAt(j).toString());
+                        out.attribute(null, "name", compLrt.keyAt(j));
+                        out.attribute(null, "usageCount", compUc.valueAt(j).toString());
+                        out.attribute(null, "lrt", compLrt.valueAt(j).toString());
                         out.endTag(null, "comp");
                     }
                     out.endTag(null, "pkg");
                 }
             }
             out.endTag(null, "usage-history");
+            // stores installation history and usage count of pkg
+            out.startTag(null, "installation-history");
+            synchronized (mStatsLock) {
+                for (int i=0; i<mPkgUsage.size(); i++) {
+                    out.startTag(null, "pkg");
+                    out.attribute(null, "name", mPkgUsage.keyAt(i));
+                    out.attribute(null, "usageTotal", mPkgUsage.valueAt(i).toString());
+                    out.endTag(null, "pkg");
+                }
+            }
+            out.endTag(null, "installation-history");
             out.endDocument();
 
             mHistoryFile.finishWrite(fos);
@@ -690,6 +778,7 @@ public final class UsageStatsService extends IUsageStats.Stub {
             public void onPackageRemovedAllUsers(String packageName, int uid) {
                 synchronized (mStatsLock) {
                     mLastResumeTimes.remove(packageName);
+                    mUsageCount.remove(packageName);
                 }
             }
         };
@@ -719,8 +808,7 @@ public final class UsageStatsService extends IUsageStats.Stub {
         enforceCallingPermission();
         String pkgName;
         synchronized (mStatsLock) {
-            if ((componentName == null) ||
-                    ((pkgName = componentName.getPackageName()) == null)) {
+            if ((componentName == null) ||((pkgName = componentName.getPackageName()) == null)) {
                 return;
             }
 
@@ -756,12 +844,33 @@ public final class UsageStatsService extends IUsageStats.Stub {
                 pus.addLaunchCount(mLastResumedComp);
             }
 
+            //update component resume time and usage count
             ArrayMap<String, Long> componentResumeTimes = mLastResumeTimes.get(pkgName);
             if (componentResumeTimes == null) {
                 componentResumeTimes = new ArrayMap<String, Long>();
                 mLastResumeTimes.put(pkgName, componentResumeTimes);
             }
             componentResumeTimes.put(mLastResumedComp, System.currentTimeMillis());
+
+            ArrayMap<String, Integer> componentUsageCount = mUsageCount.get(pkgName);
+            if (componentUsageCount == null) {
+                componentUsageCount = new ArrayMap<String, Integer>();
+                mUsageCount.put(pkgName, componentUsageCount);
+            }
+            Integer count;
+            if (componentUsageCount.get(mLastResumedComp) != null) {
+                count = componentUsageCount.get(mLastResumedComp);
+                componentUsageCount.put(mLastResumedComp, count+1); // increment component count
+            } else {
+                count = 1;
+                componentUsageCount.put(mLastResumedComp, count); // first use of component
+            }
+            if(mPkgUsage.containsKey(pkgName) == true) {
+                count = mPkgUsage.get(pkgName) + 1; // increment package count
+                mPkgUsage.put(pkgName, count);
+            } else {
+                mPkgUsage.put(pkgName, 1);// first use of package
+            }
         }
     }
 
@@ -842,6 +951,17 @@ public final class UsageStatsService extends IUsageStats.Stub {
         }
         mContext.enforcePermission(android.Manifest.permission.UPDATE_DEVICE_STATS,
                 Binder.getCallingPid(), Binder.getCallingUid(), null);
+    }
+
+    public int getPkgUsageStat(String packageName) {
+        mContext.enforceCallingOrSelfPermission(
+                android.Manifest.permission.PACKAGE_USAGE_STATS, null);
+        synchronized (mStatsLock) {
+            if (mPkgUsage.containsKey(packageName)){
+                return mPkgUsage.get(packageName);
+            }
+        }
+        return 0;
     }
 
     @Override

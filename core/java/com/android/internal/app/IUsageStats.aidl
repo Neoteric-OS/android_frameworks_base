@@ -23,6 +23,7 @@ interface IUsageStats {
     void noteResumeComponent(in ComponentName componentName);
     void notePauseComponent(in ComponentName componentName);
     void noteLaunchTime(in ComponentName componentName, int millis);
+    int getPkgUsageStat(String packageName);
     PkgUsageStats getPkgUsageStats(in ComponentName componentName);
     PkgUsageStats[] getAllPkgUsageStats();
 }

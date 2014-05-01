@@ -8269,6 +8269,20 @@ public final class ActivityManagerService extends ActivityManagerNative
         return mSleeping || mShuttingDown;
     }
 
+    /*
+     * Check if dexOpt operations can be done when goingToSleep.
+     * deferredDexOpt to be turned ON with deferDexOpt.
+     */
+    public void checkDexOpt(){
+        IPackageManager pm = AppGlobals.getPackageManager();
+        try {
+            // launch deferred dexOpt operations
+            pm.deferredDexOpt();
+        } catch (RemoteException e) {
+            Slog.e(TAG, "Error while performing deferredDexOpt "+e);
+        }
+    }
+
     public void goingToSleep() {
         if (checkCallingPermission(android.Manifest.permission.DEVICE_POWER)
                 != PackageManager.PERMISSION_GRANTED) {

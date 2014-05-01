@@ -231,6 +231,11 @@ public class PackageManagerService extends IPackageManager.Stub {
     private static final long WATCHDOG_TIMEOUT = 1000*60*10;     // ten minutes
 
     /**
+     * Parameter to decide usage frequency of app in a given period.
+     * feature currently turned off.
+     */
+    private static final int USAGE_THRESHOLD = 1000000;
+    /**
      * Whether verification is enabled by default.
      */
     private static final boolean DEFAULT_VERIFY_ENABLE = true;
@@ -4018,6 +4023,75 @@ public class PackageManagerService extends IPackageManager.Stub {
         }
     }
 
+    /*
+    *  Launch dexOpt for deferred packages.
+    *  Feature turned off as default.
+    */
+    public void deferredDexOpt() {
+        if (mDeferredDexOpt != null) {
+            int N = mDeferredDexOpt.size();
+
+            PackageParser.Package pkg;
+            Iterator<PackageParser.Package> iter = mDeferredDexOpt.iterator();
+
+            while (iter.hasNext()){
+                pkg = iter.next();
+                try {
+                    boolean result;
+                    synchronized (mPackages) {
+                        if (pkg == null) {
+                            return;
+                        }
+                        // if dexOpt was performed on pkg, remove from list
+                        if  (pkg.mDidDexOpt) {
+                            iter.remove();
+                            return;
+                        }
+                    }
+                    // perform dexOpt for pkg from deferred pkg list
+                    synchronized (mInstallLock) {
+                        result = (performDexOptLI(pkg, false, false, true) == DEX_OPT_PERFORMED);
+                    }
+                    // if successful, remove pkg from deferred pkg list
+                    if (result == true) {
+                        iter.remove();
+                    }
+                } catch (Exception e) {
+                    Slog.w(TAG, "Exception when doing dexopt : ", e);
+                }
+            }
+        }
+    }
+
+    /*
+    *  Defer dexOpt of a package based on usage frequency.
+    *  Returns with true/false to result in DEX_OPT_DEFERRED/DEX_OPT_PERFORMED
+    *  Feature turned off as default.
+    */
+    private boolean deferDexOpt(PackageParser.Package pkg) {
+        int pkgUsageCount = ActivityManager.getPackageUsageCount(pkg.applicationInfo.packageName);
+        boolean defer = false;
+
+        // pkg record exists  && usage is below threshold. Parameter to defer to change
+        if ((pkgUsageCount != 0) && (pkgUsageCount > USAGE_THRESHOLD)) {
+            defer = false;// Will change to true once feature is enabled.
+        }
+
+        if (mDeferredDexOpt == null) {
+            mDeferredDexOpt = new HashSet<PackageParser.Package>();
+        }
+        // Check if pkg was deferred before. This can be a user action to run application
+        if (mDeferredDexOpt.contains(pkg) == true) {
+            defer = false;
+        }
+        // add pkg to deferred list
+        if (defer == true) {
+            mDeferredDexOpt.add(pkg);
+            return true;
+        }
+        return false;
+    }
+
     static final int DEX_OPT_SKIPPED = 0;
     static final int DEX_OPT_PERFORMED = 1;
     static final int DEX_OPT_DEFERRED = 2;
@@ -4051,6 +4125,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                             mDeferredDexOpt = new HashSet<PackageParser.Package>();
                         }
                         mDeferredDexOpt.add(pkg);
+                        Log.i(TAG, "DEX_OPT_DEFERRED dexopt on: " + pkg.applicationInfo.packageName);
                         return DEX_OPT_DEFERRED;
                     } else {
                         Log.i(TAG, "Running dexopt on: " + pkg.applicationInfo.packageName +
@@ -9941,7 +10016,13 @@ public class PackageManagerService extends IPackageManager.Stub {
         if (outInfo != null) {
             outInfo.uid = ps.appId;
         }
-
+        synchronized (mPackages) {
+            PackageParser.Package pkg = ps.pkg;
+            if (pkg != null && (mDeferredDexOpt.contains(pkg) == true)) {
+                mDeferredDexOpt.remove(pkg);
+                if (DEBUG_REMOVE) Slog.d(TAG, "Remove deferred pkg deletePackageLI: " +pkg.applicationInfo.packageName);
+            }
+        }
         // Delete package data from internal structures and also remove data if flag is set
         removePackageDataLI(ps, allUserHandles, perUserInstalled, outInfo, flags, writeSettings);
 

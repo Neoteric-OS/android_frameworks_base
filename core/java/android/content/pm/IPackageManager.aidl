@@ -376,6 +376,9 @@ interface IPackageManager {
      */
     boolean performDexOpt(String packageName);
 
+    // Ask package manager to perform dexOpt on deferred packages
+    void deferredDexOpt();
+
     /**
      * Update status of external media on the package manager to scan and
      * install packages installed on the external media. Like say the
