@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6abf008d_1d28a372",
+        "filename": "services/java/com/android/server/accessibility/AccessibilityManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2971,
+      "author": {
+        "id": 1005153
+      },
+      "writtenOn": "2014-05-04T04:08:57Z",
+      "side": 1,
+      "message": "This stuff should also be in the synchronized block",
+      "range": {
+        "startLine": 2971,
+        "startChar": 16,
+        "endLine": 2971,
+        "endChar": 48
+      },
+      "revId": "d2578b05fbc5e70cb9004b0f79894079a813cc01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
