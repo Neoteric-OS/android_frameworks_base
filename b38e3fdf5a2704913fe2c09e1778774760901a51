@@ -16,6 +16,24 @@
       "revId": "b38e3fdf5a2704913fe2c09e1778774760901a51",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a6cc413_7f11e3b5",
+        "filename": "core/jni/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1003981
+      },
+      "writtenOn": "2014-05-07T23:17:03Z",
+      "side": 1,
+      "message": "No, we need to build against libdl built from source.\nUse \tLOCAL_LDLIBS only if you build against the NDK.",
+      "parentUuid": "8a58b470_9570135f",
+      "revId": "b38e3fdf5a2704913fe2c09e1778774760901a51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
