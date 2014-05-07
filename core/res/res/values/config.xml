@@ -1304,4 +1304,7 @@
         <item>333</item>
         <item>353</item>
     </string-array>
+	
+	<!--SIM does not save, but the voice mail number to be changed. -->
+	<bool name="editable_voicemailnumber">false</bool>
 </resources>
