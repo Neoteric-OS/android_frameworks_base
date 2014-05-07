@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a58b470_9570135f",
+        "filename": "core/jni/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-05-07T23:08:49Z",
+      "side": 1,
+      "message": "wouldn\u0027t you rather remove this line instead?",
+      "revId": "b38e3fdf5a2704913fe2c09e1778774760901a51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
