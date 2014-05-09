@@ -3722,7 +3722,7 @@ void InputDispatcher::updateDispatchStatisticsLocked(nsecs_t currentTime, const 
 
 void InputDispatcher::traceInboundQueueLengthLocked() {
     if (ATRACE_ENABLED()) {
-        ATRACE_INT("iq", mInboundQueue.count());
+        ATRACE_INT("iq", mInboundQueue.count);
     }
 }
 
@@ -3730,7 +3730,7 @@ void InputDispatcher::traceOutboundQueueLengthLocked(const sp<Connection>& conne
     if (ATRACE_ENABLED()) {
         char counterName[40];
         snprintf(counterName, sizeof(counterName), "oq:%s", connection->getWindowName());
-        ATRACE_INT(counterName, connection->outboundQueue.count());
+        ATRACE_INT(counterName, connection->outboundQueue.count);
     }
 }
 
@@ -3738,7 +3738,7 @@ void InputDispatcher::traceWaitQueueLengthLocked(const sp<Connection>& connectio
     if (ATRACE_ENABLED()) {
         char counterName[40];
         snprintf(counterName, sizeof(counterName), "wq:%s", connection->getWindowName());
-        ATRACE_INT(counterName, connection->waitQueue.count());
+        ATRACE_INT(counterName, connection->waitQueue.count);
     }
 }
 
@@ -3761,19 +3761,6 @@ void InputDispatcher::monitor() {
     mDispatcherIsAliveCondition.wait(mLock);
     mLock.unlock();
 }
-
-
-// --- InputDispatcher::Queue ---
-
-template <typename T>
-uint32_t InputDispatcher::Queue<T>::count() const {
-    uint32_t result = 0;
-    for (const T* entry = head; entry; entry = entry->next) {
-        result += 1;
-    }
-    return result;
-}
-
 
 // --- InputDispatcher::InjectionState ---
 

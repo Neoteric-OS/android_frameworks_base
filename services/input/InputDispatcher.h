@@ -608,8 +608,9 @@ private:
     struct Queue {
         T* head;
         T* tail;
+        uint32_t mCount;
 
-        inline Queue() : head(NULL), tail(NULL) {
+        inline Queue() : head(NULL), tail(NULL), mCount(0) {
         }
 
         inline bool isEmpty() const {
@@ -617,6 +618,7 @@ private:
         }
 
         inline void enqueueAtTail(T* entry) {
+            mCount++;
             entry->prev = tail;
             if (tail) {
                 tail->next = entry;
@@ -628,6 +630,7 @@ private:
         }
 
         inline void enqueueAtHead(T* entry) {
+            mCount++;
             entry->next = head;
             if (head) {
                 head->prev = entry;
@@ -639,6 +642,7 @@ private:
         }
 
         inline void dequeue(T* entry) {
+            mCount--;
             if (entry->prev) {
                 entry->prev->next = entry->next;
             } else {
@@ -652,6 +656,7 @@ private:
         }
 
         inline T* dequeueAtHead() {
+            mCount--;
             T* entry = head;
             head = entry->next;
             if (head) {
@@ -662,7 +667,9 @@ private:
             return entry;
         }
 
-        uint32_t count() const;
+        inline uint32_t count() const {
+            return mCount;
+        }
     };
 
     /* Specifies which events are to be canceled and why. */
