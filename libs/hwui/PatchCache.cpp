@@ -113,6 +113,7 @@ void PatchCache::remove(Vector<patch_pair_t>& patchesToRemove, Res_png_9patch* p
         const PatchDescription& key = i.key();
         if (key.getPatch() == patch) {
             patchesToRemove.push(patch_pair_t(&key, i.value()));
+            mCache.remove(key);
         }
     }
 }
@@ -162,7 +163,6 @@ void PatchCache::clearGarbage() {
 
         mSize -= patch->getSize();
 
-        mCache.remove(*pair.getFirst());
         delete patch;
     }
 
