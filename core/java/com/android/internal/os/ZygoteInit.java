@@ -23,6 +23,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.net.LocalServerSocket;
 import android.opengl.EGL14;
+import android.os.Build;
 import android.os.Debug;
 import android.os.Process;
 import android.os.SystemClock;
@@ -606,6 +607,10 @@ public class ZygoteInit {
             Trace.setTracingEnabled(false);
 
             if (startSystemServer) {
+                if (hasSecondZygote(abiList)) {
+                    waitForSecondaryZygote(socketName);
+                }
+
                 startSystemServer();
             }
 
@@ -619,6 +624,36 @@ public class ZygoteInit {
             Log.e(TAG, "Zygote died with exception", ex);
             closeServerSocket();
             throw ex;
+        }
+    }
+
+    /**
+     * Return {@code true} if this device configuration has another zygote.
+     *
+     * We determine this by comparing the device ABI list with this zygotes
+     * list. If this zygote supports all ABIs this device supports, there won't
+     * be another zygote.
+     */
+    private static boolean hasSecondZygote(String abiList) {
+        return !SystemProperties.get("ro.product.cpu.abilist").equals(abiList);
+    }
+
+    private static void waitForSecondaryZygote(String socketName) {
+        String otherZygoteName = Process.ZYGOTE_SOCKET.equals(socketName) ?
+                Process.SECONDARY_ZYGOTE_SOCKET : Process.ZYGOTE_SOCKET;
+        while (true) {
+            try {
+                final Process.ZygoteState zs = Process.ZygoteState.connect(otherZygoteName);
+                zs.close();
+                break;
+            } catch (IOException ioe) {
+                Log.w(TAG, "Got error connecting to zygote, retrying. msg= " + ioe.getMessage());
+            }
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ie) {
+            }
         }
     }
 

@@ -22,6 +22,10 @@ import com.android.internal.telephony.TelephonyProperties;
  * Information about the current build, extracted from system properties.
  */
 public class Build {
+
+    /** @hide */
+    public static final String BAZ = "baz";
+
     /** Value used for when a build property is unknown. */
     public static final String UNKNOWN = "unknown";
 
