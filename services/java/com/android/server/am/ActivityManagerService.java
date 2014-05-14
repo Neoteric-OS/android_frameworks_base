@@ -16630,8 +16630,12 @@ public final class ActivityManagerService extends ActivityManagerNative
         if (info == null) return null;
         ApplicationInfo newInfo = new ApplicationInfo(info);
         newInfo.uid = applyUserId(info.uid, userId);
-        newInfo.dataDir = USER_DATA_DIR + userId + "/"
-                + info.packageName;
+        try {
+            File dataDir = new File(USER_DATA_DIR + userId + "/" + info.packageName);
+            newInfo.dataDir = dataDir.getCanonicalPath();
+        } catch(Exception e) {
+            Slog.d(TAG,"unable to get dataDir",e);
+        }
         return newInfo;
     }
 
