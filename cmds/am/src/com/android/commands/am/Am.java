@@ -33,6 +33,7 @@ import android.content.pm.IPackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
@@ -42,6 +43,8 @@ import android.os.UserHandle;
 import android.util.AndroidException;
 import android.view.IWindowManager;
 import com.android.internal.os.BaseCommand;
+
+import dalvik.system.VMRuntime;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -813,6 +816,7 @@ public class Am extends BaseCommand {
         Bundle args = new Bundle();
         String argKey = null, argValue = null;
         IWindowManager wm = IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
+        String instructionSet = null;
 
         String opt;
         while ((opt=nextOption()) != null) {
@@ -831,6 +835,8 @@ public class Am extends BaseCommand {
                 no_window_animation = true;
             } else if (opt.equals("--user")) {
                 userId = parseUserArg(nextArgRequired());
+            } else if (opt.equals("--instruction-set")) {
+                instructionSet = nextArgRequired();
             } else {
                 System.err.println("Error: Unknown option: " + opt);
                 return;
@@ -861,7 +867,24 @@ public class Am extends BaseCommand {
             wm.setAnimationScale(1, 0.0f);
         }
 
-        if (!mAm.startInstrumentation(cn, profileFile, 0, args, watcher, connection, userId)) {
+        String matchedAbi = null;
+        if (instructionSet != null) {
+            final String[] supportedAbis = Build.SUPPORTED_ABIS;
+            for (String abi : supportedAbis) {
+                if (instructionSet.equals(VMRuntime.getInstructionSet(abi))) {
+                    matchedAbi = abi;
+                    break;
+                }
+            }
+
+            if (matchedAbi == null) {
+                throw new AndroidException(
+                        "INSTRUMENTATION_FAILED: Unsupported instruction set " + instructionSet);
+            }
+        }
+
+        if (!mAm.startInstrumentation(cn, profileFile, 0, args, watcher, connection, userId,
+                matchedAbi)) {
             throw new AndroidException("INSTRUMENTATION_FAILED: " + cn.flattenToString());
         }
 
