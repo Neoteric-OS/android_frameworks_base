@@ -21,8 +21,57 @@
 #include "InputListener.h"
 
 #include <cutils/log.h>
+#include <dlfcn.h>
 
 namespace android {
+
+// --- Event Processing ---
+
+typedef int (*EventProcessingInit)();
+typedef int (*EventProcessingFini)();
+typedef NotifyMotionArgs* (*EventProcessing)(const NotifyMotionArgs&);
+static void* event_processing_handle = NULL;
+EventProcessing event_processing = NULL;
+
+/*  Initializes event processing module. */
+static void event_processing_init_impl() {
+    const char* so_name = "/vendor/lib/libeventprocessing.so";
+    event_processing_handle = event_processing_handle ?
+        event_processing_handle : dlopen(so_name, RTLD_LAZY);
+    if (event_processing_handle == NULL) {
+        ALOGE("Missing module %s required for event processing: %s", so_name, dlerror());
+        return;
+    }
+    // Initialize event processing in the loaded module.
+    EventProcessingInit event_processing_initialize = reinterpret_cast<EventProcessingInit>(
+        dlsym(event_processing_handle, "event_processing_initialize"));
+    if (event_processing_initialize == NULL) {
+        ALOGE("Initialization routine is not found in %s\n", so_name);
+        dlclose(event_processing_handle);
+        return;
+    }
+    if (event_processing_initialize() == -1) {
+        dlclose(event_processing_handle);
+        return;
+    }
+
+    event_processing = reinterpret_cast<EventProcessing>(dlsym(event_processing_handle,
+                                                               "event_processing"));
+    if (event_processing == NULL) {
+        ALOGE("dlsym(\"event_processing\") failed");
+    }
+}
+
+static void event_processing_fini_impl() {
+    if (event_processing_handle != NULL) {
+        EventProcessingFini event_processing_finalize =
+            reinterpret_cast<EventProcessingFini>(dlsym(event_processing_handle,
+                                                        "event_processing_finalize"));
+        if (event_processing_finalize != NULL) {
+            event_processing_finalize();
+        }
+    }
+}
 
 // --- NotifyConfigurationChangedArgs ---
 
@@ -138,6 +187,7 @@ void NotifyDeviceResetArgs::notify(const sp<InputListenerInterface>& listener) c
 
 QueuedInputListener::QueuedInputListener(const sp<InputListenerInterface>& innerListener) :
         mInnerListener(innerListener) {
+    event_processing_init_impl();
 }
 
 QueuedInputListener::~QueuedInputListener() {
@@ -145,6 +195,7 @@ QueuedInputListener::~QueuedInputListener() {
     for (size_t i = 0; i < count; i++) {
         delete mArgsQueue[i];
     }
+    event_processing_fini_impl();
 }
 
 void QueuedInputListener::notifyConfigurationChanged(
@@ -157,7 +208,11 @@ void QueuedInputListener::notifyKey(const NotifyKeyArgs* args) {
 }
 
 void QueuedInputListener::notifyMotion(const NotifyMotionArgs* args) {
-    mArgsQueue.push(new NotifyMotionArgs(*args));
+    if (event_processing == NULL) {
+        mArgsQueue.push(new NotifyMotionArgs(*args));
+    } else {
+        mArgsQueue.push(event_processing(*args));
+    }
 }
 
 void QueuedInputListener::notifySwitch(const NotifySwitchArgs* args) {
