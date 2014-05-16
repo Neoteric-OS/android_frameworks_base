@@ -17583,7 +17583,7 @@ package android.os {
 
   public abstract class CountDownTimer {
     ctor public CountDownTimer(long, long);
-    method public final void cancel();
+    method public final synchronized void cancel();
     method public abstract void onFinish();
     method public abstract void onTick(long);
     method public final synchronized android.os.CountDownTimer start();
@@ -22364,6 +22364,7 @@ package android.renderscript {
   public class ScriptC extends android.renderscript.Script {
     ctor protected ScriptC(int, android.renderscript.RenderScript);
     ctor protected ScriptC(android.renderscript.RenderScript, android.content.res.Resources, int);
+    ctor protected ScriptC(android.renderscript.RenderScript, java.lang.String, byte[], byte[]);
   }
 
   public final class ScriptGroup extends android.renderscript.BaseObj {
