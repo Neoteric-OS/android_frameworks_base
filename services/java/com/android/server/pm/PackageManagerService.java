@@ -5024,6 +5024,10 @@ public class PackageManagerService extends IPackageManager.Stub {
             pkgSetting.uidError = uidError;
         }
 
+        if (pkg.applicationInfo.targetSdkVersion <= Build.VERSION_CODES.KITKAT) {
+            // Lame and gross hacks for renderscript
+        }
+
         String path = scanFile.getPath();
         /* Note: We don't want to unpack the native binaries for
          *        system applications, unless they have been updated
@@ -5055,57 +5059,72 @@ public class PackageManagerService extends IPackageManager.Stub {
 
                     setInternalAppAbi(pkg, pkgSetting);
                 } else {
-                    if (!isForwardLocked(pkg) && !isExternal(pkg)) {
-                        /*
-                         * Update native library dir if it starts with
-                         * /data/data
-                         */
-                        if (nativeLibraryDir.getPath().startsWith(dataPathString)) {
-                            setInternalAppNativeLibraryPath(pkg, pkgSetting);
-                            nativeLibraryDir = new File(pkg.applicationInfo.nativeLibraryDir);
+                    final NativeLibraryHelper.ApkHandle handle = new NativeLibraryHelper.ApkHandle(scanFile);
+                    try {
+                        // Enable gross and lame hacks for apps that are built with old
+                        // SDK tools. We must scan their APKs for renderscript bitcode and
+                        // not launch them if it's present. Don't bother checking on devices
+                        // that don't have 64 bit support.
+                        String[] abiList = Build.SUPPORTED_ABIS;
+                        if (Build.SUPPORTED_64_BIT_ABIS.length > 0 &&
+                                NativeLibraryHelper.hasRenderscriptBitcode(handle)) {
+                            abiList = Build.SUPPORTED_32_BIT_ABIS;
                         }
 
-                        try {
-                            int copyRet = copyNativeLibrariesForInternalApp(scanFile, nativeLibraryDir);
-                            if (copyRet < 0 && copyRet != PackageManager.NO_NATIVE_LIBRARIES) {
-                                Slog.e(TAG, "Unable to copy native libraries");
+                        if (!isForwardLocked(pkg) && !isExternal(pkg)) {
+                            /*
+                            * Update native library dir if it starts with
+                            * /data/data
+                            */
+                            if (nativeLibraryDir.getPath().startsWith(dataPathString)) {
+                                setInternalAppNativeLibraryPath(pkg, pkgSetting);
+                                nativeLibraryDir = new File(pkg.applicationInfo.nativeLibraryDir);
+                            }
+
+                            try {
+                                int copyRet = copyNativeLibrariesForInternalApp(handle, nativeLibraryDir,
+                                        abiList);
+                                if (copyRet < 0 && copyRet != PackageManager.NO_NATIVE_LIBRARIES) {
+                                    Slog.e(TAG, "Unable to copy native libraries");
+                                    mLastScanError = PackageManager.INSTALL_FAILED_INTERNAL_ERROR;
+                                    return null;
+                                }
+
+                                // We've successfully copied native libraries across, so we make a
+                                // note of what ABI we're using
+                                if (copyRet != PackageManager.NO_NATIVE_LIBRARIES) {
+                                    pkg.applicationInfo.cpuAbi = Build.SUPPORTED_ABIS[copyRet];
+                                } else {
+                                    pkg.applicationInfo.cpuAbi = null;
+                                }
+                            } catch (IOException e) {
+                                Slog.e(TAG, "Unable to copy native libraries", e);
                                 mLastScanError = PackageManager.INSTALL_FAILED_INTERNAL_ERROR;
                                 return null;
                             }
-
-                            // We've successfully copied native libraries across, so we make a
-                            // note of what ABI we're using
-                            if (copyRet != PackageManager.NO_NATIVE_LIBRARIES) {
-                                pkg.applicationInfo.cpuAbi = Build.SUPPORTED_ABIS[copyRet];
-                            } else {
-                                pkg.applicationInfo.cpuAbi = null;
-                            }
-                        } catch (IOException e) {
-                            Slog.e(TAG, "Unable to copy native libraries", e);
-                            mLastScanError = PackageManager.INSTALL_FAILED_INTERNAL_ERROR;
-                            return null;
-                        }
-                    } else {
-                        // We don't have to copy the shared libraries if we're in the ASEC container
-                        // but we still need to scan the file to figure out what ABI the app needs.
-                        //
-                        // TODO: This duplicates work done in the default container service. It's possible
-                        // to clean this up but we'll need to change the interface between this service
-                        // and IMediaContainerService (but doing so will spread this logic out, rather
-                        // than centralizing it).
-                        final NativeLibraryHelper.ApkHandle handle = new NativeLibraryHelper.ApkHandle(scanFile);
-                        final int abi = NativeLibraryHelper.findSupportedAbi(handle, Build.SUPPORTED_ABIS);
-                        if (abi >= 0) {
-                            pkg.applicationInfo.cpuAbi = Build.SUPPORTED_ABIS[abi];
-                        } else if (abi == PackageManager.NO_NATIVE_LIBRARIES) {
-                            // Note that (non upgraded) system apps will not have any native
-                            // libraries bundled in their APK, but we're guaranteed not to be
-                            // such an app at this point.
-                            pkg.applicationInfo.cpuAbi = null;
                         } else {
-                            mLastScanError = PackageManager.INSTALL_FAILED_INTERNAL_ERROR;
-                            return null;
+                            // We don't have to copy the shared libraries if we're in the ASEC container
+                            // but we still need to scan the file to figure out what ABI the app needs.
+                            //
+                            // TODO: This duplicates work done in the default container service. It's possible
+                            // to clean this up but we'll need to change the interface between this service
+                            // and IMediaContainerService (but doing so will spread this logic out, rather
+                            // than centralizing it).
+                            final int abi = NativeLibraryHelper.findSupportedAbi(handle, Build.SUPPORTED_ABIS);
+                            if (abi >= 0) {
+                                pkg.applicationInfo.cpuAbi = Build.SUPPORTED_ABIS[abi];
+                            } else if (abi == PackageManager.NO_NATIVE_LIBRARIES) {
+                                // Note that (non upgraded) system apps will not have any native
+                                // libraries bundled in their APK, but we're guaranteed not to be
+                                // such an app at this point.
+                                pkg.applicationInfo.cpuAbi = null;
+                            } else {
+                                mLastScanError = PackageManager.INSTALL_FAILED_INTERNAL_ERROR;
+                                return null;
+                            }
+                            handle.close();
                         }
+                    } finally {
                         handle.close();
                     }
 
@@ -5750,7 +5769,8 @@ public class PackageManagerService extends IPackageManager.Stub {
         }
     }
 
-    private static int copyNativeLibrariesForInternalApp(File scanFile, final File nativeLibraryDir)
+    private static int copyNativeLibrariesForInternalApp(NativeLibraryHelper.ApkHandle handle,
+            final File nativeLibraryDir, String[] abiList)
             throws IOException {
         if (!nativeLibraryDir.isDirectory()) {
             nativeLibraryDir.delete();
@@ -5773,21 +5793,16 @@ public class PackageManagerService extends IPackageManager.Stub {
          * If this is an internal application or our nativeLibraryPath points to
          * the app-lib directory, unpack the libraries if necessary.
          */
-        final NativeLibraryHelper.ApkHandle handle = new NativeLibraryHelper.ApkHandle(scanFile);
-        try {
-            int abi = NativeLibraryHelper.findSupportedAbi(handle, Build.SUPPORTED_ABIS);
-            if (abi >= 0) {
-                int copyRet = NativeLibraryHelper.copyNativeBinariesIfNeededLI(handle,
-                        nativeLibraryDir, Build.SUPPORTED_ABIS[abi]);
-                if (copyRet != PackageManager.INSTALL_SUCCEEDED) {
-                    return copyRet;
-                }
+        int abi = NativeLibraryHelper.findSupportedAbi(handle, abiList);
+        if (abi >= 0) {
+            int copyRet = NativeLibraryHelper.copyNativeBinariesIfNeededLI(handle,
+                    nativeLibraryDir, Build.SUPPORTED_ABIS[abi]);
+            if (copyRet != PackageManager.INSTALL_SUCCEEDED) {
+                return copyRet;
             }
-
-            return abi;
-        } finally {
-            handle.close();
         }
+
+        return abi;
     }
 
     private void killApplication(String pkgName, int appId, String reason) {
@@ -8682,14 +8697,24 @@ public class PackageManagerService extends IPackageManager.Stub {
                 NativeLibraryHelper.removeNativeBinariesFromDirLI(nativeLibraryFile);
                 nativeLibraryFile.delete();
             }
+
+            final NativeLibraryHelper.ApkHandle handle = new NativeLibraryHelper.ApkHandle(codeFile);
+            String[] abiList = Build.SUPPORTED_ABIS;
             try {
-                int copyRet = copyNativeLibrariesForInternalApp(codeFile, nativeLibraryFile);
+                if (Build.SUPPORTED_64_BIT_ABIS.length > 0 &&
+                        NativeLibraryHelper.hasRenderscriptBitcode(handle)) {
+                    abiList = Build.SUPPORTED_32_BIT_ABIS;
+                }
+
+                int copyRet = copyNativeLibrariesForInternalApp(handle, nativeLibraryFile, abiList);
                 if (copyRet < 0 && copyRet != PackageManager.NO_NATIVE_LIBRARIES) {
                     return copyRet;
                 }
             } catch (IOException e) {
                 Slog.e(TAG, "Copying native libraries failed", e);
                 ret = PackageManager.INSTALL_FAILED_INTERNAL_ERROR;
+            } finally {
+                handle.close();
             }
 
             return ret;
