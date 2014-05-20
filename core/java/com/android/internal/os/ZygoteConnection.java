@@ -37,6 +37,7 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import libcore.io.IoUtils;
+import com.android.internal.content.NativeBridgeHelper;
 
 /**
  * A connection that can make spawn requests.
@@ -239,6 +240,9 @@ class ZygoteConnection {
                 // in child
                 IoUtils.closeQuietly(serverPipeFd);
                 serverPipeFd = null;
+                if (NativeBridgeHelper.ENABLE_NBH) {
+                    NativeBridgeHelper.init(parsedArgs.uid, parsedArgs.niceName);
+                }
                 handleChildProc(parsedArgs, descriptors, childPipeFd, newStderr);
 
                 // should never get here, the child is expected to either

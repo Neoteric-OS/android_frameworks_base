@@ -228,6 +228,11 @@ ifeq ($(WITH_MALLOC_LEAK_CHECK),true)
 	LOCAL_CFLAGS += -DMALLOC_LEAK_CHECK
 endif
 
+ifeq ($(WITH_NATIVE_BRIDGE), true)
+   LOCAL_CFLAGS += -DWITH_NATIVE_BRIDGE
+   LOCAL_SRC_FILES += com_android_internal_content_NativeBridgeHelper.cpp
+endif
+
 LOCAL_MODULE:= libandroid_runtime
 
 include external/stlport/libstlport.mk

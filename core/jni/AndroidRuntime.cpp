@@ -154,6 +154,9 @@ extern int register_android_server_NetworkManagementSocketTagger(JNIEnv* env);
 extern int register_android_server_Watchdog(JNIEnv* env);
 extern int register_android_ddm_DdmHandleNativeHeap(JNIEnv *env);
 extern int register_com_android_internal_os_ZygoteInit(JNIEnv* env);
+#ifdef WITH_NATIVE_BRIDGE
+extern int register_com_android_internal_content_NativeBridgeHelper(JNIEnv* env);
+#endif
 extern int register_android_backup_BackupDataInput(JNIEnv *env);
 extern int register_android_backup_BackupDataOutput(JNIEnv *env);
 extern int register_android_backup_FileBackupHelperBase(JNIEnv *env);
@@ -1262,6 +1265,9 @@ static const RegJNIRec gRegJNI[] = {
     REG_JNI(register_android_net_wifi_WifiNative),
     REG_JNI(register_android_os_MemoryFile),
     REG_JNI(register_com_android_internal_os_ZygoteInit),
+#ifdef WITH_NATIVE_BRIDGE
+    REG_JNI(register_com_android_internal_content_NativeBridgeHelper),
+#endif
     REG_JNI(register_com_android_internal_os_Zygote),
     REG_JNI(register_android_hardware_Camera),
     REG_JNI(register_android_hardware_camera2_CameraMetadata),

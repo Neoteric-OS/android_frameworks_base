@@ -38,6 +38,11 @@
 #include "android_view_InputChannel.h"
 #include "android_view_KeyEvent.h"
 
+#ifdef WITH_NATIVE_BRIDGE
+#include "nativebridge/NativeBridge.h"
+#include <cutils/properties.h>
+#endif
+
 #define LOG_TRACE(...)
 //#define LOG_TRACE(...) ALOG(LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 
@@ -67,6 +72,73 @@ enum {
     CMD_SHOW_SOFT_INPUT,
     CMD_HIDE_SOFT_INPUT,
 };
+
+#ifdef WITH_NATIVE_BRIDGE
+static const nativebridge::nb_na_itf_t * getNativeBridge ()
+{
+    static const nativebridge::nb_na_itf_t * nb_na_itf = NULL;
+
+    if (IS_64BIT_PROC())
+        return NULL;
+
+    if (NULL != nb_na_itf)
+        return nb_na_itf;
+
+    char propBuf[PROPERTY_VALUE_MAX];
+    property_get(PROP_ENABLE_NB, propBuf, "");
+    if (strcmp(propBuf, "true"))
+        return NULL;
+
+    int libNbNameLen = property_get(PROP_LIB_NB, propBuf, "");
+    if (libNbNameLen <= 0)
+        return NULL;
+
+    char * libNbPath = new char[libNbNameLen + SYS_LIB_PATH_LEN + 1];
+    strncpy (libNbPath, SYS_LIB_PATH, SYS_LIB_PATH_LEN);
+    strncpy (libNbPath + SYS_LIB_PATH_LEN, propBuf, libNbNameLen);
+    libNbPath[libNbNameLen + SYS_LIB_PATH_LEN] = '\0';
+
+    void * handle = dlopen(libNbPath, RTLD_LAZY);
+    delete (libNbPath);
+    if (NULL == handle)
+        return NULL;
+
+    nb_na_itf = (nativebridge::nb_na_itf_t*)dlsym(handle, NB_NA_ITF_SYM);
+    if (NULL == nb_na_itf)
+        return NULL;
+
+    handle = NULL;
+    int libVmLen = property_get(PROP_LIB_VM, propBuf, "");
+    if (libVmLen <= 0) {
+        nb_na_itf = NULL;
+        return NULL;
+    }
+
+    char * libVmPath = new char[libVmLen + SYS_LIB_PATH_LEN + 1];
+    strncpy (libVmPath, SYS_LIB_PATH, SYS_LIB_PATH_LEN);
+    strncpy (libVmPath + SYS_LIB_PATH_LEN, propBuf, libVmLen);
+    libVmPath[libVmLen + SYS_LIB_PATH_LEN] = '\0';
+
+    handle = dlopen(libVmPath, RTLD_LAZY);
+    delete (libVmPath);
+    if (NULL == handle) {
+        nb_na_itf = NULL;
+        return NULL;
+    }
+
+    struct dvm2hdEnv {
+        void *logger;
+        void *getShorty;
+    } env;
+
+    env.logger = (void*)__android_log_print;
+    env.getShorty = (void*)dlsym(handle, VM_GET_SHORTY_SYM);;
+    if (!env.getShorty || !nb_na_itf->init(&env))
+        nb_na_itf = NULL;
+
+    return nb_na_itf;
+}
+#endif
 
 static void write_work(int fd, int32_t cmd, int32_t arg1=0, int32_t arg2=0) {
     ActivityWork work;
@@ -251,13 +323,30 @@ loadNativeCode_native(JNIEnv* env, jobject clazz, jstring path, jstring funcName
 
     const char* pathStr = env->GetStringUTFChars(path, NULL);
     NativeCode* code = NULL;
-    
     void* handle = dlopen(pathStr, RTLD_LAZY);
-    
+#ifdef WITH_NATIVE_BRIDGE
+    bool needNativeBridge = false;
+    const nativebridge::nb_na_itf_t * nb_na_itf = NULL;
+    if (NULL == handle) {
+        nb_na_itf = getNativeBridge();
+        if ((NULL != nb_na_itf)
+                && (nb_na_itf->isSupported(pathStr))) {
+            handle = nb_na_itf->dlopen(pathStr, RTLD_LAZY);
+            needNativeBridge = true;
+        }
+    }
+#endif
     env->ReleaseStringUTFChars(path, pathStr);
     
     if (handle != NULL) {
         const char* funcStr = env->GetStringUTFChars(funcName, NULL);
+#ifdef WITH_NATIVE_BRIDGE
+        if (needNativeBridge) {
+            code = new NativeCode(handle, (ANativeActivity_createFunc*)
+                    nb_na_itf->dlsym(handle, funcStr));
+        }
+        else
+#endif
         code = new NativeCode(handle, (ANativeActivity_createFunc*)
                 dlsym(handle, funcStr));
         env->ReleaseStringUTFChars(funcName, funcStr);
@@ -330,9 +419,14 @@ loadNativeCode_native(JNIEnv* env, jobject clazz, jstring path, jstring funcName
             rawSavedState = env->GetByteArrayElements(savedState, NULL);
             rawSavedSize = env->GetArrayLength(savedState);
         }
-
+#ifdef WITH_NATIVE_BRIDGE
+        if (needNativeBridge) {
+            nb_na_itf->createActivity((void*)code->createActivityFunc, (void*)code,
+                    (void*)rawSavedState, rawSavedSize);
+        }
+        else
+#endif
         code->createActivityFunc(code, rawSavedState, rawSavedSize);
-
         if (rawSavedState != NULL) {
             env->ReleaseByteArrayElements(savedState, rawSavedState, 0);
         }

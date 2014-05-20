@@ -173,6 +173,7 @@ import dalvik.system.DexFile;
 import dalvik.system.StaleDexCacheError;
 import dalvik.system.VMRuntime;
 import libcore.io.IoUtils;
+import com.android.internal.content.NativeBridgeHelper;
 
 /**
  * Keep track of all those .apks everywhere.
@@ -4746,7 +4747,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                 Slog.w(TAG, "Package " + pkg.packageName
                         + " was transferred to another, but its .apk remains");
             }
-            
+
             // Just create the setting, don't add it yet. For already existing packages
             // the PkgSetting exists already and doesn't have to be created.
             pkgSetting = mSettings.getPackageLPw(pkg, origPackage, realName, suid, destCodeFile,
@@ -5152,6 +5153,11 @@ public class PackageManagerService extends IPackageManager.Stub {
                 }
 
                 pkgSetting.cpuAbiString = pkg.applicationInfo.cpuAbi;
+
+                if (NativeBridgeHelper.ENABLE_NBH) {
+                    NativeBridgeHelper.notifyInstallPkg(pkg.applicationInfo.uid,
+                            pkg.applicationInfo.processName, pkg.applicationInfo.cpuAbi);
+                }
             } catch (IOException ioe) {
                 Slog.e(TAG, "Unable to get canonical file " + ioe.toString());
             } finally {
@@ -5905,6 +5911,10 @@ public class PackageManagerService extends IPackageManager.Stub {
             final PackageParser.Package pkg = ps.pkg;
             if (pkg != null) {
                 cleanPackageDataStructuresLILPw(pkg, chatty);
+
+                if (NativeBridgeHelper.ENABLE_NBH) {
+                    NativeBridgeHelper.notifyRemovePkg(pkg.applicationInfo.uid);
+                }
             }
         }
     }
@@ -5922,6 +5932,10 @@ public class PackageManagerService extends IPackageManager.Stub {
                 mAppDirs.remove(pkg.mPath);
             }
             cleanPackageDataStructuresLILPw(pkg, chatty);
+
+            if (NativeBridgeHelper.ENABLE_NBH) {
+                NativeBridgeHelper.notifyRemovePkg(pkg.applicationInfo.uid);
+            }
         }
     }
 
@@ -9474,6 +9488,11 @@ public class PackageManagerService extends IPackageManager.Stub {
                 perUserInstalled[i] = ps != null ? ps.getInstalled(allUsers[i]) : false;
             }
         }
+
+        if (NativeBridgeHelper.ENABLE_NBH) {
+            NativeBridgeHelper.notifyReplacePkg(pkgName);
+        }
+
         boolean sysPkg = (isSystemApp(oldPackage));
         if (sysPkg) {
             replaceSystemPackageLI(oldPackage, pkg, parseFlags, scanMode,
