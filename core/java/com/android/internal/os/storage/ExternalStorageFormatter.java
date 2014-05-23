@@ -174,8 +174,7 @@ public class ExternalStorageFormatter extends Service
                             mountService.formatVolume(extStoragePath);
                             success = true;
                         } catch (Exception e) {
-                            Toast.makeText(ExternalStorageFormatter.this,
-                                    R.string.format_error, Toast.LENGTH_LONG).show();
+                            Log.w(TAG, R.string.format_error, e);
                         }
                         if (success) {
                             if (mFactoryReset) {
