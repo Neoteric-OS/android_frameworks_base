@@ -292,11 +292,13 @@ private:
 
     class PathTask: public Task<SkBitmap*> {
     public:
-        PathTask(SkPath* path, SkPaint* paint, PathTexture* texture):
-            path(path), paint(paint), texture(texture) {
+        PathTask(SkPath* path, SkPaint* paintCopy, PathTexture* texture):
+            path(path), texture(texture) {
+                paint = new SkPaint(*paintCopy);
         }
 
         ~PathTask() {
+            delete paint;
             delete future()->get();
         }
 
