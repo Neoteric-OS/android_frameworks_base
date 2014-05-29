@@ -1066,7 +1066,7 @@ final class ApplicationPackageManager extends PackageManager {
             VerificationParams verificationParams, ContainerEncryptionParams encryptionParams) {
         try {
             mPM.installPackageWithVerificationAndEncryption(packageURI, observer, flags,
-                    installerPackageName, verificationParams, encryptionParams);
+                    installerPackageName, verificationParams, encryptionParams, null);
         } catch (RemoteException e) {
             // Should never happen!
         }

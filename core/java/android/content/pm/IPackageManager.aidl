@@ -400,7 +400,8 @@ interface IPackageManager {
     void installPackageWithVerificationAndEncryption(in Uri packageURI,
             in IPackageInstallObserver observer, int flags, in String installerPackageName,
             in VerificationParams verificationParams,
-            in ContainerEncryptionParams encryptionParams);
+            in ContainerEncryptionParams encryptionParams,
+	    in String packageAbiOverride);
 
     int installExistingPackageAsUser(String packageName, int userId);
 
