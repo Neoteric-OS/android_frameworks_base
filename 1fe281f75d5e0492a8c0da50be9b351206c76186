@@ -33,6 +33,24 @@
       "revId": "1fe281f75d5e0492a8c0da50be9b351206c76186",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dffef0bb_85782205",
+        "filename": "libs/hwui/PathCache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1047627
+      },
+      "writtenOn": "2014-05-30T02:16:43Z",
+      "side": 1,
+      "message": "Thaks",
+      "parentUuid": "7fc0a468_0e279bd9",
+      "revId": "1fe281f75d5e0492a8c0da50be9b351206c76186",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
