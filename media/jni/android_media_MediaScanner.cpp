@@ -351,7 +351,7 @@ android_media_MediaScanner_extractAlbumArt(
     if (!data) {
         return NULL;
     }
-    long len = *((long*)data);
+    int len = *((int*)data);
 
     jbyteArray array = env->NewByteArray(len);
     if (array != NULL) {
