@@ -16,6 +16,24 @@
       "revId": "9fa803be109339e8ebfa7f338bf18858f49af709",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf505ca5_22ccb847",
+        "filename": "media/jni/android_media_MediaScanner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-06-09T16:23:41Z",
+      "side": 1,
+      "message": "d\u0027oh! https://android-review.googlesource.com/97108",
+      "parentUuid": "df4350e0_9404e7e2",
+      "revId": "9fa803be109339e8ebfa7f338bf18858f49af709",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
