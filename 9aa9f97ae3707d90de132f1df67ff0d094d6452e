@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f696874_7b33672e",
+        "filename": "services/java/com/android/server/pm/Installer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2014-06-09T23:26:43Z",
+      "side": 1,
+      "message": "It\u0027s a confusing name to give this function which is really only creating the data/misc directory and not the data/user/\u003cuserid\u003e directory. \"mkuser\" is misleading too.\n\nSorry for not noticing this when I reviewed the change to installd. Any chance you can make the naming of this whole path a bit more appropriate? It should either create all necessary directories for the user, or should be called createUserConfigDirs() and \"mkuserconfig\".",
+      "revId": "9aa9f97ae3707d90de132f1df67ff0d094d6452e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
