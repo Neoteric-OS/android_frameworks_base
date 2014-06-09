@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df4350e0_9404e7e2",
+        "filename": "media/jni/android_media_MediaScanner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2014-06-09T15:05:54Z",
+      "side": 1,
+      "message": "In retrospect, I should have noticed that this should be \"mediaAlbumArt \u003d\u003d NULL\"",
+      "revId": "9fa803be109339e8ebfa7f338bf18858f49af709",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
