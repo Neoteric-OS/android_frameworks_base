@@ -311,6 +311,13 @@ public final class Installer {
         return execute(builder.toString());
     }
 
+    public int createUserDataDirs(int userId) {
+        StringBuilder builder = new StringBuilder("mkuser");
+        builder.append(' ');
+        builder.append(userId);
+        return execute(builder.toString());
+    }
+
     public int removeUserDataDirs(int userId) {
         StringBuilder builder = new StringBuilder("rmuser");
         builder.append(' ');
