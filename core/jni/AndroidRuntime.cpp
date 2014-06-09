@@ -490,6 +490,7 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
     char profile_backoff[sizeof("-Xprofile-backoff:") + PROPERTY_VALUE_MAX];
     char profile_top_k_threshold[sizeof("-Xprofile-top-k-threshold") + PROPERTY_VALUE_MAX];
     char profile_top_k_change_threshold[sizeof("-Xprofile-top-k-change-threshold") + PROPERTY_VALUE_MAX];
+    char profile_type[sizeof("-Xprofile-type:") + PROPERTY_VALUE_MAX];
     char langOption[sizeof("-Duser.language=") + 3];
     char regionOption[sizeof("-Duser.region=") + 3];
     char lockProfThresholdBuf[sizeof("-Xlockprofthreshold:") + sizeof(propBuf)];
@@ -870,6 +871,13 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
         strcpy(profile_top_k_change_threshold, "-Xprofile-top-k-change-threshold:");
         if (property_get("dalvik.vm.profile.top-k-ch-thr", profile_top_k_change_threshold+33, NULL) > 0) {
             opt.optionString = profile_top_k_change_threshold;
+            mOptions.add(opt);
+        }
+
+        // Type of profile data.
+        strcpy(profile_type, "-Xprofile-type:");
+        if (property_get("dalvik.vm.profiler.type", profile_type+15, NULL) > 0) {
+            opt.optionString = profile_type;
             mOptions.add(opt);
         }
     }
