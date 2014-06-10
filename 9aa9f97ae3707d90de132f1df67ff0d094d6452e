@@ -16,6 +16,24 @@
       "revId": "9aa9f97ae3707d90de132f1df67ff0d094d6452e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fb70c4e_5333d67b",
+        "filename": "services/java/com/android/server/pm/Installer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2014-06-10T18:01:08Z",
+      "side": 1,
+      "message": "Sure. I\u0027ve used the names you suggested, verbatim.\n\nFor the other half see commit in frameworks/native with the same Change-Id (c/97341/).",
+      "parentUuid": "1f696874_7b33672e",
+      "revId": "9aa9f97ae3707d90de132f1df67ff0d094d6452e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
