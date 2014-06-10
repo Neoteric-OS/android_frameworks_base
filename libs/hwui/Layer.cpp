@@ -171,6 +171,9 @@ void Layer::deleteTexture() {
 }
 
 void Layer::clearTexture() {
+    if (texture.id == caches.getBoundTextures()) {
+        caches.resetBoundTextures();
+    }
     texture.id = 0;
 }
 

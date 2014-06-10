@@ -566,6 +566,10 @@ void Caches::resetBoundTextures() {
     memset(mBoundTextures, 0, REQUIRED_TEXTURE_UNITS_COUNT * sizeof(GLuint));
 }
 
+uint32_t Caches::getBoundTextures() {
+    return mBoundTextures[mTextureUnit];
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Scissor
 ///////////////////////////////////////////////////////////////////////////////
