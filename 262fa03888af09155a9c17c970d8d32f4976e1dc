@@ -22,6 +22,30 @@
       "revId": "262fa03888af09155a9c17c970d8d32f4976e1dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f6920a1_bf767f57",
+        "filename": "core/java/com/android/internal/content/NativeLibraryHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-06-13T09:40:21Z",
+      "side": 1,
+      "message": "I don\u0027t have a strong opinion. I tend to prefer static member functions when the constructors do a lot of \"work\", in this case scanning an entire zip file.",
+      "parentUuid": "df74307d_3436091f",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 9
+      },
+      "revId": "262fa03888af09155a9c17c970d8d32f4976e1dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
