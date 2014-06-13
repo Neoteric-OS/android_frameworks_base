@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df74307d_3436091f",
+        "filename": "core/java/com/android/internal/content/NativeLibraryHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2014-06-13T05:32:28Z",
+      "side": 1,
+      "message": "why have create() and not just have the ApkHandle constructor throw? (and one constructor call the other via this(file.getPath()))",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 9
+      },
+      "revId": "262fa03888af09155a9c17c970d8d32f4976e1dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
