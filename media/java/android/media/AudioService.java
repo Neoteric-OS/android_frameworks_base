@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
+ * Copyright (C) 2014 Tieto Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -2321,9 +2322,16 @@ public class AudioService extends IAudioService.Stub {
                         btDevice = deviceList.get(0);
                         synchronized (mConnectedDevices) {
                             int state = mA2dp.getConnectionState(btDevice);
-                            int delay = checkSendBecomingNoisyIntent(
-                                                    AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP,
-                                                    (state == BluetoothA2dp.STATE_CONNECTED) ? 1 : 0);
+                            int delay;
+                            if (AudioSystem.isA2dpSinkEnabled()) {
+                                delay = checkSendBecomingNoisyIntent(
+                                                        AudioSystem.DEVICE_IN_BLUETOOTH_A2DP,
+                                                        (state == BluetoothA2dp.STATE_CONNECTED) ? 1 : 0);
+                            } else {
+                                delay = checkSendBecomingNoisyIntent(
+                                                        AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP,
+                                                        (state == BluetoothA2dp.STATE_CONNECTED) ? 1 : 0);
+                            }
                             queueMsgUnderWakeLock(mAudioHandler,
                                     MSG_SET_A2DP_CONNECTION_STATE,
                                     state,
@@ -2395,9 +2403,16 @@ public class AudioService extends IAudioService.Stub {
                 synchronized (mA2dpAvrcpLock) {
                     mA2dp = null;
                     synchronized (mConnectedDevices) {
-                        if (mConnectedDevices.containsKey(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP)) {
-                            makeA2dpDeviceUnavailableNow(
-                                    mConnectedDevices.get(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP));
+                        if (AudioSystem.isA2dpSinkEnabled()) {
+                            if (mConnectedDevices.containsKey(AudioSystem.DEVICE_IN_BLUETOOTH_A2DP)) {
+                                makeA2dpDeviceUnavailableNow(
+                                        mConnectedDevices.get(AudioSystem.DEVICE_IN_BLUETOOTH_A2DP));
+                            }
+                        } else {
+                            if (mConnectedDevices.containsKey(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP)) {
+                                makeA2dpDeviceUnavailableNow(
+                                        mConnectedDevices.get(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP));
+                            }
                         }
                     }
                 }
@@ -2814,8 +2829,13 @@ public class AudioService extends IAudioService.Stub {
     {
         int delay;
         synchronized (mConnectedDevices) {
-            delay = checkSendBecomingNoisyIntent(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP,
+            if (AudioSystem.isA2dpSinkEnabled()) {
+                delay = checkSendBecomingNoisyIntent(AudioSystem.DEVICE_IN_BLUETOOTH_A2DP,
                                             (state == BluetoothA2dp.STATE_CONNECTED) ? 1 : 0);
+            } else {
+                delay = checkSendBecomingNoisyIntent(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP,
+                                            (state == BluetoothA2dp.STATE_CONNECTED) ? 1 : 0);
+            }
             queueMsgUnderWakeLock(mAudioHandler,
                     MSG_SET_A2DP_CONNECTION_STATE,
                     state,
@@ -3756,16 +3776,29 @@ public class AudioService extends IAudioService.Stub {
         // enable A2DP before notifying A2DP connection to avoid unecessary processing in
         // audio policy manager
         VolumeStreamState streamState = mStreamStates[AudioSystem.STREAM_MUSIC];
-        sendMsg(mAudioHandler, MSG_SET_DEVICE_VOLUME, SENDMSG_QUEUE,
-                AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP, 0, streamState, 0);
-        setBluetoothA2dpOnInt(true);
-        AudioSystem.setDeviceConnectionState(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP,
-                AudioSystem.DEVICE_STATE_AVAILABLE,
-                address);
-        // Reset A2DP suspend state each time a new sink is connected
-        AudioSystem.setParameters("A2dpSuspended=false");
-        mConnectedDevices.put( new Integer(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP),
-                address);
+        if (AudioSystem.isA2dpSinkEnabled()) {
+            sendMsg(mAudioHandler, MSG_SET_DEVICE_VOLUME, SENDMSG_QUEUE,
+                    AudioSystem.DEVICE_IN_BLUETOOTH_A2DP, 0, streamState, 0);
+            setBluetoothA2dpOnInt(true);
+            AudioSystem.setDeviceConnectionState(AudioSystem.DEVICE_IN_BLUETOOTH_A2DP,
+                    AudioSystem.DEVICE_STATE_AVAILABLE,
+                    address);
+            // Reset A2DP suspend state each time a new sink is connected
+            AudioSystem.setParameters("A2dpSuspended=false");
+            mConnectedDevices.put( new Integer(AudioSystem.DEVICE_IN_BLUETOOTH_A2DP),
+                    address);
+        } else {
+            sendMsg(mAudioHandler, MSG_SET_DEVICE_VOLUME, SENDMSG_QUEUE,
+                    AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP, 0, streamState, 0);
+            setBluetoothA2dpOnInt(true);
+            AudioSystem.setDeviceConnectionState(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP,
+                    AudioSystem.DEVICE_STATE_AVAILABLE,
+                    address);
+            // Reset A2DP suspend state each time a new sink is connected
+            AudioSystem.setParameters("A2dpSuspended=false");
+            mConnectedDevices.put( new Integer(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP),
+                    address);
+        }
     }
 
     private void onSendBecomingNoisyIntent() {
@@ -3777,10 +3810,17 @@ public class AudioService extends IAudioService.Stub {
         synchronized (mA2dpAvrcpLock) {
             mAvrcpAbsVolSupported = false;
         }
-        AudioSystem.setDeviceConnectionState(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP,
-                AudioSystem.DEVICE_STATE_UNAVAILABLE,
-                address);
-        mConnectedDevices.remove(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP);
+        if (AudioSystem.isA2dpSinkEnabled()) {
+            AudioSystem.setDeviceConnectionState(AudioSystem.DEVICE_IN_BLUETOOTH_A2DP,
+                    AudioSystem.DEVICE_STATE_UNAVAILABLE,
+                    address);
+            mConnectedDevices.remove(AudioSystem.DEVICE_IN_BLUETOOTH_A2DP);
+        } else {
+            AudioSystem.setDeviceConnectionState(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP,
+                    AudioSystem.DEVICE_STATE_UNAVAILABLE,
+                    address);
+            mConnectedDevices.remove(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP);
+        }
     }
 
     // must be called synchronized on mConnectedDevices
@@ -3789,7 +3829,11 @@ public class AudioService extends IAudioService.Stub {
         // reconnection of the sink.
         AudioSystem.setParameters("A2dpSuspended=true");
         // the device will be made unavailable later, so consider it disconnected right away
-        mConnectedDevices.remove(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP);
+        if (AudioSystem.isA2dpSinkEnabled()) {
+            mConnectedDevices.remove(AudioSystem.DEVICE_IN_BLUETOOTH_A2DP);
+        } else {
+            mConnectedDevices.remove(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP);
+        }
         // send the delayed message to make the device unavailable later
         Message msg = mAudioHandler.obtainMessage(MSG_BTA2DP_DOCK_TIMEOUT, address);
         mAudioHandler.sendMessageDelayed(msg, BTA2DP_DOCK_TIMEOUT_MILLIS);
@@ -3818,9 +3862,16 @@ public class AudioService extends IAudioService.Stub {
         }
 
         synchronized (mConnectedDevices) {
-            boolean isConnected =
-                (mConnectedDevices.containsKey(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP) &&
-                 mConnectedDevices.get(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP).equals(address));
+            boolean isConnected;
+            if (AudioSystem.isA2dpSinkEnabled()) {
+                isConnected =
+                    (mConnectedDevices.containsKey(AudioSystem.DEVICE_IN_BLUETOOTH_A2DP) &&
+                     mConnectedDevices.get(AudioSystem.DEVICE_IN_BLUETOOTH_A2DP).equals(address));
+            } else {
+                isConnected =
+                    (mConnectedDevices.containsKey(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP) &&
+                     mConnectedDevices.get(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP).equals(address));
+            }
 
             if (isConnected && state != BluetoothProfile.STATE_CONNECTED) {
                 if (btDevice.isBluetoothDock()) {
@@ -3871,12 +3922,21 @@ public class AudioService extends IAudioService.Stub {
         // address is not used for now, but may be used when multiple a2dp devices are supported
         synchronized (mA2dpAvrcpLock) {
             mAvrcpAbsVolSupported = support;
-            sendMsg(mAudioHandler, MSG_SET_DEVICE_VOLUME, SENDMSG_QUEUE,
-                    AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP, 0,
-                    mStreamStates[AudioSystem.STREAM_MUSIC], 0);
-            sendMsg(mAudioHandler, MSG_SET_DEVICE_VOLUME, SENDMSG_QUEUE,
-                    AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP, 0,
-                    mStreamStates[AudioSystem.STREAM_RING], 0);
+            if (AudioSystem.isA2dpSinkEnabled()) {
+                sendMsg(mAudioHandler, MSG_SET_DEVICE_VOLUME, SENDMSG_QUEUE,
+                        AudioSystem.DEVICE_IN_BLUETOOTH_A2DP, 0,
+                        mStreamStates[AudioSystem.STREAM_MUSIC], 0);
+                sendMsg(mAudioHandler, MSG_SET_DEVICE_VOLUME, SENDMSG_QUEUE,
+                        AudioSystem.DEVICE_IN_BLUETOOTH_A2DP, 0,
+                        mStreamStates[AudioSystem.STREAM_RING], 0);
+            } else {
+                sendMsg(mAudioHandler, MSG_SET_DEVICE_VOLUME, SENDMSG_QUEUE,
+                        AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP, 0,
+                        mStreamStates[AudioSystem.STREAM_MUSIC], 0);
+                sendMsg(mAudioHandler, MSG_SET_DEVICE_VOLUME, SENDMSG_QUEUE,
+                        AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP, 0,
+                        mStreamStates[AudioSystem.STREAM_RING], 0);
+            }
         }
     }
 

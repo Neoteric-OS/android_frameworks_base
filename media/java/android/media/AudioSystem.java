@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
+ * Copyright (C) 2014 Tieto Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +17,9 @@
 
 package android.media;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothUuid;
+import android.os.ParcelUuid;
 
 /* IF YOU CHANGE ANY OF THE CONSTANTS IN THIS FILE, DO NOT FORGET
  * TO UPDATE THE CORRESPONDING NATIVE GLUE AND AudioManager.java.
@@ -268,6 +272,7 @@ public class AudioSystem
     public static final int DEVICE_IN_DGTL_DOCK_HEADSET = DEVICE_BIT_IN | 0x400;
     public static final int DEVICE_IN_USB_ACCESSORY = DEVICE_BIT_IN | 0x800;
     public static final int DEVICE_IN_USB_DEVICE = DEVICE_BIT_IN | 0x1000;
+    public static final int DEVICE_IN_BLUETOOTH_A2DP = DEVICE_BIT_IN | 0x2000;
     public static final int DEVICE_IN_DEFAULT = DEVICE_BIT_IN | DEVICE_BIT_DEFAULT;
 
     public static final int DEVICE_IN_ALL = (DEVICE_IN_COMMUNICATION |
@@ -283,6 +288,7 @@ public class AudioSystem
                                              DEVICE_IN_DGTL_DOCK_HEADSET |
                                              DEVICE_IN_USB_ACCESSORY |
                                              DEVICE_IN_USB_DEVICE |
+                                             DEVICE_IN_BLUETOOTH_A2DP |
                                              DEVICE_IN_DEFAULT);
     public static final int DEVICE_IN_ALL_SCO = DEVICE_IN_BLUETOOTH_SCO_HEADSET;
 
@@ -308,6 +314,11 @@ public class AudioSystem
     public static final String DEVICE_OUT_USB_DEVICE_NAME = "usb_device";
     public static final String DEVICE_OUT_REMOTE_SUBMIX_NAME = "remote_submix";
 
+    public static  boolean isA2dpSinkEnabled()
+    {
+        ParcelUuid[] uuids = BluetoothAdapter.getDefaultAdapter().getUuids();
+        return BluetoothUuid.isUuidPresent(uuids,BluetoothUuid.AudioSink);
+    }
     public static String getDeviceName(int device)
     {
         switch(device) {

@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2014 Tieto Corporation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -202,6 +203,13 @@ public class MediaRecorder
         public static final int REMOTE_SUBMIX = 8;
 
         /**
+         * Audio source for audio stream from Bluetooth by A2DP,
+         * Application can use this audio source to capture audio stream that transmitted from
+         * audio source device by Bluetooth A2DP.
+         */
+        public static final int BLUETOOTH_A2DP = 9;
+
+        /**
          * Audio source for preemptible, low-priority software hotword detection
          * It presents the same gain and pre processing tuning as {@link #VOICE_RECOGNITION}.
          * <p>
@@ -328,7 +336,11 @@ public class MediaRecorder
      * @see android.media.MediaRecorder.AudioSource
      */
     public static final int getAudioSourceMax() {
-        return AudioSource.REMOTE_SUBMIX;
+        if (AudioSystem.isA2dpSinkEnabled()) {
+            return AudioSource.BLUETOOTH_A2DP;
+        } else {
+            return AudioSource.REMOTE_SUBMIX;
+        }
     }
 
     /**
