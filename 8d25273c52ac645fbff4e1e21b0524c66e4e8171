@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44587541_6e4fcb7d",
+        "filename": "core/jni/android_app_NativeActivity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1018083
+      },
+      "writtenOn": "2014-06-17T17:07:13Z",
+      "side": 1,
+      "message": "this made my brain spontaneously reboot:)",
+      "range": {
+        "startLine": 77,
+        "startChar": 27,
+        "endLine": 77,
+        "endChar": 38
+      },
+      "revId": "8d25273c52ac645fbff4e1e21b0524c66e4e8171",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
