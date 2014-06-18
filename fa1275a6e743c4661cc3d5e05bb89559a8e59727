@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6471f9c6_dce7814c",
+        "filename": "rs/java/android/renderscript/FieldPacker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-06-18T07:36:09Z",
+      "side": 1,
+      "message": "This seems like we intended the behavior because we didn\u0027t have a use-case for reset (other than to start writing from that point, and obviously that is bad for the point past the end of the array). I think we should fix this, however, since it is cleaner to allow an actual reset() to the end of the packer (particularly when people want to do incremental updates).",
+      "revId": "fa1275a6e743c4661cc3d5e05bb89559a8e59727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6471f9c6_3ce31d44",
+        "filename": "rs/java/android/renderscript/ProgramVertexFixedFunction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-06-18T07:36:09Z",
+      "side": 1,
+      "message": "If we don\u0027t want to alter FieldPacker.reset() behavior, we could WAR this by using reset(length-1) and then skip(1). That seemed pretty horrible to me, so I would prefer to fix our broken API. I can\u0027t imagine any app depending on the exception behavior for reset(length), other than our own CTS tests (https://android-review.googlesource.com/98464).",
+      "revId": "fa1275a6e743c4661cc3d5e05bb89559a8e59727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
