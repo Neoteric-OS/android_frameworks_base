@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4ce254b_c67b26ca",
+        "filename": "core/java/android/widget/VideoView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2014-06-19T16:09:12Z",
+      "side": 1,
+      "message": "put this inside of the data !\u003d null block above?",
+      "revId": "ea26f37187c70141652aaab236c102629b8be763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
