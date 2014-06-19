@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04803dc3_7ca99169",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-06-19T16:45:31Z",
+      "side": 1,
+      "message": "could you use strings instead of numbers here? I think it would be nicer and easier to follow the property without having to remember which one has which index.",
+      "range": {
+        "startLine": 876,
+        "startChar": 8,
+        "endLine": 876,
+        "endChar": 62
+      },
+      "revId": "5b9604f86e0fa990deb69f1929b86ff572656318",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
