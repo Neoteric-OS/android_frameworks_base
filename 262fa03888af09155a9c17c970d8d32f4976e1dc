@@ -46,6 +46,23 @@
       "revId": "262fa03888af09155a9c17c970d8d32f4976e1dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4a70589_07de1875",
+        "filename": "packages/DefaultContainerService/src/com/android/defcontainer/DefaultContainerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2014-06-19T17:06:57Z",
+      "side": 1,
+      "message": "It would be cool to make ApkHandle implement Closeable/AutoCloseable so we could use IoUtils.closeQuietly() here.  (Also helps some IDEs that try warning about resource leakage.)",
+      "revId": "262fa03888af09155a9c17c970d8d32f4976e1dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
