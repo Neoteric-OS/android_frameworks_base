@@ -22,6 +22,30 @@
       "revId": "5b9604f86e0fa990deb69f1929b86ff572656318",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0443dd81_fe0a213d",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1047393
+      },
+      "writtenOn": "2014-06-19T17:45:45Z",
+      "side": 1,
+      "message": "Done. I changed to strings so that we don\u0027t have to change framework if we have to add extra profile types in the future.",
+      "parentUuid": "04803dc3_7ca99169",
+      "range": {
+        "startLine": 876,
+        "startChar": 8,
+        "endLine": 876,
+        "endChar": 62
+      },
+      "revId": "5b9604f86e0fa990deb69f1929b86ff572656318",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
