@@ -1004,7 +1004,8 @@ void PathTessellator::recursiveQuadraticBezierVertices(
     float dy = by - ay;
     float d = (cx - bx) * dy - (cy - by) * dx;
 
-    if (d * d < THRESHOLD * THRESHOLD * (dx * dx * sqrInvScaleY + dy * dy * sqrInvScaleX)) {
+    if ((dx * dx + dy * dy < 0.01f) ||
+        (d * d < THRESHOLD * THRESHOLD * (dx * dx * sqrInvScaleY + dy * dy * sqrInvScaleX))) {
         // below thresh, draw line by adding endpoint
         pushToVector(outputVertices, bx, by);
     } else {
