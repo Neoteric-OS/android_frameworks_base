@@ -804,4 +804,13 @@ public class WallpaperCropActivity extends Activity {
                 ? "png" // We don't support gif compression.
                 : "jpg";
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mCropView != null) {
+            mCropView.destroy();
+            mCropView = null;
+        }
+    }
 }
