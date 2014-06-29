@@ -2280,6 +2280,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
 
         if (mAdapterHasStableIds) {
             final ViewGroup.LayoutParams vlp = child.getLayoutParams();
+            boolean generatedNewLayoutParams = true;
             LayoutParams lp;
             if (vlp == null) {
                 lp = (LayoutParams) generateDefaultLayoutParams();
@@ -2287,9 +2288,12 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                 lp = (LayoutParams) generateLayoutParams(vlp);
             } else {
                 lp = (LayoutParams) vlp;
+                generatedNewLayoutParams = false;
             }
             lp.itemId = mAdapter.getItemId(position);
-            child.setLayoutParams(lp);
+            if (generatedNewLayoutParams) {
+              child.setLayoutParams(lp);
+            }
         }
 
         if (AccessibilityManager.getInstance(mContext).isEnabled()) {
