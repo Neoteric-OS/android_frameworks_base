@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "045e7dcf_e6233e43",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-06-30T23:02:50Z",
+      "side": 1,
+      "message": "Remove this line. I believe that \"DO NOT SUBMIT\" only works on the first line in any case.",
+      "revId": "3208e5b983c8ba9109ce3f7e769953e6ec22ef99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4464f599_a8a0bb4e",
+        "filename": "rs/java/android/renderscript/RenderScript.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-06-30T23:02:50Z",
+      "side": 1,
+      "message": "Remove trailing whitespace.",
+      "revId": "3208e5b983c8ba9109ce3f7e769953e6ec22ef99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "045e7dcf_86ffea43",
+        "filename": "rs/jni/android_renderscript_RenderScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-06-30T23:02:50Z",
+      "side": 1,
+      "message": "ClippedV",
+      "range": {
+        "startLine": 1190,
+        "startChar": 13,
+        "endLine": 1190,
+        "endChar": 39
+      },
+      "revId": "3208e5b983c8ba9109ce3f7e769953e6ec22ef99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
