@@ -391,8 +391,8 @@ static void readLocale(char* language, char* region)
         property_get("ro.product.locale.language", propLang, "en");
         property_get("ro.product.locale.region", propRegn, "US");
     }
-    strncat(language, propLang, 2);
-    strncat(region, propRegn, 2);
+    strncat(language, propLang, 3);
+    strncat(region, propRegn, 3);
     //ALOGD("language=%s region=%s\n", language, region);
 }
 
@@ -490,8 +490,8 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
     char profile_backoff[sizeof("-Xprofile-backoff:") + PROPERTY_VALUE_MAX];
     char profile_top_k_threshold[sizeof("-Xprofile-top-k-threshold:") + PROPERTY_VALUE_MAX];
     char profile_top_k_change_threshold[sizeof("-Xprofile-top-k-change-threshold:") + PROPERTY_VALUE_MAX];
-    char langOption[sizeof("-Duser.language=") + 3];
-    char regionOption[sizeof("-Duser.region=") + 3];
+    char langOption[sizeof("-Duser.language=") + 4];
+    char regionOption[sizeof("-Duser.region=") + 4];
     char lockProfThresholdBuf[sizeof("-Xlockprofthreshold:") + sizeof(propBuf)];
     char jitOpBuf[sizeof("-Xjitop:") + PROPERTY_VALUE_MAX];
     char jitMethodBuf[sizeof("-Xjitmethod:") + PROPERTY_VALUE_MAX];
