@@ -469,6 +469,7 @@ public final class ViewRootImpl implements ViewParent,
                     mLastInCompatMode = true;
                 }
 
+                mLastConfiguration.setTo(view.getResources().getConfiguration());
                 mSoftInputMode = attrs.softInputMode;
                 mWindowAttributesChanged = true;
                 mWindowAttributesChangesFlag = WindowManager.LayoutParams.EVERYTHING_CHANGED;
@@ -1204,7 +1205,6 @@ public final class ViewRootImpl implements ViewParent,
             attachInfo.mWindowVisibility = viewVisibility;
             attachInfo.mRecomputeGlobalAttributes = false;
             viewVisibilityChanged = false;
-            mLastConfiguration.setTo(host.getResources().getConfiguration());
             mLastSystemUiVisibility = mAttachInfo.mSystemUiVisibility;
             // Set the layout direction if it has not been set before (inherit is the default)
             if (mViewLayoutDirectionInitial == View.LAYOUT_DIRECTION_INHERIT) {
