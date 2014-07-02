@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4a77122_1fb31328",
+        "filename": "core/jni/android_media_AudioRecord.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-07-02T15:16:00Z",
+      "side": 1,
+      "message": "Use sizeof(jshort) instead?",
+      "revId": "f795e3f6fc35d58dec1fd8149c9354bbf36cb0dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84d6ed80_9ef26dbd",
+        "filename": "core/jni/android_media_AudioRecord.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-07-02T15:16:00Z",
+      "side": 1,
+      "message": "Should sizeof(short) be sizeof(jshort)? Though I cannot think of a platform where short is not 16-bit, it does not have to be.",
+      "revId": "f795e3f6fc35d58dec1fd8149c9354bbf36cb0dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4a77122_dfd06b32",
+        "filename": "core/jni/android_media_AudioTrack.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-07-02T15:16:00Z",
+      "side": 1,
+      "message": "Should be android_media_AudioTrack_native_write_byte?",
+      "revId": "f795e3f6fc35d58dec1fd8149c9354bbf36cb0dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84d6ed80_defce590",
+        "filename": "core/jni/android_media_AudioTrack.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-07-02T15:16:00Z",
+      "side": 1,
+      "message": "Use jshort instead of short?",
+      "revId": "f795e3f6fc35d58dec1fd8149c9354bbf36cb0dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84d6ed80_fef729ab",
+        "filename": "core/jni/android_media_AudioTrack.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1037066
+      },
+      "writtenOn": "2014-07-02T15:16:00Z",
+      "side": 1,
+      "message": "Same comment as before. Use sizeof(jshort) instead?",
+      "revId": "f795e3f6fc35d58dec1fd8149c9354bbf36cb0dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
