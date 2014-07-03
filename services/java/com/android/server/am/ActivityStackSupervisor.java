@@ -382,8 +382,11 @@ public final class ActivityStackSupervisor {
                         if (headless) {
                             Slog.e(TAG, "Starting activities not supported on headless device: "
                                     + hr);
-                        } else if (realStartActivityLocked(hr, app, true, true)) {
-                            didSomething = true;
+                        } else {
+                            app.addPackage(hr.info.packageName, mService.mProcessStats);
+                            if (realStartActivityLocked(hr, app, true, true)) {
+                                didSomething = true;
+                            }
                         }
                     } catch (Exception e) {
                         Slog.w(TAG, "Exception in new application when starting activity "
