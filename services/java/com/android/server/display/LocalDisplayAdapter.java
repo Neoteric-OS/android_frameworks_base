@@ -161,10 +161,19 @@ final class LocalDisplayAdapter extends DisplayAdapter {
                     mInfo.touch = DisplayDeviceInfo.TOUCH_EXTERNAL;
                     mInfo.setAssumedDensityForExternalDisplay(mPhys.width, mPhys.height);
 
-                    // For demonstration purposes, allow rotation of the external display.
-                    // In the future we might allow the user to configure this directly.
-                    if ("portrait".equals(SystemProperties.get("persist.demo.hdmirotation"))) {
-                        mInfo.rotation = Surface.ROTATION_270;
+                    switch (SystemProperties.get("persist.sys.extdisplayrotation")) {
+                        case "portrait":
+                            mInfo.rotation = Surface.ROTATION_270;
+                            break;
+
+                        case "portrait_fixed":
+                            mInfo.rotation = Surface.ROTATION_270;
+                            mInfo.flags |= DisplayDeviceInfo.FLAG_ROTATES_WITH_CONTENT;
+                            break;
+
+                        case "landscape_fixed":
+                            mInfo.flags |= DisplayDeviceInfo.FLAG_ROTATES_WITH_CONTENT;
+                            break;
                     }
                 }
             }

@@ -24,6 +24,7 @@ import android.database.ContentObserver;
 import android.graphics.SurfaceTexture;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Slog;
@@ -247,6 +248,21 @@ final class OverlayDisplayAdapter extends DisplayAdapter {
                 }
                 mInfo.type = Display.TYPE_OVERLAY;
                 mInfo.touch = DisplayDeviceInfo.TOUCH_NONE;
+
+                switch (SystemProperties.get("persist.sys.extdisplayrotation")) {
+                    case "portrait":
+                        mInfo.rotation = Surface.ROTATION_270;
+                        break;
+
+                    case "portrait_fixed":
+                        mInfo.rotation = Surface.ROTATION_270;
+                        mInfo.flags |= DisplayDeviceInfo.FLAG_ROTATES_WITH_CONTENT;
+                        break;
+
+                    case "landscape_fixed":
+                        mInfo.flags |= DisplayDeviceInfo.FLAG_ROTATES_WITH_CONTENT;
+                        break;
+                }
             }
             return mInfo;
         }
