@@ -2111,9 +2111,9 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
                 final List<InputMethodInfo> enabled = mSettings.getEnabledInputMethodListLocked();
                 if (enabled != null) {
                     final int N = enabled.size();
-                    final String locale = mCurrentSubtype == null
-                            ? mRes.getConfiguration().locale.toString()
-                            : mCurrentSubtype.getLocale();
+                    final Locale locale = mCurrentSubtype == null
+                            ? mRes.getConfiguration().locale
+                            : mCurrentSubtype.getStructuredLocale();
                     for (int i = 0; i < N; ++i) {
                         final InputMethodInfo imi = enabled.get(i);
                         if (imi.getSubtypeCount() > 0 && InputMethodUtils.isSystemIme(imi)) {
@@ -3005,7 +3005,8 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
             // 1. Search by the current subtype's locale from enabledSubtypes.
             if (mCurrentSubtype != null) {
                 subtype = InputMethodUtils.findLastResortApplicableSubtypeLocked(
-                        mRes, enabledSubtypes, mode, mCurrentSubtype.getLocale(), false);
+                        mRes, enabledSubtypes, mode,
+                        mCurrentSubtype.getStructuredLocale(), false);
             }
             // 2. Search by the system locale from enabledSubtypes.
             // 3. Search the first enabled subtype matched with mode from enabledSubtypes.
@@ -3022,7 +3023,8 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
             // 4. Search by the current subtype's locale from all subtypes.
             if (subtype == null && mCurrentSubtype != null) {
                 subtype = InputMethodUtils.findLastResortApplicableSubtypeLocked(
-                        mRes, subtypesForSearch, mode, mCurrentSubtype.getLocale(), false);
+                        mRes, subtypesForSearch, mode,
+                        mCurrentSubtype.getStructuredLocale(), false);
             }
             // 5. Search by the system locale from all subtypes.
             // 6. Search the first enabled subtype matched with mode from all subtypes.
