@@ -119,6 +119,8 @@ public class WifiStateMachine extends StateMachine {
     private ConnectivityManager mCm;
 
     private final boolean mP2pSupported;
+    private boolean mPersistentFrequencyBandchanged = false;
+    private boolean mPreviousBand5Gh = false;
     private final AtomicBoolean mP2pConnected = new AtomicBoolean(false);
     private boolean mTemporarilyDisconnectWifi = false;
     private final String mPrimaryDeviceType;
@@ -1563,6 +1565,7 @@ public class WifiStateMachine extends StateMachine {
             Settings.Global.putInt(mContext.getContentResolver(),
                     Settings.Global.WIFI_FREQUENCY_BAND,
                     band);
+            mPersistentFrequencyBandchanged = true;
         }
         sendMessage(CMD_SET_FREQUENCY_BAND, band, 0);
     }
@@ -3072,7 +3075,10 @@ public class WifiStateMachine extends StateMachine {
 
             if (mP2pSupported) {
                 if (mOperationalMode == CONNECT_MODE) {
-                    mWifiP2pChannel.sendMessage(WifiStateMachine.CMD_ENABLE_P2P);
+                    int band = mFrequencyBand.get();
+                    if (band != WifiManager.WIFI_FREQUENCY_BAND_5GHZ) {
+                        mWifiP2pChannel.sendMessage(WifiStateMachine.CMD_ENABLE_P2P);
+                    }
                 } else {
                     // P2P statemachine starts in disabled state, and is not enabled until
                     // CMD_ENABLE_P2P is sent from here; so, nothing needs to be done to
@@ -3138,6 +3144,16 @@ public class WifiStateMachine extends StateMachine {
                         mWifiNative.bssFlush();
                         //Fetch the latest scan results when frequency band is set
                         startScanNative(WifiNative.SCAN_WITH_CONNECTION_SETUP);
+                        if (mP2pSupported && mPersistentFrequencyBandchanged) {
+                            if (mFrequencyBand.get() == WifiManager.WIFI_FREQUENCY_BAND_5GHZ) {
+                                mWifiP2pChannel.sendMessage(CMD_DISABLE_P2P_REQ);
+                                mPreviousBand5Gh = true;
+                            } else if (mPreviousBand5Gh){
+                                mWifiP2pChannel.sendMessage(CMD_ENABLE_P2P);
+                                mPreviousBand5Ghz = false;
+                            }
+                            mPersistentFrequencyBandchanged = false;
+                        }
                     } else {
                         loge("Failed to set frequency band " + band);
                     }
