@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4c385c9_33e292ee",
+        "filename": "libs/hwui/PathTessellator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 1010333
+      },
+      "writtenOn": "2014-07-07T19:43:20Z",
+      "side": 1,
+      "message": "dx and dy here are in units of scaled pixels, as opposed to actual device pixels - this means that legitimate uses of very extreme scale values will see this 0.01f threshold very differently.\n\nFor example, if we\u0027re drawing at 100x scale (uncommon, but not impossible) we\u0027d see the threshold here become 1 pixel, and end up with very jagged tessellation.",
+      "revId": "ba32dfb5710842b093185cc84d6a6ec15751cd42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
