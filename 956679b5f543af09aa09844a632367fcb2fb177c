@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4462542_f5d00a32",
+        "filename": "rs/jni/android_renderscript_RenderScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-07-07T17:35:04Z",
+      "side": 1,
+      "message": "Remove the logging.",
+      "revId": "956679b5f543af09aa09844a632367fcb2fb177c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4462542_95c1866b",
+        "filename": "rs/jni/android_renderscript_RenderScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-07-07T17:35:04Z",
+      "side": 1,
+      "message": "Whitespace",
+      "revId": "956679b5f543af09aa09844a632367fcb2fb177c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
