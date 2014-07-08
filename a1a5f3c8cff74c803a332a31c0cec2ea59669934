@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84326dd1_4054a782",
+        "filename": "services/java/com/android/server/BackupManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5123,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2014-07-08T22:55:25Z",
+      "side": 1,
+      "message": "Hm.  I guess if the alarm would have been scheduled for some time in the year 2418 or what have you, it doesn\u0027t actually *need* to be scheduled at all.  :)\n\nPlease add a comment here explaining that the transport has effectively asked us to hold off indefinitely, so we are simply waiting for a time in the future when the transport explicitly tells us to resume normal scheduling.",
+      "range": {
+        "startLine": 5123,
+        "startChar": 36,
+        "endLine": 5123,
+        "endChar": 75
+      },
+      "revId": "a1a5f3c8cff74c803a332a31c0cec2ea59669934",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
