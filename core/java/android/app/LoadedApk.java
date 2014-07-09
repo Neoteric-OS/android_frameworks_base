@@ -530,7 +530,7 @@ public final class LoadedApk {
                 }
             }
         }
-        
+
         return app;
     }
 
@@ -701,7 +701,8 @@ public final class LoadedApk {
                         if (extras != null) {
                             extras.setAllowFds(false);
                         }
-                        mgr.finishReceiver(this, resultCode, data, extras, false);
+                        final boolean isFg = (intent.getFlags() & Intent.FLAG_RECEIVER_FOREGROUND) != 0;
+                        mgr.finishReceiver(this, resultCode, data, extras, false, isFg);
                     } catch (RemoteException e) {
                         Slog.w(ActivityThread.TAG, "Couldn't finish broadcast to unregistered receiver");
                     }
@@ -731,11 +732,11 @@ public final class LoadedApk {
                 mCurIntent = intent;
                 mOrdered = ordered;
             }
-            
+
             public void run() {
                 final BroadcastReceiver receiver = mReceiver;
                 final boolean ordered = mOrdered;
-                
+
                 if (ActivityThread.DEBUG_BROADCAST) {
                     int seq = mCurIntent.getIntExtra("seq", -1);
                     Slog.i(ActivityThread.TAG, "Dispatching broadcast " + mCurIntent.getAction()
@@ -743,11 +744,11 @@ public final class LoadedApk {
                     Slog.i(ActivityThread.TAG, "  mRegistered=" + mRegistered
                             + " mOrderedHint=" + ordered);
                 }
-                
+
                 final IActivityManager mgr = ActivityManagerNative.getDefault();
                 final Intent intent = mCurIntent;
                 mCurIntent = null;
-                
+
                 if (receiver == null || mForgotten) {
                     if (mRegistered && ordered) {
                         if (ActivityThread.DEBUG_BROADCAST) Slog.i(ActivityThread.TAG,
@@ -762,6 +763,8 @@ public final class LoadedApk {
                     ClassLoader cl =  mReceiver.getClass().getClassLoader();
                     intent.setExtrasClassLoader(cl);
                     setExtrasClassLoader(cl);
+                    final boolean isFg = (intent.getFlags() & Intent.FLAG_RECEIVER_FOREGROUND) != 0;
+                    this.setForegroundQueue(isFg);
                     receiver.setPendingResult(this);
                     receiver.onReceive(mContext, intent);
                 } catch (Exception e) {
@@ -778,7 +781,7 @@ public final class LoadedApk {
                             + " in " + mReceiver, e);
                     }
                 }
-                
+
                 if (receiver.getPendingResult() != null) {
                     finish();
                 }

@@ -375,6 +375,19 @@ public final class ActivityManagerService extends ActivityManagerNative
         return (isFg) ? mFgBroadcastQueue : mBgBroadcastQueue;
     }
 
+    BroadcastRecord broadcastRecordForReceiverLocked(IBinder receiver, boolean bFgQueue) {
+        BroadcastRecord r = null;
+        if (!bFgQueue) {
+            r = mBgBroadcastQueue.getMatchingOrderedReceiver(receiver);
+        } else {
+            r = mFgBroadcastQueue.getMatchingOrderedReceiver(receiver);
+        }
+        if (r != null) {
+            return r;
+        }
+        return null;
+    }
+
     BroadcastRecord broadcastRecordForReceiverLocked(IBinder receiver) {
         for (BroadcastQueue queue : mBroadcastQueues) {
             BroadcastRecord r = queue.getMatchingOrderedReceiver(receiver);
@@ -13830,7 +13843,7 @@ public final class ActivityManagerService extends ActivityManagerNative
     }
 
     public void finishReceiver(IBinder who, int resultCode, String resultData,
-            Bundle resultExtras, boolean resultAbort) {
+            Bundle resultExtras, boolean resultAbort, boolean bFgQueue) {
         if (DEBUG_BROADCAST) Slog.v(TAG, "Finish receiver: " + who);
 
         // Refuse possible leaked file descriptors
@@ -13844,7 +13857,7 @@ public final class ActivityManagerService extends ActivityManagerNative
             BroadcastRecord r;
 
             synchronized(this) {
-                r = broadcastRecordForReceiverLocked(who);
+                r = broadcastRecordForReceiverLocked(who, bFgQueue);
                 if (r != null) {
                     doNext = r.queue.finishReceiverLocked(r, resultCode,
                         resultData, resultExtras, resultAbort, true);
@@ -13854,6 +13867,7 @@ public final class ActivityManagerService extends ActivityManagerNative
             if (doNext) {
                 r.queue.processNextBroadcast(false);
             }
+
             trimApplications();
         } finally {
             Binder.restoreCallingIdentity(origId);
