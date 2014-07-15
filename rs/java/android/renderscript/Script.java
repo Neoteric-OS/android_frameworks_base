@@ -128,26 +128,7 @@ public class Script extends BaseObj {
      *
      */
     protected void forEach(int slot, Allocation ain, Allocation aout, FieldPacker v) {
-        mRS.validate();
-        mRS.validateObject(ain);
-        mRS.validateObject(aout);
-        if (ain == null && aout == null) {
-            throw new RSIllegalArgumentException(
-                "At least one of ain or aout is required to be non-null.");
-        }
-        long in_id = 0;
-        if (ain != null) {
-            in_id = ain.getID(mRS);
-        }
-        long out_id = 0;
-        if (aout != null) {
-            out_id = aout.getID(mRS);
-        }
-        byte[] params = null;
-        if (v != null) {
-            params = v.getData();
-        }
-        mRS.nScriptForEach(getID(mRS), slot, in_id, out_id, params);
+        forEach(slot, ain, aout, v, null);
     }
 
     /**
@@ -155,31 +136,45 @@ public class Script extends BaseObj {
      *
      */
     protected void forEach(int slot, Allocation ain, Allocation aout, FieldPacker v, LaunchOptions sc) {
+        // TODO: Is this necessary if nScriptForEach calls validate as well?
         mRS.validate();
         mRS.validateObject(ain);
         mRS.validateObject(aout);
+
         if (ain == null && aout == null) {
             throw new RSIllegalArgumentException(
                 "At least one of ain or aout is required to be non-null.");
         }
 
-        if (sc == null) {
-            forEach(slot, ain, aout, v);
-            return;
-        }
-        long in_id = 0;
+        long[] in_ids = null;
         if (ain != null) {
-            in_id = ain.getID(mRS);
+            in_ids    = new long[1];
+            in_ids[0] = ain.getID(mRS);
         }
+
         long out_id = 0;
         if (aout != null) {
             out_id = aout.getID(mRS);
         }
+
         byte[] params = null;
         if (v != null) {
             params = v.getData();
         }
-        mRS.nScriptForEachClipped(getID(mRS), slot, in_id, out_id, params, sc.xstart, sc.xend, sc.ystart, sc.yend, sc.zstart, sc.zend);
+
+        int[] limits = null;
+        if (sc != null) {
+            limits = new int[6];
+
+            limits[0] = sc.xstart;
+            limits[1] = sc.xend;
+            limits[2] = sc.ystart;
+            limits[3] = sc.yend;
+            limits[4] = sc.zstart;
+            limits[5] = sc.zend;
+        }
+
+        mRS.nScriptForEach(getID(mRS), slot, in_ids, out_id, params, limits);
     }
 
     /**
@@ -188,7 +183,7 @@ public class Script extends BaseObj {
      * @hide
      */
     protected void forEach(int slot, Allocation[] ains, Allocation aout, FieldPacker v) {
-        forEach(slot, ains, aout, v, new LaunchOptions());
+        forEach(slot, ains, aout, v, null);
     }
 
     /**
@@ -197,21 +192,16 @@ public class Script extends BaseObj {
      * @hide
      */
     protected void forEach(int slot, Allocation[] ains, Allocation aout, FieldPacker v, LaunchOptions sc) {
+        // TODO: Is this necessary if nScriptForEach calls validate as well?
         mRS.validate();
-
         for (Allocation ain : ains) {
           mRS.validateObject(ain);
         }
-
         mRS.validateObject(aout);
+
         if (ains == null && aout == null) {
             throw new RSIllegalArgumentException(
                 "At least one of ain or aout is required to be non-null.");
-        }
-
-        if (sc == null) {
-            forEach(slot, ains, aout, v);
-            return;
         }
 
         long[] in_ids = new long[ains.length];
@@ -223,11 +213,25 @@ public class Script extends BaseObj {
         if (aout != null) {
             out_id = aout.getID(mRS);
         }
+
         byte[] params = null;
         if (v != null) {
             params = v.getData();
         }
-        mRS.nScriptForEachMultiClipped(getID(mRS), slot, in_ids, out_id, params, sc.xstart, sc.xend, sc.ystart, sc.yend, sc.zstart, sc.zend);
+
+        int[] limits = null;
+        if (sc != null) {
+            limits = new int[6];
+
+            limits[0] = sc.xstart;
+            limits[1] = sc.xend;
+            limits[2] = sc.ystart;
+            limits[3] = sc.yend;
+            limits[4] = sc.zstart;
+            limits[5] = sc.zend;
+        }
+
+        mRS.nScriptForEach(getID(mRS), slot, in_ids, out_id, params, limits);
     }
 
     Script(long id, RenderScript rs) {
