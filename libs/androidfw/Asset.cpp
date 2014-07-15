@@ -362,6 +362,7 @@ _FileAsset::_FileAsset(void)
  */
 _FileAsset::~_FileAsset(void)
 {
+    AutoMutex _l(gAssetLock);
     close();
 }
 
@@ -686,6 +687,7 @@ _CompressedAsset::_CompressedAsset(void)
  */
 _CompressedAsset::~_CompressedAsset(void)
 {
+    AutoMutex _l(gAssetLock);
     close();
 }
 
