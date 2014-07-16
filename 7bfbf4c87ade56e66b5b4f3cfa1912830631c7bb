@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39a80c90_03ecfe96",
+        "filename": "services/java/com/android/server/SamplingProfilerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-07-16T18:52:11Z",
+      "side": 1,
+      "message": "I can tell from my own experiments that it\u0027s very easy to go beyond this. After several weeks with the profile enabled some of the profiles reached 500+K and most of the non empty ones varied between 4k and 400K.",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 85
+      },
+      "revId": "7bfbf4c87ade56e66b5b4f3cfa1912830631c7bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9961058_55fb1e57",
+        "filename": "services/java/com/android/server/SamplingProfilerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-07-16T18:52:11Z",
+      "side": 1,
+      "message": "This looks troublesome. Why do we need this? Think about low end devices and power consumption.",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 72
+      },
+      "revId": "7bfbf4c87ade56e66b5b4f3cfa1912830631c7bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9961058_d5ee2e91",
+        "filename": "services/java/com/android/server/SamplingProfilerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-07-16T18:52:11Z",
+      "side": 1,
+      "message": "This should be \"ART private\" and may change. I don\u0027t think we should hardcode it but I also don\u0027t see another straightforward option.",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 80
+      },
+      "revId": "7bfbf4c87ade56e66b5b4f3cfa1912830631c7bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "198d0845_d708f692",
+        "filename": "services/java/com/android/server/SamplingProfilerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-07-16T18:52:11Z",
+      "side": 1,
+      "message": "This will run forever even if the profiler is disable. You need a mechanism to disable it.",
+      "range": {
+        "startLine": 125,
+        "startChar": 8,
+        "endLine": 126,
+        "endChar": 80
+      },
+      "revId": "7bfbf4c87ade56e66b5b4f3cfa1912830631c7bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9961058_d5d70ed1",
+        "filename": "services/java/com/android/server/SamplingProfilerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-07-16T18:52:11Z",
+      "side": 1,
+      "message": "I don\u0027t think you should care about this. Bear in mind that the profile format may change.",
+      "range": {
+        "startLine": 174,
+        "startChar": 44,
+        "endLine": 175,
+        "endChar": 61
+      },
+      "revId": "7bfbf4c87ade56e66b5b4f3cfa1912830631c7bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
