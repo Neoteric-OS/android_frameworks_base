@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39a80c90_beb345d2",
+        "filename": "cmds/app_process/app_main.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-07-16T21:06:45Z",
+      "side": 0,
+      "message": "it was used for this side-effect.",
+      "revId": "d543c3e113ffa82a63669feca540ca2e10b1576f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39bf2ce0_57dbec00",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-07-16T21:06:45Z",
+      "side": 0,
+      "message": "via this strlcpy.",
+      "revId": "d543c3e113ffa82a63669feca540ca2e10b1576f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19d4282d_b63b68b7",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-07-16T21:06:45Z",
+      "side": 0,
+      "message": "via this.",
+      "revId": "d543c3e113ffa82a63669feca540ca2e10b1576f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
