@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d97e1025_8f6db982",
+        "filename": "services/java/com/android/server/display/LocalDisplayAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-07-17T19:35:42Z",
+      "side": 1,
+      "message": "I do not want to introduce a property called \"persist.sys\" which will encourage people to try to use this as a configuration property.\n\nThe goal of the original code was to enable certain kinds of demo kiosk situations where the display orientation would need to be forced.  Hence the name \"persist.demo\".\n\nIf we were planning to support something like this as a real setting then we would design it quite differently and the code would not live here.",
+      "revId": "973ba3b134862bbc47bdd7302a5e22b36ec61e1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d97e1025_2fb125e1",
+        "filename": "services/java/com/android/server/display/OverlayDisplayAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-07-17T19:35:42Z",
+      "side": 1,
+      "message": "Why did you add this here?  It\u0027s only used for testing.\n\nPlease remove this.",
+      "revId": "973ba3b134862bbc47bdd7302a5e22b36ec61e1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d97e1025_ef91dd43",
+        "filename": "services/java/com/android/server/display/WifiDisplayAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1003957
+      },
+      "writtenOn": "2014-07-17T19:35:42Z",
+      "side": 1,
+      "message": "Likewise, this doesn\u0027t really seem right.",
+      "revId": "973ba3b134862bbc47bdd7302a5e22b36ec61e1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
