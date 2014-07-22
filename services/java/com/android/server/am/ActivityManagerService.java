@@ -5190,7 +5190,6 @@ public final class ActivityManagerService extends ActivityManagerNative
                 mHandler.sendMessageDelayed(nmsg, POWER_CHECK_DELAY);
                 // Tell anyone interested that we are done booting!
                 SystemProperties.set("sys.boot_completed", "1");
-                SystemProperties.set("dev.bootcomplete", "1");
                 for (int i=0; i<mStartedUsers.size(); i++) {
                     UserStartedState uss = mStartedUsers.valueAt(i);
                     if (uss.mState == UserStartedState.STATE_BOOTING) {
@@ -9457,6 +9456,7 @@ public final class ActivityManagerService extends ActivityManagerNative
             }
             mStackSupervisor.resumeTopActivitiesLocked();
             sendUserSwitchBroadcastsLocked(-1, mCurrentUserId);
+            SystemProperties.set("dev.bootcomplete", "1");
         }
     }
 
