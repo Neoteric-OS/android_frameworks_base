@@ -4123,11 +4123,15 @@ public final class ActivityManagerService extends ActivityManagerNative
                 return;
             }
 
-            // Set the app's notResponding state, and look up the errorReportReceiver
-            makeAppNotRespondingLocked(app,
-                    activity != null ? activity.shortComponentName : null,
-                    annotation != null ? "ANR " + annotation : "ANR",
-                    info.toString());
+            try {
+                // Set the app's notResponding state, and look up the errorReportReceiver
+                makeAppNotRespondingLocked(app,
+                        activity != null ? activity.shortComponentName : null,
+                        annotation != null ? "ANR " + annotation : "ANR",
+                        info.toString());
+            } catch (Exception e) {
+                Slog.w(TAG, "Failed to set app's notResponding state", e);
+            }
 
             // Bring up the infamous App Not Responding dialog
             Message msg = Message.obtain();
