@@ -2913,7 +2913,20 @@ public class PackageManagerService extends IPackageManager.Stub {
         if (query != null) {
             final int N = query.size();
             if (N == 1) {
-                return query.get(0);
+                ResolveInfo query_ri = query.get(0);
+
+                // Bug Fix: If user(not owner) have search engines more than two, ActivityManager can't get ResolverActivity as topRunningActivity.
+                //         Because ResolverActivity has applicationinfo with owner userId 0.s
+                if (userId != 0 && query_ri.activityInfo != null && query_ri.activityInfo.name.equals(mResolveActivity.name)) {
+                    ResolveInfo ri = new ResolveInfo(mResolveInfo);
+                    ri.activityInfo = new ActivityInfo(ri.activityInfo);
+                    ri.activityInfo.applicationInfo = new ApplicationInfo(
+                             ri.activityInfo.applicationInfo);
+                    ri.activityInfo.applicationInfo.uid = UserHandle.getUid(userId,
+                             UserHandle.getAppId(ri.activityInfo.applicationInfo.uid));
+                    return ri;
+                }
+                return query_ri;
             } else if (N > 1) {
                 final boolean debug = ((intent.getFlags() & Intent.FLAG_DEBUG_LOG_RESOLUTION) != 0);
                 // If there is more than one activity with the same priority,
