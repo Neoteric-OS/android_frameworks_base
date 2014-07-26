@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f922f488_7fecef97",
+        "filename": "rs/java/android/renderscript/Script.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-07-26T04:36:21Z",
+      "side": 1,
+      "message": "Long line?",
+      "range": {
+        "startLine": 138,
+        "startChar": 100,
+        "endLine": 138,
+        "endChar": 104
+      },
+      "revId": "6df608038337a365e303b8c668ca34fc9198896c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f974b47c_9490bdfa",
+        "filename": "rs/java/android/renderscript/Script.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-07-26T04:36:21Z",
+      "side": 1,
+      "message": "Long line?",
+      "range": {
+        "startLine": 194,
+        "startChar": 100,
+        "endLine": 194,
+        "endChar": 107
+      },
+      "revId": "6df608038337a365e303b8c668ca34fc9198896c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
