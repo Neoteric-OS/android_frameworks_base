@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1624f7a2_dc01e5d6",
+        "filename": "services/java/com/android/server/SamplingProfilerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1010118
+      },
+      "writtenOn": "2014-07-29T23:29:16Z",
+      "side": 1,
+      "message": "Byte.toHexString(b)",
+      "range": {
+        "startLine": 267,
+        "startChar": 22,
+        "endLine": 267,
+        "endChar": 74
+      },
+      "revId": "8987615a79efaaf674db6d6fa89580c6054b1cfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
