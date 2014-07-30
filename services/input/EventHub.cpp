@@ -1155,7 +1155,7 @@ status_t EventHub::openDeviceLocked(const char *devicePath) {
     }
 
     // Check whether this device has switches.
-    for (int i = 0; i <= SW_MAX; i++) {
+    for (int i = 0; i < SW_MAX; i++) {
         if (test_bit(i, device->swBitmask)) {
             device->classes |= INPUT_DEVICE_CLASS_SWITCH;
             break;
