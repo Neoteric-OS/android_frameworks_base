@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1624f7a2_9375934f",
+        "filename": "rs/java/android/renderscript/RenderScript.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1017430
+      },
+      "writtenOn": "2014-07-30T18:19:03Z",
+      "side": 1,
+      "message": "I think you really do need two separate calls here if multi-in requires memory allocations.",
+      "revId": "5e07843215dfb87b53e6ddee1d700d308857d5d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36f65b4a_cf2fc9a6",
+        "filename": "rs/java/android/renderscript/Script.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1017430
+      },
+      "writtenOn": "2014-07-30T18:19:03Z",
+      "side": 1,
+      "message": "does this have to be an array? (note: this really shouldn\u0027t be an array, the critical path of launching basic kernels should never be allocating memory)",
+      "revId": "5e07843215dfb87b53e6ddee1d700d308857d5d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1624f7a2_f3b727d7",
+        "filename": "rs/java/android/renderscript/Script.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1017430
+      },
+      "writtenOn": "2014-07-30T18:19:03Z",
+      "side": 1,
+      "message": "why is this changed?",
+      "revId": "5e07843215dfb87b53e6ddee1d700d308857d5d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
