@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1624f7a2_187077a6",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2014-07-31T01:41:27Z",
+      "side": 1,
+      "message": "I think the test should be slightly more elaborate?\nframeworks/base/services/java/com/android/server/SystemServer.java startBootstraceServices()\n\nThis is what a decrypted device looks like:\n  $ adb shell getprop vold.decrypt ; adb shell mount|grep /data\n    trigger_restart_framework\n    /dev/block/dm-0 /data f2fs ...",
+      "range": {
+        "startLine": 771,
+        "startChar": 51,
+        "endLine": 771,
+        "endChar": 58
+      },
+      "revId": "843ffe56acb21f2b8ed6e90e67598aa8527da31f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
