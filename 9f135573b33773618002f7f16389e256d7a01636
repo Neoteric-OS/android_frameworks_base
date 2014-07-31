@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "763a93c6_d0b53568",
+        "filename": "services/java/com/android/server/am/ActivityStackSupervisor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1117,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-07-31T17:14:31Z",
+      "side": 1,
+      "message": "Make resultStack final and move this line down to 1167, just before the first use of resultStack. Then we don\u0027t need the additional line below.",
+      "range": {
+        "startLine": 1117,
+        "startChar": 0,
+        "endLine": 1117,
+        "endChar": 90
+      },
+      "revId": "9f135573b33773618002f7f16389e256d7a01636",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16295785_ddd8b73c",
+        "filename": "services/java/com/android/server/am/ActivityStackSupervisor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-07-31T17:14:31Z",
+      "side": 1,
+      "message": "We don\u0027t need this once you\u0027ve done the work above.",
+      "range": {
+        "startLine": 1130,
+        "startChar": 1,
+        "endLine": 1132,
+        "endChar": 13
+      },
+      "revId": "9f135573b33773618002f7f16389e256d7a01636",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
