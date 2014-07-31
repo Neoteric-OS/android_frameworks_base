@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b62fab8b_eb8a9191",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2014-07-31T21:30:04Z",
+      "side": 1,
+      "message": "jpa and Paul, this seems to do the right thing from my testing.",
+      "range": {
+        "startLine": 769,
+        "startChar": 0,
+        "endLine": 772,
+        "endChar": 69
+      },
+      "revId": "4fd561637a173c7fa6a1d71e9115db1db90514ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
