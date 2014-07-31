@@ -1127,6 +1127,9 @@ public final class ActivityStackSupervisor {
                 return ActivityManager.START_FORWARD_AND_REQUEST_CONFLICT;
             }
             resultRecord = sourceRecord.resultTo;
+            if (resultRecord != null && resultRecord.task != null) {
+                resultStack = resultRecord.task.stack;
+            }
             resultWho = sourceRecord.resultWho;
             requestCode = sourceRecord.requestCode;
             sourceRecord.resultTo = null;
