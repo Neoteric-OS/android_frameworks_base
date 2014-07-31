@@ -70,6 +70,30 @@
       "revId": "843ffe56acb21f2b8ed6e90e67598aa8527da31f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16295785_08883bd0",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2014-07-31T18:33:18Z",
+      "side": 1,
+      "message": "it seems that post encryption, I also need to check for \"1\" during boot",
+      "parentUuid": "763a93c6_9011ed2e",
+      "range": {
+        "startLine": 771,
+        "startChar": 51,
+        "endLine": 771,
+        "endChar": 58
+      },
+      "revId": "843ffe56acb21f2b8ed6e90e67598aa8527da31f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
