@@ -22,6 +22,30 @@
       "revId": "843ffe56acb21f2b8ed6e90e67598aa8527da31f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "763a93c6_7de66278",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1044551
+      },
+      "writtenOn": "2014-07-31T15:12:58Z",
+      "side": 1,
+      "message": "The best test currently is if vold.decrypt is trigger_restart_min_framework\n\nIt\u0027s not wonderful design, but I think this is the way to go for now.\n\nAfter decryption, vold.decrypt will be trigger_restart_framework so this currently is not correct.",
+      "parentUuid": "1624f7a2_187077a6",
+      "range": {
+        "startLine": 771,
+        "startChar": 51,
+        "endLine": 771,
+        "endChar": 58
+      },
+      "revId": "843ffe56acb21f2b8ed6e90e67598aa8527da31f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
