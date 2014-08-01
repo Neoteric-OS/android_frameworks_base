@@ -1114,7 +1114,6 @@ public final class ActivityStackSupervisor {
                 }
             }
         }
-        ActivityStack resultStack = resultRecord == null ? null : resultRecord.task.stack;
 
         int launchFlags = intent.getFlags();
 
@@ -1160,6 +1159,8 @@ public final class ActivityStackSupervisor {
             // Also the end of the line.
             err = ActivityManager.START_CLASS_NOT_FOUND;
         }
+
+        final ActivityStack resultStack = resultRecord == null ? null : resultRecord.task.stack;
 
         if (err != ActivityManager.START_SUCCESS) {
             if (resultRecord != null) {
