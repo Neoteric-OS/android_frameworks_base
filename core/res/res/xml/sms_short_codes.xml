@@ -97,7 +97,7 @@
 
     <!-- United Kingdom (Great Britain): 4-6 digits, common codes [5-8]xxxx, plus EU:
          http://www.short-codes.com/media/Co-regulatoryCodeofPracticeforcommonshortcodes170206.pdf -->
-    <shortcode country="gb" pattern="\\d{4,6}" premium="[5-8]\\d{4}" free="116\\d{3}" />
+    <shortcode country="gb" pattern="\\d{4,6}" premium="[5-8]\\d{4}" free="116\\d{3}|85005|64711" />
 
     <!-- Georgia: 4 digits, known premium codes listed -->
     <shortcode country="ge" pattern="\\d{4}" premium="801[234]|888[239]" />
