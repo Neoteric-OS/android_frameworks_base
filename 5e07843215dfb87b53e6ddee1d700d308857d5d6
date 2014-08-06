@@ -50,6 +50,24 @@
       "revId": "5e07843215dfb87b53e6ddee1d700d308857d5d6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16431782_34cf7dea",
+        "filename": "rs/java/android/renderscript/Script.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2014-08-06T17:48:16Z",
+      "side": 1,
+      "message": "This was changed to break up the line bellow, which was over 80 characters long.",
+      "parentUuid": "1624f7a2_f3b727d7",
+      "revId": "5e07843215dfb87b53e6ddee1d700d308857d5d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
