@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6f7ab98_91e2dc34",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10772,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-08-07T16:52:14Z",
+      "side": 1,
+      "message": "do we need to de-dup this list ?",
+      "revId": "ee1a419b45a24f8a0f7328b3990cd1db6d462539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
