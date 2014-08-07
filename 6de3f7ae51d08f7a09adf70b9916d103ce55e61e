@@ -34,6 +34,24 @@
       "revId": "6de3f7ae51d08f7a09adf70b9916d103ce55e61e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "962627f7_6da15194",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4417,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-08-07T17:59:59Z",
+      "side": 1,
+      "message": "I guess i\u0027m too used to finding out the size of the collection in advance (to avoid another allocation). Are you sure you don\u0027t want to do that ?",
+      "parentUuid": "b6f7ab98_f1ed2095",
+      "revId": "6de3f7ae51d08f7a09adf70b9916d103ce55e61e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
