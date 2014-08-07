@@ -584,6 +584,7 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
     char lockProfThresholdBuf[sizeof("-Xlockprofthreshold:")-1 + PROPERTY_VALUE_MAX];
     char jitOpBuf[sizeof("-Xjitop:")-1 + PROPERTY_VALUE_MAX];
     char jitMethodBuf[sizeof("-Xjitmethod:")-1 + PROPERTY_VALUE_MAX];
+    char nativeBridgeLibray[sizeof("-XX:NativeBridgeLibrary=") + PROPERTY_VALUE_MAX];
 
     bool checkJni = false;
     property_get("dalvik.vm.checkjni", propBuf, "");
@@ -875,6 +876,9 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv)
                            profileMaxStackDepth,
                            "-Xprofile-max-stack-depth:");
     }
+
+    parseRuntimeOption("dalvik.vm.native.bridge.library",
+                       nativeBridgeLibray, "-XX:NativeBridgeLibrary=");
 
     initArgs.version = JNI_VERSION_1_4;
     initArgs.options = mOptions.editArray();
