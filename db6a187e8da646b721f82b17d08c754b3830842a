@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6f7ab98_aedb3737",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-08-07T15:30:32Z",
+      "side": 1,
+      "message": "how was this name chosen ? Shouldn\u0027t it be in the dalvik namespace ?\n\n(more generally, how are these property names chosen anyway ?)",
+      "revId": "db6a187e8da646b721f82b17d08c754b3830842a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
