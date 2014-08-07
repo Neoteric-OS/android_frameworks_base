@@ -34,6 +34,24 @@
       "revId": "db6a187e8da646b721f82b17d08c754b3830842a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6f7ab98_8ea8fb0d",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-08-07T16:33:29Z",
+      "side": 1,
+      "message": "That one came from Intel and should not limit us.",
+      "parentUuid": "56390f00_c0ce5365",
+      "revId": "db6a187e8da646b721f82b17d08c754b3830842a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
