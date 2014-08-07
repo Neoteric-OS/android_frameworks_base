@@ -5750,7 +5750,8 @@ public class PackageManagerService extends IPackageManager.Stub {
                             ps.pkg.applicationInfo.cpuAbi = null;
                             return false;
                         } else {
-                            mInstaller.rmdex(ps.codePathString, getPreferredInstructionSet());
+                            mInstaller.rmdex(ps.codePathString,
+                                             getDexCodeInstructionSet(getPreferredInstructionSet());
                         }
                     }
                 }
@@ -8981,7 +8982,8 @@ public class PackageManagerService extends IPackageManager.Stub {
                 if (instructionSet == null) {
                     throw new IllegalStateException("instructionSet == null");
                 }
-                int retCode = mInstaller.rmdex(sourceDir, instructionSet);
+                final String dexCodeInstructionSet = getDexCodeInstructionSet(instructionSet);
+                int retCode = mInstaller.rmdex(sourceDir, dexCodeInstructionSet);
                 if (retCode < 0) {
                     Slog.w(TAG, "Couldn't remove dex file for package: "
                             +  " at location "
@@ -9259,7 +9261,8 @@ public class PackageManagerService extends IPackageManager.Stub {
             if (instructionSet == null) {
                 throw new IllegalStateException("instructionSet == null");
             }
-            int retCode = mInstaller.rmdex(sourceFile, instructionSet);
+            final String dexCodeInstructionSet = getDexCodeInstructionSet(instructionSet);
+            int retCode = mInstaller.rmdex(sourceFile, dexCodeInstructionSet);
             if (retCode < 0) {
                 Slog.w(TAG, "Couldn't remove dex file for package: "
                         + " at location "
@@ -9692,8 +9695,9 @@ public class PackageManagerService extends IPackageManager.Stub {
     private int moveDexFilesLI(PackageParser.Package newPackage) {
         if ((newPackage.applicationInfo.flags&ApplicationInfo.FLAG_HAS_CODE) != 0) {
             final String instructionSet = getAppInstructionSet(newPackage.applicationInfo);
+            final String dexCodeInstructionSet = getDexCodeInstructionSet(instructionSet);
             int retCode = mInstaller.movedex(newPackage.mScanPath, newPackage.mPath,
-                                             instructionSet);
+                                             dexCodeInstructionSet);
             if (retCode != 0) {
                 /*
                  * Programs may be lazily run through dexopt, so the
@@ -9704,8 +9708,8 @@ public class PackageManagerService extends IPackageManager.Stub {
                  * file from a previous version of the package.
                  */
                 newPackage.mDexOptNeeded = true;
-                mInstaller.rmdex(newPackage.mScanPath, instructionSet);
-                mInstaller.rmdex(newPackage.mPath, instructionSet);
+                mInstaller.rmdex(newPackage.mScanPath, dexCodeInstructionSet);
+                mInstaller.rmdex(newPackage.mPath, dexCodeInstructionSet);
             }
         }
         return PackageManager.INSTALL_SUCCEEDED;
@@ -10761,9 +10765,14 @@ public class PackageManagerService extends IPackageManager.Stub {
                 publicSrcDir = applicationInfo.publicSourceDir;
             }
         }
+
+        String[] appDexInstructionSets = getAppDexInstructionSets(ps);
+        String[] dexCodeInstructionSets = new String[appDexInstructionSets.length];
+        for (int i = 0; i < appDexInstructionSets.length; i++) {
+            dexCodeInstructionSets[i] = getDexCodeInstructionSet(appDexInstructionSets[i]);
+        }
         int res = mInstaller.getSizeInfo(packageName, userHandle, p.mPath, libDirPath,
-                publicSrcDir, asecPath, getAppInstructionSetFromSettings(ps),
-                pStats);
+                publicSrcDir, asecPath, dexCodeInstructionSets, pStats);
         if (res < 0) {
             return false;
         }
