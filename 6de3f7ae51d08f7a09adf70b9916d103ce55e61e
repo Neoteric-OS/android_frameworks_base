@@ -16,6 +16,24 @@
       "revId": "6de3f7ae51d08f7a09adf70b9916d103ce55e61e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6f7ab98_f1ed2095",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4417,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-08-07T17:55:59Z",
+      "side": 1,
+      "message": "yep http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html#toArray(T[])",
+      "parentUuid": "962627f7_cdd83d2b",
+      "revId": "6de3f7ae51d08f7a09adf70b9916d103ce55e61e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
