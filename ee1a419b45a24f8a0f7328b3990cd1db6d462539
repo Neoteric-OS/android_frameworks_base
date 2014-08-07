@@ -16,6 +16,24 @@
       "revId": "ee1a419b45a24f8a0f7328b3990cd1db6d462539",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6f7ab98_f1088049",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10772,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-08-07T16:57:55Z",
+      "side": 1,
+      "message": "That\u0027s a good point. Thanks. I will upload another PS.\n\n(For the current implementation it doesn\u0027t really matter since getSizeInfo will look only at the first element in the array.)",
+      "parentUuid": "b6f7ab98_91e2dc34",
+      "revId": "ee1a419b45a24f8a0f7328b3990cd1db6d462539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
