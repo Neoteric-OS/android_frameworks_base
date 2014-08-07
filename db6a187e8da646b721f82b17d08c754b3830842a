@@ -16,6 +16,24 @@
       "revId": "db6a187e8da646b721f82b17d08c754b3830842a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56390f00_c0ce5365",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-08-07T15:34:00Z",
+      "side": 1,
+      "message": "I don\u0027t think we have any kind of strategy in choosing these names. Maybe we should! In this case I just copied the same name that was already used in the runtime. \n\nPutting it in dalvik namespace sounds like a better option.",
+      "parentUuid": "b6f7ab98_aedb3737",
+      "revId": "db6a187e8da646b721f82b17d08c754b3830842a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
