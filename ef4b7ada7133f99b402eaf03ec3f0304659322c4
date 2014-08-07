@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "360c9b77_78559085",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2014-08-07T20:22:22Z",
+      "side": 1,
+      "message": "i just checked, this is at the max length of 31 so you are okay. but there isn\u0027t checking of this in this code, and without a test case, you might have been surprised if this didn\u0027t work at all.\n\nI added build system validation recently for lengths and it caught a problem in someone elses prop name.",
+      "range": {
+        "startLine": 880,
+        "startChar": 24,
+        "endLine": 880,
+        "endChar": 55
+      },
+      "revId": "ef4b7ada7133f99b402eaf03ec3f0304659322c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
