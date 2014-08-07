@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "363e5beb_e890a78b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1017038
+      },
+      "writtenOn": "2014-08-07T01:39:46Z",
+      "side": 1,
+      "message": "It looks like this code has been moved to frameworks/native/services/inputflinger",
+      "revId": "b6e077ce9befc087b552f6e66d27d32c778451f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
