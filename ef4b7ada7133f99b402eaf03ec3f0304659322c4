@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "96b467df_6e6f5779",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-08-08T17:38:53Z",
+      "side": 1,
+      "message": "\"Library\" (missing \"r\")",
+      "revId": "ef4b7ada7133f99b402eaf03ec3f0304659322c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "360c9b77_78559085",
         "filename": "core/jni/AndroidRuntime.cpp",
         "patchSetId": 2
@@ -37,6 +54,30 @@
       "side": 1,
       "message": "I know about the 32 limit (hit me in the back once) so I also did the counting before :). I\u0027d also prefer and like to write a test case for this but wasn\u0027t sure where would be the best place to add it. Any advice here?",
       "parentUuid": "360c9b77_78559085",
+      "range": {
+        "startLine": 880,
+        "startChar": 24,
+        "endLine": 880,
+        "endChar": 55
+      },
+      "revId": "ef4b7ada7133f99b402eaf03ec3f0304659322c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96b467df_2e755f4d",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-08-08T17:38:53Z",
+      "side": 1,
+      "message": "I would\u0027ve gone with dalvik.vm.native.bridge and -XX:NativeBridge\u003d . (Removing the library in both cases). I won\u0027t insist on it, though. \n\nWhat do you think ?",
+      "parentUuid": "b6e5ebf4_3bef5763",
       "range": {
         "startLine": 880,
         "startChar": 24,
