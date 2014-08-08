@@ -159,7 +159,9 @@ ZipEntryRO ZipFileRO::nextEntry(void* cookie)
 
 void ZipFileRO::endIteration(void* cookie)
 {
-    delete reinterpret_cast<_ZipEntryRO*>(cookie);
+    _ZipEntryRO* entry = reinterpret_cast<_ZipEntryRO*>(cookie);
+    EndIteration(entry->cookie);
+    delete entry;
 }
 
 void ZipFileRO::releaseEntry(ZipEntryRO entry) const
