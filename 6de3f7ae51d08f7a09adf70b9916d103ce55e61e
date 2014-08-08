@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "96b467df_a37fc82f",
+        "filename": "services/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-08-08T14:35:39Z",
+      "side": 1,
+      "message": "has been updated in PS3",
+      "parentUuid": "360c9b77_dd4f46a1",
+      "range": {
+        "startLine": 1353,
+        "startChar": 0,
+        "endLine": 1353,
+        "endChar": 95
+      },
+      "revId": "6de3f7ae51d08f7a09adf70b9916d103ce55e61e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "962627f7_cdd83d2b",
         "filename": "services/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 2
