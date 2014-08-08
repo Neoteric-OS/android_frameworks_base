@@ -87,6 +87,30 @@
       "revId": "ef4b7ada7133f99b402eaf03ec3f0304659322c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_47c0a410",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2014-08-08T17:43:52Z",
+      "side": 1,
+      "message": "shorter seems better, I\u0027m fine with dropping the library.",
+      "parentUuid": "96b467df_2e755f4d",
+      "range": {
+        "startLine": 880,
+        "startChar": 24,
+        "endLine": 880,
+        "endChar": 55
+      },
+      "revId": "ef4b7ada7133f99b402eaf03ec3f0304659322c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
