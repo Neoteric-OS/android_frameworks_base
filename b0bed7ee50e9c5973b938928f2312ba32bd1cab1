@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9699c785_d559ce6e",
+        "filename": "services/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6975,
+      "author": {
+        "id": 1052513
+      },
+      "writtenOn": "2014-08-09T10:53:36Z",
+      "side": 1,
+      "message": "Shouldn\u0027t anything be done for HDMI display content here?",
+      "range": {
+        "startLine": 6975,
+        "startChar": 80,
+        "endLine": 6975,
+        "endChar": 83
+      },
+      "revId": "b0bed7ee50e9c5973b938928f2312ba32bd1cab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9699c785_f556d23d",
+        "filename": "services/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6988,
+      "author": {
+        "id": 1052513
+      },
+      "writtenOn": "2014-08-09T10:53:36Z",
+      "side": 1,
+      "message": "See comment at 6975",
+      "range": {
+        "startLine": 6988,
+        "startChar": 71,
+        "endLine": 6988,
+        "endChar": 75
+      },
+      "revId": "b0bed7ee50e9c5973b938928f2312ba32bd1cab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
