@@ -16,6 +16,7 @@
 
 package com.android.internal.content;
 
+import com.android.internal.content.NativeBridgeHelper;
 import android.content.pm.PackageManager;
 import android.util.Slog;
 
@@ -107,7 +108,12 @@ public class NativeLibraryHelper {
      * {@link PackageManager#INSTALL_FAILED_NO_MATCHING_ABIS} if none of the ABIs match.
      */
     public static int findSupportedAbi(ApkHandle handle, String[] supportedAbis) {
-        return nativeFindSupportedAbi(handle.apkHandle, supportedAbis);
+        if (NativeBridgeHelper.ENABLE_NBH) {
+            return NativeBridgeHelper.adjustAbiDecision(handle.apkHandle,
+                    nativeFindSupportedAbi(handle.apkHandle, supportedAbis));
+        } else {
+            return nativeFindSupportedAbi(handle.apkHandle, supportedAbis);
+        }
     }
 
     private native static int nativeFindSupportedAbi(long handle, String[] supportedAbis);
