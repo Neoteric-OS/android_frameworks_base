@@ -48,6 +48,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import com.android.internal.content.NativeBridgeHelper;
 
 /**
  * Startup class for the zygote process.
@@ -621,6 +622,10 @@ public class ZygoteInit {
 
             if (startSystemServer) {
                 startSystemServer(abiList, socketName);
+            }
+
+            if (NativeBridgeHelper.ENABLE_NBH) {
+                NativeBridgeHelper.prepare();
             }
 
             Log.i(TAG, "Accepting command socket connections");

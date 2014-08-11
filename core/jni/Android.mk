@@ -22,6 +22,7 @@ LOCAL_CFLAGS += -DGL_GLEXT_PROTOTYPES -DEGL_EGLEXT_PROTOTYPES
 
 LOCAL_SRC_FILES:= \
 	AndroidRuntime.cpp \
+	com_android_internal_content_NativeBridgeHelper.cpp	\
 	com_android_internal_content_NativeLibraryHelper.cpp \
 	com_google_android_gles_jni_EGLImpl.cpp \
 	com_google_android_gles_jni_GLImpl.cpp.arm \

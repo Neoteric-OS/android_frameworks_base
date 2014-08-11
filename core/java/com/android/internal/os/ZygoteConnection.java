@@ -37,6 +37,7 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import libcore.io.IoUtils;
+import com.android.internal.content.NativeBridgeHelper;
 
 /**
  * A connection that can make spawn requests.
@@ -239,6 +240,15 @@ class ZygoteConnection {
                 // in child
                 IoUtils.closeQuietly(serverPipeFd);
                 serverPipeFd = null;
+                if (NativeBridgeHelper.ENABLE_NBH) {
+                    // TODO:
+                    // The private dir path for native bridge per app per user
+                    // should be passed here as last parameter.
+                    // We don't know where to get the path so far.
+                    // So we passed null here.
+                    NativeBridgeHelper.init(parsedArgs.uid, parsedArgs.abi,
+                            parsedArgs.packageName, parsedArgs.niceName, null);
+                }
                 handleChildProc(parsedArgs, descriptors, childPipeFd, newStderr);
 
                 // should never get here, the child is expected to either
@@ -361,6 +371,12 @@ class ZygoteConnection {
 
         /** from --invoke-with */
         String invokeWith;
+
+        /** from --abi */
+        String abi;
+
+        /** from --package-name */
+        String packageName;
 
         /**
          * Any args after and including the first non-option arg
@@ -528,6 +544,18 @@ class ZygoteConnection {
                     mountExternal = Zygote.MOUNT_EXTERNAL_MULTIUSER_ALL;
                 } else if (arg.equals("--query-abi-list")) {
                     abiListQuery = true;
+                } else if (arg.startsWith("--abi=")) {
+                    if (abi != null) {
+                        throw new IllegalArgumentException(
+                                "Duplicate arg specified");
+                    }
+                    abi = arg.substring(arg.indexOf('=') + 1);
+                } else if (arg.startsWith("--package-name=")) {
+                    if (packageName != null) {
+                        throw new IllegalArgumentException(
+                                "Duplicate arg specified");
+                    }
+                    packageName = arg.substring(arg.indexOf('=') + 1);
                 } else {
                     break;
                 }
