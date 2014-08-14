@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d657bfb2_4d7351b6",
+        "filename": "libs/androidfw/ZipFileRO.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-08-14T19:47:01Z",
+      "side": 1,
+      "message": "an explicit ZipEntryName(const char*) constructor might be a good idea.",
+      "revId": "6bace04acd79653ca4163c0320b2fc967fb02677",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
