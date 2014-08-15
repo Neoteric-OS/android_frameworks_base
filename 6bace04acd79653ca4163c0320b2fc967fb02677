@@ -16,6 +16,24 @@
       "revId": "6bace04acd79653ca4163c0320b2fc967fb02677",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16a1570c_ee3c9faf",
+        "filename": "libs/androidfw/ZipFileRO.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1052243
+      },
+      "writtenOn": "2014-08-15T13:48:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d657bfb2_4d7351b6",
+      "revId": "6bace04acd79653ca4163c0320b2fc967fb02677",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
