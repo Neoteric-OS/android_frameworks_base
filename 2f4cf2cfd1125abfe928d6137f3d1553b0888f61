@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d61fbf43_0a3d7fd7",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1050938
+      },
+      "writtenOn": "2014-08-18T14:35:40Z",
+      "side": 1,
+      "message": "A question, is the prop dalvik.vm.natve.bridge read-only? If not can we use a read-only prop so that user app can not change it\u0027s value?",
+      "revId": "2f4cf2cfd1125abfe928d6137f3d1553b0888f61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
