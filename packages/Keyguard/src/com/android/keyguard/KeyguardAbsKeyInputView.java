@@ -41,6 +41,7 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
     protected View mEcaView;
     protected boolean mEnableHaptics;
     private boolean mDismissing;
+    private CountDownTimer mCountdownTimer = null;
 
     // To avoid accidental lockout due to events while the device in in the pocket, ignore
     // any passwords with length less than or equal to this length.
@@ -76,7 +77,7 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
         if (shouldLockout(deadline)) {
             handleAttemptLockout(deadline);
         } else {
-            resetState();
+            resetState(false);
         }
     }
 
@@ -86,7 +87,12 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
     }
 
     protected abstract int getPasswordTextViewId();
-    protected abstract void resetState();
+    /*
+     * Reset a state of the view.
+     *
+     * @param important Indicates whether default security message should be displayed.
+     */
+    protected abstract void resetState(boolean important);
 
     @Override
     protected void onFinishInflate() {
@@ -181,11 +187,13 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
     protected void handleAttemptLockout(long elapsedRealtimeDeadline) {
         setPasswordEntryEnabled(false);
         long elapsedRealtime = SystemClock.elapsedRealtime();
-        new CountDownTimer(elapsedRealtimeDeadline - elapsedRealtime, 1000) {
+        long secondsInFuture = (long) Math.ceil(
+                (elapsedRealtimeDeadline - elapsedRealtime) / 1000.0);
+        mCountdownTimer = new CountDownTimer(secondsInFuture * 1000, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
-                int secondsRemaining = (int) (millisUntilFinished / 1000);
+                int secondsRemaining = (int) Math.ceil(millisUntilFinished / 1000.0);
                 mSecurityMessageDisplay.setMessage(
                         R.string.kg_too_many_failed_attempts_countdown, true, secondsRemaining);
             }
@@ -193,7 +201,7 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
             @Override
             public void onFinish() {
                 mSecurityMessageDisplay.setMessage("", false);
-                resetState();
+                resetState(true /* important */);
             }
         }.start();
     }
@@ -218,6 +226,10 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
 
     @Override
     public void onPause() {
+        if (mCountdownTimer != null) {
+            mCountdownTimer.cancel();
+            mCountdownTimer = null;
+        }
         if (mPendingLockCheck != null) {
             mPendingLockCheck.cancel(false);
             mPendingLockCheck = null;
