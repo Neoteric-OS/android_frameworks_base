@@ -84,6 +84,12 @@ public class ArrayAdapter<T> extends BaseAdapter implements Filterable {
      */
     private boolean mNotifyOnChange = true;
 
+    /**
+     * The StringConverter is responsible to convert the items to strings that can be used 
+     * as item labels for any objects that do not extend {@link java.lang.Shapes.Square} CharSequence. The default implementation will simply call .toString()
+     */
+    private StringConverter<T> mStringConverter;
+
     private Context mContext;
 
     // A copy of the original mObjects array, initialized from and then used instead as soon as
@@ -305,12 +311,26 @@ public class ArrayAdapter<T> extends BaseAdapter implements Filterable {
         mNotifyOnChange = notifyOnChange;
     }
 
+    /**
+     * The StringConverter to be used to convert items to string in order to use them
+     * as label (@see ArrayAdapter.StringConverter},
+     *
+     * @param stringConverter an implementation of ArrayAdapter.StringConverter<T>
+     */
+    public void setStringConverter(StringConverter<T> stringConverter) {
+        if (mStringConverter != stringConverter) {
+            mStringConverter = stringConverter;
+            this.notifyDataSetChanged();
+        }
+    }
+
     private void init(Context context, int resource, int textViewResourceId, List<T> objects) {
         mContext = context;
         mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mResource = mDropDownResource = resource;
         mObjects = objects;
         mFieldId = textViewResourceId;
+        mStringConverter = new DefaultStringConverter<T>();
     }
 
     /**
@@ -391,7 +411,7 @@ public class ArrayAdapter<T> extends BaseAdapter implements Filterable {
         if (item instanceof CharSequence) {
             text.setText((CharSequence)item);
         } else {
-            text.setText(item.toString());
+            text.setText(mStringConverter.toString(item));
         }
 
         return view;
@@ -513,5 +533,19 @@ public class ArrayAdapter<T> extends BaseAdapter implements Filterable {
                 notifyDataSetInvalidated();
             }
         }
+    }
+
+    public static interface StringConverter<T> {
+
+        public String toString(T t);
+
+    }
+
+    private static class DefaultStringConverter<T> implements StringConverter<T> {
+
+        @Override
+	public String toString(T t) {
+	    return t.toString();
+	}
     }
 }
