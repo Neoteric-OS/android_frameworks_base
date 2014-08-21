@@ -1391,4 +1391,28 @@ interface ITelephony {
      * @hide
      */
     SignalStrength getSignalStrength(int subId);
+
+    /**
+     * Get ATR (Answer To Reset; as per ISO/IEC 7816-4) from SIM card
+     *
+     * The ATR is sent from the card when an electrical reset of the card's 
+     * chip by the card reader occurs. It provides information about the communication
+     * parameters proposed by the card, as well as it's nature and state.
+     * Permissions android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE is required
+     * @return the atr of the card
+     */
+    byte[] getAtr();
+
+    /**
+     * Get ATR (Answer To Reset; as per ISO/IEC 7816-4) from SIM card
+     * for a particular subId.
+     *
+     * The ATR is sent from the card when an electrical reset of the card's 
+     * chip by the card reader occurs. It provides information about the communication
+     * parameters proposed by the card, as well as it's nature and state.
+     * Permissions android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE is required
+     * @param subId Subscription index
+     * @return the atr of the card
+     */
+    byte[] getAtrUsingSubId(int subId);
 }
