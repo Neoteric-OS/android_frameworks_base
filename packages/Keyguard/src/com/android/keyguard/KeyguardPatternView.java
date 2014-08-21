@@ -184,12 +184,12 @@ public class KeyguardPatternView extends LinearLayout implements KeyguardSecurit
         if (deadline != 0) {
             handleAttemptLockout(deadline);
         } else {
-            displayDefaultSecurityMessage();
+            displayDefaultSecurityMessage(false);
         }
     }
 
-    private void displayDefaultSecurityMessage() {
-        mSecurityMessageDisplay.setMessage(R.string.kg_pattern_instructions, false);
+    private void displayDefaultSecurityMessage(boolean important) {
+        mSecurityMessageDisplay.setMessage(R.string.kg_pattern_instructions, important);
     }
 
     @Override
@@ -282,20 +282,32 @@ public class KeyguardPatternView extends LinearLayout implements KeyguardSecurit
         mLockPatternView.clearPattern();
         mLockPatternView.setEnabled(false);
         final long elapsedRealtime = SystemClock.elapsedRealtime();
+        // If we want to get onTick() 31 times (30, 29, 28, ...., 2, 1, 0), millisInFuture for
+        // CountDownTimer should be 32000. Therefore 2 seconds are added to
+        // original value (elapsedRealtimeDeadline - elapsedRealtime).
+        final long millisInFuture = ((long) Math.ceil(
+                    (elapsedRealtimeDeadline - elapsedRealtime) / 1000.0) + 2) * 1000;
 
-        mCountdownTimer = new CountDownTimer(elapsedRealtimeDeadline - elapsedRealtime, 1000) {
+        mCountdownTimer = new CountDownTimer(millisInFuture, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
-                final int secondsRemaining = (int) (millisUntilFinished / 1000);
-                mSecurityMessageDisplay.setMessage(
-                        R.string.kg_too_many_failed_attempts_countdown, true, secondsRemaining);
+                final int secondsRemaining = (int) Math.round(millisUntilFinished / 1000.0) - 2;
+
+                if (secondsRemaining > 0) {
+                    mSecurityMessageDisplay.setMessage(
+                            R.string.kg_too_many_failed_attempts_countdown, true, secondsRemaining);
+                } else {
+                    mLockPatternView.setEnabled(true);
+                    displayDefaultSecurityMessage(true /* important */);
+                    cancel();
+                }
             }
 
             @Override
             public void onFinish() {
-                mLockPatternView.setEnabled(true);
-                displayDefaultSecurityMessage();
+                // onFinish() cannot be used to determine accurate reset timing
+                // because onFinish() may be called up to 2 seconds after last onTick().
             }
 
         }.start();

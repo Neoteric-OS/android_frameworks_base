@@ -76,7 +76,7 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
         if (shouldLockout(deadline)) {
             handleAttemptLockout(deadline);
         } else {
-            resetState();
+            resetState(false);
         }
     }
 
@@ -86,7 +86,12 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
     }
 
     protected abstract int getPasswordTextViewId();
-    protected abstract void resetState();
+    /*
+     * Reset a state of the view.
+     *
+     * @param important Indicates whether default security message should be displayed.
+     */
+    protected abstract void resetState(boolean important);
 
     @Override
     protected void onFinishInflate() {
@@ -181,19 +186,31 @@ public abstract class KeyguardAbsKeyInputView extends LinearLayout
     protected void handleAttemptLockout(long elapsedRealtimeDeadline) {
         setPasswordEntryEnabled(false);
         long elapsedRealtime = SystemClock.elapsedRealtime();
-        new CountDownTimer(elapsedRealtimeDeadline - elapsedRealtime, 1000) {
+        // If we want to get onTick() 31 times (30, 29, 28, ...., 2, 1, 0), millisInFuture for
+        // CountDownTimer should be 32000. Therefore 2 seconds are added to
+        // original value (elapsedRealtimeDeadline - elapsedRealtime).
+        long millisInFuture = ((long) Math.ceil(
+                (elapsedRealtimeDeadline - elapsedRealtime) / 1000.0) + 2) * 1000;
+
+        new CountDownTimer(millisInFuture, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
-                int secondsRemaining = (int) (millisUntilFinished / 1000);
-                mSecurityMessageDisplay.setMessage(
-                        R.string.kg_too_many_failed_attempts_countdown, true, secondsRemaining);
+                int secondsRemaining = (int) Math.round(millisUntilFinished / 1000.0) - 2;
+                if (secondsRemaining > 0) {
+                    mSecurityMessageDisplay.setMessage(
+                            R.string.kg_too_many_failed_attempts_countdown, true, secondsRemaining);
+                } else {
+                    mSecurityMessageDisplay.setMessage("", false);
+                    resetState(true /* important */);
+                    cancel();
+                }
             }
 
             @Override
             public void onFinish() {
-                mSecurityMessageDisplay.setMessage("", false);
-                resetState();
+                // onFinish() cannot be used to determine accurate reset timing
+                // because onFinish() may be called up to 2 seconds after last onTick().
             }
         }.start();
     }
