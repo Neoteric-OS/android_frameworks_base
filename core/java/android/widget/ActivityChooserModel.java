@@ -45,6 +45,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.text.Collator;
 
 /**
  * <p>
@@ -896,7 +897,11 @@ public class ActivityChooserModel extends DataSetObservable {
 
         @Override
         public int hashCode() {
-            return 31 + Float.floatToIntBits(weight);
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + Float.floatToIntBits(weight);
+            result = prime * result + ((resolveInfo.loadLabel(mContext.getPackageManager()) == null) ? 0 : (resolveInfo.loadLabel(mContext.getPackageManager()).hashCode()));
+            return result;
         }
 
         @Override
@@ -911,14 +916,19 @@ public class ActivityChooserModel extends DataSetObservable {
                 return false;
             }
             ActivityResolveInfo other = (ActivityResolveInfo) obj;
-            if (Float.floatToIntBits(weight) != Float.floatToIntBits(other.weight)) {
+            Collator collator = Collator.getInstance();
+            if ((Float.floatToIntBits(weight) != Float.floatToIntBits(other.weight)) || (resolveInfo.loadLabel(mContext.getPackageManager()) != other.resolveInfo.loadLabel(mContext.getPackageManager()))) {
                 return false;
             }
             return true;
         }
 
         public int compareTo(ActivityResolveInfo another) {
-             return  Float.floatToIntBits(another.weight) - Float.floatToIntBits(weight);
+            Collator collator = Collator.getInstance();
+            if (Float.floatToIntBits(weight) == Float.floatToIntBits(another.weight)) {
+                return  collator.compare(resolveInfo.loadLabel(mContext.getPackageManager()),another.resolveInfo.loadLabel(mContext.getPackageManager()));
+            }
+            return  Float.floatToIntBits(another.weight) - Float.floatToIntBits(weight);
         }
 
         @Override
@@ -926,6 +936,7 @@ public class ActivityChooserModel extends DataSetObservable {
             StringBuilder builder = new StringBuilder();
             builder.append("[");
             builder.append("resolveInfo:").append(resolveInfo.toString());
+            builder.append("; label_name:").append(resolveInfo.loadLabel(mContext.getPackageManager()));
             builder.append("; weight:").append(new BigDecimal(weight));
             builder.append("]");
             return builder.toString();
@@ -990,6 +1001,7 @@ public class ActivityChooserModel extends DataSetObservable {
             if (DEBUG) {
                 Log.i(LOG_TAG, "Could not open historical records file: " + mHistoryFileName);
             }
+            Collections.sort(mActivities);
             return;
         }
         try {
