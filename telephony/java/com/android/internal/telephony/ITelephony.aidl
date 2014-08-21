@@ -1246,4 +1246,15 @@ interface ITelephony {
      * @param appType the icc application type, like {@link #APPTYPE_USIM}
      */
     String[] getForbiddenPlmns(int subId, int appType);
+
+    /**
+     * Get ATR (Answer To Reset; as per ISO/IEC 7816-4) from SIM card
+     */
+    byte[] getAtr();
+
+    /**
+     * Get ATR (Answer To Reset; as per ISO/IEC 7816-4) from SIM card
+     * for a particular subId.
+     */
+    byte[] getAtrUsingSubId(int subId);
 }
