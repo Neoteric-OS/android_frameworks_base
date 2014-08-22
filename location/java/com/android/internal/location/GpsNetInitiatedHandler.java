@@ -24,13 +24,17 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.location.INetInitiatedListener;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.UserHandle;
+import android.os.SystemProperties;
 import android.util.Log;
+import android.util.Slog;
 
 import com.android.internal.R;
 import com.android.internal.telephony.GsmAlphabet;
+import com.android.internal.telephony.TelephonyProperties;
 
 /**
  * A GPS Network-initiated Handler class used by LocationManager.
@@ -65,11 +69,13 @@ public class GpsNetInitiatedHandler {
     public static final int GPS_NI_TYPE_VOICE = 1;
     public static final int GPS_NI_TYPE_UMTS_SUPL = 2;
     public static final int GPS_NI_TYPE_UMTS_CTRL_PLANE = 3;
+    public static final int GPS_NI_TYPE_EMERGENCY_SUPL = 4;
     
     // these need to match GpsUserResponseType constants in gps_ni.h    
     public static final int GPS_NI_RESPONSE_ACCEPT = 1;
     public static final int GPS_NI_RESPONSE_DENY = 2;
     public static final int GPS_NI_RESPONSE_NORESP = 3;    
+    public static final int GPS_NI_RESPONSE_IGNORE = 4;
     
     // these need to match GpsNiNotifyFlags constants in gps_ni.h
     public static final int GPS_NI_NEED_NOTIFY = 0x0001;
@@ -87,14 +93,24 @@ public class GpsNetInitiatedHandler {
     
     // parent gps location provider
     private final LocationManager mLocationManager;
-    
+
     // configuration of notificaiton behavior
     private boolean mPlaySounds = false;
     private boolean mPopupImmediately = true;
-    
+
+    // read the SUPL_ES form gps.conf
+    private int mIsSuplEsEnabled;
+
+    /* will be changed form GpsLocationProvider if the
+     device enter or leave emergency mode.*/
+    static public boolean mIsInEmergency = false;
+
+    public static GpsNetInitiatedHandler obj;
+    private final INetInitiatedListener mNetInitiatedListener;
+
     // Set to true if string from HAL is encoded as Hex, e.g., "3F0039"    
     static private boolean mIsHexInput = true;
-        
+
     public static class GpsNiNotification
     {
         public int notificationId;
@@ -118,6 +134,26 @@ public class GpsNetInitiatedHandler {
         Bundle extras;
     };
     
+    // for reading the value of mIsInEmergency
+    public boolean readEmergencySUPLStatus()
+    {
+        synchronized (this) {
+            if (DEBUG) Log.d(TAG, "public boolean readEmergencySUPLStatus():" +
+                                  "mIsInEmergency is " + mIsInEmergency);
+            return mIsInEmergency;
+        }
+    }
+
+    // for writing the value of mIsInEmergency
+    public void updateEmergencySUPLStatus(boolean status)
+    {
+        synchronized (this) {
+            if (DEBUG) Log.d(TAG, "public boolean updateEmergencySUPLStatus():" +
+                                  "mIsInEmergency is " + status);
+            mIsInEmergency = status;
+        }
+    }
+
     /**
      * The notification that is shown when a network-initiated notification
      * (and verification) event is received. 
@@ -125,43 +161,35 @@ public class GpsNetInitiatedHandler {
      * This is lazily created, so use {@link #setNINotification()}.
      */
     private Notification mNiNotification;
-    
-    public GpsNetInitiatedHandler(Context context) {
+
+    public GpsNetInitiatedHandler(Context context,
+                                  INetInitiatedListener netInitiatedListener,
+                                  int isSuplEsEnabled) {
         mContext = context;
         mLocationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+        GpsNetInitiatedHandler.obj = this;
+        mIsSuplEsEnabled = isSuplEsEnabled;
+        mNetInitiatedListener = netInitiatedListener;
     }
     
     // Handles NI events from HAL
     public void handleNiNotification(GpsNiNotification notif)
     {
-        if (DEBUG) Log.d(TAG, "handleNiNotification" + " notificationId: " + notif.notificationId
-                + " requestorId: " + notif.requestorId + " text: " + notif.text);
+        if (DEBUG) Log.d(TAG, "in handleNiNotification () :"
+                        + " notificationId: " + notif.notificationId
+                        + " requestorId: " + notif.requestorId
+                        + " text: " + notif.text);
 
-        // Notify and verify with immediate pop-up
-        if (notif.needNotify && notif.needVerify && mPopupImmediately)
-        {
-            // Popup the dialog box now
-            openNiDialog(notif);
-        }
-
-        // Notify only, or delayed pop-up (change mPopupImmediately to FALSE)
-        if (notif.needNotify && !notif.needVerify ||
-            notif.needNotify && notif.needVerify && !mPopupImmediately)
-        {
-            // Show the notification
-
-            // if mPopupImmediately == FALSE and needVerify == TRUE, a dialog will be opened
-            // when the user opens the notification message
-
-            setNiNotification(notif);
-        }
-
-        // ACCEPT cases: 1. Notify, no verify; 2. no notify, no verify; 3. privacy override.
-        if ( notif.needNotify && !notif.needVerify ||
-            !notif.needNotify && !notif.needVerify ||
-             notif.privacyOverride)
-        {
-            mLocationManager.sendNiResponse(notif.notificationId, GPS_NI_RESPONSE_ACCEPT);
+        if (mNetInitiatedListener != null) {
+            if (mIsSuplEsEnabled == 0) {
+                if (DEBUG) Log.d(TAG, "SUPL_ES is disabled, calling handleNi(notif)");
+                handleNi(notif);
+            } else {
+                if (DEBUG) Log.d(TAG, "SUPL_ES is enabled, calling handleNiInEs(notif)");
+                handleNiInEs(notif);
+            }
+        } else {
+            Log.e(TAG, "mNetInitiatedListener is null");
         }
 
         //////////////////////////////////////////////////////////////////////////
@@ -175,6 +203,75 @@ public class GpsNetInitiatedHandler {
         //   However, the UI should at least close the dialog when timeout. Further,
         //   for more general handling, timeout response should be added to the Handler here.
         //
+    }
+
+    // handle NI form HAL when SUPL_ES is disabled.
+    private synchronized void handleNi(GpsNiNotification notif) {
+        // legacy behavior
+        if (DEBUG) Log.d(TAG, "entering handleNi(GpsNiNotification notif)");
+        if (notif.needNotify) {
+            if (DEBUG) Log.d(TAG, "notif.needNotify is true");
+            if (notif.needVerify && mPopupImmediately) {
+                // Popup the dialog box now
+                if (DEBUG) Log.d(TAG, "calling openNiDialog(notif)");
+                openNiDialog(notif);
+            } else {
+                // Show the notification
+                if (DEBUG) Log.d(TAG, "calling setNiNotification(notif)");
+                setNiNotification(notif);
+            }
+        }
+        // ACCEPT cases: 1. Notify, no verify; 2. no notify, no verify;
+        // 3. privacy override.
+        if (!notif.needVerify || notif.privacyOverride) {
+            if (DEBUG) Log.d(TAG, "!notif.needVerify || notif.privacyOverride is true");
+            try {
+                if (DEBUG) Log.d(TAG, "sending GPS_NI_RESPONSE_ACCEPT");
+                mNetInitiatedListener.sendNiResponse(notif.notificationId,
+                                                     GPS_NI_RESPONSE_ACCEPT);
+            } catch (RemoteException e) {
+                Slog.e(TAG, "RemoteException in sendNiResponse");
+            }
+        }
+        if (DEBUG) Log.d(TAG, "leaving handleNi(GpsNiNotification notif)");
+    }
+
+    // handle NI from HAL when the SUPL_ES is enadbled
+    private synchronized void handleNiInEs(GpsNiNotification notif) {
+        if (DEBUG) Log.d(TAG, "entering handleNiInEs(GpsNiNotification notif)");
+
+        /* UE is in emergency mode when in emergency call mode or in emergency call back mode*/
+        boolean isUEInEmergencyMode = readEmergencySUPLStatus() ||
+            Boolean.parseBoolean(SystemProperties.get(TelephonyProperties.PROPERTY_INECM_MODE));
+
+        if (DEBUG) Log.d(TAG, "isUEInEmergencyMode is" + isUEInEmergencyMode +
+            "readEmergencySUPLStatus() is" + readEmergencySUPLStatus() +
+            "Boolean.parseBoolean(SystemProperties.get(TelephonyProperties" +
+            ".PROPERTY_INECM_MODE)) is" +
+            Boolean.parseBoolean(SystemProperties.get(TelephonyProperties.PROPERTY_INECM_MODE)));
+
+        /* Ignore the emergency SUPL INIT when :
+               SUPL ES bit is not on but UE is in emmergency mode
+           Ignore the emergency SUPL INIT when :
+               SUPL ES bit is on but UE is not in emmergency mode
+        */
+        if ((notif.niType == GPS_NI_TYPE_EMERGENCY_SUPL) != isUEInEmergencyMode) {
+            if (DEBUG) Log.d(TAG, "(notif.niType == GPS_NI_TYPE_EMERGENCY_SUPL)" +
+                                  " != isUEInEmergencyMode");
+            try {
+                if (DEBUG) Log.d(TAG, "ignoring the NI");
+                mNetInitiatedListener.sendNiResponse(notif.notificationId,
+                                                     GPS_NI_RESPONSE_IGNORE);
+            } catch (RemoteException e) {
+                Slog.e(TAG, "RemoteException in sendNiResponse");
+            }
+        } else {
+            if (DEBUG) Log.d(TAG, "(notif.niType == GPS_NI_TYPE_EMERGENCY_SUPL)" +
+                                  " == isUEInEmergencyMode;"+
+                                  "calling handleSuplNi(notif)");
+            handleNi(notif);
+        }
+        if (DEBUG) Log.d(TAG, "leaving handleNiInEs(GpsNiNotification notif)");
     }
 
     // Sets the NI notification.
@@ -238,7 +335,7 @@ public class GpsNetInitiatedHandler {
         String message = getDialogMessage(notif, mContext);
 
         // directly bring up the NI activity
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.setClass(mContext, com.android.internal.app.NetInitiatedActivity.class);
 
         // put data in the intent

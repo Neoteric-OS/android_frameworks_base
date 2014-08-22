@@ -62,6 +62,8 @@ import android.provider.Telephony.Sms.Intents;
 import android.telephony.SmsMessage;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
+import android.telephony.PhoneNumberUtils;
+import android.telephony.PhoneStateListener;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.NtpTrustedTime;
@@ -306,6 +308,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
     private int mSuplServerPort;
     private String mC2KServerHost;
     private int mC2KServerPort;
+    private int mIsSuplEsEnabled;
 
     private final Context mContext;
     private final NtpTrustedTime mNtpTime;
@@ -322,6 +325,8 @@ public class GpsLocationProvider implements LocationProviderInterface {
     private int mAGpsDataConnectionIpAddr;
     private final ConnectivityManager mConnMgr;
     private final GpsNetInitiatedHandler mNIHandler;
+    private PhoneStateListener mPhoneStateListener;
+    private final TelephonyManager mTelephonyManager;
 
     // Wakelocks
     private final static String WAKELOCK_KEY = "GpsLocationProvider";
@@ -429,6 +434,20 @@ public class GpsLocationProvider implements LocationProviderInterface {
                  info = connManager.getNetworkInfo(info.getType());
 
                  updateNetworkState(networkState, info);
+             } else if (action.equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
+                 if (DEBUG) Log.d(TAG, "receive an outgoing call");
+                 if (intent.getExtras() == null) {
+                     Log.e(TAG, "intent.getExtras() == null");
+                     return;
+                 }
+
+                 String phonenumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
+                 if (PhoneNumberUtils.isEmergencyNumber(phonenumber)) {
+                     if (DEBUG) Log.d(TAG, "this is a emergency call");
+                     if (GpsNetInitiatedHandler.obj != null) {
+                         GpsNetInitiatedHandler.obj.updateEmergencySUPLStatus(true);
+                     }
+                 }
              }
         }
     };
@@ -481,6 +500,17 @@ public class GpsLocationProvider implements LocationProviderInterface {
                     Log.e(TAG, "unable to parse C2K_PORT: " + portString);
                 }
             }
+
+            String isSuplESEnabled = mProperties.getProperty("SUPL_ES");
+            if (isSuplESEnabled != null) {
+                try {
+                    mIsSuplEsEnabled = Integer.parseInt(isSuplESEnabled);
+                } catch (NumberFormatException e) {
+                    Log.e(TAG, "unable to parse SUPL_ES: " + isSuplESEnabled);
+                }
+            } else {
+                Log.e(TAG, "unable to read SUPL_ES from" + PROPERTIES_FILE);
+            }
         } catch (IOException e) {
             Log.w(TAG, "Could not open GPS configuration file " + filename);
             return false;
@@ -493,8 +523,6 @@ public class GpsLocationProvider implements LocationProviderInterface {
         mContext = context;
         mNtpTime = NtpTrustedTime.getInstance(context);
         mILocationManager = ilocationManager;
-        mNIHandler = new GpsNetInitiatedHandler(context);
-
         mLocation.setExtras(mLocationExtras);
 
         // Create a wake lock
@@ -508,6 +536,8 @@ public class GpsLocationProvider implements LocationProviderInterface {
 
         mConnMgr = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
+        mTelephonyManager =
+            (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
         // App ops service to keep track of who is accessing the GPS
         mAppOpsService = IAppOpsService.Stub.asInterface(ServiceManager.getService(
                 Context.APP_OPS_SERVICE));
@@ -526,6 +556,31 @@ public class GpsLocationProvider implements LocationProviderInterface {
         if (!propertiesLoaded) {
             loadPropertiesFile(DEFAULT_PROPERTIES_FILE);
         }
+
+        mNIHandler = new GpsNetInitiatedHandler(context,
+                                                mNetInitiatedListener,
+                                                mIsSuplEsEnabled);
+
+        if (mPhoneStateListener == null) {
+            mPhoneStateListener = new PhoneStateListener() {
+                @Override
+                public void onCallStateChanged(int state, String incomingNumber) {
+                    if (DEBUG) Log.d(TAG, "onCallStateChanged(): "+"state is "+ state);
+                    // listening for emergency call ends
+                    if (state == TelephonyManager.CALL_STATE_IDLE) {
+                        if (DEBUG) Log.d(TAG, "state == TelephonyManager.CALL_STATE_IDLE");
+                        if (mNIHandler.obj == null) {
+                            Log.e(TAG, "GpsNetInitiatedHandler is NULL!");
+                        } else {
+                            if (DEBUG) Log.d(TAG, "calling GpsNetInitiatedHandler" +
+                                                  ".obj.updateEmergencySUPLStatus(false)");
+                            mNIHandler.obj.updateEmergencySUPLStatus(false);
+                        }
+                    }
+                }
+            };
+        }
+        mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
 
         // construct handler, listen for events
         mHandler = new ProviderHandler(looper);
@@ -576,6 +631,10 @@ public class GpsLocationProvider implements LocationProviderInterface {
         intentFilter.addAction(ALARM_WAKEUP);
         intentFilter.addAction(ALARM_TIMEOUT);
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        mContext.registerReceiver(mBroadcastReciever, intentFilter, null, mHandler);
+
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_NEW_OUTGOING_CALL);
         mContext.registerReceiver(mBroadcastReciever, intentFilter, null, mHandler);
     }
 
