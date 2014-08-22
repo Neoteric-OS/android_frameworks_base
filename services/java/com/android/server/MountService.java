@@ -1021,7 +1021,9 @@ class MountService extends IMountService.Stub
                 /*
                  * Media is blank or does not contain a supported filesystem
                  */
-                updatePublicVolumeState(volume, Environment.MEDIA_NOFS);
+                if (!getVolumeState(path).equals(Environment.MEDIA_REMOVED)) {
+                    updatePublicVolumeState(volume, Environment.MEDIA_NOFS);
+                }
                 action = Intent.ACTION_MEDIA_NOFS;
                 rc = StorageResultCode.OperationFailedMediaBlank;
             } else if (code == VoldResponseCode.OpFailedMediaCorrupt) {
@@ -1029,7 +1031,9 @@ class MountService extends IMountService.Stub
                 /*
                  * Volume consistency check failed
                  */
-                updatePublicVolumeState(volume, Environment.MEDIA_UNMOUNTABLE);
+                if (!getVolumeState(path).equals(Environment.MEDIA_REMOVED)) {
+                    updatePublicVolumeState(volume, Environment.MEDIA_UNMOUNTABLE);
+                }
                 action = Intent.ACTION_MEDIA_UNMOUNTABLE;
                 rc = StorageResultCode.OperationFailedMediaCorrupt;
             } else {
