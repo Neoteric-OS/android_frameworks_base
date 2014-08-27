@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33f4add0_757040a6",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-08-27T13:26:49Z",
+      "side": 1,
+      "message": "is dalvik.vm.profile.max-depth better ? I think \"max\" is more important than \"stack\" but whatever, I don\u0027t particularly care either way.",
+      "revId": "407ce7f66c33f7e9acdf2e1870d0a6c588acd6bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
