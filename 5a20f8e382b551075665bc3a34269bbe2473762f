@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "736f0577_9898a166",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1019666
+      },
+      "writtenOn": "2014-08-28T22:39:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9397195e_0b7545a1",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 44
+      },
+      "revId": "5a20f8e382b551075665bc3a34269bbe2473762f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3cd11a8_14afb47f",
         "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2014-08-27T19:17:57Z",
       "side": 1,
       "message": "nit: This is pretty much a setter() function, and emergency probably has less to do with SUPL. I suggest we just call it setEmergencyStatus().",
+      "range": {
+        "startLine": 148,
+        "startChar": 16,
+        "endLine": 148,
+        "endChar": 41
+      },
+      "revId": "5a20f8e382b551075665bc3a34269bbe2473762f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d37ef124_bbc6b327",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1019666
+      },
+      "writtenOn": "2014-08-28T22:39:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3cd11a8_14afb47f",
       "range": {
         "startLine": 148,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d37ef124_5bdc6ff6",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1019666
+      },
+      "writtenOn": "2014-08-28T22:39:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3cd11a8_94a2a498",
+      "range": {
+        "startLine": 328,
+        "startChar": 12,
+        "endLine": 328,
+        "endChar": 30
+      },
+      "revId": "5a20f8e382b551075665bc3a34269bbe2473762f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3b431fe_e5448c34",
         "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2014-08-27T19:17:57Z",
       "side": 1,
       "message": "can mPhoneStateListener be non-null in the constructor? It looks strange only this member is checked against null.",
+      "range": {
+        "startLine": 564,
+        "startChar": 12,
+        "endLine": 564,
+        "endChar": 31
+      },
+      "revId": "5a20f8e382b551075665bc3a34269bbe2473762f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f35a15dc_a7fc594d",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1019666
+      },
+      "writtenOn": "2014-08-28T22:39:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3b431fe_e5448c34",
       "range": {
         "startLine": 564,
         "startChar": 12,
