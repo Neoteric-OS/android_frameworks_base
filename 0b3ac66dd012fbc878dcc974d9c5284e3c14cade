@@ -1,0 +1,625 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73e46551_a7a80e7d",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "use a single line comment for this",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 44
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33ee6d35_05a8d6a9",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "this is implicitly taken care of",
+      "range": {
+        "startLine": 106,
+        "startChar": 41,
+        "endLine": 106,
+        "endChar": 48
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33ee6d35_a5b2ca17",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "don\u0027t expose this field as public\nalso why does it need to be static? it has non-static getter and setter methods",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 17
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33ee6d35_6599e29b",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "why are we exposing a static public field that stores a reference to the last object created? \nare you trying to use a singleton pattern here?",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 45
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3541db2_4cdcb3f6",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "I might be wrong but i didn\u0027t see that this class makes use of the value stored in mIsInEmergency, if that is the case, please remove it from here, and store it in the class that actually uses it",
+      "range": {
+        "startLine": 137,
+        "startChar": 32,
+        "endLine": 137,
+        "endChar": 46
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73e46551_c7a3929f",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "don\u0027t do this, just use a volatile field to store the flag",
+      "range": {
+        "startLine": 140,
+        "startChar": 8,
+        "endLine": 140,
+        "endChar": 29
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73e46551_67af267f",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "do we really need this logging? are we not sure if there would be concurrency problems accessing this?",
+      "range": {
+        "startLine": 141,
+        "startChar": 12,
+        "endLine": 142,
+        "endChar": 73
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33ee6d35_252a3a69",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "can GpsNetInitiatedHandler find out this value on its own?",
+      "range": {
+        "startLine": 167,
+        "startChar": 34,
+        "endLine": 167,
+        "endChar": 53
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73e46551_8764ea9a",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "why isn\u0027t mIsSuplEsEnabled of type boolean?",
+      "range": {
+        "startLine": 184,
+        "startChar": 16,
+        "endLine": 184,
+        "endChar": 32
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33ee6d35_c53f0ea2",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "is this an error that can be ignored, or should the ctor throw if null is passed?",
+      "range": {
+        "startLine": 192,
+        "startChar": 12,
+        "endLine": 192,
+        "endChar": 56
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33ee6d35_854ea64d",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "do we really need this? it is already logged in line185",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 76
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33ee6d35_654ba23f",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "change all these logs to Log.v",
+      "range": {
+        "startLine": 213,
+        "startChar": 12,
+        "endLine": 213,
+        "endChar": 62
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73e46551_07c29a16",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "can you add a comment on why we check for needVerify and PopupImmediately flags to show the NI dialog?",
+      "range": {
+        "startLine": 214,
+        "startChar": 12,
+        "endLine": 214,
+        "endChar": 56
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73e46551_c7f2727a",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "should this comment be placed before line 212?",
+      "range": {
+        "startLine": 224,
+        "startChar": 5,
+        "endLine": 225,
+        "endChar": 31
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73e46551_27d99e06",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "is it important to know which flag was actually true?",
+      "range": {
+        "startLine": 227,
+        "startChar": 35,
+        "endLine": 227,
+        "endChar": 86
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3541db2_ec1ebff9",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "the log is repetitive given line 227",
+      "range": {
+        "startLine": 229,
+        "startChar": 16,
+        "endLine": 229,
+        "endChar": 72
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73e46551_87d6aad2",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "should this be Log.e instead?",
+      "range": {
+        "startLine": 233,
+        "startChar": 16,
+        "endLine": 233,
+        "endChar": 20
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73e46551_67d3a6e4",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "typo enabled",
+      "range": {
+        "startLine": 239,
+        "startChar": 46,
+        "endLine": 239,
+        "endChar": 54
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33ee6d35_a5164a1f",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "can this throw? and if so, can we handle it?",
+      "range": {
+        "startLine": 245,
+        "startChar": 12,
+        "endLine": 245,
+        "endChar": 32
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73e46551_e70176a2",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "typo emergency",
+      "range": {
+        "startLine": 254,
+        "startChar": 50,
+        "endLine": 254,
+        "endChar": 60
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33ee6d35_050c5611",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "(nit) can you store this in a local before using it for the condition?",
+      "range": {
+        "startLine": 258,
+        "startChar": 12,
+        "endLine": 258,
+        "endChar": 56
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3541db2_2c05b7a0",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "same here, this log is redundant given line 259",
+      "range": {
+        "startLine": 262,
+        "startChar": 16,
+        "endLine": 262,
+        "endChar": 57
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33ee6d35_059e1659",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "you don\u0027t need this, PhoneNumberUtils.isEmergencyNumber() handles null strings",
+      "range": {
+        "startLine": 438,
+        "startChar": 17,
+        "endLine": 442,
+        "endChar": 18
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73e46551_87634a6a",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "use pascal case notation: phoneNumber",
+      "range": {
+        "startLine": 444,
+        "startChar": 24,
+        "endLine": 444,
+        "endChar": 35
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3541db2_8c25cb33",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "don\u0027t do this, implement a proper singleton pattern for the object if you need it, see my comments in GpsNetInitiatedHandler.java",
+      "range": {
+        "startLine": 447,
+        "startChar": 21,
+        "endLine": 447,
+        "endChar": 62
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3541db2_4c8b53d2",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "can you just extract the flag inlined in here? so you avoid having a member field at all?",
+      "range": {
+        "startLine": 562,
+        "startChar": 48,
+        "endLine": 562,
+        "endChar": 64
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3541db2_6c888fd4",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-08-29T00:40:31Z",
+      "side": 1,
+      "message": "don\u0027t do this, you have a reference to the object you just created",
+      "range": {
+        "startLine": 571,
+        "startChar": 34,
+        "endLine": 571,
+        "endChar": 38
+      },
+      "revId": "0b3ac66dd012fbc878dcc974d9c5284e3c14cade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
