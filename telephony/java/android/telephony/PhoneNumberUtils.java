@@ -804,6 +804,32 @@ public class PhoneNumberUtils
      */
     public static String
     calledPartyBCDToString (byte[] bytes, int offset, int length) {
+        return calledPartyBCDToString (bytes, offset, length, false);
+    }
+
+    /**
+     *  3GPP TS 24.008 10.5.4.7
+     *  Called Party BCD Number
+     *
+     *  See Also TS 51.011 10.5.1 "dialing number/ssc string"
+     *  and TS 11.11 "10.3.1 EF adn (Abbreviated dialing numbers)"
+     *
+     * @param bytes the data buffer
+     * @param offset should point to the TOA (aka. TON/NPI) octet after the length byte
+     * @param length is the number of bytes including TOA byte
+     *                and must be at least 2
+     * @param smsBcdEncoded true if following sms BCD encoding according to:
+     *                 ETSI TS 123 040 V9.3.0, Section: 9.1.2.3 Semi-octet representation
+     *
+     * @return partial string on invalid decode
+     *
+     * FIXME(mkf) support alphanumeric address type
+     *  currently implemented in SMSMessage.getAddress()
+     *
+     * @hide
+     */
+    public static String
+    calledPartyBCDToString (byte[] bytes, int offset, int length, boolean smsBcdEncoded) {
         boolean prependPlus = false;
         StringBuilder ret = new StringBuilder(1 + length * 2);
 
@@ -816,8 +842,13 @@ public class PhoneNumberUtils
             prependPlus = true;
         }
 
-        internalCalledPartyBCDFragmentToString(
-                ret, bytes, offset + 1, length - 1);
+        if (smsBcdEncoded) {
+            internalCalledPartySMSBCDFragmentToString(
+                    ret, bytes, offset + 1, length - 1);
+        } else {
+            internalCalledPartyBCDFragmentToString(
+                    ret, bytes, offset + 1, length - 1);
+        }
 
         if (prependPlus && ret.length() == 0) {
             // If the only thing there is a prepended plus, return ""
@@ -902,6 +933,33 @@ public class PhoneNumberUtils
         return ret.toString();
     }
 
+    private static void internalCalledPartySMSBCDFragmentToString(
+            StringBuilder sb, byte[] bytes, int offset, int length) {
+
+        for (int i = offset; i < length + offset; i++) {
+            byte b;
+            char c;
+
+            c = bcdToCharSMS((byte) (bytes[i] & 0xf));
+
+            if (c != 0) {
+                sb.append(c);
+            }
+
+            b = (byte) ((bytes[i] >> 4) & 0xf);
+
+            if (b == 0xf && i + 1 == length + offset) {
+                //ignore final 0xf
+                break;
+            }
+
+            c = bcdToCharSMS(b);
+            if (c != 0) {
+                sb.append(c);
+            }
+        }
+    }
+
     private static void
     internalCalledPartyBCDFragmentToString(
         StringBuilder sb, byte [] bytes, int offset, int length) {
@@ -952,6 +1010,22 @@ public class PhoneNumberUtils
         internalCalledPartyBCDFragmentToString(ret, bytes, offset, length);
 
         return ret.toString();
+    }
+
+    /** returns 0 on invalid value */
+    private static char
+    bcdToCharSMS(byte b) {
+        if (b < 0xa) {
+            return (char)('0' + b);
+        } else switch (b) {
+            case 0xa: return '*';
+            case 0xb: return '#';
+            case 0xc: return 'a';
+            case 0xd: return 'b';
+            case 0xe: return 'c';
+
+            default: return 0;
+        }
     }
 
     /** returns 0 on invalid value */

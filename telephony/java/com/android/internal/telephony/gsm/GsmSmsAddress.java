@@ -72,7 +72,7 @@ public class GsmSmsAddress extends SmsAddress {
                 origBytes[length - 1] |= 0xf0;
             }
             address = PhoneNumberUtils.calledPartyBCDToString(origBytes,
-                    OFFSET_TOA, length - OFFSET_TOA);
+                    OFFSET_TOA, length - OFFSET_TOA, true);
 
             // And restore origBytes
             origBytes[length - 1] = lastByte;
