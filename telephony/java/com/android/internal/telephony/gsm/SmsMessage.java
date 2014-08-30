@@ -17,6 +17,7 @@
 package com.android.internal.telephony.gsm;
 
 import android.telephony.PhoneNumberUtils;
+import android.telephony.PhoneNumberUtils.BCDExtendedType;
 import android.text.format.Time;
 import android.telephony.Rlog;
 import android.content.res.Resources;
@@ -536,7 +537,7 @@ public class SmsMessage extends SmsMessageBase {
                 // SC address
                 try {
                     ret = PhoneNumberUtils
-                            .calledPartyBCDToString(mPdu, mCur, len);
+                            .calledPartyBCDToString(mPdu, mCur, len, BCDExtendedType.CALLED_PARTY);
                 } catch (RuntimeException tr) {
                     Rlog.d(LOG_TAG, "invalid SC address: ", tr);
                     ret = null;

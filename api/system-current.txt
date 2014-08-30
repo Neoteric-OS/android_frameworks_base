@@ -43219,8 +43219,8 @@ package android.telephony {
   public class PhoneNumberUtils {
     ctor public PhoneNumberUtils();
     method public static void addTtsSpan(android.text.Spannable, int, int);
-    method public static java.lang.String calledPartyBCDFragmentToString(byte[], int, int);
-    method public static java.lang.String calledPartyBCDToString(byte[], int, int);
+    method public static deprecated java.lang.String calledPartyBCDFragmentToString(byte[], int, int);
+    method public static deprecated java.lang.String calledPartyBCDToString(byte[], int, int);
     method public static boolean compare(java.lang.String, java.lang.String);
     method public static boolean compare(android.content.Context, java.lang.String, java.lang.String);
     method public static java.lang.String convertKeypadLettersToDigits(java.lang.String);
@@ -43253,7 +43253,7 @@ package android.telephony {
     method public static byte[] networkPortionToCalledPartyBCD(java.lang.String);
     method public static byte[] networkPortionToCalledPartyBCDWithLength(java.lang.String);
     method public static java.lang.String normalizeNumber(java.lang.String);
-    method public static byte[] numberToCalledPartyBCD(java.lang.String);
+    method public static deprecated byte[] numberToCalledPartyBCD(java.lang.String);
     method public static java.lang.String replaceUnicodeDigits(java.lang.String);
     method public static java.lang.String stringFromStringAndTOA(java.lang.String, int);
     method public static java.lang.String stripSeparators(java.lang.String);
@@ -43267,6 +43267,13 @@ package android.telephony {
     field public static final int TOA_Unknown = 129; // 0x81
     field public static final char WAIT = 59; // 0x003b ';'
     field public static final char WILD = 78; // 0x004e 'N'
+  }
+
+  public static final class PhoneNumberUtils.BCDExtendedType extends java.lang.Enum {
+    method public static android.telephony.PhoneNumberUtils.BCDExtendedType valueOf(java.lang.String);
+    method public static final android.telephony.PhoneNumberUtils.BCDExtendedType[] values();
+    enum_constant public static final android.telephony.PhoneNumberUtils.BCDExtendedType CALLED_PARTY;
+    enum_constant public static final android.telephony.PhoneNumberUtils.BCDExtendedType EF_ADN;
   }
 
   public class PhoneStateListener {
