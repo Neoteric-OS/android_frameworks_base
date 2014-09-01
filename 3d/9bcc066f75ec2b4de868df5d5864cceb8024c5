@@ -1,0 +1,8 @@
+Code-Review+1: Richard Coles <torne@google.com>
+Verified+1: Deckard Autoverifier <deckard@android.com>
+Code-Review+2: Selim Gurun <sgurun@google.com>
+Submitted-by: Marcin Kosiba <mkosiba@google.com>
+Submitted-at: Mon, 01 Sep 2014 08:48:48 +0000
+Reviewed-on: https://android-review.googlesource.com/103380
+Project: platform/frameworks/base
+Branch: refs/heads/master
