@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d371918d_283a3300",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-09-02T21:09:24Z",
+      "side": 1,
+      "message": "this is not needed",
+      "range": {
+        "startLine": 182,
+        "startChar": 61,
+        "endLine": 182,
+        "endChar": 64
+      },
+      "revId": "d47e2bc853f0501ab889d2d27bda7dbef52170a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d371918d_68342b10",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-09-02T21:09:24Z",
+      "side": 1,
+      "message": "should we remove this?",
+      "range": {
+        "startLine": 185,
+        "startChar": 20,
+        "endLine": 185,
+        "endChar": 59
+      },
+      "revId": "d47e2bc853f0501ab889d2d27bda7dbef52170a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f374d57c_eff11dfd",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-09-02T21:09:24Z",
+      "side": 1,
+      "message": "(nit) don\u0027t abbreviate",
+      "range": {
+        "startLine": 226,
+        "startChar": 44,
+        "endLine": 226,
+        "endChar": 49
+      },
+      "revId": "d47e2bc853f0501ab889d2d27bda7dbef52170a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d371918d_0349d879",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-09-02T21:09:24Z",
+      "side": 1,
+      "message": "isn\u0027t this redundant?",
+      "range": {
+        "startLine": 273,
+        "startChar": 71,
+        "endLine": 273,
+        "endChar": 87
+      },
+      "revId": "d47e2bc853f0501ab889d2d27bda7dbef52170a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d371918d_8335e8ec",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1034489
+      },
+      "writtenOn": "2014-09-02T21:09:24Z",
+      "side": 1,
+      "message": "should this be sulpESProperty? if you are in the catch statement, then isSuplEsEnabled was not set",
+      "range": {
+        "startLine": 534,
+        "startChar": 57,
+        "endLine": 534,
+        "endChar": 72
+      },
+      "revId": "d47e2bc853f0501ab889d2d27bda7dbef52170a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
