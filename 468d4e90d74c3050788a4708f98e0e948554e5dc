@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10523f23_4071725b",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1036868
+      },
+      "writtenOn": "2014-09-03T23:09:58Z",
+      "side": 1,
+      "message": "How are you going to handle the carrier-specific override? the SUPL_ES entry may only be available much later (after SIM card is ready).",
+      "range": {
+        "startLine": 539,
+        "startChar": 48,
+        "endLine": 539,
+        "endChar": 63
+      },
+      "revId": "468d4e90d74c3050788a4708f98e0e948554e5dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
