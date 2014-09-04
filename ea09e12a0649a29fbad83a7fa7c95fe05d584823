@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "10807fc3_939b3321",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1049138
+      },
+      "writtenOn": "2014-09-04T20:23:42Z",
+      "side": 1,
+      "message": "This onReceive() will be called only when there is a out going call happens. After we parse out the dialing number, this variable is getting rest. \n\nEmergency callback mode will be checked by line 267:\nBoolean.parseBoolean(SystemProperties.get(TelephonyProperties.PROPERTY_INECM_MODE));",
+      "parentUuid": "50583741_99a0fc7d",
+      "range": {
+        "startLine": 146,
+        "startChar": 16,
+        "endLine": 146,
+        "endChar": 30
+      },
+      "revId": "ea09e12a0649a29fbad83a7fa7c95fe05d584823",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d07987b6_23c454da",
         "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "30e023af_7832157c",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1049138
+      },
+      "writtenOn": "2014-09-04T20:23:42Z",
+      "side": 1,
+      "message": "It should be false and is corrected in the next patch.\n\nThe checker decides which function it is going to call.\nIf mIsSuplEsEnabled is false, handleNi() will be called for legacy behavior and acceptance behavior. If mIsSuplEsEnabled is true, handleNiInEs() will be call to see if we should deny some cases.",
+      "parentUuid": "d07987b6_23c454da",
+      "range": {
+        "startLine": 207,
+        "startChar": 32,
+        "endLine": 207,
+        "endChar": 36
+      },
+      "revId": "ea09e12a0649a29fbad83a7fa7c95fe05d584823",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30e023af_4fbc2dc6",
         "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
         "patchSetId": 9
@@ -59,6 +107,30 @@
       "writtenOn": "2014-09-04T18:19:04Z",
       "side": 1,
       "message": "I found the comment and the overall logic is quite confusing here. Do you mean you won\u0027t ignore emergency SUPL INIT when ES bit is off and UE is not in emergency?",
+      "range": {
+        "startLine": 272,
+        "startChar": 0,
+        "endLine": 272,
+        "endChar": 64
+      },
+      "revId": "ea09e12a0649a29fbad83a7fa7c95fe05d584823",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50dbd705_d69f54d9",
+        "filename": "location/java/com/android/internal/location/GpsNetInitiatedHandler.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1049138
+      },
+      "writtenOn": "2014-09-04T20:23:42Z",
+      "side": 1,
+      "message": "Enriched the comments in next patch as followed: \n        \n/*\n1. When SUPL ES bit is off and UE is not in emergency mode: Call handleNi() to do legacy behavior.\n\n2. When SUPL ES bit is on and UE is in emergency mode: Call handleNi() to do acceptance behavior.\n\n3. When SUPL ES bit is off but UE is in emergency mode: Ignore the emergency SUPL INIT.\n\n4. When SUPL ES bit is on but UE is not in emergency mode: Ignore the emergency SUPL INIT.\n*/",
+      "parentUuid": "30e023af_4fbc2dc6",
       "range": {
         "startLine": 272,
         "startChar": 0,
