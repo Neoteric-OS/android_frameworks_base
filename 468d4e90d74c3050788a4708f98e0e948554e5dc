@@ -22,6 +22,30 @@
       "revId": "468d4e90d74c3050788a4708f98e0e948554e5dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f04e8b81_c23563ed",
+        "filename": "services/java/com/android/server/location/GpsLocationProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1010570
+      },
+      "writtenOn": "2014-09-04T01:14:44Z",
+      "side": 1,
+      "message": "Good catch.  Added setSuplEsEnablement(boolean) in the next patchset.  Can you call this when reconfiguration is to be called?",
+      "parentUuid": "10523f23_4071725b",
+      "range": {
+        "startLine": 539,
+        "startChar": 48,
+        "endLine": 539,
+        "endChar": 63
+      },
+      "revId": "468d4e90d74c3050788a4708f98e0e948554e5dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
