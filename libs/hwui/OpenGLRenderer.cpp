@@ -2239,7 +2239,15 @@ status_t OpenGLRenderer::drawBitmapMesh(SkBitmap* bitmap, int meshWidth, int mes
 
     const uint32_t count = meshWidth * meshHeight * 6;
 
-    ColorTextureVertex mesh[count];
+    // ColorTextureVertex is not a POD because it has a base class.
+    // Clang does not allow variable length array of non-POD element type.
+    // Use a simple class object to delete the dynamically allocated mesh.
+    struct MeshAllocator {
+        ColorTextureVertex* mesh;
+        MeshAllocator(uint32_t count) { mesh = new ColorTextureVertex[count]; }
+        ~MeshAllocator() { delete [] mesh; }
+    } temp(count);
+    ColorTextureVertex* mesh = temp.mesh;
     ColorTextureVertex* vertex = mesh;
 
     bool cleanupColors = false;
