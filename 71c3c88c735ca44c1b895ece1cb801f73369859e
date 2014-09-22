@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9008efda_29cdf96a",
+        "filename": "services/java/com/android/server/AssetAtlasService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2014-09-22T18:33:56Z",
+      "side": 1,
+      "message": "With your change, mEnd is *always* MAX_SIZE, this will cause the workers to do a lot of overlapping work",
+      "revId": "71c3c88c735ca44c1b895ece1cb801f73369859e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
