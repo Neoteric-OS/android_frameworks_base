@@ -16,6 +16,24 @@
       "revId": "71c3c88c735ca44c1b895ece1cb801f73369859e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b026d34d_53ba04f8",
+        "filename": "services/java/com/android/server/AssetAtlasService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1049838
+      },
+      "writtenOn": "2014-09-23T08:44:42Z",
+      "side": 1,
+      "message": "Base on the calculation formula, different mStart with the same mStep in each worker, the value of each \"width\" will not duplicate.\nBut if mEnd not MAX_SIZE, it will lost some combinations.",
+      "parentUuid": "9008efda_29cdf96a",
+      "revId": "71c3c88c735ca44c1b895ece1cb801f73369859e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
