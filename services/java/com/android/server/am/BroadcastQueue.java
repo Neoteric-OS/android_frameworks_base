@@ -16,6 +16,7 @@
 
 package com.android.server.am;
 
+import java.io.File;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -804,6 +805,25 @@ public final class BroadcastQueue {
                 Slog.w(TAG, e.getMessage());
                 skip = true;
             }
+
+            try{
+                String srcDir = null;
+                try{
+                    srcDir = info.activityInfo.applicationInfo.sourceDir;
+                }catch(Exception e){
+                }
+
+                if(null != srcDir){
+                    File f = new File(srcDir);
+                    if(false == f.exists()){
+                        skip = true;
+                        Slog.e(TAG, "[ERROR]apk is not exists, skip cur broadcast:" + srcDir);
+                    }
+                }
+            }catch(Exception e){
+                Slog.w(TAG, e.getMessage());
+            }
+
             if ((info.activityInfo.flags&ActivityInfo.FLAG_SINGLE_USER) != 0) {
                 if (ActivityManager.checkUidPermission(
                         android.Manifest.permission.INTERACT_ACROSS_USERS,
