@@ -16,6 +16,24 @@
       "revId": "3e9774aba950e25cfba8a428dc9129e698d4b965",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0150830_33fb688c",
+        "filename": "media/java/android/media/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4232,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2014-09-30T18:29:17Z",
+      "side": 1,
+      "message": "Do you see the listener for orientation being called with screen off? I don\u0027t.",
+      "parentUuid": "101b206c_7cbf6d8a",
+      "revId": "3e9774aba950e25cfba8a428dc9129e698d4b965",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
