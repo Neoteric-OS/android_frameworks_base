@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "504f587e_256b2e13",
+        "filename": "core/java/android/util/MathUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-10-01T13:20:20Z",
+      "side": 1,
+      "message": "Thank god this wasn\u0027t made public. It\u0027s generally quite useless.",
+      "revId": "33253a4baa6279f81a73425b49dfb6abe5f5416e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70529c24_068f1aba",
+        "filename": "core/java/android/util/MathUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-10-01T13:20:20Z",
+      "side": 1,
+      "message": "sigh....",
+      "revId": "33253a4baa6279f81a73425b49dfb6abe5f5416e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
