@@ -1,0 +1,51 @@
+Automatic tests for Runtime Resource Overlay (RRO)
+
+
+Host side:
+
+- run.sh
+    Entry point for host side interaction with tests. Execute 'run.sh -r' to
+    build, sync and run all tests, or 'run -h' for a full list of options.
+
+
+Device side:
+
+The test suite is installed in /data/nativetest/rro_tests along with auxiliary
+data (i.e. a bunch of apks).
+
+- RROBase.cpp
+    Base class for all RRO tests. Contains common helper functions.
+
+- RRONativeTests.cpp
+    Tests running exclusively in native. Quick to run. Verifies the actual
+    RRO mechanism. If the native tests do not pass, neither will the Java
+    tests.
+
+- RROJavaTests.cpp
+    Tests implemented in Java. Takes a few minutes to run. Verifies that the
+    Android framework correctly loads both target and overlay packages.
+
+    The Java tests work with three configurations of overlay packages. The
+    configurations are Setup0 (no overlays), Setup1 (one overlay) and Setup2
+    (two overlays).
+
+    The Java tests follow this outline:
+
+    - Android is stopped ('stop').
+
+    - The file system is populated with a suitable set of overlays (copied from
+      /data/nativetests/rro_tests/data).
+
+    - Android is started ('start').
+
+    - The Java instrumentation tests are executed ('am instrument -e setup X').
+      The currently used setup is passed as a parameter, and will be read in
+      Java by inspecting getArguments().
+
+    - The instrumentation output is parsed.
+
+    - Android is stopped ('stop').
+
+    - The test overlays are removed.
+
+    - Android is started ('start').

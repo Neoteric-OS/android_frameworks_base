@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.rrotests">
+    <uses-permission android:name="android.permission.RUN_INSTRUMENTATION"/>
+    <application>
+        <uses-library android:name="android.test.runner"/>
+    </application>
+    <instrumentation android:name="com.android.rrotests.TestRunner"
+        android:targetPackage="com.android.rrotests"
+        android:label="Runtime Resource Overlay tests"/>
+</manifest>
