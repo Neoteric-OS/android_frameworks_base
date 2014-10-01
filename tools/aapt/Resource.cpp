@@ -24,7 +24,8 @@
 #  define ZD_TYPE long
 #endif
 
-#define NOISY(x) // x
+// Set to true for noisy debug output.
+static const bool kIsDebug = false;
 
 // Number of threads to use for preprocessing images.
 static const size_t MAX_THREADS = 4;
@@ -125,15 +126,17 @@ public:
             String8 leaf(group->getLeaf());
             mLeafName = String8(leaf);
             mParams = file->getGroupEntry().toParams();
-            NOISY(printf("Dir %s: mcc=%d mnc=%d lang=%c%c cnt=%c%c orient=%d ui=%d density=%d touch=%d key=%d inp=%d nav=%d\n",
-                   group->getPath().string(), mParams.mcc, mParams.mnc,
-                   mParams.language[0] ? mParams.language[0] : '-',
-                   mParams.language[1] ? mParams.language[1] : '-',
-                   mParams.country[0] ? mParams.country[0] : '-',
-                   mParams.country[1] ? mParams.country[1] : '-',
-                   mParams.orientation, mParams.uiMode,
-                   mParams.density, mParams.touchscreen, mParams.keyboard,
-                   mParams.inputFlags, mParams.navigation));
+            if (kIsDebug) {
+                printf("Dir %s: mcc=%d mnc=%d lang=%c%c cnt=%c%c orient=%d ui=%d density=%d touch=%d key=%d inp=%d nav=%d\n",
+                        group->getPath().string(), mParams.mcc, mParams.mnc,
+                        mParams.language[0] ? mParams.language[0] : '-',
+                        mParams.language[1] ? mParams.language[1] : '-',
+                        mParams.country[0] ? mParams.country[0] : '-',
+                        mParams.country[1] ? mParams.country[1] : '-',
+                        mParams.orientation, mParams.uiMode,
+                        mParams.density, mParams.touchscreen, mParams.keyboard,
+                        mParams.inputFlags, mParams.navigation);
+            }
             mPath = "res";
             mPath.appendPath(file->getGroupEntry().toDirName(mResType));
             mPath.appendPath(leaf);
@@ -144,7 +147,9 @@ public:
                 return UNKNOWN_ERROR;
             }
 
-            NOISY(printf("file name=%s\n", mBaseName.string()));
+            if (kIsDebug) {
+                printf("file name=%s\n", mBaseName.string());
+            }
 
             return NO_ERROR;
         }
@@ -398,27 +403,35 @@ static void collect_files(const sp<AaptDir>& dir,
 
         if (index < 0) {
             sp<ResourceTypeSet> set = new ResourceTypeSet();
-            NOISY(printf("Creating new resource type set for leaf %s with group %s (%p)\n",
-                    leafName.string(), group->getPath().string(), group.get()));
+            if (kIsDebug) {
+                printf("Creating new resource type set for leaf %s with group %s (%p)\n",
+                        leafName.string(), group->getPath().string(), group.get());
+            }
             set->add(leafName, group);
             resources->add(resType, set);
         } else {
             sp<ResourceTypeSet> set = resources->valueAt(index);
             index = set->indexOfKey(leafName);
             if (index < 0) {
-                NOISY(printf("Adding to resource type set for leaf %s group %s (%p)\n",
-                        leafName.string(), group->getPath().string(), group.get()));
+                if (kIsDebug) {
+                    printf("Adding to resource type set for leaf %s group %s (%p)\n",
+                            leafName.string(), group->getPath().string(), group.get());
+                }
                 set->add(leafName, group);
             } else {
                 sp<AaptGroup> existingGroup = set->valueAt(index);
-                NOISY(printf("Extending to resource type set for leaf %s group %s (%p)\n",
-                        leafName.string(), group->getPath().string(), group.get()));
+                if (kIsDebug) {
+                    printf("Extending to resource type set for leaf %s group %s (%p)\n",
+                            leafName.string(), group->getPath().string(), group.get());
+                }
                 for (size_t j=0; j<files.size(); j++) {
-                    NOISY(printf("Adding file %s in group %s resType %s\n",
-                        files.valueAt(j)->getSourceFile().string(),
-                        files.keyAt(j).toDirName(String8()).string(),
-                        resType.string()));
-                    status_t err = existingGroup->addFile(files.valueAt(j));
+                    if (kIsDebug) {
+                        printf("Adding file %s in group %s resType %s\n",
+                                files.valueAt(j)->getSourceFile().string(),
+                                files.keyAt(j).toDirName(String8()).string(),
+                                resType.string());
+                    }
+                    existingGroup->addFile(files.valueAt(j));
                 }
             }
         }
@@ -433,12 +446,16 @@ static void collect_files(const sp<AaptAssets>& ass,
 
     for (int i=0; i<N; i++) {
         sp<AaptDir> d = dirs.itemAt(i);
-        NOISY(printf("Collecting dir #%d %p: %s, leaf %s\n", i, d.get(), d->getPath().string(),
-                d->getLeaf().string()));
+        if (kIsDebug) {
+            printf("Collecting dir #%d %p: %s, leaf %s\n", i, d.get(), d->getPath().string(),
+                    d->getLeaf().string());
+        }
         collect_files(d, resources);
 
         // don't try to include the res dir
-        NOISY(printf("Removing dir leaf %s\n", d->getLeaf().string()));
+        if (kIsDebug) {
+            printf("Removing dir leaf %s\n", d->getLeaf().string());
+        }
         ass->removeDir(d->getLeaf());
     }
 }
@@ -595,11 +612,11 @@ static bool applyFileOverlay(Bundle *bundle,
                 if (bundle->getVerbose()) {
                     printf("trying overlaySet Key=%s\n",overlaySet->keyAt(overlayIndex).string());
                 }
-                size_t baseIndex = UNKNOWN_ERROR;
+                ssize_t baseIndex = UNKNOWN_ERROR;
                 if (baseSet->get() != NULL) {
                     baseIndex = (*baseSet)->indexOfKey(overlaySet->keyAt(overlayIndex));
                 }
-                if (baseIndex < UNKNOWN_ERROR) {
+                if (baseIndex >= 0) {
                     // look for same flavor.  For a given file (strings.xml, for example)
                     // there may be a locale specific or other flavors - we want to match
                     // the same flavor.
@@ -625,10 +642,10 @@ static bool applyFileOverlay(Bundle *bundle,
                     for (size_t overlayGroupIndex = 0;
                             overlayGroupIndex<overlayGroupSize;
                             overlayGroupIndex++) {
-                        size_t baseFileIndex =
+                        ssize_t baseFileIndex =
                                 baseGroup->getFiles().indexOfKey(overlayFiles.
                                 keyAt(overlayGroupIndex));
-                        if (baseFileIndex < UNKNOWN_ERROR) {
+                        if (baseFileIndex >= 0) {
                             if (bundle->getVerbose()) {
                                 printf("found a match (" ZD ") for overlay file %s, for flavor %s\n",
                                         (ZD_TYPE) baseFileIndex,
@@ -734,7 +751,9 @@ static void fullyQualifyClassName(const String8& package, sp<XMLNode> node,
         } else {
             className += name;
         }
-        NOISY(printf("Qualifying class '%s' to '%s'", name.string(), className.string()));
+        if (kIsDebug) {
+            printf("Qualifying class '%s' to '%s'", name.string(), className.string());
+        }
         attr->string.setTo(String16(className));
     }
 }
@@ -802,7 +821,10 @@ status_t massageManifest(Bundle* bundle, sp<XMLNode> root)
         }
         String8 origPackage(attr->string);
         attr->string.setTo(String16(manifestPackageNameOverride));
-        NOISY(printf("Overriding package '%s' to be '%s'\n", origPackage.string(), manifestPackageNameOverride));
+        if (kIsDebug) {
+            printf("Overriding package '%s' to be '%s'\n", origPackage.string(),
+                    manifestPackageNameOverride);
+        }
 
         // Make class names fully qualified
         sp<XMLNode> application = root->getChildElement(String16(), String16("application"));
@@ -898,8 +920,9 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets)
         return err;
     }
 
-    NOISY(printf("Creating resources for package %s\n",
-                 assets->getPackage().string()));
+    if (kIsDebug) {
+        printf("Creating resources for package %s\n", assets->getPackage().string());
+    }
 
     ResourceTable table(bundle, String16(assets->getPackage()));
     err = table.addIncludedResources(bundle, assets);
@@ -907,7 +930,9 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets)
         return err;
     }
 
-    NOISY(printf("Found %d included resource packages\n", (int)table.size()));
+    if (kIsDebug) {
+        printf("Found %d included resource packages\n", (int)table.size());
+    }
 
     // Standard flags for compiled XML and optional UTF-8 encoding
     int xmlFlags = XML_COMPILE_STANDARD_RESOURCE;
@@ -1322,12 +1347,6 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets)
 
         // Read resources back in,
         finalResTable.add(resFile->getData(), resFile->getSize());
-#if 0
-        NOISY(
-              printf("Generated resources:\n");
-              finalResTable.print();
-        )
-#endif
     }
 
     // Perform a basic validation of the manifest file.  This time we
@@ -1975,7 +1994,7 @@ static status_t writeTextLayoutClasses(
                     package16.string(), package16.size(), &typeSpecFlags);
                 //printf("%s:%s/%s: 0x%08x\n", String8(package16).string(),
                 //    String8(attr16).string(), String8(name16).string(), typeSpecFlags);
-                const bool pub = (typeSpecFlags&ResTable_typeSpec::SPEC_PUBLIC) != 0;
+                //const bool pub = (typeSpecFlags&ResTable_typeSpec::SPEC_PUBLIC) != 0;
 
                 fprintf(fp,
                         "int styleable %s_%s %d\n",
@@ -2318,7 +2337,7 @@ addProguardKeepRule(ProguardKeepSet* keep, const String8& inClassName,
 
 void
 addProguardKeepMethodRule(ProguardKeepSet* keep, const String8& memberName,
-        const char* pkg, const String8& srcName, int line)
+        const char* /* pkg */, const String8& srcName, int line)
 {
     String8 rule("-keepclassmembers class * { *** ");
     rule += memberName;
@@ -2640,7 +2659,7 @@ status_t writePathsToFile(const sp<FilePathStore>& files, FILE* fp)
 }
 
 status_t
-writeDependencyPreReqs(Bundle* bundle, const sp<AaptAssets>& assets, FILE* fp, bool includeRaw)
+writeDependencyPreReqs(Bundle* /* bundle */, const sp<AaptAssets>& assets, FILE* fp, bool includeRaw)
 {
     status_t deps = -1;
     deps += writePathsToFile(assets->getFullResPaths(), fp);
