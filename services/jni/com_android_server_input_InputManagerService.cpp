@@ -1369,7 +1369,10 @@ static JNINativeMethod gInputManagerMethods[] = {
         LOG_FATAL_IF(! var, "Unable to find field " fieldName);
 
 int register_android_server_InputManager(JNIEnv* env) {
-    int res = jniRegisterNativeMethods(env, "com/android/server/input/InputManagerService",
+#if ! LOG_NDEBUG
+    int res =
+#endif
+        jniRegisterNativeMethods(env, "com/android/server/input/InputManagerService",
             gInputManagerMethods, NELEM(gInputManagerMethods));
     LOG_FATAL_IF(res < 0, "Unable to register native methods.");
 

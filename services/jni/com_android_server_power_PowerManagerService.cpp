@@ -220,7 +220,10 @@ static JNINativeMethod gPowerManagerServiceMethods[] = {
         LOG_FATAL_IF(! var, "Unable to find field " fieldName);
 
 int register_android_server_PowerManagerService(JNIEnv* env) {
-    int res = jniRegisterNativeMethods(env, "com/android/server/power/PowerManagerService",
+#if ! LOG_NDEBUG
+    int res =
+#endif
+        jniRegisterNativeMethods(env, "com/android/server/power/PowerManagerService",
             gPowerManagerServiceMethods, NELEM(gPowerManagerServiceMethods));
     LOG_FATAL_IF(res < 0, "Unable to register native methods.");
 
