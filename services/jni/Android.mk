@@ -54,6 +54,10 @@ LOCAL_SHARED_LIBRARIES := \
 
 LOCAL_CFLAGS += -DEGL_EGLEXT_PROTOTYPES -DGL_GLEXT_PROTOTYPES -Wall -Werror
 
+# SensorEventConnection::dump overloads BBinder::dump
+# not fixable without changing APIs, so let's not error out
+LOCAL_CLANG_CFLAGS := -Wno-error=overloaded-virtual
+
 LOCAL_MODULE:= libandroid_servers
 
 include $(BUILD_SHARED_LIBRARY)
