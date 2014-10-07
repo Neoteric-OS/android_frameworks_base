@@ -2,10 +2,16 @@ LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
 
+LOCAL_CPP_EXTENSION := .cc
 LOCAL_SRC_FILES:= \
-	app_main.cpp
+	app_main.cc \
+	../../../../art/sigchainlib/sigchain.cc
+
+LOCAL_LDFLAGS := -Wl,--version-script,art/sigchainlib/version-script.txt -Wl,--export-dynamic
+LOCAL_CPPFLAGS := -std=gnu++11
 
 LOCAL_SHARED_LIBRARIES := \
+	libdl \
 	libcutils \
 	libutils \
 	liblog \
@@ -28,8 +34,10 @@ ifeq ($(TARGET_ARCH),arm)
 
 include $(CLEAR_VARS)
 
+LOCAL_CPP_EXTENSION := .cc
 LOCAL_SRC_FILES:= \
-	app_main.cpp
+	app_main.cc \
+	../../../../art/sigchainlib/sigchain.cc
 
 LOCAL_SHARED_LIBRARIES := \
 	libcutils \
@@ -37,6 +45,9 @@ LOCAL_SHARED_LIBRARIES := \
 	liblog \
 	libbinder \
 	libandroid_runtime
+
+LOCAL_LDFLAGS := -ldl -Wl,--version-script,art/sigchainlib/version-script.txt -Wl,--export-dynamic
+LOCAL_CPPFLAGS := -std=gnu++11
 
 LOCAL_MODULE := app_process__asan
 LOCAL_MODULE_TAGS := eng
