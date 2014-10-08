@@ -51,6 +51,24 @@
       "revId": "4c482be2e57c9c95fe085ddb13db49be572d8506",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50c2f81e_cf1ed4fa",
+        "filename": "cmds/app_process/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-10-08T13:29:54Z",
+      "side": 1,
+      "message": "Is that documented somewhere in the form of a comment ? It\u0027ll stop people from having the same thought as I did and wasting time trying it.",
+      "parentUuid": "30e904d0_37b4bff4",
+      "revId": "4c482be2e57c9c95fe085ddb13db49be572d8506",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
