@@ -19587,6 +19587,26 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         needGlobalAttributesUpdate(false);
 
         notifyEnterOrExitForAutoFillIfNeeded(true);
+
+        try {
+            if (!mAttachInfo.mImmediateInputQueried && mContext instanceof android.app.Activity) {
+                android.app.Activity activity = (android.app.Activity)mContext;
+
+                android.content.pm.ActivityInfo ai = activity.getPackageManager().getActivityInfo(
+                    activity.getComponentName(), android.content.pm.PackageManager.GET_META_DATA);
+
+                if (ai != null && ai.metaData != null) {
+                    mAttachInfo.mImmediateInputRequested =
+                        ai.metaData.getBoolean("com.nvidia.immediateInput");
+
+                    Log.d(VIEW_LOG_TAG, "com.nvidia.immediateInput = " + mAttachInfo.mImmediateInputRequested);
+                }
+
+                mAttachInfo.mImmediateInputQueried = true;
+            }
+        } catch(Exception e) {
+            Log.e(VIEW_LOG_TAG, "Exception while trying to query for immediateInput: " + e);
+        }
     }
 
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
@@ -27966,6 +27986,16 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
          * event stream.
          */
         boolean mUnbufferedDispatchRequested;
+
+        /**
+         * Indicates whether the view has requested immediate input dispatching.
+         */
+        boolean mImmediateInputRequested;
+
+        /**
+         * Indicates whether the view has queries for the immmediate input requesting dispatch.
+         */
+        boolean mImmediateInputQueried;
 
         /**
          * Indicates that ViewAncestor should trigger a global layout change
