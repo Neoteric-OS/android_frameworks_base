@@ -37,6 +37,7 @@ import android.app.ResourcesManager;
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.CompatibilityInfo;
@@ -1459,7 +1460,7 @@ public final class ViewRootImpl implements ViewParent,
             mTraversalBarrier = mHandler.getLooper().getQueue().postSyncBarrier();
             mChoreographer.postCallback(
                     Choreographer.CALLBACK_TRAVERSAL, mTraversalRunnable, null);
-            if (!mUnbufferedInputDispatch) {
+            if (!mUnbufferedInputDispatch && !mAttachInfo.mImmediateInputRequested) {
                 scheduleConsumeBatchedInput();
             }
             notifyRendererOfFramePending();
@@ -7283,7 +7284,7 @@ public final class ViewRootImpl implements ViewParent,
 
         @Override
         public void onBatchedInputEventPending() {
-            if (mUnbufferedInputDispatch) {
+            if (mUnbufferedInputDispatch || mAttachInfo.mImmediateInputRequested) {
                 super.onBatchedInputEventPending();
             } else {
                 scheduleConsumeBatchedInput();
