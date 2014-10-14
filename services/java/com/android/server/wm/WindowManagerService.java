@@ -4589,8 +4589,18 @@ public class WindowManagerService extends IWindowManager.Stub
         if (NW > 0) {
             mWindowsChanged = true;
         }
+        int targetDisplayId = Display.DEFAULT_DISPLAY;
+        try {
+            targetDisplayId = mTaskIdToTask.get(token.appWindowToken.groupId).getDisplayContent().getDisplayId();
+        } catch (NullPointerException e) {
+            if (DEBUG_WINDOW_MOVEMENT) Slog.v(TAG, "can't find display of " + token);
+            targetDisplayId = -1;
+        }
         for (int i=0; i<NW; i++) {
             WindowState win = token.windows.get(i);
+            if (targetDisplayId != -1 && win.getDisplayId() != targetDisplayId) {
+                continue;
+            }
             if (DEBUG_WINDOW_MOVEMENT) Slog.v(TAG, "Tmp removing app window " + win);
             win.getWindowList().remove(win);
             int j = win.mChildWindows.size();
