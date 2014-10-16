@@ -1157,9 +1157,6 @@ public class Vpn {
         public void exit() {
             // We assume that everything is reset after stopping the daemons.
             interrupt();
-            for (LocalSocket socket : mSockets) {
-                IoUtils.closeQuietly(socket);
-            }
             agentDisconnect();
             try {
                 mContext.unregisterReceiver(mBroadcastReceiver);
@@ -1408,6 +1405,16 @@ public class Vpn {
             } catch (InterruptedException e) {
                 Log.d(TAG, "interrupted during monitorDaemons(); stopping services");
             } finally {
+                for (LocalSocket socket : mSockets) {
+                    IoUtils.closeQuietly(socket);
+                }
+
+                // This sleep is necessary for racoon to successfully complete sending delete
+                // message to server.
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {}
+
                 for (String daemon : mDaemons) {
                     SystemService.stop(daemon);
                 }
