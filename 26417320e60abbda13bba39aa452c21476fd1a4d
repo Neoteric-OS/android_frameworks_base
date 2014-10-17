@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "908ab09b_2556da9c",
+        "filename": "services/input/EventHub.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1005480
+      },
+      "writtenOn": "2014-10-17T20:03:46Z",
+      "side": 1,
+      "message": "TEMP_FAILURE_RETRY()",
+      "range": {
+        "startLine": 924,
+        "startChar": 10,
+        "endLine": 924,
+        "endChar": 15
+      },
+      "revId": "26417320e60abbda13bba39aa452c21476fd1a4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
