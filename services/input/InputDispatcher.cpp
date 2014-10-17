@@ -3331,7 +3331,9 @@ status_t InputDispatcher::unregisterInputChannelLocked(const sp<InputChannel>& i
     nsecs_t currentTime = now();
     abortBrokenDispatchCycleLocked(currentTime, connection, notify);
 
+    if(!notify) {
     connection->status = Connection::STATUS_ZOMBIE;
+    }
     return OK;
 }
 
@@ -3429,6 +3431,11 @@ void InputDispatcher::doNotifyInputChannelBrokenLockedInterruptible(
         mPolicy->notifyInputChannelBroken(connection->inputWindowHandle);
 
         mLock.lock();
+    }
+
+    ssize_t connectionIndex = getConnectionIndexLocked(connection->inputChannel);
+    if (connectionIndex < 0) {
+        connection->status = Connection::STATUS_ZOMBIE;
     }
 }
 
