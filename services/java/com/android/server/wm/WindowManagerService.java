@@ -4806,6 +4806,7 @@ public class WindowManagerService extends IWindowManager.Stub
                     displayContent.moveHomeStackBox(isHomeStackTask);
                 }
                 stack.moveTaskToTop(task);
+                moveStackWindowsLocked(stack.getDisplayContent());
             }
         } finally {
             Binder.restoreCallingIdentity(origId);
