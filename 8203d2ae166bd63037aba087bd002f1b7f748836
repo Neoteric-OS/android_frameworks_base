@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5e75e92_45261ce3",
+        "filename": "services/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4822,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-10-21T14:19:59Z",
+      "side": 1,
+      "message": "Please move this to TaskRecord, as a new method\n\n  void setSendingToBottom(boolean toBottom).\n\nAlso, don\u0027t use the : operator as it entails creating a new Iterator object. Just use for (int appTokenNdx \u003d ...; ; )",
+      "range": {
+        "startLine": 4820,
+        "startChar": 0,
+        "endLine": 4822,
+        "endChar": 21
+      },
+      "revId": "8203d2ae166bd63037aba087bd002f1b7f748836",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
