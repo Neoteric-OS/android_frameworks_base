@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "150232f8_30cd8e3f",
+        "filename": "libs/androidfw/AssetManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-10-22T06:34:59Z",
+      "side": 1,
+      "message": "I was just making this suggestion on PS1, but you read my mind. :)",
+      "revId": "10cc791acb123124c5ed876a6c8fc51996f1ced1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "151b126c_625fc8bc",
+        "filename": "libs/androidfw/BackupHelpers.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-10-22T06:34:59Z",
+      "side": 1,
+      "message": "Perhaps kIsDebug to be consistent with the rest of the change?",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 24
+      },
+      "revId": "10cc791acb123124c5ed876a6c8fc51996f1ced1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "150232f8_d0db0af9",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3108,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-10-22T06:34:59Z",
+      "side": 1,
+      "message": "Remove trailing whitespace.",
+      "revId": "10cc791acb123124c5ed876a6c8fc51996f1ced1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "354c968a_6dfd8d7f",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3296,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-10-22T06:34:59Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be something more like \"kDebugLoadTableSuperNoisy\" instead?",
+      "range": {
+        "startLine": 3296,
+        "startChar": 8,
+        "endLine": 3296,
+        "endChar": 29
+      },
+      "revId": "10cc791acb123124c5ed876a6c8fc51996f1ced1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "354c968a_4d02d1e3",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3594,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-10-22T06:34:59Z",
+      "side": 1,
+      "message": "Whitespace",
+      "revId": "10cc791acb123124c5ed876a6c8fc51996f1ced1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
