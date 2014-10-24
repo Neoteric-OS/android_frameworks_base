@@ -190,6 +190,93 @@ nContextFinish(JNIEnv *_env, jobject _this, jlong con)
     rsContextFinish((RsContext)con);
 }
 
+static jlong
+nClosureCreate(JNIEnv *_env, jobject _this, jlong con, jlong kernelID,
+               jlong returnValue, jlongArray fieldIDArray,
+               jlongArray valueArray, jintArray sizeArray,
+               jlongArray depClosureArray, jlongArray depFieldIDArray) {
+  jlong* jFieldIDs = _env->GetLongArrayElements(fieldIDArray, nullptr);
+  jsize fieldIDs_length = _env->GetArrayLength(fieldIDArray);
+  RsScriptFieldID* fieldIDs =
+      (RsScriptFieldID*)alloca(sizeof(RsScriptFieldID) * fieldIDs_length);
+  for (int i = 0; i< fieldIDs_length; i++) {
+    fieldIDs[i] = (RsScriptFieldID)jFieldIDs[i];
+  }
+
+  jlong* jValues = _env->GetLongArrayElements(valueArray, nullptr);
+  jsize values_length = _env->GetArrayLength(valueArray);
+  uintptr_t* values = (uintptr_t*)alloca(sizeof(uintptr_t) * values_length);
+  for (int i = 0; i < values_length; i++) {
+    values[i] = (uintptr_t)jValues[i];
+  }
+
+  jint* sizes = _env->GetIntArrayElements(sizeArray, nullptr);
+  jsize sizes_length = _env->GetArrayLength(sizeArray);
+
+  jlong* jDepClosures =
+      _env->GetLongArrayElements(depClosureArray, nullptr);
+  jsize depClosures_length = _env->GetArrayLength(depClosureArray);
+  RsClosure* depClosures =
+      (RsClosure*)alloca(sizeof(RsClosure) * depClosures_length);
+  for (int i = 0; i < depClosures_length; i++) {
+    depClosures[i] = (RsClosure)jDepClosures[i];
+  }
+
+  jlong* jDepFieldIDs =
+      _env->GetLongArrayElements(depFieldIDArray, nullptr);
+  jsize depFieldIDs_length = _env->GetArrayLength(depFieldIDArray);
+  RsScriptFieldID* depFieldIDs =
+      (RsScriptFieldID*)alloca(sizeof(RsScriptFieldID) * depFieldIDs_length);
+  for (int i = 0; i < depClosures_length; i++) {
+    depFieldIDs[i] = (RsClosure)jDepFieldIDs[i];
+  }
+
+  return (jlong)(uintptr_t)rsClosureCreate(
+      (RsContext)con, (RsScriptKernelID)kernelID, (RsAllocation)returnValue,
+      fieldIDs, (size_t)fieldIDs_length, values, (size_t)values_length,
+      (int*)sizes, (size_t)sizes_length,
+      depClosures, (size_t)depClosures_length,
+      depFieldIDs, (size_t)depFieldIDs_length);
+}
+
+static void
+nClosureEval(JNIEnv *_env, jobject _this, jlong con, jlong closureID) {
+  rsClosureEval((RsContext)con, (RsClosure)closureID);
+}
+
+static void
+nClosureSetArg(JNIEnv *_env, jobject _this, jlong con, jlong closureID,
+               jint index, jlong value, jint size) {
+  rsClosureSetArg((RsContext)con, (RsClosure)closureID, index,
+                  (uintptr_t)value, size);
+}
+
+static void
+nClosureSetGlobal(JNIEnv *_env, jobject _this, jlong con, jlong closureID,
+                  jlong fieldID, jlong value, jint size) {
+  rsClosureSetGlobal((RsContext)con, (RsClosure)closureID,
+                     (RsScriptFieldID)fieldID, (uintptr_t)value, size);
+}
+
+static long
+nScriptGroup2Create(JNIEnv *_env, jobject _this, jlong con,
+                    jlongArray closureArray) {
+  jlong* jClosures = _env->GetLongArrayElements(closureArray, nullptr);
+  jsize numClosures = _env->GetArrayLength(closureArray);
+  RsClosure* closures = (RsClosure*)alloca(sizeof(RsClosure) * numClosures);
+  for (int i = 0; i < numClosures; i++) {
+    closures[i] = (RsClosure)jClosures[i];
+  }
+
+  return (jlong)(uintptr_t)rsScriptGroup2Create((RsContext)con, closures,
+                                                numClosures);
+}
+
+static void
+nScriptGroup2Execute(JNIEnv *_env, jobject _this, jlong con, jlong groupID) {
+  rsScriptGroup2Execute((RsContext)con, (RsScriptGroup2)groupID);
+}
+
 static void
 nAssignName(JNIEnv *_env, jobject _this, jlong con, jlong obj, jbyteArray str)
 {
@@ -1630,6 +1717,10 @@ static JNINativeMethod methods[] = {
 {"rsnContextPause",                  "(J)V",                                  (void*)nContextPause },
 {"rsnContextResume",                 "(J)V",                                  (void*)nContextResume },
 {"rsnContextSendMessage",            "(JI[I)V",                               (void*)nContextSendMessage },
+{"rsnClosureCreate",                 "(JJJ[J[J[I[J[J)J",                      (void*)nClosureCreate },
+{"rsnClosureEval",                   "(JJ)V",                                 (void*)nClosureEval },
+{"rsnClosureSetArg",                 "(JJIJI)V",                              (void*)nClosureSetArg },
+{"rsnClosureSetGlobal",              "(JJJJI)V",                              (void*)nClosureSetGlobal },
 {"rsnAssignName",                    "(JJ[B)V",                               (void*)nAssignName },
 {"rsnGetName",                       "(JJ)Ljava/lang/String;",                (void*)nGetName },
 {"rsnObjDestroy",                    "(JJ)V",                                 (void*)nObjDestroy },
@@ -1704,9 +1795,11 @@ static JNINativeMethod methods[] = {
 {"rsnScriptKernelIDCreate",          "(JJII)J",                               (void*)nScriptKernelIDCreate },
 {"rsnScriptFieldIDCreate",           "(JJI)J",                                (void*)nScriptFieldIDCreate },
 {"rsnScriptGroupCreate",             "(J[J[J[J[J[J)J",                        (void*)nScriptGroupCreate },
+{"rsnScriptGroup2Create",            "(J[J)J",                                (void*)nScriptGroup2Create },
 {"rsnScriptGroupSetInput",           "(JJJJ)V",                               (void*)nScriptGroupSetInput },
 {"rsnScriptGroupSetOutput",          "(JJJJ)V",                               (void*)nScriptGroupSetOutput },
 {"rsnScriptGroupExecute",            "(JJ)V",                                 (void*)nScriptGroupExecute },
+{"rsnScriptGroup2Execute",           "(JJ)V",                                 (void*)nScriptGroup2Execute },
 
 {"rsnProgramStoreCreate",            "(JZZZZZZIII)J",                         (void*)nProgramStoreCreate },
 
