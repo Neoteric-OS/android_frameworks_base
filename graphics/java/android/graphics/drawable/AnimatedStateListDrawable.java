@@ -215,7 +215,9 @@ public class AnimatedStateListDrawable extends StateListDrawable {
             transition = new AnimationDrawableTransition((AnimationDrawable) d, reversed);
         } else if (d instanceof AnimatedVectorDrawable) {
             final boolean reversed = state.isTransitionReversed(fromId, toId);
-            transition = new AnimatedVectorDrawableTransition((AnimatedVectorDrawable) d, reversed);
+            final boolean reversible = state.isTransitionReversible(fromId, toId);
+            transition = new AnimatedVectorDrawableTransition((AnimatedVectorDrawable) d, reversed,
+                    reversible);
         } else if (d instanceof Animatable) {
             transition = new AnimatableTransition((Animatable) d);
         } else {
@@ -303,15 +305,18 @@ public class AnimatedStateListDrawable extends StateListDrawable {
     private static class AnimatedVectorDrawableTransition  extends Transition {
         private final AnimatedVectorDrawable mAvd;
         private final boolean mReversed;
+        private final boolean mReversible;
 
-        public AnimatedVectorDrawableTransition(AnimatedVectorDrawable avd, boolean reversed) {
+        public AnimatedVectorDrawableTransition(AnimatedVectorDrawable avd, boolean reversed,
+                boolean reversible) {
             mAvd = avd;
             mReversed = reversed;
+            mReversible = reversible;
         }
 
         @Override
         public boolean canReverse() {
-            return mAvd.canReverse();
+            return mReversible && mAvd.canReverse();
         }
 
         @Override
@@ -537,7 +542,7 @@ public class AnimatedStateListDrawable extends StateListDrawable {
                 mTransitions.append(keyToFrom, pos | (1L << REVERSE_SHIFT));
             }
 
-            return addChild(anim);
+            return pos;
         }
 
         int addStateSet(@NonNull int[] stateSet, @NonNull Drawable drawable, int id) {
@@ -567,6 +572,11 @@ public class AnimatedStateListDrawable extends StateListDrawable {
         boolean isTransitionReversed(int fromId, int toId) {
             final long keyFromTo = generateTransitionKey(fromId, toId);
             return (mTransitions.get(keyFromTo, -1) >> REVERSE_SHIFT & REVERSE_MASK) == 1;
+        }
+
+        boolean isTransitionReversible(int fromId, int toId) {
+            final int index = indexOfTransition(fromId, toId);
+            return index != -1 && index == indexOfTransition(toId, fromId);
         }
 
         @Override
