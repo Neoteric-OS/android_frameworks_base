@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "354d76af_22a74aa0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-10-29T13:19:53Z",
+      "side": 1,
+      "message": "I missed this typo.... this should have been \"bridge\"",
+      "revId": "6a4d2369e5493cea86817634eceb0be46ba7d7a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
