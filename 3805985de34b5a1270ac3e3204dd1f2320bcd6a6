@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75ae0e67_fa91115c",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-10-29T12:40:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55abca56_8e13ffca",
+      "revId": "3805985de34b5a1270ac3e3204dd1f2320bcd6a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "354d76af_c266660f",
         "filename": "core/jni/com_android_internal_os_Zygote.cpp",
         "patchSetId": 4
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "55abca56_ee2f13f8",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-10-29T12:40:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75ae0e67_5aa145b1",
+      "revId": "3805985de34b5a1270ac3e3204dd1f2320bcd6a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75ae0e67_1a9bcd7f",
         "filename": "core/jni/com_android_internal_os_Zygote.cpp",
         "patchSetId": 4
@@ -64,6 +100,24 @@
       "writtenOn": "2014-10-29T12:18:46Z",
       "side": 1,
       "message": "s/of missing data directory/dataDir \u003d\u003d NULL/",
+      "revId": "3805985de34b5a1270ac3e3204dd1f2320bcd6a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "354d76af_42b896ef",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2014-10-29T12:40:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75ae0e67_1a9bcd7f",
       "revId": "3805985de34b5a1270ac3e3204dd1f2320bcd6a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
