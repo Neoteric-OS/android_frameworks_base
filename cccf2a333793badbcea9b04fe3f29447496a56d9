@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5d09a11_d539dc17",
+        "filename": "core/java/android/app/FragmentManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1004254
+      },
+      "writtenOn": "2014-10-30T17:38:34Z",
+      "side": 0,
+      "message": "fs.mSavedFragmentState is always null...",
+      "revId": "cccf2a333793badbcea9b04fe3f29447496a56d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
