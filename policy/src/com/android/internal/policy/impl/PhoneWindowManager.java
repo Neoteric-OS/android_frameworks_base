@@ -435,7 +435,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     WindowState mTopFullscreenOpaqueWindowState;
     HashSet<IApplicationToken> mAppsToBeHidden = new HashSet<IApplicationToken>();
-    HashSet<IApplicationToken> mAppsThatDismissKeyguard = new HashSet<IApplicationToken>();
     boolean mTopIsFullscreen;
     boolean mForceStatusBar;
     boolean mForceStatusBarFromKeyguard;
@@ -1721,9 +1720,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     @Override
     public boolean isForceHiding(WindowManager.LayoutParams attrs) {
-        return (attrs.privateFlags & PRIVATE_FLAG_KEYGUARD) != 0 ||
-                (isKeyguardHostWindow(attrs) && isKeyguardSecureIncludingHidden()) ||
-                (attrs.type == TYPE_KEYGUARD_SCRIM);
+        return (attrs.privateFlags & PRIVATE_FLAG_KEYGUARD) != 0
+                || (attrs.type == TYPE_KEYGUARD_SCRIM);
     }
 
     @Override
@@ -3746,7 +3744,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     public void beginPostLayoutPolicyLw(int displayWidth, int displayHeight) {
         mTopFullscreenOpaqueWindowState = null;
         mAppsToBeHidden.clear();
-        mAppsThatDismissKeyguard.clear();
         mForceStatusBar = false;
         mForceStatusBarFromKeyguard = false;
         mForcingShowNavBar = false;
@@ -3802,44 +3799,37 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             final boolean dismissKeyguard = (fl & FLAG_DISMISS_KEYGUARD) != 0;
             final boolean secureKeyguard = isKeyguardSecure();
             if (appWindow) {
-                final IApplicationToken appToken = win.getAppToken();
-                if (showWhenLocked) {
+                if (showWhenLocked || (dismissKeyguard && !secureKeyguard)) {
                     // Remove any previous windows with the same appToken.
-                    mAppsToBeHidden.remove(appToken);
-                    mAppsThatDismissKeyguard.remove(appToken);
-                    if (mAppsToBeHidden.isEmpty() && isKeyguardSecureIncludingHidden()) {
+                    mAppsToBeHidden.remove(win.getAppToken());
+                    if (mAppsToBeHidden.isEmpty() && showWhenLocked) {
                         mWinShowWhenLocked = win;
                         mHideLockScreen = true;
                         mForceStatusBarFromKeyguard = false;
                     }
-                } else if (dismissKeyguard) {
-                    if (secureKeyguard) {
-                        mAppsToBeHidden.add(appToken);
-                    } else {
-                        mAppsToBeHidden.remove(appToken);
-                    }
-                    mAppsThatDismissKeyguard.add(appToken);
                 } else {
-                    mAppsToBeHidden.add(appToken);
+                    mAppsToBeHidden.add(win.getAppToken());
                 }
                 if (attrs.x == 0 && attrs.y == 0
                         && attrs.width == WindowManager.LayoutParams.MATCH_PARENT
                         && attrs.height == WindowManager.LayoutParams.MATCH_PARENT) {
                     if (DEBUG_LAYOUT) Slog.v(TAG, "Fullscreen window: " + win);
                     mTopFullscreenOpaqueWindowState = win;
-                    if (!mAppsThatDismissKeyguard.isEmpty() &&
-                            mDismissKeyguard == DISMISS_KEYGUARD_NONE) {
-                        if (DEBUG_LAYOUT) Slog.v(TAG,
-                                "Setting mDismissKeyguard true by win " + win);
-                        mDismissKeyguard = mWinDismissingKeyguard == win ?
-                                DISMISS_KEYGUARD_CONTINUE : DISMISS_KEYGUARD_START;
-                        mWinDismissingKeyguard = win;
-                        mForceStatusBarFromKeyguard = mShowingLockscreen && secureKeyguard;
-                    } else if (mAppsToBeHidden.isEmpty() && showWhenLocked) {
-                        if (DEBUG_LAYOUT) Slog.v(TAG,
-                                "Setting mHideLockScreen to true by win " + win);
-                        mHideLockScreen = true;
-                        mForceStatusBarFromKeyguard = false;
+                    if (mAppsToBeHidden.isEmpty()) {
+                        if (showWhenLocked) {
+                            if (DEBUG_LAYOUT) Slog.v(TAG,
+                                    "Setting mHideLockScreen to true by win " + win);
+                            mHideLockScreen = true;
+                            mForceStatusBarFromKeyguard = false;
+                        }
+                        if (dismissKeyguard && mDismissKeyguard == DISMISS_KEYGUARD_NONE) {
+                            if (DEBUG_LAYOUT) Slog.v(TAG,
+                                    "Setting mDismissKeyguard true by win " + win);
+                            mDismissKeyguard = mWinDismissingKeyguard == win ?
+                                    DISMISS_KEYGUARD_CONTINUE : DISMISS_KEYGUARD_START;
+                            mWinDismissingKeyguard = win;
+                            mForceStatusBarFromKeyguard = mShowingLockscreen && secureKeyguard;
+                        }
                     }
                     if ((fl & FLAG_ALLOW_LOCK_WHILE_SCREEN_ON) != 0) {
                         mAllowLockscreenWhenOn = true;
@@ -4933,11 +4923,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     public boolean isKeyguardSecure() {
         if (mKeyguardDelegate == null) return false;
         return mKeyguardDelegate.isSecure();
-    }
-
-    // Returns true if keyguard is currently locked whether or not it is currently hidden.
-    private boolean isKeyguardSecureIncludingHidden() {
-        return mKeyguardDelegate.isSecure() && mKeyguardDelegate.isShowing();
     }
 
     /** {@inheritDoc} */
