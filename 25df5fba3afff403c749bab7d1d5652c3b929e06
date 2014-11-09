@@ -46,6 +46,30 @@
       "revId": "25df5fba3afff403c749bab7d1d5652c3b929e06",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fae74b92_e2ff6639",
+        "filename": "libs/androidfw/BackupHelpers.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-11-09T00:37:38Z",
+      "side": 1,
+      "message": "I left it that way because the surrounding code (e.g., line 548) still uses old-style casts. Moving the codebase into the present (with C++11 features) will be a follow-up after I enabled -Werror in every nook and cranny here. :-)",
+      "parentUuid": "ba3f93b4_5045cce1",
+      "range": {
+        "startLine": 558,
+        "startChar": 36,
+        "endLine": 558,
+        "endChar": 51
+      },
+      "revId": "25df5fba3afff403c749bab7d1d5652c3b929e06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
