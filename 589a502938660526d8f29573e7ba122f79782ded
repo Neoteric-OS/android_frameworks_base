@@ -16,6 +16,24 @@
       "revId": "589a502938660526d8f29573e7ba122f79782ded",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4f777e_5ffa731f",
+        "filename": "libs/hwui/DisplayList.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-11-10T23:58:35Z",
+      "side": 1,
+      "message": "You mean the explicit \"public:\"? Done.",
+      "parentUuid": "7a97db02_21abe86c",
+      "revId": "589a502938660526d8f29573e7ba122f79782ded",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
