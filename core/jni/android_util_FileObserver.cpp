@@ -29,7 +29,7 @@
 #include <sys/ioctl.h>
 #include <errno.h>
 
-#ifdef HAVE_INOTIFY
+#if defined(__linux__)
 #include <sys/inotify.h>
 #endif
 
@@ -39,20 +39,16 @@ static jmethodID method_onEvent;
 
 static jint android_os_fileobserver_init(JNIEnv* env, jobject object)
 {
-#ifdef HAVE_INOTIFY
-
+#if defined(__linux__)
     return (jint)inotify_init();    
-
-#else // HAVE_INOTIFY
-
+#else
     return -1;
-
-#endif // HAVE_INOTIFY
+#endif
 }
 
 static void android_os_fileobserver_observe(JNIEnv* env, jobject object, jint fd)
 {
-#ifdef HAVE_INOTIFY
+#if defined(__linux__)
  
     char event_buf[512];
     struct inotify_event* event;
@@ -99,14 +95,14 @@ static void android_os_fileobserver_observe(JNIEnv* env, jobject object, jint fd
         }
     }
     
-#endif // HAVE_INOTIFY
+#endif
 }
 
 static jint android_os_fileobserver_startWatching(JNIEnv* env, jobject object, jint fd, jstring pathString, jint mask)
 {
     int res = -1;
     
-#ifdef HAVE_INOTIFY
+#if defined(__linux__)
    
     if (fd >= 0)
     {
@@ -117,18 +113,18 @@ static jint android_os_fileobserver_startWatching(JNIEnv* env, jobject object, j
         env->ReleaseStringUTFChars(pathString, path);
     }
 
-#endif // HAVE_INOTIFY
+#endif
     
     return res;
 }
 
 static void android_os_fileobserver_stopWatching(JNIEnv* env, jobject object, jint fd, jint wfd)
 {
-#ifdef HAVE_INOTIFY
+#if defined(__linux__)
 
     inotify_rm_watch((int)fd, (uint32_t)wfd);
 
-#endif // HAVE_INOTIFY
+#endif
 }
 
 static JNINativeMethod sMethods[] = {
