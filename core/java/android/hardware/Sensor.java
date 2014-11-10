@@ -501,6 +501,30 @@ public final class Sensor {
      * @see #TYPE_PICK_UP_GESTURE
      */
     public static final String STRING_TYPE_PICK_UP_GESTURE = "android.sensor.pick_up_gesture";
+    /**
+     * A constant describing a heart rate monitor ecg.
+     * <p>
+     * The reported value is the heart rate in beats per minute.
+     * <p>
+     * The reported accuracy represents the status of the monitor during the reading. See the
+     * {@code SENSOR_STATUS_*} constants in {@link android.hardware.SensorManager SensorManager}
+     * for more details on accuracy/status values. In particular, when the accuracy is
+     * {@code SENSOR_STATUS_UNRELIABLE} or {@code SENSOR_STATUS_NO_CONTACT}, the heart rate
+     * value should be discarded.
+     * <p>
+     * This sensor requires permission {@code android.permission.BODY_SENSORS}.
+     * It will not be returned by {@code SensorManager.getSensorsList} nor
+     * {@code SensorManager.getDefaultSensor} if the application doesn't have this permission.
+     */
+    public static final int TYPE_HEART_RATE_ECG = 26;
+
+    /**
+     * A constant string describing a heart rate monitor ecg.
+     *
+     * @see #TYPE_HEART_RATE_ECG
+     */
+    public static final String STRING_TYPE_HEART_RATE_ECG = "android.sensor.heart_rate_ecg";
+
 
     /**
      * A constant describing all sensor types.
