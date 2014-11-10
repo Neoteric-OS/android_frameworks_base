@@ -91,7 +91,7 @@ private:
     std::vector<SkPath> mTempPaths;
 };
 
-class DeferStateStruct : public PlaybackStateStruct {
+struct DeferStateStruct : public PlaybackStateStruct {
 public:
     DeferStateStruct(DeferredDisplayList& deferredList, OpenGLRenderer& renderer, int replayFlags)
             : PlaybackStateStruct(renderer, replayFlags, &(deferredList.mAllocator)),
