@@ -9374,7 +9374,7 @@ public final class ActivityManagerService extends ActivityManagerNative
 
                 // Make sure that the user who owns this provider is started.  If not,
                 // we don't want to allow it to run.
-                if (mStartedUsers.get(userId) == null) {
+                if (!isUserRunningLocked(userId, false)) {
                     Slog.w(TAG, "Unable to launch app "
                             + cpi.applicationInfo.packageName + "/"
                             + cpi.applicationInfo.uid + " for provider "
