@@ -16,6 +16,24 @@
       "revId": "538b00f6e583dfd38f6e329ef6715fb72f924160",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4f777e_f6bee0a4",
+        "filename": "media/tests/audiotests/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2014-11-11T23:03:26Z",
+      "side": 0,
+      "message": "I thought it was important to test *everywhere*. Why are we testing shared_mem only on arm???\n\nI compiled for all architectures, and it does compile. That\u0027s as much as I wanted test.",
+      "parentUuid": "bab4f3b0_62e49abc",
+      "revId": "538b00f6e583dfd38f6e329ef6715fb72f924160",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
