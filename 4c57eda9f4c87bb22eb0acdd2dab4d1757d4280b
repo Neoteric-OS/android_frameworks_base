@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa83cbc2_cbb57df0",
+        "filename": "libs/common_time/common_time_server.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-11-12T16:07:36Z",
+      "side": 1,
+      "message": "Your commit message made me think : should this just be \"result \u003d true\" ?\n\ni.e, do we want to execute line 997 in this case ?",
+      "revId": "4c57eda9f4c87bb22eb0acdd2dab4d1757d4280b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
