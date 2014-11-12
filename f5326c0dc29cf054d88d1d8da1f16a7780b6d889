@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4f777e_d920b53a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-11-12T00:03:21Z",
+      "side": 1,
+      "message": "Is this intended to describe the bug you fixed? Can you be more specific about that?",
+      "range": {
+        "startLine": 9,
+        "startChar": 44,
+        "endLine": 9,
+        "endChar": 53
+      },
+      "revId": "f5326c0dc29cf054d88d1d8da1f16a7780b6d889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aaefb66_acee0795",
+        "filename": "libs/common_time/clock_recovery.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-11-12T00:03:21Z",
+      "side": 1,
+      "message": "Delete dead code?",
+      "revId": "f5326c0dc29cf054d88d1d8da1f16a7780b6d889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4f777e_d9d795ca",
+        "filename": "libs/common_time/common_time_server.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2014-11-12T00:03:21Z",
+      "side": 1,
+      "message": "This is a bug fix, and not a warning-related change. I guess it is ok to roll it together in this case, but it really should have been separate.",
+      "revId": "f5326c0dc29cf054d88d1d8da1f16a7780b6d889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
