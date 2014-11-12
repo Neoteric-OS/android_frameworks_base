@@ -3786,8 +3786,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if ((attrs.privateFlags & PRIVATE_FLAG_KEYGUARD) != 0) {
                 mShowingLockscreen = true;
             }
-            boolean appWindow = attrs.type >= FIRST_APPLICATION_WINDOW
-                    && attrs.type < FIRST_SYSTEM_WINDOW;
+            final IApplicationToken appToken = win.getAppToken();
+            boolean appWindow = appToken != null;
             if (attrs.type == TYPE_DREAM) {
                 // If the lockscreen was showing when the dream started then wait
                 // for the dream to draw before hiding the lockscreen.
@@ -3802,7 +3802,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             final boolean dismissKeyguard = (fl & FLAG_DISMISS_KEYGUARD) != 0;
             final boolean secureKeyguard = isKeyguardSecure();
             if (appWindow) {
-                final IApplicationToken appToken = win.getAppToken();
                 if (showWhenLocked) {
                     // Remove any previous windows with the same appToken.
                     mAppsToBeHidden.remove(appToken);
