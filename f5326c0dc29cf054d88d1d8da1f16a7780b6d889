@@ -56,6 +56,24 @@
       "revId": "f5326c0dc29cf054d88d1d8da1f16a7780b6d889",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da88c7e4_4a040785",
+        "filename": "libs/common_time/common_time_server.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-11-12T13:42:03Z",
+      "side": 1,
+      "message": "i think it\u0027s fine to leave it as part of this change. probably worth a mention in the commit message, though.",
+      "parentUuid": "5a4f777e_d9d795ca",
+      "revId": "f5326c0dc29cf054d88d1d8da1f16a7780b6d889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
