@@ -22,6 +22,30 @@
       "revId": "66367338ef0b7cfd6f445a73c216c9f1911826d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afba387_ef0c1ddd",
+        "filename": "graphics/java/android/graphics/Interpolator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2014-11-13T00:19:38Z",
+      "side": 1,
+      "message": "Note that I\u0027m touching a lot of classes here whose semantics I don\u0027t fully understand.  Hence the code review is appreciated.\n\nHaving said that, I think the implicit contract for library classes is that if the client lets the constructor race with a use, all bets are off.  A few exceptional classes like String promise more than that, primarily because the so-called Java security model breaks completely if they don\u0027t.  I don\u0027t see why this class should promise more than the default.\n\nTechnically it doesn\u0027t anyway, since it has non-final fields which are not guaranteed to be stable in such cases.  In practice, I agree that we\u0027re weakening a property of the class, but I don\u0027t think it\u0027s a useful or expected one.  If you hand off an instance of this class to another thread, you should do it using mutual exclusion or a volatile reference, in which case none of this matters much.\n\nI agree that in the presence of a racing access you may briefly see native_instance point to junk, and could still get memory corruption, if you time things just right.  But in such a case, it should be much more likely that you see null, and hence get an easily debuggable crash.  Currently, if we have another finalizable object pointing to one of these, and the other finalizer tries to update this object, we have a 50-50 chance of it working correctly or of memory corruption, with no chance of an easily debuggable crash.",
+      "parentUuid": "fa582b71_80d73a50",
+      "range": {
+        "startLine": 155,
+        "startChar": 11,
+        "endLine": 155,
+        "endChar": 12
+      },
+      "revId": "66367338ef0b7cfd6f445a73c216c9f1911826d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
