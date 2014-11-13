@@ -386,28 +386,20 @@ final class WindowState implements WindowManagerPolicy.WindowState {
             mAttachedWindow = attachedWindow;
             if (WindowManagerService.DEBUG_ADD_REMOVE) Slog.v(TAG, "Adding " + this + " to " + mAttachedWindow);
 
-            int children_size = mAttachedWindow.mChildWindows.size();
-            if (children_size == 0) {
-                mAttachedWindow.mChildWindows.add(this);
+            final WindowList childWindows = mAttachedWindow.mChildWindows;
+            final int NCW = childWindows.size();
+            if (NCW == 0) {
+                childWindows.add(this);
             } else {
-                for (int i = 0; i < children_size; i++) {
-                    WindowState child = (WindowState)mAttachedWindow.mChildWindows.get(i);
-                    if (this.mSubLayer < child.mSubLayer) {
-                        mAttachedWindow.mChildWindows.add(i, this);
+                for (int i = 0; i < NCW; i++) {
+                    final int subLayer = childWindows.get(i).mSubLayer;
+                    if (mSubLayer < subLayer || mSubLayer == subLayer && subLayer < 0) {
+                        childWindows.add(i, this);
                         break;
-                    } else if (this.mSubLayer > child.mSubLayer) {
-                        continue;
-                    }
-
-                    if (this.mBaseLayer <= child.mBaseLayer) {
-                        mAttachedWindow.mChildWindows.add(i, this);
-                        break;
-                    } else {
-                        continue;
                     }
                 }
-                if (children_size == mAttachedWindow.mChildWindows.size()) {
-                    mAttachedWindow.mChildWindows.add(this);
+                if (NCW == childWindows.size()) {
+                    childWindows.add(this);
                 }
             }
 
