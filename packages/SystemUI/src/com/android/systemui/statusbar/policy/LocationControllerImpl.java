@@ -96,22 +96,27 @@ public class LocationControllerImpl extends BroadcastReceiver implements Locatio
      * <p>If enabling, a user consent dialog will pop up prompting the user to accept.
      * If the user doesn't accept, network location won't be enabled.
      *
-     * @return true if attempt to change setting was successful.
+     * @return true if the user isn't restricted from using location.
      */
     public boolean setLocationEnabled(boolean enabled) {
         int currentUserId = ActivityManager.getCurrentUser();
         if (isUserLocationRestricted(currentUserId)) {
             return false;
         }
-        final ContentResolver cr = mContext.getContentResolver();
         // When enabling location, a user consent dialog will pop up, and the
         // setting won't be fully enabled until the user accepts the agreement.
         int mode = enabled
                 ? Settings.Secure.LOCATION_MODE_PREVIOUS : Settings.Secure.LOCATION_MODE_OFF;
-        // QuickSettings always runs as the owner, so specifically set the settings
+        // QuickSettings always runs as the owner, so specifically send the intent
         // for the current foreground user.
-        return Settings.Secure
-                .putIntForUser(cr, Settings.Secure.LOCATION_MODE, mode, currentUserId);
+        Intent intent = new Intent()
+                .setClassName("com.android.settings",
+                        "com.android.settings.location.LocationReceiver")
+                .putExtra("NEW_MODE", mode)
+                .addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+        mContext.sendBroadcastAsUser(intent, UserHandle.of(currentUserId),
+                android.Manifest.permission.WRITE_SECURE_SETTINGS);
+        return true;
     }
 
     /**
