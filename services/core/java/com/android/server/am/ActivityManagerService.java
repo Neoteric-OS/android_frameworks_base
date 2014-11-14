@@ -16428,18 +16428,14 @@ public final class ActivityManagerService extends ActivityManagerNative
     // Returns which broadcast queue the app is the current [or imminent] receiver
     // on, or 'null' if the app is not an active broadcast recipient.
     private BroadcastQueue isReceivingBroadcast(ProcessRecord app) {
-        BroadcastRecord r = app.curReceiver;
-        if (r != null) {
-            return r.queue;
-        }
-
-        // It's not the current receiver, but it might be starting up to become one
         synchronized (this) {
             for (BroadcastQueue queue : mBroadcastQueues) {
-                r = queue.mPendingBroadcast;
-                if (r != null && r.curApp == app) {
-                    // found it; report which queue it's in
-                    return queue;
+                if (queue.mOrderedBroadcasts.size() > 0) {
+                    BroadcastRecord r = queue.mOrderedBroadcasts.get(0);
+                    if (r.curApp == app) {
+                        // found it; report which queue it's in
+                        return queue;
+                    }
                 }
             }
         }
@@ -18009,7 +18005,7 @@ public final class ActivityManagerService extends ActivityManagerNative
             for (i=mRemovedProcesses.size()-1; i>=0; i--) {
                 final ProcessRecord app = mRemovedProcesses.get(i);
                 if (app.activities.size() == 0
-                        && app.curReceiver == null && app.services.size() == 0) {
+                        && isReceivingBroadcast(app) == null && app.services.size() == 0) {
                     Slog.i(
                         TAG, "Exiting empty application process "
                         + app.processName + " ("

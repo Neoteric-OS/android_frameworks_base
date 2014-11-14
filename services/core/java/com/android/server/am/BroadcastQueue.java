@@ -228,7 +228,6 @@ public final class BroadcastQueue {
         }
         r.receiver = app.thread.asBinder();
         r.curApp = app;
-        app.curReceiver = r;
         app.forceProcessStateUpTo(ActivityManager.PROCESS_STATE_RECEIVER);
         mService.updateLruProcessLocked(app, false, null);
         mService.updateOomAdjLocked();
@@ -255,7 +254,6 @@ public final class BroadcastQueue {
                         "Process cur broadcast " + r + ": NOT STARTED!");
                 r.receiver = null;
                 r.curApp = null;
-                app.curReceiver = null;
             }
         }
     }
@@ -295,26 +293,22 @@ public final class BroadcastQueue {
 
     public void skipCurrentReceiverLocked(ProcessRecord app) {
         boolean reschedule = false;
-        BroadcastRecord r = app.curReceiver;
-        if (r != null) {
-            // The current broadcast is waiting for this app's receiver
-            // to be finished.  Looks like that's not going to happen, so
-            // let the broadcast continue.
-            logBroadcastReceiverDiscardLocked(r);
-            finishReceiverLocked(r, r.resultCode, r.resultData,
-                    r.resultExtras, r.resultAbort, false);
-            reschedule = true;
+        BroadcastRecord r;
+        if (mOrderedBroadcasts.size() > 0) {
+            r = mOrderedBroadcasts.get(0);
+            if (r.curApp == app) {
+                // The current broadcast is waiting for this app's receiver
+                // to be finished.  Looks like that's not going to happen, so
+                // let the broadcast continue.
+                if (DEBUG_BROADCAST && r == mPendingBroadcast) Slog.v(TAG,
+                        "[" + mQueueName + "] skip & discard pending app " + r);
+                logBroadcastReceiverDiscardLocked(r);
+                finishReceiverLocked(r, r.resultCode, r.resultData,
+                        r.resultExtras, r.resultAbort, false);
+                reschedule = true;
+            }
         }
 
-        r = mPendingBroadcast;
-        if (r != null && r.curApp == app) {
-            if (DEBUG_BROADCAST) Slog.v(TAG,
-                    "[" + mQueueName + "] skip & discard pending app " + r);
-            logBroadcastReceiverDiscardLocked(r);
-            finishReceiverLocked(r, r.resultCode, r.resultData,
-                    r.resultExtras, r.resultAbort, false);
-            reschedule = true;
-        }
         if (reschedule) {
             scheduleBroadcastsLocked();
         }
@@ -352,9 +346,6 @@ public final class BroadcastQueue {
         }
         r.receiver = null;
         r.intent.setComponent(null);
-        if (r.curApp != null) {
-            r.curApp.curReceiver = null;
-        }
         if (r.curFilter != null) {
             r.curFilter.receiverList.curBroadcast = null;
         }
@@ -508,7 +499,6 @@ public final class BroadcastQueue {
                     // things that directly call the IActivityManager API, which
                     // are already core system stuff so don't matter for this.
                     r.curApp = filter.receiverList.app;
-                    filter.receiverList.app.curReceiver = r;
                     mService.updateOomAdjLocked(r.curApp);
                 }
             }
@@ -531,7 +521,7 @@ public final class BroadcastQueue {
                     r.curFilter = null;
                     filter.receiverList.curBroadcast = null;
                     if (filter.receiverList.app != null) {
-                        filter.receiverList.app.curReceiver = null;
+                        r.curApp = null;
                     }
                 }
             }
