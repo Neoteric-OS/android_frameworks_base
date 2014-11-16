@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a6dff43_0646dc80",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2014-11-16T20:21:02Z",
+      "side": 1,
+      "message": "Please add parentheses around this.\n\nAlso, can you add a comment similar to what is in WMS.addAttachedWindowToListLocked() about adding below for negative sub-layers vs. above for positive sub-layers?",
+      "range": {
+        "startLine": 396,
+        "startChar": 48,
+        "endLine": 396,
+        "endChar": 85
+      },
+      "revId": "7a92a9e99652a9391e9815edca6ddf9b73cc02d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
