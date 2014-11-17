@@ -69,6 +69,24 @@
       "revId": "0366a76ecf4b5f21530eba62d54620f296c8f727",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a44d7e8_c33e4a50",
+        "filename": "core/jni/android/graphics/GraphicsJNI.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1052399
+      },
+      "writtenOn": "2014-11-17T23:17:36Z",
+      "side": 1,
+      "message": "In TypefaceImpl.h I found some comment about the difficulty to define its member functions. It seems reasonable to keep TypefaceImpl as a struct until a larger clean up.",
+      "parentUuid": "5aff77b8_2534cefa",
+      "revId": "0366a76ecf4b5f21530eba62d54620f296c8f727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
