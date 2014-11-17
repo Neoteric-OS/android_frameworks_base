@@ -22,6 +22,30 @@
       "revId": "7a92a9e99652a9391e9815edca6ddf9b73cc02d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ae3a320_4f993151",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1035211
+      },
+      "writtenOn": "2014-11-17T13:10:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a6dff43_0646dc80",
+      "range": {
+        "startLine": 396,
+        "startChar": 48,
+        "endLine": 396,
+        "endChar": 85
+      },
+      "revId": "7a92a9e99652a9391e9815edca6ddf9b73cc02d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
