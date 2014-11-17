@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da38c75e_21384e10",
+        "filename": "cmds/bootanimation/AudioPlayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-11-17T22:31:59Z",
+      "side": 1,
+      "message": "this is C++. why wouldn\u0027t you just say FileMap?",
+      "revId": "0366a76ecf4b5f21530eba62d54620f296c8f727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af97fd6_862dccbf",
+        "filename": "core/jni/android/graphics/GraphicsJNI.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-11-17T22:31:59Z",
+      "side": 1,
+      "message": "the others are all class. shouldn\u0027t we try to be consistent?",
+      "revId": "0366a76ecf4b5f21530eba62d54620f296c8f727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
