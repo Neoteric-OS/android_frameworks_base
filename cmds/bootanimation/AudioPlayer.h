@@ -28,7 +28,7 @@ public:
     virtual     ~AudioPlayer();
     bool        init(const char* config);
 
-    void        playFile(struct FileMap* fileMap);
+    void        playFile(class FileMap* fileMap);
 
 private:
     virtual bool        threadLoop();
@@ -39,7 +39,7 @@ private:
     int                 mPeriodSize;
     int                 mPeriodCount;
 
-    struct FileMap*     mCurrentFile;
+    class FileMap*      mCurrentFile;
 };
 
 } // namespace android

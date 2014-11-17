@@ -193,7 +193,7 @@ bool AudioPlayer::init(const char* config)
     return false;
 }
 
-void AudioPlayer::playFile(struct FileMap* fileMap) {
+void AudioPlayer::playFile(class FileMap* fileMap) {
     // stop any currently playing sound
     requestExitAndWait();
 
