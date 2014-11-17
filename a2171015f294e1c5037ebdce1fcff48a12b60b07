@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a42cfda_df629b38",
+        "filename": "libs/hwui/AmbientShadow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1010334
+      },
+      "writtenOn": "2014-11-17T22:03:06Z",
+      "side": 1,
+      "message": "Convention is to use fabs() for floats instead of std::abs().",
+      "revId": "a2171015f294e1c5037ebdce1fcff48a12b60b07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
