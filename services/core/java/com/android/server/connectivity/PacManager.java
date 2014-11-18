@@ -15,6 +15,8 @@
  */
 package com.android.server.connectivity;
 
+import static android.net.ConnectivityManager.NETID_UNSET;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -24,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.net.Network;
 import android.net.ProxyInfo;
 import android.net.Uri;
 import android.os.Handler;
@@ -32,8 +35,10 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.net.IProxyCallback;
@@ -69,74 +74,194 @@ public class PacManager {
 
     /** Keep these values up-to-date with ProxyService.java */
     public static final String KEY_PROXY = "keyProxy";
-    private String mCurrentPac;
-    @GuardedBy("mProxyLock")
-    private Uri mPacUrl = Uri.EMPTY;
 
     private AlarmManager mAlarmManager;
-    @GuardedBy("mProxyLock")
-    private IProxyService mProxyService;
-    private PendingIntent mPacRefreshIntent;
-    private ServiceConnection mConnection;
-    private ServiceConnection mProxyConnection;
-    private Context mContext;
 
-    private int mCurrentDelay;
-    private int mLastPort;
+    private final Context mContext;
+    private final Handler mConnectivityHandler;
+    private final int mProxyMessage;
 
-    private boolean mHasSentBroadcast;
-    private boolean mHasDownloaded;
+    private class Pac {
+        private final Network mNetwork;
+        private final Uri mPacUrl;
+        private String mPac;
 
-    private Handler mConnectivityHandler;
-    private int mProxyMessage;
+        private int mCurrentDelay;
 
-    /**
-     * Used for locking when setting mProxyService and all references to mPacUrl or mCurrentPac.
-     */
-    private final Object mProxyLock = new Object();
+        private boolean mHasDownloaded;
+        private boolean mHasStartedDownload;
+        private boolean mDisposed;
 
-    private Runnable mPacDownloader = new Runnable() {
-        @Override
-        public void run() {
-            String file;
-            synchronized (mProxyLock) {
+        private PendingIntent mPacRefreshIntent;
+
+        private int getNetId() {
+            return mNetwork == null ? NETID_UNSET : mNetwork.netId;
+        }
+
+        private Runnable mPacDownloader = new Runnable() {
+            @Override
+            public void run() {
                 if (Uri.EMPTY.equals(mPacUrl)) return;
+                // Do not hold lock while waiting to download.
+                String file;
                 try {
-                    file = get(mPacUrl);
+                    file = get(mPacUrl.toString());
                 } catch (IOException ioe) {
                     file = null;
                     Log.w(TAG, "Failed to load PAC file: " + ioe);
                 }
-            }
-            if (file != null) {
                 synchronized (mProxyLock) {
-                    if (!file.equals(mCurrentPac)) {
-                        setCurrentProxyScript(file);
+                    if (mDisposed) return;
+                    if (file != null) {
+                        if (!file.equals(mPac)) {
+                            setCurrentProxyScriptLocked(file);
+                        }
+                        mDownloadsCompletedSinceLastBroadcast = true;
+                        mHasDownloaded = true;
+                        sendNetworkProxyBroadcastIfNeededLocked();
+                        longScheduleLocked();
+                    } else {
+                        rescheduleLocked();
                     }
                 }
-                mHasDownloaded = true;
-                sendProxyIfNeeded();
-                longSchedule();
+            }
+        };
+
+        private BroadcastReceiver mPacRefreshIntentReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                new Thread(mPacDownloader).start();
+            }
+        };
+
+        public Pac(Uri pacUrl, Network network) {
+            mNetwork = network;
+            mPacUrl = pacUrl;
+            mPac = null;
+
+            final String intentAction = ACTION_PAC_REFRESH + getNetId();
+            mPacRefreshIntent = PendingIntent.getBroadcast(
+                    mContext, 0, new Intent(intentAction), 0);
+            mContext.registerReceiver(mPacRefreshIntentReceiver, new IntentFilter(intentAction));
+
+            mCurrentDelay = DELAY_1;
+            mHasDownloaded = false;
+            mHasStartedDownload = false;
+            mDisposed = false;
+            getAlarmManager().cancel(mPacRefreshIntent);
+        }
+
+        private void sendNetworkProxyBroadcastIfNeededLocked() {
+            // For non-default Networks we need to force the broadcast, otherwise the
+            // broadcast will not be sent because it does not look like the default
+            // Network's proxy config has changed.
+            if (getDefaultPacLocked() != this) {
+                sendBroadcastLocked(true);
             } else {
-                reschedule();
+                sendBroadcastIfNeededLocked();
             }
         }
-    };
 
-    class PacRefreshIntentReceiver extends BroadcastReceiver {
-        public void onReceive(Context context, Intent intent) {
-            IoThread.getHandler().post(mPacDownloader);
+        public boolean hasDownloadedLocked() {
+            return mHasDownloaded;
+        }
+
+        public void startInitialDownloadLocked() {
+            if (mHasStartedDownload) return;
+            mHasStartedDownload = true;
+            new Thread(mPacDownloader).start();
+        }
+
+        public void disposeLocked() {
+            mDisposed = true;
+            getAlarmManager().cancel(mPacRefreshIntent);
+            mContext.unregisterReceiver(mPacRefreshIntentReceiver);
+            if (mPac != null) {
+                setCurrentProxyScriptLocked(null);
+                sendNetworkProxyBroadcastIfNeededLocked();
+            }
+        }
+
+        private int getNextDelay(int currentDelay) {
+           if (++currentDelay > DELAY_4) {
+               return DELAY_4;
+           }
+           return currentDelay;
+        }
+
+        private void longScheduleLocked() {
+            mCurrentDelay = DELAY_1;
+            setDownloadInLocked(DELAY_LONG);
+        }
+
+        private void rescheduleLocked() {
+            mCurrentDelay = getNextDelay(mCurrentDelay);
+            setDownloadInLocked(mCurrentDelay);
+        }
+
+        private void setDownloadInLocked(int delayIndex) {
+            long delay = getDownloadDelay(delayIndex);
+            long timeTillTrigger = 1000 * delay + SystemClock.elapsedRealtime();
+            getAlarmManager().set(AlarmManager.ELAPSED_REALTIME, timeTillTrigger,
+                    mPacRefreshIntent);
+        }
+
+        /**
+         * Fetch PAC script.
+         *
+         * @throws IOException
+         */
+        private String get(String urlString) throws IOException {
+            URL url = new URL(urlString);
+            URLConnection urlConnection;
+            if (mNetwork == null) {
+                urlConnection = url.openConnection(java.net.Proxy.NO_PROXY);
+            } else {
+                urlConnection = mNetwork.openConnection(url, java.net.Proxy.NO_PROXY);
+            }
+            return new String(Streams.readFully(urlConnection.getInputStream()));
+        }
+
+        private void setCurrentProxyScriptLocked(String script) {
+            if (mProxyService == null) {
+                Log.e(TAG, "setCurrentProxyScript: no proxy service");
+                return;
+            }
+            try {
+                mProxyService.setPacFile(script, getNetId());
+                mPac = script;
+            } catch (RemoteException e) {
+                Log.e(TAG, "Unable to set PAC file", e);
+            }
         }
     }
 
+    private final Object mProxyLock = new Object();
+    @GuardedBy("mProxyLock")
+    private IProxyService mProxyService;
+    @GuardedBy("mProxyLock")
+    private ServiceConnection mConnection;
+    @GuardedBy("mProxyLock")
+    private ServiceConnection mProxyConnection;
+    @GuardedBy("mProxyLock")
+    private final SparseArray<Pac> mPacForNetId = new SparseArray<Pac>();
+    @GuardedBy("mProxyLock")
+    private boolean mNetworkProxyDisable = false;
+    @GuardedBy("mProxyLock")
+    private Pac mGlobalPac;
+    @GuardedBy("mProxyLock")
+    private int mDefaultNetworkNetId = NETID_UNSET;
+    @GuardedBy("mProxyLock")
+    private boolean mDownloadsCompletedSinceLastBroadcast = false;
+    @GuardedBy("mProxyLock")
+    private int mLastPort = -1;
+    @GuardedBy("mProxyLock")
+    private ProxyInfo mGlobalProxy;
+    @GuardedBy("mProxyLock")
+    private int mLastDefaultNetIdSentToProxyService = NETID_UNSET;
+
     public PacManager(Context context, Handler handler, int proxyMessage) {
         mContext = context;
-        mLastPort = -1;
-
-        mPacRefreshIntent = PendingIntent.getBroadcast(
-                context, 0, new Intent(ACTION_PAC_REFRESH), 0);
-        context.registerReceiver(new PacRefreshIntentReceiver(),
-                new IntentFilter(ACTION_PAC_REFRESH));
         mConnectivityHandler = handler;
         mProxyMessage = proxyMessage;
     }
@@ -148,75 +273,125 @@ public class PacManager {
         return mAlarmManager;
     }
 
-    /**
-     * Updates the PAC Manager with current Proxy information. This is called by
-     * the ConnectivityService directly before a broadcast takes place to allow
-     * the PacManager to indicate that the broadcast should not be sent and the
-     * PacManager will trigger a new broadcast when it is ready.
-     *
-     * @param proxy Proxy information that is about to be broadcast.
-     * @return Returns true when the broadcast should not be sent
-     */
-    public synchronized boolean setCurrentProxyScriptUrl(ProxyInfo proxy) {
-        if (!Uri.EMPTY.equals(proxy.getPacFileUrl())) {
-            if (proxy.getPacFileUrl().equals(mPacUrl) && (proxy.getPort() > 0)) {
-                // Allow to send broadcast, nothing to do.
-                return false;
-            }
-            synchronized (mProxyLock) {
-                mPacUrl = proxy.getPacFileUrl();
-            }
-            mCurrentDelay = DELAY_1;
-            mHasSentBroadcast = false;
-            mHasDownloaded = false;
-            getAlarmManager().cancel(mPacRefreshIntent);
-            bind();
-            return true;
-        } else {
-            getAlarmManager().cancel(mPacRefreshIntent);
-            synchronized (mProxyLock) {
-                mPacUrl = Uri.EMPTY;
-                mCurrentPac = null;
-                if (mProxyService != null) {
-                    try {
-                        mProxyService.stopPacSystem();
-                    } catch (RemoteException e) {
-                        Log.w(TAG, "Failed to stop PAC service", e);
-                    } finally {
-                        unbind();
-                    }
-                }
-            }
-            return false;
+    public void setNetworkProxyDisable(boolean networkProxyDisable) {
+        synchronized (mProxyLock) {
+            if (networkProxyDisable == mNetworkProxyDisable) return;
+            mNetworkProxyDisable = networkProxyDisable;
+            updateProxyServiceNetworkProxyDisableLocked();
+            updateServiceBindingsLocked();
+            sendBroadcastIfNeededLocked();
         }
     }
 
-    /**
-     * Does a post and reports back the status code.
-     *
-     * @throws IOException
-     */
-    private static String get(Uri pacUri) throws IOException {
-        URL url = new URL(pacUri.toString());
-        URLConnection urlConnection = url.openConnection(java.net.Proxy.NO_PROXY);
-        return new String(Streams.readFully(urlConnection.getInputStream()));
+    private void updateProxyServiceDefaultNetIdLocked(boolean forceUpdate) {
+        if (mProxyService == null) return;
+        final int newNetId = mGlobalProxy != null ? NETID_UNSET : mDefaultNetworkNetId;
+        if (!forceUpdate && newNetId == mLastDefaultNetIdSentToProxyService) return;
+        try {
+            mProxyService.setDefaultNetId(newNetId);
+            mLastDefaultNetIdSentToProxyService = newNetId;
+        } catch (RemoteException e) {
+            Log.e(TAG, "Unable to set default NetId", e);
+        }
     }
 
-    private int getNextDelay(int currentDelay) {
-       if (++currentDelay > DELAY_4) {
-           return DELAY_4;
-       }
-       return currentDelay;
+
+    private void updateProxyServiceNetworkProxyDisableLocked() {
+        if (mProxyService == null) return;
+        try {
+            mProxyService.setNetworkProxyDisable(mNetworkProxyDisable);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Unable to set network proxy disable", e);
+        }
     }
 
-    private void longSchedule() {
-        mCurrentDelay = DELAY_1;
-        setDownloadIn(DELAY_LONG);
+    public void setGlobalProxy(ProxyInfo proxy) {
+        synchronized (mProxyLock) {
+            mGlobalProxy = proxy;
+            final Uri newPacUrl = proxy == null ? Uri.EMPTY : proxy.getPacFileUrl();
+            if (mGlobalPac != null) mGlobalPac.disposeLocked();
+            if (Uri.EMPTY.equals(newPacUrl)) {
+                mGlobalPac = null;
+            } else {
+                mGlobalPac = new Pac(newPacUrl, null);
+                if (mProxyService != null) mGlobalPac.startInitialDownloadLocked();
+            }
+            updateProxyServiceDefaultNetIdLocked(false);
+            updateServiceBindingsLocked();
+            sendBroadcastIfNeededLocked();
+        }
     }
 
-    private void reschedule() {
-        mCurrentDelay = getNextDelay(mCurrentDelay);
-        setDownloadIn(mCurrentDelay);
+    public void setNetworkProxy(ProxyInfo proxy, Network network, boolean isDefault) {
+        synchronized (mProxyLock) {
+            final Uri newPacUrl = proxy == null ? Uri.EMPTY : proxy.getPacFileUrl();
+            if (isDefault) {
+                mDefaultNetworkNetId = network.netId;
+            } else {
+                if (mDefaultNetworkNetId == network.netId) mDefaultNetworkNetId = NETID_UNSET;
+            }
+            updateProxyServiceDefaultNetIdLocked(false);
+            final Pac oldPac = mPacForNetId.get(network.netId);
+            if (oldPac != null) oldPac.disposeLocked();
+            if (Uri.EMPTY.equals(newPacUrl)) {
+                mPacForNetId.remove(network.netId);
+            } else {
+                final Pac newPac = new Pac(newPacUrl, network);
+                mPacForNetId.put(network.netId, newPac);
+                if (mProxyService != null) newPac.startInitialDownloadLocked();
+            }
+            updateServiceBindingsLocked();
+            sendBroadcastIfNeededLocked();
+        }
+    }
+
+    private Pac getDefaultPacLocked() {
+        if (mGlobalProxy != null) return mGlobalPac;
+        if (mNetworkProxyDisable) return null;
+        return mPacForNetId.get(mDefaultNetworkNetId);
+    }
+
+    private boolean needProxyServiceLocked() {
+        return mGlobalPac != null || mPacForNetId.size() > 0;
+    }
+
+    private boolean needLegacyProxyServiceLocked() {
+        return getDefaultPacLocked() != null;
+    }
+
+    private boolean pendingDownloadsLocked() {
+        if (mGlobalPac != null && !mGlobalPac.hasDownloadedLocked()) return true;
+        for (int i = 0; i < mPacForNetId.size(); i++) {
+            if (!mPacForNetId.valueAt(i).hasDownloadedLocked()) return true;
+        }
+        return false;
+    }
+
+    private void sendBroadcastIfNeededLocked() {
+        if (needProxyServiceLocked() && mProxyService == null) return;
+        if (needLegacyProxyServiceLocked() && mLastPort == -1) return;
+        if (pendingDownloadsLocked() && !mDownloadsCompletedSinceLastBroadcast) return;
+        sendBroadcastLocked(false);
+    }
+
+    private void sendBroadcastLocked(boolean forceBroadcast) {
+        mDownloadsCompletedSinceLastBroadcast = false;
+        mConnectivityHandler.sendMessage(mConnectivityHandler.obtainMessage(mProxyMessage,
+                mLastPort, forceBroadcast ? 1 : 0));
+    }
+
+    private void updateServiceBindingsLocked() {
+        if (needProxyServiceLocked()) {
+            if (mConnection == null) bindPacServiceLocked();
+        } else {
+            if (mConnection != null) unbindPacServiceLocked();
+        }
+
+        if (needLegacyProxyServiceLocked()) {
+            if (mProxyConnection == null) bindLegacyProxyServiceLocked();
+        } else {
+            if (mProxyConnection != null) unbindLegacyProxyServiceLocked();
+        }
     }
 
     private String getPacChangeDelay() {
@@ -238,43 +413,9 @@ public class PacManager {
         return 0;
     }
 
-    private void setDownloadIn(int delayIndex) {
-        long delay = getDownloadDelay(delayIndex);
-        long timeTillTrigger = 1000 * delay + SystemClock.elapsedRealtime();
-        getAlarmManager().set(AlarmManager.ELAPSED_REALTIME, timeTillTrigger, mPacRefreshIntent);
-    }
-
-    private boolean setCurrentProxyScript(String script) {
-        if (mProxyService == null) {
-            Log.e(TAG, "setCurrentProxyScript: no proxy service");
-            return false;
-        }
-        try {
-            mProxyService.setPacFile(script);
-            mCurrentPac = script;
-        } catch (RemoteException e) {
-            Log.e(TAG, "Unable to set PAC file", e);
-        }
-        return true;
-    }
-
-    private void bind() {
-        if (mContext == null) {
-            Log.e(TAG, "No context for binding");
-            return;
-        }
+    private void bindPacServiceLocked() {
         Intent intent = new Intent();
         intent.setClassName(PAC_PACKAGE, PAC_SERVICE);
-        // Already bound no need to bind again.
-        if ((mProxyConnection != null) && (mConnection != null)) {
-            if (mLastPort != -1) {
-                sendPacBroadcast(new ProxyInfo(mPacUrl, mLastPort));
-            } else {
-                Log.e(TAG, "Received invalid port from Local Proxy,"
-                        + " PAC will not be operational");
-            }
-            return;
-        }
         mConnection = new ServiceConnection() {
             @Override
             public void onServiceDisconnected(ComponentName component) {
@@ -297,20 +438,23 @@ public class PacManager {
                     if (mProxyService == null) {
                         Log.e(TAG, "No proxy service");
                     } else {
-                        try {
-                            mProxyService.startPacSystem();
-                        } catch (RemoteException e) {
-                            Log.e(TAG, "Unable to reach ProxyService - PAC will not be started", e);
+                        updateProxyServiceDefaultNetIdLocked(true);
+                        updateProxyServiceNetworkProxyDisableLocked();
+                        if (mGlobalPac != null) mGlobalPac.startInitialDownloadLocked();
+                        for (int i = 0; i < mPacForNetId.size(); i++) {
+                            mPacForNetId.valueAt(i).startInitialDownloadLocked();
                         }
-                        IoThread.getHandler().post(mPacDownloader);
                     }
                 }
             }
         };
-        mContext.bindService(intent, mConnection,
-                Context.BIND_AUTO_CREATE | Context.BIND_NOT_FOREGROUND | Context.BIND_NOT_VISIBLE);
+        mContext.bindServiceAsUser(intent, mConnection,
+                Context.BIND_AUTO_CREATE | Context.BIND_NOT_FOREGROUND | Context.BIND_NOT_VISIBLE,
+                UserHandle.CURRENT);
+    }
 
-        intent = new Intent();
+    private void bindLegacyProxyServiceLocked() {
+        Intent intent = new Intent();
         intent.setClassName(PROXY_PACKAGE, PROXY_SERVICE);
         mProxyConnection = new ServiceConnection() {
             @Override
@@ -325,17 +469,15 @@ public class PacManager {
                         callbackService.getProxyPort(new IProxyPortListener.Stub() {
                             @Override
                             public void setProxyPort(int port) throws RemoteException {
-                                if (mLastPort != -1) {
-                                    // Always need to send if port changed
-                                    mHasSentBroadcast = false;
-                                }
-                                mLastPort = port;
-                                if (port != -1) {
-                                    Log.d(TAG, "Local proxy is bound on " + port);
-                                    sendProxyIfNeeded();
-                                } else {
-                                    Log.e(TAG, "Received invalid port from Local Proxy,"
-                                            + " PAC will not be operational");
+                                synchronized (mProxyLock) {
+                                    mLastPort = port;
+                                    if (port != -1) {
+                                        Log.d(TAG, "Local proxy is bound on " + port);
+                                        sendBroadcastIfNeededLocked();
+                                    } else {
+                                        Log.e(TAG, "Received invalid port from Local Proxy,"
+                                                + " PAC will not be operational");
+                                    }
                                 }
                             }
                         });
@@ -345,34 +487,24 @@ public class PacManager {
                 }
             }
         };
-        mContext.bindService(intent, mProxyConnection,
-                Context.BIND_AUTO_CREATE | Context.BIND_NOT_FOREGROUND | Context.BIND_NOT_VISIBLE);
+        mContext.bindServiceAsUser(intent, mProxyConnection,
+                Context.BIND_AUTO_CREATE | Context.BIND_NOT_FOREGROUND | Context.BIND_NOT_VISIBLE,
+                UserHandle.CURRENT);
     }
 
-    private void unbind() {
+    private void unbindPacServiceLocked() {
         if (mConnection != null) {
             mContext.unbindService(mConnection);
             mConnection = null;
         }
+        mProxyService = null;
+    }
+
+    private void unbindLegacyProxyServiceLocked() {
         if (mProxyConnection != null) {
             mContext.unbindService(mProxyConnection);
             mProxyConnection = null;
         }
-        mProxyService = null;
         mLastPort = -1;
-    }
-
-    private void sendPacBroadcast(ProxyInfo proxy) {
-        mConnectivityHandler.sendMessage(mConnectivityHandler.obtainMessage(mProxyMessage, proxy));
-    }
-
-    private synchronized void sendProxyIfNeeded() {
-        if (!mHasDownloaded || (mLastPort == -1)) {
-            return;
-        }
-        if (!mHasSentBroadcast) {
-            sendPacBroadcast(new ProxyInfo(mPacUrl, mLastPort));
-            mHasSentBroadcast = true;
-        }
     }
 }

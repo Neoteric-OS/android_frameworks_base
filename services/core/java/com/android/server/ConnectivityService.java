@@ -321,7 +321,11 @@ public class ConnectivityService extends IConnectivityManager.Stub {
     private static final int EVENT_SAMPLE_INTERVAL_ELAPSED = 15;
 
     /**
-     * PAC manager has received new port.
+     * Posted back from PAC manager when either:
+     *   1. PAC manager has received new port, or
+     *   2. PAC manager is done fetching PAC script
+     * arg1 = Port of local legacy proxy server.
+     * arg2 = Non-zero if a proxy broadcast must be sent.
      */
     private static final int EVENT_PROXY_HAS_CHANGED = 16;
 
@@ -408,6 +412,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
     private volatile ProxyInfo mDefaultProxy = null;
     private Object mProxyLock = new Object();
     private boolean mDefaultProxyDisabled = false;
+    private ProxyInfo mLastBroadcastProxyInfo;
 
     // track the global proxy.
     private ProxyInfo mGlobalProxy = null;
@@ -2083,6 +2088,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
             }
             notifyNetworkCallbacks(nai, ConnectivityManager.CALLBACK_LOST);
             nai.networkMonitor.sendMessage(NetworkMonitor.CMD_NETWORK_DISCONNECTED);
+            mPacManager.setNetworkProxy(null, nai.network, false);
             mNetworkAgentInfos.remove(msg.replyTo);
             updateClat(null, nai.linkProperties, nai);
             mLegacyTypeTracker.remove(nai);
@@ -2318,7 +2324,8 @@ public class ConnectivityService extends IConnectivityManager.Stub {
                     break;
                 }
                 case EVENT_PROXY_HAS_CHANGED: {
-                    handleApplyDefaultProxy((ProxyInfo)msg.obj);
+                    maybeAddLegacyProxyServerPort(msg.arg1);
+                    sendProxyBroadcastIfNeeded(msg.arg2 != 0);
                     break;
                 }
                 case EVENT_REGISTER_NETWORK_FACTORY: {
@@ -2534,25 +2541,38 @@ public class ConnectivityService extends IConnectivityManager.Stub {
         return a != null && a.equals(b);
     }
 
+    private void maybeAddLegacyProxyServerPort(int port) {
+        if (port == -1) return;
+        synchronized (mProxyLock) {
+            if (mGlobalProxy != null) {
+                final Uri pacUrl = mGlobalProxy.getPacFileUrl();
+                if (pacUrl != null) {
+                    mGlobalProxy = new ProxyInfo(pacUrl, port);
+                }
+            } else if (!mDefaultProxyDisabled && mDefaultProxy != null) {
+                final Uri pacUrl = mDefaultProxy.getPacFileUrl();
+                if (pacUrl != null) {
+                    mDefaultProxy = new ProxyInfo(pacUrl, port);
+                }
+            }
+        }
+    }
+
     public void setGlobalProxy(ProxyInfo proxyProperties) {
         enforceConnectivityInternalPermission();
-
+        proxyProperties = canonicalizeProxyInfo(proxyProperties);
+        if (proxyProperties != null && !proxyProperties.isValid()) {
+            if (DBG) log("Invalid proxy properties, ignoring: " + proxyProperties.toString());
+            return;
+        }
         synchronized (mProxyLock) {
-            if (proxyProperties == mGlobalProxy) return;
-            if (proxyProperties != null && proxyProperties.equals(mGlobalProxy)) return;
-            if (mGlobalProxy != null && mGlobalProxy.equals(proxyProperties)) return;
+            if (proxyInfoEqual(proxyProperties, mGlobalProxy)) return;
 
             String host = "";
             int port = 0;
             String exclList = "";
             String pacFileUrl = "";
-            if (proxyProperties != null && (!TextUtils.isEmpty(proxyProperties.getHost()) ||
-                    (proxyProperties.getPacFileUrl() != null))) {
-                if (!proxyProperties.isValid()) {
-                    if (DBG)
-                        log("Invalid proxy properties, ignoring: " + proxyProperties.toString());
-                    return;
-                }
+            if (proxyProperties != null) {
                 mGlobalProxy = new ProxyInfo(proxyProperties);
                 host = mGlobalProxy.getHost();
                 port = mGlobalProxy.getPort();
@@ -2575,10 +2595,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
                 Binder.restoreCallingIdentity(token);
             }
 
-            if (mGlobalProxy == null) {
-                proxyProperties = mDefaultProxy;
-            }
-            sendProxyBroadcast(proxyProperties);
+            mPacManager.setGlobalProxy(mGlobalProxy);
         }
     }
 
@@ -2603,6 +2620,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
 
             synchronized (mProxyLock) {
                 mGlobalProxy = proxyProperties;
+                mPacManager.setGlobalProxy(mGlobalProxy);
             }
         }
     }
@@ -2618,35 +2636,13 @@ public class ConnectivityService extends IConnectivityManager.Stub {
     }
 
     private void handleApplyDefaultProxy(ProxyInfo proxy) {
-        if (proxy != null && TextUtils.isEmpty(proxy.getHost())
-                && (proxy.getPacFileUrl() == null)) {
-            proxy = null;
+        proxy = canonicalizeProxyInfo(proxy);
+        if (proxy != null && !proxy.isValid()) {
+            if (DBG) log("Invalid proxy properties, ignoring: " + proxy.toString());
+            return;
         }
         synchronized (mProxyLock) {
-            if (mDefaultProxy != null && mDefaultProxy.equals(proxy)) return;
-            if (mDefaultProxy == proxy) return; // catches repeated nulls
-            if (proxy != null &&  !proxy.isValid()) {
-                if (DBG) log("Invalid proxy properties, ignoring: " + proxy.toString());
-                return;
-            }
-
-            // This call could be coming from the PacManager, containing the port of the local
-            // proxy.  If this new proxy matches the global proxy then copy this proxy to the
-            // global (to get the correct local port), and send a broadcast.
-            // TODO: Switch PacManager to have its own message to send back rather than
-            // reusing EVENT_HAS_CHANGED_PROXY and this call to handleApplyDefaultProxy.
-            if ((mGlobalProxy != null) && (proxy != null) && (proxy.getPacFileUrl() != null)
-                    && proxy.getPacFileUrl().equals(mGlobalProxy.getPacFileUrl())) {
-                mGlobalProxy = proxy;
-                sendProxyBroadcast(mGlobalProxy);
-                return;
-            }
             mDefaultProxy = proxy;
-
-            if (mGlobalProxy != null) return;
-            if (!mDefaultProxyDisabled) {
-                sendProxyBroadcast(proxy);
-            }
         }
     }
 
@@ -2656,7 +2652,8 @@ public class ConnectivityService extends IConnectivityManager.Stub {
         ProxyInfo oldProxyInfo = oldLp == null ? null : oldLp.getHttpProxy();
 
         if (!proxyInfoEqual(newProxyInfo, oldProxyInfo)) {
-            sendProxyBroadcast(getDefaultProxy());
+            if (isDefaultNetwork(nai)) handleApplyDefaultProxy(newProxyInfo);
+            mPacManager.setNetworkProxy(newProxyInfo, nai.network, isDefaultNetwork(nai));
         }
     }
 
@@ -2683,9 +2680,11 @@ public class ConnectivityService extends IConnectivityManager.Stub {
         }
     }
 
-    private void sendProxyBroadcast(ProxyInfo proxy) {
+    private void sendProxyBroadcastIfNeeded(boolean forceRebroadcast) {
+        ProxyInfo proxy = getDefaultProxy();
+        if (!forceRebroadcast && proxyInfoEqual(mLastBroadcastProxyInfo, proxy)) return;
+        mLastBroadcastProxyInfo = proxy;
         if (proxy == null) proxy = new ProxyInfo("", 0, "");
-        if (mPacManager.setCurrentProxyScriptUrl(proxy)) return;
         if (DBG) log("sending Proxy Broadcast for " + proxy);
         Intent intent = new Intent(Proxy.PROXY_CHANGE_ACTION);
         intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING |
@@ -3586,11 +3585,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
         final boolean flushDns = updateRoutes(newLp, oldLp, netId);
         updateDnses(newLp, oldLp, netId, flushDns);
         updateClat(newLp, oldLp, networkAgent);
-        if (isDefaultNetwork(networkAgent)) {
-            handleApplyDefaultProxy(newLp.getHttpProxy());
-        } else {
-            updateProxy(newLp, oldLp, networkAgent);
-        }
+        updateProxy(newLp, oldLp, networkAgent);
         // TODO - move this check to cover the whole function
         if (!Objects.equals(newLp, oldLp)) {
             notifyNetworkCallbacks(networkAgent, ConnectivityManager.CALLBACK_IP_CHANGED);
@@ -3831,6 +3826,8 @@ public class ConnectivityService extends IConnectivityManager.Stub {
         }
         notifyLockdownVpn(newNetwork);
         handleApplyDefaultProxy(newNetwork.linkProperties.getHttpProxy());
+        mPacManager.setNetworkProxy(newNetwork.linkProperties.getHttpProxy(), newNetwork.network,
+                true);
         updateTcpBufferSizes(newNetwork);
     }
 
@@ -4117,14 +4114,9 @@ public class ConnectivityService extends IConnectivityManager.Stub {
             if (networkAgent.isVPN()) {
                 // Temporarily disable the default proxy (not global).
                 synchronized (mProxyLock) {
-                    if (!mDefaultProxyDisabled) {
-                        mDefaultProxyDisabled = true;
-                        if (mGlobalProxy == null && mDefaultProxy != null) {
-                            sendProxyBroadcast(null);
-                        }
-                    }
+                    mDefaultProxyDisabled = true;
+                    mPacManager.setNetworkProxyDisable(mDefaultProxyDisabled);
                 }
-                // TODO: support proxy per network.
             }
             // Consider network even though it is not yet validated.
             rematchNetworkAndRequests(networkAgent, false);
@@ -4133,12 +4125,8 @@ public class ConnectivityService extends IConnectivityManager.Stub {
             networkAgent.asyncChannel.disconnect();
             if (networkAgent.isVPN()) {
                 synchronized (mProxyLock) {
-                    if (mDefaultProxyDisabled) {
-                        mDefaultProxyDisabled = false;
-                        if (mGlobalProxy == null && mDefaultProxy != null) {
-                            sendProxyBroadcast(mDefaultProxy);
-                        }
-                    }
+                    mDefaultProxyDisabled = false;
+                    mPacManager.setNetworkProxyDisable(mDefaultProxyDisabled);
                 }
             }
         }

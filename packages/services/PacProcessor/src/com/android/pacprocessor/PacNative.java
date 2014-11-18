@@ -23,17 +23,13 @@ import android.util.Log;
 public class PacNative {
     private static final String TAG = "PacProxy";
 
-    private String mCurrentPac;
-
-    private boolean mIsActive;
-
     // Only make native calls from inside synchronized blocks.
-    private native boolean createV8ParserNativeLocked();
-    private native boolean destroyV8ParserNativeLocked();
+    private native boolean setProxyScriptNativeLocked(String script, int netId);
+    private native void setDefaultNetIdNativeLocked(int netId);
+    private native void setNetworkProxyDisableNativeLocked(boolean networkProxyDisable);
+    private native void shutdownNativeLocked();
 
-    private native boolean setProxyScriptNativeLocked(String script);
-
-    private native String makeProxyRequestNativeLocked(String url, String host);
+    private native String makeProxyRequestNativeLocked(String url, String host, int netId);
 
     static {
         System.loadLibrary("jni_pacprocessor");
@@ -43,44 +39,32 @@ public class PacNative {
 
     }
 
-    public synchronized boolean startPacSupport() {
-        if (createV8ParserNativeLocked()) {
-            Log.e(TAG, "Unable to Create v8 Proxy Parser.");
-            return true;
-        }
-        mIsActive = true;
-        return false;
-    }
-
-    public synchronized boolean stopPacSupport() {
-        if (mIsActive) {
-            if (destroyV8ParserNativeLocked()) {
-                Log.e(TAG, "Unable to Destroy v8 Proxy Parser.");
-                return true;
-            }
-            mIsActive = false;
-        }
-        return false;
-    }
-
-    public synchronized boolean setCurrentProxyScript(String script) {
-        if (setProxyScriptNativeLocked(script)) {
+    public synchronized boolean setCurrentProxyScript(String script, int netId) {
+        if (setProxyScriptNativeLocked(script, netId)) {
             Log.e(TAG, "Unable to parse proxy script.");
             return true;
         }
         return false;
     }
 
-    public synchronized String makeProxyRequest(String url, String host) {
-        String ret = makeProxyRequestNativeLocked(url, host);
+    public synchronized void setNetworkProxyDisable(boolean networkProxyDisable) {
+        setNetworkProxyDisableNativeLocked(networkProxyDisable);
+    }
+
+    public synchronized void setDefaultNetId(int netId) {
+        setDefaultNetIdNativeLocked(netId);
+    }
+
+    public synchronized void shutdown() {
+        shutdownNativeLocked();
+    }
+
+    public synchronized String makeProxyRequest(String url, String host, int netId) {
+        String ret = makeProxyRequestNativeLocked(url, host, netId);
         if ((ret == null) || (ret.length() == 0)) {
             Log.e(TAG, "v8 Proxy request failed.");
             ret = null;
         }
         return ret;
-    }
-
-    public synchronized boolean isActive() {
-        return mIsActive;
     }
 }

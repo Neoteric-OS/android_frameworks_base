@@ -235,7 +235,7 @@ public final class Proxy {
     }
 
     /** @hide */
-    public static final void setHttpProxySystemProperty(ProxyInfo p) {
+    public static final void setHttpProxySystemProperty(ProxyInfo p, int netId) {
         String host = null;
         String port = null;
         String exclList = null;
@@ -246,12 +246,12 @@ public final class Proxy {
             exclList = p.getExclusionListAsString();
             pacFileUrl = p.getPacFileUrl();
         }
-        setHttpProxySystemProperty(host, port, exclList, pacFileUrl);
+        setHttpProxySystemProperty(host, port, exclList, pacFileUrl, netId);
     }
 
     /** @hide */
     public static final void setHttpProxySystemProperty(String host, String port, String exclList,
-            Uri pacFileUrl) {
+            Uri pacFileUrl, int netId) {
         if (exclList != null) exclList = exclList.replace(",", "|");
         if (false) Log.d(TAG, "setHttpProxySystemProperty :"+host+":"+port+" - "+exclList);
         if (host != null) {
@@ -276,7 +276,7 @@ public final class Proxy {
             System.clearProperty("https.nonProxyHosts");
         }
         if (!Uri.EMPTY.equals(pacFileUrl)) {
-            ProxySelector.setDefault(new PacProxySelector());
+            ProxySelector.setDefault(new PacProxySelector(netId));
         } else {
             ProxySelector.setDefault(sDefaultProxySelector);
         }

@@ -18,10 +18,9 @@ package com.android.net;
 /** @hide */
 interface IProxyService
 {
-    String resolvePacFile(String host, String url);
+    String resolvePacFile(String host, String url, int netId);
 
-    oneway void setPacFile(String scriptContents);
-
-    oneway void startPacSystem();
-    oneway void stopPacSystem();
+    oneway void setPacFile(String scriptContents, int netId);
+    oneway void setNetworkProxyDisable(boolean networkProxyDisable);
+    oneway void setDefaultNetId(int netId);
 }
