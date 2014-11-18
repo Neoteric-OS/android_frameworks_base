@@ -2507,7 +2507,7 @@ public class ConnectivityService extends IConnectivityManager.Stub {
         }
     }
 
-    public ProxyInfo getProxy() {
+    public ProxyInfo getDefaultProxy() {
         // this information is already available as a world read/writable jvm property
         // so this API change wouldn't have a benifit.  It also breaks the passing
         // of proxy info to all the JVMs.
@@ -2517,6 +2517,21 @@ public class ConnectivityService extends IConnectivityManager.Stub {
             if ((ret == null) && !mDefaultProxyDisabled) ret = mDefaultProxy;
             return ret;
         }
+    }
+
+    private ProxyInfo canonicalizeProxyInfo(ProxyInfo proxy) {
+        if (proxy != null && TextUtils.isEmpty(proxy.getHost())
+                && (proxy.getPacFileUrl() == null || Uri.EMPTY.equals(proxy.getPacFileUrl()))) {
+            proxy = null;
+        }
+        return proxy;
+    }
+
+    private boolean proxyInfoEqual(ProxyInfo a, ProxyInfo b) {
+        a = canonicalizeProxyInfo(a);
+        b = canonicalizeProxyInfo(b);
+        if (a == b) return true;
+        return a != null && a.equals(b);
     }
 
     public void setGlobalProxy(ProxyInfo proxyProperties) {
@@ -2632,6 +2647,16 @@ public class ConnectivityService extends IConnectivityManager.Stub {
             if (!mDefaultProxyDisabled) {
                 sendProxyBroadcast(proxy);
             }
+        }
+    }
+
+    // If the proxy has changed from oldLp to newLp, resend proxy broadcast with default proxy.
+    private void updateProxy(LinkProperties newLp, LinkProperties oldLp, NetworkAgentInfo nai) {
+        ProxyInfo newProxyInfo = newLp == null ? null : newLp.getHttpProxy();
+        ProxyInfo oldProxyInfo = oldLp == null ? null : oldLp.getHttpProxy();
+
+        if (!proxyInfoEqual(newProxyInfo, oldProxyInfo)) {
+            sendProxyBroadcast(getDefaultProxy());
         }
     }
 
@@ -3561,7 +3586,11 @@ public class ConnectivityService extends IConnectivityManager.Stub {
         final boolean flushDns = updateRoutes(newLp, oldLp, netId);
         updateDnses(newLp, oldLp, netId, flushDns);
         updateClat(newLp, oldLp, networkAgent);
-        if (isDefaultNetwork(networkAgent)) handleApplyDefaultProxy(newLp.getHttpProxy());
+        if (isDefaultNetwork(networkAgent)) {
+            handleApplyDefaultProxy(newLp.getHttpProxy());
+        } else {
+            updateProxy(newLp, oldLp, networkAgent);
+        }
         // TODO - move this check to cover the whole function
         if (!Objects.equals(newLp, oldLp)) {
             notifyNetworkCallbacks(networkAgent, ConnectivityManager.CALLBACK_IP_CHANGED);
