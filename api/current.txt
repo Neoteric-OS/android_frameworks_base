@@ -16855,6 +16855,7 @@ package android.net {
     method public android.net.NetworkInfo[] getAllNetworkInfo();
     method public android.net.Network[] getAllNetworks();
     method public deprecated boolean getBackgroundDataSetting();
+    method public android.net.ProxyInfo getDefaultProxy();
     method public android.net.LinkProperties getLinkProperties(android.net.Network);
     method public android.net.NetworkCapabilities getNetworkCapabilities(android.net.Network);
     method public android.net.NetworkInfo getNetworkInfo(int);
@@ -17036,6 +17037,7 @@ package android.net {
     method public java.net.InetAddress getByName(java.lang.String) throws java.net.UnknownHostException;
     method public javax.net.SocketFactory getSocketFactory();
     method public java.net.URLConnection openConnection(java.net.URL) throws java.io.IOException;
+    method public java.net.URLConnection openConnection(java.net.URL, java.net.Proxy) throws java.io.IOException;
     method public void writeToParcel(android.os.Parcel, int);
     field public static final android.os.Parcelable.Creator CREATOR;
   }
@@ -17145,7 +17147,7 @@ package android.net {
     method public static final deprecated int getDefaultPort();
     method public static final deprecated java.lang.String getHost(android.content.Context);
     method public static final deprecated int getPort(android.content.Context);
-    field public static final java.lang.String EXTRA_PROXY_INFO = "android.intent.extra.PROXY_INFO";
+    field public static final deprecated java.lang.String EXTRA_PROXY_INFO = "android.intent.extra.PROXY_INFO";
     field public static final java.lang.String PROXY_CHANGE_ACTION = "android.intent.action.PROXY_CHANGE";
   }
 

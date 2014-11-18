@@ -453,6 +453,10 @@ public class ConnectivityManager {
     public static final int NETID_UNSET = 0;
 
     private final IConnectivityManager mService;
+    /**
+     * A kludge to facilitate static access where a Context pointer isn't available.
+     */
+    private static ConnectivityManager sInstance;
 
     private INetworkManagementService mNMService;
 
@@ -1396,6 +1400,7 @@ public class ConnectivityManager {
      */
     public ConnectivityManager(IConnectivityManager service) {
         mService = checkNotNull(service, "missing IConnectivityManager");
+        sInstance = this;
     }
 
     /** {@hide} */
@@ -1415,6 +1420,18 @@ public class ConnectivityManager {
             context.enforceCallingOrSelfPermission(
                     android.Manifest.permission.CHANGE_NETWORK_STATE, "ConnectivityService");
         }
+    }
+
+    /**
+     * @deprecated - use getSystemService. This is a kludge to support static access in certain
+     *               situations where a Context pointer is unavailable.
+     * @hide
+     */
+    public static ConnectivityManager getInstance() {
+        if (sInstance == null) {
+            throw new IllegalStateException("No ConnectivityManager yet constructed");
+        }
+        return sInstance;
     }
 
     /**
@@ -1748,20 +1765,25 @@ public class ConnectivityManager {
     }
 
     /**
-     * Get the HTTP proxy settings for the current default network.  Note that
-     * if a global proxy is set, it will override any per-network setting.
+     * Get the current default HTTP proxy settings.  If a global proxy is set it will be returned,
+     * otherwise if this process is bound to a {@link Network} using
+     * {@link #setProcessDefaultNetwork} then that {@code Network}'s proxy is returned, otherwise
+     * the default network's proxy is returned.
      *
      * @return the {@link ProxyInfo} for the current HTTP proxy, or {@code null} if no
      *        HTTP proxy is active.
-     *
-     * <p>This method requires the call to hold the permission
-     * {@link android.Manifest.permission#ACCESS_NETWORK_STATE}.
-     * {@hide}
-     * @deprecated Deprecated in favor of {@link #getLinkProperties}
      */
-    public ProxyInfo getProxy() {
+    public ProxyInfo getDefaultProxy() {
+        final Network network = getProcessDefaultNetwork();
+        if (network != null) {
+            final ProxyInfo globalProxy = getGlobalProxy();
+            if (globalProxy != null) return globalProxy;
+            final LinkProperties lp = getLinkProperties(network);
+            if (lp != null) return lp.getHttpProxy();
+            return null;
+        }
         try {
-            return mService.getProxy();
+            return mService.getDefaultProxy();
         } catch (RemoteException e) {
             return null;
         }
@@ -2491,6 +2513,8 @@ public class ConnectivityManager {
             return true;
         }
         if (NetworkUtils.bindProcessToNetwork(netId)) {
+            // Set HTTP proxy system properties to match network.
+            Proxy.setHttpProxySystemProperty(getInstance().getDefaultProxy());
             // Must flush DNS cache as new network may have different DNS resolutions.
             InetAddress.clearDnsCache();
             // Must flush socket pool as idle sockets will be bound to previous network and may
