@@ -41,14 +41,9 @@ public final class Proxy {
     private static final ProxySelector sDefaultProxySelector;
 
     /**
-     * Used to notify an app that's caching the default connection proxy
-     * that either the default connection or its proxy has changed.
-     * The intent will have the following extra value:</p>
-     * <ul>
-     *   <li><em>EXTRA_PROXY_INFO</em> - The ProxyProperties for the proxy.  Non-null,
-     *                                   though if the proxy is undefined the host string
-     *                                   will be empty.
-     * </ul>
+     * Used to notify an app that's caching the proxy
+     * that either the default connection has changed or a connection's proxy has changed.
+     * The new proxy should be queried using {@link ConnectivityManager#getDefaultProxy()}.
      *
      * <p class="note">This is a protected intent that can only be sent by the system
      */
