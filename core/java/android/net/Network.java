@@ -252,12 +252,17 @@ public class Network implements Parcelable {
             if (lp != null) proxyInfo = lp.getHttpProxy();
         }
         java.net.Proxy proxy = null;
+        ProxySelector proxySelector = null;
         if (proxyInfo != null) {
-            proxy = proxyInfo.makeProxy();
+            if (!Uri.EMPTY.equals(proxyInfo.getPacFileUrl())) {
+                proxySelector = new PacProxySelector(netId);
+            } else {
+                proxy = proxyInfo.makeProxy();
+            }
         } else {
             proxy = java.net.Proxy.NO_PROXY;
         }
-        return openConnection(url, proxy);
+        return openConnection(url, proxy, proxySelector);
     }
 
     /**
@@ -273,6 +278,11 @@ public class Network implements Parcelable {
      */
     public URLConnection openConnection(URL url, java.net.Proxy proxy) throws IOException {
         if (proxy == null) throw new IllegalArgumentException("proxy is null");
+        return openConnection(url, proxy, null);
+    }
+
+    private URLConnection openConnection(URL url, java.net.Proxy proxy, ProxySelector proxySelector)
+            throws IOException {
         maybeInitHttpClient();
         String protocol = url.getProtocol();
         OkHttpClient client;
@@ -287,6 +297,7 @@ public class Network implements Parcelable {
             // passed another protocol.
             throw new MalformedURLException("Invalid URL or unrecognized protocol " + protocol);
         }
+        if (proxySelector != null) client.setProxySelector(proxySelector);
         return client.setSocketFactory(getSocketFactory())
                 .setHostResolver(mHostResolver)
                 .setConnectionPool(mConnectionPool)

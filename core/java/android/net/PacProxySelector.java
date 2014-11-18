@@ -44,8 +44,10 @@ public class PacProxySelector extends ProxySelector {
 
     private IProxyService mProxyService;
     private final List<Proxy> mDefaultList;
+    private final int mNetId;
 
-    public PacProxySelector() {
+    public PacProxySelector(int netId) {
+        mNetId = netId;
         mProxyService = IProxyService.Stub.asInterface(
                 ServiceManager.getService(PROXY_SERVICE));
         if (mProxyService == null) {
@@ -73,7 +75,7 @@ public class PacProxySelector extends ProxySelector {
             urlString = uri.getHost();
         }
         try {
-            response = mProxyService.resolvePacFile(uri.getHost(), urlString);
+            response = mProxyService.resolvePacFile(uri.getHost(), urlString, mNetId);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

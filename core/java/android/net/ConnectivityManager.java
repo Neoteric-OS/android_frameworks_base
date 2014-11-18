@@ -2514,7 +2514,7 @@ public class ConnectivityManager {
         }
         if (NetworkUtils.bindProcessToNetwork(netId)) {
             // Set HTTP proxy system properties to match network.
-            Proxy.setHttpProxySystemProperty(getInstance().getDefaultProxy());
+            Proxy.setHttpProxySystemProperty(getInstance().getDefaultProxy(), netId);
             // Must flush DNS cache as new network may have different DNS resolutions.
             InetAddress.clearDnsCache();
             // Must flush socket pool as idle sockets will be bound to previous network and may

@@ -839,9 +839,11 @@ public final class ActivityThread {
             final Network network = ConnectivityManager.getProcessDefaultNetwork();
             if (network != null) {
                 Proxy.setHttpProxySystemProperty(
-                        ConnectivityManager.from(getSystemContext()).getDefaultProxy());
+                        ConnectivityManager.from(getSystemContext()).getDefaultProxy(),
+                        network.netId);
             } else {
-                Proxy.setHttpProxySystemProperty(host, port, exclList, pacFileUrl);
+                Proxy.setHttpProxySystemProperty(host, port, exclList, pacFileUrl,
+                        ConnectivityManager.NETID_UNSET);
             }
         }
 
@@ -4423,7 +4425,7 @@ public final class ActivityThread {
             IConnectivityManager service = IConnectivityManager.Stub.asInterface(b);
             try {
                 final ProxyInfo proxyInfo = service.getDefaultProxy();
-                Proxy.setHttpProxySystemProperty(proxyInfo);
+                Proxy.setHttpProxySystemProperty(proxyInfo, ConnectivityManager.NETID_UNSET);
             } catch (RemoteException e) {}
         }
 

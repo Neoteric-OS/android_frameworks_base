@@ -16,9 +16,12 @@
 
 #define LOG_TAG "PacProcessor"
 
+#include <map>
+
 #include <utils/Log.h>
 #include <utils/Mutex.h>
 #include "android_runtime/AndroidRuntime.h"
+#include "resolv_netid.h"
 
 #include "jni.h"
 #include "JNIHelp.h"
@@ -27,11 +30,11 @@
 
 namespace android {
 
+namespace {
+
 class ProxyErrorLogger : public net::ProxyErrorListener {
 public:
-    ~ProxyErrorLogger() {
-
-    }
+    virtual ~ProxyErrorLogger() {}
     void AlertMessage(String16 message) {
         String8 str(message);
         ALOGD("Alert: %s", str.string());
@@ -40,11 +43,37 @@ public:
         String8 str(message);
         ALOGE("Error: %s", str.string());
     }
+    static ProxyErrorLogger* getDefault() {
+        if (sDefault == NULL) {
+            sDefault = new ProxyErrorLogger();
+        }
+        return sDefault;
+    }
+    static void freeDefault() {
+        if (sDefault != NULL) {
+            delete sDefault;
+            sDefault = NULL;
+        }
+    }
+private:
+    static ProxyErrorLogger* sDefault;
+};
+ProxyErrorLogger* ProxyErrorLogger::sDefault;
+
+struct ProxyResolver {
+    ProxyResolver() : proxyResolver(net::ProxyResolverJSBindings::CreateDefault(),
+            ProxyErrorLogger::getDefault()), pacSet(false) {}
+    virtual ~ProxyResolver() {}
+
+    net::ProxyResolverV8 proxyResolver;
+    bool pacSet;
 };
 
-net::ProxyResolverV8* proxyResolver = NULL;
-ProxyErrorLogger* logger = NULL;
-bool pacSet = false;
+#define GLOBAL_PROXY_NETID (NETID_UNSET)
+typedef std::map<int, ProxyResolver*> ProxyResolverMap;
+ProxyResolverMap proxyResolvers;
+int defaultNetId = NETID_UNSET;
+bool networkProxyDisable = false;
 
 String16 jstringToString16(JNIEnv* env, jstring jstr) {
     const jchar* str = env->GetStringCritical(jstr, 0);
@@ -61,65 +90,75 @@ jstring string16ToJstring(JNIEnv* env, String16 string) {
     return env->NewString(reinterpret_cast<const jchar*>(str), len);
 }
 
-static jboolean com_android_pacprocessor_PacNative_createV8ParserNativeLocked(JNIEnv* /* env */,
-        jobject) {
-    if (proxyResolver == NULL) {
-        logger = new ProxyErrorLogger();
-        proxyResolver = new net::ProxyResolverV8(net::ProxyResolverJSBindings::CreateDefault(),
-                logger);
-        pacSet = false;
-        return JNI_FALSE;
-    }
-    return JNI_TRUE;
+void setNetworkProxyDisableNativeLocked(JNIEnv*, jobject, jboolean newNetworkProxyDisable) {
+    networkProxyDisable = newNetworkProxyDisable;
 }
 
-static jboolean com_android_pacprocessor_PacNative_destroyV8ParserNativeLocked(JNIEnv* /* env */,
-        jobject) {
-    if (proxyResolver != NULL) {
-        delete logger;
-        delete proxyResolver;
-        logger = NULL;
-        proxyResolver = NULL;
-        return JNI_FALSE;
-    }
-    return JNI_TRUE;
+void setDefaultNetIdNativeLocked(JNIEnv*, jobject, jint newDefaultNetId) {
+    defaultNetId = newDefaultNetId;
 }
 
-static jboolean com_android_pacprocessor_PacNative_setProxyScriptNativeLocked(JNIEnv* env, jobject,
-        jstring script) {
-    String16 script16 = jstringToString16(env, script);
+jboolean setProxyScriptNativeLocked(JNIEnv* env, jobject, jstring script, jint netId) {
+    ProxyResolverMap::iterator proxyResolverIter = proxyResolvers.find(netId);
+    if (script == NULL) {
+        if (proxyResolverIter != proxyResolvers.end()) {
+            proxyResolvers.erase(proxyResolverIter);
+            delete proxyResolverIter->second;
+            if (proxyResolvers.empty()) {
+                ProxyErrorLogger::freeDefault();
+            }
+        }
+    } else {
+        String16 script16 = jstringToString16(env, script);
 
-    if (proxyResolver == NULL) {
-        ALOGE("V8 Parser not started when setting PAC script");
-        return JNI_TRUE;
-    }
+        if (proxyResolverIter == proxyResolvers.end()) {
+            proxyResolvers[netId] = new ProxyResolver();
+        }
 
-    if (proxyResolver->SetPacScript(script16) != OK) {
-        ALOGE("Unable to set PAC script");
-        return JNI_TRUE;
+        if (proxyResolvers[netId]->proxyResolver.SetPacScript(script16) != OK) {
+            ALOGE("Unable to set PAC script");
+            return JNI_TRUE;
+        }
+        proxyResolvers[netId]->pacSet = true;
     }
-    pacSet = true;
 
     return JNI_FALSE;
 }
 
-static jstring com_android_pacprocessor_PacNative_makeProxyRequestNativeLocked(JNIEnv* env, jobject,
-        jstring url, jstring host) {
+void shutdownNativeLocked(JNIEnv*, jobject) {
+    for(ProxyResolverMap::iterator i = proxyResolvers.begin(); i != proxyResolvers.end(); ++i) {
+        delete i->second;
+    }
+    proxyResolvers.clear();
+    ProxyErrorLogger::freeDefault();
+}
+
+jstring makeProxyRequestNativeLocked(JNIEnv* env, jobject, jstring url, jstring host, jint netId) {
     String16 url16 = jstringToString16(env, url);
     String16 host16 = jstringToString16(env, host);
     String16 ret;
 
-    if (proxyResolver == NULL) {
-        ALOGE("V8 Parser not initialized when running PAC script");
+    // Querying for default PAC?
+    if (netId == NETID_UNSET) {
+        // Query for default NetID.
+        netId = defaultNetId;
+    // Querying for a specific NetID and a global proxy is in place?
+    } else if (defaultNetId == GLOBAL_PROXY_NETID) {
+        // Query for global proxy.
+        netId = GLOBAL_PROXY_NETID;
+    }
+
+    ProxyResolverMap::iterator proxyResolverIter = proxyResolvers.find(netId);
+
+    if (proxyResolverIter == proxyResolvers.end()) {
         return NULL;
     }
 
-    if (!pacSet) {
-        ALOGW("Attempting to run PAC with no script set");
+    if (!proxyResolverIter->second->pacSet) {
         return NULL;
     }
 
-    if (proxyResolver->GetProxyForURL(url16, host16, &ret) != OK) {
+    if (proxyResolverIter->second->proxyResolver.GetProxyForURL(url16, host16, &ret) != OK) {
         String8 ret8(ret);
         ALOGE("Error Running PAC: %s", ret8.string());
         return NULL;
@@ -130,16 +169,16 @@ static jstring com_android_pacprocessor_PacNative_makeProxyRequestNativeLocked(J
     return jret;
 }
 
-static JNINativeMethod gMethods[] = {
-    { "createV8ParserNativeLocked", "()Z",
-        (void*)com_android_pacprocessor_PacNative_createV8ParserNativeLocked},
-    { "destroyV8ParserNativeLocked", "()Z",
-        (void*)com_android_pacprocessor_PacNative_destroyV8ParserNativeLocked},
-    { "setProxyScriptNativeLocked", "(Ljava/lang/String;)Z",
-        (void*)com_android_pacprocessor_PacNative_setProxyScriptNativeLocked},
-    { "makeProxyRequestNativeLocked", "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;",
-        (void*)com_android_pacprocessor_PacNative_makeProxyRequestNativeLocked},
+JNINativeMethod gMethods[] = {
+    { "setDefaultNetIdNativeLocked", "(I)V", (void*)setDefaultNetIdNativeLocked},
+    { "setNetworkProxyDisableNativeLocked", "(Z)V", (void*)setNetworkProxyDisableNativeLocked},
+    { "setProxyScriptNativeLocked", "(Ljava/lang/String;I)Z", (void*)setProxyScriptNativeLocked},
+    { "shutdownNativeLocked", "()V", (void*)shutdownNativeLocked},
+    { "makeProxyRequestNativeLocked", "(Ljava/lang/String;Ljava/lang/String;I)Ljava/lang/String;",
+        (void*)makeProxyRequestNativeLocked},
 };
+
+} /* namespace */
 
 int register_com_android_pacprocessor_PacNative(JNIEnv* env) {
     return jniRegisterNativeMethods(env, "com/android/pacprocessor/PacNative",

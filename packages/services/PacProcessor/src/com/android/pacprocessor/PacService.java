@@ -47,7 +47,7 @@ public class PacService extends Service {
     public void onDestroy() {
         super.onDestroy();
         if (mPacNative != null) {
-            mPacNative.stopPacSupport();
+            mPacNative.shutdown();
             mPacNative = null;
             mStub = null;
         }
@@ -70,7 +70,7 @@ public class PacService extends Service {
         }
 
         @Override
-        public String resolvePacFile(String host, String url) throws RemoteException {
+        public String resolvePacFile(String host, String url, int netId) throws RemoteException {
             try {
                 // Check for characters that could be used for an injection attack.
                 new URL(url);
@@ -79,37 +79,37 @@ public class PacService extends Service {
                         throw new RemoteException("Invalid host was passed");
                     }
                 }
-                return mPacNative.makeProxyRequest(url, host);
+                return mPacNative.makeProxyRequest(url, host, netId);
             } catch (MalformedURLException e) {
                 throw new RemoteException("Invalid URL was passed");
             }
         }
 
         @Override
-        public void setPacFile(String script) throws RemoteException {
+        public void setPacFile(String script, int netId) throws RemoteException {
             if (Binder.getCallingUid() != Process.SYSTEM_UID) {
                 Log.e(TAG, "Only system user is allowed to call setPacFile");
                 throw new SecurityException();
             }
-            mPacNative.setCurrentProxyScript(script);
+            mPacNative.setCurrentProxyScript(script, netId);
         }
 
         @Override
-        public void startPacSystem() throws RemoteException {
+        public void setDefaultNetId(int netId) throws RemoteException {
             if (Binder.getCallingUid() != Process.SYSTEM_UID) {
-                Log.e(TAG, "Only system user is allowed to call startPacSystem");
+                Log.e(TAG, "Only system user is allowed to call setDefaultNetId");
                 throw new SecurityException();
             }
-            mPacNative.startPacSupport();
+            mPacNative.setDefaultNetId(netId);
         }
 
         @Override
-        public void stopPacSystem() throws RemoteException {
+        public void setNetworkProxyDisable(boolean networkProxyDisable) throws RemoteException {
             if (Binder.getCallingUid() != Process.SYSTEM_UID) {
-                Log.e(TAG, "Only system user is allowed to call stopPacSystem");
+                Log.e(TAG, "Only system user is allowed to call setNetworkProxyDisable");
                 throw new SecurityException();
             }
-            mPacNative.stopPacSupport();
+            mPacNative.setNetworkProxyDisable(networkProxyDisable);
         }
     }
 }

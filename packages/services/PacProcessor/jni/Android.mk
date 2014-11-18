@@ -23,7 +23,8 @@ LOCAL_SRC_FILES := \
     com_android_pacprocessor_PacNative.cpp
 
 LOCAL_C_INCLUDES += \
-    external/chromium-libpac/src
+    external/chromium-libpac/src \
+    $(TOP)/bionic/libc/dns/include
 
 LOCAL_SHARED_LIBRARIES := \
     libandroidfw \
