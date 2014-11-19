@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faad8bfd_528d943c",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-11-19T16:08:24Z",
+      "side": 1,
+      "message": "Please use fuller words for variables. We\u0027re trying to get away from ALL CAPS and abbreviations. Maybe use numWindows or numChildWindows.",
+      "range": {
+        "startLine": 390,
+        "startChar": 22,
+        "endLine": 390,
+        "endChar": 25
+      },
+      "revId": "d2274ee23319ec712a625aa88383ab20d4ee7b46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a55ffac_a03d23b3",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-11-19T16:08:24Z",
+      "side": 1,
+      "message": "Please rename to childSubLayer.",
+      "range": {
+        "startLine": 395,
+        "startChar": 30,
+        "endLine": 395,
+        "endChar": 38
+      },
+      "revId": "d2274ee23319ec712a625aa88383ab20d4ee7b46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a7f2323_2f1a858d",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-11-19T16:08:24Z",
+      "side": 1,
+      "message": "This has always been a lame way of saying if we haven\u0027t added the window yet, add it to the end now. Since you\u0027re already editing this, let\u0027s fix it now. Either take int i out of the loop initializer and compare it to numChildWindows, or create a new variable, \"boolean added\" which is set true before the break; statement and test it.",
+      "range": {
+        "startLine": 404,
+        "startChar": 20,
+        "endLine": 404,
+        "endChar": 46
+      },
+      "revId": "d2274ee23319ec712a625aa88383ab20d4ee7b46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
