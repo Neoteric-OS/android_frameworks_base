@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7af35b1b_3e640907",
+        "filename": "opengl/java/android/opengl/GLSurfaceView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042426
+      },
+      "writtenOn": "2014-11-19T02:52:37Z",
+      "side": 1,
+      "message": "When the GLSurfaceView using EGL API to get RGB888 config, it may get a RGBA8888 config. This happens in the emulator with Intel integrated graphics card acceleration, since there is no exact RGB888 config in the graphics card and it could be compatible.",
+      "revId": "4dcc4b36dac98e0c757399ecef4f638b3e682f5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
