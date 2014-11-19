@@ -37,6 +37,41 @@
     },
     {
       "key": {
+        "uuid": "7af35b1b_be593901",
+        "filename": "cmds/bootanimation/AudioPlayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-11-19T10:37:59Z",
+      "side": 1,
+      "message": "Please change this, this is C++.",
+      "parentUuid": "3afc83c4_6413ea7b",
+      "revId": "0366a76ecf4b5f21530eba62d54620f296c8f727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7af35b1b_9e5efde4",
+        "filename": "cmds/bootanimation/AudioPlayer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-11-19T10:37:59Z",
+      "side": 1,
+      "message": "and here",
+      "revId": "0366a76ecf4b5f21530eba62d54620f296c8f727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1af97fd6_862dccbf",
         "filename": "core/jni/android/graphics/GraphicsJNI.h",
         "patchSetId": 3
