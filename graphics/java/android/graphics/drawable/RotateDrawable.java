@@ -215,7 +215,7 @@ public class RotateDrawable extends Drawable implements Drawable.Callback {
      * @attr ref android.R.styleable#RotateDrawable_pivotX
      */
     public void setPivotX(float pivotX) {
-        if (mState.mPivotX == pivotX) {
+        if (mState.mPivotX != pivotX) {
             mState.mPivotX = pivotX;
             invalidateSelf();
         }
@@ -241,7 +241,7 @@ public class RotateDrawable extends Drawable implements Drawable.Callback {
      * @see #isPivotXRelative()
      */
     public void setPivotXRelative(boolean relative) {
-        if (mState.mPivotXRel == relative) {
+        if (mState.mPivotXRel != relative) {
             mState.mPivotXRel = relative;
             invalidateSelf();
         }
@@ -269,7 +269,7 @@ public class RotateDrawable extends Drawable implements Drawable.Callback {
      * @attr ref android.R.styleable#RotateDrawable_pivotY
      */
     public void setPivotY(float pivotY) {
-        if (mState.mPivotY == pivotY) {
+        if (mState.mPivotY != pivotY) {
             mState.mPivotY = pivotY;
             invalidateSelf();
         }
@@ -295,7 +295,7 @@ public class RotateDrawable extends Drawable implements Drawable.Callback {
      * @see #isPivotYRelative()
      */
     public void setPivotYRelative(boolean relative) {
-        if (mState.mPivotYRel == relative) {
+        if (mState.mPivotYRel != relative) {
             mState.mPivotYRel = relative;
             invalidateSelf();
         }
