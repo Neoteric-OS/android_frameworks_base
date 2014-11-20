@@ -16,6 +16,24 @@
       "revId": "c4ad81e40fe92447dd908179d38b69095fc55a71",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a441f3a_2e05e736",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4230,
+      "author": {
+        "id": 1015668
+      },
+      "writtenOn": "2014-11-20T11:07:27Z",
+      "side": 1,
+      "message": "Our original bug report for this states:\n\n\"If a system app in /system/priv-app/ is once updated via Google play and it is moved to /system/app/ by next FOTA, then the app keeps FLAG_PRIVILEGED even after moved to /system/app.\"",
+      "parentUuid": "ba5313fc_30938863",
+      "revId": "c4ad81e40fe92447dd908179d38b69095fc55a71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
