@@ -52,6 +52,58 @@
       "revId": "c4ad81e40fe92447dd908179d38b69095fc55a71",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ff84938_60134cff",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4230,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2014-11-20T22:01:11Z",
+      "side": 1,
+      "message": "I just talked this over with ctate in person, and this location (L4428) is the right place to make the change.\n\nThe only change we\u0027d like to make is to also hoist the *adding* of the flag up to this location, so we\u0027re either adding/removing the flag at this single point.  So we\u0027d be doing ctate\u0027s suggest if/else logic in this single location.",
+      "parentUuid": "3f0555fe_7fbacbe7",
+      "revId": "c4ad81e40fe92447dd908179d38b69095fc55a71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ff84938_000248a9",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4257,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2014-11-20T22:01:11Z",
+      "side": 1,
+      "message": "Per above comment, this would move up to the if() block added above.",
+      "revId": "c4ad81e40fe92447dd908179d38b69095fc55a71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ff84938_4031708f",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7114,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2014-11-20T22:01:11Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "c4ad81e40fe92447dd908179d38b69095fc55a71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
