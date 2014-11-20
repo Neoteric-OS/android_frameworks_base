@@ -34,6 +34,24 @@
       "revId": "c4ad81e40fe92447dd908179d38b69095fc55a71",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f0555fe_7fbacbe7",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4230,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2014-11-20T21:35:59Z",
+      "side": 1,
+      "message": "There is already a case a few lines below (~ line 4256) where it has been detected that the path has changed [as in OTA], and privilege is explicitly applied when appropriate:\n\n  if (locationIsPrivileged(scanFile)) {\n    updatedPkg.pkgFlags |\u003d ApplicationInfo.FLAG_PRIVILEGED;\n  }\n\nI would think the correction in the other direction would best be done as an \u0027else\u0027 clause here:\n\n  if (locationIsPrivileged(scanFile)) {\n    updatedPkg.pkgFlags |\u003d ApplicationInfo.FLAG_PRIVILEGED;\n  } else {\n    // A formerly-privileged apk has been moved out of privilege; revoke it\n    updatedPkg.pkgFlags \u0026\u003d ~ApplicationInfo.FLAG_PRIVILEGED;\n  }\n\nI\u0027m wary of introducing another privilege-adjustment point outside the scope of the existing \"app whose system path has changed due to OTA\" sequence.",
+      "parentUuid": "1a441f3a_2e05e736",
+      "revId": "c4ad81e40fe92447dd908179d38b69095fc55a71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
