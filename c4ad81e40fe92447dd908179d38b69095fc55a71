@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba5313fc_30938863",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4230,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-11-20T10:55:24Z",
+      "side": 1,
+      "message": "does this apply to play store updates to privileged apps ? it shouldn\u0027t. Afaik, (jsharkey please correct me if i\u0027m wrong) the only case where we should remove FLAG_PRIVILEGED is if an OTA moves an app out of priv-app and into app.",
+      "revId": "c4ad81e40fe92447dd908179d38b69095fc55a71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
