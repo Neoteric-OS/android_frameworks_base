@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf0a2512_380ea927",
+        "filename": "media/jni/android_media_MediaDrm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2014-11-21T00:28:44Z",
+      "side": 1,
+      "message": "can you move the assignment to inside the HashMapToKeyedVector() function, so that the result doesn\u0027t depend on the caller?",
+      "revId": "631e644ca91659ef056cac1f65dee3a501c50d99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
