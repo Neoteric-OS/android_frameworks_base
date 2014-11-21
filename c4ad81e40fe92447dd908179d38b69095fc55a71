@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "5f2689b6_cdb6c95e",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4230,
+      "author": {
+        "id": 1015668
+      },
+      "writtenOn": "2014-11-21T11:03:25Z",
+      "side": 1,
+      "message": "No, it\u0027s a bug report internally at Sony Mobile.\n\nI\u0027ll upload a new patch set to address the review comments after I\u0027ve got feedback from the original author.",
+      "parentUuid": "9f448158_cfefddc2",
+      "revId": "c4ad81e40fe92447dd908179d38b69095fc55a71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ff84938_000248a9",
         "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 7
