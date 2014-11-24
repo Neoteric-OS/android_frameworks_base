@@ -130,6 +130,7 @@ void RenderState::resumeFromFunctorInvoke() {
     glEnable(GL_BLEND);
     glBlendFunc(mCaches->lastSrcMode, mCaches->lastDstMode);
     glBlendEquation(GL_FUNC_ADD);
+    glStencilMask(0xff);
 }
 
 void RenderState::debugOverdraw(bool enable, bool clear) {
