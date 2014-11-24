@@ -680,9 +680,24 @@ public class WindowManagerService extends IWindowManager.Stub
 
     private WindowContentFrameStats mTempWindowRenderStats;
 
+    private boolean mDisposed;
+
     final class DragInputEventReceiver extends InputEventReceiver {
         public DragInputEventReceiver(InputChannel inputChannel, Looper looper) {
             super(inputChannel, looper);
+        }
+
+        public void requestDispose() {
+            if (mH.getLooper().isCurrentThread()) {
+                dispose();
+            } else {
+                mH.post(new Runnable() {
+                    public void run() {
+                        dispose();
+                    }
+                });
+            }
+            mDisposed = true;
         }
 
         @Override
@@ -691,6 +706,7 @@ public class WindowManagerService extends IWindowManager.Stub
             try {
                 if (event instanceof MotionEvent
                         && (event.getSource() & InputDevice.SOURCE_CLASS_POINTER) != 0
+                        && !mDisposed
                         && mDragState != null) {
                     final MotionEvent motionEvent = (MotionEvent)event;
                     boolean endDrag = false;
