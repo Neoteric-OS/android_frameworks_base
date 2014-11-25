@@ -52,6 +52,11 @@ public final class Proxy {
     /**
      * Intent extra included with {@link #PROXY_CHANGE_ACTION} intents.
      * It describes the new proxy being used (as a {@link ProxyInfo} object).
+     * @deprecated Because {@code PROXY_CHANGE_ACTION} is sent whenever the proxy
+     * for any network on the system changes, applications should always use
+     * {@link ConnectivityManager#getDefaultProxy()} or
+     * {@link ConnectivityManager#getLinkProperties(Network)}.{@link LinkProperties#getHttpProxy()}
+     * to get the proxy for the Network(s) they are using.
      */
     public static final String EXTRA_PROXY_INFO = "android.intent.extra.PROXY_INFO";
 
