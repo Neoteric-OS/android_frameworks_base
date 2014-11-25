@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "7f298d84_37735a13",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4230,
+      "author": {
+        "id": 1015668
+      },
+      "writtenOn": "2014-11-25T09:00:30Z",
+      "side": 1,
+      "message": "\u003e hoist the *adding* of the flag up to this location, so we\u0027re either adding/removing the flag at this single point\n\nDone",
+      "parentUuid": "5f2689b6_cdb6c95e",
+      "revId": "c4ad81e40fe92447dd908179d38b69095fc55a71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ff84938_000248a9",
         "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 7
@@ -120,6 +138,24 @@
       "writtenOn": "2014-11-20T22:01:11Z",
       "side": 1,
       "message": "Per above comment, this would move up to the if() block added above.",
+      "revId": "c4ad81e40fe92447dd908179d38b69095fc55a71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f3395f6_3baa2367",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4257,
+      "author": {
+        "id": 1015668
+      },
+      "writtenOn": "2014-11-25T09:00:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ff84938_000248a9",
       "revId": "c4ad81e40fe92447dd908179d38b69095fc55a71",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
