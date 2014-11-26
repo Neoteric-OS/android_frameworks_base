@@ -1,0 +1,8 @@
+Code-Review+1: Zoran Jovanovic <zoran.jovanovic@sonymobile.com>
+Verified+1: Deckard Autoverifier <deckard@android.com>
+Code-Review+2: Adam Lesinski <adamlesinski@google.com>
+Submitted-by: Conley Owens <cco3@android.com>
+Submitted-at: Wed, 26 Nov 2014 17:57:08 +0000
+Reviewed-on: https://android-review.googlesource.com/113650
+Project: platform/frameworks/base
+Branch: refs/heads/master
