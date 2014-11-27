@@ -1482,6 +1482,14 @@ public abstract class PackageManager {
 
     /**
      * Feature for {@link #getSystemAvailableFeatures} and
+     * {@link #hasSystemFeature}: The WiFi feature nocoex.
+     */
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_WIFI_NOCOEX = "android.hardware.wifi.nocoex";
+
+
+    /**
+     * Feature for {@link #getSystemAvailableFeatures} and
      * {@link #hasSystemFeature}: The device supports Wi-Fi Direct networking.
      */
     @SdkConstant(SdkConstantType.FEATURE)
