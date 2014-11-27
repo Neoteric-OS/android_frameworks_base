@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f633129_76458e92",
+        "filename": "core/java/android/net/http/Headers.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1052243
+      },
+      "writtenOn": "2014-11-27T13:05:29Z",
+      "side": 1,
+      "message": "Why not use Character.toLowerCase here?",
+      "revId": "cd1d3fc3e7a20affde546fcce0d67087d6475711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
