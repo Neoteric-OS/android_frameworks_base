@@ -22,6 +22,30 @@
       "revId": "0ea4e7b581f97b13d4f63f54609736a1ad5a858a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f147587_24513227",
+        "filename": "core/java/android/net/http/Headers.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-11-27T14:03:56Z",
+      "side": 1,
+      "message": "i\u0027m surprised you made this comment here and not on setLowerCaseIndexOf (below). I would never be able to guess what the method did based on its name.",
+      "parentUuid": "5f17698b_a517de36",
+      "range": {
+        "startLine": 479,
+        "startChar": 19,
+        "endLine": 479,
+        "endChar": 44
+      },
+      "revId": "0ea4e7b581f97b13d4f63f54609736a1ad5a858a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
