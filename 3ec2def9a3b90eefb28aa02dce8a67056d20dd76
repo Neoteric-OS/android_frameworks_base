@@ -16,6 +16,24 @@
       "revId": "3ec2def9a3b90eefb28aa02dce8a67056d20dd76",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f17698b_e81b6b8e",
+        "filename": "core/java/android/net/http/CharArrayBuffers.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-11-27T18:03:51Z",
+      "side": 0,
+      "message": "it\u0027s a no-op, the RHS of the contains is always ASCII (a HTTP header).",
+      "parentUuid": "9f2561f1_27513a27",
+      "revId": "3ec2def9a3b90eefb28aa02dce8a67056d20dd76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
