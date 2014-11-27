@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f2561f1_27513a27",
+        "filename": "core/java/android/net/http/CharArrayBuffers.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2014-11-27T18:00:35Z",
+      "side": 0,
+      "message": "note that this only touched ASCII characters whereas Character.toLowerCase will alter many non-ASCII characters. i don\u0027t know whether the old behavior was a bug, but this is a behavioral change.",
+      "revId": "3ec2def9a3b90eefb28aa02dce8a67056d20dd76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
