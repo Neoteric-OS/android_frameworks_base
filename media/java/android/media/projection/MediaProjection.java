@@ -183,9 +183,8 @@ public final class MediaProjection {
     private final class MediaProjectionCallback extends IMediaProjectionCallback.Stub {
         @Override
         public void onStop() {
-            final int N = mCallbacks.size();
-            for (int i = 0; i < N; i++) {
-                mCallbacks.get(i).onStop();
+            for (CallbackRecord callback : mCallbacks.values()) {
+                callback.onStop();
             }
         }
     }
