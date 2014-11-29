@@ -534,8 +534,15 @@ public final class PageContentRepository {
             }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
         }
 
+        abstract class UnbindServiceTask extends AsyncTask<Void, Void, Void> {
+            AsyncRenderer mRenderer;
+            public UnbindServiceTask(AsyncRenderer renderer) {
+                mRenderer = renderer;
+            }
+        };
+
         public void destroy(final Runnable callback) {
-            new AsyncTask<Void, Void, Void>() {
+            new UnbindServiceTask(AsyncRenderer.this) {
                 @Override
                 protected Void doInBackground(Void... params) {
                     return null;
@@ -545,7 +552,7 @@ public final class PageContentRepository {
                 public void onPostExecute(Void result) {
                     if (mBoundToService) {
                         mBoundToService = false;
-                        mContext.unbindService(AsyncRenderer.this);
+                        mContext.unbindService(mRenderer);
                     }
                     mPageContentCache.invalidate();
                     mPageContentCache.clear();
