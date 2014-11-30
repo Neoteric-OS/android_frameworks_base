@@ -182,7 +182,7 @@ int NativeInputEventReceiver::handleEvent(int receiveFd, int events, void* data)
 
                 if (status == WOULD_BLOCK) {
                     if (kDebugDispatchCycle) {
-                        ALOGD("channel '%s' ~ Sent %u queued finish events; %u left.",
+                        ALOGD("channel '%s' ~ Sent %zu queued finish events; %zu left.",
                                 getInputChannelName(), i, mFinishQueue.size());
                     }
                     return 1; // keep the callback, try again later
@@ -201,7 +201,7 @@ int NativeInputEventReceiver::handleEvent(int receiveFd, int events, void* data)
             }
         }
         if (kDebugDispatchCycle) {
-            ALOGD("channel '%s' ~ Sent %u queued finish events; none left.",
+            ALOGD("channel '%s' ~ Sent %zu queued finish events; none left.",
                     getInputChannelName(), mFinishQueue.size());
         }
         mFinishQueue.clear();
@@ -217,7 +217,7 @@ int NativeInputEventReceiver::handleEvent(int receiveFd, int events, void* data)
 status_t NativeInputEventReceiver::consumeEvents(JNIEnv* env,
         bool consumeBatches, nsecs_t frameTime, bool* outConsumedBatch) {
     if (kDebugDispatchCycle) {
-        ALOGD("channel '%s' ~ Consuming input events, consumeBatches=%s, frameTime=%lld.",
+        ALOGD("channel '%s' ~ Consuming input events, consumeBatches=%s, frameTime=%zd.",
                 getInputChannelName(), consumeBatches ? "true" : "false", frameTime);
     }
 

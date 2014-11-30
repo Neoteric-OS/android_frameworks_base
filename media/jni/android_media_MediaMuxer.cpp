@@ -106,7 +106,7 @@ static void android_media_MediaMuxer_writeSampleData(
     }
 
     if (dstSize < (offset + size)) {
-        ALOGE("writeSampleData saw wrong dstSize %lld, size  %d, offset %d",
+        ALOGE("writeSampleData saw wrong dstSize %zd, size  %d, offset %d",
               dstSize, size, offset);
         if (byteArray != NULL) {
             env->ReleaseByteArrayElements(byteArray, (jbyte *)dst, 0);
