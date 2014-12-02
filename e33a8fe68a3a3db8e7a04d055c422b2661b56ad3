@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fb555f8_ff1c1bd7",
+        "filename": "core/jni/android_view_InputEventReceiver.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1052399
+      },
+      "writtenOn": "2014-12-02T00:53:59Z",
+      "side": 1,
+      "message": "frameTime is int64_t, which should be formatted as PRId64.",
+      "range": {
+        "startLine": 220,
+        "startChar": 73,
+        "endLine": 220,
+        "endChar": 82
+      },
+      "revId": "e33a8fe68a3a3db8e7a04d055c422b2661b56ad3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fa849a2_43ae9af7",
+        "filename": "media/jni/android_media_MediaExtractor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1052399
+      },
+      "writtenOn": "2014-12-02T00:53:59Z",
+      "side": 1,
+      "message": "use PRId64?",
+      "revId": "e33a8fe68a3a3db8e7a04d055c422b2661b56ad3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fb555f8_7fa48b18",
+        "filename": "media/jni/android_media_MediaMetadataRetriever.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1052399
+      },
+      "writtenOn": "2014-12-02T00:53:59Z",
+      "side": 1,
+      "message": "PRId64",
+      "range": {
+        "startLine": 231,
+        "startChar": 28,
+        "endLine": 231,
+        "endChar": 30
+      },
+      "revId": "e33a8fe68a3a3db8e7a04d055c422b2661b56ad3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fa849a2_c36bca11",
+        "filename": "media/jni/android_media_MediaMuxer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1052399
+      },
+      "writtenOn": "2014-12-02T00:53:59Z",
+      "side": 1,
+      "message": "PRId64",
+      "range": {
+        "startLine": 109,
+        "startChar": 50,
+        "endLine": 109,
+        "endChar": 52
+      },
+      "revId": "e33a8fe68a3a3db8e7a04d055c422b2661b56ad3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fa849a2_4360da2a",
+        "filename": "media/jni/android_media_MediaRecorder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1052399
+      },
+      "writtenOn": "2014-12-02T00:53:59Z",
+      "side": 1,
+      "message": "PRId64",
+      "revId": "e33a8fe68a3a3db8e7a04d055c422b2661b56ad3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
