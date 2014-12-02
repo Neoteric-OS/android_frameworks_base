@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfb999d9_b92d3f05",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1014687
+      },
+      "writtenOn": "2014-12-02T00:43:58Z",
+      "side": 1,
+      "message": "Etan, Can you add these files that are missing . The latest file should be fine\n\t\n1. telecomm/java/android/telecom/ConferenceParticipant.java\n \t\n2. telecomm/java/android/telecom/ConferenceParticipant.aidl\n\n3. telecomm/java/android/telecom/ImsConferenceState.java\n4. telephony/java/com/android/ims/internal/IImsCallSession.aidl\n5. telephony/java/com/android/ims/internal/IImsCallSessionListener.aidl\n \n\n\nAlternately you can cherry pick these commits\n\n\n1. Below commit is not integrated properly\nnew files ConferenceParticipant.aidl \u0026 ConferenceParticipant.java are missing\nChanges done to ImsConferenceState.java are missing\ncommit 3bffcf78b5e4bd8b60543126fc0bdb09808f28f5\nAuthor: Tyler Gunn \u003ctgunn@google.com\u003e\nDate:   Tue Oct 28 13:51:27 2014 -0700\n    Bug: 18057361\n    Change-Id: Iadfebe84959f30f8e835f282aa994c0b92768aa6\n\n2. Below commit is missing\ncommit 6a7ed1eb408a94a9d74ea55a68771a94c3005455\nAuthor: Tyler Gunn \u003ctgunn@google.com\u003e\nDate:   Wed Oct 22 11:26:40 2014 -0700\n    \n    Bug: 18058253\n    Change-Id: I1c44d3db0f7aa00a3ae6efb1231c5ddd39ab20ac\n3. commit f764e8075775f84df0c5c51a529548ba64707517\nAuthor: Tyler Gunn \u003ctgunn@google.com\u003e\nDate:   Fri Oct 24 14:06:40 2014 -0700\n    IMS call merge call-back changes.\n    \n    Bug: 18056632\n    Change-Id: I8fc73b6c9db5e7970de81d8c3e09abc80f1a262f",
+      "range": {
+        "startLine": 36,
+        "startChar": 10,
+        "endLine": 36,
+        "endChar": 11
+      },
+      "revId": "ce7068cff473dc813c79a127ffaf9cfc53d1840b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
