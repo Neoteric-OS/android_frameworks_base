@@ -22,6 +22,30 @@
       "revId": "c78b4fb0e61b52466b266e07f703fbcb3203a8c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7fc8ad75_aa9cf742",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16433,
+      "author": {
+        "id": 1061585
+      },
+      "writtenOn": "2014-12-03T09:16:42Z",
+      "side": 1,
+      "message": "What I want to do here is getting BroadcastRecord candidates instead of removed app.curReceiver. This patch get them from top of mOrderedBroadcasts of broadcast queues. Because these candidates means both app.curReceiver and mPendingBroadcast. Checking mPendingBroadcast can be removed.\n\nOnly ordered broadcasts have been set to mPendingBroadcast. Same as app.curReceiver. So OomAdj of parallel broadcasts haven\u0027t been increased from before. This patch doesn\u0027t change the behavior.",
+      "parentUuid": "9ff481d2_52e0b253",
+      "range": {
+        "startLine": 16433,
+        "startChar": 16,
+        "endLine": 16433,
+        "endChar": 58
+      },
+      "revId": "c78b4fb0e61b52466b266e07f703fbcb3203a8c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
