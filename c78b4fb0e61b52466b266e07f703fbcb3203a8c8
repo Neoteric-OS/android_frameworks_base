@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ff481d2_52e0b253",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16433,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2014-12-03T01:16:32Z",
+      "side": 1,
+      "message": "Can you go into some more detail about why you changed the semantics of isReceivingBroadcast() like this?  Did you find that mPendingBroadcast was wrong in some cases?\n\nI\u0027m concerned that this no longer reports that the target process of any non-ordered broadcast is a broadcast target.  This has OOM-killer implications and may lead to spurious kills of non-ordered broadcast recipient processes just as they\u0027re about to receive the broadcast.",
+      "range": {
+        "startLine": 16433,
+        "startChar": 16,
+        "endLine": 16433,
+        "endChar": 58
+      },
+      "revId": "c78b4fb0e61b52466b266e07f703fbcb3203a8c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
