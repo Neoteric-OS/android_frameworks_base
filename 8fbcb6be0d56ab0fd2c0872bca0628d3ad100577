@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc8ad75_652850ae",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2014-12-03T15:20:02Z",
+      "side": 1,
+      "message": "Add a TODO explaining what we need this for and what we can do to get rid of it?",
+      "revId": "8fbcb6be0d56ab0fd2c0872bca0628d3ad100577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fb3a1f9_2b90f1b1",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2518,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2014-12-03T15:20:02Z",
+      "side": 1,
+      "message": "I\u0027m confused. getDefaultProxy() returns the proxy of the default network, right? Why are we setting our proxy to that?\n\nShouldn\u0027t we set the proxy specified by the network\u0027s LinkProperties?",
+      "revId": "8fbcb6be0d56ab0fd2c0872bca0628d3ad100577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fb3a1f9_6b9ae9d1",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2014-12-03T15:20:02Z",
+      "side": 1,
+      "message": "I don\u0027t think we should honour or set the global proxy here at all. This method is completely bound to a given Network, and its documentation explicitly promises that it will only send traffic on the Network. But the global proxy certainly won\u0027t know that it needs to send all traffic on that Network, and in fact it might not even be reachable from that Network at all.\n\nFor example, consider an app that needs to send an MMS on a network that can only reach the MMS server but not the Internet. Such an app would not be able to use this method.",
+      "revId": "8fbcb6be0d56ab0fd2c0872bca0628d3ad100577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fb3a1f9_8b9f3dbf",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2014-12-03T15:20:02Z",
+      "side": 1,
+      "message": "Why do you need the explicit \"java.net\" here?",
+      "revId": "8fbcb6be0d56ab0fd2c0872bca0628d3ad100577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7fc8ad75_454c349f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2522,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2014-12-03T15:20:02Z",
+      "side": 1,
+      "message": "Can you add a comment explaining what do two methods give us over writing, say, \"Objects.equals(proxy1, proxy2)\"?\n\nAre they just an optimization such that if the proxy changes from null to empty we don\u0027t waste cycles updating things? Or is there a more subtle reason we can\u0027t just use Objects.equals()?",
+      "revId": "8fbcb6be0d56ab0fd2c0872bca0628d3ad100577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7fc8ad75_65413066",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2533,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2014-12-03T15:20:02Z",
+      "side": 1,
+      "message": "Replace these two lines with:\n\n    return Objects.equals(a, b);",
+      "revId": "8fbcb6be0d56ab0fd2c0872bca0628d3ad100577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fb3a1f9_0bda4d9b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2653,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2014-12-03T15:20:02Z",
+      "side": 1,
+      "message": "You might want to make it even more explicit that this gets called when any network changes proxy, but the broadcast only ever contains the default proxy (even if it hasn\u0027t changed). Maybe even add a TODO to deprecate the extra.",
+      "revId": "8fbcb6be0d56ab0fd2c0872bca0628d3ad100577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
