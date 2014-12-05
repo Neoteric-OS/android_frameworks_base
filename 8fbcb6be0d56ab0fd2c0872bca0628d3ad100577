@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f19292f_75498829",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2014-12-05T03:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fc8ad75_652850ae",
+      "revId": "8fbcb6be0d56ab0fd2c0872bca0628d3ad100577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fb3a1f9_2b90f1b1",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2014-12-03T15:20:02Z",
       "side": 1,
       "message": "I\u0027m confused. getDefaultProxy() returns the proxy of the default network, right? Why are we setting our proxy to that?\n\nShouldn\u0027t we set the proxy specified by the network\u0027s LinkProperties?",
+      "revId": "8fbcb6be0d56ab0fd2c0872bca0628d3ad100577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf3dc54e_096d31f6",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2518,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2014-12-05T03:27:46Z",
+      "side": 1,
+      "message": "getDefaultProxy() returns the proxy that best applies to this app.  If there is a global proxy, this is used, otherwise if the process is bound to a network (likely at this callsite), the network\u0027s proxy is used, otherwise the default network\u0027s proxy is used (also likely at this callsite if netId\u003d\u003dNETID_UNSET).  getDefaultProxy() returns to us exactly what we want to update the system properties to.",
+      "parentUuid": "9fb3a1f9_2b90f1b1",
       "revId": "8fbcb6be0d56ab0fd2c0872bca0628d3ad100577",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5f19292f_75bea8a5",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2014-12-05T03:27:46Z",
+      "side": 1,
+      "message": "As we discussed extensively in the Monday night meeting, the global proxy for better or worse is designed to apply to all networks, all the time.  A global proxy is only used in fairly extreme cases to truly lock down a device.  If someone installs a global proxy to, say, protect a child from adult content, I would imagine blocking MMS is a first step :)\n\nAnother way to look at this is, we\u0027re carrying over the KK behavior.\n\nIf an app wants to bypass the proxy there are many ways to do so, e.g. the openConnection(URL, Proxy) method I\u0027m adding, by bundling their own HTTP stack, or with setProcessDefaultNetwork() and URL.openConnection(Proxy).",
+      "parentUuid": "9fb3a1f9_6b9ae9d1",
+      "revId": "8fbcb6be0d56ab0fd2c0872bca0628d3ad100577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fb3a1f9_8b9f3dbf",
         "filename": "core/java/android/net/Network.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2014-12-03T15:20:02Z",
       "side": 1,
       "message": "Why do you need the explicit \"java.net\" here?",
+      "revId": "8fbcb6be0d56ab0fd2c0872bca0628d3ad100577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff33bd7c_31497a2a",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2014-12-05T03:27:46Z",
+      "side": 1,
+      "message": "Otherwise we\u0027ll get the android.net one.",
+      "parentUuid": "9fb3a1f9_8b9f3dbf",
       "revId": "8fbcb6be0d56ab0fd2c0872bca0628d3ad100577",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3f163501_74c4e8ca",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2522,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2014-12-05T03:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fc8ad75_454c349f",
+      "revId": "8fbcb6be0d56ab0fd2c0872bca0628d3ad100577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fc8ad75_65413066",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 3
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "3f163501_9421c416",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2533,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2014-12-05T03:27:46Z",
+      "side": 1,
+      "message": "Ha, I just realized ProxyInfo.equals() isn\u0027t strong enough...ugh, talk about super subtleties...  maybeAddLegacyProxyServerPort() from my other PAC CL updates the host and port when a PAC URL is present, but ProxyInfo.equals() ignores the host when a PAC URL is present.  Done and fixed.",
+      "parentUuid": "7fc8ad75_65413066",
+      "revId": "8fbcb6be0d56ab0fd2c0872bca0628d3ad100577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fb3a1f9_0bda4d9b",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 3
@@ -115,6 +223,24 @@
       "writtenOn": "2014-12-03T15:20:02Z",
       "side": 1,
       "message": "You might want to make it even more explicit that this gets called when any network changes proxy, but the broadcast only ever contains the default proxy (even if it hasn\u0027t changed). Maybe even add a TODO to deprecate the extra.",
+      "revId": "8fbcb6be0d56ab0fd2c0872bca0628d3ad100577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f0721cb_17693467",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2653,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2014-12-05T03:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fb3a1f9_0bda4d9b",
       "revId": "8fbcb6be0d56ab0fd2c0872bca0628d3ad100577",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
