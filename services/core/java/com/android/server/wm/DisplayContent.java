@@ -381,9 +381,11 @@ class DisplayContent {
         final int numStacks = mStacks.size();
         for (int stackNdx = 0; stackNdx < numStacks; ++stackNdx) {
             ArrayList<Task> tasks = mStacks.get(stackNdx).getTasks();
-            for (int taskNdx = tasks.size() - 1; taskNdx >= 0; --taskNdx) {
+            final int numTasks = tasks.size();
+            for (int taskNdx = 0; taskNdx < numTasks; ++taskNdx) {
                 AppTokenList tokens = tasks.get(taskNdx).mAppTokens;
-                for (int tokenNdx = tokens.size() - 1; tokenNdx >= 0; --tokenNdx) {
+                final int numTokens = tokens.size();
+                for (int tokenNdx = 0; tokenNdx < numTokens; ++tokenNdx) {
                     final AppWindowToken wtoken = tokens.get(tokenNdx);
                     pw.print("  App #"); pw.print(ndx++);
                             pw.print(' '); pw.print(wtoken); pw.println(":");
