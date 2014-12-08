@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "444f9e7e_8ebb1f42",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1793,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2014-12-08T17:01:35Z",
+      "side": 1,
+      "message": "Hmm, having arbitrary constants like this seems pretty fragile, is this size matching some struct coming up from native code?\n\nShould we be writing a header version byte to help us decide what parsing path to take?",
+      "revId": "cea639cf3f9ee6f851045fb0a25429dfa23fed39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
