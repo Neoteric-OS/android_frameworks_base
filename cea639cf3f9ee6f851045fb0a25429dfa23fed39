@@ -16,6 +16,24 @@
       "revId": "cea639cf3f9ee6f851045fb0a25429dfa23fed39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a48dbaf4_e3a18c7a",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1793,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-12-08T18:34:27Z",
+      "side": 1,
+      "message": "Yeah, it does. i approved these on the basis that they were cherry-picks. these might even be different on different architectures, so you should be careful.",
+      "parentUuid": "444f9e7e_8ebb1f42",
+      "revId": "cea639cf3f9ee6f851045fb0a25429dfa23fed39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
