@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "043046e8_54514259",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1774,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2014-12-09T13:53:20Z",
+      "side": 1,
+      "message": "Nit: this isn\u0027t entirely accurate, because apparently when a VPN is up (even a split tunnel VPN, and even a VPN that applies to a different user!) the default proxy is disabled. But I would say that\u0027s a bug and we shouldn\u0027t document that bug here.",
+      "revId": "31b560ca99c63b70cc12f95f3910f433dfcd94fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "043046e8_3446b6a1",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2520,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2014-12-09T13:53:20Z",
+      "side": 1,
+      "message": "// TODO: deprecate this static method and replace it with a non-static version.",
+      "revId": "31b560ca99c63b70cc12f95f3910f433dfcd94fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e45ed22a_9e134d7d",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2014-12-09T13:53:20Z",
+      "side": 1,
+      "message": "Maybe change \"on this Network\" to \"on this Network, unless a global HTTP proxy is configured\"?",
+      "revId": "31b560ca99c63b70cc12f95f3910f433dfcd94fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e45ed22a_fe05a93a",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2014-12-09T13:53:20Z",
+      "side": 1,
+      "message": "Instead of making null illegal here, can we reserve it to mean \"whatever proxy this network specified\"? That way we\u0027d address all the use cases:\n\n  1. openConnection(url) -\u003e global proxy, else network\u0027s proxy\n  2. openConnection(url, null) -\u003e network\u0027s proxy\n  3. openConnection(url, proxy) -\u003e specified proxy\n  4. openConnection(url, Proxy.NO_PROXY) -\u003e no proxy\n\nWith this CL, apps that want to do #3 have to do:\n\n    LinkProperties lp \u003d getLinkProperties(network);\n    Proxy proxy \u003d lp.getHttpProxy();\n    URLConnection conn \u003d network.openConnection(url, proxy);\n\nwhich seems like something we could do for them.",
+      "revId": "31b560ca99c63b70cc12f95f3910f433dfcd94fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24a1ca5e_a591445f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2540,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2014-12-09T13:53:20Z",
+      "side": 1,
+      "message": "Can you add a pointer to the legacy PAC resolver code?",
+      "revId": "31b560ca99c63b70cc12f95f3910f433dfcd94fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
