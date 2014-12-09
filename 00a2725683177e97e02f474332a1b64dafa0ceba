@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "040206f8_c17c6625",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2014-12-09T15:21:18Z",
+      "side": 1,
+      "message": "https://android-review.googlesource.com/#/c/118222/ has a better description of what the problem is here. You might want to you some of the wording from that change so your description is clearer.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 48
+      },
+      "revId": "00a2725683177e97e02f474332a1b64dafa0ceba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "648022c5_3fca2b2d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2014-12-09T15:21:18Z",
+      "side": 1,
+      "message": "task",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 14
+      },
+      "revId": "00a2725683177e97e02f474332a1b64dafa0ceba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4ba529b_0ad5bb4d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2014-12-09T15:21:18Z",
+      "side": 1,
+      "message": "itself",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "00a2725683177e97e02f474332a1b64dafa0ceba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "040206f8_e16f6265",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2014-12-09T15:21:18Z",
+      "side": 1,
+      "message": "task",
+      "range": {
+        "startLine": 13,
+        "startChar": 48,
+        "endLine": 13,
+        "endChar": 53
+      },
+      "revId": "00a2725683177e97e02f474332a1b64dafa0ceba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
