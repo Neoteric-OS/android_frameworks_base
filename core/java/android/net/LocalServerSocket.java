@@ -35,7 +35,7 @@ public class LocalServerSocket {
     private static final int LISTEN_BACKLOG = 50;
 
     /**
-     * Crewates a new server socket listening at specified name.
+     * Creates a new server socket listening at specified name.
      * On the Android platform, the name is created in the Linux
      * abstract namespace (instead of on the filesystem).
      * 
