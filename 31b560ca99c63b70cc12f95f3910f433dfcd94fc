@@ -70,6 +70,47 @@
     },
     {
       "key": {
+        "uuid": "047766c2_bc03a5aa",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2014-12-09T20:09:05Z",
+      "side": 1,
+      "message": "I think that\u0027s a subtlety we shouldn\u0027t let people hit accidentally through the api.  They can do it if they need to but I could see people accidentally missing the global proxy because they didn\u0027t know about it.  I\u0027d prefer the current behavior.",
+      "parentUuid": "e45ed22a_fe05a93a",
+      "revId": "31b560ca99c63b70cc12f95f3910f433dfcd94fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4b4dab0_28e1aba2",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2014-12-09T20:09:05Z",
+      "side": 1,
+      "message": "I think Jason set this up to be mutually exclusive - either have a host or have a pac but never both.\n\nWas there a need for this change?",
+      "range": {
+        "startLine": 258,
+        "startChar": 0,
+        "endLine": 258,
+        "endChar": 28
+      },
+      "revId": "31b560ca99c63b70cc12f95f3910f433dfcd94fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24a1ca5e_a591445f",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
