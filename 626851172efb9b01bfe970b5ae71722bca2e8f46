@@ -34,6 +34,24 @@
       "revId": "626851172efb9b01bfe970b5ae71722bca2e8f46",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "840c3679_0fc6c5d9",
+        "filename": "libs/androidfw/Asset.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-12-10T15:07:20Z",
+      "side": 1,
+      "message": "if this was called from multiple threads, then this fix is incomplete (as i\u0027ve stated above). looks like i\u0027ll have to try and trace through *how* this is called from multiple threads since you have empirical proof that it is.",
+      "parentUuid": "e4fdf273_5202347c",
+      "revId": "626851172efb9b01bfe970b5ae71722bca2e8f46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
