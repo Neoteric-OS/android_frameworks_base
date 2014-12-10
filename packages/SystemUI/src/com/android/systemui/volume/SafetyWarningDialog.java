@@ -23,7 +23,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.WindowManager;
 
 import com.android.systemui.statusbar.phone.SystemUIDialog;
@@ -39,7 +38,6 @@ abstract public class SafetyWarningDialog extends SystemUIDialog
     private final AudioManager mAudioManager;
 
     private long mShowTime;
-    private boolean mNewVolumeUp;
 
     public SafetyWarningDialog(Context context, AudioManager audioManager) {
         super(context);
@@ -60,25 +58,6 @@ abstract public class SafetyWarningDialog extends SystemUIDialog
     }
 
     abstract protected void cleanUp();
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && event.getRepeatCount() == 0) {
-            mNewVolumeUp = true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && mNewVolumeUp
-                && (System.currentTimeMillis() - mShowTime) > KEY_CONFIRM_ALLOWED_AFTER) {
-            if (D.BUG) Log.d(TAG, "Confirmed warning via VOLUME_UP");
-            mAudioManager.disableSafeMediaVolume();
-            dismiss();
-        }
-        return super.onKeyUp(keyCode, event);
-    }
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
