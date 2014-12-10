@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44eebec7_4d2f3929",
+        "filename": "libs/androidfw/Asset.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-12-10T13:19:51Z",
+      "side": 1,
+      "message": "just to expand on my previous statement a little bit.\n\nWhy is this code special ? None of the other functions in this code are thread safe. You could just as easily see a fault on line 834 or a double release on line 830.\n\nThere are two key questions here :\n(1) Is this class used from multiple threads ? (I don\u0027t have a definite answer to this one)\n(2) Is this class *supposed* to be used from multiple threads ? (if it is, we should protect the rest of the public API the same way. if it\u0027s not, we should document that it isn\u0027t thread safe and fix the callers.)",
+      "revId": "626851172efb9b01bfe970b5ae71722bca2e8f46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
