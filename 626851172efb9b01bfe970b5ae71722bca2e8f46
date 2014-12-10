@@ -16,6 +16,24 @@
       "revId": "626851172efb9b01bfe970b5ae71722bca2e8f46",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4fdf273_5202347c",
+        "filename": "libs/androidfw/Asset.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1004424
+      },
+      "writtenOn": "2014-12-10T15:05:30Z",
+      "side": 1,
+      "message": "analyze showed that it was this block creating the problem, and to answer your question. \n 1. yes this calls is called from multiple threads, however I can not now state exactly where this is done, but it was during boot of the device.\n 2. We can\u0027t really say if the intention for this is to be thread safe or not, only that it has by the framework been called from several threads during device boot.",
+      "parentUuid": "44eebec7_4d2f3929",
+      "revId": "626851172efb9b01bfe970b5ae71722bca2e8f46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
