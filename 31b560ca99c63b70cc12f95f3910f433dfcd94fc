@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "24662a37_1764168c",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1774,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2014-12-10T17:04:29Z",
+      "side": 1,
+      "message": "Ack.  Let\u0027s leave VPN bizare-ness out of this comment; when a VPN is in place all bets are off anyhow, e.g. the VPN could fake out the proxy anyhow.",
+      "parentUuid": "043046e8_54514259",
+      "revId": "31b560ca99c63b70cc12f95f3910f433dfcd94fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "043046e8_3446b6a1",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "646ca215_3c5c99f4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2520,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2014-12-10T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "043046e8_3446b6a1",
+      "revId": "31b560ca99c63b70cc12f95f3910f433dfcd94fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e45ed22a_9e134d7d",
         "filename": "core/java/android/net/Network.java",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2014-12-09T13:53:20Z",
       "side": 1,
       "message": "Maybe change \"on this Network\" to \"on this Network, unless a global HTTP proxy is configured\"?",
+      "revId": "31b560ca99c63b70cc12f95f3910f433dfcd94fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24662a37_170ed6da",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2014-12-10T17:04:29Z",
+      "side": 1,
+      "message": "It\u0027s not just the global HTTP proxy, but any proxy.  Any proxy could be a daemon on localhost forwarding via any kind of smoke signals.  I think \"on this Network\" is fine; if a proxy is in place at least the communication to the proxy will be \"on this Network\" as much as any traffic is \"on this Network\" where the implied localhost exception exists inherently.",
+      "parentUuid": "e45ed22a_9e134d7d",
       "revId": "31b560ca99c63b70cc12f95f3910f433dfcd94fc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "646ca215_7cdbb133",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2014-12-10T17:04:29Z",
+      "side": 1,
+      "message": "I\u0027m simply matching the java.net behavior for URL.openConnection() versus URL.openConnection(proxy).  I agree with Robert that the current behavior is more obvious (read: less of a foot-gun).  Lorenzo, I think your example code is to satisfy case #2, however I think case #2 is (much to your chagrin) a violation of policy (ignoring global proxy) so we shouldn\u0027t be supporting it.  In summary, I don\u0027t want to make this any trickier than it is.",
+      "parentUuid": "047766c2_bc03a5aa",
+      "revId": "31b560ca99c63b70cc12f95f3910f433dfcd94fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4b4dab0_28e1aba2",
         "filename": "core/java/android/net/ProxyInfo.java",
         "patchSetId": 5
@@ -111,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "646ca215_9ce84db7",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2014-12-10T17:04:29Z",
+      "side": 1,
+      "message": "Jason\u0027s legacy PAC resolver makes diligent use of of setting both the PAC URL, host and port in the ProxyInfo that ConnectivityService/Manager give back to apps.  It is very hard to debug this sort of behavior without this change because if a PAC is in place you have no idea if the legacy PAC resolver is working/setup/exposed etc.",
+      "parentUuid": "a4b4dab0_28e1aba2",
+      "range": {
+        "startLine": 258,
+        "startChar": 0,
+        "endLine": 258,
+        "endChar": 28
+      },
+      "revId": "31b560ca99c63b70cc12f95f3910f433dfcd94fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24a1ca5e_a591445f",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
@@ -122,6 +218,24 @@
       "writtenOn": "2014-12-09T13:53:20Z",
       "side": 1,
       "message": "Can you add a pointer to the legacy PAC resolver code?",
+      "revId": "31b560ca99c63b70cc12f95f3910f433dfcd94fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24662a37_9756669e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2540,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2014-12-10T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24a1ca5e_a591445f",
       "revId": "31b560ca99c63b70cc12f95f3910f433dfcd94fc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
