@@ -76,45 +76,47 @@ multiprocessor architectures. This document introduces issues that
 can arise when writing code for symmetric multiprocessor systems in C, C++, and the Java
 programming language (hereafter referred to simply as “Java” for the sake of
 brevity). It's intended as a primer for Android app developers, not as a complete 
-discussion on the subject. The focus is on the ARM CPU architecture.</p>
+discussion on the subject.</p>
 
 <p>If you’re in a hurry, you can skip the <a href="#theory">Theory</a> section
 and go directly to <a href="#practice">Practice</a> for best practices, but this
 is not recommended.</p>
 
-
+noticea
 <h2 id="intro">Introduction</h2>
 
 <p>SMP is an acronym for “Symmetric Multi-Processor”.  It describes a design in
 which two or more identical CPU cores share access to main memory.  Until
 a few years ago, all Android devices were UP (Uni-Processor).</p>
 
-<p>Most &mdash; if not all &mdash; Android devices do have multiple CPUs, but generally one
-of them is used to run applications while others manage various bits of device
-hardware (for example, the radio).  The CPUs may have different architectures, and the
-programs running on them can’t use main memory to communicate with each
+<p>Most &mdash; if not all &mdash; Android devices always had multiple CPUs, but
+in the past only one of them was used to run applications while others manage various bits of device
+hardware (for example, the radio).  The CPUs may have had different architectures, and the
+programs running on them couldn’t use main memory to communicate with each
 other.</p>
 
 <p>Most Android devices sold today are built around SMP designs,
-making things a bit more complicated for software developers.  The sorts of race
-conditions you might encounter in a multi-threaded program are much worse on SMP
-when two or more of your threads are running simultaneously on different cores.
-What’s more, SMP on ARM is more challenging to work with than SMP on x86.  Code
-that has been thoroughly tested on x86 may break badly on ARM.</p>
+making things a bit more complicated for software developers.  Race conditions
+in a multi-threaded program may not cause visible problems on a uniprocessor,
+but may fail regularly when two or more of your threads
+are running simultaneously on different cores.
+What’s more, code may be more or less prone to failures when run on different
+processor architectures, or even on different implementations of the same
+architecture.  Code that has been thoroughly tested on x86 may break badly on ARM.
+Code may start to fail when recompiled with a more modern compiler.</p>
 
 <p>The rest of this document will explain why, and tell you what you need to do
 to ensure that your code behaves correctly.</p>
 
 
-<h2 id="theory">Theory</h2>
+<h2 id="theory">Memory consistency models: Why SMPs are (slightly) different</h2>
 
 <p>This is a high-speed, glossy overview of a complex subject.  Some areas will
-be incomplete, but none of it should be misleading or wrong.</p>
+be incomplete, but none of it should be misleading or wrong.  As you
+will see in the next section, the details here are usually not important.</p>
 
 <p>See <a href="#more">Further reading</a> at the end of the document for
 pointers to more thorough treatments of the subject.</p>
-
-<h3 id="mem_consistency">Memory consistency models</h3>
 
 <p>Memory consistency models, or often just “memory models”, describe the
 guarantees the hardware architecture makes about memory accesses.  For example,
@@ -132,6 +134,11 @@ Gharachorloo</a>)</span>:</p>
 <li>All operations on a single processor appear to execute in the order described
 by that processor's program.</li>
 </ul>
+
+<p>Let's assume temporarily that we have a very simple compiler or interpreter
+that introduces no surprises: It translates
+assignments in the source code to load and store instructions in exactly the
+corresponding order, one instruction per access.
 
 <p>If you look at a bit of code and see that it does some reads and writes from
 memory, on a sequentially-consistent CPU architecture you know that the code
@@ -208,185 +215,65 @@ sequentially-consistent machine, that can’t happen.</p>
 <p>Most uni-processors, including x86 and ARM, are sequentially consistent.
 Most SMP systems, including x86 and ARM, are not.</p>
 
-<h4 id="proc_consistency">Processor consistency</h4>
+<p>The details vary substantially.  For example, x86, though not sequentially
+consistent, still guarantees that reg0=5 and reg1 = 0 remains impossible.
+ARM, on the other hand, does not.  However these differences are not really
+of interest to C, C++, or Java programmers</p>
 
-<p>x86 SMP provides <em>processor consistency</em>, which is slightly weaker than
-sequential.  While the architecture guarantees that loads are not reordered with
-respect to other loads, and stores are not reordered with respect to other
-stores, it does not guarantee that a store followed by a load will be observed
-in the expected order.</p>
+<p>So far, we've unrealistically assumed that it is only the hardware that
+reorders instructions.  In reality, the compiler also reorders instructions to
+improve performance.  In our example, the compiler might decide that some later
+code in Thread 2 needed the value of reg1 before it needed reg0, and thus load
+reg1 first.  Or some prior code may already have loaded A, and the compiler
+might decide to reuse that value instead of loading A again.  In either case,
+the loads to reg0 and reg1 might be reordered.</p>
 
-<p>Consider the following example, which is a piece of Dekker’s Algorithm for
-mutual exclusion:</p>
+<p>Reordering memory accesses, either in the hardware, or in the compiler, is
+allowed, since it doesn't affect the execution of a single thread, and
+it can significantly improve performance.  As we will see, with a bit of care,
+we can also prevent it from affecting the results of multithreaded programs.</p>
 
-<table>
-<tr>
-<th>Thread 1</th>
-<th>Thread 2</th>
-</tr>
-<tr>
-<td><code>A = true<br />
-reg1 = B<br />
-if (reg1 == false)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<em>critical-stuff</em></code></td>
-<td><code>B = true<br />
-reg2 = A<br />
-if (reg2 == false)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<em>critical-stuff</em></code></td>
-</tr>
-</table>
+<p>Since compilers can also reorder memory accesses, this problem is actually
+not new to SMPs.  Even on a uniprocessor, a compiler could reorder the loads to
+reg0 and reg1 in our example, and Thread 1 could be scheduled between the
+reordered instructions. But if our compiler happened to not reorder, we might
+never observe this problem.  On most ARM SMPs, even without compiler
+reordering, the reordering will probably be seen, possibly after a very large
+number of successful executions.  Unless you're programming in assembly
+language SMPs generally just make it more likely you'll see problems that were
+there all along.</p>
 
-<p>The idea is that thread 1 uses A to indicate that it’s busy, and thread 2
-uses B.  Thread 1 sets A and then checks to see if B is set; if not, it can
-safely assume that it has exclusive access to the critical section.  Thread 2
-does something similar.  (If a thread discovers that both A and B are set, a
-turn-taking algorithm is used to ensure fairness.)</p>
+<h2 id="racefree">Data-race-free programming</h2>
 
-<p>On a sequentially-consistent machine, this works correctly.  On x86 and ARM
-SMP, the store to A and the load from B in thread 1 can be “observed” in a
-different order by thread 2.  If that happened, we could actually appear to
-execute this sequence (where blank lines have been inserted to highlight the
-apparent order of operations):</p>
+<p>Fortunately, there is usually an easy way to avoid thinking about any of
+these details.  It's safe to forget most of the preceding section except when
+you're debugging a program that didn't follow the rules.  Just remember the
+"sequential consistency" part.
 
-<table>
-<tr>
-<th>Thread 1</th>
-<th>Thread 2</th>
-</tr>
-<tr>
-<td><code>reg1 = B<br />
-<br />
-<br />
-A = true<br />
-if (reg1 == false)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<em>critical-stuff</em></code></td>
+<p>Modern programming languages encourage what's known as a "data-race-free"
+programming style.  So long as you promise not to introduce "data races",
+and avoid a handful of constructs that tell the compiler otherwise, the compiler
+and hardware promise to provide sequentially consistent results.  This doesn't
+really mean they avoid memory access reordering.  It does mean that if you
+follow the rules you won't be able to tell that memory accesses are being
+reordered.  It's a lot like telling you that sausage is a delicious and
+appetizing food, so long as you promise not to visit the
+sausage factory.  Data races are what expose the ugly truth about memory
+reordering.</p>
 
-<td><code><br />
-B = true<br />
-reg2 = A<br />
-<br />
-if (reg2 == false)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;<em>critical-stuff</em></code></td>
-</tr>
-</table>
+<h3 id="dataraces">What's a "data race"?</h2>
 
-<p>This results in both reg1 and reg2 set to “false”, allowing the threads to
-execute code in the critical section simultaneously.  To understand how this can
-happen, it’s useful to know a little about CPU caches.</p>
+<p>A <i>data race</i> occurs when at least two threads simultaneously access
+the same ordinary data, and at least one of them modifies it.  By "ordinary
+data" we mean something that's not specifically a synchronization object
+intended for thread communication.  Mutexes, condition variables, Java
+volatiles, or C++ atomic objects are not ordinary data, and are "exempt" from
+data races.  In fact they are used to prevent data races on other objects.</p>
 
-<h4 id="cpu_cache">CPU cache behavior</h4>
-
-<p>This is a substantial topic in and of itself.  An extremely brief overview
-follows.  (The motivation for this material is to provide some basis for
-understanding why SMP systems behave as they do.)</p>
-
-<p>Modern CPUs have one or more caches between the processor and main memory.
-These are labeled L1, L2, and so on, with the higher numbers being successively
-“farther” from the CPU.  Cache memory adds size and cost to the hardware, and
-increases power consumption, so the ARM CPUs used in Android devices typically
-have small L1 caches and little or no L2/L3.</p>
-
-<p>Loading or storing a value into the L1 cache is very fast.  Doing the same to
-main memory can be 10-100x slower.  The CPU will therefore try to operate out of
-the cache as much as possible.  The <em>write policy</em> of a cache determines when data
-written to it is forwarded to main memory.  A <em>write-through</em> cache will initiate
-a write to memory immediately, while a <em>write-back</em> cache will wait until it runs
-out of space and has to evict some entries.  In either case, the CPU will
-continue executing instructions past the one that did the store, possibly
-executing dozens of them before the write is visible in main memory.  (While the
-write-through cache has a policy of immediately forwarding the data to main
-memory, it only <strong>initiates</strong> the write.  It does not have to wait
-for it to finish.)</p>
-
-<p>The cache behavior becomes relevant to this discussion when each CPU core has
-its own private cache.  In a simple model, the caches have no way to interact
-with each other directly.  The values held by core #1’s cache are not shared
-with or visible to core #2’s cache except as loads or stores from main memory.
-The long latencies on memory accesses would make inter-thread interactions
-sluggish, so it’s useful to define a way for the caches to share data.  This
-sharing is called <em>cache coherency</em>, and the coherency rules are defined
-by the CPU architecture’s <em>cache consistency model</em>.</p>
-
-<p>With that in mind, let’s return to the Dekker example.  When core 1 executes
-“A = 1”, the value gets stored in core 1’s cache.  When core 2 executes “if (A
-== 0)”, it might read from main memory or it might read from core 2’s cache;
-either way it won’t see the store performed by core 1.  (“A” could be in core
-2’s cache because of a previous load from “A”.)</p>
-
-<p>For the memory consistency model to be sequentially consistent, core 1 would
-have to wait for all other cores to be aware of “A = 1” before it could execute
-“if (B == 0)” (either through strict cache coherency rules, or by disabling the
-caches entirely so everything operates out of main memory).  This would impose a
-performance penalty on every store operation.  Relaxing the rules for the
-ordering of stores followed by loads improves performance but imposes a burden
-on software developers.</p>
-
-<p>The other guarantees made by the processor consistency model are less
-expensive to make.  For example, to ensure that memory writes are not observed
-out of order, it just needs to ensure that the stores are published to other
-cores in the same order that they were issued.  It doesn’t need to wait for
-store #1 to <strong>finish</strong> being published before it can start on store
-#2, it just needs to ensure that it doesn’t finish publishing #2 before it
-finishes publishing #1.  This avoids a performance bubble.</p>
-
-<p>Relaxing the guarantees even further can provide additional opportunities for
-CPU optimization, but creates more opportunities for code to behave in ways the
-programmer didn’t expect.</p>
-
-<p>One additional note: CPU caches don’t operate on individual bytes.  Data is
-read or written as <em>cache lines</em>; for many ARM CPUs these are 32 bytes.  If you
-read data from a location in main memory, you will also be reading some adjacent
-values.  Writing data will cause the cache line to be read from memory and
-updated.  As a result, you can cause a value to be loaded into cache as a
-side-effect of reading or writing something nearby, adding to the general aura
-of mystery.</p>
-
-<h4 id="observability">Observability</h4>
-
-<p>Before going further, it’s useful to define in a more rigorous fashion what
-is meant by “observing” a load or store.  Suppose core 1 executes “A = 1”.  The
-store is <em>initiated</em> when the CPU executes the instruction.  At some
-point later, possibly through cache coherence activity, the store is
-<em>observed</em> by core 2.  In a write-through cache it doesn’t really
-<em>complete</em> until the store arrives in main memory, but the memory
-consistency model doesn’t dictate when something completes, just when it can be
-<em>observed</em>.</p>
-
-
-<p>(In a kernel device driver that accesses memory-mapped I/O locations, it may
-be very important to know when things actually complete.  We’re not going to go
-into that here.)</p>
-
-<p>Observability may be defined as follows:</p>
-
-<ul>
-<li>"A write to a location in memory is said to be observed by an observer Pn
-when a subsequent read of the location by Pn would return the value written by
-the write."</li>
-<li>"A read of a location in memory is said to be observed by an observer Pm
-when a subsequent write to the location by Pm would have no effect on the value
-returned by the read." <span style="font-size:.9em;color:#777">(<em><a
-href="#more" style="color:#777">Reasoning about the ARM weakly consistent memory
-model</a></em>)</span></li>
-</ul>
-
-
-<p>A less formal way to describe it (where “you” and “I” are CPU cores) would be:</p>
-
-<ul>
-<li>I have observed your write when I can read what you wrote</li>
-<li>I have observed your read when I can no longer affect the value you read</li>
-</ul>
-
-<p>The notion of observing a write is intuitive; observing a read is a bit less
-so (don’t worry, it grows on you).</p>
-
-<p>With this in mind, we’re ready to talk about ARM.</p>
-
-<h4 id="ordering">ARM's weak ordering</h4>
-
-<p>ARM SMP provides weak memory consistency guarantees.  It does not guarantee that
-loads or stores are ordered with respect to each other.</p>
+<p>In order to determine whether two threads simultaneously access the same
+location, we can ignore the memory-reordering discussion from above, and assume
+sequential consistency.  The following program doesn't have a data race if A
+and B are ordinary boolean variables that are initially false:</p>
 
 <table>
 <tr>
@@ -394,660 +281,161 @@ loads or stores are ordered with respect to each other.</p>
 <th>Thread 2</th>
 </tr>
 <tr>
-<td><code>A = 41<br />
-B = 1    // “A is ready”</code></td>
-<td><code>loop_until (B == 1)<br />
-reg = A</code></td>
+<td><code>if (A) B = true</code></td>
+<td><code>if (B) A = true</code></td>
 </tr>
 </table>
 
-<p>Recall that all addresses are initially zero.  The “loop_until” instruction
-reads B repeatedly, looping until we read 1 from B.  The idea here is that
-thread 2 is waiting for thread 1 to update A.  Thread 1 sets A, and then sets B
-to 1 to indicate data availability.</p>
+Since operations are not reordered, both conditions will evaluate to false, and
+neither variable is ever updated.  Thus there cannot be a data race.  There is
+no need to think about what might happen if the load from A and store to B in
+Thread 1 were somehow reordered.  The compiler is not allowed to reorder Thread
+1 by rewriting it as "<code>B = true; if (!A) B = false</code>".  That would be
+like making sausage in the middle of town in broad daylight.
 
-<p>On x86 SMP, this is guaranteed to work.  Thread 2 will observe the stores
-made by thread 1 in program order, and thread 1 will observe thread 2’s loads in
-program order.</p>
+Data races are officially defined on basic built-in types like integers and
+references or pointers.  Assigning to an "int" while simultaneously reading it
+in another thread is clearly a data race.  But both the C++ STL and the Java
+Collections libraries are written to allow you to also reason about data races
+at the library level.  They promise to not introduce data races unless there
+are concurrent accesses to the same container, at least one of which updates
+it.  Updating a <code>set&lt;T&gt;</code> in one thread while simultaneously
+reading it in another is effectively a data race because the library may
+introduce one.  Updating one <code>set&lt;T&gt;</code> in one thread while
+reading a different one in another is not a data race, because the library
+promises not to introduce a low-level data race in that case.
 
-<p>On ARM SMP, the loads and stores can be observed in any order.  It is
-possible, after all the code has executed, for reg to hold 0.  It’s also
-possible for it to hold 41.  Unless you explicitly define the ordering, you
-don’t know how this will come out.</p>
+<h3 id="avoiding">Avoiding data races</h3>
 
-<p>(For those with experience on other systems, ARM’s memory model is equivalent
-to PowerPC in most respects.)</p>
+Modern programming languages provide a number of synchronization
+mechanisms to avoid data races.  The most basic tools are:
 
+<dl>
+<dt>Locks or Mutexes</dt>
 
-<h3 id="datamem_barriers">Data memory barriers</h3>
+<dd>Mutexes (C++11 <code>mutex_t</code>, or pthread_mutex_t), or synchronized
+blocks in Java can be used to ensure that certain section of code do not run
+concurrently with other sections of code accessing the same data.  We'll refer
+to these and other similar facilities generaically asl "locks."  Consistentaly
+acquiring a specific lock before accessing a shared data structure and
+releasing it afterwards, prevent data races when accessing the data structure
+and ensures that updates and accesses are atomic, i.e. no other update to the
+data structure can run in the middle.  This is deservedly by far the most
+common tool for preventing data races.</dd>
 
-<p>Memory barriers provide a way for your code to tell the CPU that memory
-access ordering matters.  ARM/x86 uniprocessors offer sequential consistency,
-and thus have no need for them.  (The barrier instructions can be executed but
-aren’t useful; in at least one case they’re hideously expensive, motivating
-separate builds for SMP targets.)</p>
+<dt>Volatile/atomic variables</dt>
 
-<p>There are four basic situations to consider:</p>
+<dd>Java provides volatile fields that support concurrent access without
+introducing data races.  Since 2011, C and C++ support atomic variables and
+fields with similar semantics.  These are more difficult to use then locks,
+since they only ensure that individual accesses (or sometimes a read followed
+by a write to the same location) are atomic.  Unlike locks, they can't be used
+directly to prevent other threads from interfering with longer code
+sequences.</dd>
+
+</dl>
+
+<p>It's worth noting that "volatile" has very different meanings in C++
+and Java.  In C++ "volatile" does not really prevent data races, though
+older code often uses it as a workaround for the lack of atomic objects.</p>
+
+<p>C/C++ atomic variables or Java volatiles can be used to prevent data races
+on other variables.  If <code>FLAG</code> is declared to have type
+<code>atomic_bool</code> (C/C++) or volatile boolean (Java), and is initially
+false then the following snippet is data-race-free:</p>
+
+<table>
+<tr>
+<th>Thread 1</th>
+<th>Thread 2</th>
+</tr>
+<tr>
+<td><code>A = ...<br />
+&nbsp;&nbsp;FLAG = true</code>
+</td>
+<td><code>while (!FLAG) {}<br />
+... = A</code>
+</td>
+</tr>
+</table>
+
+<p>Since Thread 2 waits for <code>FLAG</code> to be set, the access to
+<code>A</code> in Thread 2 must happen after, and not concurrently with, the
+assignment to <code>A</code> in Thread 1.  Thus there is no data race on
+<code>A</code>.  The race on <code>FLAG</code> doesn't count as a data race,
+since volatile/atomic accesses are not "ordinary memory accesses".</p>
+
+<p>The implementation is required to prevent or hide memory ordering
+sufficiently to make code like the preceding litmus test behave as expected.
+This normally makes volatile/atomic memory accesses more expensive than
+ordinary accesses.  Commonly such accesses require an additional few
+dozen cycles to prevent memory reordering.  But this number varies
+between zero and a few hundred cycles depending on the exact hardware.</p>
+
+<p>Although this example is data-race-free, locks together with
+<code>Object.wait()</code> in Java or condition variables in C/C++ usually
+provide a better solution that does not involve waiting in a loop while
+draining battery power.</p>
+
+<h3 id="reordering">When reordering becomes visible</h3>
+
+Data-race-free programming normally saves us from having to explicitly deal
+with memory access reordering issues.  However, there are everal cases in
+which it does become visible:
 
 <ol>
-<li>store followed by another store</li>
-<li>load followed by another load</li>
-<li>load followed by store</li>
-<li>store followed by load</li>
+<li> If your program has a bug resulting in an unintentional data race,
+compiler and hardware transformations can become visible, and the behavior
+of your program may be surprising.  For example, if we forgot to declare
+<code>FLAG</code> volatile in the preceding example, Thread 2 may see an uninitialized <code>A</code>.
+Or the compiler may decide that FLAG can't possibly change during Thread 2's loop and transform the program to
+
+<table>
+<tr>
+<th>Thread 1</th>
+<th>Thread 2</th>
+</tr>
+<tr>
+<td><code>A = ...<br />
+&nbsp;&nbsp;FLAG = true</code>
+</td>
+<td>reg0 = FLAG
+while (!reg0) {}<br />
+... = A
+</td>
+</tr>
+</table>
+
+When you debug, you may well see the loop continuing forever in spite of
+the fact that FLAG is true.</li>
+
+<li> C++ provides facilities for explicitly relaxing
+sequential consistency even if there are no races.  Atomic operations
+can take explicit <code>memory_order_</code>... arguments.  Similarly, the
+<code>java.util.concurrent.atomic</code> package provides a more restricted
+set of similar facilities, notably <code>lazySet()</code>.  And Java
+programmers occasionally use intentional data races for similar effect.
+All of these provide small-to-modest performance improvements at a large
+cost in programming complexity.  We do not discuss them further
+in this document.</li>
+
+<li> Some C and C++ code is written in an older style, not entirely
+consistent with current language standards, in which <code>volatile</code>
+variables are used instead of <code>atomic</code> ones, and memory ordering
+is explicitly disallowed by inserting so called <i>fences</i> or
+<i>barriers</i>.  This requires explicit reasoning about access
+reordering and understanding of hardware memory models.  A coding style
+along these lines is still used in the Linux kernel.  It should not
+be used in new Android applications, and is also not further discussed here.
+</li>
 </ol>
-
-<h4 id="ss_ll">Store/store and load/load</h4>
-
-<p>Recall our earlier example:</p>
-
-<table>
-<tr>
-<th>Thread 1</th>
-<th>Thread 2</th>
-</tr>
-<tr>
-<td><code>A = 41<br />
-B = 1    // “A is ready”</code></td>
-<td><code>loop_until (B == 1)<br />
-reg = A</code></td>
-</tr>
-</table>
-
-
-<p>Thread 1 needs to ensure that the store to A happens before the store to B.
-This is a “store/store” situation.  Similarly, thread 2 needs to ensure that the
-load of B happens before the load of A; this is a load/load situation.  As
-mentioned earlier, the loads and stores can be observed in any order.</p>
-
-<div style="padding:.5em 2em;">
-<div style="border-left:4px solid #ccc;padding:0 1em;font-style:italic;">
-<p>Going back to the cache discussion, assume A and B are on separate cache
-lines, with minimal cache coherency.  If the store to A stays local but the
-store to B is published, core 2 will see B=1 but won’t see the update to A.  On
-the other side, assume we read A earlier, or it lives on the same cache line as
-something else we recently read.  Core 2 spins until it sees the update to B,
-then loads A from its local cache, where the value is still zero.</p>
-</div>
-</div>
-
-<p>We can fix it like this:</p>
-
-<table>
-<tr>
-<th>Thread 1</th>
-<th>Thread 2</th>
-</tr>
-<tr>
-<td><code>A = 41<br />
-<em>store/store barrier</em><br />
-B = 1    // “A is ready”</code></td>
-<td><code>loop_until (B == 1)<br />
-<em>load/load barrier</em><br />
-reg = A</code></td>
-</tr>
-</table>
-
-<p>The store/store barrier guarantees that <strong>all observers</strong> will
-observe the write to A before they observe the write to B.  It makes no
-guarantees about the ordering of loads in thread 1, but we don’t have any of
-those, so that’s okay.  The load/load barrier in thread 2 makes a similar
-guarantee for the loads there.</p>
-
-<p>Since the store/store barrier guarantees that thread 2 observes the stores in
-program order, why do we need the load/load barrier in thread 2?  Because we
-also need to guarantee that thread 1 observes the loads in program order.</p>
-
-<div style="padding:.5em 2em;">
-<div style="border-left:4px solid #ccc;padding:0 1em;font-style:italic;">
-<p>The store/store barrier could work by flushing all
-dirty entries out of the local cache, ensuring that other cores see them before
-they see any future stores.  The load/load barrier could purge the local cache
-completely and wait for any “in-flight” loads to finish, ensuring that future
-loads are observed after previous loads.  What the CPU actually does doesn’t
-matter, so long as the appropriate guarantees are kept.  If we use a barrier in
-core 1 but not in core 2, core 2 could still be reading A from its local
-cache.</p>
-</div>
-</div>
-
-<p>Because the architectures have different memory models, these barriers are
-required on ARM SMP but not x86 SMP.</p>
-
-<h4 id="ls_sl">Load/store and store/load</h4>
-
-<p>The Dekker’s Algorithm fragment shown earlier illustrated the need for a
-store/load barrier.  Here’s an example where a load/store barrier is
-required:</p>
-
-<table>
-<tr>
-<th>Thread 1</th>
-<th>Thread 2</th>
-</tr>
-<tr>
-<td><code>reg = A<br />
-B = 1    // “I have latched A”</code></td>
-<td><code>loop_until (B == 1)<br />
-A = 41    // update A</code></td>
-</tr>
-</table>
-
-<p>Thread 2 could observe thread 1’s store of B=1 before it observe’s thread 1’s
-load from A, and as a result store A=41 before thread 1 has a chance to read A.
-Inserting a load/store barrier in each thread solves the problem:</p>
-
-<table>
-<tr>
-<th>Thread 1</th>
-<th>Thread 2</th>
-</tr>
-<tr>
-<td><code>reg = A<br />
-<em>load/store barrier</em><br />
-B = 1    // “I have latched A”</code></td>
-<td><code>loop_until (B == 1)<br />
-<em>load/store barrier</em><br />
-A = 41    // update A</code></td>
-</tr>
-</table>
-
-<div style="padding:.5em 2em;">
-<div style="border-left:4px solid #ccc;padding:0 1em;font-style:italic;">
-<p>A store to local cache may be observed before a load from main memory,
-because accesses to main memory are so much slower.  In this case, assume core
-1’s cache has the cache line for B but not A.  The load from A is initiated, and
-while that’s in progress execution continues.  The store to B happens in local
-cache, and by some means becomes available to core 2 while the load from A is
-still in progress.  Thread 2 is able to exit the loop before it has observed
-thread 1’s load from A.</p>
-
-<p>A thornier question is: do we need a barrier in thread 2?  If the CPU doesn’t
-perform speculative writes, and doesn’t execute instructions out of order, can
-thread 2 store to A before thread 1’s read if thread 1 guarantees the load/store
-ordering?  (Answer: no.)  What if there’s a third core watching A and B?
-(Answer: now you need one, or you could observe B==0 / A==41 on the third core.)
- It’s safest to insert barriers in both places and not worry about the
-details.</p>
-</div>
-</div>
-
-<p>As mentioned earlier, store/load barriers are the only kind required on x86
-SMP.</p>
-
-<h4 id="barrier_inst">Barrier instructions</h4>
-
-<p>Different CPUs provide different flavors of barrier instruction.  For
-example:</p>
-
-<ul>
-<li>Sparc V8 has a “membar” instruction that takes a 4-element bit vector.  The
-four categories of barrier can be specified individually.</li>
-<li>Alpha provides “rmb” (load/load), “wmb” (store/store), and “mb” (full).
-(Trivia: the linux kernel provides three memory barrier functions with these
-names and behaviors.)</li>
-<li>x86 has a variety of options; “mfence” (introduced with SSE2) provides a
-full barrier.</li>
-<li>ARMv7 has “dmb st” (store/store) and “dmb sy” (full).</li>
-</ul>
-
-<p>“Full barrier” means all four categories are included.</p>
-
-<p>It is important to recognize that the only thing guaranteed by barrier
-instructions is ordering.  Do not treat them as cache coherency “sync points” or
-synchronous “flush” instructions.  The ARM “dmb” instruction has no direct
-effect on other cores.  This is important to understand when trying to figure
-out where barrier instructions need to be issued.</p>
-
-
-<h4 id="addr_dep">Address dependencies and causal consistency</h4>
-
-<p><em>(This is a slightly more advanced topic and can be skipped.)</em>
-
-<p>The ARM CPU provides one special case where a load/load barrier can be
-avoided.  Consider the following example from earlier, modified slightly:</p>
-
-<table>
-<tr>
-<th>Thread 1</th>
-<th>Thread 2</th>
-</tr>
-<tr>
-<td><code>[A+8] = 41<br />
-<em>store/store barrier</em><br />
-B = 1    // “A is ready”</code></td>
-<td><code>loop:<br />
-&nbsp;&nbsp;&nbsp;&nbsp;reg0 = B<br />
-&nbsp;&nbsp;&nbsp;&nbsp;if (reg0 == 0) goto loop<br />
-reg1 = 8<br />
-reg2 = [A + reg1]</code></td>
-</tr>
-</table>
-
-<p>This introduces a new notation.  If “A” refers to a memory address, “A+n”
-refers to a memory address offset by 8 bytes from A.  If A is the base address
-of an object or array, [A+8] could be a field in the object or an element in the
-array.</p>
-
-<p>The “loop_until” seen in previous examples has been expanded to show the load
-of B into reg0.  reg1 is assigned the numeric value 8, and reg2 is loaded from
-the address [A+reg1] (the same location that thread 1 is accessing).</p>
-
-<p>This will not behave correctly because the load from B could be observed
-after the load from [A+reg1].  We can fix this with a load/load barrier after
-the loop, but on ARM we can also just do this:</p>
-
-<table>
-<tr>
-<th>Thread 1</th>
-<th>Thread 2</th>
-</tr>
-<tr>
-<td><code>[A+8] = 41<br />
-<em>store/store barrier</em><br />
-B = 1    // “A is ready”</code></td>
-<td><code>loop:<br />
-&nbsp;&nbsp;&nbsp;&nbsp;reg0 = B<br />
-&nbsp;&nbsp;&nbsp;&nbsp;if (reg0 == 0) goto loop<br />
-reg1 = 8 <strong>+ (reg0 & 0)</strong><br />
-reg2 = [A + reg1]</code></td>
-</tr>
-</table>
-
-<p>What we’ve done here is change the assignment of reg1 from a constant (8) to
-a value that depends on what we loaded from B.  In this case, we do a bitwise
-AND of the value with 0, which yields zero, which means reg1 still has the value
-8.  However, the ARM CPU believes that the load from [A+reg1] depends upon the
-load from B, and will ensure that the two are observed in program order.</p>
-
-<p>This is called an <em>address dependency</em>.  Address dependencies exist
-when the value returned by a load is used to compute the address of a subsequent
-load or store.  It can let you avoid the need for an explicit barrier in certain
-situations.</p>
-
-<p>ARM does not provide <em>control dependency</em> guarantees.  To illustrate
-this it’s necessary to dip into ARM code for a moment: <span
-style="font-size:.9em;color:#777">(<em><a href="#more"
-style="color:#777">Barrier Litmus Tests and Cookbook</a></em>)</span>.</p>
-
-<pre>
-LDR r1, [r0]
-CMP r1, #55
-LDRNE r2, [r3]
-</pre>
-
-<p>The loads from r0 and r3 may be observed out of order, even though the load
-from r3 will not execute at all if [r0] doesn’t hold 55.  Inserting AND r1, r1,
-#0 and replacing the last instruction with LDRNE r2, [r3, r1] would ensure
-proper ordering without an explicit barrier.  (This is a prime example of why
-you can’t think about consistency issues in terms of instruction execution.
-Always think in terms of memory accesses.)</p>
-
-<p>While we’re hip-deep, it’s worth noting that ARM does not provide <em>causal
-consistency</em>:</p>
-
-<table>
-<tr>
-<th>Thread 1</th>
-<th>Thread 2</th>
-<th>Thread 3</th>
-</tr>
-<tr>
-<td><code>A = 1</code></td>
-<td><code>loop_until (A == 1)<br />
-B = 1</code></td>
-<td><code>loop:<br />
-&nbsp;&nbsp;reg0 = B<br />
-&nbsp;&nbsp;if (reg0 == 0) goto loop<br />
-reg1 = reg0 & 0<br />
-reg2 = [A+reg1]</code></td>
-</tr>
-</table>
-
-<p>Here, thread 1 sets A, signaling thread 2. Thread 2 sees that and sets B to
-signal thread 3.  Thread 3 sees it and loads from A, using an address dependency
-to ensure that the load of B and the load of A are observed in program
-order.</p>
-
-<p>It’s possible for reg2 to hold zero at the end of this.  The fact that a
-store in thread 1 causes something to happen in thread 2 which causes something
-to happen in thread 3 does not mean that thread 3 will observe the stores in
-that order.  (Inserting a load/store barrier in thread 2 fixes this.)</p>
-
-<h4 id="membarrier_summary">Memory barrier summary</h4>
-
-<p>Barriers come in different flavors for different situations.  While there can
-be performance advantages to using exactly the right barrier type, there are
-code maintenance risks in doing so &mdash; unless the person updating the code
-fully understands it, they might introduce the wrong type of operation and cause
-a mysterious breakage.  Because of this, and because ARM doesn’t provide a wide
-variety of barrier choices, many atomic primitives use full
-barrier instructions when a barrier is required.</p>
-
-<p>The key thing to remember about barriers is that they define ordering.  Don’t
-think of them as a “flush” call that causes a series of actions to happen.
-Instead, think of them as a dividing line in time for operations on the current
-CPU core.</p>
-
-
-<h3 id="atomic_ops">Atomic operations</h3>
-
-<p>Atomic operations guarantee that an operation that requires a series of steps
-always behaves as if it were a single operation.  For example, consider a
-non-atomic increment (“++A”) executed on the same variable by two threads
-simultaneously:</p>
-
-<table>
-<tr>
-<th>Thread 1</th>
-<th>Thread 2</th>
-</tr>
-<tr>
-<td><code>reg = A<br />
-reg = reg + 1<br />
-A = reg</code></td>
-<td><code>reg = A<br />
-reg = reg + 1<br />
-A = reg</code></td>
-</tr>
-</table>
-
-<p>If the threads execute concurrently from top to bottom, both threads will
-load 0 from A, increment it to 1, and store it back, leaving a final result of
-1.  If we used an atomic increment operation, you would be guaranteed that the
-final result will be 2.</p>
-
-<h4 id="atomic_essentials">Atomic essentials</h4>
-
-<p>The most fundamental operations &mdash; loading and storing 32-bit values
-&mdash; are inherently atomic on ARM so long as the data is aligned on a 32-bit
-boundary.  For example:</p>
-
-<table>
-<tr>
-<th>Thread 1</th>
-<th>Thread 2</th>
-</tr>
-<tr>
-<td><code>reg = 0x00000000<br />
-A = reg</code></td>
-<td><code>reg = 0xffffffff<br />
-A = reg</code></td>
-</tr>
-</table>
-
-<p>The CPU guarantees that A will hold 0x00000000 or 0xffffffff.  It will never
-hold 0x0000ffff or any other partial “mix” of bytes.</p>
-
-<div style="padding:.5em 2em;">
-<div style="border-left:4px solid #ccc;padding:0 1em;font-style:italic;">
-<p>The atomicity guarantee is lost if the data isn’t aligned.  Misaligned data
-could straddle a cache line, so other cores could see the halves update
-independently.  Consequently, the ARMv7 documentation declares that it provides
-“single-copy atomicity” for all byte accesses, halfword accesses to
-halfword-aligned locations, and word accesses to word-aligned locations.
-Doubleword (64-bit) accesses are <strong>not</strong> atomic, unless the
-location is doubleword-aligned and special load/store instructions are used.
-This behavior is important to understand when multiple threads are performing
-unsynchronized updates to packed structures or arrays of primitive types.</p>
-</div>
-</div>
-
-<p>There is no need for 32-bit “atomic read” or “atomic write” functions on ARM
-or x86.  Where one is provided for completeness, it just does a trivial load or
-store.</p>
-
-<p>Operations that perform more complex actions on data in memory are
-collectively known as <em>read-modify-write</em> (RMW) instructions, because
-they load data, modify it in some way, and write it back.  CPUs vary widely in
-how these are implemented.  ARM uses a technique called “Load Linked / Store
-Conditional”, or LL/SC.</p>
-
-<div style="padding:.5em 2em;">
-<div style="border-left:4px solid #ccc;padding:0 1em;font-style:italic;">
-<p>A <em>linked</em> or <em>locked</em> load reads the data from memory as
-usual, but also establishes a reservation, tagging the physical memory address.
-The reservation is cleared when another core tries to write to that address.  To
-perform an LL/SC, the data is read with a reservation, modified, and then a
-conditional store instruction is used to try to write the data back.  If the
-reservation is still in place, the store succeeds; if not, the store will fail.
-Atomic functions based on LL/SC usually loop, retrying the entire
-read-modify-write sequence until it completes without interruption.</p>
-</div>
-</div>
-
-<p>It’s worth noting that the read-modify-write operations would not work
-correctly if they operated on stale data.  If two cores perform an atomic
-increment on the same address, and one of them is not able to see what the other
-did because each core is reading and writing from local cache, the operation
-won’t actually be atomic.  The CPU’s cache coherency rules ensure that the
-atomic RMW operations remain atomic in an SMP environment.</p>
-
-<p>This should not be construed to mean that atomic RMW operations use a memory
-barrier.  On ARM, atomics have no memory barrier semantics.  While a series of
-atomic RMW operations on a single address will be observed in program order by
-other cores, there are no guarantees when it comes to the ordering of atomic and
-non-atomic operations.</p>
-
-<p>It often makes sense to pair barriers and atomic operations together. The
-next section describes this in more detail.</p>
-
-<h4 id="atomic_barrierpairing">Atomic + barrier pairing</h4>
-
-<p>As usual, it’s useful to illuminate the discussion with an example.  We’re
-going to consider a basic mutual-exclusion primitive called a <em>spin
-lock</em>.  The idea is that a memory address (which we’ll call “lock”)
-initially holds zero.  When a thread wants to execute code in the critical
-section, it sets the lock to 1, executes the critical code, and then changes it
-back to zero when done.  If another thread has already set the lock to 1, we sit
-and spin until the lock changes back to zero.</p>
-
-<p>To make this work we use an atomic RMW primitive called
-<em>compare-and-swap</em>.  The function takes three arguments: the memory
-address, the expected current value, and the new value.  If the value currently
-in memory matches what we expect, it is replaced with the new value, and the old
-value is returned.  If the current value is not what we expect, we don’t change
-anything.  A minor variation on this is called <em>compare-and-set</em>; instead
-of returning the old value it returns a boolean indicating whether the swap
-succeeded.  For our needs either will work, but compare-and-set is slightly
-simpler for examples, so we use it and just refer to it as “CAS”.</p>
-
-<p>The acquisition of the spin lock is written like this (using a C-like
-language):</p>
-
-<pre>do {
-    success = atomic_cas(&lock, 0, 1)
-} while (!success)
-
-full_memory_barrier()
-
-<em>critical-section</em></pre>
-
-<p>If no thread holds the lock, the lock value will be 0, and the CAS operation
-will set it to 1 to indicate that we now have it.  If another thread has it, the
-lock value will be 1, and the CAS operation will fail because the expected
-current value does not match the actual current value.  We loop and retry.
-(Note this loop is on top of whatever loop the LL/SC code might be doing inside
-the atomic_cas function.)</p>
-
-<div style="padding:.5em 2em;">
-<div style="border-left:4px solid #ccc;padding:0 1em;font-style:italic;">
-<p>On SMP, a spin lock is a useful way to guard a small critical section.  If we
-know that another thread is going to execute a handful of instructions and then
-release the lock, we can just burn a few cycles while we wait our turn.
-However, if the other thread happens to be executing on the same core, we’re
-just wasting time because the other thread can’t make progress until the OS
-schedules it again (either by migrating it to a different core or by preempting
-us).  A proper spin lock implementation would optimistically spin a few times
-and then fall back on an OS primitive (such as a Linux futex) that allows the
-current thread to sleep while waiting for the other thread to finish up.  On a
-uniprocessor you never want to spin at all.  For the sake of brevity we’re
-ignoring all this.</p>
-</div>
-</div>
-
-<p>The memory barrier is necessary to ensure that other threads observe the
-acquisition of the lock before they observe any loads or stores in the critical
-section.  Without that barrier, the memory accesses could be observed while the
-lock is not held.</p>
-
-<p>The <code>full_memory_barrier</code> call here actually does
-<strong>two</strong> independent operations.  First, it issues the CPU’s full
-barrier instruction.  Second, it tells the compiler that it is not allowed to
-reorder code around the barrier.  That way, we know that the
-<code>atomic_cas</code> call will be executed before anything in the critical
-section.  Without this <em>compiler reorder barrier</em>, the compiler has a
-great deal of freedom in how it generates code, and the order of instructions in
-the compiled code might be much different from the order in the source code.</p>
-
-<p>Of course, we also want to make sure that none of the memory accesses
-performed in the critical section are observed after the lock is released.  The
-full version of the simple spin lock is:</p>
-
-<pre>do {
-    success = atomic_cas(&lock, 0, 1)   // acquire
-} while (!success)
-full_memory_barrier()
-
-<em>critical-section</em>
-
-full_memory_barrier()
-atomic_store(&lock, 0)                  // release</pre>
-
-<p>We perform our second CPU/compiler memory barrier immediately
-<strong>before</strong> we release the lock, so that loads and stores in the
-critical section are observed before the release of the lock.</p>
-
-<p>As mentioned earlier, the <code>atomic_store</code> operation is a simple
-assignment on ARM and x86.  Unlike the atomic RMW operations, we don’t guarantee
-that other threads will see this value immediately.  This isn’t a problem,
-though, because we only need to keep the other threads <strong>out</strong>. The
-other threads will stay out until they observe the store of 0.  If it takes a
-little while for them to observe it, the other threads will spin a little
-longer, but we will still execute code correctly.</p>
-
-<p>It’s convenient to combine the atomic operation and the barrier call into a
-single function.  It also provides other advantages, which will become clear
-shortly.</p>
-
-
-<h4 id="acq_rel">Acquire and release</h4>
-
-<p>When acquiring the spinlock, we issue the atomic CAS and then the barrier.
-When releasing the spinlock, we issue the barrier and then the atomic store.
-This inspires a particular naming convention: operations followed by a barrier
-are “acquiring” operations, while operations preceded by a barrier are
-“releasing” operations.  (It would be wise to install the spin lock example
-firmly in mind, as the names are not otherwise intuitive.)</p>
-
-<p>Rewriting the spin lock example with this in mind:</p>
-
-<pre>do {
-    success = atomic_<strong>acquire</strong>_cas(&lock, 0, 1)
-} while (!success)
-
-<em>critical-section</em>
-
-atomic_<strong>release</strong>_store(&lock, 0)</pre>
-
-<p>This is a little more succinct and easier to read, but the real motivation
-for doing this lies in a couple of optimizations we can now perform.</p>
-
-<p>First, consider <code>atomic_release_store</code>.  We need to ensure that
-the store of zero to the lock word is observed after any loads or stores in the
-critical section above it.  In other words, we need a load/store and store/store
-barrier.  In an earlier section we learned that these aren’t necessary on x86
-SMP -- only store/load barriers are required.  The implementation of
-<code>atomic_release_store</code> on x86 is therefore just a compiler reorder
-barrier followed by a simple store.  No CPU barrier is required.</p>
-
-<p>The second optimization mostly applies to the compiler (although some CPUs,
-such as the Itanium, can take advantage of it as well).  The basic principle is
-that code can move across acquire and release barriers, but only in one
-direction.</p>
-
-<p>Suppose we have a mix of locally-visible and globally-visible memory
-accesses, with some miscellaneous computation as well:</p>
-
-<pre>local1 = arg1 / 41
-local2 = threadStruct->field2
-threadStruct->field3 = local2
-
-do {
-    success = atomic_acquire_cas(&lock, 0, 1)
-} while (!success)
-
-local5 = globalStruct->field5
-globalStruct->field6 = local5
-
-atomic_release_store(&lock, 0)</pre>
-
-<p>Here we see two completely independent sets of operations.  The first set
-operates on a thread-local data structure, so we’re not concerned about clashes
-with other threads.  The second set operates on a global data structure, which
-must be protected with a lock.</p>
-
-<p>A full compiler reorder barrier in the atomic ops will ensure that the
-program order matches the source code order at the lock boundaries.  However,
-allowing the compiler to interleave instructions can improve performance.  Loads
-from memory can be slow, but the CPU can continue to execute instructions that
-don’t require the result of that load while waiting for it to complete.  The
-code might execute more quickly if it were written like this instead:</p>
-
-<pre>do {
-    success = atomic_acquire_cas(&lock, 0, 1)
-} while (!success)
-
-local2 = threadStruct->field2
-local5 = globalStruct->field5
-local1 = arg1 / 41
-threadStruct->field3 = local2
-globalStruct->field6 = local5
-
-atomic_release_store(&lock, 0)</pre>
-
-<p>We issue both loads, do some unrelated computation, and then execute the
-instructions that make use of the loads.  If the integer division takes less
-time than one of the loads, we essentially get it for free, since it happens
-during a period where the CPU would have stalled waiting for a load to
-complete.</p>
-
-<p>Note that <strong>all</strong> of the operations are now happening inside the
-critical section.  Since none of the “threadStruct” operations are visible
-outside the current thread, nothing else can see them until we’re finished here,
-so it doesn’t matter exactly when they happen.</p>
-
-<p>In general, it is always safe to move operations <strong>into</strong> a
-critical section, but never safe to move operations <strong>out of</strong> a
-critical section.  Put another way, you can migrate code “downward” across an
-acquire barrier, and “upward” across a release barrier.  If the atomic ops used
-a full barrier, this sort of migration would not be possible.</p>
-
-<p>Returning to an earlier point, we can state that on x86 all loads are
-acquiring loads, and all stores are releasing stores.  As a result:</p>
-
-<ul>
-<li>Loads may not be reordered with respect to each other.  You can’t take a
-load and move it “upward” across another load’s acquire barrier.</li>
-<li>Stores may not be reordered with respect to each other, because you can’t
-move a store “downward” across another store’s release barrier.</li>
-<li>A load followed by a store can’t be reordered, because neither instruction
-will tolerate it.</li>
-<li>A store followed by a load <strong>can</strong> be reordered, because each
-instruction can move across the other in that direction.</li>
-</ul>
-
-<p>Hence, you only need store/load barriers on x86 SMP.</p>
-
-<p>Labeling atomic operations with “acquire” or “release” describes not only
-whether the barrier is executed before or after the atomic operation, but also
-how the compiler is allowed to reorder code.</p>
 
 <h2 id="practice">Practice</h2>
 
 <p>Debugging memory consistency problems can be very difficult.  If a missing
-memory barrier causes some code to read stale data, you may not be able to
+atomic or volatile declaration causes some code to read stale data, you may not be able to
 figure out why by examining memory dumps with a debugger.  By the time you can
-issue a debugger query, the CPU cores will have all observed the full set of
+issue a debugger query, the CPU cores may have all observed the full set of
 accesses, and the contents of memory and the CPU registers will appear to be in
 an “impossible” state.</p>
 
