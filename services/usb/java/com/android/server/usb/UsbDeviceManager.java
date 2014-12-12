@@ -555,7 +555,7 @@ public class UsbDeviceManager {
                 } else {
                     Slog.e(TAG, "nativeGetAccessoryStrings failed");
                 }
-            } else if (!enteringAccessoryMode) {
+            } else if (!enteringAccessoryMode || !mConnected) {
                 // make sure accessory mode is off
                 // and restore default functions
                 Slog.d(TAG, "exited USB accessory mode");
@@ -637,7 +637,8 @@ public class UsbDeviceManager {
                     }
                     if (mBootCompleted) {
                         updateUsbState();
-                        updateAudioSourceFunction();
+                        if (mConnected == mConfigured)
+                            updateAudioSourceFunction();
                     }
                     break;
                 case MSG_ENABLE_ADB:
