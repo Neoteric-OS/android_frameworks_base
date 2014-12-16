@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "211e1c5a_549b6cdb",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/stack/NotificationStackScrollLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2014-12-16T13:59:26Z",
+      "side": 1,
+      "message": "Is there evidence that this is actually crashing?\nonSecondaryPointerUp recovers when the active pointer is lifted and set to an other valid index. \nThe only possibility where I could see this bugging around somehow if motionevents are dropped which should actually be handled and therefore an incomplete stream is used.\nIn that case we should solve this root issue first.",
+      "revId": "b93acd7b1e02755d78bae832e89f0d049f0c8a5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
