@@ -457,6 +457,10 @@ class TouchExplorer implements EventStreamTransformation {
             case MotionEvent.ACTION_MOVE: {
                 final int pointerId = receivedTracker.getPrimaryPointerId();
                 final int pointerIndex = event.findPointerIndex(pointerId);
+                if (pointerIndex == -1) {
+                    Slog.e(LOG_TAG, "Invalid pointerId=" + pointerIndex + " in handleMotionEventStateTouchExploring");
+                    break;
+                }
                 final int pointerIdBits = (1 << pointerId);
                 switch (event.getPointerCount()) {
                     case 1: {
@@ -1321,6 +1325,10 @@ class TouchExplorer implements EventStreamTransformation {
                 return;
             }
 
+            if (pointerIndex == -1) {
+                Slog.e(LOG_TAG, "Invalid pointerId=" + pointerIndex);
+                return;
+            }
             mLongPressingPointerId = pointerId;
             mLongPressingPointerDeltaX = (int) mEvent.getX(pointerIndex) - clickLocation.x;
             mLongPressingPointerDeltaY = (int) mEvent.getY(pointerIndex) - clickLocation.y;

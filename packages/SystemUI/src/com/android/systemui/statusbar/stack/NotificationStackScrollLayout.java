@@ -845,8 +845,13 @@ public class NotificationStackScrollLayout extends ViewGroup
             }
             case MotionEvent.ACTION_POINTER_UP:
                 onSecondaryPointerUp(ev);
-                mLastMotionY = (int) ev.getY(ev.findPointerIndex(mActivePointerId));
-                mDownX = (int) ev.getX(ev.findPointerIndex(mActivePointerId));
+                final int activePointerIndex = ev.findPointerIndex(mActivePointerId);
+                if (activePointerIndex == -1) {
+                    Log.e(TAG, "Invalid pointerId=" + mActivePointerId + " in onScrollTouch");
+                    break;
+                }
+                mLastMotionY = (int) ev.getY(activePointerIndex);
+                mDownX = (int) ev.getX(activePointerIndex);
                 break;
         }
         return true;

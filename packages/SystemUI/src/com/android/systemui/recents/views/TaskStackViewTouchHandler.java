@@ -150,6 +150,9 @@ class TaskStackViewTouchHandler implements SwipeHelper.Callback {
                 if (mActivePointerId == INACTIVE_POINTER_ID) break;
 
                 int activePointerIndex = ev.findPointerIndex(mActivePointerId);
+                if (activePointerIndex == -1) {
+                    break;
+                }
                 int y = (int) ev.getY(activePointerIndex);
                 int x = (int) ev.getX(activePointerIndex);
                 if (Math.abs(y - mInitialMotionY) > mScrollTouchSlop) {
@@ -238,6 +241,9 @@ class TaskStackViewTouchHandler implements SwipeHelper.Callback {
                 if (mActivePointerId == INACTIVE_POINTER_ID) break;
 
                 int activePointerIndex = ev.findPointerIndex(mActivePointerId);
+                if (activePointerIndex == -1) {
+                    break;
+                }
                 int x = (int) ev.getX(activePointerIndex);
                 int y = (int) ev.getY(activePointerIndex);
                 int yTotal = Math.abs(y - mInitialMotionY);

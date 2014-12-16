@@ -810,6 +810,10 @@ public class StackView extends AdapterViewAnimator {
 
     private void handlePointerUp(MotionEvent ev) {
         int pointerIndex = ev.findPointerIndex(mActivePointerId);
+        if (pointerIndex == -1) {
+            Log.e(TAG, "Invalid pointerId=" + pointerIndex + " in handlePointerUp");
+            return;
+        }
         float newY = ev.getY(pointerIndex);
         int deltaY = (int) (newY - mInitialY);
         mLastInteractionTime = System.currentTimeMillis();

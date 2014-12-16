@@ -530,7 +530,12 @@ public class HorizontalScrollView extends FrameLayout {
             }
             case MotionEvent.ACTION_POINTER_UP:
                 onSecondaryPointerUp(ev);
-                mLastMotionX = (int) ev.getX(ev.findPointerIndex(mActivePointerId));
+                final int activePointerIndex = ev.findPointerIndex(mActivePointerId);
+                if (activePointerIndex == -1) {
+                    Log.e(TAG, "Invalid pointerId=" + mActivePointerId + " in onInterceptTouchEvent");
+                    break;
+                }
+                mLastMotionX = (int) ev.getX(activePointerIndex);
                 break;
         }
 
