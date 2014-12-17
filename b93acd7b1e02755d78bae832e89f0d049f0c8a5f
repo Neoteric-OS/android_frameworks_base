@@ -34,6 +34,24 @@
       "revId": "b93acd7b1e02755d78bae832e89f0d049f0c8a5f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c102a041_315e90c5",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/stack/NotificationStackScrollLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2014-12-17T13:18:36Z",
+      "side": 1,
+      "message": "Is there a bug open for this with a stacktrace where it is exactly crashing at this location here? I\u0027d like to solve the root issue instead of adding defensive checks then.",
+      "parentUuid": "a1b4ccb0_c89faff3",
+      "revId": "b93acd7b1e02755d78bae832e89f0d049f0c8a5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
