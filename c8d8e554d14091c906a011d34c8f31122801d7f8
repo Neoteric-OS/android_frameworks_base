@@ -16,6 +16,47 @@
       "revId": "c8d8e554d14091c906a011d34c8f31122801d7f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1d5ac01_e0154264",
+        "filename": "policy/src/com/android/internal/policy/impl/PhoneWindowManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2014-12-17T16:47:14Z",
+      "side": 1,
+      "message": "Better yet, you can change the line to\n\nmNavigationBarCanMove \u003d width !\u003d height \u0026\u0026 shortSizeDp \u003c 600;",
+      "parentUuid": "a1076c51_90cad427",
+      "revId": "c8d8e554d14091c906a011d34c8f31122801d7f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "611ad4b5_a9ecd9ca",
+        "filename": "policy/src/com/android/internal/policy/impl/PhoneWindowManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1524,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2014-12-17T16:47:14Z",
+      "side": 1,
+      "message": "Can you also change this to \u0027\u003e\u003d\u0027 which makes the logic the inverse of what we have in getNonDecorDisplayHeight()?",
+      "range": {
+        "startLine": 1524,
+        "startChar": 51,
+        "endLine": 1524,
+        "endChar": 52
+      },
+      "revId": "c8d8e554d14091c906a011d34c8f31122801d7f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
