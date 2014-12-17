@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1076c51_90cad427",
+        "filename": "policy/src/com/android/internal/policy/impl/PhoneWindowManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1013823
+      },
+      "writtenOn": "2014-12-17T14:59:32Z",
+      "side": 1,
+      "message": "Convention is to always use braces.  Also please update the comment.",
+      "revId": "c8d8e554d14091c906a011d34c8f31122801d7f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
