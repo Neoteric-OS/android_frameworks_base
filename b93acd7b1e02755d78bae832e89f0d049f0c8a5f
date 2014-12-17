@@ -16,6 +16,24 @@
       "revId": "b93acd7b1e02755d78bae832e89f0d049f0c8a5f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1b4ccb0_c89faff3",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/stack/NotificationStackScrollLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1039033
+      },
+      "writtenOn": "2014-12-17T05:00:23Z",
+      "side": 1,
+      "message": "Yes. This is cause of App crashing.\nWe meet many app crash bug cause invalid index access in L OS.\nThis is exception handling code for call getX(), getY() to solve crashing.",
+      "parentUuid": "211e1c5a_549b6cdb",
+      "revId": "b93acd7b1e02755d78bae832e89f0d049f0c8a5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
