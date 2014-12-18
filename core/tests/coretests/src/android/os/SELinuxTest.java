@@ -11,7 +11,7 @@ public class SELinuxTest extends AndroidTestCase {
         if(SELinux.isSELinuxEnabled() == false)
             return;
 
-        String ctx = SELinux.getFileContext("/system/bin/toolbox");
+        String ctx = SELinux.getFileContext("/system/bin/cat");
         assertEquals(ctx, "u:object_r:system_file:s0");
     }
 
