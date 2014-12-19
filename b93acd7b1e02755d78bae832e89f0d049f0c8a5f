@@ -52,6 +52,24 @@
       "revId": "b93acd7b1e02755d78bae832e89f0d049f0c8a5f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "811b4806_57fc2c43",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/stack/NotificationStackScrollLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1039033
+      },
+      "writtenOn": "2014-12-19T06:21:11Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is reported or not.\nOn our internal test it is not occur here, but other code at same event handling ACTION_POINTER_UP.\nI want to solve the root cause, but anyone knows that now.\nSo, I think the first step is handling the exception and next try to find it.",
+      "parentUuid": "c102a041_315e90c5",
+      "revId": "b93acd7b1e02755d78bae832e89f0d049f0c8a5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
