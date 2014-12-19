@@ -339,15 +339,6 @@ class LoaderManagerImpl extends LoaderManager {
             }
         }
 
-        void cancel() {
-            if (DEBUG) Log.v(TAG, "  Canceling: " + this);
-            if (mStarted && mLoader != null && mListenerRegistered) {
-                if (!mLoader.cancelLoad()) {
-                    onLoadCanceled(mLoader);
-                }
-            }
-        }
-
         void destroy() {
             if (DEBUG) Log.v(TAG, "  Destroying: " + this);
             mDestroyed = true;
@@ -668,19 +659,18 @@ class LoaderManagerImpl extends LoaderManager {
                 } else {
                     // We already have an inactive loader for this ID that we are
                     // waiting for!  What to do, what to do...
-                    if (!info.mStarted) {
-                        // The current Loader has not been started...  we thus
-                        // have no reason to keep it around, so bam, slam,
-                        // thank-you-ma'am.
+                    // Well, lets see if we can cancel the current loader first.
+                    if (!info.mStarted || info.mLoader == null || !info.mLoader.cancelLoad()) {
+                        // The current Loader has not been started, or has already finished its
+                        // background duties and we just could cancel it immediately, we thus
+                        // have no reason to keep it around, so bam, slam, thank-you-ma'am.
                         if (DEBUG) Log.v(TAG, "  Current loader is stopped; replacing");
                         mLoaders.put(id, null);
                         info.destroy();
                     } else {
-                        // Now we have three active loaders... we'll queue
-                        // up this request to be processed once one of the other loaders
-                        // finishes or is canceled.
-                        if (DEBUG) Log.v(TAG, "  Current loader is running; attempting to cancel");
-                        info.cancel();
+                        // We just asked the current loader to cancel itself. In the meantime
+                        // we need to remember that we have a pending loader to install once
+                        // cancellation is over.
                         if (info.mPendingLoader != null) {
                             if (DEBUG) Log.v(TAG, "  Removing pending loader: " + info.mPendingLoader);
                             info.mPendingLoader.destroy();
