@@ -1467,11 +1467,12 @@ public final class Parcel {
             writeInt(EX_HAS_REPLY_HEADER);
             final int sizePosition = dataPosition();
             writeInt(0);  // total size of fat header, to be filled in later
+            final int payloadStartPosition = dataPosition();
             StrictMode.writeGatheredViolationsToParcel(this);
-            final int payloadPosition = dataPosition();
+            final int payloadEndPosition = dataPosition();
             setDataPosition(sizePosition);
-            writeInt(payloadPosition - sizePosition);  // header size
-            setDataPosition(payloadPosition);
+            writeInt(payloadEndPosition - payloadStartPosition);  // header size
+            setDataPosition(payloadEndPosition);
         } else {
             writeInt(0);
         }
