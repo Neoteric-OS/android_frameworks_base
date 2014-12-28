@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "418cf0b9_ec0bf316",
+        "filename": "policy/src/com/android/internal/policy/impl/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1689,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2014-12-28T23:47:17Z",
+      "side": 1,
+      "message": "If width\u003d\u003dheight then mNavigationBarCanMove is false. In which case this conditional fails before it gets to evaluating the \"\u003e\" condition. No need to modify this. Further, if fullWidth\u003d\u003dfullHeight then there is no rotation and we want to return fullWidth, not (fullWidth - mNav...).\n\nSo I think this change is wrong.",
+      "range": {
+        "startLine": 1689,
+        "startChar": 52,
+        "endLine": 1689,
+        "endChar": 53
+      },
+      "revId": "33a3bdc6811c62e071aaf480ddb4b54d988f8324",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
