@@ -34,6 +34,23 @@
       "revId": "cea639cf3f9ee6f851045fb0a25429dfa23fed39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a185ac8b_63553c92",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1795,
+      "author": {
+        "id": 1002068
+      },
+      "writtenOn": "2014-12-28T14:17:24Z",
+      "side": 1,
+      "message": "In the cases when this is 160 bytes, the type field still is only 4 bytes, while there\u0027s 4 bytes of padding before the mNumPlanes field. So technically, this reads 4 bytes of padding into the top part of the number (and would fail on big endian). I\u0027m not sure if the padding is defined to be zero-initialized, or if it can be anything.",
+      "revId": "cea639cf3f9ee6f851045fb0a25429dfa23fed39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
