@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0144b839_2b2cf9ff",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2150,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-12-29T12:24:44Z",
+      "side": 1,
+      "message": "this makes an IPC to the mount service...",
+      "revId": "1b5692f42a2aecbe896785464555e5ba5554850a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a185ac8b_034c70bd",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2163,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-12-29T12:24:44Z",
+      "side": 1,
+      "message": "... so wouldn\u0027t it make sense to have the mount service check as part of this method ?\n\nAlso, wouldn\u0027t this fail, even without your fix ?",
+      "revId": "1b5692f42a2aecbe896785464555e5ba5554850a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c180e07b_87cb2a5b",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2173,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2014-12-29T12:24:44Z",
+      "side": 1,
+      "message": "hmm, not sure if it makes sense to add null directories to the array (in the failure case).",
+      "revId": "1b5692f42a2aecbe896785464555e5ba5554850a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
