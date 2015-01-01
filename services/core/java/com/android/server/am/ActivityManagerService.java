@@ -2930,8 +2930,8 @@ public final class ActivityManagerService extends ActivityManagerNative
 
     int startIsolatedProcess(String entryPoint, String[] entryPointArgs,
             String processName, String abiOverride, int uid, Runnable crashHandler) {
-        synchronized(this) {
-            ApplicationInfo info = new ApplicationInfo();
+        synchronized (this) {
+            final ApplicationInfo info = new ApplicationInfo();
             // In general the ApplicationInfo.uid isn't neccesarily equal to ProcessRecord.uid.
             // For isolated processes, the former contains the parent's uid and the latter the
             // actual uid of the isolated process.
@@ -2944,11 +2944,28 @@ public final class ActivityManagerService extends ActivityManagerNative
             info.processName = processName;
             info.className = entryPoint;
             info.packageName = "android";
-            ProcessRecord proc = startProcessLocked(processName, info /* info */,
+            final ProcessRecord proc = startProcessLocked(processName, info /* info */,
                     false /* knownToBeDead */, 0 /* intentFlags */, ""  /* hostingType */,
                     null /* hostingName */, true /* allowWhileBooting */, true /* isolated */,
                     uid, true /* keepIfLarge */, abiOverride, entryPoint, entryPointArgs,
                     crashHandler);
+            if (proc != null && !"android.app.ActivityThread".equals(entryPoint)) {
+                // The process will not attach, so just keep the record awhile.
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        synchronized (this) {
+                            synchronized (mPidsSelfLocked) {
+                                mPidsSelfLocked.remove(proc.pid);
+                            }
+                            mProcessNames.remove(info.processName, proc.uid);
+                            mIsolatedProcesses.remove(proc.uid);
+                            mBatteryStatsService.noteProcessFinish(info.processName, info.uid);
+                            mBatteryStatsService.removeIsolatedUid(proc.uid, info.uid);
+                        }
+                    }
+                }, PROC_START_TIMEOUT);
+            }
             return proc != null ? proc.pid : 0;
         }
     }
