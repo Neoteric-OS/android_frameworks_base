@@ -70,6 +70,24 @@
       "revId": "b93acd7b1e02755d78bae832e89f0d049f0c8a5f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0144b839_7136f0d3",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/stack/NotificationStackScrollLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2015-01-02T13:20:57Z",
+      "side": 1,
+      "message": "We (sony) have seen this in the wild also (uploaded a fix here https://android-review.googlesource.com/#/c/121004 the other day before noticing this CL).\n\nPartial stack trace as reported internally:\n\n  java.lang.IllegalArgumentException: pointerIndex out of range\n  at android.view.MotionEvent.nativeGetAxisValue(Native Method)\n  at android.view.MotionEvent.getY(MotionEvent.java:1998)\n  at com.android.systemui.statusbar.stack.NotificationStackScrollLayout.onScrollTouch(NotificationStackScrollLayout.java:868)\n  at com.android.systemui.statusbar.stack.NotificationStackScrollLayout.onTouchEvent(NotificationStackScrollLayout.java:724)\n  at android.view.View.dispatchTouchEvent(View.java:8464)",
+      "parentUuid": "811b4806_57fc2c43",
+      "revId": "b93acd7b1e02755d78bae832e89f0d049f0c8a5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
