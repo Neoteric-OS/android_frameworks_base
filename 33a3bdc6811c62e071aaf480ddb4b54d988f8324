@@ -22,6 +22,30 @@
       "revId": "33a3bdc6811c62e071aaf480ddb4b54d988f8324",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ef89d38_80289875",
+        "filename": "policy/src/com/android/internal/policy/impl/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1689,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-01-03T22:10:49Z",
+      "side": 1,
+      "message": "Good point!",
+      "parentUuid": "418cf0b9_ec0bf316",
+      "range": {
+        "startLine": 1689,
+        "startChar": 52,
+        "endLine": 1689,
+        "endChar": 53
+      },
+      "revId": "33a3bdc6811c62e071aaf480ddb4b54d988f8324",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
