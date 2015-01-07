@@ -73,7 +73,7 @@ public class NtpTrustedTime implements TrustedTime {
 
     @Override
     public boolean forceRefresh() {
-        if (mServer == null) {
+        if ("".equals(mServer)) {
             // missing server, so no trusted time available
             return false;
         }
