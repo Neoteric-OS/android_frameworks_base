@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eefdd173_722c9837",
+        "filename": "core/java/android/util/NtpTrustedTime.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2015-01-07T16:44:03Z",
+      "side": 1,
+      "message": "Please use TextUtils.isEmpty()",
+      "revId": "8d6a6fdbc34267ee361e7bd20719887268161870",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
