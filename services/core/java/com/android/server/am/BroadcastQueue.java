@@ -102,6 +102,11 @@ public final class BroadcastQueue {
     final BroadcastRecord[] mBroadcastHistory = new BroadcastRecord[MAX_BROADCAST_HISTORY];
 
     /**
+     * Historical data of past pended broadcasts, for debugging.
+     */
+    final PendedBroadcastRecord[] mPendedBroadcastHistory = new PendedBroadcastRecord[MAX_BROADCAST_HISTORY];
+
+    /**
      * Summary of historical data of past broadcasts, for debugging.
      */
     final Intent[] mBroadcastSummaryHistory = new Intent[MAX_BROADCAST_SUMMARY_HISTORY];
@@ -947,6 +952,7 @@ public final class BroadcastQueue {
 
             mPendingBroadcast = r;
             mPendingBroadcastRecvIndex = recIdx;
+            addPendedBroadcastToHistoryLocked(r, recIdx);
         }
     }
 
@@ -1084,6 +1090,61 @@ public final class BroadcastQueue {
         mBroadcastSummaryHistory[0] = r.intent;
     }
 
+    final private void addPendedBroadcastToHistoryLocked(BroadcastRecord r, int idx) {
+        PendedBroadcastRecord pbr;
+        if (mPendedBroadcastHistory[0] != null &&
+                mPendedBroadcastHistory[0].record == r) {
+            pbr = mPendedBroadcastHistory[0];
+        } else {
+            System.arraycopy(mPendedBroadcastHistory, 0, mPendedBroadcastHistory, 1,
+                    MAX_BROADCAST_HISTORY-1);
+            pbr = mPendedBroadcastHistory[0] = new PendedBroadcastRecord(r);
+        }
+        pbr.updateReceiverStartTime(idx, r.receiverTime);
+    }
+
+    final private boolean dumpPendedHistoryLocked(FileDescriptor fd, PrintWriter pw,
+            String[] args, boolean dumpAll, String dumpPackage, boolean needSep) {
+        boolean printed = false;
+
+        for (int i=0; i<MAX_BROADCAST_HISTORY; i++) {
+            PendedBroadcastRecord pbr = mPendedBroadcastHistory[i];
+            if (pbr == null) {
+                break;
+            }
+            if (dumpPackage != null && !dumpPackage.equals(pbr.record.callerPackage)) {
+                continue;
+            }
+            if (!printed) {
+                if (needSep) {
+                    pw.println();
+                }
+                pw.println("  Historical pended broadcasts [" + mQueueName + "]:");
+                needSep = true;
+                printed = true;
+            }
+            BroadcastRecord br = pbr.record;
+            if (dumpAll) {
+                pw.print("   Historical Pended Broadcast " + mQueueName + " #");
+                        pw.print(i); pw.println(":");
+                br.dump(pw, "    ");
+            } else {
+                pw.print("  #"); pw.print(i); pw.print(": "); pw.println(br);
+                pw.print("    ");
+                pw.println(br.intent.toShortString(false, true, true, false));
+                if (br.targetComp != null && br.targetComp != br.intent.getComponent()) {
+                    pw.print("    targetComp: "); pw.println(br.targetComp.toShortString());
+                }
+                Bundle bundle = br.intent.getExtras();
+                if (bundle != null) {
+                    pw.print("    extras: "); pw.println(bundle.toString());
+                }
+            }
+            pbr.dumpLocked(fd, pw, args, "     ");
+        }
+        return needSep;
+    }
+
     final void logBroadcastReceiverDiscardLocked(BroadcastRecord r) {
         if (r.nextReceiver > 0) {
             Object curReceiver = r.receivers.get(r.nextReceiver-1);
@@ -1165,6 +1226,8 @@ public final class BroadcastQueue {
                 needSep = true;
             }
         }
+
+        needSep = dumpPendedHistoryLocked(fd, pw, args, dumpAll, dumpPackage,  needSep);
 
         int i;
         boolean printed = false;
