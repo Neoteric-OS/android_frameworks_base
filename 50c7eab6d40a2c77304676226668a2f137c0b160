@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ea8d591_8fdd759d",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1052243
+      },
+      "writtenOn": "2015-01-08T14:17:55Z",
+      "side": 1,
+      "message": "Do we need this \u0027\u003c\u0027 at the end?",
+      "revId": "50c7eab6d40a2c77304676226668a2f137c0b160",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
