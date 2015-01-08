@@ -16,6 +16,24 @@
       "revId": "8d6a6fdbc34267ee361e7bd20719887268161870",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e697d05_38c945bd",
+        "filename": "core/java/android/util/NtpTrustedTime.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1005082
+      },
+      "writtenOn": "2015-01-08T00:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eefdd173_722c9837",
+      "revId": "8d6a6fdbc34267ee361e7bd20719887268161870",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
