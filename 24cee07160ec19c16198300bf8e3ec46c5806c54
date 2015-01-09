@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aea119bc_66c40a4f",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4487,
+      "author": {
+        "id": 1003723
+      },
+      "writtenOn": "2015-01-09T00:16:26Z",
+      "side": 1,
+      "message": "next time i\u0027d cut this nonsense of avoiding an import..",
+      "range": {
+        "startLine": 4487,
+        "startChar": 12,
+        "endLine": 4487,
+        "endChar": 35
+      },
+      "revId": "24cee07160ec19c16198300bf8e3ec46c5806c54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
