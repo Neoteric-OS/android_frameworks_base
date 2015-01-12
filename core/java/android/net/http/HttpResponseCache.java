@@ -16,20 +16,20 @@
 
 package android.net.http;
 
-import android.content.Context;
+import com.android.okhttp.Cache;
+import com.android.okhttp.AndroidShimResponseCache;
+import com.android.okhttp.OkCacheContainer;
+
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.net.CacheRequest;
 import java.net.CacheResponse;
-import java.net.HttpURLConnection;
 import java.net.ResponseCache;
 import java.net.URI;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
-import javax.net.ssl.HttpsURLConnection;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  * Caches HTTP and HTTPS responses to the filesystem so they may be reused,
@@ -40,7 +40,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
  * <h3>Installing an HTTP response cache</h3>
  * Enable caching of all of your application's HTTP requests by installing the
  * cache at application startup. For example, this code installs a 10 MiB cache
- * in the {@link Context#getCacheDir() application-specific cache directory} of
+ * in the {@link android.content.Context#getCacheDir() application-specific cache directory} of
  * the filesystem}: <pre>   {@code
  *   protected void onCreate(Bundle savedInstanceState) {
  *       ...
@@ -147,12 +147,12 @@ import org.apache.http.impl.client.DefaultHttpClient;
  *       } catch (Exception httpResponseCacheNotAvailable) {
  *       }}</pre>
  */
-public final class HttpResponseCache extends ResponseCache implements Closeable {
+public final class HttpResponseCache extends ResponseCache implements Closeable, OkCacheContainer {
 
-    private final com.android.okhttp.HttpResponseCache delegate;
+    private AndroidShimResponseCache shimResponseCache;
 
-    private HttpResponseCache(com.android.okhttp.HttpResponseCache delegate) {
-        this.delegate = delegate;
+    private HttpResponseCache(AndroidShimResponseCache shimResponseCache) {
+        this.shimResponseCache = shimResponseCache;
     }
 
     /**
@@ -161,54 +161,52 @@ public final class HttpResponseCache extends ResponseCache implements Closeable 
      */
     public static HttpResponseCache getInstalled() {
         ResponseCache installed = ResponseCache.getDefault();
-        if (installed instanceof com.android.okhttp.HttpResponseCache) {
-            return new HttpResponseCache(
-                    (com.android.okhttp.HttpResponseCache) installed);
+        if (installed instanceof HttpResponseCache) {
+            return (HttpResponseCache) installed;
         }
-
         return null;
     }
 
     /**
-     * Creates a new HTTP response cache and {@link ResponseCache#setDefault
-     * sets it} as the system default cache.
+     * Creates a new HTTP response cache and sets it as the system default cache.
      *
      * @param directory the directory to hold cache data.
      * @param maxSize the maximum size of the cache in bytes.
      * @return the newly-installed cache
-     * @throws IOException if {@code directory} cannot be used for this cache.
+     * @throws java.io.IOException if {@code directory} cannot be used for this cache.
      *     Most applications should respond to this exception by logging a
      *     warning.
      */
-    public static HttpResponseCache install(File directory, long maxSize) throws IOException {
+    public static synchronized HttpResponseCache install(File directory, long maxSize) throws
+        IOException {
         ResponseCache installed = ResponseCache.getDefault();
-        if (installed instanceof com.android.okhttp.HttpResponseCache) {
-            com.android.okhttp.HttpResponseCache installedCache =
-                    (com.android.okhttp.HttpResponseCache) installed;
+
+        if (installed instanceof HttpResponseCache) {
+            HttpResponseCache installedResponseCache = (HttpResponseCache) installed;
             // don't close and reopen if an equivalent cache is already installed
-            if (installedCache.getDirectory().equals(directory)
-                    && installedCache.getMaxSize() == maxSize
-                    && !installedCache.isClosed()) {
-                return new HttpResponseCache(installedCache);
+            AndroidShimResponseCache trueResponseCache = installedResponseCache.shimResponseCache;
+            if (trueResponseCache.isEquivalent(directory, maxSize)) {
+                return installedResponseCache;
             } else {
                 // The HttpResponseCache that owns this object is about to be replaced.
-                installedCache.close();
+                trueResponseCache.close();
             }
         }
 
-        com.android.okhttp.HttpResponseCache responseCache =
-                new com.android.okhttp.HttpResponseCache(directory, maxSize);
-        ResponseCache.setDefault(responseCache);
-        return new HttpResponseCache(responseCache);
+        AndroidShimResponseCache trueResponseCache =
+            AndroidShimResponseCache.create(directory, maxSize);
+        HttpResponseCache newResponseCache = new HttpResponseCache(trueResponseCache);
+        ResponseCache.setDefault(newResponseCache);
+        return newResponseCache;
     }
 
     @Override public CacheResponse get(URI uri, String requestMethod,
-            Map<String, List<String>> requestHeaders) throws IOException {
-        return delegate.get(uri, requestMethod, requestHeaders);
+        Map<String, List<String>> requestHeaders) throws IOException {
+        return shimResponseCache.get(uri, requestMethod, requestHeaders);
     }
 
     @Override public CacheRequest put(URI uri, URLConnection urlConnection) throws IOException {
-        return delegate.put(uri, urlConnection);
+        return shimResponseCache.put(uri, urlConnection);
     }
 
     /**
@@ -217,7 +215,12 @@ public final class HttpResponseCache extends ResponseCache implements Closeable 
      * deletion is pending.
      */
     public long size() {
-        return delegate.getSize();
+        try {
+            return shimResponseCache.size();
+        } catch (IOException e) {
+            // This can occur if the cache failed to lazily initialize. Return -1 to mean "unknown".
+            return -1;
+        }
     }
 
     /**
@@ -225,7 +228,7 @@ public final class HttpResponseCache extends ResponseCache implements Closeable 
      * its data.
      */
     public long maxSize() {
-        return delegate.getMaxSize();
+        return shimResponseCache.maxSize();
     }
 
     /**
@@ -235,7 +238,7 @@ public final class HttpResponseCache extends ResponseCache implements Closeable 
      */
     public void flush() {
         try {
-            delegate.flush();
+            shimResponseCache.flush();
         } catch (IOException ignored) {
         }
     }
@@ -245,7 +248,7 @@ public final class HttpResponseCache extends ResponseCache implements Closeable 
      * supply a response or validate a locally cached response.
      */
     public int getNetworkCount() {
-        return delegate.getNetworkCount();
+        return shimResponseCache.getNetworkCount();
     }
 
     /**
@@ -254,7 +257,7 @@ public final class HttpResponseCache extends ResponseCache implements Closeable 
      * validated over the network.
      */
     public int getHitCount() {
-        return delegate.getHitCount();
+        return shimResponseCache.getHitCount();
     }
 
     /**
@@ -263,7 +266,7 @@ public final class HttpResponseCache extends ResponseCache implements Closeable 
      * to handle a redirects and retries.
      */
     public int getRequestCount() {
-        return delegate.getRequestCount();
+        return shimResponseCache.getRequestCount();
     }
 
     /**
@@ -271,19 +274,26 @@ public final class HttpResponseCache extends ResponseCache implements Closeable 
      * will remain on the filesystem.
      */
     @Override public void close() throws IOException {
-        if (ResponseCache.getDefault() == this.delegate) {
+        if (ResponseCache.getDefault() == this) {
             ResponseCache.setDefault(null);
         }
-        delegate.close();
+        shimResponseCache.close();
     }
 
     /**
      * Uninstalls the cache and deletes all of its stored contents.
      */
     public void delete() throws IOException {
-        if (ResponseCache.getDefault() == this.delegate) {
+        if (ResponseCache.getDefault() == this) {
             ResponseCache.setDefault(null);
         }
-        delegate.delete();
+        shimResponseCache.delete();
     }
+
+    /** @hide Needed for OkHttp integration. */
+    @Override
+    public Cache getCache() {
+        return shimResponseCache.getCache();
+    }
+
 }
