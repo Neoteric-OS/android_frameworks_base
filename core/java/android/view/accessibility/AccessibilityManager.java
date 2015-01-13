@@ -636,13 +636,11 @@ public final class AccessibilityManager {
      * Notifies the registered {@link AccessibilityStateChangeListener}s.
      */
     private void handleNotifyAccessibilityStateChanged() {
-        final boolean isEnabled;
         synchronized (mLock) {
-            isEnabled = mIsEnabled;
-        }
-        final int listenerCount = mAccessibilityStateChangeListeners.size();
-        for (int i = 0; i < listenerCount; i++) {
-            mAccessibilityStateChangeListeners.get(i).onAccessibilityStateChanged(isEnabled);
+            final int listenerCount = mAccessibilityStateChangeListeners.size();
+            for (int i = 0; i < listenerCount; i++) {
+                mAccessibilityStateChangeListeners.get(i).onAccessibilityStateChanged(mIsEnabled);
+            }
         }
     }
 
@@ -650,14 +648,12 @@ public final class AccessibilityManager {
      * Notifies the registered {@link TouchExplorationStateChangeListener}s.
      */
     private void handleNotifyTouchExplorationStateChanged() {
-        final boolean isTouchExplorationEnabled;
         synchronized (mLock) {
-            isTouchExplorationEnabled = mIsTouchExplorationEnabled;
-        }
-        final int listenerCount = mTouchExplorationStateChangeListeners.size();
-        for (int i = 0; i < listenerCount; i++) {
-            mTouchExplorationStateChangeListeners.get(i)
-                    .onTouchExplorationStateChanged(isTouchExplorationEnabled);
+            final int listenerCount = mTouchExplorationStateChangeListeners.size();
+            for (int i = 0; i < listenerCount; i++) {
+                mTouchExplorationStateChangeListeners.get(i)
+                        .onTouchExplorationStateChanged(mIsTouchExplorationEnabled);
+            }
         }
     }
 
@@ -665,14 +661,12 @@ public final class AccessibilityManager {
      * Notifies the registered {@link HighTextContrastChangeListener}s.
      */
     private void handleNotifyHighTextContrastStateChanged() {
-        final boolean isHighTextContrastEnabled;
         synchronized (mLock) {
-            isHighTextContrastEnabled = mIsHighTextContrastEnabled;
-        }
-        final int listenerCount = mHighTextContrastStateChangeListeners.size();
-        for (int i = 0; i < listenerCount; i++) {
-            mHighTextContrastStateChangeListeners.get(i)
-                    .onHighTextContrastStateChanged(isHighTextContrastEnabled);
+            final int listenerCount = mHighTextContrastStateChangeListeners.size();
+            for (int i = 0; i < listenerCount; i++) {
+                mHighTextContrastStateChangeListeners.get(i)
+                        .onHighTextContrastStateChanged(mIsHighTextContrastEnabled);
+            }
         }
     }
 
