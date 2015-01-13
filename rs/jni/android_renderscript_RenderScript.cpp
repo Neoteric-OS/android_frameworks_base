@@ -275,6 +275,46 @@ nScriptGroup2Execute(JNIEnv *_env, jobject _this, jlong con, jlong groupID) {
   rsScriptGroupExecute((RsContext)con, (RsScriptGroup2)groupID);
 }
 
+static RsBlasTranspose
+convertTranspose(jint trans) {
+    switch (trans) {
+        case (111):
+            return RsBlasNoTrans;
+        case (112):
+            return RsBlasTrans;
+        case (113):
+            return RsBlasConjTrans;
+        }
+    return RsBlasNoTrans;
+}
+
+static void
+nScriptIntrinsicBLAS_SGEMM(JNIEnv *_env, jobject _this, jlong con, jlong id, jint TransA,
+                           jint TransB, jint M, jint N, jint K, jfloat alpha, jlong A, jlong B, jfloat beta, jlong C) {
+    RsBlasCall call;
+    memset(&call, 0, sizeof(call));
+    call.func = RsBlas_sgemm;
+    
+    call.transA = convertTranspose(TransA);
+    call.transB = convertTranspose(TransB);
+    call.M = M;
+    call.N = N;
+    call.K = K;
+    call.alpha.f = alpha;
+    call.beta.f = beta;
+    
+    RsAllocation in_allocs[3];
+    in_allocs[0] = (RsAllocation)A;
+    in_allocs[1] = (RsAllocation)B;
+    in_allocs[2] = (RsAllocation)C;
+    
+    rsScriptForEachMulti((RsContext)con, (RsScript)id, 0,
+                         in_allocs, sizeof(in_allocs), nullptr,
+                         &call, sizeof(call), nullptr, 0);
+    
+    
+}
+
 static void
 nAssignName(JNIEnv *_env, jobject _this, jlong con, jlong obj, jbyteArray str)
 {
@@ -2005,6 +2045,8 @@ static JNINativeMethod methods[] = {
 {"rsnScriptGroupSetOutput",          "(JJJJ)V",                               (void*)nScriptGroupSetOutput },
 {"rsnScriptGroupExecute",            "(JJ)V",                                 (void*)nScriptGroupExecute },
 {"rsnScriptGroup2Execute",           "(JJ)V",                                 (void*)nScriptGroup2Execute },
+
+{"rsnScriptIntrinsicBLAS_SGEMM",     "(JJIIIIIFJJFJ)V",                       (void*)nScriptIntrinsicBLAS_SGEMM },
 
 {"rsnProgramStoreCreate",            "(JZZZZZZIII)J",                         (void*)nProgramStoreCreate },
 

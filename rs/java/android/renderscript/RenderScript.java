@@ -858,6 +858,14 @@ public class RenderScript {
         return rsnPathCreate(mContext, prim, isStatic, vtx, loop, q);
     }
 
+    native void rsnScriptIntrinsicBLAS_SGEMM(long con, long id, int TransA, int TransB, int M, int N, int K, float alpha,
+                                             long A, long B, float beta, long C);
+    synchronized void nScriptIntrinsicBLAS_SGEMM(long id, int TransA, int TransB, int M, int N, int K, float alpha, 
+                                                 long A, long B, float beta, long C) {
+        validate();
+        rsnScriptIntrinsicBLAS_SGEMM(mContext, id, TransA, TransB, M, N, K, alpha, A, B, beta, C);
+    }
+
     long     mDev;
     long     mContext;
     @SuppressWarnings({"FieldCanBeLocal"})
