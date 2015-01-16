@@ -1245,6 +1245,10 @@ class WindowStateAnimator {
             mDtDx = 0;
             mDsDy = 0;
             mDtDy = mWin.mGlobalScale;
+            if (appTransformation == null) {
+                mHasClipRect = false;
+                mClipRect.setEmpty();
+            }
         }
     }
 
@@ -1334,6 +1338,10 @@ class WindowStateAnimator {
         clipRect.top -= attrs.surfaceInsets.top;
         clipRect.right += attrs.surfaceInsets.right;
         clipRect.bottom += attrs.surfaceInsets.bottom;
+
+        if ((w.mAttrs.flags & LayoutParams.FLAG_LAYOUT_INSET_DECOR) == 0) {
+            mHasClipRect = false;
+        }
 
         // If we have an animated clip rect, intersect it with the clip rect.
         if (mHasClipRect) {
