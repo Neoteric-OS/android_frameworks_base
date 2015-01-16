@@ -55,22 +55,12 @@ public class WrapperInit {
     public static void main(String[] args) {
         try {
             // Parse our mandatory arguments.
-            int fdNum = Integer.parseInt(args[0], 10);
-            int targetSdkVersion = Integer.parseInt(args[1], 10);
-
-            // Tell the Zygote what our actual PID is (since it only knows about the
-            // wrapper that it directly forked).
-            if (fdNum != 0) {
-                try {
-                    FileDescriptor fd = new FileDescriptor();
-                    fd.setInt$(fdNum);
-                    DataOutputStream os = new DataOutputStream(new FileOutputStream(fd));
-                    os.writeInt(Process.myPid());
-                    os.close();
-                    IoUtils.closeQuietly(fd);
-                } catch (IOException ex) {
-                    Slog.d(TAG, "Could not write pid of wrapped process to Zygote pipe.", ex);
-                }
+            int targetSdkVersion;
+            try {
+                targetSdkVersion = Integer.parseInt(args[0], 10);
+            } catch (NumberFormatException nfe) {
+                Slog.e(TAG, "Invalid targetSdkVersion: " + args[0]);
+                throw nfe;
             }
 
             // Mimic Zygote preloading.
@@ -97,17 +87,32 @@ public class WrapperInit {
      */
     public static void execApplication(String invokeWith, String niceName,
             int targetSdkVersion, FileDescriptor pipeFd, String[] args) {
+        sendPidToParent(pipeFd);
         StringBuilder command = new StringBuilder(invokeWith);
         command.append(" /system/bin/app_process /system/bin --application");
         if (niceName != null) {
             command.append(" '--nice-name=").append(niceName).append("'");
         }
         command.append(" com.android.internal.os.WrapperInit ");
-        command.append(pipeFd != null ? pipeFd.getInt$() : 0);
-        command.append(' ');
         command.append(targetSdkVersion);
         Zygote.appendQuotedShellArgs(command, args);
         Zygote.execShell(command.toString());
+    }
+
+    /**
+     * Tell the zygote about or PID before we exec, at which point the FD will be
+     * close since it's marked O_CLOEXEC. Calls to exec() won't change our PID.
+     */
+    private static void sendPidToParent(FileDescriptor pipeFd) {
+        try {
+            DataOutputStream os = new DataOutputStream(new FileOutputStream(pipeFd));
+            os.writeInt(Process.myPid());
+            os.close();
+        } catch (IOException ex) {
+            Slog.d(TAG, "Could not write pid of wrapped process to Zygote pipe.", ex);
+        } finally {
+            IoUtils.closeQuietly(pipeFd);
+        }
     }
 
     /**
