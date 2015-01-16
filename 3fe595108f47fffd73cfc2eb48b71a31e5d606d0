@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8be0c7b0_2f6be95e",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-01-16T15:48:10Z",
+      "side": 1,
+      "message": "turns out we need the \"child\" side of this pipe to not be O_CLOEXEC. (which ends up breaking wrapped processes)\n\nI\u0027ll restructure that code to fix this properly since we shouldn\u0027t need to report our PID after exec, we could just as well do it before.",
+      "revId": "3fe595108f47fffd73cfc2eb48b71a31e5d606d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
