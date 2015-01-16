@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8be0c7b0_4f942dab",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-01-16T17:48:42Z",
+      "side": 1,
+      "message": "I tried. It was absurdly painful. Also, there\u0027s no code (well, one file) in libandroid_runtime that uses std::string. Everybody else uses String8, which is almost as bad as char :P",
+      "parentUuid": "2bcfdb48_3ba32310",
+      "revId": "272001009a3613d02c0659757a58c19c3a2fe290",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bcfdb48_bbae33f0",
         "filename": "services/core/java/com/android/server/MountService.java",
         "patchSetId": 1
