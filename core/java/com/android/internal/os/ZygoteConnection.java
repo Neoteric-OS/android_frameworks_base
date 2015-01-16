@@ -16,7 +16,8 @@
 
 package com.android.internal.os;
 
-import static android.system.OsConstants.O_CLOEXEC;
+import static android.system.OsConstants.FD_CLOEXEC;
+import static android.system.OsConstants.F_SETFD;
 import static android.system.OsConstants.STDERR_FILENO;
 import static android.system.OsConstants.STDIN_FILENO;
 import static android.system.OsConstants.STDOUT_FILENO;
@@ -191,9 +192,10 @@ class ZygoteConnection {
             }
 
             if (parsedArgs.runtimeInit && parsedArgs.invokeWith != null) {
-                FileDescriptor[] pipeFds = Os.pipe2(O_CLOEXEC);
+                FileDescriptor[] pipeFds = Os.pipe();
                 childPipeFd = pipeFds[1];
                 serverPipeFd = pipeFds[0];
+                Os.fcntlInt(serverPipeFd, F_SETFD, FD_CLOEXEC);
             }
 
             /**
