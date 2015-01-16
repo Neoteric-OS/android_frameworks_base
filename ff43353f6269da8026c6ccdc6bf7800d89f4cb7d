@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abdbcb04_dfa1a735",
+        "filename": "core/java/com/android/internal/os/WrapperInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-01-16T17:30:47Z",
+      "side": 1,
+      "message": "didn\u0027t you say you\u0027d removed this?",
+      "revId": "ff43353f6269da8026c6ccdc6bf7800d89f4cb7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
