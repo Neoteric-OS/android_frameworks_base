@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bcfdb48_3ba32310",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-01-16T17:47:17Z",
+      "side": 1,
+      "message": "i really want to replace all this crap code with std::string, but not today.",
+      "revId": "272001009a3613d02c0659757a58c19c3a2fe290",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2bcfdb48_bbae33f0",
+        "filename": "services/core/java/com/android/server/MountService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-01-16T17:47:17Z",
+      "side": 1,
+      "message": "you\u0027re still going to set these for now?\n\n  // TODO: come back and remove these.",
+      "revId": "272001009a3613d02c0659757a58c19c3a2fe290",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2bcfdb48_3b7c83da",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16386,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-01-16T17:47:17Z",
+      "side": 1,
+      "message": "we should kill them, but maybe in a separate change if you\u0027re worried?",
+      "revId": "272001009a3613d02c0659757a58c19c3a2fe290",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "abdbcb04_ea04eb42",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16395,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-01-16T17:47:17Z",
+      "side": 1,
+      "message": "isn\u0027t this the only reference to persist.sys.localevar? can\u0027t you kill that one right now?",
+      "revId": "272001009a3613d02c0659757a58c19c3a2fe290",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
