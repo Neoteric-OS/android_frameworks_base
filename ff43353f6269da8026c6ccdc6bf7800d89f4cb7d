@@ -16,6 +16,24 @@
       "revId": "ff43353f6269da8026c6ccdc6bf7800d89f4cb7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbd63fdb_f1a4e815",
+        "filename": "core/java/com/android/internal/os/WrapperInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-01-16T17:31:32Z",
+      "side": 1,
+      "message": "this is the yak-shaving i need to do to retest that change.",
+      "parentUuid": "abdbcb04_dfa1a735",
+      "revId": "ff43353f6269da8026c6ccdc6bf7800d89f4cb7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
