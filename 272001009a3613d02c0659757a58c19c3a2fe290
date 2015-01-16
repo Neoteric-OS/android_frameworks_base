@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6bc55323_3dd79b56",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-01-16T17:53:23Z",
+      "side": 1,
+      "message": "yeah, we should add a C++ system property API that uses std::string. (if we\u0027d programmed like grown ups from the beginning, we\u0027d have been able to move to longer property names and values without touching any code.)",
+      "parentUuid": "8be0c7b0_4f942dab",
+      "revId": "272001009a3613d02c0659757a58c19c3a2fe290",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bcfdb48_bbae33f0",
         "filename": "services/core/java/com/android/server/MountService.java",
         "patchSetId": 1
