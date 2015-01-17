@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb347f09_a1007e74",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2015-01-17T00:19:31Z",
+      "side": 1,
+      "message": "Actually, it would be safer to keep the original code, and then do \n\n  Os.fcntlInt(childPipeFd, F_SETFD, 0)\n\nThis will ensure that serverPipeFd is always marked as FD_CLOEXEC from the very beginning, rather than having a very brief window where serverPipeFd is available across an exec.",
+      "revId": "cb52f9740bae50e3ea570068eb3afe42b88bf28b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
