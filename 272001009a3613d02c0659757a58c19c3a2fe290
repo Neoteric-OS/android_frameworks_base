@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4b408f75_bdb1bf04",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-01-19T09:47:28Z",
+      "side": 1,
+      "message": "not just that, i wanted to pass std::string to readLocale as well, which would mean a bit more pain down the line.\n\ni don\u0027t really like the String8 API, it\u0027s crufty and inconsistent in its behaviour but it\u0027s also very widely used.\n\n(why on earth does a String class have methods like getBasePath and convertResToPath..aaargh)",
+      "parentUuid": "6bc55323_3dd79b56",
+      "revId": "272001009a3613d02c0659757a58c19c3a2fe290",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bcfdb48_bbae33f0",
         "filename": "services/core/java/com/android/server/MountService.java",
         "patchSetId": 1
