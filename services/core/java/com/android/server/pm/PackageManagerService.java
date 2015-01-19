@@ -1435,10 +1435,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                 Slog.w(TAG, "No SYSTEMSERVERCLASSPATH found!");
             }
 
-            final List<String> allInstructionSets = InstructionSets.getAllInstructionSets();
-            final String[] dexCodeInstructionSets =
-                    getDexCodeInstructionSets(
-                            allInstructionSets.toArray(new String[allInstructionSets.size()]));
+            final String[] dexCodeInstructionSets = InstructionSets.getAllDexCodeInstructionSets();
 
             /**
              * Ensure all external libraries have had dexopt run on them.
@@ -10144,6 +10141,14 @@ public class PackageManagerService extends IPackageManager.Stub {
 
         res.removedInfo.uid = oldPkg.applicationInfo.uid;
         res.removedInfo.removedPackage = packageName;
+
+        // Remove existing odex in /data
+        final String[] dexCodeIsas = InstructionSets.getAllDexCodeInstructionSets();
+        for (String dexCodeIsa : dexCodeIsas) {
+            mInstaller.rmdex(deletedPackage.applicationInfo.sourceDir,
+                             dexCodeIsa);
+        }
+
         // Remove existing system package
         removePackageLI(oldPkgSetting, true);
         // writer
