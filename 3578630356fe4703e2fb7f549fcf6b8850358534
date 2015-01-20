@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cbd63fdb_5a6ce9f7",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-01-20T11:59:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbd63fdb_1aebc107",
+      "revId": "3578630356fe4703e2fb7f549fcf6b8850358534",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbd63fdb_3af005ef",
         "filename": "core/java/android/net/http/HttpResponseCache.java",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4b408f75_c05820cc",
+        "filename": "core/java/android/net/http/HttpResponseCache.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-01-20T11:59:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbd63fdb_3af005ef",
+      "revId": "3578630356fe4703e2fb7f549fcf6b8850358534",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b408f75_801458ea",
         "filename": "core/java/android/net/http/HttpResponseCache.java",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2015-01-20T11:17:13Z",
       "side": 1,
       "message": "update javadoc ?",
+      "revId": "3578630356fe4703e2fb7f549fcf6b8850358534",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4bc24f1f_36b33ede",
+        "filename": "core/java/android/net/http/HttpResponseCache.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-01-20T11:59:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b408f75_801458ea",
       "revId": "3578630356fe4703e2fb7f549fcf6b8850358534",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
