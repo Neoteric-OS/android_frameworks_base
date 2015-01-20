@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbd63fdb_1aebc107",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-01-20T11:17:13Z",
+      "side": 1,
+      "message": "minor nit: this could move to the previous line.",
+      "revId": "3578630356fe4703e2fb7f549fcf6b8850358534",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbd63fdb_3af005ef",
+        "filename": "core/java/android/net/http/HttpResponseCache.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-01-20T11:17:13Z",
+      "side": 1,
+      "message": "isn\u0027t 8 chars the right level of indentation here ?",
+      "revId": "3578630356fe4703e2fb7f549fcf6b8850358534",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b408f75_801458ea",
+        "filename": "core/java/android/net/http/HttpResponseCache.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-01-20T11:17:13Z",
+      "side": 1,
+      "message": "update javadoc ?",
+      "revId": "3578630356fe4703e2fb7f549fcf6b8850358534",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
