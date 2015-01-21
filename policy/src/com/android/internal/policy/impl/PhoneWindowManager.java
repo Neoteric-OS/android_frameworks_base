@@ -200,6 +200,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private WindowState mKeyguardScrim;
     private boolean mKeyguardHidden;
     private boolean mKeyguardDrawnOnce;
+    private boolean mIsKeyguardSecure;
 
     /* Table of Application Launch keys.  Maps from key codes to intent categories.
      *
@@ -2995,6 +2996,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (!isKeyguardShowing) {
                 navTranslucent &= areTranslucentBarsAllowed();
             }
+            mIsKeyguardSecure = isKeyguardSecure();
 
             // When the navigation bar isn't visible, we put up a fake
             // input window to catch all touch events.  This way we can
@@ -3800,7 +3802,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
             final boolean showWhenLocked = (fl & FLAG_SHOW_WHEN_LOCKED) != 0;
             final boolean dismissKeyguard = (fl & FLAG_DISMISS_KEYGUARD) != 0;
-            final boolean secureKeyguard = isKeyguardSecure();
             if (appWindow) {
                 final IApplicationToken appToken = win.getAppToken();
                 if (showWhenLocked) {
@@ -3813,7 +3814,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         mForceStatusBarFromKeyguard = false;
                     }
                 } else if (dismissKeyguard) {
-                    if (secureKeyguard) {
+                    if (mIsKeyguardSecure) {
                         mAppsToBeHidden.add(appToken);
                     } else {
                         mAppsToBeHidden.remove(appToken);
@@ -3834,7 +3835,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         mDismissKeyguard = mWinDismissingKeyguard == win ?
                                 DISMISS_KEYGUARD_CONTINUE : DISMISS_KEYGUARD_START;
                         mWinDismissingKeyguard = win;
-                        mForceStatusBarFromKeyguard = mShowingLockscreen && secureKeyguard;
+                        mForceStatusBarFromKeyguard = mShowingLockscreen && mIsKeyguardSecure;
                     } else if (mAppsToBeHidden.isEmpty() && showWhenLocked) {
                         if (DEBUG_LAYOUT) Slog.v(TAG,
                                 "Setting mHideLockScreen to true by win " + win);
