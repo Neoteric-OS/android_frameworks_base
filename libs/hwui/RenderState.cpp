@@ -93,7 +93,9 @@ void RenderState::bindFramebuffer(GLuint fbo) {
 
 void RenderState::invokeFunctor(Functor* functor, DrawGlInfo::Mode mode, DrawGlInfo* info) {
     interruptForFunctorInvoke();
+    mCaches->startMark(0, "GL functor");
     (*functor)(mode, info);
+    mCaches->endMark();
     resumeFromFunctorInvoke();
 }
 

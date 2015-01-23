@@ -1455,7 +1455,7 @@ public:
             : DrawOp(NULL), mFunctor(functor) {}
 
     virtual status_t applyDraw(OpenGLRenderer& renderer, Rect& dirty) {
-        renderer.startMark("GL functor");
+        renderer.startMark("DrawFunctor");
         status_t ret = renderer.callDrawGLFunction(mFunctor, dirty);
         renderer.endMark();
         return ret;
