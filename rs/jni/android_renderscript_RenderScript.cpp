@@ -1480,6 +1480,16 @@ nScriptKernelIDCreate(JNIEnv *_env, jobject _this, jlong con, jlong sid, jint sl
 }
 
 static jlong
+nScriptInvokeIDCreate(JNIEnv *_env, jobject _this, jlong con, jlong sid, jint slot)
+{
+    if (kLogApi) {
+        ALOGD("nScriptInvokeIDCreate, con(%p) script(%p), slot(%i), sig(%i)", (RsContext)con,
+              (void *)sid, slot);
+    }
+    return (jlong)(uintptr_t)rsScriptInvokeIDCreate((RsContext)con, (RsScript)sid, slot);
+}
+
+static jlong
 nScriptFieldIDCreate(JNIEnv *_env, jobject _this, jlong con, jlong sid, jint slot)
 {
     if (kLogApi) {
@@ -2001,6 +2011,7 @@ static JNINativeMethod methods[] = {
 {"rsnScriptCCreate",                 "(JLjava/lang/String;Ljava/lang/String;[BI)J",  (void*)nScriptCCreate },
 {"rsnScriptIntrinsicCreate",         "(JIJ)J",                                (void*)nScriptIntrinsicCreate },
 {"rsnScriptKernelIDCreate",          "(JJII)J",                               (void*)nScriptKernelIDCreate },
+{"rsnScriptInvokeIDCreate",          "(JJI)J",                                (void*)nScriptInvokeIDCreate },
 {"rsnScriptFieldIDCreate",           "(JJI)J",                                (void*)nScriptFieldIDCreate },
 {"rsnScriptGroupCreate",             "(J[J[J[J[J[J)J",                        (void*)nScriptGroupCreate },
 {"rsnScriptGroup2Create",            "(JLjava/lang/String;[J)J",               (void*)nScriptGroup2Create },
