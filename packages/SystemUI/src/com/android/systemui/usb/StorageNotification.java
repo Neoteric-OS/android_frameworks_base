@@ -131,7 +131,7 @@ public class StorageNotification extends SystemUI {
              */
             Intent intent = new Intent();
             intent.setClass(mContext, com.android.systemui.usb.UsbStorageActivity.class);
-            PendingIntent pi = PendingIntent.getActivity(mContext, 0, intent, 0);
+            PendingIntent pi = PendingIntent.getActivityAsUser(mContext, 0, intent, 0, null, UserHandle.CURRENT);
             setUsbStorageNotification(
                     com.android.internal.R.string.usb_storage_stop_notification_title,
                     com.android.internal.R.string.usb_storage_stop_notification_message,
@@ -201,7 +201,7 @@ public class StorageNotification extends SystemUI {
             intent.setClass(mContext, com.android.internal.app.ExternalMediaFormatActivity.class);
             intent.putExtra(StorageVolume.EXTRA_STORAGE_VOLUME,
                     getVolumeByPath(mStorageManager.getVolumeList(), path));
-            PendingIntent pi = PendingIntent.getActivity(mContext, 0, intent, 0);
+            PendingIntent pi = PendingIntent.getActivityAsUser(mContext, 0, intent, 0, null, UserHandle.CURRENT);
 
             setMediaStorageNotification(
                     com.android.internal.R.string.ext_media_nofs_notification_title,
@@ -217,7 +217,7 @@ public class StorageNotification extends SystemUI {
             intent.setClass(mContext, com.android.internal.app.ExternalMediaFormatActivity.class);
             intent.putExtra(StorageVolume.EXTRA_STORAGE_VOLUME,
                     getVolumeByPath(mStorageManager.getVolumeList(), path));
-            PendingIntent pi = PendingIntent.getActivity(mContext, 0, intent, 0);
+            PendingIntent pi = PendingIntent.getActivityAsUser(mContext, 0, intent, 0, null, UserHandle.CURRENT);
 
             setMediaStorageNotification(
                     com.android.internal.R.string.ext_media_unmountable_notification_title,
@@ -274,7 +274,7 @@ public class StorageNotification extends SystemUI {
             intent.setClass(mContext, com.android.systemui.usb.UsbStorageActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            PendingIntent pi = PendingIntent.getActivity(mContext, 0, intent, 0);
+            PendingIntent pi = PendingIntent.getActivityAsUser(mContext, 0, intent, 0, null, UserHandle.CURRENT);
             setUsbStorageNotification(
                     com.android.internal.R.string.usb_storage_notification_title,
                     com.android.internal.R.string.usb_storage_notification_message,
