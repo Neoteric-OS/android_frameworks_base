@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "77bffbde_d7401c5b",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-01-30T10:10:22Z",
+      "side": 1,
+      "message": "I\u0027d rephrase this to something like \"Properties with a trailing \".\" are illegal.\"",
+      "revId": "e32df45fe1a8cb7286bfdad392a0d36e0ddcf8e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97a38fb2_f00fc052",
         "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
         "patchSetId": 1
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "Yeah, I do prefer the current version since this could get called on every Zygote start up. I know it\u0027s not likely measurably slower to do a replaceAll, but better safe than sorry.",
       "parentUuid": "97a38fb2_f00fc052",
+      "revId": "e32df45fe1a8cb7286bfdad392a0d36e0ddcf8e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97baafec_582d5db8",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-01-30T10:10:22Z",
+      "side": 1,
+      "message": "I prefer this version.",
+      "parentUuid": "f793eb67_0b633d03",
       "revId": "e32df45fe1a8cb7286bfdad392a0d36e0ddcf8e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
