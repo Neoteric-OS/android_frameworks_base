@@ -1013,6 +1013,21 @@ nAllocationResize1D(JNIEnv *_env, jobject _this, jlong con, jlong alloc, jint di
     rsAllocationResize1D((RsContext)con, (RsAllocation)alloc, dimX);
 }
 
+
+static jlong
+nAllocationAdapterCreate(JNIEnv *_env, jobject _this, jlong con, jlong basealloc, jlong type)
+{
+    return 0;
+}
+
+static void
+nAllocationAdapterOffset(JNIEnv *_env, jobject _this, jlong con, jlong alloc,
+                        jint x, jint y, jint z, jint face, jint lod,
+                        jint a1, jint a2, jint a3, jint a4)
+{
+}
+
+
 // -----------------------------------
 
 static jlong
@@ -1982,6 +1997,9 @@ static JNINativeMethod methods[] = {
 {"rsnAllocationGetType",             "(JJ)J",                                 (void*)nAllocationGetType},
 {"rsnAllocationResize1D",            "(JJI)V",                                (void*)nAllocationResize1D },
 {"rsnAllocationGenerateMipmaps",     "(JJ)V",                                 (void*)nAllocationGenerateMipmaps },
+
+{"rsnAllocationAdapterCreate",       "(JJJ)J",                                (void*)nAllocationAdapterCreate },
+{"rsnAllocationAdapterOffset",       "(JJIIIIIIIII)V",                        (void*)nAllocationAdapterOffset },
 
 {"rsnScriptBindAllocation",          "(JJJI)V",                               (void*)nScriptBindAllocation },
 {"rsnScriptSetTimeZone",             "(JJ[B)V",                               (void*)nScriptSetTimeZone },
