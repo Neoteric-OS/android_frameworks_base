@@ -19,6 +19,7 @@ package android.nfc;
 import android.content.ComponentName;
 import android.nfc.cardemulation.AidGroup;
 import android.nfc.cardemulation.ApduServiceInfo;
+import android.nfc.cardemulation.NfcFServiceInfo;
 import android.os.RemoteCallback;
 
 /**
@@ -37,4 +38,15 @@ interface INfcCardEmulation
     boolean setPreferredService(in ComponentName service);
     boolean unsetPreferredService();
     boolean supportsAidPrefixRegistration();
+    boolean isNfcFServiceRegistered(int userHandle, in ComponentName service);
+    String getSystemCodeForService(int userHandle, in ComponentName service);
+    /* TODO: the type of serviceDescriptionLocalization, serviceBanner should be reconsidered */
+    boolean registerSystemCodeForService(int userHandle, in ComponentName service, String systemCode,
+            String serviceDescription, String serviceDescriptionLocalization, int serviceBanner);
+    boolean removeSystemCodeForService(int userHandle, in ComponentName service);
+    String getNfcid2ForService(int userHandle, in ComponentName service);
+    boolean setNfcid2ForService(int userHandle, in ComponentName service, String nfcid2, boolean force);
+    boolean stopCreatingSensfResDuringActivationForService(int userHandle, in ComponentName service, boolean stop);
+    List<NfcFServiceInfo> getNfcFServices(int userHandle);
+    int getMaxNumOfRegisterableSystemCode();
 }

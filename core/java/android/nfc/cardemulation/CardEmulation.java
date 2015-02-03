@@ -156,7 +156,8 @@ public final class CardEmulation {
                 throw new UnsupportedOperationException();
             }
             try {
-                if (!pm.hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION)) {
+                if (!pm.hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION) &&
+                        !pm.hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION_NFCF)) {
                     Log.e(TAG, "This device does not support card emulation");
                     throw new UnsupportedOperationException();
                 }
@@ -537,7 +538,8 @@ public final class CardEmulation {
      */
     public boolean setDefaultServiceForCategory(ComponentName service, String category) {
         try {
-            return sService.setDefaultServiceForCategory(UserHandle.myUserId(), service, category);
+            return sService.setDefaultServiceForCategory(UserHandle.myUserId(),
+                    service, category);
         } catch (RemoteException e) {
             // Try one more time
             recoverService();
@@ -546,8 +548,8 @@ public final class CardEmulation {
                 return false;
             }
             try {
-                return sService.setDefaultServiceForCategory(UserHandle.myUserId(), service,
-                        category);
+                return sService.setDefaultServiceForCategory(UserHandle.myUserId(),
+                        service, category);
             } catch (RemoteException ee) {
                 Log.e(TAG, "Failed to reach CardEmulationService.");
                 return false;
@@ -632,6 +634,355 @@ public final class CardEmulation {
             return false;
         }
 
+        return true;
+    }
+
+    /**
+     * Allows an application to query whether a NFC-F service is
+     * currently registered.
+     *
+     * @param service The ComponentName of the service
+     * @return whether the service is registered
+     *
+     * <p class="note">Requires the {@link android.Manifest.permission#NFC} permission.
+     */
+    public boolean isNfcFServiceRegistered(ComponentName service) {
+        try {
+            return sService.isNfcFServiceRegistered(UserHandle.myUserId(), service);
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return false;
+            }
+            try {
+                return sService.isNfcFServiceRegistered(UserHandle.myUserId(), service);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Retrieves the current System Code for the specified service.
+     *
+     * @param service The component name of the service
+     * @return the current System Code
+     */
+    public String getSystemCodeForService(ComponentName service) {
+        try {
+            return sService.getSystemCodeForService(UserHandle.myUserId(), service);
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return null;
+            }
+            try {
+                return sService.getSystemCodeForService(UserHandle.myUserId(), service);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return null;
+            }
+        }
+    }
+
+    /**
+     * Registers a System Code for the specified service.
+     *
+     * <p>If a System Code was previously registered for this service
+     * (either statically through the manifest, or dynamically by using this API),
+     * that System Code will be replaced with this one.
+     *
+     * <p>Note that you can only register System Code for a service that
+     * is running under the same UID as the caller of this API. Typically
+     * this means you need to call this from the same
+     * package as the service itself, though UIDs can also
+     * be shared between packages using shared UIDs.
+     *
+     * <p>The serviceDescriptionLocalization is used for localization.
+     * If null is set to the serviceDescriptionLocalization, serviceDescription
+     * is used.
+     *
+     * @param service The component name of the service
+     * @param systemCode The System Code to be registered
+     * @param serviceDescription The description printed in the Settings
+     * @param serviceDescriptionLocalization The description for localization
+     * @param serviceBanner The banner printed in the Settings
+     * @return whether the registration was successful.
+     */
+    public boolean registerSystemCodeForService(ComponentName service, String systemCode,
+            String serviceDescription, String serviceDescriptionLocalization, int serviceBanner) {
+        // TODO: the type of serviceDescriptionLocalization, serviceBanner should be reconsidered
+        if (systemCode == null || serviceDescription == null) {
+            return false;
+        }
+        try {
+            return sService.registerSystemCodeForService(UserHandle.myUserId(),
+                    service, systemCode,
+                    serviceDescription, serviceDescriptionLocalization, serviceBanner);
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return false;
+            }
+            try {
+                return sService.registerSystemCodeForService(UserHandle.myUserId(),
+                        service, systemCode,
+                        serviceDescription, serviceDescriptionLocalization, serviceBanner);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Removes a registered System Code for the service provided.
+     *
+     * @param service The component name of the service
+     * @return whether the System Code was successfully removed.
+     */
+    public boolean removeSystemCodeForService(ComponentName service) {
+        try {
+            return sService.removeSystemCodeForService(UserHandle.myUserId(), service);
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return false;
+            }
+            try {
+                return sService.removeSystemCodeForService(UserHandle.myUserId(), service);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Retrieves the current NFCUD2 for the specified service.
+     *
+     * @param service The component name of the service
+     * @return the current NFCID2
+     */
+    public String getNfcid2ForService(ComponentName service) {
+        try {
+            return sService.getNfcid2ForService(UserHandle.myUserId(), service);
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return null;
+            }
+            try {
+                return sService.getNfcid2ForService(UserHandle.myUserId(), service);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return null;
+            }
+        }
+    }
+
+    /**
+     * Set a NFCID2 for the specified service.
+     *
+     * <p>If a NFCID2 was previously set for this service
+     * (either statically through the manifest, or dynamically by using this API),
+     * that NFCID2 will be replaced with this one.
+     *
+     * <p>Note that you can only set NFCID2 for a service that
+     * is running under the same UID as the caller of this API. Typically
+     * this means you need to call this from the same
+     * package as the service itself, though UIDs can also
+     * be shared between packages using shared UIDs.
+     *
+     * @param service The component name of the service
+     * @param nfcid2 The NFCID2 to be registered
+     * @param forec whether the setting is allowed
+                    when the same NFCID2 is already set by another service.
+     * @return whether the setting was successful.
+     */
+    public boolean setNfcid2ForService(ComponentName service, String nfcid2, boolean force) {
+        try {
+            return sService.setNfcid2ForService(UserHandle.myUserId(),
+                    service, nfcid2, force);
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return false;
+            }
+            try {
+                return sService.setNfcid2ForService(UserHandle.myUserId(),
+                        service, nfcid2, force);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Stop responding SENSF_RES during activation.
+     *
+     * @param service The component name of the service
+     * @param stop wheter stop or not
+     * @return whether the stopping was successful.
+     *
+     * <p class="note">Requires the
+     * {@link PackageManager#FEATURE_NFC_HOST_CARD_EMULATION_NFCF_STOP_SENSF_RES}.
+     */
+    public boolean stopCreatingSensfResDuringActivationForService(ComponentName service,
+            boolean stop) {
+        try {
+            return sService.stopCreatingSensfResDuringActivationForService(
+                    UserHandle.myUserId(), service, stop);
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return false;
+            }
+            try {
+                return sService.stopCreatingSensfResDuringActivationForService(
+                        UserHandle.myUserId(), service, stop);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Returns whether the user has allowed System Code to be handled
+     * by a service that is preferred by the foreground application,
+     * instead of by a pre-configured service.
+     *
+     * Foreground applications can set such preferences using the
+     * {@link #setPreferredService(Activity, ComponentName)} method.
+     *
+     * @return whether the System Code can be handled by a service
+     *         specified by the foreground app.
+     */
+    public boolean isNfcFForegroundPreferenceAllowed() {
+        boolean preferForeground = false;
+        try {
+            preferForeground = Settings.Secure.getInt(mContext.getContentResolver(),
+                    Settings.Secure.NFC_NFCF_FOREGROUND) != 0;
+        } catch (SettingNotFoundException e) {
+        }
+        return preferForeground;
+    }
+
+    /**
+     * @hide
+     */
+    public List<NfcFServiceInfo> getNfcFServices() {
+        try {
+            return sService.getNfcFServices(UserHandle.myUserId());
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return null;
+            }
+            try {
+                return sService.getNfcFServices(UserHandle.myUserId());
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return null;
+            }
+        }
+    }
+
+    /**
+     * @hide
+     */
+    public int getMaxNumOfRegisterableSystemCode() {
+        try {
+            return sService.getMaxNumOfRegisterableSystemCode();
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                // TODO:error handling (throws exception ?)
+                return -1;
+            }
+            try {
+                return sService.getMaxNumOfRegisterableSystemCode();
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                // TODO:error handling (throws exception ?)
+                return -1;
+            }
+        }
+    }
+
+    /**
+     * @hide
+     */
+    public static boolean isValidSystemCode(String systemCode) {
+        if (systemCode == null) {
+            return false;
+        }
+
+        int systemCodeLength = systemCode.length();
+        if (systemCodeLength != 4) {
+            Log.e(TAG, "System Code " + systemCode + " is not correctly formatted.");
+            return false;
+        }
+        // check if the value is between 0x4000 and 0x4FFF (except 0xXXFF)
+        int systemCodeValue;
+        try {
+            systemCodeValue = Integer.valueOf(systemCode, 16);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        if (systemCodeValue < 0x4000 || systemCodeValue > 0x4FFF) {
+            return false;
+        }
+        if ((systemCodeValue & 0x00FF) == 0xFF) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @hide
+     */
+    public static boolean isValidNfcid2(String nfcid2) {
+        if (nfcid2 == null) {
+            return false;
+        }
+
+        int nfcid2Length = nfcid2.length();
+        if (nfcid2Length != 16) {
+            Log.e(TAG, "NFCID2 " + nfcid2 + " is not correctly formatted.");
+            return false;
+        }
+        // check if the the value starts with 0x02FE
+        long nfcid2Value;
+        try {
+            nfcid2Value = Long.valueOf(nfcid2, 16);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        if ((nfcid2Value >> 48) != 0x02FE) {
+            return false;
+        }
         return true;
     }
 
