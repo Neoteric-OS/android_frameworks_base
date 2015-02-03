@@ -265,9 +265,7 @@ public class Editor {
             hideError();
         }
 
-        if (mBlink != null) {
-            mBlink.removeCallbacks(mBlink);
-        }
+        suspendBlink();
 
         if (mInsertionPointCursorController != null) {
             mInsertionPointCursorController.onDetached();
@@ -554,13 +552,13 @@ public class Editor {
         }
     }
 
-    private void suspendBlink() {
+    void suspendBlink() {
         if (mBlink != null) {
             mBlink.cancel();
         }
     }
 
-    private void resumeBlink() {
+    void resumeBlink() {
         if (mBlink != null) {
             mBlink.uncancel();
             makeBlink();
@@ -963,7 +961,7 @@ public class Editor {
                 showError();
             }
 
-            makeBlink();
+            resumeBlink();
         } else {
             if (mError != null) {
                 hideError();
@@ -1040,14 +1038,9 @@ public class Editor {
 
     void onWindowFocusChanged(boolean hasWindowFocus) {
         if (hasWindowFocus) {
-            if (mBlink != null) {
-                mBlink.uncancel();
-                makeBlink();
-            }
+            resumeBlink();
         } else {
-            if (mBlink != null) {
-                mBlink.cancel();
-            }
+            suspendBlink();
             if (mInputContentType != null) {
                 mInputContentType.enterDown = false;
             }
@@ -1751,7 +1744,7 @@ public class Editor {
         return start == end;
     }
 
-    void makeBlink() {
+    private void makeBlink() {
         if (shouldBlink()) {
             mShowCursor = SystemClock.uptimeMillis();
             if (mBlink == null) mBlink = new Blink();
@@ -1782,8 +1775,8 @@ public class Editor {
         }
 
         void cancel() {
+            removeCallbacks(Blink.this);
             if (!mCancelled) {
-                removeCallbacks(Blink.this);
                 mCancelled = true;
             }
         }
