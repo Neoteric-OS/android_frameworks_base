@@ -1448,7 +1448,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             mEditor.prepareCursorControllers();
 
             // start or stop the cursor blinking as appropriate
-            mEditor.makeBlink();
+            mEditor.resumeBlink();
         }
     }
 
@@ -7466,7 +7466,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             mEditor.mCursorVisible = visible;
             invalidate();
 
-            mEditor.makeBlink();
+            mEditor.resumeBlink();
 
             // InsertionPointCursorController depends on mCursorVisible
             mEditor.prepareCursorControllers();
@@ -7695,7 +7695,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
         if (curs >= 0) {
             mHighlightPathBogus = true;
-            if (mEditor != null) mEditor.makeBlink();
+            if (mEditor != null) mEditor.resumeBlink();
             bringPointIntoView(curs);
         }
     }
@@ -7746,7 +7746,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 invalidateCursor(Selection.getSelectionStart(buf), oldStart, newStart);
                 checkForResize();
                 registerForPreDraw();
-                if (mEditor != null) mEditor.makeBlink();
+                if (mEditor != null) mEditor.resumeBlink();
             }
         }
 
