@@ -85,7 +85,8 @@ public class UsbDeviceManager {
             "/sys/class/android_usb/android0/f_rndis/ethaddr";
     private static final String AUDIO_SOURCE_PCM_PATH =
             "/sys/class/android_usb/android0/f_audio_source/pcm";
-
+    private static final String CONFIGFS_PATH =
+            "/config/usb_gadget/";
     private static final int MSG_UPDATE_STATE = 0;
     private static final int MSG_ENABLE_ADB = 1;
     private static final int MSG_SET_CURRENT_FUNCTIONS = 2;
@@ -127,6 +128,8 @@ public class UsbDeviceManager {
     private Map<String, List<Pair<String, String>>> mOemModeMap;
     private String[] mAccessoryStrings;
     private UsbDebuggingManager mDebuggingManager;
+    private String mInitStatePath;
+    private boolean mConfigfs;
 
     private class AdbSettingsObserver extends ContentObserver {
         public AdbSettingsObserver() {
@@ -159,7 +162,16 @@ public class UsbDeviceManager {
         }
     };
 
+
     public UsbDeviceManager(Context context) {
+        if (new File(CONFIGFS_PATH).exists()) {
+            mConfigfs = true;
+            mInitStatePath = "sys.usb.state.configfs";
+        } else {
+            mConfigfs = false;
+            mInitStatePath = "sys.usb.state";
+        }
+
         mContext = context;
         mContentResolver = context.getContentResolver();
         PackageManager pm = mContext.getPackageManager();
@@ -436,7 +448,7 @@ public class UsbDeviceManager {
             // give up after 1 second.
             for (int i = 0; i < 20; i++) {
                 // State transition is done when sys.usb.state is set to the new configuration
-                if (state.equals(SystemProperties.get("sys.usb.state"))) return true;
+                if (state.equals(SystemProperties.get(mInitStatePath))) return true;
                 SystemClock.sleep(50);
             }
             Slog.e(TAG, "waitForState(" + state + ") FAILED");
