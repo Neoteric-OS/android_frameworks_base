@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c7a64aa_145cf4bc",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1019050
+      },
+      "writtenOn": "2015-02-04T18:42:23Z",
+      "side": 1,
+      "message": "Fixed in CL:\n\nhttps://android-review.googlesource.com/#/c/128801/",
+      "parentUuid": "77bffbde_d7401c5b",
+      "revId": "e32df45fe1a8cb7286bfdad392a0d36e0ddcf8e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97a38fb2_f00fc052",
         "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
         "patchSetId": 1
