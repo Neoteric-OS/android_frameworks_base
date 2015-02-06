@@ -4733,6 +4733,124 @@ public final class Settings {
         public static final String NFC_PAYMENT_FOREGROUND = "nfc_payment_foreground";
 
         /**
+         * One of the registered NFC NfcF component
+         * @hide
+         */
+        public static final String NFC_NFCF_REGISTERED_COMPONENT_1 =
+                "nfc_nfcf_registered_component_1";
+
+        /**
+         * One of the registered NFC NfcF component
+         * @hide
+         */
+        public static final String NFC_NFCF_REGISTERED_COMPONENT_2 =
+                "nfc_nfcf_registered_component_2";
+
+        /**
+         * One of the registered NFC NfcF component
+         * @hide
+         */
+        public static final String NFC_NFCF_REGISTERED_COMPONENT_3 =
+                "nfc_nfcf_registered_component_3";
+
+        /**
+         * One of the registered NFC NfcF component
+         * @hide
+         */
+        public static final String NFC_NFCF_REGISTERED_COMPONENT_4 =
+                "nfc_nfcf_registered_component_4";
+
+        /**
+         * One of the registered NFC NfcF component
+         * @hide
+         */
+        public static final String NFC_NFCF_REGISTERED_COMPONENT_5 =
+                "nfc_nfcf_registered_component_5";
+
+        /**
+         * One of the registered NFC NfcF component
+         * @hide
+         */
+        public static final String NFC_NFCF_REGISTERED_COMPONENT_6 =
+                "nfc_nfcf_registered_component_6";
+
+        /**
+         * One of the registered NFC NfcF component
+         * @hide
+         */
+        public static final String NFC_NFCF_REGISTERED_COMPONENT_7 =
+                "nfc_nfcf_registered_component_7";
+
+        /**
+         * One of the registered NFC NfcF component
+         * @hide
+         */
+        public static final String NFC_NFCF_REGISTERED_COMPONENT_8 =
+                "nfc_nfcf_registered_component_8";
+
+        /**
+         * One of the registered NFC NfcF component
+         * @hide
+         */
+        public static final String NFC_NFCF_REGISTERED_COMPONENT_9 =
+                "nfc_nfcf_registered_component_9";
+
+        /**
+         * One of the registered NFC NfcF component
+         * @hide
+         */
+        public static final String NFC_NFCF_REGISTERED_COMPONENT_10 =
+                "nfc_nfcf_registered_component_10";
+
+        /**
+         * One of the registered NFC NfcF component
+         * @hide
+         */
+        public static final String NFC_NFCF_REGISTERED_COMPONENT_11 =
+                "nfc_nfcf_registered_component_11";
+
+        /**
+         * One of the registered NFC NfcF component
+         * @hide
+         */
+        public static final String NFC_NFCF_REGISTERED_COMPONENT_12 =
+                "nfc_nfcf_registered_component_12";
+
+        /**
+         * One of the registered NFC NfcF component
+         * @hide
+         */
+        public static final String NFC_NFCF_REGISTERED_COMPONENT_13 =
+                "nfc_nfcf_registered_component_13";
+
+        /**
+         * One of the registered NFC NfcF component
+         * @hide
+         */
+        public static final String NFC_NFCF_REGISTERED_COMPONENT_14 =
+                "nfc_nfcf_registered_component_14";
+
+        /**
+         * One of the registered NFC NfcF component
+         * @hide
+         */
+        public static final String NFC_NFCF_REGISTERED_COMPONENT_15 =
+                "nfc_nfcf_registered_component_15";
+
+        /**
+         * One of the registered NFC NfcF component
+         * @hide
+         */
+        public static final String NFC_NFCF_REGISTERED_COMPONENT_16 =
+                "nfc_nfcf_registered_component_16";
+
+        /**
+         * Whether NFC NfcF is handled by the foreground application or a default.
+         * @hide
+         */
+        public static final String NFC_NFCF_FOREGROUND = "nfc_nfcf_foreground";
+
+        /**
          * Specifies the package name currently configured to be the primary sms application
          * @hide
          */
