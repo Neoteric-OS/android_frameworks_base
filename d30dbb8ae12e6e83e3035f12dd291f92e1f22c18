@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96d0f589_c8ec2fd3",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 16414,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2015-02-12T17:44:34Z",
+      "side": 1,
+      "message": "FYI: it\u0027s never been legal for system_server to set these properties, and this has always been a no-op. Prior to SELinux, init maintained a whitelist of properties settable by system server, and the user.* properties were never whitelisted. With the move to SELinux, we are continuing to reject these property set requests.\n\nThis code can safely be deleted since these have been no-ops for years...\n\nSee also bug 18910417.",
+      "range": {
+        "startLine": 16408,
+        "startChar": 0,
+        "endLine": 16414,
+        "endChar": 64
+      },
+      "revId": "d30dbb8ae12e6e83e3035f12dd291f92e1f22c18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
