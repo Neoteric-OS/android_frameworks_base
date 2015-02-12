@@ -20,6 +20,7 @@ import android.animation.ValueAnimator;
 import android.app.ActivityManager;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.IBinder;
@@ -211,7 +212,7 @@ public final class WindowManagerGlobal {
             // system context), assume we want hardware acceleration.
             final Context context = view.getContext();
             if (context != null
-                    && context.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.LOLLIPOP) {
+                    && context.getApplicationInfo().hardwareAccelerated) {
                 wparams.flags |= WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED;
             }
         }
