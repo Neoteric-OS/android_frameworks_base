@@ -393,9 +393,8 @@ public class InputMethodUtils {
     private static ArrayList<InputMethodSubtype> getImplicitlyApplicableSubtypesLocked(
             Resources res, InputMethodInfo imi) {
         final List<InputMethodSubtype> subtypes = InputMethodUtils.getSubtypes(imi);
-        final String systemLocale = res.getConfiguration().locale.toString();
-        if (TextUtils.isEmpty(systemLocale)) return new ArrayList<InputMethodSubtype>();
-        final String systemLanguage = res.getConfiguration().locale.getLanguage();
+        final Locale systemLocale = res.getConfiguration().locale;
+        if (systemLocale.toString().isEmpty()) return new ArrayList<InputMethodSubtype>();
         final HashMap<String, InputMethodSubtype> applicableModeAndSubtypesMap =
                 new HashMap<String, InputMethodSubtype>();
         final int N = subtypes.size();
@@ -414,9 +413,11 @@ public class InputMethodUtils {
         }
         for (int i = 0; i < N; ++i) {
             final InputMethodSubtype subtype = subtypes.get(i);
-            final String locale = subtype.getLocale();
+            final Locale locale = subtype.getLocaleClass();
             final String mode = subtype.getMode();
-            final String language = getLanguageFromLocaleString(locale);
+            // The language for each of the locales has to match, else we might end up
+            // matching "fi" (finnish) with "fil" filipino.
+            //
             // When system locale starts with subtype's locale, that subtype will be applicable
             // for system locale. We need to make sure the languages are the same, to prevent
             // locales like "fil" (Filipino) being matched by "fi" (Finnish).
@@ -429,9 +430,9 @@ public class InputMethodUtils {
             // need to find applicable subtypes aggressively unlike
             // findLastResortApplicableSubtypeLocked.
             //
-            // TODO: This check is broken. It won't take scripts into account and doesn't
-            // account for the mandatory conversions performed by Locale#toString.
-            if (language.equals(systemLanguage) && systemLocale.startsWith(locale)) {
+            // TODO: This check is broken. It doesn't take scripts into account.
+            if (systemLocale.getLanguage().equals(locale.getLanguage()) &&
+                    systemLocale.toLanguageTag().startsWith(locale.toLanguageTag())) {
                 final InputMethodSubtype applicableSubtype = applicableModeAndSubtypesMap.get(mode);
                 // If more applicable subtypes are contained, skip.
                 if (applicableSubtype != null) {
@@ -499,23 +500,22 @@ public class InputMethodUtils {
      * @return the most applicable subtypeId
      */
     public static InputMethodSubtype findLastResortApplicableSubtypeLocked(
-            Resources res, List<InputMethodSubtype> subtypes, String mode, String locale,
+            Resources res, List<InputMethodSubtype> subtypes, String mode, Locale locale,
             boolean canIgnoreLocaleAsLastResort) {
         if (subtypes == null || subtypes.size() == 0) {
             return null;
         }
-        if (TextUtils.isEmpty(locale)) {
-            locale = res.getConfiguration().locale.toString();
+        if (locale == null) {
+            locale = res.getConfiguration().locale;
         }
-        final String language = getLanguageFromLocaleString(locale);
+        final String language = locale.getLanguage();
         boolean partialMatchFound = false;
         InputMethodSubtype applicableSubtype = null;
         InputMethodSubtype firstMatchedModeSubtype = null;
         final int N = subtypes.size();
         for (int i = 0; i < N; ++i) {
             InputMethodSubtype subtype = subtypes.get(i);
-            final String subtypeLocale = subtype.getLocale();
-            final String subtypeLanguage = getLanguageFromLocaleString(subtypeLocale);
+            final Locale subtypeLocale = subtype.getLocaleClass();
             // An applicable subtype should match "mode". If mode is null, mode will be ignored,
             // and all subtypes with all modes can be candidates.
             if (mode == null || subtypes.get(i).getMode().equalsIgnoreCase(mode)) {
@@ -526,7 +526,7 @@ public class InputMethodUtils {
                     // Exact match (e.g. system locale is "en_US" and subtype locale is "en_US")
                     applicableSubtype = subtype;
                     break;
-                } else if (!partialMatchFound && language.equals(subtypeLanguage)) {
+                } else if (!partialMatchFound && subtypeLocale.getLanguage().equals(language)) {
                     // Partial match (e.g. system locale is "en_US" and subtype locale is "en")
                     applicableSubtype = subtype;
                     partialMatchFound = true;
