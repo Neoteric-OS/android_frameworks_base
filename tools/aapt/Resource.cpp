@@ -2723,7 +2723,7 @@ addProguardKeepRule(ProguardKeepSet* keep, const String8& inClassName,
     String8 location("view ");
     location += srcName;
     char lineno[20];
-    sprintf(lineno, ":%d", line);
+    snprintf(lineno, sizeof(lineno), ":%d", line);
     location += lineno;
 
     keep->add(rule, location);
@@ -2740,7 +2740,7 @@ addProguardKeepMethodRule(ProguardKeepSet* keep, const String8& memberName,
     String8 location("onClick ");
     location += srcName;
     char lineno[20];
-    sprintf(lineno, ":%d", line);
+    snprintf(lineno, sizeof(lineno), ":%d", line);
     location += lineno;
 
     keep->add(rule, location);

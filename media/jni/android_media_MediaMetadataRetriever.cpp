@@ -61,7 +61,7 @@ static void process_media_retriever_call(JNIEnv *env, status_t opStatus, const c
         } else {
             char msg[256];
             // Append the status code to the message.
-            sprintf(msg, "%s: status = 0x%X", message, opStatus);
+            snprintf(msg, sizeof(msg), "%s: status = 0x%X", message, opStatus);
             jniThrowException( env, exception, msg);
         }
     }

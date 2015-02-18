@@ -39,7 +39,7 @@ static string
 format_int(int n)
 {
     char str[20];
-    sprintf(str, "%d", n);
+    snprintf(str, sizeof(str), "%d", n);
     return string(str);
 }
 

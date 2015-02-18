@@ -415,7 +415,7 @@ static void load_maps(int pid, stats_t* stats)
     char tmp[128];
     FILE *fp;
 
-    sprintf(tmp, "/proc/%d/smaps", pid);
+    snprintf(tmp, sizeof(tmp), "/proc/%d/smaps", pid);
     fp = fopen(tmp, "r");
     if (fp == 0) return;
 
@@ -502,7 +502,7 @@ static jlong android_os_Debug_getPssPid(JNIEnv *env, jobject clazz, jint pid, jl
         pss = uss = graphics_mem.graphics + graphics_mem.gl + graphics_mem.other;
     }
 
-    sprintf(tmp, "/proc/%d/smaps", pid);
+    snprintf(tmp, sizeof(tmp), "/proc/%d/smaps", pid);
     fp = fopen(tmp, "r");
 
     if (fp != 0) {

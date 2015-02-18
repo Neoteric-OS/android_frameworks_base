@@ -198,7 +198,7 @@ void android_os_Process_setProcessGroup(JNIEnv* env, jobject clazz, int pid, jin
 
         strcpy(cmdline, "unknown");
 
-        sprintf(proc_path, "/proc/%d/cmdline", pid);
+        snprintf(proc_path, sizeof(proc_path), "/proc/%d/cmdline", pid);
         fd = open(proc_path, O_RDONLY);
         if (fd >= 0) {
             int rc = read(fd, cmdline, sizeof(cmdline)-1);
@@ -213,7 +213,7 @@ void android_os_Process_setProcessGroup(JNIEnv* env, jobject clazz, int pid, jin
         }
     }
 
-    sprintf(proc_path, "/proc/%d/task", pid);
+    snprintf(proc_path, sizeof(proc_path), "/proc/%d/task", pid);
     if (!(d = opendir(proc_path))) {
         // If the process exited on us, don't generate an exception
         if (errno != ENOENT)
@@ -369,7 +369,7 @@ jboolean android_os_Process_setSwappiness(JNIEnv *env, jobject clazz,
 
     int fd = open(text, O_WRONLY);
     if (fd >= 0) {
-        sprintf(text, "%" PRId32, pid);
+        snprintf(text, sizeof(text), "%" PRId32, pid);
         write(fd, text, strlen(text));
         close(fd);
     }

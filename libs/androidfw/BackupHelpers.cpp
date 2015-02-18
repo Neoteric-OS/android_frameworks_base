@@ -441,11 +441,11 @@ static void calc_tar_checksum(char* buf) {
 
     // Now write the real checksum value:
     // [ 148 :   8 ]  checksum: 6 octal digits [leading zeroes], NUL, SPC
-    sprintf(buf + 148, "%06o", sum); // the trailing space is already in place
+    snprintf(buf + 148, 7, "%06o", sum); // the trailing space is already in place
 }
 
 // Returns number of bytes written
-static int write_pax_header_entry(char* buf, const char* key, const char* value) {
+static int write_pax_header_entry(char* buf, size_t size, const char* key, const char* value) {
     // start with the size of "1 key=value\n"
     int len = strlen(key) + strlen(value) + 4;
     if (len > 9) len++;
@@ -454,7 +454,7 @@ static int write_pax_header_entry(char* buf, const char* key, const char* value)
     // since PATH_MAX is 4096 we don't expect to have to generate any single
     // header entry longer than 9999 characters
 
-    return sprintf(buf, "%d %s=%s\n", len, key, value);
+    return snprintf(buf, size, "%d %s=%s\n", len, key, value);
 }
 
 // Wire format to the backup manager service is chunked:  each chunk is prefixed by
@@ -525,6 +525,7 @@ int write_tarfile(const String8& packageName, const String8& domain,
     char* buf = (char *)calloc(1,BUFSIZE);
     char* paxHeader = buf + 512;    // use a different chunk of it as separate scratch
     char* paxData = buf + 1024;
+    char* paxData_end = buf + BUFSIZE;
 
     if (buf == NULL) {
         ALOGE("Out of mem allocating transfer buffer");
@@ -615,10 +616,10 @@ int write_tarfile(const String8& packageName, const String8& domain,
         // size header -- calc len in digits by actually rendering the number
         // to a string - brute force but simple
         snprintf(sizeStr, sizeof(sizeStr), "%lld", (long long)s.st_size);
-        p += write_pax_header_entry(p, "size", sizeStr);
+        p += write_pax_header_entry(p, paxData_end - p, "size", sizeStr);
 
         // fullname was generated above with the ustar paths
-        p += write_pax_header_entry(p, "path", fullname.string());
+        p += write_pax_header_entry(p, paxData_end - p, "path", fullname.string());
 
         // Now we know how big the pax data is
         int paxLen = p - paxData;

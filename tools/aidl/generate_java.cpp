@@ -16,7 +16,7 @@ Variable*
 VariableFactory::Get(Type* type)
 {
     char name[100];
-    sprintf(name, "%s%d", m_base.c_str(), m_index);
+    snprintf(name, sizeof(name), "%s%d", m_base.c_str(), m_index);
     m_index++;
     Variable* v = new Variable(type, name);
     m_vars.push_back(v);

@@ -535,7 +535,7 @@ void OpenGLRenderer::flushLayers() {
 
         // Note: it is very important to update the layers in order
         for (int i = 0; i < count; i++) {
-            sprintf(layerName, "Layer #%d", i);
+            snprintf(layerName, sizeof(layerName), "Layer #%d", i);
             startMark(layerName);
 
             ATRACE_BEGIN("flushLayer");

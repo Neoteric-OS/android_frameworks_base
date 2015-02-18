@@ -754,7 +754,7 @@ static void android_os_Binder_restoreCallingIdentity(JNIEnv* env, jobject clazz,
     if (uid > 0 && uid < 999) {
         // In Android currently there are no uids in this range.
         char buf[128];
-        sprintf(buf, "Restoring bad calling ident: 0x%" PRIx64, token);
+        snprintf(buf, sizeof(buf), "Restoring bad calling ident: 0x%" PRIx64, token);
         jniThrowException(env, "java/lang/IllegalStateException", buf);
         return;
     }

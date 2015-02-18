@@ -176,7 +176,7 @@ static void process_media_player_call(JNIEnv *env, jobject thiz, status_t opStat
             } else {
                char msg[256];
                 // append the status code to the message
-               sprintf(msg, "%s: status=0x%X", message, opStatus);
+               snprintf(msg, sizeof(msg), "%s: status=0x%X", message, opStatus);
                jniThrowException( env, exception, msg);
             }
         }

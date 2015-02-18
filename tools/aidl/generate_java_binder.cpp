@@ -261,7 +261,7 @@ generate_method(const method_type* method, Class* interface,
     transactCodeName += method->name.data;
 
     char transactCodeValue[60];
-    sprintf(transactCodeValue, "(android.os.IBinder.FIRST_CALL_TRANSACTION + %d)", index);
+    snprintf(transactCodeValue, sizeof(transactCodeValue), "(android.os.IBinder.FIRST_CALL_TRANSACTION + %d)", index);
 
     Field* transactCode = new Field(STATIC | FINAL,
                             new Variable(INT_TYPE, transactCodeName));

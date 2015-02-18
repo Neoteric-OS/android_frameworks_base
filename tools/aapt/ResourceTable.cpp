@@ -308,7 +308,7 @@ struct PendingAttribute
         }
         
         char numberStr[16];
-        sprintf(numberStr, "%d", type);
+        snprintf(numberStr, sizeof(numberStr), "%d", type);
         status_t err = outTable->addBag(sourcePos, myPackage,
                 attr16, ident, String16(""),
                 String16("^type"),
@@ -428,7 +428,7 @@ static status_t compileAttribute(const sp<AaptFile>& in,
         attr.createIfNeeded(outTable);
         if (!attr.hasErrors) {
             char buf[11];
-            sprintf(buf, "%d", l10n_required);
+            snprintf(buf, sizeof(buf), "%d", l10n_required);
             err = outTable->addBag(attr.sourcePos, myPackage, attr16, attr.ident,
                     String16(""), String16("^l10n"), String16(buf), NULL, NULL);
             if (err != NO_ERROR) {
@@ -466,7 +466,7 @@ static status_t compileAttribute(const sp<AaptFile>& in,
                 attr.type |= localType;
                 if (!attr.hasErrors) {
                     char numberStr[16];
-                    sprintf(numberStr, "%d", attr.type);
+                    snprintf(numberStr, sizeof(numberStr), "%d", attr.type);
                     err = outTable->addBag(SourcePos(in->getPrintableSource(), block.getLineNumber()),
                             myPackage, attr16, attr.ident, String16(""),
                             String16("^type"), String16(numberStr), NULL, NULL, true);
@@ -1082,7 +1082,7 @@ status_t compileResourceFile(Bundle* bundle,
                     }
                     String16 curName(name);
                     char buf[64];
-                    sprintf(buf, "%d", (int)(end-curIdent+1));
+                    snprintf(buf, sizeof(buf), "%d", (int)(end-curIdent+1));
                     curName.append(String16(buf));
                     
                     err = outTable->addEntry(srcPos, myPackage, type, curName,
@@ -1554,7 +1554,7 @@ status_t compileResourceFile(Bundle* bundle,
 
                         String16 itemIdent;
                         if (curType == array16) {
-                            sprintf(elmIndexStr, "^index_%d", (int)elmIndex++);
+                            snprintf(elmIndexStr, sizeof(elmIndexStr), "^index_%d", (int)elmIndex++);
                             itemIdent = String16(elmIndexStr);
                         } else if (curType == plurals16) {
                             ssize_t itemIdentIdx = block.indexOfAttribute(NULL, "quantity");
@@ -3496,7 +3496,7 @@ status_t ResourceTable::Entry::generateAttributes(ResourceTable* table,
 //             return UNKNOWN_ERROR;
 #else
             char numberStr[16];
-            sprintf(numberStr, "%d", ResTable_map::TYPE_ANY);
+            snprintf(numberStr, sizeof(numberStr), "%d", ResTable_map::TYPE_ANY);
             status_t err = table->addBag(SourcePos("<generated>", 0), package,
                                          attr16, key, String16(""),
                                          String16("^type"),

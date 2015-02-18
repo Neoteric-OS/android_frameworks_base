@@ -296,7 +296,7 @@ android_media_MediaRecorder_setMaxDuration(JNIEnv *env, jobject thiz, jint max_d
     sp<MediaRecorder> mr = getMediaRecorder(env, thiz);
 
     char params[64];
-    sprintf(params, "max-duration=%d", max_duration_ms);
+    snprintf(params, sizeof(params), "max-duration=%d", max_duration_ms);
 
     process_media_recorder_call(env, mr->setParameters(String8(params)), "java/lang/RuntimeException", "setMaxDuration failed.");
 }
@@ -309,7 +309,7 @@ android_media_MediaRecorder_setMaxFileSize(
     sp<MediaRecorder> mr = getMediaRecorder(env, thiz);
 
     char params[64];
-    sprintf(params, "max-filesize=%" PRId64, max_filesize_bytes);
+    snprintf(params, sizeof(params), "max-filesize=%" PRId64, max_filesize_bytes);
 
     process_media_recorder_call(env, mr->setParameters(String8(params)), "java/lang/RuntimeException", "setMaxFileSize failed.");
 }
