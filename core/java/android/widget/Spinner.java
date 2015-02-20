@@ -31,6 +31,7 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.inputmethod.InputMethodManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -491,6 +492,16 @@ public class Spinner extends AbsSpinner implements OnClickListener {
      */
     public void setOnItemClickListenerInt(OnItemClickListener l) {
         super.setOnItemClickListener(l);
+    }
+
+    @Override
+    protected void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        InputMethodManager imm = InputMethodManager.peekInstance();
+        if (imm != null && imm.isFullscreenMode()) {
+            mPopup.dismiss();
+        }
     }
 
     @Override
