@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "085862e4_a4e9c204",
+        "filename": "graphics/java/android/graphics/Color.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-02-21T09:38:11Z",
+      "side": 1,
+      "message": "following ?",
+      "revId": "0b5ec574c2957fab606a4e038748ccc6c88f0406",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
