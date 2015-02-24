@@ -24,7 +24,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
 import java.security.spec.AlgorithmParameterSpec;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.security.auth.x500.X500Principal;
 
@@ -70,6 +73,20 @@ public final class KeyPairGeneratorSpec implements AlgorithmParameterSpec {
 
     private final Date mEndDate;
 
+    private final Date mKeyValidityStart;
+    private final Date mKeyValidityForOriginationEnd;
+    private final Date mKeyValidityForConsumptionEnd;
+    private final @KeyStoreKeyConstraints.PurposeEnum int mPurposes;
+    private final @KeyStoreKeyConstraints.AlgorithmEnum Integer mAlgorithm;
+    private final @KeyStoreKeyConstraints.PaddingEnum Integer mPadding;
+    private final @KeyStoreKeyConstraints.DigestEnum Integer mDigest;
+    private final @KeyStoreKeyConstraints.BlockModeEnum Integer mBlockMode;
+    private final Integer mMinSecondsBetweenOperations;
+    private final Integer mMaxUsesPerBoot;
+    private final boolean mUserAuthenticationRequired;
+    private final Set<Integer> mUserAuthenticators;
+    private final Integer mMaxSecondsSinceUserAuthentication;
+
     private final int mFlags;
 
     /**
@@ -106,7 +123,19 @@ public final class KeyPairGeneratorSpec implements AlgorithmParameterSpec {
      */
     public KeyPairGeneratorSpec(Context context, String keyStoreAlias, String keyType, int keySize,
             AlgorithmParameterSpec spec, X500Principal subjectDN, BigInteger serialNumber,
-            Date startDate, Date endDate, int flags) {
+            Date startDate, Date endDate, Date keyValidityStart,
+            Date keyValidityForOriginationEnd, Date keyValidityForConsumptionEnd,
+            @KeyStoreKeyConstraints.PurposeEnum int purposes,
+            @KeyStoreKeyConstraints.AlgorithmEnum Integer algorithm,
+            @KeyStoreKeyConstraints.PaddingEnum Integer padding,
+            @KeyStoreKeyConstraints.DigestEnum Integer digest,
+            @KeyStoreKeyConstraints.BlockModeEnum Integer blockMode,
+            Integer minSecondsBetweenOperations,
+            Integer maxUsesPerBoot,
+            boolean userAuthenticationRequired,
+            Set<Integer> userAuthenticators,
+            Integer maxSecondsSinceUserAuthentication,
+            int flags) {
         if (context == null) {
             throw new IllegalArgumentException("context == null");
         } else if (TextUtils.isEmpty(keyStoreAlias)) {
@@ -132,7 +161,34 @@ public final class KeyPairGeneratorSpec implements AlgorithmParameterSpec {
         mSerialNumber = serialNumber;
         mStartDate = startDate;
         mEndDate = endDate;
+        mKeyValidityStart = keyValidityStart;
+        mKeyValidityForOriginationEnd = keyValidityForOriginationEnd;
+        mKeyValidityForConsumptionEnd = keyValidityForConsumptionEnd;
+        mPurposes = purposes;
+        mAlgorithm = algorithm;
+        mPadding = padding;
+        mDigest = digest;
+        mBlockMode = blockMode;
+        mMinSecondsBetweenOperations = minSecondsBetweenOperations;
+        mMaxUsesPerBoot = maxUsesPerBoot;
+        mUserAuthenticationRequired = userAuthenticationRequired;
+        mUserAuthenticators = (userAuthenticators != null)
+                ? new HashSet<Integer>(userAuthenticators)
+                : Collections.<Integer>emptySet();
+        mMaxSecondsSinceUserAuthentication = maxSecondsSinceUserAuthentication;
         mFlags = flags;
+    }
+
+    /**
+     * TODO: Remove this constructor once tests have been updated to use the above constructor.
+     * @hide
+     */
+    public KeyPairGeneratorSpec(Context context, String keyStoreAlias, String keyType, int keySize,
+            AlgorithmParameterSpec spec, X500Principal subjectDN, BigInteger serialNumber,
+            Date startDate, Date endDate, int flags) {
+        this(context, keyStoreAlias, keyType, keySize, spec, subjectDN, serialNumber, startDate,
+                endDate, startDate, null, endDate, 0, null, null, null, null, null, null, false,
+                null, null, flags);
     }
 
     /**
@@ -209,6 +265,97 @@ public final class KeyPairGeneratorSpec implements AlgorithmParameterSpec {
     /**
      * @hide
      */
+    public Date getKeyValidityStart() {
+        return mKeyValidityStart;
+    }
+
+    /**
+     * @hide
+     */
+    public Date getKeyValidityForConsumptionEnd() {
+        return mKeyValidityForConsumptionEnd;
+    }
+
+    /**
+     * @hide
+     */
+    public Date getKeyValidityForOriginationEnd() {
+        return mKeyValidityForOriginationEnd;
+    }
+
+    /**
+     * @hide
+     */
+    public @KeyStoreKeyConstraints.PurposeEnum int getPurposes() {
+        return mPurposes;
+    }
+
+    /**
+     * @hide
+     */
+    public @KeyStoreKeyConstraints.AlgorithmEnum Integer getAlgorithm() {
+        return mAlgorithm;
+    }
+
+    /**
+     * @hide
+     */
+    public @KeyStoreKeyConstraints.PaddingEnum Integer getPadding() {
+        return mPadding;
+    }
+
+    /**
+     * @hide
+     */
+    public @KeyStoreKeyConstraints.DigestEnum Integer getDigest() {
+        return mDigest;
+    }
+
+    /**
+     * @hide
+     */
+    public @KeyStoreKeyConstraints.BlockModeEnum Integer getBlockMode() {
+        return mBlockMode;
+    }
+
+    /**
+     * @hide
+     */
+    public Integer getMinSecondsBetweenOperations() {
+        return mMinSecondsBetweenOperations;
+    }
+
+    /**
+     * @hide
+     */
+    public Integer getMaxUsesPerBoot() {
+        return mMaxUsesPerBoot;
+    }
+
+    /**
+     * @hide
+     */
+    public boolean isUserAuthenticationRequired() {
+        return mUserAuthenticationRequired;
+    }
+
+    /**
+     * @hide
+     */
+    public Set<Integer> getUserAuthenticators() {
+        return new HashSet<Integer>(mUserAuthenticators);
+    }
+
+    /**
+     * @hide
+     */
+    public Integer getMaxSecondsSinceUserAuthentication() {
+        return mMaxSecondsSinceUserAuthentication;
+    }
+
+    /**
+     * @hide
+     */
     int getFlags() {
         return mFlags;
     }
@@ -260,6 +407,20 @@ public final class KeyPairGeneratorSpec implements AlgorithmParameterSpec {
         private Date mStartDate;
 
         private Date mEndDate;
+
+        private Date mKeyValidityStart;
+        private Date mKeyValidityForOriginationEnd;
+        private Date mKeyValidityForConsumptionEnd;
+        private @KeyStoreKeyConstraints.PurposeEnum int mPurposes;
+        private @KeyStoreKeyConstraints.AlgorithmEnum Integer mAlgorithm;
+        private @KeyStoreKeyConstraints.PaddingEnum Integer mPadding;
+        private @KeyStoreKeyConstraints.DigestEnum Integer mDigest;
+        private @KeyStoreKeyConstraints.BlockModeEnum Integer mBlockMode;
+        private Integer mMinSecondsBetweenOperations;
+        private Integer mMaxUsesPerBoot;
+        private boolean mUserAuthenticationRequired;
+        private Set<Integer> mUserAuthenticators;
+        private Integer mMaxSecondsSinceUserAuthentication;
 
         private int mFlags;
 
@@ -378,6 +539,114 @@ public final class KeyPairGeneratorSpec implements AlgorithmParameterSpec {
         }
 
         /**
+         * @hide
+         */
+        public Builder setKeyValidityStart(Date startDate) {
+            mKeyValidityStart = startDate;
+            return this;
+        }
+
+        /**
+         * @hide
+         */
+        public Builder setKeyValidityForOriginationEnd(Date instant) {
+            mKeyValidityForOriginationEnd = instant;
+            return this;
+        }
+
+        /**
+         * @hide
+         */
+        public Builder setKeyValidityForConsumptionEnd(Date instant) {
+            mKeyValidityForConsumptionEnd = instant;
+            return this;
+        }
+
+        /**
+         * @hide
+         */
+        public Builder setPurposes(@KeyStoreKeyConstraints.PurposeEnum int purposes) {
+            mPurposes = purposes;
+            return this;
+        }
+
+        /**
+         * @hide
+         */
+        public Builder setAlgorithm(@KeyStoreKeyConstraints.AlgorithmEnum int algorithm) {
+            mAlgorithm = algorithm;
+            return this;
+        }
+
+        /**
+         * @hide
+         */
+        public Builder setPadding(@KeyStoreKeyConstraints.PaddingEnum int padding) {
+            mPadding = padding;
+            return this;
+        }
+
+        /**
+         * @hide
+         */
+        public Builder setDigest(@KeyStoreKeyConstraints.DigestEnum int digest) {
+            mDigest = digest;
+            return this;
+        }
+
+        /**
+         * @hide
+         */
+        public Builder setBlockMode(@KeyStoreKeyConstraints.BlockModeEnum int blockMode) {
+            mBlockMode = blockMode;
+            return this;
+        }
+
+        /**
+         * @hide
+         */
+        public Builder setMinSecondsBetweenOperations(int seconds) {
+            mMinSecondsBetweenOperations = seconds;
+            return this;
+        }
+
+        /**
+         * @hide
+         */
+        public Builder setMaxUsesPerBoot(int count) {
+            mMaxUsesPerBoot = count;
+            return this;
+        }
+
+        /**
+         * @hide
+         */
+        public Builder setUserAuthenticationRequired(boolean required) {
+            mUserAuthenticationRequired = required;
+            return this;
+        }
+
+        /**
+         * @hide
+         */
+        public Builder setUserAuthenticators(int... userAuthenticators) {
+            Set<Integer> userAuthenticatorsSet = new HashSet<Integer>();
+            for (int userAuthenticator : userAuthenticators) {
+                userAuthenticatorsSet.add(userAuthenticator);
+            }
+            mUserAuthenticators = userAuthenticatorsSet;
+            return this;
+        }
+
+        /**
+         * @hide
+         */
+        public Builder setMaxSecondsSinceUserAuthentication(int seconds) {
+            mMaxSecondsSinceUserAuthentication = seconds;
+            return this;
+        }
+
+        /**
          * Indicates that this key must be encrypted at rest on storage. Note
          * that enabling this will require that the user enable a strong lock
          * screen (e.g., PIN, password) before creating or using the generated
@@ -396,7 +665,11 @@ public final class KeyPairGeneratorSpec implements AlgorithmParameterSpec {
          */
         public KeyPairGeneratorSpec build() {
             return new KeyPairGeneratorSpec(mContext, mKeystoreAlias, mKeyType, mKeySize, mSpec,
-                    mSubjectDN, mSerialNumber, mStartDate, mEndDate, mFlags);
+                    mSubjectDN, mSerialNumber, mStartDate, mEndDate, mKeyValidityStart,
+                    mKeyValidityForOriginationEnd, mKeyValidityForConsumptionEnd, mPurposes,
+                    mAlgorithm, mPadding, mDigest, mBlockMode, mMinSecondsBetweenOperations,
+                    mMaxUsesPerBoot, mUserAuthenticationRequired, mUserAuthenticators,
+                    mMaxSecondsSinceUserAuthentication, mFlags);
         }
     }
 }

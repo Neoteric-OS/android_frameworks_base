@@ -1,49 +1,18 @@
-/*
- * Copyright (C) 2013 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package android.security;
 
-import android.content.Context;
-
-import java.security.KeyPairGenerator;
-import java.security.KeyStore.ProtectionParameter;
+import java.security.spec.AlgorithmParameterSpec;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * This provides the optional parameters that can be specified for
- * {@code KeyStore} entries that work with
- * <a href="{@docRoot}training/articles/keystore.html">Android KeyStore
- * facility</a>. The Android KeyStore facility is accessed through a
- * {@link java.security.KeyStore} API using the {@code AndroidKeyStore}
- * provider. The {@code context} passed in may be used to pop up some UI to ask
- * the user to unlock or initialize the Android KeyStore facility.
- * <p>
- * Any entries placed in the {@code KeyStore} may be retrieved later. Note that
- * there is only one logical instance of the {@code KeyStore} per application
- * UID so apps using the {@code sharedUid} facility will also share a
- * {@code KeyStore}.
- * <p>
- * Keys may be generated using the {@link KeyPairGenerator} facility with a
- * {@link KeyPairGeneratorSpec} to specify the entry's {@code alias}. A
- * self-signed X.509 certificate will be attached to generated entries, but that
- * may be replaced at a later time by a certificate signed by a real Certificate
- * Authority.
+ * @hide
  */
-public final class KeyStoreParameter implements ProtectionParameter {
-    private int mFlags;
+public class KeyGeneratorSpec implements AlgorithmParameterSpec {
+
+    private final String mKeystoreAlias;
+    private final Integer mKeySize;
     private final Date mKeyValidityStart;
     private final Date mKeyValidityForOriginationEnd;
     private final Date mKeyValidityForConsumptionEnd;
@@ -55,10 +24,14 @@ public final class KeyStoreParameter implements ProtectionParameter {
     private final Integer mMinSecondsBetweenOperations;
     private final Integer mMaxUsesPerBoot;
     private final boolean mUserAuthenticationRequired;
-    private final int[] mUserAuthenticators;
+    private final Set<Integer> mUserAuthenticators;
     private final Integer mMaxSecondsSinceUserAuthentication;
+    private final int mFlags;
 
-    private KeyStoreParameter(int flags, Date keyValidityStart,
+    /**
+     * @hide
+     */
+    KeyGeneratorSpec(String keystoreKeyAlias, Integer keySize, Date keyValidityStart,
             Date keyValidityForOriginationEnd, Date keyValidityForConsumptionEnd,
             @KeyStoreKeyConstraints.PurposeEnum int purposes,
             @KeyStoreKeyConstraints.AlgorithmEnum Integer algorithm,
@@ -68,9 +41,11 @@ public final class KeyStoreParameter implements ProtectionParameter {
             Integer minSecondsBetweenOperations,
             Integer maxUsesPerBoot,
             boolean userAuthenticationRequired,
-            @KeyStoreKeyConstraints.BlockModeEnum int[] userAuthenticators,
-            Integer maxSecondsSinceUserAuthentication) {
-        mFlags = flags;
+            Set<Integer> userAuthenticators,
+            Integer maxSecondsSinceUserAuthentication,
+            int flags) {
+        mKeystoreAlias = keystoreKeyAlias;
+        mKeySize = keySize;
         mKeyValidityStart = keyValidityStart;
         mKeyValidityForOriginationEnd = keyValidityForOriginationEnd;
         mKeyValidityForConsumptionEnd = keyValidityForConsumptionEnd;
@@ -82,21 +57,73 @@ public final class KeyStoreParameter implements ProtectionParameter {
         mMinSecondsBetweenOperations = minSecondsBetweenOperations;
         mMaxUsesPerBoot = maxUsesPerBoot;
         mUserAuthenticationRequired = userAuthenticationRequired;
-        mUserAuthenticators = (userAuthenticators != null) ? userAuthenticators.clone() : null;
+        mUserAuthenticators = (userAuthenticators != null)
+                ? new HashSet<Integer>(userAuthenticators)
+                : Collections.<Integer>emptySet();
         mMaxSecondsSinceUserAuthentication = maxSecondsSinceUserAuthentication;
+        mFlags = flags;
     }
 
-    /**
-     * @hide
-     */
-    public int getFlags() {
-        return mFlags;
+    public String getKeystoreAlias() {
+        return mKeystoreAlias;
     }
 
-    /**
-     * Returns {@code true} if this parameter requires entries to be encrypted
-     * on the disk.
-     */
+    public Integer getKeySize() {
+        return mKeySize;
+    }
+
+    public Date getKeyValidityStart() {
+        return mKeyValidityStart;
+    }
+
+    public Date getKeyValidityForConsumptionEnd() {
+        return mKeyValidityForConsumptionEnd;
+    }
+
+    public Date getKeyValidityForOriginationEnd() {
+        return mKeyValidityForOriginationEnd;
+    }
+
+    public @KeyStoreKeyConstraints.PurposeEnum int getPurposes() {
+        return mPurposes;
+    }
+
+    public @KeyStoreKeyConstraints.AlgorithmEnum Integer getAlgorithm() {
+        return mAlgorithm;
+    }
+
+    public @KeyStoreKeyConstraints.PaddingEnum Integer getPadding() {
+        return mPadding;
+    }
+
+    public @KeyStoreKeyConstraints.DigestEnum Integer getDigest() {
+        return mDigest;
+    }
+
+    public @KeyStoreKeyConstraints.BlockModeEnum Integer getBlockMode() {
+        return mBlockMode;
+    }
+
+    public Integer getMinSecondsBetweenOperations() {
+        return mMinSecondsBetweenOperations;
+    }
+
+    public Integer getMaxUsesPerBoot() {
+        return mMaxUsesPerBoot;
+    }
+
+    public boolean isUserAuthenticationRequired() {
+        return mUserAuthenticationRequired;
+    }
+
+    public Set<Integer> getUserAuthenticators() {
+        return new HashSet<Integer>(mUserAuthenticators);
+    }
+
+    public Integer getMaxSecondsSinceUserAuthentication() {
+        return mMaxSecondsSinceUserAuthentication;
+    }
+
     public boolean isEncryptionRequired() {
         return (mFlags & KeyStore.FLAG_ENCRYPTED) != 0;
     }
@@ -104,113 +131,13 @@ public final class KeyStoreParameter implements ProtectionParameter {
     /**
      * @hide
      */
-    public Date getKeyValidityStart() {
-        return mKeyValidityStart;
+    int getFlags() {
+        return mFlags;
     }
 
-    /**
-     * @hide
-     */
-    public Date getKeyValidityForConsumptionEnd() {
-        return mKeyValidityForConsumptionEnd;
-    }
-
-    /**
-     * @hide
-     */
-    public Date getKeyValidityForOriginationEnd() {
-        return mKeyValidityForOriginationEnd;
-    }
-
-    /**
-     * @hide
-     */
-    public @KeyStoreKeyConstraints.PurposeEnum int getPurposes() {
-        return mPurposes;
-    }
-
-    /**
-     * @hide
-     */
-    public @KeyStoreKeyConstraints.AlgorithmEnum Integer getAlgorithm() {
-        return mAlgorithm;
-    }
-
-    /**
-     * @hide
-     */
-    public @KeyStoreKeyConstraints.PaddingEnum Integer getPadding() {
-        return mPadding;
-    }
-
-    /**
-     * @hide
-     */
-    public @KeyStoreKeyConstraints.DigestEnum Integer getDigest() {
-        return mDigest;
-    }
-
-    /**
-     * @hide
-     */
-    public @KeyStoreKeyConstraints.BlockModeEnum Integer getBlockMode() {
-        return mBlockMode;
-    }
-
-    /**
-     * @hide
-     */
-    public Integer getMinSecondsBetweenOperations() {
-        return mMinSecondsBetweenOperations;
-    }
-
-    /**
-     * @hide
-     */
-    public Integer getMaxUsesPerBoot() {
-        return mMaxUsesPerBoot;
-    }
-
-    /**
-     * @hide
-     */
-    public boolean isUserAuthenticationRequired() {
-        return mUserAuthenticationRequired;
-    }
-
-    /**
-     * @hide
-     */
-    public int[] getUserAuthenticators() {
-        return (mUserAuthenticators != null) ? mUserAuthenticators.clone() : null;
-    }
-
-    /**
-     * @hide
-     */
-    public Integer getMaxSecondsSinceUserAuthentication() {
-        return mMaxSecondsSinceUserAuthentication;
-    }
-
-    /**
-     * Builder class for {@link KeyStoreParameter} objects.
-     * <p>
-     * This will build protection parameters for use with the
-     * <a href="{@docRoot}training/articles/keystore.html">Android KeyStore
-     * facility</a>.
-     * <p>
-     * This can be used to require that KeyStore entries be stored encrypted.
-     * <p>
-     * Example:
-     *
-     * <pre class="prettyprint">
-     * KeyStoreParameter params = new KeyStoreParameter.Builder(mContext)
-     *         .setEncryptionRequired()
-     *         .build();
-     * </pre>
-     */
-    public final static class Builder {
-        private int mFlags;
+    public static class Builder {
+        private String mKeystoreAlias;
+        private Integer mKeySize;
         private Date mKeyValidityStart;
         private Date mKeyValidityForOriginationEnd;
         private Date mKeyValidityForConsumptionEnd;
@@ -222,29 +149,89 @@ public final class KeyStoreParameter implements ProtectionParameter {
         private Integer mMinSecondsBetweenOperations;
         private Integer mMaxUsesPerBoot;
         private boolean mUserAuthenticationRequired;
-        private int[] mUserAuthenticators;
+        private Set<Integer> mUserAuthenticators;
         private Integer mMaxSecondsSinceUserAuthentication;
+        private int mFlags;
 
-        /**
-         * Creates a new instance of the {@code Builder} with the given
-         * {@code context}. The {@code context} passed in may be used to pop up
-         * some UI to ask the user to unlock or initialize the Android KeyStore
-         * facility.
-         */
-        public Builder(Context context) {
-            if (context == null) {
-                throw new NullPointerException("context == null");
-            }
-
-            // Context is currently not used, but will be in the future.
+        public Builder setAlias(String alias) {
+            mKeystoreAlias = alias;
+            return this;
         }
 
-        /**
-         * Indicates that this key must be encrypted at rest on storage. Note
-         * that enabling this will require that the user enable a strong lock
-         * screen (e.g., PIN, password) before creating or using the generated
-         * key is successful.
-         */
+        public Builder setKeySize(int keySize) {
+            mKeySize = keySize;
+            return this;
+        }
+
+        public Builder setKeyValidityStart(Date startDate) {
+            mKeyValidityStart = startDate;
+            return this;
+        }
+
+        public Builder setKeyValidityForOriginationEnd(Date instant) {
+            mKeyValidityForOriginationEnd = instant;
+            return this;
+        }
+
+        public Builder setKeyValidityForConsumptionEnd(Date instant) {
+            mKeyValidityForConsumptionEnd = instant;
+            return this;
+        }
+
+        public Builder setPurposes(@KeyStoreKeyConstraints.PurposeEnum int purposes) {
+            mPurposes = purposes;
+            return this;
+        }
+
+        public Builder setAlgorithm(@KeyStoreKeyConstraints.AlgorithmEnum int algorithm) {
+            mAlgorithm = algorithm;
+            return this;
+        }
+
+        public Builder setPadding(@KeyStoreKeyConstraints.PaddingEnum int padding) {
+            mPadding = padding;
+            return this;
+        }
+
+        public Builder setDigest(@KeyStoreKeyConstraints.DigestEnum int digest) {
+            mDigest = digest;
+            return this;
+        }
+
+        public Builder setBlockMode(@KeyStoreKeyConstraints.BlockModeEnum int blockMode) {
+            mBlockMode = blockMode;
+            return this;
+        }
+
+        public Builder setMinSecondsBetweenOperations(int seconds) {
+            mMinSecondsBetweenOperations = seconds;
+            return this;
+        }
+
+        public Builder setMaxUsesPerBoot(int count) {
+            mMaxUsesPerBoot = count;
+            return this;
+        }
+
+        public Builder setUserAuthenticationRequired(boolean required) {
+            mUserAuthenticationRequired = required;
+            return this;
+        }
+
+        public Builder setUserAuthenticators(int... userAuthenticators) {
+            Set<Integer> userAuthenticatorsSet = new HashSet<Integer>();
+            for (int userAuthenticator : userAuthenticators) {
+                userAuthenticatorsSet.add(userAuthenticator);
+            }
+            mUserAuthenticators = userAuthenticatorsSet;
+            return this;
+        }
+
+        public Builder setMaxSecondsSinceUserAuthentication(int seconds) {
+            mMaxSecondsSinceUserAuthentication = seconds;
+            return this;
+        }
+
         public Builder setEncryptionRequired(boolean required) {
             if (required) {
                 mFlags |= KeyStore.FLAG_ENCRYPTED;
@@ -254,122 +241,12 @@ public final class KeyStoreParameter implements ProtectionParameter {
             return this;
         }
 
-        /**
-         * @hide
-         */
-        public Builder setKeyValidityStart(Date startDate) {
-            mKeyValidityStart = startDate;
-            return this;
-        }
-
-        /**
-         * @hide
-         */
-        public Builder setKeyValidityForOriginationEnd(Date instant) {
-            mKeyValidityForOriginationEnd = instant;
-            return this;
-        }
-
-        /**
-         * @hide
-         */
-        public Builder setKeyValidityForConsumptionEnd(Date instant) {
-            mKeyValidityForConsumptionEnd = instant;
-            return this;
-        }
-
-        /**
-         * @hide
-         */
-        public Builder setPurposes(@KeyStoreKeyConstraints.PurposeEnum int purposes) {
-            mPurposes = purposes;
-            return this;
-        }
-
-        /**
-         * @hide
-         */
-        public Builder setAlgorithm(@KeyStoreKeyConstraints.AlgorithmEnum int algorithm) {
-            mAlgorithm = algorithm;
-            return this;
-        }
-
-        /**
-         * @hide
-         */
-        public Builder setPadding(@KeyStoreKeyConstraints.PaddingEnum int padding) {
-            mPadding = padding;
-            return this;
-        }
-
-        /**
-         * @hide
-         */
-        public Builder setDigest(@KeyStoreKeyConstraints.DigestEnum int digest) {
-            mDigest = digest;
-            return this;
-        }
-
-        /**
-         * @hide
-         */
-        public Builder setBlockMode(@KeyStoreKeyConstraints.BlockModeEnum int blockMode) {
-            mBlockMode = blockMode;
-            return this;
-        }
-
-        /**
-         * @hide
-         */
-        public Builder setMinSecondsBetweenOperations(int seconds) {
-            mMinSecondsBetweenOperations = seconds;
-            return this;
-        }
-
-        /**
-         * @hide
-         */
-        public Builder setMaxUsesPerBoot(int count) {
-            mMaxUsesPerBoot = count;
-            return this;
-        }
-
-        /**
-         * @hide
-         */
-        public Builder setUserAuthenticationRequired(boolean required) {
-            mUserAuthenticationRequired = required;
-            return this;
-        }
-
-        /**
-         * @hide
-         */
-        public Builder setUserAuthenticators(int... userAuthenticators) {
-            mUserAuthenticators = userAuthenticators;
-            return this;
-        }
-
-        /**
-         * @hide
-         */
-        public Builder setMaxSecondsSinceUserAuthentication(int seconds) {
-            mMaxSecondsSinceUserAuthentication = seconds;
-            return this;
-        }
-
-        /**
-         * Builds the instance of the {@code KeyPairGeneratorSpec}.
-         *
-         * @throws IllegalArgumentException if a required field is missing
-         * @return built instance of {@code KeyPairGeneratorSpec}
-         */
-        public KeyStoreParameter build() {
-            return new KeyStoreParameter(mFlags, mKeyValidityStart,
+        public KeyGeneratorSpec build() {
+            return new KeyGeneratorSpec(mKeystoreAlias, mKeySize, mKeyValidityStart,
                     mKeyValidityForOriginationEnd, mKeyValidityForConsumptionEnd, mPurposes,
                     mAlgorithm, mPadding, mDigest, mBlockMode, mMinSecondsBetweenOperations,
                     mMaxUsesPerBoot, mUserAuthenticationRequired, mUserAuthenticators,
-                    mMaxSecondsSinceUserAuthentication);
+                    mMaxSecondsSinceUserAuthentication, mFlags);
         }
     }
 }
