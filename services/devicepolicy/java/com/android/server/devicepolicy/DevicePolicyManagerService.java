@@ -3910,14 +3910,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         }
 
         DevicePolicyData policy = getUserData(userHandle);
-        final int n = policy.mAdminList.size();
-        for (int i = 0; i < n; i++) {
-            ActiveAdmin admin = policy.mAdminList.get(i);
-            if (profileOwner.equals(admin.info)) {
-                return admin;
-            }
-        }
-        return null;
+        return policy.mAdminMap.get(profileOwner);
     }
 
     @Override
@@ -5160,12 +5153,15 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         }
         synchronized (this) {
             final DevicePolicyData policy = getUserData(userHandle);
+            final ComponentName profileOwner = getProfileOwner(userHandle);
+            final String deviceOwner = getDeviceOwner();
             Bundle adminExtras = new Bundle();
             adminExtras.putString(DeviceAdminReceiver.EXTRA_LOCK_TASK_PACKAGE, pkg);
             for (ActiveAdmin admin : policy.mAdminList) {
-                boolean ownsDevice = isDeviceOwner(admin.info.getPackageName());
-                boolean ownsProfile = (getProfileOwner(userHandle) != null
-                        && getProfileOwner(userHandle).equals(admin.info.getPackageName()));
+                boolean ownsDevice = (deviceOwner != null
+                        && deviceOwner.equals(admin.info.getPackageName()));
+                boolean ownsProfile = (profileOwner != null
+                        && profileOwner.equals(admin.info.getComponent()));
                 if (ownsDevice || ownsProfile) {
                     if (isEnabled) {
                         sendAdminCommandLocked(admin, DeviceAdminReceiver.ACTION_LOCK_TASK_ENTERING,
