@@ -181,6 +181,7 @@ public class ZygoteInit {
     private static final int ROOT_GID = 0;
 
     static void preload() {
+        Trace.traceBegin(Trace.TRACE_TAG_BOOT, "ZygotePreload");
         Log.d(TAG, "begin preload");
         preloadClasses();
         preloadResources();
@@ -190,6 +191,7 @@ public class ZygoteInit {
         // for memory sharing purposes.
         WebViewFactory.prepareWebViewInZygote();
         Log.d(TAG, "end preload");
+        Trace.traceEnd(Trace.TRACE_TAG_BOOT);
     }
 
     private static void preloadSharedLibraries() {
@@ -223,6 +225,8 @@ public class ZygoteInit {
             return;
         }
 
+
+        Trace.traceBegin(Trace.TRACE_TAG_BOOT, "PreloadClasses");
         Log.i(TAG, "Preloading classes...");
         long startTime = SystemClock.uptimeMillis();
 
@@ -263,6 +267,7 @@ public class ZygoteInit {
                     continue;
                 }
 
+                Trace.traceBegin(Trace.TRACE_TAG_BOOT, "PreloadClass_" + line);
                 try {
                     if (false) {
                         Log.v(TAG, "Preloading " + line + "...");
@@ -283,6 +288,7 @@ public class ZygoteInit {
                     }
                     throw new RuntimeException(t);
                 }
+                Trace.traceEnd(Trace.TRACE_TAG_BOOT);
             }
 
             Log.i(TAG, "...preloaded " + count + " classes in "
@@ -295,7 +301,9 @@ public class ZygoteInit {
             runtime.setTargetHeapUtilization(defaultUtilization);
 
             // Fill in dex caches with classes, fields, and methods brought in by preloading.
+            Trace.traceBegin(Trace.TRACE_TAG_BOOT, "PreloadDexCaches");
             runtime.preloadDexCaches();
+            Trace.traceEnd(Trace.TRACE_TAG_BOOT);
 
             // Bring back root. We'll need it later if we're in the zygote.
             if (droppedPriviliges) {
@@ -307,6 +315,7 @@ public class ZygoteInit {
                 }
             }
         }
+        Trace.traceEnd(Trace.TRACE_TAG_BOOT);
     }
 
     /**
@@ -317,6 +326,7 @@ public class ZygoteInit {
      * range, and occasionally even larger.
      */
     private static void preloadResources() {
+        Trace.traceBegin(Trace.TRACE_TAG_BOOT, "PreloadResources");
         final VMRuntime runtime = VMRuntime.getRuntime();
 
         try {
@@ -345,6 +355,7 @@ public class ZygoteInit {
         } catch (RuntimeException e) {
             Log.w(TAG, "Failure preloading resources", e);
         }
+        Trace.traceEnd(Trace.TRACE_TAG_BOOT);
     }
 
     private static int preloadColorStateLists(VMRuntime runtime, TypedArray ar) {
@@ -557,6 +568,7 @@ public class ZygoteInit {
 
     public static void main(String argv[]) {
         try {
+            Trace.traceBegin(Trace.TRACE_TAG_BOOT, "ZygoteInit");
             RuntimeInit.enableDdms();
             // Start profiling the zygote initialization.
             SamplingProfilerIntegration.start();
@@ -591,15 +603,23 @@ public class ZygoteInit {
             SamplingProfilerIntegration.writeZygoteSnapshot();
 
             // Do an initial gc to clean up after startup
+            Trace.traceBegin(Trace.TRACE_TAG_BOOT, "PostZygoteInitGC");
             gcAndFinalize();
+            Trace.traceEnd(Trace.TRACE_TAG_BOOT);
 
             // Disable tracing so that forked processes do not inherit stale tracing tags from
             // Zygote.
-            Trace.setTracingEnabled(false);
+            // TODO: But how do we trace zygote then? The following line is
+            // commented out to enable systrace of boot, even though this may
+            // break something.
+            // Trace.setTracingEnabled(false);
 
             if (startSystemServer) {
+                Trace.traceBegin(Trace.TRACE_TAG_BOOT, "StartSystemServer");
                 startSystemServer(abiList, socketName);
+                Trace.traceEnd(Trace.TRACE_TAG_BOOT);
             }
+            Trace.traceEnd(Trace.TRACE_TAG_BOOT);
 
             Log.i(TAG, "Accepting command socket connections");
             runSelectLoop(abiList);
