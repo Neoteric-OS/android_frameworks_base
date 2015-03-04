@@ -617,11 +617,26 @@ public class SettingsBackupAgent extends BackupAgentHelper {
             if (nBytes > buffer.length) buffer = new byte[nBytes];
             in.readFully(buffer, 0, nBytes);
             int retainedWifiState = enableWifi(false);
+
+            final ContentResolver cr = getContentResolver();
+            final int scanAlways = Settings.Global.getInt(cr,
+                    Settings.Global.WIFI_SCAN_ALWAYS_AVAILABLE, 0);
+            if (scanAlways != 0) {
+                Settings.Global.putInt(cr,
+                        Settings.Global.WIFI_SCAN_ALWAYS_AVAILABLE, 0);
+            }
+            // !!! Give the wifi stack a moment to quiesce
+            try { Thread.sleep(1500); } catch (InterruptedException e) {}
             restoreWifiSupplicant(FILE_WIFI_SUPPLICANT, buffer, nBytes);
             FileUtils.setPermissions(FILE_WIFI_SUPPLICANT,
                     FileUtils.S_IRUSR | FileUtils.S_IWUSR |
                     FileUtils.S_IRGRP | FileUtils.S_IWGRP,
                     Process.myUid(), Process.WIFI_UID);
+
+            if (scanAlways != 0) {
+                Settings.Global.putInt(cr,
+                        Settings.Global.WIFI_SCAN_ALWAYS_AVAILABLE, scanAlways);
+            }
             // retain the previous WIFI state.
             enableWifi(retainedWifiState == WifiManager.WIFI_STATE_ENABLED ||
                     retainedWifiState == WifiManager.WIFI_STATE_ENABLING);
