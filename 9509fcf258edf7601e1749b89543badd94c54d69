@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37302c12_e543b096",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1026058
+      },
+      "writtenOn": "2015-03-06T02:31:02Z",
+      "side": 1,
+      "message": "Any reason why we might need to allow root as well?  Debugging, dev workflow, etc.?",
+      "range": {
+        "startLine": 138,
+        "startChar": 12,
+        "endLine": 138,
+        "endChar": 47
+      },
+      "revId": "9509fcf258edf7601e1749b89543badd94c54d69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37302c12_a8ce9fa7",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1026058
+      },
+      "writtenOn": "2015-03-06T02:31:02Z",
+      "side": 1,
+      "message": "would be nice to make sure these are always defined (else throw security exception), and get rid of this assignment.",
+      "range": {
+        "startLine": 627,
+        "startChar": 8,
+        "endLine": 634,
+        "endChar": 9
+      },
+      "revId": "9509fcf258edf7601e1749b89543badd94c54d69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
