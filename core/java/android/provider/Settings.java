@@ -6340,6 +6340,14 @@ public final class Settings {
                "hdmi_control_auto_device_off_enabled";
 
        /**
+        * Whether to allow CEC devices to send &lt;One Touch Play&gt; commands.
+        * (0 = false, 1 = true)
+        * @hide
+        */
+       public static final String HDMI_CONTROL_ONE_TOUCH_PLAY_ENABLED =
+               "hdmi_control_one_touch_play_enabled";
+
+       /**
         * Whether to use the DHCP client from Lollipop and earlier instead of the newer Android DHCP
         * client.
         * (0 = false, 1 = true)

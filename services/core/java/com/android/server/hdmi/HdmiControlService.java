@@ -221,6 +221,11 @@ public final class HdmiControlService extends SystemService {
     @GuardedBy("mLock")
     private boolean mHdmiControlEnabled;
 
+    // Set to true while HDMI-CEC OneTouchPlay is enabled. If set to false, no OneTouchPlay
+    // commands will be sent.
+    @GuardedBy("mLock")
+    private boolean mHdmiControlOneTouchPlayEnabled;
+
     // Set to true while the service is in normal mode. While set to false, no input change is
     // allowed. Used for situations where input change can confuse users such as channel auto-scan,
     // system upgrade, etc., a.k.a. "prohibit mode".
@@ -388,6 +393,7 @@ public final class HdmiControlService extends SystemService {
         mPowerStatus = HdmiControlManager.POWER_STATUS_TRANSIENT_TO_ON;
         mProhibitMode = false;
         mHdmiControlEnabled = readBooleanSetting(Global.HDMI_CONTROL_ENABLED, true);
+        mHdmiControlOneTouchPlayEnabled = readBooleanSetting(Global.HDMI_CONTROL_ONE_TOUCH_PLAY_ENABLED, false);
         mMhlInputChangeEnabled = readBooleanSetting(Global.MHL_INPUT_SWITCHING_ENABLED, true);
 
         mCecController = HdmiCecController.create(this);
@@ -487,6 +493,7 @@ public final class HdmiControlService extends SystemService {
                 Global.HDMI_CONTROL_ENABLED,
                 Global.HDMI_CONTROL_AUTO_WAKEUP_ENABLED,
                 Global.HDMI_CONTROL_AUTO_DEVICE_OFF_ENABLED,
+                Global.HDMI_CONTROL_ONE_TOUCH_PLAY_ENABLED,
                 Global.MHL_INPUT_SWITCHING_ENABLED,
                 Global.MHL_POWER_CHARGE_ENABLED
         };
@@ -522,6 +529,9 @@ public final class HdmiControlService extends SystemService {
                         localDevice.setAutoDeviceOff(enabled);
                     }
                     // No need to propagate to HAL.
+                    break;
+                case Global.HDMI_ONE_TOUCH_PLAY_ENABLED:
+                    setHdmiControlOneTouchPlayEnabled(enabled);
                     break;
                 case Global.MHL_INPUT_SWITCHING_ENABLED:
                     setMhlInputChangeEnabled(enabled);
@@ -1635,6 +1645,7 @@ public final class HdmiControlService extends SystemService {
             final IndentingPrintWriter pw = new IndentingPrintWriter(writer, "  ");
 
             pw.println("mHdmiControlEnabled: " + mHdmiControlEnabled);
+            pw.println("mHdmiControlOneTouchPlayEnabled: " + mHdmiControlOneTouchPlayEnabled);
             pw.println("mProhibitMode: " + mProhibitMode);
             if (mCecController != null) {
                 pw.println("mCecController: ");
@@ -1665,6 +1676,11 @@ public final class HdmiControlService extends SystemService {
         if (source == null) {
             Slog.w(TAG, "Local playback device not available");
             invokeCallback(callback, HdmiControlManager.RESULT_SOURCE_NOT_AVAILABLE);
+            return;
+        }
+        if (!isHdmiControlOneTouchPlayEnabled()) {
+            Slog.w(TAG, "OneTouchPlay disabled");
+            invokeCallback(callback, HdmiControlManager.RESULT_INCORRECT_MODE);
             return;
         }
         source.oneTouchPlay(callback);
@@ -2231,6 +2247,20 @@ public final class HdmiControlService extends SystemService {
                 });
             }
         });
+    }
+
+    @ServiceThreadOnly
+    void setHdmiControlOneTouchPlayEnabled(boolean enabled) {
+        assertRunOnServiceThread();
+        synchronized (mLock) {
+            mHdmiControlOneTouchPlayEnabled = enabled;
+        }
+    }
+
+    boolean isHdmiControlOneTouchPlayEnabled() {
+        synchronized (mLock) {
+            return mHdmiControlOneTouchPlayEnabled;
+        }
     }
 
     @ServiceThreadOnly
