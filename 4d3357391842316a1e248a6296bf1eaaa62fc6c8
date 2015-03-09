@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57f840fa_5be92382",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-03-09T18:45:50Z",
+      "side": 1,
+      "message": "Maybe \"ZygoteConnection: remove obsolete security checks\".",
+      "revId": "4d3357391842316a1e248a6296bf1eaaa62fc6c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b71c1c20_b6ecc8c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-03-09T18:45:50Z",
+      "side": 1,
+      "message": "extra space before system_server, spawing -\u003e spawning.\nMaybe \"SELinux guarantees that only the system_server and permissive domains such as su are allowed to connect to the zygote socket.  Remove obsolete security checks that were only applicable when other processes could connect.\"",
+      "revId": "4d3357391842316a1e248a6296bf1eaaa62fc6c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
