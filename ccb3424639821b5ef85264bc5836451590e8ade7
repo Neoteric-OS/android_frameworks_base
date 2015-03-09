@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57f840fa_fb63cf17",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-03-09T17:38:23Z",
+      "side": 1,
+      "message": "Why not just make this restriction universal, i.e. applied independent of peer UID?  Then you don\u0027t need any hardcoded check of SYSTEM_UID at all.",
+      "revId": "ccb3424639821b5ef85264bc5836451590e8ade7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

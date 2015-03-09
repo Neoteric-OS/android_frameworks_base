@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57f840fa_3b6ed7fe",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1010111
+      },
+      "writtenOn": "2015-03-09T17:38:23Z",
+      "side": 0,
+      "message": "This one isn\u0027t normally allowed to SYSTEM_UID, so by removing this check you are allowing something not previously allowed.  Seemingly only reachable from su / adb root at present.",
+      "revId": "e59b7ce2564a916240e561b36f4476f2d72a65c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
