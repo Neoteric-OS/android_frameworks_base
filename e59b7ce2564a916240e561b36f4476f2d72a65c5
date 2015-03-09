@@ -16,6 +16,24 @@
       "revId": "e59b7ce2564a916240e561b36f4476f2d72a65c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57112008_5320e4c7",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1026058
+      },
+      "writtenOn": "2015-03-09T18:04:53Z",
+      "side": 0,
+      "message": "Right.  My first pass aimed to eliminate the code which is not exercised by calls from system_server, which would include this path.  Unfortunately, in order to not break developer tools, as per bdc@\u0027s comments, I left invokeWith in, and thus removed the check without removing the functionality.\n\nAn argument could be made that since we own the system_server code, it would be a bug there, but the same argument should be made about the applyUid check.  It would probably be best for me to put this back in with the selinux check scraped.",
+      "parentUuid": "57f840fa_3b6ed7fe",
+      "revId": "e59b7ce2564a916240e561b36f4476f2d72a65c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
