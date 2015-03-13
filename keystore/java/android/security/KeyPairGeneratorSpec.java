@@ -24,7 +24,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
 import java.security.spec.AlgorithmParameterSpec;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.security.auth.x500.X500Principal;
 
@@ -72,6 +75,10 @@ public final class KeyPairGeneratorSpec implements AlgorithmParameterSpec {
 
     private final int mFlags;
 
+    private final Set<Integer> mUserAuthenticators;
+
+    private final int mUserAuthenticationValidityDurationSeconds;
+
     /**
      * Parameter specification for the "{@code AndroidKeyPairGenerator}"
      * instance of the {@link java.security.KeyPairGenerator} API. The
@@ -106,7 +113,8 @@ public final class KeyPairGeneratorSpec implements AlgorithmParameterSpec {
      */
     public KeyPairGeneratorSpec(Context context, String keyStoreAlias, String keyType, int keySize,
             AlgorithmParameterSpec spec, X500Principal subjectDN, BigInteger serialNumber,
-            Date startDate, Date endDate, int flags) {
+            Date startDate, Date endDate, int flags, Set<Integer> userAuthenticators,
+            int userAuthenticationValidityDurationSeconds) {
         if (context == null) {
             throw new IllegalArgumentException("context == null");
         } else if (TextUtils.isEmpty(keyStoreAlias)) {
@@ -121,6 +129,9 @@ public final class KeyPairGeneratorSpec implements AlgorithmParameterSpec {
             throw new IllegalArgumentException("endDate == null");
         } else if (endDate.before(startDate)) {
             throw new IllegalArgumentException("endDate < startDate");
+        } else if (userAuthenticationValidityDurationSeconds < 0) {
+            throw new IllegalArgumentException(
+                    "userAuthenticationValidityDurationSeconds must not be negative");
         }
 
         mContext = context;
@@ -133,6 +144,10 @@ public final class KeyPairGeneratorSpec implements AlgorithmParameterSpec {
         mStartDate = startDate;
         mEndDate = endDate;
         mFlags = flags;
+        mUserAuthenticators = (userAuthenticators != null)
+                ? new HashSet<Integer>(userAuthenticators)
+                : Collections.<Integer>emptySet();
+        mUserAuthenticationValidityDurationSeconds = userAuthenticationValidityDurationSeconds;
     }
 
     /**
@@ -222,6 +237,31 @@ public final class KeyPairGeneratorSpec implements AlgorithmParameterSpec {
     }
 
     /**
+     * Gets the user authenticators which protect access to this key. The key can only be used iff
+     * the user has authenticated to at least one of these user authenticators.
+     *
+     * @return user authenticators or empty set if the key can be used without user authentication.
+     *
+     * @hide
+     */
+    public Set<Integer> getUserAuthenticators() {
+        return new HashSet<Integer>(mUserAuthenticators);
+    }
+
+    /**
+     * Gets the duration of time (seconds) for which this private key can be used after the user
+     * successfully authenticates to one of the associated user authenticators.
+     *
+     * @return duration in seconds or {@code 0} if the user needs to authenticate for every use of
+     *         the private key.
+     *
+     * @hide
+     */
+    public int getUserAuthenticationValidityDurationSeconds() {
+        return mUserAuthenticationValidityDurationSeconds;
+    }
+
+    /**
      * Builder class for {@link KeyPairGeneratorSpec} objects.
      * <p>
      * This will build a parameter spec for use with the <a href="{@docRoot}
@@ -262,6 +302,10 @@ public final class KeyPairGeneratorSpec implements AlgorithmParameterSpec {
         private Date mEndDate;
 
         private int mFlags;
+
+        private Set<Integer> mUserAuthenticators;
+
+        private int mUserAuthenticationValidityDurationSeconds;
 
         /**
          * Creates a new instance of the {@code Builder} with the given
@@ -389,6 +433,42 @@ public final class KeyPairGeneratorSpec implements AlgorithmParameterSpec {
         }
 
         /**
+         * Sets the user authenticators which protect access to this key. The key can only be used
+         * iff the user has authenticated to at least one of these user authenticators.
+         *
+         * <p>By default, the key can be used without user authentication.
+         *
+         * @param userAuthenticators user authenticators or empty list if this key can be accessed
+         *        without user authentication.
+         *
+         * @see #setUserAuthenticationValidityDurationSeconds(int)
+         * @see #setInvalidatedOnUserAuthenticatorConfigurationChange(boolean)
+         *
+         * @hide
+         */
+        public Builder setUserAuthenticators(Set<Integer> userAuthenticators) {
+            mUserAuthenticators =
+                    (userAuthenticators != null) ? new HashSet<Integer>(userAuthenticators) : null;
+            return this;
+        }
+
+        /**
+         * Sets the duration of time (seconds) for which this private key can be used after the user
+         * successfully authenticates to one of the associated user authenticators.
+         *
+         * <p>By default, the user needs to authenticate for every use of the private key.
+         *
+         * @param seconds duration in seconds or {@code 0} if the user needs to authenticate for
+         *        every use of the private key.
+         *
+         * @hide
+         */
+        public Builder setUserAuthenticationValidityDurationSeconds(int seconds) {
+            mUserAuthenticationValidityDurationSeconds = seconds;
+            return this;
+        }
+
+        /**
          * Builds the instance of the {@code KeyPairGeneratorSpec}.
          *
          * @throws IllegalArgumentException if a required field is missing
@@ -396,7 +476,8 @@ public final class KeyPairGeneratorSpec implements AlgorithmParameterSpec {
          */
         public KeyPairGeneratorSpec build() {
             return new KeyPairGeneratorSpec(mContext, mKeystoreAlias, mKeyType, mKeySize, mSpec,
-                    mSubjectDN, mSerialNumber, mStartDate, mEndDate, mFlags);
+                    mSubjectDN, mSerialNumber, mStartDate, mEndDate, mFlags, mUserAuthenticators,
+                    mUserAuthenticationValidityDurationSeconds);
         }
     }
 }

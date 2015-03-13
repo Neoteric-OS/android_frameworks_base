@@ -19,7 +19,10 @@ package android.security;
 import android.test.AndroidTestCase;
 
 import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 
 import javax.security.auth.x500.X500Principal;
 
@@ -41,7 +44,7 @@ public class KeyPairGeneratorSpecTest extends AndroidTestCase {
     public void testConstructor_Success() throws Exception {
         KeyPairGeneratorSpec spec =
                 new KeyPairGeneratorSpec(getContext(), TEST_ALIAS_1, "RSA", 1024, null, TEST_DN_1,
-                        SERIAL_1, NOW, NOW_PLUS_10_YEARS, 0);
+                        SERIAL_1, NOW, NOW_PLUS_10_YEARS, 0, null, 4);
 
         assertEquals("Context should be the one specified", getContext(), spec.getContext());
 
@@ -56,6 +59,10 @@ public class KeyPairGeneratorSpecTest extends AndroidTestCase {
         assertEquals("startDate should be the one specified", NOW, spec.getStartDate());
 
         assertEquals("endDate should be the one specified", NOW_PLUS_10_YEARS, spec.getEndDate());
+
+        assertEquals(Collections.emptySet(), spec.getUserAuthenticators());
+
+        assertEquals(4, spec.getUserAuthenticationValidityDurationSeconds());
     }
 
     public void testBuilder_Success() throws Exception {
@@ -68,6 +75,8 @@ public class KeyPairGeneratorSpecTest extends AndroidTestCase {
                 .setStartDate(NOW)
                 .setEndDate(NOW_PLUS_10_YEARS)
                 .setEncryptionRequired()
+                .setUserAuthenticators(new HashSet<Integer>(Arrays.asList(1, 2, 3)))
+                .setUserAuthenticationValidityDurationSeconds(7)
                 .build();
 
         assertEquals("Context should be the one specified", getContext(), spec.getContext());
@@ -85,12 +94,16 @@ public class KeyPairGeneratorSpecTest extends AndroidTestCase {
         assertEquals("endDate should be the one specified", NOW_PLUS_10_YEARS, spec.getEndDate());
 
         assertEquals("encryption flag should be on", KeyStore.FLAG_ENCRYPTED, spec.getFlags());
+
+        assertEquals(new HashSet<Integer>(Arrays.asList(1, 2, 3)), spec.getUserAuthenticators());
+
+        assertEquals(7, spec.getUserAuthenticationValidityDurationSeconds());
     }
 
     public void testConstructor_NullContext_Failure() throws Exception {
         try {
             new KeyPairGeneratorSpec(null, TEST_ALIAS_1, "RSA", 1024, null, TEST_DN_1, SERIAL_1, NOW,
-                    NOW_PLUS_10_YEARS, 0);
+                    NOW_PLUS_10_YEARS, 0, null, 0);
             fail("Should throw IllegalArgumentException when context is null");
         } catch (IllegalArgumentException success) {
         }
@@ -99,7 +112,7 @@ public class KeyPairGeneratorSpecTest extends AndroidTestCase {
     public void testConstructor_NullKeystoreAlias_Failure() throws Exception {
         try {
             new KeyPairGeneratorSpec(getContext(), null, "RSA", 1024, null, TEST_DN_1, SERIAL_1, NOW,
-                    NOW_PLUS_10_YEARS, 0);
+                    NOW_PLUS_10_YEARS, 0, null, 0);
             fail("Should throw IllegalArgumentException when keystoreAlias is null");
         } catch (IllegalArgumentException success) {
         }
@@ -108,7 +121,7 @@ public class KeyPairGeneratorSpecTest extends AndroidTestCase {
     public void testConstructor_NullSubjectDN_Failure() throws Exception {
         try {
             new KeyPairGeneratorSpec(getContext(), TEST_ALIAS_1, "RSA", 1024, null, null, SERIAL_1, NOW,
-                    NOW_PLUS_10_YEARS, 0);
+                    NOW_PLUS_10_YEARS, 0, null, 0);
             fail("Should throw IllegalArgumentException when subjectDN is null");
         } catch (IllegalArgumentException success) {
         }
@@ -117,7 +130,7 @@ public class KeyPairGeneratorSpecTest extends AndroidTestCase {
     public void testConstructor_NullSerial_Failure() throws Exception {
         try {
             new KeyPairGeneratorSpec(getContext(), TEST_ALIAS_1, "RSA", 1024, null, TEST_DN_1, null, NOW,
-                    NOW_PLUS_10_YEARS, 0);
+                    NOW_PLUS_10_YEARS, 0, null, 0);
             fail("Should throw IllegalArgumentException when startDate is null");
         } catch (IllegalArgumentException success) {
         }
@@ -126,7 +139,7 @@ public class KeyPairGeneratorSpecTest extends AndroidTestCase {
     public void testConstructor_NullStartDate_Failure() throws Exception {
         try {
             new KeyPairGeneratorSpec(getContext(), TEST_ALIAS_1, "RSA", 1024, null, TEST_DN_1, SERIAL_1,
-                    null, NOW_PLUS_10_YEARS, 0);
+                    null, NOW_PLUS_10_YEARS, 0, null, 0);
             fail("Should throw IllegalArgumentException when startDate is null");
         } catch (IllegalArgumentException success) {
         }
@@ -135,7 +148,7 @@ public class KeyPairGeneratorSpecTest extends AndroidTestCase {
     public void testConstructor_NullEndDate_Failure() throws Exception {
         try {
             new KeyPairGeneratorSpec(getContext(), TEST_ALIAS_1, "RSA", 1024, null, TEST_DN_1, SERIAL_1,
-                    NOW, null, 0);
+                    NOW, null, 0, null, 0);
             fail("Should throw IllegalArgumentException when keystoreAlias is null");
         } catch (IllegalArgumentException success) {
         }
@@ -144,9 +157,18 @@ public class KeyPairGeneratorSpecTest extends AndroidTestCase {
     public void testConstructor_EndBeforeStart_Failure() throws Exception {
         try {
             new KeyPairGeneratorSpec(getContext(), TEST_ALIAS_1, "RSA", 1024, null, TEST_DN_1, SERIAL_1,
-                    NOW_PLUS_10_YEARS, NOW, 0);
+                    NOW_PLUS_10_YEARS, NOW, 0, null, 0);
             fail("Should throw IllegalArgumentException when end is before start");
         } catch (IllegalArgumentException success) {
+        }
+    }
+
+    public void testConstructor_UserAuthenticationValidityDuration_Failure() throws Exception {
+        try {
+            new KeyPairGeneratorSpec(getContext(), TEST_ALIAS_1, "RSA", 1024, null, TEST_DN_1, SERIAL_1,
+                    NOW_PLUS_10_YEARS, NOW, 0, null, -1);
+            fail();
+        } catch (IllegalArgumentException expected) {
         }
     }
 }
