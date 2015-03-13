@@ -44,8 +44,9 @@ import java.util.List;
  * NFC card emulation developer guide</a>.</p>
  *
  * <p class="note">Use of this class requires the
- * {@link PackageManager#FEATURE_NFC_HOST_CARD_EMULATION} to be present
- * on the device.
+ * {@link PackageManager#FEATURE_NFC_HOST_CARD_EMULATION} or
+ * {@link PackageManager#FEATURE_NFC_HOST_CARD_EMULATION_NFCF}
+ * to be present on the device.
  */
 public final class CardEmulation {
     static final String TAG = "CardEmulation";
@@ -131,6 +132,9 @@ public final class CardEmulation {
 
     final Context mContext;
 
+    static boolean sIsHceCapable = false;
+    static boolean sIsHceFCapable = false;
+
     private CardEmulation(Context context, INfcCardEmulation service) {
         mContext = context.getApplicationContext();
         sService = service;
@@ -156,7 +160,11 @@ public final class CardEmulation {
                 throw new UnsupportedOperationException();
             }
             try {
-                if (!pm.hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION)) {
+                sIsHceCapable = pm.hasSystemFeature(
+                        PackageManager.FEATURE_NFC_HOST_CARD_EMULATION);
+                sIsHceFCapable = pm.hasSystemFeature(
+                        PackageManager.FEATURE_NFC_HOST_CARD_EMULATION_NFCF);
+                if (!sIsHceCapable && !sIsHceFCapable) {
                     Log.e(TAG, "This device does not support card emulation");
                     throw new UnsupportedOperationException();
                 }
@@ -200,6 +208,9 @@ public final class CardEmulation {
      * <p class="note">Requires the {@link android.Manifest.permission#NFC} permission.
      */
     public boolean isDefaultServiceForCategory(ComponentName service, String category) {
+        if (!sIsHceCapable) {
+            throw new UnsupportedOperationException();
+        }
         try {
             return sService.isDefaultServiceForCategory(UserHandle.myUserId(), service, category);
         } catch (RemoteException e) {
@@ -231,6 +242,9 @@ public final class CardEmulation {
      * <p class="note">Requires the {@link android.Manifest.permission#NFC} permission.
      */
     public boolean isDefaultServiceForAid(ComponentName service, String aid) {
+        if (!sIsHceCapable) {
+            throw new UnsupportedOperationException();
+        }
         try {
             return sService.isDefaultServiceForAid(UserHandle.myUserId(), service, aid);
         } catch (RemoteException e) {
@@ -262,6 +276,9 @@ public final class CardEmulation {
      *         specified by the foreground app.
      */
     public boolean categoryAllowsForegroundPreference(String category) {
+        if (!sIsHceCapable) {
+            throw new UnsupportedOperationException();
+        }
         if (CATEGORY_PAYMENT.equals(category)) {
             boolean preferForeground = false;
             try {
@@ -289,6 +306,9 @@ public final class CardEmulation {
      * @return the selection mode for the passed in category
      */
     public int getSelectionModeForCategory(String category) {
+        if (!sIsHceCapable) {
+            throw new UnsupportedOperationException();
+        }
         if (CATEGORY_PAYMENT.equals(category)) {
             String defaultComponent = Settings.Secure.getString(mContext.getContentResolver(),
                     Settings.Secure.NFC_PAYMENT_DEFAULT_COMPONENT);
@@ -324,6 +344,9 @@ public final class CardEmulation {
      */
     public boolean registerAidsForService(ComponentName service, String category,
             List<String> aids) {
+        if (!sIsHceCapable) {
+            throw new UnsupportedOperationException();
+        }
         AidGroup aidGroup = new AidGroup(aids, category);
         try {
             return sService.registerAidGroupForService(UserHandle.myUserId(), service, aidGroup);
@@ -359,6 +382,9 @@ public final class CardEmulation {
      * @return The list of AIDs registered for this category, or null if it couldn't be found.
      */
     public List<String> getAidsForService(ComponentName service, String category) {
+        if (!sIsHceCapable) {
+            throw new UnsupportedOperationException();
+        }
         try {
             AidGroup group =  sService.getAidGroupForService(UserHandle.myUserId(), service,
                     category);
@@ -396,6 +422,9 @@ public final class CardEmulation {
      * @return whether the group was successfully removed.
      */
     public boolean removeAidsForService(ComponentName service, String category) {
+        if (!sIsHceCapable) {
+            throw new UnsupportedOperationException();
+        }
         try {
             return sService.removeAidGroupForService(UserHandle.myUserId(), service, category);
         } catch (RemoteException e) {
@@ -444,6 +473,9 @@ public final class CardEmulation {
      * @return whether the registration was successful
      */
     public boolean setPreferredService(Activity activity, ComponentName service) {
+        if (!sIsHceCapable) {
+            throw new UnsupportedOperationException();
+        }
         // Verify the activity is in the foreground before calling into NfcService
         if (activity == null || service == null) {
             throw new NullPointerException("activity or service or category is null");
@@ -480,6 +512,9 @@ public final class CardEmulation {
      * @return true when successful
      */
     public boolean unsetPreferredService(Activity activity) {
+        if (!sIsHceCapable) {
+            throw new UnsupportedOperationException();
+        }
         if (activity == null) {
             throw new NullPointerException("activity is null");
         }
@@ -515,6 +550,9 @@ public final class CardEmulation {
      * @return whether AID prefix registering is supported on this device.
      */
     public boolean supportsAidPrefixRegistration() {
+        if (!sIsHceCapable) {
+            throw new UnsupportedOperationException();
+        }
         try {
             return sService.supportsAidPrefixRegistration();
         } catch (RemoteException e) {
@@ -537,7 +575,8 @@ public final class CardEmulation {
      */
     public boolean setDefaultServiceForCategory(ComponentName service, String category) {
         try {
-            return sService.setDefaultServiceForCategory(UserHandle.myUserId(), service, category);
+            return sService.setDefaultServiceForCategory(UserHandle.myUserId(),
+                    service, category);
         } catch (RemoteException e) {
             // Try one more time
             recoverService();
@@ -546,8 +585,8 @@ public final class CardEmulation {
                 return false;
             }
             try {
-                return sService.setDefaultServiceForCategory(UserHandle.myUserId(), service,
-                        category);
+                return sService.setDefaultServiceForCategory(UserHandle.myUserId(),
+                        service, category);
             } catch (RemoteException ee) {
                 Log.e(TAG, "Failed to reach CardEmulationService.");
                 return false;
@@ -635,9 +674,403 @@ public final class CardEmulation {
         return true;
     }
 
+    /**
+     * Retrieves the current System Code for the specified service.
+     *
+     * <p>Before calling {@link #registerSystemCodeForService(ComponentName, String)},
+     * the System Code contained in the Manifest file is returned. After calling
+     * {@link #registerSystemCodeForService(ComponentName, String)}, the System Code
+     * registered there is returned. After calling
+     * {@link #removeSystemCodeForService(ComponentName)}, "null" is returned.
+     *
+     * @param service The component name of the service
+     * @return the current System Code
+     */
+    public String getSystemCodeForService(ComponentName service) {
+        if (!sIsHceFCapable) {
+            throw new UnsupportedOperationException();
+        }
+        if (service == null) {
+            throw new NullPointerException("service is null");
+        }
+        try {
+            return sService.getSystemCodeForService(UserHandle.myUserId(), service);
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return null;
+            }
+            try {
+                return sService.getSystemCodeForService(UserHandle.myUserId(), service);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return null;
+            }
+        }
+    }
+
+    /**
+     * Registers a System Code for the specified service.
+     *
+     * <p>The System Code must be in range from "4000" to "4FFF" (excluding "4*FF").
+     *
+     * <p>If a System Code was previously registered for this service
+     * (either statically through the manifest, or dynamically by using this API),
+     * it will be replaced with this one.
+     *
+     * <p>Before calling this method, the System Code contained in the Manifest file
+     * is registered for the service.
+     *
+     * <p>Even if the same System Code is already registered for another service,
+     * this method succeeds in registering the System Code.
+     *
+     * <p>Note that you can only register a System Code for a service that
+     * is running under the same UID as the caller of this API. Typically
+     * this means you need to call this from the same
+     * package as the service itself, though UIDs can also
+     * be shared between packages using shared UIDs.
+     *
+     * @param service The component name of the service
+     * @param systemCode The System Code to be registered
+     * @return whether the registration was successful.
+     */
+    public boolean registerSystemCodeForService(ComponentName service, String systemCode) {
+        if (!sIsHceFCapable) {
+            throw new UnsupportedOperationException();
+        }
+        if (service == null || systemCode == null) {
+            throw new NullPointerException("service or systemCode is null");
+        }
+        try {
+            return sService.registerSystemCodeForService(UserHandle.myUserId(),
+                    service, systemCode);
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return false;
+            }
+            try {
+                return sService.registerSystemCodeForService(UserHandle.myUserId(),
+                        service, systemCode);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Removes a registered System Code for the specified service.
+     *
+     * @param service The component name of the service
+     * @return whether the System Code was successfully removed.
+     */
+    public boolean removeSystemCodeForService(ComponentName service) {
+        if (!sIsHceFCapable) {
+            throw new UnsupportedOperationException();
+        }
+        if (service == null) {
+            throw new NullPointerException("service is null");
+        }
+        try {
+            return sService.removeSystemCodeForService(UserHandle.myUserId(), service);
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return false;
+            }
+            try {
+                return sService.removeSystemCodeForService(UserHandle.myUserId(), service);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Retrieves the current NFCUD2 for the specified service.
+     *
+     * <p>Before calling {@link #setNfcid2ForService(ComponentName, String)},
+     * the NFCID2 contained in the Manifest file is returned. If "random" is specified
+     * in the Manifest file, a random number assigned by the system at installation time
+     * is returned. After setting an NFCID2
+     * with {@link #setNfcid2ForService(ComponentName, String)}, this NFCID2 is returned.
+     *
+     * @param service The component name of the service
+     * @return the current NFCID2
+     */
+    public String getNfcid2ForService(ComponentName service) {
+        if (!sIsHceFCapable) {
+            throw new UnsupportedOperationException();
+        }
+        if (service == null) {
+            throw new NullPointerException("service is null");
+        }
+        try {
+            return sService.getNfcid2ForService(UserHandle.myUserId(), service);
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return null;
+            }
+            try {
+                return sService.getNfcid2ForService(UserHandle.myUserId(), service);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return null;
+            }
+        }
+    }
+
+    /**
+     * Set a NFCID2 for the specified service.
+     *
+     * <p>The NFCID2 must be in range from "02FE000000000000" to "02FEFFFFFFFFFFFF".
+     *
+     * <p>If a NFCID2 was previously set for this service
+     * (either statically through the manifest, or dynamically by using this API),
+     * it will be replaced.
+     *
+     * <p>Before calling this method, the NFCID2 contained in the Manifest file is set
+     * for the service.
+     *
+     * <p>Note that you can only set the NFCID2 for a service that
+     * is running under the same UID as the caller of this API. Typically
+     * this means you need to call this from the same
+     * package as the service itself, though UIDs can also
+     * be shared between packages using shared UIDs.
+     *
+     * @param service The component name of the service
+     * @param nfcid2 The NFCID2 to be registered
+     * @return whether the setting was successful.
+     */
+    public boolean setNfcid2ForService(ComponentName service, String nfcid2) {
+        if (!sIsHceFCapable) {
+            throw new UnsupportedOperationException();
+        }
+        if (service == null || nfcid2 == null) {
+            throw new NullPointerException("service or nfcid2 is null");
+        }
+        try {
+            return sService.setNfcid2ForService(UserHandle.myUserId(),
+                    service, nfcid2);
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return false;
+            }
+            try {
+                return sService.setNfcid2ForService(UserHandle.myUserId(),
+                        service, nfcid2);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Allows a foreground application to specify which card emulation service
+     * should be preferred while a specific Activity is in the foreground.
+     *
+     * <p>The specified HCE-F service is only enabled when the corresponding application is
+     * in the foreground and this method has been called. When the application is moved to
+     * the background or {@link #disableNfcFForegroundService(Activity)} is called,
+     * the HCE-F service is disabled.
+     *
+     * <p>The specified Activity must currently be in resumed state. A good
+     * paradigm is to call this method in your {@link Activity#onResume}, and to call
+     * {@link #disableNfcFForegroundService(Activity)} in your {@link Activity#onPause}.
+     *
+     * <p>Note that this preference is not persisted by the OS, and hence must be
+     * called every time the Activity is resumed.
+     *
+     * @param activity The activity which prefers this service to be invoked
+     * @param service The service to be preferred while this activity is in the foreground
+     * @return whether the registration was successful
+     */
+    public boolean enableNfcFForegroundService(Activity activity, ComponentName service) {
+        if (!sIsHceFCapable) {
+            throw new UnsupportedOperationException();
+        }
+        if (activity == null || service == null) {
+            throw new NullPointerException("activity or service is null");
+        }
+        // Verify the activity is in the foreground before calling into NfcService
+        if (!activity.isResumed()) {
+            throw new IllegalArgumentException("Activity must be resumed.");
+        }
+        try {
+            return sService.enableNfcFForegroundService(service);
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return false;
+            }
+            try {
+                return sService.enableNfcFForegroundService(service);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Unsets the preferred service for the specified Activity.
+     *
+     * <p>Note that the specified Activity must still be in resumed
+     * state at the time of this call. A good place to call this method
+     * is in your {@link Activity#onPause} implementation.
+     *
+     * @param activity The activity which the service was registered for
+     * @return true when successful
+     */
+    public boolean disableNfcFForegroundService(Activity activity) {
+        if (!sIsHceFCapable) {
+            throw new UnsupportedOperationException();
+        }
+        if (activity == null) {
+            throw new NullPointerException("activity is null");
+        }
+        if (!activity.isResumed()) {
+            throw new IllegalArgumentException("Activity must be resumed.");
+        }
+        try {
+            return sService.disableNfcFForegroundService();
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return false;
+            }
+            try {
+                return sService.disableNfcFForegroundService();
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return false;
+            }
+        }
+    }
+
+    /**
+     * @hide
+     */
+    public List<NfcFServiceInfo> getNfcFServices() {
+        try {
+            return sService.getNfcFServices(UserHandle.myUserId());
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return null;
+            }
+            try {
+                return sService.getNfcFServices(UserHandle.myUserId());
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return null;
+            }
+        }
+    }
+
+    /**
+     * @hide
+     */
+    public int getMaxNumOfRegisterableSystemCode() {
+        if (!sIsHceFCapable) {
+            throw new UnsupportedOperationException();
+        }
+        try {
+            return sService.getMaxNumOfRegisterableSystemCode();
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return -1;
+            }
+            try {
+                return sService.getMaxNumOfRegisterableSystemCode();
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return -1;
+            }
+        }
+    }
+
+    /**
+     * @hide
+     */
+    public static boolean isValidSystemCode(String systemCode) {
+        if (systemCode == null) {
+            return false;
+        }
+        int systemCodeLength = systemCode.length();
+        if (systemCodeLength != 4) {
+            Log.e(TAG, "System Code " + systemCode + " is not correctly formatted.");
+            return false;
+        }
+        // check if the value is between 0x4000 and 0x4FFF (except 0xXXFF)
+        int systemCodeValue;
+        try {
+            systemCodeValue = Integer.valueOf(systemCode, 16);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        if (systemCodeValue < 0x4000 || systemCodeValue > 0x4FFF) {
+            return false;
+        }
+        if ((systemCodeValue & 0x00FF) == 0xFF) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @hide
+     */
+    public static boolean isValidNfcid2(String nfcid2) {
+        if (nfcid2 == null) {
+            return false;
+        }
+        int nfcid2Length = nfcid2.length();
+        if (nfcid2Length != 16) {
+            Log.e(TAG, "NFCID2 " + nfcid2 + " is not correctly formatted.");
+            return false;
+        }
+        // check if the the value starts with 0x02FE
+        long nfcid2Value;
+        try {
+            nfcid2Value = Long.valueOf(nfcid2, 16);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        if ((nfcid2Value >> 48) != 0x02FE) {
+            return false;
+        }
+        return true;
+    }
+
     void recoverService() {
         NfcAdapter adapter = NfcAdapter.getDefaultAdapter(mContext);
         sService = adapter.getCardEmulationService();
     }
 
 }
+

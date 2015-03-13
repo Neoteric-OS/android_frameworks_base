@@ -19,6 +19,7 @@ package android.nfc;
 import android.content.ComponentName;
 import android.nfc.cardemulation.AidGroup;
 import android.nfc.cardemulation.ApduServiceInfo;
+import android.nfc.cardemulation.NfcFServiceInfo;
 import android.os.RemoteCallback;
 
 /**
@@ -37,4 +38,13 @@ interface INfcCardEmulation
     boolean setPreferredService(in ComponentName service);
     boolean unsetPreferredService();
     boolean supportsAidPrefixRegistration();
+    String getSystemCodeForService(int userHandle, in ComponentName service);
+    boolean registerSystemCodeForService(int userHandle, in ComponentName service, String systemCode);
+    boolean removeSystemCodeForService(int userHandle, in ComponentName service);
+    String getNfcid2ForService(int userHandle, in ComponentName service);
+    boolean setNfcid2ForService(int userHandle, in ComponentName service, String nfcid2);
+    boolean enableNfcFForegroundService(in ComponentName service);
+    boolean disableNfcFForegroundService();
+    List<NfcFServiceInfo> getNfcFServices(int userHandle);
+    int getMaxNumOfRegisterableSystemCode();
 }
