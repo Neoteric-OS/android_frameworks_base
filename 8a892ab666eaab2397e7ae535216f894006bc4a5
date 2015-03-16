@@ -22,6 +22,30 @@
       "revId": "8a892ab666eaab2397e7ae535216f894006bc4a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86336cf4_cca7ef84",
+        "filename": "core/java/android/widget/TimePickerSpinnerDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2015-03-16T01:32:26Z",
+      "side": 1,
+      "message": "See below, the @Override getCurrentMinute. It seems somebody made that public API at some point? That\u0027s why I kept it and left it small...",
+      "parentUuid": "41331ed7_93a9a696",
+      "range": {
+        "startLine": 289,
+        "startChar": 8,
+        "endLine": 289,
+        "endChar": 51
+      },
+      "revId": "8a892ab666eaab2397e7ae535216f894006bc4a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
