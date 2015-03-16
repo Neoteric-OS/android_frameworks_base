@@ -16,6 +16,24 @@
       "revId": "63662320aef7ef2f66d9f947fe048574aae7ea79",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "468414cc_42e15211",
+        "filename": "core/java/android/hardware/camera2/DngCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2015-03-16T03:22:55Z",
+      "side": 1,
+      "message": "Potentially it does, but who reads the millions of warnings... :-)",
+      "parentUuid": "66475868_03e14e12",
+      "revId": "63662320aef7ef2f66d9f947fe048574aae7ea79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
