@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66475868_03e14e12",
+        "filename": "core/java/android/hardware/camera2/DngCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2015-03-16T03:22:10Z",
+      "side": 1,
+      "message": "Seems like jack should be warning on these kind of bugs",
+      "revId": "63662320aef7ef2f66d9f947fe048574aae7ea79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
