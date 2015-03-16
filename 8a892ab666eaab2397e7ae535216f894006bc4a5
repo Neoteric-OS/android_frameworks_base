@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41331ed7_93a9a696",
+        "filename": "core/java/android/widget/TimePickerSpinnerDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2015-03-16T01:31:04Z",
+      "side": 1,
+      "message": "seriously what is even going on here",
+      "range": {
+        "startLine": 289,
+        "startChar": 8,
+        "endLine": 289,
+        "endChar": 51
+      },
+      "revId": "8a892ab666eaab2397e7ae535216f894006bc4a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
