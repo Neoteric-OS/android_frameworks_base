@@ -16,6 +16,24 @@
       "revId": "5ea9b833c6f8508babcf57a5a4e0f85c42757fc6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a671501d_854f22c3",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1023586
+      },
+      "writtenOn": "2015-03-18T17:18:46Z",
+      "side": 1,
+      "message": "Because createSystemContext is called after performPendingShutdown, and even mSystemContext is available, VibratorService has not been initialized yet.",
+      "parentUuid": "86b52cfa_9c3e456d",
+      "revId": "5ea9b833c6f8508babcf57a5a4e0f85c42757fc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
