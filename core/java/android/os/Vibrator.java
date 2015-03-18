@@ -37,7 +37,9 @@ public abstract class Vibrator {
      * @hide to prevent subclassing from outside of the framework
      */
     public Vibrator() {
-        mPackageName = ActivityThread.currentPackageName();
+        Context context = ActivityThread.currentApplication();
+        mPackageName = context != null ? context.getOpPackageName()
+                : ActivityThread.currentPackageName();
     }
 
     /**
