@@ -1,4 +1,4 @@
-/*
+PACKA/*
  * Copyright (C) 2011 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -39,6 +39,7 @@ import android.os.FileUtils;
 import android.os.Handler;
 import android.os.IUserManager;
 import android.os.Process;
+import static android.os.Process.SYSTEM_UID;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
@@ -112,6 +113,7 @@ public class UserManagerService extends IUserManager.Stub {
 
     private static final String USER_INFO_DIR = "system" + File.separator + "users";
     private static final String USER_LIST_FILENAME = "userlist.xml";
+    private static final String USER_MANAGED_PROFILE_FILENAME = "managed_profiles.list";
     private static final String USER_PHOTO_FILENAME = "photo.png";
 
     private static final String RESTRICTIONS_FILE_PREFIX = "res_";
@@ -142,6 +144,7 @@ public class UserManagerService extends IUserManager.Stub {
 
     private final Handler mHandler;
 
+    private final File mManagedProfileListFile;
     private final File mUsersDir;
     private final File mUserListFile;
     private final File mBaseUserPath;
@@ -224,6 +227,7 @@ public class UserManagerService extends IUserManager.Stub {
                         |FileUtils.S_IROTH|FileUtils.S_IXOTH,
                         -1, -1);
                 mUserListFile = new File(mUsersDir, USER_LIST_FILENAME);
+                mManagedProfileListFile = new File(mUsersDir, USER_MANAGED_PROFILE_FILENAME);
                 initDefaultGuestRestrictions();
                 readUserListLocked();
                 // Prune out any partially created/partially removed users.
@@ -822,6 +826,41 @@ public class UserManagerService extends IUserManager.Stub {
     }
 
     /*
+     * Writes each user and associated profile owner.
+     *
+     * Modeled after packages.list.
+     */
+    private void writeManagedProfilesLocked() {
+        FileOutputStream fos = null;
+        AtomicFile managedProfilesListFile = new AtomicFile(mManagedProfileListFile);
+
+        try {
+            fos = managedProfilesListFile.startWrite();
+            final BufferedOutputStream bos = new BufferedOutputStream(fos);
+            StringBuilder sb = new StringBuilder();
+            Slog.e(LOG_TAG, "dacashman - entering user loop!");
+            for (int user : mUserIds) {
+                UserInfo ui = getUserInfoLocked(user);
+                if (ui.isManagedProfile()) {
+                    sb.setLength(0);
+                    sb.append(Integer.toString(user));
+                    sb.append(" ");
+                    sb.append(Integer.toString(ui.profileGroupId));
+                    sb.append("\n");
+                    bos.write(sb.toString().getBytes());
+                }
+            }
+            bos.flush();
+            bos.close();
+            managedProfilesListFile.finishWrite(fos);
+            FileUtils.setPermissions(mManagedProfileListFile, 0644, SYSTEM_UID, SYSTEM_UID);
+        } catch (Exception e) {
+            managedProfilesListFile.failWrite(fos);
+            Slog.e(LOG_TAG, "Error writing managed proflies list");
+        }
+    }
+
+    /*
      * Writes the user list file in this format:
      *
      * <users nextSerialNumber="3">
@@ -864,6 +903,7 @@ public class UserManagerService extends IUserManager.Stub {
             userListFile.failWrite(fos);
             Slog.e(LOG_TAG, "Error writing user list");
         }
+        writeManagedProfilesLocked();
     }
 
     private void writeRestrictionsLocked(XmlSerializer serializer, Bundle restrictions) 
