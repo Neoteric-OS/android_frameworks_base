@@ -42,7 +42,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -229,7 +228,7 @@ public class WallpaperManager {
         
         private static final int MSG_CLEAR_WALLPAPER = 1;
         
-        Globals(Looper looper) {
+        Globals() {
             IBinder b = ServiceManager.getService(Context.WALLPAPER_SERVICE);
             mService = IWallpaperManager.Stub.asInterface(b);
         }
@@ -332,17 +331,17 @@ public class WallpaperManager {
     private static final Object sSync = new Object[0];
     private static Globals sGlobals;
 
-    static void initGlobals(Looper looper) {
+    static void initGlobals() {
         synchronized (sSync) {
             if (sGlobals == null) {
-                sGlobals = new Globals(looper);
+                sGlobals = new Globals();
             }
         }
     }
     
     /*package*/ WallpaperManager(Context context, Handler handler) {
         mContext = context;
-        initGlobals(context.getMainLooper());
+        initGlobals();
     }
 
     /**
