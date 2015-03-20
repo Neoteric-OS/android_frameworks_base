@@ -96,7 +96,7 @@ public class BinderInternal {
     
     public static void forceGc(String reason) {
         EventLog.writeEvent(2741, reason);
-        Runtime.getRuntime().gc();
+        Daemons.requestGC();
     }
     
     static void forceBinderGc() {
