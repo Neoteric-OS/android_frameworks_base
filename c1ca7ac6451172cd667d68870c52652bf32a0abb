@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "068cdc85_46cfabd9",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1059418
+      },
+      "writtenOn": "2015-03-20T17:03:36Z",
+      "side": 1,
+      "message": "You can use OutputStreamWriter(fos) instead of bos+sb. It is already buffered and you don\u0027t need to sb.toString() for each user entry.",
+      "range": {
+        "startLine": 839,
+        "startChar": 0,
+        "endLine": 840,
+        "endChar": 51
+      },
+      "revId": "c1ca7ac6451172cd667d68870c52652bf32a0abb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
