@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86160cff_08e2b7c8",
+        "filename": "core/java/android/widget/ImageView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2015-03-21T20:01:10Z",
+      "side": 1,
+      "message": "remove trailing space",
+      "range": {
+        "startLine": 458,
+        "startChar": 32,
+        "endLine": 458,
+        "endChar": 33
+      },
+      "revId": "23ef1f23212205b56521e39d8730eff897fc3413",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6a1e40d_bdf2cbb2",
+        "filename": "core/java/android/widget/ImageView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2015-03-21T20:01:10Z",
+      "side": 1,
+      "message": "just use Drawable, doesn\u0027t need to be fully-specified since Drawable is already imported in this class",
+      "range": {
+        "startLine": 459,
+        "startChar": 14,
+        "endLine": 459,
+        "endChar": 48
+      },
+      "revId": "23ef1f23212205b56521e39d8730eff897fc3413",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
