@@ -182,9 +182,43 @@ public class ZygoteInit {
 
     static void preload() {
         Log.d(TAG, "begin preload");
+
         preloadClasses();
         preloadResources();
         preloadOpenGL();
+
+        /*
+        Thread preloadClassesThread = new Thread(new Runnable() {
+            public void run() {
+                preloadClasses();
+                preloadOpenGL();
+            }
+        });
+        preloadClassesThread.start();
+
+        Thread preloadResourcesThread = new Thread(new Runnable() {
+            public void run() {
+                preloadResources();
+            }
+        });
+        preloadResourcesThread.start();
+
+        Thread preloadOpenGLThread = new Thread(new Runnable() {
+            public void run() {
+                preloadOpenGL();
+            }
+        });
+        preloadOpenGLThread.start();
+
+        try {
+            preloadClassesThread.join();
+            preloadResourcesThread.join();
+            // preloadOpenGLThread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        */
+
         preloadSharedLibraries();
         // Ask the WebViewFactory to do any initialization that must run in the zygote process,
         // for memory sharing purposes.
@@ -203,6 +237,41 @@ public class ZygoteInit {
         if (!SystemProperties.getBoolean(PROPERTY_DISABLE_OPENGL_PRELOADING, false)) {
             EGL14.eglGetDisplay(EGL14.EGL_DEFAULT_DISPLAY);
         }
+    }
+
+    private static class InitializationRunner implements Runnable {
+
+        private java.util.Queue<String> input;
+        private Throwable failed;
+
+        public InitializationRunner(java.util.Queue<String> input) {
+            this.input = input;
+        }
+
+        public Throwable getFailed() {
+            return failed;
+        }
+
+        public void run() {
+            String s;
+            while ((s = input.poll()) != null) {
+                try {
+                    if (false) {
+                        Log.v(TAG, "Preloading " + s + "...");
+                    }
+                    Class.forName(s);
+                } catch (ClassNotFoundException e) {
+                    Log.w(TAG, "Class not found for preloading: " + s);
+                } catch (UnsatisfiedLinkError e) {
+                    Log.w(TAG, "Problem preloading " + s + ": " + e);
+                } catch (Throwable t) {
+                    Log.e(TAG, "Error preloading " + s + ".", t);
+                    failed = t;
+                    break;
+                }
+            }
+        }
+
     }
 
     /**
@@ -225,6 +294,30 @@ public class ZygoteInit {
 
         Log.i(TAG, "Preloading classes...");
         long startTime = SystemClock.uptimeMillis();
+
+        java.util.concurrent.ConcurrentLinkedQueue<String> classNames =
+                new java.util.concurrent.ConcurrentLinkedQueue<String>();
+        try {
+            BufferedReader br
+                = new BufferedReader(new InputStreamReader(is), 256);
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Skip comments and blank lines.
+                line = line.trim();
+                if (line.startsWith("#") || line.equals("")) {
+                    continue;
+                }
+                classNames.add(line);
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "Error reading " + PRELOADED_CLASSES + ".", e);
+        } finally {
+            IoUtils.closeQuietly(is);
+        }
+
+        Log.i(TAG, "Preloading classes - done reading input...");
+        int count = classNames.size();
 
         // Drop root perms while running static initializers.
         final int reuid = Os.getuid();
@@ -250,61 +343,46 @@ public class ZygoteInit {
         float defaultUtilization = runtime.getTargetHeapUtilization();
         runtime.setTargetHeapUtilization(0.8f);
 
+        InitializationRunner runner1 = new InitializationRunner(classNames);
+        // InitializationRunner runner2 = new InitializationRunner(classNames);
+
+        // Thread runner1Thread = new Thread(runner1);
+        // runner1Thread.start();
+        runner1.run();
+
+        /*
         try {
-            BufferedReader br
-                = new BufferedReader(new InputStreamReader(is), 256);
+            runner1Thread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        */
 
-            int count = 0;
-            String line;
-            while ((line = br.readLine()) != null) {
-                // Skip comments and blank lines.
-                line = line.trim();
-                if (line.startsWith("#") || line.equals("")) {
-                    continue;
-                }
+        if (runner1.getFailed() != null) {
+            throw new RuntimeException(runner1.getFailed());
+        }
+        /*
+        if (runner2.getFailed() != null) {
+            throw new RuntimeException(runner2.getFailed());
+        }
+        */
+        
+        Log.i(TAG, "...preloaded " + count + " classes in "
+                + (SystemClock.uptimeMillis()-startTime) + "ms.");
 
-                try {
-                    if (false) {
-                        Log.v(TAG, "Preloading " + line + "...");
-                    }
-                    Class.forName(line);
-                    count++;
-                } catch (ClassNotFoundException e) {
-                    Log.w(TAG, "Class not found for preloading: " + line);
-                } catch (UnsatisfiedLinkError e) {
-                    Log.w(TAG, "Problem preloading " + line + ": " + e);
-                } catch (Throwable t) {
-                    Log.e(TAG, "Error preloading " + line + ".", t);
-                    if (t instanceof Error) {
-                        throw (Error) t;
-                    }
-                    if (t instanceof RuntimeException) {
-                        throw (RuntimeException) t;
-                    }
-                    throw new RuntimeException(t);
-                }
-            }
+        // Restore default.
+        runtime.setTargetHeapUtilization(defaultUtilization);
 
-            Log.i(TAG, "...preloaded " + count + " classes in "
-                    + (SystemClock.uptimeMillis()-startTime) + "ms.");
-        } catch (IOException e) {
-            Log.e(TAG, "Error reading " + PRELOADED_CLASSES + ".", e);
-        } finally {
-            IoUtils.closeQuietly(is);
-            // Restore default.
-            runtime.setTargetHeapUtilization(defaultUtilization);
+        // Fill in dex caches with classes, fields, and methods brought in by preloading.
+        runtime.preloadDexCaches();
 
-            // Fill in dex caches with classes, fields, and methods brought in by preloading.
-            runtime.preloadDexCaches();
-
-            // Bring back root. We'll need it later if we're in the zygote.
-            if (droppedPriviliges) {
-                try {
-                    Os.setreuid(ROOT_UID, ROOT_UID);
-                    Os.setregid(ROOT_GID, ROOT_GID);
-                } catch (ErrnoException ex) {
-                    throw new RuntimeException("Failed to restore root", ex);
-                }
+        // Bring back root. We'll need it later if we're in the zygote.
+        if (droppedPriviliges) {
+            try {
+                Os.setreuid(ROOT_UID, ROOT_UID);
+                Os.setregid(ROOT_GID, ROOT_GID);
+            } catch (ErrnoException ex) {
+                throw new RuntimeException("Failed to restore root", ex);
             }
         }
     }
@@ -328,7 +406,7 @@ public class ZygoteInit {
                 long startTime = SystemClock.uptimeMillis();
                 TypedArray ar = mResources.obtainTypedArray(
                         com.android.internal.R.array.preloaded_drawables);
-                int N = preloadDrawables(runtime, ar);
+                int N = preloadDrawables(ar);
                 ar.recycle();
                 Log.i(TAG, "...preloaded " + N + " resources in "
                         + (SystemClock.uptimeMillis()-startTime) + "ms.");
@@ -367,23 +445,69 @@ public class ZygoteInit {
     }
 
 
-    private static int preloadDrawables(VMRuntime runtime, TypedArray ar) {
-        int N = ar.length();
-        for (int i=0; i<N; i++) {
-            int id = ar.getResourceId(i, 0);
-            if (false) {
-                Log.v(TAG, "Preloading resource #" + Integer.toHexString(id));
-            }
-            if (id != 0) {
-                if (mResources.getDrawable(id, null) == null) {
-                    throw new IllegalArgumentException(
-                            "Unable to find preloaded drawable resource #0x"
-                            + Integer.toHexString(id)
-                            + " (" + ar.getString(i) + ")");
+    private static class PreloadDrawablesRunner implements Runnable {
+
+        private Resources resources;
+        private final TypedArray array;
+        private final int runnerId;
+        private final int runnerCount;
+        private Throwable failed;
+
+        public PreloadDrawablesRunner(Resources resources, TypedArray array, int runnerId,
+                int runnerCount) {
+            this.resources = resources;
+            this.array = array;
+            this.runnerId = runnerId;
+            this.runnerCount = runnerCount;
+        }
+
+        public Throwable getFailed() {
+            return failed;
+        }
+
+        public void run() {
+            final int N = array.length();
+            for (int i = runnerId; i < N; i += runnerCount) {
+                int id = array.getResourceId(i, 0);
+                if (false) {
+                    Log.v(TAG, "Preloading resource #" + Integer.toHexString(id));
+                }
+                if (id != 0) {
+                    if (resources.getDrawable(id, null) == null) {
+                        failed = new IllegalArgumentException(
+                                "Unable to find preloaded drawable resource #0x"
+                                + Integer.toHexString(id)
+                                + " (" + array.getString(i) + ")");
+                    }
                 }
             }
         }
-        return N;
+    }
+
+    private static int preloadDrawables(TypedArray ar) {
+        PreloadDrawablesRunner runner1 = new PreloadDrawablesRunner(mResources, ar, 0, 1);
+        // PreloadDrawablesRunner runner2 = new PreloadDrawablesRunner(mResources, ar, 1, 2);
+
+        // Thread runner1Thread = new Thread(runner1);
+        // runner1Thread.start();
+        runner1.run();
+
+        /*
+        try {
+            runner1Thread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        */
+
+        if (runner1.getFailed() != null) {
+            throw new RuntimeException(runner1.getFailed());
+        }
+        /*if (runner2.getFailed() != null) {
+            throw new RuntimeException(runner2.getFailed());
+        }*/
+        
+        return ar.length();
     }
 
     /**
