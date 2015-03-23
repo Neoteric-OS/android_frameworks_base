@@ -140,10 +140,9 @@ public class DimLayer {
     }
 
     /**
-     * @param layer The new layer value.
      * @param inTransaction Whether the call is made within a surface transaction.
      */
-    void adjustSurface(int layer, boolean inTransaction) {
+    void adjustBounds(boolean inTransaction) {
         final int dw, dh;
         final float xPos, yPos;
         if (!mStack.isFullscreen()) {
@@ -169,23 +168,21 @@ public class DimLayer {
             }
             mDimSurface.setPosition(xPos, yPos);
             mDimSurface.setSize(dw, dh);
-            mDimSurface.setLayer(layer);
         } catch (RuntimeException e) {
-            Slog.w(TAG, "Failure setting size or layer", e);
+            Slog.w(TAG, "Failure setting size", e);
         } finally {
             if (!inTransaction) {
                 SurfaceControl.closeTransaction();
             }
         }
         mLastBounds.set(mBounds);
-        mLayer = layer;
     }
 
     // Assumes that surface transactions are currently closed.
     void setBounds(Rect bounds) {
         mBounds.set(bounds);
         if (isDimming() && !mLastBounds.equals(bounds)) {
-            adjustSurface(mLayer, false);
+            adjustBounds(false);
         }
     }
 
@@ -224,9 +221,10 @@ public class DimLayer {
             return;
         }
 
-        if (!mLastBounds.equals(mBounds) || mLayer != layer) {
-            adjustSurface(layer, true);
+        if (!mLastBounds.equals(mBounds)) {
+            adjustBounds(true);
         }
+        setLayer(layer);
 
         long curTime = SystemClock.uptimeMillis();
         final boolean animating = isAnimating();
