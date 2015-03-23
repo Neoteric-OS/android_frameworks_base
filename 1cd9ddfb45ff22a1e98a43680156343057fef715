@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6a1e40d_a4cf4bd8",
+        "filename": "services/core/java/com/android/server/wm/DimLayer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-03-23T19:46:44Z",
+      "side": 1,
+      "message": "Also affects position which only changes if the bounds change. Can we also encapsulate call to setPosition and the position calculation above with the needResize check?",
+      "range": {
+        "startLine": 172,
+        "startChar": 16,
+        "endLine": 172,
+        "endChar": 26
+      },
+      "revId": "1cd9ddfb45ff22a1e98a43680156343057fef715",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
