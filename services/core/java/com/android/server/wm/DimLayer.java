@@ -142,8 +142,9 @@ public class DimLayer {
     /**
      * @param layer The new layer value.
      * @param inTransaction Whether the call is made within a surface transaction.
+     * @param needResize Whether the size of the surface needs to be changed.
      */
-    void adjustSurface(int layer, boolean inTransaction) {
+    void adjustSurface(int layer, boolean inTransaction, boolean needResize) {
         final int dw, dh;
         final float xPos, yPos;
         if (!mStack.isFullscreen()) {
@@ -168,7 +169,9 @@ public class DimLayer {
                 SurfaceControl.openTransaction();
             }
             mDimSurface.setPosition(xPos, yPos);
-            mDimSurface.setSize(dw, dh);
+            if (needResize) {
+                mDimSurface.setSize(dw, dh);
+            }
             mDimSurface.setLayer(layer);
         } catch (RuntimeException e) {
             Slog.w(TAG, "Failure setting size or layer", e);
@@ -185,7 +188,7 @@ public class DimLayer {
     void setBounds(Rect bounds) {
         mBounds.set(bounds);
         if (isDimming() && !mLastBounds.equals(bounds)) {
-            adjustSurface(mLayer, false);
+            adjustSurface(mLayer, false, true);
         }
     }
 
@@ -224,8 +227,9 @@ public class DimLayer {
             return;
         }
 
-        if (!mLastBounds.equals(mBounds) || mLayer != layer) {
-            adjustSurface(layer, true);
+        final boolean resized = !mLastBounds.equals(mBounds);
+        if (resized || mLayer != layer) {
+            adjustSurface(layer, true, resized);
         }
 
         long curTime = SystemClock.uptimeMillis();
