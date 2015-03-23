@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a69cf0d8_3588a274",
+        "filename": "services/core/java/com/android/server/wm/DimLayer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2015-03-23T21:56:59Z",
+      "side": 1,
+      "message": "Because of what Olawale says below this should be called \"boundsChanged\". In addition, if boundsChanged is false we don\u0027t need dw, dh, xPos, yPos calculations. This could also be split into two methods, adjustLayer() and adjustBounds().",
+      "range": {
+        "startLine": 147,
+        "startChar": 65,
+        "endLine": 147,
+        "endChar": 75
+      },
+      "revId": "1cd9ddfb45ff22a1e98a43680156343057fef715",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6a1e40d_a4cf4bd8",
         "filename": "services/core/java/com/android/server/wm/DimLayer.java",
         "patchSetId": 2
