@@ -1352,7 +1352,7 @@ public class RenderScript {
     }
 
     /**
-     * calls create(cts, ContextType.NORMAL, CREATE_FLAG_NONE)
+     * calls create(ctx, ContextType.NORMAL, CREATE_FLAG_NONE)
      *
      * See documentation for @create for details
      *
@@ -1364,7 +1364,7 @@ public class RenderScript {
     }
 
     /**
-     * calls create(cts, ct, CREATE_FLAG_NONE)
+     * calls create(ctx, ct, CREATE_FLAG_NONE)
      *
      * See documentation for @create for details
      *
@@ -1374,6 +1374,36 @@ public class RenderScript {
      */
     public static RenderScript create(Context ctx, ContextType ct) {
         return create(ctx, ct, CREATE_FLAG_NONE);
+    }
+
+
+    /**
+     * calls create(ctx, ctx.getApplicationInfo().targetSdkVersion, ct, CREATE_FLAG_NONE)
+     *
+     * See documentation for @create for details
+     *
+     * @param ctx The context.
+     * @param ct The type of context to be created.
+     * @param flags The OR of the CREATE_FLAG_* options desired
+     * @return RenderScript
+     */
+    public static RenderScript create(Context ctx, ContextType ct, int flags) {
+        int v = ctx.getApplicationInfo().targetSdkVersion;
+        return create(ctx, v, ct, flags);
+    }
+
+    /**
+     * calls create(ctx, sdkVersion, ContextType.NORMAL, CREATE_FLAG_NONE)
+     *
+     * Used by the RenderScriptThunker to maintain backward compatibility.
+     *
+     * @hide
+     * @param ctx The context.
+     * @param sdkVersion The target SDK Version.
+     * @return RenderScript
+     */
+    public static RenderScript create(Context ctx, int sdkVersion) {
+        return create(ctx, sdkVersion, ContextType.NORMAL, CREATE_FLAG_NONE);
     }
 
      /**
@@ -1391,28 +1421,29 @@ public class RenderScript {
      *
      * Prior to API 23 this always created a new context.
      *
+     * @hide
      * @param ctx The context.
      * @param ct The type of context to be created.
+     * @param sdkVersion The target SDK Version.
      * @param flags The OR of the CREATE_FLAG_* options desired
      * @return RenderScript
      */
-    public static RenderScript create(Context ctx, ContextType ct, int flags) {
-        int v = ctx.getApplicationInfo().targetSdkVersion;
-        if (v < 23) {
-            return internalCreate(ctx, v, ct, flags);
+    public static RenderScript create(Context ctx, int sdkVersion, ContextType ct, int flags) {
+        if (sdkVersion < 23) {
+            return internalCreate(ctx, sdkVersion, ct, flags);
         }
 
         synchronized (mProcessContextList) {
             for (RenderScript prs : mProcessContextList) {
                 if ((prs.mContextType == ct) &&
                     (prs.mContextFlags == flags) &&
-                    (prs.mContextSdkVersion == v)) {
+                    (prs.mContextSdkVersion == sdkVersion)) {
 
                     return prs;
                 }
             }
 
-            RenderScript prs = internalCreate(ctx, v, ct, flags);
+            RenderScript prs = internalCreate(ctx, sdkVersion, ct, flags);
             prs.mIsProcessContext = true;
             mProcessContextList.add(prs);
             return prs;
