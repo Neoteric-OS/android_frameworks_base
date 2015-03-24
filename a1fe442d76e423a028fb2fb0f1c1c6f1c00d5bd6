@@ -22,6 +22,30 @@
       "revId": "a1fe442d76e423a028fb2fb0f1c1c6f1c00d5bd6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3f6a249_acd4ab3e",
+        "filename": "core/java/android/app/ApplicationThreadNative.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1057373
+      },
+      "writtenOn": "2015-03-24T20:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6215087_05b1f273",
+      "range": {
+        "startLine": 527,
+        "startChar": 91,
+        "endLine": 527,
+        "endChar": 106
+      },
+      "revId": "a1fe442d76e423a028fb2fb0f1c1c6f1c00d5bd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
