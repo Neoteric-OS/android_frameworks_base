@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "267f204e_e7f15617",
+        "filename": "services/core/java/com/android/server/wm/DimLayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-03-24T02:55:26Z",
+      "side": 1,
+      "message": "lets make this private",
+      "range": {
+        "startLine": 145,
+        "startChar": 4,
+        "endLine": 145,
+        "endChar": 5
+      },
+      "revId": "c9eb4730dab95b24dccf47033a5c914e1a472866",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06869c96_c0a8be04",
+        "filename": "services/core/java/com/android/server/wm/DimLayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-03-24T02:55:26Z",
+      "side": 1,
+      "message": "I think it will make things cleaner if we moved the SurfaceControl transaction try-catch-finally block here and move passing the argument in setBounds().",
+      "range": {
+        "startLine": 185,
+        "startChar": 12,
+        "endLine": 185,
+        "endChar": 32
+      },
+      "revId": "c9eb4730dab95b24dccf47033a5c914e1a472866",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
