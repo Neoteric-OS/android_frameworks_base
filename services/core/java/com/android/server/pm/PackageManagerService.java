@@ -1530,6 +1530,18 @@ public class PackageManagerService extends IPackageManager.Stub {
                 }
             }
 
+            /**
+             * Look for any incomplete package installations before scanning system partition.
+             * If the system app is disabled but its updated app isn't installed completely,
+             * remove the incomplateted updated app first before scanning system partition so
+             * the system app can be scanned, not skipped.
+             */
+            ArrayList<PackageSetting> incompletePkgsList = mSettings.getListOfIncompleteInstallPackagesLPr();
+            for(int i = 0; i < incompletePkgsList.size(); i++) {
+                //clean up here
+                cleanupInstallFailedPackage(incompletePkgsList.get(i));
+            }
+
             // Collect vendor overlay packages.
             // (Do this before scanning any apps.)
             // For security and version matching reason, only consider
@@ -4371,6 +4383,11 @@ public class PackageManagerService extends IPackageManager.Stub {
                     }
                     updatedPkgBetter = true;
                 }
+            } else if (ps == null && (scanFlags&SCAN_BOOTING) != 0) {
+                // Enable sysetm app since its updated package cannot be found.
+                logCriticalInfo(Log.WARN, "Package " + pkg.packageName +
+                        " was disabled but cannot find its updated one.");
+                mSettings.removeDisabledSystemPackageLPw(pkg.packageName);
             }
         }
 
