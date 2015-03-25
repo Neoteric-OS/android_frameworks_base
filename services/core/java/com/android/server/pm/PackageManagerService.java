@@ -1530,6 +1530,18 @@ public class PackageManagerService extends IPackageManager.Stub {
                 }
             }
 
+            /**
+             * Look for any incomplete package installations before scanning system partition.
+             * If the system app is disabled but its updated app isn't installed completely,
+             * remove the incomplateted updated app first before scanning system partition so
+             * the system app can be scanned, not skipped.
+             */
+            ArrayList<PackageSetting> deleteIncompletePkgsList = mSettings.getListOfIncompleteInstallPackagesLPr();
+            for(int i = 0; i < deleteIncompletePkgsList.size(); i++) {
+                //clean up here
+                cleanupInstallFailedPackage(deleteIncompletePkgsList.get(i));
+            }
+
             // Collect vendor overlay packages.
             // (Do this before scanning any apps.)
             // For security and version matching reason, only consider
