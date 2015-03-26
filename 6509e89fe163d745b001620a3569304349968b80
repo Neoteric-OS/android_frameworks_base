@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63758ab8_bc616581",
+        "filename": "keystore/java/android/security/AndroidKeyStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-03-26T22:16:34Z",
+      "side": 1,
+      "message": "Should we do anything in this else? There is no way the key will be usable without purposes so maybe we should just error?",
+      "range": {
+        "startLine": 526,
+        "startChar": 0,
+        "endLine": 526,
+        "endChar": 67
+      },
+      "revId": "6509e89fe163d745b001620a3569304349968b80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63758ab8_3c56b5b3",
+        "filename": "keystore/java/android/security/AndroidKeyStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-03-26T22:16:34Z",
+      "side": 1,
+      "message": "These methods will only ever return Keystore.NO_ERROR on success.",
+      "range": {
+        "startLine": 541,
+        "startChar": 11,
+        "endLine": 541,
+        "endChar": 51
+      },
+      "revId": "6509e89fe163d745b001620a3569304349968b80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
