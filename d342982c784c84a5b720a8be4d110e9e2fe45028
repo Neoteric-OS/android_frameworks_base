@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63758ab8_0bd4c3e4",
+        "filename": "keystore/java/android/security/KeyGeneratorSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-03-27T22:26:32Z",
+      "side": 1,
+      "message": "I don\u0027t think its valid for decryption or verification either?",
+      "range": {
+        "startLine": 140,
+        "startChar": 70,
+        "endLine": 140,
+        "endChar": 92
+      },
+      "revId": "d342982c784c84a5b720a8be4d110e9e2fe45028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43d246e8_12775306",
+        "filename": "keystore/java/android/security/KeyGeneratorSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-03-27T22:26:32Z",
+      "side": 1,
+      "message": "Can we do unrestricted? \"unset\"?",
+      "range": {
+        "startLine": 160,
+        "startChar": 53,
+        "endLine": 160,
+        "endChar": 85
+      },
+      "revId": "d342982c784c84a5b720a8be4d110e9e2fe45028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63758ab8_4ba71b87",
+        "filename": "keystore/java/android/security/KeyGeneratorSpec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-03-27T22:26:32Z",
+      "side": 1,
+      "message": "as above",
+      "range": {
+        "startLine": 169,
+        "startChar": 45,
+        "endLine": 169,
+        "endChar": 73
+      },
+      "revId": "d342982c784c84a5b720a8be4d110e9e2fe45028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43d246e8_a5f4ffd3",
+        "filename": "keystore/java/android/security/KeyStoreKeyGeneratorSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-03-27T22:26:32Z",
+      "side": 1,
+      "message": "I think we always have to specify a padding, even if PADDING_NONE",
+      "range": {
+        "startLine": 95,
+        "startChar": 12,
+        "endLine": 95,
+        "endChar": 38
+      },
+      "revId": "d342982c784c84a5b720a8be4d110e9e2fe45028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
