@@ -22,28 +22,34 @@ import android.os.Parcelable;
 /**
  * @hide
  */
-class KeymasterBlobArgument extends KeymasterArgument {
-    public final byte[] blob;
+public class KeymasterBlob implements Parcelable {
+    public byte[] blob;
 
-    public KeymasterBlobArgument(int tag, byte[] blob) {
-        super(tag);
-        switch (KeymasterDefs.getTagType(tag)) {
-            case KeymasterDefs.KM_BIGNUM:
-            case KeymasterDefs.KM_BYTES:
-                break; // OK.
-            default:
-                throw new IllegalArgumentException("Bad blob tag " + tag);
-        }
+    public KeymasterBlob(byte[] blob) {
         this.blob = blob;
     }
+    public static final Parcelable.Creator<KeymasterBlob> CREATOR = new
+            Parcelable.Creator<KeymasterBlob>() {
+                public KeymasterBlob createFromParcel(Parcel in) {
+                    return new KeymasterBlob(in);
+                }
 
-    public KeymasterBlobArgument(int tag, Parcel in) {
-        super(tag);
+                public KeymasterBlob[] newArray(int length) {
+                    return new KeymasterBlob[length];
+                }
+            };
+
+    protected KeymasterBlob(Parcel in) {
         blob = in.createByteArray();
     }
 
     @Override
-    public void writeValue(Parcel out) {
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
         out.writeByteArray(blob);
     }
 }
