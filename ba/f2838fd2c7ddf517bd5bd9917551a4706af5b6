@@ -1,0 +1,8 @@
+Verified+1: Deckard Autoverifier <deckard@android.com>
+Code-Review+1: Chad Brubaker <cbrubaker@google.com>
+Code-Review+2: Alex Klyubin <klyubin@google.com>
+Submitted-by: Alex Klyubin <klyubin@google.com>
+Submitted-at: Fri, 27 Mar 2015 19:21:12 +0000
+Reviewed-on: https://android-review.googlesource.com/144063
+Project: platform/frameworks/base
+Branch: refs/heads/master
