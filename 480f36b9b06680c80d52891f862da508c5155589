@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3a94260_1ad429c2",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-03-29T23:32:32Z",
+      "side": 1,
+      "message": "rename to requests",
+      "range": {
+        "startLine": 263,
+        "startChar": 12,
+        "endLine": 263,
+        "endChar": 19
+      },
+      "revId": "480f36b9b06680c80d52891f862da508c5155589",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3ae3665_2c01b707",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-03-29T23:32:32Z",
+      "side": 1,
+      "message": "use \u003c\u003e here.",
+      "range": {
+        "startLine": 270,
+        "startChar": 22,
+        "endLine": 270,
+        "endChar": 60
+      },
+      "revId": "480f36b9b06680c80d52891f862da508c5155589",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3b7bab3_ad35a957",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4684,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-03-29T23:32:32Z",
+      "side": 1,
+      "message": "Is this comment still needed now that you are checking for first?",
+      "range": {
+        "startLine": 4679,
+        "startChar": 0,
+        "endLine": 4684,
+        "endChar": 83
+      },
+      "revId": "480f36b9b06680c80d52891f862da508c5155589",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
