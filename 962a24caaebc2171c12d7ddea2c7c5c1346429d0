@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3b7bab3_5b5e2356",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2791,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-03-30T23:52:06Z",
+      "side": 1,
+      "message": "add space between operator.",
+      "range": {
+        "startLine": 2791,
+        "startChar": 28,
+        "endLine": 2791,
+        "endChar": 29
+      },
+      "revId": "962a24caaebc2171c12d7ddea2c7c5c1346429d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
