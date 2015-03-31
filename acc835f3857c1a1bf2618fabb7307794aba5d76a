@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63bd8ac9_16ac3a9d",
+        "filename": "keystore/java/android/security/KeyStoreKeyCharacteristics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-03-31T23:25:23Z",
+      "side": 1,
+      "message": "Let\u0027s split these into imported/not and TEE/not.\n\nI would like to be able to tell if, for example, a key I imported landed in the TEE, that gives some nice properties for all time after I import the key.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 92
+      },
+      "revId": "acc835f3857c1a1bf2618fabb7307794aba5d76a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
