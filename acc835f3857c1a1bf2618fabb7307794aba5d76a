@@ -22,6 +22,30 @@
       "revId": "acc835f3857c1a1bf2618fabb7307794aba5d76a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "439a4679_b89c4170",
+        "filename": "keystore/java/android/security/KeyStoreKeyCharacteristics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-03-31T23:32:38Z",
+      "side": 1,
+      "message": "We don\u0027t have that information available (yet?) in Keymaster. Let\u0027s do this in the future.",
+      "parentUuid": "63bd8ac9_16ac3a9d",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 92
+      },
+      "revId": "acc835f3857c1a1bf2618fabb7307794aba5d76a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
