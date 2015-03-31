@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83143e89_5008595d",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5033,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-03-31T19:30:42Z",
+      "side": 1,
+      "message": "Please update comment since we no longer acquire multiple connections to the same provider.",
+      "range": {
+        "startLine": 5030,
+        "startChar": 72,
+        "endLine": 5033,
+        "endChar": 45
+      },
+      "revId": "0443884469ffe2a54c330697c3f451d80daf6119",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a315c284_9d578e5f",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5129,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-03-31T19:30:42Z",
+      "side": 1,
+      "message": "and \" or local to the process\" here.",
+      "range": {
+        "startLine": 5129,
+        "startChar": 44,
+        "endLine": 5129,
+        "endChar": 45
+      },
+      "revId": "0443884469ffe2a54c330697c3f451d80daf6119",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
