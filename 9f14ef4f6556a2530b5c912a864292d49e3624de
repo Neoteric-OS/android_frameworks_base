@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03d68e0c_c395a8bd",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3903,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-01T01:21:05Z",
+      "side": 1,
+      "message": "this name is confusing. can we rename to \u0027focusStack\u0027?",
+      "range": {
+        "startLine": 3903,
+        "startChar": 16,
+        "endLine": 3903,
+        "endChar": 30
+      },
+      "revId": "9f14ef4f6556a2530b5c912a864292d49e3624de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3da2233_9d67834f",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3904,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-01T01:21:05Z",
+      "side": 1,
+      "message": "let\u0027s rename this to \u0027topTask\u0027.",
+      "range": {
+        "startLine": 3904,
+        "startChar": 16,
+        "endLine": 3904,
+        "endChar": 21
+      },
+      "revId": "9f14ef4f6556a2530b5c912a864292d49e3624de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03d68e0c_e392acd2",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3943,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-01T01:21:05Z",
+      "side": 1,
+      "message": "Add comment on this if block on why we are doing this.",
+      "range": {
+        "startLine": 3943,
+        "startChar": 12,
+        "endLine": 3943,
+        "endChar": 41
+      },
+      "revId": "9f14ef4f6556a2530b5c912a864292d49e3624de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3d89a3c_4ebffbf3",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3954,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-01T01:21:05Z",
+      "side": 1,
+      "message": "go ahead and remove this commented out block.",
+      "range": {
+        "startLine": 3953,
+        "startChar": 12,
+        "endLine": 3954,
+        "endChar": 68
+      },
+      "revId": "9f14ef4f6556a2530b5c912a864292d49e3624de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
