@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c38d5646_8ea2dbed",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5033,
+      "author": {
+        "id": 1023586
+      },
+      "writtenOn": "2015-04-01T07:05:44Z",
+      "side": 1,
+      "message": "This looks to describe:\nline #5131: incProviderRefLocked(prc, stable);\nSo the new code should still match the comment.",
+      "parentUuid": "83143e89_5008595d",
+      "range": {
+        "startLine": 5030,
+        "startChar": 72,
+        "endLine": 5033,
+        "endChar": 45
+      },
+      "revId": "0443884469ffe2a54c330697c3f451d80daf6119",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a315c284_9d578e5f",
         "filename": "core/java/android/app/ActivityThread.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2015-03-31T19:30:42Z",
       "side": 1,
       "message": "and \" or local to the process\" here.",
+      "range": {
+        "startLine": 5129,
+        "startChar": 44,
+        "endLine": 5129,
+        "endChar": 45
+      },
+      "revId": "0443884469ffe2a54c330697c3f451d80daf6119",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3a6dac2_d28ba2b2",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5129,
+      "author": {
+        "id": 1023586
+      },
+      "writtenOn": "2015-04-01T07:05:44Z",
+      "side": 1,
+      "message": "OK",
+      "parentUuid": "a315c284_9d578e5f",
       "range": {
         "startLine": 5129,
         "startChar": 44,
