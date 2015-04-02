@@ -2398,6 +2398,21 @@ public final class Settings {
         private static final Validator SCREEN_OFF_TIMEOUT_VALIDATOR = sNonNegativeIntegerValidator;
 
         /**
+         * Control whether to enable automatic timeout mode.
+         */
+        public static final String SCREEN_TIMEOUT_MODE = "screen_timeout_mode";
+
+        /**
+         * SCREEN_TIMEOUT_MODE value for manual mode.
+         */
+        public static final int SCREEN_TIMEOUT_MODE_MANUAL = 0;
+
+        /**
+         * SCREEN_TIMEOUT_MODE value for automatic mode.
+         */
+        public static final int SCREEN_TIMEOUT_MODE_AUTOMATIC = 1;
+
+        /**
          * The screen backlight brightness between 0 and 255.
          */
         public static final String SCREEN_BRIGHTNESS = "screen_brightness";

@@ -2504,6 +2504,7 @@ public abstract class Context {
             TV_INPUT_SERVICE,
             //@hide: NETWORK_SCORE_SERVICE,
             USAGE_STATS_SERVICE,
+            //@hide: TIMEOUT_SERVICE,
             MEDIA_SESSION_SERVICE,
             BATTERY_SERVICE,
             JOB_SCHEDULER_SERVICE,
@@ -2889,6 +2890,9 @@ public abstract class Context {
     public static final String NETWORK_STATS_SERVICE = "netstats";
     /** {@hide} */
     public static final String NETWORK_POLICY_SERVICE = "netpolicy";
+
+    /** {@hide} */
+    public static final String TIMEOUT_SERVICE = "timeout";
 
     /**
      * Use with {@link #getSystemService} to retrieve a {@link

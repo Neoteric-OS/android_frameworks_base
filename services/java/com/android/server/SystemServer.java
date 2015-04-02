@@ -148,6 +148,7 @@ public final class SystemServer {
 
     // TODO: remove all of these references by improving dependency resolution and boot phases
     private PowerManagerService mPowerManagerService;
+    private TimeoutManagerService mTimeoutManagerService;
     private ActivityManagerService mActivityManagerService;
     private DisplayManagerService mDisplayManagerService;
     private PackageManagerService mPackageManagerService;
@@ -339,6 +340,9 @@ public final class SystemServer {
                 ActivityManagerService.Lifecycle.class).getService();
         mActivityManagerService.setSystemServiceManager(mSystemServiceManager);
         mActivityManagerService.setInstaller(installer);
+
+        // Timeout manager is used by the power manager to control the display timeout
+        mTimeoutManagerService = mSystemServiceManager.startService(TimeoutManagerService.class);
 
         // Power manager needs to be started early because other services need it.
         // Native daemons may be watching for it to be registered so it must be ready
@@ -1127,6 +1131,12 @@ public final class SystemServer {
         }
 
         Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakePowerManagerServiceReady");
+        try {
+            mTimeoutManagerService.systemReady();
+        } catch (Throwable e) {
+            reportWtf("making Timeout Manager Service ready", e);
+        }
+
         try {
             // TODO: use boot phase
             mPowerManagerService.systemReady(mActivityManagerService.getAppOpsService());

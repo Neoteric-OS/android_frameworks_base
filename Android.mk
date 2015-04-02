@@ -204,6 +204,8 @@ LOCAL_SRC_FILES += \
 	core/java/android/nfc/INfcCardEmulation.aidl \
 	core/java/android/nfc/INfcFCardEmulation.aidl \
 	core/java/android/nfc/INfcUnlockHandler.aidl \
+	core/java/android/os/IAutoTimeoutManager.aidl \
+	core/java/android/os/IAutoTimeoutManagerCallbacks.aidl \
 	core/java/android/os/IBatteryPropertiesListener.aidl \
 	core/java/android/os/IBatteryPropertiesRegistrar.aidl \
 	core/java/android/os/ICancellationSignal.aidl \

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Default for phone -->
+
+    <!-- Timeout when device is flat -->
+    <integer name="config_flat_timeout">15000</integer> <!-- 15s -->
+    <!-- Timeout when device is angled -->
+    <integer name="config_angle_timeout">30000</integer> <!-- 30s -->
+
+    <!-- dim duration -->
+    <integer name="config_dim_duration">3000</integer> <!-- 3s -->
+
+</resources>

@@ -84,6 +84,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
+import android.os.TimeoutManagerInternal;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.storage.StorageManager;
@@ -274,6 +275,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
 
     final PowerManager mPowerManager;
     final PowerManagerInternal mPowerManagerInternal;
+    final TimeoutManagerInternal mTimeoutManagerInternal;
 
     IWindowManager mIWindowManager;
     NotificationManager mNotificationManager;
@@ -1049,6 +1051,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                 PackageManager.FEATURE_DEVICE_ADMIN);
         mPowerManager = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
         mPowerManagerInternal = LocalServices.getService(PowerManagerInternal.class);
+        mTimeoutManagerInternal = LocalServices.getService(TimeoutManagerInternal.class);
         mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "DPM");
         mLocalService = new LocalService();
         if (!mHasFeature) {
@@ -3032,7 +3035,8 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
             }
 
             policy.mLastMaximumTimeToLock = timeMs;
-            mPowerManagerInternal.setMaximumScreenOffTimeoutFromDeviceAdmin((int)timeMs);
+
+            mTimeoutManagerInternal.setMaximumScreenOffTimeoutFromDeviceAdmin((int) timeMs);
         } finally {
             Binder.restoreCallingIdentity(ident);
         }

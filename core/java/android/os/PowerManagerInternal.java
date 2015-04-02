@@ -106,28 +106,10 @@ public abstract class PowerManagerInternal {
     public abstract void setButtonBrightnessOverrideFromWindowManager(int brightness);
 
     /**
-     * Used by the window manager to override the user activity timeout based on the
-     * current foreground activity.  It can only be used to make the timeout shorter
-     * than usual, not longer.
-     *
-     * This method must only be called by the window manager.
-     *
-     * @param timeoutMillis The overridden timeout, or -1 to disable the override.
-     */
-    public abstract void setUserActivityTimeoutOverrideFromWindowManager(long timeoutMillis);
-
-    /**
      * Used by the window manager to tell the power manager that the user is no longer actively
      * using the device.
      */
     public abstract void setUserInactiveOverrideFromWindowManager();
-
-    /**
-     * Used by device administration to set the maximum screen off timeout.
-     *
-     * This method must only be called by the device administration policy manager.
-     */
-    public abstract void setMaximumScreenOffTimeoutFromDeviceAdmin(int timeMs);
 
     /**
      * Used by the dream manager to override certain properties while dozing.

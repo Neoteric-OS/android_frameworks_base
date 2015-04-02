@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.autotimeoutmanager" >
+
+    <application
+        android:label="@string/app_name" >
+
+        <service
+            android:name="com.android.autotimeoutmanager.AutoTimeoutManagerService"
+            android:enabled="true"
+            android:label="@string/app_name" >
+            <meta-data android:name="com.android.settings.title" android:resource="@string/screen_auto_sleep_title"/>
+            <meta-data android:name="com.android.settings.summary" android:resource="@string/screen_auto_sleep_summary"/>
+        </service>
+
+    </application>
+
+</manifest>

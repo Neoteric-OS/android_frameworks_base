@@ -63,6 +63,7 @@ import android.os.StrictMode;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.SystemService;
+import android.os.TimeoutManagerInternal;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.os.WorkSource;
@@ -636,6 +637,8 @@ public class WindowManagerService extends IWindowManager.Stub
     PowerManager mPowerManager;
     PowerManagerInternal mPowerManagerInternal;
 
+    final TimeoutManagerInternal mTimeoutManagerInternal;
+
     float mWindowAnimationScaleSetting = 1.0f;
     float mTransitionAnimationScaleSetting = 1.0f;
     float mAnimatorDurationScaleSetting = 1.0f;
@@ -939,6 +942,7 @@ public class WindowManagerService extends IWindowManager.Stub
                 }
             }
         });
+        mTimeoutManagerInternal = LocalServices.getService(TimeoutManagerInternal.class);
         mAnimationsDisabled = mPowerManagerInternal.getLowPowerModeEnabled();
         mScreenFrozenLock = mPowerManager.newWakeLock(
                 PowerManager.PARTIAL_WAKE_LOCK, "SCREEN_FROZEN");
@@ -10338,7 +10342,7 @@ public class WindowManagerService extends IWindowManager.Stub
                 mPowerManagerInternal.setButtonBrightnessOverrideFromWindowManager(
                         toBrightnessOverride(mInnerFields.mButtonBrightness));
             }
-            mPowerManagerInternal.setUserActivityTimeoutOverrideFromWindowManager(
+            mTimeoutManagerInternal.setUserActivityTimeoutOverrideFromWindowManager(
                     mInnerFields.mUserActivityTimeout);
         }
 

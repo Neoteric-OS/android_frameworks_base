@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AutoTimeoutManager</string>
+    <!-- Display settings. will be shown with other timeout values -->
+    <string name="screen_auto_sleep_title">Automatic</string>
+    <!-- Summary text shown when display timeout is controlled automatically -->
+    <string name="screen_auto_sleep_summary">Automatic</string>
+
+</resources>

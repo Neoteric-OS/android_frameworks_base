@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Default for tablets -->
+
+    <!-- Timeout when device is flat -->
+    <integer name="config_flat_timeout">30000</integer> <!-- 30s -->
+    <!-- Timeout when device is angled -->
+    <integer name="config_angle_timeout">60000</integer> <!-- 60s -->
+
+</resources>
