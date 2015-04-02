@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3bdfae6_f6f679a7",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3946,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-04-02T17:00:30Z",
+      "side": 1,
+      "message": "We should use System.currentTimeMillis() here.",
+      "range": {
+        "startLine": 3946,
+        "startChar": 36,
+        "endLine": 3946,
+        "endChar": 65
+      },
+      "revId": "60648e55f3d65a11c8c4a485178d4fc79c1d0c14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
