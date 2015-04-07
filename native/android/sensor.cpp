@@ -165,6 +165,11 @@ float ASensor_getResolution(ASensor const* sensor)
     return static_cast<Sensor const*>(sensor)->getResolution();
 }
 
+float ASensor_getMaxValue(ASensor const* sensor)
+{
+    return static_cast<Sensor const*>(sensor)->getMaxValue();
+}
+
 int ASensor_getMinDelay(ASensor const* sensor)
 {
     return static_cast<Sensor const*>(sensor)->getMinDelay();
