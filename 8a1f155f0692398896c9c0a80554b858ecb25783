@@ -22,6 +22,30 @@
       "revId": "8a1f155f0692398896c9c0a80554b858ecb25783",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83c43ed3_5e03d53c",
+        "filename": "keystore/java/android/security/KeyGeneratorSpec.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-04-08T23:28:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "237f124e_760176bc",
+      "range": {
+        "startLine": 180,
+        "startChar": 78,
+        "endLine": 180,
+        "endChar": 79
+      },
+      "revId": "8a1f155f0692398896c9c0a80554b858ecb25783",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
