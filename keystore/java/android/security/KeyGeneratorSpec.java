@@ -22,6 +22,7 @@ import android.text.TextUtils;
 import java.security.spec.AlgorithmParameterSpec;
 import java.util.Date;
 
+import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
@@ -51,6 +52,7 @@ public class KeyGeneratorSpec implements AlgorithmParameterSpec {
     private final @KeyStoreKeyConstraints.PurposeEnum int mPurposes;
     private final @KeyStoreKeyConstraints.PaddingEnum int mPaddings;
     private final @KeyStoreKeyConstraints.BlockModeEnum int mBlockModes;
+    private final boolean mIndCpaRequired;
     private final @KeyStoreKeyConstraints.UserAuthenticatorEnum int mUserAuthenticators;
     private final int mUserAuthenticationValidityDurationSeconds;
 
@@ -65,6 +67,7 @@ public class KeyGeneratorSpec implements AlgorithmParameterSpec {
             @KeyStoreKeyConstraints.PurposeEnum int purposes,
             @KeyStoreKeyConstraints.PaddingEnum int paddings,
             @KeyStoreKeyConstraints.BlockModeEnum int blockModes,
+            boolean indCpaRequired,
             @KeyStoreKeyConstraints.UserAuthenticatorEnum int userAuthenticators,
             int userAuthenticationValidityDurationSeconds) {
         if (context == null) {
@@ -87,6 +90,7 @@ public class KeyGeneratorSpec implements AlgorithmParameterSpec {
         mPurposes = purposes;
         mPaddings = paddings;
         mBlockModes = blockModes;
+        mIndCpaRequired = indCpaRequired;
         mUserAuthenticators = userAuthenticators;
         mUserAuthenticationValidityDurationSeconds = userAuthenticationValidityDurationSeconds;
     }
@@ -169,6 +173,14 @@ public class KeyGeneratorSpec implements AlgorithmParameterSpec {
     }
 
     /**
+     * Returns {@code true} if indistinguishability under chosen plaintext attack ({@code IND-CPA})
+     * is required for all uses of this key for encryption.
+     */
+    public boolean isIndCpaRequired() {
+        return mIndCpaRequired;
+    }
+
+    /**
      * Gets the set of user authenticators which protect access to this key. The key can only be
      * used iff the user has authenticated to at least one of these user authenticators.
      *
@@ -207,6 +219,7 @@ public class KeyGeneratorSpec implements AlgorithmParameterSpec {
         private @KeyStoreKeyConstraints.PurposeEnum int mPurposes;
         private @KeyStoreKeyConstraints.PaddingEnum int mPaddings;
         private @KeyStoreKeyConstraints.BlockModeEnum int mBlockModes;
+        private boolean mIndCpaRequired = true;
         private @KeyStoreKeyConstraints.UserAuthenticatorEnum int mUserAuthenticators;
         private int mUserAuthenticationValidityDurationSeconds = -1;
 
@@ -346,6 +359,40 @@ public class KeyGeneratorSpec implements AlgorithmParameterSpec {
         }
 
         /**
+         * Sets whether indistinguishability under chosen-plaintext attack ({@code IND-CPA}) is
+         * required for all uses of the key for encryption. This property is important because it
+         * mitigates several classes of weaknesses due to which ciphertext may leak information
+         * about plaintext.
+         *
+         * <p>By default, {@code IND-CPA} is required.
+         *
+         * <p>When {@code IND-CPA} is required:
+         * <ul>
+         * <li>block modes which do not offer {@code IND-CPA}, such as {@code ECB}, are prohibited;
+         * </li>
+         * <li>in block modes which use an IV, such as {@code CBC}, {@code CTR}, and {@code GCM},
+         * caller-provided IVs are rejected when encrypting, to ensure that only random IVs are
+         * used.</li>
+         *
+         * <p>Before disabling this requirement, consider the following approaches instead:
+         * <ul>
+         * <li>If you are generating a random IV for encryption and then initializing a {@code}
+         * Cipher using the IV, the solution is to let the {@code Cipher} generate a random IV
+         * instead. This will occur if the {@code Cipher} is initialized for encryption without an
+         * IV. The IV can then be queried via {@link Cipher#getIV()}.</li>
+         * <li>If you are generating a non-random IV (e.g., an IV derived from something not fully
+         * random, such as the name of the file being encrypted, or transaction ID, or password,
+         * or a device identifier), consider changing your design to use a random IV which will then
+         * be provided in addition to the ciphertext to the entities which need to decrypt the
+         * ciphertext.</li>
+         * </ul>
+         */
+        public Builder setIndCpaRequired(boolean required) {
+            mIndCpaRequired = required;
+            return this;
+        }
+
+        /**
          * Sets the user authenticators which protect access to this key. The key can only be used
          * iff the user has authenticated to at least one of these user authenticators.
          *
@@ -394,6 +441,7 @@ public class KeyGeneratorSpec implements AlgorithmParameterSpec {
                     mPurposes,
                     mPaddings,
                     mBlockModes,
+                    mIndCpaRequired,
                     mUserAuthenticators,
                     mUserAuthenticationValidityDurationSeconds);
         }
