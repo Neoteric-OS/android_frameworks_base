@@ -122,6 +122,24 @@
       "revId": "6950ef6fda6e9de5588ef6d93fcb2bd9174034e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "237f124e_64aaa47e",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4592,
+      "author": {
+        "id": 1043845
+      },
+      "writtenOn": "2015-04-08T20:14:08Z",
+      "side": 1,
+      "message": "Works for me. I\u0027ll upload the simpler change in a bit.",
+      "parentUuid": "83c43ed3_04659645",
+      "revId": "6950ef6fda6e9de5588ef6d93fcb2bd9174034e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
