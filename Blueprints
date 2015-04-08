@@ -1,0 +1,211 @@
+//
+// Copyright (C) 2008 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+// We have a special case here where we build the library's resources
+// independently from its code, so we need to find where the resource
+// class source got placed in the course of building the resources.
+// Thus, the magic here.
+// Also, this module cannot depend directly on the R.java file; if it
+// did, the PRIVATE_* vars for R.java wouldn't be guaranteed to be correct.
+// Instead, it depends on the R.stamp file, which lists the corresponding
+// R.java file as a prerequisite.
+// TODO: find a more appropriate way to do this.
+framework_res_source_path = "APPS/framework-res_intermediates/src"
+
+// Copy AIDL files to be preprocessed and included in the SDK,
+// specified relative to the root of the build tree.
+// ============================================================
+
+aidl_preprocess {
+    name: "framework_aidl",
+    srcs: [
+        "telephony/java/android/telephony/ServiceState.aidl",
+        "telephony/java/android/telephony/CellInfo.aidl",
+        "telephony/java/android/telephony/SignalStrength.aidl",
+        "telephony/java/android/telephony/IccOpenLogicalChannelResponse.aidl",
+        "telephony/java/android/telephony/NeighboringCellInfo.aidl",
+        "location/java/android/location/Location.aidl",
+        "location/java/android/location/Address.aidl",
+        "location/java/android/location/Criteria.aidl",
+        "media/java/android/media/MediaMetadata.aidl",
+        "media/java/android/media/MediaDescription.aidl",
+        "media/java/android/media/Rating.aidl",
+        "media/java/android/media/AudioAttributes.aidl",
+        "media/java/android/media/AudioFocusInfo.aidl",
+        "media/java/android/media/session/PlaybackState.aidl",
+        "media/java/android/media/session/MediaSession.aidl",
+        "media/java/android/media/tv/TvInputInfo.aidl",
+        "media/java/android/media/tv/TvTrackInfo.aidl",
+        "media/java/android/media/browse/MediaBrowser.aidl",
+        "wifi/java/android/net/wifi/ScanSettings.aidl",
+        "wifi/java/android/net/wifi/p2p/WifiP2pInfo.aidl",
+        "wifi/java/android/net/wifi/p2p/WifiP2pDeviceList.aidl",
+        "wifi/java/android/net/wifi/p2p/WifiP2pConfig.aidl",
+        "wifi/java/android/net/wifi/p2p/WifiP2pDevice.aidl",
+        "wifi/java/android/net/wifi/p2p/WifiP2pGroup.aidl",
+        "wifi/java/android/net/wifi/p2p/nsd/WifiP2pServiceRequest.aidl",
+        "wifi/java/android/net/wifi/p2p/nsd/WifiP2pServiceInfo.aidl",
+        "wifi/java/android/net/wifi/WpsInfo.aidl",
+        "wifi/java/android/net/wifi/ScanResult.aidl",
+        "wifi/java/android/net/wifi/WifiEnterpriseConfig.aidl",
+        "wifi/java/android/net/wifi/WifiConfiguration.aidl",
+        "wifi/java/android/net/wifi/WifiInfo.aidl",
+        "graphics/java/android/graphics/Region.aidl",
+        "graphics/java/android/graphics/Bitmap.aidl",
+        "graphics/java/android/graphics/Point.aidl",
+        "graphics/java/android/graphics/PointF.aidl",
+        "graphics/java/android/graphics/RectF.aidl",
+        "graphics/java/android/graphics/Rect.aidl",
+        "core/java/android/accounts/AuthenticatorDescription.aidl",
+        "core/java/android/accounts/Account.aidl",
+        "core/java/android/print/PrintDocumentInfo.aidl",
+        "core/java/android/print/PageRange.aidl",
+        "core/java/android/print/PrintAttributes.aidl",
+        "core/java/android/print/PrinterCapabilitiesInfo.aidl",
+        "core/java/android/print/PrinterId.aidl",
+        "core/java/android/print/PrintJobInfo.aidl",
+        "core/java/android/print/PrinterInfo.aidl",
+        "core/java/android/print/PrintJobId.aidl",
+        "core/java/android/hardware/usb/UsbDevice.aidl",
+        "core/java/android/hardware/usb/UsbInterface.aidl",
+        "core/java/android/hardware/usb/UsbEndpoint.aidl",
+        "core/java/android/hardware/usb/UsbAccessory.aidl",
+        "core/java/android/os/Messenger.aidl",
+        "core/java/android/os/PatternMatcher.aidl",
+        "core/java/android/os/Message.aidl",
+        "core/java/android/os/UserHandle.aidl",
+        "core/java/android/os/ParcelUuid.aidl",
+        "core/java/android/os/ParcelFileDescriptor.aidl",
+        "core/java/android/os/ResultReceiver.aidl",
+        "core/java/android/os/PersistableBundle.aidl",
+        "core/java/android/os/WorkSource.aidl",
+        "core/java/android/os/DropBoxManager.aidl",
+        "core/java/android/os/Bundle.aidl",
+        "core/java/android/accessibilityservice/AccessibilityServiceInfo.aidl",
+        "core/java/android/net/Network.aidl",
+        "core/java/android/net/RouteInfo.aidl",
+        "core/java/android/net/NetworkInfo.aidl",
+        "core/java/android/net/IpPrefix.aidl",
+        "core/java/android/net/NetworkCapabilities.aidl",
+        "core/java/android/net/DhcpInfo.aidl",
+        "core/java/android/net/ProxyInfo.aidl",
+        "core/java/android/net/LinkProperties.aidl",
+        "core/java/android/net/Uri.aidl",
+        "core/java/android/net/NetworkRequest.aidl",
+        "core/java/android/net/LinkAddress.aidl",
+        "core/java/android/view/Surface.aidl",
+        "core/java/android/view/WindowContentFrameStats.aidl",
+        "core/java/android/view/InputDevice.aidl",
+        "core/java/android/view/InputEvent.aidl",
+        "core/java/android/view/inputmethod/InputMethodSubtype.aidl",
+        "core/java/android/view/inputmethod/CursorAnchorInfo.aidl",
+        "core/java/android/view/inputmethod/CompletionInfo.aidl",
+        "core/java/android/view/inputmethod/ExtractedText.aidl",
+        "core/java/android/view/inputmethod/EditorInfo.aidl",
+        "core/java/android/view/inputmethod/InputMethodInfo.aidl",
+        "core/java/android/view/inputmethod/CorrectionInfo.aidl",
+        "core/java/android/view/inputmethod/InputBinding.aidl",
+        "core/java/android/view/inputmethod/ExtractedTextRequest.aidl",
+        "core/java/android/view/DragEvent.aidl",
+        "core/java/android/view/KeyEvent.aidl",
+        "core/java/android/view/WindowManager.aidl",
+        "core/java/android/view/WindowAnimationFrameStats.aidl",
+        "core/java/android/view/MotionEvent.aidl",
+        "core/java/android/view/accessibility/AccessibilityNodeInfo.aidl",
+        "core/java/android/view/accessibility/AccessibilityRecord.aidl",
+        "core/java/android/view/accessibility/AccessibilityWindowInfo.aidl",
+        "core/java/android/view/accessibility/AccessibilityEvent.aidl",
+        "core/java/android/view/textservice/SpellCheckerSubtype.aidl",
+        "core/java/android/view/textservice/TextInfo.aidl",
+        "core/java/android/view/textservice/SpellCheckerInfo.aidl",
+        "core/java/android/view/textservice/SentenceSuggestionsInfo.aidl",
+        "core/java/android/view/textservice/SuggestionsInfo.aidl",
+        "core/java/android/service/carrier/MessagePdu.aidl",
+        "core/java/android/service/notification/StatusBarNotification.aidl",
+        "core/java/android/speech/tts/Voice.aidl",
+        "core/java/android/app/usage/UsageEvents.aidl",
+        "core/java/android/app/Notification.aidl",
+        "core/java/android/app/WallpaperInfo.aidl",
+        "core/java/android/app/AppOpsManager.aidl",
+        "core/java/android/app/ActivityManager.aidl",
+        "core/java/android/app/PendingIntent.aidl",
+        "core/java/android/app/AlarmManager.aidl",
+        "core/java/android/app/SearchableInfo.aidl",
+        "core/java/android/app/job/JobParameters.aidl",
+        "core/java/android/app/job/JobInfo.aidl",
+        "core/java/android/appwidget/AppWidgetProviderInfo.aidl",
+        "core/java/android/content/ClipDescription.aidl",
+        "core/java/android/content/IntentFilter.aidl",
+        "core/java/android/content/Intent.aidl",
+        "core/java/android/content/res/Configuration.aidl",
+        "core/java/android/content/res/ObbInfo.aidl",
+        "core/java/android/content/RestrictionEntry.aidl",
+        "core/java/android/content/ClipData.aidl",
+        "core/java/android/content/SyncAdapterType.aidl",
+        "core/java/android/content/SyncRequest.aidl",
+        "core/java/android/content/PeriodicSync.aidl",
+        "core/java/android/content/SyncResult.aidl",
+        "core/java/android/content/pm/FeatureInfo.aidl",
+        "core/java/android/content/pm/InstrumentationInfo.aidl",
+        "core/java/android/content/pm/PackageInstaller.aidl",
+        "core/java/android/content/pm/ServiceInfo.aidl",
+        "core/java/android/content/pm/Signature.aidl",
+        "core/java/android/content/pm/ApplicationInfo.aidl",
+        "core/java/android/content/pm/PermissionInfo.aidl",
+        "core/java/android/content/pm/ActivityInfo.aidl",
+        "core/java/android/content/pm/PackageInfo.aidl",
+        "core/java/android/content/pm/ResolveInfo.aidl",
+        "core/java/android/content/pm/ProviderInfo.aidl",
+        "core/java/android/content/pm/PackageStats.aidl",
+        "core/java/android/content/pm/PermissionGroupInfo.aidl",
+        "core/java/android/content/pm/LabeledIntent.aidl",
+        "core/java/android/content/ComponentName.aidl",
+        "core/java/android/content/SyncStats.aidl",
+        "core/java/android/content/ContentValues.aidl",
+        "core/java/android/content/SyncInfo.aidl",
+        "core/java/android/content/IntentSender.aidl",
+        "core/java/android/widget/RemoteViews.aidl",
+        "core/java/android/text/style/SuggestionSpan.aidl",
+        "core/java/android/nfc/Tag.aidl",
+        "core/java/android/nfc/NdefRecord.aidl",
+        "core/java/android/nfc/NdefMessage.aidl",
+        "core/java/android/bluetooth/BluetoothHealthAppConfiguration.aidl",
+        "core/java/android/bluetooth/le/AdvertiseSettings.aidl",
+        "core/java/android/bluetooth/le/ScanSettings.aidl",
+        "core/java/android/bluetooth/le/AdvertiseData.aidl",
+        "core/java/android/bluetooth/le/ScanFilter.aidl",
+        "core/java/android/bluetooth/le/ScanResult.aidl",
+        "core/java/android/bluetooth/BluetoothDevice.aidl",
+        "core/java/android/database/CursorWindow.aidl",
+    ],
+}
+
+// Include subdirectory makefiles
+// ============================================================
+
+// If we're building with ONE_SHOT_MAKEFILE (mm, mmm), then what the framework
+// team really wants is to build the stuff defined by this makefile.
+// ANDROIDMK TRANSLATION ERROR: unsupported conditional
+// ifeq (,$(ONE_SHOT_MAKEFILE))
+// ANDROIDMK TRANSLATION ERROR: unsupported include
+// include $(call first-makefiles-under,$(LOCAL_PATH))
+// ANDROIDMK TRANSLATION ERROR: endif from unsupported contitional
+// endif
+// ANDROIDMK TRANSLATION ERROR: endif from unsupported contitional
+// endif
+// ANDROID_BUILD_EMBEDDED
+
+subdirs=["tools/*"]
