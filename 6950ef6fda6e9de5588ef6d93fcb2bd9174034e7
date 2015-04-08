@@ -104,6 +104,24 @@
       "revId": "6950ef6fda6e9de5588ef6d93fcb2bd9174034e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83c43ed3_04659645",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4592,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2015-04-08T20:12:54Z",
+      "side": 1,
+      "message": "The resource code here is shared on-device and is *deeply* performance sensitive, so I echo Adam\u0027s concerns about even minor recurring extra work.",
+      "parentUuid": "a3eea234_5c0754d3",
+      "revId": "6950ef6fda6e9de5588ef6d93fcb2bd9174034e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
