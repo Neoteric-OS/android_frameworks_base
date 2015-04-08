@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "237f124e_760176bc",
+        "filename": "keystore/java/android/security/KeyGeneratorSpec.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2015-04-08T22:54:02Z",
+      "side": 1,
+      "message": "How about adding \"For example, if a given plaintext always produces the same ciphertext, an attacker may see the repeated ciphertexts and be able to deduce something about the plaintext\".\n\nI like what\u0027s there.  I think the example would help make clear why this matters.",
+      "range": {
+        "startLine": 180,
+        "startChar": 78,
+        "endLine": 180,
+        "endChar": 79
+      },
+      "revId": "8a1f155f0692398896c9c0a80554b858ecb25783",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
