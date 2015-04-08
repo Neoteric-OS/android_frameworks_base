@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3eea234_868a2be6",
+        "filename": "include/androidfw/ResourceTypes.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1043034
+      },
+      "writtenOn": "2015-04-08T18:32:17Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "revId": "6950ef6fda6e9de5588ef6d93fcb2bd9174034e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3eea234_0673bb97",
+        "filename": "include/androidfw/ResourceTypes.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1506,
+      "author": {
+        "id": 1043034
+      },
+      "writtenOn": "2015-04-08T18:32:17Z",
+      "side": 1,
+      "message": "You can remove this, as ResTable::stringToInt just delegates to this.",
+      "revId": "6950ef6fda6e9de5588ef6d93fcb2bd9174034e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63f82afb_f01006d8",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4592,
+      "author": {
+        "id": 1043034
+      },
+      "writtenOn": "2015-04-08T18:32:17Z",
+      "side": 1,
+      "message": "Why are we converting to a utf8 string here? This is unnecessary. If this is the price to pay for the use of std::stringstream then I don\u0027t think it\u0027s worth it.",
+      "revId": "6950ef6fda6e9de5588ef6d93fcb2bd9174034e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
