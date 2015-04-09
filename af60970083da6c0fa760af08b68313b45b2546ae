@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3d33a94_875186ee",
+        "filename": "tools/aapt/ResourceTable.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3170,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2015-04-09T00:44:54Z",
+      "side": 1,
+      "message": "0x%08zu doesn\u0027t make sense to me, since the zu won\u0027t be in hex format. Can you change this to %zx instead?",
+      "range": {
+        "startLine": 3170,
+        "startChar": 79,
+        "endLine": 3170,
+        "endChar": 86
+      },
+      "revId": "af60970083da6c0fa760af08b68313b45b2546ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
