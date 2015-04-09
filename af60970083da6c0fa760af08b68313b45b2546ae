@@ -22,6 +22,30 @@
       "revId": "af60970083da6c0fa760af08b68313b45b2546ae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03868e96_a71d89ea",
+        "filename": "tools/aapt/ResourceTable.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3170,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2015-04-09T00:49:42Z",
+      "side": 1,
+      "message": "Whoops, good catch.  Fixed.",
+      "parentUuid": "e3d33a94_875186ee",
+      "range": {
+        "startLine": 3170,
+        "startChar": 79,
+        "endLine": 3170,
+        "endChar": 86
+      },
+      "revId": "af60970083da6c0fa760af08b68313b45b2546ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
