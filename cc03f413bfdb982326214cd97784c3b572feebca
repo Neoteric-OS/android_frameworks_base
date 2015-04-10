@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3617abc_7713300f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-04-10T09:25:53Z",
+      "side": 1,
+      "message": "Move the Signed-Off-by line above the change-id, otherwise you might confuse gerritt.",
+      "revId": "cc03f413bfdb982326214cd97784c3b572feebca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a38a229d_5d2f3b34",
+        "filename": "include/androidfw/Asset.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-04-10T09:25:53Z",
+      "side": 1,
+      "message": "make this private.",
+      "revId": "cc03f413bfdb982326214cd97784c3b572feebca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6394aac1_7b1ddfe7",
+        "filename": "libs/androidfw/Asset.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-04-10T09:25:53Z",
+      "side": 1,
+      "message": "why does locking extend just to two functions and not the others that use the streaming zip inflater ?",
+      "revId": "cc03f413bfdb982326214cd97784c3b572feebca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
