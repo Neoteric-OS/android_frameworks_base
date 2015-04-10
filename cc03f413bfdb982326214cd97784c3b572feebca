@@ -68,6 +68,24 @@
       "revId": "cc03f413bfdb982326214cd97784c3b572feebca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "434a4643_f5e1f214",
+        "filename": "libs/androidfw/Asset.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1070913
+      },
+      "writtenOn": "2015-04-10T09:53:11Z",
+      "side": 1,
+      "message": "Add too much mutex in _CompressedAsset functions may cause performance impact. So I just add mutex to avoid double free issue.",
+      "parentUuid": "434a4643_35cb7a9f",
+      "revId": "cc03f413bfdb982326214cd97784c3b572feebca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
