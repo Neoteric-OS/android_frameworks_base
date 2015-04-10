@@ -50,6 +50,24 @@
       "revId": "cc03f413bfdb982326214cd97784c3b572feebca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "434a4643_35cb7a9f",
+        "filename": "libs/androidfw/Asset.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1070913
+      },
+      "writtenOn": "2015-04-10T09:50:10Z",
+      "side": 1,
+      "message": "I just want to fix delete mZipInflater issue. Only _CompressedAsset::close() and _CompressedAsset::getBuffer() will delet mZipInflater object.\nI try to add mutex to prevent double free mZipInflater object when muti-threading concurrency access.",
+      "parentUuid": "6394aac1_7b1ddfe7",
+      "revId": "cc03f413bfdb982326214cd97784c3b572feebca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
