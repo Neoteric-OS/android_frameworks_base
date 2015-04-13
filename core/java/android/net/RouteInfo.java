@@ -367,7 +367,13 @@ public final class RouteInfo implements Parcelable {
      * @return {@code true} if the destination and prefix length cover the given address.
      */
     public boolean matches(InetAddress destination) {
-        if (destination == null) return false;
+        if ((destination == null)
+                || ((mDestination.getAddress() instanceof Inet4Address) &&
+                    !(destination instanceof Inet4Address))
+                || ((mDestination.getAddress() instanceof Inet6Address) &&
+                    !(destination instanceof Inet6Address))) {
+            return false;
+        }
 
         // match the route destination and destination with prefix length
         InetAddress dstNet = NetworkUtils.getNetworkPart(destination,
