@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10f25655_e6009abc",
+        "filename": "core/java/android/net/RouteInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2015-04-13T07:43:41Z",
+      "side": 1,
+      "message": "IpPrefix#getAddress() does a byte copy of the raw address. Two copies aren\u0027t the end of the world, but it seems like it would be better to implement a matches() or contains() method in IpPrefix, since it can avoid the copies.",
+      "range": {
+        "startLine": 371,
+        "startChar": 21,
+        "endLine": 371,
+        "endChar": 44
+      },
+      "revId": "c73e650e454b6cc4d7f6adc887a62c92a7f459ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
