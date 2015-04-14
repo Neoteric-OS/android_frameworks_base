@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f090620b_8220bc53",
+        "filename": "core/java/android/net/IpPrefix.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2015-04-14T06:26:31Z",
+      "side": 1,
+      "message": "s/ipAddr/address/\n\nDid javadoc complain about this? \"make doc-comment-check-docs\" checks that the docs build correctly.",
+      "range": {
+        "startLine": 175,
+        "startChar": 14,
+        "endLine": 175,
+        "endChar": 20
+      },
+      "revId": "95abace67fd0fde3b7289ca707957292ebf537e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
