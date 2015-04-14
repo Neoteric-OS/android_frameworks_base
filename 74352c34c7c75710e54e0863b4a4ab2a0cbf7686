@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "108ed6ef_40538ebf",
+        "filename": "core/java/android/net/IpPrefix.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2015-04-14T02:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "901e4658_f78f1afc",
+      "range": {
+        "startLine": 173,
+        "startChar": 37,
+        "endLine": 173,
+        "endChar": 45
+      },
+      "revId": "74352c34c7c75710e54e0863b4a4ab2a0cbf7686",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10f25655_c908095d",
         "filename": "core/java/android/net/IpPrefix.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "108ed6ef_80c436e4",
+        "filename": "core/java/android/net/IpPrefix.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2015-04-14T02:27:22Z",
+      "side": 1,
+      "message": "Done.\n\n(didn\u0027t do this at first because I felt it to be slightly less readable because |address| is also a member of |this|)",
+      "parentUuid": "10f25655_c908095d",
+      "range": {
+        "startLine": 178,
+        "startChar": 40,
+        "endLine": 178,
+        "endChar": 46
+      },
+      "revId": "74352c34c7c75710e54e0863b4a4ab2a0cbf7686",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10f25655_6937bd12",
         "filename": "core/tests/coretests/src/android/net/IpPrefixTest.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2015-04-13T11:34:34Z",
       "side": 1,
       "message": "Other tests use:\n\n    private InetAddress Address(String addr) {\n\nYou might want to use the same, for consistency. Up to you.",
+      "range": {
+        "startLine": 32,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 44
+      },
+      "revId": "74352c34c7c75710e54e0863b4a4ab2a0cbf7686",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f090620b_5f284b04",
+        "filename": "core/tests/coretests/src/android/net/IpPrefixTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2015-04-14T02:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10f25655_6937bd12",
       "range": {
         "startLine": 32,
         "startChar": 31,
