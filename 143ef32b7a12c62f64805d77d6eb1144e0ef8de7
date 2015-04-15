@@ -16,6 +16,24 @@
       "revId": "143ef32b7a12c62f64805d77d6eb1144e0ef8de7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b07b4aac_098db903",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2015-04-15T17:43:07Z",
+      "side": 1,
+      "message": "I don\u0027t think this is true. There are locks in Resources.",
+      "parentUuid": "709c722a_614ed24f",
+      "revId": "143ef32b7a12c62f64805d77d6eb1144e0ef8de7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
