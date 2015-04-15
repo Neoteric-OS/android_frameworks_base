@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "709c722a_614ed24f",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2015-04-15T11:43:40Z",
+      "side": 1,
+      "message": "I believe the Resources class forgoes locking while preloading, assuming there will only be one thread. Hence, activating a second runner here would likely cause problems.\n\n(also, parallelizing drawable and class preloads may cause problems if any class initializers are loading resources, but I don\u0027t know if that happens in practice.)",
+      "revId": "143ef32b7a12c62f64805d77d6eb1144e0ef8de7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
