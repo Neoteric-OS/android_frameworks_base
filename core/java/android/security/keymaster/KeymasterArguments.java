@@ -111,8 +111,13 @@ public class KeymasterArguments implements Parcelable {
     }
 
     public long getLong(int tag, long defaultValue) {
-        if (KeymasterDefs.getTagType(tag) != KeymasterDefs.KM_LONG) {
-            throw new IllegalArgumentException("Tag is not a long type: " + tag);
+        switch (KeymasterDefs.getTagType(tag)) {
+            case KeymasterDefs.KM_LONG:
+                break; // Accepted type
+            case KeymasterDefs.KM_LONG_REP:
+                throw new IllegalArgumentException("Repeatable tags must use getLongs: " + tag);
+            default:
+                throw new IllegalArgumentException("Tag is not a long type: " + tag);
         }
         KeymasterArgument arg = getArgumentByTag(tag);
         if (arg == null) {
@@ -170,6 +175,19 @@ public class KeymasterArguments implements Parcelable {
         for (KeymasterArgument arg : mArguments) {
             if (arg.tag == tag) {
                 values.add(((KeymasterIntArgument) arg).value);
+            }
+        }
+        return values;
+    }
+
+    public List<Long> getLongs(int tag) {
+        if (KeymasterDefs.getTagType(tag) != KeymasterDefs.KM_LONG_REP) {
+            throw new IllegalArgumentException("Tag is not a repeating long: " + tag);
+        }
+        List<Long> values = new ArrayList<Long>();
+        for (KeymasterArgument arg : mArguments) {
+            if (arg.tag == tag) {
+                values.add(((KeymasterLongArgument) arg).value);
             }
         }
         return values;
