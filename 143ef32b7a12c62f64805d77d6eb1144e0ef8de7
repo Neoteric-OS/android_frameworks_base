@@ -34,6 +34,24 @@
       "revId": "143ef32b7a12c62f64805d77d6eb1144e0ef8de7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "709c722a_aad6ef42",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2015-04-16T15:04:46Z",
+      "side": 1,
+      "message": "Yeah, but they\u0027re not used while preloading, as mentioned here: https://android.googlesource.com/platform/frameworks/base/+/android-5.1.0_r5/core/java/android/content/res/Resources.java#94\n\n...and implemented here: https://android.googlesource.com/platform/frameworks/base/+/android-5.1.0_r5/core/java/android/content/res/Resources.java#2402",
+      "parentUuid": "b07b4aac_098db903",
+      "revId": "143ef32b7a12c62f64805d77d6eb1144e0ef8de7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
