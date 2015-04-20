@@ -17,6 +17,7 @@
 package com.android.systemui.statusbar.phone;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -27,14 +28,21 @@ public class IconMerger extends LinearLayout {
     private static final String TAG = "IconMerger";
     private static final boolean DEBUG = false;
 
-    private int mIconSize;
+    private int mIconWidth;
     private View mMoreView;
 
     public IconMerger(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mIconSize = context.getResources().getDimensionPixelSize(
+        int iconHeight = context.getResources().getDimensionPixelSize(
                 R.dimen.status_bar_icon_size);
+        int iconPadding = context.getResources().getDimensionPixelSize(
+                R.dimen.status_bar_icon_padding);
+        /*
+         * We use the same calculation for the icon width as in:
+         * .PhoneStatusBar#updateNotificationIcons()
+         */
+        mIconWidth = iconHeight + 2 * iconPadding;
 
         if (DEBUG) {
             setBackgroundColor(0x800099FF);
@@ -50,7 +58,7 @@ public class IconMerger extends LinearLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         // we need to constrain this to an integral multiple of our children
         int width = getMeasuredWidth();
-        setMeasuredDimension(width - (width % mIconSize), getMeasuredHeight());
+        setMeasuredDimension(width - (width % mIconWidth), getMeasuredHeight());
     }
 
     @Override
@@ -70,7 +78,7 @@ public class IconMerger extends LinearLayout {
         final boolean overflowShown = (mMoreView.getVisibility() == View.VISIBLE);
         // let's assume we have one more slot if the more icon is already showing
         if (overflowShown) visibleChildren --;
-        final boolean moreRequired = visibleChildren * mIconSize > width;
+        final boolean moreRequired = visibleChildren * mIconWidth > width;
         if (moreRequired != overflowShown) {
             post(new Runnable() {
                 @Override
