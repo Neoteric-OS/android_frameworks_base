@@ -27,14 +27,17 @@ public class IconMerger extends LinearLayout {
     private static final String TAG = "IconMerger";
     private static final boolean DEBUG = false;
 
-    private int mIconSize;
+    private int mIconWidth;
     private View mMoreView;
 
     public IconMerger(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mIconSize = context.getResources().getDimensionPixelSize(
+        int iconSize = context.getResources().getDimensionPixelSize(
                 R.dimen.status_bar_icon_size);
+        int iconPadding = context.getResources().getDimensionPixelSize(
+                R.dimen.status_bar_icon_padding);
+        mIconWidth = calclculateIconWidth(iconSize, iconPadding);
 
         if (DEBUG) {
             setBackgroundColor(0x800099FF);
@@ -50,7 +53,7 @@ public class IconMerger extends LinearLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         // we need to constrain this to an integral multiple of our children
         int width = getMeasuredWidth();
-        setMeasuredDimension(width - (width % mIconSize), getMeasuredHeight());
+        setMeasuredDimension(width - (width % mIconWidth), getMeasuredHeight());
     }
 
     @Override
@@ -70,7 +73,7 @@ public class IconMerger extends LinearLayout {
         final boolean overflowShown = (mMoreView.getVisibility() == View.VISIBLE);
         // let's assume we have one more slot if the more icon is already showing
         if (overflowShown) visibleChildren --;
-        final boolean moreRequired = visibleChildren * mIconSize > width;
+        final boolean moreRequired = visibleChildren * mIconWidth > width;
         if (moreRequired != overflowShown) {
             post(new Runnable() {
                 @Override
@@ -79,5 +82,17 @@ public class IconMerger extends LinearLayout {
                 }
             });
         }
+    }
+
+    /**
+     * Considering the padding, this method calculates the effective icon width
+     * of the notification icons.
+     *
+     * @param iconSize The icon size.
+     * @param iconHPadding The padding between the icons.
+     * @return The effective icon width which is expected by the {@link IconMerger}.
+     */
+    int calclculateIconWidth(final int iconSize, final int iconHPadding) {
+        return iconSize + 2 * iconHPadding;
     }
 }

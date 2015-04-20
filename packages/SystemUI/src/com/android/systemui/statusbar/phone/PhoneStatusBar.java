@@ -1588,8 +1588,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     }
 
     private void updateNotificationIcons() {
+        final int effectiveIconWidth = mNotificationIcons.calclculateIconWidth(mIconSize, mIconHPadding);
         final LinearLayout.LayoutParams params
-            = new LinearLayout.LayoutParams(mIconSize + 2*mIconHPadding, mNaturalBarHeight);
+            = new LinearLayout.LayoutParams(effectiveIconWidth, mNaturalBarHeight);
 
         ArrayList<Entry> activeNotifications = mNotificationData.getActiveNotifications();
         final int N = activeNotifications.size();
