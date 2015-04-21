@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70f6329f_ae57b729",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2015-04-21T16:12:40Z",
+      "side": 1,
+      "message": "Isn\u0027t it a bit unusual for a getter to modify the state?",
+      "revId": "d86281cb3da685672d89f964228980f6753adcae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70f6329f_ee51bf34",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1002951
+      },
+      "writtenOn": "2015-04-21T16:12:40Z",
+      "side": 1,
+      "message": "else should work here.",
+      "revId": "d86281cb3da685672d89f964228980f6753adcae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
