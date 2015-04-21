@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d01a7eb3_97712b8e",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2015-04-21T16:17:20Z",
+      "side": 1,
+      "message": "Perhaps, though I don\u0027t think it\u0027s uncommon for getters to do a kind of lazy initialization, which I consider this to be.\nMore importantly, the alternative is to keep storing the original (non-application) context, which is exactly what we were trying to avoid with the original change.",
+      "parentUuid": "70f6329f_ae57b729",
+      "revId": "d86281cb3da685672d89f964228980f6753adcae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70f6329f_ee51bf34",
         "filename": "media/java/android/media/AudioManager.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-04-21T16:12:40Z",
       "side": 1,
       "message": "else should work here.",
+      "revId": "d86281cb3da685672d89f964228980f6753adcae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "302afabf_b200c1bb",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2015-04-21T16:17:20Z",
+      "side": 1,
+      "message": "no, because setContext might have succeeded in getting the application context and updated mApplicationContext",
+      "parentUuid": "70f6329f_ee51bf34",
       "revId": "d86281cb3da685672d89f964228980f6753adcae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
