@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "302afabf_78158d73",
+        "filename": "Blueprints",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2015-04-21T00:10:31Z",
+      "side": 1,
+      "message": "I dropped support for now, to be revisited when stubs support is added",
+      "parentUuid": "f02302ea_bcdd350d",
+      "range": {
+        "startLine": 458,
+        "startChar": 2,
+        "endLine": 458,
+        "endChar": 18
+      },
+      "revId": "cb5d58d2efc8b9b915ac666d8c0f83b3e87c1d09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d01a7eb3_50b9810d",
         "filename": "Blueprints",
         "patchSetId": 1
@@ -59,6 +83,24 @@
       "writtenOn": "2015-04-21T00:05:08Z",
       "side": 1,
       "message": "Hmm, nany droiddoc modules skipped. The api-stubs modules will be hard to tackle.",
+      "revId": "cb5d58d2efc8b9b915ac666d8c0f83b3e87c1d09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f02302ea_fc8a0db2",
+        "filename": "Blueprints",
+        "patchSetId": 1
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2015-04-21T00:10:31Z",
+      "side": 1,
+      "message": "Yeah, droiddoc is on the todo list",
+      "parentUuid": "d01a7eb3_50b9810d",
       "revId": "cb5d58d2efc8b9b915ac666d8c0f83b3e87c1d09",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
