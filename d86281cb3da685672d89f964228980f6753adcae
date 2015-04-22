@@ -69,6 +69,29 @@
       "revId": "d86281cb3da685672d89f964228980f6753adcae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50984e8f_05d3f48b",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1018108
+      },
+      "writtenOn": "2015-04-22T20:02:03Z",
+      "side": 1,
+      "message": "error: cannot assign a value to final variable mApplicationContext",
+      "range": {
+        "startLine": 666,
+        "startChar": 8,
+        "endLine": 666,
+        "endChar": 62
+      },
+      "revId": "d86281cb3da685672d89f964228980f6753adcae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
