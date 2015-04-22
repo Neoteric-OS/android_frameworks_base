@@ -723,6 +723,33 @@ class MountService extends IMountService.Stub
         runIdleMaintenance(null);
     }
 
+    public void createNewUserDir(int userHandle, String path) {
+        // ext4enc:TODO is this the right permission to enforce here?
+        mContext.enforceCallingOrSelfPermission(Manifest.permission.CRYPT_KEEPER,
+            "no permission to access the crypt keeper");
+
+        waitForReady();
+
+        if (DEBUG_EVENTS) {
+            Slog.i(TAG, "Creating new user dir");
+        }
+
+        try {
+            NativeDaemonEvent event = mConnector.execute(
+                "cryptfs", "createnewuserdir", userHandle, path);
+            if (!"0".equals(event.getMessage())) {
+                String error = "createnewuserdir sent unexpected message: "
+                    + event.getMessage();
+                Slog.e(TAG,  error);
+                // ext4enc:TODO is this the right exception?
+                throw new RuntimeException(error);
+            }
+        } catch (NativeDaemonConnectorException e) {
+            Slog.e(TAG, "createnewuserdir threw exception", e);
+            throw new RuntimeException("createnewuserdir threw exception", e);
+        }
+    }
+
     @Override
     public long lastMaintenance() {
         return mLastMaintenance;
