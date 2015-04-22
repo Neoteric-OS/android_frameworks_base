@@ -888,6 +888,24 @@ public interface IMountService extends IInterface {
                 }
                 return;
             }
+
+            public int createNewUserDir(int userHandle, String path) throws RemoteException {
+                Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
+                int _result;
+                try {
+                    _data.writeInterfaceToken(DESCRIPTOR);
+                    _data.writeInt(userHandle);
+                    _data.writeString(path);
+                    mRemote.transact(Stub.TRANSACTION_createNewUserDir, _data, _reply, 0);
+                    _reply.readException();
+                    _result = _reply.readInt();
+                } finally {
+                    _reply.recycle();
+                    _data.recycle();
+                }
+                return _result;
+            }
         }
 
         private static final String DESCRIPTOR = "IMountService";
@@ -977,6 +995,8 @@ public interface IMountService extends IInterface {
         static final int TRANSACTION_lastMaintenance = IBinder.FIRST_CALL_TRANSACTION + 41;
 
         static final int TRANSACTION_runMaintenance = IBinder.FIRST_CALL_TRANSACTION + 42;
+
+        static final int TRANSACTION_createNewUserDir = IBinder.FIRST_CALL_TRANSACTION + 43;
 
         /**
          * Cast an IBinder object into an IMountService interface, generating a
@@ -1396,6 +1416,14 @@ public interface IMountService extends IInterface {
                     reply.writeNoException();
                     return true;
                 }
+                case TRANSACTION_createNewUserDir: {
+                    data.enforceInterface(DESCRIPTOR);
+                    int userHandle = data.readInt();
+                    String path = data.readString();
+                    createNewUserDir(userHandle, path);
+                    reply.writeNoException();
+                    return true;
+                }
             }
             return super.onTransact(code, data, reply, flags);
         }
@@ -1680,4 +1708,12 @@ public interface IMountService extends IInterface {
      * @throws RemoteException
      */
     public void runMaintenance() throws RemoteException;
+
+    /**
+     * Creates the user data directory, possibly encrypted
+     * @param userHandle Handle of the user whose directory we are creating
+     * @param path Path at which to create the directory.
+     */
+    public void createNewUserDir(int userHandle, String path)
+        throws RemoteException;
 }
