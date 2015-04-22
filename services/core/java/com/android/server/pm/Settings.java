@@ -33,10 +33,14 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Environment;
 import android.os.FileUtils;
+import android.os.IBinder;
 import android.os.PatternMatcher;
 import android.os.Process;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.os.storage.IMountService;
 import android.util.LogPrinter;
 
 import com.android.internal.util.FastXmlSerializer;
@@ -3095,11 +3099,25 @@ final class Settings {
         }
     }
 
+    void createNewUserDir(int userHandle, File path) {
+        final IBinder service = ServiceManager.getService("mount");
+        if (service == null) {
+            Log.e(TAG, "Error creating new user dir: could not find mount service");
+            throw new RuntimeException("Error creating new user dir: could not find mount service");
+        }
+        IMountService mountService = IMountService.Stub.asInterface(service);
+        try {
+            mountService.createNewUserDir(userHandle, path.getAbsolutePath());
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error creating new user dir", e);
+            // ext4enc:TODO is this the right exception?
+            throw new RuntimeException("Error creating new user dir", e);
+        }
+    }
+
     void createNewUserLILPw(PackageManagerService service, Installer installer,
             int userHandle, File path) {
-        path.mkdir();
-        FileUtils.setPermissions(path.toString(), FileUtils.S_IRWXU | FileUtils.S_IRWXG
-                | FileUtils.S_IXOTH, -1, -1);
+        createNewUserDir(userHandle, path);
         for (PackageSetting ps : mPackages.values()) {
             if (ps.pkg == null || ps.pkg.applicationInfo == null) {
                 continue;

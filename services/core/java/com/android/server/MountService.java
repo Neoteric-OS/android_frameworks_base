@@ -44,6 +44,7 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
@@ -2442,6 +2443,34 @@ class MountService extends IMountService.Stub
             event = mConnector.execute("cryptfs", "clearpw");
         } catch (NativeDaemonConnectorException e) {
             throw e.rethrowAsParcelableException();
+        }
+    }
+
+    @Override
+    public void createNewUserDir(int userHandle, String path) {
+        if (Binder.getCallingUid() != Process.SYSTEM_UID) {
+            throw new SecurityException("Only SYSTEM_UID can create user directories");
+        }
+
+        waitForReady();
+
+        if (DEBUG_EVENTS) {
+            Slog.i(TAG, "Creating new user dir");
+        }
+
+        try {
+            NativeDaemonEvent event = mConnector.execute(
+                "cryptfs", "createnewuserdir", userHandle, path);
+            if (!"0".equals(event.getMessage())) {
+                String error = "createnewuserdir sent unexpected message: "
+                    + event.getMessage();
+                Slog.e(TAG,  error);
+                // ext4enc:TODO is this the right exception?
+                throw new RuntimeException(error);
+            }
+        } catch (NativeDaemonConnectorException e) {
+            Slog.e(TAG, "createnewuserdir threw exception", e);
+            throw new RuntimeException("createnewuserdir threw exception", e);
         }
     }
 
