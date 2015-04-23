@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50984e8f_eb71015e",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/IconMerger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1071570
+      },
+      "writtenOn": "2015-04-23T18:58:01Z",
+      "side": 1,
+      "message": "As we have an instance of IconMerger in PhoneStatusBar I added a new non static method to this class.\nI also renounced to load the resources directly in this method, because in PhoneStatusBar they are stored in member variables anyway.\n\nThese members are filled on creation and on configuration change. I don\u0027t think  that we have the case that by another configuration other dimens are used, right? But if they would change on configuration changes we would have to consider this in the IconMerger as well. Otherwise I could clean up this a little bit in a later commit. I will check this.",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 65
+      },
+      "revId": "4d585a66c8527855023de956097f4c5b6713ff9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
