@@ -45,6 +45,30 @@
       "revId": "4d585a66c8527855023de956097f4c5b6713ff9c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b088aa37_562c0ac7",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/IconMerger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1071570
+      },
+      "writtenOn": "2015-04-23T19:17:37Z",
+      "side": 1,
+      "message": "Typo will be fixed and method will be moved up.\nWhy public? The method is, and I think it will, only be used in this package. Regarding the Context read my comment above?",
+      "parentUuid": "706b9231_f238969d",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 7
+      },
+      "revId": "4d585a66c8527855023de956097f4c5b6713ff9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
