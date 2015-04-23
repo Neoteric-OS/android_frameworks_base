@@ -22,6 +22,29 @@
       "revId": "4d585a66c8527855023de956097f4c5b6713ff9c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "706b9231_f238969d",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/IconMerger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1013823
+      },
+      "writtenOn": "2015-04-23T19:08:30Z",
+      "side": 1,
+      "message": "Please make public, move up in file to immediately following the ctor, fix the typo in the method name, and pass context (resolve dimens each time).",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 7
+      },
+      "revId": "4d585a66c8527855023de956097f4c5b6713ff9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
