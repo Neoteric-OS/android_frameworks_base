@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "309d9a70_9ec82e59",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-04-24T17:52:15Z",
+      "side": 1,
+      "message": "Please add a one/two-liner Javadoc comment about the meaning of this error code.",
+      "revId": "12e718be313e741f85d400e6aa9db9368d24bc4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
