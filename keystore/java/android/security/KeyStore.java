@@ -51,6 +51,7 @@ public class KeyStore {
     public static final int VALUE_CORRUPTED = 8;
     public static final int UNDEFINED_ACTION = 9;
     public static final int WRONG_PASSWORD = 10;
+    public static final int OP_AUTH_NEEDED = 15;
 
     // Used for UID field to indicate the calling UID.
     public static final int UID_SELF = -1;
