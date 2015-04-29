@@ -1750,8 +1750,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
                 case AsyncChannel.CMD_CHANNEL_DISCONNECT: {
-                    NetworkAgentInfo nai = mNetworkAgentInfos.get(msg.replyTo);
-                    if (nai != null) nai.asyncChannel.disconnect();
+                    disconnectNetworkAgent(mNetworkAgentInfos.get(msg.replyTo));
                     break;
                 }
                 case AsyncChannel.CMD_CHANNEL_DISCONNECTED: {
@@ -1927,11 +1926,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mNetworkFactoryInfos.remove(msg.obj);
             }
         } else if (mNetworkAgentInfos.containsKey(msg.replyTo)) {
-            if (msg.arg1 == AsyncChannel.STATUS_SUCCESSFUL) {
+            NetworkAgentInfo nai = mNetworkAgentInfos.get(msg.replyTo);
+            if (nai.asyncChannel != null && msg.arg1 == AsyncChannel.STATUS_SUCCESSFUL) {
                 if (VDBG) log("NetworkAgent connected");
                 // A network agent has requested a connection.  Establish the connection.
-                mNetworkAgentInfos.get(msg.replyTo).asyncChannel.
-                        sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
+                nai.asyncChannel.sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
             } else {
                 loge("Error connecting NetworkAgent");
                 NetworkAgentInfo nai = mNetworkAgentInfos.remove(msg.replyTo);
@@ -3717,7 +3716,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             loge("Dead network still had at least " + nr);
             break;
         }
-        nai.asyncChannel.disconnect();
+        disconnectNetworkAgent(nai);
     }
 
     private void handleLingerComplete(NetworkAgentInfo oldNetwork) {
@@ -4066,7 +4065,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     ReapUnvalidatedNetworks.REAP);
         } else if (state == NetworkInfo.State.DISCONNECTED ||
                 state == NetworkInfo.State.SUSPENDED) {
-            networkAgent.asyncChannel.disconnect();
+            disconnectNetworkAgent(networkAgent);
             if (networkAgent.isVPN()) {
                 synchronized (mProxyLock) {
                     if (mDefaultProxyDisabled) {
@@ -4223,6 +4222,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         int user = UserHandle.getUserId(Binder.getCallingUid());
         synchronized (mVpns) {
             return mVpns.get(user).setUnderlyingNetworks(networks);
+        }
+    }
+
+    private void disconnectNetworkAgent(NetworkAgentInfo nai) {
+        if (nai != null) {
+            nai.asyncChannel.disconnect();
+            nai.asyncChannel = null;
         }
     }
 }
