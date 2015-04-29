@@ -1927,11 +1927,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mNetworkFactoryInfos.remove(msg.obj);
             }
         } else if (mNetworkAgentInfos.containsKey(msg.replyTo)) {
-            if (msg.arg1 == AsyncChannel.STATUS_SUCCESSFUL) {
+            NetworkAgentInfo nai = mNetworkAgentInfos.get(msg.replyTo);
+            if (nai != null && nai.asyncChannel != null && msg.arg1 == AsyncChannel.STATUS_SUCCESSFUL) {
                 if (VDBG) log("NetworkAgent connected");
                 // A network agent has requested a connection.  Establish the connection.
-                mNetworkAgentInfos.get(msg.replyTo).asyncChannel.
-                        sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
+                nai.asyncChannel.sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
             } else {
                 loge("Error connecting NetworkAgent");
                 NetworkAgentInfo nai = mNetworkAgentInfos.remove(msg.replyTo);
@@ -3718,6 +3718,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             break;
         }
         nai.asyncChannel.disconnect();
+        nai.asyncChannel = null;
     }
 
     private void handleLingerComplete(NetworkAgentInfo oldNetwork) {
