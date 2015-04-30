@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0f35e19_24f196e1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1931,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2015-04-30T08:56:38Z",
+      "side": 1,
+      "message": "For this to be useful I think you\u0027ll need to ensure that anything that disconnects a NetworkAgentInfo (e.g., teardownUnneededNetwork) also sets that NetworkAgentInfo\u0027s asyncChannel to null.",
+      "range": {
+        "startLine": 1931,
+        "startChar": 31,
+        "endLine": 1931,
+        "endChar": 55
+      },
+      "revId": "fb6a81272b3a91da101e8992688dd942d835ae41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0eeea34_86eeb001",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1931,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2015-04-30T08:56:38Z",
+      "side": 1,
+      "message": "Do you need the \"nai !\u003d null\" check?\n\nI think the only place we insert objects into mNetworkAgentInfos is in handleRegisterNetworkAgent, and that will crash with an NPE if the NetworkAgentInfo being registered is null.",
+      "range": {
+        "startLine": 1931,
+        "startChar": 16,
+        "endLine": 1931,
+        "endChar": 27
+      },
+      "revId": "fb6a81272b3a91da101e8992688dd942d835ae41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0eeea34_c666f8d7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1931,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2015-04-30T08:56:38Z",
+      "side": 1,
+      "message": "Long line, please wrap lines at 100 characters:\n\nhttps://source.android.com/source/code-style.html#limit-line-length\nhttps://source.android.com/source/code-style.html#use-spaces-for-indentation\n\n(If you get rid of the \"nai !\u003d null\" check you won\u0027t have to re-wrap.)",
+      "range": {
+        "startLine": 1931,
+        "startChar": 71,
+        "endLine": 1931,
+        "endChar": 104
+      },
+      "revId": "fb6a81272b3a91da101e8992688dd942d835ae41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
