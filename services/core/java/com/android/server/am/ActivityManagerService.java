@@ -17019,7 +17019,7 @@ public final class ActivityManagerService extends ActivityManagerNative
             boolean doingAll, long now) {
         if (mAdjSeq == app.adjSeq) {
             // This adjustment has already been computed.
-            return app.curRawAdj;
+            return app.curAdj;
         }
 
         if (app.thread == null) {
