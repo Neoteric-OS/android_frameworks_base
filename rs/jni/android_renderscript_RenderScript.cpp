@@ -44,6 +44,9 @@
 
 //#define LOG_API ALOGE
 static constexpr bool kLogApi = false;
+static constexpr size_t kMaxNumberArgsAndBindings = 1000;
+static constexpr size_t kMaxNumberClosuresInScriptGroup = 1000000;
+static constexpr size_t kMaxNumberKernelArguments = 256;
 
 using namespace android;
 
@@ -335,46 +338,86 @@ nClosureCreate(JNIEnv *_env, jobject _this, jlong con, jlong kernelID,
                jlongArray depClosureArray, jlongArray depFieldIDArray) {
   jlong* jFieldIDs = _env->GetLongArrayElements(fieldIDArray, nullptr);
   jsize fieldIDs_length = _env->GetArrayLength(fieldIDArray);
-  RsScriptFieldID* fieldIDs =
-      (RsScriptFieldID*)alloca(sizeof(RsScriptFieldID) * fieldIDs_length);
-  for (int i = 0; i< fieldIDs_length; i++) {
-    fieldIDs[i] = (RsScriptFieldID)jFieldIDs[i];
-  }
-
   jlong* jValues = _env->GetLongArrayElements(valueArray, nullptr);
   jsize values_length = _env->GetArrayLength(valueArray);
-  uintptr_t* values = (uintptr_t*)alloca(sizeof(uintptr_t) * values_length);
-  for (int i = 0; i < values_length; i++) {
-    values[i] = (uintptr_t)jValues[i];
-  }
-
   jint* sizes = _env->GetIntArrayElements(sizeArray, nullptr);
   jsize sizes_length = _env->GetArrayLength(sizeArray);
-
   jlong* jDepClosures =
       _env->GetLongArrayElements(depClosureArray, nullptr);
   jsize depClosures_length = _env->GetArrayLength(depClosureArray);
-  RsClosure* depClosures =
-      (RsClosure*)alloca(sizeof(RsClosure) * depClosures_length);
-  for (int i = 0; i < depClosures_length; i++) {
-    depClosures[i] = (RsClosure)jDepClosures[i];
-  }
-
   jlong* jDepFieldIDs =
       _env->GetLongArrayElements(depFieldIDArray, nullptr);
   jsize depFieldIDs_length = _env->GetArrayLength(depFieldIDArray);
+
+  if (fieldIDs_length != values_length || values_length != sizes_length) {
+      ALOGE("Unmatched field IDs, values, and sizes in closure creation.");
+      return 0;
+  }
+
+  size_t numValues = (size_t)fieldIDs_length;
+
+  if (depClosures_length != depFieldIDs_length) {
+      ALOGE("Unmatched closures and field IDs for dependencies in closure creation.");
+      return 0;
+  }
+
+  size_t numDependencies = (size_t)depClosures_length;
+
+  if (numDependencies > numValues) {
+      ALOGE("Unexpected number of dependencies in closure creation");
+      return 0;
+  }
+
+  if (numValues > kMaxNumberArgsAndBindings) {
+      ALOGE("Too many arguments or globals in closure creation");
+      return 0;
+  }
+
+  RsScriptFieldID* fieldIDs =
+      (RsScriptFieldID*)alloca(sizeof(RsScriptFieldID) * numValues);
+  if (fieldIDs == nullptr) {
+      return 0;
+  }
+
+  for (size_t i = 0; i < numValues; i++) {
+    fieldIDs[i] = (RsScriptFieldID)jFieldIDs[i];
+  }
+
+  uintptr_t* values = (uintptr_t*)alloca(sizeof(uintptr_t) * numValues);
+  if (values == nullptr) {
+      return 0;
+  }
+
+  for (size_t i = 0; i < numValues; i++) {
+    values[i] = (uintptr_t)jValues[i];
+  }
+
+  RsClosure* depClosures =
+      (RsClosure*)alloca(sizeof(RsClosure) * numDependencies);
+  if (depClosures == nullptr) {
+      return 0;
+  }
+
+  for (size_t i = 0; i < numDependencies; i++) {
+    depClosures[i] = (RsClosure)jDepClosures[i];
+  }
+
   RsScriptFieldID* depFieldIDs =
-      (RsScriptFieldID*)alloca(sizeof(RsScriptFieldID) * depFieldIDs_length);
-  for (int i = 0; i < depClosures_length; i++) {
+      (RsScriptFieldID*)alloca(sizeof(RsScriptFieldID) * numDependencies);
+  if (depFieldIDs == nullptr) {
+      return 0;
+  }
+
+  for (size_t i = 0; i < numDependencies; i++) {
     depFieldIDs[i] = (RsClosure)jDepFieldIDs[i];
   }
 
   return (jlong)(uintptr_t)rsClosureCreate(
       (RsContext)con, (RsScriptKernelID)kernelID, (RsAllocation)returnValue,
-      fieldIDs, (size_t)fieldIDs_length, values, (size_t)values_length,
-      (int*)sizes, (size_t)sizes_length,
-      depClosures, (size_t)depClosures_length,
-      depFieldIDs, (size_t)depFieldIDs_length);
+      fieldIDs, numValues, values, numValues,
+      (int*)sizes, numValues,
+      depClosures, numDependencies,
+      depFieldIDs, numDependencies);
 }
 
 static jlong
@@ -386,26 +429,46 @@ nInvokeClosureCreate(JNIEnv *_env, jobject _this, jlong con, jlong invokeID,
 
   jlong* jFieldIDs = _env->GetLongArrayElements(fieldIDArray, nullptr);
   jsize fieldIDs_length = _env->GetArrayLength(fieldIDArray);
-  RsScriptFieldID* fieldIDs =
-      (RsScriptFieldID*)alloca(sizeof(RsScriptFieldID) * fieldIDs_length);
-  for (int i = 0; i< fieldIDs_length; i++) {
-    fieldIDs[i] = (RsScriptFieldID)jFieldIDs[i];
-  }
-
   jlong* jValues = _env->GetLongArrayElements(valueArray, nullptr);
   jsize values_length = _env->GetArrayLength(valueArray);
-  uintptr_t* values = (uintptr_t*)alloca(sizeof(uintptr_t) * values_length);
-  for (int i = 0; i < values_length; i++) {
-    values[i] = (uintptr_t)jValues[i];
-  }
-
   jint* sizes = _env->GetIntArrayElements(sizeArray, nullptr);
   jsize sizes_length = _env->GetArrayLength(sizeArray);
 
+  if (fieldIDs_length != values_length || values_length != sizes_length) {
+      ALOGE("Unmatched field IDs, values, and sizes in closure creation.");
+      return 0;
+  }
+
+  size_t numValues = (size_t) fieldIDs_length;
+
+  if (numValues > kMaxNumberArgsAndBindings) {
+      ALOGE("Too many arguments or globals in closure creation");
+      return 0;
+  }
+
+  RsScriptFieldID* fieldIDs =
+      (RsScriptFieldID*)alloca(sizeof(RsScriptFieldID) * numValues);
+  if (fieldIDs == nullptr) {
+      return 0;
+  }
+
+  for (size_t i = 0; i< numValues; i++) {
+    fieldIDs[i] = (RsScriptFieldID)jFieldIDs[i];
+  }
+
+  uintptr_t* values = (uintptr_t*)alloca(sizeof(uintptr_t) * numValues);
+  if (values == nullptr) {
+      return 0;
+  }
+
+  for (size_t i = 0; i < numValues; i++) {
+    values[i] = (uintptr_t)jValues[i];
+  }
+
   return (jlong)(uintptr_t)rsInvokeClosureCreate(
       (RsContext)con, (RsScriptInvokeID)invokeID, jParams, jParamLength,
-      fieldIDs, (size_t)fieldIDs_length, values, (size_t)values_length,
-      (int*)sizes, (size_t)sizes_length);
+      fieldIDs, numValues, values, numValues,
+      (int*)sizes, numValues);
 }
 
 static void
@@ -430,7 +493,17 @@ nScriptGroup2Create(JNIEnv *_env, jobject _this, jlong con, jstring name,
 
   jlong* jClosures = _env->GetLongArrayElements(closureArray, nullptr);
   jsize numClosures = _env->GetArrayLength(closureArray);
+
+  if (numClosures > (jsize) kMaxNumberClosuresInScriptGroup) {
+    ALOGE("Too many closures in script group");
+    return 0;
+  }
+
   RsClosure* closures = (RsClosure*)alloca(sizeof(RsClosure) * numClosures);
+  if (closures == nullptr) {
+      return 0;
+  }
+
   for (int i = 0; i < numClosures; i++) {
     closures[i] = (RsClosure)jClosures[i];
   }
@@ -1764,6 +1837,15 @@ nScriptForEach(JNIEnv *_env, jobject _this, jlong con, jlong script, jint slot,
 
     RsAllocation *in_allocs = nullptr;
 
+    jint   param_len = 0;
+    jbyte *param_ptr = nullptr;
+
+    RsScriptCall sc, *sca = nullptr;
+    uint32_t sc_size = 0;
+
+    jint  limit_len = 0;
+    jint *limit_ptr = nullptr;
+
     if (ains != nullptr) {
         in_len = _env->GetArrayLength(ains);
         in_ptr = _env->GetLongArrayElements(ains, nullptr);
@@ -1774,7 +1856,16 @@ nScriptForEach(JNIEnv *_env, jobject _this, jlong con, jlong script, jint slot,
         } else {
             // Convert from 64-bit jlong types to the native pointer type.
 
+            if (in_len > (jint)kMaxNumberKernelArguments) {
+                ALOGE("Too many arguments in kernel launch.");
+                return;
+            }
+
             in_allocs = (RsAllocation*)alloca(in_len * sizeof(RsAllocation));
+            if (in_allocs == nullptr) {
+                ALOGE("Failed launching kernel for lack of memory.");
+                goto exit;
+            }
 
             for (int index = in_len; --index >= 0;) {
                 in_allocs[index] = (RsAllocation)in_ptr[index];
@@ -1782,19 +1873,10 @@ nScriptForEach(JNIEnv *_env, jobject _this, jlong con, jlong script, jint slot,
         }
     }
 
-    jint   param_len = 0;
-    jbyte *param_ptr = nullptr;
-
     if (params != nullptr) {
         param_len = _env->GetArrayLength(params);
         param_ptr = _env->GetByteArrayElements(params, nullptr);
     }
-
-    RsScriptCall sc, *sca = nullptr;
-    uint32_t sc_size = 0;
-
-    jint  limit_len = 0;
-    jint *limit_ptr = nullptr;
 
     if (limits != nullptr) {
         limit_len = _env->GetArrayLength(limits);
@@ -1825,6 +1907,8 @@ nScriptForEach(JNIEnv *_env, jobject _this, jlong con, jlong script, jint slot,
     rsScriptForEachMulti((RsContext)con, (RsScript)script, slot,
                          in_allocs, in_len, (RsAllocation)aout,
                          param_ptr, param_len, sca, sc_size);
+
+exit:
 
     if (ains != nullptr) {
         _env->ReleaseLongArrayElements(ains, in_ptr, JNI_ABORT);
