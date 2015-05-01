@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0f35e19_44c782c4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1754,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2015-05-01T03:53:22Z",
+      "side": 1,
+      "message": "Remove this null check.",
+      "range": {
+        "startLine": 1754,
+        "startChar": 20,
+        "endLine": 1754,
+        "endChar": 36
+      },
+      "revId": "600ac0dab2e215d27ca083ec0d141f4c39b862b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
