@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0ece23d_a5b3eafc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1863,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2015-05-01T04:06:04Z",
+      "side": 1,
+      "message": "Urg, it looks like we could use this after it\u0027s nulled out  for example, if wifi connects, we kick off a validation attempt, and then network monitor fails validation after wifi has disconnected but before we send it a CMD_NETWORK_DISCONNECTED.\n\nCan you wrap this in a \"if (nai !\u003d null)\"? I looked at the rest of the file and couldn\u0027t find any other cases where we try to use the asyncChannel without null-checking it, but you might want to take a look as well.",
+      "range": {
+        "startLine": 1863,
+        "startChar": 24,
+        "endLine": 1863,
+        "endChar": 41
+      },
+      "revId": "031c8d664ab291a5029103b38ccdd22799c53717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
