@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0f35e19_8436aa5e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4070,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2015-05-01T03:31:38Z",
+      "side": 1,
+      "message": "Looks like there are a few places where we call nai.asyncChannel.disconnect. On the face of it it doesn\u0027t look like they can cause crashes like the one you fixed, but for consistency I\u0027d prefer that we null out the async channel every time we disconnect a network agent. Can you factor it out to a function? Maybe something like this:\n\n    private void disconnectNetworkAgent(NetworkAgentInfo nai) {\n        if (nai !\u003d null) {\n            nai.asyncChannel.disconnect();\n            nai.asyncChannel \u003d null;\n        }\n    }\n\nand then replace all instances of nai.asyncChannel.disconnect(nai) with disconnectNetworkAgent(nai).",
+      "range": {
+        "startLine": 4070,
+        "startChar": 25,
+        "endLine": 4070,
+        "endChar": 48
+      },
+      "revId": "ff40b4b1006f987a1791d8decc076e99f3bb9a71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
