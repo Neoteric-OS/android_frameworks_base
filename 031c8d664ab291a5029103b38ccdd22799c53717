@@ -22,6 +22,53 @@
       "revId": "031c8d664ab291a5029103b38ccdd22799c53717",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "504a0e43_8c87bbe0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1863,
+      "author": {
+        "id": 1062130
+      },
+      "writtenOn": "2015-05-04T21:04:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0ece23d_a5b3eafc",
+      "range": {
+        "startLine": 1863,
+        "startChar": 24,
+        "endLine": 1863,
+        "endChar": 41
+      },
+      "revId": "031c8d664ab291a5029103b38ccdd22799c53717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "706d52b3_36b6163a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4231,
+      "author": {
+        "id": 1062130
+      },
+      "writtenOn": "2015-05-04T21:04:58Z",
+      "side": 1,
+      "message": "apparently, this won\u0027t work. asyncChannel is final and therefore cannot be reassigned to null.\n\nCan we then simply catch exception and bail out if asyncChannel is already disconnected to resolve original issue?",
+      "range": {
+        "startLine": 4231,
+        "startChar": 31,
+        "endLine": 4231,
+        "endChar": 35
+      },
+      "revId": "031c8d664ab291a5029103b38ccdd22799c53717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
