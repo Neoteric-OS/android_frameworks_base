@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "102df676_c2cd0639",
+        "filename": "tools/aapt/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-05-04T22:48:15Z",
+      "side": 1,
+      "message": "let\u0027s (a) remove this and (b -- can be done later since it\u0027s not actually a change) check that clang isn\u0027t breaking this code.",
+      "revId": "48ae3dfad3f0edd7409648b3396b11252a483923",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
