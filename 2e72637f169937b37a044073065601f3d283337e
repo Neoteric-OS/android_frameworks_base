@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d026fe9b_1412f654",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-05-05T20:00:13Z",
+      "side": 1,
+      "message": "Don\u0027t apply animation clip to dialog activities.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "2e72637f169937b37a044073065601f3d283337e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d026fe9b_3417f244",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-05-05T20:00:13Z",
+      "side": 1,
+      "message": "clipped",
+      "range": {
+        "startLine": 10,
+        "startChar": 23,
+        "endLine": 10,
+        "endChar": 26
+      },
+      "revId": "2e72637f169937b37a044073065601f3d283337e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "102df676_9d0fe532",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-05-05T20:00:13Z",
+      "side": 1,
+      "message": "This is caused...",
+      "range": {
+        "startLine": 10,
+        "startChar": 28,
+        "endLine": 10,
+        "endChar": 42
+      },
+      "revId": "2e72637f169937b37a044073065601f3d283337e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0218a87_7fd4ef3a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-05-05T20:00:13Z",
+      "side": 1,
+      "message": "the clip rect animation is not needed for non-inset decor app window,...",
+      "range": {
+        "startLine": 13,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 16
+      },
+      "revId": "2e72637f169937b37a044073065601f3d283337e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "102df676_7db4f1c0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-05-05T20:00:13Z",
+      "side": 1,
+      "message": "Change to:\n\nhttps://code.google.com/p/android/issues/detail?id\u003d161362\nBug: 20652683\nBug: 19523205",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "2e72637f169937b37a044073065601f3d283337e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0218a87_3ffc37b1",
+        "filename": "services/core/java/com/android/server/wm/WindowStateAnimator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-05-05T20:00:13Z",
+      "side": 1,
+      "message": "Can you please add some comment about this?",
+      "range": {
+        "startLine": 1343,
+        "startChar": 25,
+        "endLine": 1343,
+        "endChar": 88
+      },
+      "revId": "2e72637f169937b37a044073065601f3d283337e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
