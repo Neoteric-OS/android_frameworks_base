@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed42494b_6fc8f127",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1023582
+      },
+      "writtenOn": "2015-05-06T05:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d026fe9b_1412f654",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "2e72637f169937b37a044073065601f3d283337e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d026fe9b_3417f244",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "6d2e5992_4b6be59f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1023582
+      },
+      "writtenOn": "2015-05-06T05:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d026fe9b_3417f244",
+      "range": {
+        "startLine": 10,
+        "startChar": 23,
+        "endLine": 10,
+        "endChar": 26
+      },
+      "revId": "2e72637f169937b37a044073065601f3d283337e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed42494b_4fcd2d36",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1023582
+      },
+      "writtenOn": "2015-05-06T05:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "102df676_9d0fe532",
+      "range": {
+        "startLine": 10,
+        "startChar": 28,
+        "endLine": 10,
+        "endChar": 42
+      },
+      "revId": "2e72637f169937b37a044073065601f3d283337e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0218a87_7fd4ef3a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2015-05-05T20:00:13Z",
       "side": 1,
       "message": "the clip rect animation is not needed for non-inset decor app window,...",
+      "range": {
+        "startLine": 13,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 16
+      },
+      "revId": "2e72637f169937b37a044073065601f3d283337e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d2e5992_2b709987",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1023582
+      },
+      "writtenOn": "2015-05-06T05:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0218a87_7fd4ef3a",
       "range": {
         "startLine": 13,
         "startChar": 9,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ed42494b_2fd2e9d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1023582
+      },
+      "writtenOn": "2015-05-06T05:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "102df676_7db4f1c0",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "2e72637f169937b37a044073065601f3d283337e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0218a87_3ffc37b1",
         "filename": "services/core/java/com/android/server/wm/WindowStateAnimator.java",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2015-05-05T20:00:13Z",
       "side": 1,
       "message": "Can you please add some comment about this?",
+      "range": {
+        "startLine": 1343,
+        "startChar": 25,
+        "endLine": 1343,
+        "endChar": 88
+      },
+      "revId": "2e72637f169937b37a044073065601f3d283337e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed42494b_efdbc1ec",
+        "filename": "services/core/java/com/android/server/wm/WindowStateAnimator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1023582
+      },
+      "writtenOn": "2015-05-06T05:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0218a87_3ffc37b1",
       "range": {
         "startLine": 1343,
         "startChar": 25,
