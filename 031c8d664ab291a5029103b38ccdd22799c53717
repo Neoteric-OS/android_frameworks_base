@@ -93,6 +93,30 @@
       "revId": "031c8d664ab291a5029103b38ccdd22799c53717",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed42494b_f81385dd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4231,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2015-05-07T14:12:10Z",
+      "side": 1,
+      "message": "Actually, can you just remove this line? I think we\u0027ll end up putting a null check into AsyncChannel#sendMessage, but this change is a worthwhile refactoring in itself and we should take it.",
+      "parentUuid": "6d2e5992_144e1a4a",
+      "range": {
+        "startLine": 4231,
+        "startChar": 31,
+        "endLine": 4231,
+        "endChar": 35
+      },
+      "revId": "031c8d664ab291a5029103b38ccdd22799c53717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
