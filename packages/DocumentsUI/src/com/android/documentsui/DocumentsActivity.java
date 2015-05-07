@@ -192,7 +192,7 @@ public class DocumentsActivity extends Activity {
 
         if (mState.action == ACTION_CREATE) {
             final String mimeType = getIntent().getType();
-            final String title = getIntent().getStringExtra(Intent.EXTRA_TITLE);
+            final String title = getPreferredExtraTitle(icicle, getIntent());
             SaveFragment.show(getFragmentManager(), mimeType, title);
         } else if (mState.action == ACTION_OPEN_TREE) {
             PickFragment.show(getFragmentManager());
@@ -217,6 +217,14 @@ public class DocumentsActivity extends Activity {
             }
         } else {
             onCurrentDirectoryChanged(ANIM_NONE);
+        }
+    }
+
+    private String getPreferredExtraTitle(Bundle bundle, Intent intent) {
+        if (bundle != null && bundle.containsKey(Intent.EXTRA_TITLE)) {
+            return bundle.getString(Intent.EXTRA_TITLE);
+        } else {
+            return intent.getStringExtra(Intent.EXTRA_TITLE);
         }
     }
 
@@ -720,6 +728,13 @@ public class DocumentsActivity extends Activity {
     protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
         state.putParcelable(EXTRA_STATE, mState);
+        final SaveFragment saveFragment = SaveFragment.get(getFragmentManager());
+        if (saveFragment != null) {
+            String title = saveFragment.getDisplayName();
+            if (title != null && title.length() != 0) {
+                state.putString(Intent.EXTRA_TITLE, title);
+            }
+        }
     }
 
     @Override
