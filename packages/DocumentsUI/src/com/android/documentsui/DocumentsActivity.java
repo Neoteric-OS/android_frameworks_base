@@ -166,7 +166,7 @@ public class DocumentsActivity extends BaseActivity {
 
         if (mState.action == ACTION_CREATE) {
             final String mimeType = getIntent().getType();
-            final String title = getIntent().getStringExtra(Intent.EXTRA_TITLE);
+            final String title = getPreferredExtraTitle(icicle, getIntent());
             SaveFragment.show(getFragmentManager(), mimeType, title);
         } else if (mState.action == ACTION_OPEN_TREE ||
                    mState.action == ACTION_OPEN_COPY_DESTINATION) {
@@ -207,6 +207,14 @@ public class DocumentsActivity extends BaseActivity {
             }
         } else {
             onCurrentDirectoryChanged(ANIM_NONE);
+        }
+    }
+
+    private String getPreferredExtraTitle(Bundle bundle, Intent intent) {
+        if (bundle != null && bundle.containsKey(Intent.EXTRA_TITLE)) {
+            return bundle.getString(Intent.EXTRA_TITLE);
+        } else {
+            return intent.getStringExtra(Intent.EXTRA_TITLE);
         }
     }
 

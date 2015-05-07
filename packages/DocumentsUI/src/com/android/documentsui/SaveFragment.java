@@ -147,4 +147,8 @@ public class SaveFragment extends Fragment {
         mSave.setVisibility(pending ? View.INVISIBLE : View.VISIBLE);
         mProgress.setVisibility(pending ? View.VISIBLE : View.GONE);
     }
+
+    String getDisplayName() {
+        return mDisplayName != null ? mDisplayName.getText().toString() : "";
+    }
 }

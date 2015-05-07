@@ -458,6 +458,14 @@ abstract class BaseActivity extends Activity {
     protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
         state.putParcelable(EXTRA_STATE, getDisplayState());
+
+        final SaveFragment saveFragment = SaveFragment.get(getFragmentManager());
+        if (saveFragment != null) {
+            String title = saveFragment.getDisplayName();
+            if (title != null && title.length() != 0) {
+                state.putString(Intent.EXTRA_TITLE, title);
+            }
+        }
     }
 
     @Override
