@@ -478,6 +478,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
      * app window under this, still dismiss the keyguard but don't show the app underneath. Show
      * the wallpaper. */
     private WindowState mWinShowWhenLocked;
+    private boolean mSecureDismissingKeyguard;
 
     boolean mShowingLockscreen;
     boolean mShowingDream;
@@ -4094,9 +4095,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                             mDismissKeyguard == DISMISS_KEYGUARD_NONE) {
                         if (DEBUG_LAYOUT) Slog.v(TAG,
                                 "Setting mDismissKeyguard true by win " + win);
-                        mDismissKeyguard = mWinDismissingKeyguard == win ?
+                        mDismissKeyguard = mWinDismissingKeyguard == win
+                                && mSecureDismissingKeyguard == mKeyguardSecure ?
                                 DISMISS_KEYGUARD_CONTINUE : DISMISS_KEYGUARD_START;
                         mWinDismissingKeyguard = win;
+                        mSecureDismissingKeyguard = mKeyguardSecure;
                         mForceStatusBarFromKeyguard = mShowingLockscreen && mKeyguardSecure;
                     } else if (mAppsToBeHidden.isEmpty() && showWhenLocked) {
                         if (DEBUG_LAYOUT) Slog.v(TAG,
@@ -4250,6 +4253,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
             } else {
                 mWinDismissingKeyguard = null;
+                mSecureDismissingKeyguard = false;
                 mKeyguardHidden = false;
                 if (setKeyguardOccludedLw(false)) {
                     changes |= FINISH_LAYOUT_REDO_LAYOUT
