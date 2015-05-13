@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad15b184_1aac4916",
+        "filename": "core/java/android/app/AlarmManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1019174
+      },
+      "writtenOn": "2015-05-13T17:41:42Z",
+      "side": 1,
+      "message": "Please don\u0027t change a line if you\u0027re only removing whitespace (it clutters the git history).",
+      "revId": "3eff9f5f845c077e6c670ce6147951c1d50b6c71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
