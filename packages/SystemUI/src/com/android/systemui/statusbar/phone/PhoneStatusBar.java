@@ -1750,6 +1750,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         if (controller != null) {
                             // we've got a live one, here
                             mediaNotification = entry;
+                            final PlaybackState state = controller.getPlaybackState();
+                            if (state == null) continue;
+                            if (state.getState() == PlaybackState.STATE_PLAYING) {
+                                if (DEBUG_MEDIA) {
+                                    Log.v(TAG, "DEBUG_MEDIA: found controller playing media "
+                                        + entry.notification.getKey());
+                                }
+                                break;
+                            }
                         }
                     }
                 }
