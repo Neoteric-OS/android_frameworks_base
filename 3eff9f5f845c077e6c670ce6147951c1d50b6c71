@@ -16,6 +16,24 @@
       "revId": "3eff9f5f845c077e6c670ce6147951c1d50b6c71",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d9a7579_12be0c47",
+        "filename": "core/java/android/app/AlarmManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1005255
+      },
+      "writtenOn": "2015-05-14T01:10:54Z",
+      "side": 1,
+      "message": "Done, thanks! Actually, that was my editor to blame :)",
+      "parentUuid": "ad15b184_1aac4916",
+      "revId": "3eff9f5f845c077e6c670ce6147951c1d50b6c71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
