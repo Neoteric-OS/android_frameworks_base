@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eda6c9c2_c023b525",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-05-15T21:05:46Z",
+      "side": 1,
+      "message": "Some information on the problem you are seeing when this isn\u0027t forwarded would be helpful.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 42
+      },
+      "revId": "5b2e3b75c989178212d82a2e7c0f7b54969bfd40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
