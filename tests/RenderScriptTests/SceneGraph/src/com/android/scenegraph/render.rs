@@ -79,6 +79,7 @@ static void draw(SgRenderable *obj) {
         rsgBindProgramRaster(renderState->pr);
     } else {
         rs_program_raster pr;
+        rsClearObject(&pr);
         rsgBindProgramRaster(pr);
     }
 
