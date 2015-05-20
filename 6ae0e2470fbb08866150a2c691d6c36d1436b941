@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adfdb1c1_5d7af6b5",
+        "filename": "services/core/java/com/android/server/am/ActiveServices.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1013810
+      },
+      "writtenOn": "2015-05-20T16:34:05Z",
+      "side": 1,
+      "message": "Delete trailing space so we don\u0027t get two spaces in a row.",
+      "range": {
+        "startLine": 512,
+        "startChar": 61,
+        "endLine": 512,
+        "endChar": 62
+      },
+      "revId": "6ae0e2470fbb08866150a2c691d6c36d1436b941",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
