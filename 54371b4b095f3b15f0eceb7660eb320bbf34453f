@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd4745eb_01d74c77",
+        "filename": "rs/java/android/renderscript/Element.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2015-05-20T08:28:23Z",
+      "side": 1,
+      "message": "Because FLOAT_16 is still @hide in the Java APIs, this actually breaks our CTS ElementTest.java file, since it expects anything it hasn\u0027t whitelisted to fail to produce a vector type. This part of the patch now makes it such that FLOAT_16 can successfully create a vector (which then causes us to not throw the expected exception).",
+      "revId": "54371b4b095f3b15f0eceb7660eb320bbf34453f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
