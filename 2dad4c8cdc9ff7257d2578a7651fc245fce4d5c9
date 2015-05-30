@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed56c9ec_23f15967",
+        "filename": "packages/SystemUI/src/com/android/systemui/keyguard/KeyguardViewMediator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2015-05-30T00:01:29Z",
+      "side": 1,
+      "message": "This should use mLockPatternUtils.getCurrentUser() instead to avoid race conditions, but we\u0027ve replaced that method in the internal tree.\n\nLet me check on how to best proceed and I\u0027ll follow-up here.",
+      "range": {
+        "startLine": 678,
+        "startChar": 56,
+        "endLine": 678,
+        "endChar": 79
+      },
+      "revId": "2dad4c8cdc9ff7257d2578a7651fc245fce4d5c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b91fb853_636d817c",
+        "filename": "packages/SystemUI/src/com/android/systemui/keyguard/KeyguardViewMediator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2015-05-30T00:01:29Z",
+      "side": 1,
+      "message": "dito.",
+      "range": {
+        "startLine": 683,
+        "startChar": 51,
+        "endLine": 683,
+        "endChar": 74
+      },
+      "revId": "2dad4c8cdc9ff7257d2578a7651fc245fce4d5c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
