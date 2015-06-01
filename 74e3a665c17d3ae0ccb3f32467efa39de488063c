@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d42d931_0349d941",
+        "filename": "tools/aapt/pseudolocalize.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-06-01T11:44:01Z",
+      "side": 1,
+      "message": "use nullptr or NULL and not 0",
+      "revId": "74e3a665c17d3ae0ccb3f32467efa39de488063c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7919c071_c74d8ebe",
+        "filename": "tools/aapt/pseudolocalize.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-06-01T11:44:01Z",
+      "side": 1,
+      "message": "const size_t length \u003d text.size();",
+      "revId": "74e3a665c17d3ae0ccb3f32467efa39de488063c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d42d931_6340dd14",
+        "filename": "tools/aapt/pseudolocalize.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-06-01T11:44:01Z",
+      "side": 1,
+      "message": "is_space ?",
+      "range": {
+        "startLine": 204,
+        "startChar": 15,
+        "endLine": 204,
+        "endChar": 20
+      },
+      "revId": "74e3a665c17d3ae0ccb3f32467efa39de488063c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9fb8c32_05bc9126",
+        "filename": "tools/aapt/pseudolocalize.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-06-01T11:44:01Z",
+      "side": 1,
+      "message": "\"if (mDepth \u003d\u003d 0)\" please don\u0027t use the unary not for integer types",
+      "revId": "74e3a665c17d3ae0ccb3f32467efa39de488063c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7919c071_a74a92a2",
+        "filename": "tools/aapt/pseudolocalize.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-06-01T11:44:01Z",
+      "side": 1,
+      "message": "if (mDepth \u003d\u003d 0)",
+      "revId": "74e3a665c17d3ae0ccb3f32467efa39de488063c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7919c071_a79cd2ba",
+        "filename": "tools/aapt/pseudolocalize.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-06-01T11:44:01Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN ?",
+      "revId": "74e3a665c17d3ae0ccb3f32467efa39de488063c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d42d931_8364e9cb",
+        "filename": "tools/aapt/pseudolocalize.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-06-01T11:44:01Z",
+      "side": 1,
+      "message": "please place private members at the end of the class. prefer to use explicit widths, int32_t / uint32_t or size_t",
+      "revId": "74e3a665c17d3ae0ccb3f32467efa39de488063c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
