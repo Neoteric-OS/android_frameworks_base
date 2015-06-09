@@ -208,7 +208,7 @@ check_filename(const char* filename, const char* package, buffer_type* name)
     p = strchr(name->data, '.');
     len = p ? p-name->data : strlen(name->data);
     expected.append(name->data, len);
-    
+
     expected += ".aidl";
 
     len = fn.length();
@@ -1058,7 +1058,7 @@ compile_aidl(Options& options)
     check_outputFilePath(options.outputFileName);
 
     err = generate_java(options.outputFileName, options.inputFileName.c_str(),
-                        (interface_type*)mainDoc);
+                        options.shouldTrace, (interface_type*)mainDoc);
 
     return err;
 }
