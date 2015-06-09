@@ -19,6 +19,7 @@ usage()
             "   -p<FILE>   file created by --preprocess to import.\n"
             "   -o<FOLDER> base output folder for generated files.\n"
             "   -b         fail when trying to compile a parcelable.\n"
+	     "   -t         add atrace events to unmarshaling.\n"
             "\n"
             "INPUT:\n"
             "   An aidl interface file.\n"
@@ -51,6 +52,7 @@ parse_options(int argc, const char* const* argv, Options *options)
     options->task = COMPILE_AIDL;
     options->failOnParcelable = false;
     options->autoDepFile = false;
+    options->shouldTrace = false;
 
     // OPTIONS
     while (i < argc) {
@@ -97,6 +99,9 @@ parse_options(int argc, const char* const* argv, Options *options)
                 else if (len == 2 && s[1] == 'b') {
                     options->failOnParcelable = true;
                 }
+		else if (len ==2 && s[1] == 't') {
+		    options->shouldTrace = true;
+		}
                 else {
                     // s[1] is not known
                     fprintf(stderr, "unknown option (%d): %s\n", i, s);

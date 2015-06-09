@@ -1058,7 +1058,7 @@ compile_aidl(Options& options)
     check_outputFilePath(options.outputFileName);
 
     err = generate_java(options.outputFileName, options.inputFileName.c_str(),
-                        (interface_type*)mainDoc);
+			options.shouldTrace, (interface_type*)mainDoc);
 
     return err;
 }

@@ -24,6 +24,7 @@ struct Options
     string outputBaseFolder;
     string depFileName;
     bool autoDepFile;
+    bool shouldTrace;
 
     vector<string> filesToPreprocess;
 };

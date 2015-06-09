@@ -248,7 +248,8 @@ generate_read_from_parcel(Type* t, StatementBlock* addTo, Variable* v,
 
 static void
 generate_method(const method_type* method, Class* interface,
-                    StubClass* stubClass, ProxyClass* proxyClass, int index)
+		StubClass* stubClass, ProxyClass* proxyClass, int index,
+		bool tracing)
 {
     arg_type* arg;
     int i;
@@ -297,6 +298,27 @@ generate_method(const method_type* method, Class* interface,
     // interface token validation is the very first thing we do
     c->statements->Add(new MethodCall(stubClass->transact_data,
             "enforceInterface", 1, new LiteralExpression("DESCRIPTOR")));
+
+    FieldVariable *sdk_int;
+    Type *trace_class;
+    if (tracing) {
+	trace_class = new Type("android.os", "Trace", Type::BUILT_IN,
+				     false, false, false);
+        IfStatement *sdk_check = new IfStatement();
+	Type *build_class = new Type("android.os.Build", "VERSION", Type::BUILT_IN,
+				 false, false, false);
+
+	sdk_int =  new FieldVariable(build_class, "SDK_INT");
+
+	sdk_check->expression = new Comparison(sdk_int, ">=",
+					       new LiteralExpression("18"));
+
+	StringLiteralExpression *trace_param = new StringLiteralExpression(method->name.data);
+	sdk_check->statements->Add(new MethodCall(trace_class, "beginSection",
+						  1, trace_param));
+
+	c->statements->Add(sdk_check);
+    }
 
     // args
     Variable* cl = NULL;
@@ -375,6 +397,14 @@ generate_method(const method_type* method, Class* interface,
         }
 
         arg = arg->next;
+    }
+
+    //end Tracing
+    if (tracing) {
+        IfStatement *sdk_check2 = new IfStatement();
+	sdk_check2->expression = new Comparison(sdk_int, ">=", new LiteralExpression("18"));
+	sdk_check2->statements->Add(new MethodCall(trace_class, "endSection"));
+	c->statements->Add(sdk_check2);
     }
 
     // return true
@@ -514,7 +544,7 @@ generate_interface_descriptors(StubClass* stub, ProxyClass* proxy)
 }
 
 Class*
-generate_binder_interface_class(const interface_type* iface)
+generate_binder_interface_class(const interface_type* iface, bool tracing)
 {
     InterfaceType* interfaceType = static_cast<InterfaceType*>(
         NAMES.Find(iface->package, iface->name.data));
@@ -549,7 +579,8 @@ generate_binder_interface_class(const interface_type* iface)
     while (item != NULL) {
         if (item->item_type == METHOD_TYPE) {
             method_type * method_item = (method_type*) item;
-            generate_method(method_item, interface, stub, proxy, method_item->assigned_id);
+            generate_method(method_item, interface, stub, proxy,
+			    method_item->assigned_id, tracing);
         }
         item = item->next;
         index++;
