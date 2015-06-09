@@ -865,9 +865,13 @@ public interface WindowManagerPolicy {
      * @param attached For sub-windows, the window it is attached to; this
      *                 window will already have had layoutWindow() called on it
      *                 so you can use its Rect.  Otherwise null.
+     * @param statusarBeImeTarget To identify if StatusBar window is IME target.
+     *                            StatusBar window will be IME target only when StatusBar draws
+     *                            Keyguard password lock view and needs IME to input password on
+     *                            input field UI, and on this time, StatusBar window needs to be
+     *                            layout as Keygaurd to carve out IME region on its window frame.
      */
-    public void layoutWindowLw(WindowState win, WindowState attached);
-
+    public void layoutWindowLw(WindowState win, WindowState attached, boolean statusarBeImeTarget);
     
     /**
      * Return the insets for the areas covered by system windows. These values
