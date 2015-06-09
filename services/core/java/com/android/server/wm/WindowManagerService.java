@@ -8961,6 +8961,11 @@ public class WindowManagerService extends IWindowManager.Stub
         // First perform layout of any root windows (not attached
         // to another window).
         int topAttached = -1;
+        boolean statusBarBeImeTarget = mInputMethodWindow != null && mInputMethodTarget != null
+                && mInputMethodWindow.isVisibleLw() && mInputMethodTarget.isVisibleLw()
+                && mInputMethodTarget.mAttrs != null
+                && mInputMethodTarget.mAttrs.type == LayoutParams.TYPE_STATUS_BAR
+                && (mInputMethodTarget.mAttrs.privateFlags & PRIVATE_FLAG_KEYGUARD) == 0;
         for (i = N-1; i >= 0; i--) {
             final WindowState win = windows.get(i);
 
@@ -9014,7 +9019,7 @@ public class WindowManagerService extends IWindowManager.Stub
                     }
                     win.mLayoutNeeded = false;
                     win.prelayout();
-                    mPolicy.layoutWindowLw(win, null);
+                    mPolicy.layoutWindowLw(win, null, statusBarBeImeTarget);
                     win.mLayoutSeq = seq;
                     if (DEBUG_LAYOUT) Slog.v(TAG, "  LAYOUT: mFrame="
                             + win.mFrame + " mContainingFrame="
@@ -9066,7 +9071,7 @@ public class WindowManagerService extends IWindowManager.Stub
                     }
                     win.mLayoutNeeded = false;
                     win.prelayout();
-                    mPolicy.layoutWindowLw(win, win.mAttachedWindow);
+                    mPolicy.layoutWindowLw(win, win.mAttachedWindow, false);
                     win.mLayoutSeq = seq;
                     if (DEBUG_LAYOUT) Slog.v(TAG, "  LAYOUT: mFrame="
                             + win.mFrame + " mContainingFrame="

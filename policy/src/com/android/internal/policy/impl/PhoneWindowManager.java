@@ -3509,11 +3509,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     /** {@inheritDoc} */
     @Override
-    public void layoutWindowLw(WindowState win, WindowState attached) {
+    public void layoutWindowLw(WindowState win, WindowState attached, boolean statusBarBeImeTarget) {
         // we've already done the status bar
         final WindowManager.LayoutParams attrs = win.getAttrs();
-        if ((win == mStatusBar && (attrs.privateFlags & PRIVATE_FLAG_KEYGUARD) == 0) ||
-                win == mNavigationBar) {
+        if ((win == mStatusBar && (attrs.privateFlags & PRIVATE_FLAG_KEYGUARD) == 0
+                && !statusBarBeImeTarget) || win == mNavigationBar) {
             return;
         }
         final boolean isDefaultDisplay = win.isDefaultDisplay();
@@ -3573,7 +3573,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             // IM dock windows always go to the bottom of the screen.
             attrs.gravity = Gravity.BOTTOM;
             mDockLayer = win.getSurfaceLayer();
-        } else if (win == mStatusBar && (attrs.privateFlags & PRIVATE_FLAG_KEYGUARD) != 0) {
+        } else if (win == mStatusBar && (attrs.privateFlags & PRIVATE_FLAG_KEYGUARD) != 0
+                || statusBarBeImeTarget) {
             pf.left = df.left = of.left = mUnrestrictedScreenLeft;
             pf.top = df.top = of.top = mUnrestrictedScreenTop;
             pf.right = df.right = of.right = mUnrestrictedScreenWidth + mUnrestrictedScreenLeft;
