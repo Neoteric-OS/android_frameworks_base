@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "198c4486_d3492608",
+        "filename": "media/java/android/media/MediaMetadataRetriever.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2015-06-11T16:11:12Z",
+      "side": 1,
+      "message": "please prefer try with resources for platform code.",
+      "revId": "4c021ac41670e6371e93e4e75865ebaca467bbdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
