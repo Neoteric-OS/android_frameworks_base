@@ -100,6 +100,8 @@ final class OneTouchPlayAction extends HdmiCecFeatureAction {
             int status = cmd.getParams()[0];
             if (status == HdmiControlManager.POWER_STATUS_ON) {
                 broadcastActiveSource();
+                sendCommand(HdmiCecMessageBuilder.buildReportMenuStatus(getSourceAddress(),
+                        mTargetAddress, Constants.MENU_STATE_ACTIVATED));
                 invokeCallback(HdmiControlManager.RESULT_SUCCESS);
                 finish();
             }
