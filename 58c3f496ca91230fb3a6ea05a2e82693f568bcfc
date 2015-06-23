@@ -93,6 +93,30 @@
       "revId": "58c3f496ca91230fb3a6ea05a2e82693f568bcfc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe23d6e9_5026a2c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1022530
+      },
+      "writtenOn": "2015-06-23T20:40:15Z",
+      "side": 1,
+      "message": "To be clearer, this change id is the same as what it was cherry picked from, and as I hear, the change ids should be the same as they are used by automergers, etc.",
+      "parentUuid": "fe23d6e9_50886226",
+      "range": {
+        "startLine": 12,
+        "startChar": 11,
+        "endLine": 12,
+        "endChar": 52
+      },
+      "revId": "58c3f496ca91230fb3a6ea05a2e82693f568bcfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
