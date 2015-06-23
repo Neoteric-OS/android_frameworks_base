@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e149a89_0766b84a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1057373
+      },
+      "writtenOn": "2015-06-23T19:11:35Z",
+      "side": 1,
+      "message": "This looks a change ID, not a commit. Is that right?",
+      "range": {
+        "startLine": 9,
+        "startChar": 20,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "58c3f496ca91230fb3a6ea05a2e82693f568bcfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe23d6e9_edc9c148",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1057373
+      },
+      "writtenOn": "2015-06-23T19:11:35Z",
+      "side": 1,
+      "message": "Should the change id be the same as what it was cherry picked from?",
+      "range": {
+        "startLine": 12,
+        "startChar": 11,
+        "endLine": 12,
+        "endChar": 52
+      },
+      "revId": "58c3f496ca91230fb3a6ea05a2e82693f568bcfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
