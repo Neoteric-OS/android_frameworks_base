@@ -264,6 +264,10 @@ int ShadowTessellator::getExtraVertexNumber(const Vector2& vector1,
     // acos( )     --- [0, M_PI]
     // floor(...)  --- [0, EXTRA_VERTEX_PER_PI]
     float dotProduct = vector1.dot(vector2);
+    // make sure that dotProduct value is in acsof input range [-1, 1]
+    if (fabs(dotProduct) > 1.0f) {
+        dotProduct = copysign(1.0f, dotProduct);
+    }
     // TODO: Use look up table for the dotProduct to extraVerticesNumber
     // computation, if needed.
     float angle = acosf(dotProduct);
