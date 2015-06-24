@@ -748,8 +748,16 @@ public class KeyEvent extends InputEvent implements Parcelable {
     public static final int KEYCODE_TV_TIMER_PROGRAMMING = 258;
     /** Key code constant: Help key. */
     public static final int KEYCODE_HELP = 259;
+    /** Key code constant: Primary stem key */
+    public static final int KEYCODE_STEM_PRIMARY = 260;
+    /** Key code constant: Generic stem key 1 */
+    public static final int KEYCODE_STEM_1 = 261;
+    /** Key code constant: Generic stem key 2 */
+    public static final int KEYCODE_STEM_2 = 262;
+    /** Key code constant: Generic stem key 3 */
+    public static final int KEYCODE_STEM_3 = 263;
 
-    private static final int LAST_KEYCODE = KEYCODE_HELP;
+    private static final int LAST_KEYCODE = KEYCODE_STEM_3;
 
     // NOTE: If you add a new keycode here you must also add it to:
     //  isSystem()
