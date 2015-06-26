@@ -6276,6 +6276,9 @@ public class PackageManagerService extends IPackageManager.Stub {
                 adjustedAbi =  scannedPackage.applicationInfo.primaryCpuAbi;
             }
 
+            String preferredInstructionSet = getDexCodeInstructionSet(getPreferredInstructionSet());
+            String adjustedInstructionSet = VMRuntime.getInstructionSet(adjustedAbi);
+            boolean deleteOld = !adjustedInstructionSet.equals(preferredInstructionSet);
             for (PackageSetting ps : packagesForUser) {
                 if (scannedPackage == null || !scannedPackage.packageName.equals(ps.name)) {
                     if (ps.primaryCpuAbiString != null) {
@@ -6294,8 +6297,12 @@ public class PackageManagerService extends IPackageManager.Stub {
                             ps.pkg.applicationInfo.primaryCpuAbi = null;
                             return;
                         } else {
-                            mInstaller.rmdex(ps.codePathString,
-                                    getDexCodeInstructionSet(getPreferredInstructionSet()));
+                            if (deleteOld) {
+                                List<String> allCodePaths = ps.pkg.getAllCodePaths();
+                                for (String codePath : allCodePaths) {
+                                    mInstaller.rmdex(codePath, preferredInstructionSet);
+                                }
+                            }
                         }
                     }
                 }
