@@ -11708,6 +11708,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                             outActivities.add(pa.mPref.mComponent);
                         }
                     }
+                    num++;
                 }
             }
         }
