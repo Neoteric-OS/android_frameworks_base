@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "93a1f560_6b99cd55",
+        "filename": "graphics/java/android/graphics/Canvas.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2015-06-29T15:58:31Z",
+      "side": 1,
+      "message": "Can\u0027t take a reference to Canvas, as Canvas contains large objects that we cannot afford to wait for a double-gc on (in this case specifically Bitmap).",
+      "range": {
+        "startLine": 100,
+        "startChar": 8,
+        "endLine": 100,
+        "endChar": 31
+      },
+      "revId": "66367338ef0b7cfd6f445a73c216c9f1911826d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa582b71_80d73a50",
         "filename": "graphics/java/android/graphics/Interpolator.java",
         "patchSetId": 1
@@ -42,6 +65,76 @@
         "startChar": 11,
         "endLine": 155,
         "endChar": 12
+      },
+      "revId": "66367338ef0b7cfd6f445a73c216c9f1911826d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93a1f560_8b9e993d",
+        "filename": "graphics/java/android/graphics/Interpolator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2015-06-29T15:58:31Z",
+      "side": 1,
+      "message": "This should be fine.",
+      "parentUuid": "fa582b71_80d73a50",
+      "range": {
+        "startLine": 155,
+        "startChar": 11,
+        "endLine": 155,
+        "endChar": 12
+      },
+      "revId": "66367338ef0b7cfd6f445a73c216c9f1911826d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5384ddcb_91d486e6",
+        "filename": "graphics/java/android/graphics/NinePatch.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2015-06-29T15:58:31Z",
+      "side": 1,
+      "message": "it\u0027s public but it\u0027s @hide so you can remove the final \u0026 set it to 0.",
+      "range": {
+        "startLine": 125,
+        "startChar": 60,
+        "endLine": 126,
+        "endChar": 36
+      },
+      "revId": "66367338ef0b7cfd6f445a73c216c9f1911826d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5384ddcb_f1c2b227",
+        "filename": "graphics/java/android/graphics/Region.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2015-06-29T15:58:31Z",
+      "side": 1,
+      "message": "it\u0027s @hide, so can remove the final \u0026 set it to 0.",
+      "range": {
+        "startLine": 385,
+        "startChar": 35,
+        "endLine": 385,
+        "endChar": 60
       },
       "revId": "66367338ef0b7cfd6f445a73c216c9f1911826d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
