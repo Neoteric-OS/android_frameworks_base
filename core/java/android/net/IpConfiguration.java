@@ -20,6 +20,8 @@ import android.net.StaticIpConfiguration;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -33,8 +35,10 @@ public class IpConfiguration implements Parcelable {
         /* Use statically configured IP settings. Configuration can be accessed
          * with staticIpConfiguration */
         STATIC,
-        /* Use dynamically configured IP settigns */
+        /* Use dynamically configured IP settings */
         DHCP,
+        /* Use static DNS servers but use DHCP for IP address and routing */
+        STATIC_DNS,
         /* no IP details are assigned, this is used to indicate
          * that any existing IP settings should be retained */
         UNASSIGNED
@@ -43,6 +47,8 @@ public class IpConfiguration implements Parcelable {
     public IpAssignment ipAssignment;
 
     public StaticIpConfiguration staticIpConfiguration;
+
+    public ArrayList<InetAddress> staticDnsServers;
 
     public enum ProxySettings {
         /* No proxy is to be used. Any existing proxy settings
@@ -66,31 +72,35 @@ public class IpConfiguration implements Parcelable {
     private void init(IpAssignment ipAssignment,
                       ProxySettings proxySettings,
                       StaticIpConfiguration staticIpConfiguration,
+                      ArrayList<InetAddress> StaticDnsServers,
                       ProxyInfo httpProxy) {
         this.ipAssignment = ipAssignment;
         this.proxySettings = proxySettings;
         this.staticIpConfiguration = (staticIpConfiguration == null) ?
                 null : new StaticIpConfiguration(staticIpConfiguration);
+        this.staticDnsServers = (StaticDnsServers == null) ?
+                new ArrayList<InetAddress>() : StaticDnsServers;
         this.httpProxy = (httpProxy == null) ?
                 null : new ProxyInfo(httpProxy);
     }
 
     public IpConfiguration() {
-        init(IpAssignment.UNASSIGNED, ProxySettings.UNASSIGNED, null, null);
+        init(IpAssignment.UNASSIGNED, ProxySettings.UNASSIGNED, null, null, null);
     }
 
     public IpConfiguration(IpAssignment ipAssignment,
                            ProxySettings proxySettings,
                            StaticIpConfiguration staticIpConfiguration,
+                           ArrayList<InetAddress> staticDnsServers,
                            ProxyInfo httpProxy) {
-        init(ipAssignment, proxySettings, staticIpConfiguration, httpProxy);
+        init(ipAssignment, proxySettings, staticIpConfiguration, staticDnsServers, httpProxy);
     }
 
     public IpConfiguration(IpConfiguration source) {
         this();
         if (source != null) {
             init(source.ipAssignment, source.proxySettings,
-                 source.staticIpConfiguration, source.httpProxy);
+                 source.staticIpConfiguration, source.staticDnsServers, source.httpProxy);
         }
     }
 
@@ -108,6 +118,14 @@ public class IpConfiguration implements Parcelable {
 
     public void setStaticIpConfiguration(StaticIpConfiguration staticIpConfiguration) {
         this.staticIpConfiguration = staticIpConfiguration;
+    }
+
+    public ArrayList<InetAddress> getStaticDnsServers() {
+        return staticDnsServers;
+    }
+
+    public void setStaticDnsServers(ArrayList<InetAddress> staticDnsServers) {
+        this.staticDnsServers = staticDnsServers;
     }
 
     public ProxySettings getProxySettings() {
@@ -135,6 +153,10 @@ public class IpConfiguration implements Parcelable {
             sbuf.append("Static configuration: " + staticIpConfiguration.toString());
             sbuf.append("\n");
         }
+        if (staticDnsServers != null) {
+            sbuf.append("Static DNS servers: " + staticDnsServers.toString());
+            sbuf.append("\n");
+        }
         sbuf.append("Proxy settings: " + proxySettings.toString());
         sbuf.append("\n");
         if (httpProxy != null) {
@@ -159,6 +181,7 @@ public class IpConfiguration implements Parcelable {
         return this.ipAssignment == other.ipAssignment &&
                 this.proxySettings == other.proxySettings &&
                 Objects.equals(this.staticIpConfiguration, other.staticIpConfiguration) &&
+                Objects.equals(this.staticDnsServers, other.staticDnsServers) &&
                 Objects.equals(this.httpProxy, other.httpProxy);
     }
 
@@ -180,6 +203,10 @@ public class IpConfiguration implements Parcelable {
         dest.writeString(ipAssignment.name());
         dest.writeString(proxySettings.name());
         dest.writeParcelable(staticIpConfiguration, flags);
+        dest.writeInt(staticDnsServers.size());
+        for (InetAddress dnsServer : staticDnsServers) {
+            NetworkUtils.parcelInetAddress(dest, dnsServer, flags);
+        }
         dest.writeParcelable(httpProxy, flags);
     }
 
@@ -191,6 +218,10 @@ public class IpConfiguration implements Parcelable {
                 config.ipAssignment = IpAssignment.valueOf(in.readString());
                 config.proxySettings = ProxySettings.valueOf(in.readString());
                 config.staticIpConfiguration = in.readParcelable(null);
+                int size = in.readInt();
+                for (int i=0; i<size; i++) {
+                    config.staticDnsServers.add(NetworkUtils.unparcelInetAddress(in));
+                }
                 config.httpProxy = in.readParcelable(null);
                 return config;
             }

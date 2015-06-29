@@ -27,6 +27,7 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 import android.annotation.SystemApi;
 
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.BitSet;
 import java.util.ArrayList;
@@ -1445,6 +1446,16 @@ public class WifiConfiguration implements Parcelable {
     /** @hide */
     public void setStaticIpConfiguration(StaticIpConfiguration staticIpConfiguration) {
         mIpConfiguration.setStaticIpConfiguration(staticIpConfiguration);
+    }
+
+    /** @hide */
+    public ArrayList<InetAddress> getStaticDnsServers() {
+        return mIpConfiguration.getStaticDnsServers();
+    }
+
+    /** @hide */
+    public void setStaticDnsServers(ArrayList<InetAddress> staticDnsServers) {
+        mIpConfiguration.setStaticDnsServers(staticDnsServers);
     }
 
     /** @hide */

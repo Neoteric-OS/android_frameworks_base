@@ -42,6 +42,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Inet4Address;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class IpConfigStore {
@@ -96,6 +97,15 @@ public class IpConfigStore {
                             out.writeUTF(DNS_KEY);
                             out.writeUTF(inetAddr.getHostAddress());
                         }
+                    }
+                    written = true;
+                    break;
+                case STATIC_DNS:
+                    out.writeUTF(IP_ASSIGNMENT_KEY);
+                    out.writeUTF(config.ipAssignment.toString());
+                    for (InetAddress dnsServer : config.getStaticDnsServers()) {
+                        out.writeUTF(DNS_KEY);
+                        out.writeUTF(dnsServer.getHostAddress());
                     }
                     written = true;
                     break;
@@ -192,6 +202,7 @@ public class IpConfigStore {
                 IpAssignment ipAssignment = IpAssignment.DHCP;
                 ProxySettings proxySettings = ProxySettings.NONE;
                 StaticIpConfiguration staticIpConfiguration = new StaticIpConfiguration();
+                ArrayList<InetAddress> dnsServers = new ArrayList<>();
                 String proxyHost = null;
                 String pacFileUrl = null;
                 int proxyPort = -1;
@@ -243,8 +254,11 @@ public class IpConfigStore {
                                 }
                             }
                         } else if (key.equals(DNS_KEY)) {
-                            staticIpConfiguration.dnsServers.add(
-                                    NetworkUtils.numericToInetAddress(in.readUTF()));
+                            // TODO: refactor this to add to DNS servers / static IP if that is
+                            // the assignment strategy in use.
+                            InetAddress addr = NetworkUtils.numericToInetAddress(in.readUTF());
+                            staticIpConfiguration.dnsServers.add(addr);
+                            dnsServers.add(addr);
                         } else if (key.equals(PROXY_SETTINGS_KEY)) {
                             proxySettings = ProxySettings.valueOf(in.readUTF());
                         } else if (key.equals(PROXY_HOST_KEY)) {
@@ -274,6 +288,9 @@ public class IpConfigStore {
                             config.staticIpConfiguration = staticIpConfiguration;
                             config.ipAssignment = ipAssignment;
                             break;
+                        case STATIC_DNS:
+                            config.setStaticDnsServers(dnsServers);
+                            config.ipAssignment = ipAssignment;
                         case DHCP:
                             config.ipAssignment = ipAssignment;
                             break;

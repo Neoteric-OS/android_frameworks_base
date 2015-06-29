@@ -174,6 +174,19 @@ public class NetlinkTracker extends BaseNetworkObserver {
     }
 
     /**
+     * Replace the DNS repository with a new set of static DNS servers.
+     * @param staticDnsServers A list of DNS servers to use.
+     */
+    public void setStaticDnsServers(ArrayList<InetAddress> staticDnsServers) {
+        maybeLog("setStaticDnsServers", "Updating link properties with new DNS servers" + staticDnsServers);
+        mDnsServerRepository = new DnsServerRepository();
+        mDnsServerRepository.addStaticDnsServers(staticDnsServers);
+        synchronized (this) {
+            mDnsServerRepository.setDnsServersOn(mLinkProperties);
+        }
+    }
+
+    /**
      * Returns a copy of this object's LinkProperties.
      */
     public synchronized LinkProperties getLinkProperties() {
@@ -324,6 +337,26 @@ class DnsServerRepository {
 
         // Prune excess entries and update the current server list.
         return updateCurrentServers();
+    }
+
+
+    /**
+     * Update the list of DNS servers to user static DNS servers with the greatest priority.
+     * @param staticDnsServers A list of static DNS servers to use.
+     * @return true if any servers were changed, false otherwise.
+     */
+    public synchronized boolean addStaticDnsServers(ArrayList<InetAddress> staticDnsServers) {
+        // Always use the static DNS servers, i.e. they should never expire.
+        long expiry = Long.MAX_VALUE;
+        mCurrentServers.clear();
+        for (InetAddress address : staticDnsServers) {
+            DnsServerEntry entry = new DnsServerEntry(address, expiry);
+            mCurrentServers.add(address);
+            // In order to maintain ordering of the preferred DNS servers,
+            // decrement the expiry by one for every next entry in the list.
+            expiry--;
+        }
+        return staticDnsServers.size() > 0;
     }
 
     private synchronized boolean updateExistingEntry(InetAddress address, long expiry) {
