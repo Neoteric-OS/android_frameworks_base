@@ -17,6 +17,7 @@
 package com.android.server;
 
 import android.content.Context;
+import android.os.Trace;
 import android.util.Slog;
 
 import java.lang.reflect.Constructor;
@@ -128,6 +129,7 @@ public class SystemServiceManager {
 
         Slog.i(TAG, "Starting phase " + mCurrentPhase);
 
+        Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "OnBootPhase" + phase);
         final int serviceLen = mServices.size();
         for (int i = 0; i < serviceLen; i++) {
             final SystemService service = mServices.get(i);
@@ -140,6 +142,7 @@ public class SystemServiceManager {
                         + mCurrentPhase, ex);
             }
         }
+        Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
     }
 
     public void startUser(final int userHandle) {
