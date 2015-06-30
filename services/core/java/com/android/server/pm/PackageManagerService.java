@@ -162,6 +162,7 @@ import android.os.SELinux;
 import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
+import android.os.Trace;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.security.KeyStore;
@@ -4274,9 +4275,12 @@ public class PackageManagerService extends IPackageManager.Stub {
 
         final PackageParser.Package pkg;
         try {
+            Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "Parse " + scanFile.getName());
             pkg = pp.parsePackage(scanFile, parseFlags);
         } catch (PackageParserException e) {
             throw PackageManagerException.from(e);
+        } finally {
+            Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
         }
 
         PackageSetting ps = null;
