@@ -17,6 +17,7 @@
 package com.android.server;
 
 import android.content.Context;
+import android.os.Trace;
 import android.util.Slog;
 
 import java.lang.reflect.Constructor;
@@ -77,6 +78,7 @@ public class SystemServiceManager {
     public <T extends SystemService> T startService(Class<T> serviceClass) {
         final String name = serviceClass.getName();
         Slog.i(TAG, "Starting " + name);
+        Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "StartService_" + name);
 
         // Create the service.
         if (!SystemService.class.isAssignableFrom(serviceClass)) {
@@ -111,6 +113,7 @@ public class SystemServiceManager {
             throw new RuntimeException("Failed to start service " + name
                     + ": onStart threw an exception", ex);
         }
+        Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
         return service;
     }
 
@@ -128,6 +131,7 @@ public class SystemServiceManager {
 
         Slog.i(TAG, "Starting phase " + mCurrentPhase);
 
+        Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "OnBootPhase" + phase);
         final int serviceLen = mServices.size();
         for (int i = 0; i < serviceLen; i++) {
             final SystemService service = mServices.get(i);
@@ -140,6 +144,7 @@ public class SystemServiceManager {
                         + mCurrentPhase, ex);
             }
         }
+        Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
     }
 
     public void startUser(final int userHandle) {
