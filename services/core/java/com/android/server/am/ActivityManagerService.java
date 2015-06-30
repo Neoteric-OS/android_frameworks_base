@@ -186,6 +186,7 @@ import android.os.ServiceManager;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.os.SystemProperties;
+import android.os.Trace;
 import android.os.UpdateLock;
 import android.os.UserHandle;
 import android.os.UserManager;
@@ -6201,6 +6202,7 @@ public final class ActivityManagerService extends ActivityManagerNative
             mCallFinishBooting = false;
         }
 
+        Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "FinishBooting");
         ArraySet<String> completedIsas = new ArraySet<String>();
         for (String abi : Build.SUPPORTED_ABIS) {
             Process.establishZygoteConnectionForAbi(abi);
@@ -6292,6 +6294,7 @@ public final class ActivityManagerService extends ActivityManagerNative
                 scheduleStartProfilesLocked();
             }
         }
+        Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
     }
 
     @Override
