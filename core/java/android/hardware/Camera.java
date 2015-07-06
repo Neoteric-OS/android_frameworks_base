@@ -1813,6 +1813,13 @@ public class Camera {
     public static final int CAMERA_ERROR_UNKNOWN = 1;
 
     /**
+     * Camera was released because another client has connected to the camera.
+     * @see Camera.ErrorCallback
+     *
+     */
+    public static final int CAMERA_ERROR_RELEASED = 2;
+
+    /**
      * Media server died. In this case, the application must release the
      * Camera object and instantiate a new one.
      * @see Camera.ErrorCallback
@@ -1835,6 +1842,7 @@ public class Camera {
          * @param error   error code:
          * <ul>
          * <li>{@link #CAMERA_ERROR_UNKNOWN}
+         * <li>{@link #CAMERA_ERROR_RELEASED}
          * <li>{@link #CAMERA_ERROR_SERVER_DIED}
          * </ul>
          * @param camera  the Camera service object
