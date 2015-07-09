@@ -27,14 +27,14 @@ import android.system.Os;
 import android.system.OsConstants;
 import android.system.StructLinger;
 import android.system.StructTimeval;
+import android.system.UnixSocketAddress;
 import android.util.MutableInt;
 
 /**
  * Socket implementation used for android.net.LocalSocket and
  * android.net.LocalServerSocket. Supports only AF_LOCAL sockets.
  */
-class LocalSocketImpl
-{
+class LocalSocketImpl {
     private SocketInputStream fis;
     private SocketOutputStream fos;
     private Object readMonitor = new Object();
@@ -199,8 +199,6 @@ class LocalSocketImpl
             throws IOException;
     private native void connectLocal(FileDescriptor fd, String name,
             int namespace) throws IOException;
-    private native void bindLocal(FileDescriptor fd, String name, int namespace)
-            throws IOException;
     private native void shutdown(FileDescriptor fd, boolean shutdownInput);
     private native Credentials getPeerCredentials_native(
             FileDescriptor fd) throws IOException;
@@ -316,7 +314,23 @@ class LocalSocketImpl
             throw new IOException("socket not created");
         }
 
-        bindLocal(fd, endpoint.getName(), endpoint.getNamespace().getId());
+        UnixSocketAddress address = endpoint.toUnixSocketAddress();
+        String fileSystemPath = address.getFileSystemPath();
+        if (fileSystemPath != null) {
+            // If this is a filesystem path, unlink first.
+            try {
+                Os.unlink(fileSystemPath);
+            } catch (ErrnoException e) {
+                // ENOENT is expected if the file does not exist.
+                // Other errors have historically been ignored.
+            }
+        }
+        try {
+            Os.setsockoptInt(fd, OsConstants.SOL_SOCKET, OsConstants.SO_REUSEADDR, 1);
+            Os.bind(fd, address);
+        } catch (ErrnoException e) {
+            throw e.rethrowAsIOException();
+        }
     }
 
     protected void listen(int backlog) throws IOException

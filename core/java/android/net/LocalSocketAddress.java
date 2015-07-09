@@ -16,6 +16,8 @@
 
 package android.net;
 
+import android.system.UnixSocketAddress;
+
 /**
  * A UNIX-domain (AF_LOCAL) socket address. For use with
  * android.net.LocalSocket and android.net.LocalServerSocket.
@@ -25,6 +27,9 @@ package android.net;
  */
 public class LocalSocketAddress
 {
+    /* See also include/cutils/sockets.h */
+    private static final String ANDROID_RESERVED_SOCKET_PREFIX = "/dev/socket/";
+
     /**
      * The namespace that this address exists in. See also
      * include/cutils/sockets.h ANDROID_SOCKET_NAMESPACE_*
@@ -96,5 +101,21 @@ public class LocalSocketAddress
      */
     public Namespace getNamespace() {
         return namespace;
+    }
+
+    /** @hide */
+    UnixSocketAddress toUnixSocketAddress() {
+        switch (namespace) {
+            case ABSTRACT:
+                return UnixSocketAddress.createAbstract(name);
+            case RESERVED:
+                return UnixSocketAddress.createFileSystem(
+                        ANDROID_RESERVED_SOCKET_PREFIX + name);
+            case FILESYSTEM:
+                return UnixSocketAddress.createFileSystem(name);
+            default:
+                throw new IllegalArgumentException(
+                        "Unknown namespace in address: " + namespace);
+        }
     }
 }

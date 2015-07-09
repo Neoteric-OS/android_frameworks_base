@@ -80,38 +80,6 @@ socket_connect_local(JNIEnv *env, jobject object,
 
 #define DEFAULT_BACKLOG 4
 
-/* private native void bindLocal(FileDescriptor fd, String name, namespace)
- * throws IOException;
- */
-
-static void
-socket_bind_local (JNIEnv *env, jobject object, jobject fileDescriptor,
-                jstring name, jint namespaceId)
-{
-    int ret;
-    int fd;
-
-    if (name == NULL) {
-        jniThrowNullPointerException(env, NULL);
-        return;
-    }
-
-    fd = jniGetFDFromFileDescriptor(env, fileDescriptor);
-
-    if (env->ExceptionCheck()) {
-        return;
-    }
-
-    ScopedUtfChars nameUtf8(env, name);
-
-    ret = socket_local_server_bind(fd, nameUtf8.c_str(), namespaceId);
-
-    if (ret < 0) {
-        jniThrowIOException(env, errno);
-        return;
-    }
-}
-
 /*    private native FileDescriptor
 **    accept (FileDescriptor fd, LocalSocketImpl s)
 **                                   throws IOException;
@@ -565,7 +533,6 @@ static JNINativeMethod gMethods[] = {
      /* name, signature, funcPtr */
     {"connectLocal", "(Ljava/io/FileDescriptor;Ljava/lang/String;I)V",
                                                 (void*)socket_connect_local},
-    {"bindLocal", "(Ljava/io/FileDescriptor;Ljava/lang/String;I)V", (void*)socket_bind_local},
     {"accept", "(Ljava/io/FileDescriptor;Landroid/net/LocalSocketImpl;)Ljava/io/FileDescriptor;", (void*)socket_accept},
     {"shutdown", "(Ljava/io/FileDescriptor;Z)V", (void*)socket_shutdown},
     {"read_native", "(Ljava/io/FileDescriptor;)I", (void*) socket_read},
