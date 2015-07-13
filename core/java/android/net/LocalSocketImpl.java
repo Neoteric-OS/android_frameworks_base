@@ -27,6 +27,7 @@ import android.system.Os;
 import android.system.OsConstants;
 import android.system.StructLinger;
 import android.system.StructTimeval;
+import android.system.StructUcred;
 import android.system.UnixSocketAddress;
 import android.util.MutableInt;
 
@@ -197,10 +198,6 @@ class LocalSocketImpl {
             FileDescriptor fd) throws IOException;
     private native void write_native(int b, FileDescriptor fd)
             throws IOException;
-    private native void connectLocal(FileDescriptor fd, String name,
-            int namespace) throws IOException;
-    private native Credentials getPeerCredentials_native(
-            FileDescriptor fd) throws IOException;
 
     /**
      * Create a new instance.
@@ -280,14 +277,16 @@ class LocalSocketImpl {
     }
 
     /** note timeout presently ignored */
-    protected void connect(LocalSocketAddress address, int timeout)
-                        throws IOException
-    {        
+    protected void connect(LocalSocketAddress address, int timeout) throws IOException {
         if (fd == null) {
             throw new IOException("socket not created");
         }
-
-        connectLocal(fd, address.getName(), address.getNamespace().getId());
+        try {
+            UnixSocketAddress unixSocketAddress = address.toUnixSocketAddress();
+            Os.connect(fd, unixSocketAddress);
+        } catch (ErrnoException e) {
+            throw e.rethrowAsIOException();
+        }
     }
 
     /**
@@ -600,7 +599,13 @@ class LocalSocketImpl {
      * @throws IOException
      */
     public Credentials getPeerCredentials() throws IOException {
-        return getPeerCredentials_native(fd);
+        try {
+            StructUcred credentials = Os.getsockoptUcred(fd, OsConstants.SOL_SOCKET,
+                OsConstants.SO_PEERCRED);
+            return new Credentials(credentials.pid, credentials.uid, credentials.gid);
+        } catch (ErrnoException e) {
+            throw e.rethrowAsIOException();
+        }
     }
 
     /**
