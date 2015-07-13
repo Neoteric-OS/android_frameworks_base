@@ -590,7 +590,7 @@ final class ActivityStack {
         for (int taskNdx = mTaskHistory.size() - 1; taskNdx >= 0; --taskNdx) {
             TaskRecord task = mTaskHistory.get(taskNdx);
             if (!isCurrentProfileLocked(task.userId)) {
-                return null;
+                continue;
             }
             final ArrayList<ActivityRecord> activities = task.mActivities;
             for (int activityNdx = activities.size() - 1; activityNdx >= 0; --activityNdx) {
