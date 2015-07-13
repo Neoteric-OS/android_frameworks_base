@@ -48,36 +48,6 @@ static jclass class_Credentials;
 static jclass class_FileDescriptor;
 static jmethodID method_CredentialsInit;
 
-/* private native void connectLocal(FileDescriptor fd,
- * String name, int namespace) throws IOException
- */
-static void
-socket_connect_local(JNIEnv *env, jobject object,
-                        jobject fileDescriptor, jstring name, jint namespaceId)
-{
-    int ret;
-    int fd;
-
-    fd = jniGetFDFromFileDescriptor(env, fileDescriptor);
-
-    if (env->ExceptionCheck()) {
-        return;
-    }
-
-    ScopedUtfChars nameUtf8(env, name);
-
-    ret = socket_local_client_connect(
-                fd,
-                nameUtf8.c_str(),
-                namespaceId,
-                SOCK_STREAM);
-
-    if (ret < 0) {
-        jniThrowIOException(env, errno);
-        return;
-    }
-}
-
 /**
  * Processes ancillary data, handling only
  * SCM_RIGHTS. Creates appropriate objects and sets appropriate
@@ -421,57 +391,15 @@ static void socket_writeba (JNIEnv *env, jobject object,
     env->ReleaseByteArrayElements(buffer, byteBuffer, JNI_ABORT);
 }
 
-static jobject socket_get_peer_credentials(JNIEnv *env,
-        jobject object, jobject fileDescriptor)
-{
-    int err;
-    int fd;
-
-    if (fileDescriptor == NULL) {
-        jniThrowNullPointerException(env, NULL);
-        return NULL;
-    }
-
-    fd = jniGetFDFromFileDescriptor(env, fileDescriptor);
-
-    if (env->ExceptionCheck()) {
-        return NULL;
-    }
-
-    struct ucred creds;
-
-    memset(&creds, 0, sizeof(creds));
-    socklen_t szCreds = sizeof(creds);
-
-    err = getsockopt(fd, SOL_SOCKET, SO_PEERCRED, &creds, &szCreds);
-
-    if (err < 0) {
-        jniThrowIOException(env, errno);
-        return NULL;
-    }
-
-    if (szCreds == 0) {
-        return NULL;
-    }
-
-    return env->NewObject(class_Credentials, method_CredentialsInit,
-            creds.pid, creds.uid, creds.gid);
-}
-
 /*
  * JNI registration.
  */
 static JNINativeMethod gMethods[] = {
      /* name, signature, funcPtr */
-    {"connectLocal", "(Ljava/io/FileDescriptor;Ljava/lang/String;I)V",
-                                                (void*)socket_connect_local},
     {"read_native", "(Ljava/io/FileDescriptor;)I", (void*) socket_read},
     {"readba_native", "([BIILjava/io/FileDescriptor;)I", (void*) socket_readba},
     {"writeba_native", "([BIILjava/io/FileDescriptor;)V", (void*) socket_writeba},
     {"write_native", "(ILjava/io/FileDescriptor;)V", (void*) socket_write},
-    {"getPeerCredentials_native",
-            "(Ljava/io/FileDescriptor;)Landroid/net/Credentials;",
-            (void*) socket_get_peer_credentials}
 };
 
 int register_android_net_LocalSocketImpl(JNIEnv *env)
