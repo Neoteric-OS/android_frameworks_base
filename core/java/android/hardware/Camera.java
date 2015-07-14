@@ -1929,7 +1929,7 @@ public class Camera {
      *             applications.
      */
     @Deprecated
-    public class Size {
+    public static class Size {
         /**
          * Sets the dimensions for pictures.
          *
