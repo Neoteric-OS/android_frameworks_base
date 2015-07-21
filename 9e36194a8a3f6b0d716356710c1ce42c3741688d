@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "185442e3_0d3e6677",
+        "filename": "tools/aapt/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003981
+      },
+      "writtenOn": "2015-07-21T19:43:02Z",
+      "side": 1,
+      "message": "This doesn\u0027t work:\nmake doesn\u0027t expand \"$(var)\" inside the string value.\nYou\u0027ll get the literal \\\"$(shell cat $(OUT_DIR)/build_number.txt)\\\" in the compilation command lines.",
+      "range": {
+        "startLine": 72,
+        "startChar": 31,
+        "endLine": 72,
+        "endChar": 74
+      },
+      "revId": "9e36194a8a3f6b0d716356710c1ce42c3741688d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
