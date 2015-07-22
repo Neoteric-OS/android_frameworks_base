@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dd2dee8_7859b90a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2015-07-22T17:53:28Z",
+      "side": 1,
+      "message": "minor: please format commit messages to have line length \u003c\u003d 72 or so. We\u0027re not terribly strict about this, but this is a bit long.",
+      "revId": "ad370e6fb6692b3e55de5db13fb329b28985b58f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
