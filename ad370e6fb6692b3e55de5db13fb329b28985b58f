@@ -16,6 +16,24 @@
       "revId": "ad370e6fb6692b3e55de5db13fb329b28985b58f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edc5ee24_4e63c833",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1077668
+      },
+      "writtenOn": "2015-07-24T03:25:01Z",
+      "side": 1,
+      "message": "Sorry about that! I thought that constraint was usually applied for the first line in the commit msg. Anyway, I\u0027ve done it for all the lines.",
+      "parentUuid": "6dd2dee8_7859b90a",
+      "revId": "ad370e6fb6692b3e55de5db13fb329b28985b58f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
