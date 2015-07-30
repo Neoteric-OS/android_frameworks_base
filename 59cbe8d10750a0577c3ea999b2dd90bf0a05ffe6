@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d5f06fb_585c9dc6",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1043845
+      },
+      "writtenOn": "2015-07-30T05:30:28Z",
+      "side": 1,
+      "message": "These should all be in winsock2.h: https://msdn.microsoft.com/en-us/library/windows/desktop/ms740069(v\u003dvs.85).aspx",
+      "revId": "59cbe8d10750a0577c3ea999b2dd90bf0a05ffe6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
