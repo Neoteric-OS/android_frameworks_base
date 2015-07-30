@@ -22,6 +22,30 @@
       "revId": "680c524361e066d70dec01904f1dda20ea020f6f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad9936fb_5fa48fff",
+        "filename": "services/core/java/com/android/server/job/controllers/IdleController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1076893
+      },
+      "writtenOn": "2015-07-30T05:15:44Z",
+      "side": 1,
+      "message": "Thanks, I will update as you suggested.",
+      "parentUuid": "caf6504b_f155f04c",
+      "range": {
+        "startLine": 160,
+        "startChar": 15,
+        "endLine": 160,
+        "endChar": 38
+      },
+      "revId": "680c524361e066d70dec01904f1dda20ea020f6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
