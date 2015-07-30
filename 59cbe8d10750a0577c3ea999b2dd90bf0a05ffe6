@@ -16,6 +16,24 @@
       "revId": "59cbe8d10750a0577c3ea999b2dd90bf0a05ffe6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea24f4a5_25b31808",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-07-30T06:06:21Z",
+      "side": 1,
+      "message": "or \u003cutils/ByteOrder.h\u003e. i don\u0027t know how to test this change though, so i was just planning on preserving existing behavior.\n\n(see the ril change for a worse example. that exposed a whole file that was copy and pasted from libcutils!)",
+      "parentUuid": "2d5f06fb_585c9dc6",
+      "revId": "59cbe8d10750a0577c3ea999b2dd90bf0a05ffe6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
