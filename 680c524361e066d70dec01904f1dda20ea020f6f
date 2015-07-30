@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caf6504b_f155f04c",
+        "filename": "services/core/java/com/android/server/job/controllers/IdleController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1023072
+      },
+      "writtenOn": "2015-07-30T03:47:02Z",
+      "side": 1,
+      "message": "this boolean is unnecessary. the only place it is read is right here and the only effect it has is to update itself.\nyou can remove mIdleInProgress completely and call mAlarm.cancel() every time the screen turns on/dreaming stops.\n\nThe advantage of having a boolean to track state for mIdleInProgress is to avoid calling cancel() unnecessarily, but i checked with the alarmmanager people and they say the overhead of cancel() is irrelevant.",
+      "range": {
+        "startLine": 160,
+        "startChar": 15,
+        "endLine": 160,
+        "endChar": 38
+      },
+      "revId": "680c524361e066d70dec01904f1dda20ea020f6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
