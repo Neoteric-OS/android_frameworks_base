@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2a40cc41_9091f427",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-07-30T06:08:42Z",
+      "side": 1,
+      "message": "i\u0027m pretty sure this is a typo too.\n\nplus you may have noticed that this exact same block is in libutils/Unicode.cpp. and a #define of INT32_MAX a few lines above.",
+      "revId": "59cbe8d10750a0577c3ea999b2dd90bf0a05ffe6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d5f06fb_585c9dc6",
         "filename": "libs/androidfw/ResourceTypes.cpp",
         "patchSetId": 1
