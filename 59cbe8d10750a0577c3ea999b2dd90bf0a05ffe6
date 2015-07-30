@@ -51,6 +51,24 @@
       "revId": "59cbe8d10750a0577c3ea999b2dd90bf0a05ffe6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a40cc41_50714c86",
+        "filename": "libs/androidfw/ResourceTypes.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1043845
+      },
+      "writtenOn": "2015-07-30T06:10:16Z",
+      "side": 1,
+      "message": "Ah, and those are real functions in mingw instead of inlines or macros, so we can\u0027t just prove them identical by inspection... annoying.",
+      "parentUuid": "ea24f4a5_25b31808",
+      "revId": "59cbe8d10750a0577c3ea999b2dd90bf0a05ffe6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
