@@ -220,7 +220,7 @@ href="http://developer.android.com/guide/practices/responsiveness.html">applicat
 responding</a>" (ANR) dialog. The user might then decide to quit your application and uninstall it
 if they are unhappy.</p>
 
-<p>Additionally, the Andoid UI toolkit is <em>not</em> thread-safe. So, you must not manipulate
+<p>Additionally, the Android UI toolkit is <em>not</em> thread-safe. So, you must not manipulate
 your UI from a worker thread&mdash;you must do all manipulation to your user interface from the UI
 thread. Thus, there are simply two rules to Android's single thread model:</p>
 
