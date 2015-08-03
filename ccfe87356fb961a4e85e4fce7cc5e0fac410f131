@@ -22,6 +22,30 @@
       "revId": "ccfe87356fb961a4e85e4fce7cc5e0fac410f131",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ad60c0d_8022b6a6",
+        "filename": "services/core/java/com/android/server/job/controllers/IdleController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1076893
+      },
+      "writtenOn": "2015-08-03T21:45:39Z",
+      "side": 1,
+      "message": "I don\u0027t see how that work.\n\nIf SCREEN_ON comes in first, mIdle stay at false, but the the comming TRIGGER_IDLE will set mIdle to true. Since SCREEN_ON was alreay processed, mIdle \u003d true could stay all the time during screen-on.\n\nDo I miss something?",
+      "parentUuid": "ea6cf416_ab0a1927",
+      "range": {
+        "startLine": 158,
+        "startChar": 15,
+        "endLine": 158,
+        "endChar": 33
+      },
+      "revId": "ccfe87356fb961a4e85e4fce7cc5e0fac410f131",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
