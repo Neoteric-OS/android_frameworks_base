@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea6cf416_ab0a1927",
+        "filename": "services/core/java/com/android/server/job/controllers/IdleController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1023072
+      },
+      "writtenOn": "2015-08-03T20:32:15Z",
+      "side": 1,
+      "message": "good point, there was a race condition here that TRIGGER_IDLE might come in right after SCREEN_ON.\n\nInstead of introducing a new variable (mScreenOn), why not just put mIdle \u003d false outside the if(mIdle) block below.\n\nBelow where you have mScreenOn \u003d false you can change it to mIdle \u003d false. When the alarm lands it will set mIdle \u003d true when it reports the idle state to the Scheduler, and if SCREEN_ON comes in first it will remain false.\n\nThe only thing that changes is we update mIdle without calling reportNewState. However we will call reportNewState when it is important -\u003e there is a change in state.",
+      "range": {
+        "startLine": 158,
+        "startChar": 15,
+        "endLine": 158,
+        "endChar": 33
+      },
+      "revId": "ccfe87356fb961a4e85e4fce7cc5e0fac410f131",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
