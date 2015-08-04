@@ -2587,6 +2587,12 @@ public class PackageParser {
                 com.android.internal.R.styleable.AndroidManifestApplication_permission, 0);
         ai.permission = (str != null && str.length() > 0) ? str.intern() : null;
 
+        if (sa.getBoolean(
+                com.android.internal.R.styleable.AndroidManifestApplication_preventAppDataExecution,
+                false)) {
+            ai.flags |= ApplicationInfo.FLAG_PREVENT_APPDATA_EXECUTION;
+        }
+
         if (owner.applicationInfo.targetSdkVersion >= Build.VERSION_CODES.FROYO) {
             str = sa.getNonConfigurationString(
                     com.android.internal.R.styleable.AndroidManifestApplication_taskAffinity,

@@ -350,6 +350,18 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      */
     public static final int FLAG_EXTRACT_NATIVE_LIBS = 1<<28;
 
+
+    /**
+     * Value for {@link #flags}: {@code true} if the application does not execute anything
+     * considered application data and wants to opt-in for additional SELinux enforcement
+     * to prevent such a case.
+     * If {@code false}, the app chooses not to opt into the additional SELinux protection for
+     * preventing application data execution.
+     *
+     * @hide
+     */
+     public static final int FLAG_PREVENT_APPDATA_EXECUTION = 1<<29;
+
     /**
      * Value for {@link #flags}: true if code from this application will need to be
      * loaded into other applications' processes. On devices that support multiple
