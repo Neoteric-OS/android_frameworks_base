@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8d6d52b6_79d4ff64",
+        "filename": "libs/hwui/Extensions.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1078578
+      },
+      "writtenOn": "2015-08-04T10:37:19Z",
+      "side": 1,
+      "message": "Is it compatible between opengl 2.0 and 3.0?",
+      "range": {
+        "startLine": 64,
+        "startChar": 63,
+        "endLine": 64,
+        "endChar": 66
+      },
+      "revId": "498301c27cdadc3c6368a4d25848b437da65e5da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d5466e3_36d460b6",
         "filename": "libs/hwui/Extensions.h",
         "patchSetId": 1
