@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d5466e3_36d460b6",
+        "filename": "libs/hwui/Extensions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1039760
+      },
+      "writtenOn": "2015-08-04T10:06:24Z",
+      "side": 1,
+      "message": "A space should follow the left brace. Also need one before right brace.",
+      "range": {
+        "startLine": 44,
+        "startChar": 44,
+        "endLine": 44,
+        "endChar": 50
+      },
+      "revId": "498301c27cdadc3c6368a4d25848b437da65e5da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
