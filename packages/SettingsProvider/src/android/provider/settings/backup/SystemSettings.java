@@ -135,7 +135,8 @@ public class SystemSettings {
                 Settings.System.ACCESSIBILITY_FORCE_INVERT_COLOR_OVERRIDE_PACKAGES_TO_DISABLE,
                 Settings.System.QS_SHOW_BRIGHTNESS,
                 Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM,
-                Settings.System.POWER_SHARE_THRESHOLD
+                Settings.System.POWER_SHARE_THRESHOLD,
+                Settings.System.THREE_FINGER_GESTURE
         ));
         return settings.toArray(new String[0]);
     }
