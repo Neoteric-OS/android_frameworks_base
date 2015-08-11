@@ -35,6 +35,7 @@
 #include <utils/threads.h>
 #include <utils/Timers.h>
 #include <utils/Trace.h>
+#include <sys/file.h>
 
 #include <assert.h>
 #include <dirent.h>
@@ -767,6 +768,10 @@ void AssetManager::addSystemOverlays(const char* pathOverlaysList,
         return;
     }
 
+    if (TEMP_FAILURE_RETRY(flock(fileno(fin), LOCK_SH)) != 0) {
+        fclose(fin);
+        return;
+    }
     char buf[1024];
     while (fgets(buf, sizeof(buf), fin)) {
         // format of each line:
@@ -797,6 +802,8 @@ void AssetManager::addSystemOverlays(const char* pathOverlaysList,
             const_cast<AssetManager*>(this)->mZipSet.addOverlay(targetPackagePath, oap);
         }
     }
+
+    TEMP_FAILURE_RETRY(flock(fileno(fin), LOCK_UN));
     fclose(fin);
 }
 
