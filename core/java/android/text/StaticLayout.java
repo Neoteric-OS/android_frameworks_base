@@ -28,6 +28,10 @@ import android.util.Log;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.GrowingArrayUtils;
 
+import java.text.BreakIterator;
+import java.util.ArrayList;
+import java.util.Locale;
+
 /**
  * StaticLayout is a Layout for text that will not be edited after it
  * is laid out.  Use {@link DynamicLayout} for text that may change.
@@ -242,7 +246,7 @@ public class StaticLayout extends Layout {
             int dir = measured.mDir;
             boolean easy = measured.mEasy;
 
-            breakOpp = nLineBreakOpportunities(localeLanguageTag, chs, paraEnd - paraStart, breakOpp);
+            breakOpp = nLineBreakOpportunities(localeLanguageTag, chs, paraEnd - paraStart);
             int breakOppIndex = 0;
 
             int width = firstWidth;
@@ -853,10 +857,31 @@ public class StaticLayout extends Layout {
         mMeasured = MeasuredText.recycle(mMeasured);
     }
 
-    // returns an array with terminal sentinel value -1 to indicate end
-    // this is so that arrays can be recycled instead of allocating new arrays
-    // every time
-    private static native int[] nLineBreakOpportunities(String locale, char[] text, int length, int[] recycle);
+    /**
+     * Get a -1 terminated array of integers representing where line breaks are permitted in text.
+     */
+    private static int[] nLineBreakOpportunities(String localeLangTag, char[] text, int length) {
+        BreakIterator breakIterator = BreakIterator.getLineInstance(
+                Locale.forLanguageTag(localeLangTag));
+        breakIterator.setText(new String(text).substring(0, length));
+
+        ArrayList<Integer> res = new ArrayList<>();
+
+        int current = breakIterator.next();
+        while (current != BreakIterator.DONE) {
+            res.add(current);
+            current = breakIterator.next();
+        }
+
+        res.add(-1);
+        int[] result = new int[res.size()];
+
+        for (int i = 0; i < res.size(); i++) {
+            result[i] = res.get(i);
+        }
+
+        return result;
+    }
 
     private int mLineCount;
     private int mTopPadding, mBottomPadding;
