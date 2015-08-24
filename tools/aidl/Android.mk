@@ -8,6 +8,24 @@ ifeq ($(TARGET_BUILD_APPS)$(filter true,$(TARGET_BUILD_PDK)),)
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
+LOCAL_CFLAGS := -g
+
+ifneq ($(HOST_OS),windows)
+# Our windows build doesn't support this yet.
+LOCAL_CLANG := true
+endif
+
+LOCAL_CLANG_CFLAGS := -Wall -Werror
+# Tragically, the code is riddled with unused parameters.
+LOCAL_CLANG_CFLAGS += -Wno-unused-parameter
+# yacc dumps a lot of code *just in case*.
+LOCAL_CLANG_CFLAGS += -Wno-unused-function
+LOCAL_CLANG_CFLAGS += -Wno-unneeded-internal-declaration
+# yacc is a tool from a more civilized age.
+LOCAL_CLANG_CFLAGS += -Wno-deprecated-register
+# yacc also has a habit of using char* over const char*.
+LOCAL_CLANG_CFLAGS += -Wno-writable-strings
+
 LOCAL_SRC_FILES := \
     AST.cpp \
     Type.cpp \
@@ -22,7 +40,6 @@ LOCAL_SRC_FILES := \
     options.cpp \
     search_path.cpp \
 
-LOCAL_CFLAGS := -g
 LOCAL_MODULE := aidl
 LOCAL_MODULE_HOST_OS := darwin linux windows
 
