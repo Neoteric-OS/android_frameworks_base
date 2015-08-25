@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44e3394a_275fdef2",
+        "filename": "core/java/android/text/StaticLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-08-25T10:38:12Z",
+      "side": 1,
+      "message": "The original code is going to some lengths to avoid array allocation. I assume because this is widely used framework code and has been optimized, although it might have been to avoid copying arrays across the JNI boundary or just premature optimization.\n\nIt will probably be required to demonstrate that performance and memory usage / garbage creation hasn\u0027t suffered appreciably for the framework folks to accept the change. \n\nFrom looking at the original native code the same kind of structures are being created/destroyed in unmanaged / native heap, although the ArrayList\u003cInteger\u003e is a bit of a worry given the boxing overhead. Shame we don\u0027t have something like Trove.\n\nThe replacement constructs a BreakIterator, Locale (maybe), two Strings, an ArrayList, multiple Integers (probably only if they are \u003c -128 or \u003e 128, given Integer.valueOf()) and an array each time, plus anything going on inside BreakIterator.\n\nWorth measuring first just to see what the situation is.\n\nIf we end up not recycling arrays, the use of the -1 cardinal is not needed.",
+      "range": {
+        "startLine": 863,
+        "startChar": 25,
+        "endLine": 863,
+        "endChar": 48
+      },
+      "revId": "108a126a404488286db3ceb2aa884b3281aaff95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "845371c9_6675103d",
+        "filename": "core/java/android/text/StaticLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-08-25T10:38:12Z",
+      "side": 1,
+      "message": "Is it possible to take a guess at an upper bound or a reasonable heuristic here? ArrayList growth may be measurable and if we can pre-size....\n\nWorth working out if there is a need first, or if we want to move forward, though.",
+      "range": {
+        "startLine": 868,
+        "startChar": 37,
+        "endLine": 868,
+        "endChar": 46
+      },
+      "revId": "108a126a404488286db3ceb2aa884b3281aaff95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
