@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "248c8586_61bf20f8",
+        "filename": "core/java/android/text/StaticLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1015625
+      },
+      "writtenOn": "2015-08-27T18:01:49Z",
+      "side": 1,
+      "message": "The native code it replaces basically does the same, fwiw (constructs BreakIterator, does multiple allocations, etc). I don\u0027t think it\u0027s possible to really know the impact without benchmarking, though.",
+      "parentUuid": "44e3394a_275fdef2",
+      "range": {
+        "startLine": 863,
+        "startChar": 25,
+        "endLine": 863,
+        "endChar": 48
+      },
+      "revId": "108a126a404488286db3ceb2aa884b3281aaff95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "845371c9_6675103d",
         "filename": "core/java/android/text/StaticLayout.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2015-08-25T10:38:12Z",
       "side": 1,
       "message": "Is it possible to take a guess at an upper bound or a reasonable heuristic here? ArrayList growth may be measurable and if we can pre-size....\n\nWorth working out if there is a need first, or if we want to move forward, though.",
+      "range": {
+        "startLine": 868,
+        "startChar": 37,
+        "endLine": 868,
+        "endChar": 46
+      },
+      "revId": "108a126a404488286db3ceb2aa884b3281aaff95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c42ba915_58e1abb9",
+        "filename": "core/java/android/text/StaticLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1015625
+      },
+      "writtenOn": "2015-08-27T18:01:49Z",
+      "side": 1,
+      "message": "text.length is an upper bound. Expected value is in the ballpark of 0.2 * text.length, though that will of course vary. If I were doing this, I think I would use 1/4, as it\u0027s likely it wouldn\u0027t be exceeded, but the waste is modest.",
+      "parentUuid": "845371c9_6675103d",
       "range": {
         "startLine": 868,
         "startChar": 37,
