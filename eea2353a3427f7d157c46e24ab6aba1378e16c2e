@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "441eda5a_b4cc00a2",
+        "filename": "tools/aidl/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2015-08-31T14:50:37Z",
+      "side": 1,
+      "message": "build the yacc code in its own static library and then link it in to the rest, where you can be stricter?",
+      "revId": "eea2353a3427f7d157c46e24ab6aba1378e16c2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
