@@ -34,6 +34,24 @@
       "revId": "f65f682efcc8cd65e1007b180ade730a01d79f94",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6492fe15_bd22bf7d",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-08-31T20:46:11Z",
+      "side": 1,
+      "message": "Wow yeah.. how did that git in there (goes to git blame)...",
+      "parentUuid": "242e4691_8b654d29",
+      "revId": "f65f682efcc8cd65e1007b180ade730a01d79f94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
