@@ -16,6 +16,24 @@
       "revId": "f65f682efcc8cd65e1007b180ade730a01d79f94",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "242e4691_8b654d29",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1013887
+      },
+      "writtenOn": "2015-08-31T20:28:38Z",
+      "side": 1,
+      "message": "The whitespace is not from this patch.",
+      "parentUuid": "842452a5_7680b0e9",
+      "revId": "f65f682efcc8cd65e1007b180ade730a01d79f94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
