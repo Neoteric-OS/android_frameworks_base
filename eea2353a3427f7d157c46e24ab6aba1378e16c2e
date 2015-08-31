@@ -16,6 +16,24 @@
       "revId": "eea2353a3427f7d157c46e24ab6aba1378e16c2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8429b287_ceeda3f3",
+        "filename": "tools/aidl/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1057759
+      },
+      "writtenOn": "2015-08-31T17:52:01Z",
+      "side": 1,
+      "message": "I\u0027ll submit a follow up.  That sounds more involved.",
+      "parentUuid": "441eda5a_b4cc00a2",
+      "revId": "eea2353a3427f7d157c46e24ab6aba1378e16c2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
