@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e486eed4_04e7d81a",
+        "filename": "tools/aidl/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1043845
+      },
+      "writtenOn": "2015-08-31T20:52:08Z",
+      "side": 1,
+      "message": "This can be dropped. The build system does this by default.",
+      "revId": "6842795290176eb98c3228e3dff267ac518ef950",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4618eea_6cfd93a8",
+        "filename": "tools/aidl/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1043845
+      },
+      "writtenOn": "2015-08-31T20:52:08Z",
+      "side": 1,
+      "message": "This is actually unnecessary. All Linux/Darwin host tools default to clang (sorry, I should have mentioned that earlier).",
+      "revId": "6842795290176eb98c3228e3dff267ac518ef950",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
