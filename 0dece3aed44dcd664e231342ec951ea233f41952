@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4618eea_52bf0598",
+        "filename": "tools/aidl/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2015-09-02T02:07:54Z",
+      "side": 1,
+      "message": "LOCAL_LDLIBS_linux :\u003d -lrt",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "0dece3aed44dcd664e231342ec951ea233f41952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
