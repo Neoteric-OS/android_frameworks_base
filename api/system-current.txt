@@ -364,6 +364,7 @@ package android {
     field public static final int allowEmbedded = 16843765; // 0x10103f5
     field public static final int allowParallelSyncs = 16843570; // 0x1010332
     field public static final int allowSingleTap = 16843353; // 0x1010259
+    field public static final int allowTLSTrustManagerOverride = 16843991; // 0x10104d7
     field public static final int allowTaskReparenting = 16843268; // 0x1010204
     field public static final int alpha = 16843551; // 0x101031f
     field public static final int alphabeticShortcut = 16843235; // 0x10101e3
@@ -8615,6 +8616,7 @@ package android.content.pm {
     field public static final int FLAG_ALLOW_BACKUP = 32768; // 0x8000
     field public static final int FLAG_ALLOW_CLEAR_USER_DATA = 64; // 0x40
     field public static final int FLAG_ALLOW_TASK_REPARENTING = 32; // 0x20
+    field public static final int FLAG_ALLOW_TLS_TRUSTMANAGER_OVERRIDE = 1; // 0x1
     field public static final int FLAG_DEBUGGABLE = 2; // 0x2
     field public static final int FLAG_EXTERNAL_STORAGE = 262144; // 0x40000
     field public static final int FLAG_EXTRACT_NATIVE_LIBS = 268435456; // 0x10000000
@@ -8648,6 +8650,7 @@ package android.content.pm {
     field public int descriptionRes;
     field public boolean enabled;
     field public int flags;
+    field public int flags2;
     field public int largestWidthLimitDp;
     field public java.lang.String manageSpaceActivityName;
     field public java.lang.String nativeLibraryDir;

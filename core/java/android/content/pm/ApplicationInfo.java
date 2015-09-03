@@ -383,6 +383,10 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      */
     public int flags = 0;
 
+    public int flags2 = 0;
+
+    public static final int FLAG_ALLOW_TLS_TRUSTMANAGER_OVERRIDE = 1 << 0;
+
     /**
      * Value for {@link #privateFlags}: true if the application is hidden via restrictions and for
      * most purposes is considered as not installed.
@@ -711,6 +715,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         className = orig.className;
         theme = orig.theme;
         flags = orig.flags;
+        flags2 = orig.flags2;
         privateFlags = orig.privateFlags;
         requiresSmallestWidthDp = orig.requiresSmallestWidthDp;
         compatibleWidthLimitDp = orig.compatibleWidthLimitDp;
@@ -762,6 +767,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         dest.writeString(className);
         dest.writeInt(theme);
         dest.writeInt(flags);
+        dest.writeInt(flags2);
         dest.writeInt(privateFlags);
         dest.writeInt(requiresSmallestWidthDp);
         dest.writeInt(compatibleWidthLimitDp);
@@ -812,6 +818,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         className = source.readString();
         theme = source.readInt();
         flags = source.readInt();
+        flags2 = source.readInt();
         privateFlags = source.readInt();
         requiresSmallestWidthDp = source.readInt();
         compatibleWidthLimitDp = source.readInt();

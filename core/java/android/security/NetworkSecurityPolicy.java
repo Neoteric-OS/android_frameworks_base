@@ -63,6 +63,10 @@ public class NetworkSecurityPolicy {
         return libcore.net.NetworkSecurityPolicy.isCleartextTrafficPermitted();
     }
 
+    public boolean allowTLSTrustManagerOverride() {
+        return libcore.net.NetworkSecurityPolicy.allowTLSTrustManagerOverride();
+    }
+
     /**
      * Sets whether cleartext network traffic is permitted for this process.
      *
@@ -73,5 +77,9 @@ public class NetworkSecurityPolicy {
      */
     public void setCleartextTrafficPermitted(boolean permitted) {
         libcore.net.NetworkSecurityPolicy.setCleartextTrafficPermitted(permitted);
+    }
+
+    public void setTLSTrustManagerOverride(boolean permitted) {
+        libcore.net.NetworkSecurityPolicy.setTLSTrustManagerOverride(permitted);
     }
 }

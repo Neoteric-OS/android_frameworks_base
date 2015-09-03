@@ -2599,4 +2599,6 @@
     <public type="style" name="Theme.DeviceDefault.Light.Dialog.Alert" />
 
   <public type="attr" name="extractNativeLibs" />
+    <public type="attr" name="allowTLSTrustManagerOverride" />
+
 </resources>
