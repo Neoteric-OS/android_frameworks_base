@@ -2589,6 +2589,14 @@ public class PackageParser {
             ai.flags2 |= ApplicationInfo.FLAG_ALLOW_TLS_TRUSTMANAGER_OVERRIDE;
         }
 
+        if (sa.getBoolean(
+                com.android.internal.R.styleable.
+                    AndroidManifestApplication_allowHttpsHostnameVerifierOverride,
+                true)) {
+            ai.flags2 |= ApplicationInfo.FLAG_ALLOW_HTTPS_HOSTNAMEVERIFIER_OVERRIDE;
+        }
+
+
         String str;
         str = sa.getNonConfigurationString(
                 com.android.internal.R.styleable.AndroidManifestApplication_permission, 0);

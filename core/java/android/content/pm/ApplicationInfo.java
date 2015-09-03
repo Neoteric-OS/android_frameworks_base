@@ -387,6 +387,8 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
 
     public static final int FLAG_ALLOW_TLS_TRUSTMANAGER_OVERRIDE = 1 << 0;
 
+    public static final int FLAG_ALLOW_HTTPS_HOSTNAMEVERIFIER_OVERRIDE = 1 << 1;
+
     /**
      * Value for {@link #privateFlags}: true if the application is hidden via restrictions and for
      * most purposes is considered as not installed.

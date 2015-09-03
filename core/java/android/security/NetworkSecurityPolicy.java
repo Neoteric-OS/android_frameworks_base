@@ -67,6 +67,10 @@ public class NetworkSecurityPolicy {
         return libcore.net.NetworkSecurityPolicy.allowTLSTrustManagerOverride();
     }
 
+    public boolean allowHttpsHostnameVerifierOverride() {
+        return libcore.net.NetworkSecurityPolicy.allowHttpsHostnameVerifierOverride();
+    }
+
     /**
      * Sets whether cleartext network traffic is permitted for this process.
      *
@@ -81,5 +85,9 @@ public class NetworkSecurityPolicy {
 
     public void setTLSTrustManagerOverride(boolean permitted) {
         libcore.net.NetworkSecurityPolicy.setTLSTrustManagerOverride(permitted);
+    }
+
+    public void setTLSHostnameVerifierOverride(boolean permitted) {
+        libcore.net.NetworkSecurityPolicy.setTLSHostnameVerifierOverride(permitted);
     }
 }

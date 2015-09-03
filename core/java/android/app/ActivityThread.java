@@ -4449,6 +4449,9 @@ public final class ActivityThread {
         NetworkSecurityPolicy.getInstance().setTLSTrustManagerOverride(
                 (data.appInfo.flags2 & ApplicationInfo.FLAG_ALLOW_TLS_TRUSTMANAGER_OVERRIDE) != 0);
 
+        NetworkSecurityPolicy.getInstance().setHttpsHostnameVerifierOverride(
+                (data.appInfo.flags2 & ApplicationInfo.FLAG_ALLOW_HTTPS_HOSTNAMEVERIFIER_OVERRIDE) != 0);
+
         if (data.debugMode != IApplicationThread.DEBUG_OFF) {
             // XXX should have option to change the port.
             Debug.changeDebugPort(8100);

@@ -2600,5 +2600,6 @@
 
   <public type="attr" name="extractNativeLibs" />
     <public type="attr" name="allowTLSTrustManagerOverride" />
+    <public type="attr" name="allowHttpsHostnameVerifierOverride" />
 
 </resources>
