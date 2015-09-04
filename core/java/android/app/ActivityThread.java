@@ -4446,6 +4446,10 @@ public final class ActivityThread {
         NetworkSecurityPolicy.getInstance().setCleartextTrafficPermitted(
                 (data.appInfo.flags & ApplicationInfo.FLAG_USES_CLEARTEXT_TRAFFIC) != 0);
 
+        if (data.appInfo.certPins != null) {
+            NetworkSecurityPolicy.getInstance().setCertPins(data.appInfo.certPins);
+        }
+
         if (data.debugMode != IApplicationThread.DEBUG_OFF) {
             // XXX should have option to change the port.
             Debug.changeDebugPort(8100);

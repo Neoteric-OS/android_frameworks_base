@@ -1392,6 +1392,10 @@
               dynamically at runtime. -->
         <attr name="required" />
     </declare-styleable>
+
+    <declare-styleable name="AndroidManifestCertPin" parent="AndroidManifestApplication">
+        <attr name="name" />
+    </declare-styleable>
     
     <!-- The <code>supports-screens</code> specifies the screen dimensions an
          application supports.  By default a modern application supports all

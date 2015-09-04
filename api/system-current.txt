@@ -8642,6 +8642,7 @@ package android.content.pm {
     field public static final int FLAG_UPDATED_SYSTEM_APP = 128; // 0x80
     field public static final int FLAG_VM_SAFE_MODE = 16384; // 0x4000
     field public java.lang.String backupAgentName;
+    field public java.lang.String[] certPins;
     field public java.lang.String className;
     field public int compatibleWidthLimitDp;
     field public java.lang.String dataDir;

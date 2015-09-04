@@ -2766,6 +2766,20 @@ public class PackageParser {
                 // enforce this.
                 XmlUtils.skipCurrentTag(parser);
 
+            } else if (tagName.equals("cert-pin")) {
+                sa = res.obtainAttributes(attrs,
+                        com.android.internal.R.styleable.AndroidManifestCertPin);
+                String pinEntry = sa.getNonResourceString(
+                        com.android.internal.R.styleable.AndroidManifestCertPin_name);
+                sa.recycle();
+
+                if (pinEntry != null) {
+                    pinEntry.intern();
+                    owner.certPins = ArrayUtils.add(owner.certPins, pinEntry);
+                }
+
+                XmlUtils.skipCurrentTag(parser);
+
             } else {
                 if (!RIGID_PARSER) {
                     Slog.w(TAG, "Unknown element under <application>: " + tagName
@@ -2779,6 +2793,10 @@ public class PackageParser {
                     return false;
                 }
             }
+        }
+
+        if (owner.certPins != null) {
+            ai.certPins = owner.certPins.toArray(new String[0]);
         }
 
         return true;
@@ -4266,6 +4284,7 @@ public class PackageParser {
         public ArrayList<String> usesLibraries = null;
         public ArrayList<String> usesOptionalLibraries = null;
         public String[] usesLibraryFiles = null;
+        public ArrayList<String> certPins = null;
 
         public ArrayList<ActivityIntentInfo> preferredActivityFilters = null;
 

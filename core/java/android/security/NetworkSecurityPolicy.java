@@ -63,6 +63,10 @@ public class NetworkSecurityPolicy {
         return libcore.net.NetworkSecurityPolicy.isCleartextTrafficPermitted();
     }
 
+    public String[] getCertPins() {
+        return libcore.net.NetworkSecurityPolicy.getCertPins();
+    }
+
     /**
      * Sets whether cleartext network traffic is permitted for this process.
      *
@@ -73,5 +77,9 @@ public class NetworkSecurityPolicy {
      */
     public void setCleartextTrafficPermitted(boolean permitted) {
         libcore.net.NetworkSecurityPolicy.setCleartextTrafficPermitted(permitted);
+    }
+
+    public void setCertPins(String[] certPins) {
+        libcore.net.NetworkSecurityPolicy.setCertPins(certPins);
     }
 }
