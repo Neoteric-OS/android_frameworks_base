@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "a4bdd6e7_5742cc2e",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2752,
+      "author": {
+        "id": 1039918
+      },
+      "writtenOn": "2015-09-08T20:01:49Z",
+      "side": 1,
+      "message": "What will happen if r.task was launched from another task (but not home), Will the next task would still try to return to r.task?\n\nMaybe when r.task is getting removed, we should always set next task to return to what r.task is returning to? (r.task.getTaskToReturnTo())",
+      "revId": "4b47412c51e84367f2d931120e6986f7b18e4bb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0484e2ca_975b051f",
         "filename": "services/core/java/com/android/server/am/ActivityStack.java",
         "patchSetId": 4
