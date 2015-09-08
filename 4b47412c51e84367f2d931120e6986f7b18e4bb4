@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "444dfaad_e222827e",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2754,
+      "author": {
+        "id": 1054350
+      },
+      "writtenOn": "2015-09-08T06:31:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0484e2ca_975b051f",
+      "range": {
+        "startLine": 2754,
+        "startChar": 12,
+        "endLine": 2754,
+        "endChar": 18
+      },
+      "revId": "4b47412c51e84367f2d931120e6986f7b18e4bb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e486eed4_d8177edb",
         "filename": "services/core/java/com/android/server/am/ActivityStack.java",
         "patchSetId": 4
@@ -59,6 +83,30 @@
       "writtenOn": "2015-09-07T16:09:37Z",
       "side": 1,
       "message": "what if the task isn\u0027t empty?",
+      "range": {
+        "startLine": 2755,
+        "startChar": 12,
+        "endLine": 2756,
+        "endChar": 76
+      },
+      "revId": "4b47412c51e84367f2d931120e6986f7b18e4bb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "846c5216_5c37d5c5",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2756,
+      "author": {
+        "id": 1054350
+      },
+      "writtenOn": "2015-09-08T06:31:25Z",
+      "side": 1,
+      "message": "r.frontOfTask will be false when the task is not empty.",
+      "parentUuid": "e486eed4_d8177edb",
       "range": {
         "startLine": 2755,
         "startChar": 12,
