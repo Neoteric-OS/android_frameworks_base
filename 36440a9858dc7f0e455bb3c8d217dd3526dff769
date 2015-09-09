@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "442a5a15_f47f783e",
+        "filename": "core/res/res/values/attrs_manifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1013157
+      },
+      "writtenOn": "2015-09-09T17:23:15Z",
+      "side": 1,
+      "message": "Also, per Steve\u0027s comments, you might need to change the name of the attribute here depending on how your decide to handle the SELinux attribute name in your other change.",
+      "revId": "36440a9858dc7f0e455bb3c8d217dd3526dff769",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04822251_32b0b0c0",
         "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
         "patchSetId": 1
