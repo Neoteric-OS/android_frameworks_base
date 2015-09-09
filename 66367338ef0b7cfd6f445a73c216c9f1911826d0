@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "44cedaa4_481c6f72",
+        "filename": "graphics/java/android/graphics/Canvas.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2015-09-09T22:24:49Z",
+      "side": 1,
+      "message": "This raises an interesting question: When should nDestroy be called?  I assumed that it would be called at the same time as the object would become finalizable, but that actually seems wrong.  It should probably happen at PhantomReference processing time, i.e. when the object is really dead.  That should normally be at the same time. But it means that if someone touches an otherwise unreachable Canvas in a finalizer, things just work.  And we no longer need to worry about clearing these fields.",
+      "parentUuid": "84d4522f_df3cb7ad",
+      "range": {
+        "startLine": 100,
+        "startChar": 8,
+        "endLine": 100,
+        "endChar": 31
+      },
+      "revId": "66367338ef0b7cfd6f445a73c216c9f1911826d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa582b71_80d73a50",
         "filename": "graphics/java/android/graphics/Interpolator.java",
         "patchSetId": 1
