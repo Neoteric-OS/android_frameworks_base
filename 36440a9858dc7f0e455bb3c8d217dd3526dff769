@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c48baa6e_90071420",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1080693
+      },
+      "writtenOn": "2015-09-09T17:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04822251_32b0b0c0",
+      "revId": "36440a9858dc7f0e455bb3c8d217dd3526dff769",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04822251_b2c34023",
         "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-09-09T16:23:18Z",
       "side": 1,
       "message": "Use spaces instead of a tab for the indentation.",
+      "revId": "36440a9858dc7f0e455bb3c8d217dd3526dff769",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c48baa6e_f0122063",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1080693
+      },
+      "writtenOn": "2015-09-09T17:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04822251_b2c34023",
       "revId": "36440a9858dc7f0e455bb3c8d217dd3526dff769",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
