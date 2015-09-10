@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "84753240_6ea64f8f",
+        "filename": "core/res/res/values/attrs_manifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1080693
+      },
+      "writtenOn": "2015-09-10T14:07:08Z",
+      "side": 1,
+      "message": "Changed attribute name to to preventAppDataExecution.",
+      "parentUuid": "442a5a15_f47f783e",
+      "revId": "36440a9858dc7f0e455bb3c8d217dd3526dff769",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04822251_32b0b0c0",
         "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
         "patchSetId": 1
@@ -65,6 +83,24 @@
       "writtenOn": "2015-09-09T18:25:48Z",
       "side": 1,
       "message": "While there is no internal structure to the seinfo string, we might want to use a character that cannot be used in mac_permissions.xml for a seinfo value as a separator, e.g. a colon (:) or comma (,), rather than an underscore (_) so that there is no possibility of conflict/ambiguity.  libselinux only cares that it does not contain any embedded whitespace.",
+      "revId": "36440a9858dc7f0e455bb3c8d217dd3526dff769",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "442a5a15_b40a6097",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1080693
+      },
+      "writtenOn": "2015-09-10T14:07:08Z",
+      "side": 1,
+      "message": "Done. Using : (colon) separator instead of _ (underscore).",
+      "parentUuid": "c48baa6e_f0eb00b1",
       "revId": "36440a9858dc7f0e455bb3c8d217dd3526dff769",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
