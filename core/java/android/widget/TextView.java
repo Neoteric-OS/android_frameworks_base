@@ -1365,7 +1365,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
     private void setTypefaceFromAttrs(String familyName, int typefaceIndex, int styleIndex) {
         Typeface tf = null;
-        if (familyName != null) {
+        if (!TextUtils.isEmpty(familyName)) {
             tf = Typeface.create(familyName, styleIndex);
             if (tf != null) {
                 setTypeface(tf);
