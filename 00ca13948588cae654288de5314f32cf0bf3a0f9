@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44fdfae7_df7ebfa9",
+        "filename": "core/res/res/values/attrs_manifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1013433
+      },
+      "writtenOn": "2015-09-10T17:36:11Z",
+      "side": 1,
+      "message": "Seems limited if new security features wish to be added. However, falls in line with the boolean nature of Android in general...",
+      "revId": "00ca13948588cae654288de5314f32cf0bf3a0f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
