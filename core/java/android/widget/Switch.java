@@ -818,9 +818,9 @@ public class Switch extends CompoundButton {
 
         if (newState != oldState) {
             playSoundEffect(SoundEffectConstants.CLICK);
-            setChecked(newState);
         }
 
+        setChecked(newState);
         cancelSuperTouch(ev);
     }
 
