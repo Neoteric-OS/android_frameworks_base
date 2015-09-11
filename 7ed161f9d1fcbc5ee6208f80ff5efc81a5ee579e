@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64cf5e9f_06009ac6",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/stack/NotificationStackScrollLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2015-09-11T03:31:15Z",
+      "side": 1,
+      "message": "nit: remove line again",
+      "revId": "7ed161f9d1fcbc5ee6208f80ff5efc81a5ee579e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64cf5e9f_c61aa239",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/stack/NotificationStackScrollLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1942,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2015-09-11T03:31:15Z",
+      "side": 1,
+      "message": "we should rather move this call before the if to avoid dupliated code.",
+      "revId": "7ed161f9d1fcbc5ee6208f80ff5efc81a5ee579e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

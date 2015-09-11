@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44fdfae7_25d6b463",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/stack/NotificationStackScrollLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2015-09-11T03:31:15Z",
+      "side": 0,
+      "message": "nit: add again",
+      "revId": "c0ce6c422cfe089e7a8e209ac924e37bed3ca770",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
