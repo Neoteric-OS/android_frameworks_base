@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4c34e74_f89e689f",
+        "filename": "docs/html/guide/topics/renderscript/reference/rs_object_types.jd",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2015-09-11T01:54:47Z",
+      "side": 1,
+      "message": "These would hold API information if we ever deprecate or add new RS object types.",
+      "revId": "663c81b4c3287bb17d77616aceef8c776269fc45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
