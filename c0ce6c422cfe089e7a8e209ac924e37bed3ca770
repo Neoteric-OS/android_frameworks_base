@@ -16,6 +16,24 @@
       "revId": "c0ce6c422cfe089e7a8e209ac924e37bed3ca770",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "845e12ce_6959619b",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/stack/NotificationStackScrollLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1081065
+      },
+      "writtenOn": "2015-09-11T05:25:55Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "44fdfae7_25d6b463",
+      "revId": "c0ce6c422cfe089e7a8e209ac924e37bed3ca770",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

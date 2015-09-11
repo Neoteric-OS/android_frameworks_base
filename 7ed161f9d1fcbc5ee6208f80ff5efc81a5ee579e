@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e46d0e7f_89205935",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/stack/NotificationStackScrollLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1081065
+      },
+      "writtenOn": "2015-09-11T05:25:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64cf5e9f_06009ac6",
+      "revId": "7ed161f9d1fcbc5ee6208f80ff5efc81a5ee579e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64cf5e9f_c61aa239",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/stack/NotificationStackScrollLayout.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-09-11T03:31:15Z",
       "side": 1,
       "message": "we should rather move this call before the if to avoid dupliated code.",
+      "revId": "7ed161f9d1fcbc5ee6208f80ff5efc81a5ee579e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e46d0e7f_a9251d44",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/stack/NotificationStackScrollLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1942,
+      "author": {
+        "id": 1081065
+      },
+      "writtenOn": "2015-09-11T05:25:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64cf5e9f_c61aa239",
       "revId": "7ed161f9d1fcbc5ee6208f80ff5efc81a5ee579e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
