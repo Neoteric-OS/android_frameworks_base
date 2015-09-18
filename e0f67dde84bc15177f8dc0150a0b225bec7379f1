@@ -22,6 +22,30 @@
       "revId": "e0f67dde84bc15177f8dc0150a0b225bec7379f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89762b11_467b72ba",
+        "filename": "cmds/appops/src/com/android/commands/appops/AppOpsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2015-09-18T12:13:03Z",
+      "side": 1,
+      "message": "Are you asking, or stating results from an actual attempt?\n\nIn any case, I don\u0027t see how your example relates to this patch. The packageName variable here comes from the appops command args, so it\u0027d be \"YouTube\" in your case -- and my patch would not make any difference there.",
+      "parentUuid": "09987b8e_e24ec6ac",
+      "range": {
+        "startLine": 220,
+        "startChar": 13,
+        "endLine": 220,
+        "endChar": 17
+      },
+      "revId": "e0f67dde84bc15177f8dc0150a0b225bec7379f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
