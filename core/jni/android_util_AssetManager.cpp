@@ -124,6 +124,11 @@ static void verifySystemIdmaps()
     pid_t pid;
     char system_id[10];
 
+    // Bail out early to avoid wasting time and logging an error.
+    if (getuid() != 0) {
+        return;
+    }
+
     snprintf(system_id, sizeof(system_id), "%d", AID_SYSTEM);
 
     switch (pid = fork()) {
