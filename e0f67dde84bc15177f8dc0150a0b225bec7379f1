@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09987b8e_e24ec6ac",
+        "filename": "cmds/appops/src/com/android/commands/appops/AppOpsCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1044339
+      },
+      "writtenOn": "2015-09-18T11:59:55Z",
+      "side": 1,
+      "message": "If im running an app called root and doing something like Runtime.getRuntime().exec(\"appops set YouTube WAKE_LOCK allow\"); i bypassed UPDATE_APP_OPS_STATS permission",
+      "range": {
+        "startLine": 220,
+        "startChar": 13,
+        "endLine": 220,
+        "endChar": 17
+      },
+      "revId": "e0f67dde84bc15177f8dc0150a0b225bec7379f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
