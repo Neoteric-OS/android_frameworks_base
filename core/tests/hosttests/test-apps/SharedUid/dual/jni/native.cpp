@@ -30,7 +30,7 @@ int result = a + b;
 
 static const char *classPathName = "com/framework/shareduid/dual/Native";
 
-static JNINativeMethod methods[] = {
+static const JNINativeMethod methods[] = {
   {"add", "(II)I", (void*)add },
 };
 

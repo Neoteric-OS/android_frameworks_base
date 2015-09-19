@@ -859,7 +859,7 @@ android_app_ActivityThread_dumpGraphics(JNIEnv* env, jobject clazz, jobject java
 
 const char* const kClassPathName = "android/view/GLES20Canvas";
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
     { "nIsAvailable",       "()Z",             (void*) android_view_GLES20Canvas_isAvailable },
 
 #ifdef USE_OPENGL_RENDERER
@@ -954,7 +954,7 @@ static JNINativeMethod gMethods[] = {
 #endif
 };
 
-static JNINativeMethod gActivityThreadMethods[] = {
+static const JNINativeMethod gActivityThreadMethods[] = {
     { "dumpGraphicsInfo",        "(Ljava/io/FileDescriptor;)V",
                                                (void*) android_app_ActivityThread_dumpGraphics }
 };
