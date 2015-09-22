@@ -26,6 +26,7 @@ import android.database.DataSetObserver;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -107,6 +108,8 @@ class CalendarViewLegacyDelegate extends CalendarView.AbstractCalendarViewDelega
     private final int mWeekSeperatorLineWidth;
 
     private int mDateTextSize;
+
+    private Typeface mDateTextTypeface;
 
     private Drawable mSelectedDateVerticalBar;
 
@@ -626,6 +629,9 @@ class CalendarViewLegacyDelegate extends CalendarView.AbstractCalendarViewDelega
                 mDateTextAppearanceResId, R.styleable.TextAppearance);
         mDateTextSize = dateTextAppearance.getDimensionPixelSize(
                 R.styleable.TextAppearance_textSize, DEFAULT_DATE_TEXT_SIZE);
+        String fontFamily = dateTextAppearance.getString(
+                R.styleable.TextAppearance_fontFamily);
+        mDateTextTypeface = Typeface.create(fontFamily, 0);
         dateTextAppearance.recycle();
     }
 
@@ -1275,12 +1281,14 @@ class CalendarViewLegacyDelegate extends CalendarView.AbstractCalendarViewDelega
             mDrawPaint.setFakeBoldText(false);
             mDrawPaint.setAntiAlias(true);
             mDrawPaint.setStyle(Paint.Style.FILL);
+            mDrawPaint.setTypeface(mDateTextTypeface);
 
             mMonthNumDrawPaint.setFakeBoldText(true);
             mMonthNumDrawPaint.setAntiAlias(true);
             mMonthNumDrawPaint.setStyle(Paint.Style.FILL);
             mMonthNumDrawPaint.setTextAlign(Paint.Align.CENTER);
             mMonthNumDrawPaint.setTextSize(mDateTextSize);
+            mMonthNumDrawPaint.setTypeface(mDateTextTypeface);
         }
 
         /**
