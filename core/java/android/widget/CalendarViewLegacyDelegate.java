@@ -26,6 +26,7 @@ import android.database.DataSetObserver;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -104,9 +105,18 @@ class CalendarViewLegacyDelegate extends CalendarView.AbstractCalendarViewDelega
 
     private static final int DEFAULT_WEEK_DAY_TEXT_APPEARANCE_RES_ID = -1;
 
+    // copy from TextView
+    // Enum for the "typeface" XML parameter.
+    // TODO: How can we get this from the XML instead of hardcoding it here?
+    private static final int SANS = 1;
+    private static final int SERIF = 2;
+    private static final int MONOSPACE = 3;
+
     private final int mWeekSeperatorLineWidth;
 
     private int mDateTextSize;
+
+    private Typeface mDateTextTypeface;
 
     private Drawable mSelectedDateVerticalBar;
 
@@ -293,7 +303,7 @@ class CalendarViewLegacyDelegate extends CalendarView.AbstractCalendarViewDelega
 
         mDateTextAppearanceResId = a.getResourceId(
                 R.styleable.CalendarView_dateTextAppearance, R.style.TextAppearance_Small);
-        updateDateTextSize();
+        updateDateTextAppearance();
 
         mWeekDayTextAppearanceResId = a.getResourceId(
                 R.styleable.CalendarView_weekDayTextAppearance,
@@ -478,7 +488,7 @@ class CalendarViewLegacyDelegate extends CalendarView.AbstractCalendarViewDelega
     public void setDateTextAppearance(int resourceId) {
         if (mDateTextAppearanceResId != resourceId) {
             mDateTextAppearanceResId = resourceId;
-            updateDateTextSize();
+            updateDateTextAppearance();
             invalidateAllWeekViews();
         }
     }
@@ -621,11 +631,43 @@ class CalendarViewLegacyDelegate extends CalendarView.AbstractCalendarViewDelega
         mMinDate = getCalendarForLocale(mMinDate, locale);
         mMaxDate = getCalendarForLocale(mMaxDate, locale);
     }
-    private void updateDateTextSize() {
+
+    private void updateDateTextAppearance() {
         TypedArray dateTextAppearance = mDelegator.getContext().obtainStyledAttributes(
                 mDateTextAppearanceResId, R.styleable.TextAppearance);
         mDateTextSize = dateTextAppearance.getDimensionPixelSize(
                 R.styleable.TextAppearance_textSize, DEFAULT_DATE_TEXT_SIZE);
+        String fontFamily = dateTextAppearance.getString(
+                R.styleable.TextAppearance_fontFamily);
+        int typefaceIndex = dateTextAppearance.getInt(
+                R.styleable.TextAppearance_typeface, -1);
+        int textStyle = dateTextAppearance.getInt(
+                R.styleable.TextAppearance_textStyle, Typeface.NORMAL);
+        Typeface tf = null;
+        if (fontFamily != null) {
+            tf = Typeface.create(fontFamily, textStyle);
+        }
+        if (tf == null) {
+            switch (typefaceIndex) {
+                case SANS:
+                    tf = Typeface.SANS_SERIF;
+                    break;
+                case SERIF:
+                    tf = Typeface.SERIF;
+                    break;
+                case MONOSPACE:
+                    tf = Typeface.MONOSPACE;
+                    break;
+            }
+            if (textStyle > 0) {
+                if (tf == null) {
+                    tf = Typeface.defaultFromStyle(textStyle);
+                } else {
+                    tf = Typeface.create(tf, textStyle);
+                }
+            }
+        }
+        mDateTextTypeface = tf;
         dateTextAppearance.recycle();
     }
 
@@ -1275,12 +1317,14 @@ class CalendarViewLegacyDelegate extends CalendarView.AbstractCalendarViewDelega
             mDrawPaint.setFakeBoldText(false);
             mDrawPaint.setAntiAlias(true);
             mDrawPaint.setStyle(Paint.Style.FILL);
+            mDrawPaint.setTypeface(mDateTextTypeface);
 
             mMonthNumDrawPaint.setFakeBoldText(true);
             mMonthNumDrawPaint.setAntiAlias(true);
             mMonthNumDrawPaint.setStyle(Paint.Style.FILL);
             mMonthNumDrawPaint.setTextAlign(Paint.Align.CENTER);
             mMonthNumDrawPaint.setTextSize(mDateTextSize);
+            mMonthNumDrawPaint.setTypeface(mDateTextTypeface);
         }
 
         /**
