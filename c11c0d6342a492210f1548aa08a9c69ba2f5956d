@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "69c577cc_a5fbdeb3",
+        "filename": "core/java/android/widget/CalendarViewLegacyDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1005082
+      },
+      "writtenOn": "2015-09-23T06:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89d46b2f_dc43a5dd",
+      "range": {
+        "startLine": 627,
+        "startChar": 17,
+        "endLine": 627,
+        "endChar": 35
+      },
+      "revId": "c11c0d6342a492210f1548aa08a9c69ba2f5956d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29253f43_76160e86",
         "filename": "core/java/android/widget/CalendarViewLegacyDelegate.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "29bfff33_83005e43",
+        "filename": "core/java/android/widget/CalendarViewLegacyDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1005082
+      },
+      "writtenOn": "2015-09-23T06:20:06Z",
+      "side": 1,
+      "message": "I confused with Resources.getString(). I\u0027ll fix it as your request.",
+      "parentUuid": "29253f43_76160e86",
+      "range": {
+        "startLine": 634,
+        "startChar": 28,
+        "endLine": 634,
+        "endChar": 57
+      },
+      "revId": "c11c0d6342a492210f1548aa08a9c69ba2f5956d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9a103bc_c6bd169f",
         "filename": "core/java/android/widget/CalendarViewLegacyDelegate.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2015-09-22T13:35:03Z",
       "side": 1,
       "message": "Populate with a value resolved from TextAppearance_textStyle.",
+      "range": {
+        "startLine": 635,
+        "startChar": 51,
+        "endLine": 635,
+        "endChar": 52
+      },
+      "revId": "c11c0d6342a492210f1548aa08a9c69ba2f5956d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29a61f28_ab2449f3",
+        "filename": "core/java/android/widget/CalendarViewLegacyDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1005082
+      },
+      "writtenOn": "2015-09-23T06:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9a103bc_c6bd169f",
       "range": {
         "startLine": 635,
         "startChar": 51,
