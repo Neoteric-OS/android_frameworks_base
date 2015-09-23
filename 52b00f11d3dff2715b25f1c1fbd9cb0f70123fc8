@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "297a9f33_6e440f82",
+        "filename": "core/java/android/widget/CalendarViewLegacyDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2015-09-23T18:26:02Z",
+      "side": 1,
+      "message": "Please also add support for android:typeface. See TextView for details on how this should interact with android:fontFamily.",
+      "range": {
+        "startLine": 628,
+        "startChar": 4,
+        "endLine": 628,
+        "endChar": 45
+      },
+      "revId": "52b00f11d3dff2715b25f1c1fbd9cb0f70123fc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
