@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -82,6 +83,9 @@ class SimpleMonthView extends View {
 
     private String mDayOfWeekTypeface;
     private String mMonthTitleTypeface;
+
+    private int mDateTextAppearanceResId;
+    private Typeface mDateTextTypeface;
 
     private Paint mDayNumberPaint;
     private Paint mDayNumberDisabledPaint;
@@ -176,6 +180,13 @@ class SimpleMonthView extends View {
         mRowHeight = (res.getDimensionPixelOffset(R.dimen.datepicker_view_animator_height)
                 - mMonthHeaderSize) / MAX_NUM_ROWS;
 
+        final TypedArray a = context.obtainStyledAttributes(attrs,
+                                R.styleable.CalendarView, defStyleAttr, defStyleRes);
+        mDateTextAppearanceResId = a.getResourceId(
+                R.styleable.CalendarView_dateTextAppearance, R.style.TextAppearance_Small);
+        updateDateTextTypeface();
+        a.recycle();
+
         // Set up accessibility components.
         mTouchHelper = new MonthViewTouchHelper(this);
         setAccessibilityDelegate(mTouchHelper);
@@ -246,6 +257,18 @@ class SimpleMonthView extends View {
         return true;
     }
 
+    private void updateDateTextTypeface() {
+        TypedArray dateTextAppearance = getContext().obtainStyledAttributes(
+                mDateTextAppearanceResId, R.styleable.TextAppearance);
+        String fontFamily = dateTextAppearance.getString(
+                R.styleable.TextAppearance_fontFamily);
+        int textStyle = dateTextAppearance.getInt(
+                R.styleable.TextAppearance_textStyle, Typeface.NORMAL);
+        mDateTextTypeface = fontFamily == null ?
+                null : Typeface.create(fontFamily, textStyle);
+        dateTextAppearance.recycle();
+    }
+
     /**
      * Sets up the text and style properties for painting.
      */
@@ -272,6 +295,7 @@ class SimpleMonthView extends View {
         mDayNumberSelectedPaint.setAntiAlias(true);
         mDayNumberSelectedPaint.setColor(mSelectedDayColor);
         mDayNumberSelectedPaint.setAlpha(SELECTED_CIRCLE_ALPHA);
+        mDayNumberSelectedPaint.setTypeface(mDateTextTypeface);
         mDayNumberSelectedPaint.setTextAlign(Align.CENTER);
         mDayNumberSelectedPaint.setStyle(Style.FILL);
         mDayNumberSelectedPaint.setFakeBoldText(true);
@@ -279,6 +303,7 @@ class SimpleMonthView extends View {
         mDayNumberPaint = new Paint();
         mDayNumberPaint.setAntiAlias(true);
         mDayNumberPaint.setTextSize(mMiniDayNumberTextSize);
+        mDayNumberPaint.setTypeface(mDateTextTypeface);
         mDayNumberPaint.setTextAlign(Align.CENTER);
         mDayNumberPaint.setStyle(Style.FILL);
         mDayNumberPaint.setFakeBoldText(false);
@@ -287,6 +312,7 @@ class SimpleMonthView extends View {
         mDayNumberDisabledPaint.setAntiAlias(true);
         mDayNumberDisabledPaint.setColor(mDisabledTextColor);
         mDayNumberDisabledPaint.setTextSize(mMiniDayNumberTextSize);
+        mDayNumberDisabledPaint.setTypeface(mDateTextTypeface);
         mDayNumberDisabledPaint.setTextAlign(Align.CENTER);
         mDayNumberDisabledPaint.setStyle(Style.FILL);
         mDayNumberDisabledPaint.setFakeBoldText(false);
