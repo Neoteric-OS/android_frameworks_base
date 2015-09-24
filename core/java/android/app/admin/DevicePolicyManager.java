@@ -1945,6 +1945,15 @@ public class DevicePolicyManager {
         return false;
     }
 
+    public boolean installKeys(ComponentName who, String alias) {
+        try {
+            return mService.installKeys(who, alias);
+        } catch (RemoteException e) {
+            Log.w(TAG, "Failed talking with device policy service", e);
+            return false;
+        }
+    }
+
     /**
      * Returns the alias of a given CA certificate in the certificate store, or null if it
      * doesn't exist.

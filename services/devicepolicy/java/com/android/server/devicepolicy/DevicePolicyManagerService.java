@@ -2981,6 +2981,33 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         return false;
     }
 
+    @Override
+    public boolean installKeys(ComponentName who, String alias) {
+        if (who == null) {
+            throw new SecurityException("ComponentName is null");
+        } else {
+            synchronized (this) {
+                getActiveAdminForCallerLocked(who, DeviceAdminInfo.USES_POLICY_PROFILE_OWNER);
+            }
+        }
+        final int callingUid = Binder.getCallingUid();
+
+        final long id = Binder.clearCallingIdentity();
+        try {
+            final KeyChainConnection keyChainConnection = KeyChain.bindAsUser(mContext, userHandle);
+            try {
+                return keyChainConnection.getService().installKeys(callingUid, alias);
+            } catch (RemoteException e) {
+                Log.e(LOG_TAG, "Installing certificate", e);
+            } finally {
+                keyChainConnection.close();
+            }
+        } finally {
+            Binder.restoreCallingIdentity(id);
+        }
+        return false;
+    }
+
     private void wipeDataLocked(boolean wipeExtRequested, String reason) {
         // If the SD card is encrypted and non-removable, we have to force a wipe.
         boolean forceExtWipe = !Environment.isExternalStorageRemovable() && isExtStorageEncrypted();
