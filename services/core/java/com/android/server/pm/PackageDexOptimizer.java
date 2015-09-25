@@ -37,6 +37,7 @@ import static com.android.server.pm.Installer.DEXOPT_BOOTCOMPLETE;
 import static com.android.server.pm.Installer.DEXOPT_DEBUGGABLE;
 import static com.android.server.pm.Installer.DEXOPT_PUBLIC;
 import static com.android.server.pm.Installer.DEXOPT_SAFEMODE;
+import static com.android.server.pm.Installer.DEXOPT_USEJIT;
 import static com.android.server.pm.InstructionSets.getAppDexInstructionSets;
 import static com.android.server.pm.InstructionSets.getDexCodeInstructionSets;
 
@@ -67,7 +68,8 @@ final class PackageDexOptimizer {
      * {@link PackageManagerService#mInstallLock}.
      */
     int performDexOpt(PackageParser.Package pkg, String[] instructionSets,
-            boolean forceDex, boolean defer, boolean inclDependencies, boolean bootComplete) {
+            boolean forceDex, boolean defer, boolean inclDependencies,
+            boolean bootComplete, boolean useJit) {
         ArraySet<String> done;
         if (inclDependencies && (pkg.usesLibraries != null || pkg.usesOptionalLibraries != null)) {
             done = new ArraySet<String>();
@@ -76,12 +78,14 @@ final class PackageDexOptimizer {
             done = null;
         }
         synchronized (mPackageManagerService.mInstallLock) {
-            return performDexOptLI(pkg, instructionSets, forceDex, defer, bootComplete, done);
+            return performDexOptLI(pkg, instructionSets, forceDex, defer, bootComplete,
+                    useJit, done);
         }
     }
 
     private int performDexOptLI(PackageParser.Package pkg, String[] targetInstructionSets,
-            boolean forceDex, boolean defer, boolean bootComplete, ArraySet<String> done) {
+            boolean forceDex, boolean defer, boolean bootComplete, boolean useJit,
+            ArraySet<String> done) {
         final String[] instructionSets = targetInstructionSets != null ?
                 targetInstructionSets : getAppDexInstructionSets(pkg.applicationInfo);
 
@@ -89,11 +93,11 @@ final class PackageDexOptimizer {
             done.add(pkg.packageName);
             if (pkg.usesLibraries != null) {
                 performDexOptLibsLI(pkg.usesLibraries, instructionSets, forceDex, defer,
-                        bootComplete, done);
+                        bootComplete, useJit, done);
             }
             if (pkg.usesOptionalLibraries != null) {
                 performDexOptLibsLI(pkg.usesOptionalLibraries, instructionSets, forceDex, defer,
-                        bootComplete, done);
+                        bootComplete, useJit, done);
             }
         }
 
@@ -156,7 +160,8 @@ final class PackageDexOptimizer {
                                 (!pkg.isForwardLocked() ? DEXOPT_PUBLIC : 0)
                                 | (vmSafeMode ? DEXOPT_SAFEMODE : 0)
                                 | (debuggable ? DEXOPT_DEBUGGABLE : 0)
-                                | (bootComplete ? DEXOPT_BOOTCOMPLETE : 0);
+                                | (bootComplete ? DEXOPT_BOOTCOMPLETE : 0)
+                                | (useJit ? DEXOPT_USEJIT : 0);
                         final int ret = mPackageManagerService.mInstaller.dexopt(path, sharedGid,
                                 pkg.packageName, dexCodeInstructionSet, dexoptNeeded, oatDir, dexFlags);
                         if (ret < 0) {
@@ -227,12 +232,13 @@ final class PackageDexOptimizer {
     }
 
     private void performDexOptLibsLI(ArrayList<String> libs, String[] instructionSets,
-            boolean forceDex, boolean defer, boolean bootComplete, ArraySet<String> done) {
+            boolean forceDex, boolean defer, boolean bootComplete, boolean useJit,
+            ArraySet<String> done) {
         for (String libName : libs) {
             PackageParser.Package libPkg = mPackageManagerService.findSharedNonSystemLibrary(
                     libName);
             if (libPkg != null && !done.contains(libName)) {
-                performDexOptLI(libPkg, instructionSets, forceDex, defer, bootComplete, done);
+                performDexOptLI(libPkg, instructionSets, forceDex, defer, bootComplete, useJit, done);
             }
         }
     }
