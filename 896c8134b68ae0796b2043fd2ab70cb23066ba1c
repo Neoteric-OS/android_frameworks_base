@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee616dea_4b062c28",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2015-09-25T21:55:38Z",
+      "side": 1,
+      "message": "There\u0027s an argument to make to not have this, so you\u0027re forced to be explicit at all call-sites. But I think it\u0027s fine for now.",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 5
+      },
+      "revId": "896c8134b68ae0796b2043fd2ab70cb23066ba1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce582944_f2fef5d5",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10459,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2015-09-25T21:55:38Z",
+      "side": 1,
+      "message": "Why make this change, when the default is false in the forwarding function, anyways?",
+      "range": {
+        "startLine": 10459,
+        "startChar": 49,
+        "endLine": 10459,
+        "endChar": 67
+      },
+      "revId": "896c8134b68ae0796b2043fd2ab70cb23066ba1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
