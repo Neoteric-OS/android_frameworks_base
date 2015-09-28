@@ -729,6 +729,9 @@ public final class BatteryService extends SystemService {
         private final int mBatteryLedOn;
         private final int mBatteryLedOff;
 
+        private boolean mLedOffWhenBatteryFullyCharged;
+        private boolean mTurnOffLed = false;
+
         public Led(Context context, LightsManager lights) {
             mBatteryLight = lights.getLight(LightsManager.LIGHT_ID_BATTERY);
 
@@ -742,6 +745,8 @@ public final class BatteryService extends SystemService {
                     com.android.internal.R.integer.config_notificationsBatteryLedOn);
             mBatteryLedOff = context.getResources().getInteger(
                     com.android.internal.R.integer.config_notificationsBatteryLedOff);
+            mLedOffWhenBatteryFullyCharged = mContext.getResources().getBoolean(
+                    com.android.internal.R.bool.config_led_off_when_battery_fully_charged);
         }
 
         /**
@@ -750,6 +755,20 @@ public final class BatteryService extends SystemService {
         public void updateLightsLocked() {
             final int level = mBatteryProps.batteryLevel;
             final int status = mBatteryProps.batteryStatus;
+
+            if (mLedOffWhenBatteryFullyCharged) {
+                // Turn off LED when plugged and fully charged
+                if (isPoweredLocked(BatteryManager.BATTERY_PLUGGED_ANY) &&
+                        status == BatteryManager.BATTERY_STATUS_FULL) {
+                    mTurnOffLed = true;
+                }
+                // Revert to default behavior when unplugged or charge level falls below 90%
+                if (!isPoweredLocked(BatteryManager.BATTERY_PLUGGED_ANY) ||
+                        level < 90) {
+                    mTurnOffLed = false;
+                }
+            }
+
             if (level < mLowBatteryWarningLevel) {
                 if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
                     // Solid red when battery is charging
@@ -762,8 +781,12 @@ public final class BatteryService extends SystemService {
             } else if (status == BatteryManager.BATTERY_STATUS_CHARGING
                     || status == BatteryManager.BATTERY_STATUS_FULL) {
                 if (status == BatteryManager.BATTERY_STATUS_FULL || level >= 90) {
-                    // Solid green when full or charging and nearly full
-                    mBatteryLight.setColor(mBatteryFullARGB);
+                    if (mTurnOffLed) {
+                        mBatteryLight.turnOff();
+                    } else {
+                        // Solid green when full or charging and nearly full
+                        mBatteryLight.setColor(mBatteryFullARGB);
+                    }
                 } else {
                     // Solid orange when charging and halfway full
                     mBatteryLight.setColor(mBatteryMediumARGB);
