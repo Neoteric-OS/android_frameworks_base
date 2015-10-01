@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="i">1</integer>
+    <string name="s">b</string>
+    <bool name="b">false</bool>
+    <integer-array name="i">
+        <item>4</item>
+        <item>5</item>
+    </integer-array>
+</resources>
