@@ -1,0 +1,4 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.rrotests.some_other_app_overlay">
+    <overlay android:targetPackage="com.android.rrotests.some_other_app"/>
+</manifest>
