@@ -1,0 +1,23 @@
+# source this script to regenerate this package as a resource in the test app
+
+compile()
+{
+    aapt package \
+        -M AndroidManifest.xml \
+        -S res \
+        -I "${OUT}"/system/framework/framework-res.apk \
+        -F /tmp/apk \
+        -f
+}
+
+sign()
+{
+    java -Djava.library.path="$(get_abs_build_var SIGNAPK_JNI_LIBRARY_PATH)" \
+        -jar "${ANDROID_HOST_OUT}"/framework/signapk.jar \
+        "${T}"/build/target/product/security/platform.x509.pem \
+        "${T}"/build/target/product/security/platform.pk8 \
+        /tmp/apk \
+        ../../res/raw/some_other_app_overlay
+}
+
+compile && sign && rm -f /tmp/apk
