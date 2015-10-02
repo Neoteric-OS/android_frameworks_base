@@ -19,6 +19,8 @@ package android.renderscript;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -1251,6 +1253,13 @@ public class RenderScript {
         public void run() {
             // This function is a temporary solution.  The final solution will
             // used typed allocations where the message id is the type indicator.
+
+            // Long sleep to exercise bug
+            try {
+                sleep(2000);
+            } catch (InterruptedException e) {
+            }
+
             int[] rbuf = new int[16];
             mRS.nContextInitToClient(mRS.mContext);
             while(mRun) {
@@ -1560,6 +1569,18 @@ public class RenderScript {
         nContextFinish();
     }
 
+    private class InterruptTask extends TimerTask {
+        private Thread mThreadToInterrupt;
+
+        InterruptTask(Thread t) {
+            mThreadToInterrupt = t;
+        }
+
+        public void run() {
+            mThreadToInterrupt.interrupt();
+        }
+    }
+
     private void helpDestroy() {
         boolean shouldDestroy = false;
         synchronized(this) {
@@ -1574,6 +1595,12 @@ public class RenderScript {
 
             nContextDeinitToClient(mContext);
             mMessageThread.mRun = false;
+
+            // Schedule to be interrupted in 100ms
+            Timer timer = new Timer(true);
+            InterruptTask task = new InterruptTask(Thread.currentThread());
+            timer.schedule(task, 200);
+
             try {
                 mMessageThread.join();
             } catch(InterruptedException e) {
