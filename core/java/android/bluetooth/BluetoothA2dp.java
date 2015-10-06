@@ -125,6 +125,9 @@ public final class BluetoothA2dp implements BluetoothProfile {
                         if (VDBG) Log.d(TAG,"Unbinding service...");
                         synchronized (mConnection) {
                             try {
+                                if (mServiceListener != null && mService != null) {
+                                    mServiceListener.onServiceDisconnected(BluetoothProfile.A2DP);
+                                }
                                 mService = null;
                                 mContext.unbindService(mConnection);
                             } catch (Exception re) {
@@ -542,9 +545,11 @@ public final class BluetoothA2dp implements BluetoothProfile {
         }
         public void onServiceDisconnected(ComponentName className) {
             if (DBG) Log.d(TAG, "Proxy object disconnected");
-            mService = null;
-            if (mServiceListener != null) {
-                mServiceListener.onServiceDisconnected(BluetoothProfile.A2DP);
+            synchronized (this) {
+                if (mServiceListener != null && mService != null) {
+                    mServiceListener.onServiceDisconnected(BluetoothProfile.A2DP);
+                }
+                mService = null;
             }
         }
     };
