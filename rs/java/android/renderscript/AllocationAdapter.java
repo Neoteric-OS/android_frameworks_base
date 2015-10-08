@@ -250,17 +250,17 @@ public class AllocationAdapter extends Allocation {
      * Any dimensions present in the type must be equal or smaller
      * to the dimensions in the source allocation.  A dimension
      * present in the allocation that is not present in the type
-     * will be constrained away with the selectors
+     * will be constrained away with the selectors.
      *
-     * If a dimension is present in the type and allcation one of
-     * two things will happen
+     * If a dimension is present in both the type and allocation, one of
+     * two things will happen.
      *
-     * If the type is smaller than the allocation a window will be
+     * If the type is smaller than the allocation, a window will be
      * created, the selected value in the adapter for that dimension
-     * will act as the base address and the type will describe the
+     * will act as the base address, and the type will describe the
      * size of the view starting at that point.
      *
-     * If the type and allocation dimension are of the same size
+     * If the type and allocation dimension are of the same size,
      * then setting the selector for the dimension will be an error.
      */
     static public AllocationAdapter createTyped(RenderScript rs, Allocation a, Type t) {
