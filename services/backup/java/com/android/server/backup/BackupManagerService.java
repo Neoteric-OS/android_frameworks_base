@@ -8075,9 +8075,6 @@ if (MORE_DEBUG) Slog.v(TAG, "   + got " + nRead + "; now wanting " + (size - soF
                 }
             }
 
-            // Clear any ongoing session timeout.
-            mBackupHandler.removeMessages(MSG_RESTORE_TIMEOUT);
-
             // If we have a PM token, we must under all circumstances be sure to
             // handshake when we've finished.
             if (mPmToken > 0) {
@@ -8088,6 +8085,7 @@ if (MORE_DEBUG) Slog.v(TAG, "   + got " + nRead + "; now wanting " + (size - soF
             } else {
                 // We were invoked via an active restore session, not by the Package
                 // Manager, so start up the session timeout again.
+                mBackupHandler.removeMessages(MSG_RESTORE_TIMEOUT);
                 mBackupHandler.sendEmptyMessageDelayed(MSG_RESTORE_TIMEOUT,
                         TIMEOUT_RESTORE_INTERVAL);
             }
