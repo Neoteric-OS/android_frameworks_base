@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9550e3b_5dad0b09",
+        "filename": "core/java/android/view/Window.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-10-15T22:10:11Z",
+      "side": 1,
+      "message": "Please add comment here on why we are avoiding adding the token.",
+      "range": {
+        "startLine": 611,
+        "startChar": 75,
+        "endLine": 612,
+        "endChar": 12
+      },
+      "revId": "ba64a58d9b72b19bc81a660bd1bd6473716c7754",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
