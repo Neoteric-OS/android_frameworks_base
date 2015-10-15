@@ -113,17 +113,46 @@ class ImageUtils {
         for (int i = 0; i < srcPlanes.length; i++) {
             int srcRowStride = srcPlanes[i].getRowStride();
             int dstRowStride = dstPlanes[i].getRowStride();
+            int srcPixelStride = srcPlanes[i].getPixelStride();
+            int dstPixelStride = dstPlanes[i].getPixelStride();
             srcBuffer = srcPlanes[i].getBuffer();
             dstBuffer = dstPlanes[i].getBuffer();
             if (!(srcBuffer.isDirect() && dstBuffer.isDirect())) {
                 throw new IllegalArgumentException("Source and destination ByteBuffers must be"
                         + " direct byteBuffer!");
             }
-            if (srcPlanes[i].getPixelStride() != dstPlanes[i].getPixelStride()) {
-                throw new IllegalArgumentException("Source plane image pixel stride " +
-                        srcPlanes[i].getPixelStride() +
-                        " must be same as destination image pixel stride " +
-                        dstPlanes[i].getPixelStride());
+            if (srcPixelStride != dstPixelStride) {
+                if (srcRowStride != dstRowStride) {
+                    throw new IllegalArgumentException("Source plane image pixel or row stride " +
+                            srcPixelStride +
+                            " must be same as destination image pixel or row stride " +
+                            dstPixelStride);
+                }
+                // Different YUV layouts between the buffers are assumed
+                int maxRowSize = srcPlanes[0].getRowStride();
+                int bytesPerPixel = ImageFormat.getBitsPerPixel(src.getFormat()) / 8;
+                byte[] srcRowData = new byte[maxRowSize];
+                byte[] dstRowData = new byte[maxRowSize];
+                int w = maxRowSize / 2;
+                int h = src.getHeight() / 2;
+                int srcLength = (w - 1) * srcPixelStride + bytesPerPixel;
+                int dstLength = (w - 1) * dstPixelStride + bytesPerPixel;
+                for (int row = 0; row < h; row++) {
+                    srcBuffer.get(srcRowData, 0, srcLength);
+                    dstBuffer.get(dstRowData, 0, dstLength);
+                    for (int col = 0; col < w; col++) {
+                        dstRowData[col * dstPixelStride] = srcRowData[col * srcPixelStride];
+                    }
+                    dstBuffer.position(dstBuffer.position() - dstLength);
+                    dstBuffer.put(dstRowData, 0, dstLength);
+                    if (row < h -1) {
+                        dstBuffer.position(dstBuffer.position() + maxRowSize - dstLength);
+                        srcBuffer.position(srcBuffer.position() + maxRowSize - srcLength);
+                    }
+                }
+                dstBuffer.rewind();
+                srcBuffer.rewind();
+                continue;
             }
 
             int srcPos = srcBuffer.position();
@@ -138,7 +167,7 @@ class ImageUtils {
                 int srcOffset = srcBuffer.position();
                 int dstOffset = dstBuffer.position();
                 Size effectivePlaneSize = getEffectivePlaneSizeForImage(src, i);
-                int srcByteCount = effectivePlaneSize.getWidth() * srcPlanes[i].getPixelStride();
+                int srcByteCount = effectivePlaneSize.getWidth() * srcPixelStride;
                 for (int row = 0; row < effectivePlaneSize.getHeight(); row++) {
                     if (row == effectivePlaneSize.getHeight() - 1) {
                         // Special case for NV21 backed YUV420_888: need handle the last row
