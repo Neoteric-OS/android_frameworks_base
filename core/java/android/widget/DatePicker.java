@@ -784,7 +784,7 @@ public class DatePicker extends FrameLayout {
         public void setMinDate(long minDate) {
             mTempDate.setTimeInMillis(minDate);
             if (mTempDate.get(Calendar.YEAR) == mMinDate.get(Calendar.YEAR)
-                    && mTempDate.get(Calendar.DAY_OF_YEAR) != mMinDate.get(Calendar.DAY_OF_YEAR)) {
+                    && mTempDate.get(Calendar.DAY_OF_YEAR) == mMinDate.get(Calendar.DAY_OF_YEAR)) {
                 return;
             }
             mMinDate.setTimeInMillis(minDate);
@@ -807,7 +807,7 @@ public class DatePicker extends FrameLayout {
         public void setMaxDate(long maxDate) {
             mTempDate.setTimeInMillis(maxDate);
             if (mTempDate.get(Calendar.YEAR) == mMaxDate.get(Calendar.YEAR)
-                    && mTempDate.get(Calendar.DAY_OF_YEAR) != mMaxDate.get(Calendar.DAY_OF_YEAR)) {
+                    && mTempDate.get(Calendar.DAY_OF_YEAR) == mMaxDate.get(Calendar.DAY_OF_YEAR)) {
                 return;
             }
             mMaxDate.setTimeInMillis(maxDate);
