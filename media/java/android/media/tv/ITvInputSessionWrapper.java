@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.InputChannel;
 import android.view.InputEvent;
@@ -87,7 +88,7 @@ public class ITvInputSessionWrapper extends ITvInputSession.Stub implements Hand
             return;
         }
 
-        long startTime = System.currentTimeMillis();
+        long startTime = SystemClock.uptimeMillis();
         switch (msg.what) {
             case DO_RELEASE: {
                 mTvInputSessionImpl.release();
@@ -185,7 +186,7 @@ public class ITvInputSessionWrapper extends ITvInputSession.Stub implements Hand
                 break;
             }
         }
-        long duration = System.currentTimeMillis() - startTime;
+        long duration = SystemClock.uptimeMillis() - startTime;
         if (duration > EXECUTE_MESSAGE_TIMEOUT_SHORT_MILLIS) {
             Log.w(TAG, "Handling message (" + msg.what + ") took too long time (duration="
                     + duration + "ms)");
