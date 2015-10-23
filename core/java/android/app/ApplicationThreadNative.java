@@ -1272,7 +1272,7 @@ class ApplicationThreadProxy implements IApplicationThread {
         data.writeInt(dumpDalvik ? 1 : 0);
         data.writeInt(dumpSummaryOnly ? 1 : 0);
         data.writeStringArray(args);
-        mRemote.transact(DUMP_MEM_INFO_TRANSACTION, data, reply, 0);
+        mRemote.transact(DUMP_MEM_INFO_TRANSACTION, data, reply, IBinder.FLAG_ONEWAY);
         reply.readException();
         data.recycle();
         reply.recycle();

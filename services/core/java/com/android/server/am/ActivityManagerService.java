@@ -14806,10 +14806,22 @@ public final class ActivityManagerService extends ActivityManagerNative
                             pw.println();
                         }
                     } else {
+                        pw.flush();
                         try {
-                            pw.flush();
-                            thread.dumpMemInfo(fd, mi, isCheckinRequest, dumpFullDetails,
-                                    dumpDalvik, dumpSummaryOnly, innerArgs);
+                            TransferPipe tp = new TransferPipe();
+                            try {
+                                thread.dumpMemInfo(tp.getWriteFd().getFileDescriptor(), mi,
+                                        isCheckinRequest, dumpFullDetails, dumpDalvik,
+                                        dumpSummaryOnly, innerArgs);
+                                tp.go(fd);
+                            } finally {
+                                tp.kill();
+                            }
+                        } catch (IOException e) {
+                            if (!isCheckinRequest) {
+                                pw.println("Failure while dumping the app: " + r);
+                                pw.flush();
+                            }
                         } catch (RemoteException e) {
                             if (!isCheckinRequest) {
                                 pw.println("Got RemoteException!");
