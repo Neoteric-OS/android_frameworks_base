@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76d48537_33d77023",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4137,
+      "author": {
+        "id": 1060157
+      },
+      "writtenOn": "2015-10-26T18:21:35Z",
+      "side": 1,
+      "message": "Should we use this only if the normal intent fails? What if there was some reshuffling of enabled/disabled components and the call now would trigger a different activity, but we might force the original one? This might lead to some subtle bugs.",
+      "revId": "cb2fe267468e01fae97c64e672abe2e33ab77508",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
