@@ -2670,9 +2670,10 @@ public final class ActivityStackSupervisor implements DisplayListener {
         boolean didSomething = false;
         for (int displayNdx = mActivityDisplays.size() - 1; displayNdx >= 0; --displayNdx) {
             final ArrayList<ActivityStack> stacks = mActivityDisplays.valueAt(displayNdx).mStacks;
-            final int numStacks = stacks.size();
-            for (int stackNdx = 0; stackNdx < numStacks; ++stackNdx) {
+            int stackNdx = stacks.size() - 1;
+            while (stackNdx >= 0) {
                 final ActivityStack stack = stacks.get(stackNdx);
+                stackNdx--;
                 if (stack.finishDisabledPackageActivitiesLocked(
                         packageName, filterByClasses, doit, evenPersistent, userId)) {
                     didSomething = true;
