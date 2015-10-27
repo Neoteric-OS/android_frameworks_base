@@ -489,6 +489,16 @@ public class RenderScript {
         validate();
         rsnAllocationSyncAll(mContext, alloc, src);
     }
+    native void rsnAllocationSetupBufferQueue(long con, long alloc, int numAlloc);
+    synchronized void nAllocationSetupBufferQueue(long alloc, int numAlloc) {
+        validate();
+        rsnAllocationSetupBufferQueue(mContext, alloc, numAlloc);
+    }
+    native void rsnAllocationShareBufferQueue(long con, long alloc1, long alloc2);
+    synchronized void nAllocationShareBufferQueue(long alloc1, long alloc2) {
+        validate();
+        rsnAllocationShareBufferQueue(mContext, alloc1, alloc2);
+    }
     native Surface rsnAllocationGetSurface(long con, long alloc);
     synchronized Surface nAllocationGetSurface(long alloc) {
         validate();
@@ -504,12 +514,11 @@ public class RenderScript {
         validate();
         rsnAllocationIoSend(mContext, alloc);
     }
-    native void rsnAllocationIoReceive(long con, long alloc);
-    synchronized void nAllocationIoReceive(long alloc) {
+    native long rsnAllocationIoReceive(long con, long alloc);
+    synchronized long nAllocationIoReceive(long alloc) {
         validate();
-        rsnAllocationIoReceive(mContext, alloc);
+        return rsnAllocationIoReceive(mContext, alloc);
     }
-
 
     native void rsnAllocationGenerateMipmaps(long con, long alloc);
     synchronized void nAllocationGenerateMipmaps(long alloc) {
