@@ -53,12 +53,16 @@ import android.os.Trace;
  **/
 
 public class Allocation extends BaseObj {
+    private static final int MAX_NUMBER_IO_INPUT_ALLOC = 16;
+
     Type mType;
     Bitmap mBitmap;
     int mUsage;
     Allocation mAdaptedAllocation;
     int mSize;
+    MipmapControl mMipmapControl;
 
+    long mTimeStamp = -1;
     boolean mReadAllowed = true;
     boolean mWriteAllowed = true;
     boolean mAutoPadding = false;
@@ -274,6 +278,17 @@ public class Allocation extends BaseObj {
     }
 
     /**
+     * @hide
+     * Get the Mipmap control flag of the Allocation.
+     *
+     * @return the Mipmap control flag of the Allocation
+     *
+     */
+    public MipmapControl getMipmap() {
+        return mMipmapControl;
+    }
+
+    /**
      * Enable/Disable AutoPadding for Vec3 elements.
      * By default: Diabled.
      *
@@ -353,6 +368,11 @@ public class Allocation extends BaseObj {
             Log.e(RenderScript.LOG_TAG, "Couldn't invoke registerNativeAllocation:" + e);
             throw new RSRuntimeException("Couldn't invoke registerNativeAllocation:" + e);
         }
+    }
+
+    Allocation(long id, RenderScript rs, Type t, int usage, MipmapControl mips) {
+        this(id, rs, t, usage);
+        mMipmapControl = mips;
     }
 
     protected void finalize() throws Throwable {
@@ -517,7 +537,7 @@ public class Allocation extends BaseObj {
                     "Can only receive if IO_INPUT usage specified.");
             }
             mRS.validate();
-            mRS.nAllocationIoReceive(getID(mRS));
+            mTimeStamp = mRS.nAllocationIoReceive(getID(mRS));
         } finally {
             Trace.traceEnd(RenderScript.TRACE_TAG);
         }
@@ -1886,7 +1906,7 @@ public class Allocation extends BaseObj {
             if (id == 0) {
                 throw new RSRuntimeException("Allocation creation failed.");
             }
-            return new Allocation(id, rs, type, usage);
+            return new Allocation(id, rs, type, usage, mips);
         } finally {
             Trace.traceEnd(RenderScript.TRACE_TAG);
         }
@@ -1944,7 +1964,7 @@ public class Allocation extends BaseObj {
             if (id == 0) {
                 throw new RSRuntimeException("Allocation creation failed.");
             }
-            return new Allocation(id, rs, t, usage);
+            return new Allocation(id, rs, t, usage, MipmapControl.MIPMAP_NONE);
         } finally {
             Trace.traceEnd(RenderScript.TRACE_TAG);
         }
@@ -2033,7 +2053,7 @@ public class Allocation extends BaseObj {
                 }
 
                 // keep a reference to the Bitmap around to prevent GC
-                Allocation alloc = new Allocation(id, rs, t, usage);
+                Allocation alloc = new Allocation(id, rs, t, usage, mips);
                 alloc.setBitmap(b);
                 return alloc;
             }
@@ -2043,10 +2063,134 @@ public class Allocation extends BaseObj {
             if (id == 0) {
                 throw new RSRuntimeException("Load failed.");
             }
-            return new Allocation(id, rs, t, usage);
+            return new Allocation(id, rs, t, usage, mips);
         } finally {
             Trace.traceEnd(RenderScript.TRACE_TAG);
         }
+    }
+
+    /**
+     * @hide
+     * Creates a new Allocation Array with the given {@link
+     * android.renderscript.Type}, and usage flags.
+     * Note: If the input allocation is of usage: USAGE_IO_INPUT,
+     * the created Allocation will be sharing the same BufferQueue.
+     *
+     * @param type RenderScript type describing data layout
+     * @param mips specifies desired mipmap behaviour for the
+     *             allocation
+     * @param usage bit field specifying how the Allocation is
+     *              utilized
+     * @param num Number of Allocations in the array.
+     * @return Allocation[]
+     */
+    public static Allocation[] createAllocations(RenderScript rs, Type t, int usage, int numAlloc) {
+        try {
+            Trace.traceBegin(RenderScript.TRACE_TAG, "createAllocations");
+            rs.validate();
+            if (t.getID(rs) == 0) {
+                throw new RSInvalidStateException("Bad Type");
+            }
+
+            Allocation[] mAllocationArray = new Allocation[numAlloc];
+            mAllocationArray[0] = createTyped(rs, t, usage);
+            if ((usage & USAGE_IO_INPUT) != 0) {
+                if (numAlloc > MAX_NUMBER_IO_INPUT_ALLOC) {
+                    throw new RSIllegalArgumentException("Exceeds the max number of Allocations allowed: " +
+                                                         MAX_NUMBER_IO_INPUT_ALLOC);
+                }
+                mAllocationArray[0].setupBufferQueue(numAlloc);;
+            }
+
+            for (int i=1; i<numAlloc; i++) {
+                mAllocationArray[i] = createFromAllcation(rs, mAllocationArray[0]);
+            }
+            return mAllocationArray;
+        } finally {
+            Trace.traceEnd(RenderScript.TRACE_TAG);
+        }
+    }
+
+    /**
+     * Creates a new Allocation with the given {@link
+     * android.renderscript.Allocation}. The same data layout of
+     * the input Allocation will be applied.
+     * If the input allocation is of usage: USAGE_IO_INPUT, the created
+     * Allocation will be sharing the same BufferQueue.
+     *
+     * @param rs Context to which the allocation will belong.
+     * @param alloc RenderScript Allocation describing data layout.
+     * @return Allocation sharing the same data structure.
+     */
+    static Allocation createFromAllcation(RenderScript rs, Allocation alloc) {
+        try {
+            Trace.traceBegin(RenderScript.TRACE_TAG, "createFromAllcation");
+            rs.validate();
+            if (alloc.getID(rs) == 0) {
+                throw new RSInvalidStateException("Bad input Allocation");
+            }
+
+            Type type = alloc.getType();
+            int usage = alloc.getUsage();
+            MipmapControl mips = alloc.getMipmap();
+            long id = rs.nAllocationCreateTyped(type.getID(rs), mips.mID, usage, 0);
+            if (id == 0) {
+                throw new RSRuntimeException("Allocation creation failed.");
+            }
+            Allocation outAlloc = new Allocation(id, rs, type, usage, mips);
+            if ((usage & USAGE_IO_INPUT) != 0) {
+                outAlloc.shareBufferQueue(alloc);
+            }
+            return outAlloc;
+        } finally {
+            Trace.traceEnd(RenderScript.TRACE_TAG);
+        }
+    }
+
+    /**
+     * Initialize BufferQueue with specified max number of buffers.
+     */
+    void setupBufferQueue(int numAlloc) {
+        mRS.validate();
+        if ((mUsage & USAGE_IO_INPUT) == 0) {
+            throw new RSInvalidStateException("Allocation is not USAGE_IO_INPUT.");
+        }
+        mRS.nAllocationSetupBufferQueue(getID(mRS), numAlloc);
+    }
+
+    /**
+     * Share the BufferQueue with another {@link #USAGE_IO_INPUT} Allocation.
+     *
+     * @param alloc Allocation to associate with allocation
+     */
+    void shareBufferQueue(Allocation alloc) {
+        mRS.validate();
+        if ((mUsage & USAGE_IO_INPUT) == 0) {
+            throw new RSInvalidStateException("Allocation is not USAGE_IO_INPUT.");
+        }
+        mGetSurfaceSurface = alloc.getSurface();
+        mRS.nAllocationShareBufferQueue(getID(mRS), alloc.getID(mRS));
+    }
+
+    /**
+     * @hide
+     * Get the timestamp for the most recent buffer held by this Allocation.
+     * The timestamp is guaranteed to be unique and monotonically increasing.
+     * Default value: -1. The timestamp will be updated after each {@link
+     * #ioReceive ioReceive()} call.
+     *
+     * It can be used to identify the images by comparing the unique timestamps
+     * when used with {@link android.hardware.camera2} APIs.
+     * Example steps:
+     *   1. Save {@link android.hardware.camera2.TotalCaptureResult} when the
+     *      capture is completed.
+     *   2. Get the timestamp after {@link #ioReceive ioReceive()} call.
+     *   3. Comparing totalCaptureResult.get(CaptureResult.SENSOR_TIMESTAMP) with
+     *      alloc.getTimeStamp().
+     * @return long Timestamp associated with the buffer held by the Allocation.
+     */
+    public long getTimeStamp() {
+        return mTimeStamp;
     }
 
     /**
@@ -2153,7 +2297,7 @@ public class Allocation extends BaseObj {
         if(id == 0) {
             throw new RSRuntimeException("Load failed for bitmap " + b + " element " + e);
         }
-        return new Allocation(id, rs, t, usage);
+        return new Allocation(id, rs, t, usage, mips);
     }
 
     /**
