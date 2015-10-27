@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76d48537_e77b5eec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2015-10-27T14:56:11Z",
+      "side": 1,
+      "message": "\"A2DP\" (all Bluetooth acronyms upper-case please)",
+      "revId": "11361b5d67708467d6e3a84e728d93035b01bd01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6ae1193_2289ef64",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2015-10-27T14:56:11Z",
+      "side": 1,
+      "message": "\"the\" AudioService",
+      "revId": "11361b5d67708467d6e3a84e728d93035b01bd01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16b509da_37bccf15",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2015-10-27T14:56:11Z",
+      "side": 1,
+      "message": "...was unbound before the service....",
+      "revId": "11361b5d67708467d6e3a84e728d93035b01bd01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
