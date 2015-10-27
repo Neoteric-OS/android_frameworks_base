@@ -58,6 +58,7 @@ public class Allocation extends BaseObj {
     int mUsage;
     Allocation mAdaptedAllocation;
     int mSize;
+    MipmapControl mMipmaps;
 
     boolean mReadAllowed = true;
     boolean mWriteAllowed = true;
@@ -271,6 +272,17 @@ public class Allocation extends BaseObj {
      */
     public int getUsage() {
         return mUsage;
+    }
+
+    /**
+     * @hide
+     * Get the Mipmap flags of the Allocation.
+     *
+     * @return usage this Allocation's set of the USAGE_* flags OR'd together
+     *
+     */
+    public MipmapControl getMipmap() {
+        return mMipmaps;
     }
 
     /**
@@ -2047,6 +2059,58 @@ public class Allocation extends BaseObj {
         } finally {
             Trace.traceEnd(RenderScript.TRACE_TAG);
         }
+    }
+
+    /**
+     * @hide
+     *
+     * Creates a new Allocation with the given {@link
+     * android.renderscript.Allocation}. The same data layout of
+     * the input Allocation will be applied.
+     * If the input allocation is of usage: USAGE_IO_INPUT, the created
+     * Allocation will be sharing the same BufferQueue.
+     *
+     * @param rs Context to which the allocation will belong.
+     * @param alloc RenderScript Allocation describing data layout.
+     * @return Allocation sharing the same data structure.
+     */
+    static public Allocation createFromAllcation(RenderScript rs, Allocation alloc) {
+        try {
+            Trace.traceBegin(RenderScript.TRACE_TAG, "createFromAllcation");
+            rs.validate();
+            if (alloc.getID(rs) == 0) {
+                throw new RSInvalidStateException("Bad input Allocation");
+            }
+
+            Type type = alloc.getType();
+            int usage = alloc.getUsage();
+            MipmapControl mips = alloc.getMipmap();
+            long id = rs.nAllocationCreateTyped(type.getID(rs), mips.mID, usage, 0);
+            if (id == 0) {
+                throw new RSRuntimeException("Allocation creation failed.");
+            }
+            Allocation outAlloc = new Allocation(id, rs, type, usage);
+            if ((usage & USAGE_IO_INPUT) != 0) {
+                outAlloc.shareBufferQueue(alloc);
+            }
+            return outAlloc;
+        } finally {
+            Trace.traceEnd(RenderScript.TRACE_TAG);
+        }
+    }
+
+    /**
+     * @hide
+     *
+     * @param alloc Allocation to associate with allocation
+     */
+    public void shareBufferQueue(Allocation alloc) {
+        mRS.validate();
+        if ((mUsage & USAGE_IO_INPUT) == 0) {
+            throw new RSInvalidStateException("Allocation is not USAGE_IO_INPUT.");
+        }
+        mGetSurfaceSurface = alloc.getSurface();
+        mRS.nAllocationShareBufferQueue(getID(mRS), alloc.getID(mRS));
     }
 
     /**
