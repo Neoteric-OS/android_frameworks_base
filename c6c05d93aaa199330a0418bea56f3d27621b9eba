@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "562a227b_6840df88",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4053,
+      "author": {
+        "id": 1057059
+      },
+      "writtenOn": "2015-11-02T15:42:59Z",
+      "side": 1,
+      "message": "Can we do \n\n+ (aInfo \u003d\u003d null) ? \"null\" : aInfo.packageName + \"/\" + aInfo.name)\n\ninstead?",
+      "range": {
+        "startLine": 4052,
+        "startChar": 36,
+        "endLine": 4053,
+        "endChar": 77
+      },
+      "revId": "c6c05d93aaa199330a0418bea56f3d27621b9eba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
