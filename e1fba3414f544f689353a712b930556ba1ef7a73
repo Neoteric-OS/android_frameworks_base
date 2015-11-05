@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1698aa84_16ab59dd",
+        "filename": "core/java/android/security/net/config/NetworkSecurityConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-05T20:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b686fe2b_d8e0191a",
+      "revId": "e1fba3414f544f689353a712b930556ba1ef7a73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6923665_7a4d6517",
         "filename": "core/java/android/security/net/config/NetworkSecurityConfig.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-11-05T20:26:33Z",
       "side": 1,
       "message": "Style: Javadoc tags such as hide should be separated by an empty line from the preceding Javadoc stuff. Here and below.",
+      "revId": "e1fba3414f544f689353a712b930556ba1ef7a73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b686fe2b_38969570",
+        "filename": "core/java/android/security/net/config/NetworkSecurityConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-05T20:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6923665_7a4d6517",
       "revId": "e1fba3414f544f689353a712b930556ba1ef7a73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f6923665_fab4f50e",
+        "filename": "core/java/android/security/net/config/NetworkSecurityConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-05T20:51:55Z",
+      "side": 1,
+      "message": "We need to use it in making builders so that we can have builders inherit from the default configuration.",
+      "parentUuid": "d69a9277_27c6686f",
+      "revId": "e1fba3414f544f689353a712b930556ba1ef7a73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6923665_3a53ddc0",
         "filename": "core/java/android/security/net/config/NetworkSecurityConfig.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2015-11-05T20:26:33Z",
       "side": 1,
       "message": "Please add a comment about the meaning of false here and in the line below. E.g., // does not override/bypass pins",
+      "revId": "e1fba3414f544f689353a712b930556ba1ef7a73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b686fe2b_f88b1d3e",
+        "filename": "core/java/android/security/net/config/NetworkSecurityConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-05T20:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6923665_3a53ddc0",
       "revId": "e1fba3414f544f689353a712b930556ba1ef7a73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "96a49abb_5fffb7cf",
+        "filename": "core/java/android/security/net/config/NetworkSecurityConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-05T20:51:55Z",
+      "side": 1,
+      "message": "The most secure (and commonly used by developers that do pinning currently) default is false.\n\nThis only impacts apps that specify pins but no trust anchors, we should make the bypass opt-in.",
+      "parentUuid": "b686fe2b_f8dddd5e",
+      "revId": "e1fba3414f544f689353a712b930556ba1ef7a73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d69a9277_a7b2580a",
         "filename": "core/java/android/security/net/config/NetworkSecurityConfig.java",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2015-11-05T20:26:33Z",
       "side": 1,
       "message": "determine",
+      "revId": "e1fba3414f544f689353a712b930556ba1ef7a73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b686fe2b_1878f10f",
+        "filename": "core/java/android/security/net/config/NetworkSecurityConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-05T20:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d69a9277_a7b2580a",
       "revId": "e1fba3414f544f689353a712b930556ba1ef7a73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1698aa84_b661a587",
+        "filename": "core/java/android/security/net/config/NetworkSecurityConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-05T20:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b69d1e72_850472a4",
+      "revId": "e1fba3414f544f689353a712b930556ba1ef7a73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b69d1e72_a51b365c",
         "filename": "core/java/android/security/net/config/SystemCertificateSource.java",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2015-11-05T20:26:33Z",
       "side": 1,
       "message": "Should be final",
+      "revId": "e1fba3414f544f689353a712b930556ba1ef7a73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36892e3b_7c4ac5a9",
+        "filename": "core/java/android/security/net/config/SystemCertificateSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-05T20:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b69d1e72_a51b365c",
       "revId": "e1fba3414f544f689353a712b930556ba1ef7a73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
