@@ -16,6 +16,24 @@
       "revId": "80a73f5939364a07d8e83d3a90de6dc789e1b334",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b686fe2b_43f27ac8",
+        "filename": "core/java/android/security/net/config/NetworkSecurityConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-05T20:56:20Z",
+      "side": 1,
+      "message": "We don\u0027t current support enforcing dynamic pins (or system wide dynamic pins) , I wanted to make it clear that this decision is only about app defined static pins.",
+      "parentUuid": "f6923665_e5ea9ac8",
+      "revId": "80a73f5939364a07d8e83d3a90de6dc789e1b334",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
