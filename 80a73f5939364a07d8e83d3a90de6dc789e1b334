@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6923665_e5ea9ac8",
+        "filename": "core/java/android/security/net/config/NetworkSecurityConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-05T20:54:49Z",
+      "side": 1,
+      "message": "Drop \"static\" here and below. These stores won\u0027t be bypassing dynamic pins either.",
+      "revId": "80a73f5939364a07d8e83d3a90de6dc789e1b334",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
