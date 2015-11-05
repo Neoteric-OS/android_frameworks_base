@@ -30,6 +30,18 @@ public final class Pin {
         this.digest = digest;
         mHashCode = Arrays.hashCode(digest) ^ digestAlgorithm.hashCode();
     }
+
+    /**
+     * @hide
+     */
+    public static boolean isValidDigestAlgorithm(String algorithm) {
+        // Currently only SHA-256 is supported. SHA-512 if/once Chromium supports it.
+        if ("SHA-256".equals(algorithm)) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public int hashCode() {
         return mHashCode;
