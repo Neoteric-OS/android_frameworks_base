@@ -390,6 +390,9 @@
                   <li><a href="<?cs var:toroot ?>guide/topics/renderscript/reference/rs_time.html">
                     <span class="en">Time Functions and Types</span>
                   </a></li>
+                  <li><a href="<?cs var:toroot ?>guide/topics/renderscript/reference/rs_allocation_create.html">
+                    <span class="en">Allocation Creation Functions</span>
+                  </a></li>
                   <li><a href="<?cs var:toroot ?>guide/topics/renderscript/reference/rs_allocation_data.html">
                     <span class="en">Allocation Data Access Functions</span>
                   </a></li>

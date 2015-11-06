@@ -609,6 +609,14 @@ elements, and scripts.  Most of these object are created using the Java RenderSc
       Handle to a Type
     </td>
   </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_object_types.html#android_rs:rs_yuv_format'>rs_yuv_format</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      YUV format
+    </td>
+  </tr>
 </tbody></table>
 <h2>Conversion Functions</h2>
 <p> The functions below convert from a numerical vector type to another, of from one color
@@ -2267,6 +2275,57 @@ system up time.  It is not recommended to call these functions inside of a kerne
     </td>
   </tr>
 </tbody></table>
+<h2>Allocation Creation Functions</h2>
+<p> The functions below can be used to create Allocations from a Script.
+</p>
+
+<p> These functions can be called directly or indirectly from an invokable
+function.  If some control-flow path can result in a call to these functions
+from a RenderScript kernel function, a compiler error will be generated.
+</p>
+<table class='jd-sumtable'><tbody>
+  <tr><th colspan='2'>Functions</th></tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_allocation_create.html#android_rs:rsCreateAllocation'>rsCreateAllocation</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Create an rs_allocation object of given Type.
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_allocation_create.html#android_rs:rsCreateElement'>rsCreateElement</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Creates an rs_element object of the specified data type
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_allocation_create.html#android_rs:rsCreatePixelElement'>rsCreatePixelElement</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Creates an rs_element object of the specified data type and data kind
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_allocation_create.html#android_rs:rsCreateType'>rsCreateType</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Creates an rs_type object with the specified Element and shape attributes
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_allocation_create.html#android_rs:rsCreateVectorElement'>rsCreateVectorElement</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Creates an rs_element object of the specified data type and vector width
+    </td>
+  </tr>
+</tbody></table>
 <h2>Allocation Data Access Functions</h2>
 <p> The functions below can be used to get and set the cells that comprise
 an allocation.
@@ -2634,6 +2693,14 @@ a <a href='rs_for_each.html#android_rs:rs_kernel_context'>rs_kernel_context</a> 
   </tr>
   <tr class='alt-color api apilevel-1'>
     <td class='jd-linkcol'>
+      <a href='rs_for_each.html#android_rs:rs_kernel'>rs_kernel</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Handle to a kernel function
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
       <a href='rs_for_each.html#android_rs:rs_kernel_context'>rs_kernel_context</a>
     </td>
     <td class='jd-descrcol' width='100%'>
@@ -2656,7 +2723,23 @@ a <a href='rs_for_each.html#android_rs:rs_kernel_context'>rs_kernel_context</a> 
       <a href='rs_for_each.html#android_rs:rsForEach'>rsForEach</a>
     </td>
     <td class='jd-descrcol' width='100%'>
-      Invoke the root kernel of a script
+      Launches a kernel
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_for_each.html#android_rs:rsForEachInternal'>rsForEachInternal</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      (Internal API) Launch a kernel in the current Script (with the slot number)
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_for_each.html#android_rs:rsForEachWithOptions'>rsForEachWithOptions</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Launches a kernel with options
     </td>
   </tr>
   <tr class='alt-color api apilevel-1'>

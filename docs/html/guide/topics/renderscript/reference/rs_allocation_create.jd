@@ -1,0 +1,275 @@
+page.title=RenderScript Allocation Creation Functions
+
+@jd:body
+
+<div class='renderscript'>
+<h2>Overview</h2>
+<p> The functions below can be used to create Allocations from a Script.
+</p>
+
+<p> These functions can be called directly or indirectly from an invokable
+function.  If some control-flow path can result in a call to these functions
+from a RenderScript kernel function, a compiler error will be generated.
+</p>
+<h2>Summary</h2>
+<table class='jd-sumtable'><tbody>
+  <tr><th colspan='2'>Functions</th></tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_allocation_create.html#android_rs:rsCreateAllocation'>rsCreateAllocation</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Create an rs_allocation object of given Type.
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_allocation_create.html#android_rs:rsCreateElement'>rsCreateElement</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Creates an rs_element object of the specified data type
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_allocation_create.html#android_rs:rsCreatePixelElement'>rsCreatePixelElement</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Creates an rs_element object of the specified data type and data kind
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_allocation_create.html#android_rs:rsCreateType'>rsCreateType</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Creates an rs_type object with the specified Element and shape attributes
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_allocation_create.html#android_rs:rsCreateVectorElement'>rsCreateVectorElement</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Creates an rs_element object of the specified data type and vector width
+    </td>
+  </tr>
+</tbody></table>
+<h2>Functions</h2>
+<a name='android_rs:rsCreateAllocation'></a>
+<div class='jd-details'>
+  <h4 class='jd-details-title'>
+    <span class='sympad'>rsCreateAllocation</span>
+    <span class='normal'>: Create an rs_allocation object of given Type.</span>
+  </h4>
+  <div class='jd-details-descr'>
+    <table class='jd-tagtable'><tbody>
+      <tr>
+        <td><a href='rs_object_types.html#android_rs:rs_allocation'>rs_allocation</a> rsCreateAllocation(<a href='rs_object_types.html#android_rs:rs_type'>rs_type</a> type);
+</td>
+        <td>    <a href='http://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels'>API level 4294967295 - 4294967295</a>
+        </td>
+      </tr>
+      <tr>
+        <td><a href='rs_object_types.html#android_rs:rs_allocation'>rs_allocation</a> rsCreateAllocation(<a href='rs_object_types.html#android_rs:rs_type'>rs_type</a> type, rs_allocation_mipmap_control mipmap, <a href='rs_value_types.html#android_rs:uint32_t'>uint32_t</a> usages, void* ptr);
+</td>
+        <td>    <a href='http://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels'>API level 4294967295 - 4294967295</a>
+        </td>
+      </tr>
+      <tr>
+        <td><a href='rs_object_types.html#android_rs:rs_allocation'>rs_allocation</a> rsCreateAllocation(<a href='rs_object_types.html#android_rs:rs_type'>rs_type</a> type, <a href='rs_value_types.html#android_rs:uint32_t'>uint32_t</a> usage);
+</td>
+        <td>    <a href='http://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels'>API level 4294967295 - 4294967295</a>
+        </td>
+      </tr>
+    </tbody></table>
+  </div>
+  <div class='jd-tagdata'>    <h5 class='jd-tagtitle'>Parameters</h5>
+    <table class='jd-tagtable'><tbody>
+    <tr><th>type</th><td>Type of the Allocation</td></tr>
+    <tr><th>usage</th><td>Usage flag for the allocation</td></tr>
+    <tr><th>mipmap</th><td></td></tr>
+    <tr><th>usages</th><td></td></tr>
+    <tr><th>ptr</th><td></td></tr>
+    </tbody></table>
+  </div>
+  <div class='jd-tagdata jd-tagdescr'>
+<p>  Creates an rs_allocation object of the given Type and usage.
+</p>
+
+<p>  RS_ALLOCATION_USAGE_SCRIPT and RS_ALLOCATION_USAGE_GRAPHICS_TEXTURE are the
+ only supported usage flags for Allocations created from within a RenderScript
+ Script.
+</p>
+  </div>
+</div>
+
+<a name='android_rs:rsCreateElement'></a>
+<div class='jd-details'>
+  <h4 class='jd-details-title'>
+    <span class='sympad'>rsCreateElement</span>
+    <span class='normal'>: Creates an rs_element object of the specified data type</span>
+  </h4>
+  <div class='jd-details-descr'>
+    <table class='jd-tagtable'><tbody>
+      <tr>
+        <td><a href='rs_object_types.html#android_rs:rs_element'>rs_element</a> rsCreateElement(<a href='rs_value_types.html#android_rs:int32_t'>int32_t</a> data_type, <a href='rs_value_types.html#android_rs:int32_t'>int32_t</a> data_kind, bool isNormalized, <a href='rs_value_types.html#android_rs:uint32_t'>uint32_t</a> vecSize);
+</td>
+        <td>    <a href='http://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels'>API level 4294967295 - 4294967295</a>
+        </td>
+      </tr>
+      <tr>
+        <td><a href='rs_object_types.html#android_rs:rs_element'>rs_element</a> rsCreateElement(<a href='rs_object_types.html#android_rs:rs_data_type'>rs_data_type</a> data_type);
+</td>
+        <td>    <a href='http://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels'>API level 4294967295 - 4294967295</a>
+        </td>
+      </tr>
+    </tbody></table>
+  </div>
+  <div class='jd-tagdata'>    <h5 class='jd-tagtitle'>Parameters</h5>
+    <table class='jd-tagtable'><tbody>
+    <tr><th>data_type</th><td>Data type of the Element</td></tr>
+    <tr><th>data_kind</th><td></td></tr>
+    <tr><th>isNormalized</th><td></td></tr>
+    <tr><th>vecSize</th><td></td></tr>
+    </tbody></table>
+  </div>
+  <div class='jd-tagdata jd-tagdescr'>
+<p>  Creates an rs_element object of the specified data type.  The data kind of
+ the Element will be set to RS_KIND_USER and vector_width will be set to 1,
+ indicating non-vector.
+</p>
+  </div>
+</div>
+
+<a name='android_rs:rsCreatePixelElement'></a>
+<div class='jd-details'>
+  <h4 class='jd-details-title'>
+    <span class='sympad'>rsCreatePixelElement</span>
+    <span class='normal'>: Creates an rs_element object of the specified data type and data kind</span>
+  </h4>
+  <div class='jd-details-descr'>
+    <table class='jd-tagtable'><tbody>
+      <tr>
+        <td><a href='rs_object_types.html#android_rs:rs_element'>rs_element</a> rsCreatePixelElement(<a href='rs_object_types.html#android_rs:rs_data_type'>rs_data_type</a> data_type, <a href='rs_object_types.html#android_rs:rs_data_kind'>rs_data_kind</a> data_kind);
+</td>
+        <td>    <a href='http://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels'>API level 4294967295 - 4294967295</a>
+        </td>
+      </tr>
+    </tbody></table>
+  </div>
+  <div class='jd-tagdata'>    <h5 class='jd-tagtitle'>Parameters</h5>
+    <table class='jd-tagtable'><tbody>
+    <tr><th>data_type</th><td>Data type of the Element</td></tr>
+    <tr><th>data_kind</th><td>Data kind of the Element</td></tr>
+    </tbody></table>
+  </div>
+  <div class='jd-tagdata jd-tagdescr'>
+<p>  Creates an rs_element object of the specified data type and data kind.  The
+ vector_width of the Element will be set to 1, indicating non-vector.
+</p>
+  </div>
+</div>
+
+<a name='android_rs:rsCreateType'></a>
+<div class='jd-details'>
+  <h4 class='jd-details-title'>
+    <span class='sympad'>rsCreateType</span>
+    <span class='normal'>: Creates an rs_type object with the specified Element and shape attributes</span>
+  </h4>
+  <div class='jd-details-descr'>
+    <table class='jd-tagtable'><tbody>
+      <tr>
+        <td><a href='rs_object_types.html#android_rs:rs_type'>rs_type</a> rsCreateType(<a href='rs_object_types.html#android_rs:rs_element'>rs_element</a> element, <a href='rs_value_types.html#android_rs:uint32_t'>uint32_t</a> dimX);
+</td>
+        <td>    <a href='http://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels'>API level 4294967295 - 4294967295</a>
+        </td>
+      </tr>
+      <tr>
+        <td><a href='rs_object_types.html#android_rs:rs_type'>rs_type</a> rsCreateType(<a href='rs_object_types.html#android_rs:rs_element'>rs_element</a> element, <a href='rs_value_types.html#android_rs:uint32_t'>uint32_t</a> dimX, <a href='rs_value_types.html#android_rs:uint32_t'>uint32_t</a> dimY);
+</td>
+        <td>    <a href='http://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels'>API level 4294967295 - 4294967295</a>
+        </td>
+      </tr>
+      <tr>
+        <td><a href='rs_object_types.html#android_rs:rs_type'>rs_type</a> rsCreateType(<a href='rs_object_types.html#android_rs:rs_element'>rs_element</a> element, <a href='rs_value_types.html#android_rs:uint32_t'>uint32_t</a> dimX, <a href='rs_value_types.html#android_rs:uint32_t'>uint32_t</a> dimY, <a href='rs_value_types.html#android_rs:uint32_t'>uint32_t</a> dimZ);
+</td>
+        <td>    <a href='http://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels'>API level 4294967295 - 4294967295</a>
+        </td>
+      </tr>
+      <tr>
+        <td><a href='rs_object_types.html#android_rs:rs_type'>rs_type</a> rsCreateType(<a href='rs_object_types.html#android_rs:rs_element'>rs_element</a> element, <a href='rs_value_types.html#android_rs:uint32_t'>uint32_t</a> dimX, <a href='rs_value_types.html#android_rs:uint32_t'>uint32_t</a> dimY, <a href='rs_value_types.html#android_rs:uint32_t'>uint32_t</a> dimZ, bool mipmaps, bool faces, <a href='rs_object_types.html#android_rs:rs_yuv_format'>rs_yuv_format</a> yuv_format);
+</td>
+        <td>    <a href='http://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels'>API level 4294967295 - 4294967295</a>
+        </td>
+      </tr>
+    </tbody></table>
+  </div>
+  <div class='jd-tagdata'>    <h5 class='jd-tagtitle'>Parameters</h5>
+    <table class='jd-tagtable'><tbody>
+    <tr><th>element</th><td>Element to be associated with the Type</td></tr>
+    <tr><th>dimX</th><td>Size along the X dimension</td></tr>
+    <tr><th>dimY</th><td>Size along the Y dimension</td></tr>
+    <tr><th>dimZ</th><td>Size along the Z dimension</td></tr>
+    <tr><th>mipmaps</th><td>Flag indicating if the Type has a mipmap chain</td></tr>
+    <tr><th>faces</th><td>Flag indicating if the Type is a cubemap</td></tr>
+    <tr><th>yuv_format</th><td>YUV layout for the Type</td></tr>
+    </tbody></table>
+  </div>
+  <div class='jd-tagdata jd-tagdescr'>
+<p>  Creates an rs_type object with the specified Element and shape attributes.
+</p>
+
+<p>  dimX specifies the size of the X dimension.
+</p>
+
+<p>  dimY, if present and non-zero, indicates that the Y dimension is present and
+ indicates its size.
+</p>
+
+<p>  dimZ, if present and non-zero, indicates that the Z dimension is present and
+ indicates its size.
+</p>
+
+<p>  mipmaps indicates the presence of level of detail (LOD).
+</p>
+
+<p>  faces indicates the  presence of cubemap faces.
+</p>
+
+<p>  yuv_format indicates the associated YUV format (or RS_YUV_NONE).
+</p>
+  </div>
+</div>
+
+<a name='android_rs:rsCreateVectorElement'></a>
+<div class='jd-details'>
+  <h4 class='jd-details-title'>
+    <span class='sympad'>rsCreateVectorElement</span>
+    <span class='normal'>: Creates an rs_element object of the specified data type and vector width</span>
+  </h4>
+  <div class='jd-details-descr'>
+    <table class='jd-tagtable'><tbody>
+      <tr>
+        <td><a href='rs_object_types.html#android_rs:rs_element'>rs_element</a> rsCreateVectorElement(<a href='rs_object_types.html#android_rs:rs_data_type'>rs_data_type</a> data_type, <a href='rs_value_types.html#android_rs:uint32_t'>uint32_t</a> vector_width);
+</td>
+        <td>    <a href='http://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels'>API level 4294967295 - 4294967295</a>
+        </td>
+      </tr>
+    </tbody></table>
+  </div>
+  <div class='jd-tagdata'>    <h5 class='jd-tagtitle'>Parameters</h5>
+    <table class='jd-tagtable'><tbody>
+    <tr><th>data_type</th><td>Data type of the Element</td></tr>
+    <tr><th>vector_width</th><td>Vector width (either 2, 3, or 4)</td></tr>
+    </tbody></table>
+  </div>
+  <div class='jd-tagdata jd-tagdescr'>
+<p>  Creates an rs_element object of the specified data type and vector width.
+ Value of vector_width must be 2, 3 or 4.  The data kind of the Element will
+ be set to RS_KIND_USER.
+</p>
+  </div>
+</div>
+
+</div>
