@@ -90,6 +90,14 @@ elements, and scripts.  Most of these object are created using the Java RenderSc
       Handle to a Type
     </td>
   </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_object_types.html#android_rs:rs_yuv_format'>rs_yuv_format</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      YUV format
+    </td>
+  </tr>
 </tbody></table>
 <h2>Types</h2>
 <a name='android_rs:rs_allocation'></a>
@@ -329,6 +337,30 @@ Added in <a href='http://developer.android.com/guide/topics/manifest/uses-sdk-el
 </p>
 
 <p> See <a href="http://developer.android.com/reference/android/renderscript/Type.html">android.renderscript.Type</a>.
+</p>
+  </div>
+</div>
+
+<a name='android_rs:rs_yuv_format'></a>
+<div class='jd-details'>
+  <h4 class='jd-details-title'>
+    <span class='sympad'>rs_yuv_format</span>
+    <span class='normal'>: YUV format</span>
+  </h4>
+  <div class='jd-details-descr'>
+<p>An enum with the following values:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href='http://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels'>API level 4294967295 - 4294967295</a>
+</p>
+  <table class='jd-tagtable'><tbody>
+    <tr><th>RS_YUV_NONE = 0</th><td></td></tr>
+    <tr><th>RS_YUV_YV12 = 0x32315659</th><td></td></tr>
+    <tr><th>RS_YUV_NV21 = 0x11</th><td></td></tr>
+    <tr><th>RS_YUV_420_888 = 0x23</th><td></td></tr>
+  </tbody></table><br/>
+<p>  Android YUV formats that can be associated with a RenderScript Type.
+</p>
+
+<p>  See <a href='http://developer.android.com/reference/android/graphics/ImageFormat.html'>android.graphics.ImageFormat</a> for a description of each format.
 </p>
   </div>
 </div>

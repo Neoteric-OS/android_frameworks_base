@@ -24,6 +24,14 @@ a <a href='rs_for_each.html#android_rs:rs_kernel_context'>rs_kernel_context</a> 
   </tr>
   <tr class='alt-color api apilevel-1'>
     <td class='jd-linkcol'>
+      <a href='rs_for_each.html#android_rs:rs_kernel'>rs_kernel</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Handle to a kernel function
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
       <a href='rs_for_each.html#android_rs:rs_kernel_context'>rs_kernel_context</a>
     </td>
     <td class='jd-descrcol' width='100%'>
@@ -47,6 +55,14 @@ a <a href='rs_for_each.html#android_rs:rs_kernel_context'>rs_kernel_context</a> 
     </td>
     <td class='jd-descrcol' width='100%'>
       Invoke the root kernel of a script
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_for_each.html#android_rs:rsForEachInternal'>rsForEachInternal</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      (Internal API) Launch a kernel in the current Script (with the slot number)
     </td>
   </tr>
   <tr class='alt-color api apilevel-1'>
@@ -169,6 +185,14 @@ a <a href='rs_for_each.html#android_rs:rs_kernel_context'>rs_kernel_context</a> 
       Index in the Levels of Detail dimension for the specified kernel context
     </td>
   </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_for_each.html#android_rs:rsParallelFor'>rsParallelFor</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Run a kernel defined in the current Script
+    </td>
+  </tr>
 </tbody></table>
 <h2>Types</h2>
 <a name='android_rs:rs_for_each_strategy_t'></a>
@@ -194,6 +218,21 @@ allocations.  This is a hint only.  Implementations may not follow the suggestio
 
 <p> This specification can help the caching behavior of the running kernel, e.g. the cache
 locality when the processing is distributed over multiple cores.
+</p>
+  </div>
+</div>
+
+<a name='android_rs:rs_kernel'></a>
+<div class='jd-details'>
+  <h4 class='jd-details-title'>
+    <span class='sympad'>rs_kernel</span>
+    <span class='normal'>: Handle to a kernel function</span>
+  </h4>
+  <div class='jd-details-descr'>
+<p>A typedef of: void*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels'>API level 4294967295 - 4294967295</a>
+</p>
+<p>  An opaque type for a function that is defined with the kernel attribute.  A value
+ of this type can be used in a <a href='rs_for_each.html#android_rs:rsParallelFor'>rsParallelFor</a> call to launch a kernel.
 </p>
   </div>
 </div>
@@ -330,6 +369,26 @@ void specializedProcessing(rs_allocation in) {<br/>
 
 <p> If both input and output allocations are specified, they must have the same dimensions.
 </p>
+  </div>
+</div>
+
+<a name='android_rs:rsForEachInternal'></a>
+<div class='jd-details'>
+  <h4 class='jd-details-title'>
+    <span class='sympad'>rsForEachInternal</span>
+    <span class='normal'>: (Internal API) Launch a kernel in the current Script (with the slot number)</span>
+  </h4>
+  <div class='jd-details-descr'>
+    <table class='jd-tagtable'><tbody>
+      <tr>
+        <td>void rsForEachInternal(int slot, <a href='rs_object_types.html#android_rs:rs_allocation'>rs_allocation</a> input, <a href='rs_object_types.html#android_rs:rs_allocation'>rs_allocation</a> output);
+</td>
+        <td>    <a href='http://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels'>API level 4294967295 - 4294967295</a>
+        </td>
+      </tr>
+    </tbody></table>
+  </div>
+  <div class='jd-tagdata jd-tagdescr'>
   </div>
 </div>
 
@@ -762,6 +821,43 @@ the context.
 </p>
 
 <p> Returns 0 if the Levels of Detail dimension is not present.
+</p>
+  </div>
+</div>
+
+<a name='android_rs:rsParallelFor'></a>
+<div class='jd-details'>
+  <h4 class='jd-details-title'>
+    <span class='sympad'>rsParallelFor</span>
+    <span class='normal'>: Run a kernel defined in the current Script</span>
+  </h4>
+  <div class='jd-details-descr'>
+    <table class='jd-tagtable'><tbody>
+      <tr>
+        <td>void rsParallelFor(<a href='rs_for_each.html#android_rs:rs_kernel'>rs_kernel</a> kernel,  ...);
+</td>
+        <td>    <a href='http://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels'>API level 4294967295 - 4294967295</a>
+        </td>
+      </tr>
+    </tbody></table>
+  </div>
+  <div class='jd-tagdata'>    <h5 class='jd-tagtitle'>Parameters</h5>
+    <table class='jd-tagtable'><tbody>
+    <tr><th>kernel</th><td>Function designator to a function that is defined with the kernel attribute.</td></tr>
+    <tr><th>...</th><td>Input and output allocations</td></tr>
+    </tbody></table>
+  </div>
+  <div class='jd-tagdata jd-tagdescr'>
+<p>  Runs the kernel over zero or more input allocations. They are passed after the
+ <a href='rs_for_each.html#android_rs:rs_kernel'>rs_kernel</a> argument. If the specified kernel returns a value, an output allocation
+ must be specified as the last argument. All input allocations,
+ and the output allocation if it exists, must have the same dimensions.
+</p>
+
+<p>  This is a synchronous function. A call to this function only returns after all
+ the work has completed for all cells of the input allocations. If the kernel
+ function returns any value, the call waits until all results have been written
+ to the output allocation.
 </p>
   </div>
 </div>

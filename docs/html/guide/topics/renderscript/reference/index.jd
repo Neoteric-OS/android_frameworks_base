@@ -354,6 +354,14 @@ page.title=RenderScript Index
   </tr>
   <tr class='alt-color api apilevel-1'>
     <td class='jd-linkcol'>
+      <a href='rs_for_each.html#android_rs:rs_kernel'>rs_kernel</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Handle to a kernel function
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
       <a href='rs_for_each.html#android_rs:rs_kernel_context'>rs_kernel_context</a>
     </td>
     <td class='jd-descrcol' width='100%'>
@@ -446,6 +454,14 @@ page.title=RenderScript Index
     </td>
     <td class='jd-descrcol' width='100%'>
       Handle to a Type
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_object_types.html#android_rs:rs_yuv_format'>rs_yuv_format</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      YUV format
     </td>
   </tr>
   <tr class='alt-color api apilevel-1'>
@@ -1741,6 +1757,46 @@ page.title=RenderScript Index
   </tr>
   <tr class='alt-color api apilevel-1'>
     <td class='jd-linkcol'>
+      <a href='rs_allocation_create.html#android_rs:rsCreateAllocation'>rsCreateAllocation</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Create an rs_allocation object of given Type.
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_allocation_create.html#android_rs:rsCreateElement'>rsCreateElement</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Creates an rs_element object of the specified data type
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_allocation_create.html#android_rs:rsCreatePixelElement'>rsCreatePixelElement</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Creates an rs_element object of the specified data type and data kind
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_allocation_create.html#android_rs:rsCreateType'>rsCreateType</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Creates an rs_type object with the specified Element and shape attributes
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_allocation_create.html#android_rs:rsCreateVectorElement'>rsCreateVectorElement</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Creates an rs_element object of the specified data type and vector width
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
       <a href='rs_debug.html#android_rs:rsDebug'>rsDebug</a>
     </td>
     <td class='jd-descrcol' width='100%'>
@@ -1841,6 +1897,14 @@ page.title=RenderScript Index
     </td>
     <td class='jd-descrcol' width='100%'>
       Invoke the root kernel of a script
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_for_each.html#android_rs:rsForEachInternal'>rsForEachInternal</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      (Internal API) Launch a kernel in the current Script (with the slot number)
     </td>
   </tr>
   <tr class='alt-color api apilevel-1'>
@@ -2177,6 +2241,14 @@ page.title=RenderScript Index
     </td>
     <td class='jd-descrcol' width='100%'>
       Create a uchar4 RGBA from floats
+    </td>
+  </tr>
+  <tr class='alt-color api apilevel-1'>
+    <td class='jd-linkcol'>
+      <a href='rs_for_each.html#android_rs:rsParallelFor'>rsParallelFor</a>
+    </td>
+    <td class='jd-descrcol' width='100%'>
+      Run a kernel defined in the current Script
     </td>
   </tr>
   <tr class='alt-color api apilevel-1'>
