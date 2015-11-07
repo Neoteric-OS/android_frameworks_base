@@ -1,0 +1,667 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d683721b_47a441c9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "per domain by -\u003e per domain via",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36892e3b_6ff8406f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "inheritance",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36892e3b_cf0e944a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Add a comma before all -- it took multiple attempts to parse this sentence (many interpretations appear to work).",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1698aa84_44b52408",
+        "filename": "core/java/android/security/net/config/Pin.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Suggestion: isSupportedDigestAlgorithm. Valid is somewhat vague, IMHO.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "568ea242_bf1b35fd",
+        "filename": "core/java/android/security/net/config/Pin.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Chromium -\u003e Chromium network stack.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b69d1e72_107d1d4a",
+        "filename": "core/java/android/security/net/config/Pin.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "1. Do you want case-sensitivity? For example, JCA algorithm names are case-insensitive.\n2. This whole method could be a one-liner return (...equals()));",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6923665_59d18ed5",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "xml -\u003e XML",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "568ea242_1f0a89a5",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Style: There\u0027s usually no need to assign false or null -- these are the default values. You assigning these two fields makes me wonder why you\u0027re not assigning other fields. So, this is slower to read as a result.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6923665_b9bfd27c",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Style: Typical preferred order of fields is static, followed by non-static. Within each group final followed by non-final. In this particular class, I\u0027d suggest separating final and non-final with an empty line. This\u0027ll make it easier to spot which bits of the class\u0027s state change and which don\u0027t.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1698aa84_847d4c02",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "You need to hold this lock while initializing, otherwise you\u0027ll have memory visibility issues.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36892e3b_4fd1c4d5",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "I suggest resetting all the fields that are populated by the initialization process. Scenario: First attempts fails half way through, second attempt is initiated. You don\u0027t want the partial state from the first attempt to influence the result of the second attempt.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b620be2e_cd350986",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Shorter: Use try-with-resources which removes the need for the finally block and makes the rest shorter:\n\ntry (XmlResourceParser parser \u003d mContext.getResources().getXml(...)) {\n} catch (..)",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b69d1e72_f0d6d971",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "1. Xml -\u003e XML\n2. Mention resource ID in the message. Optionally, resource name (see http://developer.android.com/reference/android/content/res/Resources.html#getResourceEntryName(int)).",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36712e54_cd90a976",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Invalid -\u003e Unsupported",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d683721b_87fc799b",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Suggestion: replace all \"throw new ParserException(parser, ...)\" with \"throw parserException(...)\". This\u0027ll enable you to reduce verbosity and usefully add not just the position information but also the ID and/or name of the XML resource. Overall, this\u0027ll make exceptions easier to interpret for the developer.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b686fe2b_a1b409aa",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "You should also throw if the digest is of the wrong length. Such a digest can\u0027t ever match and thus is definitely a mistake that should be caught early on.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36712e54_f0ca1e72",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Consistency: why final only here? outerDepth could also be final but isn\u0027t. Android style is to not use final for local variables unless it\u0027s needed so that they can be passed referenced from locally nested class instance. Same comment about final local vars elsewhere in this class.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36892e3b_8ffe4c21",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Suggestion: expirationTimestampMillis, to make it clearer it\u0027s about the time instant when expirtation will occur rather than the duration till that instant.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1698aa84_6714e290",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Indent by 4.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36712e54_70b06e03",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Style: Break line at highest possible semantic level. In this case, after the assignment operator.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36892e3b_4ff46443",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "This must be lower-cased, otherwise the seenDomains.contains check will not catch case-insensitive duplicates.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36712e54_90a87a9e",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Please add a comment about why it\u0027s fine to ignore includeSubdomains properties of domains seen so far. I can\u0027t figure this out after a minute of pondering.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b620be2e_edf48df5",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Alt: Duplicate domain declaration",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b686fe2b_010cf54f",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Suggestion: improve performance by using this one weird trick:\nif (!seenDomains.add(...)) {\n   throw ...\n}\n\nSet.add returns true if the element was added, false if the element was already there.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "568ea242_9fa4b9e1",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Add a TODO to cache ResourceCertificateSources by resource ID. I suspect a sizable fraction of configs will reference the same resource ID multiple times.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6923665_794baa5d",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "I assume you\u0027re using a Set because you want to de-dupe the anchors. If so, the CertificatesEntryRef class needs to implement hashCode and equals (by checking that overridesPIns is the same and the CertificateSources equal), and CertificateSource subclasses must also override hashCode and equals. Again, that won\u0027t be hard.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b620be2e_4d59f9d8",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "global -\u003e baseConfig",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36892e3b_ef151027",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Indent by 8. Here and in the next block.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36712e54_6d69753d",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "config -\u003e parser.getName()",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6923665_f9679af6",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "element -\u003e elements",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1698aa84_87cb8e75",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Suggestion: Move this check before seenPinSet. If it\u0027s base-config, it doesn\u0027t matter whether you\u0027ve seen a pin-set yet or not.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5676a24b_110c8e4f",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Include the name of the config element (i.e., base-config or domain-config). For example, \"Unknown element \" + tagName + \" inside \" + baseConfigTagName). This\u0027ll make it easier to troubleshoot issues just by looking at the exception message.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "568ea242_1fe1a91b",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "How about \"No domain elements in domain-config\"? It\u0027s clearer people who know English only a little.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b686fe2b_a198895a",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Shorter: Use the Diamond Operator: new ArrayList\u003c\u003e(); Same comment for many other places in this file.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5676a24b_315bca64",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Does this fit on the preceding line?",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b686fe2b_a1fde95f",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "I\u0027m not sure about the approach of rejecting unknown elements and attributes. The bad: it\u0027ll prevent you from adding more elements/attributes in the future versions of Android platform. The good: it\u0027ll catch mistyped elements/attributes which would otherwise be ignored. Perhaps the latter can be addressed via Android Linter warnings instead?\n\nAlso, whenever you use getAttributeValue(namespace, name, defaultValue) you\u0027re not throwing if there are unknown/unexpected attributes in that element. Consistency needed.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b69d1e72_70bae930",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Readability suggestion: Extract NSC.getDefaultBuilder() into a local var \"defaultConfigBuilder\" preceding this if statement.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d683721b_a7e09dea",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "1. inheriting\n2. Might be a simpler model to use \"parent\" instead of \"base\" vs \"default\". Then you don\u0027t care about which particular config type is your parent.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b69d1e72_30c061a1",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T04:14:33Z",
+      "side": 1,
+      "message": "Make this class static. There\u0027s no reason for it to contain a reference to the enclosing XmlConfigSource instance.",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
