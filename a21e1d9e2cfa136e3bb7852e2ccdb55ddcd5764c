@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b620be2e_e89ebb78",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T20:29:06Z",
+      "side": 1,
+      "message": "inherit",
+      "revId": "a21e1d9e2cfa136e3bb7852e2ccdb55ddcd5764c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36712e54_700f0e47",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T20:29:06Z",
+      "side": 1,
+      "message": "Why not invoke this unconditionally?",
+      "revId": "a21e1d9e2cfa136e3bb7852e2ccdb55ddcd5764c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d683721b_e75d3558",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T20:29:06Z",
+      "side": 1,
+      "message": "FYI: The preferred way to create Pair is (used to be?) Pair.create(builder, domains). The idea is that you don\u0027t need to specify the generic types, as opposed to when you use the new Pair\u003cA, B\u003e(builder, domain). With the advent of the Diamond Operator, this is a less of an issue. So, it\u0027s your call which one you prefer.",
+      "revId": "a21e1d9e2cfa136e3bb7852e2ccdb55ddcd5764c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d683721b_075b2963",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T20:29:06Z",
+      "side": 1,
+      "message": "Not 100% sure about this. Same as with rejecting pin-set or domain elements in base-config. This is the same issue as with rejecting other unknown/unexpected elements/attributes -- forward compatibility. Should this code ignore and let the Linter warn instead?",
+      "revId": "a21e1d9e2cfa136e3bb7852e2ccdb55ddcd5764c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
