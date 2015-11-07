@@ -876,6 +876,24 @@
     },
     {
       "key": {
+        "uuid": "d66b7268_eaca2772",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-07T06:19:50Z",
+      "side": 1,
+      "message": "Its not quite a set of entryrefs since we want to also dedup any source that is present with both overridePin true and false to just one with true.\n\nI\u0027m going to tackle it when I go about fixing the deduping of trust anchors in general.",
+      "parentUuid": "d683721b_e701b548",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b620be2e_4d59f9d8",
         "filename": "core/java/android/security/net/config/XmlConfigSource.java",
         "patchSetId": 1
