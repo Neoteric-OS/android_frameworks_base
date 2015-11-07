@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "b620be2e_08a44fc7",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-07T21:30:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36712e54_700f0e47",
+      "revId": "a21e1d9e2cfa136e3bb7852e2ccdb55ddcd5764c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d683721b_e75d3558",
         "filename": "core/java/android/security/net/config/XmlConfigSource.java",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "b69d1e72_f00979b1",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-07T21:30:44Z",
+      "side": 1,
+      "message": "Think I\u0027ll stick with new Pair\u003c\u003e for now.",
+      "parentUuid": "d683721b_e75d3558",
+      "revId": "a21e1d9e2cfa136e3bb7852e2ccdb55ddcd5764c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d683721b_075b2963",
         "filename": "core/java/android/security/net/config/XmlConfigSource.java",
         "patchSetId": 1
@@ -64,6 +100,24 @@
       "writtenOn": "2015-11-07T20:29:06Z",
       "side": 1,
       "message": "Not 100% sure about this. Same as with rejecting pin-set or domain elements in base-config. This is the same issue as with rejecting other unknown/unexpected elements/attributes -- forward compatibility. Should this code ignore and let the Linter warn instead?",
+      "revId": "a21e1d9e2cfa136e3bb7852e2ccdb55ddcd5764c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5676a24b_1116ce32",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-07T21:30:44Z",
+      "side": 1,
+      "message": "I\u0027m ok with accepting unknown things but not things we straight up don\u0027t want to support. Domains/pins in base-configs don\u0027t make sense and we shouldn\u0027t support them.\n\nwrt nesting a domain-config in a base config this is already the behavior (inheritance wise) of domain-config entries, and I dont want two ways to have the same inheritance behavior.",
+      "parentUuid": "d683721b_075b2963",
       "revId": "a21e1d9e2cfa136e3bb7852e2ccdb55ddcd5764c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
