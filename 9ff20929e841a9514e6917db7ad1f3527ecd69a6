@@ -858,6 +858,24 @@
     },
     {
       "key": {
+        "uuid": "d683721b_e701b548",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T05:26:25Z",
+      "side": 1,
+      "message": "I think Set is a good idea (to de-dupe), although a bit more work is required (see my earlier comment about equals and hashCode). Perhaps a TODO?",
+      "parentUuid": "5676a24b_11a32e6e",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b620be2e_4d59f9d8",
         "filename": "core/java/android/security/net/config/XmlConfigSource.java",
         "patchSetId": 1
@@ -1120,6 +1138,24 @@
     },
     {
       "key": {
+        "uuid": "b686fe2b_01915501",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T05:26:25Z",
+      "side": 1,
+      "message": "The Diamond Operator will make the code neater on many lines of this class.",
+      "parentUuid": "b686fe2b_a198895a",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5676a24b_315bca64",
         "filename": "core/java/android/security/net/config/XmlConfigSource.java",
         "patchSetId": 1
@@ -1184,6 +1220,24 @@
       "side": 1,
       "message": "The concern I have with that is that if we add a new attribute in a follow on version should a previous version just ignore it? It may be important. Maybe linter is OK. We can be more lenient for this CL.",
       "parentUuid": "b686fe2b_a1fde95f",
+      "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36712e54_f03f7e06",
+        "filename": "core/java/android/security/net/config/XmlConfigSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-07T05:26:25Z",
+      "side": 1,
+      "message": "Yes, I think this code should ignore anything it doesn\u0027t understand. Linter will need to be augmented to alleviate some of the concerns.",
+      "parentUuid": "d683721b_871399a4",
       "revId": "9ff20929e841a9514e6917db7ad1f3527ecd69a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
