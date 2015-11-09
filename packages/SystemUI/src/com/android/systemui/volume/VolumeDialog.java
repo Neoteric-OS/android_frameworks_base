@@ -1032,6 +1032,12 @@ public class VolumeDialog {
                             userLevel);
                 }
             }
+
+            //if requested volume level is zero, ensure we are no more tracking for touch gesture
+            //since, it will prevent update of volumeUI when volume increased from volume button.
+            if (userLevel == 0) {
+                mRow.tracking = false;
+            }
         }
 
         @Override
