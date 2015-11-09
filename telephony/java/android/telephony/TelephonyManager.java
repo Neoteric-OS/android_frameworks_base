@@ -5407,14 +5407,7 @@ public class TelephonyManager {
     @SystemApi
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     public boolean handlePinMmi(String dialString) {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null)
-                return telephony.handlePinMmi(dialString);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error calling ITelephony#handlePinMmi", e);
-        }
-        return false;
+        return handlePinMmiForSubscriber(getDefaultSubscription(), dialString);
     }
 
     /** @hide */
