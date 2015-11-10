@@ -1,0 +1,44 @@
+/*
+ * Copyright (C) 2015 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package android.security.net.config;
+
+import android.util.Pair;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.util.Set;
+
+/**
+ * {@link ConfigSource} with a single default config based on a {@link KeyStore}.
+ * This is only for use in {@link RootTrustManagerFactory} when provided with a {@code KeyStore}.
+ */
+class KeyStoreConfigSource implements ConfigSource {
+    private final NetworkSecurityConfig mConfig;
+    public KeyStoreConfigSource(KeyStore ks) {
+        mConfig = new NetworkSecurityConfig.Builder()
+                .addCertificatesEntryRef(
+                        new CertificatesEntryRef(new KeyStoreCertificateSource(ks), false))
+                .build();
+    }
+
+    public Set<Pair<Domain, NetworkSecurityConfig>> getPerDomainConfigs() {
+        return null;
+    }
+    public NetworkSecurityConfig getDefaultConfig() {
+        return mConfig;
+    }
+}
+
