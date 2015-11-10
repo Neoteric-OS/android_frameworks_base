@@ -18,6 +18,9 @@ package android.net.http;
 
 import com.android.org.conscrypt.TrustManagerImpl;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.List;
@@ -34,7 +37,7 @@ import javax.net.ssl.X509TrustManager;
  */
 public class X509TrustManagerExtensions {
 
-    final TrustManagerImpl mDelegate;
+    final X509TrustManager mDelegate;
 
     /**
      * Constructs a new X509TrustManagerExtensions wrapper.
@@ -43,13 +46,8 @@ public class X509TrustManagerExtensions {
      * @throws IllegalArgumentException If tm is an unsupported TrustManager type.
      */
     public X509TrustManagerExtensions(X509TrustManager tm) throws IllegalArgumentException {
-        if (tm instanceof TrustManagerImpl) {
-            mDelegate = (TrustManagerImpl) tm;
-        } else {
-            mDelegate = null;
-            throw new IllegalArgumentException("tm is an instance of " + tm.getClass().getName() +
-                    " which is not a supported type of X509TrustManager");
-        }
+        ensureRequiredMethodsPresent(tm);
+        mDelegate = tm;
     }
 
     /**
@@ -64,7 +62,27 @@ public class X509TrustManagerExtensions {
      */
     public List<X509Certificate> checkServerTrusted(X509Certificate[] chain, String authType,
                                                     String host) throws CertificateException {
-        return mDelegate.checkServerTrusted(chain, authType, host);
+        if (mDelegate instanceof TrustManagerImpl) {
+            return ((TrustManagerImpl) mDelegate).checkServerTrusted(chain, authType, host);
+        } else {
+            try {
+                Method method = mDelegate.getClass().getMethod("checkServerTrusted",
+                        X509Certificate[].class,
+                        String.class,
+                        String.class);
+                return (List<X509Certificate>) method.invoke(mDelegate, chain, authType, host);
+            } catch (NoSuchMethodException | IllegalAccessException e) {
+                throw new CertificateException("Failed to call checkServerTrusted");
+            } catch (InvocationTargetException e) {
+                if (e.getCause() instanceof CertificateException) {
+                    throw (CertificateException) e.getCause();
+                }
+                if (e.getCause() instanceof RuntimeException) {
+                    throw (RuntimeException) e.getCause();
+                }
+                throw new RuntimeException("Failed to call checkServerTrusted", e.getCause());
+            }
+        }
     }
 
     /**
@@ -78,6 +96,48 @@ public class X509TrustManagerExtensions {
      * otherwise.
      */
     public boolean isUserAddedCertificate(X509Certificate cert) {
-        return mDelegate.isUserAddedCertificate(cert);
+        if (mDelegate instanceof TrustManagerImpl) {
+            return ((TrustManagerImpl) mDelegate).isUserAddedCertificate(cert);
+        } else {
+            try {
+                Method method = mDelegate.getClass().getMethod("isUserAddedCertificate",
+                        X509Certificate.class);
+                return (Boolean) method.invoke(mDelegate, cert);
+            } catch (NoSuchMethodException | IllegalAccessException e) {
+                throw new RuntimeException("Failed to call isUserAddedCertificate", e);
+            } catch (InvocationTargetException e) {
+                if (e.getCause() instanceof RuntimeException) {
+                    throw (RuntimeException) e.getCause();
+                } else {
+                    throw new RuntimeException("Failed to call isUserAddedCertificate",
+                            e.getCause());
+                }
+            }
+        }
+    }
+
+    private void ensureRequiredMethodsPresent(X509TrustManager tm)
+            throws IllegalArgumentException {
+        if (tm instanceof TrustManagerImpl) {
+            return;
+        }
+        // Ensure that the hostname aware checkServerTrusted is present.
+        try {
+            Method method = tm.getClass().getMethod("checkServerTrusted",
+                    X509Certificate[].class,
+                    String.class,
+                    String.class);
+        } catch (NoSuchMethodException e) {
+            throw new IllegalArgumentException("Required method"
+                    + " checkServerTrusted(X509Certificate[], String, String, String) missing");
+        }
+        // Ensure that isUserAddedCertificate is present.
+        try {
+            Method method = tm.getClass().getMethod("isUserAddedCertificate",
+                    X509Certificate.class);
+        } catch (NoSuchMethodException e) {
+            throw new IllegalArgumentException(
+                    "Required method isUserAddedCertificate(X509Certificate) not found");
+        }
     }
 }
