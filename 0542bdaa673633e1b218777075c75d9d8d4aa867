@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6a6b626_dafb59a1",
+        "filename": "core/java/android/security/net/config/NetworkSecurityConfigProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-10T23:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16ac2a06_5b4f6f3c",
+      "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16ac2a06_1bbde783",
         "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-11-10T22:46:29Z",
       "side": 1,
       "message": "Nit: Append Spi to class name",
+      "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7689e6a7_68a997fc",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-10T23:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16ac2a06_1bbde783",
       "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7b0e2f2a_57224c37",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-10T23:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6a6b626_1fb1534f",
+      "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b0e2f2a_57ddac91",
         "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2015-11-10T22:46:29Z",
       "side": 1,
       "message": "Space missing before spec.",
+      "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56cb02e2_bb9e5b77",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-10T23:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b0e2f2a_57ddac91",
       "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "16c50ace_38bef1f1",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-10T23:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16ac2a06_9b45574b",
+      "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7689e6a7_6868b7c9",
         "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2015-11-10T22:46:29Z",
       "side": 1,
       "message": "Why add this optimization? It\u0027s not like engineInit is likely to be invoked multiple times.",
+      "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6da7ea7_5807699b",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-10T23:20:40Z",
+      "side": 1,
+      "message": "Why not I guess? removed.",
+      "parentUuid": "7689e6a7_6868b7c9",
       "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "76d4867d_a102b21f",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-10T23:20:40Z",
+      "side": 1,
+      "message": "That wouldn\u0027t solve the looping issue. Should we instead improve the check on line 93?",
+      "parentUuid": "76d4867d_36e9e617",
+      "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "369daed4_16bb0202",
         "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
         "patchSetId": 1
@@ -149,6 +275,24 @@
       "writtenOn": "2015-11-10T22:46:29Z",
       "side": 1,
       "message": "Extraneous space before (",
+      "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7689e6a7_e8304798",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-10T23:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "369daed4_16bb0202",
       "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
