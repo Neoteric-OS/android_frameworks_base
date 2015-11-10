@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16ac2a06_5b4f6f3c",
+        "filename": "core/java/android/security/net/config/NetworkSecurityConfigProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-10T22:46:29Z",
+      "side": 1,
+      "message": "This statement will load RootTrustManagerFactory and invoke its static initializers. We want to avoid this. Thus, reference the name of this class using a hard-coded String instead of a Class. See https://android.googlesource.com/platform/external/conscrypt/+/master/src/main/java/org/conscrypt/OpenSSLProvider.java or https://android.googlesource.com/platform/frameworks/base/+/master/keystore/java/android/security/keystore/AndroidKeyStoreProvider.java for an example.",
+      "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16ac2a06_1bbde783",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-10T22:46:29Z",
+      "side": 1,
+      "message": "Nit: Append Spi to class name",
+      "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6a6b626_1fb1534f",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-10T22:46:29Z",
+      "side": 1,
+      "message": "Suggestion: \"Unsupported spec: \" +  spec + \". Only \" + ApplicationConfigParameters.class.getName() + \" supported.\"",
+      "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b0e2f2a_57ddac91",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-10T22:46:29Z",
+      "side": 1,
+      "message": "Space missing before spec.",
+      "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16ac2a06_9b45574b",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-10T22:46:29Z",
+      "side": 1,
+      "message": "I think you need an implementation details comment right here. The comment should explain why you treat KeyStore \u003d\u003d null and !\u003d null so differently. You could add the comment right at the start of the method, or split it into the two branches, one for ks \u003d\u003d null and the other for after that block.\n\nFor example: When a TrustManager is initialized with a null KeyStore it must use its own default trust configuration. We use the application\u0027s trust config. When a TrustManager is initialized with a non-null KeyStore, it must base its trust decisions on the contents of that KeyStore. We don\u0027t want to deal with this and thus delegate that to a TrustManagerFactory from another provider.",
+      "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7689e6a7_6868b7c9",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-10T22:46:29Z",
+      "side": 1,
+      "message": "Why add this optimization? It\u0027s not like engineInit is likely to be invoked multiple times.",
+      "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6da7ea7_18ca11c7",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-10T22:46:29Z",
+      "side": 1,
+      "message": "No need for this @return -- it\u0027s fairly obvious what it returns based on the description of the method.",
+      "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76d4867d_36e9e617",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-10T22:46:29Z",
+      "side": 1,
+      "message": "To avoid loops (e.g., this same code in GMSCore Provider will delegate to this same code from the platform) I suggest changing this as follows:\n1. Rename to initFallbackTrustManager or initDelegateTrustManager.\n2. In the loop, invoke init in addition to getInstance. Continue to next provider if init fails.",
+      "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "369daed4_16bb0202",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-10T22:46:29Z",
+      "side": 1,
+      "message": "Extraneous space before (",
+      "revId": "0542bdaa673633e1b218777075c75d9d8d4aa867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
