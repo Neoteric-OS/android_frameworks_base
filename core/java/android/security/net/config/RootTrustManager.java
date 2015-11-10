@@ -18,6 +18,7 @@ package android.security.net.config;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.List;
 
 import javax.net.ssl.X509TrustManager;
 
@@ -61,10 +62,15 @@ public class RootTrustManager implements X509TrustManager {
         config.getTrustManager().checkServerTrusted(certs, authType);
     }
 
-    public void checkServerTrusted(X509Certificate[] certs, String authType, String hostname)
-            throws CertificateException {
+    public List<X509Certificate> checkServerTrusted(X509Certificate[] certs, String authType,
+            String hostname) throws CertificateException {
         NetworkSecurityConfig config = mConfig.getConfigForHostname(hostname);
-        config.getTrustManager().checkServerTrusted(certs, authType);
+        return config.getTrustManager().checkServerTrusted(certs, authType, hostname);
+    }
+
+    public boolean isUserAddedCertificate(X509Certificate cert) {
+        // TODO: Figure out the right way to handle this, and if it is still even used.
+        return false;
     }
 
     @Override
