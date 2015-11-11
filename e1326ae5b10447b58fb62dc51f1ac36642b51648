@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96d1fa8e_3d6c234e",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-11T21:28:07Z",
+      "side": 1,
+      "message": "X509TrustManagerExtensions instance is (implicitly) meant to support concurrent use. Thus, you should either add locking around access to these two Method instances or make them final. It\u0027s cleaner to make them final (by inlining the checkRequiredMethodsPresent).",
+      "revId": "e1326ae5b10447b58fb62dc51f1ac36642b51648",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76d4867d_09f760b7",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-11T21:28:07Z",
+      "side": 1,
+      "message": "You can speed this up by adding a final TrustManagerImpl field (in addition to mDelegate). This code can then avoid the potentially costly instanceof.",
+      "revId": "e1326ae5b10447b58fb62dc51f1ac36642b51648",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
