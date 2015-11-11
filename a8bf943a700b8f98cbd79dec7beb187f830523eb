@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6da7ea7_72a6c92c",
+        "filename": "core/java/android/security/net/config/KeyStoreCertificateSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T18:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56cb02e2_c61377a7",
+      "revId": "a8bf943a700b8f98cbd79dec7beb187f830523eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "369daed4_e7c4be64",
         "filename": "core/java/android/security/net/config/KeyStoreCertificateSource.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2015-11-11T17:27:33Z",
       "side": 1,
       "message": "Style: No need to assign null. It\u0027s implied and the compiler does it for you.",
+      "revId": "a8bf943a700b8f98cbd79dec7beb187f830523eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6a6b626_94eb65cd",
+        "filename": "core/java/android/security/net/config/KeyStoreCertificateSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T18:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "369daed4_e7c4be64",
       "revId": "a8bf943a700b8f98cbd79dec7beb187f830523eb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "16c50ace_b93ca3a5",
+        "filename": "core/java/android/security/net/config/KeyStoreCertificateSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T18:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76d4867d_b3d043d4",
+      "revId": "a8bf943a700b8f98cbd79dec7beb187f830523eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76d4867d_f3b3dbbf",
         "filename": "core/java/android/security/net/config/KeyStoreConfigSource.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2015-11-11T17:27:33Z",
       "side": 1,
       "message": "Given that ConfigSource consists of a default config and per-domain configs, the more precise statement is \"with the default config based on a {@link KeyStore} and no per-domain configs\".",
+      "revId": "a8bf943a700b8f98cbd79dec7beb187f830523eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16c50ace_9941e71f",
+        "filename": "core/java/android/security/net/config/KeyStoreConfigSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T18:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76d4867d_f3b3dbbf",
       "revId": "a8bf943a700b8f98cbd79dec7beb187f830523eb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "76d4867d_a61803c5",
+        "filename": "core/java/android/security/net/config/KeyStoreConfigSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T18:56:09Z",
+      "side": 1,
+      "message": "Removed, but this will not be used for other reasons ;)",
+      "parentUuid": "96d1fa8e_42581609",
+      "revId": "a8bf943a700b8f98cbd79dec7beb187f830523eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96d1fa8e_823b2ea7",
         "filename": "core/java/android/security/net/config/KeyStoreConfigSource.java",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2015-11-11T17:27:33Z",
       "side": 1,
       "message": "Empty line needed before this constructor.",
+      "revId": "a8bf943a700b8f98cbd79dec7beb187f830523eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76d4867d_e612fba0",
+        "filename": "core/java/android/security/net/config/KeyStoreConfigSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T18:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96d1fa8e_823b2ea7",
       "revId": "a8bf943a700b8f98cbd79dec7beb187f830523eb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f6a6b626_f412a9a0",
+        "filename": "core/java/android/security/net/config/KeyStoreConfigSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T18:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6da7ea7_121cada5",
+      "revId": "a8bf943a700b8f98cbd79dec7beb187f830523eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b0e2f2a_fd837f29",
         "filename": "core/java/android/security/net/config/KeyStoreConfigSource.java",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2015-11-11T17:27:33Z",
       "side": 1,
       "message": "@Override missing",
+      "revId": "a8bf943a700b8f98cbd79dec7beb187f830523eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "369daed4_e714be1e",
+        "filename": "core/java/android/security/net/config/KeyStoreConfigSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T18:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b0e2f2a_fd837f29",
       "revId": "a8bf943a700b8f98cbd79dec7beb187f830523eb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "76d4867d_26053355",
+        "filename": "core/java/android/security/net/config/KeyStoreConfigSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T18:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96d1fa8e_222ec266",
+      "revId": "a8bf943a700b8f98cbd79dec7beb187f830523eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6da7ea7_52646525",
         "filename": "core/java/android/security/net/config/RootTrustManagerFactorySpi.java",
         "patchSetId": 3
@@ -166,6 +328,24 @@
       "writtenOn": "2015-11-11T17:27:33Z",
       "side": 1,
       "message": "What\u0027s the reason for marking all methods final? If you don\u0027t want this whole class to be subclassed, just mark the whole class final instead.",
+      "revId": "a8bf943a700b8f98cbd79dec7beb187f830523eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6a6b626_5408dd6e",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactorySpi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T18:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6da7ea7_52646525",
       "revId": "a8bf943a700b8f98cbd79dec7beb187f830523eb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
