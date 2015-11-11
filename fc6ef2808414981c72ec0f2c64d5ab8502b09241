@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6a6b626_ba1bed00",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactorySpi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-11T00:50:43Z",
+      "side": 1,
+      "message": "Options for avoiding infinite loops:\n1. Handle the KeyStore yourself by extracting all the KeyStore.TrustedCertificate entries from it and creating the corresponding config.\n2. Add a special property to the Provider\u0027s name-values table. The presence of that property would signify that it doesn\u0027t want to be initialized with a KeyStore. For example, the property could be called \"TrustManagerFactory.PKIX InitWithKeyStoreNotWelcome\". The downside of such a property is that everyone who uses some cross-provider fallback logic needs to declare this.",
+      "revId": "fc6ef2808414981c72ec0f2c64d5ab8502b09241",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
