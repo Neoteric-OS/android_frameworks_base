@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "369daed4_625b9c63",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T21:19:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6a6b626_b71823c5",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76d4867d_c6f417f6",
         "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-11-11T21:02:33Z",
       "side": 1,
       "message": "Why is this field package private rather than private? Is anybody using this field?",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16c50ace_eb6e4207",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T21:19:06Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like. I\u0027ll make it private.",
+      "parentUuid": "76d4867d_c6f417f6",
       "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "56cb02e2_9c3f12b3",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T21:19:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b25eb9e_76ab10b3",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6a6b626_37055355",
         "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2015-11-11T21:02:33Z",
       "side": 1,
       "message": "Provide the cause when constructing the CertificateException. Otherwise developers will only see an unhelpful \"Failed to call checkServerTrusted\" message with no information whatsoever when something goes wrong.",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56cb02e2_7c3cd6bd",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T21:19:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6a6b626_37055355",
       "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "369daed4_a2dbc40f",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T21:19:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56cb02e2_9cba728a",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b25eb9e_96b58c0c",
         "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2015-11-11T21:02:33Z",
       "side": 1,
       "message": "isUserAddedCertificate failed",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16ac2a06_d6d851a7",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T21:19:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b25eb9e_96b58c0c",
       "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "96d1fa8e_bda933bd",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T21:19:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6a6b626_b72663f7",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16ac2a06_d671717d",
         "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2015-11-11T21:02:33Z",
       "side": 1,
       "message": "No need for this local variable.",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56cb02e2_3c19be64",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T21:19:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16ac2a06_d671717d",
       "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "7b0e2f2a_ab094140",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T21:19:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b25eb9e_5695b462",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96d1fa8e_9d20af2e",
         "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
         "patchSetId": 1
@@ -166,6 +328,24 @@
       "writtenOn": "2015-11-11T21:02:33Z",
       "side": 1,
       "message": "not found -\u003e missing (for consistency with above)",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76d4867d_06a46fde",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T21:19:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96d1fa8e_9d20af2e",
       "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
