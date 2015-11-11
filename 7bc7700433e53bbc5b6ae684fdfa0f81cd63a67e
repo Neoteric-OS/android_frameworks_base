@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16ac2a06_a9a9ea53",
+        "filename": "core/java/android/security/net/config/NetworkSecurityTrustManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-11T22:20:08Z",
+      "side": 1,
+      "message": "Please add a comment that this method is part of the interface used by Conscrypt and android.net.X509TrustManagerExtensions. This is so that it\u0027s not renamed or removed by accident.",
+      "revId": "7bc7700433e53bbc5b6ae684fdfa0f81cd63a67e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16c50ace_4b3156c7",
+        "filename": "core/java/android/security/net/config/NetworkSecurityTrustManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-11T22:20:08Z",
+      "side": 1,
+      "message": "Can fit on previous line.",
+      "revId": "7bc7700433e53bbc5b6ae684fdfa0f81cd63a67e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6a6b626_d7716f7d",
+        "filename": "core/java/android/security/net/config/NetworkSecurityTrustManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-11T22:20:08Z",
+      "side": 1,
+      "message": "Missing public boolean isUserAddedCertificate(X509Certificate cert)?",
+      "revId": "7bc7700433e53bbc5b6ae684fdfa0f81cd63a67e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16ac2a06_29969a0b",
+        "filename": "core/java/android/security/net/config/RootTrustManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-11T22:20:08Z",
+      "side": 1,
+      "message": "Please add a comment that this method is part of the interface used by Conscrypt and android.net.X509TrustManagerExtensions. This is so that it\u0027s not renamed or removed by accident.",
+      "revId": "7bc7700433e53bbc5b6ae684fdfa0f81cd63a67e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
