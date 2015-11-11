@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6a6b626_b71823c5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-11T21:02:33Z",
+      "side": 1,
+      "message": "Replace comma with period.",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76d4867d_c6f417f6",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-11T21:02:33Z",
+      "side": 1,
+      "message": "Why is this field package private rather than private? Is anybody using this field?",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b25eb9e_76ab10b3",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-11T21:02:33Z",
+      "side": 1,
+      "message": "Suggestion: ensure -\u003e check. Ensure usually implies making some proactive changes to achieve the goal. Check is a read-only operation.",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6a6b626_37055355",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-11T21:02:33Z",
+      "side": 1,
+      "message": "Provide the cause when constructing the CertificateException. Otherwise developers will only see an unhelpful \"Failed to call checkServerTrusted\" message with no information whatsoever when something goes wrong.",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56cb02e2_9cba728a",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-11T21:02:33Z",
+      "side": 1,
+      "message": "1. Shouldn\u0027t this be a CertificateException?\n2. It\u0027s not that you failed to call it, it\u0027s that the method itself failed. Thus, I suggest (\"checkServerTrusted failed\", e.getCause());",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b25eb9e_96b58c0c",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-11T21:02:33Z",
+      "side": 1,
+      "message": "isUserAddedCertificate failed",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6a6b626_b72663f7",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-11T21:02:33Z",
+      "side": 1,
+      "message": "It might be a good idea to save the two Method instances as field of this class. This\u0027ll speed up invocation via Reflection in the two methods above.",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16ac2a06_d671717d",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-11T21:02:33Z",
+      "side": 1,
+      "message": "No need for this local variable.",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b25eb9e_5695b462",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-11T21:02:33Z",
+      "side": 1,
+      "message": "No need for this local variable.",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96d1fa8e_9d20af2e",
+        "filename": "core/java/android/net/http/X509TrustManagerExtensions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-11-11T21:02:33Z",
+      "side": 1,
+      "message": "not found -\u003e missing (for consistency with above)",
+      "revId": "d1e08afd762aa7e8888102c0eb4955d7c8c752c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
