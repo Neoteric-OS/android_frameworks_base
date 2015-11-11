@@ -66,7 +66,7 @@ public class MediaMetadataRetriever
 
         try (FileInputStream is = new FileInputStream(path)) {
             FileDescriptor fd = is.getFD();
-            setDataSource(fd, 0, 0x7ffffffffffffffL);
+            setDataSource(fd, 0, Utils.getFileSizeFromFd(fd));
         } catch (FileNotFoundException fileEx) {
             throw new IllegalArgumentException();
         } catch (IOException ioEx) {
@@ -132,8 +132,7 @@ public class MediaMetadataRetriever
      */
     public void setDataSource(FileDescriptor fd)
             throws IllegalArgumentException {
-        // intentionally less than LONG_MAX
-        setDataSource(fd, 0, 0x7ffffffffffffffL);
+        setDataSource(fd, 0, Utils.getFileSizeFromFd(fd));
     }
     
     /**

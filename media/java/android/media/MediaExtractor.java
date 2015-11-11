@@ -193,7 +193,7 @@ final public class MediaExtractor {
      * @param fd the FileDescriptor for the file you want to extract from.
      */
     public final void setDataSource(@NonNull FileDescriptor fd) throws IOException {
-        setDataSource(fd, 0, 0x7ffffffffffffffL);
+        setDataSource(fd, 0, Utils.getFileSizeFromFd(fd));
     }
 
     /**

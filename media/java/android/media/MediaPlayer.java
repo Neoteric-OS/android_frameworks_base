@@ -1114,8 +1114,7 @@ public class MediaPlayer implements SubtitleController.Listener
      */
     public void setDataSource(FileDescriptor fd)
             throws IOException, IllegalArgumentException, IllegalStateException {
-        // intentionally less than LONG_MAX
-        setDataSource(fd, 0, 0x7ffffffffffffffL);
+        setDataSource(fd, 0, Utils.getFileSizeFromFd(fd));
     }
 
     /**
@@ -2419,8 +2418,7 @@ public class MediaPlayer implements SubtitleController.Listener
      */
     public void addTimedTextSource(FileDescriptor fd, String mimeType)
             throws IllegalArgumentException, IllegalStateException {
-        // intentionally less than LONG_MAX
-        addTimedTextSource(fd, 0, 0x7ffffffffffffffL, mimeType);
+        addTimedTextSource(fd, 0, Utils.getFileSizeFromFd(fd), mimeType);
     }
 
     /**

@@ -22,6 +22,9 @@ import android.util.Range;
 import android.util.Rational;
 import android.util.Size;
 
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Vector;
@@ -306,5 +309,25 @@ class Utils {
         }
         Log.w(TAG, "could not parse size range '" + o + "'");
         return null;
+    }
+
+    public static long getFileSizeFromFd(final FileDescriptor fd) {
+        final long unknownSize = 0x7ffffffffffffffL; // intentionally less than LONG_MAX
+        if (!fd.valid()) {
+            return unknownSize;
+        }
+
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(fd);
+            return fis.getChannel().size();
+        } catch (IOException e) {
+            return unknownSize;
+        } finally {
+            if (fis != null) {
+                try { fis.close(); }
+                catch (IOException e) {}
+            }
+        }
     }
 }
