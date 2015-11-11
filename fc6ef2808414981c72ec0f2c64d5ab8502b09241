@@ -16,6 +16,24 @@
       "revId": "fc6ef2808414981c72ec0f2c64d5ab8502b09241",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6a6b626_051626d6",
+        "filename": "core/java/android/security/net/config/RootTrustManagerFactorySpi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-11T05:53:23Z",
+      "side": 1,
+      "message": "Not handling the keystore has become too much effort, I\u0027ll just handle it.",
+      "parentUuid": "f6a6b626_ba1bed00",
+      "revId": "fc6ef2808414981c72ec0f2c64d5ab8502b09241",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
