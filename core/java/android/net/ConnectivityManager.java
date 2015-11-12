@@ -43,6 +43,7 @@ import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.telephony.SubscriptionManager;
 import android.util.ArrayMap;
@@ -83,6 +84,9 @@ import java.util.Map;
 @SystemService(Context.CONNECTIVITY_SERVICE)
 public class ConnectivityManager {
     private static final String TAG = "ConnectivityManager";
+
+    private static final boolean IS_USER =
+            SystemProperties.get("ro.build.type", "user").equals("user");
 
     /**
      * A change in network connectivity has occurred. A default connection has either
@@ -2493,6 +2497,7 @@ public class ConnectivityManager {
      * {@hide}
      */
     public void reportInetCondition(int networkType, int percentage) {
+        printStackTrace();
         try {
             mService.reportInetCondition(networkType, percentage);
         } catch (RemoteException e) {
@@ -2513,6 +2518,7 @@ public class ConnectivityManager {
      */
     @Deprecated
     public void reportBadNetwork(Network network) {
+        printStackTrace();
         try {
             // One of these will be ignored because it matches system's current state.
             // The other will trigger the necessary reevaluation.
@@ -2535,6 +2541,7 @@ public class ConnectivityManager {
      *                        Internet using {@code network} or {@code false} if not.
      */
     public void reportNetworkConnectivity(Network network, boolean hasConnectivity) {
+        printStackTrace();
         try {
             mService.reportNetworkConnectivity(network, hasConnectivity);
         } catch (RemoteException e) {
@@ -3073,6 +3080,7 @@ public class ConnectivityManager {
 
     private NetworkRequest sendRequestForNetwork(NetworkCapabilities need, NetworkCallback callback,
             int timeoutMs, int action, int legacyType, CallbackHandler handler) {
+        printStackTrace();
         checkCallbackNotNull(callback);
         Preconditions.checkArgument(action == REQUEST || need != null, "null NetworkCapabilities");
         final NetworkRequest request;
@@ -3332,6 +3340,7 @@ public class ConnectivityManager {
      *         {@link NetworkCapabilities#NET_CAPABILITY_CAPTIVE_PORTAL}.
      */
     public void requestNetwork(NetworkRequest request, PendingIntent operation) {
+        printStackTrace();
         checkPendingIntentNotNull(operation);
         try {
             mService.pendingRequestForNetwork(request.networkCapabilities, operation);
@@ -3355,6 +3364,7 @@ public class ConnectivityManager {
      *                  corresponding NetworkRequest you'd like to remove. Cannot be null.
      */
     public void releaseNetworkRequest(PendingIntent operation) {
+        printStackTrace();
         checkPendingIntentNotNull(operation);
         try {
             mService.releasePendingNetworkRequest(operation);
@@ -3439,6 +3449,7 @@ public class ConnectivityManager {
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     public void registerNetworkCallback(NetworkRequest request, PendingIntent operation) {
+        printStackTrace();
         checkPendingIntentNotNull(operation);
         try {
             mService.pendingListenForNetwork(request.networkCapabilities, operation);
@@ -3520,6 +3531,7 @@ public class ConnectivityManager {
      * @param networkCallback The {@link NetworkCallback} used when making the request.
      */
     public void unregisterNetworkCallback(NetworkCallback networkCallback) {
+        printStackTrace();
         checkCallbackNotNull(networkCallback);
         final List<NetworkRequest> reqs = new ArrayList<>();
         // Find all requests associated to this callback and stop callback triggers immediately.
@@ -3928,6 +3940,26 @@ public class ConnectivityManager {
         } catch (RemoteException e) {
             Log.e(TAG, "Unable to get watchlist config hash");
             throw e.rethrowFromSystemServer();
+        }
+    }
+
+    private void printStackTrace() {
+        if (!IS_USER) {
+            final StackTraceElement[] callStack = Thread.currentThread().getStackTrace();
+            String logString = null;
+            for (int i = 2; i < callStack.length; i++) {
+                logString = callStack[i].toString();
+
+                if (logString == null || logString.contains("android.os")) {
+                    break;
+                }
+
+                Log.d(TAG + " : Stack Log", logString);
+                    // Ex) D <TAG> : Stack Log: android.net.ConnectivityManager.printStackTrace...
+                    //     D <TAG> : Stack Log: android.net.ConnectivityManager.reportInetCondi...
+                    //     D <TAG> : Stack Log: java.lang.reflect.Method.invoke(Native Method)
+                    //     D <TAG> : Stack Log: com.google.android.gms.gcm.be.a(SourceFile:1319)
+            }
         }
     }
 }
