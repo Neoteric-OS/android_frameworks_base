@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "76d4867d_893b50a7",
+        "filename": "core/java/android/security/net/config/NetworkSecurityTrustManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-12T19:04:05Z",
+      "side": 1,
+      "message": "This one is only used directly by the RootTrustManager, not conscrypt/X509TrustManagerExtensions. But added just in case.",
+      "parentUuid": "16ac2a06_a9a9ea53",
+      "revId": "7bc7700433e53bbc5b6ae684fdfa0f81cd63a67e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16c50ace_4b3156c7",
         "filename": "core/java/android/security/net/config/NetworkSecurityTrustManager.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2015-11-11T22:20:08Z",
       "side": 1,
       "message": "Can fit on previous line.",
+      "revId": "7bc7700433e53bbc5b6ae684fdfa0f81cd63a67e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "369daed4_820a08a4",
+        "filename": "core/java/android/security/net/config/NetworkSecurityTrustManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-12T19:04:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16c50ace_4b3156c7",
       "revId": "7bc7700433e53bbc5b6ae684fdfa0f81cd63a67e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "76d4867d_4935d8d2",
+        "filename": "core/java/android/security/net/config/NetworkSecurityTrustManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-12T19:04:05Z",
+      "side": 1,
+      "message": "This trust manager isn\u0027t used directly by X509TrustManagerExtensions",
+      "parentUuid": "f6a6b626_d7716f7d",
+      "revId": "7bc7700433e53bbc5b6ae684fdfa0f81cd63a67e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16ac2a06_29969a0b",
         "filename": "core/java/android/security/net/config/RootTrustManager.java",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2015-11-11T22:20:08Z",
       "side": 1,
       "message": "Please add a comment that this method is part of the interface used by Conscrypt and android.net.X509TrustManagerExtensions. This is so that it\u0027s not renamed or removed by accident.",
+      "revId": "7bc7700433e53bbc5b6ae684fdfa0f81cd63a67e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b25eb9e_f99dd3d8",
+        "filename": "core/java/android/security/net/config/RootTrustManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-11-12T19:04:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16ac2a06_29969a0b",
       "revId": "7bc7700433e53bbc5b6ae684fdfa0f81cd63a67e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
