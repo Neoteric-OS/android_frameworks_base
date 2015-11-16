@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6da7ea7_4fc6661d",
+        "filename": "core/java/android/widget/SimpleExpandableListAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1014545
+      },
+      "writtenOn": "2015-11-16T23:39:54Z",
+      "side": 1,
+      "message": "This instanceof check is unnecessary, it\u0027s valid (and cheap) to call toString() on a String object.",
+      "revId": "9e9ff8bb3cbdb66c59c270649f8fdc8868fc29af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
