@@ -1,0 +1,8 @@
+Code-Review+1: Nicolas Geoffray <ngeoffray@google.com>
+Code-Review+2: Brian Carlstrom <bdc@google.com>
+Verified+1: Calin Juravle <calin@google.com>
+Submitted-by: Calin Juravle <calin@google.com>
+Submitted-at: Mon, 16 Nov 2015 11:08:09 +0000
+Reviewed-on: https://android-review.googlesource.com/180432
+Project: platform/frameworks/base
+Branch: refs/heads/master
