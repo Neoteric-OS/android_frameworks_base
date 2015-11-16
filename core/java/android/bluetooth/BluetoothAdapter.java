@@ -1907,6 +1907,9 @@ public final class BluetoothAdapter {
         } else if (profile == BluetoothProfile.INPUT_DEVICE) {
             BluetoothInputDevice iDev = new BluetoothInputDevice(context, listener);
             return true;
+        } else if (profile == BluetoothProfile.INPUT_HOST) {
+            BluetoothInputHost iHost = new BluetoothInputHost(context, listener);
+            return true;
         } else if (profile == BluetoothProfile.PAN) {
             BluetoothPan pan = new BluetoothPan(context, listener);
             return true;
@@ -1964,6 +1967,10 @@ public final class BluetoothAdapter {
             case BluetoothProfile.INPUT_DEVICE:
                 BluetoothInputDevice iDev = (BluetoothInputDevice)proxy;
                 iDev.close();
+                break;
+            case BluetoothProfile.INPUT_HOST:
+                BluetoothInputHost iHost = (BluetoothInputHost)proxy;
+                iHost.close();
                 break;
             case BluetoothProfile.PAN:
                 BluetoothPan pan = (BluetoothPan)proxy;

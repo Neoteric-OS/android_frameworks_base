@@ -137,6 +137,12 @@ public interface BluetoothProfile {
     public static final int PBAP_CLIENT = 17;
 
     /**
+     * Input Host Profile
+     * @hide
+     */
+    public static final int INPUT_HOST = 18;
+
+    /**
      * Default priority for devices that we try to auto-connect to and
      * and allow incoming connections for the profile
      * @hide

@@ -113,6 +113,7 @@ LOCAL_SRC_FILES += \
 	core/java/android/bluetooth/IBluetoothHealth.aidl \
 	core/java/android/bluetooth/IBluetoothHealthCallback.aidl \
 	core/java/android/bluetooth/IBluetoothInputDevice.aidl \
+	core/java/android/bluetooth/IBluetoothInputHost.aidl \
 	core/java/android/bluetooth/IBluetoothPan.aidl \
 	core/java/android/bluetooth/IBluetoothManager.aidl \
 	core/java/android/bluetooth/IBluetoothManagerCallback.aidl \
