@@ -120,7 +120,7 @@ public class ChooseTypeAndAccountActivity extends Activity
     private boolean mSelectedAddNewAccount = false;
     private String mDescriptionOverride;
 
-    private ArrayList<Account> mAccounts;
+    private ArrayList<Account> mAccounts = null;
     private int mPendingRequest = REQUEST_NULL;
     private Parcelable[] mExistingAccounts = null;
     private int mSelectedItemIndex;
@@ -190,7 +190,7 @@ public class ChooseTypeAndAccountActivity extends Activity
         mSetOfRelevantAccountTypes = getReleventAccountTypes(intent);
         mDescriptionOverride = intent.getStringExtra(EXTRA_DESCRIPTION_TEXT_OVERRIDE);
 
-        mAccounts = getAcceptableAccountChoices(AccountManager.get(this));
+        ensureAccountsQueried();
         if (mAccounts.isEmpty()
                 && mDisallowAddAccounts) {
             requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -250,6 +250,7 @@ public class ChooseTypeAndAccountActivity extends Activity
             outState.putParcelableArray(KEY_INSTANCE_STATE_EXISTING_ACCOUNTS, mExistingAccounts);
         }
         if (mSelectedItemIndex != SELECTED_ITEM_NONE) {
+            ensureAccountsQueried();
             if (mSelectedItemIndex == mAccounts.size()) {
                 outState.putBoolean(KEY_INSTANCE_STATE_SELECTED_ADD_ACCOUNT, true);
             } else {
@@ -291,6 +292,7 @@ public class ChooseTypeAndAccountActivity extends Activity
         mPendingRequest = REQUEST_NULL;
 
         if (resultCode == RESULT_CANCELED) {
+            ensureAccountsQueried();
             // if canceling out of addAccount and the original state caused us to skip this,
             // finish this activity
             if (mAccounts.isEmpty()) {
@@ -493,6 +495,13 @@ public class ChooseTypeAndAccountActivity extends Activity
           accountsToPopulate.add(account);
       }
       return accountsToPopulate;
+    }
+
+    private void ensureAccountsQueried() {
+        if (mAccounts == null) {
+            final AccountManager accountManager = AccountManager.get(this);
+            mAccounts = getAcceptableAccountChoices(accountManager);
+        }
     }
 
     /**
