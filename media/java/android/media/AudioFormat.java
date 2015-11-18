@@ -251,6 +251,12 @@ public class AudioFormat {
      * @hide
      * */
     public static final int ENCODING_AAC_HE_V2 = 12;
+    /** Audio data format: PCM 24 bit packed */
+    public static final int ENCODING_PCM_24BIT_PACKED = 14;
+    /** Audio data format: PCM 8_24 bit */
+    public static final int ENCODING_PCM_8_24BIT = 15;
+    /** Audio data format: PCM 32 bit */
+    public static final int ENCODING_PCM_32BIT = 16;
 
     /** Invalid audio channel configuration */
     /** @deprecated Use {@link #CHANNEL_INVALID} instead.  */
@@ -420,6 +426,10 @@ public class AudioFormat {
         case ENCODING_PCM_16BIT:
         case ENCODING_DEFAULT:
             return 2;
+        case ENCODING_PCM_24BIT_PACKED:
+            return 3;
+        case ENCODING_PCM_8_24BIT:
+        case ENCODING_PCM_32BIT:
         case ENCODING_PCM_FLOAT:
             return 4;
         case ENCODING_INVALID:
@@ -435,6 +445,9 @@ public class AudioFormat {
         case ENCODING_PCM_8BIT:
         case ENCODING_PCM_16BIT:
         case ENCODING_PCM_FLOAT:
+        case ENCODING_PCM_24BIT_PACKED:
+        case ENCODING_PCM_8_24BIT:
+        case ENCODING_PCM_32BIT:
         case ENCODING_AC3:
         case ENCODING_E_AC3:
         case ENCODING_DTS:
@@ -456,6 +469,9 @@ public class AudioFormat {
         case ENCODING_PCM_8BIT:
         case ENCODING_PCM_16BIT:
         case ENCODING_PCM_FLOAT:
+        case ENCODING_PCM_24BIT_PACKED:
+        case ENCODING_PCM_8_24BIT:
+        case ENCODING_PCM_32BIT:
         case ENCODING_AC3:
         case ENCODING_E_AC3:
         case ENCODING_DTS:
@@ -473,6 +489,9 @@ public class AudioFormat {
         case ENCODING_PCM_8BIT:
         case ENCODING_PCM_16BIT:
         case ENCODING_PCM_FLOAT:
+        case ENCODING_PCM_24BIT_PACKED:
+        case ENCODING_PCM_8_24BIT:
+        case ENCODING_PCM_32BIT:
         case ENCODING_DEFAULT:
             return true;
         case ENCODING_AC3:
@@ -696,6 +715,9 @@ public class AudioFormat {
          *     {@link AudioFormat#ENCODING_PCM_8BIT},
          *     {@link AudioFormat#ENCODING_PCM_16BIT},
          *     {@link AudioFormat#ENCODING_PCM_FLOAT},
+         *     {@link AudioFormat#ENCODING_PCM_24BIT_PACKED},
+         *     {@link AudioFormat#ENCODING_PCM_8_24BIT},
+         *     {@link AudioFormat#ENCODING_PCM_32BIT},
          *     {@link AudioFormat#ENCODING_AC3},
          *     {@link AudioFormat#ENCODING_E_AC3}.
          *     {@link AudioFormat#ENCODING_DTS},
@@ -711,6 +733,9 @@ public class AudioFormat {
                 case ENCODING_PCM_8BIT:
                 case ENCODING_PCM_16BIT:
                 case ENCODING_PCM_FLOAT:
+                case ENCODING_PCM_24BIT_PACKED:
+                case ENCODING_PCM_8_24BIT:
+                case ENCODING_PCM_32BIT:
                 case ENCODING_AC3:
                 case ENCODING_E_AC3:
                 case ENCODING_DTS:
@@ -856,6 +881,9 @@ public class AudioFormat {
         ENCODING_PCM_8BIT,
         ENCODING_PCM_16BIT,
         ENCODING_PCM_FLOAT,
+        ENCODING_PCM_24BIT_PACKED,
+        ENCODING_PCM_8_24BIT,
+        ENCODING_PCM_32BIT,
         ENCODING_AC3,
         ENCODING_E_AC3,
         ENCODING_DTS,
