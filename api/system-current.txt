@@ -16060,7 +16060,10 @@ package android.media {
     field public static final int ENCODING_E_AC3 = 6; // 0x6
     field public static final int ENCODING_INVALID = 0; // 0x0
     field public static final int ENCODING_PCM_16BIT = 2; // 0x2
+    field public static final int ENCODING_PCM_24BIT_PACKED = 14; // 0xe
+    field public static final int ENCODING_PCM_32BIT = 16; // 0x10
     field public static final int ENCODING_PCM_8BIT = 3; // 0x3
+    field public static final int ENCODING_PCM_8_24BIT = 15; // 0xf
     field public static final int ENCODING_PCM_FLOAT = 4; // 0x4
   }
 

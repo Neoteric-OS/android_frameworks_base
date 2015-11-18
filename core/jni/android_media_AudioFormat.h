@@ -31,6 +31,9 @@
 #define ENCODING_AAC_LC     10
 #define ENCODING_AAC_HE_V1  11
 #define ENCODING_AAC_HE_V2  12
+#define ENCODING_PCM_24BIT_PACKED 14
+#define ENCODING_PCM_8_24BIT 15
+#define ENCODING_PCM_32BIT 16
 #define ENCODING_INVALID    0
 #define ENCODING_DEFAULT    1
 
@@ -48,6 +51,13 @@ static inline audio_format_t audioFormatToNative(int audioFormat)
         return AUDIO_FORMAT_PCM_8_BIT;
     case ENCODING_PCM_FLOAT:
         return AUDIO_FORMAT_PCM_FLOAT;
+    case AUDIO_FORMAT_PCM_24_BIT_PACKED:
+        return ENCODING_PCM_24BIT_PACKED;
+    case AUDIO_FORMAT_PCM_8_24BIT:
+        return ENCODING_PCM_8_24BIT;
+    case AUDIO_FORMAT_PCM_32BIT:
+        return ENCODING_PCM_32BIT;
+
     case ENCODING_AC3:
         return AUDIO_FORMAT_AC3;
     case ENCODING_E_AC3:
@@ -80,12 +90,12 @@ static inline int audioFormatFromNative(audio_format_t nativeFormat)
         return ENCODING_PCM_8BIT;
     case AUDIO_FORMAT_PCM_FLOAT:
         return ENCODING_PCM_FLOAT;
-
-    // map these to ENCODING_PCM_FLOAT
-    case AUDIO_FORMAT_PCM_8_24_BIT:
     case AUDIO_FORMAT_PCM_24_BIT_PACKED:
-    case AUDIO_FORMAT_PCM_32_BIT:
-        return ENCODING_PCM_FLOAT;
+        return ENCODING_PCM_24BIT_PACKED;
+    case AUDIO_FORMAT_PCM_8_24BIT:
+        return ENCODING_PCM_8_24BIT;
+    case AUDIO_FORMAT_PCM_32BIT:
+        return ENCODING_PCM_32BIT;
 
     case AUDIO_FORMAT_AC3:
         return ENCODING_AC3;
