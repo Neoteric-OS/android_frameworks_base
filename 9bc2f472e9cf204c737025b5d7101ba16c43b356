@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b25eb9e_b9798515",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsBackupAgent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1022138
+      },
+      "writtenOn": "2015-11-19T02:09:03Z",
+      "side": 1,
+      "message": "This is a little bit aggressive - there are some networks of type EAP-SIM/AKA/AKA\u0027 which technically can be restored. But it is not clear if the SIMs are being reused. So perhaps this is OK.",
+      "revId": "9bc2f472e9cf204c737025b5d7101ba16c43b356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
