@@ -580,7 +580,10 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv, bool zygote)
     char heapminfreeOptsBuf[sizeof("-XX:HeapMinFree=")-1 + PROPERTY_VALUE_MAX];
     char heapmaxfreeOptsBuf[sizeof("-XX:HeapMaxFree=")-1 + PROPERTY_VALUE_MAX];
     char usejitOptsBuf[sizeof("-Xusejit:")-1 + PROPERTY_VALUE_MAX];
-    char jitcodecachesizeOptsBuf[sizeof("-Xjitcodecachesize:")-1 + PROPERTY_VALUE_MAX];
+    char jitcodecachemaxcapacityOptsBuf[
+        sizeof("-Xjitcodecachemaxcapacity:")-1 + PROPERTY_VALUE_MAX];
+    char jitcodecacheinitialcapacityOptsBuf[
+        sizeof("-Xjitcodecacheinitialcapacity:")-1 + PROPERTY_VALUE_MAX];
     char jitthresholdOptsBuf[sizeof("-Xjitthreshold:")-1 + PROPERTY_VALUE_MAX];
     char gctypeOptsBuf[sizeof("-Xgc:")-1 + PROPERTY_VALUE_MAX];
     char backgroundgcOptsBuf[sizeof("-XX:BackgroundGC=")-1 + PROPERTY_VALUE_MAX];
@@ -684,7 +687,12 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv, bool zygote)
      * JIT related options.
      */
     parseRuntimeOption("dalvik.vm.usejit", usejitOptsBuf, "-Xusejit:");
-    parseRuntimeOption("dalvik.vm.jitcodecachesize", jitcodecachesizeOptsBuf, "-Xjitcodecachesize:");
+    parseRuntimeOption("dalvik.vm.jitcodecachemaxcapacity",
+                       jitcodecachemaxcapacityOptsBuf,
+                       "-Xjitcodecachemaxcapacity:");
+    parseRuntimeOption("dalvik.vm.jitcodecacheinitialcapacity",
+                       jitcodecacheinitialcapacityOptsBuf,
+                       "-Xjitcodecacheinitialcapacity:");
     parseRuntimeOption("dalvik.vm.jitthreshold", jitthresholdOptsBuf, "-Xjitthreshold:");
 
     property_get("ro.config.low_ram", propBuf, "");
