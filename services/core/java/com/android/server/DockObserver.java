@@ -128,6 +128,7 @@ final class DockObserver extends SystemService {
 
     private void setDockStateLocked(int newState) {
         if (newState != mReportedDockState) {
+            mPreviousDockState = mReportedDockState;
             mReportedDockState = newState;
             if (mSystemReady) {
                 // Wake up immediately when docked or undocked except in theater mode.
@@ -152,7 +153,6 @@ final class DockObserver extends SystemService {
             Slog.i(TAG, "Dock state changed from " + mPreviousDockState + " to "
                     + mReportedDockState);
             final int previousDockState = mPreviousDockState;
-            mPreviousDockState = mReportedDockState;
 
             // Skip the dock intent if not yet provisioned.
             final ContentResolver cr = getContext().getContentResolver();
