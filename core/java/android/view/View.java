@@ -15898,6 +15898,8 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
             }
             if (!drawingWithRenderNode
                     && (parentFlags & ViewGroup.FLAG_SUPPORT_STATIC_TRANSFORMATIONS) != 0) {
+                // we only apply the parent's static transformation here if !drawingWithRenderNode,
+                // since setDisplayListProperties will push them to the RenderNode
                 final Transformation t = parent.getChildTransformation();
                 final boolean hasTransform = parent.getChildStaticTransformation(this, t);
                 if (hasTransform) {
@@ -16040,9 +16042,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
                 if (!drawingWithDrawingCache) {
                     final int multipliedAlpha = (int) (255 * alpha);
                     if (!onSetAlpha(multipliedAlpha)) {
-                        if (drawingWithRenderNode) {
-                            renderNode.setAlpha(alpha * getAlpha() * getTransitionAlpha());
-                        } else if (layerType == LAYER_TYPE_NONE) {
+                        if (!drawingWithRenderNode && layerType == LAYER_TYPE_NONE) {
                             canvas.saveLayerAlpha(sx, sy, sx + getWidth(), sy + getHeight(),
                                     multipliedAlpha);
                         }
