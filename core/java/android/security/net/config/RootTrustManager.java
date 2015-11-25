@@ -35,7 +35,6 @@ import javax.net.ssl.X509TrustManager;
  * @hide */
 public class RootTrustManager implements X509TrustManager {
     private final ApplicationConfig mConfig;
-    private static final X509Certificate[] EMPTY_ISSUERS = new X509Certificate[0];
 
     public RootTrustManager(ApplicationConfig config) {
         if (config == null) {
@@ -47,7 +46,8 @@ public class RootTrustManager implements X509TrustManager {
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType)
             throws CertificateException {
-        throw new CertificateException("Client authentication not supported");
+        NetworkSecurityConfig config = mConfig.getConfigForHostname("");
+        config.getTrustManager().checkClientTrusted(chain, authType);
     }
 
     @Override
@@ -84,6 +84,7 @@ public class RootTrustManager implements X509TrustManager {
 
     @Override
     public X509Certificate[] getAcceptedIssuers() {
-        return EMPTY_ISSUERS;
+        NetworkSecurityConfig config = mConfig.getConfigForHostname("");
+        return config.getTrustManager().getAcceptedIssuers();
     }
 }
