@@ -49,5 +49,6 @@ int main()
         IPCThreadState::self()->joinThreadPool();
 
     }
+    ALOGI("Boot animation finished.");
     return 0;
 }
