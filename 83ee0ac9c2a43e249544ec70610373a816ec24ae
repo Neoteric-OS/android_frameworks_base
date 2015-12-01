@@ -33,6 +33,24 @@
       "revId": "83ee0ac9c2a43e249544ec70610373a816ec24ae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1be45325_95028697",
+        "filename": "core/java/android/security/net/config/NetworkSecurityTrustManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-12-01T04:21:34Z",
+      "side": 1,
+      "message": "A better solution might be to change Conscrypt to offer a constructor which takes only a TrustedCertificateStore. This would make the contract more explicit and readable.",
+      "parentUuid": "9bf043de_c443be94",
+      "revId": "83ee0ac9c2a43e249544ec70610373a816ec24ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
