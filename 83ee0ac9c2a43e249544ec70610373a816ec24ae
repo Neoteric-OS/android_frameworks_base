@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbde9f59_9f4863b0",
+        "filename": "core/java/android/security/net/config/NetworkSecurityTrustManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-12-01T03:13:03Z",
+      "side": 1,
+      "message": "Style: When breaking around assignment operator, break after the operator.",
+      "revId": "83ee0ac9c2a43e249544ec70610373a816ec24ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9bf043de_c443be94",
+        "filename": "core/java/android/security/net/config/NetworkSecurityTrustManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-12-01T03:13:03Z",
+      "side": 1,
+      "message": "Will it completely ignore the empty KeyStore? That\u0027s so weird... Please document that.",
+      "revId": "83ee0ac9c2a43e249544ec70610373a816ec24ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
