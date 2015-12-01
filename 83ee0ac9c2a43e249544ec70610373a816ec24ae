@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fba69f26_2b2b3960",
+        "filename": "core/java/android/security/net/config/NetworkSecurityTrustManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-12-01T20:45:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbde9f59_9f4863b0",
+      "revId": "83ee0ac9c2a43e249544ec70610373a816ec24ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bf043de_c443be94",
         "filename": "core/java/android/security/net/config/NetworkSecurityTrustManager.java",
         "patchSetId": 4
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "A better solution might be to change Conscrypt to offer a constructor which takes only a TrustedCertificateStore. This would make the contract more explicit and readable.",
       "parentUuid": "9bf043de_c443be94",
+      "revId": "83ee0ac9c2a43e249544ec70610373a816ec24ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bbb18759_3159f00c",
+        "filename": "core/java/android/security/net/config/NetworkSecurityTrustManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2015-12-01T20:45:44Z",
+      "side": 1,
+      "message": "Its not ignored but augmented.\nWhen given a keystore TrustManagerImpl will index it into a TrustedCertificateIndex (which in our case will be empty). When doing lookups it will check that index and then the TrustedCertificateStore if one is present.",
+      "parentUuid": "1be45325_95028697",
       "revId": "83ee0ac9c2a43e249544ec70610373a816ec24ae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
