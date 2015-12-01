@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bd59733_56dd4a2d",
+        "filename": "core/java/android/security/net/config/CertificateStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-12-01T01:55:11Z",
+      "side": 1,
+      "message": "The name is pretty weird. Normally, subclasses contain the name of the superclass/interface, not the other way round. How about ConfigCertificateStore, ConfigBasedCertificateStore, ConfigBasedConscryptCertificateStore, or TrustedCertificateStoreAdapter or something along the lines?",
+      "revId": "876fdd086576ab4d5d3390b898aaf548e23e62a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bd59733_16e7c201",
+        "filename": "core/java/android/security/net/config/CertificateStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-12-01T01:55:11Z",
+      "side": 1,
+      "message": "Style: Drop \"Unsupported\" -- it\u0027s tautological, or add more detail about why it\u0027s not supported. I\u0027d vote for new UnsupportedOperationException()\n\nHere and below.",
+      "revId": "876fdd086576ab4d5d3390b898aaf548e23e62a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bbe987fc_3a9065fe",
+        "filename": "core/java/android/security/net/config/NetworkSecurityTrustManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2015-12-01T01:55:11Z",
+      "side": 1,
+      "message": "This looks pretty weird: you\u0027re providing an empty KeyStore. If this is intentional, please document why this is happening and why it\u0027s expected to work.",
+      "revId": "876fdd086576ab4d5d3390b898aaf548e23e62a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
