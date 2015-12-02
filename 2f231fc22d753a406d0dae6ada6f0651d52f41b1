@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb1bff58_43bbe68e",
+        "filename": "core/tests/benchmarks/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2015-12-02T15:42:15Z",
+      "side": 1,
+      "message": "Is this just to build it to check for compilation, or do people need it? Do we need to update or write a readme?",
+      "range": {
+        "startLine": 22,
+        "startChar": 32,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "2f231fc22d753a406d0dae6ada6f0651d52f41b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
