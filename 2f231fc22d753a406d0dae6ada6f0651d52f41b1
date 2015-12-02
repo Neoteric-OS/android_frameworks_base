@@ -22,6 +22,30 @@
       "revId": "2f231fc22d753a406d0dae6ada6f0651d52f41b1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb1bff58_03864ecb",
+        "filename": "core/tests/benchmarks/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2015-12-02T16:00:16Z",
+      "side": 1,
+      "message": "It was really for me to ensure that they would build properly and to detect breakages during build not when they are next run. The tests can still be run in exactly the same way as before.",
+      "parentUuid": "fb1bff58_43bbe68e",
+      "range": {
+        "startLine": 22,
+        "startChar": 32,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "2f231fc22d753a406d0dae6ada6f0651d52f41b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
