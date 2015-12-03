@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bc677da_08b2c754",
+        "filename": "packages/DocumentsUI/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2015-12-03T17:01:29Z",
+      "side": 1,
+      "message": "Style guide says this should be \"config_defaultAdvancedDevices\"",
+      "range": {
+        "startLine": 18,
+        "startChar": 16,
+        "endLine": 18,
+        "endChar": 45
+      },
+      "revId": "8ba7e388434451ce2c37b561b93a2486d3a86c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
