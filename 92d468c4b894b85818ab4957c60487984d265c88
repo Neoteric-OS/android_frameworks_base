@@ -22,6 +22,30 @@
       "revId": "92d468c4b894b85818ab4957c60487984d265c88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60c91c79_7f4e2350",
+        "filename": "core/java/android/os/PersistableBundle.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1077754
+      },
+      "writtenOn": "2015-12-08T01:30:07Z",
+      "side": 1,
+      "message": "We can probably change this in a separate CL. I\u0027ll let wiley@ comment on this before I land this CL.",
+      "parentUuid": "c086482d_09efc9e2",
+      "range": {
+        "startLine": 20,
+        "startChar": 29,
+        "endLine": 20,
+        "endChar": 33
+      },
+      "revId": "92d468c4b894b85818ab4957c60487984d265c88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
