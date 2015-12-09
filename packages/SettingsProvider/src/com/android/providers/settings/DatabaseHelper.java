@@ -42,6 +42,7 @@ import android.provider.Settings.Global;
 import android.provider.Settings.Secure;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.WindowManagerPolicy.WindowManagerFuncs;
 
 import com.android.ims.ImsConfig;
 import com.android.internal.content.PackageHelper;
@@ -2709,6 +2710,18 @@ class DatabaseHelper extends SQLiteOpenHelper {
                     R.bool.def_guest_user_enabled);
             loadSetting(stmt, Settings.Global.ENHANCED_4G_MODE_ENABLED,
                     ImsConfig.FeatureValueConstants.ON);
+
+            // set default lid/cover behaviour
+            if ("true".equals(com.android.internal.R.bool.config_lidControlsSleep)) {
+                loadSetting(stmt, Settings.Global.LID_BEHAVIOR,
+                    WindowManagerFuncs.LID_BEHAVIOR_SLEEP);
+            } else if ("true".equals(com.android.internal.R.bool.config_lidControlsScreenLock)) {
+                loadSetting(stmt, Settings.Global.LID_BEHAVIOR,
+                    WindowManagerFuncs.LID_BEHAVIOR_LOCK);
+            } else {
+                loadSetting(stmt, Settings.Global.LID_BEHAVIOR,
+                    WindowManagerFuncs.LID_BEHAVIOR_NONE);
+            }
 
             /*
              * IMPORTANT: Do not add any more upgrade steps here as the global,
