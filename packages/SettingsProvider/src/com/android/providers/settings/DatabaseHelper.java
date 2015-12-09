@@ -42,6 +42,7 @@ import android.provider.Settings.Global;
 import android.provider.Settings.Secure;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.WindowManagerPolicy.WindowManagerFuncs;
 
 import com.android.ims.ImsConfig;
 import com.android.internal.content.PackageHelper;
@@ -2623,6 +2624,17 @@ class DatabaseHelper extends SQLiteOpenHelper {
 
             loadSetting(stmt, Settings.Global.DEVICE_NAME, getDefaultDeviceName());
 
+            // Set default lid/cover behaviour according to legacy device config
+            if ("true".equals(com.android.internal.R.bool.config_lidControlsSleep)) {
+                loadSetting(stmt, Settings.Global.LID_BEHAVIOR,
+                    WindowManagerFuncs.LID_BEHAVIOR_SLEEP);
+            } else if ("true".equals(com.android.internal.R.bool.config_lidControlsScreenLock)) {
+                loadSetting(stmt, Settings.Global.LID_BEHAVIOR,
+                    WindowManagerFuncs.LID_BEHAVIOR_LOCK);
+            } else {
+                loadSetting(stmt, Settings.Global.LID_BEHAVIOR,
+                    WindowManagerFuncs.LID_BEHAVIOR_NONE);
+            }
             /*
              * IMPORTANT: Do not add any more upgrade steps here as the global,
              * secure, and system settings are no longer stored in a database
