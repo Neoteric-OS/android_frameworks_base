@@ -131,6 +131,9 @@ import static com.android.server.policy.WindowManagerPolicy.WindowManagerFuncs.C
 import static com.android.server.policy.WindowManagerPolicy.WindowManagerFuncs.LID_ABSENT;
 import static com.android.server.policy.WindowManagerPolicy.WindowManagerFuncs.LID_CLOSED;
 import static com.android.server.policy.WindowManagerPolicy.WindowManagerFuncs.LID_OPEN;
+import static com.android.server.policy.WindowManagerPolicy.WindowManagerFuncs.LID_BEHAVIOR_NONE;
+import static com.android.server.policy.WindowManagerPolicy.WindowManagerFuncs.LID_BEHAVIOR_SLEEP;
+import static com.android.server.policy.WindowManagerPolicy.WindowManagerFuncs.LID_BEHAVIOR_LOCK;
 import static com.android.server.wm.WindowManagerPolicyProto.FOCUSED_APP_TOKEN;
 import static com.android.server.wm.WindowManagerPolicyProto.FOCUSED_WINDOW;
 import static com.android.server.wm.WindowManagerPolicyProto.FORCE_STATUS_BAR;
@@ -598,8 +601,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     boolean mDeskDockEnablesAccelerometer;
     int mLidKeyboardAccessibility;
     int mLidNavigationAccessibility;
-    boolean mLidControlsScreenLock;
-    boolean mLidControlsSleep;
     int mShortPressOnPowerBehavior;
     int mLongPressOnPowerBehavior;
     int mVeryLongPressOnPowerBehavior;
@@ -1592,6 +1593,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     }
 
+    private int getLidBehavior() {
+        return Settings.Global.getInt(mContext.getContentResolver(),
+                Settings.Global.LID_BEHAVIOR, LID_BEHAVIOR_NONE);
+    }
+
     private int getMaxMultiPressPowerCount() {
         if (mTriplePressOnPowerBehavior != MULTI_PRESS_POWER_NOTHING) {
             return 3;
@@ -2098,10 +2104,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 com.android.internal.R.integer.config_lidKeyboardAccessibility);
         mLidNavigationAccessibility = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_lidNavigationAccessibility);
-        mLidControlsScreenLock = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_lidControlsScreenLock);
-        mLidControlsSleep = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_lidControlsSleep);
         mTranslucentDecorEnabled = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_enableTranslucentDecor);
 
@@ -2543,7 +2545,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private boolean shouldEnableWakeGestureLp() {
         return mWakeGestureEnabledSetting && !mAwake
-                && (!mLidControlsSleep || mLidState != LID_CLOSED)
+                && (getLidBehavior() != LID_BEHAVIOR_SLEEP || mLidState != LID_CLOSED)
                 && mWakeGestureListener.isSupported();
     }
 
@@ -5931,7 +5933,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         if (lidOpen) {
             wakeUp(SystemClock.uptimeMillis(), mAllowTheaterModeWakeFromLidSwitch,
                     "android.policy:LID");
-        } else if (!mLidControlsSleep) {
+        } else if (getLidBehavior() != LID_BEHAVIOR_SLEEP) {
             mPowerManager.userActivity(SystemClock.uptimeMillis(), false);
         }
     }
@@ -7835,11 +7837,22 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     private void applyLidSwitchState() {
-        if (mLidState == LID_CLOSED && mLidControlsSleep) {
-            goToSleep(SystemClock.uptimeMillis(), PowerManager.GO_TO_SLEEP_REASON_LID_SWITCH,
-                    PowerManager.GO_TO_SLEEP_FLAG_NO_DOZE);
-        } else if (mLidState == LID_CLOSED && mLidControlsScreenLock) {
-            mWindowManagerFuncs.lockDeviceNow();
+        if (mLidState == LID_CLOSED) {
+            int lidBehavior = getLidBehavior();
+            switch (lidBehavior) {
+                case LID_BEHAVIOR_LOCK:
+                    mWindowManagerFuncs.lockDeviceNow();
+                    break;
+                case LID_BEHAVIOR_SLEEP:
+                    goToSleep(SystemClock.uptimeMillis(),
+                            PowerManager.GO_TO_SLEEP_REASON_LID_SWITCH,
+                            PowerManager.GO_TO_SLEEP_FLAG_NO_DOZE);
+                    break;
+                case LID_BEHAVIOR_NONE:
+                    // fall through
+                default:
+                    break;
+            }
         }
 
         synchronized (mLock) {
@@ -8673,8 +8686,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         pw.print(prefix); pw.print("mLidKeyboardAccessibility=");
                 pw.print(mLidKeyboardAccessibility);
                 pw.print(" mLidNavigationAccessibility="); pw.print(mLidNavigationAccessibility);
-                pw.print(" mLidControlsScreenLock="); pw.println(mLidControlsScreenLock);
-        pw.print(prefix); pw.print("mLidControlsSleep="); pw.println(mLidControlsSleep);
+                pw.print(" getLidBehavior="); pw.println(getLidBehavior());
         pw.print(prefix);
                 pw.print("mLongPressOnBackBehavior=");
                 pw.println(longPressOnBackBehaviorToString(mLongPressOnBackBehavior));
