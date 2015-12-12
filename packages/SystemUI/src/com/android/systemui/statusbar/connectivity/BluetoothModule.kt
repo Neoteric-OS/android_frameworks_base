@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.connectivity
 
+import com.android.systemui.qs.tiles.AmbientDisplayTile
 import com.android.systemui.qs.tileimpl.QSTileImpl
 import com.android.systemui.qs.tiles.BluetoothTile
 import com.android.systemui.qs.tiles.CaffeineTile
@@ -43,4 +44,9 @@ interface BluetoothModule {
     @IntoMap
     @StringKey(CaffeineTile.TILE_SPEC)
     fun bindCaffeineTile(caffeineTile: CaffeineTile): QSTileImpl<*>
+
+    @Binds
+    @IntoMap
+    @StringKey(AmbientDisplayTile.TILE_SPEC)
+    fun bindAmbientDisplayTile(ambientDisplayTile: AmbientDisplayTile): QSTileImpl<*>
 }
