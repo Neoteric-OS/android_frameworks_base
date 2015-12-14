@@ -31,7 +31,9 @@ public class BaseBundle {
     private static final String TAG = "Bundle";
     static final boolean DEBUG = false;
 
+    // Keep in sync with frameworks/native/libs/binder/PersistableBundle.cpp.
     static final int BUNDLE_MAGIC = 0x4C444E42; // 'B' 'N' 'D' 'L'
+
     static final Parcel EMPTY_PARCEL;
 
     static {
@@ -206,6 +208,9 @@ public class BaseBundle {
             return;
         }
 
+        // Keep the reading of the number of key-value pairs (N) from the Parcel
+        // in sync with writeToParcelInner() in
+        // frameworks/native/libs/binder/PersistableBundle.cpp.
         int N = mParcelledData.readInt();
         if (DEBUG) Log.d(TAG, "unparcel " + Integer.toHexString(System.identityHashCode(this))
                 + ": reading " + N + " maps");
@@ -1307,6 +1312,8 @@ public class BaseBundle {
      * @param parcel The parcel to copy this bundle to.
      */
     void writeToParcelInner(Parcel parcel, int flags) {
+        // Keep implementation in sync with writeToParcel() in
+        // frameworks/native/libs/binder/PersistableBundle.cpp.
         if (mParcelledData != null) {
             if (mParcelledData == EMPTY_PARCEL) {
                 parcel.writeInt(0);
@@ -1344,6 +1351,8 @@ public class BaseBundle {
      * @param parcel The parcel to overwrite this bundle from.
      */
     void readFromParcelInner(Parcel parcel) {
+        // Keep implementation in sync with readFromParcel() in
+        // frameworks/native/libs/binder/PersistableBundle.cpp.
         int length = parcel.readInt();
         if (length < 0) {
             throw new RuntimeException("Bad length in parcel: " + length);
