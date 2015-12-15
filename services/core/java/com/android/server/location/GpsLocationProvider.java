@@ -184,6 +184,7 @@ public class GpsLocationProvider implements LocationProviderInterface {
     private static final int AGPS_DATA_CONNECTION_CLOSED = 0;
     private static final int AGPS_DATA_CONNECTION_OPENING = 1;
     private static final int AGPS_DATA_CONNECTION_OPEN = 2;
+    private static final int AGPS_DATA_CONNECTION_WIFI_OPEN = 3;
 
     // Handler messages
     private static final int CHECK_LOCATION = 1;
@@ -1521,44 +1522,68 @@ public class GpsLocationProvider implements LocationProviderInterface {
                 // Set mAGpsDataConnectionState before calling startUsingNetworkFeature
                 //  to avoid a race condition with handleUpdateNetworkState()
                 mAGpsDataConnectionState = AGPS_DATA_CONNECTION_OPENING;
-                int result = mConnMgr.startUsingNetworkFeature(
-                        ConnectivityManager.TYPE_MOBILE, Phone.FEATURE_ENABLE_SUPL);
-                if (ipaddr != null) {
-                    try {
-                        mAGpsDataConnectionIpAddr = InetAddress.getByAddress(ipaddr);
-                        Log.v(TAG, "IP address converted to: " + mAGpsDataConnectionIpAddr);
-                    } catch (UnknownHostException e) {
-                        Log.e(TAG, "Bad IP Address: " + ipaddr, e);
-                        mAGpsDataConnectionIpAddr = null;
-                    }
-                }
+                TelephonyManager phone =
+                    (TelephonyManager)mContext.getSystemService(Context.TELEPHONY_SERVICE);
+                String mccMnc = phone.getNetworkOperatorForSubscription(
+                    SubscriptionManager.getDefaultDataSubId());
+                boolean dataEnabled = phone.getDataEnabled();
+                if (DEBUG) Log.d(TAG, "Operator MCC/MNC " + mccMnc + "   dataEnabled " + dataEnabled);
 
-                if (result == PhoneConstants.APN_ALREADY_ACTIVE) {
-                    if (DEBUG) Log.d(TAG, "PhoneConstants.APN_ALREADY_ACTIVE");
-                    if (mAGpsApn != null) {
-                        setRouting();
-                        native_agps_data_conn_open(mAGpsApn, mApnIpType);
-                        mAGpsDataConnectionState = AGPS_DATA_CONNECTION_OPEN;
+                if ((!TextUtils.isEmpty(mccMnc)) && (dataEnabled)) {
+                    if (DEBUG)Log.d(TAG, "Cellular Data Bearer");
+                    int result = mConnMgr.startUsingNetworkFeature(
+                            ConnectivityManager.TYPE_MOBILE, Phone.FEATURE_ENABLE_SUPL);
+                    if (ipaddr != null) {
+                        try {
+                            mAGpsDataConnectionIpAddr = InetAddress.getByAddress(ipaddr);
+                            Log.v(TAG, "IP address converted to: " + mAGpsDataConnectionIpAddr);
+                        } catch (UnknownHostException e) {
+                            Log.e(TAG, "Bad IP Address: " + ipaddr, e);
+                            mAGpsDataConnectionIpAddr = null;
+                        }
+                    }
+
+                    if (result == PhoneConstants.APN_ALREADY_ACTIVE) {
+                        if (DEBUG) Log.d(TAG, "PhoneConstants.APN_ALREADY_ACTIVE");
+                        if (mAGpsApn != null) {
+                            setRouting();
+                            native_agps_data_conn_open(mAGpsApn, mApnIpType);
+                            mAGpsDataConnectionState = AGPS_DATA_CONNECTION_OPEN;
+                        } else {
+                            Log.e(TAG, "mAGpsApn not set when receiving PhoneConstants.APN_ALREADY_ACTIVE");
+                            mAGpsDataConnectionState = AGPS_DATA_CONNECTION_CLOSED;
+                            native_agps_data_conn_failed();
+                        }
+                    } else if (result == PhoneConstants.APN_REQUEST_STARTED) {
+                        if (DEBUG) Log.d(TAG, "PhoneConstants.APN_REQUEST_STARTED");
+                        // Nothing to do here
                     } else {
-                        Log.e(TAG, "mAGpsApn not set when receiving PhoneConstants.APN_ALREADY_ACTIVE");
+                        if (DEBUG) Log.d(TAG, "startUsingNetworkFeature failed, value is " +
+                                         result);
+                            mAGpsDataConnectionState = AGPS_DATA_CONNECTION_CLOSED;
+                            native_agps_data_conn_failed();
+                        }
+                } else {
+                    NetworkInfo mWifi = mConnMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                    if ((mWifi != null) && mWifi.isConnected()) {
+                        if (DEBUG)Log.d(TAG, "Wifi Bearer");
+                        mAGpsApn = "dummy-apn";
+                        native_agps_data_conn_open(mAGpsApn, mApnIpType);
+                        mAGpsDataConnectionState = AGPS_DATA_CONNECTION_WIFI_OPEN;
+                    } else {
+                        Log.e(TAG, "No data network is connected");
                         mAGpsDataConnectionState = AGPS_DATA_CONNECTION_CLOSED;
                         native_agps_data_conn_failed();
                     }
-                } else if (result == PhoneConstants.APN_REQUEST_STARTED) {
-                    if (DEBUG) Log.d(TAG, "PhoneConstants.APN_REQUEST_STARTED");
-                    // Nothing to do here
-                } else {
-                    if (DEBUG) Log.d(TAG, "startUsingNetworkFeature failed, value is " +
-                                     result);
-                    mAGpsDataConnectionState = AGPS_DATA_CONNECTION_CLOSED;
-                    native_agps_data_conn_failed();
                 }
                 break;
             case GPS_RELEASE_AGPS_DATA_CONN:
                 if (DEBUG) Log.d(TAG, "GPS_RELEASE_AGPS_DATA_CONN");
                 if (mAGpsDataConnectionState != AGPS_DATA_CONNECTION_CLOSED) {
-                    mConnMgr.stopUsingNetworkFeature(
-                            ConnectivityManager.TYPE_MOBILE, Phone.FEATURE_ENABLE_SUPL);
+                    if (mAGpsDataConnectionState != AGPS_DATA_CONNECTION_WIFI_OPEN) {
+                        mConnMgr.stopUsingNetworkFeature(
+                                ConnectivityManager.TYPE_MOBILE, Phone.FEATURE_ENABLE_SUPL);
+                    }
                     native_agps_data_conn_closed();
                     mAGpsDataConnectionState = AGPS_DATA_CONNECTION_CLOSED;
                     mAGpsDataConnectionIpAddr = null;
