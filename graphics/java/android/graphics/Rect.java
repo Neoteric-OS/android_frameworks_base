@@ -164,7 +164,7 @@ public final class Rect implements Parcelable {
     public String toShortString() {
         return toShortString(new StringBuilder(32));
     }
-    
+
     /**
      * Return a string representation of the rectangle in a compact form.
      * @hide
@@ -183,7 +183,7 @@ public final class Rect implements Parcelable {
      *
      * <p>You can later recover the Rect from this string through
      * {@link #unflattenFromString(String)}.
-     * 
+     *
      * @return Returns a new String of the form "left top right bottom"
      */
     @NonNull
@@ -313,7 +313,7 @@ public final class Rect implements Parcelable {
     public final int height() {
         return bottom - top;
     }
-    
+
     /**
      * @return the horizontal center of the rectangle. If the computed value
      *         is fractional, this method returns the largest integer that is
@@ -322,7 +322,7 @@ public final class Rect implements Parcelable {
     public final int centerX() {
         return (left + right) >> 1;
     }
-    
+
     /**
      * @return the vertical center of the rectangle. If the computed value
      *         is fractional, this method returns the largest integer that is
@@ -331,14 +331,14 @@ public final class Rect implements Parcelable {
     public final int centerY() {
         return (top + bottom) >> 1;
     }
-    
+
     /**
      * @return the exact horizontal center of the rectangle as a float.
      */
     public final float exactCenterX() {
         return (left + right) * 0.5f;
     }
-    
+
     /**
      * @return the exact vertical center of the rectangle as a float.
      */
@@ -475,7 +475,7 @@ public final class Rect implements Parcelable {
      *
      * @param x The X coordinate of the point being tested for containment
      * @param y The Y coordinate of the point being tested for containment
-     * @return true iff (x,y) are contained by the rectangle, where containment
+     * @return true if (x,y) are contained by the rectangle, where containment
      *              means left <= x < right and top <= y < bottom
      */
     public boolean contains(int x, int y) {
@@ -484,7 +484,7 @@ public final class Rect implements Parcelable {
     }
 
     /**
-     * Returns true iff the 4 specified sides of a rectangle are inside or equal
+     * Returns true if the 4 specified sides of a rectangle are inside or equal
      * to this rectangle. i.e. is this rectangle a superset of the specified
      * rectangle. An empty rectangle never contains another rectangle.
      *
@@ -492,7 +492,7 @@ public final class Rect implements Parcelable {
      * @param top The top of the rectangle being tested for containment
      * @param right The right side of the rectangle being tested for containment
      * @param bottom The bottom of the rectangle being tested for containment
-     * @return true iff the the 4 specified sides of a rectangle are inside or
+     * @return true if the the 4 specified sides of a rectangle are inside or
      *              equal to this rectangle
      */
     public boolean contains(int left, int top, int right, int bottom) {
@@ -504,11 +504,11 @@ public final class Rect implements Parcelable {
     }
 
     /**
-     * Returns true iff the specified rectangle r is inside or equal to this
+     * Returns true if the specified rectangle r is inside or equal to this
      * rectangle. An empty rectangle never contains another rectangle.
      *
      * @param r The rectangle being tested for containment.
-     * @return true iff the specified rectangle r is inside or equal to this
+     * @return true if the specified rectangle r is inside or equal to this
      *              rectangle
      */
     public boolean contains(@NonNull Rect r) {
@@ -547,7 +547,7 @@ public final class Rect implements Parcelable {
         }
         return false;
     }
-    
+
     /**
      * If the specified rectangle intersects this rectangle, return true and set
      * this rectangle to that intersection, otherwise return false and do not
@@ -585,7 +585,7 @@ public final class Rect implements Parcelable {
      *
      * @param a The first rectangle being intersected with
      * @param b The second rectangle being intersected with
-     * @return true iff the two specified rectangles intersect. If they do, set
+     * @return true if the two specified rectangles intersect. If they do, set
      *              this rectangle to that intersection. If they do not, return
      *              false and do not change this rectangle.
      */
@@ -612,7 +612,7 @@ public final class Rect implements Parcelable {
      * @param right The right side of the rectangle being tested for
      *              intersection
      * @param bottom The bottom of the rectangle being tested for intersection
-     * @return true iff the specified rectangle intersects this rectangle. In
+     * @return true if the specified rectangle intersects this rectangle. In
      *              no event is this rectangle modified.
      */
     public boolean intersects(int left, int top, int right, int bottom) {
@@ -620,13 +620,13 @@ public final class Rect implements Parcelable {
     }
 
     /**
-     * Returns true iff the two specified rectangles intersect. In no event are
+     * Returns true if the two specified rectangles intersect. In no event are
      * either of the rectangles modified. To record the intersection,
      * use {@link #intersect(Rect)} or {@link #setIntersect(Rect, Rect)}.
      *
      * @param a The first rectangle being tested for intersection
      * @param b The second rectangle being tested for intersection
-     * @return true iff the two specified rectangles intersect. In no event are
+     * @return true if the two specified rectangles intersect. In no event are
      *              either of the rectangles modified.
      */
     public static boolean intersects(@NonNull Rect a, @NonNull Rect b) {
@@ -669,7 +669,7 @@ public final class Rect implements Parcelable {
     public void union(@NonNull Rect r) {
         union(r.left, r.top, r.right, r.bottom);
     }
-    
+
     /**
      * Update this Rect to enclose itself and the [x,y] coordinate. There is no
      * check to see that this rectangle is non-empty.
