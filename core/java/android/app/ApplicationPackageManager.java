@@ -1032,8 +1032,8 @@ final class ApplicationPackageManager extends PackageManager {
         final Resources r = mContext.mMainThread.getTopLevelResources(
                 sameUid ? app.sourceDir : app.publicSourceDir,
                 sameUid ? app.splitSourceDirs : app.splitPublicSourceDirs,
-                app.resourceDirs, app.sharedLibraryFiles, Display.DEFAULT_DISPLAY,
-                null, mContext.mPackageInfo);
+                app.sharedLibraryFiles, Display.DEFAULT_DISPLAY,
+                null, mContext.mPackageInfo, app.packageName);
         if (r != null) {
             return r;
         }

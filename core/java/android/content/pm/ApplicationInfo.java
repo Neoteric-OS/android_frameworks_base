@@ -524,7 +524,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      * Full paths to the locations of extra resource packages this application
      * uses. This field is only used if there are extra resource packages,
      * otherwise it is null.
-     * 
+     * @deprecated To get extra resources for a package call {@link IOverlayManager}
      * {@hide}
      */
     public String[] resourceDirs;
