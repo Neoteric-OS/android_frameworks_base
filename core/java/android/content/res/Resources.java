@@ -67,6 +67,8 @@ import android.view.ViewHierarchyEncoder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -267,7 +269,7 @@ public class Resources {
             mCompatibilityInfo = compatInfo;
         }
         updateConfiguration(config, metrics);
-        assets.ensureStringBlocks();
+        assets.recreateStringBlocks();
     }
 
     /**
@@ -2000,12 +2002,7 @@ public class Resources {
                         + " final compat is " + mCompatibilityInfo);
             }
 
-            mDrawableCache.onConfigurationChange(configChanges);
-            mColorDrawableCache.onConfigurationChange(configChanges);
-            mColorStateListCache.onConfigurationChange(configChanges);
-            mAnimatorCache.onConfigurationChange(configChanges);
-            mStateListAnimatorCache.onConfigurationChange(configChanges);
-
+            flushThemedResourceCache(configChanges);
             flushLayoutCache();
         }
         synchronized (sSync) {
@@ -2078,6 +2075,60 @@ public class Resources {
             mSystem.updateConfiguration(config, metrics, compat);
             //Log.i(TAG, "Updated system resources " + mSystem
             //        + ": " + mSystem.getConfiguration());
+        }
+    }
+
+    /**
+     * @hide
+     */
+    public static void updateSystemAssets(String[] assetPaths) {
+        if (mSystem != null) {
+            mSystem.updateAssets(assetPaths);
+        }
+    }
+
+    /**
+     * @hide
+     */
+    public void updateAssets(String[] assetPaths) {
+        if (assetPaths.length == 0) {
+            throw new IllegalArgumentException("at least the path to the target apk must be specified");
+        }
+        synchronized (mAccessLock) {
+            String targetPath = assetPaths[0];
+            boolean found = false;
+            int cookie = mAssets.nextCookie(0);
+            while (cookie > 0) {
+                String path = mAssets.getCookieName(cookie);
+                if (targetPath.equals(path)) {
+                    found = true;
+                    break;
+                }
+                cookie = mAssets.nextCookie(cookie);
+            }
+            if (!found) {
+                return;
+            }
+
+            cookie = mAssets.nextOverlayCookie(targetPath, 0);
+            List<Integer> cookiesToRemove = new LinkedList<Integer>();
+            while (cookie > 0) {
+                cookiesToRemove.add(cookie);
+                cookie = mAssets.nextOverlayCookie(targetPath, cookie);
+            }
+            for (int c : cookiesToRemove) {
+                mAssets.removeAsset(c);
+            }
+            for (int i = 1; i < assetPaths.length; i++) {
+                mAssets.addOverlayPath(assetPaths[i]);
+            }
+
+            // We can't know how the resource table changed, so we need to clear _everything_.
+            flushThemedResourceCache(0xffffffff);
+
+            flushLayoutCache();
+
+            mAssets.recreateStringBlocks();
         }
     }
 
@@ -2365,6 +2416,14 @@ public class Resources {
                 mCachedXmlBlocks[i] = null;
             }
         }
+    }
+
+    private void flushThemedResourceCache(int configChanges) {
+        mDrawableCache.onConfigurationChange(configChanges);
+        mColorDrawableCache.onConfigurationChange(configChanges);
+        mColorStateListCache.onConfigurationChange(configChanges);
+        mAnimatorCache.onConfigurationChange(configChanges);
+        mStateListAnimatorCache.onConfigurationChange(configChanges);
     }
 
     /**
