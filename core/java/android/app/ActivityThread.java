@@ -60,6 +60,7 @@ import android.os.Bundle;
 import android.os.Debug;
 import android.os.DropBoxManager;
 import android.os.Environment;
+import android.os.FileUtils;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -782,48 +783,6 @@ public final class ActivityThread {
             }
 
             setCoreSettings(coreSettings);
-
-            /*
-             * Two possible indications that this package could be
-             * sharing its runtime with other packages:
-             *
-             * 1.) the sharedUserId attribute is set in the manifest,
-             *     indicating a request to share a VM with other
-             *     packages with the same sharedUserId.
-             *
-             * 2.) the application element of the manifest has an
-             *     attribute specifying a non-default process name,
-             *     indicating the desire to run in another packages VM.
-             *
-             * If sharing is enabled we do not have a unique application
-             * in a process and therefore cannot rely on the package
-             * name inside the runtime.
-             */
-            IPackageManager pm = getPackageManager();
-            android.content.pm.PackageInfo pi = null;
-            try {
-                pi = pm.getPackageInfo(appInfo.packageName, 0, UserHandle.myUserId());
-            } catch (RemoteException e) {
-            }
-            if (pi != null) {
-                boolean sharedUserIdSet = (pi.sharedUserId != null);
-                boolean processNameNotDefault =
-                (pi.applicationInfo != null &&
-                 !appInfo.packageName.equals(pi.applicationInfo.processName));
-                boolean sharable = (sharedUserIdSet || processNameNotDefault);
-
-                // Tell the VMRuntime about the application, unless it is shared
-                // inside a process.
-                if (!sharable) {
-                    final List<String> codePaths = new ArrayList<>();
-                    codePaths.add(appInfo.sourceDir);
-                    if (appInfo.splitSourceDirs != null) {
-                        Collections.addAll(codePaths, appInfo.splitSourceDirs);
-                    }
-                    VMRuntime.registerAppInfo(appInfo.packageName, appInfo.dataDir,
-                            codePaths.toArray(new String[codePaths.size()]));
-                }
-            }
 
             AppBindData data = new AppBindData();
             data.processName = processName;
@@ -4429,6 +4388,90 @@ public final class ActivityThread {
         }
     }
 
+    private void setupJitProfileSupport(LoadedApk loadedApk, File cacheDir) {
+        final ApplicationInfo appInfo = loadedApk.getApplicationInfo();
+        if (!needsToRegisterAppWithRuntime(appInfo)) {
+            // If there's no need to register with the runtime don't create a profile file.
+            return;
+        }
+        final List<String> codePaths = new ArrayList<>();
+        if ((appInfo.flags & ApplicationInfo.FLAG_HAS_CODE) != 0) {
+            codePaths.add(appInfo.sourceDir);
+        }
+        if (appInfo.splitSourceDirs != null) {
+            Collections.addAll(codePaths, appInfo.splitSourceDirs);
+        }
+
+        if (codePaths.isEmpty()) {
+            // If there are no code paths there's no need to setup a profile file and register with
+            // the runtime,
+            return;
+        }
+
+        final File profileFile = new File(cacheDir, loadedApk.mPackageName);
+        if (!profileFile.exists()) {
+            try {
+                if (!profileFile.createNewFile()) {
+                    Log.w(TAG, "Unable to create jit profile file " + profileFile);
+                    return;
+                }
+            } catch (IOException e) {
+                Log.w(TAG, "Unable to create jit profile file " +
+                        profileFile + ": " + e.getMessage());
+            }
+        }
+        int userId = UserHandle.getUserId(appInfo.uid);
+        int sharedAppGid = UserHandle.getSharedAppGid(appInfo.uid);
+        int mode =  FileUtils.S_IRUSR | FileUtils.S_IWUSR | FileUtils.S_IRGRP | FileUtils.S_IWGRP;
+        int errno = FileUtils.setPermissions(profileFile, mode, userId, sharedAppGid);
+        if (errno != 0) {
+            // We couldn't set the right permissions on the file and thus there's no point in
+            // moving forward. Delete what was created and return.
+            profileFile.delete();
+            Log.w(TAG, "Unable to set permissions on jit profile file " +
+                    profileFile + ", errno: " + errno);
+            return;
+        }
+
+        VMRuntime.registerAppInfo(profileFile.getAbsolutePath(), appInfo.dataDir,
+                codePaths.toArray(new String[codePaths.size()]));
+    }
+
+    /*
+     * Two possible indications that this package could be
+     * sharing its runtime with other packages:
+     *
+     * 1.) the sharedUserId attribute is set in the manifest,
+     *     indicating a request to share a VM with other
+     *     packages with the same sharedUserId.
+     *
+     * 2.) the application element of the manifest has an
+     *     attribute specifying a non-default process name,
+     *     indicating the desire to run in another packages VM.
+     *
+     * If sharing is enabled we do not have a unique application
+     * in a process and therefore cannot rely on the package
+     * name inside the runtime.
+     */
+    private boolean needsToRegisterAppWithRuntime(ApplicationInfo appInfo) {
+        IPackageManager pm = getPackageManager();
+        android.content.pm.PackageInfo pi = null;
+        try {
+            pi = pm.getPackageInfo(appInfo.packageName, 0, UserHandle.myUserId());
+        } catch (RemoteException e) {
+        }
+        if (pi != null) {
+            boolean sharedUserIdSet = (pi.sharedUserId != null);
+            boolean processNameNotDefault = (pi.applicationInfo != null) &&
+                    !appInfo.packageName.equals(pi.applicationInfo.processName);
+            boolean sharable = sharedUserIdSet || processNameNotDefault;
+            // Tell the VMRuntime about the application, unless it is shared
+            // inside a process.
+            return !sharable;
+        }
+        return false;
+    }
+
     private void updateDefaultDensity() {
         if (mCurDefaultDisplayDpi != Configuration.DENSITY_DPI_UNDEFINED
                 && mCurDefaultDisplayDpi != DisplayMetrics.DENSITY_DEVICE
@@ -4531,12 +4574,14 @@ public final class ActivityThread {
                 Log.v(TAG, "Unable to initialize \"java.io.tmpdir\" property due to missing cache directory");
             }
 
-            // Use codeCacheDir to store generated/compiled graphics code
+            // Use codeCacheDir to store generated/compiled graphics code and jit profiling data.
             final File codeCacheDir = appContext.getCodeCacheDir();
             if (codeCacheDir != null) {
                 setupGraphicsSupport(data.info, codeCacheDir);
+                setupJitProfileSupport(data.info, codeCacheDir);
             } else {
-                Log.e(TAG, "Unable to setupGraphicsSupport due to missing code-cache directory");
+                Log.e(TAG, "Unable to setupGraphicsSupport and setupJitProfileSupport " +
+                        "due to missing code-cache directory");
             }
         }
 
