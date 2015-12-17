@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8589c2aa_3f3347f0",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4415,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2015-12-17T17:37:40Z",
+      "side": 1,
+      "message": "The flow below here could be cleaner if you switched over to using android.system.Os methods directly:\n\n  try {\n    fd \u003d Os.open(path, OsConstants.O_CREAT, 0700);\n    Os.fchmod(fd, 0700);\n    Os.fchown(fd, appInfo.uid, appInfo.uid);\n  } catch (ErrnoException e) {\n    Log.w(TAG, ..., e);\n    Os.unlink(path);\n  } finally {\n    IoUtils.closeQuietly(fd);\n  }",
+      "range": {
+        "startLine": 4415,
+        "startChar": 0,
+        "endLine": 4415,
+        "endChar": 36
+      },
+      "revId": "d424b446ffafee7bbb40b2ba4652f51e3071f8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45c6eada_650ba63b",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4427,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2015-12-17T17:37:40Z",
+      "side": 1,
+      "message": "This doesn\u0027t give you much, since SELinux blocks any cross-user data access.  I\u0027d just mark these files as 0700.",
+      "range": {
+        "startLine": 4427,
+        "startChar": 0,
+        "endLine": 4427,
+        "endChar": 67
+      },
+      "revId": "d424b446ffafee7bbb40b2ba4652f51e3071f8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e57c3e59_a83d5f9f",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4429,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2015-12-17T17:37:40Z",
+      "side": 1,
+      "message": "I don\u0027t think you want to assign the UID ownership to the userId; those are two different concepts.  You probably want to set both the UID and GID to appInfo.uid.\n\nUsing \"0700\" for the mode is clearer imo instead of trying to dissect the various constants above.",
+      "range": {
+        "startLine": 4429,
+        "startChar": 0,
+        "endLine": 4429,
+        "endChar": 86
+      },
+      "revId": "d424b446ffafee7bbb40b2ba4652f51e3071f8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45742a7b_7585e8ec",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4459,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2015-12-17T17:37:40Z",
+      "side": 1,
+      "message": "Feels like this could be called \"isCodeSharable()\" to be more direct in it\u0027s meaning.",
+      "range": {
+        "startLine": 4459,
+        "startChar": 20,
+        "endLine": 4459,
+        "endChar": 49
+      },
+      "revId": "d424b446ffafee7bbb40b2ba4652f51e3071f8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
