@@ -22,6 +22,7 @@ import com.android.server.am.BatteryStatsService;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.hardware.Sensor;
@@ -449,8 +450,20 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     private void initialize() {
         // Initialize the power state object for the default display.
         // In the future, we might manage multiple displays independently.
-        mPowerState = new DisplayPowerState(mBlanker,
-                new ColorFade(Display.DEFAULT_DISPLAY));
+
+        // Get OpenGLES version number.
+        ActivityManager am = (ActivityManager)mContext.getSystemService(
+                Context.ACTIVITY_SERVICE);
+        int glesVersion = am.getDeviceConfigurationInfo().reqGlEsVersion;
+
+        // Use color fading animation if GLES 2.0 is supported
+        if (glesVersion >= 0x00020000) {
+            mPowerState = new DisplayPowerState(mBlanker,
+                  new ColorFadeAnimation(Display.DEFAULT_DISPLAY));
+        } else {
+            mPowerState = new DisplayPowerState(mBlanker,
+                  new ColorFadeDrawBlack(Display.DEFAULT_DISPLAY));
+        }
 
         mColorFadeOnAnimator = ObjectAnimator.ofFloat(
                 mPowerState, DisplayPowerState.COLOR_FADE_LEVEL, 0.0f, 1.0f);
