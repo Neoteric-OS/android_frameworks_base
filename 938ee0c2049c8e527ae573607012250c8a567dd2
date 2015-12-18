@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "aadcd3fd_d080bce3",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4424,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2015-12-18T14:09:05Z",
+      "side": 1,
+      "message": "jeff was asking for this :) (see previous comments). Both options are clear to me so I don\u0027t really mind :)",
+      "parentUuid": "ead24be6_929ebc26",
+      "range": {
+        "startLine": 4424,
+        "startChar": 29,
+        "endLine": 4424,
+        "endChar": 36
+      },
+      "revId": "938ee0c2049c8e527ae573607012250c8a567dd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8adf0ff2_af303925",
         "filename": "core/java/android/app/ActivityThread.java",
         "patchSetId": 4
@@ -82,6 +106,30 @@
       "writtenOn": "2015-12-18T13:47:06Z",
       "side": 1,
       "message": "this is more common than you think and it doesn\u0027t always imply that the application wants to share a VM with other packages. Lots of apps do this to host their services \u0026 other non interactive tasks in a separate process. I know that GMS Search, youtube all do this.\n\nWill this imply that we don\u0027t profile those packages ?",
+      "range": {
+        "startLine": 4451,
+        "startChar": 9,
+        "endLine": 4452,
+        "endChar": 58
+      },
+      "revId": "938ee0c2049c8e527ae573607012250c8a567dd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ead24be6_727c7898",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4452,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2015-12-18T14:09:05Z",
+      "side": 1,
+      "message": "Thanks. I carried this code along and assumed it was doing the right thing.\n\nIf this is a common case than we need a better way to identify apps which want to share the vm. Do you have any pointers how to be more precise here? \n\nThe best thing to do here is to extend the profile infrastructure to support shared VMs. It shouldn\u0027t be hard but I\u0027ll do it at a later point (after finishing the background compilation)",
+      "parentUuid": "6a81fbc7_f6e380bf",
       "range": {
         "startLine": 4451,
         "startChar": 9,
