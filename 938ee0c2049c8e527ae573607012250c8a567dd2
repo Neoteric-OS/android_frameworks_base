@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cad587d0_916b1cc1",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4393,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2015-12-18T15:40:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ead24be6_52c8542e",
+      "range": {
+        "startLine": 4393,
+        "startChar": 12,
+        "endLine": 4393,
+        "endChar": 17
+      },
+      "revId": "938ee0c2049c8e527ae573607012250c8a567dd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ead24be6_929ebc26",
         "filename": "core/java/android/app/ActivityThread.java",
         "patchSetId": 4
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2a7b83af_74ff6855",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4424,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2015-12-18T15:40:26Z",
+      "side": 1,
+      "message": "I think I got your message wrong. Added the human readable explanation of the permissions as a comment.",
+      "parentUuid": "aadcd3fd_d080bce3",
+      "range": {
+        "startLine": 4424,
+        "startChar": 29,
+        "endLine": 4424,
+        "endChar": 36
+      },
+      "revId": "938ee0c2049c8e527ae573607012250c8a567dd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8adf0ff2_af303925",
         "filename": "core/java/android/app/ActivityThread.java",
         "patchSetId": 4
@@ -83,6 +131,30 @@
       "writtenOn": "2015-12-18T13:47:06Z",
       "side": 1,
       "message": "indented by 1 extra char.",
+      "range": {
+        "startLine": 4435,
+        "startChar": 17,
+        "endLine": 4435,
+        "endChar": 42
+      },
+      "revId": "938ee0c2049c8e527ae573607012250c8a567dd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a81fbc7_565ef42e",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4435,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2015-12-18T15:40:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8adf0ff2_af303925",
       "range": {
         "startLine": 4435,
         "startChar": 17,
