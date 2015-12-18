@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "8adf0ff2_cf8a5dd3",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4427,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2015-12-18T17:40:38Z",
+      "side": 1,
+      "message": "Thanks Jeff. I added you to a thread where we were already discussing related matters. The consensus so far is to move towards a solution to allow dex2oat access the profile files.\n\nLet me know if you have other concerns regarding this CL :)",
+      "parentUuid": "aa8e93ed_a05cda77",
+      "range": {
+        "startLine": 4427,
+        "startChar": 0,
+        "endLine": 4427,
+        "endChar": 67
+      },
+      "revId": "d424b446ffafee7bbb40b2ba4652f51e3071f8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e57c3e59_a83d5f9f",
         "filename": "core/java/android/app/ActivityThread.java",
         "patchSetId": 3
