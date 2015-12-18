@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea116b43_5aeef5df",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4415,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2015-12-18T00:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8589c2aa_3f3347f0",
+      "range": {
+        "startLine": 4415,
+        "startChar": 0,
+        "endLine": 4415,
+        "endChar": 36
+      },
+      "revId": "d424b446ffafee7bbb40b2ba4652f51e3071f8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45c6eada_650ba63b",
         "filename": "core/java/android/app/ActivityThread.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2015-12-17T17:37:40Z",
       "side": 1,
       "message": "This doesn\u0027t give you much, since SELinux blocks any cross-user data access.  I\u0027d just mark these files as 0700.",
+      "range": {
+        "startLine": 4427,
+        "startChar": 0,
+        "endLine": 4427,
+        "endChar": 67
+      },
+      "revId": "d424b446ffafee7bbb40b2ba4652f51e3071f8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a50326be_f8e3d159",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4427,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2015-12-18T00:57:55Z",
+      "side": 1,
+      "message": "dex2oat is executed under sharedAppGid and it needs access to this file. If SELinux blocks it, then I will need to sync up with security team and see what is the best approach.",
+      "parentUuid": "45c6eada_650ba63b",
       "range": {
         "startLine": 4427,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "651dae1a_f69120c6",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4429,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2015-12-18T00:57:55Z",
+      "side": 1,
+      "message": "Yes, you are right. Using userId was a mistake. I actually intended to use appInfo.uid but messed things up. Thanks.",
+      "parentUuid": "e57c3e59_a83d5f9f",
+      "range": {
+        "startLine": 4429,
+        "startChar": 0,
+        "endLine": 4429,
+        "endChar": 86
+      },
+      "revId": "d424b446ffafee7bbb40b2ba4652f51e3071f8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45742a7b_7585e8ec",
         "filename": "core/java/android/app/ActivityThread.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2015-12-17T17:37:40Z",
       "side": 1,
       "message": "Feels like this could be called \"isCodeSharable()\" to be more direct in it\u0027s meaning.",
+      "range": {
+        "startLine": 4459,
+        "startChar": 20,
+        "endLine": 4459,
+        "endChar": 49
+      },
+      "revId": "d424b446ffafee7bbb40b2ba4652f51e3071f8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05f952fe_dba093c8",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4459,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2015-12-18T00:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45742a7b_7585e8ec",
       "range": {
         "startLine": 4459,
         "startChar": 20,
