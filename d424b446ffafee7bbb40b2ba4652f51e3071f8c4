@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "aa8e93ed_a05cda77",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4427,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2015-12-18T16:57:49Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m pretty sure that we don\u0027t want to extend SELinux permissions to read private app data to the dex2oat domain.  (Actually, it might be inheriting that from the installd domain today, which already has that permission.)\n\nBut yes, please sync up with the security team about your design.",
+      "parentUuid": "a50326be_f8e3d159",
+      "range": {
+        "startLine": 4427,
+        "startChar": 0,
+        "endLine": 4427,
+        "endChar": 67
+      },
+      "revId": "d424b446ffafee7bbb40b2ba4652f51e3071f8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e57c3e59_a83d5f9f",
         "filename": "core/java/android/app/ActivityThread.java",
         "patchSetId": 3
