@@ -290,5 +290,14 @@
     <!-- Duration of the expansion animation in the volume dialog -->
     <item name="volume_expand_animation_duration" type="integer">300</item>
 
+    <!-- Maximum length of operator name to be shown in status bar  -->
+    <integer name="config_operatorNameMaxLength">20</integer>
+
+    <!-- show different network indicators -->
+    <bool name="show_network_indicators">false</bool>
+
+    <!-- Show roaming and network icons -->
+    <bool name="show_roaming_and_network_icons">false</bool>
+
 </resources>
 

@@ -23,6 +23,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.telephony.SubscriptionInfo;
+import android.telephony.TelephonyManager;
 import android.util.ArraySet;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -490,7 +491,7 @@ public class SignalClusterView
         private String mMobileDescription, mMobileTypeDescription;
 
         private ViewGroup mMobileGroup;
-        private ImageView mMobile, mMobileDark, mMobileType;
+        private ImageView mMobile, mMobileDark, mMobileType, mRoaming;
 
         public PhoneState(int subId, Context context) {
             ViewGroup root = (ViewGroup) LayoutInflater.from(context)
@@ -504,6 +505,7 @@ public class SignalClusterView
             mMobile         = (ImageView) root.findViewById(R.id.mobile_signal);
             mMobileDark     = (ImageView) root.findViewById(R.id.mobile_signal_dark);
             mMobileType     = (ImageView) root.findViewById(R.id.mobile_type);
+            mRoaming        = (ImageView) root.findViewById(R.id.mobile_roaming);
         }
 
         public boolean apply(boolean isSecondaryIcon) {
@@ -527,6 +529,15 @@ public class SignalClusterView
                 }
 
                 mMobileType.setImageResource(mMobileTypeId);
+
+                TelephonyManager tm =
+                        (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+                if (tm != null && tm.isNetworkRoaming(mSubId)) {
+                    mRoaming.setImageDrawable(getContext().getResources().getDrawable(
+                                R.drawable.stat_sys_data_fully_connected_roam));
+                } else {
+                    mRoaming.setImageDrawable(null);
+                }
                 mMobileGroup.setContentDescription(mMobileTypeDescription
                         + " " + mMobileDescription);
                 mMobileGroup.setVisibility(View.VISIBLE);

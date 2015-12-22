@@ -19,12 +19,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.NetworkCapabilities;
 import android.os.Looper;
+import android.telephony.CellLocation;
+import android.telephony.gsm.GsmCellLocation;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
@@ -65,6 +68,8 @@ public class MobileSignalController extends SignalController<
     private SignalStrength mSignalStrength;
     private MobileIconGroup mDefaultIcons;
     private Config mConfig;
+    private int mCellIdentity = Integer.MAX_VALUE;
+    private int mNewCellIdentity = Integer.MAX_VALUE;
 
     // TODO: Reduce number of vars passed in, if we have the NetworkController, probably don't
     // need listener lists anymore.
@@ -179,6 +184,9 @@ public class MobileSignalController extends SignalController<
                     TelephonyIcons.THREE_G);
             mDefaultIcons = TelephonyIcons.THREE_G;
         }
+        if (mContext.getResources().getBoolean(R.bool.show_network_indicators)) {
+            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_EDGE, TelephonyIcons.E);
+        }
 
         MobileIconGroup hGroup = TelephonyIcons.THREE_G;
         if (mConfig.hspaDataDistinguishable) {
@@ -188,11 +196,22 @@ public class MobileSignalController extends SignalController<
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSUPA, hGroup);
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPA, hGroup);
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, hGroup);
+        if (mContext.getResources().getBoolean(R.bool.show_network_indicators)) {
+            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSDPA, TelephonyIcons.THREE_G_PLUS);
+            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSUPA, TelephonyIcons.THREE_G_PLUS);
+            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPA, TelephonyIcons.THREE_G_PLUS);
+            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HSPAP, TelephonyIcons.H_PLUS);
+        }
 
         if (mConfig.show4gForLte) {
             mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE, TelephonyIcons.FOUR_G);
         } else {
             mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE, TelephonyIcons.LTE);
+        }
+        if (mContext.getResources().getBoolean(R.bool.show_network_indicators)) {
+            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE, TelephonyIcons.LTE);
+        } else {
+            mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_LTE, TelephonyIcons.FOUR_G);
         }
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_IWLAN, TelephonyIcons.WFC);
     }
@@ -232,6 +251,13 @@ public class MobileSignalController extends SignalController<
         mCallbackHandler.setMobileDataIndicators(statusIcon, qsIcon, typeIcon, qsTypeIcon,
                 activityIn, activityOut, dataContentDescription, description, icons.mIsWide,
                 mSubscriptionInfo.getSubscriptionId());
+
+        mCallbackHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mNetworkController.updateNetworkLabelView();
+            }
+        });
     }
 
     @Override
@@ -384,7 +410,9 @@ public class MobileSignalController extends SignalController<
         if (isCarrierNetworkChangeActive()) {
             mCurrentState.iconGroup = TelephonyIcons.CARRIER_NETWORK_CHANGE;
         } else if (isRoaming()) {
-            mCurrentState.iconGroup = TelephonyIcons.ROAMING;
+            if (!mContext.getResources().getBoolean(R.bool.show_roaming_and_network_icons)) {
+                mCurrentState.iconGroup = TelephonyIcons.ROAMING;
+            }
         }
         if (isEmergencyOnly() != mCurrentState.isEmergency) {
             mCurrentState.isEmergency = isEmergencyOnly();
@@ -450,9 +478,32 @@ public class MobileSignalController extends SignalController<
                 Log.d(mTag, "onDataConnectionStateChanged: state=" + state
                         + " type=" + networkType);
             }
-            mDataState = state;
-            mDataNetType = networkType;
-            updateTelephony();
+            if (mContext.getResources().getBoolean(R.bool.show_network_indicators)) {
+                CellLocation cl = mPhone.getCellLocation();
+                if (cl instanceof GsmCellLocation) {
+                    GsmCellLocation cellLocation = (GsmCellLocation)cl;
+                    mNewCellIdentity = cellLocation.getCid();
+                    Log.d(mTag, "onDataConnectionStateChanged, mNewCellIdentity = "
+                            + mNewCellIdentity);
+                }
+                Log.d(mTag, "onDataConnectionStateChanged, mCellIdentity = " + mCellIdentity
+                        + ", mNewCellIdentity = " + mNewCellIdentity
+                        + ", mDataNetType = " + mDataNetType
+                        + ", networkType = " + networkType);
+                if (mCellIdentity != mNewCellIdentity) {
+                    mDataNetType = networkType;
+                } else {
+                    if (networkType > mDataNetType) {
+                        mDataNetType = networkType;
+                    }
+                }
+                mDataState = state;
+                updateTelephony();
+            } else {
+                mDataState = state;
+                mDataNetType = networkType;
+                updateTelephony();
+            }
         }
 
         @Override
