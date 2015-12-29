@@ -6987,6 +6987,16 @@ package android.bluetooth {
     field public static final int TYPE_SCO = 2; // 0x2
   }
 
+  public class OOBData implements android.os.Parcelable {
+    ctor public OOBData();
+    method public int describeContents();
+    method public byte[] getSecurityManagerTK();
+    method public void setSecurityManagerTK(byte[]);
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.bluetooth.OOBData> CREATOR;
+    field public byte[] securityManagerTK;
+  }
+
 }
 
 package android.bluetooth.le {
