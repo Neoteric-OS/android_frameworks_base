@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "2afc637c_46d396fc",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2015-12-30T20:19:26Z",
+      "side": 1,
+      "message": "Separate CL to introduce transport type is fine with me.",
+      "parentUuid": "0af79f9a_5a17e9d5",
+      "range": {
+        "startLine": 881,
+        "startChar": 39,
+        "endLine": 881,
+        "endChar": 43
+      },
+      "revId": "abe114b9df442a053f091bdf63e1291db7e4b39d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca2ae7be_4876f271",
         "filename": "core/java/android/bluetooth/OOBData.aidl",
         "patchSetId": 1
