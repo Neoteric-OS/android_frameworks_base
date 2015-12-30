@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0af79f9a_9acdd1e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2015-12-30T19:11:22Z",
+      "side": 1,
+      "message": "Nit: missing comma after \"Currently\".",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 9
+      },
+      "revId": "abe114b9df442a053f091bdf63e1291db7e4b39d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2afc637c_c6030655",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2015-12-30T19:11:22Z",
+      "side": 1,
+      "message": "Nit: \"In future\" -\u003e \"In the future,\"",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 9
+      },
+      "revId": "abe114b9df442a053f091bdf63e1291db7e4b39d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4aed17c9_f6aeb1e7",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2015-12-30T19:11:22Z",
+      "side": 1,
+      "message": "It would be nice if there is a concrete type for the Transport, instead of the generic \"int\".",
+      "range": {
+        "startLine": 881,
+        "startChar": 39,
+        "endLine": 881,
+        "endChar": 43
+      },
+      "revId": "abe114b9df442a053f091bdf63e1291db7e4b39d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca2ae7be_4876f271",
+        "filename": "core/java/android/bluetooth/OOBData.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2015-12-30T19:11:22Z",
+      "side": 1,
+      "message": "Very soon you might have to change it to 2016 :)",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "abe114b9df442a053f091bdf63e1291db7e4b39d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0af79f9a_fada159a",
+        "filename": "core/java/android/bluetooth/OOBData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2015-12-30T19:11:22Z",
+      "side": 1,
+      "message": "Wrong year?",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "abe114b9df442a053f091bdf63e1291db7e4b39d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca2ae7be_8870ea72",
+        "filename": "core/java/android/bluetooth/OOBData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2015-12-30T19:11:22Z",
+      "side": 1,
+      "message": "Nit: capitalize: \"bluetooth\" -\u003e \"Bluetooth\"",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "abe114b9df442a053f091bdf63e1291db7e4b39d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea27abf2_e430b626",
+        "filename": "core/java/android/bluetooth/OOBData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2015-12-30T19:11:22Z",
+      "side": 1,
+      "message": "What is the purpose of this public method?",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 5
+      },
+      "revId": "abe114b9df442a053f091bdf63e1291db7e4b39d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a1bbbb8_207916d0",
+        "filename": "core/java/android/bluetooth/OOBData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2015-12-30T19:11:22Z",
+      "side": 1,
+      "message": "What is the purpose of this argument?",
+      "range": {
+        "startLine": 49,
+        "startChar": 42,
+        "endLine": 49,
+        "endChar": 51
+      },
+      "revId": "abe114b9df442a053f091bdf63e1291db7e4b39d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
