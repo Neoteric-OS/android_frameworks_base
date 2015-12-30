@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "0af79f9a_5a17e9d5",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2015-12-30T19:48:09Z",
+      "side": 1,
+      "message": "createBond and connectGatt methods also use \"int transport\". This method is used in many places where createBond is. Making separate type for transport makes sense as a bigger refactoring. Can I add it in next changes ?",
+      "parentUuid": "4aed17c9_f6aeb1e7",
+      "range": {
+        "startLine": 881,
+        "startChar": 39,
+        "endLine": 881,
+        "endChar": 43
+      },
+      "revId": "abe114b9df442a053f091bdf63e1291db7e4b39d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca2ae7be_4876f271",
         "filename": "core/java/android/bluetooth/OOBData.aidl",
         "patchSetId": 1
@@ -117,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "eafecb6e_2c158f8f",
+        "filename": "core/java/android/bluetooth/OOBData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2015-12-30T19:48:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0af79f9a_fada159a",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "abe114b9df442a053f091bdf63e1291db7e4b39d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca2ae7be_8870ea72",
         "filename": "core/java/android/bluetooth/OOBData.java",
         "patchSetId": 1
@@ -128,6 +176,30 @@
       "writtenOn": "2015-12-30T19:11:22Z",
       "side": 1,
       "message": "Nit: capitalize: \"bluetooth\" -\u003e \"Bluetooth\"",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "abe114b9df442a053f091bdf63e1291db7e4b39d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea27abf2_c4677225",
+        "filename": "core/java/android/bluetooth/OOBData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2015-12-30T19:48:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca2ae7be_8870ea72",
       "range": {
         "startLine": 25,
         "startChar": 24,
@@ -163,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "4aed17c9_36ccb9b9",
+        "filename": "core/java/android/bluetooth/OOBData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2015-12-30T19:48:09Z",
+      "side": 1,
+      "message": "It\u0027s piece of Parcelable interface, must be like this, see http://developer.android.com/reference/android/os/Parcelable.html",
+      "parentUuid": "ea27abf2_e430b626",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 5
+      },
+      "revId": "abe114b9df442a053f091bdf63e1291db7e4b39d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a1bbbb8_207916d0",
         "filename": "core/java/android/bluetooth/OOBData.java",
         "patchSetId": 1
@@ -174,6 +270,30 @@
       "writtenOn": "2015-12-30T19:11:22Z",
       "side": 1,
       "message": "What is the purpose of this argument?",
+      "range": {
+        "startLine": 49,
+        "startChar": 42,
+        "endLine": 49,
+        "endChar": 51
+      },
+      "revId": "abe114b9df442a053f091bdf63e1291db7e4b39d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eafecb6e_8c0abb6b",
+        "filename": "core/java/android/bluetooth/OOBData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2015-12-30T19:48:09Z",
+      "side": 1,
+      "message": "We don\u0027t really care about it\n\nIt\u0027s additional flags about how the object should be written. May be 0 or PARCELABLE_WRITE_RETURN_VALUE.\nsee: http://developer.android.com/reference/android/os/Parcelable.html#writeToParcel(android.os.Parcel, int)",
+      "parentUuid": "6a1bbbb8_207916d0",
       "range": {
         "startLine": 49,
         "startChar": 42,
