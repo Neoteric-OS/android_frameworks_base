@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca33c71e_01efaa16",
+        "filename": "data/keyboards/Vendor_045e_Product_0719.kl",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1091604
+      },
+      "writtenOn": "2016-01-04T20:03:48Z",
+      "side": 1,
+      "message": "https://android-review.googlesource.com/#/c/194508/\nxpad.c updates from upstream fix the issue with the dpad on the wireless variant. If the xpad driver in the kernel gets updates, you would want to map axis 0x10 and 0x11 to HAT X and HAT Y respectively.",
+      "revId": "70a19a371fd6a6e9c1eccd9fa63e4ea3d9f0909d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
