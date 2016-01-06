@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a68ef71_c7387eaf",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4423,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2016-01-06T08:28:35Z",
+      "side": 1,
+      "message": "Introduce a final constant for this?",
+      "range": {
+        "startLine": 4423,
+        "startChar": 81,
+        "endLine": 4423,
+        "endChar": 85
+      },
+      "revId": "1c700c5a340bf190fdda11ccd4fe8ee6face7035",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
