@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca85875a_b1e100bd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2286,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2016-01-06T04:01:48Z",
+      "side": 1,
+      "message": "This code will call two callbacks.\n\nInstead, please add a parameter to handleReleaseNetworkRequest() to pass in the callback to be run after the request has been removed.",
+      "range": {
+        "startLine": 2286,
+        "startChar": 12,
+        "endLine": 2286,
+        "endChar": 39
+      },
+      "revId": "0c225583d1fe8e3e8d3a23580e6a60de2bbcddae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
