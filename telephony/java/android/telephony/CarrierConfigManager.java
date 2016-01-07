@@ -1327,6 +1327,7 @@ public class CarrierConfigManager {
             "show_precise_failed_cause_bool";
 
     /**
+<<<<<<< HEAD
      * Boolean to decide whether lte is enabled.
      * @hide
      */
@@ -1360,6 +1361,15 @@ public class CarrierConfigManager {
 
     // These variables are used by the MMS service and exposed through another API,
     // SmsManager. The variable names and string values are copied from there.
+=======
+     * Flag specifying whether CDMA call waiting and call forwarding are enabled
+     * @hide
+     */
+    public static final String KEY_CDMA_CW_CF_ENABLED_BOOL = "cdma_cw_cf_enabled_bool";
+
+    // These variables are used by the MMS service and exposed through another API, {@link
+    // SmsManager}. The variable names and string values are copied from there.
+>>>>>>> 8440754... Add config to disable CDMA call forward/waiting
     public static final String KEY_MMS_ALIAS_ENABLED_BOOL = "aliasEnabled";
     public static final String KEY_MMS_ALLOW_ATTACH_AUDIO_BOOL = "allowAttachAudio";
     public static final String KEY_MMS_APPEND_TRANSACTION_ID_BOOL = "enabledTransID";
@@ -2753,7 +2763,12 @@ public class CarrierConfigManager {
         // Marking it as metered for now can workaround the issue.
         // Todo: This will be fixed in Q when IWLAN full refactoring is completed.
         sDefaults.putStringArray(KEY_CARRIER_METERED_IWLAN_APN_TYPES_STRINGS,
+<<<<<<< HEAD
                 new String[]{"default"});
+=======
+                new String[]{});
+        sDefaults.putBoolean(KEY_CDMA_CW_CF_ENABLED_BOOL, false);
+>>>>>>> 8440754... Add config to disable CDMA call forward/waiting
 
         sDefaults.putIntArray(KEY_ONLY_SINGLE_DC_ALLOWED_INT_ARRAY,
                 new int[]{
