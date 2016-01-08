@@ -304,6 +304,13 @@ public class AppWidgetHostView extends FrameLayout {
         int newMaxWidth = maxWidth - (ignorePadding ? 0 : xPaddingDips);
         int newMaxHeight = maxHeight - (ignorePadding ? 0 : yPaddingDips);
 
+        if (newMinWidth < 0 || newMinHeight < 0 || newMaxWidth < 0 || newMaxHeight < 0) {
+            newMinWidth = (newMinWidth < 0) ? 0 : newMinWidth;
+            newMinHeight = (newMinHeight < 0) ? 0 : newMinHeight;
+            newMaxWidth = (newMaxWidth < 0) ? 0 : newMaxWidth;
+            newMaxHeight = (newMaxHeight < 0) ? 0 : newMaxHeight;
+        }
+
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(mContext);
 
         // We get the old options to see if the sizes have changed
