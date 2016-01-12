@@ -50,6 +50,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Interface for interacting with {@link Fragment} objects inside of an
@@ -482,6 +484,9 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
             execPendingActions();
         }
     };
+
+
+    private Comparator<Integer> comparator = Collections.reverseOrder();
 
     private void throwException(RuntimeException ex) {
         Log.e(TAG, ex.getMessage());
@@ -1187,6 +1192,7 @@ final class FragmentManagerImpl extends FragmentManager implements LayoutInflate
             mActive.add(f);
             
         } else {
+            Collections.sort(mAvailIndices, comparator);
             f.setIndex(mAvailIndices.remove(mAvailIndices.size()-1), mParent);
             mActive.set(f.mIndex, f);
         }
