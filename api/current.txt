@@ -43080,6 +43080,7 @@ package android.telephony {
     method @Nullable public CharSequence getSimSpecificCarrierIdName();
     method public int getSimState();
     method public int getSimState(int);
+    method public String getSmscAddressForSubscriber(int);
     method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public String getSubscriberId();
     method @Nullable public String getTypeAllocationCode();
     method @Nullable public String getTypeAllocationCode(int);
@@ -43124,6 +43125,7 @@ package android.telephony {
     method public boolean setOperatorBrandOverride(String);
     method public boolean setPreferredNetworkTypeToGlobal();
     method public void setPreferredOpportunisticDataSubscription(int, boolean, @Nullable java.util.concurrent.Executor, @Nullable java.util.function.Consumer<java.lang.Integer>);
+    method public boolean setSmscAddressForSubscriber(String, int);
     method public void setVisualVoicemailSmsFilterSettings(android.telephony.VisualVoicemailSmsFilterSettings);
     method public boolean setVoiceMailNumber(String, String);
     method @Deprecated public void setVoicemailRingtoneUri(android.telecom.PhoneAccountHandle, android.net.Uri);
