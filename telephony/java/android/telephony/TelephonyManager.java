@@ -2932,6 +2932,36 @@ public class TelephonyManager {
     }
 
     /**
+     * @param subId for which SmscAddress is returned
+     * @return smsc adress
+     */
+    public String getSmscAddressForSubscriber(int subId) {
+        try {
+            return getITelephony().getSmscAddressForSubscriber(subId);
+        } catch (RemoteException ex) {
+            return null;
+        } catch (NullPointerException ex) {
+            // This could happen before phone restarts due to crashing
+            return null;
+        }
+    }
+
+    /**
+     * @param subId for which SmscAddress is set
+     * @return true or false
+     */
+    public boolean setSmscAddressForSubscriber(String smsc, int subId) {
+        try {
+            return getITelephony().setSmscAddressForSubscriber(smsc, subId);
+        } catch (RemoteException ex) {
+            return false;
+        } catch (NullPointerException ex) {
+            // This could happen before phone restarts due to crashing
+            return false;
+        }
+    }
+
+    /**
      * Returns a constant indicating the state of the default SIM card.
      *
      * @see #SIM_STATE_UNKNOWN

@@ -231,6 +231,19 @@ interface ITelephony {
     boolean setRadio(boolean turnOn);
 
     /**
+     * Set Smsc address for subId
+     * @param smsc smsc address string.
+     * @param subId user preferred subId.
+     */
+    boolean setSmscAddressForSubscriber(String smsc, int subId);
+
+    /**
+     * Get Smsc address for subId
+     * @param subId user preferred subId.
+     */
+    String getSmscAddressForSubscriber(int subId);
+
+    /**
      * Set the radio to on or off on particular subId.
      * @param subId user preferred subId.
      */
