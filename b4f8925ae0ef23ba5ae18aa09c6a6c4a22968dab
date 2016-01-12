@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "676db610_054fbc41",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2016-01-12T20:59:35Z",
+      "side": 1,
+      "message": "I think this needs to change to match the final path on the frameworks/native side ( /aidl/binder/)",
+      "revId": "b4f8925ae0ef23ba5ae18aa09c6a6c4a22968dab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
