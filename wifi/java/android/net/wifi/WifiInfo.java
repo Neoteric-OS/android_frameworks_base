@@ -315,7 +315,7 @@ public class WifiInfo implements Parcelable {
      * @return the SSID
      */
     public String getSSID() {
-        if (mWifiSsid != null) {
+        if (mWifiSsid != null && mWifiSsid.octets.size() > 0) {
             String unicode = mWifiSsid.toString();
             if (!TextUtils.isEmpty(unicode)) {
                 return "\"" + unicode + "\"";
