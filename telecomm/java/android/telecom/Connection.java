@@ -424,8 +424,14 @@ public abstract class Connection extends Conferenceable {
      */
     public static final int PROPERTY_NETWORK_IDENTIFIED_EMERGENCY_CALL = 1 << 10;
 
+    /**
+     * Call is using high definition audio plus.
+     * @hide
+     */
+    public static final int PROPERTY_HIGH_DEF_AUDIO_PLUS = 1 << 11;
+
     //**********************************************************************************************
-    // Next PROPERTY value: 1<<10
+    // Next PROPERTY value: 1<<12
     //**********************************************************************************************
 
     /**
@@ -839,6 +845,10 @@ public abstract class Connection extends Conferenceable {
 
         if (can(properties, PROPERTY_NETWORK_IDENTIFIED_EMERGENCY_CALL)) {
             builder.append(isLong ? " PROPERTY_NETWORK_IDENTIFIED_EMERGENCY_CALL" : " ecall");
+        }
+
+        if (can(properties, PROPERTY_HIGH_DEF_AUDIO_PLUS)) {
+            builder.append(isLong ? " PROPERTY_HIGH_DEF_AUDIO_PLUS" : " HD+");
         }
 
         builder.append("]");

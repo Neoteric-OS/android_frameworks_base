@@ -41203,6 +41203,7 @@ package android.telecom {
     field public static final int PROPERTY_GENERIC_CONFERENCE = 2; // 0x2
     field public static final int PROPERTY_HAS_CDMA_VOICE_PRIVACY = 128; // 0x80
     field public static final int PROPERTY_HIGH_DEF_AUDIO = 16; // 0x10
+    field public static final int PROPERTY_HIGH_DEF_AUDIO_PLUS = 8192; // 0x2000
     field public static final int PROPERTY_IS_EXTERNAL_CALL = 64; // 0x40
     field public static final int PROPERTY_NETWORK_IDENTIFIED_EMERGENCY_CALL = 2048; // 0x800
     field public static final int PROPERTY_RTT = 1024; // 0x400
@@ -42167,6 +42168,7 @@ package android.telephony {
     field public static final String KEY_DIAL_STRING_REPLACE_STRING_ARRAY = "dial_string_replace_string_array";
     field public static final String KEY_DISABLE_CDMA_ACTIVATION_CODE_BOOL = "disable_cdma_activation_code_bool";
     field public static final String KEY_DISPLAY_HD_AUDIO_PROPERTY_BOOL = "display_hd_audio_property_bool";
+    field public static final String KEY_DISPLAY_HD_PLUS_AUDIO_PROPERTY_BOOL = "display_hd_plus_audio_property_bool";
     field public static final String KEY_DROP_VIDEO_CALL_WHEN_ANSWERING_AUDIO_CALL_BOOL = "drop_video_call_when_answering_audio_call_bool";
     field public static final String KEY_DTMF_TYPE_ENABLED_BOOL = "dtmf_type_enabled_bool";
     field public static final String KEY_DURATION_BLOCKING_DISABLED_AFTER_EMERGENCY_INT = "duration_blocking_disabled_after_emergency_int";

@@ -1035,6 +1035,14 @@ public class CarrierConfigManager {
             "display_hd_audio_property_bool";
 
     /**
+     * Determines whether High Definition audio plus property is displayed in the dialer UI.
+     * If {@code false}, remove the HD+ audio property from the connection so that HD+ audio
+     * related UI is not displayed. If {@code true}, keep HD+ audio property as it is configured.
+     */
+    public static final String KEY_DISPLAY_HD_PLUS_AUDIO_PROPERTY_BOOL =
+            "display_hd_plus_audio_property_bool";
+
+    /**
      * Determines whether IMS conference calls are supported by a carrier.  When {@code true},
      * IMS conference calling is supported, {@code false} otherwise.
      * @hide
@@ -2590,6 +2598,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_IS_IMS_CONFERENCE_SIZE_ENFORCED_BOOL, false);
         sDefaults.putInt(KEY_IMS_CONFERENCE_SIZE_LIMIT_INT, 5);
         sDefaults.putBoolean(KEY_DISPLAY_HD_AUDIO_PROPERTY_BOOL, true);
+        sDefaults.putBoolean(KEY_DISPLAY_HD_PLUS_AUDIO_PROPERTY_BOOL, false);
         sDefaults.putBoolean(KEY_EDITABLE_ENHANCED_4G_LTE_BOOL, true);
         sDefaults.putBoolean(KEY_HIDE_ENHANCED_4G_LTE_BOOL, false);
         sDefaults.putBoolean(KEY_ENHANCED_4G_LTE_ON_BY_DEFAULT_BOOL, true);

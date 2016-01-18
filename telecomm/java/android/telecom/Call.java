@@ -521,8 +521,13 @@ public final class Call {
          */
         public static final int PROPERTY_VOIP_AUDIO_MODE = 0x00001000;
 
+        /**
+         * Call is using high definition audio plus.
+         */
+        public static final int PROPERTY_HIGH_DEF_AUDIO_PLUS = 0x00002000;
+
         //******************************************************************************************
-        // Next PROPERTY value: 0x00002000
+        // Next PROPERTY value: 0x00004000
         //******************************************************************************************
 
         private final String mTelecomCallId;
@@ -698,6 +703,9 @@ public final class Call {
             }
             if (hasProperty(properties, PROPERTY_VOIP_AUDIO_MODE)) {
                 builder.append(" PROPERTY_VOIP_AUDIO_MODE");
+            }
+            if (hasProperty(properties, PROPERTY_HIGH_DEF_AUDIO_PLUS)) {
+                builder.append(" PROPERTY_HIGH_DEF_AUDIO_PLUS");
             }
             builder.append("]");
             return builder.toString();
