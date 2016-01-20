@@ -3739,7 +3739,20 @@ public class AudioService extends IAudioService.Stub {
                 index = 0;
             } else if (((device & AudioSystem.DEVICE_OUT_ALL_A2DP) != 0 && mAvrcpAbsVolSupported)
                     || ((device & mFullVolumeDevices) != 0)) {
-                index = (mIndexMax + 5)/10;
+                int i = (getIndex(device) + 5)/10;
+                if (i== 0) {
+                    // 0% for volume 0, mute from phone side as some accessories don't mute
+                    index = 0;
+                } else if (i == 1) {
+                    // 50% for volume 1
+                    index = (int)(mIndexMax * 0.5) /10;
+                } else if (i == 2) {
+                    // 75% for volume 2
+                    index = (int)(mIndexMax * 0.75) /10;
+                } else {
+                    // otherwise, full gain
+                    index = (mIndexMax + 5)/10;
+                }
             } else {
                 index = (getIndex(device) + 5)/10;
             }
