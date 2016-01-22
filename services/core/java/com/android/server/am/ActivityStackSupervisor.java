@@ -2466,15 +2466,19 @@ public final class ActivityStackSupervisor implements DisplayListener {
     }
 
     final void doPendingActivityLaunchesLocked(boolean doResume) {
+        final ActivityStack currentStack = doResume ? null : mFocusedStack;
         while (!mPendingActivityLaunches.isEmpty()) {
             PendingActivityLaunch pal = mPendingActivityLaunches.remove(0);
-
             try {
                 startActivityUncheckedLocked(pal.r, pal.sourceRecord, null, null, pal.startFlags,
-                                             doResume && mPendingActivityLaunches.isEmpty(), null, null);
+                        doResume && mPendingActivityLaunches.isEmpty(), null, null);
             } catch (Exception e) {
                 Slog.w(TAG, "Exception during pending activity launch pal=" + pal, e);
             }
+        }
+        if (currentStack != null && currentStack != mFocusedStack) {
+            mService.setFocusedActivityLocked(
+                    currentStack.topRunningActivityLocked(null), "startedPendingActivity");
         }
     }
 
