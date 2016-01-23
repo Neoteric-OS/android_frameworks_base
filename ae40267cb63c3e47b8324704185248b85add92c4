@@ -16,6 +16,24 @@
       "revId": "ae40267cb63c3e47b8324704185248b85add92c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4bb169e_19f3d755",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2016-01-23T06:04:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74c64632_d7343684",
+      "revId": "ae40267cb63c3e47b8324704185248b85add92c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
