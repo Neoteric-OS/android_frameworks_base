@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74c64632_d7343684",
+        "filename": "core/java/android/security/NetworkSecurityPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2016-01-23T05:56:02Z",
+      "side": 1,
+      "message": "Should be static, unless I\u0027m missing something.",
+      "revId": "ae40267cb63c3e47b8324704185248b85add92c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
