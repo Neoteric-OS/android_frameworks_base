@@ -5206,6 +5206,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
             }
 
+            // Turn Always-on VPN off
+            if (mLockdownEnabled) {
+                mKeyStore.delete(Credentials.LOCKDOWN_VPN);
+                mLockdownEnabled = false;
+                setLockdownTracker(null);
+            }
+
             // Turn VPN off
             VpnConfig vpnConfig = getVpnConfig(userId);
             if (vpnConfig != null) {
