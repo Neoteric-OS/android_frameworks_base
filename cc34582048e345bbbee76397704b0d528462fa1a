@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f15fa825_ea8727cc",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2016-01-29T12:40:41Z",
+      "side": 1,
+      "message": "Hmm.  This is inside a \"mIsRunning\" clause.  mIsRunning is only set to true inside an \"isStarted()\" clause and isStarted just checks if mIface is non-null.  mIface is only set back to null by clear() which also sets mIsRunning to false.\n\nSo it seems like the only way we can get to this line of code with mIface \u003d\u003d null is if someone is racing the fact that clear() clears mIface before clearing mIsRunning.  fixupLinkProperties() is only called from ConnectivityService\u0027s main handler thread.  clear() is called from interfaceRemoved() which is a BaseNetworkObserver callback.  I think BaseNetworkObserver methods are called from NetworkManagementService\u0027s notification threads.  I think this may be the crux of the crash.  I think this class needs some synchronization, not a null-check.",
+      "range": {
+        "startLine": 187,
+        "startChar": 27,
+        "endLine": 187,
+        "endChar": 29
+      },
+      "revId": "cc34582048e345bbbee76397704b0d528462fa1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
