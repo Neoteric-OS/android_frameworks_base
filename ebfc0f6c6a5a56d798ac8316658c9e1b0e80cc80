@@ -22,6 +22,30 @@
       "revId": "ebfc0f6c6a5a56d798ac8316658c9e1b0e80cc80",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d139c4d1_5120342b",
+        "filename": "services/core/jni/com_android_server_AlarmManagerService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-02-01T10:26:45Z",
+      "side": 1,
+      "message": "auto dir_deleter \u003d [](DIR* handle) { if (handle) closedir(handle); };\n  std::unique_ptr\u003cDIR, decltype(dir_deleter)\u003e dir(opendir(rtc_sysfs), dir_deleter);",
+      "parentUuid": "317b00b0_f4da9838",
+      "range": {
+        "startLine": 326,
+        "startChar": 3,
+        "endLine": 326,
+        "endChar": 34
+      },
+      "revId": "ebfc0f6c6a5a56d798ac8316658c9e1b0e80cc80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
