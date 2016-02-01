@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "317b00b0_f4da9838",
+        "filename": "services/core/jni/com_android_server_AlarmManagerService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-02-01T10:25:14Z",
+      "side": 1,
+      "message": "std::unique_ptr ?",
+      "range": {
+        "startLine": 326,
+        "startChar": 3,
+        "endLine": 326,
+        "endChar": 34
+      },
+      "revId": "ebfc0f6c6a5a56d798ac8316658c9e1b0e80cc80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
