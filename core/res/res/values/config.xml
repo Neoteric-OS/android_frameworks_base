@@ -2376,4 +2376,13 @@
     <!-- The BT name of the keyboard packaged with the device. If this is defined, SystemUI will
          automatically try to pair with it when the device exits tablet mode. -->
     <string translatable="false" name="config_packagedKeyboardName"></string>
+
+    <!-- This config is holding calling number conversion map - expected to convert to emergency
+         number. Formats for this config as below:
+         <item>[dialstring1],[dialstring2],[dialstring3]:[replacement]</item>
+
+         E.g. for Taiwan Type Approval, 110 and 119 should be converted to 112.
+         <item>110,119:112</item>
+    -->
+    <string-array translatable="false" name="config_convert_to_emergency_number_map" />
 </resources>

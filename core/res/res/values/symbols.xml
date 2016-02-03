@@ -2345,4 +2345,6 @@
 
   <java-symbol type="string" name="config_iccHotswapPromptForRestartDialogComponent" />
   <java-symbol type="string" name="config_packagedKeyboardName" />
+
+  <java-symbol type="array" name="config_convert_to_emergency_number_map" />
 </resources>
