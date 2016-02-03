@@ -21,6 +21,7 @@
 #include "utils/misc.h"
 #include "cutils/debugger.h"
 #include <memtrack/memtrack.h>
+#include <memunreachable/memunreachable.h>
 
 #include <cutils/log.h>
 #include <fcntl.h>
@@ -35,6 +36,9 @@
 #include <assert.h>
 #include <ctype.h>
 #include <malloc.h>
+
+#include <iomanip>
+#include <sstream>
 
 namespace android
 {
@@ -971,6 +975,26 @@ static void android_os_Debug_dumpNativeBacktraceToFile(JNIEnv* env, jobject claz
     close(fd);
 }
 
+static jstring android_os_Debug_getUnreachableMemory(JNIEnv* env, jobject clazz,
+    jint limit, jboolean contents)
+{
+    UnreachableMemoryInfo info;
+    if (!GetUnreachableMemory(info, limit)) {
+        return env->NewStringUTF("Failed to get unreachable memory");
+    }
+
+    std::ostringstream oss;
+    oss << "  " << info.leak_bytes << " bytes in ";
+    oss << info.num_leaks << " unreachable allocation" << (info.num_leaks == 1 ? "" : "s");
+    oss << std::endl;
+
+    for (auto it = info.leaks.begin(); it != info.leaks.end(); it++) {
+        oss << it->ToString(contents);
+    }
+
+    return env->NewStringUTF(oss.str().c_str());
+}
+
 /*
  * JNI registration.
  */
@@ -1006,6 +1030,8 @@ static const JNINativeMethod gMethods[] = {
             (void*)android_os_Debug_getDeathObjectCount },
     { "dumpNativeBacktraceToFile", "(ILjava/lang/String;)V",
             (void*)android_os_Debug_dumpNativeBacktraceToFile },
+    { "getUnreachableMemory", "(IZ)Ljava/lang/String;",
+            (void*)android_os_Debug_getUnreachableMemory },
 };
 
 int register_android_os_Debug(JNIEnv *env)
