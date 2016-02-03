@@ -21,6 +21,7 @@
 #include "utils/misc.h"
 #include "cutils/debugger.h"
 #include <memtrack/memtrack.h>
+#include <memunreachable/memunreachable.h>
 
 #include <cutils/log.h>
 #include <fcntl.h>
@@ -35,6 +36,9 @@
 #include <assert.h>
 #include <ctype.h>
 #include <malloc.h>
+
+#include <iomanip>
+#include <sstream>
 
 namespace android
 {
@@ -971,6 +975,63 @@ static void android_os_Debug_dumpNativeBacktraceToFile(JNIEnv* env, jobject claz
     close(fd);
 }
 
+static jstring android_os_Debug_getUnreachableMemory(JNIEnv* env, jobject clazz,
+    jint limit, jboolean contents)
+{
+    UnreachableMemoryInfo info;
+    if (!GetUnreachableMemory(info, limit)) {
+        return env->NewStringUTF("Failed to get unreachable memory");
+    }
+
+    std::ostringstream oss;
+    oss << "  " << info.leak_bytes << " bytes in ";
+    oss << info.num_leaks << " unreachable allocation" << (info.num_leaks == 1 ? "" : "s");
+    oss << std::endl;
+
+    if (info.leaks.size() > 0) {
+        for (auto it = info.leaks.begin(); it != info.leaks.end(); it++) {
+            oss << "  " << std::dec << it->size;
+            oss << " bytes at ";
+            oss << std::hex << it->begin;
+            oss << std::endl;
+
+            if (contents) {
+                const int bytes_per_line = 16;
+                const size_t bytes = std::min(it->size, it->contents_length);
+
+                if (bytes == it->size) {
+                    oss << "   contents:" << std::endl;
+                } else {
+                    oss << "  first " << bytes << " bytes of contents:" << std::endl;
+                }
+
+                for (size_t i = 0; i < bytes; i += bytes_per_line) {
+                    oss << "   " << std::hex << it->begin + i << ": ";
+                    size_t j;
+                    oss << std::setfill('0');
+                    for (j = i; j < bytes && j < i + bytes_per_line; j++) {
+                        oss << std::setw(2) << static_cast<int>(it->contents[j]) << " ";
+                    }
+                    oss << std::setfill(' ');
+                    for (; j < i + bytes_per_line; j++) {
+                        oss << "   ";
+                    }
+                    for (j = i; j < bytes && j < i + bytes_per_line; j++) {
+                        char c = it->contents[j];
+                        if (c < ' ' || c >= 0x7f) {
+                            c = '.';
+                        }
+                        oss << c;
+                    }
+                    oss << std::endl;
+                }
+            }
+        }
+    }
+
+    return env->NewStringUTF(oss.str().c_str());
+}
+
 /*
  * JNI registration.
  */
@@ -1006,6 +1067,8 @@ static const JNINativeMethod gMethods[] = {
             (void*)android_os_Debug_getDeathObjectCount },
     { "dumpNativeBacktraceToFile", "(ILjava/lang/String;)V",
             (void*)android_os_Debug_dumpNativeBacktraceToFile },
+    { "getUnreachableMemory", "(IZ)Ljava/lang/String;",
+            (void*)android_os_Debug_getUnreachableMemory },
 };
 
 int register_android_os_Debug(JNIEnv *env)
