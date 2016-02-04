@@ -4,9 +4,6 @@
 
     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
     <string name="quick_settings_tiles_extra" translatable="false">
-<<<<<<< HEAD
-=======
-        powershare,refresh_rate
->>>>>>> de14d65d097a (SystemUI: Add RefreshRate tile)
+        refresh_rate,caffeine
     </string>
 </resources>

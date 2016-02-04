@@ -18,6 +18,7 @@ package com.android.systemui.statusbar.connectivity
 
 import com.android.systemui.qs.tileimpl.QSTileImpl
 import com.android.systemui.qs.tiles.BluetoothTile
+import com.android.systemui.qs.tiles.CaffeineTile
 import com.android.systemui.qs.tiles.RefreshRateTile
 
 import dagger.Binds
@@ -32,8 +33,14 @@ interface BluetoothModule {
     @IntoMap
     @StringKey(BluetoothTile.TILE_SPEC)
     fun bindBluetoothTile(bluetoothTile: BluetoothTile): QSTileImpl<*>
+
     @Binds
     @IntoMap
     @StringKey(RefreshRateTile.TILE_SPEC)
     fun bindRefreshRateTile(refreshRateTile: RefreshRateTile): QSTileImpl<*>
+
+    @Binds
+    @IntoMap
+    @StringKey(CaffeineTile.TILE_SPEC)
+    fun bindCaffeineTile(caffeineTile: CaffeineTile): QSTileImpl<*>
 }
