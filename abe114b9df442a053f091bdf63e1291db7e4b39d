@@ -142,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "ea27abf2_84dd7a09",
+        "filename": "core/java/android/bluetooth/OOBData.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2016-02-04T00:19:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca2ae7be_4876f271",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "abe114b9df442a053f091bdf63e1291db7e4b39d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0af79f9a_fada159a",
         "filename": "core/java/android/bluetooth/OOBData.java",
         "patchSetId": 1
