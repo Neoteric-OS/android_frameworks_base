@@ -68,6 +68,7 @@ public class Watchdog extends Thread {
         "/system/bin/sdcard",
         "/system/bin/surfaceflinger"
     };
+    static final String SYSTEM_BINDER_STATS_UIWDT = "sys.dump.binder_stats.uiwdt";
 
     static Watchdog sWatchdog;
 
@@ -338,6 +339,14 @@ public class Watchdog extends Thread {
         return builder.toString();
     }
 
+    private String getBinderStats() {
+        if (SystemProperties.getInt(SYSTEM_BINDER_STATS_UIWDT, 0) == 1) {
+            Slog.i(TAG, "Dump binder stats");
+            return ActivityManagerService.dumpBinderStats();
+        }
+        return null;
+    }
+
     @Override
     public void run() {
         boolean waitedHalf = false;
@@ -406,6 +415,8 @@ public class Watchdog extends Thread {
                 allowRestart = mAllowRestart;
             }
 
+            final String binderStats = getBinderStats();
+
             // If we got here, that means that the system is most likely hung.
             // First collect stack traces from all threads of the system process.
             // Then kill this process so that the system will restart.
@@ -439,7 +450,7 @@ public class Watchdog extends Thread {
                     public void run() {
                         mActivity.addErrorToDropBox(
                                 "watchdog", null, "system_server", null, null,
-                                subject, null, stack, null);
+                                subject, null, stack, null, binderStats);
                     }
                 };
             dropboxThread.start();

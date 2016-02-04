@@ -410,6 +410,8 @@ public final class ActivityManagerService extends ActivityManagerNative
     // Lower delay than APP_BOOST_MESSAGE_DELAY to disable the boost
     static final int APP_BOOST_TIMEOUT = 2500;
 
+    static final String SYSTEM_BINDER_STATS_ANR = "sys.dump.binder_stats.anr";
+
     private static native int nativeMigrateToBoost();
     private static native int nativeMigrateFromBoost();
     private boolean mIsBoosted = false;
@@ -4842,6 +4844,30 @@ public final class ActivityManagerService extends ActivityManagerNative
         }
     }
 
+    public static String dumpBinderStats() {
+        StringBuilder sb = new StringBuilder();
+        try {
+            sb.append("\n---- BINDER FAILED TRANSACTIONS ----\n");
+            File transFile = new File("/sys/kernel/debug/binder/failed_transaction_log");
+            sb.append(FileUtils.readTextFile(transFile, getDropboxMaxSize(), "\n\n[[TRUNCATED]]"));
+            sb.append("\n---- BINDER FAILED TRANSACTIONS (end) ----\n");
+
+            sb.append("\n---- BINDER TRANSACTION LOG ----\n");
+            transFile = new File("/sys/kernel/debug/binder/transaction_log");
+            sb.append(FileUtils.readTextFile(transFile, getDropboxMaxSize(), "\n\n[[TRUNCATED]]"));
+            sb.append("\n---- BINDER TRANSACTION LOG (end) ----\n");
+
+            sb.append("\n---- BINDER ACTIVE TRANSACTIONS ----\n");
+            transFile = new File("/sys/kernel/debug/binder/transactions");
+            sb.append(FileUtils.readTextFile(transFile, getDropboxMaxSize(), "\n\n[[TRUNCATED]]"));
+            sb.append("\n---- BINDER ACTIVE TRANSACTIONS (end) ----\n");
+        } catch (IOException e) {
+            Slog.e(TAG, "Unable to prepare binder stats ", e);
+            return null;
+        }
+        return sb.toString();
+    }
+
     final void logAppTooSlow(ProcessRecord app, long startTime, String msg) {
         if (true || IS_USER_BUILD) {
             return;
@@ -4997,6 +5023,13 @@ public final class ActivityManagerService extends ActivityManagerNative
 
         final ProcessCpuTracker processCpuTracker = new ProcessCpuTracker(true);
 
+        String binderStats = null;
+
+        if (SystemProperties.getInt(SYSTEM_BINDER_STATS_ANR, 0) == 1) {
+            Slog.i(TAG, "Dump binder stats");
+            binderStats = dumpBinderStats();
+        }
+
         File tracesFile = dumpStackTraces(true, firstPids, processCpuTracker, lastPids,
                 NATIVE_STACKS_OF_INTEREST);
 
@@ -5019,7 +5052,7 @@ public final class ActivityManagerService extends ActivityManagerNative
         }
 
         addErrorToDropBox("anr", app, app.processName, activity, parent, annotation,
-                cpuInfo, tracesFile, null);
+                cpuInfo, tracesFile, null, binderStats);
 
         if (mController != null) {
             try {
@@ -12452,6 +12485,27 @@ public final class ActivityManagerService extends ActivityManagerNative
             ActivityRecord parent, String subject,
             final String report, final File logFile,
             final ApplicationErrorReport.CrashInfo crashInfo) {
+        addErrorToDropBox(eventType, process, processName, activity,
+                parent, subject, report, logFile, crashInfo, null);
+    }
+
+    /**
+     * Write a description of an error (crash, WTF, ANR) to the drop box.
+     * @param eventType to include in the drop box tag ("crash", "wtf", etc.)
+     * @param process which caused the error, null means the system server
+     * @param activity which triggered the error, null if unknown
+     * @param parent activity related to the error, null if unknown
+     * @param subject line related to the error, null if absent
+     * @param report in long form describing the error, null if absent
+     * @param logFile to include in the report, null if none
+     * @param crashInfo giving an application stack trace, null if absent
+     * @param extra extra string to be appended
+     */
+    public void addErrorToDropBox(String eventType,
+            ProcessRecord process, String processName, ActivityRecord activity,
+            ActivityRecord parent, String subject,
+            final String report, final File logFile,
+            final ApplicationErrorReport.CrashInfo crashInfo, String extra) {
         // NOTE -- this must never acquire the ActivityManagerService lock,
         // otherwise the watchdog may be prevented from resetting the system.
 
@@ -12480,6 +12534,11 @@ public final class ActivityManagerService extends ActivityManagerNative
         if (Debug.isDebuggerConnected()) {
             sb.append("Debugger: Connected\n");
         }
+
+        if (extra != null) {
+            sb.append("Extra:\n").append(extra).append("\n");
+        }
+
         sb.append("\n");
 
         // Do the rest in a worker thread to avoid blocking the caller on I/O
