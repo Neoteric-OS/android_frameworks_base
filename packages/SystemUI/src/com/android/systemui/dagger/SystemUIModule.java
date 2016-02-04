@@ -69,6 +69,7 @@ import com.android.systemui.dagger.qualifiers.SystemUser;
 import com.android.systemui.dagger.qualifiers.UiBackground;
 import com.android.systemui.demomode.dagger.DemoModeModule;
 import com.android.systemui.desktop.dagger.DesktopModule;
+import com.android.systemui.neoteric.NeotericModule;
 import com.android.systemui.deviceentry.DeviceEntryModule;
 import com.android.systemui.display.DisplayModule;
 import com.android.systemui.doze.dagger.DozeComponent;
@@ -262,6 +263,7 @@ import javax.inject.Named;
         ControlsModule.class,
         DemoModeModule.class,
         DesktopModule.class,
+        NeotericModule.class,
         DeviceEntryModule.class,
         DisplayModule.class,
         RootDozeModule.class,
