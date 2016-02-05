@@ -143,6 +143,8 @@ public class UsbDeviceManager {
     private boolean mAdbEnabled;
     private boolean mAudioSourceEnabled;
     private boolean mMidiEnabled;
+    private int mAudioSourceCard;
+    private int mAudioSourceDevice;
     private int mMidiCard;
     private int mMidiDevice;
     private Map<String, List<Pair<String, String>>> mOemModeMap;
@@ -682,26 +684,25 @@ public class UsbDeviceManager {
             boolean enabled = UsbManager.containsFunction(mCurrentFunctions,
                     UsbManager.USB_FUNCTION_AUDIO_SOURCE);
             if (enabled != mAudioSourceEnabled) {
-                int card = -1;
-                int device = -1;
-
                 if (enabled) {
                     Scanner scanner = null;
                     try {
                         scanner = new Scanner(new File(AUDIO_SOURCE_PCM_PATH));
-                        card = scanner.nextInt();
-                        device = scanner.nextInt();
+                        mAudioSourceCard = scanner.nextInt();
+                        mAudioSourceDevice = scanner.nextInt();
                     } catch (FileNotFoundException e) {
                         Slog.e(TAG, "could not open audio source PCM file", e);
+                        enabled = false;
                     } finally {
                         if (scanner != null) {
                             scanner.close();
                         }
                     }
                 }
-                mUsbAlsaManager.setAccessoryAudioState(enabled, card, device);
                 mAudioSourceEnabled = enabled;
             }
+            mUsbAlsaManager.setAccessoryAudioState(
+                    mAudioSourceEnabled && mConfigured, mAudioSourceCard, mAudioSourceDevice);
         }
 
         private void updateMidiFunction() {
