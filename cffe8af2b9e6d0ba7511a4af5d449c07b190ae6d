@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd7ab832_6b672192",
+        "filename": "packages/PrintSpooler/src/com/android/printspooler/ui/PrintActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2378,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2016-02-16T17:37:36Z",
+      "side": 1,
+      "message": "Can you please limit the size in the regex to avoid the exception? See this for an example: http://stackoverflow.com/questions/15288519/set-min-and-max-characters-in-a-regular-expression",
+      "range": {
+        "startLine": 2378,
+        "startChar": 16,
+        "endLine": 2378,
+        "endChar": 52
+      },
+      "revId": "cffe8af2b9e6d0ba7511a4af5d449c07b190ae6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
