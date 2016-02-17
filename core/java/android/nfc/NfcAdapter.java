@@ -288,6 +288,50 @@ public final class NfcAdapter {
     public static final String EXTRA_HANDOVER_TRANSFER_URI =
             "android.nfc.extra.HANDOVER_TRANSFER_URI";
 
+    /**
+     * Broadcast Action: The NDEF message just read has been verified
+     * and verification result is attached.
+     *
+     * <p>Always contains the extra field {@link #EXTRA_VERIFICATION_RESULT}.
+     * If there was an exception, {@link #EXTRA_VERIFICATION_DETAILS} is
+     * also attached with the intent.
+     *
+     * <p>Possible verification result:
+     * <p>  {@link #SIGV_NO_SIGNATURE}
+     * <p>  {@link #SIGV_FAILED}
+     * <p>  {@link #SIGV_PASSED}
+     * <p>  {@link #SIGV_PASSED_WITHOUT_ROOT}
+     * <p>  {@link #SIGV_EXCEPTION}
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_VERIFICATION_RESULT =
+            "android.nfc.action.VERIFICATION_RESULT";
+    /**
+     * Define intent data name for signature verification result.
+     */
+    public static final String EXTRA_VERIFICATION_RESULT =
+            "android.nfc.extra.VERIFICATION_RESULT";
+    /**
+     * Define intent data name for signature verification exception.
+     */
+    public static final String EXTRA_VERIFICATION_DETAILS =
+            "android.nfc.extra.VERIFICATION_DETAILS";
+
+    /**
+     * Define signature verification result.<p>
+     *   SIGV_NO_SIGNATURE          No signature record<p>
+     *   SIGV_FAILED                Signature verification failed<p>
+     *   SIGV_PASSED                Signature verification passed<p>
+     *   SIGV_PASSED_WITHOUT_ROOT   Signature verification passed without root
+     *                              certificate<p>
+     *   SIGV_EXCEPTION             Exception during verification
+     */
+    public static final int SIGV_NO_SIGNATURE        = -1;
+    public static final int SIGV_FAILED              = 0;
+    public static final int SIGV_PASSED              = 1;
+    public static final int SIGV_PASSED_WITHOUT_ROOT = 2;
+    public static final int SIGV_EXCEPTION           = 3;
+
     // Guarded by NfcAdapter.class
     static boolean sIsInitialized = false;
     static boolean sHasNfcFeature;
@@ -1544,6 +1588,69 @@ public final class NfcAdapter {
         mNfcActivityManager.setNdefPushMessage(activity, null, 0);
         mNfcActivityManager.setNdefPushMessageCallback(activity, null, 0);
         mNfcActivityManager.setOnNdefPushCompleteCallback(activity, null);
+    }
+
+    /**
+     * Enable NDEF Verify feature.
+     * <p>This API is for the Settings application.
+     * @hide
+     */
+    @SystemApi
+    public boolean enableNdefVerify() {
+        try {
+            sService.enableNdefVerify();
+            return true;
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+            return false;
+        }
+    }
+
+    /**
+     * Disable NDEF Verify feature.
+     * <p>This API is for the Settings application.
+     * @hide
+     */
+    @SystemApi
+    public boolean disableNdefVerify() {
+        try {
+            sService.disableNdefVerify();
+            return true;
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+            return false;
+        }
+    }
+
+    /**
+     * Return true if the NDEF Verify feature is enabled.
+     * <p>This function will return true only if both NFC is enabled, and the
+     * NDEF Verify feature is enabled.
+     * <p>Applications cannot directly toggle the NDEF Verify feature, but
+     * they can request Settings UI allowing the user to toggle NDEF Verify
+     * using
+     * <code>startActivity(new Intent(Settings.ACTION_NFCSECURITY_SETTINGS))</code>
+     * <p>Example usage in an Activity that requires NDEF Signature:
+     * <p><pre>
+     * protected void onResume() {
+     *     super.onResume();
+     *     if (!nfcAdapter.isEnabled()) {
+     *         startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
+     *     } else if (!nfcAdapter.isNdefPushEnabled()) {
+     *         startActivity(new Intent(Settings.ACTION_NFCSECURITY_SETTINGS));
+     *     }
+     * }</pre>
+     *
+     * @see android.provider.Settings#ACTION_NFCSHARING_SETTINGS
+     * @return true if NDEF Verify feature is enabled
+     */
+    public boolean isNdefVerifyEnabled() {
+        try {
+            return sService.isNdefVerifyEnabled();
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+            return false;
+        }
     }
 
     /**
