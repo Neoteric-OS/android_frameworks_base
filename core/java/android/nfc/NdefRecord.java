@@ -21,6 +21,7 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.ByteArrayOutputStream;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -56,10 +57,11 @@ import java.util.Locale;
  * <li><em>payload</em>: the actual payload</li>
  * </ul>
  * <p>
- * Helpers such as {@link NdefRecord#createUri}, {@link NdefRecord#createMime}
- * and {@link NdefRecord#createExternal} are included to create well-formatted
- * NDEF Records with correctly set tnf, type, id and payload fields, please
- * use these helpers whenever possible.
+ * Helpers such as {@link NdefRecord#createUri}, {@link NdefRecord#createMime},
+ * {@link NdefRecord#createExternal} and
+ * {@link NdefRecord#createSignatureRecord} are included to create
+ * well-formatted NDEF Records with correctly set tnf, type, id and payload
+ * fields, please use these helpers whenever possible.
  * <p>
  * Use the constructor {@link #NdefRecord(short, byte[], byte[], byte[])}
  * if you know what you are doing and what to set the fields individually.
@@ -101,6 +103,7 @@ public final class NdefRecord implements Parcelable {
      * @see #RTD_URI
      * @see #RTD_TEXT
      * @see #RTD_SMART_POSTER
+     * @see #RTD_SIGNATURE
      * @see #createUri
      */
     public static final short TNF_WELL_KNOWN = 0x01;
@@ -210,6 +213,12 @@ public final class NdefRecord implements Parcelable {
     public static final byte[] RTD_HANDOVER_SELECT = {0x48, 0x73}; // "Hs"
 
     /**
+     * RTD Signature type. For use with {@literal TNF_WELL_KNOWN}.
+     * @see #TNF_WELL_KNOWN
+     */
+    public static final byte[] RTD_SIGNATURE = {0x53, 0x69, 0x67}; // "Sig"
+
+    /**
      * RTD Android app type. For use with {@literal TNF_EXTERNAL}.
      * <p>
      * The payload of a record with type RTD_ANDROID_APP
@@ -222,6 +231,11 @@ public final class NdefRecord implements Parcelable {
      * @hide
      */
     public static final byte[] RTD_ANDROID_APP = "android.com:pkg".getBytes();
+
+    /**
+     * Signature RTD version supported.
+     */
+    public static final byte SIGNATURE_RTD_VERSION = 0x20; // v2.0
 
     private static final byte FLAG_MB = (byte) 0x80;
     private static final byte FLAG_ME = (byte) 0x40;
@@ -276,6 +290,10 @@ public final class NdefRecord implements Parcelable {
     private static final int MAX_PAYLOAD_SIZE = 10 * (1 << 20);  // 10 MB payload limit
 
     private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
+
+    private static final int MAX_SIGNATURE_OR_URL_SIZE = 65535; // 16 bits maximum
+    private static final int MAX_NUM_OF_CERTS = 15; // 4 bits maximum
+    private static final int MAX_CERT_STORE_OR_URL_SIZE = 65535; // 16 bits maximum
 
     private final short mTnf;
     private final byte[] mType;
@@ -511,6 +529,150 @@ public final class NdefRecord implements Parcelable {
         buffer.put(textBytes);
 
         return new NdefRecord(TNF_WELL_KNOWN, RTD_TEXT, null, buffer.array());
+    }
+
+    /**
+     * Create a new NDEF record containing digital signature data.<p>
+     *
+     * Reference specification: NFCForum-TS-RTD_Signature_2.0
+     * @param uriPresent True if a URI location is provided for the signature in the signatureOrUri
+     *                   field.
+     * @param signatureType Digital signature algorithm used.
+     * @param hashType Hash algorithm used.
+     * @param signatureOrUri Signature bytes or URI location of signature as specified by the
+     *                       uriPresent field.
+     * @param certificateFormat Certificate format used in the certificate chain
+     * @param certificateChain Complete or partial certificate chain for the signature.
+     * @param certificateChainUri URI location of the certificate chain entries for the signature
+     *                            not present in this NDEF record.
+     * @throws NullPointerException if a required parameter value is null
+     * @throws IllegalArgumentException if a valid record cannot be constructed
+     */
+    public static NdefRecord createSignatureRecord(
+            boolean uriPresent, NdefSignatureType signatureType,
+            NdefHashType hashType, byte[] signatureOrUri,
+            NdefCertificateFormat certificateFormat,
+            List<byte[]> certificateChain, Uri certificateChainUri) {
+        if (signatureType == null) {
+            throw new NullPointerException("signatureType is null");
+        } else if ((signatureType != NdefSignatureType.NO_SIGNATURE_PRESENT) &&
+                   (hashType == null)) {
+            throw new NullPointerException("hashType is null");
+        } else if (uriPresent &&
+                   (signatureType == NdefSignatureType.NO_SIGNATURE_PRESENT)) {
+            throw new IllegalArgumentException(
+                    "Signature type must be specified if URI present is true.");
+        }
+
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+        // Version
+        buffer.write(SIGNATURE_RTD_VERSION);
+        // URI_Present flag and Signature Type
+        buffer.write((uriPresent ? 0x80 : 0x00) | (signatureType.getId()));
+
+        if (uriPresent || (signatureType != NdefSignatureType.NO_SIGNATURE_PRESENT)) {
+            if (hashType == null) {
+                throw new NullPointerException("hashType is null");
+            } else if (signatureOrUri == null) {
+                throw new NullPointerException("signatureOrUri is null");
+            } else if (signatureOrUri.length > MAX_SIGNATURE_OR_URL_SIZE) {
+                throw new IllegalArgumentException(
+                    "signatureOrUri cannot exceed " + MAX_SIGNATURE_OR_URL_SIZE + " bytes");
+            } else if (certificateFormat == null) {
+                throw new NullPointerException("certificateFormat is null");
+            }
+
+            // Hash Type
+            buffer.write(hashType.getId());
+            // Signature / URL Length in big endian
+            buffer.write((signatureOrUri.length >> 8) & 0xFF);
+            buffer.write(signatureOrUri.length & 0xFF);
+            // Signature or URL
+            buffer.write(signatureOrUri, 0, signatureOrUri.length);
+
+            // Certificate Chain
+            int certificateChainHeader = ((certificateChainUri != null) ? 0x80 : 0x00);
+            certificateChainHeader |= certificateFormat.getId() << 4;
+
+            if (certificateChain != null) {
+                if (certificateChain.size() > MAX_NUM_OF_CERTS) {
+                    throw new IllegalArgumentException(
+                        "certificateChain cannot have more than " + MAX_NUM_OF_CERTS + " entries");
+                }
+
+                certificateChainHeader |= certificateChain.size();
+
+                // Certificate Header
+                buffer.write(certificateChainHeader);
+
+                for (byte[] certificate : certificateChain) {
+                    if (certificate == null) {
+                        throw new NullPointerException("certificate is null");
+                    } else if (certificate.length > MAX_CERT_STORE_OR_URL_SIZE) {
+                        throw new IllegalArgumentException(
+                            "certificate cannot exceed " + MAX_CERT_STORE_OR_URL_SIZE + " bytes");
+                    }
+
+                    // Certificate Store Length in big endian
+                    buffer.write((certificate.length >> 8) & 0xFF);
+                    buffer.write(certificate.length & 0xFF);
+                    // Certificate Store
+                    buffer.write(certificate, 0, certificate.length);
+                }
+            } else {
+                // Certificate Header
+                buffer.write(certificateChainHeader);
+            }
+
+            if (certificateChainUri != null) {
+                certificateChainUri = certificateChainUri.normalizeScheme();
+                String certificateChainUriString = certificateChainUri.toString();
+                if (certificateChainUriString.length() == 0) {
+                    throw new IllegalArgumentException("certificateChainUri is empty");
+                } else if (certificateChainUriString.length() > MAX_CERT_STORE_OR_URL_SIZE) {
+                    throw new IllegalArgumentException(
+                        "certificateChainUri cannot exceed " + MAX_CERT_STORE_OR_URL_SIZE +
+                        " bytes");
+                }
+                byte[] certificateChainUriBytes =
+                    certificateChainUriString.getBytes(StandardCharsets.UTF_8);
+
+                // Certificate URL Length
+                buffer.write((certificateChainUriBytes.length >> 8) & 0xFF);
+                buffer.write(certificateChainUriBytes.length & 0xFF);
+                // Certificate URL
+                buffer.write(certificateChainUriBytes, 0, certificateChainUriBytes.length);
+            }
+        }
+
+        return new NdefRecord(TNF_WELL_KNOWN, RTD_SIGNATURE, null, buffer.toByteArray());
+    }
+
+    /**
+     * Create a new NDEF record containing digital signature data.<p>
+     *
+     * Reference specification: NFCForum-TS-RTD_Signature_2.0
+     * @param uriPresent True if a URI location is provided for the signature in the signatureOrUri
+     *                   field.
+     * @param signatureType Digital signature algorithm used.
+     * @param hashType Hash algorithm used.
+     * @param signatureOrUri Signature bytes or URI location of signature as specified by the
+     *                       uriPresent field.
+     * @param certificateFormat Certificate format used in the certificate chain
+     * @param certificateChain Complete or partial certificate chain for the signature.
+     * @param certificateChainUri URI location of the certificate chain entries for the signature
+     *                            not present in this NDEF record.
+     * @throws NullPointerException if a required parameter value is null
+     * @throws IllegalArgumentException if a valid record cannot be constructed
+     */
+    public static NdefRecord createSignatureRecord(
+            boolean uriPresent, NdefSignatureType signatureType,
+            NdefHashType hashType, byte[] signatureOrUri,
+            NdefCertificateFormat certificateFormat,
+            List<byte[]> certificateChain, String certificateChainUri) {
+        return createSignatureRecord(uriPresent, signatureType, hashType, signatureOrUri,
+                        certificateFormat, certificateChain, Uri.parse(certificateChainUri));
     }
 
     /**
