@@ -32,13 +32,21 @@ public class TrustedCertificateStoreAdapter extends TrustedCertificateStore {
         mConfig = config;
     }
 
-    @Override
     public X509Certificate findIssuer(X509Certificate cert) {
         TrustAnchor anchor = mConfig.findTrustAnchorByIssuerAndSignature(cert);
         if (anchor == null) {
             return null;
         }
         return anchor.certificate;
+    }
+
+    @Override
+    public X509Certificate findIssuer(Certificate cert) {
+        if (cert instanceof X509Certificate) {
+            return findIssuer((X509Certificate)cert);
+        } else {
+            return null;
+        }
     }
 
     @Override

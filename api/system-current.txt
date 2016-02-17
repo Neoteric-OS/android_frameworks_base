@@ -27761,6 +27761,27 @@ package android.nfc {
     ctor public FormatException(java.lang.String, java.lang.Throwable);
   }
 
+  public final class NdefCertificateFormat extends java.lang.Enum {
+    method public java.lang.String getDescription();
+    method public byte getId();
+    method public static android.nfc.NdefCertificateFormat getInstanceOf(byte);
+    method public java.lang.String getName();
+    method public static android.nfc.NdefCertificateFormat valueOf(java.lang.String);
+    method public static final android.nfc.NdefCertificateFormat[] values();
+    enum_constant public static final android.nfc.NdefCertificateFormat M2M;
+    enum_constant public static final android.nfc.NdefCertificateFormat X_509;
+  }
+
+  public final class NdefHashType extends java.lang.Enum {
+    method public java.lang.String getDescription();
+    method public byte getId();
+    method public static android.nfc.NdefHashType getInstanceOf(byte);
+    method public java.lang.String getName();
+    method public static android.nfc.NdefHashType valueOf(java.lang.String);
+    method public static final android.nfc.NdefHashType[] values();
+    enum_constant public static final android.nfc.NdefHashType SHA_256;
+  }
+
   public final class NdefMessage implements android.os.Parcelable {
     ctor public NdefMessage(byte[]) throws android.nfc.FormatException;
     ctor public NdefMessage(android.nfc.NdefRecord, android.nfc.NdefRecord...);
@@ -27773,12 +27794,19 @@ package android.nfc {
     field public static final android.os.Parcelable.Creator<android.nfc.NdefMessage> CREATOR;
   }
 
+  public class NdefMessageSignatureVerifier {
+    ctor public NdefMessageSignatureVerifier();
+    method public static int verify(android.nfc.NdefMessage) throws java.security.cert.CertificateException, android.nfc.FormatException, java.io.IOException, java.security.InvalidKeyException, java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException, java.security.SignatureException;
+  }
+
   public final class NdefRecord implements android.os.Parcelable {
     ctor public NdefRecord(short, byte[], byte[], byte[]);
     ctor public deprecated NdefRecord(byte[]) throws android.nfc.FormatException;
     method public static android.nfc.NdefRecord createApplicationRecord(java.lang.String);
     method public static android.nfc.NdefRecord createExternal(java.lang.String, java.lang.String, byte[]);
     method public static android.nfc.NdefRecord createMime(java.lang.String, byte[]);
+    method public static android.nfc.NdefRecord createSignatureRecord(boolean, android.nfc.NdefSignatureType, android.nfc.NdefHashType, byte[], android.nfc.NdefCertificateFormat, java.util.List<byte[]>, android.net.Uri);
+    method public static android.nfc.NdefRecord createSignatureRecord(boolean, android.nfc.NdefSignatureType, android.nfc.NdefHashType, byte[], android.nfc.NdefCertificateFormat, java.util.List<byte[]>, java.lang.String);
     method public static android.nfc.NdefRecord createTextRecord(java.lang.String, java.lang.String);
     method public static android.nfc.NdefRecord createUri(android.net.Uri);
     method public static android.nfc.NdefRecord createUri(java.lang.String);
@@ -27796,9 +27824,11 @@ package android.nfc {
     field public static final byte[] RTD_HANDOVER_CARRIER;
     field public static final byte[] RTD_HANDOVER_REQUEST;
     field public static final byte[] RTD_HANDOVER_SELECT;
+    field public static final byte[] RTD_SIGNATURE;
     field public static final byte[] RTD_SMART_POSTER;
     field public static final byte[] RTD_TEXT;
     field public static final byte[] RTD_URI;
+    field public static final byte SIGNATURE_RTD_VERSION = 32; // 0x20
     field public static final short TNF_ABSOLUTE_URI = 3; // 0x3
     field public static final short TNF_EMPTY = 0; // 0x0
     field public static final short TNF_EXTERNAL_TYPE = 4; // 0x4
@@ -27808,6 +27838,28 @@ package android.nfc {
     field public static final short TNF_WELL_KNOWN = 1; // 0x1
   }
 
+  public final class NdefSignatureType extends java.lang.Enum {
+    method public java.lang.String getAlgorithm();
+    method public java.lang.String getDescription();
+    method public byte getId();
+    method public static android.nfc.NdefSignatureType getInstanceOf(byte);
+    method public int getSecurityStrengthBits();
+    method public static android.nfc.NdefSignatureType valueOf(java.lang.String);
+    method public static final android.nfc.NdefSignatureType[] values();
+    enum_constant public static final android.nfc.NdefSignatureType DSA_1024;
+    enum_constant public static final android.nfc.NdefSignatureType DSA_2048;
+    enum_constant public static final android.nfc.NdefSignatureType ECDSA_B233;
+    enum_constant public static final android.nfc.NdefSignatureType ECDSA_K233;
+    enum_constant public static final android.nfc.NdefSignatureType ECDSA_P192;
+    enum_constant public static final android.nfc.NdefSignatureType ECDSA_P224;
+    enum_constant public static final android.nfc.NdefSignatureType ECDSA_P256;
+    enum_constant public static final android.nfc.NdefSignatureType NO_SIGNATURE_PRESENT;
+    enum_constant public static final android.nfc.NdefSignatureType RSASSA_PKCS1_V1_5_1024;
+    enum_constant public static final android.nfc.NdefSignatureType RSASSA_PKCS1_v1_2048;
+    enum_constant public static final android.nfc.NdefSignatureType RSASSA_PSS_1024;
+    enum_constant public static final android.nfc.NdefSignatureType RSASSA_PSS_2048;
+  }
+
   public final class NfcAdapter {
     method public boolean addNfcUnlockHandler(android.nfc.NfcAdapter.NfcUnlockHandler, java.lang.String[]);
     method public boolean disable();
@@ -27815,17 +27867,20 @@ package android.nfc {
     method public void disableForegroundDispatch(android.app.Activity);
     method public deprecated void disableForegroundNdefPush(android.app.Activity);
     method public boolean disableNdefPush();
+    method public boolean disableNdefVerify();
     method public void disableReaderMode(android.app.Activity);
     method public boolean enable();
     method public void enableForegroundDispatch(android.app.Activity, android.app.PendingIntent, android.content.IntentFilter[], java.lang.String[][]);
     method public deprecated void enableForegroundNdefPush(android.app.Activity, android.nfc.NdefMessage);
     method public boolean enableNdefPush();
+    method public boolean enableNdefVerify();
     method public void enableReaderMode(android.app.Activity, android.nfc.NfcAdapter.ReaderCallback, int, android.os.Bundle);
     method public static android.nfc.NfcAdapter getDefaultAdapter(android.content.Context);
     method public boolean ignore(android.nfc.Tag, int, android.nfc.NfcAdapter.OnTagRemovedListener, android.os.Handler);
     method public boolean invokeBeam(android.app.Activity);
     method public boolean isEnabled();
     method public boolean isNdefPushEnabled();
+    method public boolean isNdefVerifyEnabled();
     method public boolean removeNfcUnlockHandler(android.nfc.NfcAdapter.NfcUnlockHandler);
     method public void setBeamPushUris(android.net.Uri[], android.app.Activity);
     method public void setBeamPushUrisCallback(android.nfc.NfcAdapter.CreateBeamUrisCallback, android.app.Activity);
@@ -27837,11 +27892,14 @@ package android.nfc {
     field public static final java.lang.String ACTION_NDEF_DISCOVERED = "android.nfc.action.NDEF_DISCOVERED";
     field public static final java.lang.String ACTION_TAG_DISCOVERED = "android.nfc.action.TAG_DISCOVERED";
     field public static final java.lang.String ACTION_TECH_DISCOVERED = "android.nfc.action.TECH_DISCOVERED";
+    field public static final java.lang.String ACTION_VERIFICATION_RESULT = "android.nfc.action.VERIFICATION_RESULT";
     field public static final java.lang.String EXTRA_ADAPTER_STATE = "android.nfc.extra.ADAPTER_STATE";
     field public static final java.lang.String EXTRA_ID = "android.nfc.extra.ID";
     field public static final java.lang.String EXTRA_NDEF_MESSAGES = "android.nfc.extra.NDEF_MESSAGES";
     field public static final java.lang.String EXTRA_READER_PRESENCE_CHECK_DELAY = "presence";
     field public static final java.lang.String EXTRA_TAG = "android.nfc.extra.TAG";
+    field public static final java.lang.String EXTRA_VERIFICATION_DETAILS = "android.nfc.extra.VERIFICATION_DETAILS";
+    field public static final java.lang.String EXTRA_VERIFICATION_RESULT = "android.nfc.extra.VERIFICATION_RESULT";
     field public static final int FLAG_NDEF_PUSH_NO_CONFIRM = 1; // 0x1
     field public static final int FLAG_READER_NFC_A = 1; // 0x1
     field public static final int FLAG_READER_NFC_B = 2; // 0x2
@@ -27850,6 +27908,11 @@ package android.nfc {
     field public static final int FLAG_READER_NFC_V = 8; // 0x8
     field public static final int FLAG_READER_NO_PLATFORM_SOUNDS = 256; // 0x100
     field public static final int FLAG_READER_SKIP_NDEF_CHECK = 128; // 0x80
+    field public static final int SIGV_EXCEPTION = 3; // 0x3
+    field public static final int SIGV_FAILED = 0; // 0x0
+    field public static final int SIGV_NO_SIGNATURE = -1; // 0xffffffff
+    field public static final int SIGV_PASSED = 1; // 0x1
+    field public static final int SIGV_PASSED_WITHOUT_ROOT = 2; // 0x2
     field public static final int STATE_OFF = 1; // 0x1
     field public static final int STATE_ON = 3; // 0x3
     field public static final int STATE_TURNING_OFF = 4; // 0x4

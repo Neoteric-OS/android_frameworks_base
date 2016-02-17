@@ -508,7 +508,7 @@ framework_res_R_stamp := \
 LOCAL_ADDITIONAL_DEPENDENCIES := $(framework_res_R_stamp)
 
 LOCAL_NO_STANDARD_LIBRARIES := true
-LOCAL_JAVA_LIBRARIES := core-oj core-libart conscrypt okhttp bouncycastle ext
+LOCAL_JAVA_LIBRARIES := core-oj core-libart conscrypt okhttp bouncycastle ext tpm2m
 LOCAL_STATIC_JAVA_LIBRARIES := framework-protos
 
 LOCAL_MODULE := framework
@@ -817,6 +817,7 @@ framework_docs_LOCAL_API_CHECK_JAVA_LIBRARIES := \
 	core-libart \
 	conscrypt \
 	bouncycastle \
+	tpm2m \
 	okhttp \
 	ext \
 	icu4j \
