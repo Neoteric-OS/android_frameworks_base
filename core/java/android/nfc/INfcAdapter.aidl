@@ -45,6 +45,9 @@ interface INfcAdapter
     int getState();
     boolean disable(boolean saveState);
     boolean enable();
+    void enableNdefVerify();
+    void disableNdefVerify();
+    boolean isNdefVerifyEnabled();
     boolean enableNdefPush();
     boolean disableNdefPush();
     boolean isNdefPushEnabled();
