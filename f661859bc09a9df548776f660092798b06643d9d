@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a25c0165_5991a3cc",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/BaseStatusBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2016-02-19T14:28:37Z",
+      "side": 1,
+      "message": "Do this before the ranking? No reason to get it if we aren\u0027t going to use it.",
+      "revId": "f661859bc09a9df548776f660092798b06643d9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
