@@ -16,6 +16,24 @@
       "revId": "f661859bc09a9df548776f660092798b06643d9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "428185c7_7633f0ac",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/BaseStatusBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2016-02-19T14:58:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a25c0165_5991a3cc",
+      "revId": "f661859bc09a9df548776f660092798b06643d9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
