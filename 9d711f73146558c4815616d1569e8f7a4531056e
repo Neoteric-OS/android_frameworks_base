@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2a3597e_57483c59",
+        "filename": "core/java/android/hardware/camera2/params/StreamConfigurationMap.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1060491
+      },
+      "writtenOn": "2016-02-19T19:00:22Z",
+      "side": 1,
+      "message": "I will rename this to minFrameDurations indicating it\u0027s an array.",
+      "range": {
+        "startLine": 1289,
+        "startChar": 38,
+        "endLine": 1289,
+        "endChar": 54
+      },
+      "revId": "9d711f73146558c4815616d1569e8f7a4531056e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
