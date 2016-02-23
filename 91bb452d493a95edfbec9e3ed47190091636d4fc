@@ -22,6 +22,30 @@
       "revId": "91bb452d493a95edfbec9e3ed47190091636d4fc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2b0b90b_1069f2f9",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1843,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-02-23T22:36:59Z",
+      "side": 1,
+      "message": "Good point. CL updated in Patch Set 3 to address the issue.",
+      "parentUuid": "62be89e4_cf675823",
+      "range": {
+        "startLine": 1843,
+        "startChar": 0,
+        "endLine": 1843,
+        "endChar": 82
+      },
+      "revId": "91bb452d493a95edfbec9e3ed47190091636d4fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
