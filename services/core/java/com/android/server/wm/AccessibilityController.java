@@ -380,7 +380,7 @@ final class AccessibilityController {
                         && !policy.canMagnifyWindow(windowType)) {
                     return null;
                 }
-                if (!policy.canMagnifyWindow(windowState.mAttrs.type)) {
+                if (!policy.canMagnifyWindow(windowState.mAttrs.type) || windowState.mIsImWindow) {
                     return null;
                 }
             }
@@ -493,7 +493,7 @@ final class AccessibilityController {
                     populateTransformationMatrixLocked(windowState, matrix);
                     RectF windowFrame = mTempRectF;
 
-                    if (mWindowManagerService.mPolicy.canMagnifyWindow(windowState.mAttrs.type)) {
+                    if (mWindowManagerService.mPolicy.canMagnifyWindow(windowState.mAttrs.type) && !windowState.mIsImWindow) {
                         windowFrame.set(windowState.mFrame);
                         windowFrame.offset(-windowFrame.left, -windowFrame.top);
                         matrix.mapRect(windowFrame);
