@@ -7093,6 +7093,7 @@ package android.bluetooth {
   }
 
   public final class BluetoothHeadset implements android.bluetooth.BluetoothProfile {
+    method public void bindResponse(int, boolean);
     method public java.util.List<android.bluetooth.BluetoothDevice> getConnectedDevices();
     method public int getConnectionState(android.bluetooth.BluetoothDevice);
     method public java.util.List<android.bluetooth.BluetoothDevice> getDevicesMatchingConnectionStates(int[]);
