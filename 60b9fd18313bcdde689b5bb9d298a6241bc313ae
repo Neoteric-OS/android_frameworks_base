@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a220812e_eddd6dfc",
+        "filename": "wifi/java/android/net/wifi/p2p/WifiP2pWfdInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1097698
+      },
+      "writtenOn": "2016-03-01T13:08:27Z",
+      "side": 1,
+      "message": "Could you please use 0x40 instead of 0x100",
+      "range": {
+        "startLine": 51,
+        "startChar": 75,
+        "endLine": 51,
+        "endChar": 76
+      },
+      "revId": "60b9fd18313bcdde689b5bb9d298a6241bc313ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
