@@ -66,7 +66,7 @@ static pid_t gSystemServerPid = 0;
 static const char kZygoteClassName[] = "com/android/internal/os/Zygote";
 static jclass gZygoteClass;
 static jmethodID gCallPostForkChildHooks;
-
+static int unMounted = 0;
 // Must match values in com.android.internal.os.Zygote.
 enum MountExternalKind {
   MOUNT_EXTERNAL_NONE = 0,
@@ -303,7 +303,8 @@ static bool MountEmulatedStorage(uid_t uid, jint mount_mode,
     }
 
     // Unmount storage provided by root namespace and mount requested view
-    UnmountTree("/storage");
+    if(!unMounted)
+        UnmountTree("/storage");
 
     String8 storageSource;
     if (mount_mode == MOUNT_EXTERNAL_DEFAULT) {
@@ -663,12 +664,24 @@ static jint com_android_internal_os_Zygote_nativeForkSystemServer(
   return pid;
 }
 
+
+
+static void com_android_internal_os_Zygote_nativePrepareMount(void)
+{
+    int rc;
+    rc = UnmountTree("/storage");
+    if (rc ==0 )
+        unMounted = 1;
+}
+
 static const JNINativeMethod gMethods[] = {
     { "nativeForkAndSpecialize",
       "(II[II[[IILjava/lang/String;Ljava/lang/String;[ILjava/lang/String;Ljava/lang/String;)I",
       (void *) com_android_internal_os_Zygote_nativeForkAndSpecialize },
     { "nativeForkSystemServer", "(II[II[[IJJ)I",
-      (void *) com_android_internal_os_Zygote_nativeForkSystemServer }
+      (void *) com_android_internal_os_Zygote_nativeForkSystemServer },
+    { "nativePrepareMount", "()V",
+      (void *) com_android_internal_os_Zygote_nativePrepareMount},
 };
 
 int register_com_android_internal_os_Zygote(JNIEnv* env) {

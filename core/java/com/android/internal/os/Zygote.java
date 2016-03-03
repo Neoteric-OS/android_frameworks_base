@@ -106,10 +106,15 @@ public final class Zygote {
         return pid;
     }
 
+    public static void prepareMount() {
+        nativePrepareMount();
+    }
+
     native private static int nativeForkAndSpecialize(int uid, int gid, int[] gids,int debugFlags,
           int[][] rlimits, int mountExternal, String seInfo, String niceName, int[] fdsToClose,
           String instructionSet, String appDataDir);
 
+    native private static void nativePrepareMount();
     /**
      * Special method to start the system server process. In addition to the
      * common actions performed in forkAndSpecialize, the pid of the child

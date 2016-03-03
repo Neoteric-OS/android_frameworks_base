@@ -682,7 +682,7 @@ public class ZygoteInit {
 
         fds.add(sServerSocket.getFileDescriptor());
         peers.add(null);
-
+        Zygote.prepareMount();
         while (true) {
             StructPollfd[] pollFds = new StructPollfd[fds.size()];
             for (int i = 0; i < pollFds.length; ++i) {
