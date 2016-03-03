@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22ef3134_3eb22a2f",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfileManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1077498
+      },
+      "writtenOn": "2016-03-03T23:23:24Z",
+      "side": 1,
+      "message": "Change to this?\n\nif (mHeadsetClientProfile !\u003d null) {\n    return mHeadsetClientProfile.isProfileReady();\n}",
+      "range": {
+        "startLine": 316,
+        "startChar": 7,
+        "endLine": 319,
+        "endChar": 9
+      },
+      "revId": "de47822abc59d649d70b54a92f7f225c3141f23e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
