@@ -380,9 +380,6 @@ abstract class HdmiCecLocalDevice {
 
     @ServiceThreadOnly
     protected boolean handleSetMenuLanguage(HdmiCecMessage message) {
-        assertRunOnServiceThread();
-        Slog.w(TAG, "Only Playback device can handle <Set Menu Language>:" + message.toString());
-        // 'return false' will cause to reply with <Feature Abort>.
         return false;
     }
 

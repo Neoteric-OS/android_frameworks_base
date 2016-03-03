@@ -312,42 +312,6 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
         return true;  // Broadcast message.
     }
 
-    @ServiceThreadOnly
-    protected boolean handleSetMenuLanguage(HdmiCecMessage message) {
-        assertRunOnServiceThread();
-
-        try {
-            String iso3Language = new String(message.getParams(), 0, 3, "US-ASCII");
-            Locale currentLocale = mService.getContext().getResources().getConfiguration().locale;
-            if (currentLocale.getISO3Language().equals(iso3Language)) {
-                // Do not switch language if the new language is the same as the current one.
-                // This helps avoid accidental country variant switching from en_US to en_AU
-                // due to the limitation of CEC. See the warning below.
-                return true;
-            }
-
-            // Don't use Locale.getAvailableLocales() since it returns a locale
-            // which is not available on Settings.
-            final List<LocaleInfo> localeInfos = LocalePicker.getAllAssetLocales(
-                    mService.getContext(), false);
-            for (LocaleInfo localeInfo : localeInfos) {
-                if (localeInfo.getLocale().getISO3Language().equals(iso3Language)) {
-                    // WARNING: CEC adopts ISO/FDIS-2 for language code, while Android requires
-                    // additional country variant to pinpoint the locale. This keeps the right
-                    // locale from being chosen. 'eng' in the CEC command, for instance,
-                    // will always be mapped to en-AU among other variants like en-US, en-GB,
-                    // an en-IN, which may not be the expected one.
-                    LocalePicker.updateLocale(localeInfo.getLocale());
-                    return true;
-                }
-            }
-            Slog.w(TAG, "Can't handle <Set Menu Language> of " + iso3Language);
-            return false;
-        } catch (UnsupportedEncodingException e) {
-            return false;
-        }
-    }
-
     @Override
     @ServiceThreadOnly
     protected void sendStandby(int deviceId) {
