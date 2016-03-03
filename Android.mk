@@ -656,6 +656,7 @@ aidl_files := \
 	frameworks/base/telephony/java/android/telephony/UiccAccessRule.aidl \
 	frameworks/base/telephony/java/android/telephony/euicc/DownloadableSubscription.aidl \
 	frameworks/base/telephony/java/android/telephony/euicc/EuiccInfo.aidl \
+	frameworks/base/telephony/java/android/telephony/ImsFeatureCapabilities.aidl \
 	frameworks/base/location/java/android/location/Location.aidl \
 	frameworks/base/location/java/android/location/Address.aidl \
 	frameworks/base/location/java/android/location/Criteria.aidl \

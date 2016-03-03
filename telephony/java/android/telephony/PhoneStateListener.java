@@ -254,6 +254,25 @@ public class PhoneStateListener {
      */
     public static final int LISTEN_DATA_ACTIVATION_STATE                   = 0x00040000;
 
+    /**
+     * Listen for IMS registered state changes.
+     *
+     * @see #onImsRegisteredChanged
+     * @see TelephonyRegistry#notifyImsRegisteredChangedForSubscriber(int, boolean)
+     * @hide
+     */
+    public static final int LISTEN_IMS_REGISTERED_STATE_CHANGE              = 0x00080000;
+
+    /**
+     * Listen for IMS features capabilities changes.
+     *
+     * @see #onImsFeatureCapabilitiesChanged
+     * @see TelephonyRegistry#notifyImsFeatureCapabilitiesChangedForSubscriber(
+     *          int, ImsFeatureCapabilities)
+     * @hide
+     */
+    public static final int LISTEN_IMS_FEATURE_CAPABILITIES_CHANGE          = 0x00100000;
+
      /*
      * Subscription used to listen to the phone state changes
      * @hide
@@ -365,7 +384,13 @@ public class PhoneStateListener {
                     case LISTEN_CARRIER_NETWORK_CHANGE:
                         PhoneStateListener.this.onCarrierNetworkChange((boolean)msg.obj);
                         break;
-
+                    case LISTEN_IMS_REGISTERED_STATE_CHANGE:
+                        PhoneStateListener.this.onImsRegisteredChanged((boolean)msg.obj);
+                        break;
+                    case LISTEN_IMS_FEATURE_CAPABILITIES_CHANGE:
+                        PhoneStateListener.this.onImsFeatureCapabilitiesChanged(
+                                (ImsFeatureCapabilities)msg.obj);
+                        break;
                 }
             }
         };
@@ -582,6 +607,34 @@ public class PhoneStateListener {
     }
 
     /**
+     * Callback invoked when IMS registered state is changed
+     * {@link com.android.server.TelephonyRegistry#notifyImsRegisteredChangedForSubscriber(
+     *         int, boolean)}
+     *
+     * @param isRegistered {@code true} if IMS is registered,
+     *                     {@code false} otherwise.
+     *
+     * @hide
+     */
+    public void onImsRegisteredChanged(boolean isRegistered) {
+        // default implementation empty
+    }
+
+    /**
+     * Callback invoked when IMS feature capabilities are changed
+     * {@link com.android.server.TelephonyRegistry#notifyImsFeatureCapabilitiesChangedForSubscriber(
+     *         int, ImsFeatureCapabilities)}
+     *
+     * @param capabilities The IMS feature capabilities
+     *                     {@link android.telephony.ImsFeatureCapabilities}
+     *
+     * @hide
+     */
+    public void onImsFeatureCapabilitiesChanged(ImsFeatureCapabilities capabilities) {
+        // default implementation empty
+    }
+
+    /**
      * The callback methods need to be called on the handler thread where
      * this object was created.  If the binder did that for us it'd be nice.
      *
@@ -683,6 +736,15 @@ public class PhoneStateListener {
 
         public void onCarrierNetworkChange(boolean active) {
             send(LISTEN_CARRIER_NETWORK_CHANGE, 0, 0, active);
+        }
+
+        public void onImsRegisteredChanged(boolean isRegistered) {
+            send(LISTEN_IMS_REGISTERED_STATE_CHANGE, 0, 0, isRegistered);
+        }
+
+        public void onImsFeatureCapabilitiesChanged(
+                ImsFeatureCapabilities imsFeatureCapabilities) {
+            send(LISTEN_IMS_FEATURE_CAPABILITIES_CHANGE, 0, 0, imsFeatureCapabilities);
         }
     }
 
