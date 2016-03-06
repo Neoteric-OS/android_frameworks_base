@@ -325,12 +325,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     private int mNavigationBarWindowState = WINDOW_STATE_SHOWING;
 
-    // the tracker view
-    int mTrackingPosition; // the position of the top of the tracking view.
-
     // Tracking finger for opening/closing.
     boolean mTracking;
-    VelocityTracker mVelocityTracker;
 
     int[] mAbsPos = new int[2];
     ArrayList<Runnable> mPostCollapseRunnables = new ArrayList<>();
@@ -2185,8 +2181,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     public void animateCollapsePanels(int flags, boolean force, boolean delayed,
             float speedUpFactor) {
-        if (!force &&
-                (mState == StatusBarState.KEYGUARD || mState == StatusBarState.SHADE_LOCKED)) {
+        if (mTracking || (!force &&
+                (mState == StatusBarState.KEYGUARD || mState == StatusBarState.SHADE_LOCKED))) {
             runPostCollapseRunnables();
             return;
         }
@@ -2661,8 +2657,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         synchronized (mQueueLock) {
             pw.println("Current Status Bar state:");
-            pw.println("  mExpandedVisible=" + mExpandedVisible
-                    + ", mTrackingPosition=" + mTrackingPosition);
+            pw.println("  mExpandedVisible=" + mExpandedVisible);
             pw.println("  mTracking=" + mTracking);
             pw.println("  mDisplayMetrics=" + mDisplayMetrics);
             pw.println("  mStackScroller: " + viewInfo(mStackScroller));
@@ -3784,11 +3779,16 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     }
 
     public void onTrackingStarted() {
+        mTracking = true;
         runPostCollapseRunnables();
     }
 
     public void onClosingFinished() {
         runPostCollapseRunnables();
+        if (!isPanelFullyCollapsed() && mStatusBarWindow != null) {
+            // Request focus again when the panel is not closed
+            mStatusBarWindowManager.setStatusBarFocusable(true);
+        }
     }
 
     public void onUnlockHintStarted() {
@@ -3813,6 +3813,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     }
 
     public void onTrackingStopped(boolean expand) {
+        mTracking = false;
         if (mState == StatusBarState.KEYGUARD || mState == StatusBarState.SHADE_LOCKED) {
             if (!expand && !mUnlockMethodCache.canSkipBouncer()) {
                 showBouncer();
