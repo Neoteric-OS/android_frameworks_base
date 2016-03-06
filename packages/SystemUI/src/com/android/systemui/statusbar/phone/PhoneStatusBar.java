@@ -325,13 +325,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     private int mNavigationBarWindowState = WINDOW_STATE_SHOWING;
 
-    // the tracker view
-    int mTrackingPosition; // the position of the top of the tracking view.
-
-    // Tracking finger for opening/closing.
-    boolean mTracking;
-    VelocityTracker mVelocityTracker;
-
     int[] mAbsPos = new int[2];
     ArrayList<Runnable> mPostCollapseRunnables = new ArrayList<>();
 
@@ -2204,11 +2197,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
 
         if (mStatusBarWindow != null) {
-            // release focus immediately to kick off focus change transition
-            mStatusBarWindowManager.setStatusBarFocusable(false);
-
-            mStatusBarWindow.cancelExpandHelper();
             mStatusBarView.collapseAllPanels(true /* animate */, delayed, speedUpFactor);
+
+            if (isCollapsing() || isPanelFullyCollapsed()) {
+                mStatusBarWindow.cancelExpandHelper();
+                // release focus immediately to kick off focus change transition
+                mStatusBarWindowManager.setStatusBarFocusable(false);
+            }
         }
     }
 
@@ -2307,7 +2302,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         if (SPEW) {
             Log.d(TAG, "Touch: rawY=" + event.getRawY() + " event=" + event + " mDisabled1="
-                + mDisabled1 + " mDisabled2=" + mDisabled2 + " mTracking=" + mTracking);
+                + mDisabled1 + " mDisabled2=" + mDisabled2);
         } else if (CHATTY) {
             if (event.getAction() != MotionEvent.ACTION_MOVE) {
                 Log.d(TAG, String.format(
@@ -2661,9 +2656,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         synchronized (mQueueLock) {
             pw.println("Current Status Bar state:");
-            pw.println("  mExpandedVisible=" + mExpandedVisible
-                    + ", mTrackingPosition=" + mTrackingPosition);
-            pw.println("  mTracking=" + mTracking);
+            pw.println("  mExpandedVisible=" + mExpandedVisible);
             pw.println("  mDisplayMetrics=" + mDisplayMetrics);
             pw.println("  mStackScroller: " + viewInfo(mStackScroller));
             pw.println("  mStackScroller: " + viewInfo(mStackScroller)
@@ -3788,6 +3781,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     }
 
     public void onClosingFinished() {
+        if (!isPanelFullyCollapsed()) {
+            // Request focus again when the panel is not closed
+            mStatusBarWindowManager.setStatusBarFocusable(true);
+        }
         runPostCollapseRunnables();
     }
 
