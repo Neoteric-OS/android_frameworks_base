@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37af7563_9a025ded",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2380,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2016-03-08T01:46:53Z",
+      "side": 1,
+      "message": "Under what circumstances would this be true?  Would this be a device-specific attribute?  Or a carrier-specific attribute?",
+      "revId": "3563ca76ea3bc5ef94815ecefc44c91b2fb1884e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37af7563_1a418d15",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3018,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2016-03-08T01:46:53Z",
+      "side": 1,
+      "message": "Can you please clarify, if the number is not an emergency number we will drop out here.  So it would seem this method is only going to operate on non-emergency numbers, which seems to conflict with the method comment \"converts the emergency number based on the conversion map\".",
+      "range": {
+        "startLine": 3016,
+        "startChar": 8,
+        "endLine": 3018,
+        "endChar": 9
+      },
+      "revId": "3563ca76ea3bc5ef94815ecefc44c91b2fb1884e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
