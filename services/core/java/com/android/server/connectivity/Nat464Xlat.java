@@ -105,9 +105,11 @@ public class Nat464Xlat extends BaseNetworkObserver {
      * Clears internal state. Must not be called by ConnectivityService.
      */
     private void clear() {
-        mIface = null;
-        mBaseIface = null;
-        mIsRunning = false;
+        synchronized(this) {
+            mIface = null;
+            mBaseIface = null;
+            mIsRunning = false;
+        }
     }
 
     /**
@@ -178,15 +180,17 @@ public class Nat464Xlat extends BaseNetworkObserver {
      * has no idea that 464xlat is running on top of it.
      */
     public void fixupLinkProperties(LinkProperties oldLp) {
-        if (mNetwork.clatd != null &&
-                mIsRunning &&
-                mNetwork.linkProperties != null &&
-                !mNetwork.linkProperties.getAllInterfaceNames().contains(mIface)) {
-            Slog.d(TAG, "clatd running, updating NAI for " + mIface);
-            for (LinkProperties stacked: oldLp.getStackedLinks()) {
-                if (mIface.equals(stacked.getInterfaceName())) {
-                    mNetwork.linkProperties.addStackedLink(stacked);
-                    break;
+        synchronized(this) {
+            if (mNetwork.clatd != null &&
+                    mIsRunning &&
+                    mNetwork.linkProperties != null &&
+                    !mNetwork.linkProperties.getAllInterfaceNames().contains(mIface)) {
+                Slog.d(TAG, "clatd running, updating NAI for " + mIface);
+                for (LinkProperties stacked: oldLp.getStackedLinks()) {
+                    if (mIface.equals(stacked.getInterfaceName())) {
+                        mNetwork.linkProperties.addStackedLink(stacked);
+                        break;
+                    }
                 }
             }
         }
