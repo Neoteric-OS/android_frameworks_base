@@ -61,6 +61,8 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.os.storage.IMountService;
+import android.os.storage.StorageManager;
+import android.os.storage.StorageVolume;
 import android.util.AndroidRuntimeException;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -1950,9 +1952,31 @@ class ContextImpl extends Context {
      * unable to create, they are filtered by replacing with {@code null}.
      */
     private File[] ensureDirsExistOrFilter(File[] dirs) {
+        StorageManager storageManager = (StorageManager)getSystemService(Context.STORAGE_SERVICE);
+        StorageVolume[] volumes = storageManager.getVolumeList();
+
+        for (int i = 0; i < volumes.length; i++) {
+            if (!(volumes[i].getState().equals(Environment.MEDIA_MOUNTED))) {
+                volumes[i] = null;
+            }
+        }
+
         File[] result = new File[dirs.length];
         for (int i = 0; i < dirs.length; i++) {
             File dir = dirs[i];
+            for (StorageVolume volume : volumes) {
+                if (volume != null && dir.getAbsolutePath().startsWith(volume.getPath())) {
+                    result[i] = dir;
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < result.length; i++) {
+            File dir = result[i];
+            if (dir == null) {
+                continue;
+            }
             if (!dir.exists()) {
                 if (!dir.mkdirs()) {
                     // recheck existence in case of cross-process race
