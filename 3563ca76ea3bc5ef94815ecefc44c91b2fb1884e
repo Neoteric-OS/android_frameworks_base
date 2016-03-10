@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77172dd9_f8b3f1c7",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2380,
+      "author": {
+        "id": 1022419
+      },
+      "writtenOn": "2016-03-10T07:13:15Z",
+      "side": 1,
+      "message": "This is carrier specific attribute. For Taiwan operator, we need to set true and add a following conversion map\n\n\u003citem\u003e110,119:112\u003c/item\u003e\n\nin config_emergency_call_convert_map. This is necessary for Taiwan Type Approval.",
+      "parentUuid": "37af7563_9a025ded",
+      "revId": "3563ca76ea3bc5ef94815ecefc44c91b2fb1884e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37af7563_1a418d15",
         "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2016-03-08T01:46:53Z",
       "side": 1,
       "message": "Can you please clarify, if the number is not an emergency number we will drop out here.  So it would seem this method is only going to operate on non-emergency numbers, which seems to conflict with the method comment \"converts the emergency number based on the conversion map\".",
+      "range": {
+        "startLine": 3016,
+        "startChar": 8,
+        "endLine": 3018,
+        "endChar": 9
+      },
+      "revId": "3563ca76ea3bc5ef94815ecefc44c91b2fb1884e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77172dd9_78284164",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3018,
+      "author": {
+        "id": 1022419
+      },
+      "writtenOn": "2016-03-10T07:13:15Z",
+      "side": 1,
+      "message": "Thanks for your comment.\n\nThis code is correct and the method comment \"Converts the emergency number based on the conversion map\" is incorrect.\n\nI\u0027ll upload new patch set to correct some method names and comments.",
+      "parentUuid": "37af7563_1a418d15",
       "range": {
         "startLine": 3016,
         "startChar": 8,
