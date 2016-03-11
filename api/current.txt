@@ -55081,6 +55081,10 @@ package java.util {
     method public static int hashCode(float[]);
     method public static int hashCode(double[]);
     method public static int hashCode(java.lang.Object[]);
+    method public static void setAll(T[], java.util.function.IntFunction<? extends T>);
+    method public static void setAll(int[], java.util.function.IntUnaryOperator);
+    method public static void setAll(long[], java.util.function.IntToLongFunction);
+    method public static void setAll(double[], java.util.function.IntToDoubleFunction);
     method public static void sort(int[]);
     method public static void sort(int[], int, int);
     method public static void sort(long[]);
@@ -63286,3 +63290,4 @@ package org.xmlpull.v1.sax2 {
   }
 
 }
+
