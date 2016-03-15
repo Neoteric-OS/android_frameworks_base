@@ -2038,7 +2038,8 @@ nScriptForEach(JNIEnv *_env, jobject _this, jlong con, jlong script, jint slot,
     }
 
     RsScriptCall sc, *sca = nullptr;
-    uint32_t sc_size = 0;
+    // sc_size is required by but unused by the runtime and drivers
+    uint32_t sc_size = sizeof(RsScriptCall);
 
     jint  limit_len = 0;
     jint *limit_ptr = nullptr;
