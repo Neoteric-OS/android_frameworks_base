@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37cbf5e3_6dcee6d3",
+        "filename": "rs/jni/android_renderscript_RenderScript.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2042,
+      "author": {
+        "id": 1063563
+      },
+      "writtenOn": "2016-03-15T23:16:50Z",
+      "side": 1,
+      "message": "What happens if limits\u003d\u003dnullptr and sca is left as nullptr?  Then sc_size will still be sizeof(RsScriptCall).  Contrast with what is done in nScriptReduce(), where sc_size is left as zero if limits\u003d\u003dnullptr.\n\nAlso, may want to use the idiom sizeof(sc) or sizeof(*sca) (nScriptReduce() uses the former).",
+      "range": {
+        "startLine": 2041,
+        "startChar": 0,
+        "endLine": 2042,
+        "endChar": 44
+      },
+      "revId": "a50141a2cce4d3415bb917b4619f8448913bcf91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
