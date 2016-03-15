@@ -22,6 +22,30 @@
       "revId": "a50141a2cce4d3415bb917b4619f8448913bcf91",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37cbf5e3_8d624281",
+        "filename": "rs/jni/android_renderscript_RenderScript.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2042,
+      "author": {
+        "id": 1050418
+      },
+      "writtenOn": "2016-03-15T23:21:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37cbf5e3_6dcee6d3",
+      "range": {
+        "startLine": 2041,
+        "startChar": 0,
+        "endLine": 2042,
+        "endChar": 44
+      },
+      "revId": "a50141a2cce4d3415bb917b4619f8448913bcf91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
