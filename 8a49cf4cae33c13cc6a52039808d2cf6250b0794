@@ -22,6 +22,30 @@
       "revId": "8a49cf4cae33c13cc6a52039808d2cf6250b0794",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37cbf5e3_b062f5b5",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1098498
+      },
+      "writtenOn": "2016-03-15T23:52:23Z",
+      "side": 0,
+      "message": "Did you find a place that uses true? I cannot. I see it used in HdmiControlService (which wouldn\u0027t affect it) and HdmiCecLocalDeviceTv (which is a totally separate class from HdmiCecLocalDevicePlayback and shouldn\u0027t be instantiated with Tv. If you are setting true in Tv and false in Playback, that\u0027s going to be a separate problem).\n\nThe main reason I removed it is because there is no need to update the settings db with the default. This allows knowing what % of users have set it enabled, disabled, AND default",
+      "parentUuid": "37cbf5e3_ed3bf67e",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 94
+      },
+      "revId": "8a49cf4cae33c13cc6a52039808d2cf6250b0794",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
