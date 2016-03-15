@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37cbf5e3_ed3bf67e",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1018369
+      },
+      "writtenOn": "2016-03-15T23:19:55Z",
+      "side": 0,
+      "message": "This seems unnecessary to me too.\n\nDonghyun, could you check removing the code here doesn\u0027t lead to any regression? There is another place where we use \"true\" for default value when it\u0027s not there already. The behavior will be changed.",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 94
+      },
+      "revId": "8a49cf4cae33c13cc6a52039808d2cf6250b0794",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
