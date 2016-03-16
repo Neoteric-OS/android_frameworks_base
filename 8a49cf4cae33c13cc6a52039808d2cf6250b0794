@@ -70,6 +70,30 @@
       "revId": "8a49cf4cae33c13cc6a52039808d2cf6250b0794",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc755eba_6894675f",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1098498
+      },
+      "writtenOn": "2016-03-16T22:13:33Z",
+      "side": 0,
+      "message": "Hmm, actually, you might be right. InputsActivity (in Settings) does default to true. If we remove this, then the Settings UI will be out of sync. EXCEPT for the fact that InputsActivity is never used for HdmiCecLocalDevicePlayback (but I\u0027ll start a separate email chain with you about that)\n\nSafer bet is probably remove this line.",
+      "parentUuid": "dc755eba_62832832",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 94
+      },
+      "revId": "8a49cf4cae33c13cc6a52039808d2cf6250b0794",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
