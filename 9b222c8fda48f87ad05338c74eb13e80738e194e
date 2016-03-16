@@ -22,6 +22,30 @@
       "revId": "9b222c8fda48f87ad05338c74eb13e80738e194e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc755eba_138c0c25",
+        "filename": "core/java/com/android/internal/util/Predicates.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1010118
+      },
+      "writtenOn": "2016-03-16T15:41:30Z",
+      "side": 1,
+      "message": "This will likely change when Java 9 comes along. Error prone is based off of Java 9 javac.",
+      "parentUuid": "f7723d90_f7ae5ac9",
+      "range": {
+        "startLine": 36,
+        "startChar": 25,
+        "endLine": 36,
+        "endChar": 27
+      },
+      "revId": "9b222c8fda48f87ad05338c74eb13e80738e194e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
