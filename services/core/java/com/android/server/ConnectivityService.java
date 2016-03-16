@@ -2948,8 +2948,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     // javadoc from interface
     @Override
-    public int tether(String iface) {
-        ConnectivityManager.enforceTetherChangePermission(mContext);
+    public int tether(String iface, String callerPkg) {
+        ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
         if (isTetheringSupported()) {
             final int status = mTethering.tether(iface);
             return status;
@@ -2960,8 +2960,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     // javadoc from interface
     @Override
-    public int untether(String iface) {
-        ConnectivityManager.enforceTetherChangePermission(mContext);
+    public int untether(String iface, String callerPkg) {
+        ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
 
         if (isTetheringSupported()) {
             final int status = mTethering.untether(iface);
@@ -3015,8 +3015,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public int setUsbTethering(boolean enable) {
-        ConnectivityManager.enforceTetherChangePermission(mContext);
+    public int setUsbTethering(boolean enable, String callerPkg) {
+        ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
         if (isTetheringSupported()) {
             return mTethering.setUsbTethering(enable);
         } else {
@@ -3075,8 +3075,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public void startTethering(int type, ResultReceiver receiver, boolean showProvisioningUi) {
-        ConnectivityManager.enforceTetherChangePermission(mContext);
+    public void startTethering(int type, ResultReceiver receiver, boolean showProvisioningUi,
+            String callerPkg) {
+        ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
         if (!isTetheringSupported()) {
             receiver.send(ConnectivityManager.TETHER_ERROR_UNSUPPORTED, null);
             return;
@@ -3085,8 +3086,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public void stopTethering(int type) {
-        ConnectivityManager.enforceTetherChangePermission(mContext);
+    public void stopTethering(int type, String callerPkg) {
+        ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
         mTethering.stopTethering(type);
     }
 
@@ -5481,9 +5482,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         setAirplaneMode(false);
 
         if (!mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_TETHERING)) {
-            // Untether
+            // Untetheri
+            String pkgName = mContext.getOpPackageName();
             for (String tether : getTetheredIfaces()) {
-                untether(tether);
+                untether(tether, pkgName);
             }
         }
 
