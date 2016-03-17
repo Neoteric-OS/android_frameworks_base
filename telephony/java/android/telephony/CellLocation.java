@@ -47,6 +47,22 @@ public abstract class CellLocation {
     }
 
     /**
+     * Request an update of the current location for the given subscription.
+     * If the location has changed, a broadcast will be sent to everyone registered
+     * with {@link PhoneStateListener#LISTEN_CELL_LOCATION}.
+     */
+    public static void requestLocationUpdate(int subId) {
+        try {
+            ITelephony phone = ITelephony.Stub.asInterface(ServiceManager.getService("phone"));
+            if (phone != null) {
+                phone.updateServiceLocationForSubscriber(subId);
+            }
+        } catch (RemoteException ex) {
+            // ignore it
+        }
+    }
+
+    /**
      * Create a new CellLocation from a intent notifier Bundle
      *
      * This method is used by PhoneStateIntentReceiver and maybe by

@@ -264,5 +264,43 @@
 
     <bool name="quick_settings_show_full_alarm">false</bool>
 
+    <!-- Enable showing cell max capabilities in bearer icon with config_data_network_type_rank_map. -->
+    <bool name="config_updateDataNetIconBaseOnLocation">false</bool>
+
+    <!-- This config is holding data network type rank map - expected to convert to
+         data network type rank array when config_updateDataNetIconBaseOnLocation is enabled.
+         Formats for this config should be as below:
+         <item>[DataNetworkType1],[DataNetworkType2],[DataNetworkType3]:[Rank]</item>
+         The data network type should be value of TelephonyManager#NETWORK_TYPE_XXX
+         Higher rank indicates that the data network type is better, and is always
+         shown in the same cell.
+
+         E.g. for orange operator or some other UE operators, the coverage icon
+         SHALL display the cell’s max capabilities according to the following table:
+         Bearer=icon
+         GPRS=G
+         EDGE=E
+         UMTS=3G
+         HSDPA/HSUPA=3G+
+         HSPA+ Single Carrier (21Mbps) and/or Dual Carrier (42Mbps)=H+
+         LTE=4G
+
+         Then the config should be definied as below:
+         <item>1:0</item>           -> GPRS=G
+         <item>2:1</item>           -> EDGE=E
+         <item>3:2</item>           -> UMTS=3G
+         <item>8,9,10:3</item>      -> HSDPA/HSUPA=3G+
+         <item>15:4</item>          -> HSPA+ Single Carrier (21Mbps) and/or Dual Carrier (42Mbps)=H+
+         <item>13:5</item>          -> LTE=4G
+         For default, this config meets orange operator requirement.
+    -->
+    <string-array translatable="false" name="config_data_network_type_rank_map" >
+         <item>1:0</item>
+         <item>2:1</item>
+         <item>3:2</item>
+         <item>8,9,10:3</item>
+         <item>15:4</item>
+         <item>13:5</item>
+    </string-array>
 </resources>
 

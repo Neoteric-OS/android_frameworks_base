@@ -36816,6 +36816,7 @@ package android.telephony {
     ctor public CellLocation();
     method public static android.telephony.CellLocation getEmpty();
     method public static void requestLocationUpdate();
+    method public static void requestLocationUpdate(int);
   }
 
   public abstract class CellSignalStrength {
