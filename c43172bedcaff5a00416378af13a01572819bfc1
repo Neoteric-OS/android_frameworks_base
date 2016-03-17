@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc66a235_d4f61c7c",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1098775
+      },
+      "writtenOn": "2016-03-17T22:24:36Z",
+      "side": 1,
+      "message": "Thank you for this fix. But the NPE issue has already been fixed internally, and it will be available in the next release.",
+      "revId": "c43172bedcaff5a00416378af13a01572819bfc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

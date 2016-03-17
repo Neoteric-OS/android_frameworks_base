@@ -94,6 +94,30 @@
       "revId": "8a49cf4cae33c13cc6a52039808d2cf6250b0794",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc66a235_f4f9986c",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1098775
+      },
+      "writtenOn": "2016-03-17T22:24:36Z",
+      "side": 0,
+      "message": "How about Android playback device such as Nexus Player?\nIf TvSettings app is installed on the Nexus Player, the UI will be out of sync because it uses HdmiCecLocalDevicePlayback.",
+      "parentUuid": "dc755eba_6894675f",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 94
+      },
+      "revId": "8a49cf4cae33c13cc6a52039808d2cf6250b0794",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
