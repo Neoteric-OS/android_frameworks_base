@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cb88ea6_87fc4685",
+        "filename": "core/java/com/android/internal/logging/MetricsLogger.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2016-03-17T00:16:22Z",
+      "side": 1,
+      "message": "Needed?",
+      "revId": "0eab1c1ebce2a1dcced1f35f420f5eac0f8d9a88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
