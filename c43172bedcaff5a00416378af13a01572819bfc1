@@ -16,6 +16,24 @@
       "revId": "c43172bedcaff5a00416378af13a01572819bfc1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_f8a859eb",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1099383
+      },
+      "writtenOn": "2016-03-17T22:27:54Z",
+      "side": 1,
+      "message": "Ok. Good to know",
+      "parentUuid": "fc66a235_d4f61c7c",
+      "revId": "c43172bedcaff5a00416378af13a01572819bfc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

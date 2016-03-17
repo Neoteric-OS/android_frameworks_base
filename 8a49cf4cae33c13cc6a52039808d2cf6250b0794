@@ -118,6 +118,30 @@
       "revId": "8a49cf4cae33c13cc6a52039808d2cf6250b0794",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc14e289_58ba4d34",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1099383
+      },
+      "writtenOn": "2016-03-17T22:27:54Z",
+      "side": 0,
+      "message": "I don\u0027t have a Nexus Player, could you test it? I actually think InputsActivity in TvSettings is not shown up from looking at the code",
+      "parentUuid": "fc66a235_f4f9986c",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 94
+      },
+      "revId": "8a49cf4cae33c13cc6a52039808d2cf6250b0794",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
