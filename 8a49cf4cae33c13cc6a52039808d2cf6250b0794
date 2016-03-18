@@ -142,6 +142,30 @@
       "revId": "8a49cf4cae33c13cc6a52039808d2cf6250b0794",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cc4c67e_19e12be6",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1098775
+      },
+      "writtenOn": "2016-03-18T04:38:36Z",
+      "side": 0,
+      "message": "Right, I have checked with my Nexus Player, and Input setting are currently not shown by isInputSettingNeeded().\n\nhttps://android.googlesource.com/platform/packages/apps/TvSettings/+/master/Settings/src/com/android/tv/settings/BrowseInfo.java#426\n\nBut, I think NexusPlayer needs CEC settings also. So I think we\u0027d better to consider CEC-setting issues first before cleaning up this code.",
+      "parentUuid": "fc14e289_58ba4d34",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 94
+      },
+      "revId": "8a49cf4cae33c13cc6a52039808d2cf6250b0794",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
