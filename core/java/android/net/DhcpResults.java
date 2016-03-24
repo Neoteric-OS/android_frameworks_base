@@ -43,6 +43,9 @@ public class DhcpResults extends StaticIpConfiguration {
     /** Link MTU option. 0 means unset. */
     public int mtu;
 
+    /** Captive-portal URL option (from RFC 7710). */
+    public String captivePortal;
+
     public DhcpResults() {
         super();
     }
@@ -61,6 +64,7 @@ public class DhcpResults extends StaticIpConfiguration {
             vendorInfo = source.vendorInfo;
             leaseDuration = source.leaseDuration;
             mtu = source.mtu;
+            captivePortal = source.captivePortal;
         }
     }
 

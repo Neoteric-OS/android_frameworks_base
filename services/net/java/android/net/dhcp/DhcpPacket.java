@@ -254,6 +254,12 @@ public abstract class DhcpPacket {
     protected static final byte DHCP_CLIENT_IDENTIFIER = 61;
 
     /**
+     * DHCP Optional Type: DHCP Captive-Portal (RFC 7710)
+     */
+    protected static final byte DHCP_CAPTIVE_PORTAL = (byte) 160;
+    protected String mCaptivePortal;
+
+    /**
      * DHCP zero-length option code: pad
      */
     protected static final byte DHCP_OPTION_PAD = 0x00;
@@ -747,6 +753,7 @@ public abstract class DhcpPacket {
         String message = null;
         String vendorId = null;
         String vendorInfo = null;
+        String captivePortal = null;
         byte[] expectedParams = null;
         String hostName = null;
         String domainName = null;
@@ -1008,6 +1015,11 @@ public abstract class DhcpPacket {
                             // Embedded nulls are safe as this does not get passed to netd.
                             vendorInfo = readAsciiString(packet, optionLen, true);
                             break;
+                        case DHCP_CAPTIVE_PORTAL:
+                            expectedLen = optionLen;
+                            // The value is a URI and should not have any embedded nulls.
+                            captivePortal = readAsciiString(packet, optionLen, false);
+                            break;
                         default:
                             // ignore any other parameters
                             for (int i = 0; i < optionLen; i++) {
@@ -1090,6 +1102,7 @@ public abstract class DhcpPacket {
         newPacket.mT2 = T2;
         newPacket.mVendorId = vendorId;
         newPacket.mVendorInfo = vendorInfo;
+        newPacket.mCaptivePortal = captivePortal;
         return newPacket;
     }
 
@@ -1149,6 +1162,7 @@ public abstract class DhcpPacket {
         results.vendorInfo = mVendorInfo;
         results.leaseDuration = (mLeaseTime != null) ? mLeaseTime : INFINITE_LEASE;
         results.mtu = (mMtu != null && MIN_MTU <= mMtu && mMtu <= MAX_MTU) ? mMtu : 0;
+        results.captivePortal = mCaptivePortal;
 
         return results;
     }
