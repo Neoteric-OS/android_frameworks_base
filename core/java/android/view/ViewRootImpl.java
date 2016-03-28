@@ -6386,7 +6386,13 @@ public final class ViewRootImpl implements ViewParent,
                 handleWindowContentChangedEvent(event);
             } break;
         }
-        mAccessibilityManager.sendAccessibilityEvent(event);
+
+        try {
+            mAccessibilityManager.sendAccessibilityEvent(event);
+        } catch (IllegalStateException ex) {
+            Log.e(TAG, "Error in sendAccessibilityEvent() ", ex);
+            return false;
+        }
         return true;
     }
 
