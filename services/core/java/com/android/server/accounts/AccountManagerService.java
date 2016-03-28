@@ -948,6 +948,8 @@ public class AccountManagerService
                 logRecord(db, DebugDbHelper.ACTION_ACCOUNT_ADD, TABLE_ACCOUNTS, accountId,
                         accounts, callingUid);
 
+                removeAccountFromCacheLocked(accounts, account);
+
                 insertAccountIntoCacheLocked(accounts, account);
             } finally {
                 db.endTransaction();
