@@ -531,6 +531,11 @@ public class JobSchedulerService extends com.android.server.SystemService
             if (DEBUG) {
                 Slog.d(TAG, "Could not find job to remove. Was job removed while executing?");
             }
+            Synchronized(mJobs) {
+                if (mPendingJobs.size() > 0) {
+                    mHandler.obtainMessage(MSG_CHECK_JOB).sendToTarget();
+                }
+            }
             return;
         }
         if (needsReschedule) {
