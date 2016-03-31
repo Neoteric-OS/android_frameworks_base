@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3174e57a_613e01be",
+        "filename": "rs/java/android/renderscript/Allocation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1911,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2016-03-31T00:30:49Z",
+      "side": 1,
+      "message": "Isn\u0027t this call the one allocating the native memory? I assume that the \"new Allocation()\" can\u0027t fail unless we are completely out of memory, and then there isn\u0027t anything we can do either.",
+      "revId": "19bf460dac0076eb515dac76eb5377d880f59f29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
