@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3174e57a_8976dbd9",
+        "filename": "rs/java/android/renderscript/Script.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2016-03-31T21:36:11Z",
+      "side": 1,
+      "message": "ScriptIntrinsic",
+      "range": {
+        "startLine": 364,
+        "startChar": 63,
+        "endLine": 364,
+        "endChar": 78
+      },
+      "revId": "9589cc92561aedef6a374eee68e868589ec6cf3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3174e57a_69609f06",
+        "filename": "rs/java/android/renderscript/Script.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2016-03-31T21:36:11Z",
+      "side": 1,
+      "message": "to the end of each derived class constructor.",
+      "range": {
+        "startLine": 373,
+        "startChar": 11,
+        "endLine": 374,
+        "endChar": 25
+      },
+      "revId": "9589cc92561aedef6a374eee68e868589ec6cf3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
