@@ -16,6 +16,24 @@
       "revId": "19bf460dac0076eb515dac76eb5377d880f59f29",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3174e57a_f417318c",
+        "filename": "rs/java/android/renderscript/Allocation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1911,
+      "author": {
+        "id": 1050418
+      },
+      "writtenOn": "2016-03-31T01:06:44Z",
+      "side": 1,
+      "message": "No, Allocation(...) may throw for wrong arguments. Checkout the code for the constructor Allocation(...)",
+      "parentUuid": "3174e57a_613e01be",
+      "revId": "19bf460dac0076eb515dac76eb5377d880f59f29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
