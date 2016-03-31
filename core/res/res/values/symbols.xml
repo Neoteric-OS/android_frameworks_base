@@ -2345,4 +2345,12 @@
 
   <java-symbol type="string" name="config_iccHotswapPromptForRestartDialogComponent" />
   <java-symbol type="string" name="config_packagedKeyboardName" />
+
+  <!-- Dropbox configuration options -->
+  <java-symbol type="integer" name="config_dropbox_quota_percent" />
+  <java-symbol type="integer" name="config_dropbox_reserve_percent" />
+  <java-symbol type="integer" name="config_dropbox_quota_kb" />
+  <java-symbol type="integer" name="config_dropbox_max_files" />
+  <java-symbol type="integer" name="config_dropbox_age_seconds" />
+
 </resources>

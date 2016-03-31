@@ -2379,4 +2379,13 @@
     <!-- The BT name of the keyboard packaged with the device. If this is defined, SystemUI will
          automatically try to pair with it when the device exits tablet mode. -->
     <string translatable="false" name="config_packagedKeyboardName"></string>
+
+    <!-- Dropbox configuration options -->
+    <integer name="config_dropbox_quota_percent">10</integer>
+    <integer name="config_dropbox_reserve_percent">10</integer>
+    <integer name="config_dropbox_quota_kb">5120</integer>
+    <integer name="config_dropbox_max_files">1000</integer>
+    <!-- 259200 is 3 days in seconds -->
+    <integer name="config_dropbox_age_seconds">259200</integer>
+
 </resources>

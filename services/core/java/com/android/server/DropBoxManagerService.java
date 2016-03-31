@@ -38,6 +38,7 @@ import android.text.format.Time;
 import android.util.Slog;
 
 import com.android.internal.os.IDropBoxManagerService;
+import com.android.internal.R;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -60,11 +61,6 @@ import java.util.zip.GZIPOutputStream;
  */
 public final class DropBoxManagerService extends IDropBoxManagerService.Stub {
     private static final String TAG = "DropBoxManagerService";
-    private static final int DEFAULT_AGE_SECONDS = 3 * 86400;
-    private static final int DEFAULT_MAX_FILES = 1000;
-    private static final int DEFAULT_QUOTA_KB = 5 * 1024;
-    private static final int DEFAULT_QUOTA_PERCENT = 10;
-    private static final int DEFAULT_RESERVE_PERCENT = 10;
     private static final int QUOTA_RESCAN_MILLIS = 5000;
 
     // mHandler 'what' value.
@@ -700,9 +696,11 @@ public final class DropBoxManagerService extends IDropBoxManagerService.Stub {
         // Expunge aged items (including tombstones marking deleted data).
 
         int ageSeconds = Settings.Global.getInt(mContentResolver,
-                Settings.Global.DROPBOX_AGE_SECONDS, DEFAULT_AGE_SECONDS);
+                Settings.Global.DROPBOX_AGE_SECONDS, mContext.getResources()
+                .getInteger(R.integer.config_dropbox_age_seconds));
         int maxFiles = Settings.Global.getInt(mContentResolver,
-                Settings.Global.DROPBOX_MAX_FILES, DEFAULT_MAX_FILES);
+                Settings.Global.DROPBOX_MAX_FILES, mContext.getResources()
+                .getInteger(R.integer.config_dropbox_max_files));
         long cutoffMillis = System.currentTimeMillis() - ageSeconds * 1000;
         while (!mAllFiles.contents.isEmpty()) {
             EntryFile entry = mAllFiles.contents.first();
@@ -722,11 +720,14 @@ public final class DropBoxManagerService extends IDropBoxManagerService.Stub {
         long uptimeMillis = SystemClock.uptimeMillis();
         if (uptimeMillis > mCachedQuotaUptimeMillis + QUOTA_RESCAN_MILLIS) {
             int quotaPercent = Settings.Global.getInt(mContentResolver,
-                    Settings.Global.DROPBOX_QUOTA_PERCENT, DEFAULT_QUOTA_PERCENT);
+                    Settings.Global.DROPBOX_QUOTA_PERCENT, mContext.getResources()
+                    .getInteger(R.integer.config_dropbox_quota_percent));
             int reservePercent = Settings.Global.getInt(mContentResolver,
-                    Settings.Global.DROPBOX_RESERVE_PERCENT, DEFAULT_RESERVE_PERCENT);
+                    Settings.Global.DROPBOX_RESERVE_PERCENT, mContext.getResources()
+                    .getInteger(R.integer.config_dropbox_reserve_percent));
             int quotaKb = Settings.Global.getInt(mContentResolver,
-                    Settings.Global.DROPBOX_QUOTA_KB, DEFAULT_QUOTA_KB);
+                    Settings.Global.DROPBOX_QUOTA_KB, mContext.getResources()
+                    .getInteger(R.integer.config_dropbox_quota_kb));
 
             mStatFs.restat(mDropBoxDir.getPath());
             int available = mStatFs.getAvailableBlocks();
