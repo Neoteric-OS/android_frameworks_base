@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3174e57a_c6bb6291",
+        "filename": "rs/java/android/renderscript/ScriptC.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2016-03-31T20:53:57Z",
+      "side": 1,
+      "message": "Can you make this comment look more like our other comment style here? (i.e. we always start each new line with a * aligned to the same place the opening * is on).",
+      "revId": "47adc81e5d51169a40236043a22d0259b1418062",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
