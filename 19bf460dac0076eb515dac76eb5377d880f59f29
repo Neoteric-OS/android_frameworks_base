@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3174e57a_03570ca8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1010056
+      },
+      "writtenOn": "2016-03-31T20:20:28Z",
+      "side": 1,
+      "message": "covered",
+      "range": {
+        "startLine": 19,
+        "startChar": 48,
+        "endLine": 19,
+        "endChar": 54
+      },
+      "revId": "19bf460dac0076eb515dac76eb5377d880f59f29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3174e57a_613e01be",
         "filename": "rs/java/android/renderscript/Allocation.java",
         "patchSetId": 2
