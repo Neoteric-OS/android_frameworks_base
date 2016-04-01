@@ -586,7 +586,6 @@ public class AppOpsService extends IAppOpsService.Stub {
         ArrayList<Callback> repCbs = null;
         code = AppOpsManager.opToSwitch(code);
         synchronized (this) {
-            UidState uidState = getUidStateLocked(uid, false);
             Op op = getOpLocked(code, uid, packageName, true);
             if (op != null) {
                 if (op.mode != mode) {
@@ -1436,8 +1435,6 @@ public class AppOpsService extends IAppOpsService.Stub {
 
     void writeState() {
         synchronized (mFile) {
-            List<AppOpsManager.PackageOps> allOps = getPackagesForOps(null);
-
             FileOutputStream stream;
             try {
                 stream = mFile.startWrite();
@@ -1446,15 +1443,38 @@ public class AppOpsService extends IAppOpsService.Stub {
                 return;
             }
 
+            SparseArray<UidState> outUidStates = null;
+            synchronized (this) {
+                final int uidStateCount = mUidStates.size();
+                for (int i = 0; i < uidStateCount; i++) {
+                    UidState uidState = mUidStates.valueAt(i);
+                    SparseIntArray opModes = uidState.opModes;
+                    if (opModes != null && opModes.size() > 0) {
+                        SparseIntArray outOpModes = new SparseIntArray();
+                        final int opCount = opModes.size();
+                        for (int j = 0; j < opCount; j++) {
+                            outOpModes.put(opModes.keyAt(j), opModes.valueAt(j));
+                        }
+                        UidState outUidState = new UidState(uidState.uid);
+                        outUidState.opModes = outOpModes;
+                        if (outUidStates == null) {
+                            outUidStates = new SparseArray<>();
+                        }
+                        outUidStates.put(mUidStates.keyAt(i), outUidState);
+                    }
+                }
+            }
+            List<AppOpsManager.PackageOps> allOps = getPackagesForOps(null);
+
             try {
                 XmlSerializer out = new FastXmlSerializer();
                 out.setOutput(stream, StandardCharsets.UTF_8.name());
                 out.startDocument(null, true);
                 out.startTag(null, "app-ops");
 
-                final int uidStateCount = mUidStates.size();
+                final int uidStateCount = outUidStates != null ? outUidStates.size() : 0;
                 for (int i = 0; i < uidStateCount; i++) {
-                    UidState uidState = mUidStates.valueAt(i);
+                    UidState uidState = outUidStates.valueAt(i);
                     if (uidState.opModes != null && uidState.opModes.size() > 0) {
                         out.startTag(null, "uid");
                         out.attribute(null, "n", Integer.toString(uidState.uid));
@@ -1472,65 +1492,64 @@ public class AppOpsService extends IAppOpsService.Stub {
                     }
                 }
 
-                if (allOps != null) {
-                    String lastPkg = null;
-                    for (int i=0; i<allOps.size(); i++) {
-                        AppOpsManager.PackageOps pkg = allOps.get(i);
-                        if (!pkg.getPackageName().equals(lastPkg)) {
-                            if (lastPkg != null) {
-                                out.endTag(null, "pkg");
-                            }
-                            lastPkg = pkg.getPackageName();
-                            out.startTag(null, "pkg");
-                            out.attribute(null, "n", lastPkg);
+                String lastPkg = null;
+                final int allOpsCount = allOps != null ? allOps.size() : 0;
+                for (int i = 0; i < allOpsCount; i++) {
+                    AppOpsManager.PackageOps pkg = allOps.get(i);
+                    if (!pkg.getPackageName().equals(lastPkg)) {
+                        if (lastPkg != null) {
+                            out.endTag(null, "pkg");
                         }
-                        out.startTag(null, "uid");
-                        out.attribute(null, "n", Integer.toString(pkg.getUid()));
-                        synchronized (this) {
-                            Ops ops = getOpsLocked(pkg.getUid(), pkg.getPackageName(), false);
-                            // Should always be present as the list of PackageOps is generated
-                            // from Ops.
-                            if (ops != null) {
-                                out.attribute(null, "p", Boolean.toString(ops.isPrivileged));
-                            } else {
-                                out.attribute(null, "p", Boolean.toString(false));
-                            }
-                        }
-                        List<AppOpsManager.OpEntry> ops = pkg.getOps();
-                        for (int j=0; j<ops.size(); j++) {
-                            AppOpsManager.OpEntry op = ops.get(j);
-                            out.startTag(null, "op");
-                            out.attribute(null, "n", Integer.toString(op.getOp()));
-                            if (op.getMode() != AppOpsManager.opToDefaultMode(op.getOp())) {
-                                out.attribute(null, "m", Integer.toString(op.getMode()));
-                            }
-                            long time = op.getTime();
-                            if (time != 0) {
-                                out.attribute(null, "t", Long.toString(time));
-                            }
-                            time = op.getRejectTime();
-                            if (time != 0) {
-                                out.attribute(null, "r", Long.toString(time));
-                            }
-                            int dur = op.getDuration();
-                            if (dur != 0) {
-                                out.attribute(null, "d", Integer.toString(dur));
-                            }
-                            int proxyUid = op.getProxyUid();
-                            if (proxyUid != -1) {
-                                out.attribute(null, "pu", Integer.toString(proxyUid));
-                            }
-                            String proxyPackageName = op.getProxyPackageName();
-                            if (proxyPackageName != null) {
-                                out.attribute(null, "pp", proxyPackageName);
-                            }
-                            out.endTag(null, "op");
-                        }
-                        out.endTag(null, "uid");
+                        lastPkg = pkg.getPackageName();
+                        out.startTag(null, "pkg");
+                        out.attribute(null, "n", lastPkg);
                     }
-                    if (lastPkg != null) {
-                        out.endTag(null, "pkg");
+                    out.startTag(null, "uid");
+                    out.attribute(null, "n", Integer.toString(pkg.getUid()));
+                    synchronized (this) {
+                        Ops ops = getOpsLocked(pkg.getUid(), pkg.getPackageName(), false);
+                        // Should always be present as the list of PackageOps is generated
+                        // from Ops.
+                        if (ops != null) {
+                            out.attribute(null, "p", Boolean.toString(ops.isPrivileged));
+                        } else {
+                            out.attribute(null, "p", Boolean.toString(false));
+                        }
                     }
+                    List<AppOpsManager.OpEntry> ops = pkg.getOps();
+                    for (int j = 0; j < ops.size(); j++) {
+                        AppOpsManager.OpEntry op = ops.get(j);
+                        out.startTag(null, "op");
+                        out.attribute(null, "n", Integer.toString(op.getOp()));
+                        if (op.getMode() != AppOpsManager.opToDefaultMode(op.getOp())) {
+                            out.attribute(null, "m", Integer.toString(op.getMode()));
+                        }
+                        long time = op.getTime();
+                        if (time != 0) {
+                            out.attribute(null, "t", Long.toString(time));
+                        }
+                        time = op.getRejectTime();
+                        if (time != 0) {
+                            out.attribute(null, "r", Long.toString(time));
+                        }
+                        int dur = op.getDuration();
+                        if (dur != 0) {
+                            out.attribute(null, "d", Integer.toString(dur));
+                        }
+                        int proxyUid = op.getProxyUid();
+                        if (proxyUid != -1) {
+                            out.attribute(null, "pu", Integer.toString(proxyUid));
+                        }
+                        String proxyPackageName = op.getProxyPackageName();
+                        if (proxyPackageName != null) {
+                            out.attribute(null, "pp", proxyPackageName);
+                        }
+                        out.endTag(null, "op");
+                    }
+                    out.endTag(null, "uid");
+                }
+                if (lastPkg != null) {
+                    out.endTag(null, "pkg");
                 }
 
                 out.endTag(null, "app-ops");
