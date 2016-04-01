@@ -25919,6 +25919,7 @@ package android.net {
     method public int getLinkUpstreamBandwidthKbps();
     method public boolean hasCapability(int);
     method public boolean hasTransport(int);
+    method public android.net.NetworkCapabilities setNetworkSpecifier(android.net.NetworkSpecifier);
     method public void writeToParcel(android.os.Parcel, int);
     field public static final android.os.Parcelable.Creator<android.net.NetworkCapabilities> CREATOR;
     field public static final int NET_CAPABILITY_CAPTIVE_PORTAL = 17; // 0x11
@@ -26032,6 +26033,7 @@ package android.net {
     method public android.net.NetworkRequest.Builder removeCapability(int);
     method public android.net.NetworkRequest.Builder removeTransportType(int);
     method public android.net.NetworkRequest.Builder setNetworkSpecifier(java.lang.String);
+    method public android.net.NetworkRequest.Builder setNetworkSpecifier(android.net.NetworkSpecifier);
   }
 
   public class NetworkScoreManager {
@@ -26049,6 +26051,10 @@ package android.net {
     field public static final java.lang.String EXTRA_NETWORKS_TO_SCORE = "networksToScore";
     field public static final java.lang.String EXTRA_NEW_SCORER = "newScorer";
     field public static final java.lang.String EXTRA_PACKAGE_NAME = "packageName";
+  }
+
+  public abstract class NetworkSpecifier {
+    ctor public NetworkSpecifier();
   }
 
   public class ParseException extends java.lang.RuntimeException {

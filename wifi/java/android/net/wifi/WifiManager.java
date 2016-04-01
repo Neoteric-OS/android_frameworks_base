@@ -28,6 +28,8 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.wifi.hotspot2.PasspointConfiguration;
+import android.net.NetworkSpecifier;
+import android.net.WifiNetworkSpecifier;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
@@ -2854,5 +2856,11 @@ public class WifiManager {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
+
+    /*
+     * @hide
+     */
+    public WifiNetworkSpecifier getNetworkSpecifier() {
+        return new WifiNetworkSpecifier(new byte[]{1, 2, 3, 4, 5, 6});
     }
 }
