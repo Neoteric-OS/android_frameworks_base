@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e22c08a_c28343fa",
+        "filename": "services/core/java/com/android/server/AppOpsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1457,
+      "author": {
+        "id": 1023586
+      },
+      "writtenOn": "2016-04-11T13:16:34Z",
+      "side": 1,
+      "message": "Ok, I will change this.",
+      "parentUuid": "2ea720d3_284d9013",
+      "range": {
+        "startLine": 1453,
+        "startChar": 24,
+        "endLine": 1457,
+        "endChar": 25
+      },
+      "revId": "08f7bded3256020f3ea7a8e49c6c14f74ad478e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ea720d3_239c9388",
         "filename": "services/core/java/com/android/server/AppOpsService.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-04-07T17:32:32Z",
       "side": 1,
       "message": "This doesn\u0027t seem to changer behavior. Why is it needed?",
+      "range": {
+        "startLine": 1495,
+        "startChar": 16,
+        "endLine": 1553,
+        "endChar": 17
+      },
+      "revId": "08f7bded3256020f3ea7a8e49c6c14f74ad478e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e22c08a_6230cf30",
+        "filename": "services/core/java/com/android/server/AppOpsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1023586
+      },
+      "writtenOn": "2016-04-11T13:16:34Z",
+      "side": 1,
+      "message": "Yes, it does not change.\nJust to have the same look as #1475 and reduce indent.",
+      "parentUuid": "2ea720d3_239c9388",
       "range": {
         "startLine": 1495,
         "startChar": 16,
