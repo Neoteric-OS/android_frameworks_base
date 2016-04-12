@@ -3067,4 +3067,7 @@
   <java-symbol type="bool" name="config_showSysuiShutdown" />
 
   <java-symbol type="bool" name="config_display_no_service_when_sim_unready" />
+
+  <!-- SIM contact batch operation -->
+  <java-symbol type="bool" name="config_sim_phonebook_batch_operation" />
 </resources>
