@@ -23,6 +23,9 @@ import android.util.Log;
 
 /**
  * Out Of Band Data for Bluetooth device.
+ *
+ * <p>This object represents optional data obtained from remote device through
+ * Out Of Band channel, i.e. NFC.
  */
 public class OobData implements Parcelable {
     private byte[] securityManagerTk;
@@ -31,6 +34,11 @@ public class OobData implements Parcelable {
         return securityManagerTk;
     }
 
+    /**
+     * Sets the Temporary Key value to be used by LE Security Manager during LE
+     * pairing. The value shall be 16 bytes. Please see Bluetooth CSSv6, Part A
+     * 1.8 for detailed description.
+     */
     public void setSecurityManagerTk(byte[] securityManagerTk) {
         this.securityManagerTk = securityManagerTk;
     }
