@@ -51,6 +51,12 @@ public abstract class ScanCallback {
     public static final int SCAN_FAILED_OUT_OF_HARDWARE_RESOURCES = 5;
 
     /**
+     * Fails to start scan as the app is scanning to frequently.
+     * @hide
+     */
+    public static final int SCAN_FAILED_SCANNING_TOO_FREQUENTLY = 6;
+
+    /**
      * Callback when a BLE advertisement has been found.
      *
      * @param callbackType Determines how this callback was triggered. Could be one of

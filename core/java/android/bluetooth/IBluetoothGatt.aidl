@@ -40,7 +40,7 @@ interface IBluetoothGatt {
 
     void registerScanner(in IScannerCallback callback);
     void unregisterScanner(in int scannerId);
-    void startScan(in int scannerId, in ScanSettings settings, in List<ScanFilter> filters,
+    int startScan(in int scannerId, in ScanSettings settings, in List<ScanFilter> filters,
                    in WorkSource workSource, in List scanStorages, in String callingPackage);
     void stopScan(in int scannerId);
     void flushPendingBatchResults(in int scannerId);
