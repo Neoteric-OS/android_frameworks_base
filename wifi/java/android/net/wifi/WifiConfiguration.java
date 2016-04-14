@@ -902,6 +902,19 @@ public class WifiConfiguration implements Parcelable {
      */
     public HashMap<String, Integer>  linkedConfigurations;
 
+    /**
+     * Variable name used to set or get value from supplicant.
+     * @hide
+     */
+    public static final String SIMSLOT_VAR_NAME = "sim_num";
+
+    /**
+     * SIM slot for EAP-SIM/EAP-AKA.
+     * @hide
+     * @internal
+     */
+    public String simSlot;
+
     public WifiConfiguration() {
         networkId = INVALID_NETWORK_ID;
         SSID = null;
@@ -1152,6 +1165,10 @@ public class WifiConfiguration implements Parcelable {
                 sbuf.append('\n');
             }
         }
+
+        // For EAP SIM/AKA, extend to dual SIM cards.
+        sbuf.append(" simSlot: ").append(this.simSlot);
+
         if (this.connectChoices != null) {
             for(String key : this.connectChoices.keySet()) {
                 Integer choice = this.connectChoices.get(key);
@@ -1522,6 +1539,9 @@ public class WifiConfiguration implements Parcelable {
             noInternetAccessExpected = source.noInternetAccessExpected;
             creationTime = source.creationTime;
             updateTime = source.updateTime;
+
+            // For EAP SIM/AKA, extend to dual SIM cards.
+            simSlot = source.simSlot;
         }
     }
 
@@ -1601,6 +1621,9 @@ public class WifiConfiguration implements Parcelable {
         dest.writeInt(userApproved);
         dest.writeInt(numNoInternetAccessReports);
         dest.writeInt(noInternetAccessExpected ? 1 : 0);
+
+        // For EAP SIM/AKA, extend to dual SIM cards.
+        dest.writeString(simSlot);
     }
 
     /** Implement the Parcelable interface {@hide} */
@@ -1677,6 +1700,9 @@ public class WifiConfiguration implements Parcelable {
                 config.userApproved = in.readInt();
                 config.numNoInternetAccessReports = in.readInt();
                 config.noInternetAccessExpected = in.readInt() != 0;
+
+                // For EAP SIM/AKA, extend to dual SIM cards.
+                config.simSlot = in.readString();
                 return config;
             }
 
