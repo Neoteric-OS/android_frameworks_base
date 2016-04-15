@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b890aa8_5f4d6b69",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2016-04-15T14:39:18Z",
+      "side": 1,
+      "message": "I know that these checks are in this set of CLs, but neither of them are here.  This CL just connects the error reported from the IBluetoothGatt interface, and this commit message should reflect that.",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 20
+      },
+      "revId": "19f521fd5327be3c63b8791262f8b96d20adc3aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
