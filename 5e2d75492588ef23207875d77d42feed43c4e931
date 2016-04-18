@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "084df486_64848a95",
+        "filename": "include/androidfw/ZipUtils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-04-18T11:20:13Z",
+      "side": 1,
+      "message": "The first boot after this change is going to be slightly longer.",
+      "range": {
+        "startLine": 70,
+        "startChar": 27,
+        "endLine": 70,
+        "endChar": 52
+      },
+      "revId": "5e2d75492588ef23207875d77d42feed43c4e931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b574aea_3211ce75",
+        "filename": "include/androidfw/ZipUtils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-04-18T11:20:13Z",
+      "side": 1,
+      "message": "I\u0027m not actually sure this is correct. I don\u0027t think we should try and infer whether we\u0027re in DST or not. I worry about the case in NativeLibraryHelper::copyFileIfChange where we\u0027d end up copying more often than we should because of DST transitions.",
+      "range": {
+        "startLine": 76,
+        "startChar": 29,
+        "endLine": 76,
+        "endChar": 31
+      },
+      "revId": "5e2d75492588ef23207875d77d42feed43c4e931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
