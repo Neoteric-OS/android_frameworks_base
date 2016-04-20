@@ -152,6 +152,7 @@ extern int register_android_nio_utils(JNIEnv* env);
 extern int register_android_os_Debug(JNIEnv* env);
 extern int register_android_os_MessageQueue(JNIEnv* env);
 extern int register_android_os_Parcel(JNIEnv* env);
+extern int register_android_os_PathClassLoaderFactory(JNIEnv* env);
 extern int register_android_os_SELinux(JNIEnv* env);
 extern int register_android_os_SystemProperties(JNIEnv *env);
 extern int register_android_os_SystemClock(JNIEnv* env);
@@ -173,7 +174,6 @@ extern int register_android_backup_BackupDataOutput(JNIEnv *env);
 extern int register_android_backup_FileBackupHelperBase(JNIEnv *env);
 extern int register_android_backup_BackupHelperDispatcher(JNIEnv *env);
 extern int register_android_app_backup_FullBackup(JNIEnv *env);
-extern int register_android_app_ApplicationLoaders(JNIEnv* env);
 extern int register_android_app_ActivityThread(JNIEnv *env);
 extern int register_android_app_NativeActivity(JNIEnv *env);
 extern int register_android_media_RemoteDisplay(JNIEnv *env);
@@ -1326,6 +1326,7 @@ static const RegJNIRec gRegJNI[] = {
     REG_JNI(register_android_os_Debug),
     REG_JNI(register_android_os_FileObserver),
     REG_JNI(register_android_os_MessageQueue),
+    REG_JNI(register_android_os_PathClassLoaderFactory),
     REG_JNI(register_android_os_SELinux),
     REG_JNI(register_android_os_Trace),
     REG_JNI(register_android_os_UEventObserver),
@@ -1363,7 +1364,6 @@ static const RegJNIRec gRegJNI[] = {
     REG_JNI(register_android_backup_FileBackupHelperBase),
     REG_JNI(register_android_backup_BackupHelperDispatcher),
     REG_JNI(register_android_app_backup_FullBackup),
-    REG_JNI(register_android_app_ApplicationLoaders),
     REG_JNI(register_android_app_ActivityThread),
     REG_JNI(register_android_app_NativeActivity),
     REG_JNI(register_android_util_jar_StrictJarFile),

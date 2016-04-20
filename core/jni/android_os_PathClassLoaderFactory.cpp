@@ -39,13 +39,13 @@ static const JNINativeMethod g_methods[] = {
       reinterpret_cast<void*>(createClassloaderNamespace_native) },
 };
 
-static const char* const kApplicationLoadersPathName = "android/app/ApplicationLoaders";
+static const char* const kPathClassLoaderFactoryPathName = "android/os/PathClassLoaderFactory";
 
 namespace android
 {
 
-int register_android_app_ApplicationLoaders(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, kApplicationLoadersPathName, g_methods, NELEM(g_methods));
+int register_android_os_PathClassLoaderFactory(JNIEnv* env) {
+    return RegisterMethodsOrDie(env, kPathClassLoaderFactoryPathName, g_methods, NELEM(g_methods));
 }
 
 } // namespace android
