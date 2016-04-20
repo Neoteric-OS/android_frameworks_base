@@ -24,6 +24,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.net.LocalServerSocket;
 import android.opengl.EGL14;
+import android.os.PathClassLoaderFactory;
 import android.os.Process;
 import android.os.SystemClock;
 import android.os.SystemProperties;
@@ -458,7 +459,9 @@ public class ZygoteInit {
         } else {
             ClassLoader cl = null;
             if (systemServerClasspath != null) {
-                cl = new PathClassLoader(systemServerClasspath, ClassLoader.getSystemClassLoader());
+                cl = createSystemServerClassLoader(systemServerClasspath,
+                                                   parsedArgs.targetSdkVersion);
+
                 Thread.currentThread().setContextClassLoader(cl);
             }
 
@@ -469,6 +472,18 @@ public class ZygoteInit {
         }
 
         /* should never reach here */
+    }
+
+    private static PathClassLoader createSystemServerClassLoader(String systemServerClasspath,
+                                                                 int targetSdkVersion) {
+      String librarySearchPath = System.getProperty("java.library.path");
+
+      return PathClassLoaderFactory.createClassLoader(systemServerClasspath,
+                                                      librarySearchPath,
+                                                      null /* libraryPermittedPath */,
+                                                      ClassLoader.getSystemClassLoader(),
+                                                      targetSdkVersion,
+                                                      true);
     }
 
     /**
