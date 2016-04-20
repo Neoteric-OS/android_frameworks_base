@@ -458,7 +458,9 @@ public class ZygoteInit {
         } else {
             ClassLoader cl = null;
             if (systemServerClasspath != null) {
-                cl = new PathClassLoader(systemServerClasspath, ClassLoader.getSystemClassLoader());
+                cl = createSystemServerClassLoader(systemServerClasspath,
+                                                   parsedArgs.targetSdkVersion);
+
                 Thread.currentThread().setContextClassLoader(cl);
             }
 
@@ -469,6 +471,18 @@ public class ZygoteInit {
         }
 
         /* should never reach here */
+    }
+
+    private static PathClassLoader createSystemServerClassLoader(String systemServerClasspath,
+                                                                 int targetSdkVersion) {
+      String librarySearchPath = System.getProperty("java.library.path");
+
+      return PathClassLoaderFactory.createClassLoader(systemServerClasspath,
+                                                      librarySearchPath,
+                                                      null /* libraryPermittedPath */,
+                                                      ClassLoader.getSystemClassLoader(),
+                                                      targetSdkVersion,
+                                                      true);
     }
 
     /**
