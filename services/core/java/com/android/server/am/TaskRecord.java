@@ -1041,13 +1041,13 @@ final class TaskRecord {
             } else if (ATTR_TASKTYPE.equals(attrName)) {
                 taskType = Integer.valueOf(attrValue);
             } else if (ATTR_FIRSTACTIVETIME.equals(attrName)) {
-                firstActiveTime = Long.valueOf(attrValue);
+                firstActiveTime = Long.parseLong(attrValue);
             } else if (ATTR_LASTACTIVETIME.equals(attrName)) {
-                lastActiveTime = Long.valueOf(attrValue);
+                lastActiveTime = Long.parseLong(attrValue);
             } else if (ATTR_LASTDESCRIPTION.equals(attrName)) {
                 lastDescription = attrValue;
             } else if (ATTR_LASTTIMEMOVED.equals(attrName)) {
-                lastTimeOnTop = Long.valueOf(attrValue);
+                lastTimeOnTop = Long.parseLong(attrValue);
             } else if (ATTR_NEVERRELINQUISH.equals(attrName)) {
                 neverRelinquishIdentity = Boolean.valueOf(attrValue);
             } else if (attrName.startsWith(TaskDescription.ATTR_TASKDESCRIPTION_PREFIX)) {
