@@ -2036,7 +2036,7 @@ public class Am extends BaseCommand {
         final String taskIdStr = nextArgRequired();
         final int taskId = Integer.valueOf(taskIdStr);
         final String resizeableStr = nextArgRequired();
-        final boolean resizeable = Boolean.valueOf(resizeableStr);
+        final boolean resizeable = Boolean.parseBoolean(resizeableStr);
 
         try {
             mAm.setTaskResizeable(taskId, resizeable);
