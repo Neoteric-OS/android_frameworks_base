@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e85340c8_1834a72d",
+        "filename": "include/androidfw/ZipUtils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2016-04-21T15:20:44Z",
+      "side": 1,
+      "message": "(struct timespec is a completely different struct. this is a \"broken down time\", or \"struct tm\".)",
+      "range": {
+        "startLine": 65,
+        "startChar": 58,
+        "endLine": 65,
+        "endChar": 73
+      },
+      "revId": "5e2d75492588ef23207875d77d42feed43c4e931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "084df486_64848a95",
         "filename": "include/androidfw/ZipUtils.h",
         "patchSetId": 1
@@ -36,6 +59,30 @@
       "writtenOn": "2016-04-18T11:20:13Z",
       "side": 1,
       "message": "I\u0027m not actually sure this is correct. I don\u0027t think we should try and infer whether we\u0027re in DST or not. I worry about the case in NativeLibraryHelper::copyFileIfChange where we\u0027d end up copying more often than we should because of DST transitions.",
+      "range": {
+        "startLine": 76,
+        "startChar": 29,
+        "endLine": 76,
+        "endChar": 31
+      },
+      "revId": "5e2d75492588ef23207875d77d42feed43c4e931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e85340c8_78f6fba1",
+        "filename": "include/androidfw/ZipUtils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2016-04-21T15:20:44Z",
+      "side": 1,
+      "message": "-1 means \"dunno\". only 0 and 1 express a specific opinion.\n\ndid you want to memset to clear the other fields in struct tm? it seems like we ought to be consistent: either set the fields we don\u0027t have a value for to their \"unknown\" values or just leave them alone and assume it\u0027s the caller\u0027s responsibility to set them.",
+      "parentUuid": "6b574aea_3211ce75",
       "range": {
         "startLine": 76,
         "startChar": 29,
