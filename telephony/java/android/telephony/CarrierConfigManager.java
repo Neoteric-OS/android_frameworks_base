@@ -410,6 +410,14 @@ public class CarrierConfigManager {
     public static final String KEY_SUPPORT_CONFERENCE_CALL_BOOL = "support_conference_call_bool";
 
     /**
+     * Determines whether manage IMS conference calls is supported by a carrier.  When {@code true},
+     * manage IMS conference call is supported, {@code false otherwise}.
+     * @hide
+     */
+    public static final String KEY_SUPPORT_MANAGE_IMS_CONFERENCE_CALL_BOOL =
+            "support_manage_ims_conference_call_bool";
+
+    /**
      * Determine whether user can toggle Enhanced 4G LTE Mode in Settings.
      * @hide
      */
@@ -574,6 +582,7 @@ public class CarrierConfigManager {
         sDefaults.putInt(KEY_GSM_DTMF_TONE_DELAY_INT, 0);
         sDefaults.putInt(KEY_IMS_DTMF_TONE_DELAY_INT, 0);
         sDefaults.putBoolean(KEY_SUPPORT_CONFERENCE_CALL_BOOL, true);
+        sDefaults.putBoolean(KEY_SUPPORT_MANAGE_IMS_CONFERENCE_CALL_BOOL, true);
         sDefaults.putBoolean(KEY_EDITABLE_ENHANCED_4G_LTE_BOOL, true);
         sDefaults.putBoolean(KEY_HIDE_IMS_APN_BOOL, false);
         sDefaults.putBoolean(KEY_HIDE_PREFERRED_NETWORK_TYPE_BOOL, false);
