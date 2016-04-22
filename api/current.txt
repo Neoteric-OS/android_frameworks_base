@@ -39194,6 +39194,7 @@ package android.view {
     field public static final int KEYCODE_8 = 15; // 0xf
     field public static final int KEYCODE_9 = 16; // 0x10
     field public static final int KEYCODE_A = 29; // 0x1d
+    field public static final int KEYCODE_ACCESSORY_CAMERA = 287; // 0x11f
     field public static final int KEYCODE_ALT_LEFT = 57; // 0x39
     field public static final int KEYCODE_ALT_RIGHT = 58; // 0x3a
     field public static final int KEYCODE_APOSTROPHE = 75; // 0x4b
@@ -39326,6 +39327,7 @@ package android.view {
     field public static final int KEYCODE_MEDIA_STOP = 86; // 0x56
     field public static final int KEYCODE_MEDIA_TOP_MENU = 226; // 0xe2
     field public static final int KEYCODE_MENU = 82; // 0x52
+    field public static final int KEYCODE_MESSAGE = 286; // 0x11e
     field public static final int KEYCODE_META_LEFT = 117; // 0x75
     field public static final int KEYCODE_META_RIGHT = 118; // 0x76
     field public static final int KEYCODE_MINUS = 69; // 0x45
@@ -39380,6 +39382,7 @@ package android.view {
     field public static final int KEYCODE_R = 46; // 0x2e
     field public static final int KEYCODE_RIGHT_BRACKET = 72; // 0x48
     field public static final int KEYCODE_RO = 217; // 0xd9
+    field public static final int KEYCODE_ROTATION = 285; // 0x11d
     field public static final int KEYCODE_S = 47; // 0x2f
     field public static final int KEYCODE_SCROLL_LOCK = 116; // 0x74
     field public static final int KEYCODE_SEARCH = 84; // 0x54
@@ -39387,6 +39390,7 @@ package android.view {
     field public static final int KEYCODE_SETTINGS = 176; // 0xb0
     field public static final int KEYCODE_SHIFT_LEFT = 59; // 0x3b
     field public static final int KEYCODE_SHIFT_RIGHT = 60; // 0x3c
+    field public static final int KEYCODE_SIM_SWITCH = 284; // 0x11c
     field public static final int KEYCODE_SLASH = 76; // 0x4c
     field public static final int KEYCODE_SLEEP = 223; // 0xdf
     field public static final int KEYCODE_SOFT_LEFT = 1; // 0x1
@@ -39433,11 +39437,17 @@ package android.view {
     field public static final int KEYCODE_TV_ZOOM_MODE = 255; // 0xff
     field public static final int KEYCODE_U = 49; // 0x31
     field public static final int KEYCODE_UNKNOWN = 0; // 0x0
+    field public static final int KEYCODE_USER_FUNCTION_1 = 280; // 0x118
+    field public static final int KEYCODE_USER_FUNCTION_2 = 281; // 0x119
+    field public static final int KEYCODE_USER_FUNCTION_3 = 282; // 0x11a
+    field public static final int KEYCODE_USER_FUNCTION_4 = 283; // 0x11b
     field public static final int KEYCODE_V = 50; // 0x32
     field public static final int KEYCODE_VOICE_ASSIST = 231; // 0xe7
     field public static final int KEYCODE_VOLUME_DOWN = 25; // 0x19
     field public static final int KEYCODE_VOLUME_MUTE = 164; // 0xa4
     field public static final int KEYCODE_VOLUME_UP = 24; // 0x18
+    field public static final int KEYCODE_VR_BACK = 289; // 0x121
+    field public static final int KEYCODE_VR_OK = 288; // 0x120
     field public static final int KEYCODE_W = 51; // 0x33
     field public static final int KEYCODE_WAKEUP = 224; // 0xe0
     field public static final int KEYCODE_WINDOW = 171; // 0xab

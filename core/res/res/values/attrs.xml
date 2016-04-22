@@ -1815,6 +1815,16 @@ i
         <enum name="KEYCODE_MEDIA_STEP_FORWARD" value="274" />
         <enum name="KEYCODE_MEDIA_STEP_BACKWARD" value="275" />
         <enum name="KEYCODE_SOFT_SLEEP" value="276" />
+        <enum name="KEYCODE_USER_FUNCTION_1" value="280" />
+        <enum name="KEYCODE_USER_FUNCTION_2" value="281" />
+        <enum name="KEYCODE_USER_FUNCTION_3" value="282" />
+        <enum name="KEYCODE_USER_FUNCTION_4" value="283" />
+        <enum name="KEYCODE_SIM_SWITCH" value="284" />
+        <enum name="KEYCODE_ROTATION" value="285" />
+        <enum name="KEYCODE_MESSAGE" value="286" />
+        <enum name="KEYCODE_ACCESSORY_CAMERA" value="287" />
+        <enum name="KEYCODE_VR_OK" value="288" />
+        <enum name="KEYCODE_VR_BACK" value="289" />
     </attr>
 
     <!-- ***************************************************************** -->

@@ -787,8 +787,36 @@ public class KeyEvent extends InputEvent implements Parcelable {
     /** Key code constant: put device to sleep unless a wakelock is held.
      * @hide */
     public static final int KEYCODE_SOFT_SLEEP = 276;
+    /** Key code constant: Function key 1
+     * Launch the specific activity that user defined. */
+    public static final int KEYCODE_USER_FUNCTION_1 = 280;
+    /** Key code constant: Function key 2
+     * Launch the specific activity that user defined. */
+    public static final int KEYCODE_USER_FUNCTION_2 = 281;
+    /** Key code constant: Function key 3
+     * Launch the specific activity that user defined. */
+    public static final int KEYCODE_USER_FUNCTION_3 = 282;
+    /** Key code constant: Function key 4
+     * Launch the specific activity that user defined. */
+    public static final int KEYCODE_USER_FUNCTION_4 = 283;
+    /** Key code constant: SIM Switch key
+     * It switches between multiple SIMs. */
+    public static final int KEYCODE_SIM_SWITCH = 284;
+    /** Key code constant: Rotation key
+     * It rotates screen without accelerator sensor. */
+    public static final int KEYCODE_ROTATION = 285;
+    /** Key code constant: Message key
+     * It is used to launch message App */
+    public static final int KEYCODE_MESSAGE = 286;
+    /** Key code constant: Accessory camera key
+     * It is used to launch/exit camera application */
+    public static final int KEYCODE_ACCESSORY_CAMERA = 287;
+    /** Key code constant: OK Key on the VR device */
+    public static final int KEYCODE_VR_OK = 288;
+    /** Key code constant: BACK Key on the VR device */
+    public static final int KEYCODE_VR_BACK = 289;
 
-    private static final int LAST_KEYCODE = KEYCODE_SOFT_SLEEP;
+    private static final int LAST_KEYCODE = KEYCODE_VR_BACK;
 
     // NOTE: If you add a new keycode here you must also add it to:
     //  isSystem()
