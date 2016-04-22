@@ -1815,6 +1815,26 @@ i
         <enum name="KEYCODE_MEDIA_STEP_FORWARD" value="274" />
         <enum name="KEYCODE_MEDIA_STEP_BACKWARD" value="275" />
         <enum name="KEYCODE_SOFT_SLEEP" value="276" />
+        <enum name="KEYCODE_QMEMO" value="280" />
+        <enum name="KEYCODE_QSLIDE" value="281" />
+        <enum name="KEYCODE_USER_DEFINE" value="282" />
+        <enum name="KEYCODE_SIM_SWITCH" value="283" />
+        <enum name="KEYCODE_ROTATION" value="284" />
+        <enum name="KEYCODE_MESSAGE" value="285" />
+        <enum name="KEYCODE_CAMERA_ONOFF_TOGGLE" value="286" />
+        <enum name="KEYCODE_CAMERA_MODE_APERTURE_PRIORITY" value="287" />
+        <enum name="KEYCODE_CAMERA_MODE_AUTO" value="288" />
+        <enum name="KEYCODE_CAMERA_MODE_CAMCORDER" value="289" />
+        <enum name="KEYCODE_CAMERA_MODE_MANUAL" value="290" />
+        <enum name="KEYCODE_CAMERA_MODE_PROGRAM" value="291" />
+        <enum name="KEYCODE_CAMERA_MODE_SHUTTER_PRIORITY" value="292" />
+        <enum name="KEYCODE_CAMERA_MODE_POPOUT" value="293" />
+        <enum name="KEYCODE_CAMERA_MODE_MULTIVIEW" value="294" />
+        <enum name="KEYCODE_CAMERA_MODE_SNAP" value="295" />
+        <enum name="KEYCODE_CAMERA_MODE_PANORAMA" value="296" />
+        <enum name="KEYCODE_CAMERA_MODE_SLOWMOTION" value="297" />
+        <enum name="KEYCODE_CAMERA_MODE_TIMELAPSE" value="298" />
+        <enum name="KEYCODE_CAMERA_MODE_CUSTOM" value="299" />
     </attr>
 
     <!-- ***************************************************************** -->
