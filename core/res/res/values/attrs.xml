@@ -1832,6 +1832,25 @@ i
         <enum name="KEYCODE_CUT" value="277" />
         <enum name="KEYCODE_COPY" value="278" />
         <enum name="KEYCODE_PASTE" value="279" />
+        <enum name="KEYCODE_MEMO" value="280" />
+        <enum name="KEYCODE_CUSTOM_APP_1" value="281" />
+        <enum name="KEYCODE_SIM_SWITCH" value="282" />
+        <enum name="KEYCODE_ROTATION" value="283" />
+        <enum name="KEYCODE_MESSAGING" value="284" />
+        <enum name="KEYCODE_CAMERA_TOGGLE" value="285" />
+        <enum name="KEYCODE_CAMERA_MODE_APERTURE_PRIORITY" value="286" />
+        <enum name="KEYCODE_CAMERA_MODE_AUTO" value="287" />
+        <enum name="KEYCODE_CAMERA_MODE_CAMCORDER" value="288" />
+        <enum name="KEYCODE_CAMERA_MODE_MANUAL" value="289" />
+        <enum name="KEYCODE_CAMERA_MODE_PROGRAM" value="290" />
+        <enum name="KEYCODE_CAMERA_MODE_SHUTTER_PRIORITY" value="291" />
+        <enum name="KEYCODE_CAMERA_MODE_POPOUT" value="292" />
+        <enum name="KEYCODE_CAMERA_MODE_MULTIVIEW" value="293" />
+        <enum name="KEYCODE_CAMERA_MODE_SNAP" value="294" />
+        <enum name="KEYCODE_CAMERA_MODE_PANORAMA" value="295" />
+        <enum name="KEYCODE_CAMERA_MODE_SLOWMOTION" value="296" />
+        <enum name="KEYCODE_CAMERA_MODE_TIMELAPSE" value="297" />
+        <enum name="KEYCODE_CAMERA_MODE_CUSTOM" value="298" />
     </attr>
 
     <!-- ***************************************************************** -->

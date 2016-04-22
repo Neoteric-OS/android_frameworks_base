@@ -796,8 +796,53 @@ public class KeyEvent extends InputEvent implements Parcelable {
     public static final int KEYCODE_COPY = 278;
     /** Key code constant: Paste key. */
     public static final int KEYCODE_PASTE = 279;
+    /** Key code constant: MEMO key
+     * Launch the MEMO application. */
+    public static final int KEYCODE_MEMO = 280;
+    /** Key code constant: KEYCODE_CUSTOM_APP_1 key
+     * Launch user defined application. */
+    public static final int KEYCODE_CUSTOM_APP_1 = 281;
+    /** Key code constant: SIM Switch key
+     * It switches between multiple SIMs. */
+    public static final int KEYCODE_SIM_SWITCH = 282;
+    /** Key code constant: Rotation key
+     * It is used to rotate screen in the device
+     * that does not support the acceleration sensor */
+    public static final int KEYCODE_ROTATION = 283;
+    /** Key code constant: Message key
+     * It is used to launch message App */
+    public static final int KEYCODE_MESSAGING = 284;
+    /** Key code constant: Camera on/off key
+     * It is used to start/finish camera application */
+    public static final int KEYCODE_CAMERA_TOGGLE = 285;
+    /** Key code constant: APERTURE Priority Mode key for camera device */
+    public static final int KEYCODE_CAMERA_MODE_APERTURE_PRIORITY = 286;
+    /** Key code constant: AUTO Mode key for camera device */
+    public static final int KEYCODE_CAMERA_MODE_AUTO = 287;
+    /** Key code constant: CAMCORDER Mode key for camera device */
+    public static final int KEYCODE_CAMERA_MODE_CAMCORDER = 288;
+    /** Key code constant: MANUAL Mode key for camera device */
+    public static final int KEYCODE_CAMERA_MODE_MANUAL = 289;
+    /** Key code constant: PROGRAM Mode key for camera device */
+    public static final int KEYCODE_CAMERA_MODE_PROGRAM = 290;
+    /** Key code constant: SHUTTER Priority Mode key for camera device */
+    public static final int KEYCODE_CAMERA_MODE_SHUTTER_PRIORITY = 291;
+    /** Key code constant: POPOUT Mode key for camera device */
+    public static final int KEYCODE_CAMERA_MODE_POPOUT = 292;
+    /** Key code constant: MULTIVIEW Mode key for camera device */
+    public static final int KEYCODE_CAMERA_MODE_MULTIVIEW = 293;
+    /** Key code constant: SNAP Mode key for camera device */
+    public static final int KEYCODE_CAMERA_MODE_SNAP = 294;
+    /** Key code constant: PANORAMA Mode key for camera device */
+    public static final int KEYCODE_CAMERA_MODE_PANORAMA = 295;
+    /** Key code constant: SLOWMOTION Mode key for camera device */
+    public static final int KEYCODE_CAMERA_MODE_SLOWMOTION = 296;
+    /** Key code constant: TIMELAPSE Mode key for camera device */
+    public static final int KEYCODE_CAMERA_MODE_TIMELAPSE = 297;
+    /** Key code constant: Custom mode key for camera device */
+    public static final int KEYCODE_CAMERA_MODE_CUSTOM = 298;
 
-    private static final int LAST_KEYCODE = KEYCODE_PASTE;
+    private static final int LAST_KEYCODE = KEYCODE_CAMERA_MODE_CUSTOM;
 
     // NOTE: If you add a new keycode here you must also add it to:
     //  isSystem()
