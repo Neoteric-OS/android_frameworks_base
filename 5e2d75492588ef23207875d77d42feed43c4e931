@@ -92,6 +92,30 @@
       "revId": "5e2d75492588ef23207875d77d42feed43c4e931",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c87cbc59_4b23ed84",
+        "filename": "include/androidfw/ZipUtils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-04-26T16:26:02Z",
+      "side": 1,
+      "message": "I\u0027ve elected to clear the struct here (and not rely on callers to do it). I\u0027ve updated the test accordingly.",
+      "parentUuid": "e85340c8_78f6fba1",
+      "range": {
+        "startLine": 76,
+        "startChar": 29,
+        "endLine": 76,
+        "endChar": 31
+      },
+      "revId": "5e2d75492588ef23207875d77d42feed43c4e931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
