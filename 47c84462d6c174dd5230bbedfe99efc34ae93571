@@ -34,6 +34,24 @@
       "revId": "47c84462d6c174dd5230bbedfe99efc34ae93571",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11f7dc9a_6acad226",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2152,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2016-04-29T16:07:38Z",
+      "side": 1,
+      "message": "nit: replace force !\u003d true with !force",
+      "parentUuid": "71c9f878_8bc01d57",
+      "revId": "47c84462d6c174dd5230bbedfe99efc34ae93571",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
