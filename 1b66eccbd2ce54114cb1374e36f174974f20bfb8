@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2848f9fc_2804a403",
+        "filename": "libs/hwui/font/CacheTexture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2016-05-02T14:38:34Z",
+      "side": 1,
+      "message": "You want to subtract x from r first, then clamp by width.",
+      "range": {
+        "startLine": 212,
+        "startChar": 4,
+        "endLine": 212,
+        "endChar": 59
+      },
+      "revId": "1b66eccbd2ce54114cb1374e36f174974f20bfb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
