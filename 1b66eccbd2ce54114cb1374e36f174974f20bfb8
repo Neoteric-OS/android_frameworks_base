@@ -22,6 +22,30 @@
       "revId": "1b66eccbd2ce54114cb1374e36f174974f20bfb8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "928758d1_90332299",
+        "filename": "libs/hwui/font/CacheTexture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1030488
+      },
+      "writtenOn": "2016-05-08T12:05:02Z",
+      "side": 1,
+      "message": "Yes, you are right. Thanks for pointing it out!",
+      "parentUuid": "2848f9fc_2804a403",
+      "range": {
+        "startLine": 212,
+        "startChar": 4,
+        "endLine": 212,
+        "endChar": 59
+      },
+      "revId": "1b66eccbd2ce54114cb1374e36f174974f20bfb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
