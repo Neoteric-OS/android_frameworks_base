@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "929d9872_71b75804",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1099044
+      },
+      "writtenOn": "2016-05-09T16:36:25Z",
+      "side": 1,
+      "message": "Is there a difference in cached values between putting it here and putting it right in beginIcuCachePinning (which would then probably also mean renaming the method)?\n\nBecause if there isn\u0027t (or the differences are not actually desired) then I\u0027d rather have all of this work be local (i.e. have the setting and the re-setting of the reference factory in the same method).",
+      "range": {
+        "startLine": 205,
+        "startChar": 8,
+        "endLine": 205,
+        "endChar": 29
+      },
+      "revId": "ab4fa84c239725ebcb7bf460b78f5c5af7d083af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
