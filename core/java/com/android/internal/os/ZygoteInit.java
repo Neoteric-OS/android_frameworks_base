@@ -22,6 +22,10 @@ import static android.system.OsConstants.S_IRWXO;
 
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.icu.impl.CachesReferenceFactory;
+import android.icu.impl.ReferenceFactory;
+import android.icu.text.DecimalFormatSymbols;
+import android.icu.util.ULocale;
 import android.net.LocalServerSocket;
 import android.opengl.EGL14;
 import android.os.Process;
@@ -50,6 +54,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.ref.Reference;
+import java.lang.ref.SoftReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -179,6 +185,9 @@ public class ZygoteInit {
 
     static void preload() {
         Log.d(TAG, "begin preload");
+        Trace.traceBegin(Trace.TRACE_TAG_DALVIK, "BeginIcuCachePinning");
+        beginIcuCachePinning();
+        Trace.traceEnd(Trace.TRACE_TAG_DALVIK);
         Trace.traceBegin(Trace.TRACE_TAG_DALVIK, "PreloadClasses");
         preloadClasses();
         Trace.traceEnd(Trace.TRACE_TAG_DALVIK);
@@ -193,7 +202,46 @@ public class ZygoteInit {
         // Ask the WebViewFactory to do any initialization that must run in the zygote process,
         // for memory sharing purposes.
         WebViewFactory.prepareWebViewInZygote();
+        endIcuCachePinning();
         Log.d(TAG, "end preload");
+    }
+
+    /**
+     * A custom {@link Reference} class intended to replace {@link SoftReference} in places where
+     * references should be kept forever to improve app performance. These references survive
+     * the Zygote GC and, in fact, will never be collected.
+     */
+    private static class ZygoteReference<T> extends SoftReference<T> {
+        /** This field prevents the Reference behaving like a normal SoftReference. */
+        private final T stickyReferent;
+
+        ZygoteReference(T referent) {
+            super(referent);
+            stickyReferent = referent;
+        }
+    }
+
+    private static void beginIcuCachePinning() {
+        Log.i(TAG, "Installing ICU cache reference pinning...");
+
+        // Pin ICU data in memory from this point that would normally be held by soft references.
+        // Without this, any references created immediately below or during class preloading
+        // would be collected when the Zygote GC runs in gcAndFinalize().
+        CachesReferenceFactory.setReferenceFactory(ZygoteReference::new);
+
+        Log.i(TAG, "Preloading ICU data...");
+        // Explicitly exercise code to cache data apps are likely to need.
+        ULocale[] localesToPin = { ULocale.ROOT, ULocale.US, ULocale.getDefault() };
+        for (ULocale uLocale : localesToPin) {
+            new DecimalFormatSymbols(uLocale);
+        }
+    }
+
+    private static void endIcuCachePinning() {
+        // All cache references created by ICU from this point will be soft.
+        CachesReferenceFactory.setReferenceFactory(ReferenceFactory.SOFT_REFERENCE_FACTORY);
+
+        Log.i(TAG, "Uninstalled ICU cache reference pinning...");
     }
 
     private static void preloadSharedLibraries() {
