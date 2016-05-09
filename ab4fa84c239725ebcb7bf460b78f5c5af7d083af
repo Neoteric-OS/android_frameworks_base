@@ -46,6 +46,30 @@
       "revId": "ab4fa84c239725ebcb7bf460b78f5c5af7d083af",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92b838d6_99acfb02",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1099044
+      },
+      "writtenOn": "2016-05-09T16:59:48Z",
+      "side": 1,
+      "message": "If that is a desired effect, could we make that exercising explicit in beginIcuCachePinning?",
+      "parentUuid": "d2f6309d_0b619d9a",
+      "range": {
+        "startLine": 205,
+        "startChar": 8,
+        "endLine": 205,
+        "endChar": 29
+      },
+      "revId": "ab4fa84c239725ebcb7bf460b78f5c5af7d083af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
