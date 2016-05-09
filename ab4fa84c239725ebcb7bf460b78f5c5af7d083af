@@ -70,6 +70,30 @@
       "revId": "ab4fa84c239725ebcb7bf460b78f5c5af7d083af",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2b53cdc_9aaced02",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2016-05-09T17:03:55Z",
+      "side": 1,
+      "message": "I don\u0027t think I\u0027d want to explicitly repeat what preloadClasses() does by hardcoding / static initializing any classes.\n\nI\u0027m basically assuming \"data loaded during ICU (or other) class initialization is fundamental and useful\". Also, as we move any further ICU code over to using CacheReferenceFactory the list might increase.\n\nMy assumption should be commented to make it clearer. Will do once Andreas and others have commented.\n\nIf we decide that we\u0027d rather not have data from preloadClasses() (or that other stages) caches, we can collapse it into one method.",
+      "parentUuid": "92b838d6_99acfb02",
+      "range": {
+        "startLine": 205,
+        "startChar": 8,
+        "endLine": 205,
+        "endChar": 29
+      },
+      "revId": "ab4fa84c239725ebcb7bf460b78f5c5af7d083af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
