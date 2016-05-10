@@ -94,6 +94,53 @@
       "revId": "ab4fa84c239725ebcb7bf460b78f5c5af7d083af",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "929bd88c_be94509a",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-05-10T15:25:54Z",
+      "side": 1,
+      "message": "I think Neil\u0027s approach is sound.",
+      "parentUuid": "b2b53cdc_9aaced02",
+      "range": {
+        "startLine": 205,
+        "startChar": 8,
+        "endLine": 205,
+        "endChar": 29
+      },
+      "revId": "ab4fa84c239725ebcb7bf460b78f5c5af7d083af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "929bd88c_9e462c12",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-05-10T15:25:54Z",
+      "side": 1,
+      "message": "Mathieu, you advised this, but the Javadocs say:\n\n Going from strongest to weakest, the different levels of reachability reflect the life cycle of an object. They are operationally defined as follows:\n * An object is strongly reachable if it can be reached by some thread without traversing any reference objects. A newly-created object is strongly reachable by the thread that created it.\n * An object is softly reachable if it is not strongly reachable but can be reached by traversing a soft reference.\n\nThe issue I have is that strongly is defined as \"traversing any reference _objects_\" - it\u0027s not just talking about the referent field.\n\nComments?",
+      "range": {
+        "startLine": 216,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 39
+      },
+      "revId": "ab4fa84c239725ebcb7bf460b78f5c5af7d083af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
