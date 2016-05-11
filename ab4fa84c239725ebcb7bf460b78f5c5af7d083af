@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "b2d7fc7d_6a08971f",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2016-05-11T14:37:24Z",
+      "side": 1,
+      "message": "I can do that: see below for why it won\u0027t have any effect. \n\nReference suggests not subclassing Reference directly but I can check what happens. The comment was intended to make it clear.\n\nMathieu - any preference for directly subclassing Reference, or SoftReference?",
+      "parentUuid": "92e3d849_99da8623",
+      "range": {
+        "startLine": 214,
+        "startChar": 19,
+        "endLine": 214,
+        "endChar": 68
+      },
+      "revId": "ab4fa84c239725ebcb7bf460b78f5c5af7d083af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "929bd88c_9e462c12",
         "filename": "core/java/com/android/internal/os/ZygoteInit.java",
         "patchSetId": 2
@@ -178,6 +202,30 @@
       "writtenOn": "2016-05-11T14:04:09Z",
       "side": 1,
       "message": "Pardon my ignorance -- Is this field necessary? I would assume that the garbage collector only clears references of known types (Soft or Weak). If in doubt, override clear() to do nothing?",
+      "range": {
+        "startLine": 220,
+        "startChar": 12,
+        "endLine": 220,
+        "endChar": 38
+      },
+      "revId": "ab4fa84c239725ebcb7bf460b78f5c5af7d083af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2d7fc7d_2a0e9f2d",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2016-05-11T14:37:24Z",
+      "side": 1,
+      "message": "I checked with Matheiu before and a direct subclass of Reference would be treated as a SoftReference anyway so the strong reference is necessary.\n\nAlso, docs from clear:\n\n    * \u003cp\u003e This method is invoked only by Java code; when the garbage collector\n     * clears references it does so directly, without invoking this method.",
+      "parentUuid": "92e3d849_f905926c",
       "range": {
         "startLine": 220,
         "startChar": 12,
