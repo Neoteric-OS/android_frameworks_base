@@ -231,6 +231,7 @@ public class SignalClusterView
         state.mMobileVisible = statusIcon.visible && !mBlockMobile;
         state.mMobileStrengthId = statusIcon.icon;
         state.mMobileTypeId = statusType;
+        state.mMobileRoamingId = statusIcon.roamIcon;
         state.mMobileDescription = statusIcon.contentDescription;
         state.mMobileTypeDescription = typeContentDescription;
         state.mIsMobileTypeIconWide = statusType != 0 && isWide;
@@ -485,12 +486,12 @@ public class SignalClusterView
     private class PhoneState {
         private final int mSubId;
         private boolean mMobileVisible = false;
-        private int mMobileStrengthId = 0, mMobileTypeId = 0;
+        private int mMobileStrengthId = 0, mMobileTypeId = 0, mMobileRoamingId = 0;
         private boolean mIsMobileTypeIconWide;
         private String mMobileDescription, mMobileTypeDescription;
 
         private ViewGroup mMobileGroup;
-        private ImageView mMobile, mMobileDark, mMobileType;
+        private ImageView mMobile, mMobileDark, mMobileType,  mMobileRoaming;
 
         public PhoneState(int subId, Context context) {
             ViewGroup root = (ViewGroup) LayoutInflater.from(context)
@@ -503,7 +504,12 @@ public class SignalClusterView
             mMobileGroup    = root;
             mMobile         = (ImageView) root.findViewById(R.id.mobile_signal);
             mMobileDark     = (ImageView) root.findViewById(R.id.mobile_signal_dark);
-            mMobileType     = (ImageView) root.findViewById(R.id.mobile_type);
+            if (mMobileRoamingId == -1) {
+                mMobileType     = (ImageView) root.findViewById(R.id.mobile_type);
+            } else {
+                mMobileRoaming  = (ImageView) root.findViewById(R.id.mobile_separate_roaming);
+                mMobileType     = (ImageView) root.findViewById(R.id.mobile_separate_type);
+            }
         }
 
         public boolean apply(boolean isSecondaryIcon) {
@@ -546,7 +552,11 @@ public class SignalClusterView
                         (mMobileVisible ? "VISIBLE" : "GONE"), mMobileStrengthId, mMobileTypeId));
 
             mMobileType.setVisibility(mMobileTypeId != 0 ? View.VISIBLE : View.GONE);
-
+            if (mMobileRoamingId != -1) {
+                mMobileRoaming.setImageResource(mMobileRoamingId);
+                mMobileRoaming.setVisibility(mMobileRoamingId != 0 ? View.VISIBLE : View.GONE);
+            }
+            if (DEBUG) Log.d(TAG, "apply: roam=" + mMobileRoamingId);
             return mMobileVisible;
         }
 
@@ -560,6 +570,9 @@ public class SignalClusterView
         public void setIconTint(int tint, float darkIntensity) {
             applyDarkIntensity(darkIntensity, mMobile, mMobileDark);
             setTint(mMobileType, tint);
+            if (mMobileRoaming != null) {
+                setTint(mMobileRoaming, tint);
+            }
         }
     }
 }
