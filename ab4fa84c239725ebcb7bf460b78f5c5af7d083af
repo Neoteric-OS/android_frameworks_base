@@ -121,6 +121,29 @@
     },
     {
       "key": {
+        "uuid": "92e3d849_99da8623",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1022037
+      },
+      "writtenOn": "2016-05-11T14:04:09Z",
+      "side": 1,
+      "message": "subclassing SoftReference and making the subclass \"not soft\" seems misleading. I suggest\n\nclass StrongReference\u003cT\u003e extends Reference\u003cT\u003e",
+      "range": {
+        "startLine": 214,
+        "startChar": 19,
+        "endLine": 214,
+        "endChar": 68
+      },
+      "revId": "ab4fa84c239725ebcb7bf460b78f5c5af7d083af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "929bd88c_9e462c12",
         "filename": "core/java/com/android/internal/os/ZygoteInit.java",
         "patchSetId": 2
@@ -137,6 +160,29 @@
         "startChar": 8,
         "endLine": 216,
         "endChar": 39
+      },
+      "revId": "ab4fa84c239725ebcb7bf460b78f5c5af7d083af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92e3d849_f905926c",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1022037
+      },
+      "writtenOn": "2016-05-11T14:04:09Z",
+      "side": 1,
+      "message": "Pardon my ignorance -- Is this field necessary? I would assume that the garbage collector only clears references of known types (Soft or Weak). If in doubt, override clear() to do nothing?",
+      "range": {
+        "startLine": 220,
+        "startChar": 12,
+        "endLine": 220,
+        "endChar": 38
       },
       "revId": "ab4fa84c239725ebcb7bf460b78f5c5af7d083af",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
