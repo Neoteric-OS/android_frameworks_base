@@ -198,6 +198,14 @@ class TelephonyIcons {
 
     static final int FLIGHT_MODE_ICON = R.drawable.stat_sys_airplane_mode;
     static final int ROAMING_ICON = R.drawable.stat_sys_data_fully_connected_roam;
+    static final int ROAMING_ICON_LTE = R.drawable.stat_sys_data_fully_connected_lte_roam;
+    static final int ROAMING_ICON_G = R.drawable.stat_sys_data_fully_connected_g_roam;
+    static final int ROAMING_ICON_E = R.drawable.stat_sys_data_fully_connected_e_roam;
+    static final int ROAMING_ICON_H = R.drawable.stat_sys_data_fully_connected_h_roam;
+    static final int ROAMING_ICON_3G = R.drawable.stat_sys_data_fully_connected_3g_roam;
+    static final int ROAMING_ICON_4G = R.drawable.stat_sys_data_fully_connected_4g_roam;
+    static final int ROAMING_ICON_1X = R.drawable.stat_sys_data_fully_connected_1x_roam;
+    static final int ROAMING_ICON_DISABLE_CMBO = R.drawable.stat_sys_disable_combo_roam;
     static final int ICON_LTE = R.drawable.stat_sys_data_fully_connected_lte;
     static final int ICON_G = R.drawable.stat_sys_data_fully_connected_g;
     static final int ICON_E = R.drawable.stat_sys_data_fully_connected_e;
@@ -241,6 +249,7 @@ class TelephonyIcons {
             AccessibilityContentDescriptions.PHONE_SIGNAL_STRENGTH[0],
             R.string.accessibility_data_connection_3g,
             TelephonyIcons.ICON_3G,
+            TelephonyIcons.ROAMING_ICON_3G,
             true,
             TelephonyIcons.QS_DATA_3G
             );
@@ -280,6 +289,7 @@ class TelephonyIcons {
             AccessibilityContentDescriptions.PHONE_SIGNAL_STRENGTH[0],
             R.string.accessibility_data_connection_edge,
             TelephonyIcons.ICON_E,
+            TelephonyIcons.ROAMING_ICON_E,
             false,
             TelephonyIcons.QS_DATA_E
             );
@@ -295,6 +305,7 @@ class TelephonyIcons {
             AccessibilityContentDescriptions.PHONE_SIGNAL_STRENGTH[0],
             R.string.accessibility_data_connection_cdma,
             TelephonyIcons.ICON_1X,
+            TelephonyIcons.ROAMING_ICON_1X,
             true,
             TelephonyIcons.QS_DATA_1X
             );
@@ -310,6 +321,7 @@ class TelephonyIcons {
             AccessibilityContentDescriptions.PHONE_SIGNAL_STRENGTH[0],
             R.string.accessibility_data_connection_gprs,
             TelephonyIcons.ICON_G,
+            TelephonyIcons.ROAMING_ICON_G,
             false,
             TelephonyIcons.QS_DATA_G
             );
@@ -325,6 +337,7 @@ class TelephonyIcons {
             AccessibilityContentDescriptions.PHONE_SIGNAL_STRENGTH[0],
             R.string.accessibility_data_connection_3_5g,
             TelephonyIcons.ICON_H,
+            TelephonyIcons.ROAMING_ICON_H,
             false,
             TelephonyIcons.QS_DATA_H
             );
@@ -340,6 +353,7 @@ class TelephonyIcons {
             AccessibilityContentDescriptions.PHONE_SIGNAL_STRENGTH[0],
             R.string.accessibility_data_connection_4g,
             TelephonyIcons.ICON_4G,
+            TelephonyIcons.ROAMING_ICON_4G,
             true,
             TelephonyIcons.QS_DATA_4G
             );
@@ -355,6 +369,7 @@ class TelephonyIcons {
             AccessibilityContentDescriptions.PHONE_SIGNAL_STRENGTH[0],
             R.string.accessibility_data_connection_lte,
             TelephonyIcons.ICON_LTE,
+            TelephonyIcons.ROAMING_ICON_LTE,
             true,
             TelephonyIcons.QS_DATA_LTE
             );

@@ -54,17 +54,23 @@ public interface NetworkController {
     public static class IconState {
         public final boolean visible;
         public final int icon;
+        public final int roamIcon;
         public final String contentDescription;
 
-        public IconState(boolean visible, int icon, String contentDescription) {
+        public IconState(boolean visible, int icon, int roamIcon, String contentDescription) {
             this.visible = visible;
             this.icon = icon;
+            this.roamIcon = roamIcon;
             this.contentDescription = contentDescription;
+        }
+
+        public IconState(boolean visible, int icon, String contentDescription) {
+            this(visible, icon, -1, contentDescription);
         }
 
         public IconState(boolean visible, int icon, int contentDescription,
                 Context context) {
-            this(visible, icon, context.getString(contentDescription));
+            this(visible, icon, -1, context.getString(contentDescription));
         }
     }
 

@@ -206,9 +206,13 @@ public class MobileSignalController extends SignalController<
 
         // Show icon in QS when we are connected or need to show roaming.
         boolean showDataIcon = mCurrentState.dataConnected
-                || mCurrentState.iconGroup == TelephonyIcons.ROAMING;
+                || mCurrentState.roaming && mConfig.enableMobileComboIcon;
+        int roamIcon = -1;
+        if (mCurrentState.roaming && !mConfig.enableMobileComboIcon) {
+            roamIcon = TelephonyIcons.ROAMING_ICON_DISABLE_CMBO;
+        }
         IconState statusIcon = new IconState(mCurrentState.enabled && !mCurrentState.airplaneMode,
-                getCurrentIconId(), contentDescription);
+                getCurrentIconId(), roamIcon, contentDescription);
 
         int qsTypeIcon = 0;
         IconState qsIcon = null;
@@ -227,8 +231,11 @@ public class MobileSignalController extends SignalController<
                         && !mCurrentState.carrierNetworkChangeMode
                         && mCurrentState.activityOut;
         showDataIcon &= mCurrentState.isDefault
-                || mCurrentState.iconGroup == TelephonyIcons.ROAMING;
-        int typeIcon = showDataIcon ? icons.mDataType : 0;
+                || mCurrentState.roaming && mConfig.enableMobileComboIcon;
+        int typeIcon = showDataIcon
+                ? (mCurrentState.roaming && !mConfig.enableMobileComboIcon
+                        ? icons.mRoamDataType : icons.mDataType)
+                : 0;
         mCallbackHandler.setMobileDataIndicators(statusIcon, qsIcon, typeIcon, qsTypeIcon,
                 activityIn, activityOut, dataContentDescription, description, icons.mIsWide,
                 mSubscriptionInfo.getSubscriptionId());
@@ -378,13 +385,21 @@ public class MobileSignalController extends SignalController<
         } else {
             mCurrentState.iconGroup = mDefaultIcons;
         }
+
+        if (isRoaming()) {
+            if (mConfig.enableMobileComboIcon) {
+                mCurrentState.iconGroup = TelephonyIcons.ROAMING;
+            }
+            mCurrentState.roaming = true;
+        } else {
+            mCurrentState.roaming = false;
+        }
+
         mCurrentState.dataConnected = mCurrentState.connected
                 && mDataState == TelephonyManager.DATA_CONNECTED;
 
         if (isCarrierNetworkChangeActive()) {
             mCurrentState.iconGroup = TelephonyIcons.CARRIER_NETWORK_CHANGE;
-        } else if (isRoaming()) {
-            mCurrentState.iconGroup = TelephonyIcons.ROAMING;
         }
         if (isEmergencyOnly() != mCurrentState.isEmergency) {
             mCurrentState.isEmergency = isEmergencyOnly();
@@ -477,6 +492,7 @@ public class MobileSignalController extends SignalController<
     static class MobileIconGroup extends SignalController.IconGroup {
         final int mDataContentDescription; // mContentDescriptionDataType
         final int mDataType;
+        final int mRoamDataType;
         final boolean mIsWide;
         final int mQsDataType;
 
@@ -484,10 +500,20 @@ public class MobileSignalController extends SignalController<
                 int sbNullState, int qsNullState, int sbDiscState, int qsDiscState,
                 int discContentDesc, int dataContentDesc, int dataType, boolean isWide,
                 int qsDataType) {
+            this(name, sbIcons, qsIcons, contentDesc, sbNullState, qsNullState, sbDiscState,
+                    qsDiscState, discContentDesc, dataContentDesc, dataType, 0, isWide,
+                    qsDataType);
+        }
+
+        public MobileIconGroup(String name, int[][] sbIcons, int[][] qsIcons, int[] contentDesc,
+                int sbNullState, int qsNullState, int sbDiscState, int qsDiscState,
+                int discContentDesc, int dataContentDesc, int dataType, int roamDataType,
+                boolean isWide, int qsDataType) {
             super(name, sbIcons, qsIcons, contentDesc, sbNullState, qsNullState, sbDiscState,
                     qsDiscState, discContentDesc);
             mDataContentDescription = dataContentDesc;
             mDataType = dataType;
+            mRoamDataType = roamDataType;
             mIsWide = isWide;
             mQsDataType = qsDataType;
         }
@@ -502,6 +528,7 @@ public class MobileSignalController extends SignalController<
         boolean airplaneMode;
         boolean carrierNetworkChangeMode;
         boolean isDefault;
+        boolean roaming;
 
         @Override
         public void copyFrom(State s) {
@@ -515,6 +542,7 @@ public class MobileSignalController extends SignalController<
             isEmergency = state.isEmergency;
             airplaneMode = state.airplaneMode;
             carrierNetworkChangeMode = state.carrierNetworkChangeMode;
+            roaming = state.roaming;
         }
 
         @Override
@@ -529,6 +557,7 @@ public class MobileSignalController extends SignalController<
             builder.append("isEmergency=").append(isEmergency).append(',');
             builder.append("airplaneMode=").append(airplaneMode).append(',');
             builder.append("carrierNetworkChangeMode=").append(carrierNetworkChangeMode);
+            builder.append("roaming=").append(roaming);
         }
 
         @Override
@@ -541,7 +570,8 @@ public class MobileSignalController extends SignalController<
                     && ((MobileState) o).isEmergency == isEmergency
                     && ((MobileState) o).airplaneMode == airplaneMode
                     && ((MobileState) o).carrierNetworkChangeMode == carrierNetworkChangeMode
-                    && ((MobileState) o).isDefault == isDefault;
+                    && ((MobileState) o).isDefault == isDefault
+                    && ((MobileState) o).roaming == roaming;
         }
     }
 }

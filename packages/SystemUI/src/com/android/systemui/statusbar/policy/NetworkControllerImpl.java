@@ -748,15 +748,32 @@ public class NetworkControllerImpl extends BroadcastReceiver
                 controller.getState().dataSim = datatype != null;
                 if (datatype != null) {
                     controller.getState().iconGroup =
-                            datatype.equals("1x") ? TelephonyIcons.ONE_X :
-                            datatype.equals("3g") ? TelephonyIcons.THREE_G :
-                            datatype.equals("4g") ? TelephonyIcons.FOUR_G :
-                            datatype.equals("e") ? TelephonyIcons.E :
-                            datatype.equals("g") ? TelephonyIcons.G :
-                            datatype.equals("h") ? TelephonyIcons.H :
-                            datatype.equals("lte") ? TelephonyIcons.LTE :
+                            datatype.equals("1x") || datatype.equals("roam_1x") ?
+                            TelephonyIcons.ONE_X :
+                            datatype.equals("3g") || datatype.equals("roam_3g") ?
+                            TelephonyIcons.THREE_G :
+                            datatype.equals("4g") || datatype.equals("roam_4g") ?
+                            TelephonyIcons.FOUR_G :
+                            datatype.equals("e") || datatype.equals("roam_e") ?
+                            TelephonyIcons.E :
+                            datatype.equals("g") || datatype.equals("roam_g") ?
+                            TelephonyIcons.G :
+                            datatype.equals("h") || datatype.equals("roam_h") ?
+                            TelephonyIcons.H :
+                            datatype.equals("lte") || datatype.equals("roam_lte") ?
+                            TelephonyIcons.LTE :
                             datatype.equals("roam") ? TelephonyIcons.ROAMING :
                             TelephonyIcons.UNKNOWN;
+
+                    MobileSignalController.MobileState mobileState =
+                            (MobileSignalController.MobileState)controller.getState();
+                    if (datatype.startsWith("roam")) {
+                        mobileState.roaming = true;
+                    } else {
+                        mobileState.roaming = false;
+                    }
+                    mobileState.dataConnected = true;
+                    mobileState.isDefault = true;
                 }
                 int[][] icons = TelephonyIcons.TELEPHONY_SIGNAL_STRENGTH;
                 String level = args.getString("level");
@@ -825,6 +842,7 @@ public class NetworkControllerImpl extends BroadcastReceiver
         boolean alwaysShowCdmaRssi = false;
         boolean show4gForLte = false;
         boolean hspaDataDistinguishable;
+        boolean enableMobileComboIcon;
 
         static Config readConfig(Context context) {
             Config config = new Config();
@@ -836,6 +854,7 @@ public class NetworkControllerImpl extends BroadcastReceiver
             config.show4gForLte = res.getBoolean(R.bool.config_show4GForLTE);
             config.hspaDataDistinguishable =
                     res.getBoolean(R.bool.config_hspa_data_distinguishable);
+            config.enableMobileComboIcon = res.getBoolean(R.bool.config_enableMobileComboIcon);
             return config;
         }
     }
