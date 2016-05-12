@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "f247b43c_5e973356",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1022037
+      },
+      "writtenOn": "2016-05-12T23:12:25Z",
+      "side": 1,
+      "message": "If you take in http://bugs.icu-project.org/trac/changeset/38734 you won\u0027t need this class any more.",
+      "parentUuid": "b2d7fc7d_6a08971f",
+      "range": {
+        "startLine": 214,
+        "startChar": 19,
+        "endLine": 214,
+        "endChar": 68
+      },
+      "revId": "ab4fa84c239725ebcb7bf460b78f5c5af7d083af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "929bd88c_9e462c12",
         "filename": "core/java/com/android/internal/os/ZygoteInit.java",
         "patchSetId": 2
@@ -231,6 +255,52 @@
         "startChar": 12,
         "endLine": 220,
         "endChar": 38
+      },
+      "revId": "ab4fa84c239725ebcb7bf460b78f5c5af7d083af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f247b43c_de89633a",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1022037
+      },
+      "writtenOn": "2016-05-12T23:12:25Z",
+      "side": 1,
+      "message": "If you take in http://bugs.icu-project.org/trac/changeset/38734 you would do\n  CacheValue.setStrength(CacheValue.Strength.STRONG);\ninstead.",
+      "range": {
+        "startLine": 230,
+        "startChar": 8,
+        "endLine": 230,
+        "endChar": 73
+      },
+      "revId": "ab4fa84c239725ebcb7bf460b78f5c5af7d083af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f247b43c_1e84cb1c",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1022037
+      },
+      "writtenOn": "2016-05-12T23:12:25Z",
+      "side": 1,
+      "message": "If you take in http://bugs.icu-project.org/trac/changeset/38734 you would do\n  CacheValue.setStrength(CacheValue.Strength.SOFT);\ninstead.",
+      "range": {
+        "startLine": 242,
+        "startChar": 8,
+        "endLine": 242,
+        "endChar": 92
       },
       "revId": "ab4fa84c239725ebcb7bf460b78f5c5af7d083af",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
