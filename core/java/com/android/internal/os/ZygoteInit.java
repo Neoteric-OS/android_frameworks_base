@@ -23,7 +23,11 @@ import static android.system.OsConstants.S_IRWXO;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.icu.impl.CacheValue;
+import android.icu.text.BreakIterator;
 import android.icu.text.DecimalFormatSymbols;
+import android.icu.text.NumberFormat;
+import android.icu.text.PluralRules;
+import android.icu.text.RelativeDateTimeFormatter;
 import android.icu.util.ULocale;
 import android.net.LocalServerSocket;
 import android.opengl.EGL14;
@@ -215,6 +219,10 @@ public class ZygoteInit {
         // Explicitly exercise code to cache data apps are likely to need.
         ULocale[] localesToPin = { ULocale.ROOT, ULocale.US, ULocale.getDefault() };
         for (ULocale uLocale : localesToPin) {
+            NumberFormat.getInstance(uLocale);
+            BreakIterator.getSentenceInstance(uLocale);
+            PluralRules.forLocale(uLocale);
+            RelativeDateTimeFormatter.getInstance(uLocale);
             new DecimalFormatSymbols(uLocale);
         }
     }
