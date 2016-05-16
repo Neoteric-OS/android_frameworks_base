@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f247b43c_ca118b43",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-05-16T18:35:22Z",
+      "side": 1,
+      "message": "I\u0027d put the comment at the beginning of the paragraph of code, but that\u0027s just personal preference.",
+      "range": {
+        "startLine": 215,
+        "startChar": 8,
+        "endLine": 215,
+        "endChar": 74
+      },
+      "revId": "1a6ee61e39fb89295d6a1b65fb0995ae710a5d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
