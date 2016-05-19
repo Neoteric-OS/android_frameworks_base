@@ -616,10 +616,10 @@ public final class ActiveServices {
                     if (removeNotification) {
                         r.cancelNotification();
                         r.foregroundId = 0;
-                        r.foregroundNoti = null;
                     } else if (r.appInfo.targetSdkVersion >= Build.VERSION_CODES.LOLLIPOP) {
                         r.stripForegroundServiceFlagFromNotification();
                     }
+                    r.foregroundNoti = null;
                 }
             }
         } finally {
@@ -1297,7 +1297,9 @@ public final class ActiveServices {
             r.makeRestarting(mAm.mProcessStats.getMemFactorLocked(), now);
         }
 
-        r.cancelNotification();
+        if (r.foregroundNoti != null) {
+            r.cancelNotification();
+        }
 
         mAm.mHandler.removeCallbacks(r.restarter);
         mAm.mHandler.postAtTime(r.restarter, r.nextRestartTime);
