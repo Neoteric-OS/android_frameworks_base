@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97374a6b_07e3daed",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2016-05-19T17:24:34Z",
+      "side": 0,
+      "message": "I think it would be good to move the comment as well.",
+      "revId": "233f48e3fa4321a9a2e2523a67a8e5120def5c33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
