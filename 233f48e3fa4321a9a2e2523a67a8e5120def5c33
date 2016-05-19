@@ -16,6 +16,24 @@
       "revId": "233f48e3fa4321a9a2e2523a67a8e5120def5c33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97374a6b_a70a2e69",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2016-05-19T17:33:10Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "97374a6b_07e3daed",
+      "revId": "233f48e3fa4321a9a2e2523a67a8e5120def5c33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
