@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc0fd377_6c42ea04",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1858,
+      "author": {
+        "id": 1043034
+      },
+      "writtenOn": "2016-05-24T23:12:47Z",
+      "side": 1,
+      "message": "What if this throws?\n\nRather than inspecting each call site for the potential to throw, I would always lock and unlock using try-finally.",
+      "revId": "2b016a171148a05fe4081958cd6ae297ab76c0d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
