@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bc0fd377_b8709df8",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-05-24T22:34:16Z",
+      "side": 1,
+      "message": "The only exception that could be thrown here is UnsupportedOperationException if we use the wrong Map type. I.e., if we change mLeScanClients (and similar) from HashMap to some other Map that doesn\u0027t support clear().\nThat would be a programmer\u0027s error, and my preference would be that we crash immediately so we can revert the error.",
+      "parentUuid": "bc0fd377_a6288887",
+      "revId": "4e377e8fadabb69c96f59b2a2d1e82e742777293",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc0fd377_66e4d0b4",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 1
