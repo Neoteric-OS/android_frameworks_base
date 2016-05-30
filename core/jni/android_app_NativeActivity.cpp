@@ -114,10 +114,11 @@ static bool read_work(int fd, ActivityWork* outWork) {
  * Native state for interacting with the NativeActivity class.
  */
 struct NativeCode : public ANativeActivity {
-    NativeCode(void* _dlhandle, ANativeActivity_createFunc* _createFunc) {
+    NativeCode(void* _dlhandle, ANativeActivity_createFunc* _createFunc, bool _needsNativeBridge) {
         memset((ANativeActivity*)this, 0, sizeof(ANativeActivity));
         memset(&callbacks, 0, sizeof(callbacks));
         dlhandle = _dlhandle;
+        needsNativeBridge = _needsNativeBridge;
         createActivityFunc = _createFunc;
         nativeWindow = NULL;
         mainWorkRead = mainWorkWrite = -1;
@@ -140,7 +141,11 @@ struct NativeCode : public ANativeActivity {
             // for now don't unload...  we probably should clean this
             // up and only keep one open dlhandle per proc, since there
             // is really no benefit to unloading the code.
-            //dlclose(dlhandle);
+            // if (!needsNativeBridge) {
+            //     dlclose(dlhandle);
+            // } else {
+            //     android::NativeBridgeUnloadLibrary(dlhandle);
+            // }
         }
     }
     
@@ -156,6 +161,7 @@ struct NativeCode : public ANativeActivity {
     
     void* dlhandle;
     ANativeActivity_createFunc* createActivityFunc;
+    bool needsNativeBridge;
     
     String8 internalDataPathObj;
     String8 externalDataPathObj;
@@ -266,27 +272,21 @@ loadNativeCode_native(JNIEnv* env, jobject clazz, jstring path, jstring funcName
 
     const char* pathStr = env->GetStringUTFChars(path, NULL);
     std::unique_ptr<NativeCode> code;
-    bool needNativeBridge = false;
+    bool needsNativeBridge = false;
 
-    void* handle = OpenNativeLibrary(env, sdkVersion, pathStr, classLoader, libraryPath);
-    if (handle == NULL) {
-        if (NativeBridgeIsSupported(pathStr)) {
-            handle = NativeBridgeLoadLibrary(pathStr, RTLD_LAZY);
-            needNativeBridge = true;
-        }
-    }
+    void* handle = OpenNativeLibrary(env, sdkVersion, pathStr, classLoader, libraryPath, &needsNativeBridge);
     env->ReleaseStringUTFChars(path, pathStr);
 
     if (handle != NULL) {
         void* funcPtr = NULL;
         const char* funcStr = env->GetStringUTFChars(funcName, NULL);
-        if (needNativeBridge) {
+        if (needsNativeBridge) {
             funcPtr = NativeBridgeGetTrampoline(handle, funcStr, NULL, 0);
         } else {
             funcPtr = dlsym(handle, funcStr);
         }
 
-        code.reset(new NativeCode(handle, (ANativeActivity_createFunc*)funcPtr));
+        code.reset(new NativeCode(handle, (ANativeActivity_createFunc*)funcPtr, needsNativeBridge));
         env->ReleaseStringUTFChars(funcName, funcStr);
 
         if (code->createActivityFunc == NULL) {
