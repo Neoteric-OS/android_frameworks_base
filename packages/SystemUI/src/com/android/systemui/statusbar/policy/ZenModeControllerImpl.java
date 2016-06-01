@@ -41,16 +41,18 @@ import android.util.Slog;
 
 import com.android.systemui.qs.GlobalSetting;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /** Platform implementation of the zen mode controller. **/
 public class ZenModeControllerImpl implements ZenModeController {
     private static final String TAG = "ZenModeController";
     private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
 
-    private final ArrayList<Callback> mCallbacks = new ArrayList<Callback>();
+    private final ArrayList<WeakReference<Callback>> mCallbacks = new ArrayList<>();
     private final Context mContext;
     private final GlobalSetting mModeSetting;
     private final GlobalSetting mConfigSetting;
@@ -97,12 +99,12 @@ public class ZenModeControllerImpl implements ZenModeController {
 
     @Override
     public void addCallback(Callback callback) {
-        mCallbacks.add(callback);
+        mCallbacks.add(new WeakReference<>(callback));
     }
 
     @Override
     public void removeCallback(Callback callback) {
-        mCallbacks.remove(callback);
+        mCallbacks.removeIf(refCallback -> refCallback.get() == callback);
     }
 
     @Override
@@ -165,46 +167,43 @@ public class ZenModeControllerImpl implements ZenModeController {
         return ActivityManager.getCurrentUser();
     }
 
-    private void fireNextAlarmChanged() {
-        for (Callback cb : mCallbacks) {
-            cb.onNextAlarmChanged();
+    private void fireCallback(Consumer<Callback> callback) {
+        for (int i = mCallbacks.size() - 1; i >= 0; i--) {
+            Callback cb = mCallbacks.get(i).get();
+            if (cb == null) {
+                mCallbacks.remove(i);
+                continue;
+            }
+            callback.accept(cb);
         }
+    }
+
+    private void fireNextAlarmChanged() {
+        fireCallback(cb-> cb.onNextAlarmChanged());
     }
 
     private void fireEffectsSuppressorChanged() {
-        for (Callback cb : mCallbacks) {
-            cb.onEffectsSupressorChanged();
-        }
+        fireCallback(cb-> cb.onEffectsSupressorChanged());
     }
 
     private void fireZenChanged(int zen) {
-        for (Callback cb : mCallbacks) {
-            cb.onZenChanged(zen);
-        }
+        fireCallback(cb-> cb.onZenChanged(zen));
     }
 
     private void fireZenAvailableChanged(boolean available) {
-        for (Callback cb : mCallbacks) {
-            cb.onZenAvailableChanged(available);
-        }
+        fireCallback(cb-> cb.onZenAvailableChanged(available));
     }
 
     private void fireConditionsChanged(Condition[] conditions) {
-        for (Callback cb : mCallbacks) {
-            cb.onConditionsChanged(conditions);
-        }
+        fireCallback(cb-> cb.onConditionsChanged(conditions));
     }
 
     private void fireManualRuleChanged(ZenRule rule) {
-        for (Callback cb : mCallbacks) {
-            cb.onManualRuleChanged(rule);
-        }
+        fireCallback(cb-> cb.onManualRuleChanged(rule));
     }
 
     private void fireConfigChanged(ZenModeConfig config) {
-        for (Callback cb : mCallbacks) {
-            cb.onConfigChanged(config);
-        }
+        fireCallback(cb-> cb.onConfigChanged(config));
     }
 
     private void updateConditions(Condition[] conditions) {
