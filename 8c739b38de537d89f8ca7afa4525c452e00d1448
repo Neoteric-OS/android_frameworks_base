@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "597d09ec_088a6726",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2016-06-01T23:36:25Z",
+      "side": 1,
+      "message": "just a quick precision: in my snippet example, addSupportedType should not be qualified with synchronized anymore. Sorry for the mistake.",
+      "parentUuid": "99306114_4201b261",
+      "range": {
+        "startLine": 479,
+        "startChar": 15,
+        "endLine": 479,
+        "endChar": 27
+      },
+      "revId": "8c739b38de537d89f8ca7afa4525c452e00d1448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99306114_e2d28611",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
