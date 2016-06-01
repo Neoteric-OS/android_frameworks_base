@@ -41,6 +41,7 @@ import com.android.systemui.SystemUIApplication;
 import com.android.systemui.settings.CurrentUserTracker;
 import com.android.systemui.statusbar.phone.SystemUIDialog;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +55,7 @@ public class TunerService extends SystemUI {
     // Map of Uris we listen on to their settings keys.
     private final ArrayMap<Uri, String> mListeningUris = new ArrayMap<>();
     // Map of settings keys to the listener.
-    private final HashMap<String, List<Tunable>> mTunableLookup = new HashMap<>();
+    private final HashMap<String, List<WeakReference<Tunable>>> mTunableLookup = new HashMap<>();
 
     private ContentResolver mContentResolver;
     private int mCurrentUser;
@@ -85,9 +86,9 @@ public class TunerService extends SystemUI {
 
     private void addTunable(Tunable tunable, String key) {
         if (!mTunableLookup.containsKey(key)) {
-            mTunableLookup.put(key, new ArrayList<Tunable>());
+            mTunableLookup.put(key, new ArrayList<WeakReference<Tunable>>());
         }
-        mTunableLookup.get(key).add(tunable);
+        mTunableLookup.get(key).add(new WeakReference<>(tunable));
         Uri uri = Settings.Secure.getUriFor(key);
         if (!mListeningUris.containsKey(uri)) {
             mListeningUris.put(uri, key);
@@ -99,8 +100,8 @@ public class TunerService extends SystemUI {
     }
 
     public void removeTunable(Tunable tunable) {
-        for (List<Tunable> list : mTunableLookup.values()) {
-            list.remove(tunable);
+        for (List<WeakReference<Tunable>> list : mTunableLookup.values()) {
+            list.removeIf(tunableWeakReference -> tunable == tunableWeakReference.get());
         }
     }
 
@@ -116,9 +117,22 @@ public class TunerService extends SystemUI {
 
     public void reloadSetting(Uri uri) {
         String key = mListeningUris.get(uri);
+        List<WeakReference<Tunable>> tunables = mTunableLookup.get(key);
+        if (tunables == null) {
+            return;
+        }
         String value = Settings.Secure.getStringForUser(mContentResolver, key, mCurrentUser);
-        for (Tunable tunable : mTunableLookup.get(key)) {
+        boolean needClear = false;
+        for (WeakReference<Tunable> refTunable : tunables) {
+            Tunable tunable = refTunable.get();
+            if (tunable == null) {
+                needClear = true;
+                continue;
+            }
             tunable.onTuningChanged(key, value);
+        }
+        if (needClear) {
+            tunables.removeIf(tunableWeakReference -> null == tunableWeakReference.get());
         }
     }
 
@@ -126,7 +140,11 @@ public class TunerService extends SystemUI {
         for (String key : mTunableLookup.keySet()) {
             String value = Settings.Secure.getStringForUser(mContentResolver, key,
                     mCurrentUser);
-            for (Tunable tunable : mTunableLookup.get(key)) {
+            for (WeakReference<Tunable> refTunable : mTunableLookup.get(key)) {
+                Tunable tunable = refTunable.get();
+                if (tunable == null) {
+                    continue;
+                }
                 tunable.onTuningChanged(key, value);
             }
         }
