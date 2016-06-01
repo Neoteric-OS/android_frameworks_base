@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99306114_4201b261",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2016-06-01T05:21:25Z",
+      "side": 1,
+      "message": "Lock on mTypeLists inside addSupportType instead of locking on the LegacyTypeTracker instance.\n\npublic synchronized void addSupportedType(int type) {\n    synchronized(mTypeLists) {\n        /* method body */\n    }\n}",
+      "range": {
+        "startLine": 479,
+        "startChar": 15,
+        "endLine": 479,
+        "endChar": 27
+      },
+      "revId": "8c739b38de537d89f8ca7afa4525c452e00d1448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99306114_e2d28611",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2016-06-01T05:21:25Z",
+      "side": 1,
+      "message": "this does not need to by synchronized, because reading an entry from mTypeLists is already atomic.",
+      "range": {
+        "startLine": 487,
+        "startChar": 15,
+        "endLine": 487,
+        "endChar": 27
+      },
+      "revId": "8c739b38de537d89f8ca7afa4525c452e00d1448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99306114_22062e7b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2016-06-01T05:21:25Z",
+      "side": 1,
+      "message": "Break the if then else in two statements and lock on mTypeLists around the if block:\n\npublic NetworkAgentInfo getNetworkForType(int type) {\n    synchronized(mTypeLists) {\n        if (isTypeSupported(type) \u0026\u0026 !mTypeLists[type].isEmpty()) {\n            return mTypeLists[type].get(0);\n        }\n    }\n    return null;\n}",
+      "range": {
+        "startLine": 492,
+        "startChar": 16,
+        "endLine": 492,
+        "endChar": 31
+      },
+      "revId": "8c739b38de537d89f8ca7afa4525c452e00d1448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99306114_82fbba85",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2016-06-01T05:21:25Z",
+      "side": 1,
+      "message": "synchronize on mTypeLists around lines 515 to 520.\n\nIn addition, get the size of list within that synchronize block, then use it outside the synchronize block for the last if statement.",
+      "range": {
+        "startLine": 509,
+        "startChar": 15,
+        "endLine": 509,
+        "endChar": 27
+      },
+      "revId": "8c739b38de537d89f8ca7afa4525c452e00d1448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99306114_c2f4a297",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2016-06-01T05:21:25Z",
+      "side": 1,
+      "message": "synchronize on mTypeLists around lines 532 to 541. In addition, get the first element of the list corresponding to type withing that synchronize block if the list is not empty. Then use that first element as the replacement variable.",
+      "range": {
+        "startLine": 531,
+        "startChar": 15,
+        "endLine": 531,
+        "endChar": 27
+      },
+      "revId": "8c739b38de537d89f8ca7afa4525c452e00d1448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99306114_6200365c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2016-06-01T05:21:25Z",
+      "side": 1,
+      "message": "no need to synchronize here: remove(type, nai, wasDefault) is already synchronized.",
+      "range": {
+        "startLine": 560,
+        "startChar": 15,
+        "endLine": 560,
+        "endChar": 27
+      },
+      "revId": "8c739b38de537d89f8ca7afa4525c452e00d1448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99306114_a2f19ea5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2016-06-01T05:21:25Z",
+      "side": 1,
+      "message": "synchronize on mTypeLists across lines 573 to 575.",
+      "revId": "8c739b38de537d89f8ca7afa4525c452e00d1448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
