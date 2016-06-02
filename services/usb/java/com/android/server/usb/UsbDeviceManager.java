@@ -838,9 +838,6 @@ public class UsbDeviceManager {
         private String getDefaultFunctions() {
             String func = SystemProperties.get(USB_PERSISTENT_CONFIG_PROPERTY,
                     UsbManager.USB_FUNCTION_NONE);
-            if (UsbManager.USB_FUNCTION_NONE.equals(func)) {
-                func = UsbManager.USB_FUNCTION_MTP;
-            }
             return func;
         }
 
