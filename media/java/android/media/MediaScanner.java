@@ -72,6 +72,8 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Internal service helper that no-one should use directly.
@@ -162,6 +164,7 @@ public class MediaScanner implements AutoCloseable {
     private static final String SYSTEM_SOUNDS_DIR = Environment.getRootDirectory() + "/media/audio";
     private static final String OEM_SOUNDS_DIR = Environment.getOemDirectory() + "/media/audio";
     private static final String PRODUCT_SOUNDS_DIR = Environment.getProductDirectory() + "/media/audio";
+    private static final Pattern LOCATION_PATTERN = Pattern.compile("([+|-][0-9.]+)([+|-][0-9.]+)/");
     private static String sLastInternalScanFingerprint;
 
     private static final String[] ID3_GENRES = {
@@ -516,6 +519,8 @@ public class MediaScanner implements AutoCloseable {
         private int mColorStandard;
         private int mColorTransfer;
         private int mColorRange;
+        private float mLatitude;
+        private float mLongitude;
 
         public MyMediaScannerClient() {
             mDateFormatter = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
@@ -598,6 +603,8 @@ public class MediaScanner implements AutoCloseable {
             mColorStandard = -1;
             mColorTransfer = -1;
             mColorRange = -1;
+            mLatitude = -360.0f;
+            mLongitude = -360.0f;
 
             return entry;
         }
@@ -772,6 +779,15 @@ public class MediaScanner implements AutoCloseable {
                 mColorTransfer = parseSubstring(value, 0, -1);
             } else if (name.equalsIgnoreCase("colorrange")) {
                 mColorRange = parseSubstring(value, 0, -1);
+            } else if (name.equalsIgnoreCase("location")) {
+                Matcher matcher = LOCATION_PATTERN.matcher(value);
+                if (matcher.find()) {
+                    mLatitude = Float.parseFloat(matcher.group(1));
+                    mLongitude = Float.parseFloat(matcher.group(2));
+                } else {
+                    mLatitude = -360.0f;
+                    mLongitude = -360.0f;
+                }
             } else {
                 //Log.v(TAG, "unknown tag: " + name + " (" + mProcessGenres + ")");
             }
@@ -929,6 +945,11 @@ public class MediaScanner implements AutoCloseable {
                     }
                     if (mDate > 0) {
                         map.put(Video.Media.DATE_TAKEN, mDate);
+                    }
+                    if (mLatitude >= -90.0f && mLatitude <= 90.0f &&
+                            mLongitude >= -180.0f && mLongitude <= 180.0f) {
+                        map.put(Video.Media.LATITUDE, mLatitude);
+                        map.put(Video.Media.LONGITUDE, mLongitude);
                     }
                 } else if (MediaFile.isImageFileType(mFileType)) {
                     // FIXME - add DESCRIPTION
