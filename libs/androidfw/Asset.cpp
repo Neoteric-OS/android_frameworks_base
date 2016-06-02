@@ -759,6 +759,8 @@ status_t _CompressedAsset::openChunk(FileMap* dataMap, size_t uncompressedLen)
  */
 ssize_t _CompressedAsset::read(void* buf, size_t count)
 {
+    AutoMutex _l(mLock);
+
     size_t maxLen;
     size_t actual;
 
@@ -820,6 +822,8 @@ off64_t _CompressedAsset::seek(off64_t offset, int whence)
  */
 void _CompressedAsset::close(void)
 {
+    AutoMutex _l(mLock);
+
     if (mMap != NULL) {
         delete mMap;
         mMap = NULL;
@@ -845,10 +849,10 @@ void _CompressedAsset::close(void)
  */
 const void* _CompressedAsset::getBuffer(bool)
 {
-    unsigned char* buf = NULL;
-
     if (mBuf != NULL)
         return mBuf;
+
+    unsigned char* buf = NULL;
 
     /*
      * Allocate a buffer and read the file into it.
