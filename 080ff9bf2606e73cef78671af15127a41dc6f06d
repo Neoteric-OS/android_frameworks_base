@@ -16,6 +16,24 @@
       "revId": "080ff9bf2606e73cef78671af15127a41dc6f06d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "463d26ed_bf59b780",
+        "filename": "libs/androidfw/Asset.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1103638
+      },
+      "writtenOn": "2016-06-03T06:45:32Z",
+      "side": 1,
+      "message": "The getBuffer()\u0027s caller is read(),i add the auto lock to read(),i think it can fix the race issue.",
+      "parentUuid": "5986e997_23597480",
+      "revId": "080ff9bf2606e73cef78671af15127a41dc6f06d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
