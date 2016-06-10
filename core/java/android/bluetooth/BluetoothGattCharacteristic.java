@@ -265,7 +265,8 @@ public class BluetoothGattCharacteristic implements Parcelable {
         mValue = null;
         mDescriptors = new ArrayList<BluetoothGattDescriptor>();
 
-        if ((mProperties & PROPERTY_WRITE_NO_RESPONSE) != 0) {
+        if ((mProperties & PROPERTY_WRITE) == 0 &&
+            (mProperties & PROPERTY_WRITE_NO_RESPONSE) != 0) {
             mWriteType = WRITE_TYPE_NO_RESPONSE;
         } else {
             mWriteType = WRITE_TYPE_DEFAULT;
