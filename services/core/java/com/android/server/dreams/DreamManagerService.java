@@ -346,7 +346,8 @@ public final class DreamManagerService extends SystemService {
         if (Objects.equal(mCurrentDreamName, name)
                 && mCurrentDreamIsTest == isTest
                 && mCurrentDreamCanDoze == canDoze
-                && mCurrentDreamUserId == userId) {
+                && mCurrentDreamUserId == userId
+                && !mCurrentDreamIsWaking) {
             return;
         }
 
