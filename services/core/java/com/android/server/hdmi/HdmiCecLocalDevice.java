@@ -501,13 +501,16 @@ abstract class HdmiCecLocalDevice {
     }
 
     void setAudioStatus(boolean mute, int volume) {
+        Slog.d(TAG, "setAudioStatus disabled mute=" + mute + " volume=" + volume);
         synchronized (mLock) {
             mSystemAudioMute = mute;
             mSystemAudioVolume = volume;
+            /*
             int maxVolume = mService.getAudioManager().getStreamMaxVolume(
                     AudioManager.STREAM_MUSIC);
             mService.setAudioStatus(mute,
                     VolumeControlAction.scaleToCustomVolume(volume, maxVolume));
+            */
         }
     }
 

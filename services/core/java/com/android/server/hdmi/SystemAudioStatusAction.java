@@ -68,8 +68,10 @@ final class SystemAudioStatusAction extends HdmiCecFeatureAction {
         // the audio amplifier is unknown.
         localDevice().setAudioStatus(false, Constants.UNKNOWN_VOLUME);
 
+        /*
         sendUserControlPressedAndReleased(mAvrAddress,
                 HdmiCecKeycode.getMuteKey(!localDevice().isSystemAudioActivated()));
+        */
 
         // Still return SUCCESS to callback.
         finishWithCallback(HdmiControlManager.RESULT_SUCCESS);
@@ -96,10 +98,12 @@ final class SystemAudioStatusAction extends HdmiCecFeatureAction {
         int volume = params[0] & 0x7F;
         localDevice().setAudioStatus(mute, volume);
 
+        /*
         if (!(localDevice().isSystemAudioActivated() ^ mute)) {
             // Toggle AVR's mute status to match with the system audio status.
             sendUserControlPressedAndReleased(mAvrAddress, HdmiCecKeycode.CEC_KEYCODE_MUTE);
         }
+        */
         finishWithCallback(HdmiControlManager.RESULT_SUCCESS);
     }
 
