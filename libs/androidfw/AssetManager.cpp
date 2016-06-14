@@ -1906,11 +1906,13 @@ sp<AssetManager::SharedZip> AssetManager::SharedZip::get(const String8& path,
 
 ZipFileRO* AssetManager::SharedZip::getZip()
 {
+    AutoMutex _l(gLock);
     return mZipFile;
 }
 
 Asset* AssetManager::SharedZip::getResourceTableAsset()
 {
+    AutoMutex _l(gLock);
     ALOGV("Getting from SharedZip %p resource asset %p\n", this, mResourceTableAsset);
     return mResourceTableAsset;
 }
@@ -1933,6 +1935,7 @@ Asset* AssetManager::SharedZip::setResourceTableAsset(Asset* asset)
 
 ResTable* AssetManager::SharedZip::getResourceTable()
 {
+    AutoMutex _l(gLock);
     ALOGV("Getting from SharedZip %p resource table %p\n", this, mResourceTable);
     return mResourceTable;
 }
@@ -1958,11 +1961,13 @@ bool AssetManager::SharedZip::isUpToDate()
 
 void AssetManager::SharedZip::addOverlay(const asset_path& ap)
 {
+    AutoMutex _l(gLock);
     mOverlays.add(ap);
 }
 
 bool AssetManager::SharedZip::getOverlay(size_t idx, asset_path* out) const
 {
+    AutoMutex _l(gLock);
     if (idx >= mOverlays.size()) {
         return false;
     }
