@@ -43,6 +43,7 @@ public class AppWindowAnimator {
 
     boolean animating;
     boolean wasAnimating;
+    boolean mDummyAnimation;
     Animation animation;
     boolean hasTransformation;
     final Transformation transformation = new Transformation();
@@ -105,6 +106,7 @@ public class AppWindowAnimator {
                 + ": " + anim + " wxh=" + width + "x" + height
                 + " isVisible=" + mAppToken.isVisible());
         animation = anim;
+        mDummyAnimation = false;
         animating = false;
         if (!anim.isInitialized()) {
             anim.initialize(width, height, width, height);
@@ -139,6 +141,7 @@ public class AppWindowAnimator {
         if (WindowManagerService.localLOGV) Slog.v(TAG, "Setting dummy animation in " + mAppToken
                 + " isVisible=" + mAppToken.isVisible());
         animation = sDummyAnimation;
+        mDummyAnimation = true;
         hasTransformation = true;
         transformation.clear();
         transformation.setAlpha(mAppToken.isVisible() ? 1 : 0);
@@ -147,6 +150,7 @@ public class AppWindowAnimator {
     public void clearAnimation() {
         if (animation != null) {
             animation = null;
+            mDummyAnimation = false;
             animating = true;
         }
         clearThumbnail();
@@ -175,6 +179,7 @@ public class AppWindowAnimator {
         if (animation != null) {
             toAppAnimator.animation = animation;
             animation = null;
+            mDummyAnimation = false;
             toAppAnimator.animating = animating;
             toAppAnimator.animLayerAdjustment = animLayerAdjustment;
             animLayerAdjustment = 0;
@@ -267,6 +272,7 @@ public class AppWindowAnimator {
                         ", xform=" + transformation);
                 deferFinalFrameCleanup = false;
                 animation = null;
+                mDummyAnimation = false;
                 clearThumbnail();
                 if (DEBUG_ANIM) Slog.v(TAG,
                         "Finished animation in " + mAppToken + " @ " + currentTime);
@@ -332,6 +338,7 @@ public class AppWindowAnimator {
             // clear it and make sure we run the cleanup code.
             animating = true;
             animation = null;
+            mDummyAnimation = false;
         }
 
         hasTransformation = false;
