@@ -331,6 +331,9 @@ public class StorageMeasurement {
                             mContext.unbindService(mDefContainerConn);
                         }
                     }
+                    if (null != getLooper()) {
+                        getLooper().quit();
+                    }
                     break;
                 }
                 case MSG_COMPLETED: {
