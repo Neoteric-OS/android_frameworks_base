@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4908dc63_96bc8ccf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2016-06-20T12:25:37Z",
+      "side": 1,
+      "message": "Nit: delete this part of the URL so it just refers to the bug, not a specific comment.",
+      "range": {
+        "startLine": 9,
+        "startChar": 57,
+        "endLine": 9,
+        "endChar": 85
+      },
+      "revId": "d28c61737be4834603e17cc182286f8af208f7ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4908dc63_b6bf10c3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2016-06-20T12:25:37Z",
+      "side": 1,
+      "message": "Please wrap this to 72 characters.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "d28c61737be4834603e17cc182286f8af208f7ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4908dc63_56ab448a",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/deviceinfo/StorageMeasurement.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2016-06-20T12:25:37Z",
+      "side": 1,
+      "message": "You will need to move handlerThread and mMeasurementHandler to an onCreate method to match the onDestroy. Otherwise this sequence won\u0027t work:\n\n- StorageMeasurement::this()\n- onCreate()\n- onDestroy()\n- onCreate()\n\nBecause the thread won\u0027t have been recreated the second time.",
+      "range": {
+        "startLine": 156,
+        "startChar": 8,
+        "endLine": 156,
+        "endChar": 80
+      },
+      "revId": "d28c61737be4834603e17cc182286f8af208f7ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4908dc63_f6b998dd",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/deviceinfo/StorageMeasurement.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2016-06-20T12:25:37Z",
+      "side": 1,
+      "message": "Can the looper ever be null? Since the handler is the only thing running on this thread I\u0027m not sure it\u0027s necessary to check whether the looper it\u0027s running on exists first.\n\nAlso \"getLooper() !\u003d null\" is more normal.",
+      "range": {
+        "startLine": 334,
+        "startChar": 24,
+        "endLine": 334,
+        "endChar": 43
+      },
+      "revId": "d28c61737be4834603e17cc182286f8af208f7ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
