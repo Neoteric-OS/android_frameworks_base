@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "4908dc63_b6ca704f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2016-06-20T12:48:06Z",
+      "side": 1,
+      "message": "Still need to wrap this to 72 characters.",
+      "parentUuid": "4908dc63_b6bf10c3",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "d28c61737be4834603e17cc182286f8af208f7ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4908dc63_56ab448a",
         "filename": "packages/SettingsLib/src/com/android/settingslib/deviceinfo/StorageMeasurement.java",
         "patchSetId": 2
