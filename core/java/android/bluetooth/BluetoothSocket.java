@@ -310,9 +310,7 @@ public final class BluetoothSocket implements Closeable {
 
     /**
      * Get the output stream associated with this socket.
-     * <p>The output stream will be returned even if the socket is not yet
-     * connected, but operations on that stream will throw IOException until
-     * the associated socket is connected.
+     * <p> This method will return null if the associated socket isn't connected
      * @return OutputStream
      */
     public OutputStream getOutputStream() throws IOException {
