@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "639dc16f_4b1379b3",
+        "filename": "services/core/java/com/android/server/wm/AppWindowAnimator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2016-06-24T02:10:17Z",
+      "side": 1,
+      "message": "remove this",
+      "revId": "121876fdfd18df71c112cea0e22e485bb17a33a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "639dc16f_6b083d7d",
+        "filename": "services/core/java/com/android/server/wm/WindowAnimator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2016-06-24T02:10:17Z",
+      "side": 1,
+      "message": "winAnimator.mAppAnimator !\u003d sDummyAnimation",
+      "range": {
+        "startLine": 536,
+        "startChar": 57,
+        "endLine": 536,
+        "endChar": 58
+      },
+      "revId": "121876fdfd18df71c112cea0e22e485bb17a33a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
