@@ -646,6 +646,9 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
         super.dump(pw);
         pw.println("mIsActiveSource: " + mIsActiveSource);
         pw.println("mAutoTvOff:" + mAutoTvOff);
+        synchronized (mLock) {
+            pw.println("mSafeAllDeviceInfos: " + getSafeCecDevicesLocked());
+        }
     }
 
     // Wrapper interface over PowerManager.WakeLock
