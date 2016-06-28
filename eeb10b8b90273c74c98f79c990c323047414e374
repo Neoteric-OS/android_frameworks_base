@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "834ab540_720ef82d",
+        "filename": "packages/WallpaperCropper/src/com/android/wallpapercropper/WallpaperCropActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1060398
+      },
+      "writtenOn": "2016-06-28T02:17:49Z",
+      "side": 1,
+      "message": "just disable the button instead ?",
+      "range": {
+        "startLine": 113,
+        "startChar": 23,
+        "endLine": 114,
+        "endChar": 43
+      },
+      "revId": "eeb10b8b90273c74c98f79c990c323047414e374",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
