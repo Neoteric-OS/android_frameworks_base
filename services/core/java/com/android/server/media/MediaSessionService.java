@@ -227,8 +227,13 @@ public class MediaSessionService extends SystemService implements Monitor {
     }
 
     private void updateUser() {
+
+        // Move getCurrentUser() out of synchronized block.
+        // Doing so will avoid a potential deadlock between
+        // MediaSessionService.mLock and ActivityManagerService
+        // lock.
+        int userId = ActivityManager.getCurrentUser();
         synchronized (mLock) {
-            int userId = ActivityManager.getCurrentUser();
             if (mCurrentUserId != userId) {
                 final int oldUserId = mCurrentUserId;
                 mCurrentUserId = userId; // do this first
