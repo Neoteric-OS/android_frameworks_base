@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "834ab540_122e8c83",
+        "filename": "packages/WallpaperCropper/src/com/android/wallpapercropper/WallpaperCropActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1060398
+      },
+      "writtenOn": "2016-06-28T03:39:49Z",
+      "side": 1,
+      "message": "v.setEnabled...",
+      "range": {
+        "startLine": 111,
+        "startChar": 24,
+        "endLine": 111,
+        "endChar": 49
+      },
+      "revId": "a1d582fe2bcaaf7d1e7a3d7bc97595b246194f3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
