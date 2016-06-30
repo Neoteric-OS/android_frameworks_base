@@ -1966,14 +1966,12 @@ public final class InputMethodManager {
      * have any input method subtype.
      */
     public InputMethodSubtype getCurrentInputMethodSubtype() {
-        synchronized (mH) {
             try {
                 return mService.getCurrentInputMethodSubtype();
             } catch (RemoteException e) {
                 Log.w(TAG, "IME died: " + mCurId, e);
                 return null;
             }
-        }
     }
 
     /**
