@@ -16,6 +16,24 @@
       "revId": "e91f366d6f5e4b5dcd70c96e7a318f4bdc05e2d2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20065fd0_979c242c",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1105104
+      },
+      "writtenOn": "2016-06-30T06:08:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00c95b79_39620b23",
+      "revId": "e91f366d6f5e4b5dcd70c96e7a318f4bdc05e2d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
