@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdaeb264_2686b6fa",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4866,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2016-06-30T10:30:18Z",
+      "side": 1,
+      "message": "updateLockdownVpn enforces system uid. Although I believe Settings is the only app calling factoryReset, it may cause confusion later. \n\nCan you add clearCallingIdentity and restoreCallingIdentity here before calling updateLockdownVpn?",
+      "revId": "888862654141b8f677d1862e9a136cf110e25ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
