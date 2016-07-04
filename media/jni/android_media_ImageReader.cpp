@@ -32,6 +32,7 @@
 #include <android_runtime/android_view_Surface.h>
 #include <android_runtime/android_hardware_HardwareBuffer.h>
 #include <grallocusage/GrallocUsageConversion.h>
+#include <nativehelper/ScopedLocalRef.h>
 
 #include <jni.h>
 #include <nativehelper/JNIHelp.h>
@@ -64,6 +65,7 @@ static struct {
     jfieldID mNativeBuffer;
     jfieldID mTimestamp;
     jfieldID mPlanes;
+    jmethodID setCropRect;
 } gSurfaceImageClassInfo;
 
 static struct {
@@ -309,6 +311,12 @@ static void ImageReader_classInit(JNIEnv* env, jclass clazz)
     LOG_ALWAYS_FATAL_IF(gSurfaceImageClassInfo.mPlanes == NULL,
             "can't find android/media/ImageReader$ReaderSurfaceImage.mPlanes");
 
+    gSurfaceImageClassInfo.setCropRect = env->GetMethodID(
+            imageClazz, "setCropRect", "(Landroid/graphics/Rect;)V");
+
+    LOG_ALWAYS_FATAL_IF(gSurfaceImageClassInfo.setCropRect == NULL,
+                        "can't find android/graphics/ImageReader.setCropRect");
+
     gImageReaderClassInfo.mNativeContext = env->GetFieldID(
             clazz, ANDROID_MEDIA_IMAGEREADER_CTX_JNI_ID, "J");
     LOG_ALWAYS_FATAL_IF(gImageReaderClassInfo.mNativeContext == NULL,
@@ -534,15 +542,6 @@ static jint ImageReader_imageSetup(JNIEnv* env, jobject thiz, jobject image) {
 
     // Add some extra checks for non-opaque formats.
     if (!isFormatOpaque(ctx->getBufferFormat())) {
-        // Check if the left-top corner of the crop rect is origin, we currently assume this point is
-        // zero, will revisit this once this assumption turns out problematic.
-        Point lt = buffer->mCrop.leftTop();
-        if (lt.x != 0 || lt.y != 0) {
-            jniThrowExceptionFmt(env, "java/lang/UnsupportedOperationException",
-                    "crop left top corner [%d, %d] need to be at origin", lt.x, lt.y);
-            return -1;
-        }
-
         // Check if the producer buffer configurations match what ImageReader configured.
         int outputWidth = getBufferWidth(buffer);
         int outputHeight = getBufferHeight(buffer);
@@ -595,6 +594,39 @@ static jint ImageReader_imageSetup(JNIEnv* env, jobject thiz, jobject image) {
             static_cast<jlong>(buffer->mTimestamp));
 
     return ACQUIRE_SUCCESS;
+}
+
+static void ImageReader_imageAttributesSetup(JNIEnv* env, jobject thiz, jobject image) {
+    ALOGV("%s:", __FUNCTION__);
+    JNIImageReaderContext* ctx = ImageReader_getContext(env, thiz);
+    if (ctx == NULL) {
+        jniThrowRuntimeException(env, "ImageReaderContext is not initialized");
+        return;
+    }
+
+    BufferItem* buffer = Image_getBufferItem(env, image);
+    if (!buffer) {
+        ALOGW("Image already released!!!");
+        return;
+    }
+
+    jobject cropRect = NULL;
+    ScopedLocalRef<jclass> rectClazz(
+                                env, env->FindClass("android/graphics/Rect"));
+
+    jmethodID rectConstructID = env->GetMethodID(
+                                rectClazz.get(), "<init>", "(IIII)V");
+
+    cropRect = env->NewObject(
+                            rectClazz.get(), rectConstructID, buffer->mCrop.leftTop().x, buffer->mCrop.leftTop().y,
+                            buffer->mCrop.rightBottom().x, buffer->mCrop.rightBottom().y);
+
+    env->CallVoidMethod(image, gSurfaceImageClassInfo.setCropRect, cropRect);
+
+    if (cropRect != NULL) {
+        env->DeleteLocalRef(cropRect);
+        cropRect = NULL;
+    }
 }
 
 static jint ImageReader_detachImage(JNIEnv* env, jobject thiz, jobject image) {
@@ -807,6 +839,7 @@ static const JNINativeMethod gImageReaderMethods[] = {
     {"nativeClose",            "()V",                        (void*)ImageReader_close },
     {"nativeReleaseImage",     "(Landroid/media/Image;)V",   (void*)ImageReader_imageRelease },
     {"nativeImageSetup",       "(Landroid/media/Image;)I",   (void*)ImageReader_imageSetup },
+    {"nativeImageAttributesSetup", "(Landroid/media/Image;)V", (void*)ImageReader_imageAttributesSetup },
     {"nativeGetSurface",       "()Landroid/view/Surface;",   (void*)ImageReader_getSurface },
     {"nativeDetachImage",      "(Landroid/media/Image;)I",   (void*)ImageReader_detachImage },
     {"nativeDiscardFreeBuffers", "()V",                      (void*)ImageReader_discardFreeBuffers }

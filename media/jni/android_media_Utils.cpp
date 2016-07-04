@@ -932,20 +932,12 @@ status_t lockImageFromBuffer(BufferItem* bufferItem, uint32_t inUsage,
 int getBufferWidth(BufferItem* buffer) {
     if (buffer == NULL) return -1;
 
-    if (!buffer->mCrop.isEmpty()) {
-        return buffer->mCrop.getWidth();
-    }
-
     ALOGV("%s: buffer->mGraphicBuffer: %p", __FUNCTION__, buffer->mGraphicBuffer.get());
     return buffer->mGraphicBuffer->getWidth();
 }
 
 int getBufferHeight(BufferItem* buffer) {
     if (buffer == NULL) return -1;
-
-    if (!buffer->mCrop.isEmpty()) {
-        return buffer->mCrop.getHeight();
-    }
 
     ALOGV("%s: buffer->mGraphicBuffer: %p", __FUNCTION__, buffer->mGraphicBuffer.get());
     return buffer->mGraphicBuffer->getHeight();

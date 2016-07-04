@@ -442,6 +442,7 @@ public class ImageReader implements AutoCloseable {
             switch (status) {
                 case ACQUIRE_SUCCESS:
                     si.mIsImageValid = true;
+                    nativeImageAttributesSetup(si);
                 case ACQUIRE_NO_BUFS:
                 case ACQUIRE_MAX_IMAGES:
                     break;
@@ -1036,6 +1037,13 @@ public class ImageReader implements AutoCloseable {
      * @see #ACQUIRE_MAX_IMAGES
      */
     private synchronized native int nativeImageSetup(Image i);
+
+    /**
+     * This is to setup SurfaceImage attributes, eg: crop parameters
+     * This is expected to be called after ImageSetup returns successfully,
+     * and mIsImageValid is set to TRUE
+     */
+    private synchronized native void nativeImageAttributesSetup(Image i);
 
     /**
      * We use a class initializer to allow the native code to cache some
