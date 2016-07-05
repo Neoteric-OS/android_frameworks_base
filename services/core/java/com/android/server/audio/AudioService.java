@@ -1378,26 +1378,6 @@ public class AudioService extends IAudioService.Stub {
             if (streamTypeAlias == AudioSystem.STREAM_MUSIC) {
                 setSystemAudioVolume(oldIndex, newIndex, getStreamMaxVolume(streamType), flags);
             }
-            if (mHdmiManager != null) {
-                synchronized (mHdmiManager) {
-                    // mHdmiCecSink true => mHdmiPlaybackClient != null
-                    if (mHdmiCecSink &&
-                            streamTypeAlias == AudioSystem.STREAM_MUSIC &&
-                            oldIndex != newIndex) {
-                        synchronized (mHdmiPlaybackClient) {
-                            int keyCode = (direction == -1) ? KeyEvent.KEYCODE_VOLUME_DOWN :
-                                    KeyEvent.KEYCODE_VOLUME_UP;
-                            final long ident = Binder.clearCallingIdentity();
-                            try {
-                                mHdmiPlaybackClient.sendKeyEvent(keyCode, true);
-                                mHdmiPlaybackClient.sendKeyEvent(keyCode, false);
-                            } finally {
-                                Binder.restoreCallingIdentity(ident);
-                            }
-                        }
-                    }
-                }
-            }
         }
         int index = mStreamStates[streamType].getIndex(device);
         sendVolumeUpdate(streamType, oldIndex, index, flags);
