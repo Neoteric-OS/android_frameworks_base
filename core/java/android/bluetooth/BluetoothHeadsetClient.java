@@ -100,7 +100,8 @@ public final class BluetoothHeadsetClient implements BluetoothProfile {
      * {@link #EXTRA_BATTERY_LEVEL},
      * {@link #EXTRA_OPERATOR_NAME},
      * {@link #EXTRA_VOICE_RECOGNITION},
-     * {@link #EXTRA_IN_BAND_RING}</p>
+     * {@link #EXTRA_IN_BAND_RING},
+     * {@link #EXTRA_SUBSCRIBER_INFO}</p>
      */
     public static final String ACTION_AG_EVENT =
             "android.bluetooth.headsetclient.profile.action.AG_EVENT";

@@ -1,0 +1,30 @@
+From 85bb46b25834d68256c4b215c78236c267f5189e Mon Sep 17 00:00:00 2001
+From: ByeongKeon Kim <bkk@gpartner-nvidia.com>
+Date: Fri, 1 Jul 2016 17:51:27 +0900
+Subject: [PATCH] Add missing link for ACTION_AG_EVENT document
+
+The link of EXTRA_SUBSCRIBER_INFO is add for ACTION_AG_EVENT
+
+Change-Id: I4f7176141f3e38eb5b62bc1e686f6531d02a5a12
+Signed-off-by: ByeongKeon Kim <bkk@gpartner-nvidia.com>
+---
+ core/java/android/bluetooth/BluetoothHeadsetClient.java | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/core/java/android/bluetooth/BluetoothHeadsetClient.java b/core/java/android/bluetooth/BluetoothHeadsetClient.java
+index 874026f..06ab72c 100644
+--- a/core/java/android/bluetooth/BluetoothHeadsetClient.java
++++ b/core/java/android/bluetooth/BluetoothHeadsetClient.java
+@@ -100,7 +100,8 @@ public final class BluetoothHeadsetClient implements BluetoothProfile {
+      * {@link #EXTRA_BATTERY_LEVEL},
+      * {@link #EXTRA_OPERATOR_NAME},
+      * {@link #EXTRA_VOICE_RECOGNITION},
+-     * {@link #EXTRA_IN_BAND_RING}</p>
++     * {@link #EXTRA_IN_BAND_RING},
++     * {@link #EXTRA_SUBSCRIBER_INFO}</p>
+      */
+     public static final String ACTION_AG_EVENT =
+             "android.bluetooth.headsetclient.profile.action.AG_EVENT";
+-- 
+2.1.4
+
