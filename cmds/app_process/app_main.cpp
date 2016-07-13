@@ -300,7 +300,12 @@ int main(int argc, char* const argv[])
 
     if (!niceName.isEmpty()) {
         const char* procName = niceName.string();
-        pthread_setname_np(pthread_self(), procName);
+        int len = strlen(procName);
+        if (len < 15) {
+            pthread_setname_np(pthread_self(), procName);
+        } else {
+            pthread_setname_np(pthread_self(), procName + len - 15);
+        }
         runtime.setArgv0(procName);
     }
 
