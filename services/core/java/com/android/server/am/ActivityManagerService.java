@@ -20439,13 +20439,20 @@ public final class ActivityManagerService extends ActivityManagerNative
                             }
                             uss.mState = UserState.STATE_SHUTDOWN;
                         }
-                        mBatteryStatsService.noteEvent(
-                                BatteryStats.HistoryItem.EVENT_USER_RUNNING_FINISH,
-                                Integer.toString(userId), userId);
-                        mSystemServiceManager.stopUser(userId);
-                        broadcastIntentLocked(null, null, shutdownIntent,
-                                null, shutdownReceiver, 0, null, null, null, AppOpsManager.OP_NONE,
-                                null, true, false, MY_PID, Process.SYSTEM_UID, userId);
+                        Runnable doStopUserRunnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                mBatteryStatsService.noteEvent(
+                                        BatteryStats.HistoryItem.EVENT_USER_RUNNING_FINISH,
+                                        Integer.toString(userId), userId);
+                                // Call the function on HandlerThread to avoid deadlock
+                                mSystemServiceManager.stopUser(userId);
+                                broadcastIntentLocked(null, null, shutdownIntent,
+                                        null, shutdownReceiver, 0, null, null, null, AppOpsManager.OP_NONE,
+                                        null, true, false, MY_PID, Process.SYSTEM_UID, userId);
+                            }
+                        };
+                        mHandler.post(doStopUserRunnable);
                     }
                 };
                 // Kick things off.
