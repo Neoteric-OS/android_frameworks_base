@@ -312,6 +312,7 @@ void StringPool::sortByConfig()
     Vector<size_t> newEntryArray;
     Vector<entry_style> newEntryStyleArray;
     DefaultKeyedVector<size_t, size_t> origOffsetToNewOffset;
+    size_t removeCount = 0;
 
     for (size_t i=0; i<N; i++) {
         // We are filling in new offset 'i'; oldI is where we can find it
@@ -340,23 +341,26 @@ void StringPool::sortByConfig()
         // Add any old style to the new style array.
         if (mEntryStyleArray.size() > 0) {
             if (oldI < mEntryStyleArray.size()) {
-                newEntryStyleArray.add(mEntryStyleArray[oldI]);
+                const entry_style& style = mEntryStyleArray[oldI];
+                newEntryStyleArray.add(style);
+                // Test the size here to benefit from locality
+                if (style.spans.size() > 0) {
+                    removeCount = 0;
+                } else {
+                    removeCount++;
+                }
             } else {
                 newEntryStyleArray.add(entry_style());
+                removeCount++;
             }
         }
     }
 
     // Now trim any entries at the end of the new style array that are
     // not needed.
-    for (ssize_t i=newEntryStyleArray.size()-1; i>=0; i--) {
-        const entry_style& style = newEntryStyleArray[i];
-        if (style.spans.size() > 0) {
-            // That's it.
-            break;
-        }
-        // This one is not needed; remove.
-        newEntryStyleArray.removeAt(i);
+    if (removeCount > 0) {
+        size_t removeStart = newEntryStyleArray.size() - removeCount;
+        newEntryStyleArray.removeItemsAt(removeStart, removeCount);
     }
 
     // All done, install the new data structures and upate mValues with
