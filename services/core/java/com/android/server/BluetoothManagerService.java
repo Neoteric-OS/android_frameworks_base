@@ -1731,8 +1731,6 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                     sendBluetoothServiceDownCallback();
                     unbindAndFinish();
                     sendBleStateChanged(prevState, newState);
-                    // Don't broadcast as it has already been broadcast before
-                    isStandardBroadcast = false;
                 } else if (!intermediate_off) {
                     // connect to GattService
                     if (DBG) Log.d(TAG, "Bluetooth is in LE only mode");
@@ -1756,8 +1754,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                     // For LE only mode, broadcast as is
                     sendBleStateChanged(prevState, newState);
                     sendBluetoothStateCallback(false); // BT is OFF for general users
-                    // Broadcast as STATE_OFF
-                    newState = BluetoothAdapter.STATE_OFF;
+                    isStandardBroadcast = false;
                     sendBrEdrDownCallback();
                 }
             } else if (newState == BluetoothAdapter.STATE_ON) {
