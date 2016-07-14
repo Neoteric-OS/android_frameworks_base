@@ -2662,7 +2662,9 @@ public final class ActiveServices {
                 ServiceRecord r = mRestartingServices.get(i);
                 if (r.processName.equals(app.processName) &&
                         r.serviceInfo.applicationInfo.uid == app.info.uid) {
-                    mRestartingServices.remove(i);
+                    if (mRestartingServices.remove(i)) {
+                        r.resetRestartCounter();
+                    }
                     clearRestartingIfNeededLocked(r);
                 }
             }
