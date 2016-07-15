@@ -508,6 +508,14 @@ public class CarrierConfigManager {
     public static final String KEY_ALLOW_NON_EMERGENCY_CALLS_IN_ECM_BOOL =
             "allow_non_emergency_calls_in_ecm_bool";
 
+    /**
+     * Determines whether the carrier supports sending an MMS when data is turned off.
+     * Default value is {@code false}, meaning a MMS cannot be sent if data is turned off.
+     * @hide
+     */
+    public static final String KEY_ENABLE_MMS_WITH_MOBILE_DATA_OFF =
+            "enable_mms_with_mobile_data_off";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -613,6 +621,7 @@ public class CarrierConfigManager {
         sDefaults.putString(KEY_MMS_UA_PROF_URL_STRING, "");
         sDefaults.putString(KEY_MMS_USER_AGENT_STRING, "");
         sDefaults.putBoolean(KEY_ALLOW_NON_EMERGENCY_CALLS_IN_ECM_BOOL, true);
+        sDefaults.putBoolean(KEY_ENABLE_MMS_WITH_MOBILE_DATA_OFF, false);
     }
 
     /**
