@@ -508,6 +508,14 @@ public class CarrierConfigManager {
     public static final String KEY_ALLOW_NON_EMERGENCY_CALLS_IN_ECM_BOOL =
             "allow_non_emergency_calls_in_ecm_bool";
 
+    /**
+     * Boolean indicating if support is provided for directly dialing FDN number from FDN list.
+     * If false, this feature is not supported.
+     * @hide
+     */
+    public static final String KEY_FDN_DIAL_DIRECTLY_SUPPORTED_BOOL =
+            "fdn_dial_directly_supported_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -579,6 +587,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_HIDE_PREFERRED_NETWORK_TYPE_BOOL, false);
         sDefaults.putBoolean(KEY_EDITABLE_WFC_MODE_BOOL, true);
         sDefaults.putInt(KEY_CDMA_DTMF_TONE_DELAY_INT, 100);
+        sDefaults.putBoolean(KEY_FDN_DIAL_DIRECTLY_SUPPORTED_BOOL, false);
 
         // MMS defaults
         sDefaults.putBoolean(KEY_MMS_ALIAS_ENABLED_BOOL, false);
