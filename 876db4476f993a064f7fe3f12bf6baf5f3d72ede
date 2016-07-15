@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ad1308d_7982281c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1112968
+      },
+      "writtenOn": "2016-07-15T23:39:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5acfc472_f7d40454",
+      "revId": "876db4476f993a064f7fe3f12bf6baf5f3d72ede",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5acfc472_b7ba7c19",
         "filename": "cmds/app_process/app_main.cpp",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3ad1308d_99743ce2",
+        "filename": "cmds/app_process/app_main.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1112968
+      },
+      "writtenOn": "2016-07-15T23:39:27Z",
+      "side": 1,
+      "message": "I\u0027m copying the functionality in process_name.c. I think the limit is 15 because strlen() doesn\u0027t count the terminating \\0. Tested using test-art-host and adb shell ps.",
+      "parentUuid": "5acfc472_b7ba7c19",
+      "revId": "876db4476f993a064f7fe3f12bf6baf5f3d72ede",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5acfc472_7749d41d",
         "filename": "core/jni/android_util_Process.cpp",
         "patchSetId": 1
@@ -47,6 +83,30 @@
       "writtenOn": "2016-07-14T01:06:48Z",
       "side": 1,
       "message": "should the pthread_setname_np code go into setArgv0 too, rather than have two copies?",
+      "range": {
+        "startLine": 422,
+        "startChar": 38,
+        "endLine": 422,
+        "endChar": 46
+      },
+      "revId": "876db4476f993a064f7fe3f12bf6baf5f3d72ede",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ad1308d_f9cd78c5",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1112968
+      },
+      "writtenOn": "2016-07-15T23:39:27Z",
+      "side": 1,
+      "message": "I don\u0027t think so. Playing with a device, I see two copies of the process name. Copy (1) is in /proc/$PID/cmdline, which I believe this line sets. It is not subject to the 16-character limit. Copy (2) is in /proc/$PID/stat, where, as I understand, pthread_setname_np() writes to through /proc/$PID/comm. This one is limited to 16 characters.\n\nI straced ps and it reads (1) first, falling back to (2) if there is nothing in cmdline. This explains how it can print \"com.google.android.apps...\" which is much longer than 16 characters. Accessing /proc/$PID/comm on an app process shows a truncated name.",
+      "parentUuid": "5acfc472_7749d41d",
       "range": {
         "startLine": 422,
         "startChar": 38,
