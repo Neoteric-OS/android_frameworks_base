@@ -1,0 +1,9 @@
+diff a/core/java/android/view/ViewRootImpl.java b/core/java/android/view/ViewRootImpl.java	(rejected hunks)
+@@ -417,6 +419,7 @@ public final class ViewRootImpl implements ViewParent,
+         mFallbackEventHandler = PolicyManager.makeNewFallbackEventHandler(context);
+         mChoreographer = Choreographer.getInstance();
+         mDisplayManager = (DisplayManager)context.getSystemService(Context.DISPLAY_SERVICE);
++        mPowerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+         loadSystemProperties();
+         mWindowIsRound = context.getResources().getBoolean(
+                 com.android.internal.R.bool.config_windowIsRound);

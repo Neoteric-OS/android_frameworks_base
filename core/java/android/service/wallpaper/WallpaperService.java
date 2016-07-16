@@ -41,6 +41,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.os.PowerManager;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.Display;
@@ -187,6 +188,8 @@ public abstract class WallpaperService extends Service {
         Display mDisplay;
         private int mDisplayState;
 
+        PowerManager mPowerManager;
+
         final BaseSurfaceHolder mSurfaceHolder = new BaseSurfaceHolder() {
             {
                 mRequestedFormat = PixelFormat.RGBX_8888;
@@ -232,8 +235,7 @@ public abstract class WallpaperService extends Service {
 
             @Override
             public Canvas lockCanvas() {
-                if (mDisplayState == Display.STATE_DOZE
-                        || mDisplayState == Display.STATE_DOZE_SUSPEND) {
+                if (!mPowerManager.isInteractive()) {
                     try {
                         mSession.pokeDrawLock(mWindow);
                     } catch (RemoteException e) {
@@ -867,6 +869,8 @@ public abstract class WallpaperService extends Service {
             mDisplayManager.registerDisplayListener(mDisplayListener, mCaller.getHandler());
             mDisplay = mDisplayManager.getDisplay(Display.DEFAULT_DISPLAY);
             mDisplayState = mDisplay.getState();
+
+            mPowerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
             if (DEBUG) Log.v(TAG, "onCreate(): " + this);
             onCreate(mSurfaceHolder);
