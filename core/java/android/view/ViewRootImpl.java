@@ -47,6 +47,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
+import android.os.PowerManager;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.SystemClock;
@@ -143,6 +144,7 @@ public final class ViewRootImpl implements ViewParent,
     final IWindowSession mWindowSession;
     final Display mDisplay;
     final DisplayManager mDisplayManager;
+    final PowerManager mPowerManager;
     final String mBasePackageName;
 
     final int[] mTmpLocation = new int[2];
@@ -398,6 +400,7 @@ public final class ViewRootImpl implements ViewParent,
         mFallbackEventHandler = new PhoneFallbackEventHandler(context);
         mChoreographer = Choreographer.getInstance();
         mDisplayManager = (DisplayManager)context.getSystemService(Context.DISPLAY_SERVICE);
+        mPowerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         loadSystemProperties();
     }
 
@@ -886,10 +889,8 @@ public final class ViewRootImpl implements ViewParent,
     };
 
     void pokeDrawLockIfNeeded() {
-        final int displayState = mAttachInfo.mDisplayState;
         if (mView != null && mAdded && mTraversalScheduled
-                && (displayState == Display.STATE_DOZE
-                        || displayState == Display.STATE_DOZE_SUSPEND)) {
+                && (mPowerManager.isInteractive())) {
             try {
                 mWindowSession.pokeDrawLock(mWindow);
             } catch (RemoteException ex) {
