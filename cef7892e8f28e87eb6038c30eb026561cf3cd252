@@ -22,6 +22,30 @@
       "revId": "cef7892e8f28e87eb6038c30eb026561cf3cd252",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a5b3b40_f6ca6e16",
+        "filename": "services/core/jni/android_alarm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2016-07-19T16:28:47Z",
+      "side": 1,
+      "message": "no, but this is legacy code and ghackmann is actively working on removing it.\n\nwhether or not it\u0027s worth adding an extra header above this depends on how long we think it\u0027s going to be until we can actually delete it.\n\n(i\u0027m somewhat tempted to just copy those bits we actually need into the caller itself.)",
+      "parentUuid": "6abcb797_ca2ec3f7",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 78
+      },
+      "revId": "cef7892e8f28e87eb6038c30eb026561cf3cd252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
