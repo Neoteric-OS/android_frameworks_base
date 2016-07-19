@@ -46,6 +46,30 @@
       "revId": "cef7892e8f28e87eb6038c30eb026561cf3cd252",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a5b3b40_70cfa183",
+        "filename": "services/core/jni/android_alarm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1019050
+      },
+      "writtenOn": "2016-07-19T19:47:39Z",
+      "side": 1,
+      "message": "I went with idea to only include what we need. It\u0027s nearly all of the file, but I think it\u0027s easier to have it completely self contained in that one file so that it\u0027s obvious what\u0027s going on.",
+      "parentUuid": "0a5b3b40_f6ca6e16",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 78
+      },
+      "revId": "cef7892e8f28e87eb6038c30eb026561cf3cd252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
