@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6abcb797_ca2ec3f7",
+        "filename": "services/core/jni/android_alarm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1041813
+      },
+      "writtenOn": "2016-07-19T16:26:21Z",
+      "side": 1,
+      "message": "The comments here are still proper?\n\nIs it still possible to generate this file automatically from now on?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 78
+      },
+      "revId": "cef7892e8f28e87eb6038c30eb026561cf3cd252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
