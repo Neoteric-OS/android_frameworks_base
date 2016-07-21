@@ -3232,6 +3232,18 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         }
     }
 
+    private void dumpPackageNameForUid(IndentingPrintWriter fout, int uid) {
+        String[] packages = mContext.getPackageManager().getPackagesForUid(uid);
+        if (!ArrayUtils.isEmpty(packages)) {
+            fout.increaseIndent();
+            for (String packageName : packages) {
+                fout.print(packageName);
+                fout.println();
+            }
+            fout.decreaseIndent();
+        }
+    }
+
     @Override
     protected void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
         if (!DumpUtils.checkDumpPermission(mContext, TAG, writer)) return;
@@ -3365,6 +3377,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                         fout.print("UID=");
                         fout.print(mRestrictBackgroundWhitelistRevokedUids.keyAt(i));
                         fout.println();
+                        dumpPackageNameForUid(fout,
+                                mRestrictBackgroundWhitelistRevokedUids.keyAt(i));
                     }
                     fout.decreaseIndent();
                 }
@@ -3409,6 +3423,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                     fout.print(" rules=");
                     fout.print(uidRulesToString(uidRules));
                     fout.println();
+                    dumpPackageNameForUid(fout, uid);
                 }
                 fout.decreaseIndent();
 
