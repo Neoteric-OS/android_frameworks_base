@@ -484,6 +484,36 @@ android_media_AudioTrack_set_volume(JNIEnv *env, jobject thiz, jfloat leftVol, j
 }
 
 // ----------------------------------------------------------------------------
+static jint
+android_media_AudioTrack_set_volume_ramp(JNIEnv *env,  jobject thiz, jfloat vol, jint rampDuration, jint rampType) {
+    sp<AudioTrack> lpTrack = getAudioTrack(env, thiz);
+    if (lpTrack == NULL) {
+        jniThrowException(env, "java/lang/IllegalStateException",
+            "Unable to retrieve AudioTrack pointer for setVolumeRamp()");
+        return (jint)AUDIO_JAVA_ERROR;
+    }
+
+    return nativeToJavaStatus(lpTrack->setVolumeRamp(vol, rampDuration, (audio_easing_type_t)rampType));
+}
+
+// ----------------------------------------------------------------------------
+static jfloat
+android_media_AudioTrack_get_volume(JNIEnv *env,  jobject thiz) {
+    sp<AudioTrack> lpTrack = getAudioTrack(env, thiz);
+    if (lpTrack == NULL) {
+        jniThrowException(env, "java/lang/IllegalStateException",
+            "Unable to retrieve AudioTrack pointer for getVolume()");
+        return (jfloat) -1;
+    }
+
+    float volume = 0;
+    if (NO_ERROR == lpTrack->getLastAppliedVolume(&volume)) {
+        return (jfloat) volume;
+    }
+    return (jfloat) -1;
+}
+
+// ----------------------------------------------------------------------------
 
 #define CALLBACK_COND_WAIT_TIMEOUT_MS 1000
 static void android_media_AudioTrack_release(JNIEnv *env,  jobject thiz) {
@@ -1069,6 +1099,8 @@ static const JNINativeMethod gMethods[] = {
     {"native_write_short",   "([SIIIZ)I",(void *)android_media_AudioTrack_writeArray<jshortArray>},
     {"native_write_float",   "([FIIIZ)I",(void *)android_media_AudioTrack_writeArray<jfloatArray>},
     {"native_setVolume",     "(FF)V",    (void *)android_media_AudioTrack_set_volume},
+    {"native_set_volume_ramp","(FII)I",  (void *)android_media_AudioTrack_set_volume_ramp},
+    {"native_get_volume",     "()F",     (void *)android_media_AudioTrack_get_volume},
     {"native_get_native_frame_count",
                              "()I",      (void *)android_media_AudioTrack_get_native_frame_count},
     {"native_set_playback_rate",

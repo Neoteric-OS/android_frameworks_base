@@ -92,6 +92,23 @@ public class AudioTrack
      */
     private static final float GAIN_MAX = 1.0f;
 
+    // EasingTypes:
+    // to keep in sync with hardware/libhardware/include/hardware/audio.h
+    /**
+     * Request a linear ramp from current to next gain value.
+     */
+    public static final int EASING_LINEAR    = 0;
+    /**
+     * Request a cubic ramp accelerating from zero velocity
+     * from current to next gain value.
+     */
+    public static final int EASING_CUBIC_IN  = 1;
+    /**
+     * Request a cubic ramp decelerating to zero velocity
+     * from current to next gain value.
+     */
+    public static final int EASING_CUBIC_OUT = 2;
+
     /** Minimum value for sample rate */
     private static final int SAMPLE_RATE_HZ_MIN = 4000;
     /** Maximum value for sample rate */
@@ -1373,6 +1390,49 @@ public class AudioTrack
 
 
     /**
+     * Sets a smooth gain transition to a specified target gain value
+     * on all channels of this track.
+     * Any setVolumeRamp() overrides previous calls.
+     * Any later call to {@link #setVolume} will be effective immediately
+     * and will also override any ongoing gain transition.
+     * <p>Gain values are clamped to the closed interval [0.0, max] where
+     * max is the value of {@link #getMaxVolume}.
+     * A value of 0.0 results in zero gain (silence), and
+     * a value of 1.0 means unity gain (signal unchanged).
+     * The default value is 1.0 meaning unity gain.
+     * <p>The word "volume" in the API name is historical; this is actually a linear gain.
+     * @param targetGain output gain to be reached by all channels at the end of the ramp
+     * @param duration the ramp duration in millisecond
+     * @param easingType easing function applied to reach the requested gain, see {@link #EASING_LINEAR},
+     *    {@link #EASING_CUBIC_IN}, {@link #EASING_CUBIC_OUT}
+     * @return error code or success, see {@link #SUCCESS},
+     *    {@link #ERROR_INVALID_OPERATION}
+     */
+    public int setVolumeRamp(float targetGain, int duration, int easingType) {
+        if (isRestricted()) {
+            return SUCCESS;
+        }
+        if (mState == STATE_UNINITIALIZED) {
+            return ERROR_INVALID_OPERATION;
+        }
+        targetGain = clampGainOrLevel(targetGain);
+
+        return native_set_volume_ramp(targetGain, duration, easingType);
+    }
+
+    /**
+     * Returns the volume.
+     *
+     * @return the volume currently applied to this track.
+     */
+    public float getVolume() {
+        if (isRestricted()) {
+            return 0.0f;
+        }
+        return native_get_volume();
+    }
+
+    /**
      * Sets the playback sample rate for this track. This sets the sampling rate at which
      * the audio data will be consumed and played back
      * (as set by the sampleRateInHz parameter in the
@@ -2546,7 +2606,9 @@ public class AudioTrack
 
     private native final int native_get_native_frame_count();
 
-    private native final void native_setVolume(float leftVolume, float rightVolume);
+    private native final void  native_setVolume(float leftVolume, float rightVolume);
+    private native final int   native_set_volume_ramp(float targetGain, int duration, int easingType);
+    private native final float native_get_volume();
 
     private native final int native_set_playback_rate(int sampleRateInHz);
     private native final int native_get_playback_rate();
