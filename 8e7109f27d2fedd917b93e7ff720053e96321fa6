@@ -69,6 +69,30 @@
       "revId": "8e7109f27d2fedd917b93e7ff720053e96321fa6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f0e5d7b_03e4eea8",
+        "filename": "services/core/java/com/android/server/DropBoxManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2016-07-27T14:47:39Z",
+      "side": 1,
+      "message": "They were directed at Elliott because he had made the last three changes to StatFs.java (in 2014).\n\nRe-adding Jeff who made the previous change (in 2013), and Kenny who touched the corresponding lines in StatFs (back in 2012).",
+      "parentUuid": "8f0e5d7b_a3c99a23",
+      "range": {
+        "startLine": 732,
+        "startChar": 24,
+        "endLine": 732,
+        "endChar": 30
+      },
+      "revId": "8e7109f27d2fedd917b93e7ff720053e96321fa6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
