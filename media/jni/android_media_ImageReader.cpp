@@ -908,7 +908,7 @@ static void ImageReader_close(JNIEnv* env, jobject thiz)
 
     if (consumer != NULL) {
         consumer->abandon();
-        consumer->setFrameAvailableListener(NULL);
+        consumer->setFrameAvailableListener(wp<ConsumerBase::FrameAvailableListener>());
     }
     ImageReader_setNativeContext(env, thiz, NULL);
 }

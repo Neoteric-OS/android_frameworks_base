@@ -283,7 +283,7 @@ static void SurfaceTexture_init(JNIEnv* env, jobject thiz, jboolean isDetached,
 static void SurfaceTexture_finalize(JNIEnv* env, jobject thiz)
 {
     sp<GLConsumer> surfaceTexture(SurfaceTexture_getSurfaceTexture(env, thiz));
-    surfaceTexture->setFrameAvailableListener(0);
+    surfaceTexture->setFrameAvailableListener(wp<ConsumerBase::FrameAvailableListener>());
     SurfaceTexture_setFrameAvailableListener(env, thiz, 0);
     SurfaceTexture_setSurfaceTexture(env, thiz, 0);
     SurfaceTexture_setProducer(env, thiz, 0);

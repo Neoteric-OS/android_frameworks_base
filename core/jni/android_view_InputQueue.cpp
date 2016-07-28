@@ -48,7 +48,7 @@ enum {
 InputQueue::InputQueue(jobject inputQueueObj, const sp<Looper>& looper,
         int dispatchReadFd, int dispatchWriteFd) :
         mDispatchReadFd(dispatchReadFd), mDispatchWriteFd(dispatchWriteFd),
-        mDispatchLooper(looper), mHandler(new WeakMessageHandler(this)) {
+        mDispatchLooper(looper), mHandler(new WeakMessageHandler(wp<MessageHandler>(this))) {
     JNIEnv* env = AndroidRuntime::getJNIEnv();
     mInputQueueWeakGlobal = env->NewGlobalRef(inputQueueObj);
 }

@@ -57,7 +57,7 @@ static const nsecs_t POINTER_FADE_DURATION = 500 * 1000000LL; // 500 ms
 PointerController::PointerController(const sp<PointerControllerPolicyInterface>& policy,
         const sp<Looper>& looper, const sp<SpriteController>& spriteController) :
         mPolicy(policy), mLooper(looper), mSpriteController(spriteController) {
-    mHandler = new WeakMessageHandler(this);
+    mHandler = new WeakMessageHandler(wp<MessageHandler>(this));
 
     AutoMutex _l(mLock);
 

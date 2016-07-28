@@ -41,7 +41,7 @@ namespace android {
 
 SpriteController::SpriteController(const sp<Looper>& looper, int32_t overlayLayer) :
         mLooper(looper), mOverlayLayer(overlayLayer) {
-    mHandler = new WeakMessageHandler(this);
+    mHandler = new WeakMessageHandler(wp<MessageHandler>(this));
 
     mLocked.transactionNestingCount = 0;
     mLocked.deferredSpriteUpdate = false;
