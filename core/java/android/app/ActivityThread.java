@@ -1340,7 +1340,7 @@ public final class ActivityThread {
                 case PAUSE_ACTIVITY_FINISHING:
                     Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "activityPause");
                     handlePauseActivity((IBinder)msg.obj, true, (msg.arg1&1) != 0, msg.arg2,
-                            (msg.arg1&1) != 0);
+                            (msg.arg1&2) != 0);
                     Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
                     break;
                 case STOP_ACTIVITY_SHOW:
