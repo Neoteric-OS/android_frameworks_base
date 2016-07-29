@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4f3aa556_81591a95",
+        "filename": "services/core/java/com/android/server/DropBoxManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2016-07-29T22:19:27Z",
+      "side": 1,
+      "message": "FWIW the getPath() call is still in the try block but doesn\u0027t need to be, but it\u0027s currently a simple accessor so I\u0027ll leave it up to you whether you want to pull it out.",
+      "parentUuid": "afb2410f_bca0e18d",
+      "range": {
+        "startLine": 731,
+        "startChar": 12,
+        "endLine": 731,
+        "endChar": 15
+      },
+      "revId": "8e7109f27d2fedd917b93e7ff720053e96321fa6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f0e5d7b_c33bf61b",
         "filename": "services/core/java/com/android/server/DropBoxManagerService.java",
         "patchSetId": 2
