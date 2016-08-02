@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "145b6640_6af69794",
+        "filename": "services/core/java/com/android/server/DropBoxManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2016-08-02T10:29:39Z",
+      "side": 1,
+      "message": "I think it\u0027d be better to pass the cause (e) as an argument rather than throwing it away. We should probably also leave it to the place that originally throws the exception to decide whether or not the path should be quoted in the message. So this should be:\n\nthrow new IOException(\"Failed to restat\", e);\n\nI\u0027m planning to do this as a follow-up change.",
+      "range": {
+        "startLine": 735,
+        "startChar": 22,
+        "endLine": 735,
+        "endChar": 70
+      },
+      "revId": "c5e249b9e06b3637a2931b338b5d5ce7b7cfb1e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
