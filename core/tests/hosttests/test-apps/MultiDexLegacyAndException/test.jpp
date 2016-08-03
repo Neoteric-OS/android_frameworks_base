@@ -1,3 +1,24 @@
 test:
   @@com.android.jack.annotations.ForceInMainDex
   class com.android.multidexlegacyandexception.Test
+
+testWitouhActicity:
+  @@com.android.jack.annotations.ForceInMainDex
+  class com.android.multidexlegacyandexception.TestWithoutActivity
+
+runner:
+  @@com.android.jack.annotations.ForceInMainDex
+  class com.android.test.MultiDexTestRunner
+
+junit:
+  @@com.android.jack.annotations.ForceInMainDex
+  class junit.*
+
+android:
+  @@com.android.jack.annotations.ForceInMainDex
+  class android.*
+
+org:
+  @@com.android.jack.annotations.ForceInMainDex
+  class org.*
+  
