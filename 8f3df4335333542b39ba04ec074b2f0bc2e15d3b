@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4f9bad7_876a6885",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-08-03T22:30:24Z",
+      "side": 1,
+      "message": "Is there an unit test to demonstrate the issue?\nPlease note that we have already a related unit tests in\n\n  frameworks/base/core/tests/bluetoothtests\n\n$ cd frameworks/base/core/tests/bluetoothtests\n$ mm -j 40\n$ adb install $OUT/data/app/BluetoothTests/BluetoothTests.apk\n$ adb shell am instrument -w -r -e class android.bluetooth.BluetoothStressTest#testEnable com.android.bluetooth.tests/android.bluetooth.BluetoothTestRunner\n\n\nNit: \"Toggle\" -\u003e \"toggle\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "8f3df4335333542b39ba04ec074b2f0bc2e15d3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4f9bad7_04fc36a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-08-03T22:30:24Z",
+      "side": 1,
+      "message": "Nit: capitalize: settings -\u003e Settings.",
+      "range": {
+        "startLine": 9,
+        "startChar": 49,
+        "endLine": 9,
+        "endChar": 57
+      },
+      "revId": "8f3df4335333542b39ba04ec074b2f0bc2e15d3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4f9bad7_c7d3c004",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-08-03T22:30:24Z",
+      "side": 1,
+      "message": "\"turn off/on\" or \"turn on\" ?",
+      "range": {
+        "startLine": 10,
+        "startChar": 12,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "8f3df4335333542b39ba04ec074b2f0bc2e15d3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4f9bad7_84c1464f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-08-03T22:30:24Z",
+      "side": 1,
+      "message": "Nit: \"Before BT state\" -\u003e \"before the Bluetooth state\".\nAlso, please expand BT to Bluetooth everywhere else in this log message.",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 10,
+        "endChar": 25
+      },
+      "revId": "8f3df4335333542b39ba04ec074b2f0bc2e15d3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4f9bad7_67eacca7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-08-03T22:30:24Z",
+      "side": 1,
+      "message": "Please change wording to clarify the actual observed behavior. In your testing you are already explicitly toggling Bluetooth from Settings.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "8f3df4335333542b39ba04ec074b2f0bc2e15d3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4f9bad7_672d2cfc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-08-03T22:30:24Z",
+      "side": 1,
+      "message": "Nit: no need for extra space on the second and third line. Same comment applies to the next paragraph.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 1
+      },
+      "revId": "8f3df4335333542b39ba04ec074b2f0bc2e15d3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4f9bad7_87fee856",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-08-03T22:30:24Z",
+      "side": 1,
+      "message": "Nit: bogus extra space?",
+      "revId": "8f3df4335333542b39ba04ec074b2f0bc2e15d3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
