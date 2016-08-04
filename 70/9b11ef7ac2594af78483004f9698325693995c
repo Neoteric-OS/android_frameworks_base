@@ -1,0 +1,10 @@
+Presubmit-Ready+1: Treehugger Robot <treehugger-gerrit@google.com>
+Autosubmit+1: Andre Eisenbach <eisenbach@google.com>
+Code-Review+2: Andre Eisenbach <eisenbach@google.com>
+Presubmit-Ready+1: Andre Eisenbach <eisenbach@google.com>
+Verified+1: Andre Eisenbach <eisenbach@google.com>
+Submitted-by: Andre Eisenbach <eisenbach@google.com>
+Submitted-at: Thu, 04 Aug 2016 01:06:46 +0000
+Reviewed-on: https://android-review.googlesource.com/202187
+Project: platform/frameworks/base
+Branch: refs/heads/master
