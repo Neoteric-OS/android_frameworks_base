@@ -27,6 +27,7 @@ import android.os.ParcelUuid;
 
 import android.bluetooth.IBluetoothGattCallback;
 import android.bluetooth.IBluetoothGattServerCallback;
+import android.bluetooth.le.IAdvertiserCallback;
 
 /**
  * API for interacting with BLE / GATT
@@ -40,11 +41,15 @@ interface IBluetoothGatt {
                    in List scanStorages, in String callingPackage);
     void stopScan(in int appIf, in boolean isServer);
     void flushPendingBatchResults(in int appIf, in boolean isServer);
-    void startMultiAdvertising(in int appIf,
+
+    void registerAdvertiser(in IAdvertiserCallback callback);
+    void unregisterAdvertiser(in int advertiserId);
+    void startMultiAdvertising(in int advertiserId,
                                in AdvertiseData advertiseData,
                                in AdvertiseData scanResponse,
                                in AdvertiseSettings settings);
-    void stopMultiAdvertising(in int appIf);
+    void stopMultiAdvertising(in int advertiserId);
+
     void registerClient(in ParcelUuid appId, in IBluetoothGattCallback callback);
     void unregisterClient(in int clientIf);
     void clientConnect(in int clientIf, in String address, in boolean isDirect, in int transport);
