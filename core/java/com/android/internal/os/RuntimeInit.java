@@ -72,16 +72,10 @@ public class RuntimeInit {
             // Don't re-enter if KillApplicationHandler has already run
             if (mCrashing) return;
             if (mApplicationObject == null) {
-                // The "FATAL EXCEPTION" string is still used on Android even though
-                // apps can set a custom UncaughtExceptionHandler that renders uncaught
-                // exceptions non-fatal.
-                Clog_e(TAG, "*** FATAL EXCEPTION IN SYSTEM PROCESS: " + t.getName(), e);
+                Clog_e(TAG, "*** UNCAUGHT EXCEPTION IN SYSTEM PROCESS: " + t.getName(), e);
             } else {
                 StringBuilder message = new StringBuilder();
-                // The "FATAL EXCEPTION" string is still used on Android even though
-                // apps can set a custom UncaughtExceptionHandler that renders uncaught
-                // exceptions non-fatal.
-                message.append("FATAL EXCEPTION: ").append(t.getName()).append("\n");
+                message.append("UNCAUGHT EXCEPTION: ").append(t.getName()).append("\n");
                 final String processName = ActivityThread.currentProcessName();
                 if (processName != null) {
                     message.append("Process: ").append(processName).append(", ");
