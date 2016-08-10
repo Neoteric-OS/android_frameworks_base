@@ -15921,7 +15921,8 @@ public class PackageManagerService extends IPackageManager.Stub
                         verificationInfo == null ? -1 : verificationInfo.installerUid;
                 if (!origin.existing && requiredUid != -1
                         && isVerificationEnabled(
-                                verifierUser.getIdentifier(), installFlags, installerUid)) {
+                                verifierUser.getIdentifier(), installFlags, installerUid) &&
+                                isVerificationRequired()) {
                     final Intent verification = new Intent(
                             Intent.ACTION_PACKAGE_NEEDS_VERIFICATION);
                     verification.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
@@ -16071,6 +16072,25 @@ public class PackageManagerService extends IPackageManager.Stub
 
         public boolean isForwardLocked() {
             return (installFlags & PackageManager.INSTALL_FORWARD_LOCK) != 0;
+        }
+
+        private boolean isVerificationRequired() {
+            List<String> trustedInstallerList = Arrays.asList(mContext.getResources()
+                    .getStringArray(
+                    com.android.internal.R.array.config_trustedInstallersPackageList));
+            final String[] callerPackageNames = getPackagesForUid(verificationInfo.installerUid);
+
+            if (callerPackageNames != null) {
+                for (String packageName : callerPackageNames) {
+                    if (trustedInstallerList.contains(packageName)) {
+                        PackageInfo pi = getPackageInfo(packageName, 0, mContext.getUserId());
+                        if (pi != null && pi.applicationInfo.isPrivilegedApp()) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
         }
     }
 

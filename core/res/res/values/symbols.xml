@@ -3067,4 +3067,7 @@
   <java-symbol type="bool" name="config_showSysuiShutdown" />
 
   <java-symbol type="bool" name="config_display_no_service_when_sim_unready" />
+
+  <!-- Trusted installer package list -->
+  <java-symbol type="array" name="config_trustedInstallersPackageList" />
 </resources>
