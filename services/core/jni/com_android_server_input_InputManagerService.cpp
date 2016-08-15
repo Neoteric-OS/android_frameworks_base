@@ -66,6 +66,12 @@ namespace android {
 // The scaling factor is calculated as 2 ^ (speed * exponent),
 // where the speed ranges from -7 to + 7 and is supplied by the user.
 static const float POINTER_SPEED_EXPONENT = 1.0f / 4;
+// The exponent used to calculate the pointer acceleration scaling factor.
+// The scaling factor is calculated as 2 ^ (acceleration * exponent),
+// where the acceleration ranges from 0 to + 8 and is supplied by the user.
+// The following number was chosen such that 8 will result with acceleration
+// factor of 3, which is the default
+static const float POINTER_ACCELERATION_EXPONENT = 0.19812f;
 
 static struct {
     jmethodID notifyConfigurationChanged;
@@ -196,6 +202,7 @@ public:
     void setInputDispatchMode(bool enabled, bool frozen);
     void setSystemUiVisibility(int32_t visibility);
     void setPointerSpeed(int32_t speed);
+    void setPointerAcceleration(int32_t acceleration);
     void setShowTouches(bool enabled);
     void setInteractive(bool interactive);
     void reloadCalibration();
@@ -257,6 +264,9 @@ private:
         // Pointer speed.
         int32_t pointerSpeed;
 
+        // Pointer acceleration.
+        int32_t pointerAcceleration;
+
         // True if pointer gestures are enabled.
         bool pointerGesturesEnabled;
 
@@ -297,6 +307,7 @@ NativeInputManager::NativeInputManager(jobject contextObj,
         AutoMutex _l(mLock);
         mLocked.systemUiVisibility = ASYSTEM_UI_VISIBILITY_STATUS_BAR_VISIBLE;
         mLocked.pointerSpeed = 0;
+        mLocked.pointerAcceleration = 8;
         mLocked.pointerGesturesEnabled = true;
         mLocked.showTouches = false;
     }
@@ -443,6 +454,8 @@ void NativeInputManager::getReaderConfiguration(InputReaderConfiguration* outCon
 
         outConfig->pointerVelocityControlParameters.scale = exp2f(mLocked.pointerSpeed
                 * POINTER_SPEED_EXPONENT);
+        outConfig->pointerVelocityControlParameters.acceleration = exp2f(mLocked.pointerAcceleration
+                * POINTER_ACCELERATION_EXPONENT);
         outConfig->pointerGesturesEnabled = mLocked.pointerGesturesEnabled;
 
         outConfig->showTouches = mLocked.showTouches;
@@ -748,6 +761,22 @@ void NativeInputManager::setPointerSpeed(int32_t speed) {
 
         ALOGI("Setting pointer speed to %d.", speed);
         mLocked.pointerSpeed = speed;
+    } // release lock
+
+    mInputManager->getReader()->requestRefreshConfiguration(
+            InputReaderConfiguration::CHANGE_POINTER_SPEED);
+}
+
+void NativeInputManager::setPointerAcceleration(int32_t acceleration) {
+    { // acquire lock
+        AutoMutex _l(mLock);
+
+        if (mLocked.pointerAcceleration == acceleration) {
+            return;
+        }
+
+        ALOGI("Setting pointer acceleration to %d.", acceleration);
+        mLocked.pointerAcceleration = acceleration;
     } // release lock
 
     mInputManager->getReader()->requestRefreshConfiguration(
@@ -1285,6 +1314,13 @@ static void nativeSetPointerSpeed(JNIEnv* /* env */,
     im->setPointerSpeed(speed);
 }
 
+static void nativeSetPointerAcceleration(JNIEnv* /* env */,
+        jclass /* clazz */, jlong ptr, jint acceleration) {
+    NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
+
+    im->setPointerAcceleration(acceleration);
+}
+
 static void nativeSetShowTouches(JNIEnv* /* env */,
         jclass /* clazz */, jlong ptr, jboolean enabled) {
     NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
@@ -1407,6 +1443,8 @@ static const JNINativeMethod gInputManagerMethods[] = {
             (void*) nativeTransferTouchFocus },
     { "nativeSetPointerSpeed", "(JI)V",
             (void*) nativeSetPointerSpeed },
+    { "nativeSetPointerAcceleration", "(JI)V",
+            (void*) nativeSetPointerAcceleration },
     { "nativeSetShowTouches", "(JZ)V",
             (void*) nativeSetShowTouches },
     { "nativeSetInteractive", "(JZ)V",

@@ -159,6 +159,24 @@ public final class InputManager {
     public static final int DEFAULT_POINTER_SPEED = 0;
 
     /**
+     * Pointer Acceleration: The minimum (slowest) pointer acceleration (0).
+     * @hide
+     */
+    public static final int MIN_POINTER_ACCELERATION = 0;
+
+    /**
+     * Pointer Acceleration: The maximum (fastest) pointer acceleration (8).
+     * @hide
+     */
+    public static final int MAX_POINTER_ACCELERATION = 8;
+
+    /**
+     * Pointer Acceleration: The default pointer acceleration (8).
+     * @hide
+     */
+    public static final int DEFAULT_POINTER_ACCELERATION = 8;
+
+    /**
      * Input Event Injection Synchronization Mode: None.
      * Never blocks.  Injection is asynchronous and is assumed always to be successful.
      * @hide
@@ -720,6 +738,73 @@ public final class InputManager {
             mIm.tryPointerSpeed(speed);
         } catch (RemoteException ex) {
             Log.w(TAG, "Could not set temporary pointer speed.", ex);
+        }
+    }
+
+    /**
+     * Gets the mouse pointer acceleration.
+     * <p>
+     * Only returns the permanent mouse pointer acceleration.  Ignores any temporary pointer
+     * acceleration set by {@link #tryPointerAcceleration}.
+     * </p>
+     *
+     * @param context The application context.
+     * @return The pointer acceleration as a value between {@link #MIN_POINTER_ACCELERATION} and
+     * {@link #MAX_POINTER_ACCELERATION}, or the default value {@link #DEFAULT_POINTER_ACCELERATION}.
+     *
+     * @hide
+     */
+    public int getPointerAcceleration(Context context) {
+        int acceleration = DEFAULT_POINTER_ACCELERATION;
+        try {
+            acceleration = Settings.System.getInt(context.getContentResolver(),
+                    Settings.System.POINTER_ACCELERATION);
+        } catch (SettingNotFoundException snfe) {
+        }
+        return acceleration;
+    }
+
+    /**
+     * Sets the mouse pointer acceleration.
+     * <p>
+     * Requires {@link android.Manifest.permissions.WRITE_SETTINGS}.
+     * </p>
+     *
+     * @param context The application context.
+     * @param acceleration The pointer acceleration as a value between {@link #MIN_POINTER_ACCELERATION} and
+     * {@link #MAX_POINTER_ACCELERATION}, or the default value {@link #DEFAULT_POINTER_ACCELERATION}.
+     *
+     * @hide
+     */
+    public void setPointerAcceleration(Context context, int acceleration) {
+        if (acceleration < MIN_POINTER_ACCELERATION || acceleration > MAX_POINTER_ACCELERATION) {
+            throw new IllegalArgumentException("acceleration out of range");
+        }
+
+        Settings.System.putInt(context.getContentResolver(),
+                Settings.System.POINTER_ACCELERATION, acceleration);
+    }
+
+    /**
+     * Changes the mouse pointer acceleration temporarily, but does not save the setting.
+     * <p>
+     * Requires {@link android.Manifest.permission.SET_POINTER_SPEED}.
+     * </p>
+     *
+     * @param acceleration The pointer acceleration as a value between {@link #MIN_POINTER_ACCELERATION} and
+     * {@link #MAX_POINTER_ACCELERATION}, or the default value {@link #DEFAULT_POINTER_ACCELERATION}.
+     *
+     * @hide
+     */
+    public void tryPointerAcceleration(int acceleration) {
+        if (acceleration < MIN_POINTER_ACCELERATION || acceleration > MAX_POINTER_ACCELERATION) {
+            throw new IllegalArgumentException("acceleration out of range");
+        }
+
+        try {
+            mIm.tryPointerAcceleration(acceleration);
+        } catch (RemoteException ex) {
+            Log.w(TAG, "Could not set temporary pointer acceleration.", ex);
         }
     }
 

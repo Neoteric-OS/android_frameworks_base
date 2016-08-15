@@ -196,6 +196,7 @@ public class InputManagerService extends IInputManager.Stub
     private static native boolean nativeTransferTouchFocus(long ptr,
             InputChannel fromChannel, InputChannel toChannel);
     private static native void nativeSetPointerSpeed(long ptr, int speed);
+    private static native void nativeSetPointerAcceleration(long ptr, int acceleration);
     private static native void nativeSetShowTouches(long ptr, boolean enabled);
     private static native void nativeSetInteractive(long ptr, boolean interactive);
     private static native void nativeReloadCalibration(long ptr);
@@ -304,17 +305,20 @@ public class InputManagerService extends IInputManager.Stub
         Watchdog.getInstance().addMonitor(this);
 
         registerPointerSpeedSettingObserver();
+        registerPointerAccelerationSettingObserver();
         registerShowTouchesSettingObserver();
 
         mContext.registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 updatePointerSpeedFromSettings();
+                updatePointerAccelerationFromSettings();
                 updateShowTouchesFromSettings();
             }
         }, new IntentFilter(Intent.ACTION_USER_SWITCHED), null, mHandler);
 
         updatePointerSpeedFromSettings();
+        updatePointerAccelerationFromSettings();
         updateShowTouchesFromSettings();
     }
 
@@ -1329,6 +1333,52 @@ public class InputManagerService extends IInputManager.Stub
         } catch (SettingNotFoundException snfe) {
         }
         return speed;
+    }
+
+    @Override // Binder call
+    public void tryPointerAcceleration(int acceleration) {
+        if (!checkCallingPermission(android.Manifest.permission.SET_POINTER_SPEED,
+                "tryPointerAcceleration()")) {
+            throw new SecurityException("Requires SET_POINTER_SPEED permission");
+        }
+
+        if (acceleration < InputManager.MIN_POINTER_ACCELERATION || acceleration > InputManager.MAX_POINTER_ACCELERATION) {
+            throw new IllegalArgumentException("acceleration out of range");
+        }
+
+        setPointerAccelerationUnchecked(acceleration);
+    }
+
+    public void updatePointerAccelerationFromSettings() {
+        int acceleration = getPointerAccelerationSetting();
+        setPointerAccelerationUnchecked(acceleration);
+    }
+
+    private void setPointerAccelerationUnchecked(int acceleration) {
+        acceleration = Math.min(Math.max(acceleration, InputManager.MIN_POINTER_ACCELERATION),
+                InputManager.MAX_POINTER_ACCELERATION);
+        nativeSetPointerAcceleration(mPtr, acceleration);
+    }
+
+    private void registerPointerAccelerationSettingObserver() {
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.POINTER_ACCELERATION), true,
+                new ContentObserver(mHandler) {
+                    @Override
+                    public void onChange(boolean selfChange) {
+                        updatePointerAccelerationFromSettings();
+                    }
+                }, UserHandle.USER_ALL);
+    }
+
+    private int getPointerAccelerationSetting() {
+        int acceleration = InputManager.DEFAULT_POINTER_ACCELERATION;
+        try {
+            acceleration = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.POINTER_ACCELERATION, UserHandle.USER_CURRENT);
+        } catch (SettingNotFoundException snfe) {
+        }
+        return acceleration;
     }
 
     public void updateShowTouchesFromSettings() {

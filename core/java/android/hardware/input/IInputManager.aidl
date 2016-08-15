@@ -37,6 +37,9 @@ interface IInputManager {
     // Temporarily changes the pointer speed.
     void tryPointerSpeed(int speed);
 
+    // Temporarily changes the pointer acceleration.
+    void tryPointerAcceleration(int acceleration);
+
     // Injects an input event into the system.  To inject into windows owned by other
     // applications, the caller must have the INJECT_EVENTS permission.
     boolean injectInputEvent(in InputEvent ev, int mode);
