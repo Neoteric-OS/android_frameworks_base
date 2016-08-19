@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68ee8774_4a3bc2ec",
+        "filename": "core/java/android/bluetooth/BluetoothSocket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-08-19T17:43:27Z",
+      "side": 1,
+      "message": "More descriptive error message please; e.g.,\n\n\"Error closing Bluetooth socket [\" + mSocket + \"] : \" + e.getMessage()",
+      "range": {
+        "startLine": 584,
+        "startChar": 35,
+        "endLine": 584,
+        "endChar": 72
+      },
+      "revId": "7996d80fded3697d5c3b95cdce8eb584a9cb5946",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
