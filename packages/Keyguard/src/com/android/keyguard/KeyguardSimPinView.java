@@ -53,7 +53,7 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
     private boolean mShowDefaultMessage = true;
     private int mRemainingAttempts = -1;
     private AlertDialog mRemainingAttemptsDialog;
-    private int mSubId;
+    private int mSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
     private ImageView mSimImageView;
 
     KeyguardUpdateMonitorCallback mUpdateMonitorCallback = new KeyguardUpdateMonitorCallback() {
@@ -76,8 +76,19 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
     public void resetState() {
         super.resetState();
         if (DEBUG) Log.v(TAG, "Resetting state");
+        handleSubInfoChangeIfNeeded();
         if (mShowDefaultMessage) {
             showDefaultMessage();
+        }
+    }
+
+    private void handleSubInfoChangeIfNeeded() {
+        KeyguardUpdateMonitor monitor = KeyguardUpdateMonitor.getInstance(mContext);
+        int subId = monitor.getNextSubIdForState(IccCardConstants.State.PIN_REQUIRED);
+        if (subId != mSubId && SubscriptionManager.isValidSubscriptionId(subId)) {
+            mSubId = subId;
+            mShowDefaultMessage = true;
+            mRemainingAttempts = -1;
         }
     }
 
@@ -313,11 +324,6 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
     }
 
     private void showDefaultMessage() {
-        KeyguardUpdateMonitor monitor = KeyguardUpdateMonitor.getInstance(mContext);
-        mSubId = monitor.getNextSubIdForState(IccCardConstants.State.PIN_REQUIRED);
-        if (!SubscriptionManager.isValidSubscriptionId(mSubId)) {
-            return;
-        }
         if (mRemainingAttempts >= 0) {
             mSecurityMessageDisplay.setMessage(getPinPasswordErrorMessage(
                     mRemainingAttempts, true), true);
@@ -331,7 +337,8 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
         if (count < 2) {
             msg = rez.getString(R.string.kg_sim_pin_instructions);
         } else {
-            SubscriptionInfo info = monitor.getSubscriptionInfoForSubId(mSubId);
+            SubscriptionInfo info = KeyguardUpdateMonitor.getInstance(mContext).
+                    getSubscriptionInfoForSubId(mSubId);
             CharSequence displayName = info != null ? info.getDisplayName() : ""; // don't crash
             msg = rez.getString(R.string.kg_sim_pin_instructions_multi, displayName);
             if (info != null) {
