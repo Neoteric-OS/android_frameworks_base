@@ -48149,6 +48149,7 @@ package java.lang {
     method public java.lang.Object[] getSigners();
     method public java.lang.String getSimpleName();
     method public java.lang.Class<? super T> getSuperclass();
+    method public java.lang.String getTypeName();
     method public synchronized java.lang.reflect.TypeVariable<java.lang.Class<T>>[] getTypeParameters();
     method public boolean isAnnotation();
     method public boolean isAnonymousClass();
@@ -49500,7 +49501,7 @@ package java.lang.reflect {
     method public abstract T getAnnotation(java.lang.Class<T>);
     method public abstract java.lang.annotation.Annotation[] getAnnotations();
     method public default T[] getAnnotationsByType(java.lang.Class<T>);
-    method public default java.lang.annotation.Annotation getDeclaredAnnotation(java.lang.Class<T>);
+    method public default T getDeclaredAnnotation(java.lang.Class<T>);
     method public abstract java.lang.annotation.Annotation[] getDeclaredAnnotations();
     method public default T[] getDeclaredAnnotationsByType(java.lang.Class<T>);
     method public default boolean isAnnotationPresent(java.lang.Class<? extends java.lang.annotation.Annotation>);
@@ -49531,9 +49532,8 @@ package java.lang.reflect {
     method public static void setShort(java.lang.Object, int, short) throws java.lang.ArrayIndexOutOfBoundsException, java.lang.IllegalArgumentException;
   }
 
-  public final class Constructor extends java.lang.reflect.AccessibleObject implements java.lang.reflect.GenericDeclaration java.lang.reflect.Member {
-    method public boolean equals(java.lang.Object);
-    method public A getAnnotation(java.lang.Class<A>);
+  public final class Constructor extends java.lang.reflect.Executable {
+    method public T getAnnotation(java.lang.Class<T>);
     method public java.lang.annotation.Annotation[] getDeclaredAnnotations();
     method public java.lang.Class<T> getDeclaringClass();
     method public java.lang.Class<?>[] getExceptionTypes();
@@ -49542,13 +49542,29 @@ package java.lang.reflect {
     method public int getModifiers();
     method public java.lang.String getName();
     method public java.lang.annotation.Annotation[][] getParameterAnnotations();
+    method public int getParameterCount();
     method public java.lang.Class<?>[] getParameterTypes();
     method public java.lang.reflect.TypeVariable<java.lang.reflect.Constructor<T>>[] getTypeParameters();
-    method public boolean isAnnotationPresent(java.lang.Class<? extends java.lang.annotation.Annotation>);
     method public boolean isSynthetic();
     method public boolean isVarArgs();
     method public T newInstance(java.lang.Object...) throws java.lang.IllegalAccessException, java.lang.IllegalArgumentException, java.lang.InstantiationException, java.lang.reflect.InvocationTargetException;
     method public java.lang.String toGenericString();
+  }
+
+  public abstract class Executable extends java.lang.reflect.AccessibleObject implements java.lang.reflect.GenericDeclaration java.lang.reflect.Member {
+    method public abstract java.lang.Class<?> getDeclaringClass();
+    method public abstract java.lang.Class<?>[] getExceptionTypes();
+    method public java.lang.reflect.Type[] getGenericExceptionTypes();
+    method public java.lang.reflect.Type[] getGenericParameterTypes();
+    method public abstract int getModifiers();
+    method public abstract java.lang.String getName();
+    method public abstract java.lang.annotation.Annotation[][] getParameterAnnotations();
+    method public int getParameterCount();
+    method public abstract java.lang.Class<?>[] getParameterTypes();
+    method public abstract java.lang.reflect.TypeVariable<?>[] getTypeParameters();
+    method public boolean isSynthetic();
+    method public boolean isVarArgs();
+    method public abstract java.lang.String toGenericString();
   }
 
   public final class Field extends java.lang.reflect.AccessibleObject implements java.lang.reflect.Member {
@@ -49567,7 +49583,6 @@ package java.lang.reflect {
     method public java.lang.String getName();
     method public short getShort(java.lang.Object) throws java.lang.IllegalAccessException, java.lang.IllegalArgumentException;
     method public java.lang.Class<?> getType();
-    method public boolean isAnnotationPresent(java.lang.Class<? extends java.lang.annotation.Annotation>);
     method public boolean isEnumConstant();
     method public boolean isSynthetic();
     method public void set(java.lang.Object, java.lang.Object) throws java.lang.IllegalAccessException, java.lang.IllegalArgumentException;
@@ -49618,9 +49633,9 @@ package java.lang.reflect {
     field public static final int PUBLIC = 0; // 0x0
   }
 
-  public final class Method extends java.lang.reflect.AccessibleObject implements java.lang.reflect.GenericDeclaration java.lang.reflect.Member {
-    method public boolean equals(java.lang.Object);
-    method public A getAnnotation(java.lang.Class<A>);
+  public final class Method extends java.lang.reflect.Executable {
+    method public T getAnnotation(java.lang.Class<T>);
+    method public java.lang.annotation.Annotation[] getDeclaredAnnotations();
     method public java.lang.Class<?> getDeclaringClass();
     method public java.lang.Object getDefaultValue();
     method public java.lang.Class<?>[] getExceptionTypes();
@@ -49630,6 +49645,7 @@ package java.lang.reflect {
     method public int getModifiers();
     method public java.lang.String getName();
     method public java.lang.annotation.Annotation[][] getParameterAnnotations();
+    method public int getParameterCount();
     method public java.lang.Class<?>[] getParameterTypes();
     method public java.lang.Class<?> getReturnType();
     method public java.lang.reflect.TypeVariable<java.lang.reflect.Method>[] getTypeParameters();
