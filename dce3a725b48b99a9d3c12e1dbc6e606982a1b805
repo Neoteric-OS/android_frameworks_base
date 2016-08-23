@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88357b64_d6212456",
+        "filename": "core/java/android/provider/MediaStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2016-08-23T20:36:45Z",
+      "side": 1,
+      "message": "Would this not cause the function to return INTERNAL_CONTENT_URI for something that isn\u0027t actually in internal storage?\n\nFor example, if a device has built /sdcard storage (from /storage/emulated), and a physical sd card on /mnt/media_rw, but the latter isn\u0027t currently mounted, then this function would return INTERNAL_CONTENT_URI for the path \"/mnt/media_rw/foo.mp3\", which is incorrect.\n\nIt seems like that is precisely what the current code (also provided by sonymobile, https://android-review.googlesource.com/#/c/42941) was trying to address.",
+      "range": {
+        "startLine": 1415,
+        "startChar": 0,
+        "endLine": 1424,
+        "endChar": 69
+      },
+      "revId": "dce3a725b48b99a9d3c12e1dbc6e606982a1b805",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
