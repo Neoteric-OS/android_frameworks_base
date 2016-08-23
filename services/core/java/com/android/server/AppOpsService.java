@@ -2218,7 +2218,9 @@ public class AppOpsService extends IAppOpsService.Stub {
             } catch (RemoteException e) {
                 return;
             }
-            mOpUserRestrictions.put(token, restrictionState);
+            synchronized (this) {
+                mOpUserRestrictions.put(token, restrictionState);
+            }
         }
 
         if (restrictionState.setRestriction(code, restricted, exceptionPackages, userHandle)) {
@@ -2226,7 +2228,9 @@ public class AppOpsService extends IAppOpsService.Stub {
         }
 
         if (restrictionState.isDefault()) {
-            mOpUserRestrictions.remove(token);
+            synchronized (this) {
+                mOpUserRestrictions.remove(token);
+            }
             restrictionState.destroy();
         }
     }
@@ -2263,10 +2267,12 @@ public class AppOpsService extends IAppOpsService.Stub {
     @Override
     public void removeUser(int userHandle) throws RemoteException {
         checkSystemUid("removeUser");
-        final int tokenCount = mOpUserRestrictions.size();
-        for (int i = tokenCount - 1; i >= 0; i--) {
-            ClientRestrictionState opRestrictions = mOpUserRestrictions.valueAt(i);
-            opRestrictions.removeUser(userHandle);
+        synchronized (this) {
+            final int tokenCount = mOpUserRestrictions.size();
+            for (int i = tokenCount - 1; i >= 0; i--) {
+                ClientRestrictionState opRestrictions = mOpUserRestrictions.valueAt(i);
+                opRestrictions.removeUser(userHandle);
+            }
         }
     }
 
