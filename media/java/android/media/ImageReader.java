@@ -140,11 +140,6 @@ public class ImageReader implements AutoCloseable {
                 "Maximum outstanding image count must be at least 1");
         }
 
-        if (format == ImageFormat.NV21) {
-            throw new IllegalArgumentException(
-                    "NV21 format is not supported");
-        }
-
         mNumPlanes = getNumPlanesFromFormat();
 
         nativeInit(new WeakReference<ImageReader>(this), width, height, format, maxImages);

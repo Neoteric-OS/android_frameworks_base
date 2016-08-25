@@ -1006,12 +1006,6 @@ static jint ImageReader_lockedImageSetup(JNIEnv* env, JNIImageReaderContext* ctx
         return ACQUIRE_NO_BUFFERS;
     }
 
-    if (buffer->flexFormat == HAL_PIXEL_FORMAT_YCrCb_420_SP) {
-        jniThrowException(env, "java/lang/UnsupportedOperationException",
-                "NV21 format is not supported by ImageReader");
-        return -1;
-    }
-
     // Check if the left-top corner of the crop rect is origin, we currently assume this point is
     // zero, will revist this once this assumption turns out problematic.
     Point lt = buffer->crop.leftTop();
