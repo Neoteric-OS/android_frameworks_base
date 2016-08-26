@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "652dd2d5_49044172",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5211,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2016-08-26T10:49:03Z",
+      "side": 1,
+      "message": "This is a binder call too so best to put it inside the clearCallingIdentity",
+      "range": {
+        "startLine": 5211,
+        "startChar": 16,
+        "endLine": 5211,
+        "endChar": 59
+      },
+      "revId": "b90c33e043d871f7f09db4a4b9bbdad7ecff882d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
