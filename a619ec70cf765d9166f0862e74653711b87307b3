@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "051ed617_df4eb740",
+        "filename": "libs/hwui/hwui/Paint.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1010334
+      },
+      "writtenOn": "2016-08-29T22:00:09Z",
+      "side": 1,
+      "message": "can this be made explicit? how many users are there?",
+      "revId": "a619ec70cf765d9166f0862e74653711b87307b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "051ed617_1f514fde",
+        "filename": "libs/hwui/utils/LinearAllocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1010334
+      },
+      "writtenOn": "2016-08-29T22:00:09Z",
+      "side": 1,
+      "message": "can this be made explicit? how many users are there?",
+      "revId": "a619ec70cf765d9166f0862e74653711b87307b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
