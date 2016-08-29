@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5967ec8_3cb271df",
+        "filename": "libs/hwui/hwui/Paint.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1052399
+      },
+      "writtenOn": "2016-08-29T22:36:50Z",
+      "side": 1,
+      "message": "In libs/hwui, I saw two that could be fixed easily, but I am not sure about other places.\nframeworks/base/libs/hwui/tests/common/TestUtils.cpp:99:75\nframeworks/base/libs/hwui/tests/common/TestUtils.cpp:105:70",
+      "parentUuid": "051ed617_df4eb740",
+      "revId": "a619ec70cf765d9166f0862e74653711b87307b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "051ed617_1f514fde",
         "filename": "libs/hwui/utils/LinearAllocator.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2016-08-29T22:00:09Z",
       "side": 1,
       "message": "can this be made explicit? how many users are there?",
+      "revId": "a619ec70cf765d9166f0862e74653711b87307b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5967ec8_3cc19100",
+        "filename": "libs/hwui/utils/LinearAllocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1052399
+      },
+      "writtenOn": "2016-08-29T22:36:50Z",
+      "side": 1,
+      "message": "Found several places:\n\nframeworks/base/libs/hwui/tests/microbench/LinearAllocatorBench.cpp:41:54: error: no matching constructor for initialization of \u0027std::vector\u003cchar, LinearStdAllocator\u003cchar\u003e \u003e\u0027 [clang-diagnostic-error]\n        std::vector\u003cchar, LinearStdAllocator\u003cchar\u003e \u003e v(stdAllocator);\n\nframeworks/base/libs/hwui/DisplayList.cpp:38:11: error: no matching constructor for initialization of \u0027LsaVector\u003candroid::uirenderer::DisplayList::Chunk\u003e\u0027 [clang-diagnostic-error]\n        , chunks(stdAllocator)\n \nand many lines in DisplayList.cpp, FrameBuilder.cpp, and LinearAllocatorTests.cpp.\n\nCould you suggest a good fix for those places?",
+      "parentUuid": "051ed617_1f514fde",
       "revId": "a619ec70cf765d9166f0862e74653711b87307b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
