@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5967ec8_b6fdb8d3",
+        "filename": "core/java/android/content/pm/PackageParser.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1473,
+      "author": {
+        "id": 1112331
+      },
+      "writtenOn": "2016-08-30T12:33:32Z",
+      "side": 1,
+      "message": "It will be better to use interface type(List) instead of implementation(ArrayList)",
+      "revId": "69298e37a1dadc13a70d313651fc5a56ef7d5a96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
