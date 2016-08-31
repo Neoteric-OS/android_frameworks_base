@@ -16,6 +16,7 @@
 
 package com.android.systemui;
 
+import android.app.ActivityThread;
 import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -105,6 +106,13 @@ public class SystemUIApplication extends Application {
                 }
             }, filter);
         } else {
+            // We don't need to startServices for sub-process that is doing some tasks.
+            // (screenshots, sweetsweetdesserts or tuner ..)
+            String processName = ActivityThread.currentProcessName();
+            ApplicationInfo info = getApplicationInfo();
+            if (processName != null && processName.startsWith(info.processName + ":")) {
+                return;
+            }
             // For a secondary user, boot-completed will never be called because it has already
             // been broadcasted on startup for the primary SystemUI process.  Instead, for
             // components which require the SystemUI component to be initialized per-user, we
