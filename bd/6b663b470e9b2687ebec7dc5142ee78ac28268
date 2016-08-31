@@ -1,0 +1,10 @@
+Code-Review+1: Marius Renn <renn@google.com>
+Code-Review+2: Chih-hung Hsieh <chh@google.com>
+Verified+1: Chih-hung Hsieh <chh@google.com>
+Autosubmit+1: Chih-hung Hsieh <chh@google.com>
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Chih-hung Hsieh <chh@google.com>
+Submitted-at: Wed, 31 Aug 2016 17:18:29 +0000
+Reviewed-on: https://android-review.googlesource.com/265835
+Project: platform/frameworks/base
+Branch: refs/heads/master
