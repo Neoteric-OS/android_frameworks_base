@@ -1925,6 +1925,9 @@ public final class BluetoothAdapter {
         } else if (profile == BluetoothProfile.PBAP_CLIENT) {
             BluetoothPbapClient pbapClient = new BluetoothPbapClient(context, listener);
             return true;
+        } else if (profile == BluetoothProfile.MAP_CLIENT) {
+            BluetoothMapClient mapClient = new BluetoothMapClient(context, listener);
+            return true;
         } else {
             return false;
         }
@@ -1996,6 +1999,10 @@ public final class BluetoothAdapter {
             case BluetoothProfile.PBAP_CLIENT:
                 BluetoothPbapClient pbapClient = (BluetoothPbapClient)proxy;
                 pbapClient.close();
+                break;
+            case BluetoothProfile.MAP_CLIENT:
+                BluetoothMapClient mapClient = (BluetoothMapClient)proxy;
+                mapClient.close();
                 break;
         }
     }
