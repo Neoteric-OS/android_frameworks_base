@@ -933,6 +933,9 @@ public class NotificationContentView extends FrameLayout {
         if (mIsChildInGroup) {
             mSingleLineView = mHybridGroupManager.bindFromNotification(
                     mSingleLineView, mStatusBarNotification.getNotification());
+            if (!isVisibleOrTransitioning(VISIBLE_TYPE_SINGLELINE)) {
+                mSingleLineView.setVisibility(View.INVISIBLE);
+            }
         } else if (mSingleLineView != null) {
             removeView(mSingleLineView);
             mSingleLineView = null;
