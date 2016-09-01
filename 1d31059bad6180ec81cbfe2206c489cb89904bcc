@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "312321ee_4a89d37a",
+        "filename": "core/java/android/hardware/camera2/legacy/RequestThreadManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-09-01T17:34:25Z",
+      "side": 1,
+      "message": "(disclaimer: I don\u0027t know this specific code and therefore this comment is general)\n\nThis scares me a little bit. How do you know the IllegalArgumentException is because there\u0027s no native surface ? Any of the code under the try block could have thrown it and may lead to hard to debug issues. Can the scope of the try block that catches this exception be reduced ?",
+      "range": {
+        "startLine": 245,
+        "startChar": 17,
+        "endLine": 245,
+        "endChar": 54
+      },
+      "revId": "1d31059bad6180ec81cbfe2206c489cb89904bcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
