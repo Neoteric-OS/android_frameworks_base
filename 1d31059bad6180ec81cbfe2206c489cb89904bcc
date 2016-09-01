@@ -22,6 +22,30 @@
       "revId": "1d31059bad6180ec81cbfe2206c489cb89904bcc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71711957_a9ff5dc5",
+        "filename": "core/java/android/hardware/camera2/legacy/RequestThreadManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1042691
+      },
+      "writtenOn": "2016-09-01T17:45:09Z",
+      "side": 1,
+      "message": "You could potentially throw a checked exception out of the getSurface call in android_hardware_camera2_legacy_LegacyCameraDevice.cpp instead for this case to avoid catching a general IllegalArgumentException.",
+      "parentUuid": "312321ee_4a89d37a",
+      "range": {
+        "startLine": 245,
+        "startChar": 17,
+        "endLine": 245,
+        "endChar": 54
+      },
+      "revId": "1d31059bad6180ec81cbfe2206c489cb89904bcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
