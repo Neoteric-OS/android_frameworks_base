@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "962843c7_0dd89541",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/NotificationContentView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-09-06T20:31:18Z",
+      "side": 1,
+      "message": "we should also check for mTransformationStartVisibleType, otherwise it needs to stay visible if we\u0027re transforming to/from it.",
+      "revId": "f7ac18f45afbabd7ecd5bdbdc94769132cd5aea4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
