@@ -3564,7 +3564,11 @@ final class ActivityStack {
         if (DEBUG_ALL) Slog.v(TAG, "Enqueueing pending finish: " + r);
         mStackSupervisor.mFinishingActivities.add(r);
         r.resumeKeyDispatchingLocked();
-        mStackSupervisor.resumeFocusedStackTopActivityLocked();
+        if (mStackSupervisor.isFocusedStack(this)) {
+            mStackSupervisor.resumeFocusedStackTopActivityLocked();
+        } else {
+            mStackSupervisor.scheduleIdleLocked();
+        }
         return r;
     }
 
