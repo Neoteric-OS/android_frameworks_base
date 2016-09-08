@@ -2688,6 +2688,7 @@ public class MediaPlayer extends PlayerBase
      */
     private synchronized void setSubtitleAnchor() {
         if ((mSubtitleController == null) && (ActivityThread.currentApplication() != null)) {
+            getMediaTimeProvider();
             final HandlerThread thread = new HandlerThread("SetSubtitleAnchorThread");
             thread.start();
             Handler handler = new Handler(thread.getLooper());
@@ -2703,7 +2704,7 @@ public class MediaPlayer extends PlayerBase
 
                         @Override
                         public Looper getSubtitleLooper() {
-                            return Looper.getMainLooper();
+                            return mTimeProvider.mEventHandler.getLooper();
                         }
                     });
                     thread.getLooper().quitSafely();
