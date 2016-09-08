@@ -16,6 +16,24 @@
       "revId": "69298e37a1dadc13a70d313651fc5a56ef7d5a96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "766bcf9b_5c7811ba",
+        "filename": "core/java/android/content/pm/PackageParser.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1473,
+      "author": {
+        "id": 1092759
+      },
+      "writtenOn": "2016-09-08T01:58:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5967ec8_b6fdb8d3",
+      "revId": "69298e37a1dadc13a70d313651fc5a56ef7d5a96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
