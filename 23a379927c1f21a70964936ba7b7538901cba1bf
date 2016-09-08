@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "766bcf9b_733d00c9",
+        "filename": "services/core/java/com/android/server/AppOpsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2213,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2016-09-08T18:49:26Z",
+      "side": 1,
+      "message": "This is already fixed and will be pushed out when our update gets released. No need to fix in master. Thanks for the help!",
+      "range": {
+        "startLine": 2213,
+        "startChar": 8,
+        "endLine": 2213,
+        "endChar": 20
+      },
+      "revId": "23a379927c1f21a70964936ba7b7538901cba1bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
