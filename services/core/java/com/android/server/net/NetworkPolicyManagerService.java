@@ -3484,9 +3484,17 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         @Override
         public void onPackageRemoved(String packageName, int uid) {
             if (LOGV) Slog.v(TAG, "onPackageRemoved: " + packageName + " ->" + uid);
-            synchronized (mRulesLock) {
-                removeRestrictBackgroundWhitelistedUidLocked(uid, true, true);
-                updateRestrictionRulesForUidLocked(uid);
+
+            final PackageManager pm = mContext.getPackageManager();
+            final String[] packages = pm.getPackagesForUid(uid);
+
+            if (packages == null) {
+                // many packages can use the same uid, so only update the whitelist and
+                // rules if this was the only (last) package for this uid.
+                synchronized (mRulesLock) {
+                    removeRestrictBackgroundWhitelistedUidLocked(uid, true, true);
+                    updateRestrictionRulesForUidLocked(uid);
+                }
             }
         }
     }
