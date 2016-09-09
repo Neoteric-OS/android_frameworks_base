@@ -16,6 +16,24 @@
       "revId": "f7ac18f45afbabd7ecd5bdbdc94769132cd5aea4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cba5b283_c4af9e84",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/NotificationContentView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1094240
+      },
+      "writtenOn": "2016-09-09T04:44:58Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "962843c7_0dd89541",
+      "revId": "f7ac18f45afbabd7ecd5bdbdc94769132cd5aea4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
