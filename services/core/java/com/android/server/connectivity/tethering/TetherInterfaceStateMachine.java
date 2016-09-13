@@ -136,10 +136,15 @@ public class TetherInterfaceStateMachine extends StateMachine {
             if (ifcg != null) {
                 InetAddress addr = NetworkUtils.numericToInetAddress(ipAsString);
                 ifcg.setLinkAddress(new LinkAddress(addr, prefixLen));
-                if (enabled) {
-                    ifcg.setInterfaceUp();
-                } else {
-                    ifcg.setInterfaceDown();
+                if (mInterfaceType != ConnectivityManager.TETHERING_WIFI) {
+                    // The WiFi stack has ownership of the interface up/down state.
+                    // It is unclear whether the bluetooth or USB stacks will manage their own
+                    // state.
+                    if (enabled) {
+                        ifcg.setInterfaceUp();
+                    } else {
+                        ifcg.setInterfaceDown();
+                    }
                 }
                 ifcg.clearFlag("running");
                 mNMService.setInterfaceConfig(mIfaceName, ifcg);
