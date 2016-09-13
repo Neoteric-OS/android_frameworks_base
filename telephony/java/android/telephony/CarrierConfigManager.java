@@ -278,6 +278,14 @@ public class CarrierConfigManager {
             "carrier_default_wfc_ims_enabled_bool";
 
     /**
+     * An array of networks which do not want data deactivation when the phone is shutdown.
+     * Note that this depends on the operator of the current network, not the operator on the SIM
+     * @hide
+     */
+    public static final String KEY_NETWORKS_NOT_CLEAR_DATA_STRINGS =
+            "key_networks_not_clear_data_strings";
+
+    /**
      * Default WFC_IMS_roaming_enabled: true VoWiFi roaming by default is on
      *                                  false VoWiFi roaming by default is off
      * @hide
@@ -734,6 +742,8 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_CARRIER_WFC_IMS_AVAILABLE_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_WFC_SUPPORTS_WIFI_ONLY_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_DEFAULT_WFC_IMS_ENABLED_BOOL, false);
+        sDefaults.putStringArray(KEY_CARRIER_DEFAULT_WFC_IMS_ENABLED_BOOL,
+                new String[]{"71203", "71606", "71610", "732101"});
         sDefaults.putBoolean(KEY_CARRIER_DEFAULT_WFC_IMS_ROAMING_ENABLED_BOOL, false);
         sDefaults.putInt(KEY_CARRIER_DEFAULT_WFC_IMS_MODE_INT, 2);
         sDefaults.putBoolean(KEY_CARRIER_FORCE_DISABLE_ETWS_CMAS_TEST_BOOL, false);
