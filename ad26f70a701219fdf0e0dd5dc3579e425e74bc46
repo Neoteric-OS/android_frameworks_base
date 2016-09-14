@@ -22,6 +22,30 @@
       "revId": "ad26f70a701219fdf0e0dd5dc3579e425e74bc46",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bf50afe_1e094d8c",
+        "filename": "services/core/java/com/android/server/am/AppErrors.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1023708
+      },
+      "writtenOn": "2016-09-14T04:57:34Z",
+      "side": 1,
+      "message": "Hi Wale\nyes, after review, we think both killedByAm and lowmemkiller by kernel side could be possible, so I\u0027ve changed use app.killed to judgement, it could be better for both cases.",
+      "parentUuid": "8b9bba7b_fde142c0",
+      "range": {
+        "startLine": 756,
+        "startChar": 23,
+        "endLine": 756,
+        "endChar": 35
+      },
+      "revId": "ad26f70a701219fdf0e0dd5dc3579e425e74bc46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
