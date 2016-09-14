@@ -22,6 +22,24 @@
       "revId": "438d2a2a9381060896f8f136294b826b1d40c00d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4bb54243_70341094",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1042203
+      },
+      "writtenOn": "2016-09-14T18:37:15Z",
+      "side": 1,
+      "message": "Yeah, this requires bionic (though __STRING is also on Mac).\n\nWe actually need QUOTE() from runtime/base/macros.h to do the two-level macro, to paste the value of the thing being stringified. This also comes up https://android.googlesource.com/platform/system/core/+/ad81a1d94a18097d32a80040ebac5940f073c8b6/init/init.cpp#586, fwiw.",
+      "parentUuid": "8be1fa42_b8aae671",
+      "revId": "438d2a2a9381060896f8f136294b826b1d40c00d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
