@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8be1fa42_b8aae671",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2016-09-14T16:00:17Z",
+      "side": 1,
+      "message": "this only builds for bionic, right? in which case we have __STRING(x) polluting the global namespace already. (so does glibc, and i assume the Mac should too, but i don\u0027t actually know.)",
+      "range": {
+        "startLine": 692,
+        "startChar": 8,
+        "endLine": 692,
+        "endChar": 21
+      },
+      "revId": "438d2a2a9381060896f8f136294b826b1d40c00d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
