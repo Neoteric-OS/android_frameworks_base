@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb1db24e_556aabe5",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2016-09-16T16:46:43Z",
+      "side": 1,
+      "message": "A few keys use \"STRINGS\" but the convention is \"STRING_ARRAY\"",
+      "range": {
+        "startLine": 285,
+        "startChar": 59,
+        "endLine": 285,
+        "endChar": 66
+      },
+      "revId": "bb799312a5eeb85e416bf28f1ffe5c2c7a5493e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
