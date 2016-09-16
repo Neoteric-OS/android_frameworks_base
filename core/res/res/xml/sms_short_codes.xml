@@ -129,7 +129,7 @@
 
     <!-- Italy: 5 digits (premium=4xxxx), plus EU:
          http://clients.txtnation.com/attachments/token/di5kfblvubttvlw/?name=Italy_CASP_EN.pdf -->
-    <shortcode country="it" pattern="\\d{5}" premium="4\\d{4}" free="116\\d{3}|4112503" />
+    <shortcode country="it" pattern="\\d{5}" premium="4\\d{4}" free="116\\d{3}|4112503|48000" />
 
     <!-- Japan: 8083 used by SOFTBANK_DCB_2 -->
     <shortcode country="jp" free="8083" />
