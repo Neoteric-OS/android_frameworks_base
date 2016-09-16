@@ -2267,6 +2267,8 @@
   <java-symbol type="array" name="config_cdma_international_roaming_indicators" />
   <java-symbol type="string" name="kg_text_message_separator" />
 
+  <java-symbol type="xml" name="voicemail_conf" />
+
   <java-symbol type="bool" name="config_use_sim_language_file" />
   <java-symbol type="bool" name="config_LTE_eri_for_network_name" />
   <java-symbol type="bool" name="config_defaultInTouchMode" />
