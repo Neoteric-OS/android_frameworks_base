@@ -91,6 +91,15 @@ public class ImageFloatingTextView extends TextView {
         return builder.build();
     }
 
+    @Override
+    public void onRtlPropertiesChanged(int layoutDirection) {
+        super.onRtlPropertiesChanged(layoutDirection);
+        if (mIndentLines > 0) {
+            // Invalidate layout.
+            setHint(getHint());
+        }
+    }
+
     @RemotableViewMethod
     public void setHasImage(boolean hasImage) {
         setNumIndentLines(hasImage ? 2 : 0);
