@@ -1382,14 +1382,11 @@ public class WifiManager {
      *     {@link #WIFI_FREQUENCY_BAND_5GHZ},
      *     {@link #WIFI_FREQUENCY_BAND_2GHZ},
      * @param persist {@code true} if this needs to be remembered
+     *
+     * @deprecated This API is no longer supported.
      * @hide
      */
     public void setFrequencyBand(int band, boolean persist) {
-        try {
-            mService.setFrequencyBand(band, persist);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
     }
 
     /**
@@ -1399,14 +1396,12 @@ public class WifiManager {
      *     {@link #WIFI_FREQUENCY_BAND_5GHZ},
      *     {@link #WIFI_FREQUENCY_BAND_2GHZ} or
      *     {@code -1} on failure.
+     *
+     * @deprecated This API is no longer supported.
      * @hide
      */
     public int getFrequencyBand() {
-        try {
-            return mService.getFrequencyBand();
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        return WIFI_FREQUENCY_BAND_AUTO;
     }
 
     /**
