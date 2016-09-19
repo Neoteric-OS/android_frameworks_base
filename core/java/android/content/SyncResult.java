@@ -79,7 +79,8 @@ public final class SyncResult implements Parcelable {
 
     /**
      * Used to indicate to the SyncManager that future sync requests that match the request's
-     * Account and authority should be delayed at least this many seconds.
+     * Account and authority should be delayed until this moment in time, specified by seconds 
+     * since January 1, 1970.
      */
     public long delayUntil;
 
