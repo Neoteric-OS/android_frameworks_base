@@ -441,6 +441,7 @@ public class AudioSystem
     public static final int DEVICE_IN_LOOPBACK = DEVICE_BIT_IN | 0x40000;
     public static final int DEVICE_IN_IP = DEVICE_BIT_IN | 0x80000;
     public static final int DEVICE_IN_BUS = DEVICE_BIT_IN | 0x100000;
+    public static final int DEVICE_IN_BLUETOOTH_MIC = DEVICE_BIT_IN | 0x200000;
     public static final int DEVICE_IN_DEFAULT = DEVICE_BIT_IN | DEVICE_BIT_DEFAULT;
 
     public static final int DEVICE_IN_ALL = (DEVICE_IN_COMMUNICATION |
@@ -464,6 +465,7 @@ public class AudioSystem
                                              DEVICE_IN_LOOPBACK |
                                              DEVICE_IN_IP |
                                              DEVICE_IN_BUS |
+                                             DEVICE_IN_BLUETOOTH_MIC |
                                              DEVICE_IN_DEFAULT);
     public static final int DEVICE_IN_ALL_SCO = DEVICE_IN_BLUETOOTH_SCO_HEADSET;
     public static final int DEVICE_IN_ALL_USB = (DEVICE_IN_USB_ACCESSORY |
@@ -522,6 +524,7 @@ public class AudioSystem
     public static final String DEVICE_IN_LOOPBACK_NAME = "loopback";
     public static final String DEVICE_IN_IP_NAME = "ip";
     public static final String DEVICE_IN_BUS_NAME = "bus";
+    public static final String DEVICE_IN_BLUETOOTH_MIC_NAME = "bt_mic";
 
     public static String getOutputDeviceName(int device)
     {
@@ -627,6 +630,8 @@ public class AudioSystem
             return DEVICE_IN_IP_NAME;
         case DEVICE_IN_BUS:
             return DEVICE_IN_BUS_NAME;
+        case DEVICE_IN_BLUETOOTH_MIC:
+            return DEVICE_IN_BLUETOOTH_MIC_NAME;
         case DEVICE_IN_DEFAULT:
         default:
             return Integer.toString(device);
