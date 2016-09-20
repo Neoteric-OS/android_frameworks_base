@@ -362,6 +362,8 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
         assertRunOnServiceThread();
         int newPath = HdmiUtils.twoBytesToInt(message.getParams(), 2);
         maySetActiveSource(newPath);
+        maySendActiveSource(message.getSource());
+        wakeUpIfActiveSource();
         return true;  // Broadcast message.
     }
 
@@ -371,6 +373,8 @@ final class HdmiCecLocalDevicePlayback extends HdmiCecLocalDevice {
         assertRunOnServiceThread();
         int physicalAddress = HdmiUtils.twoBytesToInt(message.getParams());
         maySetActiveSource(physicalAddress);
+        maySendActiveSource(message.getSource());
+        wakeUpIfActiveSource();
         return true;  // Broadcast message.
     }
 
