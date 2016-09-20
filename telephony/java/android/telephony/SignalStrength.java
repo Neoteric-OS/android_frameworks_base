@@ -16,11 +16,14 @@
 
 package android.telephony;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
+import android.telephony.CarrierConfigManager;
 import android.telephony.Rlog;
-import android.content.res.Resources;
 
 /**
  * Contains phone signal strength related information.
@@ -790,9 +793,17 @@ public class SignalStrength implements Parcelable {
          * = -10log P1/P2 dB
          */
         int rssiIconLevel = SIGNAL_STRENGTH_NONE_OR_UNKNOWN, rsrpIconLevel = -1, snrIconLevel = -1;
-
-        int rsrpThreshType = Resources.getSystem().getInteger(com.android.internal.R.integer.
-                config_LTE_RSRP_threshold_type);
+        // TODO
+        // By default the rsrpThreshType is 1 (lenient)
+        int rsrpThreshType = 1;
+        CarrierConfigManager configManager = (CarrierConfigManager)
+                getSystemService(Context.CARRIER_CONFIG_SERVICE);
+        if (configManager != null) {
+            PersistableBundle b = configManager.getConfig();
+            if (b != null) {
+                rsrpThreshType = b.getInt(CarrierConfigManager.KEY_LTE_RSRP_THRESHOLD_TYPE_INT);
+            }
+        }
         int[] threshRsrp;
         if (rsrpThreshType == RSRP_THRESH_TYPE_STRICT) {
             threshRsrp = RSRP_THRESH_STRICT;
