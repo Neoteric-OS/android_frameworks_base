@@ -69,6 +69,7 @@ public class SignalClusterView
     private boolean mVpnVisible = false;
     private int mVpnIconId = 0;
     private int mLastVpnIconId = -1;
+    private boolean mWifiCallingVisible = false;
     private boolean mEthernetVisible = false;
     private int mEthernetIconId = 0;
     private int mLastEthernetIconId = -1;
@@ -92,6 +93,7 @@ public class SignalClusterView
     View mNoSimsCombo;
     ImageView mVpn, mEthernet, mWifi, mAirplane, mNoSims, mEthernetDark, mWifiDark, mNoSimsDark;
     ImageView mWifiActivity;
+    ImageView mWifiCalling;
     View mWifiAirplaneSpacer;
     View mWifiSignalSpacer;
     LinearLayout mMobileSignalGroup;
@@ -177,6 +179,7 @@ public class SignalClusterView
         super.onFinishInflate();
 
         mVpn            = (ImageView) findViewById(R.id.vpn);
+        mWifiCalling    = (ImageView) findViewById(R.id.wifi_calling);
         mEthernetGroup  = (ViewGroup) findViewById(R.id.ethernet_combo);
         mEthernet       = (ImageView) findViewById(R.id.ethernet);
         mEthernetDark   = (ImageView) findViewById(R.id.ethernet_dark);
@@ -388,6 +391,12 @@ public class SignalClusterView
     }
 
     @Override
+    public void setWifiCallingIndicator(boolean show) {
+        mWifiCallingVisible = show;
+        apply();
+    }
+
+    @Override
     public boolean dispatchPopulateAccessibilityEventInternal(AccessibilityEvent event) {
         // Standard group layout onPopulateAccessibilityEvent() implementations
         // ignore content description, so populate manually
@@ -470,6 +479,7 @@ public class SignalClusterView
         } else {
             mVpn.setVisibility(View.GONE);
         }
+        mWifiCalling.setVisibility(mWifiCallingVisible ? View.VISIBLE : View.GONE);
         if (DEBUG) Log.d(TAG, String.format("vpn: %s", mVpnVisible ? "VISIBLE" : "GONE"));
 
         if (mEthernetVisible) {
@@ -582,6 +592,7 @@ public class SignalClusterView
 
     private void applyIconTint() {
         setTint(mVpn, StatusBarIconController.getTint(mTintArea, mVpn, mIconTint));
+        setTint(mWifiCalling, StatusBarIconController.getTint(mTintArea, mWifiCalling, mIconTint));
         setTint(mAirplane, StatusBarIconController.getTint(mTintArea, mAirplane, mIconTint));
         applyDarkIntensity(
                 StatusBarIconController.getDarkIntensity(mTintArea, mNoSims, mDarkIntensity),
