@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2017 The Android Open Source Project
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="17dp"
+        android:height="17dp"
+        android:viewportWidth="51.0"
+        android:viewportHeight="51.0">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M9.016,11.09c0,0.005,4.002,6.347,5.825,9.506c0.053,0.097,0.08,0.205,0.072,0.324
+            c0,0-0.002,0.005-0.002,0.007c-0.007,0.164-0.077,0.345-0.176,0.522c-0.019,0.043-0.043,0.085-0.068,0.128
+            c-0.116,0.176-0.249,0.353-0.411,0.502l-3.316,3.113c0,0,1.447,3.103,4.625,6.516l1.734,1.857c3.176,3.42,6.166,5.081,6.166,5.081
+            l3.34-3.086c0.488-0.454,1.145-0.732,1.526-0.476c3.021,2.046,9.061,6.482,9.061,6.482s0.058,0.046,0.116,0.142
+            c0.051,0.08,0.085,0.22,0.094,0.386c0,0.024,0.01,0.029,0.01,0.051c-0.002,0.01-0.007,0.022-0.007,0.031
+            c-0.002,0.077-0.036,0.169-0.06,0.261c-0.014,0.053-0.017,0.099-0.039,0.15c-0.065,0.157-0.157,0.336-0.302,0.534l-5.56,4.936
+            c-0.505,0.471-1.263,0.691-1.688,0.471c-6.088-3.149-11.433-7.153-15.961-11.923l-1.686-1.819
+            C7.871,29.932,4.256,24.315,1.544,18.021c-0.043-0.114-0.06-0.232-0.058-0.365c0,0,0.002-0.002,0.002-0.007
+            c0.007-0.186,0.072-0.386,0.164-0.589c0.019-0.048,0.043-0.089,0.07-0.138c0.111-0.198,0.239-0.396,0.413-0.56l5.316-5.192
+            C8.601,10.462,9.016,11.09,9.016,11.09z" />
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M32.986,2.386c-6.197,0-11.984,2.067-16.529,5.509l16.529,22.038L49.514,7.895
+            C44.967,4.453,39.183,2.386,32.986,2.386L32.986,2.386z" />
+</vector>

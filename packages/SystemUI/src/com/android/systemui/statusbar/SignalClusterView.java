@@ -76,6 +76,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
     private boolean mVpnVisible = false;
     private int mVpnIconId = 0;
     private int mLastVpnIconId = -1;
+    private boolean mWifiCallingVisible = false;
     private boolean mEthernetVisible = false;
     private int mEthernetIconId = 0;
     private int mLastEthernetIconId = -1;
@@ -103,6 +104,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
     ImageView mVpn, mEthernet, mWifi, mAirplane, mNoSims, mEthernetDark, mWifiDark, mNoSimsDark;
     ImageView mWifiActivityIn;
     ImageView mWifiActivityOut;
+    ImageView mWifiCalling;
     View mWifiAirplaneSpacer;
     View mWifiSignalSpacer;
     LinearLayout mMobileSignalGroup;
@@ -190,6 +192,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         super.onFinishInflate();
 
         mVpn            = findViewById(R.id.vpn);
+        mWifiCalling    = (ImageView) findViewById(R.id.wifi_calling);
         mEthernetGroup  = findViewById(R.id.ethernet_combo);
         mEthernet       = findViewById(R.id.ethernet);
         mEthernetDark   = findViewById(R.id.ethernet_dark);
@@ -399,6 +402,12 @@ public class SignalClusterView extends LinearLayout implements NetworkController
     }
 
     @Override
+    public void setWifiCallingIndicator(boolean show) {
+        mWifiCallingVisible = show;
+        apply();
+    }
+
+    @Override
     public boolean dispatchPopulateAccessibilityEventInternal(AccessibilityEvent event) {
         // Standard group layout onPopulateAccessibilityEvent() implementations
         // ignore content description, so populate manually
@@ -464,6 +473,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         } else {
             mVpn.setVisibility(View.GONE);
         }
+        mWifiCalling.setVisibility(mWifiCallingVisible ? View.VISIBLE : View.GONE);
         if (DEBUG) Log.d(TAG, String.format("vpn: %s", mVpnVisible ? "VISIBLE" : "GONE"));
 
         if (mEthernetVisible) {
@@ -609,6 +619,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
 
     private void applyIconTint() {
         setTint(mVpn, DarkIconDispatcher.getTint(mTintArea, mVpn, mIconTint));
+        setTint(mWifiCalling, DarkIconDispatcher.getTint(mTintArea, mWifiCalling, mIconTint));
         setTint(mAirplane, DarkIconDispatcher.getTint(mTintArea, mAirplane, mIconTint));
         applyDarkIntensity(
                 DarkIconDispatcher.getDarkIntensity(mTintArea, mNoSims, mDarkIntensity),

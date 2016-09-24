@@ -22,6 +22,7 @@ import android.net.NetworkCapabilities;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings.Global;
+import android.telephony.ImsFeatureCapabilities;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
@@ -51,6 +52,7 @@ public class MobileSignalController extends SignalController<
         MobileSignalController.MobileState, MobileSignalController.MobileIconGroup> {
     private final TelephonyManager mPhone;
     private final SubscriptionDefaults mDefaults;
+    private final SubscriptionManager mSubscriptionManager;
     private final String mNetworkNameDefault;
     private final String mNetworkNameSeparator;
     private final ContentObserver mObserver;
@@ -71,6 +73,9 @@ public class MobileSignalController extends SignalController<
     private SignalStrength mSignalStrength;
     private MobileIconGroup mDefaultIcons;
     private Config mConfig;
+    private boolean mImsRegistered = false;
+    private boolean mVoWifiEnabled = false;
+    private boolean mViWifiEnabled = false;
 
     // TODO: Reduce number of vars passed in, if we have the NetworkController, probably don't
     // need listener lists anymore.
@@ -86,6 +91,7 @@ public class MobileSignalController extends SignalController<
         mPhone = phone;
         mDefaults = defaults;
         mSubscriptionInfo = info;
+        mSubscriptionManager = SubscriptionManager.from(context);
         mPhoneStateListener = new MobilePhoneStateListener(info.getSubscriptionId(),
                 receiverLooper);
         mNetworkNameSeparator = getStringIfExists(R.string.status_bar_network_name_separator);
@@ -154,7 +160,9 @@ public class MobileSignalController extends SignalController<
                         | PhoneStateListener.LISTEN_CALL_STATE
                         | PhoneStateListener.LISTEN_DATA_CONNECTION_STATE
                         | PhoneStateListener.LISTEN_DATA_ACTIVITY
-                        | PhoneStateListener.LISTEN_CARRIER_NETWORK_CHANGE);
+                        | PhoneStateListener.LISTEN_CARRIER_NETWORK_CHANGE
+                        | PhoneStateListener.LISTEN_IMS_REGISTERED_STATE_CHANGE
+                        | PhoneStateListener.LISTEN_IMS_FEATURE_CAPABILITIES_CHANGE);
         mContext.getContentResolver().registerContentObserver(Global.getUriFor(Global.MOBILE_DATA),
                 true, mObserver);
         mContext.getContentResolver().registerContentObserver(Global.getUriFor(
@@ -297,6 +305,10 @@ public class MobileSignalController extends SignalController<
         callback.setMobileDataIndicators(statusIcon, qsIcon, typeIcon, qsTypeIcon,
                 activityIn, activityOut, dataContentDescription, description, icons.mIsWide,
                 mSubscriptionInfo.getSubscriptionId(), mCurrentState.roaming);
+        if (mSubscriptionManager.getDefaultDataSubscriptionId()
+                == mSubscriptionInfo.getSubscriptionId()) {
+            callback.setWifiCallingIndicator(mCurrentState.wifiCallingAvailable);
+        }
     }
 
     @Override
@@ -462,6 +474,11 @@ public class MobileSignalController extends SignalController<
             mCurrentState.networkName = mServiceState.getOperatorAlphaShort();
         }
 
+        if (mConfig.showWifiCallingIcon) {
+            mCurrentState.wifiCallingAvailable = mImsRegistered
+                    && (mVoWifiEnabled || mViWifiEnabled);
+        }
+
         notifyListenersIfNecessary();
     }
 
@@ -486,6 +503,9 @@ public class MobileSignalController extends SignalController<
         pw.println("  mSignalStrength=" + mSignalStrength + ",");
         pw.println("  mDataState=" + mDataState + ",");
         pw.println("  mDataNetType=" + mDataNetType + ",");
+        pw.println("  mImsRegistered=" + mImsRegistered + ",");
+        pw.println("  mVoWifiEnabled=" + mVoWifiEnabled + ",");
+        pw.println("  mViWifiEnabled=" + mViWifiEnabled + ",");
     }
 
     class MobilePhoneStateListener extends PhoneStateListener {
@@ -550,6 +570,26 @@ public class MobileSignalController extends SignalController<
 
             updateTelephony();
         }
+
+        @Override
+        public void onImsRegisteredChanged(boolean isRegistered) {
+            if (DEBUG) {
+                Log.d(mTag, "onImsRegisteredChanged: isRegistered=" + isRegistered);
+            }
+            mImsRegistered = isRegistered;
+            updateTelephony();
+        }
+
+        @Override
+        public void onImsFeatureCapabilitiesChanged(ImsFeatureCapabilities capability) {
+            if (DEBUG) {
+                Log.d(mTag, "onImsFeatureCapabilitiesChanged: capability ="
+                        + capability);
+            }
+            mVoWifiEnabled = capability.isVowifiEnabled();
+            mViWifiEnabled = capability.isViwifiEnabled();
+            updateTelephony();
+        }
     };
 
     static class MobileIconGroup extends SignalController.IconGroup {
@@ -582,6 +622,7 @@ public class MobileSignalController extends SignalController<
         boolean isDefault;
         boolean userSetup;
         boolean roaming;
+        boolean wifiCallingAvailable;
 
         @Override
         public void copyFrom(State s) {
@@ -597,6 +638,7 @@ public class MobileSignalController extends SignalController<
             carrierNetworkChangeMode = state.carrierNetworkChangeMode;
             userSetup = state.userSetup;
             roaming = state.roaming;
+            wifiCallingAvailable = state.wifiCallingAvailable;
         }
 
         @Override
@@ -614,6 +656,7 @@ public class MobileSignalController extends SignalController<
             builder.append("carrierNetworkChangeMode=").append(carrierNetworkChangeMode)
                     .append(',');
             builder.append("userSetup=").append(userSetup);
+            builder.append("wifiCallingAvailable=").append(wifiCallingAvailable);
         }
 
         @Override
@@ -628,7 +671,8 @@ public class MobileSignalController extends SignalController<
                     && ((MobileState) o).carrierNetworkChangeMode == carrierNetworkChangeMode
                     && ((MobileState) o).userSetup == userSetup
                     && ((MobileState) o).isDefault == isDefault
-                    && ((MobileState) o).roaming == roaming;
+                    && ((MobileState) o).roaming == roaming
+                    && ((MobileState) o).wifiCallingAvailable == wifiCallingAvailable;
         }
     }
 }

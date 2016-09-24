@@ -59,6 +59,8 @@ public interface NetworkController extends CallbackController<SignalCallback>, D
         default void setIsAirplaneMode(IconState icon) {}
 
         default void setMobileDataEnabled(boolean enabled) {}
+
+        default void setWifiCallingIndicator(boolean show) {}
     }
 
     public interface EmergencyListener {

@@ -41,6 +41,7 @@ public class CallbackHandler extends Handler implements EmergencyListener, Signa
     private static final int MSG_MOBILE_DATA_ENABLED_CHANGED = 5;
     private static final int MSG_ADD_REMOVE_EMERGENCY        = 6;
     private static final int MSG_ADD_REMOVE_SIGNAL           = 7;
+    private static final int MSG_WIFI_CALLING_STATE_CHANGED  = 8;
 
     // All the callbacks.
     private final ArrayList<EmergencyListener> mEmergencyListeners = new ArrayList<>();
@@ -72,6 +73,11 @@ public class CallbackHandler extends Handler implements EmergencyListener, Signa
             case MSG_NO_SIM_VISIBLE_CHANGED:
                 for (SignalCallback signalCluster : mSignalCallbacks) {
                     signalCluster.setNoSims(msg.arg1 != 0);
+                }
+                break;
+            case MSG_WIFI_CALLING_STATE_CHANGED:
+                for (SignalCallback signalCluster : mSignalCallbacks) {
+                    signalCluster.setWifiCallingIndicator(msg.arg1 != 0);
                 }
                 break;
             case MSG_ETHERNET_CHANGED:
@@ -146,6 +152,11 @@ public class CallbackHandler extends Handler implements EmergencyListener, Signa
     @Override
     public void setNoSims(boolean show) {
         obtainMessage(MSG_NO_SIM_VISIBLE_CHANGED, show ? 1 : 0, 0).sendToTarget();
+    }
+
+    @Override
+    public void setWifiCallingIndicator(boolean show) {
+        obtainMessage(MSG_WIFI_CALLING_STATE_CHANGED, show ? 1 : 0, 0).sendToTarget();
     }
 
     @Override

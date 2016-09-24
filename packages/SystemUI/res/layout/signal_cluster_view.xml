@@ -103,6 +103,16 @@
         android:layout_height="4dp"
         android:visibility="gone"
         />
+    <ImageView
+        android:id="@+id/wifi_calling"
+        android:visibility="gone"
+        android:paddingStart="4dp"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:src="@drawable/stat_sys_wifi_calling"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/status_bar_wifi_calling_margin_end"
+        />
     <ViewStub
         android:id="@+id/connected_device_signals_stub"
         android:layout="@layout/connected_device_signal"

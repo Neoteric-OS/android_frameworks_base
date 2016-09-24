@@ -119,6 +119,7 @@ public class NetworkControllerImpl extends BroadcastReceiver
     // States that don't belong to a subcontroller.
     private boolean mAirplaneMode = false;
     private boolean mHasNoSims;
+    private boolean mShowWifiCalling;
     private Locale mLocale = null;
     // This list holds our ordering.
     private List<SubscriptionInfo> mCurrentSubscriptions = new ArrayList<>();
@@ -374,6 +375,7 @@ public class NetworkControllerImpl extends BroadcastReceiver
         cb.setIsAirplaneMode(new IconState(mAirplaneMode,
                 TelephonyIcons.FLIGHT_MODE_ICON, R.string.accessibility_airplane_mode, mContext));
         cb.setNoSims(mHasNoSims);
+        cb.setWifiCallingIndicator(mShowWifiCalling);
         mWifiSignalController.notifyListeners(cb);
         mEthernetSignalController.notifyListeners(cb);
         for (int i = 0; i < mMobileSignalControllers.size(); i++) {
@@ -835,6 +837,11 @@ public class NetworkControllerImpl extends BroadcastReceiver
                 mHasNoSims = nosim.equals("show");
                 mCallbackHandler.setNoSims(mHasNoSims);
             }
+            String wificalling = args.getString("wificalling");
+            if (wificalling != null) {
+                mShowWifiCalling = wificalling.equals("show");
+                mCallbackHandler.setWifiCallingIndicator(mShowWifiCalling);
+            }
             String mobile = args.getString("mobile");
             if (mobile != null) {
                 boolean show = mobile.equals("show");
@@ -968,6 +975,7 @@ public class NetworkControllerImpl extends BroadcastReceiver
         boolean show4gForLte = false;
         boolean hideLtePlus = false;
         boolean hspaDataDistinguishable;
+        boolean showWifiCallingIcon = false;
 
         static Config readConfig(Context context) {
             Config config = new Config();
@@ -979,6 +987,8 @@ public class NetworkControllerImpl extends BroadcastReceiver
             config.show4gForLte = res.getBoolean(R.bool.config_show4GForLTE);
             config.hspaDataDistinguishable =
                     res.getBoolean(R.bool.config_hspa_data_distinguishable);
+            config.showWifiCallingIcon =
+                    res.getBoolean(R.bool.config_showWifiCallingIcon);
             config.hideLtePlus = res.getBoolean(R.bool.config_hideLtePlus);
             return config;
         }
