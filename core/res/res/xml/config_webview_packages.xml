@@ -15,7 +15,10 @@
 -->
 
 <webviewproviders>
-    <!-- The default WebView implementation -->
+    <!-- The default prebuilt WebView from google -->
+    <webviewprovider description="Google WebView" packageName="com.google.android.webview" availableByDefault="true" isFallback="true">
+    </webviewprovider>
+    <!-- Android WebView implementation -->
     <webviewprovider description="Android WebView" packageName="com.android.webview" availableByDefault="true">
     </webviewprovider>
 </webviewproviders>
