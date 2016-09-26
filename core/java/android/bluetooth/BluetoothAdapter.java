@@ -2274,20 +2274,20 @@ public final class BluetoothAdapter {
     @Deprecated
     @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
     public boolean startLeScan(final UUID[] serviceUuids, final LeScanCallback callback) {
-        if (DBG) Log.d(TAG, "startLeScan(): " + Arrays.toString(serviceUuids));
+        if (VDBG) Log.d(TAG, "startLeScan(): " + Arrays.toString(serviceUuids));
         if (callback == null) {
-            if (DBG) Log.e(TAG, "startLeScan: null callback");
+            if (VDBG) Log.e(TAG, "startLeScan: null callback");
             return false;
         }
         BluetoothLeScanner scanner = getBluetoothLeScanner();
         if (scanner == null) {
-            if (DBG) Log.e(TAG, "startLeScan: cannot get BluetoothLeScanner");
+            if (VDBG) Log.e(TAG, "startLeScan: cannot get BluetoothLeScanner");
             return false;
         }
 
         synchronized(mLeScanClients) {
             if (mLeScanClients.containsKey(callback)) {
-                if (DBG) Log.e(TAG, "LE Scan has already started");
+                if (VDBG) Log.e(TAG, "LE Scan has already started");
                 return false;
             }
 
@@ -2317,7 +2317,7 @@ public final class BluetoothAdapter {
                             }
                             List<ParcelUuid> scanServiceUuids = scanRecord.getServiceUuids();
                             if (scanServiceUuids == null || !scanServiceUuids.containsAll(uuids)) {
-                                if (DBG) Log.d(TAG, "uuids does not match");
+                                if (VDBG) Log.d(TAG, "uuids does not match");
                                 return;
                             }
                         }
@@ -2361,7 +2361,7 @@ public final class BluetoothAdapter {
     @Deprecated
     @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
     public void stopLeScan(LeScanCallback callback) {
-        if (DBG) Log.d(TAG, "stopLeScan()");
+        if (VDBG) Log.d(TAG, "stopLeScan()");
         BluetoothLeScanner scanner = getBluetoothLeScanner();
         if (scanner == null) {
             return;
@@ -2369,7 +2369,7 @@ public final class BluetoothAdapter {
         synchronized (mLeScanClients) {
             ScanCallback scanCallback = mLeScanClients.remove(callback);
             if (scanCallback == null) {
-                if (DBG) Log.d(TAG, "scan not started yet");
+                if (VDBG) Log.d(TAG, "scan not started yet");
                 return;
             }
             scanner.stopScan(scanCallback);
