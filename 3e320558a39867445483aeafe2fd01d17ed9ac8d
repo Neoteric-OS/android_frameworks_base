@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65a157aa_39b5b383",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2320,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2016-09-26T22:39:27Z",
+      "side": 1,
+      "message": "IF you\u0027re modifying this, then please fix the grammar :)",
+      "range": {
+        "startLine": 2320,
+        "startChar": 60,
+        "endLine": 2320,
+        "endChar": 64
+      },
+      "revId": "3e320558a39867445483aeafe2fd01d17ed9ac8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
