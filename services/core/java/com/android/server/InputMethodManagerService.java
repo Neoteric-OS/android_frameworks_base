@@ -2111,6 +2111,10 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
             return false;
         }
 
+        if (!mWindowManagerService.inputMethodTargetWindowHasFocus(mCurFocusedWindow)) {
+            return false;
+        }
+
         boolean res = false;
         if (mCurMethod != null) {
             if (DEBUG) Slog.d(TAG, "showCurrentInputLocked: mCurToken=" + mCurToken);

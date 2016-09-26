@@ -11387,4 +11387,26 @@ public class WindowManagerService extends IWindowManager.Stub
             }
         }
     }
+
+    public boolean inputMethodTargetWindowHasFocus(IBinder focusWindow) {
+        int index = findDesiredInputMethodWindowIndexLocked(false);
+        if (index > 0) {
+            WindowState imFocus = getDefaultWindowListLocked().get(index - 1);
+            if (imFocus.mAttrs.type == WindowManager.LayoutParams.TYPE_APPLICATION_STARTING
+                    && imFocus.mAppToken != null) {
+                // The client has definitely started, so it really should
+                // have a window in this app token.  Let's look for it.
+                for (int i = 0; i < imFocus.mAppToken.windows.size(); i++) {
+                    WindowState w = imFocus.mAppToken.windows.get(i);
+                    if (w != imFocus) {
+                        Log.i(TAG, "Switching to real app window: " + w);
+                        imFocus = w;
+                        break;
+                    }
+                }
+            }
+            return imFocus == mWindowMap.get(focusWindow);
+        }
+        return false;
+    }
 }
