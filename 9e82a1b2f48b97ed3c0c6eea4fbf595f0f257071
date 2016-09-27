@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05d89b6b_87981a7e",
+        "filename": "native/android/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2016-09-27T17:00:37Z",
+      "side": 1,
+      "message": "does this then generate the headers? The documentation talks about ndk_headers, why is that not needed here?",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 38
+      },
+      "revId": "9e82a1b2f48b97ed3c0c6eea4fbf595f0f257071",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
