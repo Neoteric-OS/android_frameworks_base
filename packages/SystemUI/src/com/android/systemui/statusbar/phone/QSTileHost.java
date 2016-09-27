@@ -333,7 +333,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         final LinkedHashMap<String, QSTile<?>> newTiles = new LinkedHashMap<>();
         for (String tileSpec : tileSpecs) {
             QSTile<?> tile = mTiles.get(tileSpec);
-            if (tile != null && (!(tile instanceof CustomTile)
+            if ((tile != null && tile.isAvailable()) && (!(tile instanceof CustomTile)
                     || ((CustomTile) tile).getUser() == currentUser)) {
                 if (DEBUG) Log.d(TAG, "Adding " + tile);
                 tile.removeCallbacks();
