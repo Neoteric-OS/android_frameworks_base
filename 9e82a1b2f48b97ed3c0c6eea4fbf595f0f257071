@@ -22,6 +22,30 @@
       "revId": "9e82a1b2f48b97ed3c0c6eea4fbf595f0f257071",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c1c7c3_e422fa5f",
+        "filename": "native/android/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1043845
+      },
+      "writtenOn": "2016-09-27T21:00:35Z",
+      "side": 1,
+      "message": "Added a comment in the next ps. Same answer as libjnigraphics though: the headers actually live in frameworks/native even though the library is in frameworks/base, so the headers module is in frameworks/native/Android.bp.",
+      "parentUuid": "05d89b6b_87981a7e",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 38
+      },
+      "revId": "9e82a1b2f48b97ed3c0c6eea4fbf595f0f257071",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
