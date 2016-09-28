@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5c1c7c3_706355d0",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 15671,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2016-09-28T22:22:05Z",
+      "side": 1,
+      "message": "Do this test \u0026 log outside the Runnable, otherwise there are race concerns about whether class members like mBackupTarget still point to the correct information at the time the Runnable is processed.\n\nAlso, does it even compile to put this test inside the Runnable() like this?  \u0027app\u0027 is a local variable that is not declared final, so attempting a closure that fixes its runtime value as part of the anonymous class instance isn\u0027t valid in Java, right?",
+      "range": {
+        "startLine": 15669,
+        "startChar": 0,
+        "endLine": 15671,
+        "endChar": 77
+      },
+      "revId": "f43b141377b71df69e881567a7708f611934cd16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
