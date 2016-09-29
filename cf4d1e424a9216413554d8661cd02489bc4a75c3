@@ -660,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "a28505ca_ab0b59cb",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-09-29T21:43:31Z",
+      "side": 1,
+      "message": "I think I will create a util class for doing such conversion, to eliminate code duplication.",
+      "parentUuid": "a28505ca_abc3599c",
+      "range": {
+        "startLine": 495,
+        "startChar": 12,
+        "endLine": 495,
+        "endChar": 47
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a28505ca_08a28b46",
         "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
         "patchSetId": 4
