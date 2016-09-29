@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a28505ca_7cb19997",
+        "filename": "services/core/java/com/android/server/RecoverySystemService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1056365
+      },
+      "writtenOn": "2016-09-29T23:08:37Z",
+      "side": 1,
+      "message": "while writing the last comment, i realized i didn\u0027t check the result from setupOrClearBcb() call in previous PS.",
+      "range": {
+        "startLine": 187,
+        "startChar": 16,
+        "endLine": 189,
+        "endChar": 17
+      },
+      "revId": "794c8b0b3fe16051843c22232d58d6b184dde49b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
