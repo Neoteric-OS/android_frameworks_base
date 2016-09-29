@@ -71,6 +71,99 @@
     },
     {
       "key": {
+        "uuid": "a28505ca_08adab9c",
+        "filename": "wifi/java/android/net/wifi/hotspot2/PasspointConfiguration.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-29T21:02:08Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "a28505ca_a8d6ffe5",
+      "range": {
+        "startLine": 62,
+        "startChar": 23,
+        "endLine": 62,
+        "endChar": 29
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_e8340797",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-29T21:02:08Z",
+      "side": 1,
+      "message": "Where is this enforced?",
+      "range": {
+        "startLine": 79,
+        "startChar": 39,
+        "endLine": 79,
+        "endChar": 66
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_a82eff3e",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-29T21:02:08Z",
+      "side": 1,
+      "message": "Same as above.",
+      "range": {
+        "startLine": 84,
+        "startChar": 35,
+        "endLine": 84,
+        "endChar": 64
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_68a557b2",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-29T21:02:08Z",
+      "side": 1,
+      "message": "Shall we have constants for these types?",
+      "range": {
+        "startLine": 164,
+        "startChar": 29,
+        "endLine": 164,
+        "endChar": 42
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a28505ca_e857275c",
         "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
         "patchSetId": 4
