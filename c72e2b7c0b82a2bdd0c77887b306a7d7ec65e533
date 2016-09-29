@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a28505ca_45fddc97",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-29T20:31:09Z",
+      "side": 1,
+      "message": "Nit: call it \u0027creationTimeInMs\u0027 so it is explicit about the unit. Also this way it more compliant with other Wifi APIs.",
+      "range": {
+        "startLine": 50,
+        "startChar": 16,
+        "endLine": 50,
+        "endChar": 28
+      },
+      "revId": "c72e2b7c0b82a2bdd0c77887b306a7d7ec65e533",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_e50190af",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-09-29T20:31:09Z",
+      "side": 1,
+      "message": "Nit: expirationTimeInMs?",
+      "range": {
+        "startLine": 57,
+        "startChar": 16,
+        "endLine": 57,
+        "endChar": 30
+      },
+      "revId": "c72e2b7c0b82a2bdd0c77887b306a7d7ec65e533",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
