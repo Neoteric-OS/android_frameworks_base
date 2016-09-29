@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a28505ca_6879d786",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-09-29T21:40:47Z",
+      "side": 1,
+      "message": "Will update.",
+      "parentUuid": "a28505ca_45fddc97",
+      "range": {
+        "startLine": 50,
+        "startChar": 16,
+        "endLine": 50,
+        "endChar": 28
+      },
+      "revId": "c72e2b7c0b82a2bdd0c77887b306a7d7ec65e533",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a28505ca_e50190af",
         "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2016-09-29T20:31:09Z",
       "side": 1,
       "message": "Nit: expirationTimeInMs?",
+      "range": {
+        "startLine": 57,
+        "startChar": 16,
+        "endLine": 57,
+        "endChar": 30
+      },
+      "revId": "c72e2b7c0b82a2bdd0c77887b306a7d7ec65e533",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_2873cfa8",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-09-29T21:40:47Z",
+      "side": 1,
+      "message": "Will update.",
+      "parentUuid": "a28505ca_e50190af",
       "range": {
         "startLine": 57,
         "startChar": 16,
