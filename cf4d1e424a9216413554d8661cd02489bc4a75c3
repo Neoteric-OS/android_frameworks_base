@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a28505ca_85dc443c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-29T20:42:02Z",
+      "side": 1,
+      "message": "consider having a unit test to write and read the parcelable and verify they\u0027re a match",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 15
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_a592a859",
+        "filename": "wifi/java/android/net/wifi/hotspot2/PasspointConfiguration.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-29T20:42:02Z",
+      "side": 1,
+      "message": "is this needed? Just initialize them to null above and then no need for constructor.\n\nOr if you want a constructor then have is get the two arguments and set them",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 5
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_a8d6ffe5",
+        "filename": "wifi/java/android/net/wifi/hotspot2/PasspointConfiguration.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-29T20:42:02Z",
+      "side": 1,
+      "message": "maybe will be cleaner with a constructor here:\n\nnew PasspointConfiguration(homeSp, credential);",
+      "range": {
+        "startLine": 62,
+        "startChar": 23,
+        "endLine": 62,
+        "endChar": 29
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_e857275c",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-29T20:42:02Z",
+      "side": 1,
+      "message": "naming consistency throughout class: use type or eapType elsewhere",
+      "range": {
+        "startLine": 200,
+        "startChar": 28,
+        "endLine": 200,
+        "endChar": 35
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_68e31798",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-29T20:42:02Z",
+      "side": 1,
+      "message": "not sure these empty constructors add any value - can just init variables where they are declared",
+      "range": {
+        "startLine": 220,
+        "startChar": 8,
+        "endLine": 230,
+        "endChar": 9
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_88e8db71",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-29T20:42:02Z",
+      "side": 1,
+      "message": "same - no need",
+      "range": {
+        "startLine": 290,
+        "startChar": 8,
+        "endLine": 293,
+        "endChar": 9
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_e8f64755",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-29T20:42:02Z",
+      "side": 1,
+      "message": "consider using constants for these.",
+      "range": {
+        "startLine": 336,
+        "startChar": 31,
+        "endLine": 336,
+        "endChar": 64
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_a8f03f57",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-29T20:42:02Z",
+      "side": 1,
+      "message": "is this one of the permitted values above or is there another value - EAP-NOT-SET?",
+      "range": {
+        "startLine": 342,
+        "startChar": 22,
+        "endLine": 342,
+        "endChar": 24
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_888d3be7",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-29T20:42:02Z",
+      "side": 1,
+      "message": "doesn\u0027t add anything",
+      "range": {
+        "startLine": 389,
+        "startChar": 4,
+        "endLine": 400,
+        "endChar": 5
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_a854bf1f",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-29T20:42:02Z",
+      "side": 1,
+      "message": "why the extra copy?",
+      "range": {
+        "startLine": 479,
+        "startChar": 27,
+        "endLine": 479,
+        "endChar": 40
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_c89b4314",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-29T20:42:02Z",
+      "side": 1,
+      "message": "same as below - why needed?",
+      "range": {
+        "startLine": 495,
+        "startChar": 12,
+        "endLine": 495,
+        "endChar": 47
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_08a28b46",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-29T20:42:02Z",
+      "side": 1,
+      "message": "writeByteArray already takes care of this - unless needed for the exception case\n\nBut - what does the exception case mean? when can it happen?",
+      "range": {
+        "startLine": 518,
+        "startChar": 16,
+        "endLine": 518,
+        "endChar": 47
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_682c77b6",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/HomeSP.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-09-29T20:42:02Z",
+      "side": 1,
+      "message": "needed?",
+      "range": {
+        "startLine": 74,
+        "startChar": 3,
+        "endLine": 82,
+        "endChar": 5
+      },
+      "revId": "cf4d1e424a9216413554d8661cd02489bc4a75c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
