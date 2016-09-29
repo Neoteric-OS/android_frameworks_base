@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a28505ca_a8291fa1",
+        "filename": "core/java/android/os/IRecoverySystem.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2016-09-29T20:56:10Z",
+      "side": 1,
+      "message": "we\u0027re missing a verb in this function name. \"writeBootCommand\"? \"setBootCommand\"?",
+      "revId": "66fff9392730f7694707489679badd076c0ad1a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_285aef26",
+        "filename": "services/core/java/com/android/server/RecoverySystemService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2016-09-29T20:56:10Z",
+      "side": 1,
+      "message": "ah, so maybe \"reboot\" was the missing verb?",
+      "revId": "66fff9392730f7694707489679badd076c0ad1a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a28505ca_a8f11ff4",
+        "filename": "services/core/java/com/android/server/RecoverySystemService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2016-09-29T20:56:10Z",
+      "side": 1,
+      "message": "or you can use SystemProperties.addChangeCallback. (though apparently there\u0027s no removeChangeCallback?! plus it looks like it\u0027s broken because it relies on binder knowing whether a system property changed, which is something binder can\u0027t know?)\n\nokay, forget about it. bug filed.",
+      "revId": "66fff9392730f7694707489679badd076c0ad1a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
