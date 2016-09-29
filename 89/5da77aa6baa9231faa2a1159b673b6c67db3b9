@@ -1,0 +1,10 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+1: Hidenari Koshimae <hidenari.koshimae@sonymobile.com>
+Code-Review+2: Jim Miller <jaggies@google.com>
+Verified+1: Jim Miller <jaggies@google.com>
+Autosubmit+1: Jim Miller <jaggies@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Thu, 29 Sep 2016 05:00:42 +0000
+Reviewed-on: https://android-review.googlesource.com/278342
+Project: platform/frameworks/base
+Branch: refs/heads/master
