@@ -16,6 +16,24 @@
       "revId": "1763c0a9c5c1f4d26e4def4e607a5eff5b92d110",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2af59ab_9bce4b56",
+        "filename": "cmds/idmap/scan.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1102318
+      },
+      "writtenOn": "2016-10-04T04:58:37Z",
+      "side": 1,
+      "message": "Thank you! I will do it.",
+      "parentUuid": "02aa519b_dd060b2a",
+      "revId": "1763c0a9c5c1f4d26e4def4e607a5eff5b92d110",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
