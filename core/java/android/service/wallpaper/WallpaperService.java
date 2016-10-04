@@ -18,6 +18,7 @@ package android.service.wallpaper;
 
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.view.WindowInsets;
 
 import com.android.internal.R;
@@ -186,6 +187,7 @@ public abstract class WallpaperService extends Service {
 
         DisplayManager mDisplayManager;
         Display mDisplay;
+        Point mDefaultSize;
         private int mDisplayState;
 
         final BaseSurfaceHolder mSurfaceHolder = new BaseSurfaceHolder() {
@@ -613,6 +615,10 @@ public abstract class WallpaperService extends Service {
                         + " format=" + formatChanged + " size=" + sizeChanged);
 
                 try {
+                    if (DEBUG) Log.d(TAG,"updateSurface: requested = " + myWidth + " X " + myHeight +
+                                         " default display = " + mDefaultSize.x + " X " + mDefaultSize.y);
+                    if (myWidth > mDefaultSize.x) myWidth = mDefaultSize.x;
+                    if (myHeight > mDefaultSize.y) myHeight = mDefaultSize.y;
                     mWidth = myWidth;
                     mHeight = myHeight;
                     mFormat = mSurfaceHolder.getRequestedFormat();
@@ -868,6 +874,8 @@ public abstract class WallpaperService extends Service {
             mDisplayManager = (DisplayManager)getSystemService(Context.DISPLAY_SERVICE);
             mDisplayManager.registerDisplayListener(mDisplayListener, mCaller.getHandler());
             mDisplay = mDisplayManager.getDisplay(Display.DEFAULT_DISPLAY);
+            mDefaultSize = new Point();
+            mDisplay.getSize(mDefaultSize);
             mDisplayState = mDisplay.getState();
 
             if (DEBUG) Log.v(TAG, "onCreate(): " + this);
