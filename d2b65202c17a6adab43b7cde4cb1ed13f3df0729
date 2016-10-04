@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02d8916b_cd03e971",
+        "filename": "core/java/android/service/wallpaper/WallpaperService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2016-10-04T09:16:42Z",
+      "side": 1,
+      "message": "private",
+      "revId": "d2b65202c17a6adab43b7cde4cb1ed13f3df0729",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "420b69a9_c7edfeb1",
+        "filename": "core/java/android/service/wallpaper/WallpaperService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2016-10-04T09:16:42Z",
+      "side": 1,
+      "message": "this seems rather like a workaround than a solution to the problem. Could you track down why window manager is requesting such a size?",
+      "revId": "d2b65202c17a6adab43b7cde4cb1ed13f3df0729",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
