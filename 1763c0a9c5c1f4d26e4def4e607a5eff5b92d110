@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02aa519b_dd060b2a",
+        "filename": "cmds/idmap/scan.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1043034
+      },
+      "writtenOn": "2016-10-04T00:38:10Z",
+      "side": 1,
+      "message": "Can you leave a comment here stating that the file is opened for appending so that it doesn\u0027t get truncated before we can guarantee mutual exclusion via the flock?",
+      "revId": "1763c0a9c5c1f4d26e4def4e607a5eff5b92d110",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
