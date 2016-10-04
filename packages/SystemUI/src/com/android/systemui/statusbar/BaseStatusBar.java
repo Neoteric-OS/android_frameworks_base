@@ -1678,45 +1678,36 @@ public abstract class BaseStatusBar extends SystemUI implements
                     sbn.getPackageContext(mContext),
                     contentContainer,
                     mOnClickHandler);
+            contentViewLocal.setIsRootNamespace(true);
+            contentContainer.setContractedChild(contentViewLocal);
             if (bigContentView != null) {
                 bigContentViewLocal = bigContentView.apply(
                         sbn.getPackageContext(mContext),
                         contentContainer,
                         mOnClickHandler);
+                bigContentViewLocal.setIsRootNamespace(true);
+                contentContainer.setExpandedChild(bigContentViewLocal);
             }
             if (headsUpContentView != null) {
                 headsUpContentViewLocal = headsUpContentView.apply(
                         sbn.getPackageContext(mContext),
                         contentContainer,
                         mOnClickHandler);
+                headsUpContentViewLocal.setIsRootNamespace(true);
+                contentContainer.setHeadsUpChild(headsUpContentViewLocal);
             }
             if (publicContentView != null) {
                 publicViewLocal = publicContentView.apply(
                         sbn.getPackageContext(mContext),
                         contentContainerPublic, mOnClickHandler);
+                publicViewLocal.setIsRootNamespace(true);
+                contentContainerPublic.setContractedChild(publicViewLocal);
             }
         }
         catch (RuntimeException e) {
             final String ident = sbn.getPackageName() + "/0x" + Integer.toHexString(sbn.getId());
             Log.e(TAG, "couldn't inflate view for notification " + ident, e);
             return false;
-        }
-
-        if (contentViewLocal != null) {
-            contentViewLocal.setIsRootNamespace(true);
-            contentContainer.setContractedChild(contentViewLocal);
-        }
-        if (bigContentViewLocal != null) {
-            bigContentViewLocal.setIsRootNamespace(true);
-            contentContainer.setExpandedChild(bigContentViewLocal);
-        }
-        if (headsUpContentViewLocal != null) {
-            headsUpContentViewLocal.setIsRootNamespace(true);
-            contentContainer.setHeadsUpChild(headsUpContentViewLocal);
-        }
-        if (publicViewLocal != null) {
-            publicViewLocal.setIsRootNamespace(true);
-            contentContainerPublic.setContractedChild(publicViewLocal);
         }
 
         // Extract target SDK version.
