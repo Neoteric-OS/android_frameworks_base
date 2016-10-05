@@ -22,6 +22,30 @@
       "revId": "14e9a2ebe77b05d81904528840d648f2749d8cc0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "625ced05_58d73de3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5214,
+      "author": {
+        "id": 1047710
+      },
+      "writtenOn": "2016-10-05T07:08:58Z",
+      "side": 1,
+      "message": "I agree calling setLockdownTracker() directly can save some steps. However calling updateLockdownVpn() has the benefit of checking for SYSTEM_UID, which is currently supposed necessary when handling lockdown vpn. How do you think?",
+      "parentUuid": "625ced05_98bf15ac",
+      "range": {
+        "startLine": 5214,
+        "startChar": 20,
+        "endLine": 5214,
+        "endChar": 37
+      },
+      "revId": "14e9a2ebe77b05d81904528840d648f2749d8cc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
