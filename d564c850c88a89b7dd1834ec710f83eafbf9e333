@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f85bcca_a2513e2d",
+        "filename": "cmds/idmap/scan.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1043034
+      },
+      "writtenOn": "2016-10-05T21:31:16Z",
+      "side": 1,
+      "message": "TreeHugger failed. Add #include \u003csys/file.h\u003e ?",
+      "revId": "d564c850c88a89b7dd1834ec710f83eafbf9e333",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
