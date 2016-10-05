@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "625ced05_98bf15ac",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5214,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2016-10-05T05:15:31Z",
+      "side": 1,
+      "message": "Is it better to just call setLockdownTracker(null) here rather than rely on that being a side-effect inside updateLockdownVpn()?",
+      "range": {
+        "startLine": 5214,
+        "startChar": 20,
+        "endLine": 5214,
+        "endChar": 37
+      },
+      "revId": "14e9a2ebe77b05d81904528840d648f2749d8cc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
