@@ -72,4 +72,7 @@ LOCAL_SHARED_LIBRARIES += \
     libEGL \
     libGLESv2 \
     libnetutils \
+    libhidl \
+    libhwbinder \
+    android.hardware.light@2.0 \
 
