@@ -341,8 +341,8 @@ public class WallpaperManagerService extends IWallpaperManager.Stub {
             // Empty crop means use the full image
             if (cropHint.isEmpty()) {
                 cropHint.left = cropHint.top = 0;
-                cropHint.right = options.outWidth;
-                cropHint.bottom = options.outHeight;
+                wallpaper.cropHint.right = cropHint.right = options.outWidth;
+                wallpaper.cropHint.bottom = cropHint.bottom = options.outHeight;
             } else {
                 // force the crop rect to lie within the measured bounds
                 cropHint.offset(
