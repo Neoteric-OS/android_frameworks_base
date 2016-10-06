@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fa008a6_31e5d09b",
+        "filename": "data/keyboards/Vendor_045e_Product_02e0.kl",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2016-10-06T23:52:11Z",
+      "side": 1,
+      "message": "nit: whitespace",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 23
+      },
+      "revId": "4497f9b86a5facb7afd37f6e8e0b76bbe9d79131",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
