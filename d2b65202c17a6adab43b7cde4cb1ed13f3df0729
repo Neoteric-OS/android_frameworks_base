@@ -33,6 +33,24 @@
       "revId": "d2b65202c17a6adab43b7cde4cb1ed13f3df0729",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f5a1c67_fad6a9bb",
+        "filename": "core/java/android/service/wallpaper/WallpaperService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1040258
+      },
+      "writtenOn": "2016-10-06T15:45:08Z",
+      "side": 1,
+      "message": "Checked this further. It is being set from ImageWallpaper. \nThe backtrace is as below\n\n\n\n\n01-01 00:13:35.637  6507  6507 D WallpaperService: onRelayoutContainer: callers \u003d com.android.internal.view.BaseSurfaceHolder.setFixedSize:119 android.service.wallpaper.WallpaperService$Engine$1.setFixedSize:231 com.android.systemui.ImageWallpaper$DrawableEngine.updateSurfaceSize:228 com.android.systemui.ImageWallpaper$DrawableEngine$1.onPostExecute:496 com.android.systemui.ImageWallpaper$DrawableEngine$1.onPostExecute:482 \n\n01-01 00:13:37.287  6507  6507 D WallpaperService: MSG_UPDATE_SURFACE: update surface\n01-01 00:13:37.287  6507  6507 V WallpaperService: Changes: creating\u003dfalse format\u003dfalse size\u003dtrue\n01-01 00:13:37.287  6507  6507 D WallpaperService: updateSurface: requested \u003d 1243 X 1280 default display \u003d 720 X 1280\n\n\nBut irrespective of what is set by ImageWallpaper based on Bitmap size, shouldnt the wallpaper service have a check to ensure it does not layout outside the display bounds ?",
+      "parentUuid": "420b69a9_c7edfeb1",
+      "revId": "d2b65202c17a6adab43b7cde4cb1ed13f3df0729",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
