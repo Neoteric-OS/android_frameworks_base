@@ -22,6 +22,98 @@
       "revId": "f0bfde5df61a75b44c87dde144464319d71908a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff9f98ca_a7e4769f",
+        "filename": "core/java/com/android/internal/content/NativeLibraryHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2016-10-10T20:58:49Z",
+      "side": 1,
+      "message": "\u003e100 col",
+      "range": {
+        "startLine": 121,
+        "startChar": 88,
+        "endLine": 121,
+        "endChar": 101
+      },
+      "revId": "f0bfde5df61a75b44c87dde144464319d71908a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff9f98ca_270d269c",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2016-10-10T20:58:49Z",
+      "side": 1,
+      "message": "\u003e100 col",
+      "range": {
+        "startLine": 395,
+        "startChar": 88,
+        "endLine": 395,
+        "endChar": 102
+      },
+      "revId": "f0bfde5df61a75b44c87dde144464319d71908a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff9f98ca_870a1a82",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2016-10-10T20:58:49Z",
+      "side": 1,
+      "message": "\u003e100 col",
+      "range": {
+        "startLine": 429,
+        "startChar": 99,
+        "endLine": 429,
+        "endChar": 113
+      },
+      "revId": "f0bfde5df61a75b44c87dde144464319d71908a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff9f98ca_67072e7a",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2016-10-10T20:58:49Z",
+      "side": 1,
+      "message": "\u003e100 col",
+      "range": {
+        "startLine": 443,
+        "startChar": 89,
+        "endLine": 443,
+        "endChar": 102
+      },
+      "revId": "f0bfde5df61a75b44c87dde144464319d71908a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
