@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff9f98ca_47b792ce",
+        "filename": "core/java/android/content/pm/PackageParser.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2016-10-10T20:51:39Z",
+      "side": 1,
+      "message": "Ooops. These are swapped from the declaration.\n\n[but, truth be told, I kinda like this ordering since the parameters are mostly in alphabetical order]",
+      "range": {
+        "startLine": 1500,
+        "startChar": 84,
+        "endLine": 1501,
+        "endChar": 26
+      },
+      "revId": "f0bfde5df61a75b44c87dde144464319d71908a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
