@@ -468,7 +468,7 @@ public final class KeyboardShortcuts {
             keyboardShortcutInfoAppItems.add(new KeyboardShortcutInfo(
                     mContext.getString(R.string.keyboard_shortcut_group_applications_im),
                     messagingIcon,
-                    KeyEvent.KEYCODE_T,
+                    KeyEvent.KEYCODE_S,
                     KeyEvent.META_META_ON));
         }
 
