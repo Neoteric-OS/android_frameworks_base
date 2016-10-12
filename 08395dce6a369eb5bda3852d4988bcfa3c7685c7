@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cff8a6b_1219cce8",
+        "filename": "core/java/android/net/InterfaceConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2016-10-12T11:16:18Z",
+      "side": 1,
+      "message": "Feel free to simplify this too.  \u003d)",
+      "range": {
+        "startLine": 116,
+        "startChar": 16,
+        "endLine": 116,
+        "endChar": 32
+      },
+      "revId": "08395dce6a369eb5bda3852d4988bcfa3c7685c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
