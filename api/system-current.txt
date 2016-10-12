@@ -64411,7 +64411,7 @@ package java.util.concurrent {
     method public void rejectedExecution(java.lang.Runnable, java.util.concurrent.ThreadPoolExecutor);
   }
 
-  public class TimeUnit extends java.lang.Enum {
+  public final class TimeUnit extends java.lang.Enum {
     method public long convert(long, java.util.concurrent.TimeUnit);
     method public void sleep(long) throws java.lang.InterruptedException;
     method public void timedJoin(java.lang.Thread, long) throws java.lang.InterruptedException;
