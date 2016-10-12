@@ -69,6 +69,24 @@
       "revId": "d2b65202c17a6adab43b7cde4cb1ed13f3df0729",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cff8a6b_92249c1d",
+        "filename": "core/java/android/service/wallpaper/WallpaperService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1040258
+      },
+      "writtenOn": "2016-10-12T12:54:15Z",
+      "side": 1,
+      "message": "Agree with you. \nWith the change the parallax scroll effect is not observed in Launcher, so this would not be a good change.\n\nSo would it be a better idea to handle this by disabling the FLAG_SHOW_WALLPAPER flag in keyguardScrim thereby not making it a wallpaper target and avoiding this flicker OR any other suggestions that I could further explore ?",
+      "parentUuid": "7f2d68d5_8938f9d6",
+      "revId": "d2b65202c17a6adab43b7cde4cb1ed13f3df0729",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
