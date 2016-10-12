@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c286ac7_d0bc54b1",
+        "filename": "wifi/java/android/net/wifi/hotspot2/PasspointConfiguration.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-10-12T17:30:56Z",
+      "side": 1,
+      "message": "Nit: This is a bit hard to read. Can we break it up?",
+      "range": {
+        "startLine": 59,
+        "startChar": 15,
+        "endLine": 60,
+        "endChar": 97
+      },
+      "revId": "edf140187dce47d98f8943617554de855a541f69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c286ac7_10570c00",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/HomeSP.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2016-10-12T17:30:56Z",
+      "side": 1,
+      "message": "Should this check be \"size \u003c\u003d 0\"?",
+      "range": {
+        "startLine": 157,
+        "startChar": 20,
+        "endLine": 157,
+        "endChar": 30
+      },
+      "revId": "edf140187dce47d98f8943617554de855a541f69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
