@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bcbc4ecf_a8cb1f17",
+        "filename": "wifi/java/android/net/wifi/hotspot2/PasspointConfiguration.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-10-13T04:49:13Z",
+      "side": 1,
+      "message": "You mean into multiple if statements?\n\nI am open to any suggestions.",
+      "parentUuid": "9c286ac7_d0bc54b1",
+      "range": {
+        "startLine": 59,
+        "startChar": 15,
+        "endLine": 60,
+        "endChar": 97
+      },
+      "revId": "edf140187dce47d98f8943617554de855a541f69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c286ac7_10570c00",
         "filename": "wifi/java/android/net/wifi/hotspot2/pps/HomeSP.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2016-10-12T17:30:56Z",
       "side": 1,
       "message": "Should this check be \"size \u003c\u003d 0\"?",
+      "range": {
+        "startLine": 157,
+        "startChar": 20,
+        "endLine": 157,
+        "endChar": 30
+      },
+      "revId": "edf140187dce47d98f8943617554de855a541f69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcbc4ecf_c8f13b5b",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/HomeSP.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-10-13T04:49:13Z",
+      "side": 1,
+      "message": "This is for matching the write operation. Basically value of -1 and 0 have different meaning:\n-1: null\n0: HashMap with size of 0\n\nShould never have a value \u003c -1, it will be a programming error in that case. To catch this error, I will pass the size to the constructor of HashMap, so that an exception will be thrown if ever trying to construct a HashMap with negative size.",
+      "parentUuid": "9c286ac7_10570c00",
       "range": {
         "startLine": 157,
         "startChar": 20,
