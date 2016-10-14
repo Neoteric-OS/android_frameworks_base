@@ -22,6 +22,30 @@
       "revId": "6f3a05ae772872f24609d2db484acb83fed312f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bca52e1d_abea899a",
+        "filename": "core/tests/coretests/src/android/util/TimeUtilsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2016-10-14T10:28:10Z",
+      "side": 0,
+      "message": "The testWorld() one isn\u0027t either (and was removed by somebody on the CTS team under bug 6293324 because \"it will not be fixed\").\n\nI agree on this one: I will investigate as a follow-up.",
+      "parentUuid": "bca52e1d_0bb3dde3",
+      "range": {
+        "startLine": 431,
+        "startChar": 16,
+        "endLine": 431,
+        "endChar": 34
+      },
+      "revId": "6f3a05ae772872f24609d2db484acb83fed312f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
