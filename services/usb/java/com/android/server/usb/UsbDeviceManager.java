@@ -32,6 +32,7 @@ import android.hardware.usb.UsbAccessory;
 import android.hardware.usb.UsbManager;
 import android.hardware.usb.UsbPort;
 import android.hardware.usb.UsbPortStatus;
+import android.os.Build;
 import android.os.FileUtils;
 import android.os.Handler;
 import android.os.Looper;
@@ -81,6 +82,9 @@ public class UsbDeviceManager {
      * The non-persistent property which stores the current USB settings.
      */
     private static final String USB_CONFIG_PROPERTY = "sys.usb.config";
+
+    private static final String BUILD_TYPE_USERDEBUG = "userdebug";
+    private static final String BUILD_TYPE_ENG = "eng";
 
     /**
      * The non-persistent property which stores the current USB actual state.
@@ -339,7 +343,13 @@ public class UsbDeviceManager {
                         SystemProperties.get(USB_STATE_PROPERTY));
                 mAdbEnabled = UsbManager.containsFunction(getDefaultFunctions(),
                         UsbManager.USB_FUNCTION_ADB);
-                setEnabledFunctions(null, false);
+
+                String buildType = android.os.Build.TYPE;
+                if (buildType.equals(BUILD_TYPE_USERDEBUG) || buildType.equals(BUILD_TYPE_ENG)) {
+                    setAdbEnabled(true);
+                }
+
+                setEnabledFunctions(null, false, false);
 
                 String state = FileUtils.readTextFile(new File(STATE_PATH), 0, null).trim();
                 updateState(state);
@@ -439,10 +449,9 @@ public class UsbDeviceManager {
                 String oldFunctions = mCurrentFunctions;
 
                 // Persist the adb setting
-                String newFunction = enable ? UsbManager.USB_FUNCTION_ADB
-                    : UsbManager.USB_FUNCTION_NONE;
-                if (!UsbManager.containsFunction(getDefaultFunctions(), newFunction))
-                   SystemProperties.set(USB_PERSISTENT_CONFIG_PROPERTY, newFunction);
+                String newFunction = applyAdbFunction(SystemProperties.get(
+                            USB_PERSISTENT_CONFIG_PROPERTY, UsbManager.USB_FUNCTION_NONE));
+                SystemProperties.set(USB_PERSISTENT_CONFIG_PROPERTY, newFunction);
 
                 // Changing the persistent config also changes the normal
                 // config. Wait for this to happen before changing again.
