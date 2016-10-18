@@ -656,7 +656,7 @@ public final class BluetoothDevice implements Parcelable {
     @Override
     public boolean equals(Object o) {
         if (o instanceof BluetoothDevice) {
-            return mAddress.equals(((BluetoothDevice)o).getAddress());
+            return mAddress.equalsIgnoreCase(((BluetoothDevice)o).getAddress());
         }
         return false;
     }
