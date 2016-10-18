@@ -278,8 +278,40 @@ class ScreenRotationAnimation {
                 Surface sur = new Surface();
                 sur.copyFrom(mSurfaceControl);
                 // FIXME: we should use the proper display
-                SurfaceControl.screenshot(SurfaceControl.getBuiltInDisplay(
-                        SurfaceControl.BUILT_IN_DISPLAY_ID_MAIN), sur);
+
+		final int baseW = displayContent.mBaseDisplayWidth;
+		final int baseH = displayContent.mBaseDisplayHeight;
+		final int initW = displayContent.mInitialDisplayWidth;
+		final int initH = displayContent.mInitialDisplayHeight;
+		final float baseRatio = (float) baseH / (float) baseW;
+		final float initRatio = (float) initH / (float) initW;
+
+		if (initRatio > baseRatio) {
+		    // initial size is taller than base size
+	            // -> fit to width -> filler at top and bottom
+		    final int height =
+			    (int) ((float) initW * baseRatio + .5f);
+                    final int gap = (initH - height) / 2;
+		    SurfaceControl.screenshot(
+		            SurfaceControl.getBuiltInDisplay(
+				    SurfaceControl.BUILT_IN_DISPLAY_ID_MAIN),
+			    sur, new Rect(0, gap, initW,
+			            initH - gap));
+		} else if (initRatio < baseRatio) {
+		    // initial size is shorter than base size
+		    // -> fit to height -> filler at left and right
+		    final int width =
+			    (int) ((float) initH / baseRatio + .5f);
+		    final int gap = (initW - width) / 2;
+		    SurfaceControl.screenshot(
+			    SurfaceControl.getBuiltInDisplay(
+				    SurfaceControl.BUILT_IN_DISPLAY_ID_MAIN),
+			    sur, new Rect(gap, 0,
+				    initW - gap, initH));
+		} else {
+		    SurfaceControl.screenshot(SurfaceControl.getBuiltInDisplay(
+						SurfaceControl.BUILT_IN_DISPLAY_ID_MAIN), sur);
+		}
                 mSurfaceControl.setLayerStack(display.getLayerStack());
                 mSurfaceControl.setLayer(SCREEN_FREEZE_LAYER_SCREENSHOT);
                 mSurfaceControl.setAlpha(0);
