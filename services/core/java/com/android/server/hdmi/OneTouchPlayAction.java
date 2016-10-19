@@ -88,6 +88,11 @@ final class OneTouchPlayAction extends HdmiCecFeatureAction {
         playback().setActiveSource(true);
     }
 
+    private void powerOnAvr() {
+        sendCommand(HdmiCecMessageBuilder.buildSystemAudioModeRequest(getSourceAddress(),
+                Constants.ADDR_AUDIO_SYSTEM, getSourcePath(), true));
+    }
+
     private void queryDevicePowerStatus() {
         sendCommand(HdmiCecMessageBuilder.buildGiveDevicePowerStatus(getSourceAddress(),
                 mTargetAddress));
