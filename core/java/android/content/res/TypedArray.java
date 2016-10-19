@@ -49,6 +49,11 @@ public class TypedArray {
             attrs.mLength = len;
             attrs.mRecycled = false;
 
+            // Reset DisplayMetrics for current one, to ensure the right
+            // DisplayMetrics instance after appendLibAssetForMainAssetPath
+            // was called.
+            attrs.mMetrics = res.getDisplayMetrics();
+
             final int fullLen = len * AssetManager.STYLE_NUM_ENTRIES;
             if (attrs.mData.length >= fullLen) {
                 return attrs;
