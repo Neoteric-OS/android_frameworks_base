@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcf663e5_c3473690",
+        "filename": "core/java/com/android/internal/util/AsyncChannel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-20T07:44:26Z",
+      "side": 1,
+      "message": "not a good idea to expose private variables - consider adding a protect get method.",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 193,
+        "endChar": 13
+      },
+      "revId": "484b334c838cda609918016eaa9bb564ecae6106",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcf663e5_a34c3ab5",
+        "filename": "core/java/com/android/internal/util/AsyncChannel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-20T07:44:26Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 199,
+        "startChar": 4,
+        "endLine": 199,
+        "endChar": 13
+      },
+      "revId": "484b334c838cda609918016eaa9bb564ecae6106",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
