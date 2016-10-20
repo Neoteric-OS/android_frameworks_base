@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c777f48_7aecbe4e",
+        "filename": "core/jni/android/graphics/pdf/PdfEditor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-10-20T22:30:32Z",
+      "side": 1,
+      "message": "Replace with ALOGE",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 58
+      },
+      "revId": "30f88b3629efe6cc5d44d9306b9d62f8a4991214",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
