@@ -8477,7 +8477,13 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             boolean handled = false;
 
             if (mMovement != null) {
-                handled |= mMovement.onTouchEvent(this, (Spannable) mText, event);
+                if(mMovement instanceof LinkMovementMethod) {
+                    if (action == MotionEvent.ACTION_UP) {
+                        handled |= mMovement.onTouchEvent(this, (Spannable) mText, event);
+                    }
+                } else {
+                    handled |= mMovement.onTouchEvent(this, (Spannable) mText, event);
+                }
             }
 
             final boolean textIsSelectable = isTextSelectable();
