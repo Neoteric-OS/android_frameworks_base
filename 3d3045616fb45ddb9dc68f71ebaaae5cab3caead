@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1d3dce9_a1212866",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2956,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2016-10-24T22:57:06Z",
+      "side": 1,
+      "message": "unavailable instead of invalid?",
+      "range": {
+        "startLine": 2956,
+        "startChar": 73,
+        "endLine": 2956,
+        "endChar": 80
+      },
+      "revId": "3d3045616fb45ddb9dc68f71ebaaae5cab3caead",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
