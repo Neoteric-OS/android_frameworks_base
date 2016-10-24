@@ -727,10 +727,12 @@ public class UsbDeviceManager {
                     break;
                 case MSG_ENABLE_ADB:
                     setAdbEnabled(msg.arg1 == 1);
+                    updateUsbStateBroadcastIfNeeded();
                     break;
                 case MSG_SET_CURRENT_FUNCTIONS:
                     String functions = (String)msg.obj;
                     setEnabledFunctions(functions, false);
+                    updateUsbStateBroadcastIfNeeded();
                     break;
                 case MSG_UPDATE_USER_RESTRICTIONS:
                     setEnabledFunctions(mCurrentFunctions, false);
