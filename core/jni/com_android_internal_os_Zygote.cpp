@@ -685,21 +685,6 @@ static void com_android_internal_os_Zygote_nativeUnmountStorageOnInit(JNIEnv* en
         return;
     }
 
-    // Create a staging tmpfs that is shared by our children; they will
-    // bind mount storage into their respective private namespaces, which
-    // are isolated from each other.
-    const char* target_base = getenv("EMULATED_STORAGE_TARGET");
-    if (target_base != nullptr) {
-#define STRINGIFY_UID(x) __STRING(x)
-        if (mount("tmpfs", target_base, "tmpfs", MS_NOSUID | MS_NODEV,
-                  "uid=0,gid=" STRINGIFY_UID(AID_SDCARD_R) ",mode=0751") == -1) {
-            ALOGE("Failed to mount tmpfs to %s", target_base);
-            RuntimeAbort(env, __LINE__, "Failed to mount tmpfs");
-            return;
-        }
-#undef STRINGIFY_UID
-    }
-
     UnmountTree("/storage");
 }
 
