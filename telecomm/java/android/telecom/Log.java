@@ -201,6 +201,10 @@ public class Log {
         return getSessionManager().createSubsession();
     }
 
+    public static Session.Info getExternalSession() {
+        return getSessionManager().getExternalSession();
+    }
+
     public static void cancelSubsession(Session subsession) {
         getSessionManager().cancelSubsession(subsession);
     }
