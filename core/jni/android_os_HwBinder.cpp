@@ -25,7 +25,7 @@
 
 #include <JNIHelp.h>
 #include <android_runtime/AndroidRuntime.h>
-#include <hidl/IServiceManager.h>
+#include <hidl/ServiceManagement.h>
 #include <hidl/Status.h>
 #include <hwbinder/ProcessState.h>
 #include <nativehelper/ScopedLocalRef.h>
@@ -208,26 +208,29 @@ static void JHwBinder_native_registerService(
         return;  // XXX exception already pending?
     }
 
-    const hardware::hidl_version kVersion = hardware::make_hidl_version(1, 0);
+    const android::hardware::IServiceManagerDupe::Version kVersion {
+        .major = 1,
+        .minor = 0,
+    };
 
     sp<hardware::IBinder> binder = JHwBinder::GetNativeContext(env, thiz);
 
-    status_t err = hardware::defaultServiceManager()->addService(
-                String16(
-                    reinterpret_cast<const char16_t *>(serviceName),
-                    env->GetStringLength(serviceNameObj)),
+    bool ok = hardware::defaultServiceManager()->add(
+                String8(String16(
+                          reinterpret_cast<const char16_t *>(serviceName),
+                          env->GetStringLength(serviceNameObj))).string(),
                 binder,
                 kVersion);
 
     env->ReleaseStringCritical(serviceNameObj, serviceName);
     serviceName = NULL;
 
-    if (err == OK) {
+    if (ok) {
         LOG(INFO) << "Starting thread pool.";
         ::android::hardware::ProcessState::self()->startThreadPool();
     }
 
-    signalExceptionForError(env, err);
+    signalExceptionForError(env, (ok ? OK : UNKNOWN_ERROR));
 }
 
 static jobject JHwBinder_native_getService(
@@ -243,7 +246,10 @@ static jobject JHwBinder_native_getService(
         return NULL;  // XXX exception already pending?
     }
 
-    const hardware::hidl_version kVersion = hardware::make_hidl_version(1, 0);
+    const android::hardware::IServiceManagerDupe::Version kVersion {
+        .major = 1,
+        .minor = 0,
+    };
 
     LOG(INFO) << "looking for service '"
               << String8(String16(
@@ -251,12 +257,15 @@ static jobject JHwBinder_native_getService(
                           env->GetStringLength(serviceNameObj))).string()
               << "'";
 
-    sp<hardware::IBinder> service =
-        hardware::defaultServiceManager()->getService(
-                String16(
-                    reinterpret_cast<const char16_t *>(serviceName),
-                    env->GetStringLength(serviceNameObj)),
-                kVersion);
+    sp<hardware::IBinder> service;
+    hardware::defaultServiceManager()->get(
+            String8(String16(
+                      reinterpret_cast<const char16_t *>(serviceName),
+                      env->GetStringLength(serviceNameObj))).string(),
+            kVersion,
+            [&service](sp<hardware::IBinder> out) {
+                service = out;
+            });
 
     env->ReleaseStringCritical(serviceNameObj, serviceName);
     serviceName = NULL;
