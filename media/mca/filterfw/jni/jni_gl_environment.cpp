@@ -63,7 +63,11 @@ class NativeWindowHandle : public WindowHandle {
 };
 
 jboolean Java_android_filterfw_core_GLEnvironment_nativeAllocate(JNIEnv* env, jobject thiz) {
-  return ToJBool(WrapObjectInJava(new GLEnv(), env, thiz, true));
+  GLEnv *glEnv = new GLEnv();
+  if (WrapObjectInJava(glEnv, env, thiz, true))
+    return JNI_TRUE;
+  delete glEnv;
+  return JNI_FALSE;
 }
 
 jboolean Java_android_filterfw_core_GLEnvironment_nativeDeallocate(JNIEnv* env, jobject thiz) {
