@@ -16,6 +16,24 @@
       "revId": "6ace153906629470d51ba36b6b0ac83a421b8fe8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0112549d_44f26e7f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1022419
+      },
+      "writtenOn": "2016-10-25T08:24:48Z",
+      "side": 1,
+      "message": "Thanks for your review.\n\nI updated the commit message and added \u003cBug: 32392931\u003e. Could you also check the detail information in 32392931?",
+      "parentUuid": "5c67d39f_678f5247",
+      "revId": "6ace153906629470d51ba36b6b0ac83a421b8fe8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
