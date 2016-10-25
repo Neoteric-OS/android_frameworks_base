@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1c8e09a_875b9644",
+        "filename": "wifi/java/android/net/wifi/hotspot2/PasspointConfiguration.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-10-25T22:54:12Z",
+      "side": 1,
+      "message": "Copied this code from some class in WifiService.\n\nWill change to instanceof.",
+      "parentUuid": "e1c8e09a_d39954c8",
+      "range": {
+        "startLine": 55,
+        "startChar": 34,
+        "endLine": 55,
+        "endChar": 69
+      },
+      "revId": "6163fe01422692e1423e086873908cc5cc796509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1c8e09a_d3f5d4d8",
         "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2016-10-25T18:54:47Z",
       "side": 1,
       "message": "Seems problematic. Even based on the above reference this value (rolled-over) could be \"Designated Expert with Specification Required\". Is it better to have a separate flag saying unset?",
+      "range": {
+        "startLine": 69,
+        "startChar": 11,
+        "endLine": 69,
+        "endChar": 59
+      },
+      "revId": "6163fe01422692e1423e086873908cc5cc796509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1c8e09a_62a86861",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-10-25T22:54:12Z",
+      "side": 1,
+      "message": "Good point. It is highly unlikely this value (0x80000000) will ever be used by the spec (currently only values up to 255 are used).  Also the validation code on the service side will only allowed number of predefined EAP types that are supported by Passpoint.\n\nI would prefer not to have a separate flag indicating unset, it would make code less readable when adding more similar fields in the future. One alternative approach would be to use \"long\" type for this instead and use Long.MIN_VALUE to indicate unset.\n\nMy preference would be no change. What do you think?",
+      "parentUuid": "e1c8e09a_d3f5d4d8",
       "range": {
         "startLine": 69,
         "startChar": 11,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e1c8e09a_62ad0868",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-10-25T22:54:12Z",
+      "side": 1,
+      "message": "Will update.",
+      "parentUuid": "e1c8e09a_53e2e41b",
+      "range": {
+        "startLine": 96,
+        "startChar": 38,
+        "endLine": 96,
+        "endChar": 73
+      },
+      "revId": "6163fe01422692e1423e086873908cc5cc796509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1c8e09a_7393a076",
         "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
         "patchSetId": 12
@@ -82,6 +154,30 @@
       "writtenOn": "2016-10-25T18:54:47Z",
       "side": 1,
       "message": "same - instanceof?",
+      "range": {
+        "startLine": 158,
+        "startChar": 38,
+        "endLine": 158,
+        "endChar": 73
+      },
+      "revId": "6163fe01422692e1423e086873908cc5cc796509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1c8e09a_22b710bc",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-10-25T22:54:12Z",
+      "side": 1,
+      "message": "Will update.",
+      "parentUuid": "e1c8e09a_7393a076",
       "range": {
         "startLine": 158,
         "startChar": 38,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "e1c8e09a_e2e918a2",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-10-25T22:54:12Z",
+      "side": 1,
+      "message": "Will update.",
+      "parentUuid": "e1c8e09a_730600cd",
+      "range": {
+        "startLine": 213,
+        "startChar": 38,
+        "endLine": 213,
+        "endChar": 71
+      },
+      "revId": "6163fe01422692e1423e086873908cc5cc796509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1c8e09a_331088fe",
         "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
         "patchSetId": 12
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "e1c8e09a_a2e320c0",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-10-25T22:54:12Z",
+      "side": 1,
+      "message": "Will update.",
+      "parentUuid": "e1c8e09a_331088fe",
+      "range": {
+        "startLine": 282,
+        "startChar": 34,
+        "endLine": 282,
+        "endChar": 69
+      },
+      "revId": "6163fe01422692e1423e086873908cc5cc796509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1c8e09a_13bb4cc7",
         "filename": "wifi/java/android/net/wifi/hotspot2/pps/HomeSP.java",
         "patchSetId": 12
@@ -174,6 +318,30 @@
       "writtenOn": "2016-10-25T18:54:47Z",
       "side": 1,
       "message": "same: instanceof?",
+      "range": {
+        "startLine": 70,
+        "startChar": 34,
+        "endLine": 70,
+        "endChar": 69
+      },
+      "revId": "6163fe01422692e1423e086873908cc5cc796509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1c8e09a_42d32cec",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/HomeSP.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-10-25T22:54:12Z",
+      "side": 1,
+      "message": "will update.",
+      "parentUuid": "e1c8e09a_13bb4cc7",
       "range": {
         "startLine": 70,
         "startChar": 34,
