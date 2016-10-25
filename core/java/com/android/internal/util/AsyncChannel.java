@@ -839,7 +839,7 @@ public class AsyncChannel {
      *
      * @param status to be stored in msg.arg1
      */
-    private void replyHalfConnected(int status) {
+    protected void replyHalfConnected(int status) {
         Message msg = mSrcHandler.obtainMessage(CMD_CHANNEL_HALF_CONNECTED);
         msg.arg1 = status;
         msg.obj = this;
@@ -856,7 +856,7 @@ public class AsyncChannel {
      * Link to death monitor for destination messenger. Returns true if successfully binded to
      * destination messenger; false otherwise.
      */
-    private boolean linkToDeathMonitor() {
+    protected boolean linkToDeathMonitor() {
         // Link to death only when bindService isn't used and not already linked.
         if (mConnection == null && mDeathMonitor == null) {
             mDeathMonitor = new DeathMonitor();
@@ -876,7 +876,7 @@ public class AsyncChannel {
      *
      * @param status to be stored in msg.arg1
      */
-    private void replyDisconnected(int status) {
+    protected void replyDisconnected(int status) {
         // Can't reply if already disconnected. Avoid NullPointerException.
         if (mSrcHandler == null) return;
         Message msg = mSrcHandler.obtainMessage(CMD_CHANNEL_DISCONNECTED);
@@ -924,5 +924,13 @@ public class AsyncChannel {
             replyDisconnected(STATUS_REMOTE_DISCONNECTION);
         }
 
+    }
+
+    protected Handler getSrcHandler() {
+        return mSrcHandler;
+    }
+
+    protected Messenger getDstMessenger() {
+        return mDstMessenger;
     }
 }
