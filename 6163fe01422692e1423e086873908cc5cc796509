@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1c8e09a_d39954c8",
+        "filename": "wifi/java/android/net/wifi/hotspot2/PasspointConfiguration.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-25T18:54:47Z",
+      "side": 1,
+      "message": "I thought the standard pattern was:\n\nif (!thatObject instanceof PasspointConfiguration)) {  ... }",
+      "range": {
+        "startLine": 55,
+        "startChar": 34,
+        "endLine": 55,
+        "endChar": 69
+      },
+      "revId": "6163fe01422692e1423e086873908cc5cc796509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1c8e09a_d3f5d4d8",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-25T18:54:47Z",
+      "side": 1,
+      "message": "Seems problematic. Even based on the above reference this value (rolled-over) could be \"Designated Expert with Specification Required\". Is it better to have a separate flag saying unset?",
+      "range": {
+        "startLine": 69,
+        "startChar": 11,
+        "endLine": 69,
+        "endChar": 59
+      },
+      "revId": "6163fe01422692e1423e086873908cc5cc796509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1c8e09a_53e2e41b",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-25T18:54:47Z",
+      "side": 1,
+      "message": "same - instanceof?",
+      "range": {
+        "startLine": 96,
+        "startChar": 38,
+        "endLine": 96,
+        "endChar": 73
+      },
+      "revId": "6163fe01422692e1423e086873908cc5cc796509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1c8e09a_7393a076",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-25T18:54:47Z",
+      "side": 1,
+      "message": "same - instanceof?",
+      "range": {
+        "startLine": 158,
+        "startChar": 38,
+        "endLine": 158,
+        "endChar": 73
+      },
+      "revId": "6163fe01422692e1423e086873908cc5cc796509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1c8e09a_d3f6f4bb",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-25T18:54:47Z",
+      "side": 1,
+      "message": "same: another var for unset value?",
+      "range": {
+        "startLine": 201,
+        "startChar": 19,
+        "endLine": 201,
+        "endChar": 46
+      },
+      "revId": "6163fe01422692e1423e086873908cc5cc796509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1c8e09a_730600cd",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-25T18:54:47Z",
+      "side": 1,
+      "message": "same: instanceof?",
+      "range": {
+        "startLine": 213,
+        "startChar": 38,
+        "endLine": 213,
+        "endChar": 71
+      },
+      "revId": "6163fe01422692e1423e086873908cc5cc796509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1c8e09a_331088fe",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-25T18:54:47Z",
+      "side": 1,
+      "message": "same: instanceof",
+      "range": {
+        "startLine": 282,
+        "startChar": 34,
+        "endLine": 282,
+        "endChar": 69
+      },
+      "revId": "6163fe01422692e1423e086873908cc5cc796509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1c8e09a_13bb4cc7",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/HomeSP.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-25T18:54:47Z",
+      "side": 1,
+      "message": "same: instanceof?",
+      "range": {
+        "startLine": 70,
+        "startChar": 34,
+        "endLine": 70,
+        "endChar": 69
+      },
+      "revId": "6163fe01422692e1423e086873908cc5cc796509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
