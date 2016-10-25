@@ -79,6 +79,7 @@ import com.android.server.hdmi.HdmiCecLocalDevice.ActiveSource;
 import com.android.server.hdmi.HdmiCecLocalDevice.PendingActionClearedCallback;
 import com.android.server.hdmi.SelectRequestBuffer.DeviceSelectRequest;
 import com.android.server.hdmi.SelectRequestBuffer.PortSelectRequest;
+import com.android.server.power.ShutdownThread;
 
 import libcore.util.EmptyArray;
 
@@ -166,7 +167,13 @@ public final class HdmiControlService extends SystemService {
                     }
                     break;
                 case Intent.ACTION_SHUTDOWN:
-                    if (isPowerOnOrTransient()) {
+                    boolean reboot = true;
+                    String shutdownAction = SystemProperties.get(
+                            ShutdownThread.SHUTDOWN_ACTION_PROPERTY, "");
+                    if (shutdownAction != null && shutdownAction.length() > 0) {
+                        reboot = (shutdownAction.charAt(0) == '1');
+                    }
+                    if (isPowerOnOrTransient() && !reboot) {
                         onStandby(STANDBY_SHUTDOWN);
                     }
                     break;
