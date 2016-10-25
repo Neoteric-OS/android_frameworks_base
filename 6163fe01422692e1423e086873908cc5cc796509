@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "e1c8e09a_2dd021dd",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2016-10-25T23:19:42Z",
+      "side": 1,
+      "message": "Even if that was the case (assume no change) then you\u0027re exposing this implementation detail as a public detail. Should there be a function isEapTypeValid() which checks this special value internally?",
+      "parentUuid": "e1c8e09a_62a86861",
+      "range": {
+        "startLine": 69,
+        "startChar": 11,
+        "endLine": 69,
+        "endChar": 59
+      },
+      "revId": "6163fe01422692e1423e086873908cc5cc796509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1c8e09a_53e2e41b",
         "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
         "patchSetId": 12
