@@ -112,12 +112,15 @@ LOCAL_SRC_FILES:= \
     android/graphics/DrawFilter.cpp \
     android/graphics/FontFamily.cpp \
     android/graphics/CreateJavaOutputStreamAdaptor.cpp \
+    android/graphics/GIFMovie.cpp \
     android/graphics/Graphics.cpp \
     android/graphics/HarfBuzzNGFaceSkia.cpp \
     android/graphics/Interpolator.cpp \
     android/graphics/MaskFilter.cpp \
     android/graphics/Matrix.cpp \
     android/graphics/Movie.cpp \
+    android/graphics/MovieImpl.cpp \
+    android/graphics/Movie_FactoryDefault.cpp \
     android/graphics/NinePatch.cpp \
     android/graphics/NinePatchPeeker.cpp \
     android/graphics/Paint.cpp \
@@ -196,6 +199,7 @@ LOCAL_C_INCLUDES += \
     $(TOP)/system/core/include \
     $(TOP)/system/media/camera/include \
     $(TOP)/system/netd/include \
+    external/giflib \
     external/pdfium/core/include/fpdfapi \
     external/pdfium/fpdfsdk/include \
     external/pdfium/public \
@@ -214,6 +218,9 @@ LOCAL_C_INCLUDES += \
     frameworks/minikin/include \
     external/freetype/include
 # TODO: clean up Minikin so it doesn't need the freetype include
+
+LOCAL_STATIC_LIBRARIES := \
+    libgif \
 
 LOCAL_SHARED_LIBRARIES := \
     libmemtrack \
