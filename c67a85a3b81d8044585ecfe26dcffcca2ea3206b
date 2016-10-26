@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1826880_074c7a39",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PanelView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-10-26T17:25:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is the right measure. We have the same problem when closing the panel normally with the mouse, also not in keyguard state?",
+      "revId": "c67a85a3b81d8044585ecfe26dcffcca2ea3206b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1826880_c7c45250",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PanelView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-10-26T17:25:54Z",
+      "side": 1,
+      "message": "we should probably do the expand logic here if it\u0027s a mouse and and it\u0027s an up (or even better inside onEmptySpaceClick. That will fix it for all cases.",
+      "revId": "c67a85a3b81d8044585ecfe26dcffcca2ea3206b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
