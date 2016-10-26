@@ -216,6 +216,30 @@
     },
     {
       "key": {
+        "uuid": "a1826880_4a04c779",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-10-26T17:29:30Z",
+      "side": 1,
+      "message": "I think you\u0027re right. Will think through a bit more and add the necessary changes in a future CL.",
+      "parentUuid": "a1826880_27417e03",
+      "range": {
+        "startLine": 69,
+        "startChar": 11,
+        "endLine": 69,
+        "endChar": 59
+      },
+      "revId": "6163fe01422692e1423e086873908cc5cc796509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1c8e09a_53e2e41b",
         "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
         "patchSetId": 12
