@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21775881_15e3d490",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PanelView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1103773
+      },
+      "writtenOn": "2016-10-27T02:08:52Z",
+      "side": 1,
+      "message": "Yes. It the last point is at top of the screen when slip up to unlock screen, the UP action can\u0027t be recognize with mouse.",
+      "parentUuid": "a1826880_074c7a39",
+      "revId": "c67a85a3b81d8044585ecfe26dcffcca2ea3206b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1826880_c7c45250",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PanelView.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-10-26T17:25:54Z",
       "side": 1,
       "message": "we should probably do the expand logic here if it\u0027s a mouse and and it\u0027s an up (or even better inside onEmptySpaceClick. That will fix it for all cases.",
+      "revId": "c67a85a3b81d8044585ecfe26dcffcca2ea3206b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21775881_35e0d081",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PanelView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1103773
+      },
+      "writtenOn": "2016-10-27T02:08:52Z",
+      "side": 1,
+      "message": "If it is in keyguard, it can\u0027t call endMotionEvent, so the logic can\u0027t get here.\nIt will return at below logic:\n\nif (isFullyCollapsed() \u0026\u0026 event.isFromSource(InputDevice.SOURCE_MOUSE)) {\n.....\nreturn true;\n}",
+      "parentUuid": "a1826880_c7c45250",
       "revId": "c67a85a3b81d8044585ecfe26dcffcca2ea3206b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
