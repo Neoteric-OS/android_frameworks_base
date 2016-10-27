@@ -69,6 +69,24 @@
       "revId": "c67a85a3b81d8044585ecfe26dcffcca2ea3206b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a63c3ec1_d1d664d9",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PanelView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-10-27T17:56:57Z",
+      "side": 1,
+      "message": "That\u0027s what I\u0027m saying, we should remove the logic above and place it here",
+      "parentUuid": "21775881_35e0d081",
+      "revId": "c67a85a3b81d8044585ecfe26dcffcca2ea3206b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
