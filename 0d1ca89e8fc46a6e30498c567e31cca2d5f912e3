@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1826880_7e014821",
+        "filename": "services/core/java/com/android/server/am/BroadcastQueue.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1435,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2016-10-27T15:55:52Z",
+      "side": 1,
+      "message": "nit -- missing spaces: \"if (mPendingBroadcast !\u003d null) {\"",
+      "revId": "0d1ca89e8fc46a6e30498c567e31cca2d5f912e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
