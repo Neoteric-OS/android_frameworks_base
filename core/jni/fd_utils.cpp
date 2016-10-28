@@ -141,6 +141,11 @@ FileDescriptorInfo* FileDescriptorInfo::CreateFromFd(int fd) {
     return NULL;
   }
 
+  if (f_stat.st_nlink <= 0) {
+    ALOGE("The fd %d corresponding file has been deleted", fd);
+    return NULL;
+  }
+
   const FileDescriptorWhitelist* whitelist = FileDescriptorWhitelist::Get();
 
   if (S_ISSOCK(f_stat.st_mode)) {
@@ -223,11 +228,18 @@ FileDescriptorInfo* FileDescriptorInfo::CreateFromFd(int fd) {
 
 bool FileDescriptorInfo::Restat() const {
   struct stat f_stat;
+
   if (TEMP_FAILURE_RETRY(fstat(fd, &f_stat)) == -1) {
+    ALOGE("Failed stat fd %d, file path %s", fd, file_path.c_str());
     return false;
   }
 
-  return f_stat.st_ino == stat.st_ino && f_stat.st_dev == stat.st_dev;
+  if (f_stat.st_nlink <= 0) {
+    ALOGE("The fd %d corresponding file %s has been deleted", fd, file_path.c_str());
+    return false;
+  }
+
+  return (f_stat.st_ino == file_stat.st_ino) && (f_stat.st_dev == file_stat.st_dev);
 }
 
 bool FileDescriptorInfo::ReopenOrDetach() const {
@@ -276,7 +288,7 @@ bool FileDescriptorInfo::ReopenOrDetach() const {
 
 FileDescriptorInfo::FileDescriptorInfo(int fd) :
   fd(fd),
-  stat(),
+  file_stat(),
   open_flags(0),
   fd_flags(0),
   fs_flags(0),
@@ -284,11 +296,11 @@ FileDescriptorInfo::FileDescriptorInfo(int fd) :
   is_sock(true) {
 }
 
-FileDescriptorInfo::FileDescriptorInfo(struct stat stat, const std::string& file_path,
+FileDescriptorInfo::FileDescriptorInfo(struct stat file_stat, const std::string& file_path,
                                        int fd, int open_flags, int fd_flags, int fs_flags,
                                        off_t offset) :
   fd(fd),
-  stat(stat),
+  file_stat(file_stat),
   file_path(file_path),
   open_flags(open_flags),
   fd_flags(fd_flags),
