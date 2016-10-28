@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86501a4a_beb6e1dc",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PanelView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-10-28T20:27:45Z",
+      "side": 1,
+      "message": "hmm this isn\u0027t completely sane though, as onEmtpySpaceClick is still called when we expand. Maybe we should put it inside onEmptySpaceClick and return early there.",
+      "revId": "edc0647e1603c79d51f469f362c9dd82e35e3724",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
