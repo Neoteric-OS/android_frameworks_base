@@ -81,7 +81,7 @@ class FileDescriptorInfo {
   bool ReopenOrDetach() const;
 
   const int fd;
-  const struct stat stat;
+  const struct stat file_stat;
   const std::string file_path;
   const int open_flags;
   const int fd_flags;
@@ -92,7 +92,7 @@ class FileDescriptorInfo {
  private:
   FileDescriptorInfo(int fd);
 
-  FileDescriptorInfo(struct stat stat, const std::string& file_path, int fd, int open_flags,
+  FileDescriptorInfo(struct stat file_stat, const std::string& file_path, int fd, int open_flags,
                      int fd_flags, int fs_flags, off_t offset);
 
   // Returns the locally-bound name of the socket |fd|. Returns true
