@@ -22,6 +22,30 @@
       "revId": "47353ff7a17495eebf3e3a819c0a723a1b74bb74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8689fa79_70b070c1",
+        "filename": "libs/androidfw/AssetManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1061696
+      },
+      "writtenOn": "2016-11-01T23:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86501a4a_8e8644ac",
+      "range": {
+        "startLine": 808,
+        "startChar": 12,
+        "endLine": 809,
+        "endChar": 67
+      },
+      "revId": "47353ff7a17495eebf3e3a819c0a723a1b74bb74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
