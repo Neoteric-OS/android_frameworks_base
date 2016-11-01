@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26d84e6c_f67311c8",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2016-11-01T19:17:00Z",
+      "side": 1,
+      "message": "this feels kind of arbitrary and doesn\u0027t necessarily apply to every device",
+      "range": {
+        "startLine": 691,
+        "startChar": 0,
+        "endLine": 692,
+        "endChar": 69
+      },
+      "revId": "fed37d291c593d1548d1ca725a2f445d9d64a169",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26d84e6c_364f5980",
+        "filename": "media/java/android/media/MediaCodecList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001525
+      },
+      "writtenOn": "2016-11-01T19:17:00Z",
+      "side": 1,
+      "message": "static member variable should be named sContext, however: you really shouldn\u0027t assign a context to a static variable, because then there will be a reference to that context (which can be an Activity or Service or Application) that won\u0027t go away until explicitly cleared.\nIn addition, there are various race conditions here if a MediaCodecList is created from multiple threads (one without context, one with, or two with different contexts)",
+      "range": {
+        "startLine": 162,
+        "startChar": 24,
+        "endLine": 162,
+        "endChar": 32
+      },
+      "revId": "fed37d291c593d1548d1ca725a2f445d9d64a169",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
