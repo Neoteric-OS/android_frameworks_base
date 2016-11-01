@@ -1281,7 +1281,7 @@ public class SyncManager {
             while (operationIterator.hasNext()) {
                 final SyncOperation op = operationIterator.next();
                 if (op.appIdle
-                        && (packageName == null || getPackageName(op.target).equals(packageName))
+                        && (packageName == null || packageName.equals(getPackageName(op.target)))
                         && (userId == UserHandle.USER_ALL || op.target.userId == userId)) {
                     op.appIdle = false;
                     clearBackoffSetting(op);
