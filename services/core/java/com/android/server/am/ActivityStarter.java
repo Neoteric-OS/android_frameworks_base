@@ -410,7 +410,8 @@ class ActivityStarter {
         // If permissions need a review before any of the app components can run, we
         // launch the review activity and pass a pending intent to start the activity
         // we are to launching now after the review is completed.
-        if (Build.PERMISSIONS_REVIEW_REQUIRED && aInfo != null) {
+        if ((mService.mPermissionReviewRequired
+                || Build.PERMISSIONS_REVIEW_REQUIRED) && aInfo != null) {
             if (mService.getPackageManagerInternalLocked().isPermissionsReviewRequired(
                     aInfo.packageName, userId)) {
                 IIntentSender target = mService.getIntentSenderLocked(
@@ -1540,9 +1541,9 @@ class ActivityStarter {
                 == (FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK)) {
             // The caller has requested to completely replace any existing task with its new
             // activity. Well that should not be too hard...
+            intentActivity.task.performClearTaskLocked();
+            intentActivity.task.setIntent(mStartActivity);
             mReuseTask = intentActivity.task;
-            mReuseTask.performClearTaskLocked();
-            mReuseTask.setIntent(mStartActivity);
             // When we clear the task - focus will be adjusted, which will bring another task
             // to top before we launch the activity we need. This will temporary swap their
             // mTaskToReturnTo values and we don't want to overwrite them accidentally.

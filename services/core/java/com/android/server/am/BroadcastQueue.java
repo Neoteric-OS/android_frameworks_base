@@ -265,7 +265,7 @@ public final class BroadcastQueue {
 
         r.receiver = app.thread.asBinder();
         r.curApp = app;
-        app.curReceiver = r;
+        app.curReceivers.add(r);
         app.forceProcessStateUpTo(ActivityManager.PROCESS_STATE_RECEIVER);
         mService.updateLruProcessLocked(app, false, null);
         mService.updateOomAdjLocked();
@@ -293,7 +293,7 @@ public final class BroadcastQueue {
                         "Process cur broadcast " + r + ": NOT STARTED!");
                 r.receiver = null;
                 r.curApp = null;
-                app.curReceiver = null;
+                app.curReceivers.remove(r);
             }
         }
     }
@@ -389,8 +389,8 @@ public final class BroadcastQueue {
         }
         r.receiver = null;
         r.intent.setComponent(null);
-        if (r.curApp != null && r.curApp.curReceiver == r) {
-            r.curApp.curReceiver = null;
+        if (r.curApp != null && r.curApp.curReceivers.contains(r)) {
+            r.curApp.curReceivers.remove(r);
         }
         if (r.curFilter != null) {
             r.curFilter.receiverList.curBroadcast = null;
@@ -618,7 +618,7 @@ public final class BroadcastQueue {
         // the broadcast and if the calling app is in the foreground and the broadcast is
         // explicit we launch the review UI passing it a pending intent to send the skipped
         // broadcast.
-        if (Build.PERMISSIONS_REVIEW_REQUIRED) {
+        if (mService.mPermissionReviewRequired || Build.PERMISSIONS_REVIEW_REQUIRED) {
             if (!requestStartTargetPermissionsReviewIfNeededLocked(r, filter.packageName,
                     filter.owningUserId)) {
                 r.delivery[index] = BroadcastRecord.DELIVERY_SKIPPED;
@@ -643,7 +643,7 @@ public final class BroadcastQueue {
                 // things that directly call the IActivityManager API, which
                 // are already core system stuff so don't matter for this.
                 r.curApp = filter.receiverList.app;
-                filter.receiverList.app.curReceiver = r;
+                filter.receiverList.app.curReceivers.add(r);
                 mService.updateOomAdjLocked(r.curApp);
             }
         }
@@ -671,7 +671,7 @@ public final class BroadcastQueue {
                 r.curFilter = null;
                 filter.receiverList.curBroadcast = null;
                 if (filter.receiverList.app != null) {
-                    filter.receiverList.app.curReceiver = null;
+                    filter.receiverList.app.curReceivers.remove(r);
                 }
             }
         }
@@ -1124,7 +1124,8 @@ public final class BroadcastQueue {
             // the broadcast and if the calling app is in the foreground and the broadcast is
             // explicit we launch the review UI passing it a pending intent to send the skipped
             // broadcast.
-            if (Build.PERMISSIONS_REVIEW_REQUIRED && !skip) {
+            if ((mService.mPermissionReviewRequired
+                    || Build.PERMISSIONS_REVIEW_REQUIRED) && !skip) {
                 if (!requestStartTargetPermissionsReviewIfNeededLocked(r,
                         info.activityInfo.packageName, UserHandle.getUserId(
                                 info.activityInfo.applicationInfo.uid))) {

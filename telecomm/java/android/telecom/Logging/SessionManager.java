@@ -19,7 +19,9 @@ package android.telecom.Logging;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Process;
 import android.provider.Settings;
+import android.telecom.Log;
 import android.util.Base64;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -40,12 +42,9 @@ public class SessionManager {
 
     // Currently using 3 letters, So don't exceed 64^3
     private static final long SESSION_ID_ROLLOVER_THRESHOLD = 262144;
-
     // This parameter can be overridden in Telecom's Timeouts class.
-    public static final long DEFAULT_SESSION_TIMEOUT_MS = 30000L; // 30 seconds
-
-    private static String LOGGING_TAG = "Logging";
-
+    private static final long DEFAULT_SESSION_TIMEOUT_MS = 30000L; // 30 seconds
+    private static final String LOGGING_TAG = "Logging";
     private static final String TIMEOUTS_PREFIX = "telecom.";
 
     // Synchronized in all method calls
@@ -53,20 +52,26 @@ public class SessionManager {
     private Context mContext;
 
     @VisibleForTesting
-    public ConcurrentHashMap<Integer, Session> sSessionMapper = new ConcurrentHashMap<>(100);
+    public ConcurrentHashMap<Integer, Session> mSessionMapper = new ConcurrentHashMap<>(100);
     @VisibleForTesting
-    public Handler sSessionCleanupHandler = new Handler(Looper.getMainLooper());
-    @VisibleForTesting
-    public java.lang.Runnable sCleanStaleSessions = () ->
+    public java.lang.Runnable mCleanStaleSessions = () ->
             cleanupStaleSessions(getSessionCleanupTimeoutMs());
+    private Handler mSessionCleanupHandler = new Handler(Looper.getMainLooper());
 
     // Overridden in LogTest to skip query to ContentProvider
     private interface ISessionCleanupTimeoutMs {
         long get();
     }
 
+    // Overridden in tests to provide test Thread IDs
+    public interface ICurrentThreadId {
+        int get();
+    }
+
     @VisibleForTesting
-    public ISessionCleanupTimeoutMs sSessionCleanupTimeoutMs = () -> {
+    public ICurrentThreadId mCurrentThreadId = Process::myTid;
+
+    private ISessionCleanupTimeoutMs mSessionCleanupTimeoutMs = () -> {
         // mContext may be null in some cases, such as testing. For these cases, use the
         // default value.
         if (mContext == null) {
@@ -99,14 +104,29 @@ public class SessionManager {
     }
 
     private long getSessionCleanupTimeoutMs() {
-        return sSessionCleanupTimeoutMs.get();
+        return mSessionCleanupTimeoutMs.get();
     }
 
     private synchronized void resetStaleSessionTimer() {
-        sSessionCleanupHandler.removeCallbacksAndMessages(null);
+        mSessionCleanupHandler.removeCallbacksAndMessages(null);
         // Will be null in Log Testing
-        if (sCleanStaleSessions != null) {
-            sSessionCleanupHandler.postDelayed(sCleanStaleSessions, getSessionCleanupTimeoutMs());
+        if (mCleanStaleSessions != null) {
+            mSessionCleanupHandler.postDelayed(mCleanStaleSessions, getSessionCleanupTimeoutMs());
+        }
+    }
+
+    /**
+     * Determines whether or not to start a new session or continue an existing session based on
+     * the {@link Session.Info} info passed into startSession. If info is null, a new Session is
+     * created. This code must be accompanied by endSession() at the end of the Session.
+     */
+    public synchronized void startSession(Session.Info info, String shortMethodName,
+            String callerIdentification) {
+        // Start a new session normally if the
+        if(info == null) {
+            startSession(shortMethodName, callerIdentification);
+        } else {
+            startExternalSession(info, shortMethodName);
         }
     }
 
@@ -118,21 +138,61 @@ public class SessionManager {
             String callerIdentification) {
         resetStaleSessionTimer();
         int threadId = getCallingThreadId();
-        Session activeSession = sSessionMapper.get(threadId);
+        Session activeSession = mSessionMapper.get(threadId);
         // We have called startSession within an active session that has not ended... Register this
         // session as a subsession.
         if (activeSession != null) {
             Session childSession = createSubsession(true);
             continueSession(childSession, shortMethodName);
             return;
+        } else {
+            // Only Log that we are starting the parent session.
+            Log.d(LOGGING_TAG, Session.START_SESSION);
         }
         Session newSession = new Session(getNextSessionID(), shortMethodName,
-                System.currentTimeMillis(), threadId, false, callerIdentification);
-        sSessionMapper.put(threadId, newSession);
-
-        android.telecom.Log.v(LOGGING_TAG, Session.START_SESSION);
+                System.currentTimeMillis(), false, callerIdentification);
+        mSessionMapper.put(threadId, newSession);
     }
 
+    /**
+     * Registers an external Session with the Manager using that external Session's sessionInfo.
+     * Log.endSession will still need to be called at the end of the session.
+     * @param sessionInfo Describes the external Session's information.
+     * @param shortMethodName The method name of the new session that is being started.
+     */
+    public synchronized void startExternalSession(Session.Info sessionInfo,
+            String shortMethodName) {
+        if(sessionInfo == null) {
+            return;
+        }
+
+        int threadId = getCallingThreadId();
+        Session threadSession = mSessionMapper.get(threadId);
+        if (threadSession != null) {
+            // We should never get into a situation where there is already an active session AND
+            // an external session is added. We are just using that active session.
+            Log.w(LOGGING_TAG, "trying to start an external session with a session " +
+                    "already active.");
+            return;
+        }
+
+        // Create Session from Info and add to the sessionMapper under this ID.
+        Session externalSession = new Session(Session.EXTERNAL_INDICATOR + sessionInfo.sessionId,
+                sessionInfo.shortMethodName, System.currentTimeMillis(),
+                false /*isStartedFromActiveSession*/, null);
+        externalSession.setIsExternal(true);
+        // Mark the external session as already completed, since we have no way of knowing when
+        // the external session actually has completed.
+        externalSession.markSessionCompleted(Session.UNDEFINED);
+        // Track the external session with the SessionMapper so that we can create and continue
+        // an active subsession based on it.
+        mSessionMapper.put(threadId, externalSession);
+        // Create a subsession from this external Session parent node
+        Session childSession = createSubsession();
+        continueSession(childSession, shortMethodName);
+
+        Log.d(LOGGING_TAG, Session.START_SESSION);
+    }
 
     /**
      * Notifies the logging system that a subsession will be run at a later point and
@@ -145,24 +205,24 @@ public class SessionManager {
 
     private synchronized Session createSubsession(boolean isStartedFromActiveSession) {
         int threadId = getCallingThreadId();
-        Session threadSession = sSessionMapper.get(threadId);
+        Session threadSession = mSessionMapper.get(threadId);
         if (threadSession == null) {
-            android.telecom.Log.d(LOGGING_TAG, "Log.createSubsession was called with no session " +
+            Log.d(LOGGING_TAG, "Log.createSubsession was called with no session " +
                     "active.");
             return null;
         }
         // Start execution time of the session will be overwritten in continueSession(...).
         Session newSubsession = new Session(threadSession.getNextChildId(),
-                threadSession.getShortMethodName(), System.currentTimeMillis(), threadId,
+                threadSession.getShortMethodName(), System.currentTimeMillis(),
                 isStartedFromActiveSession, null);
         threadSession.addChild(newSubsession);
         newSubsession.setParentSession(threadSession);
 
         if (!isStartedFromActiveSession) {
-            android.telecom.Log.v(LOGGING_TAG, Session.CREATE_SUBSESSION + " " +
+            Log.v(LOGGING_TAG, Session.CREATE_SUBSESSION + " " +
                     newSubsession.toString());
         } else {
-            android.telecom.Log.v(LOGGING_TAG, Session.CREATE_SUBSESSION +
+            Log.v(LOGGING_TAG, Session.CREATE_SUBSESSION +
                     " (Invisible subsession)");
         }
         return newSubsession;
@@ -171,14 +231,14 @@ public class SessionManager {
     /**
      * Cancels a subsession that had Log.createSubsession() called on it, but will never have
      * Log.continueSession(...) called on it due to an error. Allows the subsession to be cleaned
-     * gracefully instead of being removed by the sSessionCleanupHandler forcefully later.
+     * gracefully instead of being removed by the mSessionCleanupHandler forcefully later.
      */
     public synchronized void cancelSubsession(Session subsession) {
         if (subsession == null) {
             return;
         }
 
-        subsession.markSessionCompleted(0);
+        subsession.markSessionCompleted(Session.UNDEFINED);
         endParentSessions(subsession);
     }
 
@@ -192,21 +252,20 @@ public class SessionManager {
             return;
         }
         resetStaleSessionTimer();
-        String callingMethodName = subsession.getShortMethodName();
-        subsession.setShortMethodName(callingMethodName + "->" + shortMethodName);
+        subsession.setShortMethodName(shortMethodName);
         subsession.setExecutionStartTimeMs(System.currentTimeMillis());
         Session parentSession = subsession.getParentSession();
         if (parentSession == null) {
-            android.telecom.Log.d(LOGGING_TAG, "Log.continueSession was called with no session " +
-                    "active for method %s.", shortMethodName);
+            Log.i(LOGGING_TAG, "Log.continueSession was called with no session " +
+                    "active for method " + shortMethodName);
             return;
         }
 
-        sSessionMapper.put(getCallingThreadId(), subsession);
+        mSessionMapper.put(getCallingThreadId(), subsession);
         if (!subsession.isStartedFromActiveSession()) {
-            android.telecom.Log.v(LOGGING_TAG, Session.CONTINUE_SUBSESSION);
+            Log.v(LOGGING_TAG, Session.CONTINUE_SUBSESSION);
         } else {
-            android.telecom.Log.v(LOGGING_TAG, Session.CONTINUE_SUBSESSION +
+            Log.v(LOGGING_TAG, Session.CONTINUE_SUBSESSION +
                     " (Invisible Subsession) with Method " + shortMethodName);
         }
     }
@@ -217,30 +276,30 @@ public class SessionManager {
      */
     public synchronized void endSession() {
         int threadId = getCallingThreadId();
-        Session completedSession = sSessionMapper.get(threadId);
+        Session completedSession = mSessionMapper.get(threadId);
         if (completedSession == null) {
-            android.telecom.Log.w(LOGGING_TAG, "Log.endSession was called with no session active.");
+            Log.w(LOGGING_TAG, "Log.endSession was called with no session active.");
             return;
         }
 
         completedSession.markSessionCompleted(System.currentTimeMillis());
         if (!completedSession.isStartedFromActiveSession()) {
-            android.telecom.Log.v(LOGGING_TAG, Session.END_SUBSESSION + " (dur: " +
+            Log.v(LOGGING_TAG, Session.END_SUBSESSION + " (dur: " +
                     completedSession.getLocalExecutionTime() + " mS)");
         } else {
-            android.telecom.Log.v(LOGGING_TAG, Session.END_SUBSESSION +
+            Log.v(LOGGING_TAG, Session.END_SUBSESSION +
                     " (Invisible Subsession) (dur: " + completedSession.getLocalExecutionTime() +
                     " ms)");
         }
         // Remove after completed so that reference still exists for logging the end events
         Session parentSession = completedSession.getParentSession();
-        sSessionMapper.remove(threadId);
+        mSessionMapper.remove(threadId);
         endParentSessions(completedSession);
         // If this subsession was started from a parent session using Log.startSession, return the
         // ThreadID back to the parent after completion.
         if (parentSession != null && !parentSession.isSessionCompleted() &&
                 completedSession.isStartedFromActiveSession()) {
-            sSessionMapper.put(threadId, parentSession);
+            mSessionMapper.put(threadId, parentSession);
         }
     }
 
@@ -251,28 +310,39 @@ public class SessionManager {
         if (!subsession.isSessionCompleted() || subsession.getChildSessions().size() != 0) {
             return;
         }
-
         Session parentSession = subsession.getParentSession();
         if (parentSession != null) {
             subsession.setParentSession(null);
             parentSession.removeChild(subsession);
+            // Report the child session of the external session as being complete to the listeners,
+            // not the external session itself.
+            if (parentSession.isExternal()) {
+                long fullSessionTimeMs =
+                        System.currentTimeMillis() - subsession.getExecutionStartTimeMilliseconds();
+                notifySessionCompleteListeners(subsession.getShortMethodName(), fullSessionTimeMs);
+            }
             endParentSessions(parentSession);
         } else {
             // All of the subsessions have been completed and it is time to report on the full
             // running time of the session.
             long fullSessionTimeMs =
                     System.currentTimeMillis() - subsession.getExecutionStartTimeMilliseconds();
-            android.telecom.Log.v(LOGGING_TAG, Session.END_SESSION + " (dur: " + fullSessionTimeMs
+            Log.d(LOGGING_TAG, Session.END_SESSION + " (dur: " + fullSessionTimeMs
                     + " ms): " + subsession.toString());
-            // TODO: Add analytics hook
-            for (ISessionListener l : mSessionListeners) {
-                l.sessionComplete(subsession.getShortMethodName(), fullSessionTimeMs);
+            if (!subsession.isExternal()) {
+                notifySessionCompleteListeners(subsession.getShortMethodName(), fullSessionTimeMs);
             }
         }
     }
 
+    private void notifySessionCompleteListeners(String methodName, long sessionTimeMs) {
+        for (ISessionListener l : mSessionListeners) {
+            l.sessionComplete(methodName, sessionTimeMs);
+        }
+    }
+
     public String getSessionId() {
-        Session currentSession = sSessionMapper.get(getCallingThreadId());
+        Session currentSession = mSessionMapper.get(getCallingThreadId());
         return currentSession != null ? currentSession.toString() : "";
     }
 
@@ -291,24 +361,22 @@ public class SessionManager {
         return getBase64Encoding(nextId);
     }
 
-    @VisibleForTesting
-    public synchronized void restartSessionCounter() {
+    private synchronized void restartSessionCounter() {
         sCodeEntryCounter = 0;
     }
 
-    @VisibleForTesting
-    public String getBase64Encoding(int number) {
+    private String getBase64Encoding(int number) {
         byte[] idByteArray = ByteBuffer.allocate(4).putInt(number).array();
         idByteArray = Arrays.copyOfRange(idByteArray, 2, 4);
         return Base64.encodeToString(idByteArray, Base64.NO_WRAP | Base64.NO_PADDING);
     }
 
-    public int getCallingThreadId() {
-        return android.os.Process.myTid();
+    private int getCallingThreadId() {
+        return mCurrentThreadId.get();
     }
 
     @VisibleForTesting
-    private synchronized void cleanupStaleSessions(long timeoutMs) {
+    public synchronized void cleanupStaleSessions(long timeoutMs) {
         String logMessage = "Stale Sessions Cleaned:\n";
         boolean isSessionsStale = false;
         long currentTimeMs = System.currentTimeMillis();
@@ -317,7 +385,7 @@ public class SessionManager {
         // If this occurs, then there is most likely a Session active that never had
         // Log.endSession called on it.
         for (Iterator<ConcurrentHashMap.Entry<Integer, Session>> it =
-             sSessionMapper.entrySet().iterator(); it.hasNext(); ) {
+             mSessionMapper.entrySet().iterator(); it.hasNext(); ) {
             ConcurrentHashMap.Entry<Integer, Session> entry = it.next();
             Session session = entry.getValue();
             if (currentTimeMs - session.getExecutionStartTimeMilliseconds() > timeoutMs) {
@@ -327,9 +395,9 @@ public class SessionManager {
             }
         }
         if (isSessionsStale) {
-            android.telecom.Log.w(LOGGING_TAG, logMessage);
+            Log.w(LOGGING_TAG, logMessage);
         } else {
-            android.telecom.Log.v(LOGGING_TAG, "No stale logging sessions needed to be cleaned...");
+            Log.v(LOGGING_TAG, "No stale logging sessions needed to be cleaned...");
         }
     }
 
