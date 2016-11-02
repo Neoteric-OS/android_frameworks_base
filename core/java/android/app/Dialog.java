@@ -1332,17 +1332,19 @@ public class Dialog implements DialogInterface, Window.Callback,
 
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case DISMISS:
-                    ((OnDismissListener) msg.obj).onDismiss(mDialog.get());
-                    break;
-                case CANCEL:
-                    ((OnCancelListener) msg.obj).onCancel(mDialog.get());
-                    break;
-                case SHOW:
-                    ((OnShowListener) msg.obj).onShow(mDialog.get());
-                    break;
-            }
+           if(mDialog.get() != null){ 
+		switch (msg.what) {
+                	case DISMISS:
+                    		((OnDismissListener) msg.obj).onDismiss(mDialog.get());
+                    		break;
+                	case CANCEL:
+                    		((OnCancelListener) msg.obj).onCancel(mDialog.get());
+                    		break;
+                	case SHOW:
+                    		((OnShowListener) msg.obj).onShow(mDialog.get());
+                    		break;
+            	}
+	    }
         }
     }
 }
