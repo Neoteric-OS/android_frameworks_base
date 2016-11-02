@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6dd1ea2_12b1522d",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1112331
+      },
+      "writtenOn": "2016-11-02T08:07:58Z",
+      "side": 1,
+      "message": "IMHO static class would be better",
+      "revId": "664f062245ef8b5840b3e1bb7c9b42a41742dc35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
