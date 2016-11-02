@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6dd1ea2_e894868c",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2394,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2016-11-02T21:24:04Z",
+      "side": 1,
+      "message": "can you change this to 400, such that we can merge it? We changed it to 400 there.",
+      "revId": "24f7a2613d12ab9ed0a2a60032a21e957906eb39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
