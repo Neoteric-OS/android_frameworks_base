@@ -793,7 +793,8 @@ public class ResourcesManager {
 
             for (int i = mResourceImpls.size() - 1; i >= 0; i--) {
                 ResourcesKey key = mResourceImpls.keyAt(i);
-                ResourcesImpl r = mResourceImpls.valueAt(i).get();
+                WeakReference<ResourcesImpl> weakImplRef = mResourceImpls.valueAt(i);
+                ResourcesImpl r = weakImplRef != null ? weakImplRef.get() : null;
                 if (r != null) {
                     if (DEBUG || DEBUG_CONFIGURATION) Slog.v(TAG, "Changing resources "
                             + r + " config to: " + config);
