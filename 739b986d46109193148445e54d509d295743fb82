@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2625ae91_05901265",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2016-11-03T15:36:46Z",
+      "side": 1,
+      "message": "mention it does nothing currently.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 29
+      },
+      "revId": "739b986d46109193148445e54d509d295743fb82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
