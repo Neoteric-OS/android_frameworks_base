@@ -34,6 +34,8 @@
 #include "core_jni_helpers.h"
 
 using android::AndroidRuntime;
+using android::hardware::hidl_vec;
+using android::hardware::hidl_string;
 
 #define PACKAGE_PATH    "android/os"
 #define CLASS_NAME      "HwBinder"
@@ -199,45 +201,48 @@ static void JHwBinder_native_transact(
 static void JHwBinder_native_registerService(
         JNIEnv *env,
         jobject thiz,
-        jstring serviceNameObj,
-        jint versionMajor,
-        jint versionMinor) {
+        jobject interfaceChainArrayList,
+        jstring serviceNameObj) {
     if (serviceNameObj == NULL) {
         jniThrowException(env, "java/lang/NullPointerException", NULL);
         return;
     }
 
-    if (versionMajor < 0
-            || versionMajor > 65535
-            || versionMinor < 0
-            || versionMinor > 65535) {
-        jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
-        return;
-    }
-
-    const jchar *serviceName = env->GetStringCritical(serviceNameObj, NULL);
+    const char *serviceName = env->GetStringUTFChars(serviceNameObj, NULL);
 
     if (serviceName == NULL) {
         return;  // XXX exception already pending?
     }
 
-    using android::hidl::manager::V1_0::IServiceManager;
+    jclass arrayListClass = FindClassOrDie(env, "java/util/ArrayList");
+    jmethodID methodSize = GetMethodIDOrDie(env, arrayListClass, "size", "()I");
+    jmethodID methodGet = GetMethodIDOrDie(env, arrayListClass, "get", "(I)Ljava/lang/Object;");
 
-    const IServiceManager::Version kVersion {
-        .major = static_cast<uint16_t>(versionMajor),
-        .minor = static_cast<uint16_t>(versionMinor),
-    };
+    jint numInterfaces = env->CallIntMethod(interfaceChainArrayList, methodSize);
+    hidl_string *strings = new hidl_string[numInterfaces];
+
+    for (jint i = 0; i < numInterfaces; i++) {
+        jstring strObj = static_cast<jstring>(
+            env->CallObjectMethod(interfaceChainArrayList, methodGet, i)
+        );
+        const char * str = env->GetStringUTFChars(strObj, nullptr);
+        strings[i] = hidl_string(str);
+        env->ReleaseStringUTFChars(strObj, str);
+    }
+
+    hidl_vec<hidl_string> interfaceChain;
+    interfaceChain.setToExternal(strings, numInterfaces, true /* shouldOwn */);
+
+    using android::hidl::manager::V1_0::IServiceManager;
 
     sp<hardware::IBinder> binder = JHwBinder::GetNativeContext(env, thiz);
 
     bool ok = hardware::defaultServiceManager()->add(
-                String8(String16(
-                          reinterpret_cast<const char16_t *>(serviceName),
-                          env->GetStringLength(serviceNameObj))).string(),
-                binder,
-                kVersion);
+                interfaceChain,
+                serviceName,
+                binder);
 
-    env->ReleaseStringCritical(serviceNameObj, serviceName);
+    env->ReleaseStringUTFChars(serviceNameObj, serviceName);
     serviceName = NULL;
 
     if (ok) {
@@ -251,52 +256,37 @@ static void JHwBinder_native_registerService(
 static jobject JHwBinder_native_getService(
         JNIEnv *env,
         jclass /* clazzObj */,
-        jstring serviceNameObj,
-        jint versionMajor,
-        jint versionMinor) {
+        jstring ifaceNameObj,
+        jstring serviceNameObj) {
     if (serviceNameObj == NULL) {
         jniThrowException(env, "java/lang/NullPointerException", NULL);
         return NULL;
     }
 
-    if (versionMajor < 0
-            || versionMajor > 65535
-            || versionMinor < 0
-            || versionMinor > 65535) {
-        jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
-        return NULL;
-    }
+    const char *ifaceName   = env->GetStringUTFChars(ifaceNameObj, NULL);
+    const char *serviceName = env->GetStringUTFChars(serviceNameObj, NULL);
 
-    const jchar *serviceName = env->GetStringCritical(serviceNameObj, NULL);
-
-    if (serviceName == NULL) {
+    if (ifaceName == NULL || serviceName == NULL) {
         return NULL;  // XXX exception already pending?
     }
 
     using android::hidl::manager::V1_0::IServiceManager;
 
-    const IServiceManager::Version kVersion {
-        .major = static_cast<uint16_t>(versionMajor),
-        .minor = static_cast<uint16_t>(versionMinor),
-    };
-
     LOG(INFO) << "looking for service '"
-              << String8(String16(
-                          reinterpret_cast<const char16_t *>(serviceName),
-                          env->GetStringLength(serviceNameObj))).string()
+              << serviceName
               << "'";
 
     sp<hardware::IBinder> service;
     hardware::defaultServiceManager()->get(
-            String8(String16(
-                      reinterpret_cast<const char16_t *>(serviceName),
-                      env->GetStringLength(serviceNameObj))).string(),
-            kVersion,
+            ifaceName,
+            serviceName,
             [&service](sp<hardware::IBinder> out) {
                 service = out;
             });
 
-    env->ReleaseStringCritical(serviceNameObj, serviceName);
+    env->ReleaseStringUTFChars(ifaceNameObj, ifaceName);
+    ifaceName = NULL;
+    env->ReleaseStringUTFChars(serviceNameObj, serviceName);
     serviceName = NULL;
 
     if (service == NULL) {
@@ -318,10 +308,10 @@ static JNINativeMethod gMethods[] = {
         "(IL" PACKAGE_PATH "/HwParcel;L" PACKAGE_PATH "/HwParcel;I)V",
         (void *)JHwBinder_native_transact },
 
-    { "registerService", "(Ljava/lang/String;II)V",
+    { "registerService", "(Ljava/util/ArrayList;Ljava/lang/String;)V",
         (void *)JHwBinder_native_registerService },
 
-    { "getService", "(Ljava/lang/String;II)L" PACKAGE_PATH "/IHwBinder;",
+    { "getService", "(Ljava/lang/String;Ljava/lang/String;)L" PACKAGE_PATH "/IHwBinder;",
         (void *)JHwBinder_native_getService },
 };
 
