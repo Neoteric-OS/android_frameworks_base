@@ -232,6 +232,9 @@ class PackageDexOptimizer {
                     case DexFile.SELF_PATCHOAT_NEEDED:
                         dexoptType = "self patchoat";
                         break;
+                    case DexFile.UPDATE_VDEX_NEEDED:
+                        dexoptType = "update vdex";
+                        break;
                     default:
                         throw new IllegalStateException("Invalid dexopt:" + dexoptNeeded);
                 }
