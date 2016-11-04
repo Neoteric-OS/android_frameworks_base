@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bf38bab_e8336f22",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2016-11-04T21:05:12Z",
+      "side": 1,
+      "message": "Not sure where the right place/time to pull these out is.",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 219,
+        "endChar": 96
+      },
+      "revId": "dfa1d851097df3199ddd97f1316775bd20724156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
