@@ -2194,12 +2194,17 @@ public class ExifInterface {
             }
 
             if (tag == null || dataFormat <= 0 ||
-                    dataFormat >= IFD_FORMAT_BYTES_PER_FORMAT.length) {
-                // Skip if the parsed tag number is not defined or invalid data format.
+                    dataFormat >= IFD_FORMAT_BYTES_PER_FORMAT.length ||
+                    numberOfComponents < 0) {
+                // Skip if the parsed tag number is not defined or invalid data format or invalid
+                // number of components.
                 if (tag == null) {
                     Log.w(TAG, "Skip the tag entry since tag number is not defined: " + tagNumber);
-                } else {
+                } else if (dataFormat <= 0 || dataFormat >= IFD_FORMAT_BYTES_PER_FORMAT.length) {
                     Log.w(TAG, "Skip the tag entry since data format is invalid: " + dataFormat);
+                } else {
+                    Log.w(TAG, "Skip the tag entry since number of components is invalid: " +
+                            numberOfComponents);
                 }
                 dataInputStream.seek(nextEntryOffset);
                 continue;
