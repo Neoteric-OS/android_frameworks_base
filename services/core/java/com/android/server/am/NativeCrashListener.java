@@ -20,7 +20,6 @@ import android.app.ApplicationErrorReport.CrashInfo;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.StructTimeval;
-import android.system.StructUcred;
 import android.system.UnixSocketAddress;
 import android.util.Slog;
 
@@ -105,9 +104,9 @@ final class NativeCrashListener extends Thread {
 
         if (DEBUG) Slog.i(TAG, "Starting up");
 
-        // The file system entity for this socket is created with 0700 perms, owned
-        // by system:system.  debuggerd runs as root, so is capable of connecting to
-        // it, but 3rd party apps cannot.
+        // The file system entity for this socket is created with 0777 perms, owned
+        // by system:system. selinux restricts things so that only crash_dump can
+        // access it.
         {
             File socketFile = new File(DEBUGGERD_SOCKET_PATH);
             if (socketFile.exists()) {
@@ -121,6 +120,7 @@ final class NativeCrashListener extends Thread {
                     DEBUGGERD_SOCKET_PATH);
             Os.bind(serverFd, sockAddr);
             Os.listen(serverFd, 1);
+            Os.chmod(DEBUGGERD_SOCKET_PATH, 0777);
 
             while (true) {
                 FileDescriptor peerFd = null;
@@ -129,14 +129,9 @@ final class NativeCrashListener extends Thread {
                     peerFd = Os.accept(serverFd, null /* peerAddress */);
                     if (MORE_DEBUG) Slog.v(TAG, "Got debuggerd socket " + peerFd);
                     if (peerFd != null) {
-                        // Only the superuser is allowed to talk to us over this socket
-                        StructUcred credentials =
-                                Os.getsockoptUcred(peerFd, SOL_SOCKET, SO_PEERCRED);
-                        if (credentials.uid == 0) {
-                            // the reporting thread may take responsibility for
-                            // acking the debugger; make sure we play along.
-                            consumeNativeCrashData(peerFd);
-                        }
+                        // the reporting thread may take responsibility for
+                        // acking the debugger; make sure we play along.
+                        consumeNativeCrashData(peerFd);
                     }
                 } catch (Exception e) {
                     Slog.w(TAG, "Error handling connection", e);
