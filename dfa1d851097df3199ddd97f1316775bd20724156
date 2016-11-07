@@ -69,6 +69,30 @@
       "revId": "dfa1d851097df3199ddd97f1316775bd20724156",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bcd134f_73954f1a",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2016-11-07T17:45:38Z",
+      "side": 1,
+      "message": "good catch",
+      "parentUuid": "6b23efec_e7ae02ce",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 55
+      },
+      "revId": "dfa1d851097df3199ddd97f1316775bd20724156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
