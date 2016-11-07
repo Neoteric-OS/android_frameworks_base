@@ -22,6 +22,53 @@
       "revId": "dfa1d851097df3199ddd97f1316775bd20724156",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b55af38_dad121e1",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2016-11-07T12:38:27Z",
+      "side": 1,
+      "message": "you could retrieve these in register_android_os_HwBinder(), take a global ref on the class (MakeGlobalRefOrDie()) and store the class/methods in a global variable - this would save you having to look these up every time.",
+      "parentUuid": "4bf38bab_e8336f22",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 219,
+        "endChar": 96
+      },
+      "revId": "dfa1d851097df3199ddd97f1316775bd20724156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b23efec_e7ae02ce",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2016-11-07T12:38:27Z",
+      "side": 1,
+      "message": "if one of the two isn\u0027t NULL you need to release it before returning.",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 55
+      },
+      "revId": "dfa1d851097df3199ddd97f1316775bd20724156",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
