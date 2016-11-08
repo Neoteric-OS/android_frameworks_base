@@ -1811,27 +1811,49 @@ public class WifiConfiguration implements Parcelable {
         mIpConfiguration.ipAssignment = ipAssignment;
     }
 
-    /** @hide */
-    public IpConfiguration.ProxySettings getProxySettings() {
+    /**
+     * @return returns the {@link ProxySettings} describing the type of proxy set in
+     * this WifiConfiguration.
+     */
+    public ProxySettings getProxySettings() {
         return mIpConfiguration.proxySettings;
     }
 
-    /** @hide */
-    public void setProxySettings(IpConfiguration.ProxySettings proxySettings) {
+    /**
+     * Set the {@link ProxySettings} for this WifiConfiguration
+     * @param proxySettings {@link ProxySettings} describing the type of proxy used
+     * by this WifiConfiguration
+     */
+    public void setProxySettings(ProxySettings proxySettings) {
         mIpConfiguration.proxySettings = proxySettings;
     }
 
-    /** @hide */
+    /**
+     * @return returns the {@link ProxyInfo} containing details for configuring different types
+     * of proxy in this WifiConfiguration. {@link #getProxySettings()} to determine which type of
+     * proxy is actually being used.
+     */
     public ProxyInfo getHttpProxy() {
         return mIpConfiguration.httpProxy;
     }
 
-    /** @hide */
+    /**
+     * Set the {@link ProxyInfo} for this WifiConfiguration
+     * @param httpProxy The {@link ProxyInfo} containing details for configuring different types
+     * of proxy in this WifiConfiguration. {@link #setProxySettings()} to set which type of proxy is
+     * actually used.
+     */
     public void setHttpProxy(ProxyInfo httpProxy) {
         mIpConfiguration.httpProxy = httpProxy;
     }
 
-    /** @hide */
+    /**
+     * Sets both the {@link ProxySettings} and {@link ProxyInfo} for this WifiConfiguration
+     * @param proxySettings {@link ProxySettings} describing the type of proxy used
+     * by this WifiConfiguration
+     * @param httpProxy The {@link ProxyInfo} containing details for configuring different types
+     * of proxy in this WifiConfiguration.
+     */
     public void setProxy(ProxySettings settings, ProxyInfo proxy) {
         mIpConfiguration.proxySettings = settings;
         mIpConfiguration.httpProxy = proxy;
