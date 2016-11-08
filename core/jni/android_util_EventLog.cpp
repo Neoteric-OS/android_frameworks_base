@@ -15,14 +15,13 @@
  */
 
 #include <fcntl.h>
+#include <sys/cdefs.h>
 
 #include <log/log.h>
 
 #include "JNIHelp.h"
 #include "core_jni_helpers.h"
 #include "jni.h"
-
-#define UNUSED  __attribute__((__unused__))
 
 // The size of the tag number comes out of the payload size.
 #define MAX_EVENT_PAYLOAD (LOGGER_ENTRY_MAX_PAYLOAD - sizeof(int32_t))
@@ -50,8 +49,8 @@ static jclass gStringClass;
  * In class android.util.EventLog:
  *  static native int writeEvent(int tag, int value)
  */
-static jint android_util_EventLog_writeEvent_Integer(JNIEnv* env UNUSED,
-                                                     jobject clazz UNUSED,
+static jint android_util_EventLog_writeEvent_Integer(JNIEnv* env __unused,
+                                                     jobject clazz __unused,
                                                      jint tag, jint value)
 {
     return android_btWriteLog(tag, EVENT_TYPE_INT, &value, sizeof(value));
@@ -61,8 +60,8 @@ static jint android_util_EventLog_writeEvent_Integer(JNIEnv* env UNUSED,
  * In class android.util.EventLog:
  *  static native int writeEvent(long tag, long value)
  */
-static jint android_util_EventLog_writeEvent_Long(JNIEnv* env UNUSED,
-                                                  jobject clazz UNUSED,
+static jint android_util_EventLog_writeEvent_Long(JNIEnv* env __unused,
+                                                  jobject clazz __unused,
                                                   jint tag, jlong value)
 {
     return android_btWriteLog(tag, EVENT_TYPE_LONG, &value, sizeof(value));
@@ -72,8 +71,8 @@ static jint android_util_EventLog_writeEvent_Long(JNIEnv* env UNUSED,
  * In class android.util.EventLog:
  *  static native int writeEvent(long tag, float value)
  */
-static jint android_util_EventLog_writeEvent_Float(JNIEnv* env UNUSED,
-                                                  jobject clazz UNUSED,
+static jint android_util_EventLog_writeEvent_Float(JNIEnv* env __unused,
+                                                  jobject clazz __unused,
                                                   jint tag, jfloat value)
 {
     return android_btWriteLog(tag, EVENT_TYPE_FLOAT, &value, sizeof(value));
@@ -84,7 +83,7 @@ static jint android_util_EventLog_writeEvent_Float(JNIEnv* env UNUSED,
  *  static native int writeEvent(int tag, String value)
  */
 static jint android_util_EventLog_writeEvent_String(JNIEnv* env,
-                                                    jobject clazz UNUSED,
+                                                    jobject clazz __unused,
                                                     jint tag, jstring value) {
     uint8_t buf[MAX_EVENT_PAYLOAD];
 
@@ -170,7 +169,8 @@ static jint android_util_EventLog_writeEvent_Array(JNIEnv* env, jobject clazz,
  *
  *  Reads events from the event log
  */
-static void android_util_EventLog_readEvents(JNIEnv* env, jobject clazz UNUSED,
+static void android_util_EventLog_readEvents(JNIEnv* env,
+                                             jobject clazz __unused,
                                              jintArray tags,
                                              jobject out) {
 
