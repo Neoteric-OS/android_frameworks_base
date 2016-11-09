@@ -353,7 +353,7 @@ public class CallerInfo {
         // shortcut and skip the query.
         if (PhoneNumberUtils.isLocalEmergencyNumber(context, number)) {
             return new CallerInfo().markAsEmergency(context);
-        } else if (PhoneNumberUtils.isVoiceMailNumber(subId, number)) {
+        } else if (PhoneNumberUtils.isVoiceMailNumber(context, subId, number)) {
             return new CallerInfo().markAsVoiceMail();
         }
 
