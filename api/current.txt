@@ -31838,6 +31838,7 @@ package android.provider {
     field public static final java.lang.String EXTRA_ERROR = "error";
     field public static final java.lang.String EXTRA_EXCLUDE_SELF = "android.provider.extra.EXCLUDE_SELF";
     field public static final java.lang.String EXTRA_INFO = "info";
+    field public static final java.lang.String EXTRA_INITIAL_URI = "android.provider.extra.INITIAL_URI";
     field public static final java.lang.String EXTRA_LOADING = "loading";
     field public static final java.lang.String EXTRA_ORIENTATION = "android.provider.extra.ORIENTATION";
     field public static final java.lang.String EXTRA_PROMPT = "android.provider.extra.PROMPT";
@@ -37211,6 +37212,7 @@ package android.telephony {
 
   public class TelephonyManager {
     method public boolean canChangeDtmfToneLength();
+    method public android.telephony.TelephonyManager createForPhoneAccountHandle(android.telecom.PhoneAccountHandle);
     method public android.telephony.TelephonyManager createForSubscriptionId(int);
     method public java.util.List<android.telephony.CellInfo> getAllCellInfo();
     method public int getCallState();
@@ -37233,6 +37235,7 @@ package android.telephony {
     method public int getNetworkType();
     method public int getPhoneCount();
     method public int getPhoneType();
+    method public android.telephony.ServiceState getServiceState();
     method public java.lang.String getSimCountryIso();
     method public java.lang.String getSimOperator();
     method public java.lang.String getSimOperatorName();

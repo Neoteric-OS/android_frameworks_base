@@ -17,9 +17,11 @@
 package android.telephony;
 
 import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
+import android.annotation.SystemApi;
 import android.app.ActivityThread;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -28,12 +30,13 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.BatteryStats;
 import android.os.ResultReceiver;
-import android.provider.Settings;
-import android.provider.Settings.SettingNotFoundException;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
+import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
+import android.service.carrier.CarrierIdentifier;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.util.Log;
@@ -253,6 +256,21 @@ public class TelephonyManager {
     public TelephonyManager createForSubscriptionId(int subId) {
       // Don't reuse any TelephonyManager objects.
       return new TelephonyManager(mContext, subId);
+    }
+
+    /**
+     * Create a new TelephonyManager object pinned to the given phone account.
+     *
+     * @return a TelephonyManager that uses the given phone account for all calls, or {@code null} if
+     * the phone account does not correspond to a valid subscription ID.
+     */
+    @Nullable
+    public TelephonyManager createForPhoneAccountHandle(PhoneAccountHandle phoneAccountHandle) {
+        int subId = getSubIdForPhoneAccountHandle(phoneAccountHandle);
+        if (!SubscriptionManager.isValidSubscriptionId(subId)) {
+            return null;
+        }
+        return new TelephonyManager(mContext, subId);
     }
 
     /** {@hide} */
@@ -2783,6 +2801,12 @@ public class TelephonyManager {
         if (mContext == null) return;
         try {
             Boolean notifyNow = (getITelephony() != null);
+            // If the listener has not explicitly set the subId (for example, created with the
+            // default constructor), replace the subId so it will listen to the account the
+            // telephony manager is created with.
+            if (listener.mSubId == null) {
+                listener.mSubId = mSubId;
+            }
             sRegistry.listenForSubscriber(listener.mSubId, getOpPackageName(),
                     listener.callback, events, notifyNow);
         } catch (RemoteException ex) {
@@ -5146,6 +5170,19 @@ public class TelephonyManager {
         return retval;
     }
 
+    private int getSubIdForPhoneAccountHandle(PhoneAccountHandle phoneAccountHandle) {
+        int retval = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+        try {
+            ITelecomService service = getTelecomService();
+            if (service != null) {
+                retval = getSubIdForPhoneAccount(service.getPhoneAccount(phoneAccountHandle));
+            }
+        } catch (RemoteException e) {
+        }
+
+        return retval;
+    }
+
     /**
      * Resets telephony manager settings back to factory defaults.
      *
@@ -5192,6 +5229,22 @@ public class TelephonyManager {
             Log.e(TAG, "Error calling ITelephony#getModemActivityInfo", e);
         }
         result.send(0, null);
+    }
+
+    /**
+     * Returns the service state information. Callers require either READ_PRIVILEGED_PHONE_STATE or
+     * READ_PHONE_STATE to retrieve the information.
+     */
+    public ServiceState getServiceState() {
+        try {
+            ITelephony service = getITelephony();
+            if (service != null) {
+                return service.getServiceStateForSubscriber(mSubId, getOpPackageName());
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling ITelephony#getServiceStateForSubscriber", e);
+        }
+        return null;
     }
 
     /**
