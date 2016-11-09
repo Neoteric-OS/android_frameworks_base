@@ -42,6 +42,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /** {@hide} */
 public class XmlUtils {
@@ -732,12 +733,12 @@ public class XmlUtils {
      * #see #writeMapXml
      */
     @SuppressWarnings("unchecked")
-    public static final HashMap<String, ?> readMapXml(InputStream in)
+    public static final ConcurrentHashMap<String, ?> readMapXml(InputStream in)
     throws XmlPullParserException, java.io.IOException
     {
         XmlPullParser   parser = Xml.newPullParser();
         parser.setInput(in, StandardCharsets.UTF_8.name());
-        return (HashMap<String, ?>) readValueXml(parser, new String[1]);
+        return (ConcurrentHashMap<String, ?>) readValueXml(parser, new String[1]);
     }
 
     /**
