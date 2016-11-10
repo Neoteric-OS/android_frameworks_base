@@ -2718,7 +2718,7 @@ public final class Parcel {
             if (DEBUG_ARRAY_MAP) Log.d(TAG, "  Read #" + (N-1) + " "
                     + (dataPosition()-startPos) + " bytes: key=0x"
                     + Integer.toHexString((key != null ? key.hashCode() : 0)) + " " + key);
-            outVal.append(key, value);
+            outVal.put(key, value);
             N--;
         }
         outVal.validate();
