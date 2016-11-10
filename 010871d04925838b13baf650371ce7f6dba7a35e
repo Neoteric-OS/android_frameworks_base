@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b8e8f82_71686ba4",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2016-11-10T15:47:16Z",
+      "side": 1,
+      "message": "I\u0027m curious, why the change to use an Integer class here rather than the existing int/constant values?",
+      "range": {
+        "startLine": 236,
+        "startChar": 4,
+        "endLine": 236,
+        "endChar": 29
+      },
+      "revId": "010871d04925838b13baf650371ce7f6dba7a35e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b8e8f82_b19a53a7",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2016-11-10T15:47:16Z",
+      "side": 1,
+      "message": "subscription ID associated with the given phone account.",
+      "range": {
+        "startLine": 259,
+        "startChar": 58,
+        "endLine": 259,
+        "endChar": 78
+      },
+      "revId": "010871d04925838b13baf650371ce7f6dba7a35e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b8e8f82_d19fd795",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2016-11-10T15:47:16Z",
+      "side": 1,
+      "message": "Wrap to 100 char.",
+      "range": {
+        "startLine": 261,
+        "startChar": 96,
+        "endLine": 261,
+        "endChar": 101
+      },
+      "revId": "010871d04925838b13baf650371ce7f6dba7a35e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b8e8f82_f1f21bef",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5233,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2016-11-10T15:47:16Z",
+      "side": 1,
+      "message": "Suggest cleaning up the comment a bit:\n\nReturns the current {@link ServiceState} information.\n\u003cp\u003e\nRequires Permission:\n   {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE} or\n   {@link android.Manifest.permission#READ_PRIVILEGED_PHONE_STATE READ_PRIVILEGED_PHONE_STATE}",
+      "range": {
+        "startLine": 5232,
+        "startChar": 7,
+        "endLine": 5233,
+        "endChar": 52
+      },
+      "revId": "010871d04925838b13baf650371ce7f6dba7a35e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b8e8f82_d1f117e9",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5244,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2016-11-10T15:47:16Z",
+      "side": 1,
+      "message": "You should be able to just call the private method that already exists to avoid duplicating the code.\nreturn getServiceStateForSubscriber(mSubId)",
+      "range": {
+        "startLine": 5236,
+        "startChar": 8,
+        "endLine": 5244,
+        "endChar": 20
+      },
+      "revId": "010871d04925838b13baf650371ce7f6dba7a35e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
