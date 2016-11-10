@@ -16,6 +16,24 @@
       "revId": "cc8cd5e176ad9b22b18687224523444bfd6c271a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb669bd0_60d526cc",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2016-11-10T20:42:20Z",
+      "side": 1,
+      "message": "Done for both LTE and GSM.",
+      "parentUuid": "cb669bd0_9a070d8d",
+      "revId": "cc8cd5e176ad9b22b18687224523444bfd6c271a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
