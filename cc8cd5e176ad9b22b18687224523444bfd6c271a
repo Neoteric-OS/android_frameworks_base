@@ -34,6 +34,24 @@
       "revId": "cc8cd5e176ad9b22b18687224523444bfd6c271a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb669bd0_20932ee5",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2016-11-10T20:53:08Z",
+      "side": 1,
+      "message": "I think it is @return instead of @returns?",
+      "parentUuid": "cb669bd0_60d526cc",
+      "revId": "cc8cd5e176ad9b22b18687224523444bfd6c271a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
