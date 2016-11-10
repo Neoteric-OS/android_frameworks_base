@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6beccf3c_1f1943e9",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2198,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2016-11-10T11:45:16Z",
+      "side": 1,
+      "message": "I can see that numberOfComponents \u003c 0 here would lead to the negative array size you mention in line 2215, however I have insufficient information to judge whether this is the right way to fix this. I\u0027m trying to find you the right reviewer; in the meantime, how would you feel about\n\n a) Expand your commit message: Be more specific about which field has an invalid value and point to the EXIF format specification for how that field should be interpreted\n\n b) perhaps expand coverage of ExifInterfaceTest to this case using your \"crafted jpeg file\"?",
+      "revId": "96e18eb8ffbbc7d473d9488aedb7cf895ae5a09f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
