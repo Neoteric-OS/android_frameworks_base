@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb669bd0_9a42adac",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1097644
+      },
+      "writtenOn": "2016-11-10T19:22:35Z",
+      "side": 1,
+      "message": "DEFAULT_SUBSCRIPTION_ID will have ambiguous meaning here. Is it the default of the phone or the default of the telephonyManager?\nINVALID_SUBSCRIPTION_ID will also have some weird effects. What if someone is trying to listen to a invalid subId but we switch it to the subId telephonyManager is on?\nI think we\u0027ll need a more explicit \"this field has not been touched\"",
+      "parentUuid": "6b8e8f82_71686ba4",
+      "range": {
+        "startLine": 236,
+        "startChar": 4,
+        "endLine": 236,
+        "endChar": 29
+      },
+      "revId": "010871d04925838b13baf650371ce7f6dba7a35e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b8e8f82_b19a53a7",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 4
