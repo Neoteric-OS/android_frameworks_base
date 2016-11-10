@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb669bd0_e0e056b9",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2196,
+      "author": {
+        "id": 1018369
+      },
+      "writtenOn": "2016-11-10T20:42:42Z",
+      "side": 1,
+      "message": "|| should go to the next line",
+      "revId": "0e2bb59ea7e470bd4d69d5834a7c0ba4c5b8e7dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb669bd0_a0073e8c",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 1018369
+      },
+      "writtenOn": "2016-11-10T20:42:42Z",
+      "side": 1,
+      "message": "I don\u0027t think this comment is necessary as we already print out the same messages below.",
+      "range": {
+        "startLine": 2199,
+        "startChar": 0,
+        "endLine": 2200,
+        "endChar": 40
+      },
+      "revId": "0e2bb59ea7e470bd4d69d5834a7c0ba4c5b8e7dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
