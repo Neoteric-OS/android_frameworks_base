@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb669bd0_603a86e2",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2016-11-10T21:01:03Z",
+      "side": 1,
+      "message": "remove this space",
+      "range": {
+        "startLine": 209,
+        "startChar": 5,
+        "endLine": 209,
+        "endChar": 6
+      },
+      "revId": "55e4cd44baf1c6598c3b0672c33a19bfbbc0bf15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
