@@ -359,7 +359,7 @@ class AppWindowToken extends WindowToken {
 
             win.destroyOrSaveSurface();
             if (win.mRemoveOnExit) {
-                service.removeWindowInnerLocked(win);
+                service.removeWindowInnerLocked(win, win.mChildWindows.size() > 0);
             }
             final DisplayContent displayContent = win.getDisplayContent();
             if (displayContent != null && !displayList.contains(displayContent)) {

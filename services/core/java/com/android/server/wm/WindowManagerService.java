@@ -2444,6 +2444,10 @@ public class WindowManagerService extends IWindowManager.Stub
     }
 
     void removeWindowInnerLocked(WindowState win) {
+        removeWindowInnerLocked(win, false);
+    }
+
+    void removeWindowInnerLocked(WindowState win, boolean updateFocus) {
         if (win.mRemoved) {
             // Nothing to do.
             if (DEBUG_ADD_REMOVE) Slog.v(TAG_WM,
@@ -2550,6 +2554,9 @@ public class WindowManagerService extends IWindowManager.Stub
                     win.mAppToken.updateReportedVisibilityLocked();
                 }
             }
+        }
+        if (updateFocus) {
+            updateFocusedWindowLocked(UPDATE_FOCUS_NORMAL, false /*updateInputWindows*/);
         }
 
         mInputMonitor.updateInputWindowsLw(true /*force*/);
