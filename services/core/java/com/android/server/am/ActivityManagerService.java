@@ -3696,6 +3696,9 @@ public final class ActivityManagerService extends ActivityManagerNative
                 // Also turn on CheckJNI for debuggable apps. It's quite
                 // awkward to turn on otherwise.
                 debugFlags |= Zygote.DEBUG_ENABLE_CHECKJNI;
+                // Also ensure that all frames are deoptimizable since
+                // otherwise not everything can be debugged.
+                debugFlags |= Zygote.DEBUG_FULLY_DEOPTABLE;
             }
             // Run the app in safe mode if its manifest requests so or the
             // system is booted in safe mode.

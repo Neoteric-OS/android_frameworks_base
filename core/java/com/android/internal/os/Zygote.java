@@ -48,6 +48,8 @@ public final class Zygote {
     public static final int DEBUG_ALWAYS_JIT = 1 << 6;
     /** Make the code debuggable with turning off some optimizations. */
     public static final int DEBUG_NATIVE_DEBUGGABLE = 1 << 7;
+    /** Make the code always deoptimizable by turning off some optimizations. */
+    public static final int DEBUG_FULLY_DEOPTABLE = 1 << 8;
 
     /** No external storage should be mounted. */
     public static final int MOUNT_EXTERNAL_NONE = 0;
