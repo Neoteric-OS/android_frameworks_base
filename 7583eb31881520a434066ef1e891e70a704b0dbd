@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb527fc5_839a7ea7",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2198,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2016-11-11T11:40:18Z",
+      "side": 1,
+      "message": "is the four byte field in the header intended to be an unsigned 32bit value? If so, the correct way to fix this would be to interpret it as an unsigned value, rather than restrict to positive signed 32bit values. E.g.\n\nlong numberOfComponents \u003d dataInputStream.readInt() \u0026 0xffffffffL; // unsigned 32bit int\n\n? But see further considerations below regarding overflow.",
+      "range": {
+        "startLine": 2198,
+        "startChar": 22,
+        "endLine": 2198,
+        "endChar": 45
+      },
+      "revId": "7583eb31881520a434066ef1e891e70a704b0dbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb527fc5_43b56619",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2213,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2016-11-11T11:40:18Z",
+      "side": 1,
+      "message": "bug: This value can be negative even if numberOfComponents is positive (example: numberOfComponents \u003d\u003d 1L \u003c\u003c 30).\n\nFurther, even if byteCount \u003e 0, it could be that the multiplication overflowed to an incorrect positive value.\n\nSo your change doesn\u0027t entirely fix the issue. I think we need to also skip the entry if the multiplication overflows. One solution is to perform a long multiplication and then check whether the long result equals the same value cast to int.",
+      "range": {
+        "startLine": 2213,
+        "startChar": 28,
+        "endLine": 2213,
+        "endChar": 88
+      },
+      "revId": "7583eb31881520a434066ef1e891e70a704b0dbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
