@@ -1473,6 +1473,7 @@ package android {
     field public static final int windowTransitionBackgroundFadeDuration = 16843873; // 0x1010461
     field public static final int windowTranslucentNavigation = 16843760; // 0x10103f0
     field public static final int windowTranslucentStatus = 16843759; // 0x10103ef
+    field public static final int wrapRuntime = 16844072; // 0x1010528
     field public static final int writePermission = 16842760; // 0x1010008
     field public static final int x = 16842924; // 0x10100ac
     field public static final int xlargeScreens = 16843455; // 0x10102bf
@@ -9380,6 +9381,7 @@ package android.content.pm {
     field public static final int FLAG_UPDATED_SYSTEM_APP = 128; // 0x80
     field public static final int FLAG_USES_CLEARTEXT_TRAFFIC = 134217728; // 0x8000000
     field public static final int FLAG_VM_SAFE_MODE = 16384; // 0x4000
+    field public static final int FLAG_WRAP_RUNTIME = 1; // 0x1
     field public java.lang.String backupAgentName;
     field public java.lang.String className;
     field public int compatibleWidthLimitDp;
@@ -9388,6 +9390,7 @@ package android.content.pm {
     field public java.lang.String deviceProtectedDataDir;
     field public boolean enabled;
     field public int flags;
+    field public int flags2;
     field public int largestWidthLimitDp;
     field public java.lang.String manageSpaceActivityName;
     field public int minSdkVersion;

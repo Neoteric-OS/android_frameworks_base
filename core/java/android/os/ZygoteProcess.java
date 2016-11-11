@@ -196,11 +196,12 @@ public class ZygoteProcess {
                                                   String abi,
                                                   String instructionSet,
                                                   String appDataDir,
+                                                  String invokeWith,
                                                   String[] zygoteArgs) {
         try {
             return startViaZygote(processClass, niceName, uid, gid, gids,
                     debugFlags, mountExternal, targetSdkVersion, seInfo,
-                    abi, instructionSet, appDataDir, zygoteArgs);
+                    abi, instructionSet, appDataDir, invokeWith, zygoteArgs);
         } catch (ZygoteStartFailedEx ex) {
             Log.e(LOG_TAG,
                     "Starting VM process through Zygote failed");
@@ -321,6 +322,7 @@ public class ZygoteProcess {
                                                       String abi,
                                                       String instructionSet,
                                                       String appDataDir,
+                                                      String invokeWith,
                                                       String[] extraArgs)
                                                       throws ZygoteStartFailedEx {
         ArrayList<String> argsForZygote = new ArrayList<String>();
@@ -396,6 +398,11 @@ public class ZygoteProcess {
 
         if (appDataDir != null) {
             argsForZygote.add("--app-data-dir=" + appDataDir);
+        }
+
+        if (invokeWith != null) {
+            argsForZygote.add("--invoke-with");
+            argsForZygote.add(invokeWith);
         }
 
         argsForZygote.add(processClass);

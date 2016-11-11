@@ -313,6 +313,10 @@
          the safe mode.  -->
     <attr name="vmSafeMode" format="boolean" />
 
+    <!-- Flag indicating whether the application requests to be executed using a zygote
+         wrapped by the wrap.sh script provided as part of the APK.  -->
+    <attr name="wrapRuntime" format="boolean" />
+
     <!-- <p>Flag indicating whether the application's rendering should be hardware
          accelerated if possible. This flag is turned on by default for applications
          that are targeting {@link android.os.Build.VERSION_CODES#ICE_CREAM_SANDWICH}
@@ -1257,6 +1261,7 @@
         <attr name="enabled" />
         <attr name="debuggable" />
         <attr name="vmSafeMode" />
+        <attr name="wrapRuntime" />
         <attr name="hardwareAccelerated" />
         <!-- Name of activity to be launched for managing the application's space on the device. -->
         <attr name="manageSpaceActivity" />
