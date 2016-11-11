@@ -39,6 +39,29 @@
       "revId": "0e2bb59ea7e470bd4d69d5834a7c0ba4c5b8e7dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b451336_8c942720",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2206,
+      "author": {
+        "id": 1112679
+      },
+      "writtenOn": "2016-11-11T01:48:33Z",
+      "side": 1,
+      "message": "\u0027+\u0027 should go to the next line.",
+      "range": {
+        "startLine": 2206,
+        "startChar": 91,
+        "endLine": 2206,
+        "endChar": 93
+      },
+      "revId": "0e2bb59ea7e470bd4d69d5834a7c0ba4c5b8e7dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
