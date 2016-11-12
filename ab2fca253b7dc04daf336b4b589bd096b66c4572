@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b91cbcd_2fc783fc",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2016-11-12T00:39:59Z",
+      "side": 1,
+      "message": "http://en.cppreference.com/w/cpp/locale/wstring_convert\n\nIs this helpful? (String8(String16() looks pretty awkward to me...)",
+      "range": {
+        "startLine": 270,
+        "startChar": 27,
+        "endLine": 270,
+        "endChar": 43
+      },
+      "revId": "ab2fca253b7dc04daf336b4b589bd096b66c4572",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
