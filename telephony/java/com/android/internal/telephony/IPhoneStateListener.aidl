@@ -24,6 +24,7 @@ import android.telephony.DataConnectionRealTimeInfo;
 import android.telephony.PreciseCallState;
 import android.telephony.PreciseDataConnectionState;
 import android.telephony.VoLteServiceState;
+import android.telephony.SimActivationState;
 
 oneway interface IPhoneStateListener {
     void onServiceStateChanged(in ServiceState serviceState);
@@ -43,6 +44,7 @@ oneway interface IPhoneStateListener {
     void onPreciseDataConnectionStateChanged(in PreciseDataConnectionState dataConnectionState);
     void onDataConnectionRealTimeInfoChanged(in DataConnectionRealTimeInfo dcRtInfo);
     void onVoLteServiceStateChanged(in VoLteServiceState lteState);
+    void onSimActivationStateChanged(in SimActivationState activationState);
     void onOemHookRawEvent(in byte[] rawData);
     void onCarrierNetworkChange(in boolean active);
 }

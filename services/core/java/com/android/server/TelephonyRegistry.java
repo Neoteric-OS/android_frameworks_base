@@ -16,7 +16,6 @@
 
 package com.android.server;
 
-import android.Manifest;
 import android.app.ActivityManager;
 import android.app.AppOpsManager;
 import android.content.BroadcastReceiver;
@@ -35,6 +34,7 @@ import android.os.RemoteException;
 import android.os.UserHandle;
 import android.telephony.CellLocation;
 import android.telephony.Rlog;
+import android.telephony.SimActivationState;
 import android.telephony.TelephonyManager;
 import android.telephony.SubscriptionManager;
 import android.telephony.PhoneStateListener;
@@ -141,6 +141,8 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
     private String[] mCallIncomingNumber;
 
     private ServiceState[] mServiceState;
+
+    private SimActivationState[] mSimActivationState;
 
     private SignalStrength[] mSignalStrength;
 
@@ -301,6 +303,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
         mDataConnectionNetworkType = new int[numPhones];
         mCallIncomingNumber = new String[numPhones];
         mServiceState = new ServiceState[numPhones];
+        mSimActivationState = new SimActivationState[numPhones];
         mSignalStrength = new SignalStrength[numPhones];
         mMessageWaiting = new boolean[numPhones];
         mDataConnectionPossible = new boolean[numPhones];
@@ -317,6 +320,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
             mDataConnectionState[i] = TelephonyManager.DATA_UNKNOWN;
             mCallIncomingNumber[i] =  "";
             mServiceState[i] =  new ServiceState();
+            mSimActivationState[i] = new SimActivationState();
             mSignalStrength[i] =  new SignalStrength();
             mMessageWaiting[i] =  false;
             mCallForwarding[i] =  false;
@@ -644,6 +648,13 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                             remove(r.binder);
                         }
                     }
+                    if ((events & PhoneStateListener.LISTEN_SIM_ACTIVATION_STATE) !=0) {
+                        try {
+                            r.callback.onSimActivationStateChanged(mSimActivationState[phoneId]);
+                        } catch (RemoteException ex) {
+                            remove(r.binder);
+                        }
+                    }
                 }
             }
         } else {
@@ -793,6 +804,47 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
             handleRemoveListLocked();
         }
         broadcastServiceStateChanged(state, phoneId, subId);
+    }
+
+    public void notifySimActivationStateChangedForPhoneId(int phoneId, int subId,
+                                                SimActivationState activationState) {
+        if (!checkNotifyPermission("notifySimActivationState()")){
+            return;
+        }
+        if (VDBG) {
+            log("notifySimActivationStateForPhoneId: subId=" + subId + " phoneId=" + phoneId
+                    + " state=" + activationState);
+        }
+        synchronized (mRecords) {
+            if (validatePhoneId(phoneId)) {
+                mSimActivationState[phoneId] = activationState;
+                for (Record r : mRecords) {
+                    if (VDBG) {
+                        log("notifySimActivationStateForPhoneId: r=" + r + " subId=" + subId
+                                + " phoneId=" + phoneId + " state=" + activationState);
+                    }
+                    if (r.matchPhoneStateListenerEvent(
+                            PhoneStateListener.LISTEN_SIM_ACTIVATION_STATE) &&
+                            idMatch(r.subId, subId, phoneId)) {
+                        try {
+                            if (DBG) {
+                                log("notifySimActivationStateForPhoneId: callback.onSASC r=" + r
+                                        + " subId=" + subId + " phoneId=" + phoneId
+                                        + " state=" + activationState);
+                            }
+                            // TODO: a copy reference ?
+                            r.callback.onSimActivationStateChanged(
+                                    new SimActivationState(activationState));
+                        } catch (RemoteException ex) {
+                            mRemoveList.add(r.binder);
+                        }
+                    }
+                }
+            } else {
+                log("notifySimActivationStateForPhoneId: INVALID phoneId=" + phoneId);
+            }
+            handleRemoveListLocked();
+        }
     }
 
     public void notifySignalStrengthForPhoneId(int phoneId, int subId,
@@ -1324,6 +1376,7 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
                 pw.println("  mCallState=" + mCallState[i]);
                 pw.println("  mCallIncomingNumber=" + mCallIncomingNumber[i]);
                 pw.println("  mServiceState=" + mServiceState[i]);
+                pw.println("  mSimActivationState= " + mSimActivationState[i]);
                 pw.println("  mSignalStrength=" + mSignalStrength[i]);
                 pw.println("  mMessageWaiting=" + mMessageWaiting[i]);
                 pw.println("  mCallForwarding=" + mCallForwarding[i]);

@@ -36990,6 +36990,7 @@ package android.telephony {
     method public void onServiceStateChanged(android.telephony.ServiceState);
     method public deprecated void onSignalStrengthChanged(int);
     method public void onSignalStrengthsChanged(android.telephony.SignalStrength);
+    method public void onSimActivationStateChanged(android.telephony.SimActivationState);
     field public static final int LISTEN_CALL_FORWARDING_INDICATOR = 8; // 0x8
     field public static final int LISTEN_CALL_STATE = 32; // 0x20
     field public static final int LISTEN_CELL_INFO = 1024; // 0x400
@@ -37001,6 +37002,7 @@ package android.telephony {
     field public static final int LISTEN_SERVICE_STATE = 1; // 0x1
     field public static final deprecated int LISTEN_SIGNAL_STRENGTH = 2; // 0x2
     field public static final int LISTEN_SIGNAL_STRENGTHS = 256; // 0x100
+    field public static final int LISTEN_SIM_ACTIVATION_STATE = 131072; // 0x20000
   }
 
   public class ServiceState implements android.os.Parcelable {
@@ -37041,6 +37043,25 @@ package android.telephony {
     method public int getLevel();
     method public boolean isGsm();
     method public void writeToParcel(android.os.Parcel, int);
+  }
+
+  public class SimActivationState implements android.os.Parcelable {
+    ctor public SimActivationState(android.telephony.SimActivationState);
+    ctor public SimActivationState();
+    ctor public SimActivationState(android.os.Parcel);
+    method protected void copyFrom(android.telephony.SimActivationState);
+    method public int describeContents();
+    method public int getDataActivationState();
+    method public java.lang.String getDataActivationStateStr();
+    method public int getVoiceActivationState();
+    method public java.lang.String getVoiceActivationStateStr();
+    method public static boolean isValidActivationState(int, boolean);
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.telephony.SimActivationState> CREATOR;
+    field public static final int STATE_ACTIVATED = 1; // 0x1
+    field public static final int STATE_DEACTIVATED = 2; // 0x2
+    field public static final int STATE_RESTRICTED = 3; // 0x3
+    field public static final int STATE_UNKNOWN = 0; // 0x0
   }
 
   public final class SmsManager {

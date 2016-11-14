@@ -2461,6 +2461,59 @@ public class TelephonyManager {
     }
 
     /**
+     * Sets the voice activation state for the given subscriber.
+     *
+     * <p>Requires Permission:
+     *   {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE}
+     * Or the calling app has carrier privileges. @see #hasCarrierPrivileges
+     *
+     * @param subId The subscription id.
+     * @param activationState The voice activation state of the given subscriber.
+     * @see SimActivationState#STATE_ACTIVATED;
+     * @see SimActivationState#STATE_DEACTIVATED;
+     *
+     * @return true if successfully set, false otherwise.
+     * @hide
+     */
+    public boolean setVoiceActivationState(int subId, int activationState) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony != null)
+                return telephony.setVoiceActivationState(subId, activationState);
+        } catch (RemoteException ex) {
+        } catch (NullPointerException ex) {
+        }
+        return false;
+    }
+
+    /**
+     * Sets the data activation state for the given subscriber.
+     *
+     * <p>Requires Permission:
+     *   {@link android.Manifest.permission#MODIFY_PHONE_STATE}
+     * Or the calling app has carrier privileges. @see #hasCarrierPrivileges
+     *
+     * @param subId The subscription id.
+     * @param activationState The data activation state of the given subscriber.
+     * @see SimActivationState#STATE_ACTIVATED
+     * @see SimActivationState#STATE_DEACTIVATED
+     * @see SimActivationState#STATE_RESTRICTED
+     *
+     * @return true if successfully set, false otherwise.
+     * @hide
+     */
+    public boolean setDataActivationState(int subId, int activationState) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony != null)
+                return telephony.setDataActivationState(subId, activationState);
+        } catch (RemoteException ex) {
+        } catch (NullPointerException ex) {
+        }
+        return false;
+    }
+
+    /**
      * Returns the voice mail count. Return 0 if unavailable, -1 if there are unread voice messages
      * but the count is unknown.
      * <p>

@@ -20,17 +20,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.telephony.SubscriptionManager;
-import android.telephony.CellLocation;
-import android.telephony.CellInfo;
-import android.telephony.VoLteServiceState;
-import android.telephony.Rlog;
-import android.telephony.ServiceState;
-import android.telephony.SignalStrength;
-import android.telephony.PreciseCallState;
-import android.telephony.PreciseDataConnectionState;
 
 import com.android.internal.telephony.IPhoneStateListener;
+
 import java.util.List;
 import java.lang.ref.WeakReference;
 
@@ -228,6 +220,14 @@ public class PhoneStateListener {
      */
     public static final int LISTEN_CARRIER_NETWORK_CHANGE                   = 0x00010000;
 
+    /**
+     *  Listen for changes to the sim activation state (cellular).
+     *
+     *  @see #onSimActivationStateChanged
+     *  @see SimActivationState
+     */
+    public static final int LISTEN_SIM_ACTIVATION_STATE                      = 0x00020000;
+
      /*
      * Subscription used to listen to the phone state changes
      * @hide
@@ -327,6 +327,8 @@ public class PhoneStateListener {
                     case LISTEN_VOLTE_STATE:
                         PhoneStateListener.this.onVoLteServiceStateChanged((VoLteServiceState)msg.obj);
                         break;
+                    case LISTEN_SIM_ACTIVATION_STATE:
+                        PhoneStateListener.this.onSimActivationStateChanged((SimActivationState)msg.obj);
                     case LISTEN_OEM_HOOK_RAW_EVENT:
                         PhoneStateListener.this.onOemHookRawEvent((byte[])msg.obj);
                         break;
@@ -505,6 +507,10 @@ public class PhoneStateListener {
     public void onVoLteServiceStateChanged(VoLteServiceState stateInfo) {
     }
 
+    public void onSimActivationStateChanged(SimActivationState state) {
+
+    }
+
     /**
      * Callback invoked when OEM hook raw event is received. Requires
      * the READ_PRIVILEGED_PHONE_STATE permission.
@@ -617,6 +623,10 @@ public class PhoneStateListener {
 
         public void onVoLteServiceStateChanged(VoLteServiceState lteState) {
             send(LISTEN_VOLTE_STATE, 0, 0, lteState);
+        }
+
+        public void onSimActivationStateChanged(SimActivationState activationState) {
+            send(LISTEN_SIM_ACTIVATION_STATE, 0, 0, activationState);
         }
 
         public void onOemHookRawEvent(byte[] rawData) {

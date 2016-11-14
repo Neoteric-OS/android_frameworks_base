@@ -438,6 +438,18 @@ interface ITelephony {
      */
     boolean setVoiceMailNumber(int subId, String alphaTag, String number);
 
+     /**
+      * Sets the voice activation state for a particular subscriber.
+      * Returns true if set successfully, false otherwise
+      */
+    boolean setVoiceActivationState(int subId, int activationState);
+
+    /**
+      * Sets the data activation state for a particular subscriber.
+      * Returns true if set successfully, false otherwise
+      */
+    boolean setDataActivationState(int subId, int activationState);
+
     /**
       * Returns the unread count of voicemails
       */
