@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb669bd0_e823c61c",
+        "filename": "wifi/java/android/net/wifi/EAP.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-14T17:45:47Z",
+      "side": 1,
+      "message": "|EapConstants|? The class doesn\u0027t really do any EAP protocol related stuff.",
+      "range": {
+        "startLine": 24,
+        "startChar": 19,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "bf196cf0bf3215d720cce0743fdc0fd3dbf0cdfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
