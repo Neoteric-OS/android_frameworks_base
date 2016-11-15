@@ -22,6 +22,30 @@
       "revId": "90bc8e30ad3b0c211ef6e4a2e54cfadd28df1b2d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7037600d_0c6cf41e",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2016-11-15T17:49:10Z",
+      "side": 1,
+      "message": "RRC is the Radio Resource Controller. Thus, established connections to the network (from a radio perspective) are referred to as RRC connections (in UMTS and LTE). Sadly, in pure GSM-land the functionally equivalent entity is just \"RR\" rather than \"RRC\". So, it\u0027s technically correct #thebestkindofcorrect.",
+      "parentUuid": "7037600d_7ba618f8",
+      "range": {
+        "startLine": 210,
+        "startChar": 61,
+        "endLine": 210,
+        "endChar": 64
+      },
+      "revId": "90bc8e30ad3b0c211ef6e4a2e54cfadd28df1b2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
