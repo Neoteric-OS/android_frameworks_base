@@ -22,6 +22,30 @@
       "revId": "bf196cf0bf3215d720cce0743fdc0fd3dbf0cdfc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7037600d_d1a2a37c",
+        "filename": "wifi/java/android/net/wifi/EAP.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-15T16:50:58Z",
+      "side": 1,
+      "message": "Will update.",
+      "parentUuid": "cb669bd0_e823c61c",
+      "range": {
+        "startLine": 24,
+        "startChar": 19,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "bf196cf0bf3215d720cce0743fdc0fd3dbf0cdfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
