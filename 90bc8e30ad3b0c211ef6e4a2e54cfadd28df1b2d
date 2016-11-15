@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7037600d_7ba618f8",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2016-11-15T14:53:52Z",
+      "side": 1,
+      "message": "What is RRC?  Notice GSM is RR?",
+      "range": {
+        "startLine": 210,
+        "startChar": 61,
+        "endLine": 210,
+        "endChar": 64
+      },
+      "revId": "90bc8e30ad3b0c211ef6e4a2e54cfadd28df1b2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
