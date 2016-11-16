@@ -16,6 +16,7 @@
 
 package android.net.wifi.hotspot2;
 
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.hotspot2.pps.Credential;
 import android.net.wifi.hotspot2.pps.HomeSP;
 import android.os.Parcelable;
@@ -35,6 +36,27 @@ import android.os.Parcel;
 public final class PasspointConfiguration implements Parcelable {
     public HomeSP homeSp = null;
     public Credential credential = null;
+
+    /**
+     * Constructor for creating PasspointConfiguration with default values.
+     */
+    public PasspointConfiguration() {}
+
+    /**
+     * Copy constructor.
+     *
+     * @param source The source to copy from
+     */
+    public PasspointConfiguration(PasspointConfiguration source) {
+        if (source != null) {
+            if (source.homeSp != null) {
+                homeSp = new HomeSP(source.homeSp);
+            }
+            if (source.credential != null) {
+                credential = new Credential(source.credential);
+            }
+        }
+    }
 
     @Override
     public int describeContents() {
