@@ -116,6 +116,30 @@
       "revId": "7583eb31881520a434066ef1e891e70a704b0dbd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5055fc37_972b0492",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2213,
+      "author": {
+        "id": 1128478
+      },
+      "writtenOn": "2016-11-17T03:11:02Z",
+      "side": 1,
+      "message": "What if we make sure that the long multiplication result is not larger than Integer.MAX_VALUE",
+      "parentUuid": "eb527fc5_43b56619",
+      "range": {
+        "startLine": 2213,
+        "startChar": 28,
+        "endLine": 2213,
+        "endChar": 88
+      },
+      "revId": "7583eb31881520a434066ef1e891e70a704b0dbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
