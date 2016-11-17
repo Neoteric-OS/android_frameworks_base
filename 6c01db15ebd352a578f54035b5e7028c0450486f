@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b028f8c6_2aac5f86",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2196,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2016-11-17T11:43:20Z",
+      "side": 1,
+      "message": "unrelated to this CL, so directing this question to Sungsoo: Is \"dataFormat \u003c\u003d 0\" correct or should this be \"dataFormat \u003c\u003d 0\"? Why is the value 0 not valid for dataFormat? (I note that IFD_FORMAT_BYTES_PER_FORMAT[0] is 0 so maybe that is indeed an invalid format).",
+      "range": {
+        "startLine": 2196,
+        "startChar": 31,
+        "endLine": 2196,
+        "endChar": 46
+      },
+      "revId": "6c01db15ebd352a578f54035b5e7028c0450486f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b028f8c6_cabf83ad",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2209,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2016-11-17T11:43:20Z",
+      "side": 1,
+      "message": "The duplication of all of these checks (such as \"dataFormat \u003c\u003d 0 || dataFormat \u003e\u003d IFD_FORMAT_BYTES_PER_FORMAT.length)\") is prone to bugs introduced in future refactorings. The same is true for your duplication of the skipping logic between lines 2207-2208 and 2217-2218.\n\nYou can deduplicate this logic and make it a lot less prone to bugs introduced in future by rewriting as:\n\nlong byteCount;\nboolean valid \u003d false;\nif (tag \u003d\u003d null) {\n   Log.w(TAG, \"Skip the tag entry since tag number is not defined: \" + tagNumber);\n}  else if (dataFormat \u003c\u003d 0 || dataFormat \u003e\u003d ...) {\n  Log.w(TAG, \"Skip the tag entry since data format is invalid: \" + dataFormat);\n} else {\n  byteCount \u003d (long) numberOfComponents * IFD_FORMAT_BYTES_PER_FORMAT[dataFormat];\n  if (byteCount \u003c 0 || byteCount \u003e Integer.MAX_VALUE) {\n    Log.w(TAG, \"Skip the tag entry since number of components is invalid: \" + numberOfComponents);\n  } else {\n    valid \u003d true;\n  }\n}\n\nif (!valid) {\n  dataInputStream.seek(nextEntryOffset);\n  continue;\n}\n\nIn this draft I have lumped the numberOfComponents \u003c 0 check into the byteCount check by checking for byteCount \u003c 0, which feels more natural to me.\n\nOne could get rid of the \"boolean valid\" by boxing the byteCount into a nullable Long, but that\u0027s a bit icky too.",
+      "range": {
+        "startLine": 2196,
+        "startChar": 12,
+        "endLine": 2209,
+        "endChar": 13
+      },
+      "revId": "6c01db15ebd352a578f54035b5e7028c0450486f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
