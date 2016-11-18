@@ -1,0 +1,10 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+1: Xiaolin Gan <ganxiaolin@xiaomi.com>
+Code-Review+2: Adam Lesinski <adamlesinski@google.com>
+Verified+1: Adam Lesinski <adamlesinski@google.com>
+Autosubmit+1: Adam Lesinski <adamlesinski@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Fri, 18 Nov 2016 22:30:41 +0000
+Reviewed-on: https://android-review.googlesource.com/304716
+Project: platform/frameworks/base
+Branch: refs/heads/master
