@@ -17,6 +17,7 @@
 package com.android.server.devicepolicy;
 
 import com.android.internal.widget.LockPatternUtils;
+import com.android.server.testing.MockUtils;
 
 import android.app.IActivityManager;
 import android.app.NotificationManager;
