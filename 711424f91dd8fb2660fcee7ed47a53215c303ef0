@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30040898_acce676f",
+        "filename": "core/jni/android_util_EventLog.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-11-18T21:31:52Z",
+      "side": 1,
+      "message": "this should have been removed earlier ... and without this here, we can delete log/log.h from the headers :-)",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 70
+      },
+      "revId": "711424f91dd8fb2660fcee7ed47a53215c303ef0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
