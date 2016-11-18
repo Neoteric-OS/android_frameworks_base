@@ -59,5 +59,9 @@ interface IBluetoothHeadset {
                       String number, int type);
     boolean enableWBS();
     boolean disableWBS();
+    boolean enableInbandRinging(in BluetoothDevice device);
+    boolean disableInbandRinging(in BluetoothDevice device);
+    boolean isInbandRingingEnabled(in BluetoothDevice device);
+    BluetoothDevice getCurrentDevice();
     void bindResponse(int ind_id, boolean ind_status);
 }
