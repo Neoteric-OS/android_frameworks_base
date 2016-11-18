@@ -17,7 +17,7 @@
 #include <fcntl.h>
 #include <sys/cdefs.h>
 
-#include <log/log.h>
+#include <log/log_event_list.h>
 
 #include "JNIHelp.h"
 #include "core_jni_helpers.h"
@@ -50,7 +50,7 @@ static jint android_util_EventLog_writeEvent_Integer(JNIEnv* env __unused,
                                                      jobject clazz __unused,
                                                      jint tag, jint value)
 {
-    android_log_event_context ctx(tag);
+    android_log_event_list ctx(tag);
     ctx << (int32_t)value;
     return ctx.write();
 }
@@ -63,7 +63,7 @@ static jint android_util_EventLog_writeEvent_Long(JNIEnv* env __unused,
                                                   jobject clazz __unused,
                                                   jint tag, jlong value)
 {
-    android_log_event_context ctx(tag);
+    android_log_event_list ctx(tag);
     ctx << (int64_t)value;
     return ctx.write();
 }
@@ -76,7 +76,7 @@ static jint android_util_EventLog_writeEvent_Float(JNIEnv* env __unused,
                                                   jobject clazz __unused,
                                                   jint tag, jfloat value)
 {
-    android_log_event_context ctx(tag);
+    android_log_event_list ctx(tag);
     ctx << (float)value;
     return ctx.write();
 }
@@ -88,7 +88,7 @@ static jint android_util_EventLog_writeEvent_Float(JNIEnv* env __unused,
 static jint android_util_EventLog_writeEvent_String(JNIEnv* env,
                                                     jobject clazz __unused,
                                                     jint tag, jstring value) {
-    android_log_event_context ctx(tag);
+    android_log_event_list ctx(tag);
     // Don't throw NPE -- I feel like it's sort of mean for a logging function
     // to be all crashy if you pass in NULL -- but make the NULL value explicit.
     if (value != NULL) {
@@ -107,7 +107,7 @@ static jint android_util_EventLog_writeEvent_String(JNIEnv* env,
  */
 static jint android_util_EventLog_writeEvent_Array(JNIEnv* env, jobject clazz,
                                                    jint tag, jobjectArray value) {
-    android_log_event_context ctx(tag);
+    android_log_event_list ctx(tag);
 
     if (value == NULL) {
         ctx << "[NULL]";
