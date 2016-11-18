@@ -843,6 +843,40 @@ public class CarrierConfigManager {
             "signal_pco_receiver_string_array";
 
     /**
+     * A list of interesting signals which could wake up a carrier app.
+     * Note those intents should be declared in the Manifest file.
+     * @see com.android.internal.telephony.TelephonyIntents
+     * Example:
+     * <item>com.google.android.carrierAPK/.CarrierSignalReceiverA:
+     * android.intent.action.CARRIER_SIGNAL_REDIRECTED,
+     * android.intent.action.CARRIER_SIGNAL_PCO_VALUE
+     * </item>
+     * <item>com.google.android.carrierAPK/.CarrierSignalReceiverB:
+     * android.intent.action.CARRIER_SIGNAL_PCO_VALUE
+     * </item>
+     * @hide
+     */
+    public static final String KEY_CARRIER_APP_WAKE_SIGNAL_CONFIG_STRING_ARRAY =
+            "carrier_app_wake_signal_config";
+
+    /**
+     * A list of interesting signals for a carrier app during run-time.
+     * Note those intents are targeting on run-time broadcast receivers and won't wake up the app.
+     * @see com.android.internal.telephony.TelephonyIntents
+     * Example:
+     * <item>com.google.android.carrierAPK/.CarrierSignalReceiverA:
+     * android.intent.action.CARRIER_SIGNAL_REQUEST_NETWORK_FAILED,
+     * android.intent.action.CARRIER_SIGNAL_PCO_VALUE
+     * </item>
+     * <item>com.google.android.carrierAPK/.CarrierSignalReceiverB:
+     * android.intent.action.CARRIER_SIGNAL_REQUEST_NETWORK_FAILED
+     * </item>
+     * @hide
+     */
+    public static final String KEY_CARRIER_APP_NO_WAKE_SIGNAL_CONFIG_STRING_ARRAY =
+            "carrier_app_no_wake_signal_config";
+
+    /**
      * Determines whether the carrier supports making non-emergency phone calls while the phone is
      * in emergency callback mode.  Default value is {@code true}, meaning that non-emergency calls
      * are allowed in emergency callback mode.
@@ -1220,6 +1254,8 @@ public class CarrierConfigManager {
         sDefaults.putStringArray(KEY_SIGNAL_DCFAILURE_RECEIVER_STRING_ARRAY, null);
         sDefaults.putStringArray(KEY_SIGNAL_PCO_RECEIVER_STRING_ARRAY, null);
         sDefaults.putString(KEY_CARRIER_SETUP_APP_STRING, "");
+        sDefaults.putStringArray(KEY_CARRIER_APP_WAKE_SIGNAL_CONFIG_STRING_ARRAY, null);
+        sDefaults.putStringArray(KEY_CARRIER_APP_NO_WAKE_SIGNAL_CONFIG_STRING_ARRAY, null);
 
         // Rat families: {GPRS, EDGE}, {EVDO, EVDO_A, EVDO_B}, {UMTS, HSPA, HSDPA, HSUPA, HSPAP},
         // {LTE, LTE_CA}
