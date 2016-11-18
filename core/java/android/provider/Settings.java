@@ -8290,6 +8290,10 @@ public final class Settings {
         /** {@hide} */
         public static final String
                 BLUETOOTH_PAN_PRIORITY_PREFIX = "bluetooth_pan_priority_";
+        /** {@hide} */
+        public static final String
+                BLUETOOTH_HEADSET_INBAND_RINGING_ENABLE_PREFIX =
+                "bluetooth_headset_inband_ringing_enable_";
 
         /**
          * Device Idle (Doze) specific settings.
@@ -8504,6 +8508,14 @@ public final class Settings {
          */
         public static final String getBluetoothSapPriorityKey(String address) {
             return BLUETOOTH_SAP_PRIORITY_PREFIX + address.toUpperCase(Locale.ROOT);
+        }
+
+        /**
+         * Get the key that retrieves a bluetooth headset's in-band ringing enable flag
+         * @hide
+         */
+        public static final String getBluetoothHeadsetInbandRingingEnableKey(String address) {
+            return BLUETOOTH_HEADSET_INBAND_RINGING_ENABLE_PREFIX + address.toUpperCase(Locale.ROOT);
         }
 
         /**
