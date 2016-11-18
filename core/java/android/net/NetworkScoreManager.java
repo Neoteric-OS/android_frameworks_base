@@ -269,4 +269,22 @@ public class NetworkScoreManager {
             throw e.rethrowFromSystemServer();
         }
     }
+
+    /**
+     * Unregister a network score cache.
+     *
+     * @param networkType the type of network this cache can handle. See {@link NetworkKey#type}.
+     * @param scoreCache implementation of {@link INetworkScoreCache} to store the scores.
+     * @throws SecurityException if the caller does not hold the
+     *         {@link android.Manifest.permission#BROADCAST_NETWORK_PRIVILEGED} permission.
+     * @throws IllegalArgumentException if a score cache is already registered for this type.
+     * @hide
+     */
+    public void unregisterNetworkScoreCache(int networkType, INetworkScoreCache scoreCache) {
+        try {
+            mService.unregisterNetworkScoreCache(networkType, scoreCache);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 }
