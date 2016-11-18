@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "10d38449_b58b6001",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2196,
+      "author": {
+        "id": 1112679
+      },
+      "writtenOn": "2016-11-18T05:08:20Z",
+      "side": 1,
+      "message": "Yes, zero is not defined for the ifd data format. \nYou can find the IFD data format types here:\nhttp://gvsoft.no-ip.org/exif/exif-explanation.html#IFD",
+      "parentUuid": "5055fc37_97b66422",
+      "range": {
+        "startLine": 2196,
+        "startChar": 31,
+        "endLine": 2196,
+        "endChar": 46
+      },
+      "revId": "6c01db15ebd352a578f54035b5e7028c0450486f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b028f8c6_cabf83ad",
         "filename": "media/java/android/media/ExifInterface.java",
         "patchSetId": 7
