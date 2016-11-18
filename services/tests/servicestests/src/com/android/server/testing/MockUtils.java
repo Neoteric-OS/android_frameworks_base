@@ -13,18 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.server.devicepolicy;
-
-import com.google.common.base.Objects;
-
-import com.android.internal.util.Preconditions;
-import com.android.server.pm.UserRestrictionsUtils;
+package com.android.server.testing;
 
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.UserHandle;
 
+import com.android.internal.util.Preconditions;
+import com.android.server.devicepolicy.DpmTestUtils;
+import com.android.server.pm.UserRestrictionsUtils;
+import com.google.common.base.Objects;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -77,6 +76,22 @@ public class MockUtils {
             @Override
             public void describeTo(Description description) {
                 description.appendText("Intent: action=\"" + action + "\"");
+            }
+        };
+        return Mockito.argThat(m);
+    }
+
+    public static Intent checkIntent(final Intent intent) {
+        final Matcher<Intent> m = new BaseMatcher<Intent>() {
+            @Override
+            public boolean matches(Object item) {
+                if (item == null) return false;
+                return intent.filterEquals((Intent) item);
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText(intent.toString());
             }
         };
         return Mockito.argThat(m);

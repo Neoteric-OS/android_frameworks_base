@@ -25,6 +25,7 @@ import android.content.ComponentName;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.wifi.WifiInfo;
 import android.os.Build.VERSION_CODES;
 import android.os.Build;
@@ -36,11 +37,11 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.test.MoreAsserts;
 import android.test.suitebuilder.annotation.SmallTest;
-import android.util.ArraySet;
 import android.util.Pair;
 
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
+import com.android.server.testing.MockUtils;
 
 import org.mockito.ArgumentCaptor;
 import org.mockito.invocation.InvocationOnMock;
@@ -51,7 +52,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
