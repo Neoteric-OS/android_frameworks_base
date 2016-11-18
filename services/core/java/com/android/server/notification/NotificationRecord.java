@@ -146,13 +146,15 @@ public final class NotificationRecord {
                 || (n.defaults & Notification.DEFAULT_VIBRATE) != 0
                 || n.sound != null
                 || n.vibrate != null;
+        boolean isLight = (n.defaults & Notification.DEFAULT_LIGHTS) != 0
+            || n.ledARGB != null;
         stats.isNoisy = isNoisy;
 
         if (!isNoisy && importance > IMPORTANCE_LOW) {
             importance = IMPORTANCE_LOW;
         }
 
-        if (isNoisy) {
+        if (isNoisy || isLight) {
             if (importance < IMPORTANCE_DEFAULT) {
                 importance = IMPORTANCE_DEFAULT;
             }
