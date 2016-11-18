@@ -1010,6 +1010,105 @@ public final class BluetoothHeadset implements BluetoothProfile {
     }
 
     /**
+     * enable in-band ringing.
+     *
+     * @return true if successful
+     *         false if there was some error such as
+     *               there is no connected headset
+     * @hide
+     */
+    public boolean enableInbandRinging(BluetoothDevice device) {
+        if (mService != null && isEnabled()) {
+            try {
+                return mService.enableInbandRinging(device);
+            } catch (RemoteException e) {
+                Log.e(TAG, e.toString());
+            }
+        } else {
+            Log.w(TAG, "Proxy not attached to service");
+            if (DBG) Log.d(TAG, Log.getStackTraceString(new Throwable()));
+        }
+        return false;
+    }
+
+    /**
+     * disable in-band ringing.
+     *
+     * @return true if successful
+     *         false if there was some error such as
+     *               there is no connected headset
+     * @hide
+     */
+    public boolean disableInbandRinging(BluetoothDevice device) {
+        if (mService != null && isEnabled()) {
+            try {
+                return mService.disableInbandRinging(device);
+            } catch (RemoteException e) {
+                Log.e(TAG, e.toString());
+            }
+        } else {
+            Log.w(TAG, "Proxy not attached to service");
+            if (DBG) Log.d(TAG, Log.getStackTraceString(new Throwable()));
+        }
+        return false;
+    }
+
+    /**
+     * check if in-band ringing is enabled for this headset.
+     *
+     * @return true if in-band ringing is enabled
+     *         false if in-band ringing is disabled or headset
+     *         is not connected
+     * @hide
+     */
+    public boolean isInbandRingingEnabled(BluetoothDevice device) {
+        if (mService != null && isEnabled()) {
+            try {
+                return mService.isInbandRingingEnabled(device);
+            } catch (RemoteException e) {
+                Log.e(TAG, e.toString());
+            }
+        } else {
+            Log.w(TAG, "Proxy not attached to service");
+            if (DBG) Log.d(TAG, Log.getStackTraceString(new Throwable()));
+        }
+        return false;
+    }
+
+    /**
+     * Get current active HFP device
+     *
+     * @return current active HFP device, null if no HFP device is connected
+     *
+     * @hide
+     */
+    public BluetoothDevice getCurrentDevice() {
+        if (mService != null && isEnabled()) {
+            try {
+                return mService.getCurrentDevice();
+            } catch (RemoteException e) {
+                Log.e(TAG, e.toString());
+            }
+        } else {
+            Log.w(TAG, "Proxy not attached to service");
+            if (DBG) Log.d(TAG, Log.getStackTraceString(new Throwable()));
+        }
+        return null;
+    }
+
+    /**
+     * check if in-band ringing is supported for this platform.
+     *
+     * @return true if in-band ringing is supported
+     *         false if in-band ringing is not supported
+     * @hide
+     */
+    public static boolean isInbandRingingSupported(Context context) {
+        return context.getResources().getBoolean(
+                com.android.internal.R.bool.config_bluetooth_hfp_inband_ringing_support);
+    }
+
+    /**
      * Send Headset the BIND response from AG to report change in the status of the
      * HF indicators to the headset
      *
