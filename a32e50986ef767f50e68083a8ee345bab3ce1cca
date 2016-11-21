@@ -22,6 +22,30 @@
       "revId": "a32e50986ef767f50e68083a8ee345bab3ce1cca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30040898_ce1bc559",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2016-11-21T23:46:52Z",
+      "side": 1,
+      "message": "Agreed, but couldn\u0027t find the copy constructuors for them. Not sure what is the best way to copy certificates and keys since we can only get encoded data.  Don\u0027t think clone would work, since it is just a shallow copy.\n\nAlso this is currently how they\u0027re being copied in WifiEnterpriseConfig :(",
+      "parentUuid": "30040898_0e9d5df7",
+      "range": {
+        "startLine": 507,
+        "startChar": 28,
+        "endLine": 508,
+        "endChar": 55
+      },
+      "revId": "a32e50986ef767f50e68083a8ee345bab3ce1cca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
