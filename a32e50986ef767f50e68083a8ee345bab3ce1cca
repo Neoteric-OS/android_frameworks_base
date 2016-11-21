@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30040898_0e9d5df7",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2016-11-21T23:31:17Z",
+      "side": 1,
+      "message": "clone? or do these have their own copy constructors. Just copying the reference like this will result in this value changing if they are changed in the original object.",
+      "range": {
+        "startLine": 507,
+        "startChar": 28,
+        "endLine": 508,
+        "endChar": 55
+      },
+      "revId": "a32e50986ef767f50e68083a8ee345bab3ce1cca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
