@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "10d38449_3532b04f",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2196,
+      "author": {
+        "id": 1128478
+      },
+      "writtenOn": "2016-11-21T06:40:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5055fc37_97a9445c",
+      "range": {
+        "startLine": 2196,
+        "startChar": 47,
+        "endLine": 2196,
+        "endChar": 49
+      },
+      "revId": "7583eb31881520a434066ef1e891e70a704b0dbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb527fc5_839a7ea7",
         "filename": "media/java/android/media/ExifInterface.java",
         "patchSetId": 5
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "Considering that it is just a metadata and an image file is not bigger than 1G(2^30), 4 byte signed integer MUST be enough.",
       "parentUuid": "eb527fc5_839a7ea7",
+      "range": {
+        "startLine": 2198,
+        "startChar": 22,
+        "endLine": 2198,
+        "endChar": 45
+      },
+      "revId": "7583eb31881520a434066ef1e891e70a704b0dbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10d38449_152fb4e5",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2198,
+      "author": {
+        "id": 1128478
+      },
+      "writtenOn": "2016-11-21T06:40:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5055fc37_b7ac486c",
       "range": {
         "startLine": 2198,
         "startChar": 22,
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "What if we make sure that the long multiplication result is not larger than Integer.MAX_VALUE",
       "parentUuid": "eb527fc5_43b56619",
+      "range": {
+        "startLine": 2213,
+        "startChar": 28,
+        "endLine": 2213,
+        "endChar": 88
+      },
+      "revId": "7583eb31881520a434066ef1e891e70a704b0dbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10d38449_f5a2f849",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2213,
+      "author": {
+        "id": 1128478
+      },
+      "writtenOn": "2016-11-21T06:40:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5055fc37_b77e081c",
       "range": {
         "startLine": 2213,
         "startChar": 28,
