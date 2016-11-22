@@ -22,6 +22,30 @@
       "revId": "9067c20f10ec7fbd7a436b7457c2740ebec23be6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b01e38f2_695b9172",
+        "filename": "core/java/android/bluetooth/le/BluetoothLeAdvertiser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2016-11-22T21:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b01e38f2_09977528",
+      "range": {
+        "startLine": 321,
+        "startChar": 16,
+        "endLine": 321,
+        "endChar": 21
+      },
+      "revId": "9067c20f10ec7fbd7a436b7457c2740ebec23be6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
