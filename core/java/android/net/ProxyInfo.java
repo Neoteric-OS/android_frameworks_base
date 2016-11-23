@@ -56,7 +56,6 @@ public class ProxyInfo implements Parcelable {
      *@hide
      */
     public static final String LOCAL_HOST = "localhost";
-
     /**
      * Constructs a {@link ProxyInfo} object that points at a Direct proxy
      * on the specified host and port.

@@ -22,6 +22,7 @@ import android.net.IpConfiguration;
 import android.net.IpConfiguration.ProxySettings;
 import android.net.ProxyInfo;
 import android.net.StaticIpConfiguration;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.UserHandle;
@@ -1821,14 +1822,37 @@ public class WifiConfiguration implements Parcelable {
         mIpConfiguration.proxySettings = proxySettings;
     }
 
-    /** @hide */
+    /**
+     * @return returns the {@link ProxyInfo httpProxy} used by this WifiConfiguration. If no proxy
+     *          is set, will return {@code null}.
+     */
     public ProxyInfo getHttpProxy() {
+        if (mIpConfiguration.proxySettings == IpConfiguration.ProxySettings.NONE) {
+            return null;
+        }
         return mIpConfiguration.httpProxy;
     }
 
-    /** @hide */
+    /**
+     * Set the {@link ProxyInfo} for this WifiConfiguration.
+     * @param httpProxy {@link ProxyInfo} representing the httpProxy to be used by this
+     *                  WifiConfiguration. Setting this {@code null} will explicitly set no proxy,
+     *                  removing any proxy that was previously set.
+     *                  If the {@link ProxyInfo} contains settings for both a PAC and Direct/Static
+     *                  proxy, the PAC proxy will be used.
+     * @exception throw IllegalArgumentException for invalid httpProxy
+     */
     public void setHttpProxy(ProxyInfo httpProxy) {
-        mIpConfiguration.httpProxy = httpProxy;
+        if (httpProxy == null) {
+            mIpConfiguration.setProxySettings(IpConfiguration.ProxySettings.NONE);
+        } else if (!httpProxy.isValid()) {
+            throw new IllegalArgumentException("Invalid ProxyInfo: " + httpProxy.toString());
+        } else if (!Uri.EMPTY.equals(httpProxy.getPacFileUrl())) {
+            mIpConfiguration.setProxySettings(IpConfiguration.ProxySettings.PAC);
+        } else {
+            mIpConfiguration.setProxySettings(IpConfiguration.ProxySettings.STATIC);
+        }
+        mIpConfiguration.setHttpProxy(httpProxy);
     }
 
     /** @hide */
