@@ -219,18 +219,20 @@ class PackageDexOptimizer {
 
                 final String dexoptType;
                 String oatDir = null;
-                switch (dexoptNeeded) {
+                // dexoptNeeded is positive for an .oat location, negative for a .odex location.
+                switch (Math.abs(dexoptNeeded)) {
                     case DexFile.NO_DEXOPT_NEEDED:
                         continue;
-                    case DexFile.DEX2OAT_NEEDED:
+                    case DexFile.DEX2OAT_FROM_SCRATCH:
+                    case DexFile.DEX2OAT_FOR_BOOT_IMAGE:
+                    case DexFile.DEX2OAT_FOR_FILTER:
+                    case DexFile.DEX2OAT_FOR_RELOCATION:
                         dexoptType = "dex2oat";
                         oatDir = createOatDirIfSupported(pkg, dexCodeInstructionSet);
                         break;
-                    case DexFile.PATCHOAT_NEEDED:
-                        dexoptType = "patchoat";
-                        break;
-                    case DexFile.SELF_PATCHOAT_NEEDED:
-                        dexoptType = "self patchoat";
+                    case DexFile.PATCHOAT_FOR_RELOCATION:
+                        // oat location needs to self-patchoat.
+                        dexoptType = dexoptNeeded > 0 ? "self patchoat" : "patchoat";
                         break;
                     default:
                         throw new IllegalStateException("Invalid dexopt:" + dexoptNeeded);
@@ -383,7 +385,7 @@ class PackageDexOptimizer {
         protected int adjustDexoptNeeded(int dexoptNeeded) {
             // Ensure compilation, no matter the current state.
             // TODO: The return value is wrong when patchoat is needed.
-            return DexFile.DEX2OAT_NEEDED;
+            return DexFile.DEX2OAT_FROM_SCRATCH;
         }
     }
 }
