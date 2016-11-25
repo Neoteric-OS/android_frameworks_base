@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "103c64a3_ad255d72",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2016-11-25T14:20:30Z",
+      "side": 1,
+      "message": "you could be extra nice and  check and log a warning when\nisSystemLocation ^ pkg.isSystemApp()",
+      "range": {
+        "startLine": 222,
+        "startChar": 24,
+        "endLine": 222,
+        "endChar": 40
+      },
+      "revId": "d18cf34f7adda970453877cdb7f8af572b70ff5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "103c64a3_8d20a163",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2016-11-25T14:20:30Z",
+      "side": 1,
+      "message": "the other way around. (you need to negate)",
+      "range": {
+        "startLine": 236,
+        "startChar": 37,
+        "endLine": 236,
+        "endChar": 53
+      },
+      "revId": "d18cf34f7adda970453877cdb7f8af572b70ff5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
