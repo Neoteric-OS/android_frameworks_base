@@ -22,6 +22,29 @@
       "revId": "a148a35263b8558926c1edece4d12a5c6e31b70e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "103c64a3_8d798173",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2016-11-25T13:38:57Z",
+      "side": 1,
+      "message": "make this a variable \"isOatLocation\". It will read better.",
+      "range": {
+        "startLine": 235,
+        "startChar": 37,
+        "endLine": 235,
+        "endChar": 51
+      },
+      "revId": "a148a35263b8558926c1edece4d12a5c6e31b70e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
