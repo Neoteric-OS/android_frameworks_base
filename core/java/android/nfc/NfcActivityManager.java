@@ -240,7 +240,13 @@ public final class NfcActivityManager extends IAppCallback.Stub
         try {
             NfcAdapter.sService.setReaderMode(token, this, flags, extras);
         } catch (RemoteException e) {
+            // Try one more time
             mAdapter.attemptDeadServiceRecovery(e);
+            try {
+                NfcAdapter.sService.setReaderMode(token, this, flags, extras);
+            } catch (RemoteException ee) {
+                // do nothing
+            }
         }
     }
 
@@ -338,7 +344,13 @@ public final class NfcActivityManager extends IAppCallback.Stub
         try {
             NfcAdapter.sService.setAppCallback(this);
         } catch (RemoteException e) {
+            // Try one more time
             mAdapter.attemptDeadServiceRecovery(e);
+            try {
+                NfcAdapter.sService.setAppCallback(this);
+            } catch (RemoteException ee) {
+                // do nothing
+            }
         }
     }
 
@@ -346,7 +358,13 @@ public final class NfcActivityManager extends IAppCallback.Stub
         try {
             NfcAdapter.sService.verifyNfcPermission();
         } catch (RemoteException e) {
+            // Try one more time
             mAdapter.attemptDeadServiceRecovery(e);
+            try {
+                NfcAdapter.sService.verifyNfcPermission();
+            } catch (RemoteException ee) {
+                // do nothing
+            }
         }
     }
 

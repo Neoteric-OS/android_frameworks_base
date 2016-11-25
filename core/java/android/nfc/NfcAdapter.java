@@ -681,8 +681,13 @@ public final class NfcAdapter {
         try {
             return sService.getState() == STATE_ON;
         } catch (RemoteException e) {
+            // Try one more time
             attemptDeadServiceRecovery(e);
-            return false;
+            try {
+                return sService.getState() == STATE_ON;
+            } catch (RemoteException ee) {
+                return false;
+            }
         }
     }
 
@@ -703,8 +708,13 @@ public final class NfcAdapter {
         try {
             return sService.getState();
         } catch (RemoteException e) {
+            // Try one more time
             attemptDeadServiceRecovery(e);
-            return NfcAdapter.STATE_OFF;
+            try {
+                return sService.getState();
+            } catch (RemoteException ee) {
+                return NfcAdapter.STATE_OFF;
+            }
         }
     }
 
@@ -729,8 +739,13 @@ public final class NfcAdapter {
         try {
             return sService.enable();
         } catch (RemoteException e) {
+            // Try one more time
             attemptDeadServiceRecovery(e);
-            return false;
+            try {
+                return sService.enable();
+            } catch (RemoteException ee) {
+                return false;
+            }
         }
     }
 
@@ -757,8 +772,13 @@ public final class NfcAdapter {
         try {
             return sService.disable(true);
         } catch (RemoteException e) {
+            // Try one more time
             attemptDeadServiceRecovery(e);
-            return false;
+            try {
+                return sService.disable(true);
+            } catch (RemoteException ee) {
+                return false;
+            }
         }
     }
 
@@ -771,8 +791,13 @@ public final class NfcAdapter {
         try {
             return sService.disable(persist);
         } catch (RemoteException e) {
+            // Try one more time
             attemptDeadServiceRecovery(e);
-            return false;
+            try {
+                return sService.disable(persist);
+            } catch (RemoteException ee) {
+                return false;
+            }
         }
     }
 
@@ -785,7 +810,13 @@ public final class NfcAdapter {
         try {
             sService.pausePolling(timeoutInMs);
         } catch (RemoteException e) {
+            // Try one more time
             attemptDeadServiceRecovery(e);
+            try {
+                sService.pausePolling(timeoutInMs);
+            } catch (RemoteException ee) {
+                // do nothing
+            }
         }
     }
 
@@ -800,6 +831,11 @@ public final class NfcAdapter {
             sService.resumePolling();
         } catch (RemoteException e) {
             attemptDeadServiceRecovery(e);
+            try {
+                sService.resumePolling();
+            } catch (RemoteException ee) {
+                // do nothing
+            }
         }
     }
 
@@ -1302,16 +1338,23 @@ public final class NfcAdapter {
             throw new IllegalStateException("Foreground dispatch can only be enabled " +
                     "when your activity is resumed");
         }
+
+        TechListParcel parcel = null;
+        if (techLists != null && techLists.length > 0) {
+            parcel = new TechListParcel(techLists);
+        }
+        ActivityThread.currentActivityThread().registerOnActivityPausedListener(activity,
+                mForegroundDispatchListener);
         try {
-            TechListParcel parcel = null;
-            if (techLists != null && techLists.length > 0) {
-                parcel = new TechListParcel(techLists);
-            }
-            ActivityThread.currentActivityThread().registerOnActivityPausedListener(activity,
-                    mForegroundDispatchListener);
             sService.setForegroundDispatch(intent, filters, parcel);
         } catch (RemoteException e) {
+            // Try one more time
             attemptDeadServiceRecovery(e);
+            try {
+                sService.setForegroundDispatch(intent, filters, parcel);
+            } catch (RemoteException ee) {
+                // do nothing
+            }
         }
     }
 
@@ -1351,12 +1394,18 @@ public final class NfcAdapter {
     void disableForegroundDispatchInternal(Activity activity, boolean force) {
         try {
             sService.setForegroundDispatch(null, null, null);
-            if (!force && !activity.isResumed()) {
-                throw new IllegalStateException("You must disable foreground dispatching " +
-                        "while your activity is still resumed");
-            }
         } catch (RemoteException e) {
+            // Try one more time
             attemptDeadServiceRecovery(e);
+            try {
+                sService.setForegroundDispatch(null, null, null);
+            } catch (RemoteException ee) {
+                // do nothing
+            }
+        }
+        if (!force && !activity.isResumed()) {
+            throw new IllegalStateException("You must disable foreground dispatching " +
+                    "while your activity is still resumed");
         }
     }
 
@@ -1448,9 +1497,15 @@ public final class NfcAdapter {
             sService.invokeBeam();
             return true;
         } catch (RemoteException e) {
-            Log.e(TAG, "invokeBeam: NFC process has died.");
+            // Try one more time
             attemptDeadServiceRecovery(e);
-            return false;
+            try {
+                sService.invokeBeam();
+                return true;
+            } catch (RemoteException ee) {
+                Log.e(TAG, "invokeBeam: NFC process has died.");
+                return false;
+            }
         }
     }
 
@@ -1463,9 +1518,15 @@ public final class NfcAdapter {
             sService.invokeBeamInternal(shareData);
             return true;
         } catch (RemoteException e) {
-            Log.e(TAG, "invokeBeam: NFC process has died.");
+            // Try one more time
             attemptDeadServiceRecovery(e);
-            return false;
+            try {
+                sService.invokeBeamInternal(shareData);
+                return true;
+            } catch (RemoteException ee) {
+                Log.e(TAG, "invokeBeam: NFC process has died.");
+                return false;
+            }
         }
     }
 
@@ -1559,8 +1620,13 @@ public final class NfcAdapter {
         try {
             return sService.enableNdefPush();
         } catch (RemoteException e) {
+            // Try one more time
             attemptDeadServiceRecovery(e);
-            return false;
+            try {
+                return sService.enableNdefPush();
+            } catch (RemoteException ee) {
+                return false;
+            }
         }
     }
 
@@ -1579,8 +1645,13 @@ public final class NfcAdapter {
         try {
             return sService.disableNdefPush();
         } catch (RemoteException e) {
+            // Try one more time
             attemptDeadServiceRecovery(e);
-            return false;
+            try {
+                return sService.disableNdefPush();
+            } catch (RemoteException ee) {
+                return false;
+            }
         }
     }
 
@@ -1617,8 +1688,13 @@ public final class NfcAdapter {
         try {
             return sService.isNdefPushEnabled();
         } catch (RemoteException e) {
+            // Try one more time
             attemptDeadServiceRecovery(e);
-            return false;
+            try {
+                return sService.isNdefPushEnabled();
+            } catch (RemoteException ee) {
+                return false;
+            }
         }
     }
 
@@ -1687,7 +1763,13 @@ public final class NfcAdapter {
         try {
             return sService.ignore(tag.getServiceHandle(), debounceMs, iListener);
         } catch (RemoteException e) {
-            return false;
+            // Try one more time
+            attemptDeadServiceRecovery(e);
+            try {
+                return sService.ignore(tag.getServiceHandle(), debounceMs, iListener);
+            } catch (RemoteException ee) {
+                return false;
+            }
         }
     }
 
@@ -1705,7 +1787,13 @@ public final class NfcAdapter {
         try {
             sService.dispatch(tag);
         } catch (RemoteException e) {
+            // Try one more time
             attemptDeadServiceRecovery(e);
+            try {
+                sService.dispatch(tag);
+            } catch (RemoteException ee) {
+                // do nothing
+            }
         }
     }
 
@@ -1716,7 +1804,13 @@ public final class NfcAdapter {
         try {
             sService.setP2pModes(initiatorModes, targetModes);
         } catch (RemoteException e) {
+            // Try one more time
             attemptDeadServiceRecovery(e);
+            try {
+                sService.setP2pModes(initiatorModes, targetModes);
+            } catch (RemoteException ee) {
+                // do nothing
+            }
         }
     }
 
@@ -1748,31 +1842,47 @@ public final class NfcAdapter {
             return false;
         }
 
-        try {
-            synchronized (mLock) {
-                if (mNfcUnlockHandlers.containsKey(unlockHandler)) {
-                    // update the tag technologies
+        synchronized (mLock) {
+            if (mNfcUnlockHandlers.containsKey(unlockHandler)) {
+                // update the tag technologies
+                try {
                     sService.removeNfcUnlockHandler(mNfcUnlockHandlers.get(unlockHandler));
-                    mNfcUnlockHandlers.remove(unlockHandler);
-                }
-
-                INfcUnlockHandler.Stub iHandler = new INfcUnlockHandler.Stub() {
-                    @Override
-                    public boolean onUnlockAttempted(Tag tag) throws RemoteException {
-                        return unlockHandler.onUnlockAttempted(tag);
+                } catch (RemoteException e) {
+                    // Try one more time
+                    attemptDeadServiceRecovery(e);
+                    try {
+                        sService.removeNfcUnlockHandler(mNfcUnlockHandlers.get(unlockHandler));
+                    } catch (RemoteException ee) {
+                        return false;
                     }
-                };
+                }
+                mNfcUnlockHandlers.remove(unlockHandler);
+            }
 
+            INfcUnlockHandler.Stub iHandler = new INfcUnlockHandler.Stub() {
+                @Override
+                public boolean onUnlockAttempted(Tag tag) throws RemoteException {
+                    return unlockHandler.onUnlockAttempted(tag);
+                }
+            };
+
+            try {
                 sService.addNfcUnlockHandler(iHandler,
                         Tag.getTechCodesFromStrings(tagTechnologies));
-                mNfcUnlockHandlers.put(unlockHandler, iHandler);
+            } catch (RemoteException e) {
+                // Try one more time
+                attemptDeadServiceRecovery(e);
+                try {
+                    sService.addNfcUnlockHandler(iHandler,
+                            Tag.getTechCodesFromStrings(tagTechnologies));
+                } catch (RemoteException ee) {
+                    return false;
+                }
+            } catch (IllegalArgumentException e) {
+                Log.e(TAG, "Unable to register LockscreenDispatch", e);
+                return false;
             }
-        } catch (RemoteException e) {
-            attemptDeadServiceRecovery(e);
-            return false;
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Unable to register LockscreenDispatch", e);
-            return false;
+            mNfcUnlockHandlers.put(unlockHandler, iHandler);
         }
 
         return true;
@@ -1791,18 +1901,23 @@ public final class NfcAdapter {
                 throw new UnsupportedOperationException();
             }
         }
-        try {
-            synchronized (mLock) {
-                if (mNfcUnlockHandlers.containsKey(unlockHandler)) {
-                    sService.removeNfcUnlockHandler(mNfcUnlockHandlers.remove(unlockHandler));
-                }
 
-                return true;
+        synchronized (mLock) {
+            if (mNfcUnlockHandlers.containsKey(unlockHandler)) {
+                try {
+                    sService.removeNfcUnlockHandler(mNfcUnlockHandlers.remove(unlockHandler));
+                } catch (RemoteException e) {
+                    // Try one more time
+                    attemptDeadServiceRecovery(e);
+                    try {
+                        sService.removeNfcUnlockHandler(mNfcUnlockHandlers.remove(unlockHandler));
+                    } catch (RemoteException ee) {
+                        return false;
+                    }
+                }
             }
-        } catch (RemoteException e) {
-            attemptDeadServiceRecovery(e);
-            return false;
         }
+        return true;
     }
 
     /**
@@ -1816,8 +1931,13 @@ public final class NfcAdapter {
         try {
             return sService.getNfcAdapterExtrasInterface(mContext.getPackageName());
         } catch (RemoteException e) {
+            // Try one more time
             attemptDeadServiceRecovery(e);
-            return null;
+            try {
+                return sService.getNfcAdapterExtrasInterface(mContext.getPackageName());
+            } catch (RemoteException ee) {
+                return null;
+            }
         }
     }
 
