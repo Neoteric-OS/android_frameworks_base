@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "103c64a3_0d8e714f",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2016-11-25T14:00:11Z",
+      "side": 1,
+      "message": "We can refine later once those flags do have an impact on how we compile. Or now if you feel we should distinguish now. No strong opinions about it.",
+      "parentUuid": "103c64a3_ad11dd3c",
+      "range": {
+        "startLine": 230,
+        "startChar": 24,
+        "endLine": 230,
+        "endChar": 47
+      },
+      "revId": "a148a35263b8558926c1edece4d12a5c6e31b70e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "103c64a3_8d798173",
         "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-11-25T13:38:57Z",
       "side": 1,
       "message": "make this a variable \"isOatLocation\". It will read better.",
+      "range": {
+        "startLine": 235,
+        "startChar": 37,
+        "endLine": 235,
+        "endChar": 51
+      },
+      "revId": "a148a35263b8558926c1edece4d12a5c6e31b70e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "103c64a3_ed78456c",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2016-11-25T14:00:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "103c64a3_8d798173",
       "range": {
         "startLine": 235,
         "startChar": 37,
