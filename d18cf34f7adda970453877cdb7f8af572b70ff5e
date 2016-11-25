@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "103c64a3_ade2bde7",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2016-11-25T15:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "103c64a3_8d47c11d",
+      "range": {
+        "startLine": 222,
+        "startChar": 24,
+        "endLine": 222,
+        "endChar": 40
+      },
+      "revId": "d18cf34f7adda970453877cdb7f8af572b70ff5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "103c64a3_8d20a163",
         "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
         "patchSetId": 2
@@ -83,6 +107,30 @@
       "side": 1,
       "message": "We got rid of \"self patchoat\" everywhere else, why not get rid of it here too? \"patchoat\", \"patchoat from odex\", \"patchoat from oat\", something like that is probably better.",
       "parentUuid": "103c64a3_8d20a163",
+      "range": {
+        "startLine": 236,
+        "startChar": 37,
+        "endLine": 236,
+        "endChar": 53
+      },
+      "revId": "d18cf34f7adda970453877cdb7f8af572b70ff5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "103c64a3_cdd7090d",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2016-11-25T15:11:53Z",
+      "side": 1,
+      "message": "Replaced with only \"patchoat\".",
+      "parentUuid": "103c64a3_4d1f9923",
       "range": {
         "startLine": 236,
         "startChar": 37,
