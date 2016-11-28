@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "103c64a3_70b42eb1",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1057373
+      },
+      "writtenOn": "2016-11-28T08:11:24Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment. Is it necessary?",
+      "range": {
+        "startLine": 234,
+        "startChar": 24,
+        "endLine": 234,
+        "endChar": 63
+      },
+      "revId": "c72ec1957eef3fd64c47b94bf859376a88d22b75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
