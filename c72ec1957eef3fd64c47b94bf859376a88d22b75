@@ -22,6 +22,30 @@
       "revId": "c72ec1957eef3fd64c47b94bf859376a88d22b75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "103c64a3_70cb4e35",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2016-11-28T08:46:27Z",
+      "side": 1,
+      "message": "No, removed.",
+      "parentUuid": "103c64a3_70b42eb1",
+      "range": {
+        "startLine": 234,
+        "startChar": 24,
+        "endLine": 234,
+        "endChar": 63
+      },
+      "revId": "c72ec1957eef3fd64c47b94bf859376a88d22b75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
