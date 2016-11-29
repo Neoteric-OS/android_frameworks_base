@@ -16,6 +16,24 @@
       "revId": "4983fbacb39ff69878fca1d0e6d2c0000935a6d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d56a716_eba60d93",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1023708
+      },
+      "writtenOn": "2016-11-29T06:24:55Z",
+      "side": 1,
+      "message": "I\u0027ve add my test steps in commit message, it should be write some sample program to simulate application crash but cannot found in AMS site, you can use these test steps by android 7.1.1 emulator.",
+      "parentUuid": "b04b9845_9514266d",
+      "revId": "4983fbacb39ff69878fca1d0e6d2c0000935a6d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
