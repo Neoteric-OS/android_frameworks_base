@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30288869_1d3cd9d5",
+        "filename": "tools/preload2/src/com/android/preload/Main.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-11-29T23:29:19Z",
+      "side": 1,
+      "message": "We probably want ComputeThresholdXAction here. That way the following input will make the threshold clear.",
+      "range": {
+        "startLine": 199,
+        "startChar": 20,
+        "endLine": 199,
+        "endChar": 60
+      },
+      "revId": "9f1c3e1c9ba035ef2c4e15cbfbf5c1ad9ca9c0ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
