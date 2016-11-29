@@ -240,7 +240,8 @@ static void JHwBinder_native_registerService(
 
     sp<hardware::IBinder> binder = JHwBinder::GetNativeContext(env, thiz);
 
-    bool ok = hardware::defaultServiceManager()->add(
+    ::android::hardware::Return<bool> ok =
+            hardware::defaultServiceManager()->add(
                 interfaceChain,
                 serviceName,
                 binder);
@@ -248,12 +249,17 @@ static void JHwBinder_native_registerService(
     env->ReleaseStringUTFChars(serviceNameObj, serviceName);
     serviceName = NULL;
 
-    if (ok) {
+    if (!ok.isOk()) {
+        signalExceptionForError(env, FAILED_TRANSACTION);
+        return;
+    }
+
+    if (ok.get()) {
         LOG(INFO) << "Starting thread pool.";
         ::android::hardware::ProcessState::self()->startThreadPool();
     }
 
-    signalExceptionForError(env, (ok ? OK : UNKNOWN_ERROR));
+    signalExceptionForError(env, (ok.get() ? OK : UNKNOWN_ERROR));
 }
 
 static jobject JHwBinder_native_getService(
@@ -286,17 +292,22 @@ static jobject JHwBinder_native_getService(
               << "'";
 
     sp<hardware::IBinder> service;
-    hardware::defaultServiceManager()->get(
-            ifaceName,
-            serviceName,
-            [&service](sp<hardware::IBinder> out) {
-                service = out;
-            });
+    ::android::hardware::Return<void> status =
+            hardware::defaultServiceManager()->get(
+                ifaceName,
+                serviceName,
+                [&service](sp<hardware::IBinder> out) {
+                    service = out;
+                });
 
     env->ReleaseStringUTFChars(ifaceNameObj, ifaceName);
     ifaceName = NULL;
     env->ReleaseStringUTFChars(serviceNameObj, serviceName);
     serviceName = NULL;
+
+    if (!status.isOk()) {
+        signalExceptionForError(env, FAILED_TRANSACTION);
+    }
 
     if (service == NULL) {
         signalExceptionForError(env, NAME_NOT_FOUND);
