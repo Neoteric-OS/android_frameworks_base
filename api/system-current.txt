@@ -25845,6 +25845,19 @@ package android.net {
     field public final java.lang.String ssid;
   }
 
+  public class WifiNetworkScoreCache extends android.os.Binder {
+    ctor public WifiNetworkScoreCache(android.content.Context);
+    method public final void clearScores();
+    method protected final void dump(java.io.FileDescriptor, java.io.PrintWriter, java.lang.String[]);
+    method public boolean getMeteredHint(android.net.wifi.ScanResult);
+    method public int getNetworkScore(android.net.wifi.ScanResult);
+    method public int getNetworkScore(android.net.wifi.ScanResult, boolean);
+    method public boolean hasScoreCurve(android.net.wifi.ScanResult);
+    method public boolean isScoredNetwork(android.net.wifi.ScanResult);
+    method public final void updateScores(java.util.List<android.net.ScoredNetwork>);
+    field public static final int INVALID_NETWORK_SCORE = -128; // 0xffffff80
+  }
+
 }
 
 package android.net.http {
