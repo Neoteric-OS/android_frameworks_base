@@ -10125,7 +10125,6 @@ public final class ActivityManagerService extends ActivityManagerNative
         long ident = Binder.clearCallingIdentity();
         try {
             if (!isSystemInitiated) {
-                task.mLockTaskUid = callingUid;
                 if (task.mLockTaskAuth == LOCK_TASK_AUTH_PINNABLE) {
                     // startLockTask() called by app and task mode is lockTaskModeDefault.
                     if (DEBUG_LOCKTASK) Slog.w(TAG_LOCKTASK, "Mode default, asking user");
@@ -10141,6 +10140,9 @@ public final class ActivityManagerService extends ActivityManagerNative
                 if (stack == null || task != stack.topTask()) {
                     throw new IllegalArgumentException("Invalid task, not in foreground");
                 }
+                // Updates mLockTaskUid after checking if we need to ask users via
+                // showScreenPinningRequest.
+                task.mLockTaskUid = callingUid;
             }
             if (DEBUG_LOCKTASK) Slog.w(TAG_LOCKTASK, isSystemInitiated ? "Locking pinned" :
                     "Locking fully");
@@ -10193,47 +10195,49 @@ public final class ActivityManagerService extends ActivityManagerNative
 
     @Override
     public void stopLockTaskMode() {
-        final TaskRecord lockTask = mStackSupervisor.getLockedTaskLocked();
-        if (lockTask == null) {
-            // Our work here is done.
-            return;
-        }
-
-        final int callingUid = Binder.getCallingUid();
-        final int lockTaskUid = lockTask.mLockTaskUid;
-        final int lockTaskModeState = mStackSupervisor.getLockTaskModeState();
-        if (lockTaskModeState == ActivityManager.LOCK_TASK_MODE_NONE) {
-            // Done.
-            return;
-        } else {
-            // Ensure the same caller for startLockTaskMode and stopLockTaskMode.
-            // It is possible lockTaskMode was started by the system process because
-            // android:lockTaskMode is set to a locking value in the application manifest
-            // instead of the app calling startLockTaskMode. In this case
-            // {@link TaskRecord.mLockTaskUid} will be 0, so we compare the callingUid to the
-            // {@link TaskRecord.effectiveUid} instead. Also caller with
-            // {@link MANAGE_ACTIVITY_STACKS} can stop any lock task.
-            if (checkCallingPermission(MANAGE_ACTIVITY_STACKS) != PERMISSION_GRANTED
-                    && callingUid != lockTaskUid
-                    && (lockTaskUid != 0 || callingUid != lockTask.effectiveUid)) {
-                throw new SecurityException("Invalid uid, expected " + lockTaskUid
-                        + " callingUid=" + callingUid + " effectiveUid=" + lockTask.effectiveUid);
+        synchronized (this) {
+            final TaskRecord lockTask = mStackSupervisor.getLockedTaskLocked();
+            if (lockTask == null) {
+                // Our work here is done.
+                return;
             }
-        }
-        long ident = Binder.clearCallingIdentity();
-        try {
-            Log.d(TAG, "stopLockTaskMode");
-            // Stop lock task
-            synchronized (this) {
+
+            final int callingUid = Binder.getCallingUid();
+            final int lockTaskUid = lockTask.mLockTaskUid;
+            final int lockTaskModeState = mStackSupervisor.getLockTaskModeState();
+            if (lockTaskModeState == ActivityManager.LOCK_TASK_MODE_NONE) {
+                // Done.
+                return;
+            } else {
+                // Ensure the same caller for startLockTaskMode and stopLockTaskMode.
+                // It is possible lockTaskMode was started by the system process because
+                // android:lockTaskMode is set to a locking value in the application manifest
+                // instead of the app calling startLockTaskMode. In this case
+                // {@link TaskRecord.mLockTaskUid} will be 0, so we compare the callingUid to the
+                // {@link TaskRecord.effectiveUid} instead. Also caller with
+                // {@link MANAGE_ACTIVITY_STACKS} can stop any lock task.
+                if (checkCallingPermission(MANAGE_ACTIVITY_STACKS) != PERMISSION_GRANTED
+                        && callingUid != lockTaskUid
+                        && (lockTaskUid != 0 || callingUid != lockTask.effectiveUid)) {
+                    throw new SecurityException("Invalid uid, expected " + lockTaskUid
+                            + " callingUid=" + callingUid
+                            + " effectiveUid=" + lockTask.effectiveUid);
+                }
+            }
+            long ident = Binder.clearCallingIdentity();
+            try {
+                Log.d(TAG, "stopLockTaskMode");
+                // Stop lock task
                 mStackSupervisor.setLockTaskModeLocked(null, ActivityManager.LOCK_TASK_MODE_NONE,
                         "stopLockTask", true);
+                TelecomManager tm = (TelecomManager) mContext.getSystemService(
+                        Context.TELECOM_SERVICE);
+                if (tm != null) {
+                    tm.showInCallScreen(false);
+                }
+            } finally {
+                Binder.restoreCallingIdentity(ident);
             }
-            TelecomManager tm = (TelecomManager) mContext.getSystemService(Context.TELECOM_SERVICE);
-            if (tm != null) {
-                tm.showInCallScreen(false);
-            }
-        } finally {
-            Binder.restoreCallingIdentity(ident);
         }
     }
 
