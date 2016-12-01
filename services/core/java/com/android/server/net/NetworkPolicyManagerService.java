@@ -111,20 +111,13 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
-import android.net.ConnectivityManager;
+import android.net.*;
 import android.net.IConnectivityManager;
 import android.net.INetworkManagementEventObserver;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
-import android.net.LinkProperties;
-import android.net.NetworkIdentity;
-import android.net.NetworkInfo;
-import android.net.NetworkPolicy;
-import android.net.NetworkPolicyManager;
-import android.net.NetworkQuotaInfo;
-import android.net.NetworkState;
-import android.net.NetworkTemplate;
+import android.net.wifi.IWifiManager;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -239,6 +232,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     private static final int VERSION_SWITCH_APP_ID = 8;
     private static final int VERSION_ADDED_NETWORK_ID = 9;
     private static final int VERSION_SWITCH_UID = 10;
+    //TODO: bump this once we're ready to enable it.
+    private static final int VERSION_MOVED_METERED_WIFI_POLICIES = 11;
     private static final int VERSION_LATEST = VERSION_SWITCH_UID;
 
     @VisibleForTesting
@@ -304,6 +299,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     private INotificationManager mNotifManager;
     private PowerManagerInternal mPowerManagerInternal;
     private IDeviceIdleController mDeviceIdleController;
+    private WifiManager mWifiManager;
 
     // See main javadoc for instructions on how to use these locks.
     final Object mUidRulesFirstLock = new Object();
@@ -577,6 +573,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             }
 
             mUsageStats = LocalServices.getService(UsageStatsManagerInternal.class);
+            mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
 
             synchronized (mUidRulesFirstLock) {
                 synchronized (mNetworkPoliciesSecondLock) {
@@ -663,15 +660,17 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             mContext.registerReceiver(mSnoozeWarningReceiver, snoozeWarningFilter,
                     MANAGE_NETWORK_POLICY, mHandler);
 
-            // listen for configured wifi networks to be removed
-            final IntentFilter wifiConfigFilter =
-                    new IntentFilter(CONFIGURED_NETWORKS_CHANGED_ACTION);
-            mContext.registerReceiver(mWifiConfigReceiver, wifiConfigFilter, null, mHandler);
+            if (VERSION_LATEST < VERSION_MOVED_METERED_WIFI_POLICIES) {
+                // listen for configured wifi networks to be removed
+                final IntentFilter wifiConfigFilter =
+                        new IntentFilter(CONFIGURED_NETWORKS_CHANGED_ACTION);
+                mContext.registerReceiver(mWifiConfigReceiver, wifiConfigFilter, null, mHandler);
 
-            // listen for wifi state changes to catch metered hint
-            final IntentFilter wifiStateFilter = new IntentFilter(
-                    WifiManager.NETWORK_STATE_CHANGED_ACTION);
-            mContext.registerReceiver(mWifiStateReceiver, wifiStateFilter, null, mHandler);
+                // listen for wifi state changes to catch metered hint
+                final IntentFilter wifiStateFilter = new IntentFilter(
+                        WifiManager.NETWORK_STATE_CHANGED_ACTION);
+                mContext.registerReceiver(mWifiStateReceiver, wifiStateFilter, null, mHandler);
+            }
 
             mUsageStats.addAppIdleStateChangeListener(new AppIdleStateChangeListener());
         } finally {
@@ -912,6 +911,13 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             }
         }
     };
+
+    @Override
+    public void onNetworkCapabilitiesChanged() {
+        synchronized (mNetworkPoliciesSecondLock) {
+            updateNetworkRulesNL();
+        }
+    }
 
     static NetworkPolicy newWifiPolicy(NetworkTemplate template, boolean metered) {
         return new NetworkPolicy(template, CYCLE_NONE, Time.TIMEZONE_UTC,
@@ -1267,14 +1273,31 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         // First, generate identities of all connected networks so we can
         // quickly compare them against all defined policies below.
         final ArrayList<Pair<String, NetworkIdentity>> connIdents = new ArrayList<>(states.length);
-        final ArraySet<String> connIfaces = new ArraySet<String>(states.length);
+        final ArraySet<String> newMeteredIfaces = new ArraySet<String>(states.length);
         for (NetworkState state : states) {
             if (state.networkInfo != null && state.networkInfo.isConnected()) {
+                boolean metered = false;
+                if (VERSION_LATEST >= VERSION_MOVED_METERED_WIFI_POLICIES) {
+                    try {
+                        NetworkCapabilities capabilities =
+                                mConnManager.getNetworkCapabilities(state.network);
+                        if (capabilities != null && !capabilities.hasCapability(
+                                NetworkCapabilities.NET_CAPABILITY_NOT_METERED)) {
+                            metered = true;
+                        }
+                    } catch (RemoteException e) {
+                        // ignored; service lives in system_server
+                    }
+                }
+
                 final NetworkIdentity ident = NetworkIdentity.buildNetworkIdentity(mContext, state);
 
                 final String baseIface = state.linkProperties.getInterfaceName();
                 if (baseIface != null) {
                     connIdents.add(Pair.create(baseIface, ident));
+                    if (metered) {
+                        newMeteredIfaces.add(baseIface);
+                    }
                 }
 
                 // Stacked interfaces are considered to have same identity as
@@ -1284,7 +1307,20 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                     final String stackedIface = stackedLink.getInterfaceName();
                     if (stackedIface != null) {
                         connIdents.add(Pair.create(stackedIface, ident));
+                        if (metered) {
+                            newMeteredIfaces.add(stackedIface);
+                        }
                     }
+                }
+            }
+        }
+
+        if (VERSION_LATEST >= VERSION_MOVED_METERED_WIFI_POLICIES) {
+            for (int i = connIdents.size() - 1; i >= 0; i--) {
+                final Pair<String, NetworkIdentity> ident = connIdents.get(i);
+                if (ident.second != null &&
+                        ident.second.getType() == ConnectivityManager.TYPE_WIFI) {
+                    mConnManager.getNetworkCapabilities(ident.second.)
                 }
             }
         }
@@ -1310,7 +1346,6 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         }
 
         long lowestRule = Long.MAX_VALUE;
-        final ArraySet<String> newMeteredIfaces = new ArraySet<String>(states.length);
 
         // apply each policy that we found ifaces for; compute remaining data
         // based on current cycle and historical stats, and push to kernel.
@@ -1362,7 +1397,9 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                     mHandler.obtainMessage(MSG_UPDATE_INTERFACE_QUOTA,
                             (int) (quotaBytes >> 32), (int) (quotaBytes & 0xFFFFFFFF), iface)
                             .sendToTarget();
-                    newMeteredIfaces.add(iface);
+                    if (VERSION_LATEST < VERSION_MOVED_METERED_WIFI_POLICIES) {
+                        newMeteredIfaces.add(iface);
+                    }
                 }
             }
 
@@ -1373,15 +1410,6 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             if (hasLimit && policy.limitBytes < lowestRule) {
                 lowestRule = policy.limitBytes;
             }
-        }
-
-        for (int i = connIfaces.size()-1; i >= 0; i--) {
-            String iface = connIfaces.valueAt(i);
-            // long quotaBytes split up into two ints to fit in message
-            mHandler.obtainMessage(MSG_UPDATE_INTERFACE_QUOTA,
-                    (int) (Long.MAX_VALUE >> 32), (int) (Long.MAX_VALUE & 0xFFFFFFFF), iface)
-                    .sendToTarget();
-            newMeteredIfaces.add(iface);
         }
 
         mHandler.obtainMessage(MSG_ADVISE_PERSIST_THRESHOLD, lowestRule).sendToTarget();
@@ -1544,6 +1572,24 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                             inferred = readBooleanAttribute(in, ATTR_INFERRED);
                         } else {
                             inferred = false;
+                        }
+
+                        if (version >= VERSION_MOVED_METERED_WIFI_POLICIES) {
+                            // Set WifiConfiguration.meteredOverride for existing user-marked
+                            // metered Wi-Fi policies when metered=true && inferred=false
+                            if (metered && !inferred) {
+                                List<WifiConfiguration> configs =
+                                        mWifiManager.getConfiguredNetworks();
+                                if (configs != null) {
+                                    for (int i = configs.size()-1; i >= 0; i--) {
+                                        WifiConfiguration config = configs.get(i);
+                                        if (config.SSID.equals(networkId)) {
+                                            config.meteredOverride = true;
+                                            mWifiManager.updateNetwork(config);
+                                        }
+                                    }
+                                }
+                            }
                         }
 
                         final NetworkTemplate template = new NetworkTemplate(networkTemplate,

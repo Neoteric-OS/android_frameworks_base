@@ -75,4 +75,7 @@ interface INetworkPolicyManager {
     boolean isNetworkMetered(in NetworkState state);
 
     void factoryReset(String subscriber);
+
+    /** Callback used on network capabilites changed */
+    void onNetworkCapabilitiesChanged();
 }
