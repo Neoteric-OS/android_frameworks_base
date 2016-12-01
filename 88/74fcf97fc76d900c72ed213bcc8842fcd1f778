@@ -1,0 +1,8 @@
+Presubmit-Ready+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: David James <davidjames@google.com>
+Verified+1: ltrochtova <ltrochtova@google.com>
+Submitted-by: ltrochtova <ltrochtova@google.com>
+Submitted-at: Thu, 01 Dec 2016 21:20:42 +0000
+Reviewed-on: https://android-review.googlesource.com/309092
+Project: platform/frameworks/base
+Branch: refs/heads/master
