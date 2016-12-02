@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6db227c7_aecb6332",
+        "filename": "services/core/java/com/android/server/pm/ShortcutPackageInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2016-12-02T16:24:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d556338_38649328",
+      "revId": "33e8bf1fb714d0e2b3cff5c4420431cf7bf7dbb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d556338_b829c3b5",
         "filename": "services/core/java/com/android/server/pm/ShortcutPackageInfo.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-12-02T16:12:14Z",
       "side": 1,
       "message": "As discussed, you don\u0027t need to catch it.  I have catch (RuntimeException) already at the call site to detect malformed files.",
+      "revId": "33e8bf1fb714d0e2b3cff5c4420431cf7bf7dbb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4db723b6_aae7cf63",
+        "filename": "services/core/java/com/android/server/pm/ShortcutPackageInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2016-12-02T16:24:38Z",
+      "side": 1,
+      "message": "Done, but are you sure that it is better? \n\n1.) ShortcutService.applyRestore() seems to only catch XmlPullParserException|IOException.\n\n2.) Also, relying on there not being any other call sites seems risky. From the perspective of callers of loadFromXml(), is the correct behavior to throw IAE or to silently ignore malformed hashes?",
+      "parentUuid": "4d556338_b829c3b5",
       "revId": "33e8bf1fb714d0e2b3cff5c4420431cf7bf7dbb1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
