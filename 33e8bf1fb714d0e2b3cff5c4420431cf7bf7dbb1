@@ -87,6 +87,24 @@
       "revId": "33e8bf1fb714d0e2b3cff5c4420431cf7bf7dbb1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d04af97_467b522c",
+        "filename": "services/core/java/com/android/server/pm/ShortcutPackageInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2016-12-02T20:55:52Z",
+      "side": 1,
+      "message": "I don\u0027t see any such exception conversion logic at\n\nhttps://android.googlesource.com/platform/frameworks/base/+/master/services/core/java/com/android/server/pm/ShortcutUser.java#273\n\nWhat am I missing?",
+      "parentUuid": "4d556338_383813e5",
+      "revId": "33e8bf1fb714d0e2b3cff5c4420431cf7bf7dbb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
