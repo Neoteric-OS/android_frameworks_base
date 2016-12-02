@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dde43f8_525cd29b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2016-12-02T11:42:22Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "4df335ec34ba9b28f3f6031f356063af145e2d28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "adbc1f98_2d7f79cb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2016-12-02T11:42:22Z",
+      "side": 1,
+      "message": "red",
+      "range": {
+        "startLine": 19,
+        "startChar": 62,
+        "endLine": 19,
+        "endChar": 63
+      },
+      "revId": "4df335ec34ba9b28f3f6031f356063af145e2d28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4dde43f8_7261d64c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2016-12-02T11:42:22Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 21,
+        "startChar": 32,
+        "endLine": 21,
+        "endChar": 38
+      },
+      "revId": "4df335ec34ba9b28f3f6031f356063af145e2d28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc11b20_ec35e338",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1796,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2016-12-02T11:42:22Z",
+      "side": 1,
+      "message": "I think this may break Activity.requestVisibleBehind - could you test that?",
+      "revId": "4df335ec34ba9b28f3f6031f356063af145e2d28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
