@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d556338_89459bb9",
+        "filename": "libs/androidfw/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2016-12-02T00:39:24Z",
+      "side": 1,
+      "message": "2016",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "4ae0c343713144d0f78f07d2ff7b534819dca943",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d556338_498703a2",
+        "filename": "libs/androidfw/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2016-12-02T00:39:24Z",
+      "side": 1,
+      "message": "this builds a shared \u0026 static library, right? But for the device we only want a shared, and for the host we only want a static.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 10
+      },
+      "revId": "4ae0c343713144d0f78f07d2ff7b534819dca943",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
