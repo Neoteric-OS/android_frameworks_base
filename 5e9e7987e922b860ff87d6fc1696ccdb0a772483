@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d159bc1_9ddd132f",
+        "filename": "services/core/java/com/android/server/AlarmManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2016-12-02T23:10:54Z",
+      "side": 1,
+      "message": "I don\u0027t think I understand the point of this change.  rebatch does not go through this code path -- this is called only for incoming new alarms.  Furthermore, if triggerAtTime is in the past, advancing it by a constant 5 seconds is not a meaningful adjustment.  It\u0027s surprisingly common for triggerAtTime to be zero, for example: if an app wants to have an alarm fire as soon as possible this is more efficient than calculating \u0027now\u0027 just to set the alarm.",
+      "range": {
+        "startLine": 1060,
+        "startChar": 72,
+        "endLine": 1060,
+        "endChar": 111
+      },
+      "revId": "5e9e7987e922b860ff87d6fc1696ccdb0a772483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
