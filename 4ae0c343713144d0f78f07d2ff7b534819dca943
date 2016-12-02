@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4d556338_c9ef93ff",
+        "filename": "libs/androidfw/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2016-12-02T00:58:57Z",
+      "side": 1,
+      "message": "I\u0027m more worried about someone accidentally adding libandroidfw to their static_libs on the device build which will now work but be undesired rather than the build-time cost.",
+      "parentUuid": "4d556338_0957cb1e",
+      "revId": "4ae0c343713144d0f78f07d2ff7b534819dca943",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d556338_a92e9fb9",
         "filename": "libs/androidfw/tests/Android.bp",
         "patchSetId": 1
