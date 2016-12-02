@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4d556338_6948077d",
+        "filename": "libs/androidfw/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2016-12-02T00:48:58Z",
+      "side": 1,
+      "message": "These are mostly auto-converted from the Android.mk file, so I generally leave the copyright date alone",
+      "parentUuid": "4d556338_89459bb9",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "4ae0c343713144d0f78f07d2ff7b534819dca943",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d556338_498703a2",
         "filename": "libs/androidfw/Android.bp",
         "patchSetId": 1
@@ -42,6 +66,23 @@
         "endLine": 17,
         "endChar": 10
       },
+      "revId": "4ae0c343713144d0f78f07d2ff7b534819dca943",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d556338_0957cb1e",
+        "filename": "libs/androidfw/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2016-12-02T00:48:58Z",
+      "side": 1,
+      "message": "This disables the host shared library.  The device static library is mostly a precursor of the shared library (it reuses all the .o files).",
       "revId": "4ae0c343713144d0f78f07d2ff7b534819dca943",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
