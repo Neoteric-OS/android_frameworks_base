@@ -69,6 +69,24 @@
       "revId": "33e8bf1fb714d0e2b3cff5c4420431cf7bf7dbb1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d556338_383813e5",
+        "filename": "services/core/java/com/android/server/pm/ShortcutPackageInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2016-12-02T16:32:45Z",
+      "side": 1,
+      "message": "Yeah the design is actually a little iffy, but this method is always called by ShortcutUser.loadFromXml() which converts RuntimeException to ShortcutService.InvalidFileFormatException.  You could catch IAE here and throw InvalidFileFormatException, but that\u0027ll be a bigger change than necessary as you\u0027ll need to update multiple method signatures across multiple files, so just throw it here and I\u0027ll do something about it on master.\n\n(The reason why I catch them at the call site is I don\u0027t want to catch every single possible runtime exceptions that could happen while loading a file; there are other possible exceptions that could be caused by malformed files.)",
+      "parentUuid": "4db723b6_aae7cf63",
+      "revId": "33e8bf1fb714d0e2b3cff5c4420431cf7bf7dbb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
