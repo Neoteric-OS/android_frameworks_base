@@ -45,6 +45,29 @@
       "revId": "4ae0c343713144d0f78f07d2ff7b534819dca943",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d556338_a92e9fb9",
+        "filename": "libs/androidfw/tests/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2016-12-02T00:39:39Z",
+      "side": 1,
+      "message": "2016",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "4ae0c343713144d0f78f07d2ff7b534819dca943",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
