@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d159bc1_21cb990c",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2016-12-05T18:42:03Z",
+      "side": 1,
+      "message": "?  I think cell is implied by SIM.  You should give examples of states here so people know what\u0027s meant by activation state",
+      "range": {
+        "startLine": 224,
+        "startChar": 56,
+        "endLine": 224,
+        "endChar": 64
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_e1c461fa",
+        "filename": "telephony/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2016-12-05T18:42:03Z",
+      "side": 1,
+      "message": "comments?",
+      "range": {
+        "startLine": 510,
+        "startChar": 16,
+        "endLine": 510,
+        "endChar": 43
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_dc8a646c",
+        "filename": "telephony/java/android/telephony/SimActivationState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2016-12-05T18:42:03Z",
+      "side": 1,
+      "message": "I wonder if we couldn\u0027t get by on a pair of INTs?  the set functions just take INTs and not a SimActivationState, so this feels not quite right.",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 31
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_c1227dc8",
+        "filename": "telephony/java/android/telephony/SimActivationState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2016-12-05T18:42:03Z",
+      "side": 1,
+      "message": "white space",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 4
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_fc60884b",
+        "filename": "telephony/java/android/telephony/SimActivationState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2016-12-05T18:42:03Z",
+      "side": 1,
+      "message": "abnormal?  Shouldn\u0027t this be \"deactivated\"?",
+      "range": {
+        "startLine": 51,
+        "startChar": 90,
+        "endLine": 51,
+        "endChar": 98
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_5c5af49b",
+        "filename": "telephony/java/android/telephony/SimActivationState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2016-12-05T18:42:03Z",
+      "side": 1,
+      "message": "currently?\n\nCould a carrier do the same thing for voice minutes?",
+      "range": {
+        "startLine": 58,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 24
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_7cb3789d",
+        "filename": "telephony/java/android/telephony/SimActivationState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2016-12-05T18:42:03Z",
+      "side": 1,
+      "message": "seems like overkill.  Objects given out via the API should probably be immutable.  Objects used internally to track state should only change on a single thread.",
+      "range": {
+        "startLine": 62,
+        "startChar": 12,
+        "endLine": 62,
+        "endChar": 25
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_bcc9f010",
+        "filename": "telephony/java/android/telephony/SimActivationState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2016-12-05T18:42:03Z",
+      "side": 1,
+      "message": "toString(State)?",
+      "range": {
+        "startLine": 65,
+        "startChar": 26,
+        "endLine": 65,
+        "endChar": 38
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_5c6e7419",
+        "filename": "telephony/java/android/telephony/SimActivationState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2016-12-05T18:42:03Z",
+      "side": 1,
+      "message": "I\u0027m not sure I like the data spcifics.  Verifying it\u0027s part of the enum is fine, but maybe drop isData?",
+      "range": {
+        "startLine": 80,
+        "startChar": 26,
+        "endLine": 80,
+        "endChar": 48
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_dc7944e7",
+        "filename": "telephony/java/android/telephony/SimActivationState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2016-12-05T18:42:03Z",
+      "side": 1,
+      "message": "this is probably better done in the tracker as it can keep the history of transitions and leave this class as a pretty dumb bag of data",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 79
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_3c4e2084",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2478,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2016-12-05T18:42:03Z",
+      "side": 1,
+      "message": "shouldn\u0027t there also be get\u0027s for voice and data?",
+      "range": {
+        "startLine": 2478,
+        "startChar": 19,
+        "endLine": 2478,
+        "endChar": 42
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_8136c542",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2016-12-05T18:42:03Z",
+      "side": 1,
+      "message": "indent like the others",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 6
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
