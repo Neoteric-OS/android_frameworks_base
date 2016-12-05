@@ -18,6 +18,7 @@ package com.android.internal.os;
 
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
+import android.os.RemoteException;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Slog;
