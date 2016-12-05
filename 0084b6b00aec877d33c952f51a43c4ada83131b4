@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d159bc1_3d45f9b6",
+        "filename": "core/java/android/net/WifiNetworkScoreCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-05T21:38:30Z",
+      "side": 1,
+      "message": "Avoid allocating iterators: \nhttps://docs.google.com/document/d/1772U-6hNWjEYNpsvqFo-mwPSrBD_r6Wn08qeAd6ltBk/view#heading\u003dh.woei4s95qf53",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 51
+      },
+      "revId": "0084b6b00aec877d33c952f51a43c4ada83131b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_5dd66daf",
+        "filename": "core/java/android/net/WifiNetworkScoreCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-05T21:38:30Z",
+      "side": 1,
+      "message": "null check on wifiManager",
+      "range": {
+        "startLine": 191,
+        "startChar": 37,
+        "endLine": 191,
+        "endChar": 48
+      },
+      "revId": "0084b6b00aec877d33c952f51a43c4ada83131b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_fdc401fa",
+        "filename": "core/java/android/net/WifiNetworkScoreCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-05T21:38:30Z",
+      "side": 1,
+      "message": "Over 100 chars",
+      "range": {
+        "startLine": 192,
+        "startChar": 99,
+        "endLine": 192,
+        "endChar": 102
+      },
+      "revId": "0084b6b00aec877d33c952f51a43c4ada83131b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
