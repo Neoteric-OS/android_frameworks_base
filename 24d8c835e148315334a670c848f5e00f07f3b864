@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "8d159bc1_a01f7ed2",
+        "filename": "telephony/java/android/telephony/SimActivationState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2016-12-05T23:06:26Z",
+      "side": 1,
+      "message": "SimActivationState consists a list of internal state like voice and data activation state (it could be expanded if needed later). A list of separate API for each internal state update might be easier to use than a single SimActivationState\n\nReplace with two INT requires separate listener callback for each internal state update.",
+      "parentUuid": "8d159bc1_dc8a646c",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 31
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d159bc1_c1227dc8",
         "filename": "telephony/java/android/telephony/SimActivationState.java",
         "patchSetId": 2
@@ -82,6 +106,30 @@
       "writtenOn": "2016-12-05T18:42:03Z",
       "side": 1,
       "message": "white space",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 4
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_9d8ce555",
+        "filename": "telephony/java/android/telephony/SimActivationState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2016-12-05T23:06:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d159bc1_c1227dc8",
       "range": {
         "startLine": 37,
         "startChar": 0,
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "8d159bc1_7d893143",
+        "filename": "telephony/java/android/telephony/SimActivationState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2016-12-05T23:06:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d159bc1_fc60884b",
+      "range": {
+        "startLine": 51,
+        "startChar": 90,
+        "endLine": 51,
+        "endChar": 98
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d159bc1_5c5af49b",
         "filename": "telephony/java/android/telephony/SimActivationState.java",
         "patchSetId": 2
@@ -128,6 +200,30 @@
       "writtenOn": "2016-12-05T18:42:03Z",
       "side": 1,
       "message": "currently?\n\nCould a carrier do the same thing for voice minutes?",
+      "range": {
+        "startLine": 58,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 24
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_9757271d",
+        "filename": "telephony/java/android/telephony/SimActivationState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2016-12-05T23:06:26Z",
+      "side": 1,
+      "message": "carriers could do the same for voice min, like prepaid sim card run out of min. But we don\u0027t have any use case for voice_restricted state, no carrier app/default app will act upon that state and we are unclear how to detect it, That\u0027s why I marked it only avail for data currently.",
+      "parentUuid": "8d159bc1_5c5af49b",
       "range": {
         "startLine": 58,
         "startChar": 12,
@@ -163,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "8d159bc1_bd8fa949",
+        "filename": "telephony/java/android/telephony/SimActivationState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2016-12-05T23:06:26Z",
+      "side": 1,
+      "message": "curious why it is single threaded, simActivationTracker is not a handler",
+      "parentUuid": "8d159bc1_7cb3789d",
+      "range": {
+        "startLine": 62,
+        "startChar": 12,
+        "endLine": 62,
+        "endChar": 25
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d159bc1_bcc9f010",
         "filename": "telephony/java/android/telephony/SimActivationState.java",
         "patchSetId": 2
@@ -174,6 +294,30 @@
       "writtenOn": "2016-12-05T18:42:03Z",
       "side": 1,
       "message": "toString(State)?",
+      "range": {
+        "startLine": 65,
+        "startChar": 26,
+        "endLine": 65,
+        "endChar": 38
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_7754b317",
+        "filename": "telephony/java/android/telephony/SimActivationState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2016-12-05T23:06:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d159bc1_bcc9f010",
       "range": {
         "startLine": 65,
         "startChar": 26,
@@ -209,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "8d159bc1_77883208",
+        "filename": "telephony/java/android/telephony/SimActivationState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2016-12-05T23:06:26Z",
+      "side": 1,
+      "message": "moving that logic to SimActivationTracker#setVoiceActivationState? since we currently only support data_restricted state",
+      "parentUuid": "8d159bc1_5c6e7419",
+      "range": {
+        "startLine": 80,
+        "startChar": 26,
+        "endLine": 80,
+        "endChar": 48
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d159bc1_dc7944e7",
         "filename": "telephony/java/android/telephony/SimActivationState.java",
         "patchSetId": 2
@@ -220,6 +388,30 @@
       "writtenOn": "2016-12-05T18:42:03Z",
       "side": 1,
       "message": "this is probably better done in the tracker as it can keep the history of transitions and leave this class as a pretty dumb bag of data",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 79
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_f7dae205",
+        "filename": "telephony/java/android/telephony/SimActivationState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2016-12-05T23:06:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d159bc1_dc7944e7",
       "range": {
         "startLine": 117,
         "startChar": 0,
@@ -266,6 +458,30 @@
       "writtenOn": "2016-12-05T18:42:03Z",
       "side": 1,
       "message": "indent like the others",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 6
+      },
+      "revId": "24d8c835e148315334a670c848f5e00f07f3b864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d159bc1_ab507f7d",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2016-12-05T23:06:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d159bc1_8136c542",
       "range": {
         "startLine": 70,
         "startChar": 4,
