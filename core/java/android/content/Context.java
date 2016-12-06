@@ -3274,6 +3274,25 @@ public abstract class Context {
 
     /**
      * Use with {@link #getSystemService} to retrieve a
+     * {@link android.telephony.MbmsStreamingManager} for streaming carrier MBMS content.
+     *
+     * @see #getSystemService
+     * @see android.telephony.MbmsStreamingManager
+     */
+    public static final String MBMS_STREAMING_SERVICE = "carrier_mbms_streaming";
+
+    /**
+     * Use with {@link #getSystemService} to retrieve a
+     * {@link android.telephony.MbmsDownloadManager} for downloading carrier MBMS
+     * content.
+     *
+     * @see #getSystemService
+     * @see android.telephony.MbmsDownloadManager
+     */
+    public static final String MBMS_DOWNLOAD_SERVICE = "carrier_mbms_download";
+
+    /**
+     * Use with {@link #getSystemService} to retrieve a
      * {@link android.text.ClipboardManager} for accessing and modifying
      * {@link android.content.ClipboardManager} for accessing and modifying
      * the contents of the global clipboard.
