@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad833f54_1b12677c",
+        "filename": "core/java/android/net/WifiNetworkScoreCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2016-12-06T19:24:01Z",
+      "side": 1,
+      "message": "Why not android.net.wifi as I suggested before?",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 19
+      },
+      "revId": "699d6c15fe543ff1e4e85595d174624d7605c67b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
