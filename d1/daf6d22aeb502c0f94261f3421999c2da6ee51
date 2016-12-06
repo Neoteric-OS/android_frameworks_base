@@ -1,0 +1,11 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+1: Joe LaPenna <jlapenna@google.com>
+Code-Review+2: Adam Powell <adamp@google.com>
+Code-Review+1: Jeremy Joslin <jjoslin@google.com>
+Autosubmit+1: Jeremy Joslin <jjoslin@google.com>
+Verified+1: Jeremy Joslin <jjoslin@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Tue, 06 Dec 2016 23:08:02 +0000
+Reviewed-on: https://android-review.googlesource.com/310565
+Project: platform/frameworks/base
+Branch: refs/heads/master
