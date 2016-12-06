@@ -1582,10 +1582,22 @@ public class ConnectivityManager {
     public PacketKeepalive startNattKeepalive(
             Network network, int intervalSeconds, PacketKeepaliveCallback callback,
             InetAddress srcAddr, int srcPort, InetAddress dstAddr) {
+        return startNattKeepalive(network, intervalSeconds, callback,
+                    srcAddr, srcPort, dstAddr, PacketKeepalive.NATT_PORT);
+    }
+
+    /**
+     * Starts an IPsec NAT-T keepalive packet with the specified parameters.
+     *
+     * @hide
+     */
+    public PacketKeepalive startNattKeepalive(
+            Network network, int intervalSeconds, PacketKeepaliveCallback callback,
+            InetAddress srcAddr, int srcPort, InetAddress dstAddr, int dstPort) {
         final PacketKeepalive k = new PacketKeepalive(network, callback);
         try {
             mService.startNattKeepalive(network, intervalSeconds, k.mMessenger, new Binder(),
-                    srcAddr.getHostAddress(), srcPort, dstAddr.getHostAddress());
+                    srcAddr.getHostAddress(), srcPort, dstAddr.getHostAddress(), dstPort);
         } catch (RemoteException e) {
             Log.e(TAG, "Error starting packet keepalive: ", e);
             k.stopLooper();

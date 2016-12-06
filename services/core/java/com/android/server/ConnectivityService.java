@@ -5457,12 +5457,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public void startNattKeepalive(Network network, int intervalSeconds, Messenger messenger,
-            IBinder binder, String srcAddr, int srcPort, String dstAddr) {
+            IBinder binder, String srcAddr, int srcPort, String dstAddr, int dstPort) {
         enforceKeepalivePermission();
         mKeepaliveTracker.startNattKeepalive(
                 getNetworkAgentInfoForNetwork(network),
                 intervalSeconds, messenger, binder,
-                srcAddr, srcPort, dstAddr, ConnectivityManager.PacketKeepalive.NATT_PORT);
+                srcAddr, srcPort, dstAddr, dstPort);
     }
 
     @Override

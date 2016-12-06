@@ -172,7 +172,7 @@ interface IConnectivityManager
     void factoryReset();
 
     void startNattKeepalive(in Network network, int intervalSeconds, in Messenger messenger,
-            in IBinder binder, String srcAddr, int srcPort, String dstAddr);
+            in IBinder binder, String srcAddr, int srcPort, String dstAddr, int dstPort);
 
     void stopKeepalive(in Network network, int slot);
 
