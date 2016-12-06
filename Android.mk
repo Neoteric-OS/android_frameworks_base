@@ -428,6 +428,12 @@ LOCAL_SRC_FILES += \
 	telecomm/java/com/android/internal/telecom/IInCallService.aidl \
 	telecomm/java/com/android/internal/telecom/ITelecomService.aidl \
 	telecomm/java/com/android/internal/telecom/RemoteServiceCallback.aidl \
+        telephony/java/android/telephony/mbms/IMbmsDownloadManagerListener.aidl \
+	telephony/java/android/telephony/mbms/IMbmsStreamingManagerListener.aidl \
+        telephony/java/android/telephony/mbms/IStreamingListener.aidl \
+	telephony/java/android/telephony/mbms/vendor/IMbmsDownloadService.aidl \
+	telephony/java/android/telephony/mbms/vendor/IMbmsStreamingService.aidl \
+        telephony/java/android/telephony/mbms/vendor/IStreamingService.aidl \
 	telephony/java/com/android/ims/internal/IImsCallSession.aidl \
 	telephony/java/com/android/ims/internal/IImsCallSessionListener.aidl \
 	telephony/java/com/android/ims/internal/IImsConfig.aidl \
@@ -536,6 +542,12 @@ framework_built := $(call java-lib-deps,framework)
 include $(CLEAR_VARS)
 
 aidl_files := \
+        frameworks/base/telephony/java/android/telephony/mbms/DownloadRequest.aidl \
+        frameworks/base/telephony/java/android/telephony/mbms/DownloadStatus.aidl \
+        frameworks/base/telephony/java/android/telephony/mbms/FileInfo.aidl \
+        frameworks/base/telephony/java/android/telephony/mbms/FileServiceInfo.aidl \
+        frameworks/base/telephony/java/android/telephony/mbms/ServiceInfo.aidl \
+        frameworks/base/telephony/java/android/telephony/mbms/StreamingServiceInfo.aidl \
 	frameworks/base/telephony/java/android/telephony/ServiceState.aidl \
 	frameworks/base/telephony/java/android/telephony/SubscriptionInfo.aidl \
 	frameworks/base/telephony/java/android/telephony/CellInfo.aidl \
