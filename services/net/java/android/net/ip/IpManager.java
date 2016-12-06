@@ -1251,10 +1251,20 @@ public class IpManager extends StateMachine {
                 return;
             }
 
-            if (mConfiguration.mEnableIPv4 && !startIPv4()) {
-                doImmediateProvisioningFailure(IpManagerEvent.ERROR_STARTING_IPV4);
-                transitionTo(mStoppingState);
-                return;
+            if (mConfiguration.mUsingIpReachabilityMonitor) {
+                try {
+                    mIpReachabilityMonitor = new IpReachabilityMonitor(
+                            mContext,
+                            mInterfaceName,
+                            new IpReachabilityMonitor.Callback() {
+                                @Override
+                                public void notifyLost(InetAddress ip, String logMsg) {
+                                    mCallback.onReachabilityLost(logMsg);
+                                }
+                            });
+                } catch (IllegalArgumentException e) {
+
+                }
             }
 
             if (mConfiguration.mUsingIpReachabilityMonitor && !startIpReachabilityMonitor()) {
