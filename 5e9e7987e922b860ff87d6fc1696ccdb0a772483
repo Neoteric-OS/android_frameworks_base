@@ -46,6 +46,30 @@
       "revId": "5e9e7987e922b860ff87d6fc1696ccdb0a772483",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad833f54_983e5d1d",
+        "filename": "services/core/java/com/android/server/AlarmManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2016-12-06T18:27:24Z",
+      "side": 1,
+      "message": "I see, thanks.  I think I understand now -- although I still think that my point about alarms with a triggerAtTime of zero still applies: advancing that by 5 seconds is meaningless, and is a sign that this is not an accurate fix for the issue.\n\nAs I see it, the root problem is really that the data currently being stored per alarm doesn\u0027t actually record everything we need:  what we *really* need to know is the time at which the alarm was originally scheduled, not the caller\u0027s stated original trigger time.  If we knew that, then in any later rebatch we could still calculate the appropriate earliest-allowed trigger time.\n\nSo far we\u0027ve been fairly conservative about preserving the caller\u0027s attempted triggerAtTime, but I think now that the cleanest way to proceed is to adjust *that* when it\u0027s less than the mandatory minimum futurity, not just adjust the calculated effective trigger time.  Then we\u0027d never have to think about it again during rebatch, because the origWhen field preserved in the Alarm object would already take that minimum futurity into account.\n\nThat would make this section of the code look like this instead:\n\n  final long minTrigger \u003d nowElapsed + mConstants.MIN_FUTURITY;\n  if (nominalTrigger \u003e minTrigger) {\n      // alarm is far enough in the future, just use it as-is\n      triggerElapsed \u003d nominalTrigger;\n  } else {\n      // alarm is too soon - push it out to minimum futurity\n      triggerElapsed \u003d minTrigger;\n      triggerAtTime +\u003d (minTrigger - nominalTrigger);\n  }\n\n...and from here on we pretend that the calling app scheduled the alarm for (now + MIN_FUTURITY) in the first place, so we\u0027re done.",
+      "parentUuid": "cdbcf3d0_b32ab88b",
+      "range": {
+        "startLine": 1060,
+        "startChar": 72,
+        "endLine": 1060,
+        "endChar": 111
+      },
+      "revId": "5e9e7987e922b860ff87d6fc1696ccdb0a772483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
