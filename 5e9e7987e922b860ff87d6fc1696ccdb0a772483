@@ -22,6 +22,30 @@
       "revId": "5e9e7987e922b860ff87d6fc1696ccdb0a772483",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cdbcf3d0_b32ab88b",
+        "filename": "services/core/java/com/android/server/AlarmManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1128955
+      },
+      "writtenOn": "2016-12-06T02:50:29Z",
+      "side": 1,
+      "message": "Hi Chris, \n\nI know the re-batch logic is not at here, but re-batch will be affected by this parameter-\"triggerAtTime\". \n\nWhile adding a new alarm, this new alarm\u0027s parameter-\"origWhen\" will be assigned this value - \"triggerAtTime\". \n\nSo let go to see see the re-batch function.\n\nvoid reAddAlarmLocked(Alarm a, long nowElapsed, boolean doValidate) {\na.when \u003d a.origWhen;\n(...skip)\n\nSo if once reAddAlarmLocked function triggers, this new alarm\u0027s parameter-\"when\" will be assigned back this value \"origWhen\".\n\n\nSo this patch is to fix the defect.",
+      "parentUuid": "8d159bc1_9ddd132f",
+      "range": {
+        "startLine": 1060,
+        "startChar": 72,
+        "endLine": 1060,
+        "endChar": 111
+      },
+      "revId": "5e9e7987e922b860ff87d6fc1696ccdb0a772483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
