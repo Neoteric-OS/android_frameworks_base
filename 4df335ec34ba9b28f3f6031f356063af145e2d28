@@ -103,6 +103,24 @@
       "revId": "4df335ec34ba9b28f3f6031f356063af145e2d28",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad833f54_c382a652",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1796,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2016-12-07T19:15:29Z",
+      "side": 1,
+      "message": "This is used for Android TV so an app can continue media playback behind the homescreen. Could you test this scenario?",
+      "parentUuid": "eda8d7f5_ac98e308",
+      "revId": "4df335ec34ba9b28f3f6031f356063af145e2d28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
