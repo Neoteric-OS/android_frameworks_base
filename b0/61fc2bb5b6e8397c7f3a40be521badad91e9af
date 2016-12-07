@@ -1,0 +1,9 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Autosubmit+1: Tomasz Mikolajewski <mtomasz@google.com>
+Code-Review+2: Narayan Kamath <narayan@google.com>
+Verified+1: Tomasz Mikolajewski <mtomasz@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Wed, 07 Dec 2016 01:40:48 +0000
+Reviewed-on: https://android-review.googlesource.com/310284
+Project: platform/frameworks/base
+Branch: refs/heads/master
