@@ -522,9 +522,12 @@ public class ZygoteInit {
                 }
 
                 if (dexoptNeeded != DexFile.NO_DEXOPT_NEEDED) {
+                    final int dexFlags = 0;
+                    final String compilerFilter = "speed";
+                    final String uuid = null;
                     try {
-                        installer.dexopt(classPathElement, Process.SYSTEM_UID, instructionSet,
-                                dexoptNeeded, 0 /*dexFlags*/, "speed", null /*volumeUuid*/,
+                        installer.dexopt(classPathElement, Process.SYSTEM_UID, "*", instructionSet,
+                                dexoptNeeded, null, dexFlags, compilerFilter, uuid,
                                 sharedLibraries);
                     } catch (InstallerException e) {
                         // Ignore (but log), we need this on the classpath for fallback mode.
