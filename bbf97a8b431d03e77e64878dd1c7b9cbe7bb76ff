@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad833f54_e371eabf",
+        "filename": "wifi/tests/src/android/net/wifi/WifiNetworkScoreCacheTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2016-12-07T19:15:03Z",
+      "side": 1,
+      "message": "Needs to start with an \u0027m\u0027.",
+      "revId": "bbf97a8b431d03e77e64878dd1c7b9cbe7bb76ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad833f54_a35c4238",
+        "filename": "wifi/tests/src/android/net/wifi/WifiNetworkScoreCacheTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2016-12-07T19:15:03Z",
+      "side": 1,
+      "message": "\u0027m\u0027",
+      "revId": "bbf97a8b431d03e77e64878dd1c7b9cbe7bb76ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d774f48_14055c78",
+        "filename": "wifi/tests/src/android/net/wifi/WifiNetworkScoreCacheTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2016-12-07T19:15:03Z",
+      "side": 1,
+      "message": "can be static",
+      "revId": "bbf97a8b431d03e77e64878dd1c7b9cbe7bb76ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d774f48_3402d871",
+        "filename": "wifi/tests/src/android/net/wifi/WifiNetworkScoreCacheTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2016-12-07T19:15:03Z",
+      "side": 1,
+      "message": "document param",
+      "revId": "bbf97a8b431d03e77e64878dd1c7b9cbe7bb76ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
