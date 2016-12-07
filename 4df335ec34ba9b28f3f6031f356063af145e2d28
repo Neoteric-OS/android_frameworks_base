@@ -85,6 +85,24 @@
       "revId": "4df335ec34ba9b28f3f6031f356063af145e2d28",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eda8d7f5_ac98e308",
+        "filename": "services/core/java/com/android/server/am/ActivityStack.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1796,
+      "author": {
+        "id": 1023708
+      },
+      "writtenOn": "2016-12-07T13:49:36Z",
+      "side": 1,
+      "message": "hi Jorim, for Activity.requestVisibleBehind is used for fullscreen task, I tried local for app to call this function for full screen stack it should be no difference, if any missing case you can let me know.\n\nbecause line 1796 the modification is for home stack task case, the comment shows there is no task can visible behind home activity, since the home task is no home activity, I think it could be no conflict to set behindFullscreenActivity as false because there is no home activity.",
+      "parentUuid": "8dc11b20_ec35e338",
+      "revId": "4df335ec34ba9b28f3f6031f356063af145e2d28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
