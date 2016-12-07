@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad833f54_3270a586",
+        "filename": "core/java/android/os/Trace.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2016-12-07T01:41:27Z",
+      "side": 1,
+      "message": "why 22 rather than 21?",
+      "revId": "45d4935b9efc29aa25840e5226b0ea608ee0695c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
