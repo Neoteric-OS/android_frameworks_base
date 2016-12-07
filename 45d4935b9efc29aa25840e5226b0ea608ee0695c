@@ -16,6 +16,24 @@
       "revId": "45d4935b9efc29aa25840e5226b0ea608ee0695c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad833f54_23e132b7",
+        "filename": "core/java/android/os/Trace.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2016-12-07T18:44:26Z",
+      "side": 1,
+      "message": "21 is used in internal, and the changes that added it looked annoying to cherry-pick upstream.",
+      "parentUuid": "ad833f54_3270a586",
+      "revId": "45d4935b9efc29aa25840e5226b0ea608ee0695c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
