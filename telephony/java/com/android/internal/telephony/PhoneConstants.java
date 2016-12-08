@@ -153,6 +153,22 @@ public class PhoneConstants {
             APN_TYPE_EMERGENCY
     };
 
+    // This bitmask represents PhoneConstants.APN_TYPE_*
+    public static class ApnTypeBitmask {
+        public static final int APN_TYPE_UNKNOWN_BIT    = 0x00;
+        public static final int APN_TYPE_DEFAULT_BIT    = 0x01;
+        public static final int APN_TYPE_MMS_BIT        = 0x02;
+        public static final int APN_TYPE_SUPL_BIT       = 0x04;
+        public static final int APN_TYPE_DUN_BIT        = 0x08;
+        public static final int APN_TYPE_HIPRI_BIT      = 0x10;
+        public static final int APN_TYPE_FOTA_BIT       = 0x20;
+        public static final int APN_TYPE_IMS_BIT        = 0x40;
+        public static final int APN_TYPE_CBS_BIT        = 0x80;
+        public static final int APN_TYPE_IA_BIT         = 0x100;
+        public static final int APN_TYPE_EMERGENCY_BIT  = 0x200;
+        public static final int APN_TYPE_ALL_BIT        = 0xFFFFFFFF;
+    }
+
     public static final int RIL_CARD_MAX_APPS    = 8;
 
     public static final int DEFAULT_CARD_INDEX   = 0;
