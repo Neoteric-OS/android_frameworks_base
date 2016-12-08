@@ -26,7 +26,7 @@
 #include <JNIHelp.h>
 #include <android/hidl/manager/1.0/IServiceManager.h>
 #include <android/hidl/base/1.0/IBase.h>
-#include <android/hidl/base/1.0/IHwBase.h>
+#include <android/hidl/base/1.0/BpBase.h>
 #include <android_runtime/AndroidRuntime.h>
 #include <hidl/ServiceManagement.h>
 #include <hidl/Status.h>
@@ -241,7 +241,8 @@ static void JHwBinder_native_registerService(
     using android::hidl::manager::V1_0::IServiceManager;
 
     sp<hardware::IBinder> binder = JHwBinder::GetNativeContext(env, thiz);
-    sp<hidl::base::V1_0::IBase> base = hidl::base::V1_0::IHwBase::asInterface(binder);
+    /* TODO(b/33440494) this is not right */
+    sp<hidl::base::V1_0::IBase> base = new hidl::base::V1_0::BpBase(binder);
     bool ok = hardware::defaultServiceManager()->add(
                 interfaceChain,
                 serviceName,
