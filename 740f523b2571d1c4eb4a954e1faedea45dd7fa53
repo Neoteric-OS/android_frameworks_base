@@ -22,6 +22,30 @@
       "revId": "740f523b2571d1c4eb4a954e1faedea45dd7fa53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_69c21ef0",
+        "filename": "services/core/java/com/android/server/pm/OtaDexoptService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2016-12-09T23:39:21Z",
+      "side": 1,
+      "message": "Yeah, the Binder call no longer respects this flag, since all OTA-related dexopt calls are now coming from otapreopt, and never through the Binder call.\n\nI\u0027ll take another pass through and remove the flag.",
+      "parentUuid": "3a2b0780_ae336c06",
+      "range": {
+        "startLine": 433,
+        "startChar": 33,
+        "endLine": 433,
+        "endChar": 43
+      },
+      "revId": "740f523b2571d1c4eb4a954e1faedea45dd7fa53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
