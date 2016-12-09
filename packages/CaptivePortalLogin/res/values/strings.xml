@@ -8,5 +8,9 @@
     <string name="ssl_error_warning">The network you&#8217;re trying to join has security issues.</string>
     <string name="ssl_error_example">For example, the login page may not belong to the organization shown.</string>
     <string name="ssl_error_continue">Continue anyway via browser</string>
+    <string name="portal_notification_id">Activate your service</string>
+    <string name="no_data_notification_id">No data service</string>
+    <string name="portal_notification_detail">Sign in to portal to activate your service</string>
+    <string name="no_data_notification_detail">No Service, please contact your carrier</string>
 
 </resources>

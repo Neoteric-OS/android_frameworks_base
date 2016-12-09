@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CarrierDefaultReceivers</string>
+    <string name="portal_notification_id">Activate your service</string>
+    <string name="no_data_notification_id">No data service</string>
+    <string name="portal_notification_detail">Sign in to portal to activate your service</string>
+    <string name="no_data_notification_detail">No Service, please contact your carrier</string>
+</resources>

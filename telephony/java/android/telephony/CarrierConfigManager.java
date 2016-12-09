@@ -835,6 +835,54 @@ public class CarrierConfigManager {
             "signal_pco_receiver_string_array";
 
     /**
+     * A list of interesting signals which could wake up a carrier app.
+     * Note those intents should be declared in the Manifest file.
+     * @see com.android.internal.telephony.TelephonyIntents
+     * Example:
+     * <item>com.google.android.carrierAPK/.CarrierSignalReceiverA:
+     * android.intent.action.CARRIER_SIGNAL_REDIRECTED,
+     * android.intent.action.CARRIER_SIGNAL_PCO_VALUE
+     * </item>
+     * <item>com.google.android.carrierAPK/.CarrierSignalReceiverB:
+     * android.intent.action.CARRIER_SIGNAL_PCO_VALUE
+     * </item>
+     * @hide
+     */
+    public static final String KEY_CARRIER_APP_WAKE_SIGNAL_CONFIG_STRING_ARRAY =
+            "carrier_app_wake_signal_config";
+
+    /**
+     * A list of interesting signals for a carrier app during run-time.
+     * Note those intents are targeting on run-time broadcast receivers and won't wake up the app.
+     * @see com.android.internal.telephony.TelephonyIntents
+     * Example:
+     * <item>com.google.android.carrierAPK/.CarrierSignalReceiverA:
+     * android.intent.action.CARRIER_SIGNAL_REQUEST_NETWORK_FAILED,
+     * android.intent.action.CARRIER_SIGNAL_PCO_VALUE
+     * </item>
+     * <item>com.google.android.carrierAPK/.CarrierSignalReceiverB:
+     * android.intent.action.CARRIER_SIGNAL_REQUEST_NETWORK_FAILED
+     * </item>
+     * @hide
+     */
+    public static final String KEY_CARRIER_APP_NO_WAKE_SIGNAL_CONFIG_STRING_ARRAY =
+            "carrier_app_no_wake_signal_config";
+
+    /**
+     * A list of configured carrier actions from carrier default app upon redirection signal
+     * @hide
+     */
+    public static final String KEY_DEFAULT_APP_ACTIONS_ON_REDIRECTION_STRINGS =
+            "default_app_actions_on_redirection";
+
+    /**
+     * A list of configured carrier actions from carrier default app upon pco signal
+     * @hide
+     */
+    public static final String KEY_DEFAULT_APP_ACTION_ON_PCO_STRINGS = "default_app_actions_on_pco";
+
+
+    /**
      * Determines whether the carrier supports making non-emergency phone calls while the phone is
      * in emergency callback mode.  Default value is {@code true}, meaning that non-emergency calls
      * are allowed in emergency callback mode.

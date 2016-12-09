@@ -527,7 +527,8 @@ public class NetworkMonitor extends StateMachine {
                     //    expensive metered network, or unwanted leaking of the User Agent string.
                     if (!mDefaultRequest.networkCapabilities.satisfiedByNetworkCapabilities(
                             mNetworkAgentInfo.networkCapabilities)) {
-                        validationLog("Network would not satisfy default request, not validating");
+                        validationLog("!Network would not satisfy default request, not validating" +
+                                mDefaultRequest.networkCapabilities.toString() + "::::" + mNetworkAgentInfo.networkCapabilities.toString());
                         transitionTo(mValidatedState);
                         return HANDLED;
                     }
