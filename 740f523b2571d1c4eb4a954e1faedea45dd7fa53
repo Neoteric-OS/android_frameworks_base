@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a2b0780_ae336c06",
+        "filename": "services/core/java/com/android/server/pm/OtaDexoptService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2016-12-09T22:57:54Z",
+      "side": 1,
+      "message": "I thought you killed this one? Only on the installd side?",
+      "range": {
+        "startLine": 433,
+        "startChar": 33,
+        "endLine": 433,
+        "endChar": 43
+      },
+      "revId": "740f523b2571d1c4eb4a954e1faedea45dd7fa53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
