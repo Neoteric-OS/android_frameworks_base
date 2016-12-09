@@ -17,9 +17,12 @@
 #define LOG_TAG "NetworkStats"
 
 #include <errno.h>
+#include <fcntl.h>
 #include <inttypes.h>
+#include <sstream>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 #include <core_jni_helpers.h>
 #include <jni.h>
@@ -28,6 +31,7 @@
 #include <ScopedLocalRef.h>
 #include <ScopedPrimitiveArray.h>
 
+#include <android-base/file.h>  // For TEMP_FAILURE_RETRY on Darwin.
 #include <utils/Log.h>
 #include <utils/misc.h>
 #include <utils/Vector.h>
@@ -96,15 +100,32 @@ static jlongArray get_long_array(JNIEnv* env, jobject obj, jfieldID field, int s
     return env->NewLongArray(size);
 }
 
+/*
+ * helper function used to read the data from proc/net/xt_qtaguid/stats and store
+ * in a string. The buffer size is set to 4k to read as close as to a page size at a
+ * time to reduce the possibility of getting corrupted data.
+ */
+static int readtostring(const char* path, std::string* content) {
+    content->clear();
+    char buf[4096];
+    ssize_t n;
+    int flags = O_RDONLY | O_CLOEXEC | O_BINARY | O_NOFOLLOW;
+    int fd = TEMP_FAILURE_RETRY(open(path, flags));
+    if (fd == -1) {
+        return fd;
+    }
+    while ((n = TEMP_FAILURE_RETRY(read(fd, &buf[0], sizeof(buf)))) > 0) {
+        content->append(buf, n);
+        memset(&buf, sizeof(buf), 0);
+    }
+    return 0;
+}
+
+
 static int readNetworkStatsDetail(JNIEnv* env, jclass clazz, jobject stats,
         jstring path, jint limitUid, jobjectArray limitIfacesObj, jint limitTag) {
     ScopedUtfChars path8(env, path);
     if (path8.c_str() == NULL) {
-        return -1;
-    }
-
-    FILE *fp = fopen(path8.c_str(), "r");
-    if (fp == NULL) {
         return -1;
     }
 
@@ -124,104 +145,144 @@ static int readNetworkStatsDetail(JNIEnv* env, jclass clazz, jobject stats,
     Vector<stats_line> lines;
 
     int lastIdx = 1;
-    int idx;
+    int idx, res;
     char buffer[384];
-    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
-        stats_line s;
-        int64_t rawTag;
-        char* pos = buffer;
-        char* endPos;
-        // First field is the index.
-        idx = (int)strtol(pos, &endPos, 10);
-        //ALOGI("Index #%d: %s", idx, buffer);
-        if (pos == endPos) {
-            // Skip lines that don't start with in index.  In particular,
-            // this will skip the initial header line.
-            continue;
-        }
-        if (idx != lastIdx + 1) {
-            ALOGE("inconsistent idx=%d after lastIdx=%d: %s", idx, lastIdx, buffer);
-            fclose(fp);
-            return -1;
-        }
-        lastIdx = idx;
-        pos = endPos;
-        // Skip whitespace.
-        while (*pos == ' ') {
-            pos++;
-        }
-        // Next field is iface.
-        int ifaceIdx = 0;
-        while (*pos != ' ' && *pos != 0 && ifaceIdx < (int)(sizeof(s.iface)-1)) {
-            s.iface[ifaceIdx] = *pos;
-            ifaceIdx++;
-            pos++;
-        }
-        if (*pos != ' ') {
-            ALOGE("bad iface: %s", buffer);
-            fclose(fp);
-            return -1;
-        }
-        s.iface[ifaceIdx] = 0;
-        if (limitIfaces.size() > 0) {
-            // Is this an iface the caller is interested in?
-            int i = 0;
-            while (i < (int)limitIfaces.size()) {
-                if (limitIfaces[i] == s.iface) {
-                    break;
-                }
-                i++;
-            }
-            if (i >= (int)limitIfaces.size()) {
-                // Nothing matched; skip this line.
-                //ALOGI("skipping due to iface: %s", buffer);
-                continue;
-            }
-        }
-
-        // Ignore whitespace
-        while (*pos == ' ') pos++;
-
-        // Find end of tag field
-        endPos = pos;
-        while (*endPos != ' ') endPos++;
-
-        // Three digit field is always 0x0, otherwise parse
-        if (endPos - pos == 3) {
-            rawTag = 0;
-        } else {
-            if (sscanf(pos, "%" PRIx64, &rawTag) != 1) {
-                ALOGE("bad tag: %s", pos);
-                fclose(fp);
-                return -1;
-            }
-        }
-        s.tag = rawTag >> 32;
-        if (limitTag != -1 && s.tag != limitTag) {
-            //ALOGI("skipping due to tag: %s", buffer);
-            continue;
-        }
-        pos = endPos;
-
-        // Ignore whitespace
-        while (*pos == ' ') pos++;
-
-        // Parse remaining fields.
-        if (sscanf(pos, "%u %u %" PRIu64 " %" PRIu64 " %" PRIu64 " %" PRIu64,
-                &s.uid, &s.set, &s.rxBytes, &s.rxPackets,
-                &s.txBytes, &s.txPackets) == 6) {
-            if (limitUid != -1 && limitUid != s.uid) {
-                //ALOGI("skipping due to uid: %s", buffer);
-                continue;
-            }
-            lines.push_back(s);
-        } else {
-            //ALOGI("skipping due to bad remaining fields: %s", pos);
-        }
+    std::string stats_string;
+    bool data_corrupt = true;
+    bool double_check = false;
+    res = readtostring(path8.c_str(), &stats_string);
+    if(res < 0) {
+        return -1;
     }
 
-    if (fclose(fp) != 0) {
-        ALOGE("Failed to close netstats file");
+    while (!double_check && data_corrupt) {
+        data_corrupt = false;
+        std::istringstream stream{stats_string};
+        std::string statsLine;
+
+        /*
+         * Comparing the hash and file length of two consecutive read result
+         * from proc file system and proceed only if the result is consistent.
+         */
+        if(!double_check) {
+            size_t hashone, hashtwo, stats_size, verify_size;
+            stats_size = 0;
+            hashone = 0;
+            verify_size = stats_string.size();
+            hashtwo = std::hash<std::string>{}(stats_string);
+            while((stats_size != verify_size )|| (hashone != hashtwo)) {
+                hashone = hashtwo;
+                stats_size = verify_size;
+                res = readtostring(path8.c_str(), &stats_string);
+                if (res < 0) {
+                    return -1;
+                }
+                verify_size = stats_string.size();
+                hashtwo = std::hash<std::string>{}(stats_string);
+            }
+            double_check = true;
+        }
+
+        while (std::getline(stream, statsLine)) {
+            strcpy(buffer, statsLine.c_str());
+            stats_line s;
+            int64_t rawTag;
+            char* pos = buffer;
+            char* endPos;
+            // First field is the index.
+            idx = (int)strtol(pos, &endPos, 10);
+            //ALOGI("Index #%d: %s", idx, buffer);
+            if (pos == endPos) {
+                // Skip lines that don't start with in index.  In particular,
+                // this will skip the initial header line.
+                continue;
+            }
+            if (idx != lastIdx + 1) {
+                ALOGE("inconsistent idx=%d after lastIdx=%d: %s", idx, lastIdx, buffer);
+                data_corrupt = true;
+                break;
+            }
+            lastIdx = idx;
+            pos = endPos;
+            // Skip whitespace.
+            while (*pos == ' ') {
+                pos++;
+            }
+            // Next field is iface.
+            int ifaceIdx = 0;
+            while (*pos != ' ' && *pos != 0 && ifaceIdx < (int)(sizeof(s.iface)-1)) {
+                s.iface[ifaceIdx] = *pos;
+                ifaceIdx++;
+                pos++;
+            }
+            if (*pos != ' ') {
+                ALOGE("bad iface: %s", buffer);
+                data_corrupt = true;
+                break;
+            }
+            s.iface[ifaceIdx] = 0;
+            if (limitIfaces.size() > 0) {
+                // Is this an iface the caller is interested in?
+                int i = 0;
+                while (i < (int)limitIfaces.size()) {
+                    if (limitIfaces[i] == s.iface) {
+                        break;
+                    }
+                    i++;
+                }
+                if (i >= (int)limitIfaces.size()) {
+                    // Nothing matched; skip this line.
+                    //ALOGI("skipping due to iface: %s", buffer);
+                    continue;
+                }
+            }
+
+            // Ignore whitespace
+            while (*pos == ' ') pos++;
+
+            // Find end of tag field
+            endPos = pos;
+            while (*endPos != ' ') endPos++;
+
+            // Three digit field is always 0x0, otherwise parse
+            if (endPos - pos == 3) {
+                rawTag = 0;
+            } else {
+                if (sscanf(pos, "%" PRIx64, &rawTag) != 1) {
+                    ALOGE("bad tag: %s", pos);
+                    data_corrupt = true;
+                    break;
+                }
+            }
+            s.tag = rawTag >> 32;
+            if (limitTag != -1 && s.tag != limitTag) {
+                //ALOGI("skipping due to tag: %s", buffer);
+                continue;
+            }
+            pos = endPos;
+
+            // Ignore whitespace
+            while (*pos == ' ') pos++;
+
+            // Parse remaining fields.
+            if (sscanf(pos, "%u %u %" PRIu64 " %" PRIu64 " %" PRIu64 " %" PRIu64,
+                    &s.uid, &s.set, &s.rxBytes, &s.rxPackets,
+                    &s.txBytes, &s.txPackets) == 6) {
+                if (limitUid != -1 && limitUid != s.uid) {
+                    //ALOGI("skipping due to uid: %s", buffer);
+                    continue;
+                }
+                //testPrintI("raw data: %s", buffer);
+                lines.push_back(s);
+            } else {
+                //ALOGI("skipping due to bad remaining fields: %s", pos);
+            }
+        }
+    }
+    /*  if the data is still corrupt after double checked with the comparision
+        program. return error
+        */
+    if (data_corrupt) {
         return -1;
     }
 
