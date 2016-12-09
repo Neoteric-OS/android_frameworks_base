@@ -105,7 +105,7 @@ public class RemoteViews implements Parcelable, Filter {
      * An array of actions to perform on the view tree once it has been
      * inflated
      */
-    private ArrayList<Action> mActions;
+    private final ArrayList<Action> mActions = new ArrayList<Action>();
 
     /**
      * A class to keep track of memory usage by this RemoteViews
@@ -165,7 +165,9 @@ public class RemoteViews implements Parcelable, Filter {
      * @hide
      */
     public void setRemoteInputs(int viewId, RemoteInput[] remoteInputs) {
-        mActions.add(new SetRemoteInputsAction(viewId, remoteInputs));
+        synchronized (mActions) {
+            mActions.add(new SetRemoteInputsAction(viewId, remoteInputs));
+        }
     }
 
     /**
@@ -359,31 +361,26 @@ public class RemoteViews implements Parcelable, Filter {
         RemoteViews copy = newRv.clone();
 
         HashMap<String, Action> map = new HashMap<String, Action>();
-        if (mActions == null) {
-            mActions = new ArrayList<Action>();
-        }
 
-        int count = mActions.size();
-        for (int i = 0; i < count; i++) {
-            Action a = mActions.get(i);
-            map.put(a.getUniqueKey(), a);
-        }
-
-        ArrayList<Action> newActions = copy.mActions;
-        if (newActions == null) return;
-        count = newActions.size();
-        for (int i = 0; i < count; i++) {
-            Action a = newActions.get(i);
-            String key = newActions.get(i).getUniqueKey();
-            int mergeBehavior = newActions.get(i).mergeBehavior();
-            if (map.containsKey(key) && mergeBehavior == Action.MERGE_REPLACE) {
-                mActions.remove(map.get(key));
-                map.remove(key);
+        synchronized (mActions) {
+            for (Action a : mActions) {
+                map.put(a.getUniqueKey(), a);
             }
 
-            // If the merge behavior is ignore, we don't bother keeping the extra action
-            if (mergeBehavior == Action.MERGE_REPLACE || mergeBehavior == Action.MERGE_APPEND) {
-                mActions.add(a);
+            ArrayList<Action> newActions = copy.mActions;
+            if (newActions == null) return;
+            for (Action a : newActions) {
+                String key = newActions.get(i).getUniqueKey();
+                int mergeBehavior = newActions.get(i).mergeBehavior();
+                if (map.containsKey(key) && mergeBehavior == Action.MERGE_REPLACE) {
+                    mActions.remove(map.get(key));
+                    map.remove(key);
+                }
+
+                // If the merge behavior is ignore, we don't bother keeping the extra action
+                if (mergeBehavior == Action.MERGE_REPLACE || mergeBehavior == Action.MERGE_APPEND) {
+                    mActions.add(a);
+                }
             }
         }
 
@@ -2187,7 +2184,6 @@ public class RemoteViews implements Parcelable, Filter {
 
             int count = parcel.readInt();
             if (count > 0) {
-                mActions = new ArrayList<Action>(count);
                 for (int i=0; i<count; i++) {
                     int tag = parcel.readInt();
                     switch (tag) {
@@ -2314,11 +2310,10 @@ public class RemoteViews implements Parcelable, Filter {
         mMemoryUsageCounter.clear();
 
         if (!hasLandscapeAndPortraitLayouts()) {
-            // Accumulate the memory usage for each action
-            if (mActions != null) {
-                final int count = mActions.size();
-                for (int i= 0; i < count; ++i) {
-                    mActions.get(i).updateMemoryUsageEstimate(mMemoryUsageCounter);
+            synchronized (mActions) {
+                // Accumulate the memory usage for each action
+                for (Action a : mActions) {
+                    a.updateMemoryUsageEstimate(mMemoryUsageCounter);
                 }
             }
             if (mIsRoot) {
@@ -2337,10 +2332,9 @@ public class RemoteViews implements Parcelable, Filter {
     private void setBitmapCache(BitmapCache bitmapCache) {
         mBitmapCache = bitmapCache;
         if (!hasLandscapeAndPortraitLayouts()) {
-            if (mActions != null) {
-                final int count = mActions.size();
-                for (int i= 0; i < count; ++i) {
-                    mActions.get(i).setBitmapCache(bitmapCache);
+            synchronized (mActions) {
+                for (Action a : mActions) {
+                    a.setBitmapCache(bitmapCache);
                 }
             }
         } else {
@@ -2368,10 +2362,9 @@ public class RemoteViews implements Parcelable, Filter {
                     " layouts cannot be modified. Instead, fully configure the landscape and" +
                     " portrait layouts individually before constructing the combined layout.");
         }
-        if (mActions == null) {
-            mActions = new ArrayList<Action>();
+        synchronized (mActions) {
+            mActions.add(a);
         }
-        mActions.add(a);
 
         // update the memory usage stats
         a.updateMemoryUsageEstimate(mMemoryUsageCounter);
@@ -2922,7 +2915,9 @@ public class RemoteViews implements Parcelable, Filter {
                 && layoutWidth != ViewGroup.LayoutParams.WRAP_CONTENT) {
             throw new IllegalArgumentException("Only supports 0, WRAP_CONTENT and MATCH_PARENT");
         }
-        mActions.add(new LayoutParamAction(viewId, LayoutParamAction.LAYOUT_WIDTH, layoutWidth));
+        synchronized (mActions) {
+            mActions.add(new LayoutParamAction(viewId, LayoutParamAction.LAYOUT_WIDTH, layoutWidth));
+        }
     }
 
     /**
@@ -3434,11 +3429,9 @@ public class RemoteViews implements Parcelable, Filter {
     }
 
     private void performApply(View v, ViewGroup parent, OnClickHandler handler) {
-        if (mActions != null) {
-            handler = handler == null ? DEFAULT_ON_CLICK_HANDLER : handler;
-            final int count = mActions.size();
-            for (int i = 0; i < count; i++) {
-                Action a = mActions.get(i);
+        handler = handler == null ? DEFAULT_ON_CLICK_HANDLER : handler;
+        synchronized (mActions) {
+            for (Action a : mActions) {
                 a.apply(v, parent, handler);
             }
         }
@@ -3467,7 +3460,9 @@ public class RemoteViews implements Parcelable, Filter {
      * @hide
      */
     public int getSequenceNumber() {
-        return (mActions == null) ? 0 : mActions.size();
+        synchronized (mActions) {
+            return mActions.size();
+        }
     }
 
     /* (non-Javadoc)
@@ -3494,16 +3489,11 @@ public class RemoteViews implements Parcelable, Filter {
             dest.writeParcelable(mApplication, flags);
             dest.writeInt(mLayoutId);
             dest.writeInt(mIsWidgetCollectionChild ? 1 : 0);
-            int count;
-            if (mActions != null) {
-                count = mActions.size();
-            } else {
-                count = 0;
-            }
-            dest.writeInt(count);
-            for (int i=0; i<count; i++) {
-                Action a = mActions.get(i);
-                a.writeToParcel(dest, 0);
+            synchronized (mActions) {
+                dest.writeInt(mActions.size());
+                for (Action a : mActions) {
+                    a.writeToParcel(dest, 0);
+                }
             }
         } else {
             dest.writeInt(MODE_HAS_LANDSCAPE_AND_PORTRAIT);
