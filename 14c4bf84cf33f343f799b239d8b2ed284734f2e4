@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a2b0780_b534df97",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2016-12-09T20:06:30Z",
+      "side": 1,
+      "message": "these are pretty much identical except passing a different bit of data and calling a different callback.\n\nCan we combine these two with a activationType parameter (still two callbacks).",
+      "range": {
+        "startLine": 819,
+        "startChar": 16,
+        "endLine": 819,
+        "endChar": 59
+      },
+      "revId": "14c4bf84cf33f343f799b239d8b2ed284734f2e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
