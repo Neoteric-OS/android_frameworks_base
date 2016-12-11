@@ -24,6 +24,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Public API for the Bluetooth GATT Profile.
@@ -51,6 +52,8 @@ public final class BluetoothGatt implements BluetoothProfile {
     private final Object mStateLock = new Object();
     private Boolean mDeviceBusy = false;
     private int mTransport;
+    private AtomicInteger mInitConnectState = new AtomicInteger(INIT_CONNECT_STATE_WANT_CONNECTED);
+    private AtomicInteger mInitCloseState = new AtomicInteger(INIT_CLOSE_STATE_IDLE);
 
     private static final int AUTH_RETRY_STATE_IDLE = 0;
     private static final int AUTH_RETRY_STATE_NO_MITM = 1;
@@ -61,6 +64,14 @@ public final class BluetoothGatt implements BluetoothProfile {
     private static final int CONN_STATE_CONNECTED = 2;
     private static final int CONN_STATE_DISCONNECTING = 3;
     private static final int CONN_STATE_CLOSED = 4;
+
+    private static final int INIT_CONNECT_STATE_WANT_CONNECTED = 0;
+    private static final int INIT_CONNECT_STATE_WANT_DISCONNECTED = 1;
+    private static final int INIT_CONNECT_STATE_COMPLETED = 2;
+
+    private static final int INIT_CLOSE_STATE_IDLE = 0;
+    private static final int INIT_CLOSE_STATE_WANT_CLOSED = 1;
+    private static final int INIT_CLOSE_STATE_ALREADY_INITIALIZED = 2;
 
     private List<BluetoothGattService> mServices;
 
@@ -151,6 +162,17 @@ public final class BluetoothGatt implements BluetoothProfile {
                     }
                 }
                 mClientIf = clientIf;
+
+                if (!mInitCloseState.compareAndSet(INIT_CLOSE_STATE_IDLE,
+                                                   INIT_CLOSE_STATE_ALREADY_INITIALIZED)) {
+                    // close() has been called
+                    unregisterApp();
+                    synchronized(mStateLock) {
+                        mConnState = CONN_STATE_CLOSED;
+                    }
+                    return;
+                }
+
                 if (status != GATT_SUCCESS) {
                     mCallback.onConnectionStateChange(BluetoothGatt.this, GATT_FAILURE,
                                                       BluetoothProfile.STATE_DISCONNECTED);
@@ -160,8 +182,24 @@ public final class BluetoothGatt implements BluetoothProfile {
                     return;
                 }
                 try {
-                    mService.clientConnect(mClientIf, mDevice.getAddress(),
-                                           !mAutoConnect, mTransport); // autoConnect is inverse of "isDirect"
+                    int expectedInitConnectState = INIT_CONNECT_STATE_WANT_DISCONNECTED;
+                    while (!mInitConnectState.compareAndSet(expectedInitConnectState,
+                                                            INIT_CONNECT_STATE_COMPLETED)) {
+                        // Wrong expectation, so invert state and tell service about new state
+                        expectedInitConnectState =
+                            expectedInitConnectState == INIT_CONNECT_STATE_WANT_CONNECTED ?
+                                                        INIT_CONNECT_STATE_WANT_DISCONNECTED :
+                                                        INIT_CONNECT_STATE_WANT_CONNECTED;
+
+                        if (expectedInitConnectState == INIT_CONNECT_STATE_WANT_CONNECTED) {
+                            // autoConnect is inverse of "isDirect"
+                            mService.clientConnect(mClientIf, mDevice.getAddress(),
+                                                   !mAutoConnect, mTransport);
+                            mAutoConnect = true; // at most the first connection attempt should be direct
+                        } else {
+                            mService.clientDisconnect(mClientIf, mDevice.getAddress());
+                        }
+                    }
                 } catch (RemoteException e) {
                     Log.e(TAG,"",e);
                 }
@@ -522,9 +560,15 @@ public final class BluetoothGatt implements BluetoothProfile {
     public void close() {
         if (DBG) Log.d(TAG, "close()");
 
-        unregisterApp();
-        mConnState = CONN_STATE_CLOSED;
-        mAuthRetryState = AUTH_RETRY_STATE_IDLE;
+        if (mInitCloseState.compareAndSet(INIT_CLOSE_STATE_IDLE, INIT_CLOSE_STATE_WANT_CLOSED)) {
+            // onClientRegistered has not been called yet, so deferring this command
+            return;
+        }
+        if (mInitCloseState.get() == INIT_CLOSE_STATE_ALREADY_INITIALIZED) {
+            unregisterApp();
+            mConnState = CONN_STATE_CLOSED;
+            mAuthRetryState = AUTH_RETRY_STATE_IDLE;
+        }
     }
 
     /**
@@ -675,10 +719,17 @@ public final class BluetoothGatt implements BluetoothProfile {
      */
     public void disconnect() {
         if (DBG) Log.d(TAG, "cancelOpen() - device: " + mDevice.getAddress());
-        if (mService == null || mClientIf == 0) return;
+        if (mService == null) return;
 
         try {
-            mService.clientDisconnect(mClientIf, mDevice.getAddress());
+            if (mInitConnectState.compareAndSet(INIT_CONNECT_STATE_WANT_CONNECTED,
+                                                INIT_CONNECT_STATE_WANT_DISCONNECTED)) {
+                // onClientRegistered has not been called yet, so deferring this command
+                return;
+            }
+            if (mInitConnectState.get() == INIT_CONNECT_STATE_COMPLETED) {
+                mService.clientDisconnect(mClientIf, mDevice.getAddress());
+            }
         } catch (RemoteException e) {
             Log.e(TAG,"",e);
         }
@@ -695,8 +746,15 @@ public final class BluetoothGatt implements BluetoothProfile {
      */
     public boolean connect() {
         try {
-            mService.clientConnect(mClientIf, mDevice.getAddress(),
-                                   false, mTransport); // autoConnect is inverse of "isDirect"
+            if (mInitConnectState.compareAndSet(INIT_CONNECT_STATE_WANT_DISCONNECTED,
+                                                INIT_CONNECT_STATE_WANT_CONNECTED)) {
+                // onClientRegistered has not been called yet, so deferring this command
+                return true;
+            }
+            if (mInitConnectState.get() == INIT_CONNECT_STATE_COMPLETED) {
+                mService.clientConnect(mClientIf, mDevice.getAddress(),
+                                       false, mTransport); // autoConnect is inverse of "isDirect"
+            }
             return true;
         } catch (RemoteException e) {
             Log.e(TAG,"",e);
