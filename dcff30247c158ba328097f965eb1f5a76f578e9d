@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a2b0780_06aff9c7",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T23:10:31Z",
+      "side": 1,
+      "message": "const (to affirm that this will not be changed)",
+      "range": {
+        "startLine": 110,
+        "startChar": 28,
+        "endLine": 110,
+        "endChar": 48
+      },
+      "revId": "dcff30247c158ba328097f965eb1f5a76f578e9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_e6f62dde",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T23:10:31Z",
+      "side": 1,
+      "message": "line this const with the above const.\n\nWe have a 100 character limit for Android code to deal with wrap (although I continue to personally observe 80 ;-/ but that is my problem ;-})",
+      "range": {
+        "startLine": 128,
+        "startChar": 32,
+        "endLine": 128,
+        "endChar": 45
+      },
+      "revId": "dcff30247c158ba328097f965eb1f5a76f578e9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_66b8fd0e",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T23:10:31Z",
+      "side": 1,
+      "message": "length",
+      "range": {
+        "startLine": 255,
+        "startChar": 52,
+        "endLine": 255,
+        "endChar": 58
+      },
+      "revId": "dcff30247c158ba328097f965eb1f5a76f578e9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_8649a933",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T23:10:31Z",
+      "side": 1,
+      "message": "do {  } while()\n\nand drop the initialization of the leading vars.",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 9
+      },
+      "revId": "dcff30247c158ba328097f965eb1f5a76f578e9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_06e13910",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T23:10:31Z",
+      "side": 1,
+      "message": "I\u0027d prefer corrupted",
+      "range": {
+        "startLine": 275,
+        "startChar": 52,
+        "endLine": 275,
+        "endChar": 61
+      },
+      "revId": "dcff30247c158ba328097f965eb1f5a76f578e9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
