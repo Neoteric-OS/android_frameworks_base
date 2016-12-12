@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2d3f4f99_718512ef",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2016-12-12T12:50:18Z",
+      "side": 1,
+      "message": "Another strategy we might try is to progressively move things out of Tethering.java until it\u0027s just a high-level facade composed of supporting classes in the tethering/ subdirectory (sub-package).",
+      "parentUuid": "2d3f4f99_317b8a2d",
+      "range": {
+        "startLine": 149,
+        "startChar": 4,
+        "endLine": 149,
+        "endChar": 10
+      },
+      "revId": "708ad383c63535a87b7428e7a1218eb874e2cd3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a2b0780_489403d0",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 2
