@@ -233,6 +233,12 @@ public class DisconnectCause {
      */
     public static final int DIALED_ON_WRONG_SLOT = 56;
 
+    /**
+     * The call being placed was detected as a call forwarding number and was being dialed while
+     * roaming on a carrier that does not allow this.
+     */
+    public static final int DIALED_CALL_FORWARDING_WHILE_ROAMING = 57;
+
     //*********************************************************************************************
     // When adding a disconnect type:
     // 1) Please assign the new type the next id value below.
@@ -248,7 +254,7 @@ public class DisconnectCause {
     public static final int MINIMUM_VALID_VALUE = NOT_DISCONNECTED;
 
     /** Largest valid value for call disconnect codes. */
-    public static final int MAXIMUM_VALID_VALUE = DIALED_ON_WRONG_SLOT;
+    public static final int MAXIMUM_VALID_VALUE = DIALED_CALL_FORWARDING_WHILE_ROAMING;
 
     /** Private constructor to avoid class instantiation. */
     private DisconnectCause() {
@@ -370,6 +376,8 @@ public class DisconnectCause {
             return "DATA_LIMIT_REACHED";
         case DIALED_ON_WRONG_SLOT:
             return "DIALED_ON_WRONG_SLOT";
+        case DIALED_CALL_FORWARDING_WHILE_ROAMING:
+            return "DIALED_CALL_FORWARDING_WHILE_ROAMING";
         default:
             return "INVALID: " + cause;
         }
