@@ -16,6 +16,24 @@
       "revId": "db886f31a8250f949a57d1b9128c04434f073b89",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_a326d7e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1124150
+      },
+      "writtenOn": "2016-12-12T22:20:30Z",
+      "side": 1,
+      "message": "derp, nice catch",
+      "parentUuid": "3a2b0780_c36e8370",
+      "revId": "db886f31a8250f949a57d1b9128c04434f073b89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
