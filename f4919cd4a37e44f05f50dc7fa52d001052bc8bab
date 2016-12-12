@@ -1,0 +1,602 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a2b0780_ff37dd9a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "Use a short one line summary description that makes sense.\n\nbesides this information is on line 17 below.\n\neg:\n\njni: NetworkStatsFactory: data corruption reading proc",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_e29aa047",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "NB: Android coding standard, in a C++ file, this is the only C comment style allowed/required. All others must use // style.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 2
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_9ffa1999",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "nit: In the Android coding standards we place C++ headers in their own sorted group. Legacy, however, does permit them to be in sorted order in the system set of headers as it is here. Please move below as its own group.",
+      "range": {
+        "startLine": 22,
+        "startChar": 1,
+        "endLine": 22,
+        "endChar": 18
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_3ff0c5ac",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "Use reference (\u0026) (in essence to state that this pointer can never be passed in as null).",
+      "range": {
+        "startLine": 108,
+        "startChar": 53,
+        "endLine": 108,
+        "endChar": 54
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_22d308ef",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "ScopedUtfChars \u0026path",
+      "range": {
+        "startLine": 108,
+        "startChar": 24,
+        "endLine": 108,
+        "endChar": 40
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_ff123d07",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "nit: worry about large buffer on stack. options abound.\n\nHowever, advantage is quick pair of reads, without a 4K page allocation to slow it down. Please put a comment as to _why_ you want such a large stack allocation.\n\nnit2: define where used (before line 117)",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 19
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_bfdcb533",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "nit: define where used (before line 117)",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 14
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_c20d64b2",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "given suggestion to switch to ScopedUtfChars reference, path.c_str() here.",
+      "range": {
+        "startLine": 113,
+        "startChar": 37,
+        "endLine": 113,
+        "endChar": 41
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_1f0629d0",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "This is needless cargo. This has been shown in other projects to reduce the reading rate by ~20% in profiling which will put this fix at more risk since one wants to read this as \u0027snappily\u0027 as one can. The only reason to clear a buffer is to ensure that random stack information is not disclosed, and that is not accomplished since the first read could (but doesn\u0027t) disclose the data to content-\u003eappend ...",
+      "range": {
+        "startLine": 119,
+        "startChar": 8,
+        "endLine": 119,
+        "endChar": 37
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_62f3507c",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "fd leak, failure to close.\n\nPlease switch fd to android::base::unique_fd so that it can close automatically:\n\n#include \u003candroid-base/unique_fd.h\u003e\n. . .\nandroid::base::unique_fd fd(TEMP_FAILURE_RETRY(open(path.c_str(), flags));",
+      "range": {
+        "startLine": 120,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 5
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_a264985f",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "if you had ssize_t for the function and instead\n\nreturn content.length();\n\ncode below using this function would be simpler.",
+      "range": {
+        "startLine": 121,
+        "startChar": 10,
+        "endLine": 121,
+        "endChar": 12
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_3fa20591",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "Only used inside double check, define where first used.\n\nbesides, comment above regarding returning ssize_t removes the need for this definition with judicious use of ssize_t for stats_size and verify_size.",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 12
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_628fd00f",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "Given the loop cargo and simplification, this bool being set and break below is only used to replace a return -1;",
+      "range": {
+        "startLine": 149,
+        "startChar": 1,
+        "endLine": 149,
+        "endChar": 29
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_df0f81e1",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "nit: trailing space, remove.",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 8
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_22a1c87a",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "Use C++ comment style //",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 11
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_22ac286b",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "define where used",
+      "range": {
+        "startLine": 166,
+        "startChar": 12,
+        "endLine": 166,
+        "endChar": 61
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_62e110b4",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "()",
+      "range": {
+        "startLine": 170,
+        "startChar": 44,
+        "endLine": 170,
+        "endChar": 46
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_42d614e0",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "()",
+      "range": {
+        "startLine": 179,
+        "startChar": 48,
+        "endLine": 179,
+        "endChar": 50
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_8273dc53",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "Always set in first pass of the loop, and never reset, resulting in the outer loop you added to always exit. Remove outer loop as well; or rationalize a requested re-read in a retry counter loop that spots data corruption when parsing?",
+      "range": {
+        "startLine": 181,
+        "startChar": 12,
+        "endLine": 181,
+        "endChar": 32
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_9fb339e5",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "This path always happens only once, and in the first pass of the loop.\n\nMove outside the loop(sic, since the outer loop looks non-functional as well), and drop double_check bool.",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 9
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_9fe1f9e8",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "nit: use spaces, no tabs allowed in Android Coding standard",
+      "range": {
+        "startLine": 185,
+        "startChar": 4,
+        "endLine": 185,
+        "endChar": 5
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_7fd1ad0e",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "ditto, there are more tabs in this file ...",
+      "range": {
+        "startLine": 186,
+        "startChar": 4,
+        "endLine": 186,
+        "endChar": 5
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_5fd6f108",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "All these should be defined where first used.",
+      "range": {
+        "startLine": 191,
+        "startChar": 12,
+        "endLine": 194,
+        "endChar": 25
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_bfc71558",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "nit: If all this logging is necessary, maybe wrap in a debugging macro; otherwise remove as this code has likely hit maturity?\n\nOf course, if the loop construction is KISS this large swath of code would be untouched with added indent and leaving it as-is would be acceptable.",
+      "range": {
+        "startLine": 281,
+        "startChar": 0,
+        "endLine": 281,
+        "endChar": 74
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_1fed09d8",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "This is C++, use // style commenting.",
+      "range": {
+        "startLine": 285,
+        "startChar": 4,
+        "endLine": 287,
+        "endChar": 10
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_6278f02f",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T17:01:21Z",
+      "side": 1,
+      "message": "expensive way of replacing\n\ndata_corrupt \u003d true;\nbreak;\n\nwith\n\nreturn -1;",
+      "range": {
+        "startLine": 288,
+        "startChar": 0,
+        "endLine": 290,
+        "endChar": 5
+      },
+      "revId": "f4919cd4a37e44f05f50dc7fa52d001052bc8bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
