@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a2b0780_f6d5c2a0",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T21:30:04Z",
+      "side": 1,
+      "message": "ssize_t",
+      "range": {
+        "startLine": 109,
+        "startChar": 7,
+        "endLine": 109,
+        "endChar": 10
+      },
+      "revId": "a10ad40a99904aa1c3cfb5190c95db8cacc486c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_56c7f6fd",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T21:30:04Z",
+      "side": 1,
+      "message": "//\u003cspace\u003e + others, please audit.",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 6
+      },
+      "revId": "a10ad40a99904aa1c3cfb5190c95db8cacc486c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_b6bdfa0c",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T21:30:04Z",
+      "side": 1,
+      "message": "ssize_t return _internal_ lines.length() if successful, there will be some simplification below as a result:\n\nssize_t size \u003d parseStatsFromString(...);\nif (size \u003c 0) {\n    . . .\n    size \u003d parseStatsFromString(...);\n}",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 10
+      },
+      "revId": "a10ad40a99904aa1c3cfb5190c95db8cacc486c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_767d52d0",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T21:30:04Z",
+      "side": 1,
+      "message": "passing a reference removes a copy constructor:\n\nconst std::string\u0026 statsString,",
+      "range": {
+        "startLine": 126,
+        "startChar": 32,
+        "endLine": 126,
+        "endChar": 44
+      },
+      "revId": "a10ad40a99904aa1c3cfb5190c95db8cacc486c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_d684069f",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T21:30:04Z",
+      "side": 1,
+      "message": "Android coding standard \u0027\u0026 \u0027, not \u0027 \u0026\u0027",
+      "range": {
+        "startLine": 126,
+        "startChar": 75,
+        "endLine": 126,
+        "endChar": 77
+      },
+      "revId": "a10ad40a99904aa1c3cfb5190c95db8cacc486c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_f68702a1",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T21:30:04Z",
+      "side": 1,
+      "message": "passing a const reference removes a copy constructor:\n\nconst Vector\u003cstring8\u003e\u0026 limitIfaces,",
+      "range": {
+        "startLine": 127,
+        "startChar": 32,
+        "endLine": 127,
+        "endChar": 59
+      },
+      "revId": "a10ad40a99904aa1c3cfb5190c95db8cacc486c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_16896e47",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T21:30:04Z",
+      "side": 1,
+      "message": "define where first used in associated scope (line 138)",
+      "range": {
+        "startLine": 129,
+        "startChar": 3,
+        "endLine": 129,
+        "endChar": 12
+      },
+      "revId": "a10ad40a99904aa1c3cfb5190c95db8cacc486c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_f662621d",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T21:30:04Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 218,
+        "startChar": 12,
+        "endLine": 218,
+        "endChar": 50
+      },
+      "revId": "a10ad40a99904aa1c3cfb5190c95db8cacc486c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_d6e88637",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T21:30:04Z",
+      "side": 1,
+      "message": "Put a comment here? On first read an error will be returned if the content is missing a sequence number or truncated(?)",
+      "range": {
+        "startLine": 252,
+        "startChar": 4,
+        "endLine": 252,
+        "endChar": 87
+      },
+      "revId": "a10ad40a99904aa1c3cfb5190c95db8cacc486c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d2a2762_2e2b3393",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T21:30:04Z",
+      "side": 1,
+      "message": "if\u003cspace\u003e(",
+      "range": {
+        "startLine": 252,
+        "startChar": 4,
+        "endLine": 252,
+        "endChar": 7
+      },
+      "revId": "a10ad40a99904aa1c3cfb5190c95db8cacc486c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_d6340699",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T21:30:04Z",
+      "side": 1,
+      "message": "FYI from Android coding standard:\n\nif (stats_size \u003c 0) return -1;\n\n-or-\n\nif (stats_size \u003c 0) {\n    return -1;\n}",
+      "range": {
+        "startLine": 262,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 13
+      },
+      "revId": "a10ad40a99904aa1c3cfb5190c95db8cacc486c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_f620225f",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T21:30:04Z",
+      "side": 1,
+      "message": "No harm in letted parseStatsFromString perform this operation at its top instead of here.",
+      "range": {
+        "startLine": 267,
+        "startChar": 8,
+        "endLine": 267,
+        "endChar": 22
+      },
+      "revId": "a10ad40a99904aa1c3cfb5190c95db8cacc486c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d2a2762_0e2e6fa2",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T21:30:04Z",
+      "side": 1,
+      "message": "if\u003cspace\u003e(",
+      "range": {
+        "startLine": 268,
+        "startChar": 8,
+        "endLine": 268,
+        "endChar": 11
+      },
+      "revId": "a10ad40a99904aa1c3cfb5190c95db8cacc486c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a2b0780_36658ac8",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2016-12-12T21:30:04Z",
+      "side": 1,
+      "message": "leverage return value from ssize_t parseStatsFromString?",
+      "range": {
+        "startLine": 273,
+        "startChar": 0,
+        "endLine": 273,
+        "endChar": 28
+      },
+      "revId": "a10ad40a99904aa1c3cfb5190c95db8cacc486c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
