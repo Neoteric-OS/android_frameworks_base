@@ -164,26 +164,28 @@ abstract public class ManagedServices {
     }
 
     public void dump(PrintWriter pw, DumpFilter filter) {
-        pw.println("    All " + getCaption() + "s (" + mEnabledServicesForCurrentProfiles.size()
-                + ") enabled for current profiles:");
-        for (ComponentName cmpt : mEnabledServicesForCurrentProfiles) {
-            if (filter != null && !filter.matches(cmpt)) continue;
-            pw.println("      " + cmpt);
-        }
+        synchronized (mMutex) {
+            pw.println("    All " + getCaption() + "s (" + mEnabledServicesForCurrentProfiles.size()
+                    + ") enabled for current profiles:");
+            for (ComponentName cmpt : mEnabledServicesForCurrentProfiles) {
+                if (filter != null && !filter.matches(cmpt)) continue;
+                pw.println("      " + cmpt);
+            }
 
-        pw.println("    Live " + getCaption() + "s (" + mServices.size() + "):");
-        for (ManagedServiceInfo info : mServices) {
-            if (filter != null && !filter.matches(info.component)) continue;
-            pw.println("      " + info.component
-                    + " (user " + info.userid + "): " + info.service
-                    + (info.isSystem?" SYSTEM":"")
-                    + (info.isGuest(this)?" GUEST":""));
-        }
+            pw.println("    Live " + getCaption() + "s (" + mServices.size() + "):");
+            for (ManagedServiceInfo info : mServices) {
+                if (filter != null && !filter.matches(info.component)) continue;
+                pw.println("      " + info.component
+                        + " (user " + info.userid + "): " + info.service
+                        + (info.isSystem ? " SYSTEM" : "")
+                        + (info.isGuest(this) ? " GUEST" : ""));
+            }
 
-        pw.println("    Snoozed " + getCaption() + "s (" +
-                mSnoozingForCurrentProfiles.size() + "):");
-        for (ComponentName name : mSnoozingForCurrentProfiles) {
-            pw.println("      " + name.flattenToShortString());
+            pw.println("    Snoozed " + getCaption() + "s (" +
+                    mSnoozingForCurrentProfiles.size() + "):");
+            for (ComponentName name : mSnoozingForCurrentProfiles) {
+                pw.println("      " + name.flattenToShortString());
+            }
         }
     }
 

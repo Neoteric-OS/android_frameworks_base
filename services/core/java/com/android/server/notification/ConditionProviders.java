@@ -251,9 +251,11 @@ public class ConditionProviders extends ManagedServices {
 
     public IConditionProvider findConditionProvider(ComponentName component) {
         if (component == null) return null;
-        for (ManagedServiceInfo service : mServices) {
-            if (component.equals(service.component)) {
-                return provider(service);
+        synchronized (mMutex) {
+            for (ManagedServiceInfo service : mServices) {
+                if (component.equals(service.component)) {
+                    return provider(service);
+                }
             }
         }
         return null;
