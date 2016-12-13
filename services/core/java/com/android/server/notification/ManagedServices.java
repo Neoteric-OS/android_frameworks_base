@@ -720,6 +720,7 @@ abstract public class ManagedServices {
                         Slog.e(TAG, getCaption() + " " + name + " could not be unbound: " + ex);
                     }
                 }
+                break;
             }
         }
     }
@@ -740,6 +741,7 @@ abstract public class ManagedServices {
                         && info.userid == userid) {
                     if (DEBUG) Slog.d(TAG, "Removing active service " + info.component);
                     serviceInfo = removeServiceLocked(i);
+                    break;
                 }
             }
         }
