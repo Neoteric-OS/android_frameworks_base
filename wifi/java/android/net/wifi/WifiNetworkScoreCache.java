@@ -17,8 +17,10 @@
 package android.net.wifi;
 
 import android.Manifest.permission;
+import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.content.Context;
+import android.os.Handler;
 import android.net.INetworkScoreCache;
 import android.net.NetworkKey;
 import android.net.ScoredNetwork;
@@ -43,30 +45,52 @@ public class WifiNetworkScoreCache extends INetworkScoreCache.Stub {
     // We treat the lowest possible score as though there were no score, effectively allowing the
     // scorer to provide an RSSI threshold below which a network should not be used.
     public static final int INVALID_NETWORK_SCORE = Byte.MIN_VALUE;
+
+    // See {@link #CacheListener}.
+    @Nullable
+    private final CacheListener mListener;
+
     private final Context mContext;
+
 
     // The key is of the form "<ssid>"<bssid>
     // TODO: What about SSIDs that can't be encoded as UTF-8?
     private final Map<String, ScoredNetwork> mNetworkCache;
 
+
     public WifiNetworkScoreCache(Context context) {
+        this(context, null /* listener */);
+    }
+
+    /**
+     * Instantiates a WifiNetworkScoreCache.
+     *
+     * @param context Application context
+     * @param listener CacheListener for cache updates
+     */
+    public WifiNetworkScoreCache(Context context, @Nullable CacheListener listener) {
         mContext = context;
+        mListener = listener;
         mNetworkCache = new HashMap<String, ScoredNetwork>();
     }
 
     @Override public final void updateScores(List<ScoredNetwork> networks) {
-      if (networks == null) {
+        if (networks == null) {
            return;
-       }
-       Log.e(TAG, "updateScores list size=" + networks.size());
+        }
+        Log.e(TAG, "updateScores list size=" + networks.size());
 
-       synchronized(mNetworkCache) {
-           for (ScoredNetwork network : networks) {
-               String networkKey = buildNetworkKey(network);
-               if (networkKey == null) continue;
-               mNetworkCache.put(networkKey, network);
-           }
-       }
+        synchronized(mNetworkCache) {
+            for (ScoredNetwork network : networks) {
+                String networkKey = buildNetworkKey(network);
+                if (networkKey == null) continue;
+                mNetworkCache.put(networkKey, network);
+            }
+        }
+
+        if (mListener != null) {
+            mListener.post(networks);
+        }
     }
 
     @Override public final void clearScores() {
@@ -193,4 +217,32 @@ public class WifiNetworkScoreCache extends INetworkScoreCache.Stub {
         }
     }
 
+    /** Listener for updates to the cache inside WifiNetworkScoreCache. */
+    public abstract static class CacheListener {
+
+        private Handler mHandler;
+
+        public CacheListener(Handler handler) {
+            mHandler = handler;
+        }
+
+        /** Invokes the {@link #networkCacheUpdated(List<ScoredNetwork>)} method on the handler. */
+        public void post(List<ScoredNetwork> updatedNetworks) {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    networkCacheUpdated(updatedNetworks);
+                }
+            });
+        }
+
+        /**
+         * Invoked whenever the cache is updated.
+         *
+         * <p>Clearing the cache does not invoke this method.
+         *
+         * @param updatedNetworks the networks that were updated
+         */
+        public abstract void networkCacheUpdated(List<ScoredNetwork> updatedNetworks);
+    }
 }
