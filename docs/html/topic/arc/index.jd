@@ -9,6 +9,7 @@ page.title=Optimizing Apps for Chromebooks
         <li><a href="#update-manifest">Update Your App's Manifest File</a></li>
         <li><a href="#leverage">Leverage Support for Multi-Window Mode</li>
         <li><a href="#keyboard">Support the Keyboard, Trackpad, and Mouse</a></li>
+        <li><a href="#network">Check for Networking Requirements</a></li>
         <li><a href="#backup">Use Backup and Restore Effectively</a></li>
         <li><a href="#update-ndk">Update the NDK Libraries</a></li>
         <li><a href="#support-new-features">Plan Support for New Android Features</a></li>
@@ -129,6 +130,37 @@ touchscreen, and you should support and distinguish between both interfaces
 properly. Given the support for physical keyboards, you can now provide hotkeys
 to enable your app's users to be more productive. For example, if your app
 supports printing, you can use <strong>Ctrl+P</strong> to open a print dialog.
+</p>
+
+<h2 id="network">Check for Networking Requirements</h2>
+
+<p>
+Chromebooks run the entire Android OS in a container, similar to Docker or
+LXC. This means that Android will not have direct access to the system's
+LAN interface. Instead, IPv4 traffic will pass through an internal layer
+of network address translation (NAT), and IPv6 unicast traffic will be routed
+through an extra hop. Outbound unicast connections from an Android app to
+the internet should mostly work as-is; but in general, inbound connections
+are blocked. Multicast or broadcast packets from Android will not be
+forwarded to the LAN through the firewall.
+</p>
+
+<p>
+As a special exception to the multicast restriction, Chrome OS runs a service
+that forwards mDNS traffic between Android and the LAN interface, so the
+standard <a
+href="https://developer.android.com/training/connect-devices-wirelessly/nsd.html">Network
+Service Discovery</a> APIs are the recommended way to discover other devices
+on the LAN segment. After finding a device on the LAN, an Android app can
+use standard TCP or UDP unicast sockets to communicate with it.
+</p>
+
+<p>
+IPv4 connections originating from Android will use the Chrome OS host's
+IPv4 address. Internally, the Android app will see a private IPv4 address
+assigned to the network interface. IPv6 connections originating from Android
+will use a different address from the Chrome OS host, as the Android
+container will have a dedicated public IPv6 address.
 </p>
 
 <h2 id="backup">Use Backup and Restore Effectively</h2>
