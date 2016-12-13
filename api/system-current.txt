@@ -40572,6 +40572,7 @@ package android.telephony {
     method public java.lang.String getSimOperatorName();
     method public java.lang.String getSimSerialNumber();
     method public int getSimState();
+    method public int getSimState(int);
     method public java.lang.String getSubscriberId();
     method public java.util.List<android.telephony.TelephonyHistogram> getTelephonyHistograms();
     method public java.lang.String getVoiceMailAlphaTag();
@@ -40685,6 +40686,7 @@ package android.telephony {
     field public static final int SIM_ACTIVATION_RESULT_IN_PROGRESS = 2; // 0x2
     field public static final int SIM_ACTIVATION_RESULT_NOT_SUPPORTED = 1; // 0x1
     field public static final int SIM_STATE_ABSENT = 1; // 0x1
+    field public static final int SIM_STATE_CARD_RESTRICTED = 9; // 0x9
     field public static final int SIM_STATE_NETWORK_LOCKED = 4; // 0x4
     field public static final int SIM_STATE_PIN_REQUIRED = 2; // 0x2
     field public static final int SIM_STATE_PUK_REQUIRED = 3; // 0x3

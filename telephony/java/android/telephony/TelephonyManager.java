@@ -1838,7 +1838,6 @@ public class TelephonyManager {
     public static final int SIM_STATE_CARD_IO_ERROR = 8;
     /** SIM card state: SIM Card restricted, present but not usable due to
      * carrier restrictions.
-     *@hide
      */
     public static final int SIM_STATE_CARD_RESTRICTED = 9;
 
@@ -1884,6 +1883,7 @@ public class TelephonyManager {
      * @see #SIM_STATE_NOT_READY
      * @see #SIM_STATE_PERM_DISABLED
      * @see #SIM_STATE_CARD_IO_ERROR
+     * @see #SIM_STATE_CARD_RESTRICTED
      */
     public int getSimState() {
         int slotIdx = getDefaultSim();
@@ -1921,8 +1921,8 @@ public class TelephonyManager {
      * @see #SIM_STATE_NOT_READY
      * @see #SIM_STATE_PERM_DISABLED
      * @see #SIM_STATE_CARD_IO_ERROR
+     * @see #SIM_STATE_CARD_RESTRICTED
      */
-    /** {@hide} */
     public int getSimState(int slotIdx) {
         int simState = SubscriptionManager.getSimStateForSlotIdx(slotIdx);
         return simState;
