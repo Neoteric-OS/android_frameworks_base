@@ -2913,15 +2913,18 @@
     <string name="ringtone_unknown">Unknown ringtone</string>
 
     <!-- A notification is shown when there are open wireless networks nearby.  This is the notification's title. -->
-    <plurals name="wifi_available">
-        <item quantity="one">Wi-Fi network available</item>
-        <item quantity="other">Wi-Fi networks available</item>
-    </plurals>
+    <string name="wifi_available">Connect to Wi-Fi network</string>
     <!-- A notification is shown when there are open wireless networks nearby.  This is the notification's message. -->
     <plurals name="wifi_available_detailed">
         <item quantity="one">Open Wi-Fi network available</item>
         <item quantity="other">Open Wi-Fi networks available</item>
     </plurals>
+
+    <!-- A notification is shown when there are open wireless networks nearby. These are the different notification actions. -->
+    <string name="wifi_available_options">Options</string>
+    <string name="wifi_available_connect">Connect</string>
+    <string name="wifi_available_connecting">Connecting</string>
+    <string name="wifi_available_connected">Connected</string>
 
     <!-- A notification is shown when a wifi captive portal network is detected.  This is the notification's title. -->
     <string name="wifi_available_sign_in">Sign in to Wi-Fi network</string>
