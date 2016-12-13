@@ -164,26 +164,28 @@ abstract public class ManagedServices {
     }
 
     public void dump(PrintWriter pw, DumpFilter filter) {
-        pw.println("    All " + getCaption() + "s (" + mEnabledServicesForCurrentProfiles.size()
-                + ") enabled for current profiles:");
-        for (ComponentName cmpt : mEnabledServicesForCurrentProfiles) {
-            if (filter != null && !filter.matches(cmpt)) continue;
-            pw.println("      " + cmpt);
-        }
+        synchronized (mMutex) {
+            pw.println("    All " + getCaption() + "s (" + mEnabledServicesForCurrentProfiles.size()
+                    + ") enabled for current profiles:");
+            for (ComponentName cmpt : mEnabledServicesForCurrentProfiles) {
+                if (filter != null && !filter.matches(cmpt)) continue;
+                pw.println("      " + cmpt);
+            }
 
-        pw.println("    Live " + getCaption() + "s (" + mServices.size() + "):");
-        for (ManagedServiceInfo info : mServices) {
-            if (filter != null && !filter.matches(info.component)) continue;
-            pw.println("      " + info.component
-                    + " (user " + info.userid + "): " + info.service
-                    + (info.isSystem?" SYSTEM":"")
-                    + (info.isGuest(this)?" GUEST":""));
-        }
+            pw.println("    Live " + getCaption() + "s (" + mServices.size() + "):");
+            for (ManagedServiceInfo info : mServices) {
+                if (filter != null && !filter.matches(info.component)) continue;
+                pw.println("      " + info.component
+                        + " (user " + info.userid + "): " + info.service
+                        + (info.isSystem ? " SYSTEM" : "")
+                        + (info.isGuest(this) ? " GUEST" : ""));
+            }
 
-        pw.println("    Snoozed " + getCaption() + "s (" +
-                mSnoozingForCurrentProfiles.size() + "):");
-        for (ComponentName name : mSnoozingForCurrentProfiles) {
-            pw.println("      " + name.flattenToShortString());
+            pw.println("    Snoozed " + getCaption() + "s (" +
+                    mSnoozingForCurrentProfiles.size() + "):");
+            for (ComponentName name : mSnoozingForCurrentProfiles) {
+                pw.println("      " + name.flattenToShortString());
+            }
         }
     }
 
@@ -259,7 +261,7 @@ abstract public class ManagedServices {
         rebindServices(false);
     }
 
-    public ManagedServiceInfo getServiceFromTokenLocked(IInterface service) {
+    private ManagedServiceInfo getServiceFromTokenLocked(IInterface service) {
         if (service == null) {
             return null;
         }
@@ -272,7 +274,7 @@ abstract public class ManagedServices {
         return null;
     }
 
-    public ManagedServiceInfo checkServiceTokenLocked(IInterface service) {
+    private ManagedServiceInfo checkServiceTokenLocked(IInterface service) {
         checkNotNull(service);
         ManagedServiceInfo info = getServiceFromTokenLocked(service);
         if (info != null) {
@@ -280,6 +282,12 @@ abstract public class ManagedServices {
         }
         throw new SecurityException("Disallowed call from unknown " + getCaption() + ": "
                 + service);
+    }
+
+    public ManagedServiceInfo checkServiceToken(IInterface service) {
+        synchronized(mMutex) {
+            return checkServiceTokenLocked(service);
+        }
     }
 
     public void unregisterService(IInterface service, int userid) {
