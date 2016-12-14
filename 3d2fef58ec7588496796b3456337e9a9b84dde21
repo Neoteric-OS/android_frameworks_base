@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6aeb2c_f70fa8e0",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2016-12-14T00:39:58Z",
+      "side": 1,
+      "message": "Should we use a static HashMap\u003cint, String\u003e() instead?",
+      "revId": "3d2fef58ec7588496796b3456337e9a9b84dde21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
