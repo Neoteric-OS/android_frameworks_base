@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6aeb2c_c20587c4",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2016-12-14T18:18:01Z",
+      "side": 1,
+      "message": "suggestion: \"Unknown state\" or \"Unknown BT state\"",
+      "range": {
+        "startLine": 216,
+        "startChar": 29,
+        "endLine": 216,
+        "endChar": 34
+      },
+      "revId": "cb21ad71ed805968c43d3f5911107632a20fcf53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
