@@ -34,7 +34,6 @@ import android.util.Log;
 import com.android.internal.telephony.IMms;
 import com.android.internal.telephony.ISms;
 import com.android.internal.telephony.SmsRawData;
-import com.android.internal.telephony.uicc.IccConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -731,6 +730,7 @@ public final class SmsManager {
         return success;
     }
 
+    private static final int SMS_RECORD_LENGTH = 176;
     /**
      * Delete the specified message from the ICC.
      * ICC (Integrated Circuit Card) is the card of the device.
@@ -744,7 +744,7 @@ public final class SmsManager {
     public boolean
     deleteMessageFromIcc(int messageIndex) {
         boolean success = false;
-        byte[] pdu = new byte[IccConstants.SMS_RECORD_LENGTH-1];
+        byte[] pdu = new byte[SMS_RECORD_LENGTH-1];
         Arrays.fill(pdu, (byte)0xff);
 
         try {
