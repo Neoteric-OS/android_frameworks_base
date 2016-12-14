@@ -16,6 +16,24 @@
       "revId": "3d2fef58ec7588496796b3456337e9a9b84dde21",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6aeb2c_8f4578b7",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2016-12-14T15:04:31Z",
+      "side": 1,
+      "message": "HashMap initialization is atrocious in Java.  This is much cleaner, easier to read and understand.",
+      "parentUuid": "da6aeb2c_f70fa8e0",
+      "revId": "3d2fef58ec7588496796b3456337e9a9b84dde21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
