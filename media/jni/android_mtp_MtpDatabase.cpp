@@ -1030,6 +1030,7 @@ static const PropertyTableEntry   kDevicePropertyTable[] = {
     {   MTP_DEVICE_PROPERTY_DEVICE_FRIENDLY_NAME,       MTP_TYPE_STR },
     {   MTP_DEVICE_PROPERTY_IMAGE_SIZE,                 MTP_TYPE_STR },
     {   MTP_DEVICE_PROPERTY_BATTERY_LEVEL,              MTP_TYPE_UINT8 },
+    {   MTP_DEVICE_PROPERTY_PERCEIVED_DEVICE_TYPE,      MTP_TYPE_UINT32 },
 };
 
 bool MyMtpDatabase::getObjectPropertyInfo(MtpObjectProperty property, int& type) {
@@ -1208,6 +1209,10 @@ MtpProperty* MyMtpDatabase::getDevicePropertyDesc(MtpDeviceProperty property) {
             result = new MtpProperty(property, MTP_TYPE_UINT8);
             result->setFormRange(0, env->GetIntField(mDatabase, field_batteryScale), 1);
             result->mCurrentValue.u.u8 = (uint8_t)env->GetIntField(mDatabase, field_batteryLevel);
+            break;
+        case MTP_DEVICE_PROPERTY_PERCEIVED_DEVICE_TYPE:
+            result = new MtpProperty(property, MTP_TYPE_UINT32);
+            result->mCurrentValue.u.u32 = (uint32_t) 0x3 /* Mobile phone */;
             break;
     }
 

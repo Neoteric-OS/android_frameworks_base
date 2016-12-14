@@ -710,6 +710,7 @@ public class MtpDatabase implements AutoCloseable {
             MtpConstants.DEVICE_PROPERTY_DEVICE_FRIENDLY_NAME,
             MtpConstants.DEVICE_PROPERTY_IMAGE_SIZE,
             MtpConstants.DEVICE_PROPERTY_BATTERY_LEVEL,
+            MtpConstants.DEVICE_PROPERTY_PERCEIVED_DEVICE_TYPE,
         };
     }
 
@@ -867,6 +868,10 @@ public class MtpDatabase implements AutoCloseable {
                 String imageSize = Integer.toString(width) + "x" +  Integer.toString(height);
                 imageSize.getChars(0, imageSize.length(), outStringValue, 0);
                 outStringValue[imageSize.length()] = 0;
+                return MtpConstants.RESPONSE_OK;
+
+            case MtpConstants.DEVICE_PROPERTY_PERCEIVED_DEVICE_TYPE:
+                outIntValue[0] = 0x3 /* Mobile Phone */;
                 return MtpConstants.RESPONSE_OK;
 
             // DEVICE_PROPERTY_BATTERY_LEVEL is implemented in the JNI code
