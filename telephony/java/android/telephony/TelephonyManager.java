@@ -5458,7 +5458,7 @@ public class TelephonyManager {
                 return;
             }
         } catch (RemoteException e) {
-            Log.e(TAG, "Error calling ITelephony#getModemActivityInfo", e);
+            Log.e(TAG, "Error calling ITelephony#requestModemActivityInfo", e);
         }
         result.send(0, null);
     }
