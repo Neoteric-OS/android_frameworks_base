@@ -17,26 +17,23 @@
  */
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.carrierdefaultreceivers" >
+    package="com.android.carrierdefaultapp" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CONNECTIVITY_INTERNAL" />
-    <uses-permission android:name="android.Manifest.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS" />
-    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
     <uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
-    <uses-permission android:name="android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS" />
+    <uses-permission android:name="android.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application android:label="@string/app_name" >
-        <receiver android:name="com.android.carrierdefaultreceivers.CarrierDefaultBroadcastReceiver">
+        <receiver android:name="com.android.carrierdefaultapp.CarrierDefaultBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.CARRIER_SIGNAL_REDIRECTED" />
-                <action android:name="com.android.carrierDefaultApp.portal" />
-                <action android:name="com.android.carrierDefaultApp.restricted_nw_avail" />
             </intent-filter>
         </receiver>
-        <service android:name="com.android.carrierdefaultreceivers.CaptivePortalJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <activity android:name="com.android.carrierdefaultapp.CaptivePortalLaunchActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:excludeFromRecents="true"/>
     </application>
 </manifest>

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.carrierdefaultreceivers;
+package com.android.carrierdefaultapp;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -24,18 +24,16 @@ import android.content.res.Resources;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import com.android.carrierdefaultreceivers.R;
-
 import com.android.internal.telephony.PhoneConstants;
-
+import com.android.carrierdefaultapp.R;
+/**
+ * This util class provide common logic for carrier actions
+ */
 public class CarrierActionUtils {
     private static final String TAG = "CarrierActionUtils";
 
-    private static final String CARRIER_PORTAL_LAUNCH = "com.android.carrierDefaultApp.portal";
-    private static final String RESTRCTED_NETWORK_AVAIL =
-            "com.android.carrierDefaultApp.restricted_nw_avail";
     private static final String PORTAL_NOTIFICATION_TAG = "CarrierDefault.Portal.Notification";
-    private static final String NO_DATA_NOTIFICATION_TAG= "CarrierDefault.NoData.Notification";
+    private static final String NO_DATA_NOTIFICATION_TAG = "CarrierDefault.NoData.Notification";
     private static final int PORTAL_NOTIFICATION_ID = 0;
     private static final int NO_DATA_NOTIFICATION_ID = 1;
 
@@ -76,11 +74,10 @@ public class CarrierActionUtils {
         logd("onShowCaptivePortalNotification");
         final NotificationManager notificationMgr = context.getSystemService(
                 NotificationManager.class);
-        Intent portalIntent = new Intent(CARRIER_PORTAL_LAUNCH);
+        Intent portalIntent = new Intent(context, CaptivePortalLaunchActivity.class);
         portalIntent.putExtras(intent);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, portalIntent,
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, portalIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
-
         Notification notification = getNotification(context, R.string.portal_notification_id,
                 R.string.portal_notification_detail, pendingIntent);
         try {
@@ -91,7 +88,7 @@ public class CarrierActionUtils {
     }
 
     public static void onShowNoServiceNotification(Context context) {
-        logd("Post no service notification");
+        logd("onShowNoServiceNotification");
         final NotificationManager notificationMgr = context.getSystemService(
                 NotificationManager.class);
         Notification notification = getNotification(context, R.string.no_data_notification_id,
@@ -120,7 +117,7 @@ public class CarrierActionUtils {
                 .setOngoing(true)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setDefaults(Notification.DEFAULT_ALL)
-                /*.setAutoCancel(true)*/
+                .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .setLocalOnly(true)
                 .setWhen(System.currentTimeMillis())
                 .setShowWhen(false);
