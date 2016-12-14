@@ -496,6 +496,10 @@ public class SystemConfig {
             addFeature(PackageManager.FEATURE_SECURELY_REMOVES_USERS, 0);
         }
 
+        if (ActivityManager.supportsMultiWindow()) {
+            addFeature(PackageManager.FEATURE_MULTIWINDOW, 0);
+        }
+
         for (String featureName : mUnavailableFeatures) {
             removeFeature(featureName);
         }
