@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da6aeb2c_57f07cdf",
+        "filename": "docs/html/topic/arc/index.jd",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1067059
+      },
+      "writtenOn": "2016-12-14T00:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6aeb2c_773f38c9",
+      "range": {
+        "startLine": 141,
+        "startChar": 31,
+        "endLine": 141,
+        "endChar": 35
+      },
+      "revId": "05dd5468ff091be6257317d856ac444c7ac7293e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6aeb2c_176b64d2",
         "filename": "docs/html/topic/arc/index.jd",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-12-14T00:28:07Z",
       "side": 1,
       "message": "Replace this comma with a semicolon.",
+      "range": {
+        "startLine": 143,
+        "startChar": 37,
+        "endLine": 143,
+        "endChar": 38
+      },
+      "revId": "05dd5468ff091be6257317d856ac444c7ac7293e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6aeb2c_77f578ce",
+        "filename": "docs/html/topic/arc/index.jd",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1067059
+      },
+      "writtenOn": "2016-12-14T00:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6aeb2c_176b64d2",
       "range": {
         "startLine": 143,
         "startChar": 37,
