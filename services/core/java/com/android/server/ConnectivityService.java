@@ -720,15 +720,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mHandler = new InternalHandler(mHandlerThread.getLooper());
         mTrackerHandler = new NetworkStateTrackerHandler(mHandlerThread.getLooper());
 
-        // setup our unique device name
-        if (TextUtils.isEmpty(SystemProperties.get("net.hostname"))) {
-            String id = Settings.Secure.getString(context.getContentResolver(),
-                    Settings.Secure.ANDROID_ID);
-            if (id != null && id.length() > 0) {
-                String name = new String("android-").concat(id);
-                SystemProperties.set("net.hostname", name);
-            }
-        }
+        clearDeprecatedSystemProperties();
 
         mReleasePendingIntentDelayMs = Settings.Secure.getInt(context.getContentResolver(),
                 Settings.Secure.CONNECTIVITY_RELEASE_PENDING_INTENT_DELAY_MS, 5_000);
@@ -5571,5 +5563,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void logNetworkEvent(NetworkAgentInfo nai, int evtype) {
         mMetricsLog.log(new NetworkEvent(nai.network.netId, evtype));
+    }
+
+    private static void clearDeprecatedSystemProperties() {
+        final String[] DEPRECATED = {
+            "net.hostname", "net.dns1", "net.dns2", "net.dns3", "net.dns4"
+        };
+
+        for (String deprecated : DEPRECATED) {
+            SystemProperties.set(deprecated, "");
+        }
     }
 }
