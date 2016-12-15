@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6aeb2c_cd6e8170",
+        "filename": "core/res/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2915,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2016-12-15T22:40:20Z",
+      "side": 1,
+      "message": "is a high quality open wireless network nearby. same with below",
+      "range": {
+        "startLine": 2915,
+        "startChar": 44,
+        "endLine": 2915,
+        "endChar": 77
+      },
+      "revId": "63fff914b00037dabd0796ff94a906d9563b4bb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
