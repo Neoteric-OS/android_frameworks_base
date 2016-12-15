@@ -190,6 +190,7 @@ LOCAL_C_INCLUDES += \
     $(LOCAL_PATH)/../../libs/hwui \
     $(LOCAL_PATH)/../../../native/opengl/libs \
     $(LOCAL_PATH)/../../../native/vulkan/include \
+    $(LOCAL_PATH)/include \
     $(call include-path-for, bluedroid) \
     $(call include-path-for, libhardware)/hardware \
     $(call include-path-for, libhardware_legacy)/hardware_legacy \
@@ -280,7 +281,8 @@ LOCAL_SHARED_LIBRARIES += \
 LOCAL_C_INCLUDES += bionic/libc/private
 
 # AndroidRuntime.h depends on nativehelper/jni.h
-LOCAL_EXPORT_C_INCLUDE_DIRS := libnativehelper/include
+LOCAL_EXPORT_C_INCLUDE_DIRS := libnativehelper/include frameworks/base/include
+LOCAL_EXPORT_SHARED_LIBRARY_HEADERS := libbinder
 
 LOCAL_MODULE:= libandroid_runtime
 
