@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ad3a349_b59360e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1091002
+      },
+      "writtenOn": "2016-12-15T00:27:31Z",
+      "side": 1,
+      "message": "Great! Please add Bug: 25360563",
+      "revId": "0fee1fee64bde6c077831259362ba554682889b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
