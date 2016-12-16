@@ -1,0 +1,34 @@
+Manual tests for runtime resource overlays
+
+This directory contains
+
+    - target: app which will have its resources overlaid
+    - red, green, blue: overlay packages for target app
+    - system: overlay package for the Android framework
+
+Install the apks and grant the target app the required permission:
+
+    $ adb root
+    $ adb remount
+    $ adb exec-out stop
+    $ adb sync vendor
+    $ adb exec-out start
+    $ adb install $OUT/data/app/OverlaysTarget/OverlaysTarget.apk
+    $ adb exec-out pm grant com.android.test.overlay.target \
+                            android.permission.CHANGE_OVERLAY_PACKAGES
+
+The Target app contains buttons to enable or disable the overlays, and to
+change their priority. Alternatively, commands can be passed via adb:
+
+    $ adb root
+    $ adb exec-out cmd overlay list
+    $ adb exec-out cmd overlay enable com.android.test.overlay.red
+
+The app displays three color blobs. Without any enabled overlays, they blobs
+will all be gray. When enabled, the red overlay makes all three fields red, the
+green makes two of them green and the blue overlay makes one of them blue. By
+changing the priority of the overlays the fields can be red, green, blue, or
+all red, or something in between.
+
+The system overlay modifies the framework's black and white colors. These show
+up in many UI elements, such as the power dialog (long press the power key).
