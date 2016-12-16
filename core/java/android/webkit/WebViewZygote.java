@@ -38,69 +38,100 @@ public class WebViewZygote {
     private static final String WEBVIEW_ZYGOTE_SERVICE_32 = "webview_zygote32";
     private static final String WEBVIEW_ZYGOTE_SERVICE_64 = "webview_zygote64";
 
+    /**
+     * Lock object that protects all other static members.
+     */
+    private static final Object sLock = new Object();
+
+    /**
+     * Instance that maintains the socket connection to the zygote. This is null if the zygote
+     * is not running or is not connected.
+     */
     private static ZygoteProcess sZygote;
 
+    /**
+     * Information about the selected WebView package. This is set from #onWebViewProviderChanged().
+     */
     private static PackageInfo sPackage;
 
+    /**
+     * Flag for whether multi-process WebView is enabled. If this is false, the zygote
+     * will not be started.
+     */
     private static boolean sMultiprocessEnabled = false;
 
     public static ZygoteProcess getProcess() {
-        connectToZygoteIfNeeded();
-        return sZygote;
+        synchronized(sLock) {
+            connectToZygoteIfNeeded();
+            return sZygote;
+        }
     }
 
     public static String getPackageName() {
-        return sPackage.packageName;
+        synchronized(sLock) {
+            return sPackage.packageName;
+        }
     }
 
     public static boolean isMultiprocessEnabled() {
-        return sMultiprocessEnabled && sPackage != null;
+        synchronized(sLock) {
+            return sMultiprocessEnabled && sPackage != null;
+        }
     }
 
     public static void setMultiprocessEnabled(boolean enabled) {
-        sMultiprocessEnabled = enabled;
+        synchronized(sLock) {
+            sMultiprocessEnabled = enabled;
 
-        // When toggling between multi-process being on/off, start or stop the
-        // service. If it is enabled and the zygote is not yet started, bring up the service.
-        // Otherwise, bring down the service. The name may be null if the package
-        // information has not yet been resolved.
-        final String serviceName = getServiceName();
-        if (serviceName == null) return;
+            // When toggling between multi-process being on/off, start or stop the
+            // service. If it is enabled and the zygote is not yet started, bring up the service.
+            // Otherwise, bring down the service. The name may be null if the package
+            // information has not yet been resolved.
+            final String serviceName = getServiceName();
+            if (serviceName == null) return;
 
-        if (enabled && sZygote == null) {
-            SystemService.start(serviceName);
-        } else {
-            SystemService.stop(serviceName);
-            sZygote = null;
+            if (enabled && sZygote == null) {
+                SystemService.start(serviceName);
+            } else {
+                SystemService.stop(serviceName);
+                sZygote = null;
+            }
         }
     }
 
     public static void onWebViewProviderChanged(PackageInfo packageInfo) {
-        sPackage = packageInfo;
+        String serviceName;
+        synchronized(sLock) {
+            sPackage = packageInfo;
 
-        // If multi-process is not enabled, then do not start the zygote service.
-        if (!sMultiprocessEnabled) {
-            return;
+            // If multi-process is not enabled, then do not start the zygote service.
+            if (!sMultiprocessEnabled) {
+                return;
+            }
+
+            serviceName = getServiceName();
+            sZygote = null;
+
+            // The service may enter the RUNNING state before it opens the socket,
+            // so connectToZygoteIfNeeded() may still fail.
+            if (SystemService.isStopped(serviceName)) {
+                SystemService.start(serviceName);
+            } else {
+                SystemService.restart(serviceName);
+            }
+
+            try {
+                SystemService.waitForState(serviceName, SystemService.State.RUNNING, 5000);
+            } catch (TimeoutException e) {
+                Log.e(LOGTAG, "Timed out waiting for " + serviceName);
+                return;
+            }
+
+            connectToZygoteIfNeeded();
         }
-
-        final String serviceName = getServiceName();
-
-        if (SystemService.isStopped(serviceName)) {
-            SystemService.start(serviceName);
-        } else if (sZygote != null) {
-            SystemService.restart(serviceName);
-        }
-
-        try {
-            SystemService.waitForState(serviceName, SystemService.State.RUNNING, 5000);
-        } catch (TimeoutException e) {
-            Log.e(LOGTAG, "Timed out waiting for " + serviceName);
-            return;
-        }
-
-        connectToZygoteIfNeeded();
     }
 
+    // sLock must be held.
     private static String getServiceName() {
         if (sPackage == null)
             return null;
@@ -113,6 +144,7 @@ public class WebViewZygote {
         return WEBVIEW_ZYGOTE_SERVICE_32;
     }
 
+    // sLock must be held.
     private static void connectToZygoteIfNeeded() {
         if (sZygote != null)
             return;
