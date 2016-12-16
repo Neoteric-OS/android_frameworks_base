@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3acce7f8_66028e74",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3792,
+      "author": {
+        "id": 1059813
+      },
+      "writtenOn": "2016-12-16T12:01:12Z",
+      "side": 1,
+      "message": "Can we add some error reporting for the case when the wrap.sh script doesn\u0027t exists (e.g. log line)?",
+      "range": {
+        "startLine": 3790,
+        "startChar": 0,
+        "endLine": 3792,
+        "endChar": 17
+      },
+      "revId": "b72cb855f12742c235aa51bafce5a0906dffcfcd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
