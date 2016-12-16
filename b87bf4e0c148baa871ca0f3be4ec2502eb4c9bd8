@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a51fff3_5ad3c2ed",
+        "filename": "core/jni/android_os_Debug.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1019050
+      },
+      "writtenOn": "2016-12-16T20:47:00Z",
+      "side": 1,
+      "message": "Rather than duplicating this function, I\u0027d recommend creating a single function that takes a timeout. The above function would call this function with a timeout of 0, which would mean no timeout. In fact, the dump_backtrace_to_file_timeout function already works this way, so you wouldn\u0027t even need to do anything other than pass the value to that function.\n\nIt would like so:\n\nstatic void android_os_Debug_dumpNativeBacktraceToFile(JNIEnv* env, jobject clazz,\n    jint pid, jstring fileName)\n{\n    android_os_Debug_dumpNativeBacktraceToFileTimeout(en, clazz, pid, fileName, 0);\n}\n\nThen the second function would be as you have written here.",
+      "range": {
+        "startLine": 1046,
+        "startChar": 29,
+        "endLine": 1046,
+        "endChar": 54
+      },
+      "revId": "b87bf4e0c148baa871ca0f3be4ec2502eb4c9bd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
