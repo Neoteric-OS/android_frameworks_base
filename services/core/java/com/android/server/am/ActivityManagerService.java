@@ -5342,12 +5342,21 @@ public final class ActivityManagerService extends ActivityManagerNative
             if (nativeProcs != null) {
                 int[] pids = Process.getPidsForCommands(nativeProcs);
                 if (pids != null) {
+                    // The time of dump native backtrace shouldn't exceed 30 seconds.
+                    int timeoutSecs = 30;
+                    long startTime = System.currentTimeMillis();
+
                     for (int pid : pids) {
                         if (DEBUG_ANR) Slog.d(TAG, "Collecting stacks for native pid " + pid);
                         final long sime = SystemClock.elapsedRealtime();
-                        Debug.dumpNativeBacktraceToFile(pid, tracesPath);
+
+                        Debug.dumpNativeBacktraceToFileTimeout(pid, tracesPath, timeoutSecs);
                         if (DEBUG_ANR) Slog.d(TAG, "Done with native pid " + pid
                                 + " in " + (SystemClock.elapsedRealtime()-sime) + "ms");
+                        timeoutSecs -= (int) (System.currentTimeMillis() - startTime) / 1000;
+                        if (timeoutSecs <= 0) {
+                            break;
+                        }
                     }
                 }
             }

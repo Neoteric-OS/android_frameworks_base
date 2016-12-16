@@ -1016,6 +1016,12 @@ static void android_os_Debug_dumpNativeHeap(JNIEnv* env, jobject clazz,
 static void android_os_Debug_dumpNativeBacktraceToFile(JNIEnv* env, jobject clazz,
     jint pid, jstring fileName)
 {
+    android_os_Debug_dumpNativeBacktraceToFileTimeout(env, clazz, pid, fileName);
+}
+
+static void android_os_Debug_dumpNativeBacktraceToFileTimeout(JNIEnv* env, jobject clazz,
+    jint pid, jstring fileName, jint timeoutSecs)
+{
     if (fileName == NULL) {
         jniThrowNullPointerException(env, "file == null");
         return;
@@ -1037,7 +1043,7 @@ static void android_os_Debug_dumpNativeBacktraceToFile(JNIEnv* env, jobject claz
     if (lseek(fd, 0, SEEK_END) < 0) {
         fprintf(stderr, "lseek: %s\n", strerror(errno));
     } else {
-        dump_backtrace_to_file(pid, fd);
+        dump_backtrace_to_file_timeout(pid, fd, timeoutSecs);
     }
 
     close(fd);
@@ -1085,6 +1091,8 @@ static const JNINativeMethod gMethods[] = {
             (void*)android_os_Debug_getDeathObjectCount },
     { "dumpNativeBacktraceToFile", "(ILjava/lang/String;)V",
             (void*)android_os_Debug_dumpNativeBacktraceToFile },
+    { "dumpNativeBacktraceToFileTimeout", "(ILjava/lang/String;I)V",
+            (void*)android_os_Debug_dumpNativeBacktraceToFileTimeout },
     { "getUnreachableMemory", "(IZ)Ljava/lang/String;",
             (void*)android_os_Debug_getUnreachableMemory },
 };
