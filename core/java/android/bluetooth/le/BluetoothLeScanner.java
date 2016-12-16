@@ -388,6 +388,10 @@ public final class BluetoothLeScanner {
         public void onScanResult(final ScanResult scanResult) {
             if (VDBG) Log.d(TAG, "onScanResult() - " + scanResult.toString());
 
+            if (mBluetoothAdapter == null || !mBluetoothAdapter.isLeEnabled()) {
+                if (VDBG) Log.d(TAG, "BT not enabled. Cannot get Scan Results");
+                return;
+            }
             // Check null in case the scan has been stopped
             synchronized (this) {
                 if (mScannerId <= 0) return;
@@ -404,6 +408,12 @@ public final class BluetoothLeScanner {
 
         @Override
         public void onBatchScanResults(final List<ScanResult> results) {
+
+            if (mBluetoothAdapter == null || !mBluetoothAdapter.isLeEnabled()) {
+                if (VDBG) Log.d(TAG, "BT not enabled. Cannot get Scan Results");
+                return;
+            }
+
             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(new Runnable() {
                 @Override
@@ -418,6 +428,11 @@ public final class BluetoothLeScanner {
             if (VDBG) {
                 Log.d(TAG, "onFoundOrLost() - onFound = " + onFound +
                         " " + scanResult.toString());
+            }
+
+            if (mBluetoothAdapter == null || !mBluetoothAdapter.isLeEnabled()) {
+                if (VDBG) Log.d(TAG, "BT not enabled. Cannot get Scan Results");
+                return;
             }
 
             // Check null in case the scan has been stopped
