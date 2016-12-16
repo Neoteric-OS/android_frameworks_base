@@ -2221,9 +2221,10 @@ public final class Debug
     /**
      * Have the stack traces of the given native process dumped to the
      * specified file.  Will be appended to the file.
+     * @param timeoutSecs time to wait, in seconds, if 0 means wait forever.
      * @hide
      */
-    public static native void dumpNativeBacktraceToFile(int pid, String file);
+    public static native void dumpNativeBacktraceToFileTimeout(int pid, String file, int timeoutSecs);
 
     /**
      * Get description of unreachable native memory.
