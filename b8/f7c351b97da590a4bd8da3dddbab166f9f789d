@@ -1,0 +1,10 @@
+Code-Review+2: Jeff Sharkey <jsharkey@android.com>
+Code-Review+1: Robert Sesek <rsesek@google.com>
+Verified+1: Andreas Gampe <agampe@google.com>
+Autosubmit+1: Andreas Gampe <agampe@google.com>
+Presubmit-Ready+1: Andreas Gampe <agampe@google.com>
+Submitted-by: Andreas Gampe <agampe@google.com>
+Submitted-at: Fri, 16 Dec 2016 19:24:12 +0000
+Reviewed-on: https://android-review.googlesource.com/314702
+Project: platform/frameworks/base
+Branch: refs/heads/master
