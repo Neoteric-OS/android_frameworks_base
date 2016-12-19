@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "372b2280_8ed31bbc",
+        "filename": "core/java/android/bluetooth/IBluetoothHidDevice.aidl",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1086529
+      },
+      "writtenOn": "2016-12-19T16:37:48Z",
+      "side": 1,
+      "message": "There are several problems with this interface.\n\nFirst, the naming: we already have BluetoothInputDevice interface, which makes an extra BluetoothHidDevice class really confusing. BluetoothInputHost would be a better name (yes, when you invoke this interface from the Java code, you are doing it to interact with an Input Host). The same goes for HID_DEVICE constant in BluetoothProfile.java: we already have the INPUT_DEVICE, so it would be better to use INPUT_HOST constant name.\nThat said, the underlying implementation (HidDevService.java and native code) is named correctly and should be left as is.\n\nSecond, this interface, unlike all other profiles, doesn\u0027t accept the actual device in connect(), disconnect(), sendReport() and other methods, which is really weird given its flexibility in other parts (like QoS/SDP settings). We need to be able choosing which device to connect to and which one to send the data to.\nYou already have the android.bluetooth.BluetoothDevice import above, but it is currently unused...\n\nThird, this interface doesn\u0027t have setPriority/getPriority methods and some other common ones.\n\nSo, my suggestion is to have this interface upgraded to something like this:\n\ninterface IBluetoothInputHost {\n    boolean registerApp(in BluetoothHidDeviceAppConfiguration config,\n            in BluetoothHidDeviceAppSdpSettings sdp, in BluetoothHidDeviceAppQosSettings inQos,\n            in BluetoothHidDeviceAppQosSettings outQos, in IBluetoothHidDeviceCallback callback);\n    boolean unregisterApp(in BluetoothHidDeviceAppConfiguration config);\n    boolean sendReport(in int id, in byte[] data);\n    boolean replyReport(in byte type, in byte id, in byte[] data);\n    boolean reportError(byte error);\n    boolean virtualUnplug(in BluetoothDevice device);\n    boolean connect(in BluetoothDevice device);\n    boolean disconnect(in BluetoothDevice device);\n    List\u003cBluetoothDevice\u003e getConnectedDevices();\n    List\u003cBluetoothDevice\u003e getDevicesMatchingConnectionStates(in int[] states);\n    int getConnectionState(in BluetoothDevice device);\n    boolean setPriority(in BluetoothDevice device, int priority);\n    int getPriority(in BluetoothDevice device);\n}",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 1
+      },
+      "revId": "0aadcf71c9dad12571ba1d558405287be86eafee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
