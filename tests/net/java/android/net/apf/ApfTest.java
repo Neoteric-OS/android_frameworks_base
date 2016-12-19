@@ -969,27 +969,31 @@ public class ApfTest extends AndroidTestCase {
 
     // Verify that the last program pushed to the IpManager.Callback properly filters the
     // given packet for the given lifetime.
-    private void verifyRaLifetime(MockIpManagerCallback ipManagerCallback, ByteBuffer packet,
-            int lifetime) {
-        byte[] program = ipManagerCallback.getApfProgram();
+    private void verifyRaLifetime(byte[] program, ByteBuffer packet, int lifetime) {
+        final int FRACTION_OF_LIFETIME = 6;
+        final int ageLimit = lifetime / FRACTION_OF_LIFETIME;
 
-        // Verify new program should drop RA for 1/6th its lifetime
+        // Verify new program should drop RA for 1/6th its lifetime and pass afterwards.
         assertDrop(program, packet.array());
-        assertDrop(program, packet.array(), lifetime/6);
-        assertPass(program, packet.array(), lifetime/6 + 1);
+        assertDrop(program, packet.array(), ageLimit / 2);
+        assertPass(program, packet.array(), ageLimit + 1);
         assertPass(program, packet.array(), lifetime);
 
         // Verify RA checksum is ignored
+        final short originalChecksum = packet.getShort(ICMP6_RA_CHECKSUM_OFFSET);
         packet.putShort(ICMP6_RA_CHECKSUM_OFFSET, (short)12345);
         assertDrop(program, packet.array());
         packet.putShort(ICMP6_RA_CHECKSUM_OFFSET, (short)-12345);
         assertDrop(program, packet.array());
+        packet.putShort(ICMP6_RA_CHECKSUM_OFFSET, originalChecksum);
 
         // Verify other changes to RA make it not match filter
+        final byte originalFirstByte = packet.get(0);
         packet.put(0, (byte)-1);
         assertPass(program, packet.array());
         packet.put(0, (byte)0);
         assertDrop(program, packet.array());
+        packet.put(0, originalFirstByte);
     }
 
     // Test that when ApfFilter is shown the given packet, it generates a program to filter it
@@ -999,9 +1003,8 @@ public class ApfTest extends AndroidTestCase {
         // Verify new program generated if ApfFilter witnesses RA
         ipManagerCallback.resetApfProgramWait();
         apfFilter.pretendPacketReceived(packet.array());
-        ipManagerCallback.getApfProgram();
-
-        verifyRaLifetime(ipManagerCallback, packet, lifetime);
+        byte[] program = ipManagerCallback.getApfProgram();
+        verifyRaLifetime(program, packet, lifetime);
     }
 
     private void verifyRaEvent(RaEvent expected) {
@@ -1046,18 +1049,27 @@ public class ApfTest extends AndroidTestCase {
         TestApfFilter apfFilter = new TestApfFilter(ipManagerCallback, DROP_MULTICAST, mLog);
         byte[] program = ipManagerCallback.getApfProgram();
 
+        // TODO: investigate why multiples of FRACTION_OF_LIFETIME_TO_FILTER make this test flaky.
+        final int ROUTER_LIFETIME = 1000;
+        final int PREFIX_VALID_LIFETIME = 100;
+        final int PREFIX_PREFERRED_LIFETIME = 200;
+        final int RDNSS_LIFETIME  = 300;
+        final int ROUTE_LIFETIME  = 400;
+        // Note that lifetime of 2000 will be ignored in favor of shorter route lifetime of 1000.
+        final int DNSSL_LIFETIME  = 2000;
+
         // Verify RA is passed the first time
         ByteBuffer basePacket = ByteBuffer.wrap(new byte[ICMP6_RA_OPTION_OFFSET]);
         basePacket.putShort(ETH_ETHERTYPE_OFFSET, (short)ETH_P_IPV6);
         basePacket.put(IPV6_NEXT_HEADER_OFFSET, (byte)IPPROTO_ICMPV6);
         basePacket.put(ICMP6_TYPE_OFFSET, (byte)ICMP6_ROUTER_ADVERTISEMENT);
-        basePacket.putShort(ICMP6_RA_ROUTER_LIFETIME_OFFSET, (short)1000);
+        basePacket.putShort(ICMP6_RA_ROUTER_LIFETIME_OFFSET, (short)ROUTER_LIFETIME);
         basePacket.position(IPV6_DEST_ADDR_OFFSET);
         basePacket.put(IPV6_ALL_NODES_ADDRESS);
         assertPass(program, basePacket.array());
 
-        testRaLifetime(apfFilter, ipManagerCallback, basePacket, 1000);
-        verifyRaEvent(new RaEvent(1000, -1, -1, -1, -1, -1));
+        testRaLifetime(apfFilter, ipManagerCallback, basePacket, ROUTER_LIFETIME);
+        verifyRaEvent(new RaEvent(ROUTER_LIFETIME, -1, -1, -1, -1, -1));
 
         // Ensure zero-length options cause the packet to be silently skipped.
         // Do this before we test other packets. http://b/29586253
@@ -1079,11 +1091,14 @@ public class ApfTest extends AndroidTestCase {
         prefixOptionPacket.put((byte)ICMP6_PREFIX_OPTION_TYPE);
         prefixOptionPacket.put((byte)(ICMP6_PREFIX_OPTION_LEN / 8));
         prefixOptionPacket.putInt(
-                ICMP6_RA_OPTION_OFFSET + ICMP6_PREFIX_OPTION_PREFERRED_LIFETIME_OFFSET, 100);
+                ICMP6_RA_OPTION_OFFSET + ICMP6_PREFIX_OPTION_PREFERRED_LIFETIME_OFFSET,
+                PREFIX_PREFERRED_LIFETIME);
         prefixOptionPacket.putInt(
-                ICMP6_RA_OPTION_OFFSET + ICMP6_PREFIX_OPTION_VALID_LIFETIME_OFFSET, 200);
-        testRaLifetime(apfFilter, ipManagerCallback, prefixOptionPacket, 100);
-        verifyRaEvent(new RaEvent(1000, 200, 100, -1, -1, -1));
+                ICMP6_RA_OPTION_OFFSET + ICMP6_PREFIX_OPTION_VALID_LIFETIME_OFFSET,
+                PREFIX_VALID_LIFETIME);
+        testRaLifetime(apfFilter, ipManagerCallback, prefixOptionPacket, PREFIX_PREFERRED_LIFETIME);
+        verifyRaEvent(new RaEvent(
+                ROUTER_LIFETIME, PREFIX_VALID_LIFETIME, PREFIX_PREFERRED_LIFETIME, -1, -1, -1));
 
         ByteBuffer rdnssOptionPacket = ByteBuffer.wrap(
                 new byte[ICMP6_RA_OPTION_OFFSET + ICMP6_4_BYTE_OPTION_LEN]);
@@ -1092,9 +1107,9 @@ public class ApfTest extends AndroidTestCase {
         rdnssOptionPacket.put((byte)ICMP6_RDNSS_OPTION_TYPE);
         rdnssOptionPacket.put((byte)(ICMP6_4_BYTE_OPTION_LEN / 8));
         rdnssOptionPacket.putInt(
-                ICMP6_RA_OPTION_OFFSET + ICMP6_4_BYTE_LIFETIME_OFFSET, 300);
-        testRaLifetime(apfFilter, ipManagerCallback, rdnssOptionPacket, 300);
-        verifyRaEvent(new RaEvent(1000, -1, -1, -1, 300, -1));
+                ICMP6_RA_OPTION_OFFSET + ICMP6_4_BYTE_LIFETIME_OFFSET, RDNSS_LIFETIME);
+        testRaLifetime(apfFilter, ipManagerCallback, rdnssOptionPacket, RDNSS_LIFETIME);
+        verifyRaEvent(new RaEvent(ROUTER_LIFETIME, -1, -1, -1, RDNSS_LIFETIME, -1));
 
         ByteBuffer routeInfoOptionPacket = ByteBuffer.wrap(
                 new byte[ICMP6_RA_OPTION_OFFSET + ICMP6_4_BYTE_OPTION_LEN]);
@@ -1103,9 +1118,9 @@ public class ApfTest extends AndroidTestCase {
         routeInfoOptionPacket.put((byte)ICMP6_ROUTE_INFO_OPTION_TYPE);
         routeInfoOptionPacket.put((byte)(ICMP6_4_BYTE_OPTION_LEN / 8));
         routeInfoOptionPacket.putInt(
-                ICMP6_RA_OPTION_OFFSET + ICMP6_4_BYTE_LIFETIME_OFFSET, 400);
-        testRaLifetime(apfFilter, ipManagerCallback, routeInfoOptionPacket, 400);
-        verifyRaEvent(new RaEvent(1000, -1, -1, 400, -1, -1));
+                ICMP6_RA_OPTION_OFFSET + ICMP6_4_BYTE_LIFETIME_OFFSET, ROUTE_LIFETIME);
+        testRaLifetime(apfFilter, ipManagerCallback, routeInfoOptionPacket, ROUTE_LIFETIME);
+        verifyRaEvent(new RaEvent(ROUTER_LIFETIME, -1, -1, ROUTE_LIFETIME, -1, -1));
 
         ByteBuffer dnsslOptionPacket = ByteBuffer.wrap(
                 new byte[ICMP6_RA_OPTION_OFFSET + ICMP6_4_BYTE_OPTION_LEN]);
@@ -1114,18 +1129,17 @@ public class ApfTest extends AndroidTestCase {
         dnsslOptionPacket.put((byte)ICMP6_DNSSL_OPTION_TYPE);
         dnsslOptionPacket.put((byte)(ICMP6_4_BYTE_OPTION_LEN / 8));
         dnsslOptionPacket.putInt(
-                ICMP6_RA_OPTION_OFFSET + ICMP6_4_BYTE_LIFETIME_OFFSET, 2000);
-        // Note that lifetime of 2000 will be ignored in favor of shorter
-        // route lifetime of 1000.
-        testRaLifetime(apfFilter, ipManagerCallback, dnsslOptionPacket, 1000);
-        verifyRaEvent(new RaEvent(1000, -1, -1, -1, -1, 2000));
+                ICMP6_RA_OPTION_OFFSET + ICMP6_4_BYTE_LIFETIME_OFFSET, DNSSL_LIFETIME);
+        testRaLifetime(apfFilter, ipManagerCallback, dnsslOptionPacket, ROUTER_LIFETIME);
+        verifyRaEvent(new RaEvent(ROUTER_LIFETIME, -1, -1, -1, -1, DNSSL_LIFETIME));
 
         // Verify that current program filters all five RAs:
-        verifyRaLifetime(ipManagerCallback, basePacket, 1000);
-        verifyRaLifetime(ipManagerCallback, prefixOptionPacket, 100);
-        verifyRaLifetime(ipManagerCallback, rdnssOptionPacket, 300);
-        verifyRaLifetime(ipManagerCallback, routeInfoOptionPacket, 400);
-        verifyRaLifetime(ipManagerCallback, dnsslOptionPacket, 1000);
+        program = ipManagerCallback.getApfProgram();
+        verifyRaLifetime(program, basePacket, ROUTER_LIFETIME);
+        verifyRaLifetime(program, prefixOptionPacket, PREFIX_PREFERRED_LIFETIME);
+        verifyRaLifetime(program, rdnssOptionPacket, RDNSS_LIFETIME);
+        verifyRaLifetime(program, routeInfoOptionPacket, ROUTE_LIFETIME);
+        verifyRaLifetime(program, dnsslOptionPacket, ROUTER_LIFETIME);
 
         apfFilter.shutdown();
     }
