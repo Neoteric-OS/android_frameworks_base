@@ -146,6 +146,13 @@ public class RoughtimeClient
         public long collectionTime;
     }
 
+    private static native boolean verifySignature(byte[] signature,
+        byte[] key, byte[] data);
+
+    /* For testing purposes only */
+    public static native boolean sign(byte[] outSignature,
+        byte[] key, byte[] data);
+
     /**
      * A Roughtime protocol message. Functionally a serializable map from Tags
      * to byte arrays.
@@ -376,10 +383,11 @@ public class RoughtimeClient
      * result time to add to our collection.
      *
      * @param host host name of the server.
+     * @param key server's long-term public key.
      * @param timeout network timeout in milliseconds.
      * @return true if the transaction was successful.
      */
-    public boolean requestTime(String host, int timeout) {
+    public boolean requestTime(String host, byte[] key, int timeout) {
         InetAddress address = null;
         try {
             address = InetAddress.getByName(host);
@@ -390,7 +398,7 @@ public class RoughtimeClient
 
             return false;
         }
-        return requestTime(address, ROUGHTIME_PORT, timeout);
+        return requestTime(address, ROUGHTIME_PORT, key, timeout);
     }
 
     /**
@@ -399,10 +407,12 @@ public class RoughtimeClient
      *
      * @param address address for the server.
      * @param port port to talk to the server on.
+     * @param key server's long-term public key.
      * @param timeout network timeout in milliseconds.
      * @return true if the transaction was successful.
      */
-    public boolean requestTime(InetAddress address, int port, int timeout) {
+    public boolean requestTime(InetAddress address, int port, byte[] key,
+                               int timeout) {
 
         final long rightNow = SystemClock.elapsedRealtime();
 
@@ -421,32 +431,59 @@ public class RoughtimeClient
             socket = new DatagramSocket();
             socket.setSoTimeout(timeout);
             final long startTime = SystemClock.elapsedRealtime();
-            Message request = createRequestMessage();
+            final Message request = createRequestMessage();
+            final byte[] nonce = request.get(Tag.NONC);
+
             request.send(socket, address, port);
+
             final long endTime = SystemClock.elapsedRealtime();
-            Message response = Message.receive(socket);
-            byte[] signedData = response.get(Tag.SREP);
-            Message signedResponse = Message.deserialize(signedData);
+            final Message response = Message.receive(socket);
+            final byte[] signedData = response.get(Tag.SREP);
+            final Message signedResponse = Message.deserialize(signedData);
+            final byte[] signature = response.get(Tag.SIG);
+            final byte[] root = signedResponse.get(Tag.ROOT);
+            final byte[] path = response.get(Tag.PATH);
+            final int index = response.getInt(Tag.INDX);
+            final byte[] certData = response.get(Tag.CERT);
+            final Message cert = Message.deserialize(certData);
+            final byte[] certSignature = cert.get(Tag.SIG);
+            final byte[] delegateData = cert.get(Tag.DELE);
+            final Message delegate = Message.deserialize(delegateData);
+            final long minTime = delegate.getLong(Tag.MINT);
+            final long maxTime = delegate.getLong(Tag.MAXT);
+            final byte[] delegateKey = delegate.get(Tag.PUBK);
 
             final Result result = new Result();
             result.midpoint = signedResponse.getLong(Tag.MIDP);
             result.radius = signedResponse.getInt(Tag.RADI);
             result.collectionTime = (startTime + endTime) / 2;
 
-            final byte[] root = signedResponse.get(Tag.ROOT);
-            final byte[] path = response.get(Tag.PATH);
-            final byte[] nonce = request.get(Tag.NONC);
-            final int index = response.getInt(Tag.INDX);
+            if (! verifySignature(certSignature, key, delegateData)) {
+                Log.w(TAG, "Roughtime response contained invalid certificate.");
+                return false;
+            }
+
+            if (! verifySignature(signature, delegateKey, signedData)) {
+                Log.w(TAG, "Roughtime response contained invalid signature.");
+                return false;
+            }
 
             if (! verifyNonce(root, path, nonce, index)) {
-                Log.w(TAG, "failed to authenticate roughtime response.");
+                Log.w(TAG, "Roughtime response contained " +
+                      "invalid Merkle chain.");
+                return false;
+            }
+
+            if (! (result.midpoint >= minTime && result.midpoint <= maxTime)) {
+                Log.w(TAG, "Roughtime response certificate not " +
+                           "valid for response time.");
                 return false;
             }
 
             mResults.add(result);
         } catch (Exception e) {
             if (ENABLE_DEBUG) {
-                Log.d(TAG, "request time failed", e);
+                Log.d(TAG, "Request time failed", e);
             }
 
             return false;
