@@ -32,9 +32,9 @@ import java.util.Arrays;
 /**
  * Defines the configuration of a Aware subscribe session. Built using
  * {@link SubscribeConfig.Builder}. Subscribe is done using
- * {@link WifiAwareSession#subscribe(SubscribeConfig, WifiAwareDiscoverySessionCallback,
+ * {@link WifiAwareSession#subscribe(SubscribeConfig, DiscoverySessionCallback,
  * android.os.Handler)} or
- * {@link WifiAwareSubscribeDiscoverySession#updateSubscribe(SubscribeConfig)}.
+ * {@link SubscribeDiscoverySession#updateSubscribe(SubscribeConfig)}.
  *
  * @hide PROPOSED_AWARE_API
  */
@@ -211,7 +211,7 @@ public final class SubscribeConfig implements Parcelable {
      *
      * @hide
      */
-    public void assertValid(WifiAwareCharacteristics characteristics)
+    public void assertValid(Characteristics characteristics)
             throws IllegalArgumentException {
         WifiAwareUtils.validateServiceName(mServiceName);
 
@@ -354,11 +354,11 @@ public final class SubscribeConfig implements Parcelable {
          * Sets the number of times an active (
          * {@link SubscribeConfig.Builder#setSubscribeType(int)}) subscribe session
          * will broadcast. When the count is reached an event will be
-         * generated for {@link WifiAwareDiscoverySessionCallback#onSessionTerminated(int)}
-         * with {@link WifiAwareDiscoverySessionCallback#TERMINATE_REASON_DONE}.
+         * generated for {@link DiscoverySessionCallback#onSessionTerminated(int)}
+         * with {@link DiscoverySessionCallback#TERMINATE_REASON_DONE}.
          * <p>
          *     Optional. 0 by default - indicating the session doesn't terminate on its own.
-         *     Session will be terminated when {@link WifiAwareDiscoveryBaseSession#destroy()} is
+         *     Session will be terminated when {@link DiscoverySession#destroy()} is
          *     called.
          *
          * @param subscribeCount Number of subscribe packets to broadcast.
@@ -379,11 +379,11 @@ public final class SubscribeConfig implements Parcelable {
          * {@link SubscribeConfig.Builder#setSubscribeType(int)}) subscribe session
          * will be alive - i.e. broadcasting a packet. When the TTL is reached
          * an event will be generated for
-         * {@link WifiAwareDiscoverySessionCallback#onSessionTerminated(int)} with
-         * {@link WifiAwareDiscoverySessionCallback#TERMINATE_REASON_DONE}.
+         * {@link DiscoverySessionCallback#onSessionTerminated(int)} with
+         * {@link DiscoverySessionCallback#TERMINATE_REASON_DONE}.
          * <p>
          *     Optional. 0 by default - indicating the session doesn't terminate on its own.
-         *     Session will be terminated when {@link WifiAwareDiscoveryBaseSession#destroy()} is
+         *     Session will be terminated when {@link DiscoverySession#destroy()} is
          *     called.
          *
          * @param ttlSec Lifetime of a subscribe session in seconds.
@@ -403,7 +403,7 @@ public final class SubscribeConfig implements Parcelable {
          * Sets the match style of the subscription - how are matches from a
          * single match session (corresponding to the same publish action on the
          * peer) reported to the host (using the
-         * {@link WifiAwareDiscoverySessionCallback#onServiceDiscovered(WifiAwareManager.PeerHandle,
+         * {@link DiscoverySessionCallback#onServiceDiscovered(PeerHandle,
          * byte[], byte[][])}). The options are: only report the first match and ignore the rest
          * {@link SubscribeConfig#MATCH_STYLE_FIRST_ONLY} or report every single
          * match {@link SubscribeConfig#MATCH_STYLE_ALL} (the default).
@@ -423,7 +423,7 @@ public final class SubscribeConfig implements Parcelable {
 
         /**
          * Configure whether a subscribe terminate notification
-         * {@link WifiAwareDiscoverySessionCallback#onSessionTerminated(int)} is reported
+         * {@link DiscoverySessionCallback#onSessionTerminated(int)} is reported
          * back to the callback.
          *
          * @param enable If true the terminate callback will be called when the

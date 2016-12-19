@@ -16,4 +16,21 @@
 
 package android.net.wifi.aware;
 
-parcelable WifiAwareCharacteristics;
+/**
+ * Opaque object used to represent a Wi-Fi Aware peer. Obtained from discovery sessions in
+ * {@link DiscoverySessionCallback#onServiceDiscovered(PeerHandle, byte[], byte[][])}, used
+ * when sending messages e,g, {@link PublishDiscoverySession#sendMessage(PeerHandle, int, byte[])},
+ * or when configuring a network link to a peer, e.g.
+ * {@link PublishDiscoverySession#createNetworkSpecifier(PeerHandle, byte[])}.
+ *
+ * @hide PROPOSED_AWARE_API
+ */
+public class PeerHandle {
+    /** @hide */
+    public PeerHandle(int peerId) {
+        this.peerId = peerId;
+    }
+
+    /** @hide */
+    public int peerId;
+}

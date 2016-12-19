@@ -26,16 +26,16 @@ import java.lang.annotation.RetentionPolicy;
  * Base class for Aware session events callbacks. Should be extended by
  * applications wanting notifications. The callbacks are set when a
  * publish or subscribe session is created using
- * {@link WifiAwareSession#publish(PublishConfig, WifiAwareDiscoverySessionCallback,
+ * {@link WifiAwareSession#publish(PublishConfig, DiscoverySessionCallback,
  * android.os.Handler)} or
- * {@link WifiAwareSession#subscribe(SubscribeConfig, WifiAwareDiscoverySessionCallback,
+ * {@link WifiAwareSession#subscribe(SubscribeConfig, DiscoverySessionCallback,
  * android.os.Handler)}.
  * <p>
  * A single callback is set at session creation - it cannot be replaced.
  *
  * @hide PROPOSED_AWARE_API
  */
-public class WifiAwareDiscoverySessionCallback {
+public class DiscoverySessionCallback {
     /** @hide */
     @IntDef({
             TERMINATE_REASON_DONE, TERMINATE_REASON_FAIL })
@@ -47,7 +47,7 @@ public class WifiAwareDiscoverySessionCallback {
      * Indicates that publish or subscribe session is done - all the
      * requested operations (per {@link PublishConfig} or
      * {@link SubscribeConfig}) have been executed. Failure reason flag for
-     * {@link WifiAwareDiscoverySessionCallback#onSessionTerminated(int)} callback.
+     * {@link DiscoverySessionCallback#onSessionTerminated(int)} callback.
      */
     public static final int TERMINATE_REASON_DONE = 100;
 
@@ -55,39 +55,39 @@ public class WifiAwareDiscoverySessionCallback {
      * Indicates that publish or subscribe session is terminated due to a
      * failure.
      * Failure reason flag for
-     * {@link WifiAwareDiscoverySessionCallback#onSessionTerminated(int)} callback.
+     * {@link DiscoverySessionCallback#onSessionTerminated(int)} callback.
      */
     public static final int TERMINATE_REASON_FAIL = 101;
 
     /**
      * Called when a publish operation is started successfully in response to a
-     * {@link WifiAwareSession#publish(PublishConfig, WifiAwareDiscoverySessionCallback,
+     * {@link WifiAwareSession#publish(PublishConfig, DiscoverySessionCallback,
      * android.os.Handler)} operation.
      *
-     * @param session The {@link WifiAwarePublishDiscoverySession} used to control the
+     * @param session The {@link PublishDiscoverySession} used to control the
      *            discovery session.
      */
-    public void onPublishStarted(@NonNull WifiAwarePublishDiscoverySession session) {
+    public void onPublishStarted(@NonNull PublishDiscoverySession session) {
         /* empty */
     }
 
     /**
      * Called when a subscribe operation is started successfully in response to a
-     * {@link WifiAwareSession#subscribe(SubscribeConfig, WifiAwareDiscoverySessionCallback,
+     * {@link WifiAwareSession#subscribe(SubscribeConfig, DiscoverySessionCallback,
      * android.os.Handler)} operation.
      *
-     * @param session The {@link WifiAwareSubscribeDiscoverySession} used to control the
+     * @param session The {@link SubscribeDiscoverySession} used to control the
      *            discovery session.
      */
-    public void onSubscribeStarted(@NonNull WifiAwareSubscribeDiscoverySession session) {
+    public void onSubscribeStarted(@NonNull SubscribeDiscoverySession session) {
         /* empty */
     }
 
     /**
      * Called when a publish or subscribe discovery session configuration update request
      * succeeds. Called in response to
-     * {@link WifiAwarePublishDiscoverySession#updatePublish(PublishConfig)} or
-     * {@link WifiAwareSubscribeDiscoverySession#updateSubscribe(SubscribeConfig)}.
+     * {@link PublishDiscoverySession#updatePublish(PublishConfig)} or
+     * {@link SubscribeDiscoverySession#updateSubscribe(SubscribeConfig)}.
      */
     public void onSessionConfigUpdated() {
         /* empty */
@@ -95,12 +95,12 @@ public class WifiAwareDiscoverySessionCallback {
 
     /**
      * Called when a publish or subscribe discovery session cannot be created:
-     * {@link WifiAwareSession#publish(PublishConfig, WifiAwareDiscoverySessionCallback,
+     * {@link WifiAwareSession#publish(PublishConfig, DiscoverySessionCallback,
      * android.os.Handler)} or
-     * {@link WifiAwareSession#subscribe(SubscribeConfig, WifiAwareDiscoverySessionCallback,
+     * {@link WifiAwareSession#subscribe(SubscribeConfig, DiscoverySessionCallback,
      * android.os.Handler)}, or when a configuration update fails:
-     * {@link WifiAwarePublishDiscoverySession#updatePublish(PublishConfig)} or
-     * {@link WifiAwareSubscribeDiscoverySession#updateSubscribe(SubscribeConfig)}.
+     * {@link PublishDiscoverySession#updatePublish(PublishConfig)} or
+     * {@link SubscribeDiscoverySession#updateSubscribe(SubscribeConfig)}.
      * <p>
      *     For discovery session updates failure leaves the session running with its previous
      *     configuration - the discovery session is not terminated.
@@ -111,12 +111,12 @@ public class WifiAwareDiscoverySessionCallback {
 
     /**
      * Called when a discovery session (publish or subscribe) terminates. Termination may be due
-     * to user-request (either directly through {@link WifiAwareDiscoveryBaseSession#destroy()} or
+     * to user-request (either directly through {@link DiscoverySession#destroy()} or
      * application-specified expiration, e.g. {@link PublishConfig.Builder#setPublishCount(int)}
      * or {@link SubscribeConfig.Builder#setTtlSec(int)}) or due to a failure.
      *
      * @param reason The termination reason using
-     *            {@code WifiAwareDiscoverySessionCallback.TERMINATE_*} codes.
+     *            {@code DiscoverySessionCallback.TERMINATE_*} codes.
      */
     public void onSessionTerminated(@SessionTerminateCodes int reason) {
         /* empty */
@@ -132,19 +132,19 @@ public class WifiAwareDiscoverySessionCallback {
      *            configuration.
      * @param matchFilter The filter which resulted in this service discovery.
      */
-    public void onServiceDiscovered(WifiAwareManager.PeerHandle peerHandle,
+    public void onServiceDiscovered(PeerHandle peerHandle,
             byte[] serviceSpecificInfo, byte[][] matchFilter) {
         /* empty */
     }
 
     /**
      * Called in response to
-     * {@link WifiAwareDiscoveryBaseSession#sendMessage(WifiAwareManager.PeerHandle, int, byte[])}
+     * {@link DiscoverySession#sendMessage(PeerHandle, int, byte[])}
      * when a message is transmitted successfully - i.e. when it was received successfully by the
      * peer (corresponds to an ACK being received).
      * <p>
      * Note that either this callback or
-     * {@link WifiAwareDiscoverySessionCallback#onMessageSendFailed(int)} will be
+     * {@link DiscoverySessionCallback#onMessageSendFailed(int)} will be
      * received - never both.
      *
      * @param messageId The arbitrary message ID specified when sending the message.
@@ -156,11 +156,11 @@ public class WifiAwareDiscoverySessionCallback {
     /**
      * Called when message transmission fails - when no ACK is received from the peer.
      * Retries when ACKs are not received are done by hardware, MAC, and in the Aware stack (using
-     * the {@link WifiAwareDiscoveryBaseSession#sendMessage(WifiAwareManager.PeerHandle, int,
+     * the {@link DiscoverySession#sendMessage(PeerHandle, int,
      * byte[], int)} method) - this event is received after all retries are exhausted.
      * <p>
      * Note that either this callback or
-     * {@link WifiAwareDiscoverySessionCallback#onMessageSendSucceeded(int)} will be received
+     * {@link DiscoverySessionCallback#onMessageSendSucceeded(int)} will be received
      * - never both.
      *
      * @param messageId The arbitrary message ID specified when sending the message.
@@ -171,14 +171,14 @@ public class WifiAwareDiscoverySessionCallback {
 
     /**
      * Called when a message is received from a discovery session peer - in response to the
-     * peer's {@link WifiAwareDiscoveryBaseSession#sendMessage(WifiAwareManager.PeerHandle, int,
-     * byte[])} or {@link WifiAwareDiscoveryBaseSession#sendMessage(WifiAwareManager.PeerHandle,
+     * peer's {@link DiscoverySession#sendMessage(PeerHandle, int,
+     * byte[])} or {@link DiscoverySession#sendMessage(PeerHandle,
      * int, byte[], int)}.
      *
      * @param peerHandle An opaque handle to the peer matching our discovery operation.
      * @param message A byte array containing the message.
      */
-    public void onMessageReceived(WifiAwareManager.PeerHandle peerHandle, byte[] message) {
+    public void onMessageReceived(PeerHandle peerHandle, byte[] message) {
         /* empty */
     }
 }
