@@ -22,6 +22,30 @@
       "revId": "0aadcf71c9dad12571ba1d558405287be86eafee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "372b2280_ce624330",
+        "filename": "core/java/android/bluetooth/IBluetoothHidDevice.aidl",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1086529
+      },
+      "writtenOn": "2016-12-19T17:09:52Z",
+      "side": 1,
+      "message": "To be fair: it is fine to only allow one device to be connected at a time, and not requiring it as a parameter for sendReport/disconnect/unplug, but adding the \"device\" parameter to the connect() method is really important.",
+      "parentUuid": "372b2280_8ed31bbc",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 1
+      },
+      "revId": "0aadcf71c9dad12571ba1d558405287be86eafee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
