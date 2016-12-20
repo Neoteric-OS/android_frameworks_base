@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "372b2280_11774e42",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2016-12-20T22:35:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7a50a83_7af436af",
+      "range": {
+        "startLine": 49,
+        "startChar": 40,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "1fd962f172deb827f25c35c4719317bc52f92b84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a50a83_9af9f2a6",
         "filename": "core/java/com/android/internal/os/Zygote.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "372b2280_f17ba228",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2016-12-20T22:35:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7a50a83_9af9f2a6",
+      "range": {
+        "startLine": 51,
+        "startChar": 38,
+        "endLine": 51,
+        "endChar": 42
+      },
+      "revId": "1fd962f172deb827f25c35c4719317bc52f92b84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a50a83_5a4a9a26",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 1
@@ -59,6 +107,24 @@
       "writtenOn": "2016-12-20T22:29:20Z",
       "side": 1,
       "message": "Is there a use case where the two flags can differ?",
+      "revId": "1fd962f172deb827f25c35c4719317bc52f92b84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "372b2280_31724a52",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3755,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2016-12-20T22:35:57Z",
+      "side": 1,
+      "message": "Yes, userdebug already enables Zygote.DEBUG_ENABLE_DEBUGGER (see ZygoteConntection::applyDebuggerSystemProperty).",
+      "parentUuid": "f7a50a83_5a4a9a26",
       "revId": "1fd962f172deb827f25c35c4719317bc52f92b84",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
