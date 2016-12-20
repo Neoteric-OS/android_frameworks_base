@@ -46,6 +46,42 @@
       "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "575b363f_d0a1b27c",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1042203
+      },
+      "writtenOn": "2016-12-20T18:17:30Z",
+      "side": 1,
+      "message": "\u003e Also, if onWebViewProviderChanged is used to kick off relro creation, and we also use it to trigger preloading, the zygote will presumably not get the benefit of the relro?\n\nYes, Torne brought that up before. We don\u0027t have a good solution for that yet.",
+      "parentUuid": "372b2280_8ee79bf6",
+      "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "575b363f_f0a4b68e",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1042203
+      },
+      "writtenOn": "2016-12-20T18:17:30Z",
+      "side": 1,
+      "message": "\u003e Is it implied that the code will just keep calling connectToZygoteIfNeeded until it succeeds? If that\u0027s the case, are we just calling it at the bottom of this function in the hope that we win the race and get to preload?\n\nRight, if connectToZygoteIfNeeded fails (e.g. IOException if the socket is not yet up), then sZygote will be set to null, and it will try again when something next tries to communicate with the zygote.\n\nFor the startup case, the webview_zygote is usually ready by the time the WVUS calls onWebViewProviderChanged() and so we get the preload on startup. If the provider is changed and we have to restart the zygote, then yes we hope to win the race.",
+      "parentUuid": "d7180671_36feb68d",
+      "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
