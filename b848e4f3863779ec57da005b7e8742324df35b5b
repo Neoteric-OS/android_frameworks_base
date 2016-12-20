@@ -22,6 +22,30 @@
       "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "372b2280_8ee79bf6",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1101490
+      },
+      "writtenOn": "2016-12-20T17:47:49Z",
+      "side": 1,
+      "message": "Also, if onWebViewProviderChanged is used to kick off relro creation, and we also use it to trigger preloading, the zygote will presumably not get the benefit of the relro?",
+      "parentUuid": "d7180671_36feb68d",
+      "range": {
+        "startLine": 116,
+        "startChar": 18,
+        "endLine": 116,
+        "endChar": 41
+      },
+      "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
