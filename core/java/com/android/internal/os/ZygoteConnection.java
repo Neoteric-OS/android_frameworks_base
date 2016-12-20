@@ -335,8 +335,9 @@ class ZygoteConnection {
         int[] gids;
 
         /**
-         * From --enable-debugger, --enable-checkjni, --enable-assert,
-         * --enable-safemode, --generate-debug-info and --enable-jni-logging.
+         * From --enable-jdwp, --enable-checkjni, --enable-assert,
+         * --enable-safemode, --generate-debug-info, --enable-jni-logging,
+         * --java-debuggable, and --native-debuggable.
          */
         int debugFlags;
 
@@ -446,8 +447,8 @@ class ZygoteConnection {
                     targetSdkVersionSpecified = true;
                     targetSdkVersion = Integer.parseInt(
                             arg.substring(arg.indexOf('=') + 1));
-                } else if (arg.equals("--enable-debugger")) {
-                    debugFlags |= Zygote.DEBUG_ENABLE_DEBUGGER;
+                } else if (arg.equals("--enable-jdwp")) {
+                    debugFlags |= Zygote.DEBUG_ENABLE_JDWP;
                 } else if (arg.equals("--enable-safemode")) {
                     debugFlags |= Zygote.DEBUG_ENABLE_SAFEMODE;
                 } else if (arg.equals("--enable-checkjni")) {
@@ -458,6 +459,8 @@ class ZygoteConnection {
                     debugFlags |= Zygote.DEBUG_ALWAYS_JIT;
                 } else if (arg.equals("--native-debuggable")) {
                     debugFlags |= Zygote.DEBUG_NATIVE_DEBUGGABLE;
+                } else if (arg.equals("--java-debuggable")) {
+                    debugFlags |= Zygote.DEBUG_JAVA_DEBUGGABLE;
                 } else if (arg.equals("--enable-jni-logging")) {
                     debugFlags |= Zygote.DEBUG_ENABLE_JNI_LOGGING;
                 } else if (arg.equals("--enable-assert")) {
