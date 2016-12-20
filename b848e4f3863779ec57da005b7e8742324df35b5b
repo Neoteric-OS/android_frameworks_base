@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7180671_36feb68d",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1101490
+      },
+      "writtenOn": "2016-12-20T17:44:38Z",
+      "side": 1,
+      "message": "Is it implied that the code will just keep calling connectToZygoteIfNeeded until it succeeds? If that\u0027s the case, are we just calling it at the bottom of this function in the hope that we win the race and get to preload?",
+      "range": {
+        "startLine": 116,
+        "startChar": 18,
+        "endLine": 116,
+        "endChar": 41
+      },
+      "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
