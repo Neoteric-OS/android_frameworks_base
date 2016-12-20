@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "575b363f_4de2cded",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1042203
+      },
+      "writtenOn": "2016-12-20T17:27:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "372b2280_ee5dff32",
+      "revId": "7f3e3915bbb6472bd056c6b24897b36099ae214c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17237e9f_35a91076",
         "filename": "core/java/android/webkit/WebViewZygote.java",
         "patchSetId": 1
@@ -42,6 +60,24 @@
         "endLine": 82,
         "endChar": 45
       },
+      "revId": "7f3e3915bbb6472bd056c6b24897b36099ae214c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "575b363f_0ddcd52d",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1042203
+      },
+      "writtenOn": "2016-12-20T17:27:16Z",
+      "side": 1,
+      "message": "Hm, yes I suppose there could be. It looks like we\u0027ll just have to hold the lock for the duration of onWebViewProviderChanged.",
+      "parentUuid": "17237e9f_35a91076",
       "revId": "7f3e3915bbb6472bd056c6b24897b36099ae214c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
