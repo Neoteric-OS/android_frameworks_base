@@ -171,7 +171,7 @@ static void JHwRemoteBinder_native_transact(
         JHwParcel::GetNativeContext(env, replyObj)->getParcel();
 
     status_t err = binder->transact(code, *request, reply, flags);
-    signalExceptionForError(env, err);
+    signalExceptionForError(env, err, true /* canThrowRemoteException */);
 }
 
 static JNINativeMethod gMethods[] = {

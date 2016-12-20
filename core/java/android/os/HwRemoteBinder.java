@@ -32,12 +32,15 @@ public class HwRemoteBinder implements IHwBinder {
                 mNativeContext);
     }
 
+    @Override
     public IHwInterface queryLocalInterface(String descriptor) {
         return null;
     }
 
+    @Override
     public native final void transact(
-            int code, HwParcel request, HwParcel reply, int flags);
+            int code, HwParcel request, HwParcel reply, int flags)
+        throws RemoteException;
 
     private static native final long native_init();
 
