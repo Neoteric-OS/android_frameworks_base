@@ -225,6 +225,7 @@ public class AudioService extends IAudioService.Stub {
     private static final int MSG_SET_WIRED_DEVICE_CONNECTION_STATE = 100;
     private static final int MSG_SET_A2DP_SRC_CONNECTION_STATE = 101;
     private static final int MSG_SET_A2DP_SINK_CONNECTION_STATE = 102;
+    private static final int MSG_SET_A2DP_SOURCE_CODEC_CONFIG_CHANGED = 103;
     // end of messages handled under wakelock
 
     private static final int BTA2DP_DOCK_TIMEOUT_MILLIS = 8000;
@@ -3840,6 +3841,18 @@ public class AudioService extends IAudioService.Stub {
         return delay;
     }
 
+    public void setBluetoothA2dpSourceCodecConfigChanged(BluetoothDevice device)
+    {
+        synchronized (mConnectedDevices) {
+            queueMsgUnderWakeLock(mAudioHandler,
+                    MSG_SET_A2DP_SOURCE_CODEC_CONFIG_CHANGED,
+                    0,
+                    0,
+                    device,
+                    0);
+        }
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // Inner classes
     ///////////////////////////////////////////////////////////////////////////
@@ -4644,6 +4657,11 @@ public class AudioService extends IAudioService.Stub {
                     mAudioEventWakeLock.release();
                     break;
 
+                case MSG_SET_A2DP_SOURCE_CODEC_CONFIG_CHANGED:
+                    onSetA2dpSourceCodecConfigChanged((BluetoothDevice)msg.obj);
+                    mAudioEventWakeLock.release();
+                    break;
+
                 case MSG_REPORT_NEW_ROUTES: {
                     int N = mRoutesObservers.beginBroadcast();
                     if (N > 0) {
@@ -4949,6 +4967,32 @@ public class AudioService extends IAudioService.Stub {
                 makeA2dpSrcUnavailable(address);
             } else if (!isConnected && state == BluetoothProfile.STATE_CONNECTED) {
                 makeA2dpSrcAvailable(address);
+            }
+        }
+    }
+
+    private void onSetA2dpSourceCodecConfigChanged(BluetoothDevice btDevice)
+    {
+        if (DEBUG_VOL) {
+            Log.d(TAG, "onSetA2dpSourceCodecConfigChanged btDevice="+btDevice);
+        }
+        if (btDevice == null) {
+            return;
+        }
+        String address = btDevice.getAddress();
+        if (!BluetoothAdapter.checkBluetoothAddress(address)) {
+            return;
+        }
+
+        synchronized (mConnectedDevices) {
+            String key = makeDeviceListKey(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP,
+                                           btDevice.getAddress());
+            DeviceListSpec deviceSpec = mConnectedDevices.get(key);
+            boolean isConnected = deviceSpec != null;
+
+            if (isConnected) {
+                AudioSystem.setA2dpSourceCodecConfigChanged(address,
+                        btDevice.getName());
             }
         }
     }

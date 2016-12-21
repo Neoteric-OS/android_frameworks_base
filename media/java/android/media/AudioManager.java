@@ -3278,6 +3278,21 @@ public class AudioManager {
         return delay;
     }
 
+     /**
+     * Indicate A2DP local source codec configuration has changed.
+     * @param device the Bluetooth sink device whose codec configuration has
+     * changed.
+     * {@hide}
+     */
+    public void setBluetoothA2dpSourceCodecConfigChanged(BluetoothDevice device) {
+        IAudioService service = getService();
+        try {
+            service.setBluetoothA2dpSourceCodecConfigChanged(device);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     /** {@hide} */
     public IRingtonePlayer getRingtonePlayer() {
         try {
