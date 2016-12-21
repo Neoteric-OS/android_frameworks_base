@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5742564d_f2084695",
+        "filename": "core/java/android/bluetooth/BluetoothHidDevice.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1086529
+      },
+      "writtenOn": "2016-12-21T12:42:56Z",
+      "side": 1,
+      "message": "Please implement these.",
+      "range": {
+        "startLine": 258,
+        "startChar": 0,
+        "endLine": 275,
+        "endChar": 5
+      },
+      "revId": "0aadcf71c9dad12571ba1d558405287be86eafee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "372b2280_8ed31bbc",
         "filename": "core/java/android/bluetooth/IBluetoothHidDevice.aidl",
         "patchSetId": 15
