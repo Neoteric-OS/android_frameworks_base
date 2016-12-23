@@ -69,6 +69,29 @@
       "revId": "0aadcf71c9dad12571ba1d558405287be86eafee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "372b2280_31feca8d",
+        "filename": "core/java/android/bluetooth/IBluetoothHidDeviceCallback.aidl",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1086529
+      },
+      "writtenOn": "2016-12-23T11:16:05Z",
+      "side": 1,
+      "message": "This is redundant and should be removed, because we already have the broadcast which does exactly the same thing.",
+      "range": {
+        "startLine": 25,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 74
+      },
+      "revId": "0aadcf71c9dad12571ba1d558405287be86eafee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
