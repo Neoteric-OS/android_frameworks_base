@@ -375,7 +375,6 @@ public class WifiAwareManagerTest {
         final int sessionId = 123;
         final ConfigRequest configRequest = new ConfigRequest.Builder().build();
         final PublishConfig publishConfig = new PublishConfig.Builder().build();
-        final int reason = DiscoverySessionCallback.TERMINATE_REASON_DONE;
 
         InOrder inOrder = inOrder(mockCallback, mockSessionCallback, mockAwareService,
                 mockPublishSession);
@@ -402,10 +401,10 @@ public class WifiAwareManagerTest {
         inOrder.verify(mockAwareService).publish(eq(clientId), eq(publishConfig),
                 sessionProxyCallback.capture());
         sessionProxyCallback.getValue().onSessionStarted(sessionId);
-        sessionProxyCallback.getValue().onSessionTerminated(reason);
+        sessionProxyCallback.getValue().onSessionTerminated(0);
         mMockLooper.dispatchAll();
         inOrder.verify(mockSessionCallback).onPublishStarted(publishSession.capture());
-        inOrder.verify(mockSessionCallback).onSessionTerminated(reason);
+        inOrder.verify(mockSessionCallback).onSessionTerminated();
 
         // (3) failure when trying to update: NOP
         publishSession.getValue().updatePublish(publishConfig);
@@ -513,7 +512,6 @@ public class WifiAwareManagerTest {
         final int sessionId = 123;
         final ConfigRequest configRequest = new ConfigRequest.Builder().build();
         final SubscribeConfig subscribeConfig = new SubscribeConfig.Builder().build();
-        final int reason = DiscoverySessionCallback.TERMINATE_REASON_DONE;
 
         InOrder inOrder = inOrder(mockCallback, mockSessionCallback, mockAwareService,
                 mockSubscribeSession);
@@ -540,10 +538,10 @@ public class WifiAwareManagerTest {
         inOrder.verify(mockAwareService).subscribe(eq(clientId), eq(subscribeConfig),
                 sessionProxyCallback.capture());
         sessionProxyCallback.getValue().onSessionStarted(sessionId);
-        sessionProxyCallback.getValue().onSessionTerminated(reason);
+        sessionProxyCallback.getValue().onSessionTerminated(0);
         mMockLooper.dispatchAll();
         inOrder.verify(mockSessionCallback).onSubscribeStarted(subscribeSession.capture());
-        inOrder.verify(mockSessionCallback).onSessionTerminated(reason);
+        inOrder.verify(mockSessionCallback).onSessionTerminated();
 
         // (3) failure when trying to update: NOP
         subscribeSession.getValue().updateSubscribe(subscribeConfig);
