@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f7a50a83_6c2693d0",
+        "filename": "core/java/android/bluetooth/BluetoothA2dp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-12-28T21:52:30Z",
+      "side": 1,
+      "message": "Done in Patch Set 7.",
+      "parentUuid": "f7a50a83_a60589c5",
+      "revId": "70722579d73665bcc6bb140471880c3bdeb5aa1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a50a83_660f91e2",
         "filename": "core/java/android/bluetooth/BluetoothA2dp.java",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2016-12-28T20:23:56Z",
       "side": 1,
       "message": "surround with { } even with single command",
+      "range": {
+        "startLine": 578,
+        "startChar": 34,
+        "endLine": 578,
+        "endChar": 78
+      },
+      "revId": "70722579d73665bcc6bb140471880c3bdeb5aa1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7a50a83_0c2d9fa7",
+        "filename": "core/java/android/bluetooth/BluetoothA2dp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-12-28T21:52:30Z",
+      "side": 1,
+      "message": "Done in Patch Set 7.",
+      "parentUuid": "f7a50a83_660f91e2",
       "range": {
         "startLine": 578,
         "startChar": 34,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f7a50a83_2c289b95",
+        "filename": "media/java/android/media/IAudioService.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-12-28T21:52:30Z",
+      "side": 1,
+      "message": "Done in Patch Set 7.",
+      "parentUuid": "f7a50a83_064c9d42",
+      "range": {
+        "startLine": 136,
+        "startChar": 9,
+        "endLine": 136,
+        "endChar": 49
+      },
+      "revId": "70722579d73665bcc6bb140471880c3bdeb5aa1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a50a83_c6452518",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 6
@@ -76,6 +142,30 @@
       "writtenOn": "2016-12-28T20:23:56Z",
       "side": 1,
       "message": "MSG_A2DP_DEVICE_CONFIG_CHANGE",
+      "range": {
+        "startLine": 228,
+        "startChar": 29,
+        "endLine": 228,
+        "endChar": 69
+      },
+      "revId": "70722579d73665bcc6bb140471880c3bdeb5aa1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7a50a83_cc36a7f9",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-12-28T21:52:30Z",
+      "side": 1,
+      "message": "Done in Patch Set 7.",
+      "parentUuid": "f7a50a83_c6452518",
       "range": {
         "startLine": 228,
         "startChar": 29,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "f7a50a83_ec312300",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4977,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-12-28T21:52:30Z",
+      "side": 1,
+      "message": "Done in Patch Set 7.",
+      "parentUuid": "f7a50a83_e60381c0",
+      "range": {
+        "startLine": 4977,
+        "startChar": 68,
+        "endLine": 4977,
+        "endChar": 69
+      },
+      "revId": "70722579d73665bcc6bb140471880c3bdeb5aa1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a50a83_26faf999",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 6
@@ -122,6 +236,24 @@
       "writtenOn": "2016-12-28T20:23:56Z",
       "side": 1,
       "message": "final",
+      "revId": "70722579d73665bcc6bb140471880c3bdeb5aa1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7a50a83_8c42ef5f",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4982,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-12-28T21:52:30Z",
+      "side": 1,
+      "message": "Code updated in Patch Set 7, so \"final\" cannot be used anymore.",
+      "parentUuid": "f7a50a83_26faf999",
       "revId": "70722579d73665bcc6bb140471880c3bdeb5aa1d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "f7a50a83_ac456b69",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4988,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-12-28T21:52:30Z",
+      "side": 1,
+      "message": "Done in Patch Set 7.",
+      "parentUuid": "f7a50a83_4639358e",
+      "revId": "70722579d73665bcc6bb140471880c3bdeb5aa1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a50a83_6636b1a2",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 6
@@ -156,6 +306,24 @@
       "writtenOn": "2016-12-28T20:23:56Z",
       "side": 1,
       "message": "final",
+      "revId": "70722579d73665bcc6bb140471880c3bdeb5aa1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7a50a83_4c3cf7d3",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4990,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-12-28T21:52:30Z",
+      "side": 1,
+      "message": "Done in Patch Set 7.",
+      "parentUuid": "f7a50a83_6636b1a2",
       "revId": "70722579d73665bcc6bb140471880c3bdeb5aa1d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
