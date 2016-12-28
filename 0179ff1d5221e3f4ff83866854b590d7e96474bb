@@ -22,6 +22,30 @@
       "revId": "0179ff1d5221e3f4ff83866854b590d7e96474bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7a50a83_cc122709",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4991,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-12-28T22:32:49Z",
+      "side": 1,
+      "message": "Removed in Patch Set 8.",
+      "parentUuid": "f7a50a83_8cf8afca",
+      "range": {
+        "startLine": 4991,
+        "startChar": 12,
+        "endLine": 4991,
+        "endChar": 31
+      },
+      "revId": "0179ff1d5221e3f4ff83866854b590d7e96474bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
