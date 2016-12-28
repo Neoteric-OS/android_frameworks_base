@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "773d9abc_16ae1c7e",
+        "filename": "core/java/android/os/Process.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-12-28T13:58:24Z",
+      "side": 1,
+      "message": "it would have been nice if this was an @link, but it\u0027s not a big deal since this is a hidden function anyway.",
+      "range": {
+        "startLine": 403,
+        "startChar": 27,
+        "endLine": 403,
+        "endChar": 48
+      },
+      "revId": "0ca16fa58454b1685afcf8cf49c4b67b59221349",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
