@@ -205,10 +205,13 @@ public final class ObexHelper {
                     case 0x40:
                         boolean trimTail = true;
                         index++;
-                        length = 0xFF & headerArray[index];
-                        length = length << 8;
-                        index++;
-                        length += 0xFF & headerArray[index];
+                        length = (headerArray[index] << 8) + headerArray[index + 1];
+                        index +=2;
+                        if (length == 0) {
+                            Log.e(TAG, "Remote sent an OBEX Connect response with " +
+                                  "header length as zero");
+                            break;
+                        }
                         length -= 3;
                         index++;
                         value = new byte[length];
