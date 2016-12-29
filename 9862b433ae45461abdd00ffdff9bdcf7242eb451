@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7180671_222790cc",
+        "filename": "core/jni/fd_utils-inl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-12-29T14:00:12Z",
+      "side": 1,
+      "message": "maybe we should split this out into a separate if() statement with a detailed log (like you did earlier).",
+      "range": {
+        "startLine": 173,
+        "startChar": 11,
+        "endLine": 173,
+        "endChar": 32
+      },
+      "revId": "9862b433ae45461abdd00ffdff9bdcf7242eb451",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
