@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1728de81_964b3275",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2016-12-29T14:36:50Z",
+      "side": 1,
+      "message": "this seems like the wrong way to do it. if you look at ZygoteInit.handleSystemServerProcess, you\u0027ll see what we\u0027re already passing the system server class path via the command line. We should just create a class loader based on that classpath.\n\nthat would be a more general solution that will help other wrapper cases as well.\n\nI\u0027m talking about the following code in ZygoteInit :\n\n if (parsedArgs.invokeWith !\u003d null) {\n            String[] args \u003d parsedArgs.remainingArgs;\n            // If we have a non-null system server class path, we\u0027ll have to duplicate the\n            // existing arguments and append the classpath to it. ART will handle the classpath\n            // correctly when we exec a new process.\n            if (systemServerClasspath !\u003d null) {\n                String[] amendedArgs \u003d new String[args.length + 2];\n                amendedArgs[0] \u003d \"-cp\";\n                amendedArgs[1] \u003d systemServerClasspath;\n                System.arraycopy(parsedArgs.remainingArgs, 0, amendedArgs, 2, parsedArgs.remainingArgs.length);\n            }\n\n            WrapperInit.execApplication(parsedArgs.invokeWith,\n                    parsedArgs.niceName, parsedArgs.targetSdkVersion,\n                    VMRuntime.getCurrentInstructionSet(), null, args);\n}",
+      "range": {
+        "startLine": 334,
+        "startChar": 11,
+        "endLine": 342,
+        "endChar": 9
+      },
+      "revId": "bfb31a1f31a6ca431fd404074a9b01a05ced420a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
