@@ -22,6 +22,30 @@
       "revId": "bfb31a1f31a6ca431fd404074a9b01a05ced420a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97368e0e_e426142a",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1023590
+      },
+      "writtenOn": "2016-12-30T03:07:18Z",
+      "side": 1,
+      "message": "Hi Narayan,\n\nThanks for the review.\n\nI tried the way you mentioned, but it does not work due to\n\n1. WrapperInit.execApplication does not take the amendedArgs\n2. if aboved is fixed, app_main.cpp will drop \"-cp\" due to \"Everything up to \u0027--\u0027 or first non \u0027-\u0027 arg goes to the vm\".\n3. if aboved is fixed, cmdline_parse_argument_detail.h will \"Tokenize every name\" by \u0027 \u0027 so that \"-cp _\" cannot be recognized.\n4. if aboved is fixed, art seems did not create a class loader based on class_path_string_.\n\nIt will be a long way to go.",
+      "parentUuid": "1728de81_964b3275",
+      "range": {
+        "startLine": 334,
+        "startChar": 11,
+        "endLine": 342,
+        "endChar": 9
+      },
+      "revId": "bfb31a1f31a6ca431fd404074a9b01a05ced420a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
