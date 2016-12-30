@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7a50a83_93ad2383",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-12-30T17:27:34Z",
+      "side": 1,
+      "message": "Fixed in Patch Set 11.",
+      "parentUuid": "f7a50a83_9bb0dfdb",
+      "range": {
+        "startLine": 13,
+        "startChar": 71,
+        "endLine": 13,
+        "endChar": 73
+      },
+      "revId": "f0127705961d95041ad3299e793a090536709528",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a50a83_5bffc788",
         "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2016-12-30T01:56:47Z",
       "side": 1,
       "message": "length",
+      "range": {
+        "startLine": 47,
+        "startChar": 59,
+        "endLine": 47,
+        "endChar": 61
+      },
+      "revId": "f0127705961d95041ad3299e793a090536709528",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7a50a83_33a46f9c",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-12-30T17:27:34Z",
+      "side": 1,
+      "message": "Fixed in Patch Set 11.",
+      "parentUuid": "f7a50a83_5bffc788",
       "range": {
         "startLine": 47,
         "startChar": 59,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f7a50a83_539fab49",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-12-30T17:27:34Z",
+      "side": 1,
+      "message": "Renamed in Patch Set 11.",
+      "parentUuid": "f7a50a83_fb347399",
+      "range": {
+        "startLine": 56,
+        "startChar": 28,
+        "endLine": 56,
+        "endChar": 46
+      },
+      "revId": "f0127705961d95041ad3299e793a090536709528",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a50a83_dbc41751",
         "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2016-12-30T01:56:47Z",
       "side": 1,
       "message": "final?",
+      "range": {
+        "startLine": 142,
+        "startChar": 11,
+        "endLine": 142,
+        "endChar": 12
+      },
+      "revId": "f0127705961d95041ad3299e793a090536709528",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7a50a83_96767143",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-12-30T17:27:34Z",
+      "side": 1,
+      "message": "Added in Patch Set 11.",
+      "parentUuid": "f7a50a83_dbc41751",
       "range": {
         "startLine": 142,
         "startChar": 11,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f7a50a83_367d3d1e",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3849,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-12-30T17:27:34Z",
+      "side": 1,
+      "message": "Added in Patch Set 11.",
+      "parentUuid": "f7a50a83_bbe11be9",
+      "range": {
+        "startLine": 3849,
+        "startChar": 21,
+        "endLine": 3849,
+        "endChar": 22
+      },
+      "revId": "f0127705961d95041ad3299e793a090536709528",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a50a83_7bdba337",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 9
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "f7a50a83_5678f92b",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3850,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-12-30T17:27:34Z",
+      "side": 1,
+      "message": "Added in Patch Set 11.",
+      "parentUuid": "f7a50a83_7bdba337",
+      "range": {
+        "startLine": 3850,
+        "startChar": 21,
+        "endLine": 3850,
+        "endChar": 22
+      },
+      "revId": "f0127705961d95041ad3299e793a090536709528",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a50a83_9bde9f29",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 9
@@ -151,6 +295,30 @@
       "writtenOn": "2016-12-30T01:56:47Z",
       "side": 1,
       "message": "/* delay */",
+      "range": {
+        "startLine": 3852,
+        "startChar": 21,
+        "endLine": 3852,
+        "endChar": 23
+      },
+      "revId": "f0127705961d95041ad3299e793a090536709528",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7a50a83_f686c5fe",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3852,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2016-12-30T17:27:34Z",
+      "side": 1,
+      "message": "Added in Patch Set 11.",
+      "parentUuid": "f7a50a83_9bde9f29",
       "range": {
         "startLine": 3852,
         "startChar": 21,
