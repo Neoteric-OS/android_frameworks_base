@@ -22,6 +22,30 @@
       "revId": "3003c8cf081f86d777688684326ebb0c7e788c9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7a50a83_788cfe19",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-01-03T19:07:28Z",
+      "side": 1,
+      "message": "Done in Patch Set 12.",
+      "parentUuid": "f7a50a83_fd122008",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 28
+      },
+      "revId": "3003c8cf081f86d777688684326ebb0c7e788c9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
