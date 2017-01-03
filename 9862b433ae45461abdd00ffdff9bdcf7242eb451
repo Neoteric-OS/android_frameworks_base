@@ -22,6 +22,30 @@
       "revId": "9862b433ae45461abdd00ffdff9bdcf7242eb451",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97368e0e_c4579042",
+        "filename": "core/jni/fd_utils-inl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1103638
+      },
+      "writtenOn": "2017-01-03T01:49:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7180671_222790cc",
+      "range": {
+        "startLine": 173,
+        "startChar": 11,
+        "endLine": 173,
+        "endChar": 32
+      },
+      "revId": "9862b433ae45461abdd00ffdff9bdcf7242eb451",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
