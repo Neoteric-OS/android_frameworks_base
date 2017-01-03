@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7a50a83_fde5401f",
+        "filename": "core/java/android/bluetooth/BluetoothInputHost.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-01-03T18:50:32Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 422,
+        "startChar": 0,
+        "endLine": 422,
+        "endChar": 69
+      },
+      "revId": "0a145e42619af3fbd8f2abf252766ea5c65546cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
