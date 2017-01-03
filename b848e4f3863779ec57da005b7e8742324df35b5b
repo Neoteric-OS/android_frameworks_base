@@ -82,6 +82,47 @@
       "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "372b2280_37c35af5",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2017-01-03T17:26:23Z",
+      "side": 1,
+      "message": "The zygote doesn\u0027t get the benefit of relro anyway because its address space is different and so the library base address doesn\u0027t match. We are not even trying to use the relro file in the zygote, we simply load the library with System.loadLibrary directly. So, the timing of that isn\u0027t really important.\n\nAs for the failure to connectToZygoteIfNeeded I think this is fine for now, we can tweak it later maybe.",
+      "parentUuid": "575b363f_f0a4b68e",
+      "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "372b2280_57cee61c",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2017-01-03T17:26:23Z",
+      "side": 1,
+      "message": "Common convention here is to add \"Locked\" suffix to the names of methods that must be called with sLock held.",
+      "range": {
+        "startLine": 135,
+        "startChar": 26,
+        "endLine": 135,
+        "endChar": 40
+      },
+      "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
