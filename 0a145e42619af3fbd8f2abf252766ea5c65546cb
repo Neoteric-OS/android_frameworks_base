@@ -46,6 +46,30 @@
       "revId": "0a145e42619af3fbd8f2abf252766ea5c65546cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7a50a83_3e774f7a",
+        "filename": "core/java/android/bluetooth/BluetoothInputHost.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-01-03T20:40:46Z",
+      "side": 1,
+      "message": "Either way.  I prefer not to commit commented-out debug statements, because they get out of date too easily.",
+      "parentUuid": "372b2280_976c4e22",
+      "range": {
+        "startLine": 422,
+        "startChar": 0,
+        "endLine": 422,
+        "endChar": 69
+      },
+      "revId": "0a145e42619af3fbd8f2abf252766ea5c65546cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
