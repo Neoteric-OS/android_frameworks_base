@@ -25,8 +25,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.media.AudioManager;
+import android.nfc.NfcAdapter;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.os.UserHandle;
@@ -71,6 +73,7 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
     private final String mSlotRotate;
     private final String mSlotHeadset;
     private final String mSlotDataSaver;
+    private final String mSlotNfc;
 
     private final Context mContext;
     private final Handler mHandler = new Handler();
@@ -83,6 +86,7 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
     private final StatusBarIconController mIconController;
     private final RotationLockController mRotationLockController;
     private final DataSaverController mDataSaver;
+    private NfcAdapter mNfcAdapter;
     private StatusBarKeyguardViewManager mStatusBarKeyguardViewManager;
 
     // Assume it's all good unless we hear otherwise.  We don't always seem
@@ -92,6 +96,7 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
     private boolean mZenVisible;
     private boolean mVolumeVisible;
     private boolean mCurrentUserSetup;
+    private boolean mNfcSupported;
 
     private int mZen;
 
@@ -118,6 +123,8 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         mRotationLockController = rotationLockController;
         mDataSaver = dataSaver;
 
+        mNfcSupported = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC);
+
         mSlotCast = context.getString(com.android.internal.R.string.status_bar_cast);
         mSlotHotspot = context.getString(com.android.internal.R.string.status_bar_hotspot);
         mSlotBluetooth = context.getString(com.android.internal.R.string.status_bar_bluetooth);
@@ -130,6 +137,7 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         mSlotRotate = context.getString(com.android.internal.R.string.status_bar_rotate);
         mSlotHeadset = context.getString(com.android.internal.R.string.status_bar_headset);
         mSlotDataSaver = context.getString(com.android.internal.R.string.status_bar_data_saver);
+        mSlotNfc = context.getString(com.android.internal.R.string.status_bar_nfc);
 
         mRotationLockController.addRotationLockControllerCallback(this);
 
@@ -143,6 +151,9 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_AVAILABLE);
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE);
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_REMOVED);
+        if (mNfcSupported) {
+            filter.addAction(NfcAdapter.ACTION_ADAPTER_STATE_CHANGED);
+        }
         mContext.registerReceiver(mIntentReceiver, filter, null, mHandler);
 
         // listen for user / profile change.
@@ -177,6 +188,12 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         mIconController.setIcon(mSlotCast, R.drawable.stat_sys_cast, null);
         mIconController.setIconVisibility(mSlotCast, false);
         mCast.addCallback(mCastCallback);
+
+        // nfc
+        if (mNfcSupported) {
+            mIconController.setIcon(mSlotNfc, R.drawable.stat_sys_nfc, null);
+            mIconController.setIconVisibility(mSlotNfc, false);
+        }
 
         // hotspot
         mIconController.setIcon(mSlotHotspot, R.drawable.stat_sys_hotspot,
@@ -523,6 +540,25 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         }
     }
 
+    private NfcAdapter getNfcAdapter() {
+        if (mNfcAdapter == null) {
+            try {
+                mNfcAdapter = NfcAdapter.getNfcAdapter(mContext);
+            } catch (UnsupportedOperationException e) {
+                mNfcAdapter = null;
+            }
+        }
+        return mNfcAdapter;
+    }
+
+    private void updateNfcIcon() {
+        if (getNfcAdapter().isEnabled()) {
+            mIconController.setIconVisibility(mSlotNfc, true);
+        } else {
+            mIconController.setIconVisibility(mSlotNfc, false);
+        }
+    }
+
     @Override
     public void onDataSaverChanged(boolean isDataSaving) {
         mIconController.setIconVisibility(mSlotDataSaver, isDataSaving);
@@ -546,6 +582,8 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
                 updateManagedProfile();
             } else if (action.equals(AudioManager.ACTION_HEADSET_PLUG)) {
                 updateHeadsetPlug(intent);
+            } else if (action.equals(NfcAdapter.ACTION_ADAPTER_STATE_CHANGED)) {
+                updateNfcIcon();
             }
         }
     };
