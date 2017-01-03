@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "575b363f_b9185d8e",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2017-01-03T12:17:05Z",
+      "side": 1,
+      "message": "I don\u0027t think this is sufficient coverage.  I think we really need to verify that we\u0027re dropping this packet right up to ageLimit, otherwise our programs might not be working half the time.  Can we track this down further to find out exactly where the problem is:\n1. add some logging to keep track of the lifetime passed into the APF interpreter, and add if it remains correct even when the test flakes, then\n2. add some logging in the compare instruction simulation to see what values are compared and what the outcome is?\n\nShould be able to add boatloads of logging and then just diff the log for the correct vs flaky runs.",
+      "range": {
+        "startLine": 978,
+        "startChar": 53,
+        "endLine": 978,
+        "endChar": 56
+      },
+      "revId": "c25e280b27eac6f6262e0cbacb0458402acffef3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
