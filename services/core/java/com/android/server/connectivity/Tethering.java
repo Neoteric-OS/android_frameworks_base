@@ -50,6 +50,7 @@ import android.os.INetworkManagementService;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Parcel;
+import android.os.PersistableBundle;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.UserHandle;
@@ -394,6 +395,11 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         }
     }
 
+    // Return whether tether provisioning is disabled by system properties
+    private boolean isProvisioningDisabled() {
+        return mSystemProperties.getBoolean(DISABLE_PROVISIONING_SYSPROP_KEY, false) ;
+    }
+
     /**
      * Check if the device requires a provisioning check in order to enable tethering.
      *
@@ -401,25 +407,36 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
      */
     @VisibleForTesting
     protected boolean isTetherProvisioningRequired() {
-        String[] provisionApp = mContext.getResources().getStringArray(
-                com.android.internal.R.array.config_mobile_hotspot_provision_app);
-        if (mSystemProperties.getBoolean(DISABLE_PROVISIONING_SYSPROP_KEY, false)
-                || provisionApp == null) {
+        // If tether provisioning is disabled, return false without fetching CarrierConfig
+        if (isProvisioningDisabled()){
             return false;
         }
 
-        // Check carrier config for entitlement checks
-        final CarrierConfigManager configManager = (CarrierConfigManager) mContext
-             .getSystemService(Context.CARRIER_CONFIG_SERVICE);
-        if (configManager != null && configManager.getConfig() != null) {
-            // we do have a CarrierConfigManager and it has a config.
-            boolean isEntitlementCheckRequired = configManager.getConfig().getBoolean(
-                    CarrierConfigManager.KEY_REQUIRE_ENTITLEMENT_CHECKS_BOOL);
-            if (!isEntitlementCheckRequired) {
-                return false;
+        // These are default config values in case configManager or config is null
+        boolean hasProvisioningApp = false;
+        boolean isEntitlementCheckRequired = true;
+
+        final CarrierConfigManager configManager = (CarrierConfigManager)
+                mContext.getSystemService(Context.CARRIER_CONFIG_SERVICE);
+        if (configManager != null) {
+            PersistableBundle b = configManager.getConfig();
+            if (b != null) {
+                String[] provisionApp = b.getStringArray(CarrierConfigManager.
+                        KEY_MOBILE_HOTSPOT_PROVISION_APP_STRING_ARRAY);
+                if (provisionApp == null) Log.d(TAG, "provisionApp[] == null");
+                if (provisionApp != null && provisionApp.length == 2) {
+                    hasProvisioningApp = true;
+                }
+                isEntitlementCheckRequired = b.getBoolean(
+                        CarrierConfigManager.KEY_REQUIRE_ENTITLEMENT_CHECKS_BOOL);
             }
         }
-        return (provisionApp.length == 2);
+
+        if (!hasProvisioningApp || !isEntitlementCheckRequired) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -1542,6 +1559,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                         mSimBcastGenerationNumber.incrementAndGet());
                 final IntentFilter filter = new IntentFilter();
                 filter.addAction(TelephonyIntents.ACTION_SIM_STATE_CHANGED);
+                filter.addAction(CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED);
 
                 mContext.registerReceiver(mBroadcastReceiver, filter);
             }
@@ -1571,6 +1589,17 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
 
             @Override
             public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(TelephonyIntents.ACTION_SIM_STATE_CHANGED)) {
+                    Log.d(TAG, "received ACTION_SIM_STATE_CHANGED");
+                    final String state = intent.getStringExtra(IccCardConstants.INTENT_KEY_ICC_STATE);
+                    Log.d(TAG, "got Sim changed to state " + state);
+                } else if (intent.getAction().equals(CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED)) {
+                    Log.d(TAG, "received ACTION_CARRIER_CONFIG_CHANGED");
+                    reevaluateProvisioning();
+                }
+                // TODO this block of code isn't necessary if we are going to listen for
+                // CARRIER_CONFIG_CHANGED instead of SIM_STATE_CHANGED
+                /*
                 if (DBG) {
                     Log.d(TAG, "simchange mGenerationNumber=" + mGenerationNumber +
                             ", current generationNumber=" + mSimBcastGenerationNumber.get());
@@ -1588,44 +1617,67 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
 
                 if (mSimAbsentSeen && IccCardConstants.INTENT_VALUE_ICC_LOADED.equals(state)) {
                     mSimAbsentSeen = false;
-                    try {
-                        if (mContext.getResources().getString(com.android.internal.R.string.
-                                config_mobile_hotspot_provision_app_no_ui).isEmpty() == false) {
-                            ArrayList<Integer> tethered = new ArrayList<Integer>();
-                            synchronized (mPublicSync) {
-                                for (int i = 0; i < mTetherStates.size(); i++) {
-                                    TetherState tetherState = mTetherStates.valueAt(i);
-                                    if (tetherState.mLastState !=
-                                            IControlsTethering.STATE_TETHERED) {
-                                        continue;  // Skip interfaces that aren't tethered.
-                                    }
-                                    String iface = mTetherStates.keyAt(i);
-                                    int interfaceType = ifaceNameToType(iface);
-                                    if (interfaceType != ConnectivityManager.TETHERING_INVALID) {
-                                        tethered.add(new Integer(interfaceType));
-                                    }
+                    reevaluateProvisioning();
+                }
+                */
+            }
+
+            /**
+             * Re-evaluate whether provisioning is necessary and do necessary provisioning check
+             */
+            private void reevaluateProvisioning() {
+                try {
+                    boolean hasProvisioningAppNoUi = false;
+                    final CarrierConfigManager configManager = (CarrierConfigManager)
+                            mContext.getSystemService(Context.CARRIER_CONFIG_SERVICE);
+                    if (configManager != null) {
+                        PersistableBundle b = configManager.getConfig();
+                        if (b != null) {
+                            String provisionAppNoUi = b.getString(CarrierConfigManager.
+                                    KEY_MOBILE_HOTSPOT_PROVISION_APP_NO_UI_STRING);
+                            if (provisionAppNoUi != null && !provisionAppNoUi.isEmpty()) {
+                                hasProvisioningAppNoUi = true;
+                            }
+                        }
+                    }
+                    Log.d(TAG, "onReceive hasProvisioningAppNoUi=" + hasProvisioningAppNoUi);
+                    if (hasProvisioningAppNoUi) {
+                        ArrayList<Integer> tethered = new ArrayList<Integer>();
+                        synchronized (mPublicSync) {
+                            for (int i = 0; i < mTetherStates.size(); i++) {
+                                TetherState tetherState = mTetherStates.valueAt(i);
+                                if (tetherState.mLastState !=
+                                        IControlsTethering.STATE_TETHERED) {
+                                    continue;  // Skip interfaces that aren't tethered.
+                                }
+                                String iface = mTetherStates.keyAt(i);
+                                int interfaceType = ifaceNameToType(iface);
+                                if (interfaceType != ConnectivityManager.TETHERING_INVALID) {
+                                    tethered.add(new Integer(interfaceType));
                                 }
                             }
-                            for (int tetherType : tethered) {
-                                Intent startProvIntent = new Intent();
-                                startProvIntent.putExtra(
-                                        ConnectivityManager.EXTRA_ADD_TETHER_TYPE, tetherType);
-                                startProvIntent.putExtra(
-                                        ConnectivityManager.EXTRA_RUN_PROVISION, true);
-                                startProvIntent.setComponent(TETHER_SERVICE);
-                                mContext.startServiceAsUser(startProvIntent, UserHandle.CURRENT);
-                            }
-                            Log.d(TAG, "re-evaluate provisioning");
-                        } else {
-                            Log.d(TAG, "no prov-check needed for new SIM");
                         }
-                    } catch (Resources.NotFoundException e) {
+                        for (int tetherType : tethered) {
+                            Intent startProvIntent = new Intent();
+                            startProvIntent.putExtra(
+                                    ConnectivityManager.EXTRA_ADD_TETHER_TYPE, tetherType);
+                            startProvIntent.putExtra(
+                                    ConnectivityManager.EXTRA_RUN_PROVISION, true);
+                            startProvIntent.setComponent(TETHER_SERVICE);
+                            mContext.startServiceAsUser(startProvIntent, UserHandle.CURRENT);
+                        }
+                        Log.d(TAG, "re-evaluate provisioning");
+                    } else {
                         Log.d(TAG, "no prov-check needed for new SIM");
-                        // not defined, do nothing
                     }
+                } catch (Resources.NotFoundException e) {
+                    Log.d(TAG, "exception caught, no prov-check needed for new SIM");
+                    Log.d(TAG, e.toString());
+                    // not defined, do nothing
                 }
             }
         }
+
 
         class InitialState extends TetherMasterUtilState {
             @Override

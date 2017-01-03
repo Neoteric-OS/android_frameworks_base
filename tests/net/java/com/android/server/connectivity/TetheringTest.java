@@ -17,6 +17,7 @@
 package com.android.server.connectivity;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
@@ -76,18 +77,20 @@ public class TetheringTest {
     }
 
     private void setupForRequiredProvisioning() {
-        // Produce some acceptable looking provision app setting if requested.
-        when(mResources.getStringArray(
-                com.android.internal.R.array.config_mobile_hotspot_provision_app))
-                .thenReturn(PROVISIONING_APP_NAME);
         // Don't disable tethering provisioning unless requested.
         when(mSystemProperties.getBoolean(eq(Tethering.DISABLE_PROVISIONING_SYSPROP_KEY),
                                           anyBoolean())).thenReturn(false);
+
         // Act like the CarrierConfigManager is present and ready unless told otherwise.
         when(mContext.getSystemService(Context.CARRIER_CONFIG_SERVICE))
                 .thenReturn(mCarrierConfigManager);
         when(mCarrierConfigManager.getConfig()).thenReturn(mCarrierConfig);
         mCarrierConfig.putBoolean(CarrierConfigManager.KEY_REQUIRE_ENTITLEMENT_CHECKS_BOOL, true);
+
+        // Produce some acceptable looking provision app setting if requested.
+        mCarrierConfig.putStringArray(
+                CarrierConfigManager.KEY_MOBILE_HOTSPOT_PROVISION_APP_STRING_ARRAY,
+                PROVISIONING_APP_NAME);
     }
 
     @Test
@@ -97,33 +100,35 @@ public class TetheringTest {
     }
 
     @Test
-    public void toleratesCarrierConfigManagerMissing() {
+    public void provisioningNotRequiredWhenCarrierConfigManagerMissing() {
         setupForRequiredProvisioning();
         when(mContext.getSystemService(Context.CARRIER_CONFIG_SERVICE))
                 .thenReturn(null);
-        // Couldn't get the CarrierConfigManager, but still had a declared provisioning app.
-        // We therefore still require provisioning.
-        assertTrue(mTethering.isTetherProvisioningRequired());
+        // Couldn't get the CarrierConfigManager so we don't require provisioning.
+        assertEquals(false, mTethering.isTetherProvisioningRequired());
     }
 
     @Test
-    public void toleratesCarrierConfigMissing() {
+    public void provisioningNotRequiredWhenCarrierConfigMissing() {
         setupForRequiredProvisioning();
         when(mCarrierConfigManager.getConfig()).thenReturn(null);
-        // We still have a provisioning app configured, so still require provisioning.
-        assertTrue(mTethering.isTetherProvisioningRequired());
+        // Couldn't get the CarrierConfig so we don't require provisioning
+        assertEquals(false, mTethering.isTetherProvisioningRequired());
     }
 
     @Test
     public void provisioningNotRequiredWhenAppNotFound() {
         setupForRequiredProvisioning();
-        when(mResources.getStringArray(
-                com.android.internal.R.array.config_mobile_hotspot_provision_app))
-                .thenReturn(null);
+
+        mCarrierConfig.putStringArray(
+                CarrierConfigManager.KEY_MOBILE_HOTSPOT_PROVISION_APP_STRING_ARRAY,
+                null);
         assertTrue(!mTethering.isTetherProvisioningRequired());
-        when(mResources.getStringArray(
-                com.android.internal.R.array.config_mobile_hotspot_provision_app))
-                .thenReturn(new String[] {"malformedApp"});
+
+        // put a malformed app into the config (the array should have two elements, not just one)
+        mCarrierConfig.putStringArray(
+                CarrierConfigManager.KEY_MOBILE_HOTSPOT_PROVISION_APP_STRING_ARRAY,
+                new String[] {"malformedApp"});
         assertTrue(!mTethering.isTetherProvisioningRequired());
     }
 }

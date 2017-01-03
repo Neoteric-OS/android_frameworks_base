@@ -1048,6 +1048,105 @@ public class CarrierConfigManager {
     public static final String KEY_EDITABLE_WFC_ROAMING_MODE_BOOL =
             "editable_wfc_roaming_mode_bool";
 
+    /**
+     * If the mobile hotspot feature requires provisioning, a package name and class name
+     * can be provided to launch a supported application that provisions the devices.
+     *
+     * Example Usage:
+     *
+     * String[] appDetails = null;
+     * CarrierConfigManager configManager = (CarrierConfigManager)
+     *          mPhone.getContext().getSystemService(Context.CARRIER_CONFIG_SERVICE);
+     * if (configManager != null) {
+     *     PersistableBundle bundle = configManager.getConfig();
+     *     if (bundle != null) {
+     *         appDetails = bundle.getStringArray(
+     *                 CarrierConfigManager.KEY_MOBILE_HOTSPOT_PROVISION_APP_STRING_ARRAY);
+     *     }
+     * }
+     * if (appDetails != null && appDetails.length == 2) {
+     *     Intent intent = new Intent(Intent.ACTION_MAIN);
+     *     intent.setClassName(appDetails[0], appDetails[1]);
+     *     startActivityForResult(intent, 0);
+     * }
+     *
+     * public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+     *     super.onActivityResult(requestCode, resultCode, intent);
+     *     if (requestCode == 0) {
+     *         if (resultCode == Activity.RESULT_OK) {
+     *             //Mobile hotspot provisioning successful
+     *         } else {
+     *             //Mobile hotspot provisioning failed
+     *         }
+     *     }
+     *
+     * See src/com/android/settings/TetherSettings.java for more details.
+     * For ui-less/periodic recheck support see KEY_MOBILE_HOTSPOT_PROVISION_APP_NO_UI_STRING
+     *
+     * The first element is the package name and the second element is the class name
+     * of the provisioning app
+     */
+    public static final String KEY_MOBILE_HOTSPOT_PROVISION_APP_STRING_ARRAY =
+            "mobile_hotspot_provision_app_string_array";
+
+    /**
+     * If the mobile hotspot feature requires provisioning, an action can be provided
+     * that will be broadcast in non-ui cases for checking the provisioning status.
+     *
+     * A second broadcast, action defined by KEY_MOBILE_HOTSPOT_PROVISION_RESPONSE_STRING,
+     * will be sent back to notify if provisioning succeeded or not.  The response will
+     * match that of the activity in KEY_MOBILE_HOTSPOT_PROVISION_APP_STRING_ARRAY, but instead
+     * contained within the int extra "EntitlementResult".
+     *
+     * Example Usage:
+     *
+     * String provisionAction = null;
+     * CarrierConfigManager configManager = (CarrierConfigManager)
+     *          mPhone.getContext().getSystemService(Context.CARRIER_CONFIG_SERVICE);
+     * if (configManager != null) {
+     *     PersistableBundle bundle = configManager.getConfig();
+     *     if (bundle != null) {
+     *         provisionAction = bundle.getString(
+     *                 CarrierConfigManager.KEY_MOBILE_HOTSPOT_PROVISION_APP_NO_UI_STRING);
+     *     }
+     * }
+     *  sendBroadcast(new Intent(provisionAction));
+     *
+     *  public void onReceive(Context context, Intent intent) {
+     *      String provisionResponse = null;
+     *      CarrierConfigManager configManager = (CarrierConfigManager)
+     *               context.getSystemService(Context.CARRIER_CONFIG_SERVICE);
+     *      if (configManager != null) {
+     *          PersistableBundle bundle = configManager.getConfig();
+     *          if (bundle != null) {
+     *              provisionResponse = bundle.getString(
+     *                      CarrierConfigManager.KEY_MOBILE_HOTSPOT_PROVISION_RESPONSE_STRING);
+     *          }
+     *      }
+     *      if (provisionResponse.equals(intent.getAction())
+     *             && intent.getIntExtra("EntitlementResult") == Activity.RESULT_OK) {
+     *          //Mobile hotspot provisioning successful
+     *      } else {
+     *          //Mobile hotspot provisioning failed
+     *      }
+     *  }
+     */
+    public static final String KEY_MOBILE_HOTSPOT_PROVISION_APP_NO_UI_STRING =
+            "mobile_hotspot_provision_app_no_ui_string";
+
+    /**
+     * Sent in response to a provisioning check. The caller must hold the permission
+     * android.permission.CONNECTIVITY_INTERNAL for Settings to receive this response.
+     */
+    public static final String KEY_MOBILE_HOTSPOT_PROVISION_RESPONSE_STRING =
+            "mobile_hotspot_provision_response_string";
+
+    /**
+     * Number of hours between each background provisioning call
+     */
+    public static final String KEY_MOBILE_HOTSPOT_PROVISION_CHECK_PERIOD_INT =
+            "mobile_hotspot_provision_check_period_int";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -1238,6 +1337,12 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_NOTIFY_VT_HANDOVER_TO_WIFI_FAILURE_BOOL, false);
         sDefaults.putStringArray(KEY_FILTERED_CNAP_NAMES_STRING_ARRAY, null);
         sDefaults.putBoolean(KEY_EDITABLE_WFC_ROAMING_MODE_BOOL, false);
+
+        // Used for provisioning the mobile hotspot feature
+        sDefaults.putStringArray(KEY_MOBILE_HOTSPOT_PROVISION_APP_STRING_ARRAY, null);
+        sDefaults.putString(KEY_MOBILE_HOTSPOT_PROVISION_APP_NO_UI_STRING, "");
+        sDefaults.putString(KEY_MOBILE_HOTSPOT_PROVISION_RESPONSE_STRING, "");
+        sDefaults.putInt(KEY_MOBILE_HOTSPOT_PROVISION_CHECK_PERIOD_INT, 24);
     }
 
     /**

@@ -36924,6 +36924,10 @@ package android.telephony {
     field public static final java.lang.String KEY_MMS_UA_PROF_TAG_NAME_STRING = "uaProfTagName";
     field public static final java.lang.String KEY_MMS_UA_PROF_URL_STRING = "uaProfUrl";
     field public static final java.lang.String KEY_MMS_USER_AGENT_STRING = "userAgent";
+    field public static final java.lang.String KEY_MOBILE_HOTSPOT_PROVISION_APP_NO_UI_STRING = "mobile_hotspot_provision_app_no_ui_string";
+    field public static final java.lang.String KEY_MOBILE_HOTSPOT_PROVISION_APP_STRING_ARRAY = "mobile_hotspot_provision_app_string_array";
+    field public static final java.lang.String KEY_MOBILE_HOTSPOT_PROVISION_CHECK_PERIOD_INT = "mobile_hotspot_provision_check_period_int";
+    field public static final java.lang.String KEY_MOBILE_HOTSPOT_PROVISION_RESPONSE_STRING = "mobile_hotspot_provision_response_string";
     field public static final java.lang.String KEY_ONLY_SINGLE_DC_ALLOWED_INT_ARRAY = "only_single_dc_allowed_int_array";
     field public static final java.lang.String KEY_OPERATOR_SELECTION_EXPAND_BOOL = "operator_selection_expand_bool";
     field public static final java.lang.String KEY_PREFER_2G_BOOL = "prefer_2g_bool";

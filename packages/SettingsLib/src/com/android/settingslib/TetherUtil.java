@@ -16,31 +16,53 @@
 package com.android.settingslib;
 
 import android.content.Context;
+import android.os.PersistableBundle;
 import android.os.SystemProperties;
 import android.telephony.CarrierConfigManager;
+import android.util.Log;
 
 public class TetherUtil {
+    private static final String TAG = "TetherUtil";
 
-    private static boolean isEntitlementCheckRequired(Context context) {
-        final CarrierConfigManager configManager = (CarrierConfigManager) context
-             .getSystemService(Context.CARRIER_CONFIG_SERVICE);
-        return configManager.getConfig().getBoolean(CarrierConfigManager
-             .KEY_REQUIRE_ENTITLEMENT_CHECKS_BOOL);
+    // Return whether tether provisioning is disabled by system properties
+    private static boolean isProvisioningDisabled() {
+        return SystemProperties.getBoolean("net.tethering.noprovisioning", false);
     }
 
     public static boolean isProvisioningNeeded(Context context) {
-        // Keep in sync with other usage of config_mobile_hotspot_provision_app.
+        // Keep in sync with other usages of KEY_MOBILE_HOTSPOT_PROVISION_APP_STRING_ARRAY
         // ConnectivityManager#enforceTetherChangePermission
-        String[] provisionApp = context.getResources().getStringArray(
-                com.android.internal.R.array.config_mobile_hotspot_provision_app);
-        if (SystemProperties.getBoolean("net.tethering.noprovisioning", false)
-                || provisionApp == null) {
+        // Tethering#isTetherProvisioningRequired
+
+        // If tether provisioning is disabled return false without checking CarrierConfig
+        if (isProvisioningDisabled()) {
             return false;
         }
-        // Check carrier config for entitlement checks
-        if (isEntitlementCheckRequired(context) == false) {
-            return false;
+
+        // These are default config values in case configManager or config is null
+        boolean hasProvisioningApp = false;
+        boolean isEntitlementCheckRequired = true;
+
+        final CarrierConfigManager configManager = (CarrierConfigManager)
+                context.getSystemService(Context.CARRIER_CONFIG_SERVICE);
+        if (configManager != null) {
+            PersistableBundle b = configManager.getConfig();
+            if (b != null) {
+                String[] provisionApp = b.getStringArray(CarrierConfigManager.
+                        KEY_MOBILE_HOTSPOT_PROVISION_APP_STRING_ARRAY);
+                if (provisionApp == null) Log.d(TAG, "provisionApp[] is null");
+                if (provisionApp != null && provisionApp.length == 2) {
+                    hasProvisioningApp = true;
+                }
+                isEntitlementCheckRequired = b.getBoolean(
+                        CarrierConfigManager.KEY_REQUIRE_ENTITLEMENT_CHECKS_BOOL);
+            }
         }
-        return (provisionApp.length == 2);
+
+        if (!hasProvisioningApp || !isEntitlementCheckRequired) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

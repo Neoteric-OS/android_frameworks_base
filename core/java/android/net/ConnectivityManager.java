@@ -37,11 +37,13 @@ import android.os.INetworkManagementService;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
+import android.os.PersistableBundle;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.ServiceManager;
 import android.provider.Settings;
+import android.telephony.CarrierConfigManager;
 import android.telephony.SubscriptionManager;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -1851,10 +1853,22 @@ public class ConnectivityManager {
 
     /** {@hide */
     public static final void enforceTetherChangePermission(Context context) {
-        if (context.getResources().getStringArray(
-                com.android.internal.R.array.config_mobile_hotspot_provision_app).length == 2) {
-            // Have a provisioning app - must only let system apps (which check this app)
-            // turn on tethering
+        boolean hasProvisioningApp = false;
+        CarrierConfigManager configManager = (CarrierConfigManager)
+                context.getSystemService(Context.CARRIER_CONFIG_SERVICE);
+        if (configManager != null) {
+            PersistableBundle b = configManager.getConfig();
+            if (b != null) {
+                String[] provisionApp = b.getStringArray(CarrierConfigManager.
+                            KEY_MOBILE_HOTSPOT_PROVISION_APP_STRING_ARRAY);
+                if (provisionApp == null) Log.d(TAG, "provisionApp[] is null");
+                if (provisionApp != null && provisionApp.length == 2) {
+                    hasProvisioningApp = true;
+                }
+            }
+        }
+        if (hasProvisioningApp) {
+            // only let system apps (which check this app) turn on tethering
             context.enforceCallingOrSelfPermission(
                     android.Manifest.permission.TETHER_PRIVILEGED, "ConnectivityService");
         } else {
