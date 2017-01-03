@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7a50a83_fd122008",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2017-01-03T18:58:33Z",
+      "side": 1,
+      "message": "could add into the return to save a couple of lines, though may not be more readable.",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 28
+      },
+      "revId": "3003c8cf081f86d777688684326ebb0c7e788c9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
