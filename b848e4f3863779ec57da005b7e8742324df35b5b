@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "3726c2ad_ffa4938e",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-01-03T17:52:53Z",
+      "side": 1,
+      "message": "@GuardedBy(\"sLock\") or a comment to that effect ?",
+      "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3726c2ad_1f906f2a",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-01-03T17:52:53Z",
+      "side": 1,
+      "message": "usual convention is to leave a space between synchronized and () [here and below].",
+      "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "372b2280_97d32ebc",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-01-03T17:52:53Z",
+      "side": 1,
+      "message": "i\u0027m guessing sZygote gets set to non-null eventually - how does that happen ?",
+      "range": {
+        "startLine": 94,
+        "startChar": 16,
+        "endLine": 94,
+        "endChar": 49
+      },
+      "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7180671_36feb68d",
         "filename": "core/java/android/webkit/WebViewZygote.java",
         "patchSetId": 2
