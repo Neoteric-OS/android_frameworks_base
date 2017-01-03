@@ -22,6 +22,30 @@
       "revId": "ab9651f89c48e6e696706e76b2ac0df7449f886b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7b632e5_7d90f32b",
+        "filename": "wifi/tests/src/android/net/wifi/aware/WifiAwareManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-01-03T23:23:23Z",
+      "side": 1,
+      "message": "update to what? \n\nThe proxy (this line) still gets some kind of raw status back. Whatever it is is not passed to the app facing callback (3 lines down). The change is that I removed the status code on the app-facing API (the semantics weren\u0027t clean - nothing the app could do with it - and from feedback from HAL writers can\u0027t even fail).",
+      "parentUuid": "b7b632e5_5ad7b50d",
+      "range": {
+        "startLine": 404,
+        "startChar": 40,
+        "endLine": 404,
+        "endChar": 62
+      },
+      "revId": "ab9651f89c48e6e696706e76b2ac0df7449f886b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
