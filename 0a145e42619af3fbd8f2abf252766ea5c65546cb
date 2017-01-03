@@ -22,6 +22,30 @@
       "revId": "0a145e42619af3fbd8f2abf252766ea5c65546cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "372b2280_976c4e22",
+        "filename": "core/java/android/bluetooth/BluetoothInputHost.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1086529
+      },
+      "writtenOn": "2017-01-03T19:08:59Z",
+      "side": 1,
+      "message": "Yes, I\u0027ll make a bunch of separate CLs that will remove all of these along the sendReport route (i\u0027ve mentioned that before).\nI can as well remove it now, of course.",
+      "parentUuid": "f7a50a83_fde5401f",
+      "range": {
+        "startLine": 422,
+        "startChar": 0,
+        "endLine": 422,
+        "endChar": 69
+      },
+      "revId": "0a145e42619af3fbd8f2abf252766ea5c65546cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

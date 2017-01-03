@@ -22,6 +22,30 @@
       "revId": "9cc7ebe7d90c8da1340c8115023bd38451e58f7e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "372b2280_f765d239",
+        "filename": "core/java/android/bluetooth/BluetoothInputHost.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1086529
+      },
+      "writtenOn": "2017-01-03T19:08:59Z",
+      "side": 0,
+      "message": "Kinda. This is not present in other profile\u0027s sources (or, for that matter, in other overridden methods of BluetoothProfile in this file), so I just made it more uniform.",
+      "parentUuid": "f7a50a83_bd7a6860",
+      "range": {
+        "startLine": 279,
+        "startChar": 4,
+        "endLine": 279,
+        "endChar": 13
+      },
+      "revId": "9cc7ebe7d90c8da1340c8115023bd38451e58f7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
