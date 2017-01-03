@@ -46,6 +46,30 @@
       "revId": "bfb31a1f31a6ca431fd404074a9b01a05ced420a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7a50a83_e2f91f5d",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2017-01-03T16:15:22Z",
+      "side": 1,
+      "message": "2. should be fixed by https://android-review.googlesource.com/281393.\n\n3. should not happen, so I\u0027m not sure if you formatted the classpath correctly.\n\nLast but not least, the context classloader is not the same as the regular classloader. I\u0027m surprised this works well enough.",
+      "parentUuid": "97368e0e_e426142a",
+      "range": {
+        "startLine": 334,
+        "startChar": 11,
+        "endLine": 342,
+        "endChar": 9
+      },
+      "revId": "bfb31a1f31a6ca431fd404074a9b01a05ced420a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
