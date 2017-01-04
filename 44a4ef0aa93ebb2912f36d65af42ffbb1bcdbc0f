@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7b632e5_5a77aaf2",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 4987,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2017-01-04T21:04:15Z",
+      "side": 1,
+      "message": "should we handle both A2DP sink and source here like we do for connect/disconnect?",
+      "range": {
+        "startLine": 4987,
+        "startChar": 33,
+        "endLine": 4987,
+        "endChar": 58
+      },
+      "revId": "44a4ef0aa93ebb2912f36d65af42ffbb1bcdbc0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
