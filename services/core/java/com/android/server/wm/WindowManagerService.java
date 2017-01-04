@@ -7498,6 +7498,9 @@ public class WindowManagerService extends IWindowManager.Stub
         }
         Configuration config = new Configuration();
         config.fontScale = 0;
+        if ((mCurConfiguration.uiMode & Configuration.UI_MODE_TYPE_MASK) == Configuration.UI_MODE_TYPE_CAR) {
+            config.uiMode |= Configuration.UI_MODE_TYPE_CAR;
+        }
         computeScreenConfigurationLocked(config);
         return config;
     }
