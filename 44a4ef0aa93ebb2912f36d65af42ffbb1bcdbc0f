@@ -22,6 +22,30 @@
       "revId": "44a4ef0aa93ebb2912f36d65af42ffbb1bcdbc0f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7b632e5_50a06944",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 4987,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-01-04T22:17:56Z",
+      "side": 1,
+      "message": "Probably, but should be in a future iteration.\nCurrently, the A2DP Sink mechanism is quite different from A2DP Source (e.g., Sink doesn\u0027t use the system/bt/audio_a2dp_hw HAL),\nso even if we make the changes here, we won\u0027t be able to test them.\nAfter the A2DP Sink mechanism is refactored to use the\naudio_a2dp_hw HAL, we can easily come back here and add the\nnecessary changes.",
+      "parentUuid": "b7b632e5_5a77aaf2",
+      "range": {
+        "startLine": 4987,
+        "startChar": 33,
+        "endLine": 4987,
+        "endChar": 58
+      },
+      "revId": "44a4ef0aa93ebb2912f36d65af42ffbb1bcdbc0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
