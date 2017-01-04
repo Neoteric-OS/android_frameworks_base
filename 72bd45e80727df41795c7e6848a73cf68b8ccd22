@@ -16,6 +16,24 @@
       "revId": "72bd45e80727df41795c7e6848a73cf68b8ccd22",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7b632e5_632050c3",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2017-01-04T01:03:21Z",
+      "side": 1,
+      "message": "Good to know. I\u0027ll upload an additional CL which replaces usage of this here and in the binder code this is (roughly) based off of.",
+      "parentUuid": "b7b632e5_8353a457",
+      "revId": "72bd45e80727df41795c7e6848a73cf68b8ccd22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
