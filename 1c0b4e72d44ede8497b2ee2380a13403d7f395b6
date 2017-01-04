@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7b632e5_95d0330e",
+        "filename": "core/java/android/os/HwBinder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2017-01-04T22:07:37Z",
+      "side": 1,
+      "message": "where is it thrown? The native code doesn\u0027t seem to throw this.",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 54
+      },
+      "revId": "1c0b4e72d44ede8497b2ee2380a13403d7f395b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
