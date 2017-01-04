@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7b632e5_efd9a184",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2507,
+      "author": {
+        "id": 1060405
+      },
+      "writtenOn": "2017-01-04T17:54:22Z",
+      "side": 1,
+      "message": "How about this call site? Just want to make sure they are consistent.",
+      "range": {
+        "startLine": 2505,
+        "startChar": 8,
+        "endLine": 2507,
+        "endChar": 9
+      },
+      "revId": "30d4a498c4bb99eb16d8bfd8ccfdd413c1dad881",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
