@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7b632e5_8353a457",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1014088
+      },
+      "writtenOn": "2017-01-04T00:58:43Z",
+      "side": 1,
+      "message": "It\u0027s fine here, I encourage you to use ScopedLocalRef in most cases though.",
+      "revId": "72bd45e80727df41795c7e6848a73cf68b8ccd22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
