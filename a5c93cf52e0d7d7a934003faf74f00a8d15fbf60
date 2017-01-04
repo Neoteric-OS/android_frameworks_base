@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7b632e5_c1b83110",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 60765,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2017-01-04T19:14:27Z",
+      "side": 1,
+      "message": "these changes seem unrelated.  are we pulling in something or is a rebase needed?",
+      "range": {
+        "startLine": 60762,
+        "startChar": 18,
+        "endLine": 60765,
+        "endChar": 22
+      },
+      "revId": "a5c93cf52e0d7d7a934003faf74f00a8d15fbf60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
