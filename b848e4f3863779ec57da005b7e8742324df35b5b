@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "575b363f_fcb7e3b3",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1042203
+      },
+      "writtenOn": "2017-01-04T00:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3726c2ad_ffa4938e",
+      "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3726c2ad_1f906f2a",
         "filename": "core/java/android/webkit/WebViewZygote.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-01-03T17:52:53Z",
       "side": 1,
       "message": "usual convention is to leave a space between synchronized and () [here and below].",
+      "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "575b363f_7cc41333",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1042203
+      },
+      "writtenOn": "2017-01-04T00:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3726c2ad_1f906f2a",
       "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -53,6 +89,24 @@
         "endLine": 94,
         "endChar": 49
       },
+      "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "575b363f_5cc94f47",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1042203
+      },
+      "writtenOn": "2017-01-04T00:32:49Z",
+      "side": 1,
+      "message": "In connectToZygoteIfNeededLocked() after the sPackage is set.",
+      "parentUuid": "372b2280_97d32ebc",
       "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -177,6 +231,24 @@
         "endLine": 135,
         "endChar": 40
       },
+      "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "575b363f_3cae9b65",
+        "filename": "core/java/android/webkit/WebViewZygote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1042203
+      },
+      "writtenOn": "2017-01-04T00:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "372b2280_57cee61c",
       "revId": "b848e4f3863779ec57da005b7e8742324df35b5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
