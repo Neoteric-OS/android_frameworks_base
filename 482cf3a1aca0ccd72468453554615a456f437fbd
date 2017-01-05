@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7b632e5_427ed480",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2017-01-05T19:01:16Z",
+      "side": 1,
+      "message": "Sure, I will modify the comment to make it more clear. It is a work around. The reason to fix it here instead of doing it inside the kernel is this bug happens so infrequently and it is caused by concurrency issue of reading the proc fs. The information stored inside proc fs is correct but the read result is corrupted since reading the data is not atomic. So we increased the size of each read to the maximum of proc fs can support and hopefully this will reduce the possibility of having inconsistent read since the frequency of reading the file is reduced to the minimum. And when the inconsistency happens, we will repeatedly read the file until we have a consistent read. And this should be sufficient to fix the problem.",
+      "parentUuid": "b7b632e5_8b6d6f75",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 60
+      },
+      "revId": "482cf3a1aca0ccd72468453554615a456f437fbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7b632e5_68af417d",
         "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-05T04:53:41Z",
       "side": 1,
       "message": "The comment above mentions /proc/net/xt_qtaguid/stats, but this function is not specific to that file. Is this call only ever used to parse that file, or is it used for other files?\n\nAlso, looking through other frameworks code, I see reads of this same file using a different method. Do all places that parse this file need to be modified?",
+      "range": {
+        "startLine": 110,
+        "startChar": 15,
+        "endLine": 110,
+        "endChar": 27
+      },
+      "revId": "482cf3a1aca0ccd72468453554615a456f437fbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7b632e5_a22c105f",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2017-01-05T19:01:16Z",
+      "side": 1,
+      "message": "Yes, this method here is only used for reading the stats file. The path is specified in the java code https://cs.corp.google.com/android/frameworks/base/core/java/com/android/internal/net/NetworkStatsFactory.java?rcl\u003db4413f694fbb8b03737d3e7a3831896bd371bed5\u0026l\u003d81. \n\nAnd since the bug is related to proc fs itself, all the stats parsing code may encounter with the same problem. But we only get it reported here right now. And we are planning to replacing the qtaguid module with something else in 2018. So I don\u0027t have any plan to modify other stats parsing code in the framework now.",
+      "parentUuid": "b7b632e5_68af417d",
       "range": {
         "startLine": 110,
         "startChar": 15,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b7b632e5_9d2051c4",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2017-01-05T19:01:16Z",
+      "side": 1,
+      "message": "Yes, using a 4k buffer may not be the best solution. I just want to reduce the frequency of reading the proc file and the maximum read out from proc is one page(4k) at a time. And if we can read it correctly at the first time, we can avoid doing the hash comparing loop to make sure the string is consistent. I am not very familiar with c++, if we use vector to read the file I think it only read a line at a time right? And I guess it might increase the possibility of having inconsistent data.",
+      "parentUuid": "b7b632e5_e8f0b1b0",
+      "range": {
+        "startLine": 119,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 19
+      },
+      "revId": "482cf3a1aca0ccd72468453554615a456f437fbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7b632e5_ced5b5fd",
         "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b7b632e5_5dbcf90d",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2017-01-05T19:01:16Z",
+      "side": 1,
+      "message": "Good point! This is redundant.",
+      "parentUuid": "b7b632e5_ced5b5fd",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 68
+      },
+      "revId": "482cf3a1aca0ccd72468453554615a456f437fbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7b632e5_cb1be7e5",
         "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
         "patchSetId": 6
@@ -105,6 +201,30 @@
       "writtenOn": "2017-01-05T04:53:41Z",
       "side": 1,
       "message": "Wouldn\u0027t this be better written as a loop that finishes if parseStatsFromString doesn\u0027t fail? Then you could do this a maximum number of times to avoid any infinite loops. You could still use the hash to determine whether you got a different string though.\n\nOne thing that\u0027s not clear is how the error manifests itself. Where you ever able to reproduce the error? For example, does just doing a large read fix the problem.",
+      "range": {
+        "startLine": 269,
+        "startChar": 8,
+        "endLine": 269,
+        "endChar": 70
+      },
+      "revId": "482cf3a1aca0ccd72468453554615a456f437fbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7b632e5_7d77fdf2",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2017-01-05T19:01:16Z",
+      "side": 1,
+      "message": "Could you explain more on avoid the infinite loop? The reason I use hash to determine if the string is complete is if the data stored inside proc fs is incorrect, the method parseStatsFromString will always fail. But that will be another issue we need to handle. \n\nAnd I\u0027ve never successfully reproduced the error so far. But I examined the device that reported this error and the data stored inside proc is consistent, that\u0027s why I suspect it is corrupted when read from the file.",
+      "parentUuid": "b7b632e5_cb1be7e5",
       "range": {
         "startLine": 269,
         "startChar": 8,
