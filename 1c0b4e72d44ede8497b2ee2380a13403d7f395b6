@@ -45,6 +45,30 @@
       "revId": "1c0b4e72d44ede8497b2ee2380a13403d7f395b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7b632e5_5d4b192c",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2017-01-05T19:10:05Z",
+      "side": 1,
+      "message": "thanks, did not see the code you haven\u0027t modified",
+      "parentUuid": "b7b632e5_979f509c",
+      "range": {
+        "startLine": 347,
+        "startChar": 37,
+        "endLine": 347,
+        "endChar": 51
+      },
+      "revId": "1c0b4e72d44ede8497b2ee2380a13403d7f395b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
