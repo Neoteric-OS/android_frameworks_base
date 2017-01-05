@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7b632e5_8b6d6f75",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1019050
+      },
+      "writtenOn": "2017-01-05T04:53:41Z",
+      "side": 1,
+      "message": "This comment does not make it clear, but is this to get around a kernel bug, or is it something else?",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 60
+      },
+      "revId": "482cf3a1aca0ccd72468453554615a456f437fbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7b632e5_68af417d",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1019050
+      },
+      "writtenOn": "2017-01-05T04:53:41Z",
+      "side": 1,
+      "message": "The comment above mentions /proc/net/xt_qtaguid/stats, but this function is not specific to that file. Is this call only ever used to parse that file, or is it used for other files?\n\nAlso, looking through other frameworks code, I see reads of this same file using a different method. Do all places that parse this file need to be modified?",
+      "range": {
+        "startLine": 110,
+        "startChar": 15,
+        "endLine": 110,
+        "endChar": 27
+      },
+      "revId": "482cf3a1aca0ccd72468453554615a456f437fbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7b632e5_e8f0b1b0",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1019050
+      },
+      "writtenOn": "2017-01-05T04:53:41Z",
+      "side": 1,
+      "message": "It\u0027s a little worrying to stick a 4k buffer on the stack. It might be better to use a std::vector instead.",
+      "range": {
+        "startLine": 119,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 19
+      },
+      "revId": "482cf3a1aca0ccd72468453554615a456f437fbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7b632e5_ced5b5fd",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1019050
+      },
+      "writtenOn": "2017-01-05T04:53:41Z",
+      "side": 1,
+      "message": "Is there a reason to use this construct? Couldn\u0027t you change the below to:\n\nconst char* pos \u003d statsLine.c_str();\n\nI don\u0027t see that you are modifying the string itself.",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 68
+      },
+      "revId": "482cf3a1aca0ccd72468453554615a456f437fbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7b632e5_cb1be7e5",
+        "filename": "core/jni/com_android_internal_net_NetworkStatsFactory.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1019050
+      },
+      "writtenOn": "2017-01-05T04:53:41Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this be better written as a loop that finishes if parseStatsFromString doesn\u0027t fail? Then you could do this a maximum number of times to avoid any infinite loops. You could still use the hash to determine whether you got a different string though.\n\nOne thing that\u0027s not clear is how the error manifests itself. Where you ever able to reproduce the error? For example, does just doing a large read fix the problem.",
+      "range": {
+        "startLine": 269,
+        "startChar": 8,
+        "endLine": 269,
+        "endChar": 70
+      },
+      "revId": "482cf3a1aca0ccd72468453554615a456f437fbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
