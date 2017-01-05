@@ -22,6 +22,29 @@
       "revId": "1c0b4e72d44ede8497b2ee2380a13403d7f395b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7b632e5_979f509c",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2017-01-05T17:06:33Z",
+      "side": 1,
+      "message": "it throws it right here",
+      "range": {
+        "startLine": 347,
+        "startChar": 37,
+        "endLine": 347,
+        "endChar": 51
+      },
+      "revId": "1c0b4e72d44ede8497b2ee2380a13403d7f395b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
