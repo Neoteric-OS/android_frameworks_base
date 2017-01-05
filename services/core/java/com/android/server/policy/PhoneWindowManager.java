@@ -1166,6 +1166,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         // If the power key has still not yet been handled, then detect short
         // press, long press, or multi press and decide what to do.
+        // If the power key has been handled, but screen is off, there is no reason not to wake up
         mPowerKeyHandled = hungUp || mScreenshotChordVolumeDownKeyTriggered
                 || mScreenshotChordVolumeUpKeyTriggered || gesturedServiceIntercepted;
         if (!mPowerKeyHandled) {
@@ -1197,6 +1198,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     }
                 }
             }
+        } else {
+            if (!interactive)
+                wakeUpFromPowerKey(event.getDownTime());
         }
     }
 
