@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "372b2280_02025aed",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-01-06T17:01:56Z",
+      "side": 1,
+      "message": "Yes, but i\u0027m not a compiler so I was confused by this check.\n\nSince this isn\u0027t going to be backported to other branches, why not :\n\nCHECK(fds !\u003d nullptr); ?",
+      "parentUuid": "b7b632e5_dfe8f39c",
+      "range": {
+        "startLine": 446,
+        "startChar": 29,
+        "endLine": 446,
+        "endChar": 43
+      },
+      "revId": "36d7a37c44ad15c286aa10da11e14ebaeef897fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "372b2280_0255ba12",
         "filename": "core/jni/fd_utils-inl.h",
         "patchSetId": 1
