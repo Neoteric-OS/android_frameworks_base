@@ -27499,6 +27499,29 @@ package android.net.wifi.p2p.nsd {
 
 }
 
+package android.net.wifi.util {
+
+  public class ScanResultUtil {
+    method public static android.net.wifi.WifiConfiguration createNetworkFromScanResult(android.net.wifi.ScanResult);
+    method public static java.lang.String createQuotedSSID(java.lang.String);
+    method public static boolean doesScanResultMatchWithNetwork(android.net.wifi.ScanResult, android.net.wifi.WifiConfiguration);
+    method public static boolean isScanResultForEapNetwork(android.net.wifi.ScanResult);
+    method public static boolean isScanResultForOpenNetwork(android.net.wifi.ScanResult);
+    method public static boolean isScanResultForPskNetwork(android.net.wifi.ScanResult);
+    method public static boolean isScanResultForWepNetwork(android.net.wifi.ScanResult);
+    method public static void setAllowedKeyManagementFromScanResult(android.net.wifi.ScanResult, android.net.wifi.WifiConfiguration);
+  }
+
+  public class WifiConfigurationUtil {
+    method public static boolean hasAnyValidWepKey(java.lang.String[]);
+    method public static boolean isConfigForEapNetwork(android.net.wifi.WifiConfiguration);
+    method public static boolean isConfigForOpenNetwork(android.net.wifi.WifiConfiguration);
+    method public static boolean isConfigForPskNetwork(android.net.wifi.WifiConfiguration);
+    method public static boolean isConfigForWepNetwork(android.net.wifi.WifiConfiguration);
+  }
+
+}
+
 package android.nfc {
 
   public class FormatException extends java.lang.Exception {
