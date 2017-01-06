@@ -229,12 +229,14 @@ package android {
     field public static final java.lang.String SYSTEM_ALERT_WINDOW = "android.permission.SYSTEM_ALERT_WINDOW";
     field public static final java.lang.String TETHER_PRIVILEGED = "android.permission.TETHER_PRIVILEGED";
     field public static final java.lang.String TRANSMIT_IR = "android.permission.TRANSMIT_IR";
+    field public static final java.lang.String TRIGGER_TIME_ZONE_RULES_CHECK = "android.permission.TRIGGER_TIME_ZONE_RULES_CHECK";
     field public static final java.lang.String TV_INPUT_HARDWARE = "android.permission.TV_INPUT_HARDWARE";
     field public static final java.lang.String TV_VIRTUAL_REMOTE_CONTROLLER = "android.permission.TV_VIRTUAL_REMOTE_CONTROLLER";
     field public static final java.lang.String UNINSTALL_SHORTCUT = "com.android.launcher.permission.UNINSTALL_SHORTCUT";
     field public static final java.lang.String UPDATE_APP_OPS_STATS = "android.permission.UPDATE_APP_OPS_STATS";
     field public static final java.lang.String UPDATE_DEVICE_STATS = "android.permission.UPDATE_DEVICE_STATS";
     field public static final java.lang.String UPDATE_LOCK = "android.permission.UPDATE_LOCK";
+    field public static final java.lang.String UPDATE_TIME_ZONE_RULES = "android.permission.UPDATE_TIME_ZONE_RULES";
     field public static final java.lang.String USER_ACTIVITY = "android.permission.USER_ACTIVITY";
     field public static final java.lang.String USE_FINGERPRINT = "android.permission.USE_FINGERPRINT";
     field public static final java.lang.String USE_SIP = "android.permission.USE_SIP";
@@ -6717,6 +6719,44 @@ package android.app.job {
 
 }
 
+package android.app.timezone {
+
+  public abstract class InstallOperationCallback {
+    ctor public InstallOperationCallback();
+    method public abstract void onFinished(int);
+  }
+
+  public final class RulesManager {
+    method public void checkComplete(byte[], boolean);
+    method public android.app.timezone.RulesState getRulesState();
+    method public int requestInstall(java.io.File, android.app.timezone.InstallOperationCallback) throws java.io.IOException;
+    method public int requestUninstall(android.app.timezone.InstallOperationCallback);
+    field public static final int ERROR_GENERAL_FAILURE = 2; // 0x2
+    field public static final int ERROR_OPERATION_IN_PROGRESS = 1; // 0x1
+    field public static final int SUCCESS = 0; // 0x0
+  }
+
+  public final class RulesState implements android.os.Parcelable {
+    ctor public RulesState(java.lang.String, java.lang.String, boolean, boolean, java.lang.String, java.lang.String);
+    method public int describeContents();
+    method public java.lang.String getBundleAndroidRevision();
+    method public java.lang.String getBundleFormatVersionSupported();
+    method public java.lang.String getBundleRulesVersion();
+    method public java.lang.String getSystemRulesVersion();
+    method public boolean isBundleInstalled();
+    method public boolean isOperationInProgress();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.app.timezone.RulesState> CREATOR;
+  }
+
+  public final class RulesUpdaterContract {
+    ctor public RulesUpdaterContract();
+    field public static final java.lang.String ACTION_DO_CHECK_BROADCAST = "android.intent.action.timezone.DO_RULES_UPDATE_CHECK";
+    field public static final java.lang.String EXTRA_CHECK_TOKEN = "android.intent.extra.timezone.CHECK_TOKEN";
+  }
+
+}
+
 package android.app.usage {
 
   public final class ConfigurationStats implements android.os.Parcelable {
@@ -8554,6 +8594,7 @@ package android.content {
     field public static final java.lang.String TELEPHONY_SERVICE = "phone";
     field public static final java.lang.String TELEPHONY_SUBSCRIPTION_SERVICE = "telephony_subscription_service";
     field public static final java.lang.String TEXT_SERVICES_MANAGER_SERVICE = "textservices";
+    field public static final java.lang.String TIME_ZONE_RULES_MANAGER_SERVICE = "timezone";
     field public static final java.lang.String TV_INPUT_SERVICE = "tv_input";
     field public static final java.lang.String UI_MODE_SERVICE = "uimode";
     field public static final java.lang.String USAGE_STATS_SERVICE = "usagestats";
@@ -35915,6 +35956,16 @@ package android.provider {
     field public static final java.lang.String SNIPPET = "snippet";
     field public static final java.lang.String SNIPPET_CHARSET = "snippet_cs";
     field public static final java.lang.String TYPE = "type";
+  }
+
+  public final class TimeZoneRulesDataContract {
+    field public static final java.lang.String AUTHORITY = "com.android.timezone";
+    field public static final android.net.Uri AUTHORITY_URI;
+    field public static final java.lang.String COLUMN_UPDATE_TYPE = "update_type";
+    field public static final android.net.Uri DATA_URI;
+    field public static final int UPDATE_TYPE_INSTALL = 2; // 0x2
+    field public static final int UPDATE_TYPE_NO_OP = 0; // 0x0
+    field public static final int UPDATE_TYPE_UNINSTALL = 1; // 0x1
   }
 
   public class UserDictionary {
