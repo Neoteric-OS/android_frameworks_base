@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7b632e5_dfe8f39c",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2017-01-06T16:26:28Z",
+      "side": 1,
+      "message": "No, but I thought to rather check this and let the compiler remove the check when it inlines (note that the non-const \u0026 is somewhat frowned upon).",
+      "parentUuid": "372b2280_2240b654",
+      "range": {
+        "startLine": 446,
+        "startChar": 29,
+        "endLine": 446,
+        "endChar": 43
+      },
+      "revId": "36d7a37c44ad15c286aa10da11e14ebaeef897fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "372b2280_0255ba12",
         "filename": "core/jni/fd_utils-inl.h",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "b7b632e5_7fd1a7e3",
+        "filename": "core/jni/fd_utils-inl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2017-01-06T16:26:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "372b2280_0255ba12",
+      "revId": "36d7a37c44ad15c286aa10da11e14ebaeef897fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "372b2280_e2518e26",
         "filename": "core/jni/fd_utils-inl.h",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2017-01-06T09:38:23Z",
       "side": 1,
       "message": "likewise",
+      "revId": "36d7a37c44ad15c286aa10da11e14ebaeef897fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7b632e5_3fd72fdd",
+        "filename": "core/jni/fd_utils-inl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2017-01-06T16:26:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "372b2280_e2518e26",
       "revId": "36d7a37c44ad15c286aa10da11e14ebaeef897fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
