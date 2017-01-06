@@ -2659,6 +2659,7 @@ public abstract class Context {
             SENSOR_SERVICE,
             STORAGE_SERVICE,
             WALLPAPER_SERVICE,
+            TIME_ZONE_RULES_MANAGER_SERVICE,
             VIBRATOR_SERVICE,
             //@hide: STATUS_BAR_SERVICE,
             CONNECTIVITY_SERVICE,
@@ -3654,6 +3655,16 @@ public abstract class Context {
      * @hide
      */
     public static final String GATEKEEPER_SERVICE = "android.service.gatekeeper.IGateKeeperService";
+
+    /**
+     * Use with {@link #getSystemService} to retrieve an
+     * {@link android.app.timezone.ITimeZoneRulesManager}.
+     * @hide
+     *
+     * @see #getSystemService
+     */
+    @SystemApi
+    public static final String TIME_ZONE_RULES_MANAGER_SERVICE = "timezone";
 
     /**
      * Determine whether the given permission is allowed for a particular
