@@ -35,7 +35,7 @@
 #include "jni.h"
 
 #include "android-base/stringprintf.h"
-#include "cutils/debugger.h"
+#include "debuggerd/client.h"
 #include "cutils/log.h"
 #include "JNIHelp.h"
 #include "memtrack/memtrack.h"
