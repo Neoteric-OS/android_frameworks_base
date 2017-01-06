@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "372b2280_2240b654",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-01-06T09:38:23Z",
+      "side": 1,
+      "message": "is this ever nullptr ?",
+      "range": {
+        "startLine": 446,
+        "startChar": 29,
+        "endLine": 446,
+        "endChar": 43
+      },
+      "revId": "36d7a37c44ad15c286aa10da11e14ebaeef897fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "372b2280_0255ba12",
+        "filename": "core/jni/fd_utils-inl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-01-06T09:38:23Z",
+      "side": 1,
+      "message": "const std::vector\u003cint\u003e\u0026 ?",
+      "revId": "36d7a37c44ad15c286aa10da11e14ebaeef897fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "372b2280_e2518e26",
+        "filename": "core/jni/fd_utils-inl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-01-06T09:38:23Z",
+      "side": 1,
+      "message": "likewise",
+      "revId": "36d7a37c44ad15c286aa10da11e14ebaeef897fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
