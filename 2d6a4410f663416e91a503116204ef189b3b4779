@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7b632e5_c7ce5d1b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-01-07T01:13:42Z",
+      "side": 1,
+      "message": "could use some explanation of why you\u0027d use one or the other of these.",
+      "range": {
+        "startLine": 864,
+        "startChar": 12,
+        "endLine": 864,
+        "endChar": 17
+      },
+      "revId": "2d6a4410f663416e91a503116204ef189b3b4779",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
