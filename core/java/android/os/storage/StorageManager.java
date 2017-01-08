@@ -940,12 +940,12 @@ public class StorageManager {
         return 0;
     }
 
-    private long readLong(String path) {
+    private static long readLong(String path) {
         try (final FileInputStream fis = new FileInputStream(path);
                 final BufferedReader reader = new BufferedReader(new InputStreamReader(fis));) {
             return Long.parseLong(reader.readLine());
         } catch (Exception e) {
-            Slog.w(TAG, "Could not read " + path, e);
+            Slog.w(TAG, "readLong(): could not read " + path + ": " + e);
             return 0;
         }
     }
