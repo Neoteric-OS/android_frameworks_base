@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7b632e5_4afa5101",
+        "filename": "core/java/android/os/storage/StorageManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2017-01-08T17:24:35Z",
+      "side": 1,
+      "message": "The original version added:\n\n  + \": \" + e\n\nwhich would add the exception name (but not the stacktrace) to the error message. It seems like a good idea to keep this information, since this could provide additional debugging information.",
+      "revId": "0438839ad23822ce93ea0d460bbca642d6005949",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
