@@ -156,6 +156,48 @@ public final class BluetoothLeAdvertiser {
     }
 
     /**
+    * Creates a new advertising set. If operation succeed, device will start
+    * advertising.
+    * This method returns immediately, the operation status is delivered
+    * through {@code callback.onNewAdvertisingSet()}.
+    * <p>
+    * @param parameters advertising set parameters.
+    * @param advertiseData Advertisement data to be broadcasted.
+    * @param scanResponse Scan response associated with the advertisement data.
+    * @param periodicData Periodic advertising data.
+    * @param callback Callback for advertising set.
+    */
+    public void
+    newAdvertisingSet(AdvertisingSetParameters parameters,
+                      AdvertiseData advertiseData, AdvertiseData scanResponse,
+                      PeriodicAdvertisingParameters periodicParameters,
+                      AdvertiseData periodicData,
+                      AdvertisingSetCallback callback) {
+      BluetoothLeUtils.checkAdapterStateOn(mBluetoothAdapter);
+      if (callback == null) {
+        throw new IllegalArgumentException("callback cannot be null");
+      }
+
+      IBluetoothGatt gatt;
+      try {
+        gatt = mBluetoothManager.getBluetoothGatt();
+      } catch (RemoteException e) {
+        Log.e(TAG, "Failed to get Bluetooth gatt - ", e);
+        throw new IllegalStateException("Failed to get Bluetooth");
+      }
+
+      AdvertisingSet advertisingSet =
+          new AdvertisingSet(gatt, parameters, advertiseData, scanResponse,
+                             periodicParameters, periodicData, callback);
+    }
+
+    /**
+     * Used to dispose of a {@link AdvertisingSet} object, obtained with {@link
+     * BluetoothLeAdvertiser#newAdvertisingSet}.
+     */
+    public void deleteAdvertisingSet(AdvertisingSet advertisingSet) {}
+
+    /**
      * Cleans up advertisers. Should be called when bluetooth is down.
      *
      * @hide
