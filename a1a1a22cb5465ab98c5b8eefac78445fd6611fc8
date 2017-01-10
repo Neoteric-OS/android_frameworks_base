@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7b632e5_e2a33e93",
+        "filename": "core/jni/android_os_Debug.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1019050
+      },
+      "writtenOn": "2017-01-10T01:38:11Z",
+      "side": 1,
+      "message": "This should go below the function below and you need to add a 0 to the end of the call.",
+      "range": {
+        "startLine": 1016,
+        "startChar": 0,
+        "endLine": 1020,
+        "endChar": 1
+      },
+      "revId": "a1a1a22cb5465ab98c5b8eefac78445fd6611fc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7b632e5_458234eb",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5369,
+      "author": {
+        "id": 1019050
+      },
+      "writtenOn": "2017-01-10T01:38:11Z",
+      "side": 1,
+      "message": "I don\u0027t think this is the best idea. If one of the native pids takes a long time and times out, then you get no native stacks of the other processes.\n\nProbably setting this to something like 10-15 seconds per pid might be better.",
+      "range": {
+        "startLine": 5367,
+        "startChar": 0,
+        "endLine": 5369,
+        "endChar": 25
+      },
+      "revId": "a1a1a22cb5465ab98c5b8eefac78445fd6611fc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
