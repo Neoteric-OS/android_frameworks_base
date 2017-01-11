@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17745e42_fc6c3578",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2017-01-11T14:36:22Z",
+      "side": 1,
+      "message": "Is there a heavy use case for switching between NFC and Android Beam? I don\u0027t think thats something you\u0027d really need in QS, but more likely that a long-press leading to settings for android beam would be enough. I\u0027d be more inclined to accept this patch if it were only a simple toggle.",
+      "revId": "747158dd186f54acb08967dad68f3fefdf13f3f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17745e42_dc67f993",
+        "filename": "packages/SystemUI/res/values/config.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2017-01-11T14:36:22Z",
+      "side": 1,
+      "message": "I don\u0027t think we want this tile in AOSP. I\u0027m open to getting the code in so its easier to turn on for OEMs, but I don\u0027t think we want this in the default.",
+      "revId": "747158dd186f54acb08967dad68f3fefdf13f3f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
