@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "233125ed_4ced3f05",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1104364
+      },
+      "writtenOn": "2017-01-11T14:44:53Z",
+      "side": 1,
+      "message": "Yeah, there isn\u0027t.\nI just added the detail view just in case the user does want to disable android beam, but directing him/her to settings does the job too.",
+      "parentUuid": "17745e42_fc6c3578",
+      "revId": "747158dd186f54acb08967dad68f3fefdf13f3f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17745e42_dc67f993",
         "filename": "packages/SystemUI/res/values/config.xml",
         "patchSetId": 14
