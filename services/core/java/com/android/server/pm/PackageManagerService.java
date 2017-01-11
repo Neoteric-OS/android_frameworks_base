@@ -21286,6 +21286,30 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
             }
         }
         sUserManager.systemReady();
+
+        StorageManagerInternal StorageManagerInternal = LocalServices.getService(
+                StorageManagerInternal.class);
+        StorageManagerInternal.addExternalStoragePolicy(
+                new StorageManagerInternal.ExternalStorageMountPolicy() {
+                    @Override
+                    public int getMountMode(int uid, String packageName) {
+                        if (Process.isIsolated(uid)) {
+                            return Zygote.MOUNT_EXTERNAL_NONE;
+                        }
+                        if (checkUidPermission(READ_EXTERNAL_STORAGE, uid) == PERMISSION_DENIED) {
+                            return Zygote.MOUNT_EXTERNAL_DEFAULT;
+                        }
+                        if (checkUidPermission(WRITE_EXTERNAL_STORAGE, uid) == PERMISSION_DENIED) {
+                            return Zygote.MOUNT_EXTERNAL_READ;
+                        }
+                        return Zygote.MOUNT_EXTERNAL_WRITE;
+                    }
+
+                    @Override
+                    public boolean hasExternalStorage(int uid, String packageName) {
+                        return true;
+                    }
+                });
         // If we upgraded grant all default permissions before kicking off.
         for (int userId : grantPermissionsUserIds) {
             mDefaultPermissionPolicy.grantDefaultPermissions(userId);
@@ -21322,30 +21346,6 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
         mInstallerService.systemReady();
         mDexManager.systemReady();
         mPackageDexOptimizer.systemReady();
-
-        StorageManagerInternal StorageManagerInternal = LocalServices.getService(
-                StorageManagerInternal.class);
-        StorageManagerInternal.addExternalStoragePolicy(
-                new StorageManagerInternal.ExternalStorageMountPolicy() {
-            @Override
-            public int getMountMode(int uid, String packageName) {
-                if (Process.isIsolated(uid)) {
-                    return Zygote.MOUNT_EXTERNAL_NONE;
-                }
-                if (checkUidPermission(READ_EXTERNAL_STORAGE, uid) == PERMISSION_DENIED) {
-                    return Zygote.MOUNT_EXTERNAL_DEFAULT;
-                }
-                if (checkUidPermission(WRITE_EXTERNAL_STORAGE, uid) == PERMISSION_DENIED) {
-                    return Zygote.MOUNT_EXTERNAL_READ;
-                }
-                return Zygote.MOUNT_EXTERNAL_WRITE;
-            }
-
-            @Override
-            public boolean hasExternalStorage(int uid, String packageName) {
-                return true;
-            }
-        });
 
         // Now that we're mostly running, clean up stale users and apps
         sUserManager.reconcileUsers(StorageManager.UUID_PRIVATE_INTERNAL);
