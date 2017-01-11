@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7b632e5_f02a1aed",
+        "filename": "media/jni/android_mtp_MtpDatabase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-01-11T00:34:53Z",
+      "side": 1,
+      "message": "What other types does the standard define?  We shouldn\u0027t be always claiming to be a phone when the device isn\u0027t a phone.\n\nMaybe consider reading the integer value from a system property, maybe called \"sys.usb.mtp_device_type\", which gives devices the opportunity to set the most appropriate value in their device-foo.mk files.",
+      "range": {
+        "startLine": 1215,
+        "startChar": 0,
+        "endLine": 1215,
+        "endChar": 76
+      },
+      "revId": "ac9f65e1fd076024d5c86541ab860d910ac6138b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
