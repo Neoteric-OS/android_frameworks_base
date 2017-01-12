@@ -61,9 +61,7 @@ import android.os.IBinder;
 import android.os.INetworkManagementService;
 import android.os.Looper;
 import android.os.Message;
-import android.os.MessageQueue;
 import android.os.Messenger;
-import android.os.MessageQueue.IdleHandler;
 import android.os.Process;
 import android.os.SystemClock;
 import android.provider.Settings;
@@ -76,6 +74,7 @@ import android.util.LogPrinter;
 
 import com.android.internal.util.WakeupMessage;
 import com.android.internal.util.test.BroadcastInterceptingContext;
+import com.android.internal.util.test.IdleableHandlerThread;
 import com.android.internal.util.test.FakeSettingsProvider;
 import com.android.server.connectivity.NetworkAgentInfo;
 import com.android.server.connectivity.NetworkMonitor;
@@ -151,98 +150,6 @@ public class ConnectivityServiceTest extends AndroidTestCase {
         public ContentResolver getContentResolver() {
             return mContentResolver;
         }
-    }
-
-    /**
-     * A subclass of HandlerThread that allows callers to wait for it to become idle. waitForIdle
-     * will return immediately if the handler is already idle.
-     */
-    private class IdleableHandlerThread extends HandlerThread {
-        private IdleHandler mIdleHandler;
-
-        public IdleableHandlerThread(String name) {
-            super(name);
-        }
-
-        public void waitForIdle(int timeoutMs) {
-            final ConditionVariable cv = new ConditionVariable();
-            final MessageQueue queue = getLooper().getQueue();
-
-            synchronized (queue) {
-                if (queue.isIdle()) {
-                    return;
-                }
-
-                assertNull("BUG: only one idle handler allowed", mIdleHandler);
-                mIdleHandler = new IdleHandler() {
-                    public boolean queueIdle() {
-                        synchronized (queue) {
-                            cv.open();
-                            mIdleHandler = null;
-                            return false;  // Remove the handler.
-                        }
-                    }
-                };
-                queue.addIdleHandler(mIdleHandler);
-            }
-
-            if (!cv.block(timeoutMs)) {
-                fail("HandlerThread " + getName() +
-                        " did not become idle after " + timeoutMs + " ms");
-                queue.removeIdleHandler(mIdleHandler);
-            }
-        }
-    }
-
-    // Tests that IdleableHandlerThread works as expected.
-    @SmallTest
-    public void testIdleableHandlerThread() {
-        final int attempts = 50;  // Causes the test to take about 200ms on bullhead-eng.
-
-        // Tests that waitForIdle returns immediately if the service is already idle.
-        for (int i = 0; i < attempts; i++) {
-            mService.waitForIdle();
-        }
-
-        // Bring up a network that we can use to send messages to ConnectivityService.
-        ConditionVariable cv = waitForConnectivityBroadcasts(1);
-        mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
-        mWiFiNetworkAgent.connect(false);
-        waitFor(cv);
-        Network n = mWiFiNetworkAgent.getNetwork();
-        assertNotNull(n);
-
-        // Tests that calling waitForIdle waits for messages to be processed.
-        for (int i = 0; i < attempts; i++) {
-            mWiFiNetworkAgent.setSignalStrength(i);
-            mService.waitForIdle();
-            assertEquals(i, mCm.getNetworkCapabilities(n).getSignalStrength());
-        }
-    }
-
-    @SmallTest
-    @FlakyTest(tolerance = 3)
-    public void testNotWaitingForIdleCausesRaceConditions() {
-        // Bring up a network that we can use to send messages to ConnectivityService.
-        ConditionVariable cv = waitForConnectivityBroadcasts(1);
-        mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
-        mWiFiNetworkAgent.connect(false);
-        waitFor(cv);
-        Network n = mWiFiNetworkAgent.getNetwork();
-        assertNotNull(n);
-
-        // Ensure that not calling waitForIdle causes a race condition.
-        final int attempts = 50;  // Causes the test to take about 200ms on bullhead-eng.
-        for (int i = 0; i < attempts; i++) {
-            mWiFiNetworkAgent.setSignalStrength(i);
-            if (i != mCm.getNetworkCapabilities(n).getSignalStrength()) {
-                // We hit a race condition, as expected. Pass the test.
-                return;
-            }
-        }
-
-        // No race? There is a bug in this test.
-        fail("expected race condition at least once in " + attempts + " attempts");
     }
 
     private class MockNetworkAgent {
