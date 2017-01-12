@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7783da87_a64af226",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-12T12:41:09Z",
+      "side": 1,
+      "message": "What happens if the queue becomes idle between the time you call isIdle() and the time you call addIdleHandler()?\n\nIIRC the idle handler doesn\u0027t fire if the queue is already idle. If that\u0027s the case, then I think the following can happen:\n\n 1. Test thread calls waitForIdleHandler().\n 2. queue.isIdle() returns false because the queue is processing a message.\n 3. The looper thread finishes processing the message and the queue becomes idle.\n 4. addIdleHandler() adds the idle handler.\n 5. The idle handler never fires because the queue is already idle.\n 6. We fail with \"HandlerThread did not become idle after xxx ms\".",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 46
+      },
+      "revId": "df9a6a417653596216e3c3895388b010e6271cf2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
