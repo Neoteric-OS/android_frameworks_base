@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63f31dac_11a9ce21",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/tiles/NfcTile.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2017-01-13T15:51:26Z",
+      "side": 1,
+      "message": "This can be removed now.",
+      "revId": "18f5889caaa3e8326b1a354e653011e6fdf9cc20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63f31dac_31a4ca49",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/tiles/NfcTile.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2017-01-13T15:51:26Z",
+      "side": 1,
+      "message": "This should be an else on the listening check below.",
+      "revId": "18f5889caaa3e8326b1a354e653011e6fdf9cc20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63f31dac_719e52f9",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/tiles/NfcTile.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2017-01-13T15:51:26Z",
+      "side": 1,
+      "message": "Just inline this in the constructor.",
+      "revId": "18f5889caaa3e8326b1a354e653011e6fdf9cc20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
