@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7783da87_29207510",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2345,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-13T04:00:26Z",
+      "side": 1,
+      "message": "Pre-existing, but since you\u0027re changing it... instead of using 150 here and below, can you assign 150 to a variable  or a constant that has a descriptive name?",
+      "range": {
+        "startLine": 2345,
+        "startChar": 48,
+        "endLine": 2345,
+        "endChar": 51
+      },
+      "revId": "9c9d9b2296060127605f349e366f25366dd329b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7783da87_491db9d7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2364,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-13T04:00:26Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 2364,
+        "startChar": 48,
+        "endLine": 2364,
+        "endChar": 51
+      },
+      "revId": "9c9d9b2296060127605f349e366f25366dd329b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7783da87_692a7df0",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2368,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-13T04:00:26Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 2368,
+        "startChar": 83,
+        "endLine": 2368,
+        "endChar": 86
+      },
+      "revId": "9c9d9b2296060127605f349e366f25366dd329b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
