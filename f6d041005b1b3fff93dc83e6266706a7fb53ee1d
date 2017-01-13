@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7783da87_49069989",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-13T05:34:15Z",
+      "side": 1,
+      "message": "Hmm... seems like a fair point.\n\nI poked around and tried to choose a reasonable set of errors to return.",
+      "parentUuid": "a3d9950f_4cb09bc8",
+      "range": {
+        "startLine": 893,
+        "startChar": 8,
+        "endLine": 893,
+        "endChar": 29
+      },
+      "revId": "f6d041005b1b3fff93dc83e6266706a7fb53ee1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3d9950f_cc5a4b62",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7783da87_a94645c3",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-13T05:34:15Z",
+      "side": 1,
+      "message": "Renamed.\n\nAlso, I rewrote the old comment about why we register a noop callback.",
+      "parentUuid": "a3d9950f_cc5a4b62",
+      "range": {
+        "startLine": 1097,
+        "startChar": 16,
+        "endLine": 1098,
+        "endChar": 48
+      },
+      "revId": "f6d041005b1b3fff93dc83e6266706a7fb53ee1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3d9950f_2c40b762",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-01-13T04:08:48Z",
       "side": 1,
       "message": "not sure if you are following this convention as well, but we have been filing bugs (and adding them to code) to track TODO\u0027s",
+      "range": {
+        "startLine": 1123,
+        "startChar": 15,
+        "endLine": 1123,
+        "endChar": 19
+      },
+      "revId": "f6d041005b1b3fff93dc83e6266706a7fb53ee1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7783da87_29523584",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-13T05:34:15Z",
+      "side": 1,
+      "message": "We have not yet started following that convention.\n\nFrankly, for this ancient TODO I think we should just delete the comment.  But that\u0027s for a later CL.",
+      "parentUuid": "a3d9950f_2c40b762",
       "range": {
         "startLine": 1123,
         "startChar": 15,
