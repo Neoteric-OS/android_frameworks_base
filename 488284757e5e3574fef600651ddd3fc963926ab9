@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "6354fd0e_290549c8",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/tiles/NfcTile.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1104364
+      },
+      "writtenOn": "2017-01-13T15:23:31Z",
+      "side": 1,
+      "message": "I don\u0027t think it is, i will remove this.",
+      "parentUuid": "63f31dac_b1e9da68",
+      "revId": "488284757e5e3574fef600651ddd3fc963926ab9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63f31dac_91e65e94",
         "filename": "packages/SystemUI/src/com/android/systemui/qs/tiles/NfcTile.java",
         "patchSetId": 16
@@ -47,6 +65,24 @@
       "writtenOn": "2017-01-13T14:36:33Z",
       "side": 1,
       "message": "If all this logic about shouldHide and getting the adapter is necessary this should probably be broken out into a NfcController, similar to FlashlightController.",
+      "revId": "488284757e5e3574fef600651ddd3fc963926ab9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c365a9f6_cf6d911b",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/tiles/NfcTile.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1104364
+      },
+      "writtenOn": "2017-01-13T15:23:31Z",
+      "side": 1,
+      "message": "After doing some tests, it seems this is not necessary except for the getAdapter call in handleUpdateState.",
+      "parentUuid": "63f31dac_91e65e94",
       "revId": "488284757e5e3574fef600651ddd3fc963926ab9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
