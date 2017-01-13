@@ -86,6 +86,24 @@
       "revId": "488284757e5e3574fef600651ddd3fc963926ab9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63f31dac_91949ed4",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/tiles/NfcTile.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2017-01-13T15:51:26Z",
+      "side": 1,
+      "message": "Still, If you need it in handleUpdateState, then it means there some kind of watching/bootup expectation and I\u0027d like to break that out into its own abstraction layer.",
+      "parentUuid": "c365a9f6_cf6d911b",
+      "revId": "488284757e5e3574fef600651ddd3fc963926ab9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
