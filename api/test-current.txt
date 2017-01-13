@@ -8199,6 +8199,7 @@ package android.content {
     field public static final java.lang.String HARDWARE_PROPERTIES_SERVICE = "hardware_properties";
     field public static final java.lang.String INPUT_METHOD_SERVICE = "input_method";
     field public static final java.lang.String INPUT_SERVICE = "input";
+    field public static final java.lang.String IPSEC_SERVICE = "ipsec";
     field public static final java.lang.String JOB_SCHEDULER_SERVICE = "jobscheduler";
     field public static final java.lang.String KEYGUARD_SERVICE = "keyguard";
     field public static final java.lang.String LAUNCHER_APPS_SERVICE = "launcherapps";
@@ -23794,6 +23795,67 @@ package android.net {
     method public byte[] getRawAddress();
     method public void writeToParcel(android.os.Parcel, int);
     field public static final android.os.Parcelable.Creator<android.net.IpPrefix> CREATOR;
+  }
+
+  public final class IpSecAlgorithm implements android.os.Parcelable {
+    ctor public IpSecAlgorithm(java.lang.String, byte[]);
+    ctor public IpSecAlgorithm(java.lang.String, byte[], int);
+    method public int describeContents();
+    method public byte[] getKey();
+    method public java.lang.String getName();
+    method public int getTruncationLengthBits();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final java.lang.String ALGO_AES_CBC = "cbc(aes)";
+    field public static final java.lang.String ALGO_HMAC_MD5 = "hmac(md5)";
+    field public static final java.lang.String ALGO_HMAC_SHA1 = "hmac(sha1)";
+    field public static final java.lang.String ALGO_HMAC_SHA256 = "hmac(sha256)";
+    field public static final java.lang.String ALGO_HMAC_SHA384 = "hmac(sha384)";
+    field public static final java.lang.String ALGO_HMAC_SHA512 = "hmac(sha512)";
+    field public static final android.os.Parcelable.Creator<android.net.IpSecAlgorithm> CREATOR;
+  }
+
+  public class IpSecManager {
+    method public void applyTransform(android.net.Network, android.net.IpSecTunnelModeTransform) throws java.io.IOException, android.net.IpSecManager.TransformCollisionException;
+    method public void applyTransform(java.net.DatagramSocket, android.net.IpSecTransportModeTransform) throws java.io.IOException, android.net.IpSecManager.TransformCollisionException;
+    method public void applyTransform(java.net.Socket, android.net.IpSecTransportModeTransform) throws java.io.IOException, android.net.IpSecManager.TransformCollisionException;
+    method public void deleteTransform(android.net.IpSecTransform);
+    method public void removeTransform(android.net.Network);
+    method public void removeTransform(java.net.DatagramSocket);
+    method public void removeTransform(java.net.Socket);
+  }
+
+  public class IpSecManager.TransformCollisionException extends java.lang.Exception {
+    ctor public IpSecManager.TransformCollisionException();
+  }
+
+  public class IpSecTransform {
+    field public static final int DIRECTION_IN = 0; // 0x0
+    field public static final int DIRECTION_OUT = 1; // 0x1
+    field public static final int ENCAP_ESP_OVER_IP = 0; // 0x0
+    field public static final int ENCAP_ESP_OVER_UDP_IKE = 1; // 0x1
+    field public static final int ENCAP_ESP_OVER_UDP_NON_IKE = 2; // 0x2
+  }
+
+  public static class IpSecTransform.Builder {
+    method public android.net.IpSecTransform.Builder setAuthentication(android.net.IpSecAlgorithm);
+    method public android.net.IpSecTransform.Builder setEncryption(android.net.IpSecAlgorithm);
+    method public android.net.IpSecTransform.Builder setIpv4Encapsulation(int, int, int);
+  }
+
+  public static class IpSecTransform.TransportModeBuilder extends android.net.IpSecTransform.Builder {
+    ctor public IpSecTransform.TransportModeBuilder(java.net.InetAddress, int, int);
+    method public android.net.IpSecTransportModeTransform build();
+  }
+
+  public static class IpSecTransform.TunnelModeBuilder extends android.net.IpSecTransform.Builder {
+    ctor public IpSecTransform.TunnelModeBuilder(java.net.InetAddress, java.net.InetAddress, int, int);
+    method public android.net.IpSecTunnelModeTransform build();
+  }
+
+  public final class IpSecTransportModeTransform extends android.net.IpSecTransform {
+  }
+
+  public final class IpSecTunnelModeTransform extends android.net.IpSecTransform {
   }
 
   public class LinkAddress implements android.os.Parcelable {

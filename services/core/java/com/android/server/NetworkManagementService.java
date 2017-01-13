@@ -55,6 +55,9 @@ import android.net.INetd;
 import android.net.INetworkManagementEventObserver;
 import android.net.InterfaceConfiguration;
 import android.net.IpPrefix;
+import android.net.IpSecAlgorithm;
+import android.net.IpSecConfig;
+import android.net.IpSecTransform;
 import android.net.LinkAddress;
 import android.net.Network;
 import android.net.NetworkPolicyManager;
@@ -67,8 +70,11 @@ import android.net.wifi.WifiConfiguration.KeyMgmt;
 import android.os.BatteryStats;
 import android.os.Binder;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.INetworkActivityListener;
 import android.os.INetworkManagementService;
+import android.os.Parcel;
+import android.os.ParcelFileDescriptor;
 import android.os.PowerManager;
 import android.os.Process;
 import android.os.RemoteCallbackList;
@@ -2568,5 +2574,14 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         }
 
         return failures;
+    }
+
+    @Override
+    public void removeTransform(int transformId) {
+    }
+
+    @Override
+    public int addTransform(IpSecConfig config, IBinder binder) {
+        return IpSecTransform.INVALID_TRANSFORM_ID;
     }
 }
