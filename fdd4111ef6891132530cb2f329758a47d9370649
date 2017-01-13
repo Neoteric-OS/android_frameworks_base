@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7783da87_2966b545",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-13T08:45:47Z",
+      "side": 1,
+      "message": "Idle observation: looks like if usbManager is null and we\u0027re disabling false, the previous code would clean up using:\n\n  tetherMatchingInterfaces(false, ConnectivityManager.TETHERING_USB);\n\nbut the new code won\u0027t. But the only way I could see this might cause a problem is if we turn on USB tethering and then somehow the USB manager is null.\n\nThat probably can\u0027t happen, because getSystemService would return a cached UsbManager object even if the service had somehow died.",
+      "range": {
+        "startLine": 896,
+        "startChar": 48,
+        "endLine": 896,
+        "endChar": 69
+      },
+      "revId": "fdd4111ef6891132530cb2f329758a47d9370649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7783da87_4963f934",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-13T08:45:47Z",
+      "side": 1,
+      "message": "It\u0027s a bit surprising for a function that has this name to have side effects. Maybe rename it to something like updateMobileRequiresDun or some such?",
+      "range": {
+        "startLine": 1097,
+        "startChar": 20,
+        "endLine": 1097,
+        "endChar": 45
+      },
+      "revId": "fdd4111ef6891132530cb2f329758a47d9370649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7783da87_6970bdf5",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-13T08:45:47Z",
+      "side": 1,
+      "message": "Is this an unexpected occurrence? Should it log an error?",
+      "range": {
+        "startLine": 1111,
+        "startChar": 48,
+        "endLine": 1111,
+        "endChar": 54
+      },
+      "revId": "fdd4111ef6891132530cb2f329758a47d9370649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7783da87_a99ac5fc",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-13T08:45:47Z",
+      "side": 1,
+      "message": "Nit: they are implemented already.",
+      "range": {
+        "startLine": 1128,
+        "startChar": 39,
+        "endLine": 1128,
+        "endChar": 77
+      },
+      "revId": "fdd4111ef6891132530cb2f329758a47d9370649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7783da87_c99f09ec",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-13T08:45:47Z",
+      "side": 1,
+      "message": "s/Apn/Type/",
+      "range": {
+        "startLine": 1329,
+        "startChar": 20,
+        "endLine": 1329,
+        "endChar": 38
+      },
+      "revId": "fdd4111ef6891132530cb2f329758a47d9370649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7783da87_498cd9c6",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-13T08:45:47Z",
+      "side": 1,
+      "message": "Consider s/turnOn/request/",
+      "range": {
+        "startLine": 1364,
+        "startChar": 30,
+        "endLine": 1364,
+        "endChar": 36
+      },
+      "revId": "fdd4111ef6891132530cb2f329758a47d9370649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7783da87_e994cdd2",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-13T08:45:47Z",
+      "side": 1,
+      "message": "Does this actually turn anything off? Or does it just release the request? If so, perhaps s/turnOff/unrequest/ ?",
+      "range": {
+        "startLine": 1370,
+        "startChar": 20,
+        "endLine": 1370,
+        "endChar": 27
+      },
+      "revId": "fdd4111ef6891132530cb2f329758a47d9370649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7783da87_099ad1fb",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1389,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-13T08:45:47Z",
+      "side": 1,
+      "message": "Might be useful to elaborate which sort of configuration changes.",
+      "range": {
+        "startLine": 1389,
+        "startChar": 19,
+        "endLine": 1389,
+        "endChar": 40
+      },
+      "revId": "fdd4111ef6891132530cb2f329758a47d9370649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7783da87_298f95bd",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1398,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-13T08:45:47Z",
+      "side": 1,
+      "message": "Consider s/turnOff/unrequest/",
+      "range": {
+        "startLine": 1398,
+        "startChar": 27,
+        "endLine": 1398,
+        "endChar": 34
+      },
+      "revId": "fdd4111ef6891132530cb2f329758a47d9370649",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
