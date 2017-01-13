@@ -74,6 +74,7 @@ import android.net.EthernetManager;
 import android.net.IConnectivityManager;
 import android.net.IEthernetManager;
 import android.net.INetworkPolicyManager;
+import android.net.IpSecManager;
 import android.net.NetworkPolicyManager;
 import android.net.NetworkScoreManager;
 import android.net.nsd.INsdManager;
@@ -94,6 +95,7 @@ import android.os.DropBoxManager;
 import android.os.HardwarePropertiesManager;
 import android.os.IBinder;
 import android.os.IHardwarePropertiesManager;
+import android.os.INetworkManagementService;
 import android.os.IPowerManager;
 import android.os.IRecoverySystem;
 import android.os.IUserManager;
@@ -237,6 +239,15 @@ final class SystemServiceRegistry {
                 IBinder b = ServiceManager.getService(Context.CONNECTIVITY_SERVICE);
                 IConnectivityManager service = IConnectivityManager.Stub.asInterface(b);
                 return new ConnectivityManager(context, service);
+            }});
+
+        registerService(Context.IPSEC_SERVICE, IpSecManager.class,
+                new StaticApplicationContextServiceFetcher<IpSecManager>() {
+            @Override
+            public IpSecManager createService(Context context) {
+                IBinder b = ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE);
+                INetworkManagementService service = INetworkManagementService.Stub.asInterface(b);
+                return new IpSecManager(context, service);
             }});
 
         registerService(Context.COUNTRY_DETECTOR, CountryDetector.class,
