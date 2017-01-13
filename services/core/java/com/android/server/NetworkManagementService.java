@@ -55,6 +55,8 @@ import android.net.INetd;
 import android.net.INetworkManagementEventObserver;
 import android.net.InterfaceConfiguration;
 import android.net.IpPrefix;
+import android.net.IpSecAlgorithm;
+import android.net.IpSecConfig;
 import android.net.LinkAddress;
 import android.net.Network;
 import android.net.NetworkPolicyManager;
@@ -67,8 +69,11 @@ import android.net.wifi.WifiConfiguration.KeyMgmt;
 import android.os.BatteryStats;
 import android.os.Binder;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.INetworkActivityListener;
 import android.os.INetworkManagementService;
+import android.os.Parcel;
+import android.os.ParcelFileDescriptor;
 import android.os.PowerManager;
 import android.os.Process;
 import android.os.RemoteCallbackList;
@@ -2568,5 +2573,160 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         }
 
         return failures;
+    }
+
+    private final class IpSecTransformInfo implements IBinder.DeathRecipient {
+        private IpSecConfig mConfig;
+        private final IBinder mBinder;
+        private final int mPid;
+        private final int mUid;
+        private final int mTransformId;
+
+        IpSecTransformInfo( IpSecConfig config, IBinder binder, int transformId) {
+            super();
+            mConfig = config;
+            mBinder = binder;
+            mTransformId = transformId;
+            mPid = getCallingPid();
+            mUid = getCallingUid();
+
+            try {
+                mBinder.linkToDeath(this, 0);
+            } catch (RemoteException e) {
+                binderDied();
+            }
+        }
+
+        public int getPid() { return mPid; }
+        public int getUid() { return mUid; }
+
+        void unlinkDeathRecipient() {
+            if (mBinder != null) {
+                mBinder.unlinkToDeath(this, 0);
+            }
+        }
+
+        public void binderDied() {
+            Log.w(TAG, "NetworkManagementService.IpecTransform binderDied(" + mBinder + ")");
+            removeTransformInternal(mTransformId);
+            mTransformInfo.remove(mTransformId);
+        }
+    };
+
+    private final HashMap<Integer, IpSecTransformInfo> mTransformInfo = new HashMap<Integer, IpSecTransformInfo>();
+
+    private void removeTransformInternal(int transformId) {
+        // TODO: call down to Netd
+    }
+
+    @Override
+    public void removeTransform(int transformId) {
+        IpSecTransformInfo info;
+        synchronized(mTransformInfo) {
+            info = mTransformInfo.get(transformId);
+
+        }
+
+        if (info == null) {
+            throw new IllegalArgumentException("Transform is not available to be deleted");
+        }
+
+        if (info.getPid() != getCallingPid() || info.getUid() != getCallingUid()) {
+            throw new SecurityException("Only the owner of an IpSec Transform may delete it!");
+        }
+
+        removeTransformInternal(transformId);
+    }
+
+    @Override
+    public int addTransportModeTransform(IpSecConfig config, IBinder binder) {
+        // TODO: check permissions
+
+        // Become the system user in order to pull data from IpSecConfig
+        long idToken = Binder.clearCallingIdentity();
+
+        //validation of required fields
+        int featureMask = IpSecConfig.Properties.MODE_TRANSPORT | IpSecConfig.Properties.SELECTOR;
+        if (!config.hasProperty(featureMask)) {
+            throw new IllegalArgumentException("Missing Transport Mode Config");
+        }
+
+        if (!config.hasProperty(IpSecConfig.Properties.ENCRYPTION_ALGO)
+                && !config.hasProperty(IpSecConfig.Properties.AUTHENTICATION_ALGO)) {
+            throw new IllegalArgumentException("No Encryption or Authentication Provided");
+        }
+
+        if (!config.hasProperty(IpSecConfig.Properties.NETWORK)) {
+            //TODO: Check for privileged access to allow on all networks
+            throw new IllegalArgumentException("Transform must be applied to a specific network");
+            //TODO: Check for the permission to use restricted networks
+        }
+
+        // Transport mode basics
+        ParcelFileDescriptor localSocket = config.getLocalSocket();
+        int remotePort = config.getRemotePort();
+        String remoteIp = config.getRemoteIp().getHostAddress();
+        int spi = config.getSpi();
+        int direction = config.getDirection();
+
+        IpSecAlgorithm auth = null;
+        String authAlgo = null;
+        byte[] authKey = null;
+        int authTruncBits = 0;
+
+        auth = config.getAuthenticationAlgo();
+        if (auth != null) {
+            authAlgo = auth.getAlgorithm();
+            authKey = auth.getKey();
+            authTruncBits = auth.getTruncLenBits();
+        }
+
+        IpSecAlgorithm crypt = null;
+        String cryptAlgo = null;
+        byte[] cryptKey = null;
+        int cryptTruncBits = 0;
+
+        crypt = config.getEncryptionAlgo();
+        if (crypt != null) {
+            cryptAlgo = crypt.getAlgorithm();
+            cryptKey = crypt.getKey();
+            cryptTruncBits = crypt.getTruncLenBits();
+        }
+
+        Network net = config.getNetwork();
+        long netHandle = 0; // TODO: Find the right def for a sentinel value
+        if (net != null) {
+            netHandle = net.getNetworkHandle();
+        }
+
+        // Return to being the calling user to pass the information down
+        Binder.restoreCallingIdentity(idToken);
+
+        int transformId;
+        try {
+            transformId = mNetdService.addTransportModeTransform(
+                    localSocket.getFileDescriptor(),
+                    remoteIp,
+                    remotePort,
+                    spi,
+                    direction,
+                    authAlgo,
+                    authKey,
+                    authTruncBits,
+                    cryptAlgo,
+                    cryptKey,
+                    cryptTruncBits,
+                    netHandle,
+                    Binder.getCallingUid());
+        } catch (RemoteException e) {
+            Log.e(TAG, "Could not call netDNativeService!: " + e);
+            throw new RuntimeException(e);
+        }
+
+        synchronized (mTransformInfo) {
+            mTransformInfo.put(transformId, new IpSecTransformInfo(config, binder, transformId));
+        }
+
+        return transformId;
     }
 }
