@@ -46,6 +46,30 @@
       "revId": "df9a6a417653596216e3c3895388b010e6271cf2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7783da87_a9f48567",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-13T04:26:09Z",
+      "side": 1,
+      "message": "You\u0027re right, I misread the code. I was confusing this version with a similar CL that was uploaded internally.",
+      "parentUuid": "7783da87_e9dccd01",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 46
+      },
+      "revId": "df9a6a417653596216e3c3895388b010e6271cf2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
