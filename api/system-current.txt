@@ -8522,6 +8522,7 @@ package android.content {
     field public static final java.lang.String HDMI_CONTROL_SERVICE = "hdmi_control";
     field public static final java.lang.String INPUT_METHOD_SERVICE = "input_method";
     field public static final java.lang.String INPUT_SERVICE = "input";
+    field public static final java.lang.String IPSEC_SERVICE = "ipsec";
     field public static final java.lang.String JOB_SCHEDULER_SERVICE = "jobscheduler";
     field public static final java.lang.String KEYGUARD_SERVICE = "keyguard";
     field public static final java.lang.String LAUNCHER_APPS_SERVICE = "launcherapps";
@@ -25559,6 +25560,61 @@ package android.net {
     method public byte[] getRawAddress();
     method public void writeToParcel(android.os.Parcel, int);
     field public static final android.os.Parcelable.Creator<android.net.IpPrefix> CREATOR;
+  }
+
+  public final class IpSecAlgorithm implements android.os.Parcelable {
+    ctor public IpSecAlgorithm(java.lang.String, byte[]);
+    ctor public IpSecAlgorithm(java.lang.String, byte[], int);
+    method public int describeContents();
+    method public byte[] getKey();
+    method public java.lang.String getName();
+    method public int getTruncationLengthBits();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final java.lang.String ALGO_AES_CBC = "cbc(aes)";
+    field public static final java.lang.String ALGO_HMAC_MD5 = "hmac(md5)";
+    field public static final java.lang.String ALGO_HMAC_SHA1 = "hmac(sha1)";
+    field public static final java.lang.String ALGO_HMAC_SHA256 = "hmac(sha256)";
+    field public static final java.lang.String ALGO_HMAC_SHA384 = "hmac(sha384)";
+    field public static final java.lang.String ALGO_HMAC_SHA512 = "hmac(sha512)";
+    field public static final android.os.Parcelable.Creator<android.net.IpSecAlgorithm> CREATOR;
+  }
+
+  public final class IpSecManager {
+    method public void activateTransform(android.net.IpSecTransform) throws java.io.IOException, android.net.IpSecManager.TransformCollisionException;
+    method public void applyTransportModeTransform(java.net.Socket, android.net.IpSecTransform) throws java.io.IOException;
+    method public void applyTransportModeTransform(java.net.DatagramSocket, android.net.IpSecTransform) throws java.io.IOException, android.net.IpSecManager.TransformCollisionException;
+    method public void applyTunnelModeTransform(android.net.Network, android.net.IpSecTransform);
+    method public void closeUdpEncapsulationSocket(java.io.FileDescriptor);
+    method public void deactivateTransform(android.net.IpSecTransform);
+    method public java.io.FileDescriptor openUdpEncapsulationSocket(int) throws java.net.SocketException;
+    method public void releaseOutboundSpi(java.net.InetAddress, int);
+    method public void removeTransportModeTransform(java.net.Socket, android.net.IpSecTransform);
+    method public void removeTransportModeTransform(java.net.DatagramSocket, android.net.IpSecTransform);
+    method public void removeTunnelModeTransform(android.net.Network, android.net.IpSecTransform);
+    method public int reserveOutboundSpi(java.net.InetAddress, int);
+  }
+
+  public final class IpSecManager.TransformCollisionException extends android.util.AndroidException {
+    method public int getSpi();
+  }
+
+  public final class IpSecTransform {
+    field public static final int DIRECTION_IN = 0; // 0x0
+    field public static final int DIRECTION_OUT = 1; // 0x1
+    field public static final int ENCAP_ESPINUDP = 1; // 0x1
+    field public static final int ENCAP_ESPINUDP_NONIKE = 2; // 0x2
+  }
+
+  public static class IpSecTransform.Builder {
+    ctor public IpSecTransform.Builder();
+    method public android.net.IpSecTransform buildTransportModeTransform(java.net.InetAddress);
+    method public android.net.IpSecTransform buildTunnelModeTransform(java.net.InetAddress, java.net.InetAddress);
+    method public android.net.IpSecTransform.Builder setAuthentication(int, android.net.IpSecAlgorithm);
+    method public android.net.IpSecTransform.Builder setEncryption(int, android.net.IpSecAlgorithm);
+    method public android.net.IpSecTransform.Builder setIpv4Encapsulation(int, int, int);
+    method public android.net.IpSecTransform.Builder setNattKeepalive(int);
+    method public android.net.IpSecTransform.Builder setSpi(int, int);
+    method public android.net.IpSecTransform.Builder setViaNetwork(android.net.Network);
   }
 
   public class LinkAddress implements android.os.Parcelable {
