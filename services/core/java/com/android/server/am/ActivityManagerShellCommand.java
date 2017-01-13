@@ -18,10 +18,13 @@ package com.android.server.am;
 
 import android.app.ActivityManager;
 import android.app.IActivityManager;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.os.RemoteException;
 import android.os.ShellCommand;
 import android.os.UserHandle;
 import android.util.DebugUtils;
+import android.util.DisplayMetrics;
 
 import java.io.PrintWriter;
 
@@ -66,6 +69,8 @@ class ActivityManagerShellCommand extends ShellCommand {
                     return runLenientBackgroundCheck(pw);
                 case "get-uid-state":
                     return getUidState(pw);
+                case "supports-multiwindow":
+                    return runSupportsMultiwindow(pw);
                 default:
                     return handleDefaultCommands(cmd);
             }
@@ -183,6 +188,23 @@ class ActivityManagerShellCommand extends ShellCommand {
         return 0;
     }
 
+    int runSupportsMultiwindow(PrintWriter pw) throws RemoteException {
+        // system resources does not contain all the device configuration, construct it manually.
+        Configuration config = mInterface.getConfiguration();
+        if (config == null) {
+            pw.println("Error: Activity manager has no configuration");
+            return -1;
+        }
+
+        final DisplayMetrics metrics = new DisplayMetrics();
+        metrics.setToDefaults();
+
+        Resources res = new Resources(AssetManager.getSystem(), metrics, config);
+
+        pw.println(res.getBoolean(com.android.internal.R.bool.config_supportsMultiWindow));
+        return 0;
+    }
+
     @Override
     public void onHelp() {
         PrintWriter pw = getOutPrintWriter();
@@ -241,6 +263,9 @@ class ActivityManagerShellCommand extends ShellCommand {
             pw.println("    Optionally controls lenient background check mode, returns current mode.");
             pw.println("  get-uid-state <UID>");
             pw.println("    Gets the process state of an app given its <UID>.");
+            pw.println("  supports-multiwindow");
+            pw.println("      Returns true if the device supports multiwindow.");
+
         }
     }
 }
