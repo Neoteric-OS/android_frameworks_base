@@ -20,6 +20,7 @@ package android.os;
 import android.net.InterfaceConfiguration;
 import android.net.INetd;
 import android.net.INetworkManagementEventObserver;
+import android.net.IpSecConfig;
 import android.net.Network;
 import android.net.NetworkStats;
 import android.net.RouteInfo;
@@ -418,4 +419,7 @@ interface INetworkManagementService
     int removeRoutesFromLocalNetwork(in List<RouteInfo> routes);
 
     void setAllowOnlyVpnForUids(boolean enable, in UidRange[] uidRanges);
+
+    int addTransportModeTransform(in IpSecConfig config, in IBinder binder);
+    void removeTransform(in int transformId);
 }
