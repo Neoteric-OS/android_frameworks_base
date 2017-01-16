@@ -6703,6 +6703,7 @@ package android.bluetooth {
     method public java.util.Set<android.bluetooth.BluetoothDevice> getBondedDevices();
     method public static synchronized android.bluetooth.BluetoothAdapter getDefaultAdapter();
     method public java.lang.String getName();
+    method public android.bluetooth.le.PeriodicAdvertisingManager getPeriodicAdvertisingManager();
     method public int getProfileConnectionState(int);
     method public boolean getProfileProxy(android.content.Context, android.bluetooth.BluetoothProfile.ServiceListener, int);
     method public android.bluetooth.BluetoothDevice getRemoteDevice(java.lang.String);
@@ -7492,6 +7493,19 @@ package android.bluetooth.le {
     method public void startScan(android.bluetooth.le.ScanCallback);
     method public void startScan(java.util.List<android.bluetooth.le.ScanFilter>, android.bluetooth.le.ScanSettings, android.bluetooth.le.ScanCallback);
     method public void stopScan(android.bluetooth.le.ScanCallback);
+  }
+
+  public abstract class PeriodicAdvertisingCallback {
+    ctor public PeriodicAdvertisingCallback();
+    method public void onSyncEstablished(int, android.bluetooth.BluetoothDevice, int, int);
+    method public void onSyncLost(int);
+    method public void periodicAdvertisingReport(int, android.bluetooth.le.AdvertiseData, int);
+  }
+
+  public final class PeriodicAdvertisingManager {
+    method public void cancelCreateSync(android.bluetooth.le.PeriodicAdvertisingCallback);
+    method public void createSync(android.bluetooth.le.ScanResult, int, int, android.bluetooth.le.PeriodicAdvertisingCallback);
+    method public void terminateSync(int);
   }
 
   public abstract class ScanCallback {
