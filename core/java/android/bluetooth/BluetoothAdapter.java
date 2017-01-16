@@ -26,6 +26,7 @@ import android.annotation.SystemApi;
 import android.app.ActivityThread;
 import android.bluetooth.le.BluetoothLeAdvertiser;
 import android.bluetooth.le.BluetoothLeScanner;
+import android.bluetooth.le.PeriodicAdvertisingManager;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanRecord;
@@ -525,6 +526,7 @@ public final class BluetoothAdapter {
 
     private static BluetoothLeScanner sBluetoothLeScanner;
     private static BluetoothLeAdvertiser sBluetoothLeAdvertiser;
+    private static PeriodicAdvertisingManager sPeriodicAdvertisingManager;
 
     private final IBluetoothManager mManagerService;
     private IBluetooth mService;
@@ -627,6 +629,18 @@ public final class BluetoothAdapter {
             }
         }
         return sBluetoothLeAdvertiser;
+    }
+
+    public PeriodicAdvertisingManager getPeriodicAdvertisingManager() {
+      if (!getLeAccess())
+        return null;
+      synchronized (mLock) {
+        if (sPeriodicAdvertisingManager == null) {
+          sPeriodicAdvertisingManager =
+              new PeriodicAdvertisingManager(mManagerService);
+        }
+      }
+      return sPeriodicAdvertisingManager;
     }
 
     /**
