@@ -495,18 +495,9 @@ public class DockedStackDividerController implements DimLayerUser {
     }
 
     void notifyAppTransitionStarting(ArraySet<AppWindowToken> openingApps, int appTransition) {
-        final boolean wasMinimized = mMinimizedDock;
-        checkMinimizeChanged(true /* animate */);
-
-        // We were minimized, and now we are still minimized, but somebody is trying to launch an
-        // app in docked stack, better show recent apps so we actually get unminimized! This catches
-        // any case that was missed in ActivityStarter.postStartActivityUncheckedProcessing because
-        // we couldn't retrace the launch of the app in the docked stack to the launch from
-        // homescreen.
-        if (wasMinimized && mMinimizedDock && containsAppInDockedStack(openingApps)
-                && appTransition != TRANSIT_NONE) {
-            mService.showRecentApps(true /* fromHome */);
-        }
+        final boolean isAppInDockedStackToBeLaunched = containsAppInDockedStack(openingApps)
+                && appTransition != TRANSIT_NONE;
+        checkMinimizeChanged(true /* animate */, isAppInDockedStackToBeLaunched);
     }
 
     /**
@@ -527,6 +518,10 @@ public class DockedStackDividerController implements DimLayerUser {
     }
 
     private void checkMinimizeChanged(boolean animate) {
+        checkMinimizeChanged(animate, false);
+    }
+
+    private void checkMinimizeChanged(boolean animate, boolean isAppInDockedStackToBeLaunched) {
         if (mDisplayContent.getDockedStackVisibleForUserLocked() == null) {
             return;
         }
@@ -545,7 +540,16 @@ public class DockedStackDividerController implements DimLayerUser {
         final boolean homeVisible = homeTask.getTopVisibleAppToken() != null;
         final boolean homeBehind = (fullscreenStack != null && fullscreenStack.isVisibleLocked())
                 || (homeStackTasks.size() > 1 && topHomeStackTask != homeTask);
-        setMinimizedDockedStack(homeVisible && !homeBehind, animate);
+        setMinimizedDockedStack(homeVisible && !homeBehind
+                && !isAppInDockedStackToBeLaunched, animate);
+
+        // Somebody is trying to launch an app in docked stack, better show recent apps so we
+        // actually get unminimized! This catches any case that was missed in
+        // ActivityStarter.postStartActivityUncheckedProcessing because we couldn't retrace the
+        // launch of the app in the docked stack to the launch from homescreen.
+        if (homeVisible && !homeBehind && isAppInDockedStackToBeLaunched) {
+            mService.showRecentApps(true /* fromHome */);
+        }
     }
 
     private boolean isWithinDisplay(Task task) {
