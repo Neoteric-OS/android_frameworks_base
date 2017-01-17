@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "434619f3_3dedcfcf",
+        "filename": "core/java/android/os/ParcelableException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2017-01-17T21:18:05Z",
+      "side": 1,
+      "message": "I still lean towards avoiding this class inheriting from Parcelable, since the semantics of sub-inheritance from Parcelable objects is so problematic.  Instead, could we just make ParcelableException another special core class that we understand, like String and other things?",
+      "range": {
+        "startLine": 37,
+        "startChar": 69,
+        "endLine": 37,
+        "endChar": 79
+      },
+      "revId": "5b19ac0a1af0784d1ba9130db38ea35612e37b72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
