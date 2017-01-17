@@ -22,6 +22,29 @@
       "revId": "5b19ac0a1af0784d1ba9130db38ea35612e37b72",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "434619f3_1d9ed353",
+        "filename": "core/java/android/os/ParcelableException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-01-17T21:21:30Z",
+      "side": 1,
+      "message": "Note that clients aren\u0027t required to extend this class; this is simply a utility class to wrap exceptions that can\u0027t be mutated (like java.* classes).\n\nI agree that extending Parcelable classes is fraught with trouble, so I\u0027m happy to make this class final to prevent that.\n\nIn a future CL I\u0027m planning to introduce something like:\n\n  class UserActionRequiredException extends SecurityException implements Parcelable {}\n\nWhich the Parcel code would gladly transport across without involving this class here.",
+      "range": {
+        "startLine": 37,
+        "startChar": 69,
+        "endLine": 37,
+        "endChar": 79
+      },
+      "revId": "5b19ac0a1af0784d1ba9130db38ea35612e37b72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
