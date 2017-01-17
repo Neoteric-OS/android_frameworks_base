@@ -138,6 +138,9 @@ public final class ScanSettings implements Parcelable {
 
     private int mNumOfMatchesPerFilter;
 
+    // Include only legacy advertising results
+    private boolean mLegacy;
+
     public int getScanMode() {
         return mScanMode;
     }
@@ -165,6 +168,13 @@ public final class ScanSettings implements Parcelable {
     }
 
     /**
+     * Returns wether only legacy advertisements will be returned.
+     */
+    public boolean getLegacy() {
+        return mLegacy;
+    }
+
+    /**
      * Returns report delay timestamp based on the device clock.
      */
     public long getReportDelayMillis() {
@@ -172,13 +182,15 @@ public final class ScanSettings implements Parcelable {
     }
 
     private ScanSettings(int scanMode, int callbackType, int scanResultType,
-            long reportDelayMillis, int matchMode, int numOfMatchesPerFilter) {
+                         long reportDelayMillis, int matchMode,
+                         int numOfMatchesPerFilter, boolean legacy) {
         mScanMode = scanMode;
         mCallbackType = callbackType;
         mScanResultType = scanResultType;
         mReportDelayMillis = reportDelayMillis;
         mNumOfMatchesPerFilter = numOfMatchesPerFilter;
         mMatchMode = matchMode;
+        mLegacy = legacy;
     }
 
     private ScanSettings(Parcel in) {
@@ -188,6 +200,7 @@ public final class ScanSettings implements Parcelable {
         mReportDelayMillis = in.readLong();
         mMatchMode = in.readInt();
         mNumOfMatchesPerFilter = in.readInt();
+        mLegacy = in.readInt() != 0 ? true : false;
     }
 
     @Override
@@ -198,6 +211,7 @@ public final class ScanSettings implements Parcelable {
         dest.writeLong(mReportDelayMillis);
         dest.writeInt(mMatchMode);
         dest.writeInt(mNumOfMatchesPerFilter);
+        dest.writeInt(mLegacy ? 1 : 0);
     }
 
     @Override
@@ -228,6 +242,8 @@ public final class ScanSettings implements Parcelable {
         private long mReportDelayMillis = 0;
         private int mMatchMode = MATCH_MODE_AGGRESSIVE;
         private int mNumOfMatchesPerFilter  = MATCH_NUM_MAX_ADVERTISEMENT;
+        private boolean mLegacy = true;
+
         /**
          * Set scan mode for Bluetooth LE scan.
          *
@@ -341,11 +357,23 @@ public final class ScanSettings implements Parcelable {
         }
 
         /**
+         * Set wether only legacy advertisments should be returned in scan
+         * results. This is true by default for compatibility with older apps.
+         *
+         * @param legacy when true, only legacy advertisements will be returned
+         */
+        public Builder setLegacy(boolean legacy) {
+            mLegacy = legacy;
+            return this;
+        }
+
+        /**
          * Build {@link ScanSettings}.
          */
         public ScanSettings build() {
             return new ScanSettings(mScanMode, mCallbackType, mScanResultType,
-                    mReportDelayMillis, mMatchMode, mNumOfMatchesPerFilter);
+                                    mReportDelayMillis, mMatchMode,
+                                    mNumOfMatchesPerFilter, mLegacy);
         }
     }
 }
