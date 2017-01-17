@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e39b8d7a_558ea818",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-17T18:56:59Z",
+      "side": 1,
+      "message": "nit: expire",
+      "range": {
+        "startLine": 64,
+        "startChar": 37,
+        "endLine": 64,
+        "endChar": 44
+      },
+      "revId": "4080ea3f47d524d780f0be5442478abe9de0a216",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
