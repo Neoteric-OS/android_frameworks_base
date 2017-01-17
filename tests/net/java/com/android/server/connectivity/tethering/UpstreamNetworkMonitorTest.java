@@ -20,6 +20,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_DUN;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.reset;
 
 import android.content.Context;
@@ -67,12 +68,13 @@ public class UpstreamNetworkMonitorTest {
 
     @Test
     public void testDoesNothingBeforeStarted() {
-        UpstreamNetworkMonitor unm = new UpstreamNetworkMonitor(null, null, EVENT_UNM_UPDATE);
-        assertFalse(unm.mobileNetworkRequested());
-        // Given a null Context, and therefore a null ConnectivityManager,
-        // these would cause an exception, if they actually attempted anything.
-        unm.mobileUpstreamRequiresDun(true);
-        unm.mobileUpstreamRequiresDun(false);
+        assertTrue(mCM.hasNoCallbacks());
+        assertFalse(mUNM.mobileNetworkRequested());
+
+        mUNM.mobileUpstreamRequiresDun(true);
+        assertTrue(mCM.hasNoCallbacks());
+        mUNM.mobileUpstreamRequiresDun(false);
+        assertTrue(mCM.hasNoCallbacks());
     }
 
     @Test
@@ -83,7 +85,7 @@ public class UpstreamNetworkMonitorTest {
         assertEquals(1, mCM.trackingDefault.size());
 
         mUNM.stop();
-        assertTrue(mCM.isEmpty());
+        assertTrue(mCM.hasNoCallbacks());
     }
 
     @Test
@@ -95,11 +97,11 @@ public class UpstreamNetworkMonitorTest {
         assertTrue(mCM.isListeningForDun());
 
         mUNM.stop();
-        assertTrue(mCM.isEmpty());
+        assertTrue(mCM.hasNoCallbacks());
     }
 
     @Test
-    public void testCanRequestMobileNetwork() throws Exception {
+    public void testRequestsMobileNetwork() throws Exception {
         assertFalse(mUNM.mobileNetworkRequested());
         assertEquals(0, mCM.requested.size());
 
@@ -118,11 +120,11 @@ public class UpstreamNetworkMonitorTest {
 
         mUNM.stop();
         assertFalse(mUNM.mobileNetworkRequested());
-        assertTrue(mCM.isEmpty());
+        assertTrue(mCM.hasNoCallbacks());
     }
 
     @Test
-    public void testCanRequestDunNetwork() throws Exception {
+    public void testRequestsDunNetwork() throws Exception {
         assertFalse(mUNM.mobileNetworkRequested());
         assertEquals(0, mCM.requested.size());
 
@@ -141,7 +143,7 @@ public class UpstreamNetworkMonitorTest {
 
         mUNM.stop();
         assertFalse(mUNM.mobileNetworkRequested());
-        assertTrue(mCM.isEmpty());
+        assertTrue(mCM.hasNoCallbacks());
     }
 
     private static class TestConnectivityManager extends ConnectivityManager {
@@ -153,7 +155,7 @@ public class UpstreamNetworkMonitorTest {
             super(ctx, svc);
         }
 
-        boolean isEmpty() {
+        boolean hasNoCallbacks() {
             return trackingDefault.isEmpty() &&
                    listening.isEmpty() &&
                    requested.isEmpty();
@@ -203,6 +205,8 @@ public class UpstreamNetworkMonitorTest {
                 listening.remove(cb);
             } else if (requested.containsKey(cb)) {
                 requested.remove(cb);
+            } else {
+                fail("Unexpected callback removed");
             }
 
             assertFalse(trackingDefault.contains(cb));
