@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "036b4132_8fd8182b",
+        "filename": "core/jni/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1041673
+      },
+      "writtenOn": "2017-01-18T00:59:01Z",
+      "side": 1,
+      "message": "libdebuggerd_handler?",
+      "range": {
+        "startLine": 226,
+        "startChar": 4,
+        "endLine": 226,
+        "endChar": 23
+      },
+      "revId": "3ce369601e2c55c78f4f893da12c10368d4f7f70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23b3e516_319bd264",
+        "filename": "core/jni/android_os_Debug.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1041673
+      },
+      "writtenOn": "2017-01-18T00:59:01Z",
+      "side": 1,
+      "message": "also shouldn\u0027t this be handler.h?",
+      "range": {
+        "startLine": 36,
+        "startChar": 20,
+        "endLine": 36,
+        "endChar": 26
+      },
+      "revId": "3ce369601e2c55c78f4f893da12c10368d4f7f70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
