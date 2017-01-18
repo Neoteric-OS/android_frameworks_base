@@ -22,6 +22,30 @@
       "revId": "fe7c9e6902b06add7c64d7eb75a464ee78a0bfd1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "284ae270_4db651e6",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2017-01-18T23:31:54Z",
+      "side": 1,
+      "message": ":( it really shouldn\u0027t appear in the NO_WAKE list wondered how does it ever pass the test, will re-test and update",
+      "parentUuid": "284ae270_cd1c8135",
+      "range": {
+        "startLine": 1288,
+        "startChar": 55,
+        "endLine": 1288,
+        "endChar": 80
+      },
+      "revId": "fe7c9e6902b06add7c64d7eb75a464ee78a0bfd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
