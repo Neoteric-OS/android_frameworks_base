@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a39fd578_f5e67af8",
+        "filename": "wifi/java/android/net/wifi/hotspot2/omadm/PPSMOParser.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-18T06:10:12Z",
+      "side": 1,
+      "message": "Is there any chance more than one child have NODE_SSID as its name?",
+      "range": {
+        "startLine": 657,
+        "startChar": 20,
+        "endLine": 657,
+        "endChar": 50
+      },
+      "revId": "faec2b48daf662180e7e97c8266430379b24ba4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "236e8540_0beb3e2d",
+        "filename": "wifi/java/android/net/wifi/hotspot2/omadm/PPSMOParser.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-18T06:10:12Z",
+      "side": 1,
+      "message": "Although compiler will probably take care of this, is switch statement an overkill here?",
+      "range": {
+        "startLine": 785,
+        "startChar": 1,
+        "endLine": 792,
+        "endChar": 13
+      },
+      "revId": "faec2b48daf662180e7e97c8266430379b24ba4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3e70d23_27e1687b",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/HomeSP.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-18T06:10:12Z",
+      "side": 1,
+      "message": "Nit: remove \u0027use\u0027? Or \u0027used\u0027?",
+      "range": {
+        "startLine": 48,
+        "startChar": 21,
+        "endLine": 48,
+        "endChar": 25
+      },
+      "revId": "faec2b48daf662180e7e97c8266430379b24ba4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "036b4132_e5c9ad31",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/HomeSP.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-18T06:10:12Z",
+      "side": 1,
+      "message": "It\u0027s safer to do \u0027if (size \u003c\u003d NULL_VALUE)\u0027. Otherwise new HashMap\u003c\u003e(size) may throw exception if \u0027size\u0027 is other negative value.",
+      "range": {
+        "startLine": 247,
+        "startChar": 1,
+        "endLine": 247,
+        "endChar": 41
+      },
+      "revId": "faec2b48daf662180e7e97c8266430379b24ba4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
