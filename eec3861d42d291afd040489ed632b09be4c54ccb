@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a35c3506_0c3d87dd",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1010104
+      },
+      "writtenOn": "2017-01-18T19:23:09Z",
+      "side": 1,
+      "message": "nit: android style wraps params with 8 space indent",
+      "revId": "eec3861d42d291afd040489ed632b09be4c54ccb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
