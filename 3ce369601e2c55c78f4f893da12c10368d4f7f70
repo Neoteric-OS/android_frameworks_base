@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "284ae270_8a3d4ffb",
+        "filename": "core/jni/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2017-01-18T22:43:06Z",
+      "side": 1,
+      "message": "No, this is the debuggerd client (i.e. the thing that asks for dumps, not the thing that handles them)",
+      "parentUuid": "036b4132_8fd8182b",
+      "range": {
+        "startLine": 226,
+        "startChar": 4,
+        "endLine": 226,
+        "endChar": 23
+      },
+      "revId": "3ce369601e2c55c78f4f893da12c10368d4f7f70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23b3e516_319bd264",
         "filename": "core/jni/android_os_Debug.cpp",
         "patchSetId": 2
