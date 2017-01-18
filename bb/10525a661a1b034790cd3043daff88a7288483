@@ -1,0 +1,9 @@
+Presubmit-Ready+1: Calin Juravle <calin@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Verified+1: Calin Juravle <calin@google.com>
+Code-Review+2: Calin Juravle <calin@google.com>
+Submitted-by: Calin Juravle <calin@google.com>
+Submitted-at: Wed, 18 Jan 2017 03:59:19 +0000
+Reviewed-on: https://android-review.googlesource.com/323543
+Project: platform/frameworks/base
+Branch: refs/heads/master
