@@ -70,6 +70,30 @@
       "revId": "bfb31a1f31a6ca431fd404074a9b01a05ced420a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "433c59a4_6db0d5c9",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1023590
+      },
+      "writtenOn": "2017-01-18T10:18:42Z",
+      "side": 1,
+      "message": "For 1, temporary fix by adding below line\n    args \u003d amendedArgs; \n\nFor 2, cherry pick it and turn on some logs (I shorten the real class path)\n    appproc : app_process main with argv: \"/system/bin/asan/app_process64\" \"/system/bin\" \"--application\" \"--nice-name\u003dsystem_server\" \"com.android.internal.os.WrapperInit\" \"0\" \"0\" \"-cp\" \"/system/framework/Xxx.jar\" \"com.android.server.SystemServer\"\n    appproc : Class name \u003d com.android.internal.os.WrapperInit, args \u003d \"0\" \"0\" \"-cp\" \"/system/framework/Xxx.jar\" \"com.android.server.SystemServer\"\n\nFor 3, issue still happen and error message is\n    java.lang.RuntimeException: Missing class when invoking static main -cp\n\nMay I know your suggestion on how to fix it?",
+      "parentUuid": "f7a50a83_e2f91f5d",
+      "range": {
+        "startLine": 334,
+        "startChar": 11,
+        "endLine": 342,
+        "endChar": 9
+      },
+      "revId": "bfb31a1f31a6ca431fd404074a9b01a05ced420a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
