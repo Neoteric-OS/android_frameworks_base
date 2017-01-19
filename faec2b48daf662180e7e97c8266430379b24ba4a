@@ -211,6 +211,30 @@
       "revId": "faec2b48daf662180e7e97c8266430379b24ba4a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "284ae270_b03d0dfb",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/HomeSP.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-01-19T18:25:47Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s something likely to change.  If you prefer, I can have this function explicitly perform the size check and throw a runtime exception when the size value is unexpected, instead of relying on the HashMap implementation to throw the exception.",
+      "parentUuid": "284ae270_21755936",
+      "range": {
+        "startLine": 247,
+        "startChar": 1,
+        "endLine": 247,
+        "endChar": 41
+      },
+      "revId": "faec2b48daf662180e7e97c8266430379b24ba4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
