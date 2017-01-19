@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a8b252c3_083947f1",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1360,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-19T11:26:35Z",
+      "side": 1,
+      "message": "Both startListening() and stopListening() are called on the TetheringMasterSM looper, do not need to be reentrant, and can\u0027t ever really collide in any way.\n\nThe mSimBcastGenerationNumber is currently accessed from an entirely different handler in the SimChangeBroadcastReceiver\u0027s onReceive() method.\n\nI have another change (324020) that arranges for the onReceive() methods to be run all on the same thread.  Thereafter we can begin to de-atomic-ify and de-lock-ify a little bit at a time.",
+      "parentUuid": "a8b252c3_c82c8f00",
+      "range": {
+        "startLine": 1360,
+        "startChar": 24,
+        "endLine": 1360,
+        "endChar": 37
+      },
+      "revId": "2a3efc49cba4168ce763accc194b20cd6fdaff5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8b252c3_8826971c",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-19T02:35:03Z",
       "side": 1,
       "message": "No need to explicitly call the no-arg parent constructor: if the parent class has a no-arg constructor, it is always called in all child class constructors, unless you specify another parent constructor that takes argument.",
+      "range": {
+        "startLine": 1407,
+        "startChar": 20,
+        "endLine": 1407,
+        "endChar": 28
+      },
+      "revId": "2a3efc49cba4168ce763accc194b20cd6fdaff5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8b252c3_483f3fd9",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-19T11:26:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8b252c3_8826971c",
       "range": {
         "startLine": 1407,
         "startChar": 20,
