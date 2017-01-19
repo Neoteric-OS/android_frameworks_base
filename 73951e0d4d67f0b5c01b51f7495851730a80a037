@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "284ae270_6a8681b7",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2031,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-01-19T21:34:27Z",
+      "side": 1,
+      "message": "Would it make this too complex if we either don\u0027t print this section, or add \"  None\" if no LE apps are registered?",
+      "range": {
+        "startLine": 2031,
+        "startChar": 0,
+        "endLine": 2031,
+        "endChar": 31
+      },
+      "revId": "73951e0d4d67f0b5c01b51f7495851730a80a037",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
