@@ -159,6 +159,75 @@ public class WifiManager {
     public static final String EXTRA_PASSPOINT_WNM_DELAY = "delay";
 
     /**
+     * Broadcast intent action indicating that a Passpoint Deauth Imminent frame has been received.
+     *
+     * Receiver Required Permission: android.Manifest.permission.ACCESS_WIFI_STATE
+     */
+    public static final String ACTION_PASSPOINT_DEAUTH_IMMINENT =
+            "android.net.wifi.action.PASSPOINT_DEAUTH_IMMINENT";
+    /**
+     * The BSSID of the frame originator.
+     *
+     * Type: long
+     */
+    public static final String EXTRA_PASSPOINT_DEAUTH_IMMINENT_BSSID =
+            "android.net.wifi.extra.PASSPOINT_DEAUTH_IMMINENT_BSSID";
+    /**
+     * Flag indicating failure at BSS (Basic Service Set) or ESS (Extended Service Set) level.
+     *
+     * Type: boolean
+     */
+    public static final String EXTRA_PASSPOINT_DEAUTH_IMMINENT_ESS =
+            "android.net.wifi.extra.PASSPOINT_DEAUTH_IMMINENT_ESS";
+    /**
+     * Delay in seconds that a device shall wait before attempting re-association to the same BSS
+     * or ESS (as indicated by {@link #EXTRA_PASSPOINT_DEAUTH_IMMINENT_ESS}.
+     *
+     * Type: int
+     */
+    public static final String EXTRA_PASSPOINT_DEAUTH_IMMINENT_REAUTH_DELAY =
+            "android.net.wifi.extra.PASSPOINT_DEAUTH_IMMINENT_REAUTH_DELAY";
+    /**
+     * URL that provides a webpage explaining the deauth reason.
+     *
+     * Type: String
+     */
+    public static final String EXTRA_PASSPOINT_DEAUTH_IMMINENT_REASON_URL =
+            "android.net.wifi.extra.PASSPOINT_DEAUTH_IMMINENT_REASON_URL";
+
+    /**
+     * Broadcast intent action indicating a Passpoint subscription remediation frame has been
+     * received.
+     *
+     * Receiver Required Permission: android.Manifest.permission.ACCESS_WIFI_STATE
+     */
+    public static final String ACTION_PASSPOINT_SUBSCRIPTION_REMEDIATION =
+            "android.net.wifi.action.PASSPOINT_SUBSCRIPTION_REMEDIATION";
+    /**
+     * The BSSID of the frame originator.
+     *
+     * Type: long
+     */
+    public static final String EXTRA_PASSPOINT_SUBSCRIPTION_REMEDIATION_BSSID =
+            "android.net.wifi.extra.PASSPOINT_SUBSCRIPTION_REMEDIATION_BSSID";
+    /**
+     * The protocol supported by the subscription remediation server. The possible values are:
+     * 0 - OMA DM
+     * 1 - SOAP XML SPP
+     *
+     * Type: int
+     */
+    public static final String EXTRA_PASSPOINT_SUBSCRIPTION_REMEDIATION_SERVER_METHOD =
+            "android.net.wifi.extra.PASSPOINT_SUBSCRIPTION_REMEDIATION_SERVER_METHOD";
+    /**
+     * URL of the subscription remediation server.
+     *
+     * Type: String
+     */
+    public static final String EXTRA_PASSPOINT_SUBSCRIPTION_REMEDIATION_SERVER_URL =
+            "android.net.wifi.extra.PASSPOINT_SUBSCRIPTION_REMEDIATION_SERVER_URL";
+
+    /**
      * Broadcast intent action indicating that Wi-Fi has been enabled, disabled,
      * enabling, disabling, or unknown. One extra provides this state as an int.
      * Another extra provides the previous state, if available.

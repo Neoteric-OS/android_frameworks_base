@@ -24702,6 +24702,8 @@ package android.net.wifi {
     method public boolean startScan();
     method public void startWps(android.net.wifi.WpsInfo, android.net.wifi.WifiManager.WpsCallback);
     method public int updateNetwork(android.net.wifi.WifiConfiguration);
+    field public static final java.lang.String ACTION_PASSPOINT_DEAUTH_IMMINENT = "android.net.wifi.action.PASSPOINT_DEAUTH_IMMINENT";
+    field public static final java.lang.String ACTION_PASSPOINT_SUBSCRIPTION_REMEDIATION = "android.net.wifi.action.PASSPOINT_SUBSCRIPTION_REMEDIATION";
     field public static final java.lang.String ACTION_PICK_WIFI_NETWORK = "android.net.wifi.PICK_WIFI_NETWORK";
     field public static final java.lang.String ACTION_REQUEST_SCAN_ALWAYS_AVAILABLE = "android.net.wifi.action.REQUEST_SCAN_ALWAYS_AVAILABLE";
     field public static final int ERROR_AUTHENTICATING = 1; // 0x1
@@ -24709,6 +24711,13 @@ package android.net.wifi {
     field public static final java.lang.String EXTRA_NETWORK_INFO = "networkInfo";
     field public static final java.lang.String EXTRA_NEW_RSSI = "newRssi";
     field public static final java.lang.String EXTRA_NEW_STATE = "newState";
+    field public static final java.lang.String EXTRA_PASSPOINT_DEAUTH_IMMINENT_BSSID = "android.net.wifi.extra.PASSPOINT_DEAUTH_IMMINENT_BSSID";
+    field public static final java.lang.String EXTRA_PASSPOINT_DEAUTH_IMMINENT_ESS = "android.net.wifi.extra.PASSPOINT_DEAUTH_IMMINENT_ESS";
+    field public static final java.lang.String EXTRA_PASSPOINT_DEAUTH_IMMINENT_REASON_URL = "android.net.wifi.extra.PASSPOINT_DEAUTH_IMMINENT_REASON_URL";
+    field public static final java.lang.String EXTRA_PASSPOINT_DEAUTH_IMMINENT_REAUTH_DELAY = "android.net.wifi.extra.PASSPOINT_DEAUTH_IMMINENT_REAUTH_DELAY";
+    field public static final java.lang.String EXTRA_PASSPOINT_SUBSCRIPTION_REMEDIATION_BSSID = "android.net.wifi.extra.PASSPOINT_SUBSCRIPTION_REMEDIATION_BSSID";
+    field public static final java.lang.String EXTRA_PASSPOINT_SUBSCRIPTION_REMEDIATION_SERVER_METHOD = "android.net.wifi.extra.PASSPOINT_SUBSCRIPTION_REMEDIATION_SERVER_METHOD";
+    field public static final java.lang.String EXTRA_PASSPOINT_SUBSCRIPTION_REMEDIATION_SERVER_URL = "android.net.wifi.extra.PASSPOINT_SUBSCRIPTION_REMEDIATION_SERVER_URL";
     field public static final java.lang.String EXTRA_PREVIOUS_WIFI_STATE = "previous_wifi_state";
     field public static final java.lang.String EXTRA_RESULTS_UPDATED = "resultsUpdated";
     field public static final java.lang.String EXTRA_SUPPLICANT_CONNECTED = "connected";
