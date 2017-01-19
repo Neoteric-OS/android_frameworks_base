@@ -187,6 +187,30 @@
       "revId": "faec2b48daf662180e7e97c8266430379b24ba4a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "284ae270_21755936",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/HomeSP.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-01-19T04:04:57Z",
+      "side": 1,
+      "message": "Hmm, currently the crash depends on the fact that HashMap\u003c\u003e(size) will throw exception when the vale of size is negative. If in the future the implementation somehow gets changed and the new one doesn\u0027t throw an exception, this may become something hard to debug.",
+      "parentUuid": "284ae270_0dd619a7",
+      "range": {
+        "startLine": 247,
+        "startChar": 1,
+        "endLine": 247,
+        "endChar": 41
+      },
+      "revId": "faec2b48daf662180e7e97c8266430379b24ba4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
