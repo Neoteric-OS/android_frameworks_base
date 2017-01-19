@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a8b252c3_0822a7d5",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-19T08:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8b252c3_c8156fba",
+      "range": {
+        "startLine": 377,
+        "startChar": 4,
+        "endLine": 377,
+        "endChar": 40
+      },
+      "revId": "e99c12ecdea9fcfd1a8814608bef7469d2307822",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8b252c3_08d707d5",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-19T01:50:09Z",
       "side": 1,
       "message": "Can this be replaced by:\n\ninvokeForAllObservers(o -\u003e o.interfaceStatusChanged(iface, up));\n\nor maybe invokeForAllObservers(o -\u003e { o.interfaceStatusChanged(iface, up) });",
+      "range": {
+        "startLine": 399,
+        "startChar": 30,
+        "endLine": 404,
+        "endChar": 9
+      },
+      "revId": "e99c12ecdea9fcfd1a8814608bef7469d2307822",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8b252c3_28276be6",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-19T08:53:36Z",
+      "side": 1,
+      "message": "Yes this works and it\u0027s every bit as awesome as I dreamed it could be.\n\nThank you.",
+      "parentUuid": "a8b252c3_08d707d5",
       "range": {
         "startLine": 399,
         "startChar": 30,
