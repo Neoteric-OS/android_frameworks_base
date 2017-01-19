@@ -22,6 +22,30 @@
       "revId": "ed2ebdc7d866ed379860bba13012cfded228a281",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8b252c3_48b2df4a",
+        "filename": "obex/javax/obex/ServerSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1043980
+      },
+      "writtenOn": "2017-01-19T16:26:47Z",
+      "side": 1,
+      "message": "its a generic fix, will update",
+      "parentUuid": "284ae270_fff358b6",
+      "range": {
+        "startLine": 661,
+        "startChar": 10,
+        "endLine": 661,
+        "endChar": 13
+      },
+      "revId": "ed2ebdc7d866ed379860bba13012cfded228a281",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
