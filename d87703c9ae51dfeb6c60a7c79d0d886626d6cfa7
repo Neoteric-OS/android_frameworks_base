@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "284ae270_ffb8f8d3",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-01-19T14:40:02Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer not to have the dash.  I don\u0027t see any other dashes in our dumpsys output.",
+      "range": {
+        "startLine": 2028,
+        "startChar": 33,
+        "endLine": 2028,
+        "endChar": 34
+      },
+      "revId": "d87703c9ae51dfeb6c60a7c79d0d886626d6cfa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
