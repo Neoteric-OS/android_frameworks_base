@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8b252c3_c8156fba",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-19T01:50:09Z",
+      "side": 1,
+      "message": "If this is intended to remains an interface with a single method I would annotate it with @FunctionalInterface (no new imported needed), so that it is certain that it can be implemented by lambdas.\n\nSee for example https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html",
+      "range": {
+        "startLine": 377,
+        "startChar": 4,
+        "endLine": 377,
+        "endChar": 40
+      },
+      "revId": "e99c12ecdea9fcfd1a8814608bef7469d2307822",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8b252c3_08d707d5",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-19T01:50:09Z",
+      "side": 1,
+      "message": "Can this be replaced by:\n\ninvokeForAllObservers(o -\u003e o.interfaceStatusChanged(iface, up));\n\nor maybe invokeForAllObservers(o -\u003e { o.interfaceStatusChanged(iface, up) });",
+      "range": {
+        "startLine": 399,
+        "startChar": 30,
+        "endLine": 404,
+        "endChar": 9
+      },
+      "revId": "e99c12ecdea9fcfd1a8814608bef7469d2307822",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
