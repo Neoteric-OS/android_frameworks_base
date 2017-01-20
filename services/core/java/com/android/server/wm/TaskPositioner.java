@@ -430,13 +430,14 @@ class TaskPositioner implements DimLayer.DimLayerUser {
             // We end the moving operation if position is outside the stack bounds.
             // In this case we need to clamp the position to stack bounds and calculate
             // the final window drag bounds.
-            x = Math.min(Math.max(x, mTmpRect.left), mTmpRect.right);
-            y = Math.min(Math.max(y, mTmpRect.top), mTmpRect.bottom);
+            if (mWindowDragBounds.isEmpty()) {
+                mWindowDragBounds.set(mWindowOriginalBounds);
+            }
             dragEnded = true;
+        } else {
+            updateWindowDragBounds(nX, nY);
+            updateDimLayerVisibility(nX);
         }
-
-        updateWindowDragBounds(nX, nY);
-        updateDimLayerVisibility(nX);
         return dragEnded;
     }
 
