@@ -34,6 +34,24 @@
       "revId": "52efecdf44501ea298fccb749ccf2d0d21c88983",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "284ae270_cbd20d0b",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2017-01-20T15:59:41Z",
+      "side": 1,
+      "message": "ACCESS_WIFI_STATE might be enough to get anonymized BSSes, but not un-redacted data.",
+      "parentUuid": "284ae270_a7b70738",
+      "revId": "52efecdf44501ea298fccb749ccf2d0d21c88983",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
