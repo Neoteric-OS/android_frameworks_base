@@ -16,6 +16,24 @@
       "revId": "52efecdf44501ea298fccb749ccf2d0d21c88983",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "284ae270_a7b70738",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-01-20T04:00:10Z",
+      "side": 1,
+      "message": "Yes, these intents will require the receiver to have android.Manifest.permission.ACCESS_WIFI_STATE permission in order to receive it.\n\nWill add comment to specify the required receiver permission.",
+      "parentUuid": "284ae270_33a0fd80",
+      "revId": "52efecdf44501ea298fccb749ccf2d0d21c88983",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
