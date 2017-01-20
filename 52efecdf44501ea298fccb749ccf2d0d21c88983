@@ -52,6 +52,24 @@
       "revId": "52efecdf44501ea298fccb749ccf2d0d21c88983",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "284ae270_eea037e7",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-01-20T17:26:25Z",
+      "side": 1,
+      "message": "I see. The function for sending intent Context#sendBroadcast only allows caller to specify one permission, what permission should we use in this case then?\n\nAlso currently Apps with ACCESS_WIFI_STATE permission can get the un-redacted BSSID of the currently connected AP via WifiManager#getConnectionInfo.  Is that intended?",
+      "parentUuid": "284ae270_cbd20d0b",
+      "revId": "52efecdf44501ea298fccb749ccf2d0d21c88983",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
