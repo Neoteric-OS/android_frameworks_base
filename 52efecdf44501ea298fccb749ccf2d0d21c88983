@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "284ae270_33a0fd80",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1077073
+      },
+      "writtenOn": "2017-01-20T00:33:54Z",
+      "side": 1,
+      "message": "Will this intent have a permission associated with it?  Bundling a BSSID here means we need to.",
+      "revId": "52efecdf44501ea298fccb749ccf2d0d21c88983",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
