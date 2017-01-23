@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "284ae270_1a07343c",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2022,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-01-23T19:00:31Z",
+      "side": 1,
+      "message": "Indentation doesn\u0027t match surrounding code.",
+      "range": {
+        "startLine": 2022,
+        "startChar": 12,
+        "endLine": 2022,
+        "endChar": 14
+      },
+      "revId": "8f4f0d9a90accaf6b73ffb62772703ec4a3659ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
