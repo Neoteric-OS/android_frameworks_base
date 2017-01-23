@@ -22,6 +22,30 @@
       "revId": "a76222b9bc12729ea9d975fa1d3ffbcb57d2d6fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "284ae270_9aa0c482",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2030,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2017-01-23T18:44:33Z",
+      "side": 1,
+      "message": "I prefer it this way.  Mostly because I don\u0027t like \"App(s)\" and I already wrote this code, and it\u0027s not confusing.",
+      "parentUuid": "284ae270_ab0fd116",
+      "range": {
+        "startLine": 2030,
+        "startChar": 11,
+        "endLine": 2030,
+        "endChar": 12
+      },
+      "revId": "a76222b9bc12729ea9d975fa1d3ffbcb57d2d6fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
