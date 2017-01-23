@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "284ae270_b5c271e5",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-23T19:36:45Z",
+      "side": 1,
+      "message": "TODO like really soon TODO or should file a bug to track it TODO?  :)",
+      "range": {
+        "startLine": 352,
+        "startChar": 7,
+        "endLine": 352,
+        "endChar": 36
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "284ae270_b50cb162",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-23T19:36:45Z",
+      "side": 1,
+      "message": "Out of curiosity - do you know what this will look like when we might not want an upstream attached?  (well, this and the code below).\n\nWhat if we want to tether usb to cell but then have an app create a local only hotspot?",
+      "range": {
+        "startLine": 1319,
+        "startChar": 16,
+        "endLine": 1319,
+        "endChar": 44
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
