@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8b252c3_cb29e9a6",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-23T07:38:08Z",
+      "side": 1,
+      "message": "Can this code be moved out of the callback? The callback seems pretty heavyweight for one that is intended to support a 160-line class.",
+      "range": {
+        "startLine": 946,
+        "startChar": 0,
+        "endLine": 964,
+        "endChar": 13
+      },
+      "revId": "e79def5ec14a857181c40762278b924192a9fbf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8b252c3_eb262dd6",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-23T07:38:08Z",
+      "side": 1,
+      "message": "Move this out of the callback into a method of Tethering.java? Then onSimCardLoaded() can be a simple lambda.",
+      "range": {
+        "startLine": 970,
+        "startChar": 0,
+        "endLine": 987,
+        "endChar": 17
+      },
+      "revId": "e79def5ec14a857181c40762278b924192a9fbf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
