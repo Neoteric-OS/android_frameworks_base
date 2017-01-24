@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28f9028e_db12bf7d",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-01-24T05:33:53Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be made public and the one in IccConstants removed?",
+      "range": {
+        "startLine": 747,
+        "startChar": 30,
+        "endLine": 747,
+        "endChar": 47
+      },
+      "revId": "52c921a738fcf400cb4a8a38e6c5fdb16c4f7501",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
