@@ -22,6 +22,29 @@
       "revId": "52c921a738fcf400cb4a8a38e6c5fdb16c4f7501",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d577a436_02dd21c5",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-24T18:51:46Z",
+      "side": 1,
+      "message": "Makes perfect sense. Done.",
+      "range": {
+        "startLine": 747,
+        "startChar": 30,
+        "endLine": 747,
+        "endChar": 47
+      },
+      "revId": "52c921a738fcf400cb4a8a38e6c5fdb16c4f7501",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
