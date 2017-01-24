@@ -25,6 +25,75 @@
     },
     {
       "key": {
+        "uuid": "e8ffea69_7b959382",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 975,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-24T01:50:07Z",
+      "side": 1,
+      "message": "Not necessary.",
+      "range": {
+        "startLine": 975,
+        "startChar": 52,
+        "endLine": 975,
+        "endChar": 59
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28f9028e_b2f398f0",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-24T01:50:07Z",
+      "side": 1,
+      "message": "Not an AI for this patch, but suggested improvements for later:\n\n- create mPublicSync at declaration site instead of inside the ctor\n- annotating relevant isntance variables with @Guard(mPublicSync)",
+      "range": {
+        "startLine": 976,
+        "startChar": 22,
+        "endLine": 976,
+        "endChar": 33
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08f6fe9d_ce5e8321",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-24T01:50:07Z",
+      "side": 1,
+      "message": "no need to manually box the native int.",
+      "range": {
+        "startLine": 985,
+        "startChar": 33,
+        "endLine": 985,
+        "endChar": 45
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "284ae270_b50cb162",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 8
@@ -41,6 +110,75 @@
         "startChar": 16,
         "endLine": 1319,
         "endChar": 44
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48f0f69f_b0dc3655",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/SimChangeListener.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-24T01:50:07Z",
+      "side": 1,
+      "message": "It looks like these values are used as enums. If there are good chances that there are more states in the future than just ABSENT and LOADED, I would suggest looking into an enum at that point. For instance:\n\nenum IccState { UNKNOWN, ABSENT, LOADED, ...\n  static IssState fromName(String state) {\n    switch (state) {\n      case INTENT_VALUE_ICC_ABSENT: return ABSENT;\n      ...\n  }\n}\n\nThe INTENT_VALUE_* strings can even be the enum names() generated Strings.",
+      "range": {
+        "startLine": 19,
+        "startChar": 62,
+        "endLine": 19,
+        "endChar": 85
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68f3faab_37015a27",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/SimChangeListener.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-24T01:50:07Z",
+      "side": 1,
+      "message": "Consider using an interface in order to increase your lambda github score, unless there are good chance that additional methods are needed here.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 5
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e828cac7_ed670128",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/SimChangeListener.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-24T01:50:07Z",
+      "side": 1,
+      "message": "Consider removing the if branch and always overwriting to true, even when it\u0027s a no-op.",
+      "range": {
+        "startLine": 124,
+        "startChar": 16,
+        "endLine": 124,
+        "endChar": 36
       },
       "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
