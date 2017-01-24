@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3c61ccc_5e3f4b46",
+        "filename": "wifi/java/android/net/wifi/hotspot2/omadm/PPSMOParser.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-24T21:27:15Z",
+      "side": 1,
+      "message": "Ignore non-EAP parameter:",
+      "range": {
+        "startLine": 932,
+        "startChar": 39,
+        "endLine": 932,
+        "endChar": 72
+      },
+      "revId": "06d4adfc59294f9e00ccad8fbb2dbb283bd6b1dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d35871e_920e7229",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-24T21:27:15Z",
+      "side": 1,
+      "message": "Grammars a bit weird here, should this be:\n\"Name of application used to generate the password\"\n?",
+      "range": {
+        "startLine": 125,
+        "startChar": 15,
+        "endLine": 125,
+        "endChar": 78
+      },
+      "revId": "06d4adfc59294f9e00ccad8fbb2dbb283bd6b1dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cee316a2_45748642",
+        "filename": "wifi/java/android/net/wifi/hotspot2/pps/Credential.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-01-24T21:27:15Z",
+      "side": 1,
+      "message": "shareable?",
+      "range": {
+        "startLine": 132,
+        "startChar": 23,
+        "endLine": 132,
+        "endChar": 34
+      },
+      "revId": "06d4adfc59294f9e00ccad8fbb2dbb283bd6b1dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
