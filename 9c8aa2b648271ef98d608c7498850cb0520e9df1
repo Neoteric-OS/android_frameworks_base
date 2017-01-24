@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba0575bc_0fb8a1e7",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-01-24T18:55:12Z",
+      "side": 1,
+      "message": "public static final instead to keep them consistent with other fields?",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 23
+      },
+      "revId": "9c8aa2b648271ef98d608c7498850cb0520e9df1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
