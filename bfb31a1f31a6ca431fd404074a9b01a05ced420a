@@ -94,6 +94,30 @@
       "revId": "bfb31a1f31a6ca431fd404074a9b01a05ced420a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8b252c3_6bcd5d68",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1023590
+      },
+      "writtenOn": "2017-01-24T08:28:07Z",
+      "side": 1,
+      "message": "\u003e Last but not least, the context classloader is not the same as the\n \u003e regular classloader. I\u0027m surprised this works well enough.\n\nThis works due to I create systemServerClassLoader and pass it to applicationInit.\nAs for setContextClassLoader, I just follow the implementation in handleSystemServerProcess.",
+      "parentUuid": "f7a50a83_e2f91f5d",
+      "range": {
+        "startLine": 334,
+        "startChar": 11,
+        "endLine": 342,
+        "endChar": 9
+      },
+      "revId": "bfb31a1f31a6ca431fd404074a9b01a05ced420a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
