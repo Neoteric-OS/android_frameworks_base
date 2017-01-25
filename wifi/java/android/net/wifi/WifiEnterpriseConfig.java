@@ -143,6 +143,7 @@ public class WifiEnterpriseConfig implements Parcelable {
     private X509Certificate[] mCaCerts;
     private PrivateKey mClientPrivateKey;
     private X509Certificate mClientCertificate;
+    private X509Certificate[] mClientCertificateChain;
     private int mEapMethod = Eap.NONE;
     private int mPhase2Method = Phase2.NONE;
 
@@ -164,6 +165,7 @@ public class WifiEnterpriseConfig implements Parcelable {
         mCaCerts = source.mCaCerts;
         mClientPrivateKey = source.mClientPrivateKey;
         mClientCertificate = source.mClientCertificate;
+        mClientCertificateChain = source.mClientCertificateChain;
         mEapMethod = source.mEapMethod;
         mPhase2Method = source.mPhase2Method;
     }
@@ -186,6 +188,7 @@ public class WifiEnterpriseConfig implements Parcelable {
         ParcelUtil.writeCertificates(dest, mCaCerts);
         ParcelUtil.writePrivateKey(dest, mClientPrivateKey);
         ParcelUtil.writeCertificate(dest, mClientCertificate);
+        ParcelUtil.writeCertificates(dest, mClientCertificateChain);
     }
 
     public static final Creator<WifiEnterpriseConfig> CREATOR =
@@ -205,6 +208,7 @@ public class WifiEnterpriseConfig implements Parcelable {
                     enterpriseConfig.mCaCerts = ParcelUtil.readCertificates(in);
                     enterpriseConfig.mClientPrivateKey = ParcelUtil.readPrivateKey(in);
                     enterpriseConfig.mClientCertificate = ParcelUtil.readCertificate(in);
+                    enterpriseConfig.mClientCertificateChain = ParcelUtil.readCertificates(in);
                     return enterpriseConfig;
                 }
 
@@ -625,6 +629,22 @@ public class WifiEnterpriseConfig implements Parcelable {
         }
     }
 
+    private X509Certificate[] copyCaCertificates(@Nullable X509Certificate[] certs) {
+        if (certs != null) {
+            X509Certificate[] newCerts = new X509Certificate[certs.length];
+            for (int i = 0; i < certs.length; i++) {
+                if (certs[i].getBasicConstraints() >= 0) {
+                    newCerts[i] = certs[i];
+                } else {
+                    throw new IllegalArgumentException("Not a CA certificate");
+                }
+            }
+            return newCerts;
+        } else {
+            return null;
+        }
+    }
+
     /**
      * Specify a list of X.509 certificates that identifies the server. The validation
      * passes if the CA of server certificate matches one of the given certificates.
@@ -639,19 +659,7 @@ public class WifiEnterpriseConfig implements Parcelable {
      *     not a CA certificate
      */
     public void setCaCertificates(@Nullable X509Certificate[] certs) {
-        if (certs != null) {
-            X509Certificate[] newCerts = new X509Certificate[certs.length];
-            for (int i = 0; i < certs.length; i++) {
-                if (certs[i].getBasicConstraints() >= 0) {
-                    newCerts[i] = certs[i];
-                } else {
-                    throw new IllegalArgumentException("Not a CA certificate");
-                }
-            }
-            mCaCerts = newCerts;
-        } else {
-            mCaCerts = null;
-        }
+        mCaCerts = copyCaCertificates(certs);
     }
 
     /**
@@ -765,6 +773,31 @@ public class WifiEnterpriseConfig implements Parcelable {
      */
     public X509Certificate getClientCertificate() {
         return mClientCertificate;
+    }
+
+    /**
+     * Specify a list of X.509 CA certificates that verify the client.  This
+     * forms a chain of authority which will corroborate the client certificate.
+     *
+     * <p>A default name is automatically assigned to the certificate and used
+     * with this configuration. The framework takes care of installing the
+     * certificate when the config is saved and removing the certificate when
+     * the config is removed.
+     *
+     * @param certs X.509 CA certificates
+     * @throws IllegalArgumentException if any of the provided certificates is
+     *     not a CA certificate
+     */
+    public void setClientCertificateChain(@Nullable X509Certificate[] certs) {
+        mClientCertificateChain = copyCaCertificates(certs);
+    }
+
+    @Nullable public X509Certificate[] getClientCertificateChain() {
+        if (mClientCertificateChain != null && mClientCertificateChain.length > 0) {
+            return mClientCertificateChain;
+        } else {
+            return null;
+        }
     }
 
     /**

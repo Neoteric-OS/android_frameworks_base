@@ -87,6 +87,16 @@ public class WifiEnterpriseConfigTest {
     }
 
     @Test
+    public void testSetClientCertificateChain() {
+        X509Certificate cert0 = FakeKeys.CA_CERT0;
+        X509Certificate cert1 = FakeKeys.CA_CERT1;
+        mEnterpriseConfig.setClientCertificateChain(new X509Certificate[] {cert0, cert1});
+        X509Certificate[] result = mEnterpriseConfig.getClientCertificateChain();
+        assertEquals(result.length, 2);
+        assertTrue(result[0] == cert0 && result[1] == cert1);
+    }
+
+    @Test
     public void testSaveSingleCaCertificateAlias() {
         final String alias = "single_alias 0";
         mEnterpriseConfig.setCaCertificateAliases(new String[] {alias});
