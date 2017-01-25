@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "7ec5e277_52bd9cff",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-25T05:52:20Z",
+      "side": 1,
+      "message": "(nevermind about the api linter, I just realized it was a @hide class).",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 10
+      },
+      "revId": "99409cdb0392a7ee9f2178769a4e7763aab76e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c832e502_e525219f",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 1
