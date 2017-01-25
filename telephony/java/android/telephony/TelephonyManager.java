@@ -2769,7 +2769,7 @@ public class TelephonyManager {
      * <p>
      * Requires Permission:
      * {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
-     * @param subId whose alphabetic identifier associated with the
+     * @param subId whose alphabetic identifierf associated with the
      * voice mail number is returned
      * @hide
      */
@@ -2784,6 +2784,30 @@ public class TelephonyManager {
         } catch (NullPointerException ex) {
             // This could happen before phone restarts due to crashing
             return null;
+        }
+    }
+
+    /**
+     * Send the special dialer code. The IPC caller must be the current default dialer.
+     * <p>
+     * Requires Permission:
+     *   {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE}
+     *
+     * @param inputCode The special dialer code to send which follows the format of *#*#<code>#*#*
+     * @return true if sent sucessfully, false otherwise
+     *
+     */
+    public boolean sendDialerCode(String inputCode) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony == null)
+                return false;
+            return telephony.sendDialerCode(mContext.getOpPackageName(), inputCode);
+        } catch (RemoteException ex) {
+            return false;
+        } catch (NullPointerException ex) {
+            // This could happen before phone restarts due to crashing
+            return false;
         }
     }
 

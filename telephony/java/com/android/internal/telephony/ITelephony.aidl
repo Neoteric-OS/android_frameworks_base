@@ -474,6 +474,9 @@ interface ITelephony {
     VisualVoicemailSmsFilterSettings getSystemVisualVoicemailSmsFilterSettings(String packageName,
             int subId);
 
+    // Send the special dialer code. The IPC caller must be the current default dialer.
+    boolean sendDialerCode(String callingPackageName, String inputCode);
+
     /**
      * Returns the network type for data transmission
      * Legacy call, permission-free
