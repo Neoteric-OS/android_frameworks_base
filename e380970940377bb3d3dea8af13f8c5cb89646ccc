@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87787897_08c117ab",
+        "filename": "core/java/android/os/Debug.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2226,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2017-01-25T21:25:44Z",
+      "side": 1,
+      "message": "this isn\u0027t public API, and there\u0027s only one caller, and this change switches that one caller over to the new method... seems like we\u0027re uselessly duplicating here. just add a timeout parameter to the existing method?\n\nalso document what a timeout of 0 means.",
+      "range": {
+        "startLine": 2226,
+        "startChar": 30,
+        "endLine": 2226,
+        "endChar": 55
+      },
+      "revId": "e380970940377bb3d3dea8af13f8c5cb89646ccc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
