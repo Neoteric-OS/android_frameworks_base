@@ -16,10 +16,48 @@
 
 package com.android.ims.internal;
 
+import android.app.PendingIntent;
+
+import com.android.ims.ImsCallProfile;
+import com.android.ims.internal.IImsCallSession;
+import com.android.ims.internal.IImsCallSessionListener;
+import com.android.ims.internal.IImsConfig;
+import com.android.ims.internal.IImsEcbm;
+import com.android.ims.internal.IImsMultiEndpoint;
+import com.android.ims.internal.IImsRegistrationListener;
+import com.android.ims.internal.IImsUt;
+
+import android.os.Message;
+
 /**
+ * See ImsService and IMMTelFeature for more information.
  * {@hide}
  */
 interface IImsServiceController {
+    // ImsService Control
     void createImsFeature(int slotId, int feature);
     void removeImsFeature(int slotId, int feature);
+    // MMTel Feature
+    int startSession(int slotId, int featureType, in PendingIntent incomingCallIntent,
+            in IImsRegistrationListener listener);
+    void endSession(int slotId, int featureType, int sessionId);
+    boolean isConnected(int slotId, int featureType, int sessionId, int callSessionType, int callType);
+    boolean isOpened(int slotId, int featureType, int sessionId);
+    void addRegistrationListener(int slotId, int featureType, int sessionId,
+            in IImsRegistrationListener listener);
+    void removeRegistrationListener(int slotId, int featureType, int sessionId,
+            in IImsRegistrationListener listener);
+    ImsCallProfile createCallProfile(int slotId, int featureType, int sessionId, int callSessionType, int callType);
+    IImsCallSession createCallSession(int slotId, int featureType, int sessionId,
+            in ImsCallProfile profile, IImsCallSessionListener listener);
+    IImsCallSession getPendingCallSession(int slotId, int featureType, int sessionId,
+            String callId);
+    IImsUt getUtInterface(int slotId, int featureType, int sessionId);
+    IImsConfig getConfigInterface(int slotId, int featureType, int sessionId);
+    void turnOnIms(int slotId, int featureType, int sessionId);
+    void turnOffIms(int slotId, int featureType, int sessionId);
+    IImsEcbm getEcbmInterface(int slotId, int featureType, int sessionId);
+    void setUiTTYMode(int slotId, int featureType, int sessionId, int uiTtyMode,
+            in Message onComplete);
+    IImsMultiEndpoint getMultiEndpointInterface(int slotId, int featureType, int sessionId);
 }

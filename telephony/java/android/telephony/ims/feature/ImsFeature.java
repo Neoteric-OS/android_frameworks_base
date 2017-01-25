@@ -20,14 +20,20 @@ package android.telephony.ims.feature;
  * Base class for all IMS features that are supported by the framework.
  * @hide
  */
-public class ImsFeature {
+public abstract class ImsFeature {
 
     // Invalid feature value
     public static final int INVALID = -1;
-    // ImsFeatures that are defined in the Manifests
+    // ImsFeatures that are defined in the Manifests. Ensure that these values match the previously
+    // defined values in ImsServiceClass for compatibility purposes.
     public static final int EMERGENCY_MMTEL = 0;
     public static final int MMTEL = 1;
     public static final int RCS = 2;
     // Total number of features defined
     public static final int MAX = 3;
+
+    /**
+     * Called when the feature is being removed and must be cleaned up.
+     */
+    public abstract void onFeatureRemoved();
 }
