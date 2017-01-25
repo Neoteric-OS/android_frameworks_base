@@ -1119,6 +1119,13 @@ public class CarrierConfigManager {
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
+    /**
+     * Indicates the maximum number of connections allowed by the hostpot.
+     * @hide
+     */
+    public static final String KEY_MAX_NUMBER_TETHERED_CONNECTIONS_INT =
+            "max_number_tethered_connections_int";
+
     static {
         sDefaults = new PersistableBundle();
         sDefaults.putBoolean(KEY_ALLOW_HOLD_IN_IMS_CALL_BOOL, true);
@@ -1320,6 +1327,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_NOTIFY_VT_HANDOVER_TO_WIFI_FAILURE_BOOL, false);
         sDefaults.putStringArray(KEY_FILTERED_CNAP_NAMES_STRING_ARRAY, null);
         sDefaults.putBoolean(KEY_EDITABLE_WFC_ROAMING_MODE_BOOL, false);
+        sDefaults.putInt(KEY_MAX_NUMBER_TETHERED_CONNECTIONS_INT, -1);
     }
 
     /**
