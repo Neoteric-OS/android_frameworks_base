@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "0da30b09_f9540ddc",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-25T20:37:13Z",
+      "side": 1,
+      "message": "Ah, yes they were supposed to be private when I added the input validation. Looks like I only went halfway. :-)",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 10
+      },
+      "revId": "99409cdb0392a7ee9f2178769a4e7763aab76e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c832e502_e525219f",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 1
@@ -59,6 +82,29 @@
       "writtenOn": "2017-01-25T05:51:30Z",
       "side": 1,
       "message": "Not sure what is the usage. But if caller may be hostile, you probably want to copy that array content.",
+      "range": {
+        "startLine": 37,
+        "startChar": 48,
+        "endLine": 37,
+        "endChar": 51
+      },
+      "revId": "99409cdb0392a7ee9f2178769a4e7763aab76e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3995bcf9_4ba9938d",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-25T20:37:13Z",
+      "side": 1,
+      "message": "Caller won\u0027t be hostile, but they could screw something up, so this is a good idea. Done.",
       "range": {
         "startLine": 37,
         "startChar": 48,
@@ -94,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "ade3edee_f6e0c9cc",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-25T20:37:13Z",
+      "side": 1,
+      "message": "Done.",
+      "range": {
+        "startLine": 40,
+        "startChar": 24,
+        "endLine": 41,
+        "endChar": 42
+      },
+      "revId": "99409cdb0392a7ee9f2178769a4e7763aab76e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46bbcb72_e29dc760",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 1
@@ -105,6 +174,29 @@
       "writtenOn": "2017-01-25T05:51:30Z",
       "side": 1,
       "message": "IpSecManager.class.getSimpleName() will avoid typos.",
+      "range": {
+        "startLine": 42,
+        "startChar": 38,
+        "endLine": 42,
+        "endChar": 52
+      },
+      "revId": "99409cdb0392a7ee9f2178769a4e7763aab76e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45d67a54_446f3cfc",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-25T20:37:13Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 42,
         "startChar": 38,
@@ -133,6 +225,52 @@
         "startChar": 7,
         "endLine": 63,
         "endChar": 81
+      },
+      "revId": "99409cdb0392a7ee9f2178769a4e7763aab76e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be14653c_2f8ddfb6",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-25T20:37:13Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 63,
+        "endChar": 81
+      },
+      "revId": "99409cdb0392a7ee9f2178769a4e7763aab76e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d2b6d2f_6cd8d1ce",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-25T20:37:13Z",
+      "side": 1,
+      "message": "Removing direction because this transform is only valid for outbound connections.",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 21
       },
       "revId": "99409cdb0392a7ee9f2178769a4e7763aab76e0c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
