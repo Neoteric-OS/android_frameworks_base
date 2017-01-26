@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "667fd23a_b487beb8",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-26T01:34:59Z",
+      "side": 1,
+      "message": "If these values are well-known strings defined in some standard or defined in a Linux header somewhere, consider adding a link in a comment here to indicate where is the source of truth.",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 61
+      },
+      "revId": "5bcd88e3329dda7f6d076f59064882d22d842698",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68010b81_ca12c8b8",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-26T01:34:59Z",
+      "side": 1,
+      "message": "Are valid values the static values defined above ? If so you should do validation here (hint: define a static set populated with the ALGO_* constants above).\n\nOtherwise consider defining a java Enum with a String field.",
+      "range": {
+        "startLine": 32,
+        "startChar": 26,
+        "endLine": 32,
+        "endChar": 42
+      },
+      "revId": "5bcd88e3329dda7f6d076f59064882d22d842698",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73e51735_d17b5012",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-26T01:34:59Z",
+      "side": 1,
+      "message": "Not sure of this myself, but wouldn\u0027t Parcel.createByteArray() let you avoid having to serialize manually the array length ?",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 31
+      },
+      "revId": "5bcd88e3329dda7f6d076f59064882d22d842698",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c22f7acf_27385884",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-26T01:34:59Z",
+      "side": 1,
+      "message": "Not necessarily an AI, but just food for thought: have you considered creating a Parcelable object for these arguments ?\n\ni.e would it make sense to create an IpSecConfiguration object that holds these arguments. Possible merits: can do self-validation, easier pretty printing, could serve as a key service side, can have a builder interface. Drawbacks: more boilerplate :p",
+      "range": {
+        "startLine": 80,
+        "startChar": 34,
+        "endLine": 82,
+        "endChar": 58
+      },
+      "revId": "5bcd88e3329dda7f6d076f59064882d22d842698",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
