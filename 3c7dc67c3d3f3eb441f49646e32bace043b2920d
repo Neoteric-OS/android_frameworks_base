@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "151db95e_dbe13d0a",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4031,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-01-26T00:00:57Z",
+      "side": 1,
+      "message": "Nit: Extra space (you can clean up later)",
+      "range": {
+        "startLine": 4030,
+        "startChar": 5,
+        "endLine": 4031,
+        "endChar": 5
+      },
+      "revId": "3c7dc67c3d3f3eb441f49646e32bace043b2920d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
