@@ -232,6 +232,29 @@
     },
     {
       "key": {
+        "uuid": "6c41c42a_9b48efca",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-01-26T19:39:24Z",
+      "side": 1,
+      "message": "Does this mean we would do an entitlement check even if tethering has not been requested?  (or more likely - we have a local only hotspot, and then we would do an entitlement check just in case?)  but I think we are safe from doing entitlement checks if we do not have tethering requested at all..  right?",
+      "range": {
+        "startLine": 1319,
+        "startChar": 16,
+        "endLine": 1319,
+        "endChar": 44
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48f0f69f_b0dc3655",
         "filename": "services/core/java/com/android/server/connectivity/tethering/SimChangeListener.java",
         "patchSetId": 8
