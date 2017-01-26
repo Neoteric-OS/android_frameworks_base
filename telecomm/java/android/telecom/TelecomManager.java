@@ -314,6 +314,41 @@ public class TelecomManager {
     public static final String EXTRA_CALL_BACK_NUMBER = "android.telecom.extra.CALL_BACK_NUMBER";
 
     /**
+     * A boolean extra, which when set, indicates that the call should be initiated with the RTT
+     * communication channel enabled.
+     * TODO: unhide
+     * @hide
+     */
+    public static final String EXTRA_START_CALL_WITH_RTT =
+            "android.telecom.extra.START_CALL_WITH_RTT";
+
+    /**
+     * A extra containing a {@link android.os.ParcelFileDescriptor} that should be used to send
+     * RTT text data from the connection service to the in-call app.
+     * This extra is set in the Bundle sent to the connection service within the
+     * {@link ConnectionRequest} object.
+     * Ownership of the file described by this {@link android.os.ParcelFileDescriptor}
+     * lies with Telecom -- do not attempt to close it.
+     * TODO: unhide
+     * @hide
+     */
+    public static final String EXTRA_CS_TO_INCALL_RTT_PIPE =
+            "android.telecom.extra.CS_TO_INCALL_RTT_PIPE";
+
+    /**
+     * A extra containing a {@link android.os.ParcelFileDescriptor} that should be used by the
+     * connection service to receive RTT text data from the in-call app.
+     * This extra is set in the Bundle sent to the connection service within the
+     * {@link ConnectionRequest} object.
+     * Ownership of the file described by this {@link android.os.ParcelFileDescriptor}
+     * lies with Telecom -- do not attempt to close it.
+     * TODO: unhide
+     * @hide
+     */
+    public static final String EXTRA_INCALL_TO_CS_RTT_PIPE =
+            "android.telecom.extra.INCALL_TO_CS_RTT_PIPE";
+
+    /**
      * A boolean meta-data value indicating whether an {@link InCallService} implements an
      * in-call user interface. Dialer implementations (see {@link #getDefaultDialerPackage()}) which
      * would also like to replace the in-call interface should set this meta-data to {@code true} in

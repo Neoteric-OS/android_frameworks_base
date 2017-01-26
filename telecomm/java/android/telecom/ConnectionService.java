@@ -1117,6 +1117,8 @@ public abstract class ConnectionService extends Service {
                 isIncoming,
                 isUnknown);
 
+        Log.w(this, "RTT pipes: %s and %s", request.getRttPipeFromInCall(),
+                request.getRttPipeToInCall());
         Connection connection = isUnknown ? onCreateUnknownConnection(callManagerAccount, request)
                 : isIncoming ? onCreateIncomingConnection(callManagerAccount, request)
                 : onCreateOutgoingConnection(callManagerAccount, request);

@@ -198,6 +198,13 @@ public final class Phone {
         }
     }
 
+    final void internalOnRttUpgradeRequest(String callId, int requestId) {
+        Call call = mCallByTelecomCallId.get(callId);
+        if (call != null) {
+            call.internalOnRttUpgradeRequest(requestId);
+        }
+    }
+
     /**
      * Called to destroy the phone and cleanup any lingering calls.
      */

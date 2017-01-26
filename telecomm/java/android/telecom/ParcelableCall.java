@@ -50,6 +50,7 @@ public final class ParcelableCall implements Parcelable {
     private final boolean mIsVideoCallProviderChanged;
     private final IVideoProvider mVideoCallProvider;
     private VideoCallImpl mVideoCall;
+    private final ParcelableRttCall mRttCall;
     private final String mParentCallId;
     private final List<String> mChildCallIds;
     private final StatusHints mStatusHints;
@@ -75,6 +76,7 @@ public final class ParcelableCall implements Parcelable {
             PhoneAccountHandle accountHandle,
             boolean isVideoCallProviderChanged,
             IVideoProvider videoCallProvider,
+            ParcelableRttCall rttCall,
             String parentCallId,
             List<String> childCallIds,
             StatusHints statusHints,
@@ -98,6 +100,7 @@ public final class ParcelableCall implements Parcelable {
         mAccountHandle = accountHandle;
         mIsVideoCallProviderChanged = isVideoCallProviderChanged;
         mVideoCallProvider = videoCallProvider;
+        mRttCall = rttCall;
         mParentCallId = parentCallId;
         mChildCallIds = childCallIds;
         mStatusHints = statusHints;
@@ -203,6 +206,14 @@ public final class ParcelableCall implements Parcelable {
     }
 
     /**
+     * RTT communication channel information
+     * @return The ParcelableRttCall
+     */
+    public ParcelableRttCall getParcelableRttCall() {
+        return mRttCall;
+    }
+
+    /**
      * The conference call to which this call is conferenced. Null if not conferenced.
      */
     public String getParentCallId() {
@@ -291,6 +302,7 @@ public final class ParcelableCall implements Parcelable {
             boolean isVideoCallProviderChanged = source.readByte() == 1;
             IVideoProvider videoCallProvider =
                     IVideoProvider.Stub.asInterface(source.readStrongBinder());
+            ParcelableRttCall rttCall = source.readParcelable(classLoader);
             String parentCallId = source.readString();
             List<String> childCallIds = new ArrayList<>();
             source.readList(childCallIds, classLoader);
@@ -318,6 +330,7 @@ public final class ParcelableCall implements Parcelable {
                     accountHandle,
                     isVideoCallProviderChanged,
                     videoCallProvider,
+                    rttCall,
                     parentCallId,
                     childCallIds,
                     statusHints,
@@ -358,6 +371,7 @@ public final class ParcelableCall implements Parcelable {
         destination.writeByte((byte) (mIsVideoCallProviderChanged ? 1 : 0));
         destination.writeStrongBinder(
                 mVideoCallProvider != null ? mVideoCallProvider.asBinder() : null);
+        destination.writeParcelable(mRttCall, 0);
         destination.writeString(mParentCallId);
         destination.writeList(mChildCallIds);
         destination.writeParcelable(mStatusHints, 0);

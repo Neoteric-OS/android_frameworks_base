@@ -19,6 +19,7 @@ package android.telecom;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
+import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
 
 /**
@@ -27,24 +28,93 @@ import android.os.Parcelable;
  */
 public final class ConnectionRequest implements Parcelable {
 
-    // TODO: Token to limit recursive invocations
+    public static final class Builder {
+        private PhoneAccountHandle mAccountHandle;
+        private Uri mAddress;
+        private Bundle mExtras;
+        private int mVideoState = VideoProfile.STATE_AUDIO_ONLY;
+        private String mTelecomCallId;
+        private boolean mShouldShowIncomingCallUi = false;
+        private ParcelFileDescriptor mRttPipeToInCall;
+        private ParcelFileDescriptor mRttPipeFromInCall;
+
+        public Builder() { }
+
+        public Builder setAccountHandle(PhoneAccountHandle accountHandle) {
+            this.mAccountHandle = accountHandle;
+            return this;
+        }
+
+        public Builder setAddress(Uri address) {
+            this.mAddress = address;
+            return this;
+        }
+
+        public Builder setExtras(Bundle extras) {
+            this.mExtras = extras;
+            return this;
+        }
+
+        public Builder setVideoState(int videoState) {
+            this.mVideoState = videoState;
+            return this;
+        }
+
+        public Builder setTelecomCallId(String telecomCallId) {
+            this.mTelecomCallId = telecomCallId;
+            return this;
+        }
+
+        public Builder setShouldShowIncomingCallUi(boolean shouldShowIncomingCallUi) {
+            this.mShouldShowIncomingCallUi = shouldShowIncomingCallUi;
+            return this;
+        }
+
+        /** @hide */
+        public Builder setRttPipeFromInCall(ParcelFileDescriptor rttPipeFromInCall) {
+            this.mRttPipeFromInCall = rttPipeFromInCall;
+            return this;
+        }
+
+        /** @hide */
+        public Builder setRttPipeToInCall(ParcelFileDescriptor rttPipeToInCall) {
+            this.mRttPipeToInCall = rttPipeToInCall;
+            return this;
+        }
+
+        public ConnectionRequest build() {
+            return new ConnectionRequest(
+                    mAccountHandle,
+                    mAddress,
+                    mExtras,
+                    mVideoState,
+                    mTelecomCallId,
+                    mShouldShowIncomingCallUi,
+                    mRttPipeFromInCall,
+                    mRttPipeToInCall);
+        }
+    }
+
     private final PhoneAccountHandle mAccountHandle;
     private final Uri mAddress;
     private final Bundle mExtras;
     private final int mVideoState;
     private final String mTelecomCallId;
     private final boolean mShouldShowIncomingCallUi;
+    private final ParcelFileDescriptor mRttPipeToInCall;
+    private final ParcelFileDescriptor mRttPipeFromInCall;
 
     /**
      * @param accountHandle The accountHandle which should be used to place the call.
      * @param handle The handle (e.g., phone number) to which the {@link Connection} is to connect.
      * @param extras Application-specific extra data.
+     * @deprecated Use {@link ConnectionRequest.Builder} instead.
      */
     public ConnectionRequest(
             PhoneAccountHandle accountHandle,
             Uri handle,
             Bundle extras) {
-        this(accountHandle, handle, extras, VideoProfile.STATE_AUDIO_ONLY, null, false);
+        this(accountHandle, handle, extras, VideoProfile.STATE_AUDIO_ONLY, null, false, null, null);
     }
 
     /**
@@ -52,13 +122,14 @@ public final class ConnectionRequest implements Parcelable {
      * @param handle The handle (e.g., phone number) to which the {@link Connection} is to connect.
      * @param extras Application-specific extra data.
      * @param videoState Determines the video state for the connection.
+     * @deprecated Use {@link ConnectionRequest.Builder} instead.
      */
     public ConnectionRequest(
             PhoneAccountHandle accountHandle,
             Uri handle,
             Bundle extras,
             int videoState) {
-        this(accountHandle, handle, extras, videoState, null, false);
+        this(accountHandle, handle, extras, videoState, null, false, null, null);
     }
 
     /**
@@ -71,6 +142,7 @@ public final class ConnectionRequest implements Parcelable {
      *                                 {@code true} if the {@link ConnectionService} should show its
      *                                 own incoming call UI for an incoming call.  When
      *                                 {@code false}, Telecom shows the incoming call UI.
+     * @deprecated Use {@link ConnectionRequest.Builder} instead.
      * @hide
      */
     public ConnectionRequest(
@@ -80,12 +152,27 @@ public final class ConnectionRequest implements Parcelable {
             int videoState,
             String telecomCallId,
             boolean shouldShowIncomingCallUi) {
+        this(accountHandle, handle, extras, videoState, telecomCallId,
+                shouldShowIncomingCallUi, null, null);
+    }
+
+    private ConnectionRequest(
+            PhoneAccountHandle accountHandle,
+            Uri handle,
+            Bundle extras,
+            int videoState,
+            String telecomCallId,
+            boolean shouldShowIncomingCallUi,
+            ParcelFileDescriptor rttPipeFromInCall,
+            ParcelFileDescriptor rttPipeToInCall) {
         mAccountHandle = accountHandle;
         mAddress = handle;
         mExtras = extras;
         mVideoState = videoState;
         mTelecomCallId = telecomCallId;
         mShouldShowIncomingCallUi = shouldShowIncomingCallUi;
+        mRttPipeFromInCall = rttPipeFromInCall;
+        mRttPipeToInCall = rttPipeToInCall;
     }
 
     private ConnectionRequest(Parcel in) {
@@ -95,6 +182,8 @@ public final class ConnectionRequest implements Parcelable {
         mVideoState = in.readInt();
         mTelecomCallId = in.readString();
         mShouldShowIncomingCallUi = in.readInt() == 1;
+        mRttPipeFromInCall = in.readParcelable(getClass().getClassLoader());
+        mRttPipeToInCall = in.readParcelable(getClass().getClassLoader());
     }
 
     /**
@@ -149,6 +238,35 @@ public final class ConnectionRequest implements Parcelable {
         return mShouldShowIncomingCallUi;
     }
 
+    /**
+     * Gets the ParcelFileDescriptor that is used to send RTT text from the connection service
+     * to the in-call UI
+     * @return The ParcelFileDescriptor that should be used for communication
+     * @hide
+     */
+    public ParcelFileDescriptor getRttPipeToInCall() {
+        return mRttPipeToInCall;
+    }
+
+    /**
+     * Gets the {@link ParcelFileDescriptor} that is used to send RTT text from the in-call UI to
+     * the connection service.
+     * @return The {@link ParcelFileDescriptor} that should be used for communication
+     * @hide
+     */
+    public ParcelFileDescriptor getRttPipeFromInCall() {
+        return mRttPipeFromInCall;
+    }
+
+    /**
+     * Convenience method for determining whether the ConnectionRequest is requesting an RTT session
+     * @return True if RTT is requested, false otherwise.
+     * @hide
+     */
+    public boolean isRequestingRtt() {
+        return mRttPipeFromInCall != null && mRttPipeToInCall != null;
+    }
+
     @Override
     public String toString() {
         return String.format("ConnectionRequest %s %s",
@@ -186,5 +304,7 @@ public final class ConnectionRequest implements Parcelable {
         destination.writeInt(mVideoState);
         destination.writeString(mTelecomCallId);
         destination.writeInt(mShouldShowIncomingCallUi ? 1 : 0);
+        destination.writeParcelable(mRttPipeFromInCall, 0);
+        destination.writeParcelable(mRttPipeToInCall, 0);
     }
 }
