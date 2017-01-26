@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "4cb3899e_688b07db",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-26T06:52:21Z",
+      "side": 1,
+      "message": "I\u0027ve no idea.  Frankly, it\u0027s not on my priority list, since it is what it is and has been for a while.",
+      "range": {
+        "startLine": 352,
+        "startChar": 7,
+        "endLine": 352,
+        "endChar": 36
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8ffea69_7b959382",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 8
@@ -36,6 +59,29 @@
       "writtenOn": "2017-01-24T01:50:07Z",
       "side": 1,
       "message": "Not necessary.",
+      "range": {
+        "startLine": 975,
+        "startChar": 52,
+        "endLine": 975,
+        "endChar": 59
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19ca056a_467a8b3f",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 975,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-26T06:52:21Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 975,
         "startChar": 52,
@@ -71,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "1786e9c0_77737026",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-26T06:52:21Z",
+      "side": 1,
+      "message": "Actually, this lock needs to go away entirely.  With the exception of the dump() scanning over some of these variables, it\u0027s already completely unnecessary.",
+      "range": {
+        "startLine": 976,
+        "startChar": 22,
+        "endLine": 976,
+        "endChar": 33
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08f6fe9d_ce5e8321",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 8
@@ -82,6 +151,29 @@
       "writtenOn": "2017-01-24T01:50:07Z",
       "side": 1,
       "message": "no need to manually box the native int.",
+      "range": {
+        "startLine": 985,
+        "startChar": 33,
+        "endLine": 985,
+        "endChar": 45
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee93d7e7_f08798dd",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-26T06:52:21Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 985,
         "startChar": 33,
@@ -117,6 +209,29 @@
     },
     {
       "key": {
+        "uuid": "06b52170_7a02f8e7",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-26T06:52:21Z",
+      "side": 1,
+      "message": "I think we still need to be listening for SIM changes so we can do entitlement checks.\n\nWhat we decide to do with the results of those checks based on the use case is, of course, a separate matter.",
+      "range": {
+        "startLine": 1319,
+        "startChar": 16,
+        "endLine": 1319,
+        "endChar": 44
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48f0f69f_b0dc3655",
         "filename": "services/core/java/com/android/server/connectivity/tethering/SimChangeListener.java",
         "patchSetId": 8
@@ -128,6 +243,29 @@
       "writtenOn": "2017-01-24T01:50:07Z",
       "side": 1,
       "message": "It looks like these values are used as enums. If there are good chances that there are more states in the future than just ABSENT and LOADED, I would suggest looking into an enum at that point. For instance:\n\nenum IccState { UNKNOWN, ABSENT, LOADED, ...\n  static IssState fromName(String state) {\n    switch (state) {\n      case INTENT_VALUE_ICC_ABSENT: return ABSENT;\n      ...\n  }\n}\n\nThe INTENT_VALUE_* strings can even be the enum names() generated Strings.",
+      "range": {
+        "startLine": 19,
+        "startChar": 62,
+        "endLine": 19,
+        "endChar": 85
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efb83d0a_40944051",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/SimChangeListener.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-26T06:52:21Z",
+      "side": 1,
+      "message": "I think if we have to add more states will want to rollback the lambda to a multi-method callback as well.\n\nNoted.",
       "range": {
         "startLine": 19,
         "startChar": 62,
@@ -163,6 +301,29 @@
     },
     {
       "key": {
+        "uuid": "684cb81f_40b649f1",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/SimChangeListener.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-26T06:52:21Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 5
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e828cac7_ed670128",
         "filename": "services/core/java/com/android/server/connectivity/tethering/SimChangeListener.java",
         "patchSetId": 8
@@ -174,6 +335,29 @@
       "writtenOn": "2017-01-24T01:50:07Z",
       "side": 1,
       "message": "Consider removing the if branch and always overwriting to true, even when it\u0027s a no-op.",
+      "range": {
+        "startLine": 124,
+        "startChar": 16,
+        "endLine": 124,
+        "endChar": 36
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fdf7c7ca_f372c7d9",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/SimChangeListener.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-26T06:52:21Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 124,
         "startChar": 16,
