@@ -88,6 +88,7 @@ LOCAL_SRC_FILES:= \
     android_os_SystemProperties.cpp \
     android_os_Trace.cpp \
     android_os_UEventObserver.cpp \
+    android_os_vintf_VendorManifest.cpp \
     android_net_LocalSocketImpl.cpp \
     android_net_NetUtils.cpp \
     android_net_TrafficStats.cpp \
@@ -269,6 +270,7 @@ LOCAL_SHARED_LIBRARIES := \
     libhidlbase \
     libhidltransport \
     libhwbinder \
+    libvintf \
 
 LOCAL_SHARED_LIBRARIES += \
     libhwui \

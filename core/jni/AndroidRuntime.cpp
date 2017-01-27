@@ -155,6 +155,7 @@ extern int register_android_database_SQLiteConnection(JNIEnv* env);
 extern int register_android_database_SQLiteGlobal(JNIEnv* env);
 extern int register_android_database_SQLiteDebug(JNIEnv* env);
 extern int register_android_nio_utils(JNIEnv* env);
+extern int register_android_os_vintf_VendorManifest(JNIEnv *env);
 extern int register_android_os_Debug(JNIEnv* env);
 extern int register_android_os_HwBinder(JNIEnv *env);
 extern int register_android_os_HwBlob(JNIEnv *env);
@@ -1287,6 +1288,7 @@ static const RegJNIRec gRegJNI[] = {
     REG_JNI(register_android_text_AndroidBidi),
     REG_JNI(register_android_view_InputDevice),
     REG_JNI(register_android_view_KeyCharacterMap),
+    REG_JNI(register_android_os_vintf_VendorManifest),
     REG_JNI(register_android_os_Process),
     REG_JNI(register_android_os_SystemProperties),
     REG_JNI(register_android_os_Binder),
