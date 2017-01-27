@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "5f6195af_fcc91e21",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-27T20:01:00Z",
+      "side": 1,
+      "message": "They are well-known values. From the ip xfrm man page - \nEncryption algorithms include ecb(cipher_null), cbc(des),\n              cbc(des3_ede), cbc(cast5), cbc(blowfish), cbc(aes),\n              cbc(serpent), cbc(camellia), cbc(twofish), and\n              rfc3686(ctr(aes)).\n\nUnfortunately, I don\u0027t know of an actual *canonical* reference for them since they are each defined in their respective linux kernel modules. But... I will do validation.",
+      "range": {
+        "startLine": 32,
+        "startChar": 26,
+        "endLine": 32,
+        "endChar": 42
+      },
+      "revId": "5bcd88e3329dda7f6d076f59064882d22d842698",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73e51735_d17b5012",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 3
@@ -94,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "b02f50de_e355dee5",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-27T20:01:00Z",
+      "side": 1,
+      "message": "Indeed it would! Done.",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 31
+      },
+      "revId": "5bcd88e3329dda7f6d076f59064882d22d842698",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c22f7acf_27385884",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 3
@@ -105,6 +151,29 @@
       "writtenOn": "2017-01-26T01:34:59Z",
       "side": 1,
       "message": "Not necessarily an AI, but just food for thought: have you considered creating a Parcelable object for these arguments ?\n\ni.e would it make sense to create an IpSecConfiguration object that holds these arguments. Possible merits: can do self-validation, easier pretty printing, could serve as a key service side, can have a builder interface. Drawbacks: more boilerplate :p",
+      "range": {
+        "startLine": 80,
+        "startChar": 34,
+        "endLine": 82,
+        "endChar": 58
+      },
+      "revId": "5bcd88e3329dda7f6d076f59064882d22d842698",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aee2557d_56ab79e3",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-27T20:01:00Z",
+      "side": 1,
+      "message": "I actually considered a builder interface because this is rather unwieldy. Honestly, I feel like this signature is borderline, but the signature that includes NattKeepalive is just a bit too much IMO. So basically: I agree with you (at least in principle).",
       "range": {
         "startLine": 80,
         "startChar": 34,
