@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1551672_dc4a1766",
+        "filename": "core/jni/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2017-01-27T21:10:38Z",
+      "side": 1,
+      "message": "Why are you adding this twice?",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 27
+      },
+      "revId": "b3fcf69c62e403e02ab5f110f0d815c4f96229b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7437ce_3081227f",
+        "filename": "core/jni/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2017-01-27T21:10:38Z",
+      "side": 1,
+      "message": "How are you testing this? frameworks/base/include doesn\u0027t exist.\n\n(And I suspect most users of this library probably don\u0027t need to use this library, it was a common copy-paste library)",
+      "range": {
+        "startLine": 283,
+        "startChar": 54,
+        "endLine": 283,
+        "endChar": 78
+      },
+      "revId": "b3fcf69c62e403e02ab5f110f0d815c4f96229b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
