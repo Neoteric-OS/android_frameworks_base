@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e3c7f60_a6df82fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1004395
+      },
+      "writtenOn": "2017-01-27T19:42:21Z",
+      "side": 1,
+      "message": "Bug: 29922419",
+      "revId": "d73c8e7d2cb5d4ec64287bd313503b842e6ea797",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec018368_4f36f623",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1004395
+      },
+      "writtenOn": "2017-01-27T19:42:21Z",
+      "side": 1,
+      "message": "now unused?",
+      "revId": "d73c8e7d2cb5d4ec64287bd313503b842e6ea797",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7137522b_4caebaa0",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1004395
+      },
+      "writtenOn": "2017-01-27T19:42:21Z",
+      "side": 1,
+      "message": "separate CL ?",
+      "revId": "d73c8e7d2cb5d4ec64287bd313503b842e6ea797",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
