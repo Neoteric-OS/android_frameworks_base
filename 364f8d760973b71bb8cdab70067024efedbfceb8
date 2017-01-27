@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "fad1678b_21064939",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-27T20:01:00Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 4
+      },
+      "revId": "364f8d760973b71bb8cdab70067024efedbfceb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aba9257a_1bce8fe0",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 5
@@ -41,6 +64,52 @@
         "startChar": 61,
         "endLine": 39,
         "endChar": 67
+      },
+      "revId": "364f8d760973b71bb8cdab70067024efedbfceb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3222f065_c9b0745a",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-27T20:01:00Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 39,
+        "startChar": 61,
+        "endLine": 39,
+        "endChar": 67
+      },
+      "revId": "364f8d760973b71bb8cdab70067024efedbfceb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8e27714_791ac8b9",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-27T20:01:00Z",
+      "side": 1,
+      "message": "make this class final.\n\nDone",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 24
       },
       "revId": "364f8d760973b71bb8cdab70067024efedbfceb8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -71,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "b801ff8a_28903e16",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-27T20:01:00Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 10
+      },
+      "revId": "364f8d760973b71bb8cdab70067024efedbfceb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c107066_414cc541",
         "filename": "core/java/android/net/IpSecConfig.java",
         "patchSetId": 5
@@ -82,6 +174,29 @@
       "writtenOn": "2017-01-27T07:35:12Z",
       "side": 1,
       "message": "Probably worth a one line comment that this is ORed together from FEATURE_* constants.\n\nAlso consider renaming it to \"featureFlags\".",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 18
+      },
+      "revId": "364f8d760973b71bb8cdab70067024efedbfceb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "348e05ca_9cd87d7d",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-27T20:01:00Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 75,
         "startChar": 0,
@@ -163,6 +278,29 @@
     },
     {
       "key": {
+        "uuid": "9cb4baca_e163126a",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-27T20:01:00Z",
+      "side": 1,
+      "message": "Indeed... this will be my *first* foray into unit tests. Yay!",
+      "range": {
+        "startLine": 88,
+        "startChar": 16,
+        "endLine": 88,
+        "endChar": 29
+      },
+      "revId": "364f8d760973b71bb8cdab70067024efedbfceb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70a36045_bf76de4c",
         "filename": "core/java/android/net/IpSecConfig.java",
         "patchSetId": 5
@@ -186,6 +324,29 @@
     },
     {
       "key": {
+        "uuid": "2f57893f_02850834",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-27T20:01:00Z",
+      "side": 1,
+      "message": "The intention is to make this thing only create-able via the Builder.",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 28
+      },
+      "revId": "364f8d760973b71bb8cdab70067024efedbfceb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cebd42d1_9737e6cd",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 5
@@ -197,6 +358,29 @@
       "writtenOn": "2017-01-27T07:35:12Z",
       "side": 1,
       "message": "Should it be IpSecTransform or IpSecConfig ?",
+      "range": {
+        "startLine": 63,
+        "startChar": 34,
+        "endLine": 63,
+        "endChar": 48
+      },
+      "revId": "364f8d760973b71bb8cdab70067024efedbfceb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4eb0af85_13827a24",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-27T20:01:00Z",
+      "side": 1,
+      "message": "My *thought* was that by passing in the IpSecTransform class, the IpSecConfig would remain private. The IpSecTransform class implements all the user/builder methods, but we could feel free to re-work the parcel at our leisure if no user-facing APIs actually have to touch it.",
       "range": {
         "startLine": 63,
         "startChar": 34,
