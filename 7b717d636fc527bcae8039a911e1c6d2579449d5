@@ -255,6 +255,29 @@
     },
     {
       "key": {
+        "uuid": "e174a8db_ffe2d3f9",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-01-27T02:17:43Z",
+      "side": 1,
+      "message": "This class will only fire off an entitlement check when a sim card is reinserted.  We only transition into this state when we receive CMD_TETHER_MODE_REQUESTED, so I think there\u0027s not cause for concern here.",
+      "range": {
+        "startLine": 1319,
+        "startChar": 16,
+        "endLine": 1319,
+        "endChar": 44
+      },
+      "revId": "7b717d636fc527bcae8039a911e1c6d2579449d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48f0f69f_b0dc3655",
         "filename": "services/core/java/com/android/server/connectivity/tethering/SimChangeListener.java",
         "patchSetId": 8
