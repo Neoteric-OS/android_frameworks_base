@@ -16,9 +16,10 @@
 package android.net;
 
 import android.annotation.SystemApi;
+import android.os.Binder;
 import android.os.Parcel;
 import android.os.Parcelable;
-
+import android.os.Process;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -63,6 +64,31 @@ public class IpSecAlgorithm implements Parcelable {
         mAlgorithm = algorithm;
         mKey = key.clone();
         mTruncLenBits = Math.min(truncLenBits, key.length * 8);
+    }
+
+    private void enforceSystemUid() {
+        final int uid = Binder.getCallingUid();
+        if (uid != Process.SYSTEM_UID) {
+            throw new SecurityException("Only Available to the System UID");
+        }
+    }
+
+    /** @hide */
+    public String getAlgorithm() {
+        enforceSystemUid();
+        return mAlgorithm;
+    }
+
+    /** @hide */
+    public byte[] getKey() {
+        enforceSystemUid();
+        return mKey.clone();
+    }
+
+    /** @hide */
+    public int getTruncLenBits() {
+        enforceSystemUid();
+        return mTruncLenBits;
     }
 
     /* Parcelable Implementation */

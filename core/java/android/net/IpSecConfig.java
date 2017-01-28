@@ -20,9 +20,11 @@ import static com.android.internal.util.Preconditions.checkNotNull;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SystemApi;
+import android.os.Binder;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.ParcelFileDescriptor;
+import android.os.Process;
 import android.util.Log;
 
 import java.net.InetAddress;
@@ -32,15 +34,29 @@ import java.net.UnknownHostException;
 public final class IpSecConfig implements Parcelable {
     private static final String TAG = IpSecConfig.class.getSimpleName();
 
-    static final int FEATURE_TRANSPORT_MODE = 1 << 0;
-    static final int FEATURE_TUNNEL_MODE    = 1 << 1;
-    static final int FEATURE_SELECTOR       = 1 << 2;
-    static final int FEATURE_NETWORK        = 1 << 3;
-    static final int FEATURE_ENCRYPTION     = 1 << 4;
-    static final int FEATURE_AUTHENTICATION = 1 << 5;
-    static final int FEATURE_UDP_ENCAP      = 1 << 6;
-    static final int FEATURE_SELECTOR_PROTO = 1 << 7;
+    /** @hide */
+    public static final int FEATURE_TRANSPORT_MODE = 1 << 0;
+    /** @hide */
+    public static final int FEATURE_TUNNEL_MODE    = 1 << 1;
+    /** @hide */
+    public static final int FEATURE_SELECTOR       = 1 << 2;
+    /** @hide */
+    public static final int FEATURE_NETWORK        = 1 << 3;
+    /** @hide */
+    public static final int FEATURE_ENCRYPTION     = 1 << 4;
+    /** @hide */
+    public static final int FEATURE_AUTHENTICATION = 1 << 5;
+    /** @hide */
+    public static final int FEATURE_UDP_ENCAP      = 1 << 6;
+    /** @hide */
+    public static final int FEATURE_SELECTOR_PROTO = 1 << 7;
 
+    void enforceSystemUid() {
+        final int uid = Binder.getCallingUid();
+        if (uid != Process.SYSTEM_UID) {
+            throw new SecurityException("Only Available to the System UID");
+        }
+    }
 
     // For transport mode
     ParcelFileDescriptor localSocket;
@@ -77,6 +93,85 @@ public final class IpSecConfig implements Parcelable {
     // of this class are valid.
     long features;
 
+    /** @hide */
+    public ParcelFileDescriptor getLocalSocket() {
+        enforceSystemUid();
+        return localSocket;
+    }
+
+    /** @hide */
+    public int getRemotePort() {
+        enforceSystemUid();
+        return remotePort;
+    }
+
+    /** @hide */
+    public InetAddress getLocalIp() {
+        enforceSystemUid();
+        return localIp;
+    }
+
+    /** @hide */
+    public int getSpi() {
+        enforceSystemUid();
+        return spi;
+    }
+
+    /** @hide */
+    public InetAddress getRemoteIp() {
+        enforceSystemUid();
+        return remoteIp;
+    }
+
+    /** @hide */
+    public int getDirection() {
+        enforceSystemUid();
+        return direction;
+    }
+
+    /** @hide */
+    public IpSecAlgorithm getEncryptionAlgo() {
+        enforceSystemUid();
+        return encryptionAlgo;
+    }
+
+    /** @hide */
+    public IpSecAlgorithm getAuthenticationAlgo() {
+        enforceSystemUid();
+        return authenticationAlgo;
+    }
+
+    /** @hide */
+    public Network getNetwork() {
+        enforceSystemUid();
+        return network;
+    }
+
+    /** @hide */
+    public int getEncapType() {
+        enforceSystemUid();
+        return encapType;
+    }
+
+    /** @hide */
+    public int getEncapLocalPort() {
+        enforceSystemUid();
+        return encapLocalPort;
+    }
+
+    /** @hide */
+    public int getEncapRemotePort() {
+        enforceSystemUid();
+        return encapRemotePort;
+    }
+
+    /** @hide */
+    public int getSelectorProto() {
+        enforceSystemUid();
+        return selectorProto;
+    }
+
+    /** @hide */
     public boolean hasFeature(int featureBits) {
         return (features & featureBits) == featureBits;
     }
