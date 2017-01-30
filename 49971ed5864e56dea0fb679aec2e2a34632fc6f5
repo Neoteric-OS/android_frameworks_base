@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "bcb28dc1_bbea29bd",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2017-01-30T13:18:35Z",
+      "side": 1,
+      "message": "+1, and make mFixedTimeMs final",
+      "range": {
+        "startLine": 628,
+        "startChar": 0,
+        "endLine": 631,
+        "endChar": 9
+      },
+      "revId": "49971ed5864e56dea0fb679aec2e2a34632fc6f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85e7c23b_61ebf1bd",
         "filename": "tests/net/java/android/net/apf/ApfTest.java",
         "patchSetId": 6
@@ -41,6 +64,29 @@
         "startChar": 42,
         "endLine": 1066,
         "endChar": 45
+      },
+      "revId": "49971ed5864e56dea0fb679aec2e2a34632fc6f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "785944f6_cc54454f",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2017-01-30T13:18:35Z",
+      "side": 1,
+      "message": "you\u0027re swapping the values here from the original, 100\u003c-\u003e200, but not changing the lifetime check value on line 1151, is that intentional?",
+      "range": {
+        "startLine": 1106,
+        "startChar": 0,
+        "endLine": 1113,
+        "endChar": 81
       },
       "revId": "49971ed5864e56dea0fb679aec2e2a34632fc6f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
