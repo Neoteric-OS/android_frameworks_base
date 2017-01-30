@@ -163,6 +163,29 @@
     },
     {
       "key": {
+        "uuid": "80a0ada2_124995d8",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-30T02:36:53Z",
+      "side": 1,
+      "message": "not public ? Looks Like they would need to be public to be used outside of android.net package.",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 10
+      },
+      "revId": "364f8d760973b71bb8cdab70067024efedbfceb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c107066_414cc541",
         "filename": "core/java/android/net/IpSecConfig.java",
         "patchSetId": 5
@@ -335,6 +358,29 @@
       "writtenOn": "2017-01-27T20:01:00Z",
       "side": 1,
       "message": "The intention is to make this thing only create-able via the Builder.",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 28
+      },
+      "revId": "364f8d760973b71bb8cdab70067024efedbfceb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0046dc6d_12b02176",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-30T02:36:53Z",
+      "side": 1,
+      "message": "Bits of Java trivia: since you already have a ctor \"private IpSecConfig(Parcel in)\", there wont be any default no-arg ctor. So you don\u0027t need to manually define a private no-arg ctor.",
       "range": {
         "startLine": 126,
         "startChar": 4,
