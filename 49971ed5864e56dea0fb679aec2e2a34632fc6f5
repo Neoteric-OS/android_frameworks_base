@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9bf0e0a_e20e9890",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-30T09:33:38Z",
+      "side": 1,
+      "message": "Is this used anywhere? If not, can you delete it?",
+      "range": {
+        "startLine": 628,
+        "startChar": 0,
+        "endLine": 631,
+        "endChar": 9
+      },
+      "revId": "49971ed5864e56dea0fb679aec2e2a34632fc6f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85e7c23b_61ebf1bd",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-01-30T09:33:38Z",
+      "side": 1,
+      "message": "Is it intentional that the minimum lifetime is not a multiple of 6 seconds? IIRC some of the flakiness of this test was due to lifetimes that were multiples of 6. Those lifetimes are quite common.",
+      "range": {
+        "startLine": 1066,
+        "startChar": 42,
+        "endLine": 1066,
+        "endChar": 45
+      },
+      "revId": "49971ed5864e56dea0fb679aec2e2a34632fc6f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
