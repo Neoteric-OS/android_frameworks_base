@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2432f03_fda021f5",
+        "filename": "core/java/android/os/vintf/VendorManifest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2017-01-30T18:50:55Z",
+      "side": 1,
+      "message": "remove this.",
+      "range": {
+        "startLine": 55,
+        "startChar": 3,
+        "endLine": 55,
+        "endChar": 46
+      },
+      "revId": "e74ca0b9ceafe0fe1ff2cdf611aba45810e0848d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
