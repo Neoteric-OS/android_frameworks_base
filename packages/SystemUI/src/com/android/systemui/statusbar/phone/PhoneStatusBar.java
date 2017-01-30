@@ -1289,6 +1289,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         mKeyguardViewMediatorCallback = keyguardViewMediator.getViewMediatorCallback();
         mLightStatusBarController.setFingerprintUnlockController(mFingerprintUnlockController);
+        mKeyguardShowing = mStatusBarKeyguardViewManager.isShowing();
         Trace.endSection();
     }
 

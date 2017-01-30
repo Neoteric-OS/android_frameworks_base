@@ -273,6 +273,8 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     private Set<String> mNonBlockablePkgs;
 
+    protected boolean mKeyguardShowing;
+
     @Override  // NotificationData.Environment
     public boolean isDeviceProvisioned() {
         return mDeviceProvisioned;
@@ -340,13 +342,12 @@ public abstract class BaseStatusBar extends SystemUI implements
             }
             final boolean isActivity = pendingIntent.isActivity();
             if (isActivity) {
-                final boolean keyguardShowing = mStatusBarKeyguardViewManager.isShowing();
                 final boolean afterKeyguardGone = PreviewInflater.wouldLaunchResolverActivity(
                         mContext, pendingIntent.getIntent(), mCurrentUserId);
                 dismissKeyguardThenExecute(new OnDismissAction() {
                     @Override
                     public boolean onDismiss() {
-                        if (keyguardShowing && !afterKeyguardGone) {
+                        if (mKeyguardShowing && !afterKeyguardGone) {
                             try {
                                 ActivityManagerNative.getDefault()
                                         .keyguardWaitingForActivityDrawn();
@@ -356,7 +357,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                         }
 
                         boolean handled = superOnClickHandler(view, pendingIntent, fillInIntent);
-                        overrideActivityPendingAppTransition(keyguardShowing && !afterKeyguardGone);
+                        overrideActivityPendingAppTransition(mKeyguardShowing && !afterKeyguardGone);
 
                         // close the shade if it was open
                         if (handled) {
@@ -1047,14 +1048,13 @@ public abstract class BaseStatusBar extends SystemUI implements
     }
 
     private void startNotificationGutsIntent(final Intent intent, final int appUid) {
-        final boolean keyguardShowing = mStatusBarKeyguardViewManager.isShowing();
         dismissKeyguardThenExecute(new OnDismissAction() {
             @Override
             public boolean onDismiss() {
                 AsyncTask.execute(new Runnable() {
                     public void run() {
                         try {
-                            if (keyguardShowing) {
+                            if (mKeyguardShowing) {
                                 ActivityManagerNative.getDefault()
                                         .keyguardWaitingForActivityDrawn();
                             }
@@ -1062,7 +1062,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                                     .addNextIntentWithParentStack(intent)
                                     .startActivities(getActivityOptions(),
                                             new UserHandle(UserHandle.getUserId(appUid)));
-                            overrideActivityPendingAppTransition(keyguardShowing);
+                            overrideActivityPendingAppTransition(mKeyguardShowing);
                         } catch (RemoteException e) {
                         }
                     }
@@ -1815,7 +1815,6 @@ public abstract class BaseStatusBar extends SystemUI implements
     public void startPendingIntentDismissingKeyguard(final PendingIntent intent) {
         if (!isDeviceProvisioned()) return;
 
-        final boolean keyguardShowing = mStatusBarKeyguardViewManager.isShowing();
         final boolean afterKeyguardGone = intent.isActivity()
                 && PreviewInflater.wouldLaunchResolverActivity(mContext, intent.getIntent(),
                 mCurrentUserId);
@@ -1825,7 +1824,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                     @Override
                     public void run() {
                         try {
-                            if (keyguardShowing && !afterKeyguardGone) {
+                            if (mKeyguardShowing && !afterKeyguardGone) {
                                 ActivityManagerNative.getDefault()
                                         .keyguardWaitingForActivityDrawn();
                             }
@@ -1848,7 +1847,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                         }
                         if (intent.isActivity()) {
                             mAssistManager.hideAssist();
-                            overrideActivityPendingAppTransition(keyguardShowing
+                            overrideActivityPendingAppTransition(mKeyguardShowing
                                     && !afterKeyguardGone);
                         }
                     }
@@ -1906,7 +1905,6 @@ public abstract class BaseStatusBar extends SystemUI implements
                 }
             });
 
-            final boolean keyguardShowing = mStatusBarKeyguardViewManager.isShowing();
             final boolean afterKeyguardGone = intent.isActivity()
                     && PreviewInflater.wouldLaunchResolverActivity(mContext, intent.getIntent(),
                             mCurrentUserId);
@@ -1936,7 +1934,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                         @Override
                         public void run() {
                             try {
-                                if (keyguardShowing && !afterKeyguardGone) {
+                                if (mKeyguardShowing && !afterKeyguardGone) {
                                     ActivityManagerNative.getDefault()
                                             .keyguardWaitingForActivityDrawn();
                                 }
@@ -1986,7 +1984,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                                 }
                                 if (intent.isActivity()) {
                                     mAssistManager.hideAssist();
-                                    overrideActivityPendingAppTransition(keyguardShowing
+                                    overrideActivityPendingAppTransition(mKeyguardShowing
                                             && !afterKeyguardGone);
                                 }
                             }
@@ -2538,8 +2536,7 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
 
         boolean inUse = mPowerManager.isScreenOn()
-                && (!mStatusBarKeyguardViewManager.isShowing()
-                || mStatusBarKeyguardViewManager.isOccluded());
+                && (!mKeyguardShowing || mStatusBarKeyguardViewManager.isOccluded());
         try {
             inUse = inUse && !mDreamManager.isDreaming();
         } catch (RemoteException e) {
