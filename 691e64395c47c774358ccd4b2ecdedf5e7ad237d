@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "1ba03c6a_d2581805",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-30T20:17:50Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 25
+      },
+      "revId": "691e64395c47c774358ccd4b2ecdedf5e7ad237d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fe77183_c687171e",
         "filename": "core/java/android/net/IpSecConfig.java",
         "patchSetId": 9
@@ -59,6 +82,29 @@
       "writtenOn": "2017-01-30T02:36:53Z",
       "side": 1,
       "message": "Should have @Override (and writeToParcel too).\n\nAlthough this is not a Java best practice to add @Override on interface implementation method, it is according to the Google and Android style guides ... :p",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 33
+      },
+      "revId": "691e64395c47c774358ccd4b2ecdedf5e7ad237d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6033915_87fe6603",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-30T20:17:50Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 85,
         "startChar": 4,
@@ -94,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "e52f42e6_899c8e57",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-30T20:17:50Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 5
+      },
+      "revId": "691e64395c47c774358ccd4b2ecdedf5e7ad237d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69e75d57_a39625fa",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 9
@@ -105,6 +174,29 @@
       "writtenOn": "2017-01-30T02:36:53Z",
       "side": 1,
       "message": "I am not sure what are the std practices for Android API, but personally I am not a big fan of custom checked exceptions: they add lots of noise to signatures and try catch statements but tend to be ignored just as much, if not more.\n\nIf these exception are thrown at validation and basically means the caller is not using the api correctly or in the correct mode, the caller is expected to fix the code until the exception does not appear. In which case they basically works as a debugging mechanism, but are not expected to be \"actionable\" programmatically by the caller in normal usage.\n\nIf this is the case, I suggest using std RuntimeException that the caller can\u0027t really ignore, such as IllegalArgumentException, IllegalStateException, SecurityException, ... or the Android ErrnoException for kernel errors.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 69
+      },
+      "revId": "691e64395c47c774358ccd4b2ecdedf5e7ad237d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af084997_308e1729",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-30T20:17:50Z",
+      "side": 1,
+      "message": "I\u0027m not super thrilled about this either, but it was (to the best I understand the request), Lorenzo\u0027s wish. The SocketNotBoundException and InsufficientPermissionException are both likely-not-recoverable exceptions, but I can see, particularly the PermissionException being something that happens unexpectedly and is worth \"calling out\". The TransformCollisionException is recoverable/actionable and important to have an explicit error to handle this (admittedly, hopefully rare) case.",
       "range": {
         "startLine": 44,
         "startChar": 0,
@@ -140,6 +232,29 @@
     },
     {
       "key": {
+        "uuid": "35bc2a09_6fae11da",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-30T20:17:50Z",
+      "side": 1,
+      "message": "Yes... I\u0027m really not sure why the formatting checker isn\u0027t finding these things. Done.",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 10
+      },
+      "revId": "691e64395c47c774358ccd4b2ecdedf5e7ad237d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7372cad2_0e5c14b5",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 9
@@ -151,6 +266,29 @@
       "writtenOn": "2017-01-30T02:36:53Z",
       "side": 1,
       "message": "should be +8 alignement ?",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 8
+      },
+      "revId": "691e64395c47c774358ccd4b2ecdedf5e7ad237d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "862c8ecb_0b577d81",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-30T20:17:50Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 80,
         "startChar": 4,
@@ -186,6 +324,29 @@
     },
     {
       "key": {
+        "uuid": "6286c3bf_63f747b8",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-30T20:17:50Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 10
+      },
+      "revId": "691e64395c47c774358ccd4b2ecdedf5e7ad237d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08f98acb_7c908551",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 9
@@ -209,6 +370,29 @@
     },
     {
       "key": {
+        "uuid": "0c0efb27_8ab9ac4b",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-30T20:17:50Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 71,
+        "startChar": 9,
+        "endLine": 71,
+        "endChar": 23
+      },
+      "revId": "691e64395c47c774358ccd4b2ecdedf5e7ad237d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0268da1e_2b825285",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 9
@@ -220,6 +404,29 @@
       "writtenOn": "2017-01-30T02:36:53Z",
       "side": 1,
       "message": "You probably need to null out mConfig after building.",
+      "range": {
+        "startLine": 121,
+        "startChar": 38,
+        "endLine": 121,
+        "endChar": 45
+      },
+      "revId": "691e64395c47c774358ccd4b2ecdedf5e7ad237d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50a83ef8_70dc666a",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-01-30T20:17:50Z",
+      "side": 1,
+      "message": "If I do that and someone tries to add another field to the API they\u0027re going to get a NPE. Is that the right behavior?",
       "range": {
         "startLine": 121,
         "startChar": 38,
