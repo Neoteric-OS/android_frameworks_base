@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81d1c85f_6815fcfb",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-01-31T19:22:37Z",
+      "side": 1,
+      "message": "not: all on the same line",
+      "range": {
+        "startLine": 592,
+        "startChar": 44,
+        "endLine": 595,
+        "endChar": 64
+      },
+      "revId": "92756655fe265874961a2c55867cfe0499ca2a1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc2ffb57_beffc5ad",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-01-31T19:22:37Z",
+      "side": 1,
+      "message": "nit: All on the same line",
+      "range": {
+        "startLine": 600,
+        "startChar": 28,
+        "endLine": 603,
+        "endChar": 48
+      },
+      "revId": "92756655fe265874961a2c55867cfe0499ca2a1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56462846_24833eac",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-01-31T19:22:37Z",
+      "side": 1,
+      "message": "nit: all on the same line",
+      "range": {
+        "startLine": 1234,
+        "startChar": 3,
+        "endLine": 1237,
+        "endChar": 33
+      },
+      "revId": "92756655fe265874961a2c55867cfe0499ca2a1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
