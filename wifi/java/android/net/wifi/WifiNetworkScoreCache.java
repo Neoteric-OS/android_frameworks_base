@@ -21,6 +21,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.content.Context;
+import android.os.Binder;
 import android.os.Handler;
 import android.net.INetworkScoreCache;
 import android.net.NetworkKey;
@@ -57,6 +58,7 @@ public class WifiNetworkScoreCache extends INetworkScoreCache.Stub {
 
     private final Context mContext;
     private final Object mCacheLock = new Object();
+    private final int mCreatorUid;
 
     // The key is of the form "<ssid>"<bssid>
     // TODO: What about SSIDs that can't be encoded as UTF-8?
@@ -76,7 +78,8 @@ public class WifiNetworkScoreCache extends INetworkScoreCache.Stub {
     public WifiNetworkScoreCache(Context context, @Nullable CacheListener listener) {
         mContext = context.getApplicationContext();
         mListener = listener;
-        mNetworkCache = new HashMap<String, ScoredNetwork>();
+        mNetworkCache = new HashMap<>();
+        mCreatorUid = Binder.getCallingUid();
     }
 
     @Override public final void updateScores(List<ScoredNetwork> networks) {
@@ -210,7 +213,9 @@ public class WifiNetworkScoreCache extends INetworkScoreCache.Stub {
 
     @Override protected final void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
         mContext.enforceCallingOrSelfPermission(permission.DUMP, TAG);
-        writer.println("WifiNetworkScoreCache");
+        String header = String.format("WifiNetworkScoreCache (%s/%d)",
+                mContext.getPackageName(), mCreatorUid);
+        writer.println(header);
         writer.println("  All score curves:");
         for (Map.Entry<String, ScoredNetwork> entry : mNetworkCache.entrySet()) {
             ScoredNetwork scoredNetwork = entry.getValue();
