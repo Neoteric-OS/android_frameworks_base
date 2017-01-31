@@ -32,6 +32,7 @@
         <receiver android:name="com.android.carrierdefaultapp.CarrierDefaultBroadcastReceiver">
             <intent-filter>
                 <action android:name="com.android.internal.telephony.CARRIER_SIGNAL_REDIRECTED" />
+                <action android:name="android.intent.action.SIM_STATE_CHANGED" />
             </intent-filter>
         </receiver>
         <activity android:name="com.android.carrierdefaultapp.CaptivePortalLaunchActivity"
