@@ -68,6 +68,29 @@
       "revId": "92756655fe265874961a2c55867cfe0499ca2a1e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a06121c1_efe27f68",
+        "filename": "telecomm/java/com/android/internal/telecom/IConnectionService.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-01-31T19:24:09Z",
+      "side": 1,
+      "message": "This parameter listing convention makes me sad. I don\u0027t know why only createConnection is vertically defined.",
+      "range": {
+        "startLine": 49,
+        "startChar": 9,
+        "endLine": 53,
+        "endChar": 45
+      },
+      "revId": "92756655fe265874961a2c55867cfe0499ca2a1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
