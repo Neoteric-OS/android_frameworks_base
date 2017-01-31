@@ -254,6 +254,7 @@ public class ZygoteProcess {
     private static Process.ProcessStartResult zygoteSendArgsAndGetResult(
             ZygoteState zygoteState, ArrayList<String> args)
             throws ZygoteStartFailedEx {
+
         try {
             // Throw early if any of the arguments are malformed. This means we can
             // avoid writing a partial response to the zygote.
