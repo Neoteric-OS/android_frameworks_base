@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c897eeb4_20faaff5",
+        "filename": "core/java/android/net/NetworkRecommendationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2017-01-31T20:07:10Z",
+      "side": 1,
+      "message": "Is this equals and hashCode functionality needed by anyone anymore?",
+      "revId": "c695a174211540cccfc05e8526eb8276f66478b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de751eb9_09090a74",
+        "filename": "core/java/android/net/NetworkRecommendationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1122613
+      },
+      "writtenOn": "2017-01-31T20:07:10Z",
+      "side": 1,
+      "message": "Should ResultCallback implement Runnable so that you don\u0027t have to create 2 objects here? ResultCallback could be rename to something like RecommendationRequest.",
+      "range": {
+        "startLine": 140,
+        "startChar": 20,
+        "endLine": 140,
+        "endChar": 34
+      },
+      "revId": "c695a174211540cccfc05e8526eb8276f66478b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
