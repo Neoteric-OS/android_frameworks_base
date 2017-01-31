@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a22fd262_0349209c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-31T02:51:18Z",
+      "side": 1,
+      "message": "Nit: you might want to clarify explicitly that this is @hide for now, and when it will be unhidden (when it gets an implementation). That might avoid some future confusion from other reviewers.",
+      "revId": "e0fd222b5737bfabbaef55ed80bf112e4e49eb2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09a01994_99c1e366",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-31T02:51:18Z",
+      "side": 1,
+      "message": "Looks like this read was not deleted after changing the array creation.",
+      "range": {
+        "startLine": 93,
+        "startChar": 6,
+        "endLine": 93,
+        "endChar": 31
+      },
+      "revId": "e0fd222b5737bfabbaef55ed80bf112e4e49eb2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87bd76c7_666816a5",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-31T02:51:18Z",
+      "side": 1,
+      "message": "All these instance variables follow the naming convention for public variables. But they are package private. Have you checked this is consistent with Android style guide, or do they need a \"m\" prefix ? Not sure of this myself.",
+      "range": {
+        "startLine": 46,
+        "startChar": 3,
+        "endLine": 46,
+        "endChar": 37
+      },
+      "revId": "e0fd222b5737bfabbaef55ed80bf112e4e49eb2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e87266c_086d985d",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-31T02:51:18Z",
+      "side": 1,
+      "message": "probably needs a comment about what values are valid and where the constants are.",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 18
+      },
+      "revId": "e0fd222b5737bfabbaef55ed80bf112e4e49eb2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86868083_153d206c",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-31T02:51:18Z",
+      "side": 1,
+      "message": "Same comment about valid \"type\" values.",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 17
+      },
+      "revId": "e0fd222b5737bfabbaef55ed80bf112e4e49eb2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64073706_9ce2dd53",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-31T02:51:18Z",
+      "side": 1,
+      "message": "Wrong service type.",
+      "range": {
+        "startLine": 100,
+        "startChar": 50,
+        "endLine": 100,
+        "endChar": 69
+      },
+      "revId": "e0fd222b5737bfabbaef55ed80bf112e4e49eb2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c602fee2_4064e1b6",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-31T02:51:18Z",
+      "side": 1,
+      "message": "Just checking: ConnectivityService, or NetworkServiceManagement ?",
+      "range": {
+        "startLine": 76,
+        "startChar": 32,
+        "endLine": 76,
+        "endChar": 51
+      },
+      "revId": "e0fd222b5737bfabbaef55ed80bf112e4e49eb2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
