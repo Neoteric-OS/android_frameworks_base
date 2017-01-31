@@ -20,6 +20,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.android.internal.telephony.IccCardConstants;
+import com.android.internal.telephony.TelephonyIntents;
+
 import java.util.List;
 
 public class CarrierDefaultBroadcastReceiver extends BroadcastReceiver{
@@ -28,6 +31,16 @@ public class CarrierDefaultBroadcastReceiver extends BroadcastReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "onReceive intent: " + intent.getAction());
+        if (TelephonyIntents.ACTION_SIM_STATE_CHANGED.equals(intent.getAction())) {
+            if (IccCardConstants.INTENT_VALUE_ICC_ABSENT.equals(intent
+                    .getStringExtra(IccCardConstants.INTENT_KEY_ICC_STATE))) {
+                Log.d(TAG, "onSimStateAbsent: cleanup UI");
+                CarrierActionUtils.applyCarrierAction(
+                        CarrierActionUtils.CARRIER_ACTION_CANCEL_ALL_NOTIFICATIONS,
+                        intent, context);
+            }
+            return;
+        }
         if (ProvisionObserver.isDeferredForProvision(context, intent)) {
             Log.d(TAG, "skip carrier actions during provisioning");
             return;
