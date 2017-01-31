@@ -48,6 +48,52 @@
     },
     {
       "key": {
+        "uuid": "77317353_fd5cb35a",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-31T02:23:22Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 628,
+        "startChar": 0,
+        "endLine": 631,
+        "endChar": 9
+      },
+      "revId": "49971ed5864e56dea0fb679aec2e2a34632fc6f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "124529d8_223807e6",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-31T02:23:22Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 628,
+        "startChar": 0,
+        "endLine": 631,
+        "endChar": 9
+      },
+      "revId": "49971ed5864e56dea0fb679aec2e2a34632fc6f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85e7c23b_61ebf1bd",
         "filename": "tests/net/java/android/net/apf/ApfTest.java",
         "patchSetId": 6
@@ -71,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "ff646614_ece36076",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-31T02:23:22Z",
+      "side": 1,
+      "message": "Not all RA packets below have a prefix option. There is one packet that has only a RDNSS option and ends up having a min lifetime which is a multiple of 6.\n\nI prefer not changing the lifetime in this test.",
+      "range": {
+        "startLine": 1066,
+        "startChar": 42,
+        "endLine": 1066,
+        "endChar": 45
+      },
+      "revId": "49971ed5864e56dea0fb679aec2e2a34632fc6f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "785944f6_cc54454f",
         "filename": "tests/net/java/android/net/apf/ApfTest.java",
         "patchSetId": 6
@@ -82,6 +151,29 @@
       "writtenOn": "2017-01-30T13:18:35Z",
       "side": 1,
       "message": "you\u0027re swapping the values here from the original, 100\u003c-\u003e200, but not changing the lifetime check value on line 1151, is that intentional?",
+      "range": {
+        "startLine": 1106,
+        "startChar": 0,
+        "endLine": 1113,
+        "endChar": 81
+      },
+      "revId": "49971ed5864e56dea0fb679aec2e2a34632fc6f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1357504b_40306370",
+        "filename": "tests/net/java/android/net/apf/ApfTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-31T02:23:22Z",
+      "side": 1,
+      "message": "Good catch. Undid the swap I did by mistake.\n\nThat\u0027s actually working because the filter picks the min lifetime.",
       "range": {
         "startLine": 1106,
         "startChar": 0,
