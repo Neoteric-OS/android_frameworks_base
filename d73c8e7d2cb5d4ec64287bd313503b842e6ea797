@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "68458398_f232c553",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1022419
+      },
+      "writtenOn": "2017-01-31T05:29:41Z",
+      "side": 1,
+      "message": "Done",
+      "revId": "d73c8e7d2cb5d4ec64287bd313503b842e6ea797",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec018368_4f36f623",
         "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
         "patchSetId": 1
@@ -36,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "325c8efc_b40689be",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1022419
+      },
+      "writtenOn": "2017-01-31T05:29:41Z",
+      "side": 1,
+      "message": "Thanks for your review. I removed these unused code in new patchset.",
+      "revId": "d73c8e7d2cb5d4ec64287bd313503b842e6ea797",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7137522b_4caebaa0",
         "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
         "patchSetId": 1
@@ -47,6 +81,23 @@
       "writtenOn": "2017-01-27T19:42:21Z",
       "side": 1,
       "message": "separate CL ?",
+      "revId": "d73c8e7d2cb5d4ec64287bd313503b842e6ea797",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24423f92_17c5b53b",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1022419
+      },
+      "writtenOn": "2017-01-31T05:29:41Z",
+      "side": 1,
+      "message": "Removed this change from this CL and created new CL.\nhttps://android-review.googlesource.com/#/c/330586/",
       "revId": "d73c8e7d2cb5d4ec64287bd313503b842e6ea797",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
