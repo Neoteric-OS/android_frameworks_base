@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "eb9ef80f_6dde6036",
+        "filename": "core/java/android/net/NetworkRecommendationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2017-01-31T20:53:24Z",
+      "side": 1,
+      "message": "It\u0027s used in testing and I think it\u0027s reasonable to provide in any \"public\" class so they can be easily used in Collections, etc..",
+      "revId": "c695a174211540cccfc05e8526eb8276f66478b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de751eb9_09090a74",
         "filename": "core/java/android/net/NetworkRecommendationProvider.java",
         "patchSetId": 1
@@ -36,6 +53,23 @@
         "endLine": 140,
         "endChar": 34
       },
+      "revId": "c695a174211540cccfc05e8526eb8276f66478b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c16a16a2_3dbe9b74",
+        "filename": "core/java/android/net/NetworkRecommendationProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1060801
+      },
+      "writtenOn": "2017-01-31T20:53:24Z",
+      "side": 1,
+      "message": "ResultCallback would have to be non-static in that case which would be an API change. Semantically I think it would a little strange and the resulting code wouldn\u0027t be as readable.",
       "revId": "c695a174211540cccfc05e8526eb8276f66478b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
