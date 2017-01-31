@@ -209,6 +209,29 @@
     },
     {
       "key": {
+        "uuid": "bfbee338_f4777192",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-31T02:38:03Z",
+      "side": 1,
+      "message": "ok SG. I can discussed with Lorenzo again about this. But anyway, API council may have something to say here too.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 69
+      },
+      "revId": "691e64395c47c774358ccd4b2ecdedf5e7ad237d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b74170d_6fa55647",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 9
@@ -427,6 +450,29 @@
       "writtenOn": "2017-01-30T20:17:50Z",
       "side": 1,
       "message": "If I do that and someone tries to add another field to the API they\u0027re going to get a NPE. Is that the right behavior?",
+      "range": {
+        "startLine": 121,
+        "startChar": 38,
+        "endLine": 121,
+        "endChar": 45
+      },
+      "revId": "691e64395c47c774358ccd4b2ecdedf5e7ad237d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69590b25_7c6f8a70",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-01-31T02:38:03Z",
+      "side": 1,
+      "message": "Well I would say that would be WAI.\n\nOtherwise the caller could do something like start a transform, get a builder, build it and pass down the IpSecTransform somewhere, then keep a reference to the builder and keep adding fields and stuff afterwards, which would indirectly mutate the state of the built IpSecTransform. That\u0027s undesirable right ?",
       "range": {
         "startLine": 121,
         "startChar": 38,
