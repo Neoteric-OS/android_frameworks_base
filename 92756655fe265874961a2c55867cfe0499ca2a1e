@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "26fc2263_cd071700",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-01-31T19:39:02Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 592,
+        "startChar": 44,
+        "endLine": 595,
+        "endChar": 64
+      },
+      "revId": "92756655fe265874961a2c55867cfe0499ca2a1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc2ffb57_beffc5ad",
         "filename": "telecomm/java/android/telecom/ConnectionService.java",
         "patchSetId": 1
@@ -36,6 +59,29 @@
       "writtenOn": "2017-01-31T19:22:37Z",
       "side": 1,
       "message": "nit: All on the same line",
+      "range": {
+        "startLine": 600,
+        "startChar": 28,
+        "endLine": 603,
+        "endChar": 48
+      },
+      "revId": "92756655fe265874961a2c55867cfe0499ca2a1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f41cbf4e_4d6cc0ce",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-01-31T19:39:02Z",
+      "side": 1,
+      "message": "Done",
       "range": {
         "startLine": 600,
         "startChar": 28,
@@ -71,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "2f36a434_4c58e73e",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-01-31T19:39:02Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 1234,
+        "startChar": 3,
+        "endLine": 1237,
+        "endChar": 33
+      },
+      "revId": "92756655fe265874961a2c55867cfe0499ca2a1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a06121c1_efe27f68",
         "filename": "telecomm/java/com/android/internal/telecom/IConnectionService.aidl",
         "patchSetId": 1
@@ -82,6 +151,29 @@
       "writtenOn": "2017-01-31T19:24:09Z",
       "side": 1,
       "message": "This parameter listing convention makes me sad. I don\u0027t know why only createConnection is vertically defined.",
+      "range": {
+        "startLine": 49,
+        "startChar": 9,
+        "endLine": 53,
+        "endChar": 45
+      },
+      "revId": "92756655fe265874961a2c55867cfe0499ca2a1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56b7adbf_647423df",
+        "filename": "telecomm/java/com/android/internal/telecom/IConnectionService.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-01-31T19:39:02Z",
+      "side": 1,
+      "message": "Can\u0027t tell I copy-paste huh?",
       "range": {
         "startLine": 49,
         "startChar": 9,
