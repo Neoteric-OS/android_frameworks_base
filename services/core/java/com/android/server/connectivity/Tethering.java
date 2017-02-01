@@ -1057,7 +1057,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                 return true;
             }
 
-            protected void chooseUpstreamType(boolean tryCell) {
+            protected void chooseUpstreamType() {
                 final ConnectivityManager cm = getConnectivityManager();
                 int upType = ConnectivityManager.TYPE_NONE;
                 String iface = null;
@@ -1086,7 +1086,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                         ? ConnectivityManager.TYPE_MOBILE_DUN
                         : ConnectivityManager.TYPE_MOBILE_HIPRI;
                 if (DBG) {
-                    Log.d(TAG, "chooseUpstreamType(" + tryCell + "),"
+                    Log.d(TAG, "chooseUpstreamType(),"
                             + " preferredApn="
                             + ConnectivityManager.getNetworkTypeName(preferredUpstreamMobileApn)
                             + ", got type="
@@ -1100,11 +1100,12 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                         requestUpstreamMobileConnection();
                         break;
                     case ConnectivityManager.TYPE_NONE:
-                        if (tryCell && requestUpstreamMobileConnection()) {
-                            // We think mobile should be coming up; don't set a retry.
-                        } else {
-                            sendMessageDelayed(CMD_RETRY_UPSTREAM, UPSTREAM_SETTLE_TIME_MS);
-                        }
+                        requestUpstreamMobileConnection();
+                        // Retry chooseUpstreamType() if no valid upstream has appeared.
+                        // NOTE: This can be deleted after unittests cover the notifications
+                        // sent to this state machine by UpstreamNetworkMonitor (proving that
+                        // this call is unnecessary).
+                        sendMessageDelayed(CMD_RETRY_UPSTREAM, UPSTREAM_SETTLE_TIME_MS);
                         break;
                     default:
                         /* If we've found an active upstream connection that's not DUN/HIPRI
@@ -1143,8 +1144,9 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                         setDnsForwarders(network, linkProperties);
                     }
                 }
+
                 notifyTetheredOfNewUpstreamIface(iface);
-                NetworkState ns = mUpstreamNetworkMonitor.lookup(network);
+                final NetworkState ns = mUpstreamNetworkMonitor.lookup(network);
                 if (ns != null && pertainsToCurrentUpstream(ns)) {
                     // If we already have NetworkState for this network examine
                     // it immediately, because there likely will be no second
@@ -1351,7 +1353,6 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
 
         class TetherModeAliveState extends TetherMasterUtilState {
             final SimChangeListener simChange = new SimChangeListener(mContext);
-            boolean mTryCell = true;
             @Override
             public void enter() {
                 // TODO: examine if we should check the return value.
@@ -1359,9 +1360,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                 simChange.startListening();
                 mUpstreamNetworkMonitor.start();
 
-                mTryCell = true;  // better try something first pass or crazy tests cases will fail
-                chooseUpstreamType(mTryCell);
-                mTryCell = !mTryCell;
+                chooseUpstreamType();
             }
 
             @Override
@@ -1413,13 +1412,10 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                     }
                     case CMD_UPSTREAM_CHANGED:
                         // need to try DUN immediately if Wifi goes down
-                        mTryCell = true;
-                        chooseUpstreamType(mTryCell);
-                        mTryCell = !mTryCell;
+                        chooseUpstreamType();
                         break;
                     case CMD_RETRY_UPSTREAM:
-                        chooseUpstreamType(mTryCell);
-                        mTryCell = !mTryCell;
+                        chooseUpstreamType();
                         break;
                     case EVENT_UPSTREAM_CALLBACK: {
                         final NetworkState ns = (NetworkState) message.obj;
@@ -1435,7 +1431,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                                 // selection again.  If, for example, IPv4 connectivity has shown up
                                 // after IPv6 (e.g., 464xlat became available) we want the chance to
                                 // notice and act accordingly.
-                                chooseUpstreamType(false);
+                                chooseUpstreamType();
                             }
                             break;
                         }
