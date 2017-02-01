@@ -77,6 +77,8 @@ interface IConnectivityManager
 
     boolean isTetheringSupported();
 
+    void runTetherProvisioningCheck(int type, in ResultReceiver receiver);
+
     void startTethering(int type, in ResultReceiver receiver, boolean showProvisioningUi);
 
     void stopTethering(int type);

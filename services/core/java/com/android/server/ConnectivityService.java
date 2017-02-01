@@ -3075,6 +3075,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
+    public void runTetherProvisioningCheck(int type, ResultReceiver receiver) {
+        enforceTetherChangePermission();
+        mTethering.runTetherProvisioningCheck(type, receiver);
+    }
+
+    @Override
     public void startTethering(int type, ResultReceiver receiver, boolean showProvisioningUi) {
         ConnectivityManager.enforceTetherChangePermission(mContext);
         if (!isTetheringSupported()) {

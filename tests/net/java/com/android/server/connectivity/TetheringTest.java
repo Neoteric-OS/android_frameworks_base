@@ -24,6 +24,7 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -39,17 +40,30 @@ import android.net.ConnectivityManager.NetworkCallback;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
 import android.net.InterfaceConfiguration;
+import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.INetworkManagementService;
 import android.os.PersistableBundle;
+import android.os.ResultReceiver;
+import android.os.UserHandle;
 import android.os.test.TestLooper;
 import android.os.UserHandle;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 import android.telephony.CarrierConfigManager;
+import android.telephony.CellInfo;
+import android.telephony.CellInfoGsm;
+import android.telephony.CellSignalStrengthGsm;
+import android.telephony.TelephonyManager;
+import android.util.MutableBoolean;
+import android.util.MutableInt;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.android.internal.util.test.BroadcastInterceptingContext;
 
@@ -58,6 +72,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -74,6 +90,7 @@ public class TetheringTest {
     @Mock private UsbManager mUsbManager;
     @Mock private WifiManager mWifiManager;
     @Mock private CarrierConfigManager mCarrierConfigManager;
+    @Mock private TelephonyManager mTelephonyManager;
 
     // Like so many Android system APIs, these cannot be mocked because it is marked final.
     // We have to use the real versions.
@@ -82,6 +99,8 @@ public class TetheringTest {
     private final String mTestIfname = "test_wlan0";
 
     private BroadcastInterceptingContext mServiceContext;
+    private final MutableInt mTetherServiceResult =
+            new MutableInt(ConnectivityManager.TETHER_ERROR_NO_ERROR);
     private Tethering mTethering;
 
     private class MockContext extends BroadcastInterceptingContext {
@@ -96,6 +115,7 @@ public class TetheringTest {
         public Object getSystemService(String name) {
             if (Context.CONNECTIVITY_SERVICE.equals(name)) return mConnectivityManager;
             if (Context.WIFI_SERVICE.equals(name)) return mWifiManager;
+            if (Context.TELEPHONY_SERVICE.equals(name)) return mTelephonyManager;
             return super.getSystemService(name);
         }
     }
@@ -116,10 +136,30 @@ public class TetheringTest {
                 .thenReturn(new String[]{ "test_rmnet_data0", mTestIfname });
         when(mNMService.getInterfaceConfig(anyString()))
                 .thenReturn(new InterfaceConfiguration());
-
         mServiceContext = new MockContext(mContext);
+        setTetherServiceResult(ConnectivityManager.TETHER_ERROR_NO_ERROR);
+        setupFakeTetherServiceResponses();
+
         mTethering = new Tethering(mServiceContext, mNMService, mStatsService, mPolicyManager,
                                    mLooper.getLooper(), mSystemProperties);
+    }
+
+    private void setupFakeTetherServiceResponses() {
+        doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                // TODO: Only verify services which match the right component name. This component
+                // name is statically loaded from system resources in Tethering.
+                Intent intent = (Intent) invocation.getArguments()[0];
+                if (intent.getBooleanExtra(ConnectivityManager.EXTRA_RUN_PROVISION, false)) {
+                    ResultReceiver receiver = (ResultReceiver) intent.getParcelableExtra(
+                            ConnectivityManager.EXTRA_PROVISION_CALLBACK);
+                    receiver.send(mTetherServiceResult.value, null);
+                }
+
+                return null;
+            }
+        }).when(mContext).startServiceAsUser(any(Intent.class), any(UserHandle.class));
     }
 
     private void setupForRequiredProvisioning() {
@@ -135,6 +175,38 @@ public class TetheringTest {
                 .thenReturn(mCarrierConfigManager);
         when(mCarrierConfigManager.getConfig()).thenReturn(mCarrierConfig);
         mCarrierConfig.putBoolean(CarrierConfigManager.KEY_REQUIRE_ENTITLEMENT_CHECKS_BOOL, true);
+    }
+
+    private void assertCarrierAllowsTethering(int expectedResult) {
+        final MutableBoolean hasHitCallback = new MutableBoolean(false);
+        ResultReceiver receiver = new ResultReceiver(null) {
+            @Override
+            protected void onReceiveResult(int resultCode, Bundle resultData) {
+                assertEquals(expectedResult, resultCode);
+                hasHitCallback.value = true;
+            }
+        };
+
+        mTethering.runTetherProvisioningCheck(ConnectivityManager.TETHERING_WIFI, receiver);
+        assertTrue(hasHitCallback.value);
+    }
+
+    private void simulateAvailableCellNetwork() {
+        CellInfoGsm gsmCellInfo = new CellInfoGsm();
+        gsmCellInfo.setCellSignalStrength(new CellSignalStrengthGsm());
+        gsmCellInfo.setRegistered(true);
+        List<CellInfo> networkList = new ArrayList<>();
+        networkList.add(gsmCellInfo);
+        when(mTelephonyManager.getAllCellInfo()).thenReturn(networkList);
+    }
+
+    /**
+     * Sets the next result sent by TetherService when started.
+     * @param tetherServiceResult The result of the provisioining check.
+     *         (ConnectivityManager.TETHER_ERROR_NO_ERROR, etc).
+     */
+    private void setTetherServiceResult(int tetherServiceResult) {
+        mTetherServiceResult.value = tetherServiceResult;
     }
 
     @Test
@@ -309,6 +381,69 @@ public class TetheringTest {
         // has been reaped yields an unknown interface error.
         assertEquals(ConnectivityManager.TETHER_ERROR_UNKNOWN_IFACE,
                 mTethering.getLastTetherError(mTestIfname));
+    }
+
+    @Test
+    public void runTetherProvisioningCheckProvisioningNotRequired() {
+        when(mSystemProperties.getBoolean(eq(Tethering.DISABLE_PROVISIONING_SYSPROP_KEY),
+                                          anyBoolean())).thenReturn(true);
+
+        assertCarrierAllowsTethering(ConnectivityManager.TETHER_PROVISIONING_SUCCESS);
+    }
+
+    @Test
+    public void runTetherProvisioningCheckProvisioningNoCellNetwork() {
+        setupForRequiredProvisioning();
+        when(mTelephonyManager.getAllCellInfo()).thenReturn(null);
+        when(mTelephonyManager.getDataEnabled()).thenReturn(true);
+
+        assertCarrierAllowsTethering(ConnectivityManager.TETHER_PROVISIONING_UNKNOWN);
+    }
+
+    @Test
+    public void runTetherProvisioningCheckProvisioningCellDataDisabled() {
+        setupForRequiredProvisioning();
+        simulateAvailableCellNetwork();
+        when(mTelephonyManager.getDataEnabled()).thenReturn(false);
+
+        assertCarrierAllowsTethering(ConnectivityManager.TETHER_PROVISIONING_UNKNOWN);
+    }
+
+    @Test
+    public void runTetherProvisioningCheckProvisioningDataNotConnected() {
+        setupForRequiredProvisioning();
+        simulateAvailableCellNetwork();
+        when(mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI))
+                .thenReturn(null);
+        when(mTelephonyManager.getDataEnabled()).thenReturn(true);
+        when(mTelephonyManager.getDataState()).thenReturn(TelephonyManager.DATA_DISCONNECTED);
+
+        assertCarrierAllowsTethering(ConnectivityManager.TETHER_PROVISIONING_UNKNOWN);
+    }
+
+    @Test
+    public void runTetherProvisioningCheckProvisioningSuccessOnCellData() {
+        setupForRequiredProvisioning();
+        simulateAvailableCellNetwork();
+        when(mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI))
+                .thenReturn(null);
+        when(mTelephonyManager.getDataEnabled()).thenReturn(true);
+        when(mTelephonyManager.getDataState()).thenReturn(TelephonyManager.DATA_CONNECTED);
+
+        assertCarrierAllowsTethering(ConnectivityManager.TETHER_PROVISIONING_SUCCESS);
+    }
+
+    @Test
+    public void runTetherProvisioningCheckProvisioningProvisioningFailed() {
+        setupForRequiredProvisioning();
+        simulateAvailableCellNetwork();
+        when(mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI))
+                .thenReturn(null);
+        when(mTelephonyManager.getDataEnabled()).thenReturn(true);
+        when(mTelephonyManager.getDataState()).thenReturn(TelephonyManager.DATA_CONNECTED);
+        setTetherServiceResult(ConnectivityManager.TETHER_ERROR_PROVISION_FAILED);
+
+        assertCarrierAllowsTethering(ConnectivityManager.TETHER_PROVISIONING_FAIL);
     }
 
     // TODO: Test that a request for hotspot mode doesn't interface with an

@@ -399,6 +399,35 @@ public class ConnectivityManager {
     public static final int TETHERING_BLUETOOTH = 2;
 
     /**
+     * Tether provisioning unknown result code. This occurs when the tether provisioning check
+     * cannot be completed for some reason. For example, if the device currently has no cell data
+     * available, or if the request times out.
+     * @see #runTetherProvisioningCheck(int, TetherProvisioningCheckedListener, Handler)
+     * @hide
+     */
+    @SystemApi
+    public static final int TETHER_PROVISIONING_UNKNOWN = 0;
+
+    /**
+     * Tether provisioning success result code. This value is never cached in the framework. While
+     * actively tethering, the system will recheck provisioning every 24 hours, which is configured
+     * by config_mobile_hotspot_provision_check_period.
+     * @see #runTetherProvisioningCheck(int, TetherProvisioningCheckedListener, Handler)
+     * @hide
+     */
+    @SystemApi
+    public static final int TETHER_PROVISIONING_SUCCESS = 1;
+
+    /**
+     * Tether provisioning failure result code. This occurs when the carrier does not allow
+     * tethering.
+     * @see #runTetherProvisioningCheck(int, TetherProvisioningCheckedListener, Handler)
+     * @hide
+     */
+    @SystemApi
+    public static final int TETHER_PROVISIONING_FAIL = 2;
+
+    /**
      * Extra used for communicating with the TetherService. Includes the type of tethering to
      * enable if any.
      * @hide
@@ -2067,6 +2096,25 @@ public class ConnectivityManager {
     }
 
     /**
+     * Callback for use with {@link #runTetherProvisioningCheck}.
+     * @hide
+     */
+    @SystemApi
+    public interface TetherProvisioningCheckedListener {
+        /**
+         * Called when the carrier provisioning check for tethering finishes. If
+         * {@link #runTetherProvisioningCheck} is called multiple times before the callback is
+         * triggered, the callback will be called in order once for each call to
+         * {@link #runTetherProvisioningCheck}.
+         *
+         * @param resultCode Result code indicating whether the carrier allows tethering. This will
+         *         be one of {@link #TETHER_PROVISIONING_SUCCESS},
+         *         {@link #TETHER_PROVISIONING_FAIL}, or {@link #TETHER_PROVISIONING_UNKNOWN}.
+         */
+        void onTetherProvisioningChecked(int resultCode);
+    }
+
+    /**
      * Convenient overload for
      * {@link #startTethering(int, boolean, OnStartTetheringCallback, Handler)} which passes a null
      * handler to run on the current thread's {@link Looper}.
@@ -2137,6 +2185,46 @@ public class ConnectivityManager {
             mService.stopTethering(type);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Checks if the carrier allows tethering to the mobile interface without actually turning
+     * tethering on. This should not be used if tethering is going to be enabled subsequently.
+     * {@link #startTethering} should be used instead in that case. This will query whatever
+     * carrier would be used if tethering were enabled with a cellular upstream.
+     *
+     * NOTE: If the device does not have an active cellular data connection, and provisioning is
+     * required, {@link #TETHER_PROVISIONING_UNKNOWN} will be sent to the callback because the
+     * provisioning check cannot be run. An "active" cellular data connection in this context means
+     * that the device has cell signal and is able to make data requests over the cellular network.
+     * Even if the user is on wifi, the provisioning check is done over cell data.
+     *
+     * @param type The type of downstream link for which to check tethering support. Must be one of
+     *         {@link ConnectivityManager.TETHERING_WIFI},
+     *         {@link ConnectivityManager.TETHERING_USB}, or
+     *         {@link ConnectivityManager.TETHERING_BLUETOOTH}.
+     * @param listener A listener which will be called with the result of the provisioning check.
+     * @param handler {@link Handler} to specify the thread upon which the listener will be invoked.
+     *
+     * @hide
+     */
+    @SystemApi
+    public void runTetherProvisioningCheck(
+            int type, TetherProvisioningCheckedListener listener, Handler handler) {
+        checkNotNull(listener, "TetherProvisioningCheckedListener cannot be null.");
+
+        ResultReceiver wrappedCallback = new ResultReceiver(handler) {
+            @Override
+            protected void onReceiveResult(int resultCode, Bundle resultData) {
+                listener.onTetherProvisioningChecked(resultCode);
+            }
+        };
+
+        try {
+            mService.runTetherProvisioningCheck(type, wrappedCallback);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
         }
     }
 
