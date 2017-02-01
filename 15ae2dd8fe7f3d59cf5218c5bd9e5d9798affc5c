@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73616ad7_f56f3a0b",
+        "filename": "core/java/android/os/Seccomp.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2017-02-01T23:29:45Z",
+      "side": 1,
+      "message": "The only function which the native code uses is prctl(), which is available in java.\n\nhttps://developer.android.com/reference/android/system/Os.html#prctl(int, long, long, long, long)\n\nWhat can we do to avoid new native code? Can we write this native code in java?",
+      "revId": "15ae2dd8fe7f3d59cf5218c5bd9e5d9798affc5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "422fdcdb_9855dc81",
+        "filename": "core/jni/android_os_seccomp.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2017-02-01T23:29:45Z",
+      "side": 1,
+      "message": "copyright date",
+      "revId": "15ae2dd8fe7f3d59cf5218c5bd9e5d9798affc5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cee5eee4_b90ec680",
+        "filename": "core/jni/android_os_seccomp.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2017-02-01T23:29:45Z",
+      "side": 1,
+      "message": "why is this needed?",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 5
+      },
+      "revId": "15ae2dd8fe7f3d59cf5218c5bd9e5d9798affc5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
