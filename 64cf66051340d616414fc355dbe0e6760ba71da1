@@ -22,6 +22,29 @@
       "revId": "64cf66051340d616414fc355dbe0e6760ba71da1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d87fcaf4_dd3f2e4b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-01T01:40:58Z",
+      "side": 1,
+      "message": "Done",
+      "range": {
+        "startLine": 821,
+        "startChar": 8,
+        "endLine": 822,
+        "endChar": 20
+      },
+      "revId": "64cf66051340d616414fc355dbe0e6760ba71da1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
