@@ -1424,7 +1424,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                     case EVENT_UPSTREAM_CALLBACK: {
                         final NetworkState ns = (NetworkState) message.obj;
 
-                        if (ns == null || !pertainsToCurrentUpstream(ns)) {
+                        if (!pertainsToCurrentUpstream(ns)) {
                             // TODO: In future, this is where upstream evaluation and selection
                             // could be handled for notifications which include sufficient data.
                             // For example, after CONNECTIVITY_ACTION listening is removed, here
@@ -1458,11 +1458,14 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                                 handleNewUpstreamNetworkState(ns);
                                 break;
                             case UpstreamNetworkMonitor.EVENT_ON_LOST:
-                                // TODO: Re-evaluate possible upstreams. Currently upstream
-                                // reevaluation is triggered via received CONNECTIVITY_ACTION
-                                // broadcasts that result in being passed a
-                                // TetherMasterSM.CMD_UPSTREAM_CHANGED.
+                                // The current upstream is gone. Notify the
+                                // relevant subsystems and try to choose a new
+                                // upstream. If none is immediately available
+                                // other notifications in the future cause us
+                                // to reevaluate.
                                 handleNewUpstreamNetworkState(null);
+                                notifyTetheredOfNewUpstreamIface(null);
+                                chooseUpstreamType(true);
                                 break;
                             default:
                                 break;
