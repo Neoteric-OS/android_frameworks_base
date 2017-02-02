@@ -43,7 +43,7 @@ public class HwRemoteBinder implements IHwBinder {
         throws RemoteException;
 
     public native boolean linkToDeath(DeathRecipient recipient, long cookie);
-    public native boolean unlinkToDeath(DeathRecipient recipient);
+    public native boolean unlinkToDeath(DeathRecipient recipient, long cookie);
 
     private static native final long native_init();
 

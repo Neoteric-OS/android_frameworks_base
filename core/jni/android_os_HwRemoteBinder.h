@@ -42,7 +42,7 @@ public:
 
     void add(const sp<HwBinderDeathRecipient>& recipient);
     void remove(const sp<HwBinderDeathRecipient>& recipient);
-    sp<HwBinderDeathRecipient> find(jobject recipient);
+    sp<HwBinderDeathRecipient> find(jobject recipient, jlong cookie);
 
     Mutex& lock();  // Use with care; specifically for mutual exclusion during binder death
 };

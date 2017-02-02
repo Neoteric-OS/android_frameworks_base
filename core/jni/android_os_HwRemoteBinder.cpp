@@ -111,16 +111,22 @@ public:
         }
     }
 
-    bool matches(jobject obj) {
+    bool matches(jobject obj, jlong cookie) {
         bool result;
         JNIEnv* env = javavm_to_jnienv(mVM);
 
-        if (mObject != NULL) {
-            result = env->IsSameObject(obj, mObject);
+        // Caller can pass NULL in |recipient| if they want to find the
+        // recipient using the cookie specified.
+        if (obj != NULL) {
+            if (mObject != NULL) {
+                result = env->IsSameObject(obj, mObject);
+            } else {
+                jobject me = env->NewLocalRef(mObjectWeak);
+                result = env->IsSameObject(obj, me);
+                env->DeleteLocalRef(me);
+            }
         } else {
-            jobject me = env->NewLocalRef(mObjectWeak);
-            result = env->IsSameObject(obj, me);
-            env->DeleteLocalRef(me);
+            result = (mCookie == cookie);
         }
         return result;
     }
@@ -194,11 +200,11 @@ void HwBinderDeathRecipientList::remove(const sp<HwBinderDeathRecipient>& recipi
     }
 }
 
-sp<HwBinderDeathRecipient> HwBinderDeathRecipientList::find(jobject recipient) {
+sp<HwBinderDeathRecipient> HwBinderDeathRecipientList::find(jobject recipient, jlong cookie) {
     AutoMutex _l(mLock);
 
     for (const sp<HwBinderDeathRecipient>& deathRecipient : mList) {
-        if (deathRecipient->matches(recipient)) {
+        if (deathRecipient->matches(recipient, cookie)) {
             return deathRecipient;
         }
     }
@@ -377,23 +383,18 @@ static jboolean JHwRemoteBinder_linkToDeath(JNIEnv* env, jobject thiz,
 }
 
 static jboolean JHwRemoteBinder_unlinkToDeath(JNIEnv* env, jobject thiz,
-                                                 jobject recipient)
+         jobject recipient, jlong cookie)
 {
     jboolean res = JNI_FALSE;
-    if (recipient == NULL) {
-        jniThrowNullPointerException(env, NULL);
-        return res;
-    }
-
     sp<JHwRemoteBinder> context = JHwRemoteBinder::GetNativeContext(env, thiz);
     sp<hardware::IBinder> binder = context->getBinder();
 
     if (!binder->localBinder()) {
         status_t err = NAME_NOT_FOUND;
 
-        // If we find the matching recipient, proceed to unlink using that
+        // If we find the matching recipient, proceed to unlink using that.
         HwBinderDeathRecipientList* list = (context->getDeathRecipientList()).get();
-        sp<HwBinderDeathRecipient> origJDR = list->find(recipient);
+        sp<HwBinderDeathRecipient> origJDR = list->find(recipient, cookie);
         if (origJDR != NULL) {
             wp<hardware::IBinder::DeathRecipient> dr;
             err = binder->unlinkToDeath(origJDR, NULL, 0, &dr);
@@ -432,7 +433,7 @@ static JNINativeMethod gMethods[] = {
         (void*)JHwRemoteBinder_linkToDeath},
 
     {"unlinkToDeath",
-        "(Landroid/os/IHwBinder$DeathRecipient;)Z",
+        "(Landroid/os/IHwBinder$DeathRecipient;J)Z",
         (void*)JHwRemoteBinder_unlinkToDeath},
 };
 
