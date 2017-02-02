@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e1ccfd9_843e7996",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-02T02:53:12Z",
+      "side": 1,
+      "message": "Consider using default int value 0 as the UNKNOWN value.",
+      "range": {
+        "startLine": 417,
+        "startChar": 28,
+        "endLine": 417,
+        "endChar": 59
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af4db85f_cc389787",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2087,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-02T02:53:12Z",
+      "side": 1,
+      "message": "Not sure what are best practices, but this could also be just a java.util.function.IntConsumer.\n\nDo you foresee additional methods on this interface ?",
+      "range": {
+        "startLine": 2087,
+        "startChar": 21,
+        "endLine": 2087,
+        "endChar": 56
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af39285f_e6cbe6dd",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2092,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-02T02:53:12Z",
+      "side": 1,
+      "message": "line too long.",
+      "range": {
+        "startLine": 2092,
+        "startChar": 100,
+        "endLine": 2092,
+        "endChar": 104
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88a10a72_fb1dc015",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2203,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-02T02:53:12Z",
+      "side": 1,
+      "message": "alignement",
+      "range": {
+        "startLine": 2203,
+        "startChar": 8,
+        "endLine": 2203,
+        "endChar": 10
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8c3bea1_9b1c9818",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-02T02:53:12Z",
+      "side": 1,
+      "message": "Instead of returning literal true or false, consider returning directly from the conditional expression:\n\nreturn isWifiConnected || (telephonyManager.getDataState() \u003d\u003d TelephonyManager.DATA_CONNECTED);",
+      "range": {
+        "startLine": 388,
+        "startChar": 8,
+        "endLine": 393,
+        "endChar": 20
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20e6ff17_2cfe10a3",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-02T02:53:12Z",
+      "side": 1,
+      "message": "It\u0027s a pity there is no getNormalizedLevel or something like that on the base CellInfo class.",
+      "range": {
+        "startLine": 413,
+        "startChar": 59,
+        "endLine": 413,
+        "endChar": 93
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
