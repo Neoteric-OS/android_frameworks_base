@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e0eab603_4f51e8d5",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-02-02T21:53:24Z",
+      "side": 1,
+      "message": "Done. Is this considered best practice? I\u0027ve also seen the success case as 0 quite often.",
+      "parentUuid": "1e1ccfd9_843e7996",
+      "range": {
+        "startLine": 417,
+        "startChar": 28,
+        "endLine": 417,
+        "endChar": 59
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af4db85f_cc389787",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-02T02:53:12Z",
       "side": 1,
       "message": "Not sure what are best practices, but this could also be just a java.util.function.IntConsumer.\n\nDo you foresee additional methods on this interface ?",
+      "range": {
+        "startLine": 2087,
+        "startChar": 21,
+        "endLine": 2087,
+        "endChar": 56
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fdce3297_80c8b5af",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2087,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-02-02T21:53:24Z",
+      "side": 1,
+      "message": "Good point, but afaik, this is the best practice according to API guidelines for readability and consistency reasons. I do agree that an IntConsumer would be simpler, though. Erik or Robert, do either of you have an opinion here?",
+      "parentUuid": "af4db85f_cc389787",
       "range": {
         "startLine": 2087,
         "startChar": 21,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "eee3711a_65865d61",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2092,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-02-02T21:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af39285f_e6cbe6dd",
+      "range": {
+        "startLine": 2092,
+        "startChar": 100,
+        "endLine": 2092,
+        "endChar": 104
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1970e79_d59f2bc1",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-02-02T03:43:26Z",
       "side": 1,
       "message": "This comment is not quite correct, or at least I hope it\u0027s not.\n\nIf the device doesn\u0027t have cellular data \u0026\u0026 a provisioning check is required (as determinable by essentially static config elements).\n\nAnd we shouldn\u0027t return a \"false result\", but rather the UNKNOWN state, a.k.a. an indeterminate result.",
+      "range": {
+        "startLine": 2178,
+        "startChar": 13,
+        "endLine": 2178,
+        "endChar": 22
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "127bc820_93d149d9",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2178,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-02-02T21:53:24Z",
+      "side": 1,
+      "message": "Ah yeah, good catch. I forgot to update this when I switched from a boolean to tristate return. Fixed.",
+      "parentUuid": "e1970e79_d59f2bc1",
       "range": {
         "startLine": 2178,
         "startChar": 13,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fca07e69_995aa8bb",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2181,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-02-02T21:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09dabf45_42d24384",
+      "range": {
+        "startLine": 2181,
+        "startChar": 44,
+        "endLine": 2181,
+        "endChar": 48
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88a10a72_fb1dc015",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2017-02-02T02:53:12Z",
       "side": 1,
       "message": "alignement",
+      "range": {
+        "startLine": 2203,
+        "startChar": 8,
+        "endLine": 2203,
+        "endChar": 10
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a412c83b_494a55da",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2203,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-02-02T21:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88a10a72_fb1dc015",
       "range": {
         "startLine": 2203,
         "startChar": 8,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "7623f631_d6c673c8",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-02-02T21:53:24Z",
+      "side": 1,
+      "message": "I should really fix my vim settings... done.",
+      "parentUuid": "211f55d3_98dbf238",
+      "range": {
+        "startLine": 351,
+        "startChar": 8,
+        "endLine": 351,
+        "endChar": 10
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57e7b7f0_74a9153e",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2017-02-02T03:43:26Z",
       "side": 1,
       "message": "deindent",
+      "range": {
+        "startLine": 367,
+        "startChar": 24,
+        "endLine": 367,
+        "endChar": 32
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8e4498e_1f65a4ed",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-02-02T21:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57e7b7f0_74a9153e",
       "range": {
         "startLine": 367,
         "startChar": 24,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "212308c3_a9ad7f02",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-02-02T21:53:24Z",
+      "side": 1,
+      "message": "I\u0027d also love a better way :-).",
+      "parentUuid": "edbebc10_a1eb9cd7",
+      "range": {
+        "startLine": 375,
+        "startChar": 20,
+        "endLine": 375,
+        "endChar": 39
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff96f95d_1f4b579f",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 1
@@ -220,6 +436,30 @@
       "writtenOn": "2017-02-02T03:43:26Z",
       "side": 1,
       "message": "TelephonyManager.class is the new way, and then you don\u0027t need the explicit cast.",
+      "range": {
+        "startLine": 378,
+        "startChar": 61,
+        "endLine": 378,
+        "endChar": 86
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9da8af70_d0637e72",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-02-02T21:53:24Z",
+      "side": 1,
+      "message": "Cool! Done.",
+      "parentUuid": "ff96f95d_1f4b579f",
       "range": {
         "startLine": 378,
         "startChar": 61,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "47f730ad_522abe76",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-02-02T21:53:24Z",
+      "side": 1,
+      "message": "Acknowledged, but I thought this felt a bit more readable.",
+      "parentUuid": "a8c3bea1_9b1c9818",
+      "range": {
+        "startLine": 388,
+        "startChar": 8,
+        "endLine": 393,
+        "endChar": 20
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20e6ff17_2cfe10a3",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 1
@@ -266,6 +530,30 @@
       "writtenOn": "2017-02-02T02:53:12Z",
       "side": 1,
       "message": "It\u0027s a pity there is no getNormalizedLevel or something like that on the base CellInfo class.",
+      "range": {
+        "startLine": 413,
+        "startChar": 59,
+        "endLine": 413,
+        "endChar": 93
+      },
+      "revId": "789ade63096ecb34bee827fe8df27ba05b36e3e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dae8430c_2b922892",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-02-02T21:53:24Z",
+      "side": 1,
+      "message": "Agreed :-/.",
+      "parentUuid": "20e6ff17_2cfe10a3",
       "range": {
         "startLine": 413,
         "startChar": 59,
