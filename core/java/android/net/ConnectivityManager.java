@@ -1429,8 +1429,8 @@ public class ConnectivityManager {
         l.networkCapabilities = netCap;
         l.delay = delay;
         l.expireSequenceNumber = 0;
-        l.networkRequest = sendRequestForNetwork(netCap, l.networkCallback, 0,
-                REQUEST, type);
+        l.networkRequest =
+                sendRequestForNetwork(netCap, l.networkCallback, 0, REQUEST, type, getHandler());
         if (l.networkRequest == null) return null;
         sLegacyRequests.put(netCap, l);
         sendExpireMsgForFeature(netCap, l.expireSequenceNumber, delay);
@@ -2830,12 +2830,7 @@ public class ConnectivityManager {
     private final static int REQUEST = 2;
 
     private NetworkRequest sendRequestForNetwork(NetworkCapabilities need,
-            NetworkCallback callback, int timeoutMs, int action, int legacyType) {
-        return sendRequestForNetwork(need, callback, getHandler(), timeoutMs, action, legacyType);
-    }
-
-    private NetworkRequest sendRequestForNetwork(NetworkCapabilities need,
-            NetworkCallback callback, Handler handler, int timeoutMs, int action, int legacyType) {
+            NetworkCallback callback, int timeoutMs, int action, int legacyType, Handler handler) {
         if (callback == null) {
             throw new IllegalArgumentException("null NetworkCallback");
         }
@@ -2879,8 +2874,17 @@ public class ConnectivityManager {
      */
     public void requestNetwork(NetworkRequest request, NetworkCallback networkCallback,
             int timeoutMs, int legacyType) {
+        requestNetwork(request, networkCallback, timeoutMs, legacyType, getHandler());
+    }
+
+    /**
+     * Helper function to request a network with a particular legacy type.
+     * @hide
+     */
+    private void requestNetwork(NetworkRequest request, NetworkCallback networkCallback,
+            int timeoutMs, int legacyType, Handler handler) {
         sendRequestForNetwork(request.networkCapabilities, networkCallback, timeoutMs, REQUEST,
-                legacyType);
+                legacyType, handler);
     }
 
     /**
@@ -2906,15 +2910,50 @@ public class ConnectivityManager {
      * {@link android.provider.Settings.System#canWrite}.</p>
      *
      * @param request {@link NetworkRequest} describing this request.
-     * @param networkCallback The {@link NetworkCallback} to be utilized for this
-     *                        request.  Note the callback must not be shared - they
-     *                        uniquely specify this request.
+     * @param networkCallback The {@link NetworkCallback} to be utilized for this request. Note
+     *                        the callback must not be shared - it uniquely specifies this request.
+     *                        The callback is invoked on the default internal Handler.
      * @throws IllegalArgumentException if {@code request} specifies any mutable
      *         {@code NetworkCapabilities}.
      */
     public void requestNetwork(NetworkRequest request, NetworkCallback networkCallback) {
+        requestNetwork(request, networkCallback, getHandler());
+    }
+
+    /**
+     * Request a network to satisfy a set of {@link android.net.NetworkCapabilities}.
+     *
+     * This {@link NetworkRequest} will live until released via
+     * {@link #unregisterNetworkCallback(NetworkCallback)} or the calling application exits.
+     * Status of the request can be followed by listening to the various
+     * callbacks described in {@link NetworkCallback}.  The {@link Network}
+     * can be used to direct traffic to the network.
+     * <p>It is presently unsupported to request a network with mutable
+     * {@link NetworkCapabilities} such as
+     * {@link NetworkCapabilities#NET_CAPABILITY_VALIDATED} or
+     * {@link NetworkCapabilities#NET_CAPABILITY_CAPTIVE_PORTAL}
+     * as these {@code NetworkCapabilities} represent states that a particular
+     * network may never attain, and whether a network will attain these states
+     * is unknown prior to bringing up the network so the framework does not
+     * know how to go about satisfing a request with these capabilities.
+     *
+     * <p>This method requires the caller to hold either the
+     * {@link android.Manifest.permission#CHANGE_NETWORK_STATE} permission
+     * or the ability to modify system settings as determined by
+     * {@link android.provider.Settings.System#canWrite}.</p>
+     *
+     * @param request {@link NetworkRequest} describing this request.
+     * @param networkCallback The {@link NetworkCallback} to be utilized for this request. Note
+     *                        the callback must not be shared - it uniquely specifies this request.
+     * @param handler {@link Handler} to specify the thread upon which the callback will be invoked.
+     * @throws IllegalArgumentException if {@code request} specifies any mutable
+     *         {@code NetworkCapabilities}.
+     * @hide
+     */
+    public void requestNetwork(
+            NetworkRequest request, NetworkCallback networkCallback, Handler handler) {
         requestNetwork(request, networkCallback, 0,
-                inferLegacyTypeForNetworkCapabilities(request.networkCapabilities));
+                inferLegacyTypeForNetworkCapabilities(request.networkCapabilities), handler);
     }
 
     /**
@@ -2932,9 +2971,9 @@ public class ConnectivityManager {
      * {@link android.provider.Settings.System#canWrite}.</p>
      *
      * @param request {@link NetworkRequest} describing this request.
-     * @param networkCallback The callbacks to be utilized for this request.  Note
-     *                        the callbacks must not be shared - they uniquely specify
-     *                        this request.
+     * @param networkCallback The {@link NetworkCallback} to be utilized for this request. Note
+     *                        the callback must not be shared - it uniquely specifies this request.
+     *                        The callback is invoked on the default internal Handler.
      * @param timeoutMs The time in milliseconds to attempt looking for a suitable network
      *                  before {@link NetworkCallback#unavailable} is called.
      *
@@ -2946,6 +2985,37 @@ public class ConnectivityManager {
             int timeoutMs) {
         requestNetwork(request, networkCallback, timeoutMs,
                 inferLegacyTypeForNetworkCapabilities(request.networkCapabilities));
+    }
+
+
+    /**
+     * Request a network to satisfy a set of {@link android.net.NetworkCapabilities}, limited
+     * by a timeout.
+     *
+     * This function behaves identically to the non-timedout version, but if a suitable
+     * network is not found within the given time (in milliseconds) the
+     * {@link NetworkCallback#unavailable} callback is called.  The request must
+     * still be released normally by calling {@link unregisterNetworkCallback(NetworkCallback)}.
+     *
+     * <p>This method requires the caller to hold either the
+     * {@link android.Manifest.permission#CHANGE_NETWORK_STATE} permission
+     * or the ability to modify system settings as determined by
+     * {@link android.provider.Settings.System#canWrite}.</p>
+     *
+     * @param request {@link NetworkRequest} describing this request.
+     * @param networkCallback The {@link NetworkCallback} to be utilized for this request. Note
+     *                        the callback must not be shared - it uniquely specifies this request.
+     * @param timeoutMs The time in milliseconds to attempt looking for a suitable network
+     *                  before {@link NetworkCallback#unavailable} is called.
+     * @param handler {@link Handler} to specify the thread upon which the callback will be invoked.
+     * TODO: Make timeouts work and then unhide this method.
+     *
+     * @hide
+     */
+    public void requestNetwork(NetworkRequest request, NetworkCallback networkCallback,
+            int timeoutMs, Handler handler) {
+        requestNetwork(request, networkCallback, timeoutMs,
+                inferLegacyTypeForNetworkCapabilities(request.networkCapabilities), handler);
     }
 
     /**
@@ -3066,9 +3136,27 @@ public class ConnectivityManager {
      * @param request {@link NetworkRequest} describing this request.
      * @param networkCallback The {@link NetworkCallback} that the system will call as suitable
      *                        networks change state.
+     *                        The callback is invoked on the default internal Handler.
      */
     public void registerNetworkCallback(NetworkRequest request, NetworkCallback networkCallback) {
-        sendRequestForNetwork(request.networkCapabilities, networkCallback, 0, LISTEN, TYPE_NONE);
+        registerNetworkCallback(request, networkCallback, getHandler());
+    }
+
+    /**
+     * Registers to receive notifications about all networks which satisfy the given
+     * {@link NetworkRequest}.  The callbacks will continue to be called until
+     * either the application exits or link #unregisterNetworkCallback(NetworkCallback)} is called.
+     * <p>This method requires the caller to hold the permission
+     * {@link android.Manifest.permission#ACCESS_NETWORK_STATE}.
+     *
+     * @param request {@link NetworkRequest} describing this request.
+     * @param networkCallback The {@link NetworkCallback} that the system will call as suitable
+     *                        networks change state.
+     * @param handler {@link Handler} to specify the thread upon which the callback will be invoked.
+     * @hide
+     */
+    public void registerNetworkCallback(NetworkRequest request, NetworkCallback networkCallback, Handler handler) {
+        sendRequestForNetwork(request.networkCapabilities, networkCallback, 0, LISTEN, TYPE_NONE, handler);
     }
 
     /**
@@ -3120,8 +3208,25 @@ public class ConnectivityManager {
      *
      * @param networkCallback The {@link NetworkCallback} that the system will call as the
      *                        system default network changes.
+     *                        The callback is invoked on the default internal Handler.
      */
     public void registerDefaultNetworkCallback(NetworkCallback networkCallback) {
+        registerDefaultNetworkCallback(networkCallback, getHandler());
+    }
+
+    /**
+     * Registers to receive notifications about changes in the system default network. The callbacks
+     * will continue to be called until either the application exits or
+     * {@link #unregisterNetworkCallback(NetworkCallback)} is called.
+     * <p>This method requires the caller to hold the permission
+     * {@link android.Manifest.permission#ACCESS_NETWORK_STATE}.
+     *
+     * @param networkCallback The {@link NetworkCallback} that the system will call as the
+     *                        system default network changes.
+     * @param handler {@link Handler} to specify the thread upon which the callback will be invoked.
+     * @hide
+     */
+    public void registerDefaultNetworkCallback(NetworkCallback networkCallback, Handler handler) {
         // This works because if the NetworkCapabilities are null,
         // ConnectivityService takes them from the default request.
         //
@@ -3129,7 +3234,7 @@ public class ConnectivityManager {
         // capabilities, this request is guaranteed, at all times, to be
         // satisfied by the same network, if any, that satisfies the default
         // request, i.e., the system default network.
-        sendRequestForNetwork(null, networkCallback, 0, REQUEST, TYPE_NONE);
+        sendRequestForNetwork(null, networkCallback, 0, REQUEST, TYPE_NONE, handler);
     }
 
     /**
