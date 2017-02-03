@@ -118,6 +118,30 @@
       "revId": "bfb31a1f31a6ca431fd404074a9b01a05ced420a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d923c92e_4a9c707a",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1023590
+      },
+      "writtenOn": "2017-02-03T09:16:03Z",
+      "side": 1,
+      "message": "\u003e 2. should be fixed by https://android-review.googlesource.com/281393.\n\nThis patch checks known_command (-cp) BEFORE an argument which starts without \u0027-\u0027.\nHowever, in WrapperInit.java, it did not put -cp at the front position.\n\nDo you suggest to fix 2 by parsing all arguments in app_main.cpp or refining the shell command in WrapperInit.java?",
+      "parentUuid": "f7a50a83_e2f91f5d",
+      "range": {
+        "startLine": 334,
+        "startChar": 11,
+        "endLine": 342,
+        "endChar": 9
+      },
+      "revId": "bfb31a1f31a6ca431fd404074a9b01a05ced420a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
