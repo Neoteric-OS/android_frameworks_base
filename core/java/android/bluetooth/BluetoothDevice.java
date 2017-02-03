@@ -140,13 +140,7 @@ public final class BluetoothDevice implements Parcelable {
             "android.bluetooth.device.action.ACL_CONNECTED";
 
     /**
-     * Broadcast Action: Indicates that a low level (ACL) disconnection has
-     * been requested for a remote device, and it will soon be disconnected.
-     * <p>This is useful for graceful disconnection. Applications should use
-     * this intent as a hint to immediately terminate higher level connections
-     * (RFCOMM, L2CAP, or profile connections) to the remote device.
-     * <p>Always contains the extra field {@link #EXTRA_DEVICE}.
-     * <p>Requires {@link android.Manifest.permission#BLUETOOTH} to receive.
+     * @deprecated Never sent. Use {@link #ACTION_ACL_DISCONNECTED} instead.
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_ACL_DISCONNECT_REQUESTED =
