@@ -50,6 +50,7 @@ import android.util.SparseIntArray;
 
 import com.android.internal.telephony.ITelephony;
 import com.android.internal.telephony.PhoneConstants;
+import com.android.internal.util.Preconditions;
 import com.android.internal.util.Protocol;
 import com.android.internal.util.MessageUtils;
 
@@ -2882,14 +2883,12 @@ public class ConnectivityManager {
 
     private NetworkRequest sendRequestForNetwork(NetworkCapabilities need, NetworkCallback callback,
             int timeoutMs, int action, int legacyType, CallbackHandler handler) {
-        if (callback == null) {
-            throw new IllegalArgumentException("null NetworkCallback");
-        }
-        if (need == null && action != REQUEST) {
-            throw new IllegalArgumentException("null NetworkCapabilities");
-        }
-        // TODO: throw an exception if callback.networkRequest is not null.
+        Preconditions.checkNotNull(callback, "null NetworkCallback");
+        Preconditions.checkState((action != REQUEST) && (need == null), "null NetworkCapabilities");
         // http://b/20701525
+        final int sdk = mContext.getApplicationInfo().targetSdkVersion;
+        Preconditions.checkState((sdk > VERSION_CODES.N_MR1) && (callback.networkRequest == null),
+                "NetworkCallback already registered");
         final NetworkRequest request;
         try {
             synchronized(sCallbacks) {
