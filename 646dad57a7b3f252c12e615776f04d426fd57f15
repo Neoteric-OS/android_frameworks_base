@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e993a85c_cdae18f0",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-03T03:16:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9cf86e8_2e7cbae0",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 11
+      },
+      "revId": "646dad57a7b3f252c12e615776f04d426fd57f15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3746518_7a72344d",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-31T03:47:06Z",
       "side": 1,
       "message": "If this is only accessed by the system, then I would say we can control and make sure we not mutating this array, so no need for cloning. How big is the array in practice ?",
+      "range": {
+        "startLine": 83,
+        "startChar": 18,
+        "endLine": 83,
+        "endChar": 24
+      },
+      "revId": "646dad57a7b3f252c12e615776f04d426fd57f15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e1049a5_c13656c1",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-03T03:16:22Z",
+      "side": 1,
+      "message": "Small... it\u0027s an encryption key so 512 bits or less. We might as well clone it IMO.",
+      "parentUuid": "d3746518_7a72344d",
       "range": {
         "startLine": 83,
         "startChar": 18,
