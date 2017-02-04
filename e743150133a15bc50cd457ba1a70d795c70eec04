@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cd798c2_893ec4ff",
+        "filename": "telephony/java/com/android/ims/internal/IImsCallSession.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1135723
+      },
+      "writtenOn": "2017-02-04T02:33:02Z",
+      "side": 1,
+      "message": "These parameters can be made (boolean, boolean) too. Kept them as profile for future use, in case more gets added in RTT",
+      "range": {
+        "startLine": 264,
+        "startChar": 48,
+        "endLine": 264,
+        "endChar": 59
+      },
+      "revId": "e743150133a15bc50cd457ba1a70d795c70eec04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1df6bde9_0ca97659",
+        "filename": "telephony/java/com/android/ims/internal/IImsCallSessionListener.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1135723
+      },
+      "writtenOn": "2017-02-04T02:33:02Z",
+      "side": 1,
+      "message": "Since the error codes will be subset of that in video upgrade scenario, we can move these codes elsewhere or rename videoProvider to be more generic",
+      "range": {
+        "startLine": 144,
+        "startChar": 16,
+        "endLine": 144,
+        "endChar": 26
+      },
+      "revId": "e743150133a15bc50cd457ba1a70d795c70eec04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
