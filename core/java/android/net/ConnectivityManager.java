@@ -2923,8 +2923,8 @@ public class ConnectivityManager {
      *
      * This function behaves identically to the non-timedout version, but if a suitable
      * network is not found within the given time (in milliseconds) the
-     * {@link NetworkCallback#unavailable} callback is called.  The request must
-     * still be released normally by calling {@link unregisterNetworkCallback(NetworkCallback)}.
+     * {@link NetworkCallback#onUnavailable()} callback is called.  The request must
+     * still be released normally by calling {@link #unregisterNetworkCallback(NetworkCallback)}.
      *
      * <p>This method requires the caller to hold either the
      * {@link android.Manifest.permission#CHANGE_NETWORK_STATE} permission
@@ -2936,10 +2936,7 @@ public class ConnectivityManager {
      *                        the callbacks must not be shared - they uniquely specify
      *                        this request.
      * @param timeoutMs The time in milliseconds to attempt looking for a suitable network
-     *                  before {@link NetworkCallback#unavailable} is called.
-     *
-     * TODO: Make timeouts work and then unhide this method.
-     *
+     *                  before {@link NetworkCallback#onUnavailable()} is called.
      * @hide
      */
     public void requestNetwork(NetworkRequest request, NetworkCallback networkCallback,
@@ -2949,9 +2946,9 @@ public class ConnectivityManager {
     }
 
     /**
-     * The maximum number of milliseconds the framework will look for a suitable network
-     * during a timeout-equiped call to {@link requestNetwork}.
-     * {@hide}
+     * Depreacted. Was used as maximum value for request network timeout (there is no longer a
+     * maximum timeout value).
+     * {@hide} {@Deprecated}
      */
     public final static int MAX_NETWORK_REQUEST_TIMEOUT_MS = 100 * 60 * 1000;
 
