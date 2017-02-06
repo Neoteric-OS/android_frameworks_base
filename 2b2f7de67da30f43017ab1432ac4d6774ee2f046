@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0b5f453_f3ade45f",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-06T23:36:59Z",
+      "side": 1,
+      "message": "typo: transform",
+      "range": {
+        "startLine": 90,
+        "startChar": 60,
+        "endLine": 90,
+        "endChar": 68
+      },
+      "revId": "2b2f7de67da30f43017ab1432ac4d6774ee2f046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00dd1886_a33b7032",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-06T23:36:59Z",
+      "side": 1,
+      "message": "reorder port to be after address.",
+      "range": {
+        "startLine": 58,
+        "startChar": 50,
+        "endLine": 58,
+        "endChar": 60
+      },
+      "revId": "2b2f7de67da30f43017ab1432ac4d6774ee2f046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
