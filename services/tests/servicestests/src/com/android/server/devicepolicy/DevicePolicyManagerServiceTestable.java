@@ -28,6 +28,7 @@ import android.os.PowerManagerInternal;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.UserManagerInternal;
+import android.security.KeyChain;
 import android.telephony.TelephonyManager;
 import android.util.ArrayMap;
 import android.util.Pair;
@@ -356,6 +357,11 @@ public class DevicePolicyManagerServiceTestable extends DevicePolicyManagerServi
         @Override
         TelephonyManager getTelephonyManager() {
             return context.telephonyManager;
+        }
+
+        @Override
+        KeyChain.KeyChainConnection keyChainBindAsUser(UserHandle user) {
+            return context.keyChainConnection;
         }
     }
 }
