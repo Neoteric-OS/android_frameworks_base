@@ -103,6 +103,8 @@ interface IBluetooth
     boolean isMultiAdvertisementSupported();
     boolean isOffloadedFilteringSupported();
     boolean isOffloadedScanBatchingSupported();
+    boolean isPeriodicAdvertisingSupported();
+    boolean isExtendedAdvertisingSupported();
     boolean isActivityAndEnergyReportingSupported();
     BluetoothActivityEnergyInfo reportActivityInfo();
 

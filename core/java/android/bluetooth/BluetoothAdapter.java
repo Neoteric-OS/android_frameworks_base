@@ -1385,6 +1385,42 @@ public final class BluetoothAdapter {
     }
 
     /**
+     * Return true if LE Extended Advertising feature is supported.
+     *
+     * @return true if chipset supports LE Extended Advertising feature
+     */
+    public boolean isExtendedAdvertisingSupported() {
+        if (!getLeAccess()) return false;
+        try {
+            mServiceLock.readLock().lock();
+            if (mService != null) return mService.isExtendedAdvertisingSupported();
+        } catch (RemoteException e) {
+            Log.e(TAG, "failed to get isExtendedAdvertisingSupported, error: ", e);
+        } finally {
+            mServiceLock.readLock().unlock();
+        }
+        return false;
+    }
+
+    /**
+     * Return true if LE Periodic Advertising feature is supported.
+     *
+     * @return true if chipset supports LE Periodic Advertising feature
+     */
+    public boolean isPeriodicAdvertisingSupported() {
+        if (!getLeAccess()) return false;
+        try {
+            mServiceLock.readLock().lock();
+            if (mService != null) return mService.isPeriodicAdvertisingSupported();
+        } catch (RemoteException e) {
+            Log.e(TAG, "failed to get isPeriodicAdvertisingSupported, error: ", e);
+        } finally {
+            mServiceLock.readLock().unlock();
+        }
+        return false;
+    }
+
+    /**
      * Return true if hardware has entries available for matching beacons
      *
      * @return true if there are hw entries available for matching beacons

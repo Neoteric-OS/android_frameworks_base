@@ -6712,9 +6712,11 @@ package android.bluetooth {
     method public int getState();
     method public boolean isDiscovering();
     method public boolean isEnabled();
+    method public boolean isExtendedAdvertisingSupported();
     method public boolean isMultipleAdvertisementSupported();
     method public boolean isOffloadedFilteringSupported();
     method public boolean isOffloadedScanBatchingSupported();
+    method public boolean isPeriodicAdvertisingSupported();
     method public android.bluetooth.BluetoothServerSocket listenUsingInsecureRfcommWithServiceRecord(java.lang.String, java.util.UUID) throws java.io.IOException;
     method public android.bluetooth.BluetoothServerSocket listenUsingRfcommWithServiceRecord(java.lang.String, java.util.UUID) throws java.io.IOException;
     method public boolean setName(java.lang.String);
