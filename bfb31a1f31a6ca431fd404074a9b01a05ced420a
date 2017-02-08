@@ -166,6 +166,30 @@
       "revId": "bfb31a1f31a6ca431fd404074a9b01a05ced420a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcf51651_4d27ad91",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1021471
+      },
+      "writtenOn": "2017-02-08T19:54:03Z",
+      "side": 1,
+      "message": "Why does it need this complicated context classloader logic? Why not go with Narayan\u0027s approach, which I prefer?\n\n\n\u003e This patch checks known_command (-cp) BEFORE an argument which starts without \u0027-\u0027.\nHowever, in WrapperInit.java, it did not put -cp at the front position.\n\nI\u0027m not sure why this is surprising The intent of zygote is that it looks like:\n\n  app_main {$forward to ART flags} ${zygote flags} ${mainclass flags}\n\nSo yes, the order of -cp absolutely matters because you want it to be part of the ART flags.\n\n\u003e Do you suggest to fix 2 by parsing all arguments in app_main.cpp or refining the shell command in WrapperInit.java?\n\nI think fixing the order in whatever code calls down to app_process (WrapperInit.java ?) is more appropriate than fixing app_main.cpp parsing code.\n\nI would be very wary of making \"wide\" parsing changes in app_main.cpp since its used at the core system, it seems to introduce both unnecessary parsing semantics (which goes against the original intent IMHO) and also introduces unnecessary risk.\n----\nThat being said if there\u0027s a problem in art\u0027s cmdlineparser and it\u0027s not handling classpaths correctly then please file a bug (or submit a fix) and we\u0027ll take care of it because that is something that should be working correctly.",
+      "parentUuid": "024d6888_01efd3fa",
+      "range": {
+        "startLine": 334,
+        "startChar": 11,
+        "endLine": 342,
+        "endChar": 9
+      },
+      "revId": "bfb31a1f31a6ca431fd404074a9b01a05ced420a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
