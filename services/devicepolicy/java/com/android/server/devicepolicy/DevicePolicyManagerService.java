@@ -133,7 +133,7 @@ import java.util.Set;
  */
 public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
 
-    private static final String LOG_TAG = "DevicePolicyManagerService";
+    protected static final String LOG_TAG = "DevicePolicyManagerService";
 
     private static final String DEVICE_POLICIES_XML = "device_policies.xml";
 
@@ -147,8 +147,6 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
 
     protected static final String ACTION_EXPIRED_PASSWORD_NOTIFICATION
             = "com.android.server.ACTION_EXPIRED_PASSWORD_NOTIFICATION";
-
-    private static final int MONITORING_CERT_NOTIFICATION_ID = R.string.ssl_ca_cert_warning;
 
     private static final boolean DBG = false;
 
@@ -271,7 +269,21 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
 
     Handler mHandler = new Handler();
 
-    BroadcastReceiver mReceiver = new BroadcastReceiver() {
+    /** Listens on any device, even when mHasFeature == false. */
+    final BroadcastReceiver mRootCaReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (StorageManager.inCryptKeeperBounce()) {
+                return;
+            }
+            final int userHandle = intent.getIntExtra(Intent.EXTRA_USER_HANDLE, getSendingUserId());
+            new MonitoringCertNotificationTask(DevicePolicyManagerService.this, mInjector)
+                    .execute(userHandle);
+        }
+    };
+
+    /** Listens only if mHasFeature == true. */
+    final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
@@ -286,10 +298,6 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                         handlePasswordExpirationNotification(userHandle);
                     }
                 });
-            }
-            if (Intent.ACTION_BOOT_COMPLETED.equals(action)
-                    || KeyChain.ACTION_STORAGE_CHANGED.equals(action)) {
-                new MonitoringCertNotificationTask().execute(intent);
             }
             if (Intent.ACTION_USER_REMOVED.equals(action)) {
                 removeUserData(userHandle);
@@ -910,11 +918,20 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         mWakeLock = ((PowerManager)context.getSystemService(Context.POWER_SERVICE))
                 .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "DPM");
         mLocalService = new LocalService();
+
+        // Broadcast filter for changes to the trusted certificate store. These changes get a
+        // separate intent filter so we can listen to them even when device_admin is off.
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_BOOT_COMPLETED);
+        filter.addAction(KeyChain.ACTION_STORAGE_CHANGED);
+        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+        mContext.registerReceiverAsUser(mRootCaReceiver, UserHandle.ALL, filter, null, mHandler);
+
         if (!mHasFeature) {
             // Skip the rest of the initialization
             return;
         }
-        IntentFilter filter = new IntentFilter();
+        filter = new IntentFilter();
         filter.addAction(Intent.ACTION_BOOT_COMPLETED);
         filter.addAction(ACTION_EXPIRED_PASSWORD_NOTIFICATION);
         filter.addAction(Intent.ACTION_USER_REMOVED);
