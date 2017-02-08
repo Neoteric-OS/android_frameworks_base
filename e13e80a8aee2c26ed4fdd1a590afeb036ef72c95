@@ -163,6 +163,30 @@
       "revId": "e13e80a8aee2c26ed4fdd1a590afeb036ef72c95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "958c20a9_0bfe1697",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-08T19:25:41Z",
+      "side": 1,
+      "message": "Interesting. So then it is fine if it comes from google-java-format.",
+      "parentUuid": "f3b3a8ad_2f1ca3e8",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 28
+      },
+      "revId": "e13e80a8aee2c26ed4fdd1a590afeb036ef72c95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
