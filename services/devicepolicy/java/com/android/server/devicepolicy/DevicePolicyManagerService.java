@@ -133,7 +133,7 @@ import java.util.Set;
  */
 public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
 
-    private static final String LOG_TAG = "DevicePolicyManagerService";
+    protected static final String LOG_TAG = "DevicePolicyManagerService";
 
     private static final String DEVICE_POLICIES_XML = "device_policies.xml";
 
@@ -147,8 +147,6 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
 
     protected static final String ACTION_EXPIRED_PASSWORD_NOTIFICATION
             = "com.android.server.ACTION_EXPIRED_PASSWORD_NOTIFICATION";
-
-    private static final int MONITORING_CERT_NOTIFICATION_ID = R.string.ssl_ca_cert_warning;
 
     private static final boolean DBG = false;
 
@@ -271,7 +269,18 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
 
     Handler mHandler = new Handler();
 
-    BroadcastReceiver mReceiver = new BroadcastReceiver() {
+    /** Listens on any device, even when mHasFeature == false. */
+    final BroadcastReceiver mRootCaReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final int userHandle = intent.getIntExtra(Intent.EXTRA_USER_HANDLE, getSendingUserId());
+            new MonitoringCertNotificationTask(DevicePolicyManagerService.this)
+                    .execute(userHandle);
+        }
+    };
+
+    /** Listens only if mHasFeature == true. */
+    final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
@@ -286,10 +295,6 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                         handlePasswordExpirationNotification(userHandle);
                     }
                 });
-            }
-            if (Intent.ACTION_BOOT_COMPLETED.equals(action)
-                    || KeyChain.ACTION_STORAGE_CHANGED.equals(action)) {
-                new MonitoringCertNotificationTask().execute(intent);
             }
             if (Intent.ACTION_USER_REMOVED.equals(action)) {
                 removeUserData(userHandle);
@@ -910,11 +915,20 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         mWakeLock = ((PowerManager)context.getSystemService(Context.POWER_SERVICE))
                 .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "DPM");
         mLocalService = new LocalService();
+
+        // Broadcast filter for changes to the trusted certificate store. These changes get a
+        // separate intent filter so we can listen to them even when device_admin is off.
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_BOOT_COMPLETED);
+        filter.addAction(KeyChain.ACTION_STORAGE_CHANGED);
+        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+        mContext.registerReceiverAsUser(mRootCaReceiver, UserHandle.ALL, filter, null, mHandler);
+
         if (!mHasFeature) {
             // Skip the rest of the initialization
             return;
         }
-        IntentFilter filter = new IntentFilter();
+        filter = new IntentFilter();
         filter.addAction(Intent.ACTION_BOOT_COMPLETED);
         filter.addAction(ACTION_EXPIRED_PASSWORD_NOTIFICATION);
         filter.addAction(Intent.ACTION_USER_REMOVED);
@@ -1608,94 +1622,6 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                 }
             }
             setExpirationAlarmCheckLocked(mContext, getUserData(userHandle));
-        }
-    }
-
-    private class MonitoringCertNotificationTask extends AsyncTask<Intent, Void, Void> {
-        @Override
-        protected Void doInBackground(Intent... params) {
-            int userHandle = params[0].getIntExtra(Intent.EXTRA_USER_HANDLE, UserHandle.USER_ALL);
-
-            if (userHandle == UserHandle.USER_ALL) {
-                for (UserInfo userInfo : mUserManager.getUsers()) {
-                    manageNotification(userInfo.getUserHandle());
-                }
-            } else {
-                manageNotification(new UserHandle(userHandle));
-            }
-            return null;
-        }
-
-        private void manageNotification(UserHandle userHandle) {
-            if (!mUserManager.isUserRunning(userHandle)) {
-                return;
-            }
-
-            boolean hasCert = false;
-            final long id = Binder.clearCallingIdentity();
-            try {
-                KeyChainConnection kcs = KeyChain.bindAsUser(mContext, userHandle);
-                try {
-                    if (!kcs.getService().getUserCaAliases().getList().isEmpty()) {
-                        hasCert = true;
-                    }
-                } catch (RemoteException e) {
-                    Log.e(LOG_TAG, "Could not connect to KeyChain service", e);
-                } finally {
-                    kcs.close();
-                }
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            } catch (RuntimeException e) {
-                Log.e(LOG_TAG, "Could not connect to KeyChain service", e);
-            } finally {
-                Binder.restoreCallingIdentity(id);
-            }
-            if (!hasCert) {
-                getNotificationManager().cancelAsUser(
-                        null, MONITORING_CERT_NOTIFICATION_ID, userHandle);
-                return;
-            }
-
-            int smallIconId;
-            String contentText;
-            final String ownerName = getDeviceOwnerName();
-            if (ownerName != null) {
-                contentText = mContext.getString(R.string.ssl_ca_cert_noti_managed, ownerName);
-                smallIconId = R.drawable.stat_sys_certificate_info;
-            } else {
-                contentText = mContext.getString(R.string.ssl_ca_cert_noti_by_unknown);
-                smallIconId = android.R.drawable.stat_sys_warning;
-            }
-
-            Intent dialogIntent = new Intent(Settings.ACTION_MONITORING_CERT_INFO);
-            dialogIntent.setFlags(
-                    Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            dialogIntent.setPackage("com.android.settings");
-            PendingIntent notifyIntent = PendingIntent.getActivityAsUser(mContext, 0,
-                    dialogIntent, PendingIntent.FLAG_UPDATE_CURRENT, null, userHandle);
-
-            final Context userContext;
-            try {
-                userContext = mContext.createPackageContextAsUser("android", 0, userHandle);
-            } catch (PackageManager.NameNotFoundException e) {
-                Log.e(LOG_TAG, "Create context as " + userHandle + " failed", e);
-                return;
-            }
-            final Notification noti = new Notification.Builder(userContext)
-                .setSmallIcon(smallIconId)
-                .setContentTitle(mContext.getString(R.string.ssl_ca_cert_warning))
-                .setContentText(contentText)
-                .setContentIntent(notifyIntent)
-                .setOngoing(true)
-                .setPriority(Notification.PRIORITY_HIGH)
-                .setShowWhen(false)
-                .setColor(mContext.getResources().getColor(
-                        com.android.internal.R.color.system_notification_accent_color))
-                .build();
-
-            getNotificationManager().notifyAsUser(
-                    null, MONITORING_CERT_NOTIFICATION_ID, noti, userHandle);
         }
     }
 
