@@ -142,6 +142,30 @@
       "revId": "bfb31a1f31a6ca431fd404074a9b01a05ced420a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "024d6888_01efd3fa",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2017-02-08T03:22:01Z",
+      "side": 1,
+      "message": "Igor, any comments on that?",
+      "parentUuid": "d923c92e_4a9c707a",
+      "range": {
+        "startLine": 334,
+        "startChar": 11,
+        "endLine": 342,
+        "endChar": 9
+      },
+      "revId": "bfb31a1f31a6ca431fd404074a9b01a05ced420a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
