@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "379304a6_be916f0b",
+        "filename": "core/tests/hosttests/test-apps/MultiDexLegacyTestAppTests2/src/com/android/multidexlegacytestapp/test2/MultiDexAndroidJUnitRunner.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1052388
+      },
+      "writtenOn": "2017-02-08T19:07:29Z",
+      "side": 1,
+      "message": "This should also go directly to AndroidJUnitRunner",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 39
+      },
+      "revId": "a2e345cddbb805ea753edfe067cafa7801f2da59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
