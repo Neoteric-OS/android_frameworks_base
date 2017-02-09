@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d525a26_03c9743e",
+        "filename": "services/core/java/com/android/server/fingerprint/RemovalClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1004017
+      },
+      "writtenOn": "2017-02-09T21:56:32Z",
+      "side": 1,
+      "message": "This is incorrect.  In this implementation, 0 means the last fingerprint has been removed. FingerId is 0 in this case.\n\nIn master, this has been changed to send an explicit remainder count.",
+      "range": {
+        "startLine": 83,
+        "startChar": 15,
+        "endLine": 83,
+        "endChar": 19
+      },
+      "revId": "de5eef730118f9da8c290401df4e3ebef66fd5be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
