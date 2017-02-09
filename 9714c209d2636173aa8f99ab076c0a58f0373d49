@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4239c21c_cf10a992",
+        "filename": "telephony/java/android/telephony/mbms/IMbmsDownloadManagerListener.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-02-09T22:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad28514a_b276b8a0",
+      "range": {
+        "startLine": 37,
+        "startChar": 11,
+        "endLine": 37,
+        "endChar": 61
+      },
+      "revId": "9714c209d2636173aa8f99ab076c0a58f0373d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c032dca_1c0e28bd",
         "filename": "telephony/java/android/telephony/mbms/IStreamingService.aidl",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e3e51af3_4ffe7ddf",
+        "filename": "telephony/java/android/telephony/mbms/IStreamingService.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-02-09T22:35:14Z",
+      "side": 1,
+      "message": "This dispose says we don\u0027t want any callbacks for this service any longer.  The related listener is end-of-lifed when it\u0027s disposed function is called back by the middleware.",
+      "parentUuid": "6c032dca_1c0e28bd",
+      "range": {
+        "startLine": 35,
+        "startChar": 60,
+        "endLine": 35,
+        "endChar": 62
+      },
+      "revId": "9714c209d2636173aa8f99ab076c0a58f0373d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11f4f197_c4d3c805",
         "filename": "telephony/java/android/telephony/mbms/MbmsDownloadManagerListener.java",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-02-09T21:38:32Z",
       "side": 1,
       "message": "signature does not match aidl",
+      "range": {
+        "startLine": 45,
+        "startChar": 38,
+        "endLine": 45,
+        "endChar": 39
+      },
+      "revId": "9714c209d2636173aa8f99ab076c0a58f0373d49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52b14114_269f3676",
+        "filename": "telephony/java/android/telephony/mbms/MbmsDownloadManagerListener.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-02-09T22:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11f4f197_c4d3c805",
       "range": {
         "startLine": 45,
         "startChar": 38,
