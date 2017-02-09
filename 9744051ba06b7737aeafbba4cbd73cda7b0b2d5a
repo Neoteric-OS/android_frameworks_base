@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4589613_2fb70011",
+        "filename": "core/java/com/android/internal/os/WrapperInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-02-09T17:23:33Z",
+      "side": 1,
+      "message": "long line",
+      "revId": "9744051ba06b7737aeafbba4cbd73cda7b0b2d5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5afa6896_19571c00",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-02-09T17:23:33Z",
+      "side": 1,
+      "message": "long line (here and above).",
+      "range": {
+        "startLine": 766,
+        "startChar": 8,
+        "endLine": 766,
+        "endChar": 104
+      },
+      "revId": "9744051ba06b7737aeafbba4cbd73cda7b0b2d5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91775ae4_c646ff36",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-02-09T17:23:33Z",
+      "side": 1,
+      "message": "Is there any particular reason for this order ?",
+      "range": {
+        "startLine": 771,
+        "startChar": 8,
+        "endLine": 773,
+        "endChar": 73
+      },
+      "revId": "9744051ba06b7737aeafbba4cbd73cda7b0b2d5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
