@@ -18705,7 +18705,6 @@ package android.icu.util {
     method public static java.lang.String getRegion(java.lang.String);
     method public static java.lang.String getTZDataVersion();
     method public static android.icu.util.TimeZone getTimeZone(java.lang.String);
-    method public static android.icu.util.TimeZone getTimeZone(java.lang.String, int);
     method public static java.lang.String getWindowsID(java.lang.String);
     method public boolean hasSameRules(android.icu.util.TimeZone);
     method public abstract boolean inDaylightTime(java.util.Date);

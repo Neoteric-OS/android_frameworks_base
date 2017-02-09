@@ -84,6 +84,14 @@ package android.graphics {
 
 }
 
+package android.icu.util {
+
+  public abstract class TimeZone implements java.lang.Cloneable android.icu.util.Freezable java.io.Serializable {
+    method public static android.icu.util.TimeZone getTimeZone(java.lang.String, int);
+  }
+
+}
+
 package android.location {
 
   public final class GnssMeasurement implements android.os.Parcelable {
