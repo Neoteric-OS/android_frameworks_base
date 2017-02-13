@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb7a8f69_a05cce27",
+        "filename": "wifi/java/android/net/wifi/WifiSsid.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-02-13T23:41:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67768080_23d92d34",
+      "revId": "ea24a9f04fe1c1276d7221866ddf8e6e5b185055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0308974c_29de377e",
         "filename": "wifi/java/android/net/wifi/WifiSsid.java",
         "patchSetId": 2
