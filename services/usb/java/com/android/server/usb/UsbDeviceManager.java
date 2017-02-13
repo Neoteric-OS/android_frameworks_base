@@ -32,6 +32,7 @@ import android.hardware.usb.UsbAccessory;
 import android.hardware.usb.UsbManager;
 import android.hardware.usb.UsbPort;
 import android.hardware.usb.UsbPortStatus;
+import android.os.BatteryManager;
 import android.os.FileUtils;
 import android.os.Handler;
 import android.os.Looper;
@@ -112,6 +113,7 @@ public class UsbDeviceManager {
     private static final int MSG_UPDATE_USER_RESTRICTIONS = 6;
     private static final int MSG_UPDATE_HOST_STATE = 7;
     private static final int MSG_ACCESSORY_MODE_ENTER_TIMEOUT = 8;
+    private static final int MSG_UPDATE_CHARGING_STATE = 9;
 
     private static final int AUDIO_MODE_SOURCE = 1;
 
@@ -190,6 +192,15 @@ public class UsbDeviceManager {
         }
     };
 
+    private final BroadcastReceiver mChargingReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+             int chargePlug = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+             boolean usbCharging = chargePlug == BatteryManager.BATTERY_PLUGGED_USB;
+             mHandler.sendMessage(MSG_UPDATE_CHARGING_STATE, usbCharging);
+        }
+    };
+
     public UsbDeviceManager(Context context, UsbAlsaManager alsaManager) {
         mContext = context;
         mUsbAlsaManager = alsaManager;
@@ -214,6 +225,8 @@ public class UsbDeviceManager {
         }
         mContext.registerReceiver(mHostReceiver,
                 new IntentFilter(UsbManager.ACTION_USB_PORT_CHANGED));
+        mContext.registerReceiver(mChargingReceiver,
+                new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
     private UsbSettingsManager getCurrentSettings() {
@@ -329,6 +342,7 @@ public class UsbDeviceManager {
         private int mUsbNotificationId;
         private boolean mAdbNotificationShown;
         private int mCurrentUser = UserHandle.USER_NULL;
+        private boolean mUsbCharging;
 
         public UsbHandler(Looper looper) {
             super(looper);
@@ -730,6 +744,7 @@ public class UsbDeviceManager {
 
         @Override
         public void handleMessage(Message msg) {
+            SomeArgs args;
             switch (msg.what) {
                 case MSG_UPDATE_STATE:
                     mConnected = (msg.arg1 == 1);
@@ -753,7 +768,7 @@ public class UsbDeviceManager {
                     }
                     break;
                 case MSG_UPDATE_HOST_STATE:
-                    SomeArgs args = (SomeArgs) msg.obj;
+                    args = (SomeArgs) msg.obj;
                     mHostConnected = (args.argi1 == 1);
                     mSourcePower = (args.argi2 == 1);
                     mSinkPower = (args.argi3 == 1);
@@ -764,6 +779,11 @@ public class UsbDeviceManager {
                     } else {
                         mPendingBootBroadcast = true;
                     }
+                    break;
+                case MSG_UPDATE_CHARGING_STATE:
+                    args = (SomeArgs) msg.obj;
+                    mUsbCharging = (args.argi1 == 1);
+                    updateUsbNotification();
                     break;
                 case MSG_ENABLE_ADB:
                     setAdbEnabled(msg.arg1 == 1);
@@ -855,7 +875,7 @@ public class UsbDeviceManager {
                 }
             } else if (mSourcePower) {
                 id = com.android.internal.R.string.usb_supplying_notification_title;
-            } else if (mHostConnected && mSinkPower) {
+            } else if (mHostConnected && mSinkPower && mUsbCharging) {
                 id = com.android.internal.R.string.usb_charging_notification_title;
             }
             if (id != mUsbNotificationId) {
@@ -959,6 +979,7 @@ public class UsbDeviceManager {
             pw.println("  mHostConnected: " + mHostConnected);
             pw.println("  mSourcePower: " + mSourcePower);
             pw.println("  mSinkPower: " + mSinkPower);
+            pw.println("  mUsbCharging: " + mUsbCharging);
             try {
                 pw.println("  Kernel state: "
                         + FileUtils.readTextFile(new File(STATE_PATH), 0, null).trim());
