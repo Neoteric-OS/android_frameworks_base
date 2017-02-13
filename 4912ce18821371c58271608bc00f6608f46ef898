@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1d074a_73f7e70b",
+        "filename": "telephony/java/android/telephony/ims/ImsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-13T19:56:56Z",
+      "side": 1,
+      "message": "Looks like it\u0027s called from the AIDL implementation as well. Is the other side of that always going to be in a handler?\n(If so, I\u0027d add synchronization anyway. Maybe in the future some unfortunate maintainer of this code will call it from outside the handler)",
+      "range": {
+        "startLine": 318,
+        "startChar": 0,
+        "endLine": 318,
+        "endChar": 61
+      },
+      "revId": "4912ce18821371c58271608bc00f6608f46ef898",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
