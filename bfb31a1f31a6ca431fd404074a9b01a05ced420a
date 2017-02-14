@@ -190,6 +190,30 @@
       "revId": "bfb31a1f31a6ca431fd404074a9b01a05ced420a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb7dae7a_7aa36592",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2017-02-14T02:00:22Z",
+      "side": 1,
+      "message": "I\u0027ve come to agree with Tony, in a sense. If we want the wrapped system server to correspond to the unwrapped one, it needs to be a dedicated classloader (and not the system classloader) that loads it.\n\nHowever, I totally disagree with the approach. Instead of recognizing the system server, this should recognize *any* wrapper that uses -cp as a parameter to WrapperInit, and then create the classloader accordingly. This would look along the lines of:\n\n ClassLoader classLoader \u003d null;\n // Check whether there\u0027s a -cp in the arguments, and assume the next argument is the\n // classpath. If found, create a PathClassLoader and use it for applicationInit.\n try {\n     Arguments args \u003d new Arguments(argv);\n     if (args.startArgs.length \u003e\u003d 2) {\n         for (int i \u003d 0; i \u003c args.startArgs.length - 1; i++) {\n             if (args.startArgs[i].equals(\"-cp\")) {\n                 String classpath \u003d args.startArgs[i + 1];\n                 String libraryPath \u003d System.getProperty(\"java.library.path\");\n\n                 classLoader \u003d PathClassLoaderFactory.createClassLoader(classpath,\n                         libraryPath, libraryPath, ClassLoader.getSystemClassLoader(),\n                         targetSdkVersion, true /* isNamespaceShared */);\n\n                 // Install this classloader as the context classloader, too.\n                 Thread.currentThread().setContextClassLoader(classLoader);\n\n                 break;\n             }\n         }\n     }\n } catch (IllegalArgumentException ex) {\n     // Ignore and let applicationInit deal with this.\n }\n\n(obviously being sloppy and not removing -cp, which I think is OK)",
+      "parentUuid": "bcf51651_4d27ad91",
+      "range": {
+        "startLine": 334,
+        "startChar": 11,
+        "endLine": 342,
+        "endChar": 9
+      },
+      "revId": "bfb31a1f31a6ca431fd404074a9b01a05ced420a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
