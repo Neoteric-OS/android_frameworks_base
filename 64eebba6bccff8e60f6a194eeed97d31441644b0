@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2bc553c_8acc0b13",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-02-14T01:51:10Z",
+      "side": 1,
+      "message": "maybe log?  maybe illegalArgumentException?",
+      "range": {
+        "startLine": 837,
+        "startChar": 20,
+        "endLine": 837,
+        "endChar": 27
+      },
+      "revId": "64eebba6bccff8e60f6a194eeed97d31441644b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
