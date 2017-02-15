@@ -369,6 +369,11 @@ public class ConnectivityServiceTest extends AndroidTestCase {
             connect(false);
         }
 
+        public void suspend() {
+            mNetworkInfo.setDetailedState(DetailedState.SUSPENDED, null, null);
+            mNetworkAgent.sendNetworkInfo(mNetworkInfo);
+        }
+
         public void disconnect() {
             mNetworkInfo.setDetailedState(DetailedState.DISCONNECTED, null, null);
             mNetworkAgent.sendNetworkInfo(mNetworkInfo);
@@ -1048,6 +1053,7 @@ public class ConnectivityServiceTest extends AndroidTestCase {
         AVAILABLE,
         NETWORK_CAPABILITIES,
         LINK_PROPERTIES,
+        SUSPENDED,
         LOSING,
         LOST,
         UNAVAILABLE
@@ -1101,6 +1107,11 @@ public class ConnectivityServiceTest extends AndroidTestCase {
         @Override
         public void onUnavailable() {
             setLastCallback(CallbackState.UNAVAILABLE, null, null);
+        }
+
+        @Override
+        public void onNetworkSuspended(Network network) {
+            setLastCallback(CallbackState.SUSPENDED, network, null);
         }
 
         @Override
@@ -1841,8 +1852,11 @@ public class ConnectivityServiceTest extends AndroidTestCase {
         mCellNetworkAgent = new MockNetworkAgent(TRANSPORT_CELLULAR);
         mCellNetworkAgent.connect(true);
 
-        // We should get onAvailable().
+        // We should get onAvailable(), onCapabilitiesChanged(), and
+        // onLinkPropertiesChanged() in rapid succession.
         cellNetworkCallback.expectCallback(CallbackState.AVAILABLE, mCellNetworkAgent);
+        cellNetworkCallback.expectCallback(CallbackState.NETWORK_CAPABILITIES, mCellNetworkAgent);
+        cellNetworkCallback.expectCallback(CallbackState.LINK_PROPERTIES, mCellNetworkAgent);
         // We should get onCapabilitiesChanged(), when the mobile network successfully validates.
         cellNetworkCallback.expectCallback(CallbackState.NETWORK_CAPABILITIES, mCellNetworkAgent);
         cellNetworkCallback.assertNoCallback();
@@ -1855,11 +1869,20 @@ public class ConnectivityServiceTest extends AndroidTestCase {
         cellNetworkCallback.expectCallback(CallbackState.LINK_PROPERTIES, mCellNetworkAgent);
         cellNetworkCallback.assertNoCallback();
 
+        // Suspend the network.
+        mCellNetworkAgent.suspend();
+        cellNetworkCallback.expectCallback(CallbackState.SUSPENDED, mCellNetworkAgent);
+        cellNetworkCallback.assertNoCallback();
+
         // Register a garden variety default network request.
         final TestNetworkCallback dfltNetworkCallback = new TestRequestUpdateCallback();
         mCm.registerDefaultNetworkCallback(dfltNetworkCallback);
-        // Only onAvailable() is called; no other information is delivered.
+        // We should get onAvailable(), onCapabilitiesChanged(), onLinkPropertiesChanged(),
+        // and onNetworkSuspended() in rapid succession.
         dfltNetworkCallback.expectCallback(CallbackState.AVAILABLE, mCellNetworkAgent);
+        dfltNetworkCallback.expectCallback(CallbackState.NETWORK_CAPABILITIES, mCellNetworkAgent);
+        dfltNetworkCallback.expectCallback(CallbackState.LINK_PROPERTIES, mCellNetworkAgent);
+        dfltNetworkCallback.expectCallback(CallbackState.SUSPENDED, mCellNetworkAgent);
         dfltNetworkCallback.assertNoCallback();
 
         // Request a NetworkCapabilities update; only the requesting callback is notified.

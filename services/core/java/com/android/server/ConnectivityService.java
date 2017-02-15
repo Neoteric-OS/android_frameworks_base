@@ -4839,7 +4839,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (!nr.isListen()) continue;
             if (nai.satisfies(nr) && !nai.isSatisfyingRequest(nr.requestId)) {
                 nai.addRequest(nr);
-                notifyNetworkCallback(nai, nri);
+                notifyNetworkAvailable(nai, nri);
             }
         }
     }
@@ -5021,7 +5021,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         // do this after the default net is switched, but
         // before LegacyTypeTracker sends legacy broadcasts
-        for (NetworkRequestInfo nri : addedRequests) notifyNetworkCallback(newNetwork, nri);
+        for (NetworkRequestInfo nri : addedRequests) notifyNetworkAvailable(newNetwork, nri);
 
         // Linger any networks that are no longer needed. This should be done after sending the
         // available callback for newNetwork.
@@ -5184,7 +5184,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void updateNetworkInfo(NetworkAgentInfo networkAgent, NetworkInfo newInfo) {
-        NetworkInfo.State state = newInfo.getState();
+        final NetworkInfo.State state = newInfo.getState();
         NetworkInfo oldInfo = null;
         final int oldScore = networkAgent.getCurrentScore();
         synchronized (networkAgent) {
@@ -5311,14 +5311,27 @@ public class ConnectivityService extends IConnectivityManager.Stub
         sendUpdatedScoreToFactories(nai);
     }
 
-    // notify only this one new request of the current state
-    protected void notifyNetworkCallback(NetworkAgentInfo nai, NetworkRequestInfo nri) {
-        int notifyType = ConnectivityManager.CALLBACK_AVAILABLE;
+    // Notify only this one new request of the current state. Transfer all the
+    // current state by calling NetworkCapabilities and LinkProperties callbacks
+    // so that callers can be guaranteed to have as close to atomicity in state
+    // transfer as can be supported by this current API.
+    protected void notifyNetworkAvailable(NetworkAgentInfo nai, NetworkRequestInfo nri) {
         mHandler.removeMessages(EVENT_TIMEOUT_NETWORK_REQUEST, nri);
         if (nri.mPendingIntent == null) {
-            callCallbackForRequest(nri, nai, notifyType, 0);
+            callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_AVAILABLE, 0);
         } else {
-            sendPendingIntentForRequest(nri, nai, notifyType);
+            sendPendingIntentForRequest(nri, nai, ConnectivityManager.CALLBACK_AVAILABLE);
+            // Attempt no subsequent state pushes where intents are involved.
+            return;
+        }
+
+        callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_CAP_CHANGED, 0);
+        callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_IP_CHANGED, 0);
+        // Whether a network is currently suspended is also an important
+        // element of state to be transferred (it would not otherwise be
+        // delivered by any currently available mechanism).
+        if (nai.networkInfo.getState() == NetworkInfo.State.SUSPENDED) {
+            callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_SUSPENDED, 0);
         }
     }
 
