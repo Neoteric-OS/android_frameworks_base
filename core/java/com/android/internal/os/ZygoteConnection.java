@@ -24,6 +24,7 @@ import static android.system.OsConstants.STDOUT_FILENO;
 
 import android.net.Credentials;
 import android.net.LocalSocket;
+import android.os.Build;
 import android.os.FactoryTest;
 import android.os.Process;
 import android.os.SELinux;
@@ -345,8 +346,8 @@ class ZygoteConnection {
         /** From --mount-external */
         int mountExternal = Zygote.MOUNT_EXTERNAL_NONE;
 
-        /** from --target-sdk-version. */
-        int targetSdkVersion;
+        /** from --target-sdk-version (if set). */
+        int targetSdkVersion = Build.VERSION_CODES.CUR_DEVELOPMENT;
         boolean targetSdkVersionSpecified;
 
         /** from --nice-name */
