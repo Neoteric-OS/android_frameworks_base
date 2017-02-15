@@ -1439,12 +1439,13 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                             // For example, after CONNECTIVITY_ACTION listening is removed, here
                             // is where we could observe a Wi-Fi network becoming available and
                             // passing validation.
-                            if (mCurrentUpstreamIface == null) {
+                            if (mCurrentUpstreamIface == null &&
+                                message.arg1 != UpstreamNetworkMonitor.EVENT_ON_LOST) {
                                 // If we have no upstream interface, try to run through upstream
                                 // selection again.  If, for example, IPv4 connectivity has shown up
                                 // after IPv6 (e.g., 464xlat became available) we want the chance to
                                 // notice and act accordingly.
-                                chooseUpstreamType(false);
+                                chooseUpstreamType(true);
                             }
                             break;
                         }
