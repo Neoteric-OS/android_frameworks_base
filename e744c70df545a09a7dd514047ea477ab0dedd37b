@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37c1356c_c2ee8ba9",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2017-02-15T01:23:28Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we remove the message here?",
+      "revId": "e744c70df545a09a7dd514047ea477ab0dedd37b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71b611f8_8da97393",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2017-02-15T01:23:28Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we remove the msg here?",
+      "revId": "e744c70df545a09a7dd514047ea477ab0dedd37b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
