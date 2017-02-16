@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eabaaa0c_aff98ace",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-16T03:18:01Z",
+      "side": 1,
+      "message": "Nit: consider isValidAlgorithm().",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 57,
+        "endChar": 30
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "faabbb51_197f2257",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-16T03:18:01Z",
+      "side": 1,
+      "message": "not needed.",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 15
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a23aa2ae_8ac2ea6c",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-16T03:18:01Z",
+      "side": 1,
+      "message": "Why this package private ctor ?",
+      "range": {
+        "startLine": 194,
+        "startChar": 4,
+        "endLine": 194,
+        "endChar": 20
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c6de128_69df02ce",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-16T03:18:01Z",
+      "side": 1,
+      "message": "As discussed offline, you probably want to use byte[] and do InetAddress.getByAddres().\n\nFrom the doc, it looks like getByName except an host name and not an ip addr string.",
+      "range": {
+        "startLine": 197,
+        "startChar": 28,
+        "endLine": 197,
+        "endChar": 44
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "498fdfd1_f04ab24b",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-16T03:18:01Z",
+      "side": 1,
+      "message": "As discussed offline, consider always writing everything and make the parcelling tolerant with all these fields default values.",
+      "range": {
+        "startLine": 209,
+        "startChar": 8,
+        "endLine": 209,
+        "endChar": 51
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cba0b44_2d4b01b9",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-16T03:18:01Z",
+      "side": 1,
+      "message": "Consider flattening this to keep the normal flow as unnested as possible, and pushing the exception to the branch:\n\nif (id \u003c 0) {\n  throws new ErrnoEx(-id);\n}\ntransform.setTransformId(id);",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 57,
+        "endChar": 13
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa51dd0b_228114bd",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-16T03:18:01Z",
+      "side": 1,
+      "message": "Don\u0027t you need to rethrow here ? The caller wouldn\u0027t see the error at all otherwise right ?\n\nAlso consider scoping the try catch to addTransportModeTransfor() call only. You can use final to ensure transformId initialization:\n\nfinal int transformId;\ntry {\n  transformId \u003d mService.addTransportModeTransform();\n} catch (RemoteException e) {\n  Log.e(TAG, e);\n  rethrow(e)\n}\n\nif (transformId \u003c 0) {\n ...",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 9
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10b5e373_bb05ba43",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-16T03:18:01Z",
+      "side": 1,
+      "message": "Consider adding final qualifier.",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 11
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d299f81b_45070b82",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-16T03:18:01Z",
+      "side": 1,
+      "message": "Why this synchronized block here ?\n\nSince you have a setTransformId below, it looks like you want to hold the lock for the full duration of that removeTransform() method. This should ensure that nobody can try removing the same transform at the same time twice.",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29737c0a_ac3149db",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-16T03:18:01Z",
+      "side": 1,
+      "message": "Does that mean the removal failed ? You probably need to send back something to the caller to notify failure.",
+      "range": {
+        "startLine": 95,
+        "startChar": 10,
+        "endLine": 95,
+        "endChar": 37
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcf68180_98a10721",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-16T03:18:01Z",
+      "side": 1,
+      "message": "Usually instance variables and ctors are close to the top, before instance methods.",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 53
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8bfb691_23fee678",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2601,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-16T03:18:01Z",
+      "side": 1,
+      "message": "For final immutable fields, consider making them public or package private instead of having getters.",
+      "range": {
+        "startLine": 2600,
+        "startChar": 8,
+        "endLine": 2601,
+        "endChar": 44
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10d6990f_1b7cba09",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2616,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-16T03:18:01Z",
+      "side": 1,
+      "message": "Line too long. Also, you can use \u003c\u003e instead of redeclaring the types here.",
+      "range": {
+        "startLine": 2616,
+        "startChar": 100,
+        "endLine": 2616,
+        "endChar": 115
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "274f0d9c_c322dbbe",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2734,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-16T03:18:01Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be something like rethrowFromSystemServer ?",
+      "range": {
+        "startLine": 2734,
+        "startChar": 18,
+        "endLine": 2734,
+        "endChar": 39
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
