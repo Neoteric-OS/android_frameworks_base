@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7b72077_166d4946",
+        "filename": "telephony/java/android/telephony/ims/ImsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-02-16T03:15:28Z",
+      "side": 1,
+      "message": "nit: any",
+      "range": {
+        "startLine": 416,
+        "startChar": 64,
+        "endLine": 416,
+        "endChar": 67
+      },
+      "revId": "e67b0ae5249e7952d3702c2af038edb82fd0e9de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45d31aea_bb250f2c",
+        "filename": "telephony/java/android/telephony/ims/ImsServiceProxy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-02-16T03:15:28Z",
+      "side": 1,
+      "message": "nit: space",
+      "range": {
+        "startLine": 91,
+        "startChar": 17,
+        "endLine": 91,
+        "endChar": 19
+      },
+      "revId": "e67b0ae5249e7952d3702c2af038edb82fd0e9de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "649b78a0_2f83210a",
+        "filename": "telephony/java/android/telephony/ims/ImsServiceProxy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-02-16T03:15:28Z",
+      "side": 1,
+      "message": "nit: space",
+      "range": {
+        "startLine": 290,
+        "startChar": 10,
+        "endLine": 290,
+        "endChar": 11
+      },
+      "revId": "e67b0ae5249e7952d3702c2af038edb82fd0e9de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcf74963_3865b835",
+        "filename": "telephony/java/android/telephony/ims/ImsServiceProxyCompat.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-02-16T03:15:28Z",
+      "side": 1,
+      "message": "nit space",
+      "revId": "e67b0ae5249e7952d3702c2af038edb82fd0e9de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48ef28a3_f8968e34",
+        "filename": "telephony/java/android/telephony/ims/ImsServiceProxyCompat.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-02-16T03:15:28Z",
+      "side": 1,
+      "message": "nit: space",
+      "range": {
+        "startLine": 178,
+        "startChar": 10,
+        "endLine": 178,
+        "endChar": 11
+      },
+      "revId": "e67b0ae5249e7952d3702c2af038edb82fd0e9de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
