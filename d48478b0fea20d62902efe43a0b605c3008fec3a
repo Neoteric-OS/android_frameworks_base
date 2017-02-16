@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54d8fd77_6c717a73",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5324,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-16T03:19:53Z",
+      "side": 1,
+      "message": "Should be a static private final constants.",
+      "range": {
+        "startLine": 5320,
+        "startChar": 8,
+        "endLine": 5324,
+        "endChar": 10
+      },
+      "revId": "d48478b0fea20d62902efe43a0b605c3008fec3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
