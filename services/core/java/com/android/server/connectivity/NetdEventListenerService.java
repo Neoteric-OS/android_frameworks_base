@@ -51,6 +51,9 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
     // TODO: read this constant from system property
     private static final int MAX_LOOKUPS_PER_DNS_EVENT = 100;
 
+    // Total number of DNS events received, for debugging only
+    private long mTotalDnsEvents = 0;
+
     // Stores the results of a number of consecutive DNS lookups on the same network.
     // This class is not thread-safe and it is the responsibility of the service to call its methods
     // on one thread at a time.
@@ -112,6 +115,7 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
         @Override
         public void onLost(Network network) {
             synchronized (NetdEventListenerService.this) {
+                ++mTotalDnsEvents;
                 DnsEventBatch batch = mEventBatches.remove(network.netId);
                 if (batch != null) {
                     batch.logAndClear();
@@ -161,6 +165,7 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
         IndentingPrintWriter pw = new IndentingPrintWriter(writer, "  ");
         pw.println(TAG + ":");
         pw.increaseIndent();
+        pw.println("Number of events: " + mTotalDnsEvents);
         for (DnsEventBatch batch : mEventBatches.values()) {
             pw.println(batch.toString());
         }
