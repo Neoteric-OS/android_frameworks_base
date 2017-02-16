@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14faaf7b_e93105b0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5323,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-16T07:33:26Z",
+      "side": 1,
+      "message": "Creating and iterating over this array for every NetworkCallback could get slow. Can you make this a static array that\u0027s only initialized at startup or something?",
+      "range": {
+        "startLine": 5320,
+        "startChar": 0,
+        "endLine": 5323,
+        "endChar": 58
+      },
+      "revId": "3e375da731587fd7c7f37ff8b2f44c84e884eb60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97dda74b_981ad449",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5336,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-16T07:33:26Z",
+      "side": 1,
+      "message": "Is this a behaviour change? I don\u0027t think we call the PendingIntent versions for any other reason than CALLBACK_AVAILABLE.",
+      "range": {
+        "startLine": 5336,
+        "startChar": 16,
+        "endLine": 5336,
+        "endChar": 43
+      },
+      "revId": "3e375da731587fd7c7f37ff8b2f44c84e884eb60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bdcf3495_93677c29",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1881,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-16T07:33:26Z",
+      "side": 1,
+      "message": "Don\u0027t orget onSuspended.",
+      "range": {
+        "startLine": 1881,
+        "startChar": 36,
+        "endLine": 1881,
+        "endChar": 37
+      },
+      "revId": "3e375da731587fd7c7f37ff8b2f44c84e884eb60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
