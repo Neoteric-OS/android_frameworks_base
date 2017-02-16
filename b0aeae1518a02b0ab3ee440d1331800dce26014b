@@ -22,6 +22,30 @@
       "revId": "b0aeae1518a02b0ab3ee440d1331800dce26014b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93b2399b_0170cc74",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2017-02-16T01:14:13Z",
+      "side": 1,
+      "message": "they are RIL_REQUEST_SEND_DEVICE_STATE and RIL_REQUEST_SET_UNSOLICITED_RESPONSE_FILTER which will show up in my next CL.",
+      "parentUuid": "5c06580c_f357b29b",
+      "range": {
+        "startLine": 414,
+        "startChar": 41,
+        "endLine": 414,
+        "endChar": 44
+      },
+      "revId": "b0aeae1518a02b0ab3ee440d1331800dce26014b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
