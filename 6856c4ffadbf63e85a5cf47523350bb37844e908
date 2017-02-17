@@ -186,6 +186,29 @@
     },
     {
       "key": {
+        "uuid": "056f4572_49500ee2",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-17T09:50:21Z",
+      "side": 1,
+      "message": "getServiceOrThrow()",
+      "range": {
+        "startLine": 110,
+        "startChar": 35,
+        "endLine": 110,
+        "endChar": 45
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53a190bf_2d0d95b0",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 22
