@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1139992a_2a61b11b",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-17T08:54:55Z",
+      "side": 1,
+      "message": "Define the valid truncate lengths here, instead of making the developer go look at your validation method below.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 59
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4403a1c4_e3bebcb2",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-17T08:54:55Z",
+      "side": 1,
+      "message": "Don\u0027t truncate your method name  :)",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 30
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd3e1c16_1a85602d",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-17T08:54:55Z",
+      "side": 1,
+      "message": "throw IOException",
+      "range": {
+        "startLine": 57,
+        "startChar": 48,
+        "endLine": 57,
+        "endChar": 62
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2af76a13_f6274033",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-17T08:54:55Z",
+      "side": 1,
+      "message": "Just throw e.rethrow()",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 45
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5526e5b_c907f443",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-17T08:54:55Z",
+      "side": 1,
+      "message": "Want to lock this?",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92ffb596_3c22c9b6",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-17T08:54:55Z",
+      "side": 1,
+      "message": "Who else could be blocked here?  Consider doing it all in one block.",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bba765b_9ebedef4",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-17T08:54:55Z",
+      "side": 1,
+      "message": "These should be \"throw e.rethrow..()\" to make flow control more explicit.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 40
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a014e522_d9b38fc7",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-17T08:54:55Z",
+      "side": 1,
+      "message": "Don\u0027t construct this manually; obtain it from another Manager, such as a new ConnectivityManager.getIpSecManager() API.\n\nOr maybe just fold these two methods into ConnectivityManager?",
+      "range": {
+        "startLine": 109,
+        "startChar": 31,
+        "endLine": 109,
+        "endChar": 32
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53a190bf_2d0d95b0",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-17T08:54:55Z",
+      "side": 1,
+      "message": "String so compiler can inline this.",
+      "range": {
+        "startLine": 38,
+        "startChar": 38,
+        "endLine": 38,
+        "endChar": 72
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4eca0c84_eba8c107",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-17T08:54:55Z",
+      "side": 1,
+      "message": "IntDefs for these",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "254a8a57_2f588d25",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-17T08:54:55Z",
+      "side": 1,
+      "message": "Think about moving into Builder inner class",
+      "range": {
+        "startLine": 98,
+        "startChar": 41,
+        "endLine": 98,
+        "endChar": 63
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1646b76_99324ca2",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-17T08:54:55Z",
+      "side": 1,
+      "message": "\"IPsec\"?",
+      "range": {
+        "startLine": 126,
+        "startChar": 67,
+        "endLine": 126,
+        "endChar": 72
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59e57343_672ee371",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-17T08:54:55Z",
+      "side": 1,
+      "message": "Look at using FutureTask to swap the state between threads.",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 48
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
