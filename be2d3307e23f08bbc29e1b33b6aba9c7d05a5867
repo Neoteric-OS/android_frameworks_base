@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ac3355c_f414349f",
+        "filename": "core/tests/hosttests/test-apps/MultiDexLegacyAndException/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2017-02-17T03:45:48Z",
+      "side": 1,
+      "message": "Seems like this should be a normal dependency (including elsewhere in this change)",
+      "range": {
+        "startLine": 52,
+        "startChar": 45,
+        "endLine": 52,
+        "endChar": 47
+      },
+      "revId": "be2d3307e23f08bbc29e1b33b6aba9c7d05a5867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25eca43d_c90942ee",
+        "filename": "core/tests/hosttests/test-apps/MultiDexLegacyAndException/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2017-02-17T03:45:48Z",
+      "side": 1,
+      "message": "This really isn\u0027t necessary anymore, but whichever you want to do",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 27
+      },
+      "revId": "be2d3307e23f08bbc29e1b33b6aba9c7d05a5867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "98217a16_b1b8e7b7",
+        "filename": "core/tests/hosttests/test-apps/MultiDexLegacyAndException/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2017-02-17T03:45:48Z",
+      "side": 1,
+      "message": "I\u0027d say $(hide), but I don\u0027t think that actually matters anymore with Kati/Ninja",
+      "range": {
+        "startLine": 54,
+        "startChar": 1,
+        "endLine": 54,
+        "endChar": 2
+      },
+      "revId": "be2d3307e23f08bbc29e1b33b6aba9c7d05a5867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8c02886_f24429e9",
+        "filename": "core/tests/hosttests/test-apps/MultiDexLegacyTestApp/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2017-02-17T03:45:48Z",
+      "side": 1,
+      "message": "renaming this to 2 seems like it\u0027s just more likely to run into a copy-paste problem",
+      "range": {
+        "startLine": 73,
+        "startChar": 11,
+        "endLine": 73,
+        "endChar": 12
+      },
+      "revId": "be2d3307e23f08bbc29e1b33b6aba9c7d05a5867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
