@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "01f376c9_f2c1ac70",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eabaaa0c_aff98ace",
+      "range": {
+        "startLine": 57,
+        "startChar": 13,
+        "endLine": 57,
+        "endChar": 30
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faabbb51_197f2257",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 20
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "af6af79e_a8aec629",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "If forces users to create this only via the builder. As per discussion, comment added.",
+      "parentUuid": "a23aa2ae_8ac2ea6c",
+      "range": {
+        "startLine": 194,
+        "startChar": 4,
+        "endLine": 194,
+        "endChar": 20
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c6de128_69df02ce",
         "filename": "core/java/android/net/IpSecConfig.java",
         "patchSetId": 20
@@ -82,6 +130,30 @@
       "writtenOn": "2017-02-16T03:18:01Z",
       "side": 1,
       "message": "As discussed offline, you probably want to use byte[] and do InetAddress.getByAddres().\n\nFrom the doc, it looks like getByName except an host name and not an ip addr string.",
+      "range": {
+        "startLine": 197,
+        "startChar": 28,
+        "endLine": 197,
+        "endChar": 44
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edf79849_5565c828",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Yeah... I\u0027ll do this. Just haven\u0027t gotten there yet. Adding a TODO so it doesn\u0027t get lost.",
+      "parentUuid": "8c6de128_69df02ce",
       "range": {
         "startLine": 197,
         "startChar": 28,
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "0717dd34_d13185dc",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "498fdfd1_f04ab24b",
+      "range": {
+        "startLine": 209,
+        "startChar": 8,
+        "endLine": 209,
+        "endChar": 51
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cba0b44_2d4b01b9",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 20
@@ -128,6 +224,30 @@
       "writtenOn": "2017-02-16T03:18:01Z",
       "side": 1,
       "message": "Consider flattening this to keep the normal flow as unnested as possible, and pushing the exception to the branch:\n\nif (id \u003c 0) {\n  throws new ErrnoEx(-id);\n}\ntransform.setTransformId(id);",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 57,
+        "endChar": 13
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba870add_db61c88b",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cba0b44_2d4b01b9",
       "range": {
         "startLine": 53,
         "startChar": 12,
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "88c36cf3_85b274c3",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa51dd0b_228114bd",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 9
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10b5e373_bb05ba43",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 20
@@ -174,6 +318,30 @@
       "writtenOn": "2017-02-16T03:18:01Z",
       "side": 1,
       "message": "Consider adding final qualifier.",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 11
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67fce2ce_b1eca04e",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "After refactoring the usage outside the try block, I now have to initialize this at declaration due to some weird compiler limitation.",
+      "parentUuid": "10b5e373_bb05ba43",
       "range": {
         "startLine": 82,
         "startChar": 8,
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "03df8619_a3a4b492",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "I was trying not to unnecessarily hold the lock while calling the remove, but yes, that\u0027s probably better.",
+      "parentUuid": "d299f81b_45070b82",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29737c0a_ac3149db",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 20
@@ -220,6 +412,30 @@
       "writtenOn": "2017-02-16T03:18:01Z",
       "side": 1,
       "message": "Does that mean the removal failed ? You probably need to send back something to the caller to notify failure.",
+      "range": {
+        "startLine": 95,
+        "startChar": 10,
+        "endLine": 95,
+        "endChar": 37
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "badba561_cf7ba195",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29737c0a_ac3149db",
       "range": {
         "startLine": 95,
         "startChar": 10,
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "ca3ae460_0cf38314",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcf68180_98a10721",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 53
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8bfb691_23fee678",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 20
@@ -278,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "56b56734_99407dea",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2601,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8bfb691_23fee678",
+      "range": {
+        "startLine": 2600,
+        "startChar": 8,
+        "endLine": 2601,
+        "endChar": 44
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10d6990f_1b7cba09",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 20
@@ -289,6 +553,30 @@
       "writtenOn": "2017-02-16T03:18:01Z",
       "side": 1,
       "message": "Line too long. Also, you can use \u003c\u003e instead of redeclaring the types here.",
+      "range": {
+        "startLine": 2616,
+        "startChar": 100,
+        "endLine": 2616,
+        "endChar": 115
+      },
+      "revId": "8d22a9a69a109e649f8cb244f44f75c540b014e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b836418d_6c333c91",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2616,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10d6990f_1b7cba09",
       "range": {
         "startLine": 2616,
         "startChar": 100,
