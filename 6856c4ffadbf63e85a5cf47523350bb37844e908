@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0eb90931_b408093e",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1139992a_2a61b11b",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 59
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4403a1c4_e3bebcb2",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 22
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-17T08:54:55Z",
       "side": 1,
       "message": "Don\u0027t truncate your method name  :)",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 30
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "954e6164_7636e690",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4403a1c4_e3bebcb2",
       "range": {
         "startLine": 99,
         "startChar": 15,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "14835ff4_0ce69d36",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd3e1c16_1a85602d",
+      "range": {
+        "startLine": 57,
+        "startChar": 48,
+        "endLine": 57,
+        "endChar": 62
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2af76a13_f6274033",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 22
@@ -82,6 +154,30 @@
       "writtenOn": "2017-02-17T08:54:55Z",
       "side": 1,
       "message": "Just throw e.rethrow()",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 45
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc8969bb_45f5be7e",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2af76a13_f6274033",
       "range": {
         "startLine": 62,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4a8ada81_5be0eee0",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5526e5b_c907f443",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92ffb596_3c22c9b6",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 22
@@ -128,6 +248,30 @@
       "writtenOn": "2017-02-17T08:54:55Z",
       "side": 1,
       "message": "Who else could be blocked here?  Consider doing it all in one block.",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef4aa097_7bdff5d4",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92ffb596_3c22c9b6",
       "range": {
         "startLine": 83,
         "startChar": 0,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "1285ee99_26a75ab0",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bba765b_9ebedef4",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 40
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a014e522_d9b38fc7",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 22
@@ -174,6 +342,30 @@
       "writtenOn": "2017-02-17T08:54:55Z",
       "side": 1,
       "message": "Don\u0027t construct this manually; obtain it from another Manager, such as a new ConnectivityManager.getIpSecManager() API.\n\nOr maybe just fold these two methods into ConnectivityManager?",
+      "range": {
+        "startLine": 109,
+        "startChar": 31,
+        "endLine": 109,
+        "endChar": 32
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eda2e1fa_120a3e94",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "As per discussion, obtaining from getSystemService().",
+      "parentUuid": "a014e522_d9b38fc7",
       "range": {
         "startLine": 109,
         "startChar": 31,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "09b93889_1c247bbd",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "obtaining from getSystemService()",
+      "parentUuid": "056f4572_49500ee2",
+      "range": {
+        "startLine": 110,
+        "startChar": 35,
+        "endLine": 110,
+        "endChar": 45
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53a190bf_2d0d95b0",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 22
@@ -220,6 +436,30 @@
       "writtenOn": "2017-02-17T08:54:55Z",
       "side": 1,
       "message": "String so compiler can inline this.",
+      "range": {
+        "startLine": 38,
+        "startChar": 38,
+        "endLine": 38,
+        "endChar": 72
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "648e7676_16126b1d",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53a190bf_2d0d95b0",
       "range": {
         "startLine": 38,
         "startChar": 38,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "55f2b95b_58a65012",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eca0c84_eba8c107",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "254a8a57_2f588d25",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 22
@@ -266,6 +530,30 @@
       "writtenOn": "2017-02-17T08:54:55Z",
       "side": 1,
       "message": "Think about moving into Builder inner class",
+      "range": {
+        "startLine": 98,
+        "startChar": 41,
+        "endLine": 98,
+        "endChar": 63
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28d1f17f_0d8c1f1e",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "254a8a57_2f588d25",
       "range": {
         "startLine": 98,
         "startChar": 41,
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "fdeb22e4_ff10c5d8",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1646b76_99324ca2",
+      "range": {
+        "startLine": 126,
+        "startChar": 67,
+        "endLine": 126,
+        "endChar": 72
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59e57343_672ee371",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 22
@@ -312,6 +624,30 @@
       "writtenOn": "2017-02-17T08:54:55Z",
       "side": 1,
       "message": "Look at using FutureTask to swap the state between threads.",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 48
+      },
+      "revId": "6856c4ffadbf63e85a5cf47523350bb37844e908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8128855e_efc050b5",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "Unfortunately, I wasn\u0027t able to find a way to make this cleaner with FutureTask. FutureTask wants me to define a Runnable or Callable for it, but in this case, the executor for the async piece is already fixed/provided for me, so any usage of FutureTask results in adding one more level of asynchronicity. I did fix the bug, and I\u0027ll keep poking around for something cleaner.",
+      "parentUuid": "59e57343_672ee371",
       "range": {
         "startLine": 201,
         "startChar": 0,
