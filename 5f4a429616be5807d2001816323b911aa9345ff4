@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55531a95_bd8a3b74",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "I know Lorenzo isn\u0027t happy with \"add\" here. The only other word that feels appropriate to me is \"apply\". Both \"start/stop\" and \"put/remove\" feel rather wrong.\n\nIs there a preference for \"apply/remove\"? I hesitate on \"apply\" because a quick search shows it to be very rarely used in the API.\n\nOne mark in favor of \"add\" is that for a given Network or even Socket, there\u0027s nothing that says we always have to support only one.",
+      "range": {
+        "startLine": 51,
+        "startChar": 16,
+        "endLine": 51,
+        "endChar": 28
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
