@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db8a9282_26e324fc",
+        "filename": "api/current.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 23730,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-19T07:46:09Z",
+      "side": 1,
+      "message": "getName?",
+      "range": {
+        "startLine": 23730,
+        "startChar": 35,
+        "endLine": 23730,
+        "endChar": 47
+      },
+      "revId": "a965f269613f21f84406bdd518731a881003cd11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
