@@ -49131,7 +49131,7 @@ package android.widget {
 
 package com.android.internal.util {
 
-  public abstract interface Predicate<T> {
+  public abstract deprecated interface Predicate<T> {
     method public abstract boolean apply(T);
   }
 
