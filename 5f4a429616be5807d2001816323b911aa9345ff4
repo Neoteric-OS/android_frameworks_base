@@ -2,6 +2,144 @@
   "comments": [
     {
       "key": {
+        "uuid": "44bb7092_4049cd17",
+        "filename": "api/current.txt",
+        "patchSetId": 24
+      },
+      "lineNbr": 23727,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-20T00:23:25Z",
+      "side": 1,
+      "message": "Parcelable classes need to be marked \"final\".\n\nAlso, would this class be better named \"IpSecParams\", since it\u0027s a collection of configuration details for a specific algorithm?  (This class is more than /just/ the algorithm.)",
+      "range": {
+        "startLine": 23727,
+        "startChar": 0,
+        "endLine": 23727,
+        "endChar": 64
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6f57be_07ab4fc0",
+        "filename": "api/current.txt",
+        "patchSetId": 24
+      },
+      "lineNbr": 23745,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-20T00:23:25Z",
+      "side": 1,
+      "message": "Please keep the various \u0027Defs @hide.",
+      "range": {
+        "startLine": 23744,
+        "startChar": 0,
+        "endLine": 23745,
+        "endChar": 3
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc486512_45faf628",
+        "filename": "api/current.txt",
+        "patchSetId": 24
+      },
+      "lineNbr": 23749,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-20T00:23:25Z",
+      "side": 1,
+      "message": "Will this always succeed?  Do you have an exception in mind that you want to throw when it fails?  (One possible suggestion would be to rename the below TCE to a more a general IpSecException.)",
+      "range": {
+        "startLine": 23749,
+        "startChar": 0,
+        "endLine": 23749,
+        "endChar": 67
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c968a218_d266d5db",
+        "filename": "api/current.txt",
+        "patchSetId": 24
+      },
+      "lineNbr": 23753,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-20T00:23:25Z",
+      "side": 1,
+      "message": "Hmm, no ctor that accepts a String message?  Just curious, not a strong requirement.",
+      "range": {
+        "startLine": 23753,
+        "startChar": 0,
+        "endLine": 23753,
+        "endChar": 59
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6949fe68_6f3da2e3",
+        "filename": "api/current.txt",
+        "patchSetId": 24
+      },
+      "lineNbr": 23761,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-20T00:23:25Z",
+      "side": 1,
+      "message": "Would it be useful to have symmetry methods of the getAuthentication(), getNetwork(), etc set via the builder below?",
+      "range": {
+        "startLine": 23761,
+        "startChar": 0,
+        "endLine": 23761,
+        "endChar": 72
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5880a598_d09785c3",
+        "filename": "api/current.txt",
+        "patchSetId": 24
+      },
+      "lineNbr": 23779,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-02-20T00:23:25Z",
+      "side": 1,
+      "message": "@hide please; thanks!",
+      "range": {
+        "startLine": 23775,
+        "startChar": 0,
+        "endLine": 23779,
+        "endChar": 3
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55531a95_bd8a3b74",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 24
