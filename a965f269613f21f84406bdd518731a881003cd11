@@ -22,6 +22,75 @@
       "revId": "a965f269613f21f84406bdd518731a881003cd11",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df3bd95d_ba02cf9b",
+        "filename": "api/current.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 23730,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-20T06:28:11Z",
+      "side": 1,
+      "message": "getName?",
+      "range": {
+        "startLine": 23730,
+        "startChar": 35,
+        "endLine": 23730,
+        "endChar": 47
+      },
+      "revId": "a965f269613f21f84406bdd518731a881003cd11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9eb4bb30_7c31fc72",
+        "filename": "api/current.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 23732,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-20T06:28:11Z",
+      "side": 1,
+      "message": "This is only meaningful for auth and not encryption, right?\n\nAlso, do we need it?",
+      "range": {
+        "startLine": 23732,
+        "startChar": 22,
+        "endLine": 23732,
+        "endChar": 37
+      },
+      "revId": "a965f269613f21f84406bdd518731a881003cd11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec842e88_57ca1c68",
+        "filename": "api/current.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 23745,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-20T06:28:11Z",
+      "side": 1,
+      "message": "I\u0027m not sure \"add\" is the right word here because you\u0027re not actually adding the transform *to* anything. \"register\"?",
+      "range": {
+        "startLine": 23745,
+        "startChar": 23,
+        "endLine": 23745,
+        "endChar": 35
+      },
+      "revId": "a965f269613f21f84406bdd518731a881003cd11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
