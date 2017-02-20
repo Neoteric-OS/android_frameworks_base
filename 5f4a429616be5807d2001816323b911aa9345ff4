@@ -140,6 +140,75 @@
     },
     {
       "key": {
+        "uuid": "544a4a10_f7e300d7",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-20T01:05:16Z",
+      "side": 1,
+      "message": "Needs final if not @hide I think.",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 12
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c0e069b_d80c953f",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-20T01:05:16Z",
+      "side": 1,
+      "message": "Just checking: does this need to be public ? does this need to be visible in the API ?",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 10
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "664c5900_f79ac7c4",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-20T01:05:16Z",
+      "side": 1,
+      "message": "I recommend getAddress() \u0026 getByAddress().",
+      "range": {
+        "startLine": 154,
+        "startChar": 8,
+        "endLine": 154,
+        "endChar": 100
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55531a95_bd8a3b74",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 24
@@ -156,6 +225,282 @@
         "startChar": 16,
         "endLine": 51,
         "endChar": 28
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "784256af_b796be63",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-20T01:05:16Z",
+      "side": 1,
+      "message": "Should be final. Also can be moved into synchronized block.",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 23
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "644517e8_cc2f1617",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-20T01:05:16Z",
+      "side": 1,
+      "message": "Just move declaration inside sync block and emrge with initialization.",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 30
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8f931f1_2b24540b",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-20T01:05:16Z",
+      "side": 1,
+      "message": "Same remark: should probably be private or package private.",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 40
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aac52ab_fa7d3f70",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-20T01:05:16Z",
+      "side": 1,
+      "message": "should be final.",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 18
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bacd0e0b_be15dde9",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-20T01:05:16Z",
+      "side": 1,
+      "message": "Consider using boolean return value directly:\n\nif (!mConfig.hasProperty(FOO)) { ...",
+      "range": {
+        "startLine": 135,
+        "startChar": 12,
+        "endLine": 135,
+        "endChar": 79
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88f148e9_2e8f3252",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-20T01:05:16Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this go above getSystemService() ?",
+      "range": {
+        "startLine": 142,
+        "startChar": 8,
+        "endLine": 145,
+        "endChar": 9
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3016be5_80fa8252",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-20T01:05:16Z",
+      "side": 1,
+      "message": "Why this wait ? What\u0027s the goal here ?",
+      "range": {
+        "startLine": 157,
+        "startChar": 16,
+        "endLine": 157,
+        "endChar": 46
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b916a62e_79ba1fb1",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-20T01:05:16Z",
+      "side": 1,
+      "message": "This probably need to be volatile if you use it as a sync flag between several threads.",
+      "range": {
+        "startLine": 161,
+        "startChar": 12,
+        "endLine": 161,
+        "endChar": 28
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b4f7cfe_de42c2ff",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-20T01:05:16Z",
+      "side": 1,
+      "message": "If this reentrant ? This should probably go in the sync block below.",
+      "range": {
+        "startLine": 171,
+        "startChar": 8,
+        "endLine": 171,
+        "endChar": 26
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8cfe5c87_c97867f4",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-20T01:05:16Z",
+      "side": 1,
+      "message": "Same question: why this lock ?\n\nThere is nothing going on afterwards so the caller could as well do the sleep itself if it needs it.",
+      "range": {
+        "startLine": 175,
+        "startChar": 20,
+        "endLine": 175,
+        "endChar": 50
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96db20f2_18baefaf",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-20T01:05:16Z",
+      "side": 1,
+      "message": "Consider instead simply a package private instance var.",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 5
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3324fb4c_eade7795",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-02-20T01:05:16Z",
+      "side": 1,
+      "message": "Should probably be final.",
+      "range": {
+        "startLine": 202,
+        "startChar": 3,
+        "endLine": 202,
+        "endChar": 31
       },
       "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
