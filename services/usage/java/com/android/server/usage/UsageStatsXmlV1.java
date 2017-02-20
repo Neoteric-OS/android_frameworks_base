@@ -30,6 +30,11 @@ import android.content.res.Configuration;
 import java.io.IOException;
 import java.net.ProtocolException;
 
+import static com.android.server.usage.UsageStatsDatabase.TYPE_ALL_USAGE_STATS;
+import static com.android.server.usage.UsageStatsDatabase.TYPE_EVENTS;
+import static com.android.server.usage.UsageStatsDatabase.TYPE_CONFIGURATION_STATS;
+import static com.android.server.usage.UsageStatsDatabase.TYPE_PACKAGE_STATS;
+
 /**
  * UsageStats reader/writer for version 1 of the XML format.
  */
@@ -194,8 +199,9 @@ final class UsageStatsXmlV1 {
      *
      * @param parser The parser from which to read events.
      * @param statsOut The stats object to populate with the data from the XML file.
+     * @param statsType The type of the stats to be read.
      */
-    public static void read(XmlPullParser parser, IntervalStats statsOut)
+    public static void read(XmlPullParser parser, IntervalStats statsOut, int statsType)
             throws XmlPullParserException, IOException {
         statsOut.packageStats.clear();
         statsOut.configurations.clear();
@@ -209,24 +215,48 @@ final class UsageStatsXmlV1 {
 
         int eventCode;
         int outerDepth = parser.getDepth();
+        final int type = statsType & TYPE_ALL_USAGE_STATS;
         while ((eventCode = parser.next()) != XmlPullParser.END_DOCUMENT
                 && (eventCode != XmlPullParser.END_TAG || parser.getDepth() > outerDepth)) {
+            final String tag = parser.getName();
+
             if (eventCode != XmlPullParser.START_TAG) {
+                if (type != TYPE_ALL_USAGE_STATS) {
+                    if (type == TYPE_PACKAGE_STATS && PACKAGES_TAG.equals(tag)) {
+                        statsType &= ~TYPE_PACKAGE_STATS;
+                    } else if (type == TYPE_CONFIGURATION_STATS
+                            && CONFIGURATIONS_TAG.equals(tag)) {
+                        statsType &= ~TYPE_CONFIGURATION_STATS;
+                    } else if (type == TYPE_EVENTS && EVENT_LOG_TAG.equals(tag)) {
+                        statsType &= ~TYPE_EVENTS;
+                    }
+
+                    if (statsType == 0) {
+                        // done loading
+                        break;
+                    }
+                }
+
                 continue;
             }
 
-            final String tag = parser.getName();
             switch (tag) {
                 case PACKAGE_TAG:
-                    loadUsageStats(parser, statsOut);
+                    if ((type & TYPE_PACKAGE_STATS) != 0) {
+                        loadUsageStats(parser, statsOut);
+                    }
                     break;
 
                 case CONFIG_TAG:
-                    loadConfigStats(parser, statsOut);
+                    if ((type & TYPE_CONFIGURATION_STATS) != 0) {
+                        loadConfigStats(parser, statsOut);
+                    }
                     break;
 
                 case EVENT_TAG:
-                    loadEvent(parser, statsOut);
+                    if ((type & TYPE_EVENTS) != 0) {
+                        loadEvent(parser, statsOut);
+                    }
                     break;
             }
         }

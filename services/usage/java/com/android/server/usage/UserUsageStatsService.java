@@ -42,6 +42,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.android.server.usage.UsageStatsDatabase.TYPE_CONFIGURATION_STATS;
+import static com.android.server.usage.UsageStatsDatabase.TYPE_EVENTS;
+import static com.android.server.usage.UsageStatsDatabase.TYPE_PACKAGE_STATS;
+
 /**
  * A per-user UsageStatsService. All methods are meant to be called with the main lock held
  * in UsageStatsService.
@@ -230,8 +234,8 @@ class UserUsageStatsService {
      * and bucket, then calls the {@link com.android.server.usage.UsageStatsDatabase.StatCombiner}
      * provided to select the stats to use from the IntervalStats object.
      */
-    private <T> List<T> queryStats(int intervalType, final long beginTime, final long endTime,
-            StatCombiner<T> combiner) {
+    private <T> List<T> queryStats(int statsType, int intervalType, final long beginTime,
+            final long endTime, StatCombiner<T> combiner) {
         if (intervalType == UsageStatsManager.INTERVAL_BEST) {
             intervalType = mDatabase.findBestFitBucket(beginTime, endTime);
             if (intervalType < 0) {
@@ -270,7 +274,7 @@ class UserUsageStatsService {
         final long truncatedEndTime = Math.min(currentStats.beginTime, endTime);
 
         // Get the stats from disk.
-        List<T> results = mDatabase.queryUsageStats(intervalType, beginTime,
+        List<T> results = mDatabase.queryUsageStats(statsType, intervalType, beginTime,
                 truncatedEndTime, combiner);
         if (DEBUG) {
             Slog.d(TAG, "Got " + (results != null ? results.size() : 0) + " results from disk");
@@ -297,16 +301,17 @@ class UserUsageStatsService {
     }
 
     List<UsageStats> queryUsageStats(int bucketType, long beginTime, long endTime) {
-        return queryStats(bucketType, beginTime, endTime, sUsageStatsCombiner);
+        return queryStats(TYPE_PACKAGE_STATS, bucketType, beginTime, endTime, sUsageStatsCombiner);
     }
 
     List<ConfigurationStats> queryConfigurationStats(int bucketType, long beginTime, long endTime) {
-        return queryStats(bucketType, beginTime, endTime, sConfigStatsCombiner);
+        return queryStats(TYPE_CONFIGURATION_STATS, bucketType, beginTime, endTime,
+                sConfigStatsCombiner);
     }
 
     UsageEvents queryEvents(final long beginTime, final long endTime) {
         final ArraySet<String> names = new ArraySet<>();
-        List<UsageEvents.Event> results = queryStats(UsageStatsManager.INTERVAL_DAILY,
+        List<UsageEvents.Event> results = queryStats(TYPE_EVENTS, UsageStatsManager.INTERVAL_DAILY,
                 beginTime, endTime, new StatCombiner<UsageEvents.Event>() {
                     @Override
                     public void combine(IntervalStats stats, boolean mutable,
