@@ -1887,19 +1887,20 @@ public class PackageParser {
 
                     int minVers = 1;
                     String minCode = null;
-                    int targetVers = 0;
-                    String targetCode = null;
 
                     TypedValue val = sa.peekValue(
                             com.android.internal.R.styleable.AndroidManifestUsesSdk_minSdkVersion);
                     if (val != null) {
                         if (val.type == TypedValue.TYPE_STRING && val.string != null) {
-                            targetCode = minCode = val.string.toString();
+                            minCode = val.string.toString();
                         } else {
                             // If it's not a string, it's an integer.
-                            targetVers = minVers = val.data;
+                            minVers = val.data;
                         }
                     }
+
+                    int targetVers = minVers;
+                    String targetCode = minCode;
 
                     val = sa.peekValue(
                             com.android.internal.R.styleable.AndroidManifestUsesSdk_targetSdkVersion);
