@@ -201,11 +201,8 @@ public class WifiAwareSession {
      *              value is used to gate the acceptance of a connection request from only that
      *              peer. A RESPONDER may specified a null - indicating that it will accept
      *              connection requests from any device.
-     * @param token An arbitrary token (message) to be used to match connection initiation request
-     *              to a responder setup. A RESPONDER is set up with a {@code token} which must
-     *              be matched by the token provided by the INITIATOR. A null token is permitted
-     *              on the RESPONDER and matches any peer token. An empty ({@code ""}) token is
-     *              not the same as a null token and requires the peer token to be empty as well.
+     * @param pmk A PMK (pairwise master key, see IEEE 802.11i) specifying the key to use for
+     *            encrypting the data-path. A null pmk indicates an open (non-secure) data-path.
      *
      * @return A string to be used to construct
      * {@link android.net.NetworkRequest.Builder#setNetworkSpecifier(String)} to pass to
@@ -214,7 +211,7 @@ public class WifiAwareSession {
      * [or other varieties of that API].
      */
     public String createNetworkSpecifier(@WifiAwareManager.DataPathRole int role,
-            @Nullable byte[] peer, @Nullable byte[] token) {
+            @Nullable byte[] peer, @Nullable byte[] pmk) {
         WifiAwareManager mgr = mMgr.get();
         if (mgr == null) {
             Log.e(TAG, "createNetworkSpecifier: called post GC on WifiAwareManager");
@@ -224,6 +221,6 @@ public class WifiAwareSession {
             Log.e(TAG, "createNetworkSpecifier: called after termination");
             return "";
         }
-        return mgr.createNetworkSpecifier(mClientId, role, peer, token);
+        return mgr.createNetworkSpecifier(mClientId, role, peer, pmk);
     }
 }

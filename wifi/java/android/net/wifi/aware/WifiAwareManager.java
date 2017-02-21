@@ -130,7 +130,7 @@ public class WifiAwareManager {
      */
 
     /**
-     * TYPE_1A: role, client_id, session_id, peer_id, token
+     * TYPE_1A: role, client_id, session_id, peer_id, pmk
      * @hide
      */
     public static final int NETWORK_SPECIFIER_TYPE_1A = 0;
@@ -142,7 +142,7 @@ public class WifiAwareManager {
     public static final int NETWORK_SPECIFIER_TYPE_1B = 1;
 
     /**
-     * TYPE_1C: role, client_id, session_id, token [only permitted for RESPONDER]
+     * TYPE_1C: role, client_id, session_id, pmk [only permitted for RESPONDER]
      * @hide
      */
     public static final int NETWORK_SPECIFIER_TYPE_1C = 2;
@@ -154,7 +154,7 @@ public class WifiAwareManager {
     public static final int NETWORK_SPECIFIER_TYPE_1D = 3;
 
     /**
-     * TYPE_2A: role, client_id, peer_mac, token
+     * TYPE_2A: role, client_id, peer_mac, pmk
      * @hide
      */
     public static final int NETWORK_SPECIFIER_TYPE_2A = 4;
@@ -166,7 +166,7 @@ public class WifiAwareManager {
     public static final int NETWORK_SPECIFIER_TYPE_2B = 5;
 
     /**
-     * TYPE_2C: role, client_id, token [only permitted for RESPONDER]
+     * TYPE_2C: role, client_id, pmk [only permitted for RESPONDER]
      * @hide
      */
     public static final int NETWORK_SPECIFIER_TYPE_2C = 6;
@@ -199,7 +199,7 @@ public class WifiAwareManager {
     public static final String NETWORK_SPECIFIER_KEY_PEER_MAC = "peer_mac";
 
     /** @hide */
-    public static final String NETWORK_SPECIFIER_KEY_TOKEN = "token";
+    public static final String NETWORK_SPECIFIER_KEY_PMK = "pmk";
 
     /**
      * Broadcast intent action to indicate that the state of Wi-Fi Aware availability has changed.
@@ -494,19 +494,19 @@ public class WifiAwareManager {
 
     /** @hide */
     public String createNetworkSpecifier(int clientId, int role, int sessionId,
-            PeerHandle peerHandle, byte[] token) {
+            PeerHandle peerHandle, byte[] pmk) {
         if (VDBG) {
             Log.v(TAG, "createNetworkSpecifier: role=" + role + ", sessionId=" + sessionId
                     + ", peerHandle=" + ((peerHandle == null) ? peerHandle : peerHandle.peerId)
-                    + ", token=" + token);
+                    + ", pmk=" + pmk);
         }
 
         int type;
-        if (token != null && peerHandle != null) {
+        if (pmk != null && peerHandle != null) {
             type = NETWORK_SPECIFIER_TYPE_1A;
-        } else if (token == null && peerHandle != null) {
+        } else if (pmk == null && peerHandle != null) {
             type = NETWORK_SPECIFIER_TYPE_1B;
-        } else if (token != null && peerHandle == null) {
+        } else if (pmk != null && peerHandle == null) {
             type = NETWORK_SPECIFIER_TYPE_1C;
         } else {
             type = NETWORK_SPECIFIER_TYPE_1D;
@@ -519,9 +519,9 @@ public class WifiAwareManager {
                             + "specifier");
         }
         if (role == WIFI_AWARE_DATA_PATH_ROLE_INITIATOR) {
-            if (token == null) {
+            if (pmk == null) {
                 throw new IllegalArgumentException(
-                        "createNetworkSpecifier: Invalid null token - not permitted on INITIATOR");
+                        "createNetworkSpecifier: Invalid null pmk - not permitted on INITIATOR");
             }
             if (peerHandle == null) {
                 throw new IllegalArgumentException(
@@ -540,9 +540,9 @@ public class WifiAwareManager {
             if (peerHandle != null) {
                 json.put(NETWORK_SPECIFIER_KEY_PEER_ID, peerHandle.peerId);
             }
-            if (token != null) {
-                json.put(NETWORK_SPECIFIER_KEY_TOKEN,
-                        Base64.encodeToString(token, 0, token.length, Base64.DEFAULT));
+            if (pmk != null) {
+                json.put(NETWORK_SPECIFIER_KEY_PMK,
+                        Base64.encodeToString(pmk, 0, pmk.length, Base64.DEFAULT));
             }
         } catch (JSONException e) {
             return "";
@@ -553,17 +553,17 @@ public class WifiAwareManager {
 
     /** @hide */
     public String createNetworkSpecifier(int clientId, @DataPathRole int role,
-            @Nullable byte[] peer, @Nullable byte[] token) {
+            @Nullable byte[] peer, @Nullable byte[] pmk) {
         if (VDBG) {
-            Log.v(TAG, "createNetworkSpecifier: role=" + role + ", token=" + token);
+            Log.v(TAG, "createNetworkSpecifier: role=" + role + ", pmk=" + pmk);
         }
 
         int type;
-        if (token != null && peer != null) {
+        if (pmk != null && peer != null) {
             type = NETWORK_SPECIFIER_TYPE_2A;
-        } else if (token == null && peer != null) {
+        } else if (pmk == null && peer != null) {
             type = NETWORK_SPECIFIER_TYPE_2B;
-        } else if (token != null && peer == null) {
+        } else if (pmk != null && peer == null) {
             type = NETWORK_SPECIFIER_TYPE_2C;
         } else { // both are null
             type = NETWORK_SPECIFIER_TYPE_2D;
@@ -580,9 +580,9 @@ public class WifiAwareManager {
                 throw new IllegalArgumentException(
                         "createNetworkSpecifier: Invalid peer MAC address");
             }
-            if (token == null) {
+            if (pmk == null) {
                 throw new IllegalArgumentException(
-                        "createNetworkSpecifier: Invalid null token - not permitted on INITIATOR");
+                        "createNetworkSpecifier: Invalid null pmk - not permitted on INITIATOR");
             }
         } else {
             if (peer != null && peer.length != 6) {
@@ -600,9 +600,9 @@ public class WifiAwareManager {
             if (peer != null) {
                 json.put(NETWORK_SPECIFIER_KEY_PEER_MAC, new String(HexEncoding.encode(peer)));
             }
-            if (token != null) {
-                json.put(NETWORK_SPECIFIER_KEY_TOKEN,
-                        Base64.encodeToString(token, 0, token.length, Base64.DEFAULT));
+            if (pmk != null) {
+                json.put(NETWORK_SPECIFIER_KEY_PMK,
+                        Base64.encodeToString(pmk, 0, pmk.length, Base64.DEFAULT));
             }
         } catch (JSONException e) {
             return "";
