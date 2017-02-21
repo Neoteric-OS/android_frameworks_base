@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "519c915a_83da50cf",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4348,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-21T09:05:23Z",
+      "side": 1,
+      "message": "Is it the plan to delete this code? If so, add a TODO.",
+      "range": {
+        "startLine": 4334,
+        "startChar": 0,
+        "endLine": 4348,
+        "endChar": 5
+      },
+      "revId": "098554650a981618e7012fb44bdd4adcefe7ac60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea38fde6_ec4b0e6b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5321,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-21T09:05:23Z",
+      "side": 1,
+      "message": "Given you have a return statement in the else branch, can you just invert this if and move the AVAILABLE callback just before the others? Like so:\n\n    if (nri.mPendingIntent !\u003d null) {\n        sendPendingIntentForRequest(...\n        // Attempt no...\n        return;\n    }\n\n    callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_AVAILABLE, 0);\n    callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_CAP_CHANGED, 0);\n    ...",
+      "range": {
+        "startLine": 5321,
+        "startChar": 12,
+        "endLine": 5321,
+        "endChar": 88
+      },
+      "revId": "098554650a981618e7012fb44bdd4adcefe7ac60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06d3bdae_df153a3a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5334,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-21T09:05:23Z",
+      "side": 1,
+      "message": "Seems like it might be useful to have this go out just after AVAILABLE, before CAP_CHANGED.",
+      "range": {
+        "startLine": 5334,
+        "startChar": 12,
+        "endLine": 5334,
+        "endChar": 88
+      },
+      "revId": "098554650a981618e7012fb44bdd4adcefe7ac60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca7fa268_7c0d9f29",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1844,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-21T09:05:23Z",
+      "side": 1,
+      "message": "Optional: rename this to something like testAdditionalStateCallbacks?",
+      "range": {
+        "startLine": 1844,
+        "startChar": 16,
+        "endLine": 1844,
+        "endChar": 42
+      },
+      "revId": "098554650a981618e7012fb44bdd4adcefe7ac60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ba561da_d9d96f50",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-21T09:05:23Z",
+      "side": 1,
+      "message": "Can you call this TestRequestUpdateCallback, so it\u0027s clear that it\u0027s a different object?",
+      "range": {
+        "startLine": 1846,
+        "startChar": 14,
+        "endLine": 1846,
+        "endChar": 33
+      },
+      "revId": "098554650a981618e7012fb44bdd4adcefe7ac60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "135f9791_204c01b0",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1887,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-21T09:05:23Z",
+      "side": 1,
+      "message": "This test checks that when a callback is registers and gets AVAILABLE, the other callbacks follow, but it doesn\u0027t appear to check that the other callbacks follow if an AVAILABLE callback is sent to an *already-registered* callback object.\n\nWe should test that. Options I see for doing so are:\n\n1. Add a bit more code to this test that brings up a higher-\n   scoring network (e.g., validated wifi) and tests that\n   dfltNetworkCallback gets the capability and linkproperty\n   changed callbacks.\n2. Add a convenience method (expectAvailableCallbacks?) that\n   expects all three callbacks on a given network, and replace\n   all the calls to expectCallback(CallbackState.AVAILABLE)\n   with calls to this new method.\n3. Somehow modify TestNetworkCallback#expectCallback to\n   expect the other callbacks as well if the test code is\n   expecting AVAILABLE.\n\n#1 seems simplest but it\u0027s not great in terms of coverage. I\u0027d prefer #2 or #3.",
+      "revId": "098554650a981618e7012fb44bdd4adcefe7ac60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75b6432d_fd9af805",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1888,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-21T09:05:23Z",
+      "side": 1,
+      "message": "Is is the plan to delete this code? If so, add a TODO.",
+      "range": {
+        "startLine": 1888,
+        "startChar": 8,
+        "endLine": 1888,
+        "endChar": 90
+      },
+      "revId": "098554650a981618e7012fb44bdd4adcefe7ac60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
