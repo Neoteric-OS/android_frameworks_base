@@ -22,6 +22,30 @@
       "revId": "0382be2f32a78c3ee5f1601bb0a4cef8ae9c0903",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3209d7ab_15e3d57e",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2017-02-21T18:39:12Z",
+      "side": 1,
+      "message": "Yes. We need to change both (C++ and Java)",
+      "parentUuid": "41e9add8_e92bf4e5",
+      "range": {
+        "startLine": 350,
+        "startChar": 4,
+        "endLine": 350,
+        "endChar": 10
+      },
+      "revId": "0382be2f32a78c3ee5f1601bb0a4cef8ae9c0903",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
