@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23417251_c9c0b3fd",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-22T14:21:44Z",
+      "side": 1,
+      "message": "Right now, I\u0027m thinking this will be @SystemApi. The builder will still be accessible, and the resulting transform will be given to the VpnService, that will ultimately manage the lifetime of the Transform in conjunction with the Vpn.",
+      "range": {
+        "startLine": 91,
+        "startChar": 16,
+        "endLine": 91,
+        "endChar": 40
+      },
+      "revId": "8309779d37022670c323661fe50748a62617edb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "275e9d29_6a9b00a7",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-22T14:21:44Z",
+      "side": 1,
+      "message": "I\u0027m thinking this should be FileDescriptor (not ParcelFileDescriptor).",
+      "range": {
+        "startLine": 155,
+        "startChar": 11,
+        "endLine": 155,
+        "endChar": 31
+      },
+      "revId": "8309779d37022670c323661fe50748a62617edb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a135d105_9064a2b8",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-22T14:21:44Z",
+      "side": 1,
+      "message": "FileDescriptor.",
+      "range": {
+        "startLine": 160,
+        "startChar": 44,
+        "endLine": 160,
+        "endChar": 64
+      },
+      "revId": "8309779d37022670c323661fe50748a62617edb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "234a6b26_9b80f8af",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-22T14:21:44Z",
+      "side": 1,
+      "message": "many docstrings are now wrong, such as this.",
+      "range": {
+        "startLine": 42,
+        "startChar": 76,
+        "endLine": 43,
+        "endChar": 24
+      },
+      "revId": "8309779d37022670c323661fe50748a62617edb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
