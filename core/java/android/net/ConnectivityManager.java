@@ -2931,7 +2931,7 @@ public class ConnectivityManager {
      * Helper function to request a network with a particular legacy type.
      * @hide
      */
-    private void requestNetwork(NetworkRequest request, NetworkCallback networkCallback,
+    public void requestNetwork(NetworkRequest request, NetworkCallback networkCallback,
             int timeoutMs, int legacyType, Handler handler) {
         CallbackHandler cbHandler = new CallbackHandler(handler);
         NetworkCapabilities nc = request.networkCapabilities;

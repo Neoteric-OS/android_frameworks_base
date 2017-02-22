@@ -20,6 +20,7 @@ import static android.net.ConnectivityManager.TYPE_MOBILE_DUN;
 import static android.net.ConnectivityManager.TYPE_MOBILE_HIPRI;
 
 import android.content.Context;
+import android.os.Handler;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.net.LinkProperties;
@@ -72,6 +73,7 @@ public class UpstreamNetworkMonitor {
 
     private final Context mContext;
     private final StateMachine mTarget;
+    private final Handler mHandler;
     private final int mWhat;
     private final HashMap<Network, NetworkState> mNetworkMap = new HashMap<>();
     private ConnectivityManager mCM;
@@ -84,6 +86,7 @@ public class UpstreamNetworkMonitor {
     public UpstreamNetworkMonitor(Context ctx, StateMachine tgt, int what) {
         mContext = ctx;
         mTarget = tgt;
+        mHandler = mTarget.getHandler();
         mWhat = what;
     }
 
@@ -99,10 +102,10 @@ public class UpstreamNetworkMonitor {
         final NetworkRequest listenAllRequest = new NetworkRequest.Builder()
                 .clearCapabilities().build();
         mListenAllCallback = new UpstreamNetworkCallback(CALLBACK_LISTEN_ALL);
-        cm().registerNetworkCallback(listenAllRequest, mListenAllCallback);
+        cm().registerNetworkCallback(listenAllRequest, mListenAllCallback, mHandler);
 
         mDefaultNetworkCallback = new UpstreamNetworkCallback(CALLBACK_TRACK_DEFAULT);
-        cm().registerDefaultNetworkCallback(mDefaultNetworkCallback);
+        cm().registerDefaultNetworkCallback(mDefaultNetworkCallback, mHandler);
     }
 
     public void stop() {
@@ -154,7 +157,7 @@ public class UpstreamNetworkMonitor {
         // Additionally, we log a message to aid in any subsequent debugging.
         Log.d(TAG, "requesting mobile upstream network: " + mobileUpstreamRequest);
 
-        cm().requestNetwork(mobileUpstreamRequest, mMobileNetworkCallback, 0, legacyType);
+        cm().requestNetwork(mobileUpstreamRequest, mMobileNetworkCallback, 0, legacyType, mHandler);
     }
 
     public void releaseMobileNetworkRequest() {
@@ -186,7 +189,8 @@ public class UpstreamNetworkMonitor {
                 if (mDefaultNetworkCallback == null) {
                     // The callback was unregistered in the interval between
                     // ConnectivityService calling onAvailable() and our
-                    // handling of it here on the mTarget.getHandler() thread.
+                    // handling of it here on the mHandler thread.
+                    //
                     // Clean-up of this network entry is deferred to the
                     // handling of onLost() by other callbacks.
                     // TODO: change to Log.wtf() after oag/331764 is merged.
@@ -201,7 +205,8 @@ public class UpstreamNetworkMonitor {
                 if (mMobileNetworkCallback == null) {
                     // The callback was unregistered in the interval between
                     // ConnectivityService calling onAvailable() and our
-                    // handling of it here on the mTarget.getHandler() thread.
+                    // handling of it here on the mHandler thread.
+                    //
                     // Clean-up of this network entry is deferred to the
                     // handling of onLost() by other callbacks.
                     // TODO: change to Log.wtf() after oag/331764 is merged.
@@ -324,22 +329,22 @@ public class UpstreamNetworkMonitor {
 
         @Override
         public void onAvailable(Network network) {
-            mTarget.getHandler().post(() -> handleAvailable(mCallbackType, network));
+            handleAvailable(mCallbackType, network);
         }
 
         @Override
         public void onCapabilitiesChanged(Network network, NetworkCapabilities newNc) {
-            mTarget.getHandler().post(() -> handleNetCap(network, newNc));
+            handleNetCap(network, newNc);
         }
 
         @Override
         public void onLinkPropertiesChanged(Network network, LinkProperties newLp) {
-            mTarget.getHandler().post(() -> handleLinkProp(network, newLp));
+            handleLinkProp(network, newLp);
         }
 
         @Override
         public void onLost(Network network) {
-            mTarget.getHandler().post(() -> handleLost(mCallbackType, network));
+            handleLost(mCallbackType, network);
         }
     }
 
