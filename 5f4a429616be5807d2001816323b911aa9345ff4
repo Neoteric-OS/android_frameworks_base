@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "953332f8_4fc3f3e3",
+        "filename": "api/current.txt",
+        "patchSetId": 24
+      },
+      "lineNbr": 23727,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-22T14:21:44Z",
+      "side": 1,
+      "message": "Done wrt to \"final\".\n\nRegarding the name... the xfrm kernel module is not a shining star of clarity in naming so using its conventions is a weak defense, but this class is just xfrm_algo and xfrm_algo_auth:\nhttp://lxr.free-electrons.com/source/include/uapi/linux/xfrm.h#L101\n\nI think it\u0027s preferable to try and be as specific as possible when referring to the blob that specifically includes some sort of cryptographic function and its parameters. If there\u0027s another name that better encompasses \"crypto/hashing function and its parameters\", including if it drops the \"IpSec\" prefix and is more generically usable in the system, I\u0027d be enthusiastic about such a change.",
+      "parentUuid": "44bb7092_4049cd17",
+      "range": {
+        "startLine": 23727,
+        "startChar": 0,
+        "endLine": 23727,
+        "endChar": 64
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a6f57be_07ab4fc0",
         "filename": "api/current.txt",
         "patchSetId": 24
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ef80e3d5_4ab30517",
+        "filename": "api/current.txt",
+        "patchSetId": 24
+      },
+      "lineNbr": 23745,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-22T14:21:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a6f57be_07ab4fc0",
+      "range": {
+        "startLine": 23744,
+        "startChar": 0,
+        "endLine": 23745,
+        "endChar": 3
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc486512_45faf628",
         "filename": "api/current.txt",
         "patchSetId": 24
@@ -59,6 +107,30 @@
       "writtenOn": "2017-02-20T00:23:25Z",
       "side": 1,
       "message": "Will this always succeed?  Do you have an exception in mind that you want to throw when it fails?  (One possible suggestion would be to rename the below TCE to a more a general IpSecException.)",
+      "range": {
+        "startLine": 23749,
+        "startChar": 0,
+        "endLine": 23749,
+        "endChar": 67
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a65492d0_9c2523ee",
+        "filename": "api/current.txt",
+        "patchSetId": 24
+      },
+      "lineNbr": 23749,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-22T14:21:44Z",
+      "side": 1,
+      "message": "This will always succeed unless something has gone terribly terribly wrong. Any failure would be in the wtf() category.",
+      "parentUuid": "cc486512_45faf628",
       "range": {
         "startLine": 23749,
         "startChar": 0,
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "18aeb64e_9a0e8654",
+        "filename": "api/current.txt",
+        "patchSetId": 24
+      },
+      "lineNbr": 23761,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-22T14:21:44Z",
+      "side": 1,
+      "message": "It certainly wouldn\u0027t hurt anything. Taking the example of VpnService, it does not currently provide getters, but if you have a preference that I provide them, I can.",
+      "parentUuid": "6949fe68_6f3da2e3",
+      "range": {
+        "startLine": 23761,
+        "startChar": 0,
+        "endLine": 23761,
+        "endChar": 72
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5880a598_d09785c3",
         "filename": "api/current.txt",
         "patchSetId": 24
@@ -128,6 +224,30 @@
       "writtenOn": "2017-02-20T00:23:25Z",
       "side": 1,
       "message": "@hide please; thanks!",
+      "range": {
+        "startLine": 23775,
+        "startChar": 0,
+        "endLine": 23779,
+        "endChar": 3
+      },
+      "revId": "5f4a429616be5807d2001816323b911aa9345ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e84f507_b4f71ec6",
+        "filename": "api/current.txt",
+        "patchSetId": 24
+      },
+      "lineNbr": 23779,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-22T14:21:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5880a598_d09785c3",
       "range": {
         "startLine": 23775,
         "startChar": 0,
