@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "13200ba0_3c4d415e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2017-02-22T23:13:44Z",
+      "side": 1,
+      "message": "preface this with \"Bluetooth: \" when you work in frameworks/base\n\nMaybe \"Bluetooth: use ContentObserver for airplane mode\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "6a785efcce3aa7aad8d377d14e39274396891454",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeee45f6_6c1d0b00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2017-02-22T23:13:44Z",
+      "side": 1,
+      "message": "Add a \"why\" we\u0027re doing this: Intents are going away.\n\nAlso use Fix: because thats apparently supposed to do some magic.  not sure if it works but it still marks the bug.",
+      "revId": "6a785efcce3aa7aad8d377d14e39274396891454",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a754f5d_a0f57e2c",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 5
@@ -25,6 +65,29 @@
     },
     {
       "key": {
+        "uuid": "0e941b05_ce2dd1d4",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2017-02-22T23:13:44Z",
+      "side": 1,
+      "message": "we can probably remove this now that we have logging in the enable/disable calls",
+      "range": {
+        "startLine": 273,
+        "startChar": 24,
+        "endLine": 273,
+        "endChar": 55
+      },
+      "revId": "6a785efcce3aa7aad8d377d14e39274396891454",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f4ac281_f9238a40",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 5
@@ -45,6 +108,29 @@
       "revId": "6a785efcce3aa7aad8d377d14e39274396891454",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "732ad0dd_4d80590a",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2017-02-22T23:13:44Z",
+      "side": 1,
+      "message": "This one too",
+      "range": {
+        "startLine": 278,
+        "startChar": 21,
+        "endLine": 278,
+        "endChar": 50
+      },
+      "revId": "6a785efcce3aa7aad8d377d14e39274396891454",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
