@@ -661,14 +661,19 @@ public class ApfFilter {
     // How long should the last installed filter program live for? In seconds.
     @GuardedBy("this")
     private long mLastInstalledProgramMinLifetime;
+    @GuardedBy("this")
+    private ApfProgramEvent mLastInstallEvent;
 
     // For debugging only. The last program installed.
     @GuardedBy("this")
     private byte[] mLastInstalledProgram;
 
-    // For debugging only. How many times the program was updated since we started.
+    // How many times the program was updated since we started.
     @GuardedBy("this")
-    private int mNumProgramUpdates;
+    private int mNumProgramUpdates = 0;
+    // How many times the program was updated since we started for allowing multicast traffic.
+    @GuardedBy("this")
+    private int mNumProgramUpdatesAllowingMulticast = 0;
 
     /**
      * Generate filter code to process ARP packets. Execution of this code ends in either the
@@ -947,7 +952,8 @@ public class ApfFilter {
             Log.e(TAG, "Failed to generate APF program.", e);
             return;
         }
-        mLastTimeInstalledProgram = currentTimeSeconds();
+        final long now = currentTimeSeconds();
+        mLastTimeInstalledProgram = now;
         mLastInstalledProgramMinLifetime = programMinLifetime;
         mLastInstalledProgram = program;
         mNumProgramUpdates++;
@@ -957,8 +963,12 @@ public class ApfFilter {
         }
         mIpManagerCallback.installPacketFilter(program);
         int flags = ApfProgramEvent.flagsFor(mIPv4Address != null, mMulticastFilter);
-        mMetricsLog.log(new ApfProgramEvent(
-                programMinLifetime, rasToFilter.size(), mRas.size(), program.length, flags));
+        if (mLastInstallEvent != null) {
+            mLastInstallEvent.actualLifetime = now - mLastTimeInstalledProgram;
+            mMetricsLog.log(mLastInstallEvent);
+        }
+        mLastInstallEvent = new ApfProgramEvent(
+                programMinLifetime, rasToFilter.size(), mRas.size(), program.length, flags);
     }
 
     /**
@@ -1078,11 +1088,15 @@ public class ApfFilter {
         mRas.clear();
     }
 
-    public synchronized void setMulticastFilter(boolean enabled) {
-        if (mMulticastFilter != enabled) {
-            mMulticastFilter = enabled;
-            installNewProgramLocked();
+    public synchronized void setMulticastFilter(boolean isEnabled) {
+        if (mMulticastFilter == isEnabled) {
+            return;
         }
+        mMulticastFilter = isEnabled;
+        if (!isEnabled) {
+            mNumProgramUpdatesAllowingMulticast++;
+        }
+        installNewProgramLocked();
     }
 
     /** Find the single IPv4 LinkAddress if there is one, otherwise return null. */

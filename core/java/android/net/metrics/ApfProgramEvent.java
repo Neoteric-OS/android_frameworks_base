@@ -49,7 +49,9 @@ public final class ApfProgramEvent implements Parcelable {
     @Retention(RetentionPolicy.SOURCE)
     public @interface Flags {}
 
-    public final long lifetime;     // Lifetime of the program in seconds
+    public final long lifetime;     // Maximum computed lifetime of the program in seconds
+    /** {@hide} */
+    public long actualLifetime;     // Effective program lifetime in seconds
     public final int filteredRas;   // Number of RAs filtered by the APF program
     public final int currentRas;    // Total number of current RAs at generation time
     public final int programLength; // Length of the APF program in bytes
@@ -71,6 +73,7 @@ public final class ApfProgramEvent implements Parcelable {
         this.currentRas = in.readInt();
         this.programLength = in.readInt();
         this.flags = in.readInt();
+        this.actualLifetime = in.readLong();
     }
 
     @Override
@@ -80,6 +83,7 @@ public final class ApfProgramEvent implements Parcelable {
         out.writeInt(currentRas);
         out.writeInt(programLength);
         out.writeInt(flags);
+        out.writeLong(actualLifetime);
     }
 
     @Override
@@ -90,8 +94,8 @@ public final class ApfProgramEvent implements Parcelable {
     @Override
     public String toString() {
         String lifetimeString = (lifetime < Long.MAX_VALUE) ? lifetime + "s" : "forever";
-        return String.format("ApfProgramEvent(%d/%d RAs %dB %s %s)",
-                filteredRas, currentRas, programLength, lifetimeString, namesOf(flags));
+        return String.format("ApfProgramEvent(%d/%d RAs %dB %d s/%s %s)", filteredRas, currentRas,
+                programLength, actualLifetime, lifetimeString, namesOf(flags));
     }
 
     public static final Parcelable.Creator<ApfProgramEvent> CREATOR

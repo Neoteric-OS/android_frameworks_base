@@ -33,8 +33,12 @@ public final class ApfStats implements Parcelable {
     public final int droppedRas;      // number of received RAs ignored due to the MAX_RAS limit
     public final int zeroLifetimeRas; // number of received RAs with a minimum lifetime of 0
     public final int parseErrors;     // number of received RAs that could not be parsed
-    public final int programUpdates;  // number of APF program updates
+    public final int programUpdates;  // number of APF program updates from receiving RAs.
     public final int maxProgramSize;  // maximum APF program size advertised by hardware
+    /** {@hide} total number of APF program updates. */
+    public int programUpdatesAll;
+    /** {@hide} number of APF program updates from allowing multicast traffic. */
+    public int programUpdatesAllowingMulticast;
 
     /** {@hide} */
     public ApfStats(long durationMs, int receivedRas, int matchingRas, int droppedRas,
@@ -58,6 +62,8 @@ public final class ApfStats implements Parcelable {
         this.parseErrors = in.readInt();
         this.programUpdates = in.readInt();
         this.maxProgramSize = in.readInt();
+        this.programUpdatesAll = in.readInt();
+        this.programUpdatesAllowingMulticast = in.readInt();
     }
 
     @Override
@@ -70,6 +76,8 @@ public final class ApfStats implements Parcelable {
         out.writeInt(parseErrors);
         out.writeInt(programUpdates);
         out.writeInt(maxProgramSize);
+        out.writeInt(programUpdatesAll);
+        out.writeInt(programUpdatesAllowingMulticast);
     }
 
     @Override
@@ -87,7 +95,8 @@ public final class ApfStats implements Parcelable {
                 .append(String.format("%d dropped, ", droppedRas))
                 .append(String.format("%d zero lifetime, ", zeroLifetimeRas))
                 .append(String.format("%d parse errors, ", parseErrors))
-                .append(String.format("%d program updates})", programUpdates))
+                .append(String.format("program updates: (all: %d, RAs: %d, allow multicast: %d)}",
+                        programUpdatesAll, programUpdatesAllowingMulticast, programUpdates))
                 .toString();
     }
 
