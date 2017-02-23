@@ -160,7 +160,7 @@ public class ResourcesImpl {
         return mMetrics;
     }
 
-    Configuration getConfiguration() {
+    public Configuration getConfiguration() {
         return mConfiguration;
     }
 

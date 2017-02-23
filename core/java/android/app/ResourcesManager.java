@@ -109,6 +109,8 @@ public class ResourcesManager {
     private final ArrayMap<Pair<Integer, DisplayAdjustments>, WeakReference<Display>> mDisplays =
             new ArrayMap<>();
 
+    private Configuration mTmpConfig = null;
+
     public static ResourcesManager getInstance() {
         synchronized (ResourcesManager.class) {
             if (sResourcesManager == null) {
@@ -822,46 +824,12 @@ public class ResourcesManager {
             ApplicationPackageManager.configurationChanged();
             //Slog.i(TAG, "Configuration changed in " + currentPackageName());
 
-            Configuration tmpConfig = null;
-
             for (int i = mResourceImpls.size() - 1; i >= 0; i--) {
                 ResourcesKey key = mResourceImpls.keyAt(i);
                 WeakReference<ResourcesImpl> weakImplRef = mResourceImpls.valueAt(i);
                 ResourcesImpl r = weakImplRef != null ? weakImplRef.get() : null;
                 if (r != null) {
-                    if (DEBUG || DEBUG_CONFIGURATION) Slog.v(TAG, "Changing resources "
-                            + r + " config to: " + config);
-                    int displayId = key.mDisplayId;
-                    boolean isDefaultDisplay = (displayId == Display.DEFAULT_DISPLAY);
-                    DisplayMetrics dm = defaultDisplayMetrics;
-                    final boolean hasOverrideConfiguration = key.hasOverrideConfiguration();
-                    if (!isDefaultDisplay || hasOverrideConfiguration) {
-                        if (tmpConfig == null) {
-                            tmpConfig = new Configuration();
-                        }
-                        tmpConfig.setTo(config);
-                        if (!isDefaultDisplay) {
-                            // Get new DisplayMetrics based on the DisplayAdjustments given
-                            // to the ResourcesImpl. Udate a copy if the CompatibilityInfo
-                            // changed, because the ResourcesImpl object will handle the
-                            // update internally.
-                            DisplayAdjustments daj = r.getDisplayAdjustments();
-                            if (compat != null) {
-                                daj = new DisplayAdjustments(daj);
-                                daj.setCompatibilityInfo(compat);
-                            }
-                            dm = getDisplayMetrics(displayId, daj);
-                            applyNonDefaultDisplayMetricsToConfiguration(dm, tmpConfig);
-                        }
-                        if (hasOverrideConfiguration) {
-                            tmpConfig.updateFrom(key.mOverrideConfiguration);
-                        }
-                        r.updateConfiguration(tmpConfig, dm, compat);
-                    } else {
-                        r.updateConfiguration(config, dm, compat);
-                    }
-                    //Slog.i(TAG, "Updated app resources " + v.getKey()
-                    //        + " " + r + ": " + r.getConfiguration());
+                    applyConfigurationToResourcesImplLocked(key, r, config, compat);
                 } else {
                     //Slog.i(TAG, "Removing old resources " + v.getKey());
                     mResourceImpls.removeAt(i);
@@ -872,6 +840,56 @@ public class ResourcesManager {
         } finally {
             Trace.traceEnd(Trace.TRACE_TAG_RESOURCES);
         }
+    }
+
+    void applyConfigurationToResourcesImplLocked(@Nullable ResourcesKey key, @NonNull ResourcesImpl r,
+                                           @NonNull Configuration config,
+                                           @Nullable CompatibilityInfo compat) {
+        if (!r.getConfiguration().isOtherSeqNewer(config)) {
+            if (DEBUG || DEBUG_CONFIGURATION) Slog.v(TAG, "Skipping new config for impl: " + r + " curSeq="
+                    + r.getConfiguration().seq + ", newSeq=" + config.seq);
+            return;
+        }
+
+        if (key == null && (key = findKeyForResourceImplLocked(r)) == null) {
+            if (DEBUG || DEBUG_CONFIGURATION) Slog.v(TAG, "Cannot find ResourcesKey for " + r);
+            return;
+        }
+
+        DisplayMetrics defaultDisplayMetrics = getDisplayMetrics();
+        if (DEBUG || DEBUG_CONFIGURATION) Slog.v(TAG, "Changing resources "
+                + r + " config to: " + config);
+        int displayId = key.mDisplayId;
+        boolean isDefaultDisplay = (displayId == Display.DEFAULT_DISPLAY);
+        DisplayMetrics dm = defaultDisplayMetrics;
+        final boolean hasOverrideConfiguration = key.hasOverrideConfiguration();
+        if (!isDefaultDisplay || hasOverrideConfiguration) {
+            if (mTmpConfig == null) {
+                mTmpConfig = new Configuration();
+            }
+            mTmpConfig.setTo(config);
+            if (!isDefaultDisplay) {
+                // Get new DisplayMetrics based on the DisplayAdjustments given
+                // to the ResourcesImpl. Udate a copy if the CompatibilityInfo
+                // changed, because the ResourcesImpl object will handle the
+                // update internally.
+                DisplayAdjustments daj = r.getDisplayAdjustments();
+                if (compat != null) {
+                    daj = new DisplayAdjustments(daj);
+                    daj.setCompatibilityInfo(compat);
+                }
+                dm = getDisplayMetrics(displayId, daj);
+                applyNonDefaultDisplayMetricsToConfiguration(dm, mTmpConfig);
+            }
+            if (hasOverrideConfiguration) {
+                mTmpConfig.updateFrom(key.mOverrideConfiguration);
+            }
+            r.updateConfiguration(mTmpConfig, dm, compat);
+        } else {
+            r.updateConfiguration(config, dm, compat);
+        }
+        //Slog.i(TAG, "Updated app resources " + v.getKey()
+        //        + " " + r + ": " + r.getConfiguration());
     }
 
     /**
