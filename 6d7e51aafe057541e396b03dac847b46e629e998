@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2cadc7a_6913f19a",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-02-23T17:23:54Z",
+      "side": 1,
+      "message": "Spelling in violation of RFC 4301.",
+      "range": {
+        "startLine": 36,
+        "startChar": 44,
+        "endLine": 36,
+        "endChar": 49
+      },
+      "revId": "6d7e51aafe057541e396b03dac847b46e629e998",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
