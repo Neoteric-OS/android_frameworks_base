@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e6384d7d_7a91f360",
+        "filename": "api/current.txt",
+        "patchSetId": 26
+      },
+      "lineNbr": 23766,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-02-23T22:54:01Z",
+      "side": 1,
+      "message": "If transport vs tunnel is captured in an IpSecTransform object, why are there different methods for transport vs tunnel in IpSecManager?",
+      "range": {
+        "startLine": 23766,
+        "startChar": 22,
+        "endLine": 23766,
+        "endChar": 36
+      },
+      "revId": "6d7e51aafe057541e396b03dac847b46e629e998",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2cadc7a_6913f19a",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 26
@@ -18,6 +41,29 @@
         "startChar": 44,
         "endLine": 36,
         "endChar": 49
+      },
+      "revId": "6d7e51aafe057541e396b03dac847b46e629e998",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07de9923_cfda5b2f",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-02-23T22:54:01Z",
+      "side": 1,
+      "message": "Will this result in mutating an existing IpSecTransform\u0027s config object? I thought that having a builder pattern implied the built objects to be immutable.",
+      "range": {
+        "startLine": 371,
+        "startChar": 12,
+        "endLine": 371,
+        "endChar": 44
       },
       "revId": "6d7e51aafe057541e396b03dac847b46e629e998",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
