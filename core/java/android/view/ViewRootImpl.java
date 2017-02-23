@@ -30,7 +30,6 @@ import android.annotation.NonNull;
 import android.app.ActivityManagerNative;
 import android.app.ResourcesManager;
 import android.content.ClipDescription;
-import android.content.ComponentCallbacks;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.CompatibilityInfo;
@@ -156,7 +155,14 @@ public final class ViewRootImpl implements ViewParent,
     static final ArrayList<Runnable> sFirstDrawHandlers = new ArrayList();
     static boolean sFirstDrawComplete = false;
 
-    static final ArrayList<ComponentCallbacks> sConfigCallbacks = new ArrayList();
+    /**
+     * {@hide}
+     */
+    public static interface ConfigChangedCallback {
+        void onConfigurationChanged(Resources res, Configuration newConfig);
+    }
+
+    static final ArrayList<ConfigChangedCallback> sConfigCallbacks = new ArrayList();
 
     /**
      * This list must only be modified by the main thread, so a lock is only needed when changing
@@ -455,7 +461,7 @@ public final class ViewRootImpl implements ViewParent,
         }
     }
 
-    public static void addConfigCallback(ComponentCallbacks callback) {
+    public static void addConfigCallback(ConfigChangedCallback callback) {
         synchronized (sConfigCallbacks) {
             sConfigCallbacks.add(callback);
         }
@@ -3317,7 +3323,7 @@ public final class ViewRootImpl implements ViewParent,
 
         synchronized (sConfigCallbacks) {
             for (int i=sConfigCallbacks.size()-1; i>=0; i--) {
-                sConfigCallbacks.get(i).onConfigurationChanged(config);
+                sConfigCallbacks.get(i).onConfigurationChanged(mContext.getResources(), config);
             }
         }
         if (mView != null) {

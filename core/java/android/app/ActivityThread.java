@@ -6016,33 +6016,16 @@ public final class ActivityThread {
         // add dropbox logging to libcore
         DropBox.setReporter(new DropBoxReporter());
 
-        ViewRootImpl.addConfigCallback(new ComponentCallbacks2() {
+        ViewRootImpl.addConfigCallback(new ViewRootImpl.ConfigChangedCallback() {
             @Override
-            public void onConfigurationChanged(Configuration newConfig) {
+            public void onConfigurationChanged(Resources res, Configuration newConfig) {
                 synchronized (mResourcesManager) {
                     // We need to apply this change to the resources
                     // immediately, because upon returning the view
                     // hierarchy will be informed about it.
-                    if (mResourcesManager.applyConfigurationToResourcesLocked(newConfig, null)) {
-                        updateLocaleListFromAppContext(mInitialApplication.getApplicationContext(),
-                                mResourcesManager.getConfiguration().getLocales());
-
-                        // This actually changed the resources!  Tell
-                        // everyone about it.
-                        if (mPendingConfiguration == null ||
-                                mPendingConfiguration.isOtherSeqNewer(newConfig)) {
-                            mPendingConfiguration = newConfig;
-
-                            sendMessage(H.CONFIGURATION_CHANGED, newConfig);
-                        }
-                    }
+                    mResourcesManager.applyConfigurationToResourcesImplLocked(null,
+                            res.getImpl(), newConfig, null);
                 }
-            }
-            @Override
-            public void onLowMemory() {
-            }
-            @Override
-            public void onTrimMemory(int level) {
             }
         });
     }
