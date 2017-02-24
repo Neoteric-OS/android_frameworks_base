@@ -611,6 +611,50 @@ public final class BluetoothA2dp implements BluetoothProfile {
     }
 
     /**
+     * Enables the optional codecs.
+     *
+     * @hide
+     */
+    public void enableOptionalCodecs() {
+        if (DBG) Log.d(TAG, "enableOptionalCodecs");
+        try {
+            mServiceLock.readLock().lock();
+            if (mService != null && isEnabled()) {
+                mService.enableOptionalCodecs();
+            }
+            if (mService == null) Log.w(TAG, "Proxy not attached to service");
+            return;
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error talking to BT service in enableOptionalCodecs()", e);
+            return;
+        } finally {
+            mServiceLock.readLock().unlock();
+        }
+    }
+
+    /**
+     * Disables the optional codecs.
+     *
+     * @hide
+     */
+    public void disableOptionalCodecs() {
+        if (DBG) Log.d(TAG, "disableOptionalCodecs");
+        try {
+            mServiceLock.readLock().lock();
+            if (mService != null && isEnabled()) {
+                mService.disableOptionalCodecs();
+            }
+            if (mService == null) Log.w(TAG, "Proxy not attached to service");
+            return;
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error talking to BT service in disableOptionalCodecs()", e);
+            return;
+        } finally {
+            mServiceLock.readLock().unlock();
+        }
+    }
+
+    /**
      * Helper for converting a state to a string.
      *
      * For debug use only - strings are not internationalized.
