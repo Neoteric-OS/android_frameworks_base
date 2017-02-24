@@ -1027,7 +1027,7 @@ static void android_os_Debug_dumpNativeBacktraceToFileTimeout(JNIEnv* env, jobje
         env->ReleaseStringCritical(fileName, str);
     }
 
-    int fd = open(fileName8.string(), O_CREAT | O_WRONLY | O_NOFOLLOW, 0666);  /* -rw-rw-rw- */
+    int fd = open(fileName8.string(), O_CREAT | O_WRONLY | O_NOFOLLOW | O_APPEND, 0666);
     if (fd < 0) {
         fprintf(stderr, "Can't open %s: %s\n", fileName8.string(), strerror(errno));
         return;
