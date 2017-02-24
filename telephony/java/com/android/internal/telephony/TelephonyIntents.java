@@ -16,6 +16,8 @@
 
 package com.android.internal.telephony;
 
+import android.content.Intent;
+
 /**
  * The intents that the telephony services broadcast.
  *
@@ -52,7 +54,7 @@ public class TelephonyIntents {
      * <p class="note">This is a protected intent that can only be sent
      * by the system.
      */
-    public static final String ACTION_SERVICE_STATE_CHANGED = "android.intent.action.SERVICE_STATE";
+    public static final String ACTION_SERVICE_STATE_CHANGED = Intent.ACTION_SERVICE_STATE_CHANGED;
 
     /**
      * <p>Broadcast Action: The radio technology has changed. The intent will have the following

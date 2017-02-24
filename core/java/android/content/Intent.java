@@ -1096,6 +1096,38 @@ public class Intent implements Parcelable, Cloneable {
     public static final String ACTION_SIM_ACTIVATION_REQUEST =
             "android.intent.action.SIM_ACTIVATION_REQUEST";
     /**
+     * Broadcast Action: The phone service state has changed. The intent will have the following
+     * extra values:</p>
+     * <ul>
+     *   <li><em>state</em> - An int with one of the following values:
+     *          {@link android.telephony.ServiceState#STATE_IN_SERVICE},
+     *          {@link android.telephony.ServiceState#STATE_OUT_OF_SERVICE},
+     *          {@link android.telephony.ServiceState#STATE_EMERGENCY_ONLY}
+     *          or {@link android.telephony.ServiceState#STATE_POWER_OFF}
+     *   <li><em>roaming</em> - A boolean value indicating whether the phone is roaming.</li>
+     *   <li><em>operator-alpha-long</em> - The carrier name as a string.</li>
+     *   <li><em>operator-alpha-short</em> - A potentially shortened version of the carrier name,
+     *          as a string.</li>
+     *   <li><em>operator-numeric</em> - A number representing the carrier, as a string. This is
+     *          a five or six digit number consisting of the MCC (Mobile Country Code, 3 digits)
+     *          and MNC (Mobile Network code, 2-3 digits).</li>
+     *   <li><em>manual</em> - A boolean, where true indicates that the user has chosen to select
+     *          the network manually, and false indicates that network selection is handled by the
+     *          phone.</li>
+     * </ul>
+     *
+     * <p class="note">
+     * Requires the READ_PHONE_STATE permission.
+     *
+     * <p class="note">This is a protected intent that can only be sent
+     * by the system.
+     * @hide
+     */
+    @SystemApi
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_SERVICE_STATE_CHANGED = "android.intent.action.SERVICE_STATE";
+
+    /**
      * Activity Action: Send a message to someone specified by the data.
      * <p>Input: {@link #getData} is URI describing the target.
      * <p>Output: nothing.
