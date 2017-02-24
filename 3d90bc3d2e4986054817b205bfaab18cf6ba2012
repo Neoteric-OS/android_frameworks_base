@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7bed862_adfce5b3",
+        "filename": "telephony/java/com/android/ims/ImsStreamMediaProfile.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-24T01:53:42Z",
+      "side": 1,
+      "message": "Are these changes still needed for now if I\u0027m putting RTT into the call type as a bit field?",
+      "revId": "3d90bc3d2e4986054817b205bfaab18cf6ba2012",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f95f0829_de554d92",
+        "filename": "telephony/java/com/android/ims/internal/IImsCallSession.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-24T01:53:42Z",
+      "side": 1,
+      "message": "Will the IMS stack be responsible for ensuring proper encoding of messages sent over the network?",
+      "range": {
+        "startLine": 277,
+        "startChar": 24,
+        "endLine": 277,
+        "endChar": 44
+      },
+      "revId": "3d90bc3d2e4986054817b205bfaab18cf6ba2012",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "173e48ec_62961f61",
+        "filename": "telephony/java/com/android/ims/internal/IImsCallSessionListener.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-24T01:53:42Z",
+      "side": 1,
+      "message": "This needs an additional argument for the requested ImsCallProfile to be analogous with sendRttModifyRequest.",
+      "revId": "3d90bc3d2e4986054817b205bfaab18cf6ba2012",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

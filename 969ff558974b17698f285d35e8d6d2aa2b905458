@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1c36cbf2_b1d1852c",
+        "filename": "telephony/java/com/android/ims/ImsCallProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-24T01:53:42Z",
+      "side": 1,
+      "message": "I will upload a CL changing call types to a bit field.",
+      "parentUuid": "053c5b96_9b5cc159",
+      "range": {
+        "startLine": 233,
+        "startChar": 19,
+        "endLine": 233,
+        "endChar": 29
+      },
+      "revId": "969ff558974b17698f285d35e8d6d2aa2b905458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "022ce9fd_a16ebb7d",
         "filename": "telephony/java/com/android/ims/internal/IImsCallSession.aidl",
         "patchSetId": 1
