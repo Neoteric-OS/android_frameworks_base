@@ -21,6 +21,7 @@ import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.MetricsProto;
 import com.android.internal.os.ProcessCpuTracker;
 import com.android.server.Watchdog;
+import com.android.server.am.BinderTransaction.BinderProcsInfo;
 
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
@@ -762,6 +763,8 @@ class AppErrors {
 
         boolean isSilentANR;
 
+        BinderProcsInfo binderProcsInfo = ActivityManagerService.getBinderTransactionInfo(app.pid);
+
         synchronized (mService) {
             // PowerManager.reboot() can block for a long time, so ignore ANRs while shutting down.
             if (mService.mShuttingDown) {
@@ -801,20 +804,26 @@ class AppErrors {
                 }
                 if (parentPid != app.pid) firstPids.add(parentPid);
 
-                if (MY_PID != app.pid && MY_PID != parentPid) firstPids.add(MY_PID);
+                // Dump PIDs which are connected with the ANR process by binder.
+                for (Integer pid : binderProcsInfo.javaPids) {
+                    if (!firstPids.contains(pid)) {
+                        firstPids.add(pid);
+                    }
+                }
+
+                // Add system_server process to lastPids if it is not included in firstPids.
+                if (MY_PID != app.pid && MY_PID != parentPid && !firstPids.contains(MY_PID)) {
+                    lastPids.put(MY_PID, Boolean.TRUE);
+                }
 
                 for (int i = mService.mLruProcesses.size() - 1; i >= 0; i--) {
                     ProcessRecord r = mService.mLruProcesses.get(i);
                     if (r != null && r.thread != null) {
                         int pid = r.pid;
-                        if (pid > 0 && pid != app.pid && pid != parentPid && pid != MY_PID) {
-                            if (r.persistent) {
-                                firstPids.add(pid);
-                                if (DEBUG_ANR) Slog.i(TAG, "Adding persistent proc: " + r);
-                            } else {
-                                lastPids.put(pid, Boolean.TRUE);
-                                if (DEBUG_ANR) Slog.i(TAG, "Adding ANR proc: " + r);
-                            }
+                        if (pid > 0 && pid != app.pid && pid != parentPid && pid != MY_PID
+                                && !firstPids.contains(pid)) {
+                            lastPids.put(pid, Boolean.TRUE);
+                            if (DEBUG_ANR) Slog.i(TAG, "Adding ANR proc: " + r);
                         }
                     }
                 }
@@ -869,7 +878,8 @@ class AppErrors {
         }
 
         mService.addErrorToDropBox("anr", app, app.processName, activity, parent, annotation,
-                cpuInfo, tracesFile, null);
+                cpuInfo, tracesFile, null,
+                binderProcsInfo != null ? binderProcsInfo.rawInfo : null);
 
         if (mService.mController != null) {
             try {

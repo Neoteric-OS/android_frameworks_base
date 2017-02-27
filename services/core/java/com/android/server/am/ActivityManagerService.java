@@ -51,6 +51,7 @@ import com.android.server.SystemService;
 import com.android.server.SystemServiceManager;
 import com.android.server.Watchdog;
 import com.android.server.am.ActivityStack.ActivityState;
+import com.android.server.am.BinderTransaction.BinderProcsInfo;
 import com.android.server.firewall.IntentFirewall;
 import com.android.server.pm.Installer;
 import com.android.server.pm.Installer.InstallerException;
@@ -505,7 +506,7 @@ public final class ActivityManagerService extends ActivityManagerNative
     static final String[] EMPTY_STRING_ARRAY = new String[0];
 
     // How many bytes to write into the dropbox log before truncating
-    static final int DROPBOX_MAX_SIZE = 192 * 1024;
+    static final int DROPBOX_MAX_SIZE = 512 * 1024;
     // Assumes logcat entries average around 100 bytes; that's not perfect stack traces count
     // as one line, but close enough for now.
     static final int RESERVED_BYTES_PER_LOGCAT_LINE = 100;
@@ -5407,6 +5408,11 @@ public final class ActivityManagerService extends ActivityManagerNative
         } finally {
             observer.stopWatching();
         }
+    }
+
+    public static BinderProcsInfo getBinderTransactionInfo(int aStartPid) {
+        BinderTransaction binderTransaction = new BinderTransaction();
+        return binderTransaction.getInfo(aStartPid);
     }
 
     final void logAppTooSlow(ProcessRecord app, long startTime, String msg) {
@@ -13804,6 +13810,28 @@ public final class ActivityManagerService extends ActivityManagerNative
             ActivityRecord parent, String subject,
             final String report, final File dataFile,
             final ApplicationErrorReport.CrashInfo crashInfo) {
+        addErrorToDropBox(eventType, process, processName, activity,
+                parent, subject, report, dataFile, crashInfo, null);
+    }
+
+    /**
+     * Write a description of an error (crash, WTF, ANR) to the drop box.
+     * @param eventType to include in the drop box tag ("crash", "wtf", etc.)
+     * @param process which caused the error, null means the system server
+     * @param activity which triggered the error, null if unknown
+     * @param parent activity related to the error, null if unknown
+     * @param subject line related to the error, null if absent
+     * @param report in long form describing the error, null if absent
+     * @param dataFile text file to include in the report, null if none
+     * @param crashInfo giving an application stack trace, null if absent
+     * @param extraStrings lines to include in the report, null if none
+     */
+    public void addErrorToDropBox(final String eventType,
+            ProcessRecord process, final String processName, ActivityRecord activity,
+            ActivityRecord parent, String subject,
+            final String report, final File dataFile,
+            final ApplicationErrorReport.CrashInfo crashInfo,
+            ArrayList<String> extraStrings) {
         // NOTE -- this must never acquire the ActivityManagerService lock,
         // otherwise the watchdog may be prevented from resetting the system.
 
@@ -13848,6 +13876,15 @@ public final class ActivityManagerService extends ActivityManagerNative
             sb.append("Debugger: Connected\n");
         }
         sb.append("\n");
+
+        // Add extra strings to report.
+        if (extraStrings != null && !extraStrings.isEmpty()) {
+            for (String line: extraStrings) {
+                sb.append(line);
+                sb.append("\n");
+            }
+            sb.append("\n");
+        }
 
         // Do the rest in a worker thread to avoid blocking the caller on I/O
         // (After this point, we shouldn't access AMS internal data structures.)
