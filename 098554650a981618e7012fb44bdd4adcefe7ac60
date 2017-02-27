@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "72038145_14332869",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4348,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-02-27T11:05:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "519c915a_83da50cf",
+      "range": {
+        "startLine": 4334,
+        "startChar": 0,
+        "endLine": 4348,
+        "endChar": 5
+      },
+      "revId": "098554650a981618e7012fb44bdd4adcefe7ac60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea38fde6_ec4b0e6b",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-21T09:05:23Z",
       "side": 1,
       "message": "Given you have a return statement in the else branch, can you just invert this if and move the AVAILABLE callback just before the others? Like so:\n\n    if (nri.mPendingIntent !\u003d null) {\n        sendPendingIntentForRequest(...\n        // Attempt no...\n        return;\n    }\n\n    callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_AVAILABLE, 0);\n    callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_CAP_CHANGED, 0);\n    ...",
+      "range": {
+        "startLine": 5321,
+        "startChar": 12,
+        "endLine": 5321,
+        "endChar": 88
+      },
+      "revId": "098554650a981618e7012fb44bdd4adcefe7ac60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1ab8d97_28c43f24",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5321,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-02-27T11:05:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea38fde6_ec4b0e6b",
       "range": {
         "startLine": 5321,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f784fc09_21b4e4f5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5334,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-02-27T11:05:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06d3bdae_df153a3a",
+      "range": {
+        "startLine": 5334,
+        "startChar": 12,
+        "endLine": 5334,
+        "endChar": 88
+      },
+      "revId": "098554650a981618e7012fb44bdd4adcefe7ac60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca7fa268_7c0d9f29",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-02-21T09:05:23Z",
       "side": 1,
       "message": "Optional: rename this to something like testAdditionalStateCallbacks?",
+      "range": {
+        "startLine": 1844,
+        "startChar": 16,
+        "endLine": 1844,
+        "endChar": 42
+      },
+      "revId": "098554650a981618e7012fb44bdd4adcefe7ac60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40ef29b5_049adfc2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1844,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-02-27T11:05:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca7fa268_7c0d9f29",
       "range": {
         "startLine": 1844,
         "startChar": 16,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9c12abf7_8674840d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-02-27T11:05:29Z",
+      "side": 1,
+      "message": "Removed altogether.",
+      "parentUuid": "3ba561da_d9d96f50",
+      "range": {
+        "startLine": 1846,
+        "startChar": 14,
+        "endLine": 1846,
+        "endChar": 33
+      },
+      "revId": "098554650a981618e7012fb44bdd4adcefe7ac60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "135f9791_204c01b0",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 3
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "7cb5feab_695593e5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1887,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-02-27T11:05:29Z",
+      "side": 1,
+      "message": "Massively refactored.",
+      "parentUuid": "135f9791_204c01b0",
+      "revId": "098554650a981618e7012fb44bdd4adcefe7ac60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75b6432d_fd9af805",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 3
@@ -145,6 +283,30 @@
       "writtenOn": "2017-02-21T09:05:23Z",
       "side": 1,
       "message": "Is is the plan to delete this code? If so, add a TODO.",
+      "range": {
+        "startLine": 1888,
+        "startChar": 8,
+        "endLine": 1888,
+        "endChar": 90
+      },
+      "revId": "098554650a981618e7012fb44bdd4adcefe7ac60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bc1fd54_959c9d64",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1888,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-02-27T11:05:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75b6432d_fd9af805",
       "range": {
         "startLine": 1888,
         "startChar": 8,
