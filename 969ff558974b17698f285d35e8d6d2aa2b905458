@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "eef84e64_d6e00a76",
+        "filename": "telephony/java/com/android/ims/ImsCallProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1135723
+      },
+      "writtenOn": "2017-02-27T19:44:28Z",
+      "side": 1,
+      "message": "I think its too late for this change. We will have big impact on proprietary. Will your change only be limited to AOSP or will it impact vendor too?",
+      "parentUuid": "1c36cbf2_b1d1852c",
+      "range": {
+        "startLine": 233,
+        "startChar": 19,
+        "endLine": 233,
+        "endChar": 29
+      },
+      "revId": "969ff558974b17698f285d35e8d6d2aa2b905458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "022ce9fd_a16ebb7d",
         "filename": "telephony/java/com/android/ims/internal/IImsCallSession.aidl",
         "patchSetId": 1

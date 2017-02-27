@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "1a794505_ede7685d",
+        "filename": "telephony/java/com/android/ims/internal/IImsCallSession.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1135723
+      },
+      "writtenOn": "2017-02-27T19:44:28Z",
+      "side": 1,
+      "message": "Yes. Actually RIL will do the conversion to UTF8",
+      "parentUuid": "f95f0829_de554d92",
+      "range": {
+        "startLine": 277,
+        "startChar": 24,
+        "endLine": 277,
+        "endChar": 44
+      },
+      "revId": "3d90bc3d2e4986054817b205bfaab18cf6ba2012",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "173e48ec_62961f61",
         "filename": "telephony/java/com/android/ims/internal/IImsCallSessionListener.aidl",
         "patchSetId": 3
@@ -53,6 +77,24 @@
       "writtenOn": "2017-02-24T01:53:42Z",
       "side": 1,
       "message": "This needs an additional argument for the requested ImsCallProfile to be analogous with sendRttModifyRequest.",
+      "revId": "3d90bc3d2e4986054817b205bfaab18cf6ba2012",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc01c274_1540cf32",
+        "filename": "telephony/java/com/android/ims/internal/IImsCallSessionListener.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1135723
+      },
+      "writtenOn": "2017-02-27T19:44:28Z",
+      "side": 1,
+      "message": "1) for request - sendRttModifyRequest, we would receive response via callSessionRttModifyResponseReceived\n2) callSessionRttModifyRequestReceived - is for the incoming upgrade request. User or DUT can accept or reject it. Response would be sent via sendRttModifyResponse\n\nPlease let me know if any further concerns",
+      "parentUuid": "173e48ec_62961f61",
       "revId": "3d90bc3d2e4986054817b205bfaab18cf6ba2012",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
