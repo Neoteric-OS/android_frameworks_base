@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69755539_6f165b76",
+        "filename": "api/current.txt",
+        "patchSetId": 29
+      },
+      "lineNbr": 23736,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-28T22:34:24Z",
+      "side": 1,
+      "message": "CRYPT_",
+      "revId": "470cc5433517242aa9a60ee88e7052ccc0b16007",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbebe64f_641d632f",
+        "filename": "api/current.txt",
+        "patchSetId": 29
+      },
+      "lineNbr": 23737,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-28T22:34:24Z",
+      "side": 1,
+      "message": "AUTH_",
+      "revId": "470cc5433517242aa9a60ee88e7052ccc0b16007",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e87ee05_d0326b76",
+        "filename": "api/current.txt",
+        "patchSetId": 29
+      },
+      "lineNbr": 23746,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-28T22:34:24Z",
+      "side": 1,
+      "message": "move to builder()",
+      "range": {
+        "startLine": 23746,
+        "startChar": 23,
+        "endLine": 23746,
+        "endChar": 40
+      },
+      "revId": "470cc5433517242aa9a60ee88e7052ccc0b16007",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef37afc0_581ff436",
+        "filename": "api/current.txt",
+        "patchSetId": 29
+      },
+      "lineNbr": 23750,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-28T22:34:24Z",
+      "side": 1,
+      "message": "close()",
+      "range": {
+        "startLine": 23750,
+        "startChar": 23,
+        "endLine": 23750,
+        "endChar": 42
+      },
+      "revId": "470cc5433517242aa9a60ee88e7052ccc0b16007",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b483f79_caae187e",
+        "filename": "api/current.txt",
+        "patchSetId": 29
+      },
+      "lineNbr": 23751,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-28T22:34:24Z",
+      "side": 1,
+      "message": "IpSecUdpEncapsulationSocket() (implements auto-closeable) **\n\nIpSecManager.UdpEncapsulationSocket??",
+      "range": {
+        "startLine": 23751,
+        "startChar": 41,
+        "endLine": 23751,
+        "endChar": 67
+      },
+      "revId": "470cc5433517242aa9a60ee88e7052ccc0b16007",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "322ddda2_5842e12d",
+        "filename": "api/current.txt",
+        "patchSetId": 29
+      },
+      "lineNbr": 23752,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-28T22:34:24Z",
+      "side": 1,
+      "message": "auto-closeable",
+      "range": {
+        "startLine": 23752,
+        "startChar": 42,
+        "endLine": 23752,
+        "endChar": 67
+      },
+      "revId": "470cc5433517242aa9a60ee88e7052ccc0b16007",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8745568_f7142df5",
+        "filename": "api/current.txt",
+        "patchSetId": 29
+      },
+      "lineNbr": 23755,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-28T22:34:24Z",
+      "side": 1,
+      "message": "throw ReservationFailure of some kind.\n\noverride for void w/o return",
+      "range": {
+        "startLine": 23755,
+        "startChar": 63,
+        "endLine": 23755,
+        "endChar": 66
+      },
+      "revId": "470cc5433517242aa9a60ee88e7052ccc0b16007",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "396a48b2_93769127",
+        "filename": "api/current.txt",
+        "patchSetId": 29
+      },
+      "lineNbr": 23758,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-28T22:34:24Z",
+      "side": 1,
+      "message": "static",
+      "range": {
+        "startLine": 23758,
+        "startChar": 15,
+        "endLine": 23758,
+        "endChar": 20
+      },
+      "revId": "470cc5433517242aa9a60ee88e7052ccc0b16007",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4fc198b0_e2b401ef",
+        "filename": "api/current.txt",
+        "patchSetId": 29
+      },
+      "lineNbr": 23762,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-28T22:34:24Z",
+      "side": 1,
+      "message": "implements auto-closeable",
+      "range": {
+        "startLine": 23762,
+        "startChar": 21,
+        "endLine": 23762,
+        "endChar": 35
+      },
+      "revId": "470cc5433517242aa9a60ee88e7052ccc0b16007",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1183ca0_5d556fd1",
+        "filename": "api/current.txt",
+        "patchSetId": 29
+      },
+      "lineNbr": 23773,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-28T22:34:24Z",
+      "side": 1,
+      "message": "overload to avoid explicit passing of fixed-value argument",
+      "range": {
+        "startLine": 23773,
+        "startChar": 53,
+        "endLine": 23773,
+        "endChar": 73
+      },
+      "revId": "470cc5433517242aa9a60ee88e7052ccc0b16007",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
