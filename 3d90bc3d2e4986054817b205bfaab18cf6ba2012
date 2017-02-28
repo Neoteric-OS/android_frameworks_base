@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a6577d2_a9262247",
+        "filename": "telephony/java/com/android/ims/ImsStreamMediaProfile.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-28T01:29:09Z",
+      "side": 1,
+      "message": "Disregard",
+      "parentUuid": "d7bed862_adfce5b3",
+      "revId": "3d90bc3d2e4986054817b205bfaab18cf6ba2012",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f95f0829_de554d92",
         "filename": "telephony/java/com/android/ims/internal/IImsCallSession.aidl",
         "patchSetId": 3
@@ -95,6 +113,24 @@
       "side": 1,
       "message": "1) for request - sendRttModifyRequest, we would receive response via callSessionRttModifyResponseReceived\n2) callSessionRttModifyRequestReceived - is for the incoming upgrade request. User or DUT can accept or reject it. Response would be sent via sendRttModifyResponse\n\nPlease let me know if any further concerns",
       "parentUuid": "173e48ec_62961f61",
+      "revId": "3d90bc3d2e4986054817b205bfaab18cf6ba2012",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a96abbb1_d97726e7",
+        "filename": "telephony/java/com/android/ims/internal/IImsCallSessionListener.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-28T01:29:09Z",
+      "side": 1,
+      "message": "sendRttModifyRequest has a \"toProfile\" argument for indicating the ImsCallProfile to modify to. When the modify request is received by the remote user, this method would be called. Shouldn\u0027t it have an ImsCallProfile argument indicating what profile was requested?",
+      "parentUuid": "cc01c274_1540cf32",
       "revId": "3d90bc3d2e4986054817b205bfaab18cf6ba2012",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false

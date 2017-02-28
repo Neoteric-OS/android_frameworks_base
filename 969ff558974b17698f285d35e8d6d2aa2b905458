@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "3882e253_c0c88f81",
+        "filename": "telephony/java/com/android/ims/ImsCallProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-28T01:29:09Z",
+      "side": 1,
+      "message": "Yeah you\u0027re right. I had a closer look at how your proprietary code handles these and there\u0027ll need to be a lot of changes. Let\u0027s put RTT into ImsStreamMediaProfile after all.",
+      "parentUuid": "eef84e64_d6e00a76",
+      "range": {
+        "startLine": 233,
+        "startChar": 19,
+        "endLine": 233,
+        "endChar": 29
+      },
+      "revId": "969ff558974b17698f285d35e8d6d2aa2b905458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "022ce9fd_a16ebb7d",
         "filename": "telephony/java/com/android/ims/internal/IImsCallSession.aidl",
         "patchSetId": 1
