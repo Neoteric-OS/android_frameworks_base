@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af2371c2_7ab86cdf",
+        "filename": "api/current.txt",
+        "patchSetId": 26
+      },
+      "lineNbr": 23766,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-02-28T19:19:04Z",
+      "side": 1,
+      "message": "This is one of the major pain points in the API. We don\u0027t want to support (since we can\u0027t fathom the value) Tunnel mode on a single socket or transport mode on a network. They look very similar to someone making them, but it\u0027s a question of how we discourage people from doing the wrong thing (since it will inevitably throw an error). There is one \"nuclear\" option, which is to have them build separate objects. Either they could share nothing OR the final \"build\" method could be \"buildTunnelMode()\" \"buildTransportMode()\" and spit out two separate transform objects that way? Really I haven\u0027t found a single answer to this that doesn\u0027t have some problem.",
+      "parentUuid": "e6384d7d_7a91f360",
+      "range": {
+        "startLine": 23766,
+        "startChar": 22,
+        "endLine": 23766,
+        "endChar": 36
+      },
+      "revId": "6d7e51aafe057541e396b03dac847b46e629e998",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2cadc7a_6913f19a",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 26
