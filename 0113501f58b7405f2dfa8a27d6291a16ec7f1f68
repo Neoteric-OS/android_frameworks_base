@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63f41451_11ac930a",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-02-28T23:01:21Z",
+      "side": 1,
+      "message": "Should we specify here that it must be a transport mode transform? The API seems indifferent to that.",
+      "range": {
+        "startLine": 40,
+        "startChar": 73,
+        "endLine": 40,
+        "endChar": 87
+      },
+      "revId": "0113501f58b7405f2dfa8a27d6291a16ec7f1f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca2ee54c_bd2cf743",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-02-28T23:01:21Z",
+      "side": 1,
+      "message": "Wording is confusing here. This is my suggested rewording (not including @links)\n\n\nThis class contains methods for managing IPsec sessions, which will perform kernel-space\nencryption and decryption of socket or Network traffic.\n\n\u003cp\u003e\nTo establish an IPsec connection for a socket, users first must follow these steps.\n\u003col\u003e\n\u003cli\u003eCreate an IpSecTransform.\n\u003cli\u003eReady the transform by calling activateTransform.\n\u003cli\u003eApply the transform to a socket with applyTransportModeTransform.\n\u003c/ol\u003e\n\n\u003cp\u003e\nUsers should take care to clean up after completion by calling removeTransportModeTransform and then calling deactivateTransform.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 88
+      },
+      "revId": "0113501f58b7405f2dfa8a27d6291a16ec7f1f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b00e20f5_ed774298",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-02-28T23:01:21Z",
+      "side": 1,
+      "message": "I think putting SPI on both sides of this relationship implies that SPIs must be globally unique. If what you are actually saying is that each remoteAddr gets its own SPI space, then this wording is clearer,\n\n\"SPIs must be unique for each remote address.\"",
+      "range": {
+        "startLine": 97,
+        "startChar": 25,
+        "endLine": 97,
+        "endChar": 92
+      },
+      "revId": "0113501f58b7405f2dfa8a27d6291a16ec7f1f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71249513_4f2b0c0f",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-02-28T23:01:21Z",
+      "side": 1,
+      "message": "Why would callers care what their SPI is?",
+      "range": {
+        "startLine": 99,
+        "startChar": 14,
+        "endLine": 99,
+        "endChar": 26
+      },
+      "revId": "0113501f58b7405f2dfa8a27d6291a16ec7f1f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac2b3422_cdf89b38",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-02-28T23:01:21Z",
+      "side": 1,
+      "message": "Do you think callers will want a way to distinguish the two cases? Or do we just care about getting a useful error string in the exception for debugging purposes?",
+      "range": {
+        "startLine": 115,
+        "startChar": 47,
+        "endLine": 115,
+        "endChar": 86
+      },
+      "revId": "0113501f58b7405f2dfa8a27d6291a16ec7f1f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4fa0e915_71c2cb4a",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-02-28T23:01:21Z",
+      "side": 1,
+      "message": "missing . at end",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 86
+      },
+      "revId": "0113501f58b7405f2dfa8a27d6291a16ec7f1f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd563cf6_69b277b8",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-02-28T23:01:21Z",
+      "side": 1,
+      "message": "Are we married to the verbs, \u0027apply\u0027 and \u0027activate\u0027? I don\u0027t think they do an adequate job informing the user how they should relate to each other. I know it\u0027s explained in the comments, but different verbs could help emphasize the correct usage. (also, \u0027remove\u0027 isn\u0027t a good antonym for \u0027apply\u0027)\n\ne.g.\nload, activate, deactivate, unload\nload, enable, disable, unload",
+      "range": {
+        "startLine": 120,
+        "startChar": 7,
+        "endLine": 120,
+        "endChar": 22
+      },
+      "revId": "0113501f58b7405f2dfa8a27d6291a16ec7f1f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32d7bc2c_216fe7ab",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-02-28T23:01:21Z",
+      "side": 1,
+      "message": "What state is the Socket object expected to be in when this is called? i.e. should bind() happen before or after applyTransform?",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 43
+      },
+      "revId": "0113501f58b7405f2dfa8a27d6291a16ec7f1f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d613c9e9_b633e2cb",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-02-28T23:01:21Z",
+      "side": 1,
+      "message": "Do we want to enshrine the max number in the API as a static constant? (No is a valid answer.)",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 88
+      },
+      "revId": "0113501f58b7405f2dfa8a27d6291a16ec7f1f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f852b72_870abe14",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-02-28T23:01:21Z",
+      "side": 1,
+      "message": "Suggest rewording:\n\nDeactivate an IpSecTransform and free all related resources that are managed by the system.",
+      "range": {
+        "startLine": 248,
+        "startChar": 7,
+        "endLine": 249,
+        "endChar": 37
+      },
+      "revId": "0113501f58b7405f2dfa8a27d6291a16ec7f1f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9535418d_b3b06153",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-02-28T23:01:21Z",
+      "side": 1,
+      "message": "refusing \u003d\u003d IOException?",
+      "range": {
+        "startLine": 252,
+        "startChar": 7,
+        "endLine": 252,
+        "endChar": 15
+      },
+      "revId": "0113501f58b7405f2dfa8a27d6291a16ec7f1f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "372ca376_394d9938",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-02-28T23:01:21Z",
+      "side": 1,
+      "message": "suggest moving this comment to the inside of the function body.",
+      "range": {
+        "startLine": 299,
+        "startChar": 1,
+        "endLine": 303,
+        "endChar": 14
+      },
+      "revId": "0113501f58b7405f2dfa8a27d6291a16ec7f1f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
