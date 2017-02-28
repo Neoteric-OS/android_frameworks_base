@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "10a661c1_eb7fc443",
+        "filename": "api/current.txt",
+        "patchSetId": 26
+      },
+      "lineNbr": 23766,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-02-28T23:01:21Z",
+      "side": 1,
+      "message": "\"Discourage users from doing the wrong thing\" is a good reason for the shape of the API. The fact that a tunnel mode transform and a transport mode transform are so similar is I suppose an implementation detail. If a user\u0027s perspective is something like applyTransportModeTransform(makeTransportModeTransform()) then I think that neatly avoids the confusion.\n\nThrowing an exception for applyTransporModeTransform(makeTunnelModeTransform()) seems reasonable too.",
+      "parentUuid": "af2371c2_7ab86cdf",
+      "range": {
+        "startLine": 23766,
+        "startChar": 22,
+        "endLine": 23766,
+        "endChar": 36
+      },
+      "revId": "6d7e51aafe057541e396b03dac847b46e629e998",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2cadc7a_6913f19a",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 26
