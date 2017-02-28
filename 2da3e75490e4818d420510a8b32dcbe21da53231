@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e51bf557_7d9f9c25",
+        "filename": "core/jni/android_view_InputChannel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1010334
+      },
+      "writtenOn": "2017-02-28T23:45:35Z",
+      "side": 1,
+      "message": "indent 8 when wrapping (other code in this file appears to follow this convention)",
+      "revId": "2da3e75490e4818d420510a8b32dcbe21da53231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
