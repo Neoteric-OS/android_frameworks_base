@@ -27725,6 +27725,7 @@ package android.net.wifi.hotspot2.pps {
     method public void setCertType(java.lang.String);
     method public boolean validate();
     method public void writeToParcel(android.os.Parcel, int);
+    field public static final java.lang.String CERT_TYPE_X509V3 = "x509v3";
     field public static final android.os.Parcelable.Creator<android.net.wifi.hotspot2.pps.Credential.CertificateCredential> CREATOR;
   }
 
@@ -27761,6 +27762,9 @@ package android.net.wifi.hotspot2.pps {
     method public void setUsername(java.lang.String);
     method public boolean validate();
     method public void writeToParcel(android.os.Parcel, int);
+    field public static final java.lang.String AUTH_METHOD_MSCHAP = "MS-CHAP";
+    field public static final java.lang.String AUTH_METHOD_MSCHAPV2 = "MS-CHAP-V2";
+    field public static final java.lang.String AUTH_METHOD_PAP = "PAP";
     field public static final android.os.Parcelable.Creator<android.net.wifi.hotspot2.pps.Credential.UserCredential> CREATOR;
   }
 
