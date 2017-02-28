@@ -302,7 +302,6 @@ class AppErrors {
     void crashApplication(ProcessRecord r, ApplicationErrorReport.CrashInfo crashInfo) {
         final int callingPid = Binder.getCallingPid();
         final int callingUid = Binder.getCallingUid();
-
         final long origId = Binder.clearCallingIdentity();
         try {
             crashApplicationInner(r, crashInfo, callingPid, callingUid);
@@ -312,7 +311,7 @@ class AppErrors {
     }
 
     void crashApplicationInner(ProcessRecord r, ApplicationErrorReport.CrashInfo crashInfo,
-            int callingPid, int callingUid) {
+                               int callingPid, int callingUid) {
         long timeMillis = System.currentTimeMillis();
         String shortMsg = crashInfo.exceptionClassName;
         String longMsg = crashInfo.exceptionMessage;
