@@ -117,6 +117,30 @@
       "revId": "e743150133a15bc50cd457ba1a70d795c70eec04",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f569280_801586e2",
+        "filename": "telephony/java/com/android/ims/internal/IImsCallSessionListener.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-02-28T03:17:26Z",
+      "side": 1,
+      "message": "I\u0027m providing a CL with these values in a new location:\nhttps://android-review.googlesource.com/#/c/340810/4/telecomm/java/android/telecom/Connection.java (see RttModifyStatus)",
+      "parentUuid": "35312f86_50e96c61",
+      "range": {
+        "startLine": 144,
+        "startChar": 16,
+        "endLine": 144,
+        "endChar": 26
+      },
+      "revId": "e743150133a15bc50cd457ba1a70d795c70eec04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
