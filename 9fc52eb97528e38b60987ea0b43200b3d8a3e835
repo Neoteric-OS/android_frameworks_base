@@ -1,0 +1,855 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cdfa750_499934f2",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Do you need the application context here?",
+      "range": {
+        "startLine": 245,
+        "startChar": 20,
+        "endLine": 245,
+        "endChar": 58
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c3db9f6_cefa0df6",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "No longer needed?",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 37
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e291fb45_5aa2e4bf",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "No longer needed?",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 19
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd71dfb6_9e051c1e",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Delete, now that transforms are no longer unidirectional.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 18
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44cf5b08_62c6900e",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Given that this is @hide, maybe you don\u0027t need So many accessors and can use public members?",
+      "range": {
+        "startLine": 109,
+        "startChar": 19,
+        "endLine": 109,
+        "endChar": 29
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e01c374_2e7ea4ef",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Include the SPI in the message?\n\nmsg + \" (spi\" + spi + \")\"",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 23
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72d2ba66_11f8d8ad",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 116,
+        "startChar": 68,
+        "endLine": 116,
+        "endChar": 100
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ccfffec_c218ec54",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "IPsec",
+      "range": {
+        "startLine": 162,
+        "startChar": 62,
+        "endLine": 162,
+        "endChar": 68
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc41aa71_83d381ed",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Remove mention of Networks, since that part is only system API?",
+      "range": {
+        "startLine": 209,
+        "startChar": 42,
+        "endLine": 209,
+        "endChar": 53
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f322d60_ec435aa6",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Not any more",
+      "range": {
+        "startLine": 210,
+        "startChar": 17,
+        "endLine": 210,
+        "endChar": 68
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4329f300_d67fbc11",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Not any more, or not entirely",
+      "range": {
+        "startLine": 210,
+        "startChar": 70,
+        "endLine": 210,
+        "endChar": 88
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1b686f7_258df236",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Remove since it\u0027s @systemapi.",
+      "range": {
+        "startLine": 211,
+        "startChar": 51,
+        "endLine": 211,
+        "endChar": 92
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f85792ea_36233292",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Would just replace with, \"The number of Transform objects that can be created by a particular application is limited, and attempting to create more than this number will result in an IOException. Therefore, unused Transform objects should be removed by calling...\"",
+      "range": {
+        "startLine": 213,
+        "startChar": 92,
+        "endLine": 217,
+        "endChar": 14
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5c720ab_adde290c",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Not any more.",
+      "range": {
+        "startLine": 221,
+        "startChar": 90,
+        "endLine": 222,
+        "endChar": 99
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9730741_dca32826",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "This should say \"inbound transform\", right? Since we guarantee outbound SPIs are unique?",
+      "range": {
+        "startLine": 223,
+        "startChar": 80,
+        "endLine": 224,
+        "endChar": 22
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bdcc6394_47db61cb",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Not any more.",
+      "range": {
+        "startLine": 250,
+        "startChar": 10,
+        "endLine": 251,
+        "endChar": 83
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ab48784_ff2c2228",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 252,
+        "startChar": 57,
+        "endLine": 252,
+        "endChar": 67
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2be600a_ad8ee4e5",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "These are implementation details and design rationale, so they should not go into the javadoc but in a fmethod-level comment.",
+      "range": {
+        "startLine": 283,
+        "startChar": 10,
+        "endLine": 287,
+        "endChar": 24
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5212b2e_8649eed6",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "If we have decided that activateTransform() won\u0027t open the port, then remove this text.",
+      "range": {
+        "startLine": 291,
+        "startChar": 18,
+        "endLine": 292,
+        "endChar": 91
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f548e1d2_852ae106",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Say whether callers can pass in 0 and cause the system to reserve a port for them. getsockname is a public API:\n\nhttps://developer.android.com/reference/android/system/Os.html#getsockname(java.io.FileDescriptor)",
+      "range": {
+        "startLine": 294,
+        "startChar": 21,
+        "endLine": 294,
+        "endChar": 50
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10690604_3c3dd426",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Be consistent with capitalization and spacing in the documentation. Suggest using the IETF spelling \"IPsec\" everywhere.",
+      "range": {
+        "startLine": 27,
+        "startChar": 92,
+        "endLine": 27,
+        "endChar": 97
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c3c5588_37cdfdba",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Lowercase s?",
+      "range": {
+        "startLine": 36,
+        "startChar": 21,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7054739a_0ae324e1",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Indicates that this IPsec transform applies...",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 12
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88c6b45a_a714533b",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Update docs.",
+      "range": {
+        "startLine": 42,
+        "startChar": 65,
+        "endLine": 43,
+        "endChar": 24
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85092a07_8dcf8f19",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Isn\u0027t it the default for transport as well?",
+      "range": {
+        "startLine": 66,
+        "startChar": 84,
+        "endLine": 67,
+        "endChar": 21
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a1de531_73f39e91",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "This text is confusing. What is the standard IKE implementatoin?",
+      "range": {
+        "startLine": 74,
+        "startChar": 53,
+        "endLine": 74,
+        "endChar": 90
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1905a0ec_41891c36",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Do we need this? @hide?",
+      "range": {
+        "startLine": 80,
+        "startChar": 81,
+        "endLine": 80,
+        "endChar": 98
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dbd13aaf_83453f06",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "one",
+      "range": {
+        "startLine": 203,
+        "startChar": 58,
+        "endLine": 203,
+        "endChar": 60
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f566a1ec_07f7a487",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "one of the build methods?",
+      "range": {
+        "startLine": 205,
+        "startChar": 31,
+        "endLine": 205,
+        "endChar": 49
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "793e9881_b16e1265",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "We should say *somewhere* in the docs that if the user does not specify SPI, auth, or enc for a particular direction, then that direction will not be transformed at all, potentially leading to traffic being sent in the clear.",
+      "range": {
+        "startLine": 206,
+        "startChar": 5,
+        "endLine": 206,
+        "endChar": 6
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45bd36f1_0026ecb8",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Update to buildTransportModeTransform.",
+      "range": {
+        "startLine": 207,
+        "startChar": 20,
+        "endLine": 207,
+        "endChar": 45
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3320e0ab_a41891ac",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Might want to say that for this to work, the user must also call setSpi for that direction.",
+      "range": {
+        "startLine": 214,
+        "startChar": 79,
+        "endLine": 214,
+        "endChar": 80
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26f7aa0a_98091fdf",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Ditto on perhaps saying that setSpi needs to be called.",
+      "range": {
+        "startLine": 226,
+        "startChar": 69,
+        "endLine": 226,
+        "endChar": 70
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b2264c3_7e4ef6a7",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Update docs to refer to the fact that we can now reserve SPIs.",
+      "range": {
+        "startLine": 241,
+        "startChar": 10,
+        "endLine": 243,
+        "endChar": 20
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21702f56_de635ef6",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Two possibilities here:\n\n1. Require that localPort be one that was previously reserved\n   using openUdpEncapsulationSocket.\n2. Be very explicit in this docstring about what happens a)\n   if a port is specified and matches an open encap socket,\n   b) if a port is specified and doesn\u0027t match one of the\n   encap sockets that are currently open, c) if a port is\n   specified and no encap sockets have been open.",
+      "range": {
+        "startLine": 276,
+        "startChar": 46,
+        "endLine": 277,
+        "endChar": 36
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e06c973_8d47dc28",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "Might want to say that a value that is too low will be refused by the system, and how that will play out. Will this method cause an exception, will the transform fail to apply? Will the transform apply with no keepalive? etc.",
+      "range": {
+        "startLine": 292,
+        "startChar": 55,
+        "endLine": 292,
+        "endChar": 56
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4dcb52f5_72986a7d",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-02-28T05:31:11Z",
+      "side": 1,
+      "message": "... which is the one passed in via setViaNetwork? If so, @link.",
+      "range": {
+        "startLine": 326,
+        "startChar": 46,
+        "endLine": 326,
+        "endChar": 47
+      },
+      "revId": "9fc52eb97528e38b60987ea0b43200b3d8a3e835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
