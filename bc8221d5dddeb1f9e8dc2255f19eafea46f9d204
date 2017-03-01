@@ -48,6 +48,144 @@
     },
     {
       "key": {
+        "uuid": "4428f8ba_256e511d",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:33:14Z",
+      "side": 1,
+      "message": "InetAddress",
+      "range": {
+        "startLine": 44,
+        "startChar": 48,
+        "endLine": 44,
+        "endChar": 60
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "375a4fda_64384e4a",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:33:14Z",
+      "side": 1,
+      "message": "or reserved using reserveSecurityParameterIndex",
+      "range": {
+        "startLine": 46,
+        "startChar": 99,
+        "endLine": 46,
+        "endChar": 100
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d5de054_a712a26a",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:33:14Z",
+      "side": 1,
+      "message": "destination",
+      "range": {
+        "startLine": 109,
+        "startChar": 81,
+        "endLine": 109,
+        "endChar": 87
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fdf12efa_ea474bf3",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:33:14Z",
+      "side": 1,
+      "message": "destination",
+      "range": {
+        "startLine": 110,
+        "startChar": 25,
+        "endLine": 110,
+        "endChar": 31
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d567620f_df32beb0",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:33:14Z",
+      "side": 1,
+      "message": "Consider not mentioning IAE in the throws javadoc.",
+      "range": {
+        "startLine": 112,
+        "startChar": 19,
+        "endLine": 112,
+        "endChar": 43
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76e3a856_a13f0366",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:33:14Z",
+      "side": 1,
+      "message": "long line, wrap at 100 chars",
+      "range": {
+        "startLine": 147,
+        "startChar": 98,
+        "endLine": 147,
+        "endChar": 101
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2193c3f2_faa73366",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 31
@@ -64,6 +202,213 @@
         "startChar": 34,
         "endLine": 150,
         "endChar": 52
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d03ffc3_50f7bb21",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:33:14Z",
+      "side": 1,
+      "message": "transform",
+      "range": {
+        "startLine": 213,
+        "startChar": 52,
+        "endLine": 213,
+        "endChar": 60
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d19ae43e_418ad4e1",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:33:14Z",
+      "side": 1,
+      "message": "Javadoc?\n\n    /**\n     * Represents a bound UDP encapsulation socket.\n     */",
+      "range": {
+        "startLine": 251,
+        "startChar": 4,
+        "endLine": 251,
+        "endChar": 29
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb92fcd4_ee316829",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:33:14Z",
+      "side": 1,
+      "message": "used",
+      "range": {
+        "startLine": 311,
+        "startChar": 85,
+        "endLine": 311,
+        "endChar": 93
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "112be935_0b562f8f",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:33:14Z",
+      "side": 1,
+      "message": "Is this true? Maybe throw IAE if port \u003c 1 or port \u003e 65535.",
+      "range": {
+        "startLine": 319,
+        "startChar": 59,
+        "endLine": 320,
+        "endChar": 51
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2f3ae56_98c4472c",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:33:14Z",
+      "side": 1,
+      "message": "to the requested port for the lifetime of the object",
+      "range": {
+        "startLine": 322,
+        "startChar": 62,
+        "endLine": 322,
+        "endChar": 97
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "928ab04c_7ab21d11",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:33:14Z",
+      "side": 1,
+      "message": "that is bound to a free UDP port on the system.",
+      "range": {
+        "startLine": 336,
+        "startChar": 21,
+        "endLine": 336,
+        "endChar": 52
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf8b7f27_eeb25d50",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:33:14Z",
+      "side": 1,
+      "message": "used",
+      "range": {
+        "startLine": 339,
+        "startChar": 85,
+        "endLine": 339,
+        "endChar": 93
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4281979c_7fae6a40",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:33:14Z",
+      "side": 1,
+      "message": "Delete",
+      "range": {
+        "startLine": 346,
+        "startChar": 10,
+        "endLine": 347,
+        "endChar": 78
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c49d1700_d6e14c18",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:33:14Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 350,
+        "startChar": 62,
+        "endLine": 351,
+        "endChar": 24
       },
       "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
