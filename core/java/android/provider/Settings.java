@@ -6803,6 +6803,15 @@ public final class Settings {
         public static final String BLUETOOTH_DISABLED_PROFILES = "bluetooth_disabled_profiles";
 
         /**
+         * A package name which receives intents related to pairing and device permissions.
+         * This package needs to validate the pin (usually by showing it to the user, and set the
+         * correct result using {@link android.bluetooth.BluetoothDevice.setPin} or similar.
+         * See BluetoothPairingDialog in com.android.settings for an example (the default).
+         * {@hide}
+         */
+        public static final String BLUETOOTH_PAIRING_PACKAGE = "bluetooth_pairing_package";
+
+        /**
          * A semi-colon separated list of Bluetooth interoperability workarounds.
          * Each entry is a partial Bluetooth device address string and an integer representing
          * the feature to be disabled, separated by a comma. The integer must correspond
