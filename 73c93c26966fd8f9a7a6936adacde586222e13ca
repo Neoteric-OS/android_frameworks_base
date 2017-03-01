@@ -22,6 +22,30 @@
       "revId": "73c93c26966fd8f9a7a6936adacde586222e13ca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "540c96a4_0f31cedd",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2017-03-01T15:23:25Z",
+      "side": 1,
+      "message": "Downscoped this CL to only fix the default value inside libcore (VMRuntime) for cases where setTargetSdkVersion() is not called. \n\nCases in frameworks or where setTargetSdkVersion(0) is called (e.g. b/35594029) turned out more complex than expected and are lower priority, so they are left to follow-up CLs.",
+      "parentUuid": "d33e96c8_f2c8d572",
+      "range": {
+        "startLine": 350,
+        "startChar": 8,
+        "endLine": 350,
+        "endChar": 67
+      },
+      "revId": "73c93c26966fd8f9a7a6936adacde586222e13ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
