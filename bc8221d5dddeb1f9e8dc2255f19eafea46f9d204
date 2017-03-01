@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09111f6a_0c17c026",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 31
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:11:03Z",
+      "side": 1,
+      "message": "Same bug, list only once?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 13
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04644fae_b05c395e",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:11:03Z",
+      "side": 1,
+      "message": "Given that the NMS changes are not in this CL, can you remove this change as well?",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 16
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2193c3f2_faa73366",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:11:03Z",
+      "side": 1,
+      "message": "Should we lose the \"outbound\" here and rename remoteAddr to dstAddr?",
+      "range": {
+        "startLine": 150,
+        "startChar": 34,
+        "endLine": 150,
+        "endChar": 52
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
