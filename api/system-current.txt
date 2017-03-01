@@ -25603,8 +25603,8 @@ package android.net {
     method public void reportNetworkConnectivity(android.net.Network, boolean);
     method public boolean requestBandwidthUpdate(android.net.Network);
     method public void requestNetwork(android.net.NetworkRequest, android.net.ConnectivityManager.NetworkCallback);
-    method public void requestNetwork(android.net.NetworkRequest, int, android.net.ConnectivityManager.NetworkCallback);
     method public void requestNetwork(android.net.NetworkRequest, android.net.ConnectivityManager.NetworkCallback, android.os.Handler);
+    method public void requestNetwork(android.net.NetworkRequest, int, android.net.ConnectivityManager.NetworkCallback);
     method public void requestNetwork(android.net.NetworkRequest, int, android.net.ConnectivityManager.NetworkCallback, android.os.Handler);
     method public void requestNetwork(android.net.NetworkRequest, android.app.PendingIntent);
     method public deprecated boolean requestRouteToHost(int, int);
@@ -36526,6 +36526,35 @@ package android.provider {
     field public static final java.lang.String PROTO_TYPE = "proto_type";
     field public static final java.lang.String RETRY_INDEX = "retry_index";
     field public static final java.lang.String SUBSCRIPTION_ID = "pending_sub_id";
+  }
+
+  public static final class Telephony.ServiceStateTable {
+    ctor public Telephony.ServiceStateTable();
+    method public static android.content.ContentValues getContentValuesForServiceState(android.telephony.ServiceState);
+    method public static android.net.Uri getUriForSubId(int);
+    method public static android.net.Uri getUriForSubIdAndField(int, java.lang.String);
+    field public static final java.lang.String CDMA_DEFAULT_ROAMING_INDICATOR = "cdma_default_roaming_indicator";
+    field public static final java.lang.String CDMA_ERI_ICON_INDEX = "cdma_eri_icon_index";
+    field public static final java.lang.String CDMA_ERI_ICON_MODE = "cdma_eri_icon_mode";
+    field public static final java.lang.String CDMA_ROAMING_INDICATOR = "cdma_roaming_indicator";
+    field public static final android.net.Uri CONTENT_URI;
+    field public static final java.lang.String CSS_INDICATOR = "css_indicator";
+    field public static final java.lang.String DATA_OPERATOR_ALPHA_LONG = "data_operator_alpha_long";
+    field public static final java.lang.String DATA_OPERATOR_ALPHA_SHORT = "data_operator_alpha_short";
+    field public static final java.lang.String DATA_OPERATOR_NUMERIC = "data_operator_numeric";
+    field public static final java.lang.String DATA_REG_STATE = "data_reg_state";
+    field public static final java.lang.String IS_DATA_ROAMING_FROM_REGISTRATION = "is_data_roaming_from_registration";
+    field public static final java.lang.String IS_EMERGENCY_ONLY = "is_emergency_only";
+    field public static final java.lang.String IS_MANUAL_NETWORK_SELECTION = "is_manual_network_selection";
+    field public static final java.lang.String IS_USING_CARRIER_AGGREGATION = "is_using_carrier_aggregation";
+    field public static final java.lang.String NETWORK_ID = "network_id";
+    field public static final java.lang.String RIL_DATA_RADIO_TECHNOLOGY = "ril_data_radio_technology";
+    field public static final java.lang.String RIL_VOICE_RADIO_TECHNOLOGY = "ril_voice_radio_technology";
+    field public static final java.lang.String SYSTEM_ID = "system_id";
+    field public static final java.lang.String VOICE_OPERATOR_ALPHA_LONG = "voice_operator_alpha_long";
+    field public static final java.lang.String VOICE_OPERATOR_ALPHA_SHORT = "voice_operator_alpha_short";
+    field public static final java.lang.String VOICE_OPERATOR_NUMERIC = "voice_operator_numeric";
+    field public static final java.lang.String VOICE_REG_STATE = "voice_reg_state";
   }
 
   public static final class Telephony.Sms implements android.provider.BaseColumns android.provider.Telephony.TextBasedSmsColumns {
