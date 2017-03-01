@@ -25,6 +25,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,6 +48,7 @@ import android.telephony.PreciseDataConnectionState;
 import android.telephony.PreciseDisconnectCause;
 import android.text.TextUtils;
 import android.text.format.Time;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -1451,6 +1453,11 @@ class TelephonyRegistry extends ITelephonyRegistry.Stub {
         intent.putExtra(PhoneConstants.SUBSCRIPTION_KEY, subId);
         intent.putExtra(PhoneConstants.SLOT_KEY, phoneId);
         mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
+        Log.d(TAG, "[SSProvider] broadcastServiceStateChanged: new state=" + state.getState());
+
+        // The broadcast won't wake apps but the content uri changing will
+        mContext.getContentResolver().notifyChange(Uri.parse("content://com.android.telephony/service_state"),
+                /* observer= */ null, /* syncToNetwork= */ false);
     }
 
     private void broadcastSignalStrengthChanged(SignalStrength signalStrength, int phoneId,
