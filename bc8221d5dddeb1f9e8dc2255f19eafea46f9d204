@@ -416,6 +416,144 @@
     },
     {
       "key": {
+        "uuid": "e7c6295f_d4de00a8",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:44:02Z",
+      "side": 1,
+      "message": "to a given destination address",
+      "range": {
+        "startLine": 305,
+        "startChar": 11,
+        "endLine": 305,
+        "endChar": 47
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1a71b11_e269505b",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:44:02Z",
+      "side": 1,
+      "message": "build",
+      "range": {
+        "startLine": 311,
+        "startChar": 11,
+        "endLine": 311,
+        "endChar": 19
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d520c10b_47bd5aae",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:44:02Z",
+      "side": 1,
+      "message": "IPsec",
+      "range": {
+        "startLine": 314,
+        "startChar": 37,
+        "endLine": 314,
+        "endChar": 42
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "126ded5b_15152945",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:44:02Z",
+      "side": 1,
+      "message": "to a given destination address",
+      "range": {
+        "startLine": 327,
+        "startChar": 11,
+        "endLine": 327,
+        "endChar": 47
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b75b4467_24bcd101",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:44:02Z",
+      "side": 1,
+      "message": "IPsec",
+      "range": {
+        "startLine": 336,
+        "startChar": 37,
+        "endLine": 336,
+        "endChar": 42
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "170ce903_b3c08d48",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:44:02Z",
+      "side": 1,
+      "message": "{@code SecurityParameterIndex}",
+      "range": {
+        "startLine": 339,
+        "startChar": 31,
+        "endLine": 339,
+        "endChar": 45
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11caa141_4e1e3ba3",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 31
@@ -432,6 +570,121 @@
         "startChar": 38,
         "endLine": 357,
         "endChar": 51
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "836e1673_0bfb9adf",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:44:02Z",
+      "side": 1,
+      "message": "This doc should specify which permission is needed. Add a TODO (outside the JavaDoc comment!) to track this?",
+      "range": {
+        "startLine": 388,
+        "startChar": 9,
+        "endLine": 388,
+        "endChar": 10
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "afff5a5a_c2375bdc",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:44:02Z",
+      "side": 1,
+      "message": "Since it can throw at least three types, \"an IllegalArgumentException\" -\u003e \"an exception\".",
+      "range": {
+        "startLine": 402,
+        "startChar": 92,
+        "endLine": 403,
+        "endChar": 36
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcba96fe_c3e5d351",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:44:02Z",
+      "side": 1,
+      "message": "I wouldn\u0027t say it\u0027s \"substantial\". I\u0027d just say \"To avoid this, \"",
+      "range": {
+        "startLine": 407,
+        "startChar": 81,
+        "endLine": 408,
+        "endChar": 57
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d74dfce_2643528f",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:44:02Z",
+      "side": 1,
+      "message": "setUnderlyingNetwork",
+      "range": {
+        "startLine": 441,
+        "startChar": 76,
+        "endLine": 441,
+        "endChar": 86
+      },
+      "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aa7c877_8e7f6c56",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-01T05:44:02Z",
+      "side": 1,
+      "message": "representing the remote endpoint of this IPsec tunnel",
+      "range": {
+        "startLine": 442,
+        "startChar": 56,
+        "endLine": 443,
+        "endChar": 61
       },
       "revId": "bc8221d5dddeb1f9e8dc2255f19eafea46f9d204",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
