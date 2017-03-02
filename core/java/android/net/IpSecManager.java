@@ -80,7 +80,7 @@ public final class IpSecManager {
     }
 
     private final Context mContext;
-    private final INetworkManagementService mService;
+    private final IIpSecService mService;
 
     public static final class SecurityParameterIndex implements AutoCloseable {
         private final Context mContext;
@@ -372,7 +372,7 @@ public final class IpSecManager {
      * @param context the application context for this manager
      * @hide
      */
-    public IpSecManager(Context context, INetworkManagementService service) {
+    public IpSecManager(Context context, IIpSecService service) {
         mContext = checkNotNull(context, "missing context");
         mService = checkNotNull(service, "missing service");
     }

@@ -518,6 +518,7 @@ public final class SystemServer {
         VibratorService vibrator = null;
         IMountService mountService = null;
         NetworkManagementService networkManagement = null;
+        IpSecService ipSecService = null;
         NetworkStatsService networkStats = null;
         NetworkPolicyManagerService networkPolicy = null;
         ConnectivityService connectivity = null;
@@ -792,6 +793,15 @@ public final class SystemServer {
                     ServiceManager.addService(Context.NETWORKMANAGEMENT_SERVICE, networkManagement);
                 } catch (Throwable e) {
                     reportWtf("starting NetworkManagement Service", e);
+                }
+                Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+
+                traceBeginAndSlog("StartIpSecService");
+                try {
+                    ipSecService = IpSecService.create(context);
+                    ServiceManager.addService(Context.IPSEC_SERVICE, ipSecService);
+                } catch (Throwable e) {
+                    reportWtf("starting IpSec Service", e);
                 }
                 Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
             }
@@ -1309,6 +1319,7 @@ public final class SystemServer {
         final TelephonyRegistry telephonyRegistryF = telephonyRegistry;
         final MediaRouterService mediaRouterF = mediaRouter;
         final MmsServiceBroker mmsServiceF = mmsService;
+        final IpSecService ipSecServiceF = ipSecService;
 
         // We now tell the activity manager it is okay to run third party
         // code.  It will call back into us once it has gotten to the state
@@ -1357,6 +1368,13 @@ public final class SystemServer {
                     if (networkManagementF != null) networkManagementF.systemReady();
                 } catch (Throwable e) {
                     reportWtf("making Network Managment Service ready", e);
+                }
+                Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+                Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeIpSecServiceReady");
+                try {
+                    if (ipSecServiceF != null) ipSecServiceF.systemReady();
+                } catch (Throwable e) {
+                    reportWtf("making IpSec Service ready", e);
                 }
                 Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
                 Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeNetworkStatsServiceReady");
