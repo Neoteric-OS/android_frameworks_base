@@ -134,6 +134,24 @@
       "revId": "3d90bc3d2e4986054817b205bfaab18cf6ba2012",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2a08985_d402f679",
+        "filename": "telephony/java/com/android/ims/internal/IImsCallSessionListener.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1135723
+      },
+      "writtenOn": "2017-03-02T22:21:31Z",
+      "side": 1,
+      "message": "No. This method would be called on DUT side on receiving  an upgrade request from remote side.\n\n1) When MO side triggers RTT upgrade, request will be sent via sendRttModifyRequest \n2) When MT side triggers RTT upgrade, IMS vendor would receive an UNSOL..which will then translate into callSessionRttModifyRequestReceived",
+      "parentUuid": "a96abbb1_d97726e7",
+      "revId": "3d90bc3d2e4986054817b205bfaab18cf6ba2012",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
