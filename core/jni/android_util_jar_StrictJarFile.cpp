@@ -53,6 +53,10 @@ static jobject newZipEntry(JNIEnv* env, const ZipEntry& entry, jstring entryName
 }
 
 static jlong StrictJarFile_nativeOpenJarFile(JNIEnv* env, jobject, jstring name, jint fd) {
+  if (jint == -1) {
+    return static_cast<jlong>(-1);
+  }
+
   // Name argument is used for logging, and can be any string.
   ScopedUtfChars nameChars(env, name);
   if (nameChars.c_str() == NULL) {
