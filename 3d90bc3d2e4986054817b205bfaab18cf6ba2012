@@ -152,6 +152,24 @@
       "revId": "3d90bc3d2e4986054817b205bfaab18cf6ba2012",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e8ecc71_285b65fe",
+        "filename": "telephony/java/com/android/ims/internal/IImsCallSessionListener.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1135723
+      },
+      "writtenOn": "2017-03-03T21:58:55Z",
+      "side": 1,
+      "message": "We both are talking about the same scenario here. I would upload a patch addressing all comments, as discussed.",
+      "parentUuid": "c2a08985_d402f679",
+      "revId": "3d90bc3d2e4986054817b205bfaab18cf6ba2012",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
