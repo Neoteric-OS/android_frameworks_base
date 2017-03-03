@@ -24,6 +24,7 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.app.Notification;
 import android.content.Intent;
 import android.hardware.camera2.CameraManager;
@@ -398,6 +399,7 @@ public abstract class Connection extends Conferenceable {
      * When set, indicates that a connection has an active RTT session associated with it.
      * @hide
      */
+    @TestApi
     public static final int PROPERTY_IS_RTT = 1 << 8;
 
     //**********************************************************************************************
@@ -779,6 +781,7 @@ public abstract class Connection extends Conferenceable {
      * Provides methods to read and write RTT data to/from the in-call app.
      * @hide
      */
+    @TestApi
     public static final class RttTextStream {
         private static final int READ_BUFFER_SIZE = 1000;
         private final InputStreamReader mPipeFromInCall;
@@ -824,15 +827,24 @@ public abstract class Connection extends Conferenceable {
          * @return A string containing text entered by the user, or {@code null} if the
          * conversation has been terminated or if there was an error while reading.
          */
-        public String read() {
-            try {
-                int numRead = mPipeFromInCall.read(mReadBuffer, 0, READ_BUFFER_SIZE);
-                if (numRead < 0) {
-                    return null;
-                }
-                return new String(mReadBuffer, 0, numRead);
-            } catch (IOException e) {
-                Log.w(this, "Exception encountered when reading from InputStreamReader: %s", e);
+        public String read() throws IOException {
+            int numRead = mPipeFromInCall.read(mReadBuffer, 0, READ_BUFFER_SIZE);
+            if (numRead < 0) {
+                return null;
+            }
+            return new String(mReadBuffer, 0, numRead);
+        }
+
+        /**
+         * Non-blocking version of {@link #read()}. Returns {@code null} if there is nothing to
+         * be read.
+         * @return A string containing text entered by the user, or {@code null} if the user has
+         * not entered any new text yet.
+         */
+        public String readImmediately() throws IOException {
+            if (mPipeFromInCall.ready()) {
+                return read();
+            } else {
                 return null;
             }
         }
@@ -2491,6 +2503,7 @@ public abstract class Connection extends Conferenceable {
      * {@link #onStartRtt(ParcelFileDescriptor, ParcelFileDescriptor)} has succeeded.
      * @hide
      */
+    @TestApi
     public final void sendRttInitiationSuccess() {
         mListeners.forEach((l) -> l.onRttInitiationSuccess(Connection.this));
     }
@@ -2504,6 +2517,7 @@ public abstract class Connection extends Conferenceable {
      *               exception of {@link RttModifyStatus#SESSION_MODIFY_REQUEST_SUCCESS}.
      * @hide
      */
+    @TestApi
     public final void sendRttInitiationFailure(int reason) {
         mListeners.forEach((l) -> l.onRttInitiationFailure(Connection.this, reason));
     }
@@ -2513,6 +2527,7 @@ public abstract class Connection extends Conferenceable {
      * side of the coll.
      * @hide
      */
+    @TestApi
     public final void sendRttSessionRemotelyTerminated() {
         mListeners.forEach((l) -> l.onRttSessionRemotelyTerminated(Connection.this));
     }
@@ -2522,6 +2537,7 @@ public abstract class Connection extends Conferenceable {
      * RTT session in the call.
      * @hide
      */
+    @TestApi
     public final void sendRemoteRttRequest() {
         mListeners.forEach((l) -> l.onRemoteRttRequest(Connection.this));
     }
@@ -2740,13 +2756,16 @@ public abstract class Connection extends Conferenceable {
      *                      the in-call app.
      * @hide
      */
+    @TestApi
     public void onStartRtt(@NonNull RttTextStream rttTextStream) {}
 
     /**
      * Notifies this {@link Connection} that it should terminate any existing RTT communication
-     * channel. No response to Telecom is needed for this method.
+     * channel. The implementing connection should unset {@link #PROPERTY_IS_RTT}  from the
+     * connection after this is called.
      * @hide
      */
+    @TestApi
     public void onStopRtt() {}
 
     /**
@@ -2758,6 +2777,7 @@ public abstract class Connection extends Conferenceable {
      * @param rttTextStream The object that should be used to send text to or receive text from
      *                      the in-call app.
      */
+    @TestApi
     public void handleRttUpgradeResponse(@Nullable RttTextStream rttTextStream) {}
 
     static String toLogSafePhoneNumber(String number) {
