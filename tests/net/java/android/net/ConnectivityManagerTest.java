@@ -37,9 +37,21 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.when;
+
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
-
+import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.content.pm.ApplicationInfo;
+import android.os.Build.VERSION_CODES;
+import android.net.ConnectivityManager.NetworkCallback;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -172,5 +184,62 @@ public class ConnectivityManagerTest {
     public void testNetworkCapabilitiesForTypeEthernet() {
         verifyUnrestrictedNetworkCapabilities(
                 ConnectivityManager.TYPE_ETHERNET, TRANSPORT_ETHERNET);
+    }
+
+    @Test
+    public void testNoDoubleCallbackRegistration() throws Exception {
+        ConnectivityManager manager = new ConnectivityManager(mCtx, mService);
+        //NetworkRequest request = new NetworkRequest.Builder().clearCapabilities().build();
+        NetworkRequest request = makeRequest(1234);
+        NetworkCallback callback = new ConnectivityManager.NetworkCallback();
+        ApplicationInfo info = new ApplicationInfo();
+        info.targetSdkVersion = VERSION_CODES.N_MR1 + 1;
+
+        when(mCtx.getApplicationInfo()).thenReturn(info);
+        when(mService.requestNetwork(any(), any(), anyInt(), any(), anyInt())).thenReturn(request);
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        manager.requestNetwork(request, callback, handler);
+
+        // Callback is already registered, reregistration should fail.
+        Class<IllegalArgumentException> wantException = IllegalArgumentException.class;
+        expectThrowable(() -> manager.requestNetwork(request, callback), wantException);
+
+        manager.unregisterNetworkCallback(callback);
+
+        // Service release request and sends back notification
+        Message releaseMsg = makeMessage(request, ConnectivityManager.CALLBACK_RELEASED);
+        handler.sendMessage(releaseMsg);
+
+        Thread.sleep(1000); // replace by waitForIdle()
+
+        // Unregistering the callback should make it registrable again.
+        manager.requestNetwork(request, callback);
+    }
+
+    static Message makeMessage(NetworkRequest req, int messageType) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(NetworkRequest.class.getSimpleName(), req);
+        Message msg = Message.obtain();
+        msg.what = messageType;
+        msg.setData(bundle);
+        return msg;
+    }
+
+    static NetworkRequest makeRequest(int requestId) {
+        NetworkRequest request = new NetworkRequest.Builder().clearCapabilities().build();
+        return new NetworkRequest(request.networkCapabilities, ConnectivityManager.TYPE_NONE, requestId, NetworkRequest.Type.NONE);
+    }
+
+    static void expectThrowable(Runnable block, Class<? extends Throwable> throwableType) {
+        try {
+            block.run();
+        } catch (Throwable t) {
+            if (t.getClass().equals(throwableType)) {
+                return;
+            }
+            fail("expected exception of type " + throwableType + ", but was " + t.getClass());
+        }
+        fail("expected exception of type " + throwableType);
     }
 }
