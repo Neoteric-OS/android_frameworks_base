@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4c48538_98246d74",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-03-06T17:34:02Z",
+      "side": 1,
+      "message": "do you want to file a bug to track this (and the one below) TODO?  I don\u0027t want it to get lost.  :)",
+      "range": {
+        "startLine": 1064,
+        "startChar": 7,
+        "endLine": 1064,
+        "endChar": 13
+      },
+      "revId": "66cfdbcd9f620ab14011027f40a786308491dfc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
