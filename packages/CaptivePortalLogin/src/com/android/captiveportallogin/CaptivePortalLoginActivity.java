@@ -77,8 +77,8 @@ public class CaptivePortalLoginActivity extends Activity {
         mCm = ConnectivityManager.from(this);
         mNetwork = getIntent().getParcelableExtra(ConnectivityManager.EXTRA_NETWORK);
         mCaptivePortal = getIntent().getParcelableExtra(ConnectivityManager.EXTRA_CAPTIVE_PORTAL);
-        mUserAgent = getIntent().getParcelableExtra(
-                ConnectivityManager.EXTRA_CAPTIVE_PORTAL_USER_AGENT);
+        mUserAgent =
+                getIntent().getStringExtra(ConnectivityManager.EXTRA_CAPTIVE_PORTAL_USER_AGENT);
         mUrl = getUrl();
         if (mUrl == null) {
             // getUrl() failed to parse the url provided in the intent: bail out in a way that
