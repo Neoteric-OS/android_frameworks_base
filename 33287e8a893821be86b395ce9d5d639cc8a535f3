@@ -16,6 +16,24 @@
       "revId": "33287e8a893821be86b395ce9d5d639cc8a535f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8bd2b04d_7b6b7e8d",
+        "filename": "rs/jni/android_renderscript_RenderScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1272,
+      "author": {
+        "id": 1057232
+      },
+      "writtenOn": "2017-03-07T21:47:38Z",
+      "side": 0,
+      "message": "correct. This is not needed after the refactor.",
+      "parentUuid": "7966b585_7b4f69cf",
+      "revId": "33287e8a893821be86b395ce9d5d639cc8a535f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
