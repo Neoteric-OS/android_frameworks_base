@@ -22,6 +22,30 @@
       "revId": "66cfdbcd9f620ab14011027f40a786308491dfc0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4be3c4da_ec8a3c37",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-07T03:25:06Z",
+      "side": 1,
+      "message": "It won\u0027t get lost.  It will be the very next CL to be sent out after this is merged.  \u003d)",
+      "parentUuid": "c4c48538_98246d74",
+      "range": {
+        "startLine": 1064,
+        "startChar": 7,
+        "endLine": 1064,
+        "endChar": 13
+      },
+      "revId": "66cfdbcd9f620ab14011027f40a786308491dfc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
