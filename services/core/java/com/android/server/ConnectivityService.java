@@ -395,16 +395,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     private static final int EVENT_REGISTER_NETWORK_LISTENER_WITH_INTENT = 31;
 
-    /**
-     * Indicates a caller has requested to have its callback invoked with
-     * the latest LinkProperties or NetworkCapabilities.
-     *
-     * arg1 = UID of caller
-     * obj  = NetworkRequest
-     */
-    private static final int EVENT_REQUEST_LINKPROPERTIES  = 32;
-    private static final int EVENT_REQUEST_NETCAPABILITIES = 33;
-
     /** Handler thread used for both of the handlers below. */
     @VisibleForTesting
     protected final HandlerThread mHandlerThread;
@@ -2592,16 +2582,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         callCallbackForRequest(nri, nai, callbackType, 0);
     }
 
-    private void handleRequestLinkProperties(NetworkRequest request, int callingUid) {
-        handleRequestCallbackUpdate(request, callingUid,
-                "request LinkProperties", ConnectivityManager.CALLBACK_IP_CHANGED);
-    }
-
-    private void handleRequestNetworkCapabilities(NetworkRequest request, int callingUid) {
-        handleRequestCallbackUpdate(request, callingUid,
-                "request NetworkCapabilities", ConnectivityManager.CALLBACK_CAP_CHANGED);
-    }
-
     private void handleTimedOutNetworkRequest(final NetworkRequestInfo nri) {
         if (mNetworkRequests.get(nri.request) != null && mNetworkForRequestId.get(
                 nri.request.requestId) == null) {
@@ -2983,12 +2963,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     handleMobileDataAlwaysOn();
                     break;
                 }
-                case EVENT_REQUEST_LINKPROPERTIES:
-                    handleRequestLinkProperties((NetworkRequest) msg.obj, msg.arg1);
-                    break;
-                case EVENT_REQUEST_NETCAPABILITIES:
-                    handleRequestNetworkCapabilities((NetworkRequest) msg.obj, msg.arg1);
-                    break;
                 // Sent by KeepaliveTracker to process an app request on the state machine thread.
                 case NetworkAgent.CMD_START_PACKET_KEEPALIVE: {
                     mKeepaliveTracker.handleStartKeepalive(msg);
@@ -4346,24 +4320,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (VDBG) log("pendingListenForNetwork for " + nri);
 
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_REGISTER_NETWORK_LISTENER, nri));
-    }
-
-    // TODO: Delete once callers are updated.
-    @Override
-    public void requestLinkProperties(NetworkRequest networkRequest) {
-        ensureNetworkRequestHasType(networkRequest);
-        if (networkRequest.type == NetworkRequest.Type.LISTEN) return;
-        mHandler.sendMessage(mHandler.obtainMessage(
-                EVENT_REQUEST_LINKPROPERTIES, getCallingUid(), 0, networkRequest));
-    }
-
-    // TODO: Delete once callers are updated.
-    @Override
-    public void requestNetworkCapabilities(NetworkRequest networkRequest) {
-        ensureNetworkRequestHasType(networkRequest);
-        if (networkRequest.type == NetworkRequest.Type.LISTEN) return;
-        mHandler.sendMessage(mHandler.obtainMessage(
-                EVENT_REQUEST_NETCAPABILITIES, getCallingUid(), 0, networkRequest));
     }
 
     @Override
