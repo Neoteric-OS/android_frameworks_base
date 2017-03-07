@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa484b4d_4196997e",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsCallSessionListenerImplBase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-03-07T02:49:17Z",
+      "side": 1,
+      "message": "extraneous space",
+      "range": {
+        "startLine": 256,
+        "startChar": 4,
+        "endLine": 256,
+        "endChar": 5
+      },
+      "revId": "c79cc002728582f3bd9945020d66ac43decfd577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
