@@ -7179,6 +7179,17 @@ public final class Settings {
         */
        public static final String MOBILE_DATA_ALWAYS_ON = "mobile_data_always_on";
 
+       /**
+        * Whether the wifi data connection should remain active even when higher
+        * priority networks like Ethernet are active, to keep both networks for cts .
+        *
+        * See ConnectivityService for more info.
+        *
+        * (0 = disabled, 1 = enabled)
+        * @hide
+        */
+       public static final String WIFI_ALWAYS_ON = "wifi_always_on";
+
         /**
          * Size of the event buffer for IP connectivity metrics.
          * @hide
