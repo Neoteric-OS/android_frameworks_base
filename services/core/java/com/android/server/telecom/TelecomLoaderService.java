@@ -169,6 +169,7 @@ public class TelecomLoaderService extends SystemService {
         if (phase == PHASE_ACTIVITY_MANAGER_READY) {
             registerDefaultAppNotifier();
             registerCarrierConfigChangedReceiver();
+        } else if (phase == PHASE_THIRD_PARTY_APPS_CAN_START) {
             connectToTelecom();
         }
     }
