@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23d44f98_96e306f5",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2369,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-03-08T01:53:52Z",
+      "side": 1,
+      "message": "I don\u0027t understand how this would make a difference. You are holding the same lock here. Which path to appDiedLocked() is the specific one causing problems? Is it the AppDeathRecipient.binderDied() path?",
+      "revId": "e8848a1e5a058d162910954d727cbc4c2a04e868",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
