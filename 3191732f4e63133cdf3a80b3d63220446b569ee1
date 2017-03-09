@@ -22,6 +22,30 @@
       "revId": "3191732f4e63133cdf3a80b3d63220446b569ee1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a40a25d_9d1b638d",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2726,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-03-09T19:37:48Z",
+      "side": 1,
+      "message": "Might not be bad to have the framework set and unset the property and prevent others from doing that as well.",
+      "parentUuid": "c4db67a8_7327e927",
+      "range": {
+        "startLine": 2719,
+        "startChar": 4,
+        "endLine": 2726,
+        "endChar": 30
+      },
+      "revId": "3191732f4e63133cdf3a80b3d63220446b569ee1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
