@@ -39,7 +39,7 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
 import org.mockito.Matchers;
-import org.mockito.ArgumentMatcher;
+import org.mockito.compat.ArgumentMatcher;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -131,14 +131,13 @@ public class WebViewUpdateServiceTest {
         }
 
         @Override
-        public boolean matches(Object p) {
+        public boolean matchesObject(Object p) {
             return ((PackageInfo) p).packageName.equals(mPackageName);
         }
 
-        // Provide a more useful description in case of mismatch
         @Override
-        public void describeTo (Description description) {
-            description.appendText(String.format("PackageInfo with name '%s'", mPackageName));
+        public String toString() {
+            return String.format("PackageInfo with name '%s'", mPackageName);
         }
     }
 
