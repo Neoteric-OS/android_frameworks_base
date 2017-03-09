@@ -1135,6 +1135,20 @@ public class CarrierConfigManager {
     public static final String KEY_NOTIFY_INTERNATIONAL_CALL_ON_WFC_BOOL =
             "notify_international_call_on_wfc_bool";
 
+    /**
+     * Offset to be reduced from rsrp threshold while calculating signal strength level.
+     * @hide
+     */
+    public static final String KEY_SIGNAL_STRENGTH_OFFSET_INT = "signal_strength_offset_int";
+
+    /**
+     * Threshold of EARFCN above which signal_strength_offset_int will be applied.
+     * Unit of this value should be in MHz.
+     * @hide
+     */
+    public static final String KEY_SIGNAL_STRENGTH_EAFCN_THRESHOD_INT =
+            "signal_strength_earfcn_threshold_int";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -1341,6 +1355,8 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_EDITABLE_WFC_ROAMING_MODE_BOOL, false);
         sDefaults.putBoolean(KEY_SUPPORT_3GPP_CALL_FORWARDING_WHILE_ROAMING_BOOL, true);
         sDefaults.putBoolean(KEY_NOTIFY_INTERNATIONAL_CALL_ON_WFC_BOOL, false);
+        sDefaults.putInt(KEY_SIGNAL_STRENGTH_OFFSET_INT, 0);
+        sDefaults.putInt(KEY_SIGNAL_STRENGTH_EAFCN_THRESHOD_INT, -1);
     }
 
     /**
