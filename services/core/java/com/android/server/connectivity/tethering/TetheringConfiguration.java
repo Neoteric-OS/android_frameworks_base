@@ -17,6 +17,7 @@
 package com.android.server.connectivity.tethering;
 
 import static android.content.Context.TELEPHONY_SERVICE;
+import static android.net.ConnectivityManager.TYPE_ETHERNET;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_MOBILE_DUN;
 import static android.net.ConnectivityManager.TYPE_MOBILE_HIPRI;
@@ -229,6 +230,11 @@ public class TetheringConfiguration {
                 upstreamIfaceTypes.add(TYPE_MOBILE);
                 upstreamIfaceTypes.add(TYPE_MOBILE_HIPRI);
             }
+        }
+
+        // If any upstreams are defined, always make sure our good friend Ethernet is present.
+        if (!upstreamIfaceTypes.isEmpty() && !upstreamIfaceTypes.contains(TYPE_ETHERNET)) {
+            upstreamIfaceTypes.add(0, TYPE_ETHERNET);
         }
 
         return upstreamIfaceTypes;
