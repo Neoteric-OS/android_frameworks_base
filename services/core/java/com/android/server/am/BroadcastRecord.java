@@ -249,7 +249,8 @@ final class BroadcastRecord extends Binder {
 
     boolean cleanupDisabledPackageReceiversLocked(
             String packageName, Set<String> filterByClasses, int userId, boolean doit) {
-        if ((userId != UserHandle.USER_ALL && this.userId != userId) || receivers == null) {
+        if ((this.userId != UserHandle.USER_ALL && userId != UserHandle.USER_ALL
+                && this.userId != userId) || receivers == null) {
             return false;
         }
 
@@ -262,10 +263,18 @@ final class BroadcastRecord extends Binder {
             }
             ActivityInfo info = ((ResolveInfo)o).activityInfo;
 
+            int activityUserId = UserHandle.getUserId(info.applicationInfo.uid);
+            boolean sameUserId = true;
+            if (userId != UserHandle.USER_ALL && this.userId == UserHandle.USER_ALL
+                && activityUserId != userId) {
+                sameUserId = false;
+            }
+
             final boolean sameComponent = packageName == null
                     || (info.applicationInfo.packageName.equals(packageName)
                     && (filterByClasses == null || filterByClasses.contains(info.name)));
-            if (sameComponent) {
+
+            if (sameComponent && sameUserId) {
                 if (!doit) {
                     return true;
                 }
