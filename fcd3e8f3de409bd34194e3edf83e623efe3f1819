@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1391e044_76f39aca",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-03-09T20:46:01Z",
+      "side": 1,
+      "message": "why call it earfcn then? Shouldn\u0027t it be freq?",
+      "range": {
+        "startLine": 1146,
+        "startChar": 7,
+        "endLine": 1146,
+        "endChar": 42
+      },
+      "revId": "fcd3e8f3de409bd34194e3edf83e623efe3f1819",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1a16087_cf4d6d5e",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-03-09T20:46:01Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 1149,
+        "startChar": 51,
+        "endLine": 1149,
+        "endChar": 56
+      },
+      "revId": "fcd3e8f3de409bd34194e3edf83e623efe3f1819",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd5b84af_91637add",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-03-09T20:46:01Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 1149,
+        "startChar": 57,
+        "endLine": 1149,
+        "endChar": 65
+      },
+      "revId": "fcd3e8f3de409bd34194e3edf83e623efe3f1819",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
