@@ -73,8 +73,8 @@ public class SignalClusterView
     private int mEthernetIconId = 0;
     private int mLastEthernetIconId = -1;
     private boolean mWifiVisible = false;
-    private int mWifiStrengthId = 0;
-    private int mLastWifiStrengthId = -1;
+    private int mWifiStrengthId = 0, mWifiActivityId = 0;
+    private int mLastWifiStrengthId = -1, mLastWifiActivityId = -1;
     private boolean mIsAirplaneMode = false;
     private int mAirplaneIconId = 0;
     private int mLastAirplaneIconId = -1;
@@ -89,6 +89,7 @@ public class SignalClusterView
     ViewGroup mEthernetGroup, mWifiGroup;
     View mNoSimsCombo;
     ImageView mVpn, mEthernet, mWifi, mAirplane, mNoSims, mEthernetDark, mWifiDark, mNoSimsDark;
+    ImageView mWifiActivity;
     View mWifiAirplaneSpacer;
     View mWifiSignalSpacer;
     LinearLayout mMobileSignalGroup;
@@ -180,6 +181,7 @@ public class SignalClusterView
         mWifiGroup      = (ViewGroup) findViewById(R.id.wifi_combo);
         mWifi           = (ImageView) findViewById(R.id.wifi_signal);
         mWifiDark       = (ImageView) findViewById(R.id.wifi_signal_dark);
+        mWifiActivity   = (ImageView) findViewById(R.id.wifi_inout);
         mAirplane       = (ImageView) findViewById(R.id.airplane);
         mNoSims         = (ImageView) findViewById(R.id.no_sims);
         mNoSimsDark     = (ImageView) findViewById(R.id.no_sims_dark);
@@ -229,6 +231,9 @@ public class SignalClusterView
 
     @Override
     protected void onDetachedFromWindow() {
+        mWifiGroup      = null;
+        mWifi           = null;
+        mWifiActivity   = null;
         mMobileSignalGroup.removeAllViews();
         TunerService.get(mContext).removeTunable(this);
         mSC.removeCallback(this);
@@ -263,6 +268,7 @@ public class SignalClusterView
             boolean activityIn, boolean activityOut, String description) {
         mWifiVisible = statusIcon.visible && !mBlockWifi;
         mWifiStrengthId = statusIcon.icon;
+        mWifiActivityId = getWifiActivityId(activityIn, activityOut);
         mWifiDescription = statusIcon.contentDescription;
 
         apply();
@@ -351,6 +357,22 @@ public class SignalClusterView
         return null;
     }
 
+
+    private int getWifiActivityId(boolean activityIn, boolean activityOut) {
+        if (!getContext().getResources().getBoolean(R.bool.config_showWifiActivity)) {
+            return 0;
+        }
+        int activityId = 0;
+        if (activityIn && activityOut) {
+            activityId = R.drawable.stat_sys_wifi_inout;
+        } else if (activityIn) {
+            activityId = R.drawable.stat_sys_wifi_in;
+        } else if (activityOut) {
+            activityId = R.drawable.stat_sys_wifi_out;
+        }
+        return activityId;
+    }
+
     private PhoneState inflatePhoneState(int subId) {
         PhoneState state = new PhoneState(subId, mContext);
         if (mMobileSignalGroup != null) {
@@ -403,6 +425,11 @@ public class SignalClusterView
             mWifi.setImageDrawable(null);
             mWifiDark.setImageDrawable(null);
             mLastWifiStrengthId = -1;
+        }
+
+        if (mWifiActivity != null) {
+            mWifiActivity.setImageDrawable(null);
+            mLastWifiActivityId = -1;
         }
 
         for (PhoneState state : mPhoneStates) {
@@ -473,6 +500,10 @@ public class SignalClusterView
                 setIconForView(mWifiDark, mWifiStrengthId);
                 mLastWifiStrengthId = mWifiStrengthId;
             }
+            if (mWifiActivityId != mLastWifiActivityId) {
+                mWifiActivity.setImageResource(mWifiActivityId);
+                mLastWifiActivityId = mWifiActivityId;
+            }
             mWifiGroup.setContentDescription(mWifiDescription);
             mWifiGroup.setVisibility(View.VISIBLE);
         } else {
@@ -480,9 +511,9 @@ public class SignalClusterView
         }
 
         if (DEBUG) Log.d(TAG,
-                String.format("wifi: %s sig=%d",
+                String.format("wifi: %s sig=%d act=%d",
                     (mWifiVisible ? "VISIBLE" : "GONE"),
-                    mWifiStrengthId));
+                    mWifiStrengthId, mWifiActivityId));
 
         boolean anyMobileVisible = false;
         int firstMobileTypeId = 0;
