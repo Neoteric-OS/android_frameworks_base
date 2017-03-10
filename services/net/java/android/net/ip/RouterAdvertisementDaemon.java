@@ -16,6 +16,7 @@
 
 package android.net.ip;
 
+import static android.net.util.NetworkConstants.RFC7421_PREFIX_LENGTH;
 import static android.system.OsConstants.*;
 
 import android.net.IpPrefix;
@@ -232,17 +233,28 @@ public class RouterAdvertisementDaemon {
     public void buildNewRa(RaParams deprecatedParams, RaParams newParams) {
         synchronized (mLock) {
             if (deprecatedParams != null) {
-                mDeprecatedInfoTracker.putPrefixes(deprecatedParams.prefixes);
-                mDeprecatedInfoTracker.putDnses(deprecatedParams.dnses);
+                // Make a local copy, so we can modify it.
+                final RaParams deprecated = new RaParams(deprecatedParams);
+                // Remove any ULA DNS servers.
+                removeULAs(deprecated.dnses);
+                // Process newly deprecated information.
+                mDeprecatedInfoTracker.putPrefixes(deprecated.prefixes);
+                mDeprecatedInfoTracker.putDnses(deprecated.dnses);
             }
 
-            if (newParams != null) {
+            // Make a local copy, so we can modify it.
+            final RaParams params = (newParams != null)
+                    ? new RaParams(newParams)
+                    : null;
+            if (params != null) {
+                // Remove any ULA DNS servers.
+                removeULAs(params.dnses);
                 // Process information that is no longer deprecated.
-                mDeprecatedInfoTracker.removePrefixes(newParams.prefixes);
-                mDeprecatedInfoTracker.removeDnses(newParams.dnses);
+                mDeprecatedInfoTracker.removePrefixes(params.prefixes);
+                mDeprecatedInfoTracker.removeDnses(params.dnses);
             }
 
-            mRaParams = newParams;
+            mRaParams = params;
             assembleRaLocked();
         }
 
@@ -557,6 +569,15 @@ public class RouterAdvertisementDaemon {
             // TODO: Consider looking at ra.remaining() to determine how many
             // DNS servers will fit, and adding only those.
             ra.put(dns.getAddress());
+        }
+    }
+
+    private static void removeULAs(Set<Inet6Address> addrs) {
+        for (Iterator<Inet6Address> i = addrs.iterator(); i.hasNext();) {
+            final LinkAddress dns = new LinkAddress(i.next(), RFC7421_PREFIX_LENGTH);
+            if (!dns.isGlobalPreferred()) {
+                i.remove();
+            }
         }
     }
 

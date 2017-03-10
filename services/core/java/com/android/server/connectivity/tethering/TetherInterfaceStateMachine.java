@@ -32,6 +32,7 @@ import com.android.internal.util.MessageUtils;
 import com.android.internal.util.Protocol;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
+import com.android.server.connectivity.Tethering.Mode;
 
 import java.net.InetAddress;
 
@@ -89,6 +90,7 @@ public class TetherInterfaceStateMachine extends StateMachine {
     private final int mInterfaceType;
     private final IPv6TetheringInterfaceServices mIPv6TetherSvc;
 
+    private Mode mMode;
     private int mLastError;
     private String mMyUpstreamIfaceName;  // may change over time
 
@@ -102,6 +104,7 @@ public class TetherInterfaceStateMachine extends StateMachine {
         mIfaceName = ifaceName;
         mInterfaceType = interfaceType;
         mIPv6TetherSvc = ipv6Svc;
+        mMode = Mode.IDLE;
         mLastError = ConnectivityManager.TETHER_ERROR_NO_ERROR;
 
         mInitialState = new InitialState();
@@ -116,6 +119,10 @@ public class TetherInterfaceStateMachine extends StateMachine {
 
     public int interfaceType() {
         return mInterfaceType;
+    }
+
+    public Mode mode() {
+        return mMode;
     }
 
     // configured when we start tethering and unconfig'd on error or conclusion
@@ -175,6 +182,7 @@ public class TetherInterfaceStateMachine extends StateMachine {
     class InitialState extends State {
         @Override
         public void enter() {
+            mMode = Mode.IDLE;
             mTetherController.notifyInterfaceStateChange(
                     mIfaceName, TetherInterfaceStateMachine.this,
                     IControlsTethering.STATE_AVAILABLE, mLastError);
@@ -187,6 +195,7 @@ public class TetherInterfaceStateMachine extends StateMachine {
             switch (message.what) {
                 case CMD_TETHER_REQUESTED:
                     mLastError = ConnectivityManager.TETHER_ERROR_NO_ERROR;
+                    mMode = (message.obj != null) ? (Mode) message.obj : Mode.TETHERING;
                     transitionTo(mTetheredState);
                     break;
                 case CMD_INTERFACE_DOWN:
@@ -207,6 +216,7 @@ public class TetherInterfaceStateMachine extends StateMachine {
     class TetheredState extends State {
         @Override
         public void enter() {
+            if (DBG) Log.d(TAG, "Tethering: " + mIfaceName + ", mode: " + mMode.description);
             if (!configureIfaceIp(true)) {
                 mLastError = ConnectivityManager.TETHER_ERROR_IFACE_CFG_ERROR;
                 transitionTo(mInitialState);
@@ -294,6 +304,11 @@ public class TetherInterfaceStateMachine extends StateMachine {
                     if (DBG) Log.d(TAG, "Untethered (ifdown)" + mIfaceName);
                     break;
                 case CMD_TETHER_CONNECTION_CHANGED:
+                    if (mMode != Mode.TETHERING) {
+                        // Upstream changes are not of interest in our current mode.
+                        break;
+                    }
+
                     String newUpstreamIfaceName = (String)(message.obj);
                     if ((mMyUpstreamIfaceName == null && newUpstreamIfaceName == null) ||
                             (mMyUpstreamIfaceName != null &&
@@ -347,6 +362,7 @@ public class TetherInterfaceStateMachine extends StateMachine {
     class UnavailableState extends State {
         @Override
         public void enter() {
+            mMode = Mode.IDLE;
             mLastError = ConnectivityManager.TETHER_ERROR_NO_ERROR;
             mTetherController.notifyInterfaceStateChange(
                     mIfaceName, TetherInterfaceStateMachine.this,

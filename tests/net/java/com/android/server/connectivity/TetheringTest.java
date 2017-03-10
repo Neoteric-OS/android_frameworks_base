@@ -16,21 +16,38 @@
 
 package com.android.server.connectivity;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.any;
 import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.hardware.usb.UsbManager;
+import android.net.ConnectivityManager;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
+import android.net.InterfaceConfiguration;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiManager;
 import android.os.INetworkManagementService;
 import android.os.PersistableBundle;
 import android.os.test.TestLooper;
+import android.os.UserHandle;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 import android.telephony.CarrierConfigManager;
+
+import com.android.internal.util.test.BroadcastInterceptingContext;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,34 +61,62 @@ public class TetheringTest {
     private static final String[] PROVISIONING_APP_NAME = {"some", "app"};
 
     @Mock private Context mContext;
+    @Mock private ConnectivityManager mConnectivityManager;
     @Mock private INetworkManagementService mNMService;
     @Mock private INetworkStatsService mStatsService;
     @Mock private INetworkPolicyManager mPolicyManager;
     @Mock private MockableSystemProperties mSystemProperties;
     @Mock private Resources mResources;
+    @Mock private UsbManager mUsbManager;
+    @Mock private WifiManager mWifiManager;
     @Mock private CarrierConfigManager mCarrierConfigManager;
 
     // Like so many Android system APIs, these cannot be mocked because it is marked final.
     // We have to use the real versions.
     private final PersistableBundle mCarrierConfig = new PersistableBundle();
     private final TestLooper mLooper = new TestLooper();
+    private final String mTestIfname = "test_wlan0";
 
+    private BroadcastInterceptingContext mServiceContext;
     private Tethering mTethering;
+
+    private class MockContext extends BroadcastInterceptingContext {
+        MockContext(Context base) {
+            super(base);
+        }
+
+        @Override
+        public Resources getResources() { return mResources; }
+
+        @Override
+        public Object getSystemService(String name) {
+            if (Context.CONNECTIVITY_SERVICE.equals(name)) return mConnectivityManager;
+            if (Context.WIFI_SERVICE.equals(name)) return mWifiManager;
+            if (WifiManager.class.equals(name)) return mWifiManager;
+            if (UsbManager.class.equals(name)) return mUsbManager;
+            return super.getSystemService(name);
+        }
+    }
 
     @Before public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        when(mContext.getResources()).thenReturn(mResources);
         when(mResources.getStringArray(com.android.internal.R.array.config_tether_dhcp_range))
                 .thenReturn(new String[0]);
         when(mResources.getStringArray(com.android.internal.R.array.config_tether_usb_regexs))
                 .thenReturn(new String[0]);
         when(mResources.getStringArray(com.android.internal.R.array.config_tether_wifi_regexs))
-                .thenReturn(new String[0]);
+                .thenReturn(new String[]{ "test_wlan\\d" });
         when(mResources.getStringArray(com.android.internal.R.array.config_tether_bluetooth_regexs))
                 .thenReturn(new String[0]);
         when(mResources.getIntArray(com.android.internal.R.array.config_tether_upstream_types))
                 .thenReturn(new int[0]);
-        mTethering = new Tethering(mContext, mNMService, mStatsService, mPolicyManager,
+        when(mNMService.listInterfaces())
+                .thenReturn(new String[]{ "test_rmnet_data0", mTestIfname });
+        when(mNMService.getInterfaceConfig(anyString()))
+                .thenReturn(new InterfaceConfiguration());
+
+        mServiceContext = new MockContext(mContext);
+        mTethering = new Tethering(mServiceContext, mNMService, mStatsService, mPolicyManager,
                                    mLooper.getLooper(), mSystemProperties);
     }
 
@@ -125,5 +170,93 @@ public class TetheringTest {
                 com.android.internal.R.array.config_mobile_hotspot_provision_app))
                 .thenReturn(new String[] {"malformedApp"});
         assertTrue(!mTethering.isTetherProvisioningRequired());
+    }
+
+/*
+    @Test
+    public void localOnlyWifiHotspotStartStop() throws Exception {
+        when(mConnectivityManager.isTetheringSupported()).thenReturn(true);
+        when(mWifiManager.setWifiApEnabled(any(WifiConfiguration.class), anyBoolean()))
+                .thenReturn(true);
+
+        final WifiConfiguration cfg = new WifiConfiguration();
+        cfg.SSID = "MyLocalOnlyWifiHotspot";
+
+        // --- START ---
+        assertEquals(Tethering.Mode.IDLE, mTethering.getCurrentMode());
+        assertEquals(ConnectivityManager.TETHER_ERROR_NO_ERROR,
+                mTethering.startLocalOnlyWifiHotspot(cfg));
+        assertEquals(Tethering.Mode.LOCAL_HOTSPOT, mTethering.getCurrentMode());
+        mLooper.dispatchAll();
+        verify(mWifiManager, times(1)).setWifiApEnabled(cfg, true);
+        verifyNoMoreInteractions(mWifiManager);
+
+        // Emulate externally-visible WifiManager effects, causing the
+        // per-interface state machine starts up.
+        mTethering.interfaceStatusChanged(mTestIfname, true);
+        sendWifiApStateChanged(WifiManager.WIFI_AP_STATE_ENABLED);
+        mLooper.dispatchAll();
+        verify(mNMService, times(1)).listInterfaces();
+        verify(mNMService, times(1)).getInterfaceConfig(mTestIfname);
+        verify(mNMService, times(1))
+                .setInterfaceConfig(eq(mTestIfname), any(InterfaceConfiguration.class));
+        verify(mNMService, times(1)).tetherInterface(mTestIfname);
+        verify(mNMService, times(1)).startTethering(any(String[].class));
+
+        // Lastly, verify that no other NetworkManagementService functions
+        // were called (i.e. no IP forwarding, no enabling of NAT, et cetera).
+        verifyNoMoreInteractions(mNMService);
+        assertEquals(ConnectivityManager.TETHER_ERROR_NO_ERROR,
+                mTethering.getLastTetherError(mTestIfname));
+        assertEquals(Tethering.Mode.LOCAL_HOTSPOT, mTethering.getCurrentMode());
+
+        // --- 2nd START ---
+        final WifiConfiguration cfg2 = new WifiConfiguration();
+        cfg2.SSID = "OtherLocalOnlyWifiHotspot";
+        // Starting local hotspot while already started yields an immediate
+        // error and no other activity.
+        assertEquals(ConnectivityManager.TETHER_ERROR_SERVICE_UNAVAIL,
+                mTethering.startLocalOnlyWifiHotspot(cfg));
+        verifyNoMoreInteractions(mWifiManager);
+        verifyNoMoreInteractions(mNMService);
+        assertEquals(Tethering.Mode.LOCAL_HOTSPOT, mTethering.getCurrentMode());
+
+        // --- STOP ---
+        mTethering.stopLocalOnlyWifiHotspot();
+        mLooper.dispatchAll();
+        verify(mWifiManager, times(1)).setWifiApEnabled(null, false);
+        verifyNoMoreInteractions(mWifiManager);
+
+        mTethering.interfaceRemoved(mTestIfname);
+        sendWifiApStateChanged(WifiManager.WIFI_AP_STATE_DISABLED);
+        mLooper.dispatchAll();
+
+        verify(mNMService, times(1)).untetherInterface(mTestIfname);
+        // TODO: Why is {g,s}etInterfaceConfig() called more than once?
+        verify(mNMService, atLeastOnce()).getInterfaceConfig(mTestIfname);
+        verify(mNMService, atLeastOnce())
+                .setInterfaceConfig(eq(mTestIfname), any(InterfaceConfiguration.class));
+        verify(mNMService, times(1)).stopTethering();
+        verifyNoMoreInteractions(mNMService);
+        // Asking for the last error after the per-interface state machine
+        // has been reaped yields an unknown interface error.
+        assertEquals(ConnectivityManager.TETHER_ERROR_UNKNOWN_IFACE,
+                mTethering.getLastTetherError(mTestIfname));
+        assertEquals(Tethering.Mode.IDLE, mTethering.getCurrentMode());
+
+        // --- 2nd STOP ---
+        // Stopping a second time does nothing.
+        mTethering.stopLocalOnlyWifiHotspot();
+        mLooper.dispatchAll();
+        verifyNoMoreInteractions(mWifiManager);
+        verifyNoMoreInteractions(mNMService);
+        assertEquals(Tethering.Mode.IDLE, mTethering.getCurrentMode());
+    }
+*/
+
+    private void sendWifiApStateChanged(int state) {
+        final Intent intent = new Intent(WifiManager.WIFI_AP_STATE_CHANGED_ACTION);
+        intent.putExtra(WifiManager.EXTRA_WIFI_AP_STATE, state);
+        mServiceContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
     }
 }
