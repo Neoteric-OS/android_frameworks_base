@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19ca9b20_f8a11152",
+        "filename": "services/core/java/com/android/server/am/BroadcastRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1127303
+      },
+      "writtenOn": "2017-03-10T02:14:57Z",
+      "side": 1,
+      "message": "final boolean sameUser \u003d cleanAll || !sendToAll || UserHandle.getUserId(info.applicationInfo.uid) \u003d\u003d userId);",
+      "revId": "dbbe8e882ce26e1dc6d072f7af2b2c6cc003a71d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ada29e14_eb940b4e",
+        "filename": "services/core/java/com/android/server/am/BroadcastRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1127303
+      },
+      "writtenOn": "2017-03-10T02:14:57Z",
+      "side": 1,
+      "message": "Hi Riddle\nWhen there\u0027re two users user0 and user1, packageName \u003d\u003d null, userId \u003d\u003d 0 and the broadcastRecord is send to all users, all users receiving this broadcast will be cleaned up. Only receiver of user0 should supposed to be cleaned up\n\nHow about: \nfinal boolean sameUser \u003d cleanAll || !sendToAll || UserHandle.getUserId(info.applicationInfo.uid) \u003d\u003d userId);\n\nif (sameComponent \u0026\u0026 sameUser) will remove the receiver",
+      "revId": "dbbe8e882ce26e1dc6d072f7af2b2c6cc003a71d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e903446_1a4017a2",
+        "filename": "services/core/java/com/android/server/am/BroadcastRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1127303
+      },
+      "writtenOn": "2017-03-10T02:14:57Z",
+      "side": 1,
+      "message": "if (sameComponent \u0026\u0026 sameUser)",
+      "revId": "dbbe8e882ce26e1dc6d072f7af2b2c6cc003a71d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
