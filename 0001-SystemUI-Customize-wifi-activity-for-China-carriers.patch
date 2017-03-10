@@ -1,0 +1,331 @@
+From b0c3bc210906c53f569cbe6c62752a8c5e832278 Mon Sep 17 00:00:00 2001
+From: xuejia <xuejia@codeaurora.org>
+Date: Wed, 1 Mar 2017 11:00:10 +0800
+Subject: [PATCH] SystemUI: Customize wifi activity for China carriers
+
+Use config_showWifiActivity to control whether to show wifi in/out
+indicator in status bar.
+
+Change-Id: I333a35489eab2a2a6eb1ba9984985a55b0b649d3
+---
+ .../res/drawable-hdpi/stat_sys_wifi_in.png         |  Bin 0 -> 418 bytes
+ .../res/drawable-hdpi/stat_sys_wifi_inout.png      |  Bin 0 -> 505 bytes
+ .../res/drawable-hdpi/stat_sys_wifi_out.png        |  Bin 0 -> 416 bytes
+ .../res/drawable-mdpi/stat_sys_wifi_in.png         |  Bin 0 -> 396 bytes
+ .../res/drawable-mdpi/stat_sys_wifi_inout.png      |  Bin 0 -> 445 bytes
+ .../res/drawable-mdpi/stat_sys_wifi_out.png        |  Bin 0 -> 385 bytes
+ .../res/drawable-xhdpi/stat_sys_wifi_in.png        |  Bin 0 -> 479 bytes
+ .../res/drawable-xhdpi/stat_sys_wifi_inout.png     |  Bin 0 -> 583 bytes
+ .../res/drawable-xhdpi/stat_sys_wifi_out.png       |  Bin 0 -> 446 bytes
+ .../SystemUI/res/layout/signal_cluster_view.xml    |    7 ++++
+ packages/SystemUI/res/values/config.xml            |    3 ++
+ .../systemui/statusbar/SignalClusterView.java      |   39 ++++++++++++++++++--
+ 12 files changed, 45 insertions(+), 4 deletions(-)
+ create mode 100644 packages/SystemUI/res/drawable-hdpi/stat_sys_wifi_in.png
+ create mode 100644 packages/SystemUI/res/drawable-hdpi/stat_sys_wifi_inout.png
+ create mode 100644 packages/SystemUI/res/drawable-hdpi/stat_sys_wifi_out.png
+ create mode 100644 packages/SystemUI/res/drawable-mdpi/stat_sys_wifi_in.png
+ create mode 100644 packages/SystemUI/res/drawable-mdpi/stat_sys_wifi_inout.png
+ create mode 100644 packages/SystemUI/res/drawable-mdpi/stat_sys_wifi_out.png
+ create mode 100644 packages/SystemUI/res/drawable-xhdpi/stat_sys_wifi_in.png
+ create mode 100644 packages/SystemUI/res/drawable-xhdpi/stat_sys_wifi_inout.png
+ create mode 100644 packages/SystemUI/res/drawable-xhdpi/stat_sys_wifi_out.png
+
+diff --git a/packages/SystemUI/res/drawable-hdpi/stat_sys_wifi_in.png b/packages/SystemUI/res/drawable-hdpi/stat_sys_wifi_in.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..2bb923e6dbd4ee883ddd283eb7c1398e5e1271d4
+GIT binary patch
+literal 418
+zcmeAS@N?(olHy`uVBq!ia0vp^azHH2!2%=?e)&ENNHHaOySp&_Z|^^|AIRe@@Q5sC
+zVBi)4Va7{$>;8ZQ%L*LRfizezL#u^o1(4I`>Eak-ar*70-MohacpNS!J4rNfI`ABP
+z)*%|Su!D60r<dz&ha<@hp9Dg=rriEjoO|=knLp|ugH?P}_)Z?X7p$Nes`u#f{xc?f
+zZ%0W7WXT?z+;zrg?m@rw1BG`^EA77EnVh<`@Z8cKarK4aoC`1YSATxi616(?^t@FQ
+zl=s-g+}-!*(3zG!jCX%4ugz^=whrhb(Gu5)66d1S#FEVXJcW?V+*AfbeM4h?L&JX;
+z*OdbmsDc!vB$lLFC4*F@G8h>c8tNJv=o*-Y7#drd8d({e>Kd3^85nFZybtmtLPKtT
+zN@iLmZVd->(vJW&$bf7J&QB{TPb^Aha7@WhN>y;nEJ`iUFUl@fa1J&t-1^uIsE)zY
+L)z4*}Q$iB}N9B=3
+
+literal 0
+HcmV?d00001
+
+diff --git a/packages/SystemUI/res/drawable-hdpi/stat_sys_wifi_inout.png b/packages/SystemUI/res/drawable-hdpi/stat_sys_wifi_inout.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..783ad175510002f77b13023032337a3190b73328
+GIT binary patch
+literal 505
+zcmeAS@N?(olHy`uVBq!ia0vp^azHH2!2%=?e)&ENNHHaOySp&_Z|^^|AIRe@@Q5sC
+zVBi)4Va7{$>;8ZQ%L*LRfizezL#u^o1(0*s)5S5w;`H4s8@-ql1y~;B?>#;99{UML
+zrAk&$@%SkDgHt?pmAsfVkC<6HpHu7okiU?l(P!(QH-C%`cAsWdIuaR@xpn!fj@47{
+zB<Izws&nP@*%CE5##;INA)lp2!ZXWe%FK{@U2<$0kab6Thk3|q-m|=?Zj}aZzn-;+
+z^UJzko9SoL4SDJ+tbTpE-|;AVed%)Rn|U^sx;NKN_P6i7W3k}d!-aQ3RO`yDwwLi8
+zT0Fhz+Ruu0IVMultJkQWwtS=8vSGvdG#z>WY1_6<yL5F$3Wq!U`)l>K9M5;EOz+MY
+z^D#NpYrp+5(4(Ryt`Q~9MX8A;nfZANA(^?U42JrK#`=ba|1Pd82P#knDM(2yNwrD_
+zsY+!qGB7mMH8jvQFby#@wlX!cGB(vUFt;)=*kE`c6m$p;x%nxXX_dG&9Lz~S0@NS_
+xvLQG>t)x7$D3!r6B|j-u!7Z~WwLHHlyI8?F*tBr#V>6&S22WQ%mvv4FO#uHcxv>BM
+
+literal 0
+HcmV?d00001
+
+diff --git a/packages/SystemUI/res/drawable-hdpi/stat_sys_wifi_out.png b/packages/SystemUI/res/drawable-hdpi/stat_sys_wifi_out.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..e499f9d42847f87ba2546705c2d6687bd50a5146
+GIT binary patch
+literal 416
+zcmeAS@N?(olHy`uVBq!ia0vp^azHH2!2%=?e)&ENNHHaOySp&_Z|^^|AIRe@@Q5sC
+zVBi)4Va7{$>;8ZQ%L*LRfizezL#u^o1(4I?>Eak-ar*5=L#{&x5)Kdbmrc!+JLu3|
+z(dKvUxBS7A(mSpx>czIWyjalu#h3Hp-}mhw+F2fEZ+_gab@Jfixci|`drp>GuARip
+z=4qs}U9?E7XHkYo*4s@o1=nVuty&(nTPJ;Ox8LH6Gq*e~3x1P!@?NaNHOpO7r>(Db
+z{{3x|ZEjA^p9XP_9-&WCRoUx-?h!3<jVN(0N=+=u%+FH@$;?e<Fw{3R);Bc#cX3@g
+zP=P8)K}upts#P*bRVss#fuW(Up@FV}X^5e*m8p@Hv6-%cxs`!I<IST_Q8eV{r(~v8
+z;@0q?r8W|%K?Y<)aDG}zd16s2gJVj5QmTSmW>IQ+eo=O@f^)EG;nv4yKy?hBu6{1-
+HoD!M<Y1NWL
+
+literal 0
+HcmV?d00001
+
+diff --git a/packages/SystemUI/res/drawable-mdpi/stat_sys_wifi_in.png b/packages/SystemUI/res/drawable-mdpi/stat_sys_wifi_in.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..95c56ede38a556b681a95fb86d782ac39f620637
+GIT binary patch
+literal 396
+zcmeAS@N?(olHy`uVBq!ia0vp^B0wy}!2%>d-ZYyHq?nSt-CY>|xA&jf59DzcctjR6
+zFmMZjFyp1Wb$>vDWd)AuKpL!<;cH@VIFM7|>EaloasKTDL#_q`5$E`5{s&J)WA-#W
+z|0cHX8$+I}I(vK5QL7bG!U`{))se6B@L;l+Q_z#Iyz`aSy-|JnA;o|UHI{!Wn_V(i
+zYBD%W3u~R+ZV>z^!{EdN@kQ-SvdYR<YlW@fS?byzJ}dWr-ET&-?2F<bCP-Pa0__$p
+zag8W(E=o--$;{7F2+7P%WiZq?G}bpX{C9C(IZ%NrNI^<sNvc&cNL4C>k%6J1uAzah
+zfoX`Lv6ZQjm9eR=fw`4|!3M+o6(|~V^HVa@DsgK#n3H}4s6hr~LvVgtNqJ&XDuZK6
+kep0G}TV_#ed45rLv4V53Y2nt#W<Yfep00i_>zopr0NFWuHvj+t
+
+literal 0
+HcmV?d00001
+
+diff --git a/packages/SystemUI/res/drawable-mdpi/stat_sys_wifi_inout.png b/packages/SystemUI/res/drawable-mdpi/stat_sys_wifi_inout.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..11b9a93aaa0a78323cb3ad5b876e7ec58798a54c
+GIT binary patch
+literal 445
+zcmeAS@N?(olHy`uVBq!ia0vp^B0wy}!2%>d-ZYyHq?nSt-CY>|xA&jf59DzcctjR6
+zFmMZjFyp1Wb$>vDWd)AuKpL!<;cH@VIFPf@)5S4F<NVr58~K_HL|o5nukrOb_2Afx
+z3-$$ye>VMp$R__FspZJQ9R>-76B@Tom~mzI-S3x*^DjF!v3OeUTiB!|w~F`vg(K4U
+zx%iroCKc2Li>6-5Fe$Y-XM4}b)3rY!u|nZYwRoWSf|f|dz~oA1N!jzJhWs7M>U;<0
+zcJDvY^q^DRUG3bRfY)tx!t7gkc(!!kR;;V;i+NdJ`Tl=>mq{%{MV{P0!DlYXK*x%f
+zxJHyX7o{eaWaj57gk<KXG8pO`8tWSx{=2xY9H>AQq#z}+B-JVzq$-uc$iUE0*U&)M
+zz%<0r*viz%%Ggxbz}(8fV1wcP3KR{w`6-!cmAEw=%t=22)F1=0Aviy+q&%@GmBBG3
+kKPgqgEwd=KJijQrSiw2iv~cTVGoU&KPgg&ebxsLQ05D{j{Qv*}
+
+literal 0
+HcmV?d00001
+
+diff --git a/packages/SystemUI/res/drawable-mdpi/stat_sys_wifi_out.png b/packages/SystemUI/res/drawable-mdpi/stat_sys_wifi_out.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..0f85ca0d7380669d1c76e0ff8bc33b91846b3aeb
+GIT binary patch
+literal 385
+zcmeAS@N?(olHy`uVBq!ia0vp^B0wy}!2%>d-ZYyHq?nSt-CY>|xA&jf59DzcctjR6
+zFmMZjFyp1Wb$>vDWd)AuKpL!<;cH@VIFOU->EaloasKUu-MkG3JTCK@b(a)$M<`e;
+zO!>?1d6;cNz@i!#VXwI7)^pDrl_+@l?`b@GZBgbKxp?cJ8ZIL3&YeG(E_-!j=8T(O
+zm1n-GPHAOWqrvV}b;ihI0>i^ce_mK#%K26KoJ}>4>z}m$E0EJfOI#yLoQqNuOEUBG
+z6hbm{QyC2P4UP2;4gXzSR}NI53Q~}gSdwa$3{sWKU}RuusB37TYhW5;Xl!L_WMyoo
+zYhZ3=V9<E;=u;F8x%nxXX_dG&d}yhS1Zt20*$|wcR#Ki=l*-_klAn~S;FejGTAp8&
+ZU98|7Y+AVWu^CVugQu&X%Q~loCIH#)eS!c0
+
+literal 0
+HcmV?d00001
+
+diff --git a/packages/SystemUI/res/drawable-xhdpi/stat_sys_wifi_in.png b/packages/SystemUI/res/drawable-xhdpi/stat_sys_wifi_in.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..d299daf0bad8bbb1f6a4bbc064657a5d38d594c1
+GIT binary patch
+literal 479
+zcmeAS@N?(olHy`uVBq!ia0vp^>Oic*!2%=~*u542QcOwS?k)`f+xyS#2l6-zJR*x3
+z7`TN%nDNrxx<4SnvI56+APv^b@NaUaB9L>~)5S5w<M`W48@-qvMOq)e&l3`?WsIJG
+zDEvdCZVg-Fg+mG2Dy<4-Ue{vHlP4-DrG%-rKKS$Y&d=us?*dkaX#H>g@v-us@k^=p
+z_)9I<s=l{o2AY??bJ<^OGP|;1;qSS6C316XFZss2KJxCLnzE~nW$Bvj-<B1=zZ9Ug
+zLi5F@50A2}MK?X!I%Vye+XdN~YStS{%*|r1r6#IMwm5FmO8@O=^-Qc!=ge{U<0X+9
+zs?AGePlw%m({^C<y|c&LZ!%X4hiX-@AG&Gwbl&Iotw8UHmbgZgI2WZRmSpDVDTHL^
+zrZO1n8yf2y8veVut{kX96{H{~u_V<h8Kf$e!N|bSP}k5v*T6Ky(Adh<$jaDM*TCG$
+zz+i*n{R$Kfx%nxXX_dG&9Lz~S0@NS_vLQG>t)x7$D3!r6B|j-u!7Z~WwLHHlyI8?F
+V*tBr#V>6&S22WQ%mvv4FO#r#EvAzHR
+
+literal 0
+HcmV?d00001
+
+diff --git a/packages/SystemUI/res/drawable-xhdpi/stat_sys_wifi_inout.png b/packages/SystemUI/res/drawable-xhdpi/stat_sys_wifi_inout.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..dcfdb7b41d91fd2616f275b969a69e0990488ce9
+GIT binary patch
+literal 583
+zcmeAS@N?(olHy`uVBq!ia0vp^>Oic*!2%=~*u542QcOwS?k)`f+xyS#2l6-zJR*x3
+z7`TN%nDNrxx<4SnvI56+APv^b@NaUaA_D`Xwx^3@h{y4_SND1`J4(1cO#igGjYX%~
+zHz|E_tjf~44_Kos1ld>wvpZW8v{iEIjvbN^C`~&MGD)0m+SA8xZce```|aoaOflcq
+zLzcZvBDT}3X1}(7^x#PA<k%amfyX@#d$^zZIrYX|sTq<Me^=jK9vyr|=i}+yb0s4<
+z#8m4vV+2ZjH{M&bG4GasdU;-lS9ELg;x852FUuC>XKno0dFz)}>8sXDp&^SD^5g}s
+zT)VlieCnLo=ePG(o?53mb(*$&{I2T4xv%tExwF<En-(2&dT-V3r~H{}g?pr|LZYLy
+zDvCC@{=anYeP`3m+h>pQE{fhfCHkcMw-=GBt8A*z@GdWuuM^fjcuM7Y*tg~?gR7=r
+zC&-_DxF{hnDK%+cv9@Iu(><5+SAQY{XU%Q=c9Z?R&Zz(k7O55kU>J&)xJHyX7o{ea
+zWaj57gk<KXG8pO`8tWSx{=2xY9H>AQq#z}+B-JVzq$-uc$iUE0*U&)Mz%<0r*viz%
+z%Ggxbz}(8fV1wcP3KR{w`6-!cmAEw=%t=22)F1=0Aviy+q&%@GmBBG3KPgqgEwd=K
+cJijQrSiw2iv~cTVGoU&KPgg&ebxsLQ02NT;82|tP
+
+literal 0
+HcmV?d00001
+
+diff --git a/packages/SystemUI/res/drawable-xhdpi/stat_sys_wifi_out.png b/packages/SystemUI/res/drawable-xhdpi/stat_sys_wifi_out.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..fb8125ab785ffb9d5beaf8db50ca44dd48fa347e
+GIT binary patch
+literal 446
+zcmeAS@N?(olHy`uVBq!ia0vp^>Oic*!2%=~*u542QcOwS?k)`f+xyS#2l6-zJR*x3
+z7`TN%nDNrxx<4SnvI56+APv^b@NaUaB9ODl)5S5w<M`VP8?z1@h&WtSUS8&OV$Rt{
+zp0gJ&oIHC^@&A9}pB)Y?VdCX4lqBb9US(};YqzMn@~_y@IDdnU*oNY*v)^&gZ!W*@
+zcm4wF$zux)Z+NKQm$@7HeqDLos^44Js;su$x9MH5KG&jq$Aw}i<ir~IJx`kbeQHTO
+z--|6)GQ2-OZeNp|`(Dj&-jc1?E1%d+iFf_|yx3Eq_h{|)tgTURr~YEB4w3Y}bR|F=
+z=vvVd*N775qSVBa%=|oskj&gv219*AV|_!ze;3!40~M%(6r?1Uq*^6|RHZT)85kPs
+z8XD*tn1&b{TbUYJ8Jp=Em|GbbG~PV=6h%XBeoAIqC2kELT52PK8e~8=1m~xflqVLY
+oGB~E>C#5R5WfrBD=NDxcD>w(67H)lP22{u3>FVdQ&MBb@0F@)6ZU6uP
+
+literal 0
+HcmV?d00001
+
+diff --git a/packages/SystemUI/res/layout/signal_cluster_view.xml b/packages/SystemUI/res/layout/signal_cluster_view.xml
+index d17601c..4cd6d04 100644
+--- a/packages/SystemUI/res/layout/signal_cluster_view.xml
++++ b/packages/SystemUI/res/layout/signal_cluster_view.xml
+@@ -70,6 +70,13 @@
+             android:layout_width="wrap_content"
+             android:alpha="0.0"
+             />
++        <com.android.systemui.statusbar.AlphaOptimizedImageView
++            android:theme="@style/DualToneLightTheme"
++            android:id="@+id/wifi_inout"
++            android:layout_height="17dp"
++            android:layout_width="18.41dp"
++            android:layout_gravity="center|bottom"
++            />
+     </FrameLayout>
+     <View
+         android:id="@+id/wifi_signal_spacer"
+diff --git a/packages/SystemUI/res/values/config.xml b/packages/SystemUI/res/values/config.xml
+index eb1a1eb..2b5794e 100644
+--- a/packages/SystemUI/res/values/config.xml
++++ b/packages/SystemUI/res/values/config.xml
+@@ -126,6 +126,9 @@
+     <!-- Should "4G" be shown instead of "LTE" when the network is NETWORK_TYPE_LTE? -->
+     <bool name="config_show4GForLTE">true</bool>
+ 
++    <!-- Whether or not we also show wifi activity in status bar. -->
++    <bool name="config_showWifiActivity">false</bool>
++
+     <!-- Should "LTE"/"4G" be shown instead of "LTE+"/"4G+" when on NETWORK_TYPE_LTE_CA? -->
+     <bool name="config_hideLtePlus">false</bool>
+ 
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/SignalClusterView.java b/packages/SystemUI/src/com/android/systemui/statusbar/SignalClusterView.java
+index 74caa53..2818c14 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/SignalClusterView.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/SignalClusterView.java
+@@ -73,8 +73,8 @@ public class SignalClusterView
+     private int mEthernetIconId = 0;
+     private int mLastEthernetIconId = -1;
+     private boolean mWifiVisible = false;
+-    private int mWifiStrengthId = 0;
+-    private int mLastWifiStrengthId = -1;
++    private int mWifiStrengthId = 0, mWifiActivityId = 0;
++    private int mLastWifiStrengthId = -1, mLastWifiActivityId = -1;
+     private boolean mIsAirplaneMode = false;
+     private int mAirplaneIconId = 0;
+     private int mLastAirplaneIconId = -1;
+@@ -89,6 +89,7 @@ public class SignalClusterView
+     ViewGroup mEthernetGroup, mWifiGroup;
+     View mNoSimsCombo;
+     ImageView mVpn, mEthernet, mWifi, mAirplane, mNoSims, mEthernetDark, mWifiDark, mNoSimsDark;
++    ImageView mWifiActivity;
+     View mWifiAirplaneSpacer;
+     View mWifiSignalSpacer;
+     LinearLayout mMobileSignalGroup;
+@@ -180,6 +181,7 @@ public class SignalClusterView
+         mWifiGroup      = (ViewGroup) findViewById(R.id.wifi_combo);
+         mWifi           = (ImageView) findViewById(R.id.wifi_signal);
+         mWifiDark       = (ImageView) findViewById(R.id.wifi_signal_dark);
++        mWifiActivity   = (ImageView) findViewById(R.id.wifi_inout);
+         mAirplane       = (ImageView) findViewById(R.id.airplane);
+         mNoSims         = (ImageView) findViewById(R.id.no_sims);
+         mNoSimsDark     = (ImageView) findViewById(R.id.no_sims_dark);
+@@ -229,6 +231,9 @@ public class SignalClusterView
+ 
+     @Override
+     protected void onDetachedFromWindow() {
++        mWifiGroup      = null;
++        mWifi           = null;
++        mWifiActivity   = null;
+         mMobileSignalGroup.removeAllViews();
+         TunerService.get(mContext).removeTunable(this);
+         mSC.removeCallback(this);
+@@ -263,6 +268,7 @@ public class SignalClusterView
+             boolean activityIn, boolean activityOut, String description) {
+         mWifiVisible = statusIcon.visible && !mBlockWifi;
+         mWifiStrengthId = statusIcon.icon;
++        mWifiActivityId = getWifiActivityId(activityIn, activityOut);
+         mWifiDescription = statusIcon.contentDescription;
+ 
+         apply();
+@@ -351,6 +357,22 @@ public class SignalClusterView
+         return null;
+     }
+ 
++
++    private int getWifiActivityId(boolean activityIn, boolean activityOut) {
++        if (!getContext().getResources().getBoolean(R.bool.config_showWifiActivity)) {
++            return 0;
++        }
++        int activityId = 0;
++        if (activityIn && activityOut) {
++            activityId = R.drawable.stat_sys_wifi_inout;
++        } else if (activityIn) {
++            activityId = R.drawable.stat_sys_wifi_in;
++        } else if (activityOut) {
++            activityId = R.drawable.stat_sys_wifi_out;
++        }
++        return activityId;
++    }
++
+     private PhoneState inflatePhoneState(int subId) {
+         PhoneState state = new PhoneState(subId, mContext);
+         if (mMobileSignalGroup != null) {
+@@ -405,6 +427,11 @@ public class SignalClusterView
+             mLastWifiStrengthId = -1;
+         }
+ 
++        if (mWifiActivity != null) {
++            mWifiActivity.setImageDrawable(null);
++            mLastWifiActivityId = -1;
++        }
++
+         for (PhoneState state : mPhoneStates) {
+             if (state.mMobile != null) {
+                 state.maybeStopAnimatableDrawable(state.mMobile);
+@@ -473,6 +500,10 @@ public class SignalClusterView
+                 setIconForView(mWifiDark, mWifiStrengthId);
+                 mLastWifiStrengthId = mWifiStrengthId;
+             }
++            if (mWifiActivityId != mLastWifiActivityId) {
++                mWifiActivity.setImageResource(mWifiActivityId);
++                mLastWifiActivityId = mWifiActivityId;
++            }
+             mWifiGroup.setContentDescription(mWifiDescription);
+             mWifiGroup.setVisibility(View.VISIBLE);
+         } else {
+@@ -480,9 +511,9 @@ public class SignalClusterView
+         }
+ 
+         if (DEBUG) Log.d(TAG,
+-                String.format("wifi: %s sig=%d",
++                String.format("wifi: %s sig=%d act=%d",
+                     (mWifiVisible ? "VISIBLE" : "GONE"),
+-                    mWifiStrengthId));
++                    mWifiStrengthId, mWifiActivityId));
+ 
+         boolean anyMobileVisible = false;
+         int firstMobileTypeId = 0;
+-- 
+1.7.9.5
+

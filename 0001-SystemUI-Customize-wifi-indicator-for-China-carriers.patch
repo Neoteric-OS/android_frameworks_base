@@ -1,0 +1,47 @@
+From 78bb3a352044e42d7ab19498aa6d0caefb5cc55f Mon Sep 17 00:00:00 2001
+From: xuejia <xuejia@codeaurora.org>
+Date: Wed, 1 Mar 2017 10:53:48 +0800
+Subject: [PATCH] SystemUI: Customize wifi indicator for China carriers
+
+Use config_showWifiIndicatorWhenEnabled to control whether to show
+indicator for Wifi on but not connected.
+
+Change-Id: Ifeee38afbb430bef2c1820be0b33884aaeea3b7c
+---
+ packages/SystemUI/res/values/config.xml            |    3 +++
+ .../statusbar/policy/WifiSignalController.java     |    4 +++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/res/values/config.xml b/packages/SystemUI/res/values/config.xml
+index eb1a1eb..45a7a8b 100644
+--- a/packages/SystemUI/res/values/config.xml
++++ b/packages/SystemUI/res/values/config.xml
+@@ -126,6 +126,9 @@
+     <!-- Should "4G" be shown instead of "LTE" when the network is NETWORK_TYPE_LTE? -->
+     <bool name="config_show4GForLTE">true</bool>
+ 
++    <!-- Show indicator for Wifi on but not connected. -->
++    <bool name="config_showWifiIndicatorWhenEnabled">false</bool>
++
+     <!-- Should "LTE"/"4G" be shown instead of "LTE+"/"4G+" when on NETWORK_TYPE_LTE_CA? -->
+     <bool name="config_hideLtePlus">false</bool>
+ 
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/policy/WifiSignalController.java b/packages/SystemUI/src/com/android/systemui/statusbar/policy/WifiSignalController.java
+index b890a30..1bef0c2 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/policy/WifiSignalController.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/policy/WifiSignalController.java
+@@ -77,8 +77,10 @@ public class WifiSignalController extends
+     @Override
+     public void notifyListeners(SignalCallback callback) {
+         // only show wifi in the cluster if connected or if wifi-only
++        boolean visibleWhenEnabled = mContext.getResources().getBoolean(
++                R.bool.config_showWifiIndicatorWhenEnabled);
+         boolean wifiVisible = mCurrentState.enabled
+-                && (mCurrentState.connected || !mHasMobileData);
++                && (mCurrentState.connected || !mHasMobileData || visibleWhenEnabled);
+         String wifiDesc = wifiVisible ? mCurrentState.ssid : null;
+         boolean ssidPresent = wifiVisible && mCurrentState.ssid != null;
+         String contentDescription = getStringIfExists(getContentDescription());
+-- 
+1.7.9.5
+
