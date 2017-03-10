@@ -24,12 +24,19 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkState;
 import android.net.RouteInfo;
+import android.net.util.NetworkConstants;
 import android.util.Log;
+
+import com.android.server.connectivity.Tethering.Mode;
 
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Random;
 
 
 /**
@@ -45,28 +52,52 @@ public class IPv6TetheringCoordinator {
     private static final boolean DBG = false;
     private static final boolean VDBG = false;
 
+    private static class Downstream {
+        public final TetherInterfaceStateMachine tism;
+        public final short subnetId;
+
+        Downstream(TetherInterfaceStateMachine tism, short subnetId) {
+            this.tism = tism;
+            this.subnetId = subnetId;
+        }
+    }
+
     private final ArrayList<TetherInterfaceStateMachine> mNotifyList;
-    private final LinkedList<TetherInterfaceStateMachine> mActiveDownstreams;
+    private final LinkedList<Downstream> mActiveDownstreams;
+    private final byte[] mUniqueLocalPrefix;
+    private short mNextSubnetId;
     private NetworkState mUpstreamNetworkState;
 
     public IPv6TetheringCoordinator(ArrayList<TetherInterfaceStateMachine> notifyList) {
         mNotifyList = notifyList;
         mActiveDownstreams = new LinkedList<>();
+        mUniqueLocalPrefix = generateUniqueLocalPrefix();
+        mNextSubnetId = 0;
     }
 
     public void addActiveDownstream(TetherInterfaceStateMachine downstream) {
-        if (mActiveDownstreams.indexOf(downstream) == -1) {
+        if (findDownstream(downstream) == null) {
             // Adding a new downstream appends it to the list. Adding a
             // downstream a second time without first removing it has no effect.
-            mActiveDownstreams.offer(downstream);
+            mActiveDownstreams.offer(new Downstream(downstream, mNextSubnetId++));
+            // Try to wrap cleanly after 2^15 downstreams added since boot.
+            if (mNextSubnetId < 0) mNextSubnetId = 0;
             updateIPv6TetheringInterfaces();
         }
     }
 
     public void removeActiveDownstream(TetherInterfaceStateMachine downstream) {
         stopIPv6TetheringOn(downstream);
-        if (mActiveDownstreams.remove(downstream)) {
+        if (mActiveDownstreams.remove(findDownstream(downstream))) {
             updateIPv6TetheringInterfaces();
+        }
+
+        // When tethering is stopping we can reset the subnet counter.
+        if (mNotifyList.isEmpty()) {
+            if (!mActiveDownstreams.isEmpty()) {
+                Log.wtf(TAG, "Tethering notify list empty, IPv6 downstreams non-empty.");
+            }
+            mNextSubnetId = 0;
         }
     }
 
@@ -123,10 +154,19 @@ public class IPv6TetheringCoordinator {
     }
 
     private LinkProperties getInterfaceIPv6LinkProperties(TetherInterfaceStateMachine sm) {
-        if (mUpstreamNetworkState == null) return null;
-
         if (sm.interfaceType() == ConnectivityManager.TETHERING_BLUETOOTH) {
             // TODO: Figure out IPv6 support on PAN interfaces.
+            return null;
+        }
+
+        if (sm.mode() == Mode.LOCAL_HOTSPOT) {
+            final Downstream ds = findDownstream(sm);
+            if (ds == null) return null;
+            // Build a Unique Locally-assigned Prefix configuration.
+            return getUniqueLocalConfig(mUniqueLocalPrefix, ds.subnetId);
+        }
+
+        if (mUpstreamNetworkState == null || mUpstreamNetworkState.linkProperties == null) {
             return null;
         }
 
@@ -135,8 +175,8 @@ public class IPv6TetheringCoordinator {
         // At this time we have no such mechanism--we only support tethering
         // IPv6 toward the oldest (first requested) active downstream.
 
-        final TetherInterfaceStateMachine currentActive = mActiveDownstreams.peek();
-        if (currentActive != null && currentActive == sm) {
+        final Downstream currentActive = mActiveDownstreams.peek();
+        if (currentActive != null && currentActive.tism == sm) {
             final LinkProperties lp = getIPv6OnlyLinkProperties(
                     mUpstreamNetworkState.linkProperties);
             if (lp.hasIPv6DefaultRoute() && lp.hasGlobalIPv6Address()) {
@@ -144,6 +184,13 @@ public class IPv6TetheringCoordinator {
             }
         }
 
+        return null;
+    }
+
+    Downstream findDownstream(TetherInterfaceStateMachine tism) {
+        for (Downstream ds : mActiveDownstreams) {
+            if (ds.tism == tism) return ds;
+        }
         return null;
     }
 
@@ -261,6 +308,40 @@ public class IPv6TetheringCoordinator {
                !ip.isLinkLocalAddress() &&
                !ip.isSiteLocalAddress() &&
                !ip.isMulticastAddress();
+    }
+
+    private static LinkProperties getUniqueLocalConfig(byte[] ulp, short subnetId) {
+        final LinkProperties lp = new LinkProperties();
+
+        final IpPrefix local48 = getUniqueLocalPrefix(ulp, (short) 0, 48);
+        lp.addRoute(new RouteInfo(local48, null, null));
+
+        final IpPrefix local64 = getUniqueLocalPrefix(ulp, subnetId, 64);
+        lp.addLinkAddress(new LinkAddress(local64.getAddress(), 64));
+
+        return lp;
+    }
+
+    // Generates a Unique Locally-assigned Prefix:
+    //
+    //     https://tools.ietf.org/html/rfc4193#section-3.1
+    //
+    // The result is a /48 that can be used for local-only communications.
+    private static byte[] generateUniqueLocalPrefix() {
+        final byte[] ulp = new byte[6];  // 6 = 48bits / 8bits/byte
+        (new Random()).nextBytes(ulp);
+
+        final byte[] in6addr = Arrays.copyOf(ulp, NetworkConstants.IPV6_ADDR_LEN);
+        in6addr[0] = (byte) 0xfd;  // fc00::/7 and L=1
+
+        return in6addr;
+    }
+
+    private static IpPrefix getUniqueLocalPrefix(byte[] in6addr, short subnetId, int prefixlen) {
+        final byte[] bytes = Arrays.copyOf(in6addr, in6addr.length);
+        bytes[7] = (byte) (subnetId >> 8);
+        bytes[8] = (byte) subnetId;
+        return new IpPrefix(bytes, prefixlen);
     }
 
     private static String toDebugString(NetworkState ns) {

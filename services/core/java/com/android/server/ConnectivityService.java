@@ -1945,6 +1945,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return;
         }
 
+        // DONOTSUBMIT: Remove this block.
+        if (argsContain(args, "--local_hotspot")) {
+            if (argsContain(args, "start")) {
+                mTethering.setLocalOnlyWifiHotspotEnable(true);
+            } else if (argsContain(args, "stop")) {
+                mTethering.setLocalOnlyWifiHotspotEnable(false);
+            }
+            return;
+        }
+
         if (argsContain(args, "--diag")) {
             dumpNetworkDiagnostics(pw);
             return;
