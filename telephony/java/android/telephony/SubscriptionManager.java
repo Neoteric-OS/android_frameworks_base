@@ -521,14 +521,14 @@ public class SubscriptionManager {
     }
 
     /**
-     * Get the active SubscriptionInfo associated with the slotIdx
-     * @param slotIdx the slot which the subscription is inserted
+     * Get the active SubscriptionInfo associated with the slotIndex
+     * @param slotIndex the slot which the subscription is inserted
      * @return SubscriptionInfo, maybe null if its not active
      */
-    public SubscriptionInfo getActiveSubscriptionInfoForSimSlotIndex(int slotIdx) {
-        if (VDBG) logd("[getActiveSubscriptionInfoForSimSlotIndex]+ slotIdx=" + slotIdx);
-        if (!isValidSlotId(slotIdx)) {
-            logd("[getActiveSubscriptionInfoForSimSlotIndex]- invalid slotIdx");
+    public SubscriptionInfo getActiveSubscriptionInfoForSimSlotIndex(int slotIndex) {
+        if (VDBG) logd("[getActiveSubscriptionInfoForSimSlotIndex]+ slotIndex=" + slotIndex);
+        if (!isValidSlotId(slotIndex)) {
+            logd("[getActiveSubscriptionInfoForSimSlotIndex]- invalid slotIndex");
             return null;
         }
 
@@ -537,7 +537,7 @@ public class SubscriptionManager {
         try {
             ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
             if (iSub != null) {
-                result = iSub.getActiveSubscriptionInfoForSimSlotIndex(slotIdx,
+                result = iSub.getActiveSubscriptionInfoForSimSlotIndex(slotIndex,
                         mContext.getOpPackageName());
             }
         } catch (RemoteException ex) {
@@ -1228,9 +1228,9 @@ public class SubscriptionManager {
     }
 
     /**
-     * Returns a constant indicating the state of sim for the slot idx.
+     * Returns a constant indicating the state of sim for the slot index.
      *
-     * @param slotIdx
+     * @param slotIndex
      *
      * {@See TelephonyManager#SIM_STATE_UNKNOWN}
      * {@See TelephonyManager#SIM_STATE_ABSENT}
@@ -1244,13 +1244,13 @@ public class SubscriptionManager {
      *
      * {@hide}
      */
-    public static int getSimStateForSlotIdx(int slotIdx) {
+    public static int getSimStateForSlotIndex(int slotIndex) {
         int simState = TelephonyManager.SIM_STATE_UNKNOWN;
 
         try {
             ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
             if (iSub != null) {
-                simState = iSub.getSimStateForSlotIdx(slotIdx);
+                simState = iSub.getSimStateForSlotIndex(slotIndex);
             }
         } catch (RemoteException ex) {
         }
