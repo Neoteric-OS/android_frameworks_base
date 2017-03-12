@@ -26,6 +26,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.wifi.WifiConfiguration;
 import android.os.Binder;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -2212,6 +2213,39 @@ public class ConnectivityManager {
     public int setUsbTethering(boolean enable) {
         try {
             return mService.setUsbTethering(enable);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Request that a local-only Wi-Fi hotspot be started. The supplied Wi-Fi
+     * configuration is used to start the Wi-Fi hotspot, and must be non-null.
+     *
+     * Local-only Wi-Fi hotspot functionality is currently mutually exclusive
+     * with other tethering functionality.
+     *
+     * @param cfg The {@link android.net.wifi.WifiConfiguration} to use.
+     * @return error a {@code TETHER_ERROR} value indicating success or failure
+     *
+     * @hide
+     */
+    public int startLocalOnlyWifiHotspot(WifiConfiguration cfg) {
+        try {
+            return mService.startLocalOnlyWifiHotspot(cfg);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Stop any running local-only Wi-Fi hotspot.
+     *
+     * @hide
+     */
+    public void stopLocalOnlyWifiHotspot() {
+        try {
+            mService.stopLocalOnlyWifiHotspot();
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
