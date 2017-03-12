@@ -79,6 +79,7 @@ import android.net.metrics.DefaultNetworkEvent;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.NetworkEvent;
 import android.net.util.MultinetworkPolicyTracker;
+import android.net.wifi.WifiConfiguration;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -1532,6 +1533,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (restrictBackground) {
                 log("onRestrictBackgroundChanged(true): disabling tethering");
                 mTethering.untetherAll();
+                mTethering.stopLocalOnlyWifiHotspot();
             }
         }
 
@@ -1947,6 +1949,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (argsContain(args, "--diag")) {
             dumpNetworkDiagnostics(pw);
+            return;
+        } else if (argsContain(args, "--local_hotspot")) {
+            if (argsContain(args, "start")) {
+                mTethering.startLocalOnlyWifiHotspot(null);
+            } else if (argsContain(args, "stop")) {
+                mTethering.stopLocalOnlyWifiHotspot();
+            }
             return;
         }
 
@@ -3044,6 +3053,23 @@ public class ConnectivityService extends IConnectivityManager.Stub
         } else {
             return ConnectivityManager.TETHER_ERROR_UNSUPPORTED;
         }
+    }
+
+    @Override
+    public int startLocalOnlyWifiHotspot(WifiConfiguration cfg) {
+        enforceTetherAccessPermission();
+        if (cfg == null) {
+            // Using the user-defined tethering configuration (by passing null)
+            // is unsupported.
+            return ConnectivityManager.TETHER_ERROR_UNSUPPORTED;
+        }
+        return mTethering.startLocalOnlyWifiHotspot(cfg);
+    }
+
+    @Override
+    public void stopLocalOnlyWifiHotspot() {
+        enforceTetherAccessPermission();
+        mTethering.stopLocalOnlyWifiHotspot();
     }
 
     // TODO - move iface listing, queries, etc to new module

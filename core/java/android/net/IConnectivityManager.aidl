@@ -26,6 +26,7 @@ import android.net.NetworkQuotaInfo;
 import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.net.ProxyInfo;
+import android.net.wifi.WifiConfiguration;
 import android.os.IBinder;
 import android.os.Messenger;
 import android.os.ParcelFileDescriptor;
@@ -96,6 +97,9 @@ interface IConnectivityManager
     String[] getTetherableBluetoothRegexs();
 
     int setUsbTethering(boolean enable);
+
+    int startLocalOnlyWifiHotspot(in WifiConfiguration cfg);
+    void stopLocalOnlyWifiHotspot();
 
     void reportInetCondition(int networkType, int percentage);
 
