@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83dce5a7_b90b3478",
+        "filename": "core/java/com/android/internal/os/WrapperInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2017-03-13T22:24:55Z",
+      "side": 1,
+      "message": "The only syscalls used from preserveCapabilities() is prctl(), capget(), and capset(). prctl() is already exposed in java.android.system.Os. Can we get capget() and capset() exposed, and then write all of this using java? Introducing new native code here feels ugly when we can expose this through proper java APIs.",
+      "range": {
+        "startLine": 151,
+        "startChar": 19,
+        "endLine": 151,
+        "endChar": 25
+      },
+      "revId": "ab4f37a1ca3ec97b5cff8d46d0d3c2e1305eae2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96a7a194_e9e79ab8",
+        "filename": "core/jni/com_android_internal_os_WrapperInit.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2017-03-13T22:24:55Z",
+      "side": 1,
+      "message": "It would keep the code shorter to just avoid this \"if\" block, and unconditionally do lines 44-48 regardless of whether or not permitted \u003d\u003d inheritable. It\u0027s one extra harmless syscall.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 61
+      },
+      "revId": "ab4f37a1ca3ec97b5cff8d46d0d3c2e1305eae2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a82b3779_4f4f26ad",
+        "filename": "core/jni/com_android_internal_os_WrapperInit.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2017-03-13T22:24:55Z",
+      "side": 1,
+      "message": "This might be cleaner:\n\n  for (unsigned long i \u003d 0; prctl(PR_CAPBSET_READ, i, 0, 0, 0) !\u003d -1; ++i) {\n    if (capdata[CAP_TO_INDEX(i)].inheritable \u0026 CAP_TO_MASK(i)) {\n      if (prctl(...)) { }\n    }\n  }",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 5
+      },
+      "revId": "ab4f37a1ca3ec97b5cff8d46d0d3c2e1305eae2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
