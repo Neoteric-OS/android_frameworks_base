@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adea7886_a6e287ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-03-13T13:40:22Z",
+      "side": 1,
+      "message": "mega nit: this should be consistent with \"git cherry-pick -x\" or \"repo cherry-pick\" so change it to:\n\n(cherry picked from commit 1e3db871e52e59c69edb1843df7f4aecb030bc6f)",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "185991e6699b0f27eac9545d754c0241948f3943",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
