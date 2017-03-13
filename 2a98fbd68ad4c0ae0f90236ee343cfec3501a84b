@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cbcd193e_3e3cde61",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-03-13T16:59:08Z",
+      "side": 1,
+      "message": "I personally think this is not a good format to specify a list of ranges, particularly say if the list ever becomes long. I doubt this list will be too long, but it will possibly be used as an example for other configs.\n\nBtw, independent from the format, if later we need to do band-earfcn conversion in more places, we should come up with a helper class for that instead of hardcoding these ranges this way.",
+      "parentUuid": "a02c0891_a066f7b9",
+      "range": {
+        "startLine": 1146,
+        "startChar": 52,
+        "endLine": 1147,
+        "endChar": 43
+      },
+      "revId": "2a98fbd68ad4c0ae0f90236ee343cfec3501a84b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6025772c_94c89f08",
         "filename": "telephony/java/android/telephony/SignalStrength.java",
         "patchSetId": 4
