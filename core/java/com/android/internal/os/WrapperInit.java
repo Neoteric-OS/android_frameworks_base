@@ -17,6 +17,11 @@
 package com.android.internal.os;
 
 import android.os.Process;
+import android.system.ErrnoException;
+import android.system.Os;
+import android.system.OsConstants;
+import android.system.StructCapUserData;
+import android.system.StructCapUserHeader;
 import android.util.Slog;
 import com.android.internal.os.Zygote.MethodAndArgsCaller;
 import dalvik.system.VMRuntime;
@@ -119,6 +124,7 @@ public class WrapperInit {
         command.append(' ');
         command.append(targetSdkVersion);
         Zygote.appendQuotedShellArgs(command, args);
+        preserveCapabilities();
         Zygote.execShell(command.toString());
     }
 
@@ -155,5 +161,43 @@ public class WrapperInit {
         }
 
         RuntimeInit.applicationInit(targetSdkVersion, argv, classLoader);
+    }
+
+    /**
+     * Copy current capabilities to ambient capabilities. This is required for apps using
+     * capabilities, as execv will re-evaluate the capability set, and the set of sh is
+     * empty. Ambient capabilities have to be set to inherit them effectively.
+     */
+    private static void preserveCapabilities() {
+        try {
+            StructCapUserHeader header = new StructCapUserHeader(
+                    OsConstants._LINUX_CAPABILITY_VERSION_3, 0);
+            StructCapUserData[] data = Os.capget(header);
+
+            if (data[0].permitted != data[0].inheritable ||
+                    data[1].permitted != data[1].inheritable) {
+                data[0] = new StructCapUserData(data[0].effective, data[0].permitted,
+                        data[0].permitted);
+                data[1] = new StructCapUserData(data[1].effective, data[1].permitted,
+                        data[1].permitted);
+                Os.capset(header, data);
+            }
+
+            for (int i = 0; i < 64; i++) {
+                int dataIndex = i / 32;
+                int bitShift = i % 32;
+                if ((data[dataIndex].inheritable & (1 << bitShift)) != 0) {
+                    try {
+                        Os.prctl(OsConstants.PR_CAP_AMBIENT, OsConstants.PR_CAP_AMBIENT_RAISE, i, 0,
+                                0);
+                    } catch (ErrnoException ex) {
+                        Slog.e(RuntimeInit.TAG, "RuntimeInit: Failed to raise ambient capability "
+                                + i, ex);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Slog.e(RuntimeInit.TAG, "RuntimeInit: Failed to preserve capabilities", e);
+        }
     }
 }
