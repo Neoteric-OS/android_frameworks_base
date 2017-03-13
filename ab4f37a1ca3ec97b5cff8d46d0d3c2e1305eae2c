@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b10e781_c038796f",
+        "filename": "core/java/com/android/internal/os/WrapperInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2017-03-13T22:27:54Z",
+      "side": 1,
+      "message": "I\u0027m not the biggest fan of reflecting more underlying OS-dependent things onto the Java layer, but that isn\u0027t my decision to make.",
+      "parentUuid": "83dce5a7_b90b3478",
+      "range": {
+        "startLine": 151,
+        "startChar": 19,
+        "endLine": 151,
+        "endChar": 25
+      },
+      "revId": "ab4f37a1ca3ec97b5cff8d46d0d3c2e1305eae2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96a7a194_e9e79ab8",
         "filename": "core/jni/com_android_internal_os_WrapperInit.cpp",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2017-03-13T22:24:55Z",
       "side": 1,
       "message": "This might be cleaner:\n\n  for (unsigned long i \u003d 0; prctl(PR_CAPBSET_READ, i, 0, 0, 0) !\u003d -1; ++i) {\n    if (capdata[CAP_TO_INDEX(i)].inheritable \u0026 CAP_TO_MASK(i)) {\n      if (prctl(...)) { }\n    }\n  }",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 5
+      },
+      "revId": "ab4f37a1ca3ec97b5cff8d46d0d3c2e1305eae2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "833f77e4_545c32ad",
+        "filename": "core/jni/com_android_internal_os_WrapperInit.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2017-03-13T22:27:54Z",
+      "side": 1,
+      "message": "This was copied directly from debuggerd_handler, so I assumed people were happy with it... :-)",
+      "parentUuid": "a82b3779_4f4f26ad",
       "range": {
         "startLine": 51,
         "startChar": 0,
