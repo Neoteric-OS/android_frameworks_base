@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "822599ff_f07ccaa8",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-03-13T22:02:56Z",
+      "side": 1,
+      "message": "I don\u0027t care signed vs unsigned, but the name should give an indication of which way a positive number affects things.  Offset doesn\u0027t do that.",
+      "parentUuid": "3277e856_b44cd0e3",
+      "range": {
+        "startLine": 67,
+        "startChar": 16,
+        "endLine": 67,
+        "endChar": 26
+      },
+      "revId": "681e13d510da8217abd38314fad871dc24e98f3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9b75d81_a567d7f5",
         "filename": "telephony/java/android/telephony/SignalStrength.java",
         "patchSetId": 5
