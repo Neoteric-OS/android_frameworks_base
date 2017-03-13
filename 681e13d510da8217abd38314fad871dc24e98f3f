@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d430f56d_9d48f004",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-03-13T22:03:50Z",
+      "side": 1,
+      "message": "Actually, I do care - I think signed makes the most sense for the use case you suggest.  But I think the name needs to give a better clue on direction..",
+      "parentUuid": "822599ff_f07ccaa8",
+      "range": {
+        "startLine": 67,
+        "startChar": 16,
+        "endLine": 67,
+        "endChar": 26
+      },
+      "revId": "681e13d510da8217abd38314fad871dc24e98f3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9b75d81_a567d7f5",
         "filename": "telephony/java/android/telephony/SignalStrength.java",
         "patchSetId": 5
