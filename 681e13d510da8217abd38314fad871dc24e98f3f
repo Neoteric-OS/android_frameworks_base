@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "bb6807de_40852165",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2017-03-13T22:20:49Z",
+      "side": 1,
+      "message": "But the word boost, to me make it look like it is in single direction. Offset is generic enough to be positive and negative",
+      "parentUuid": "d430f56d_9d48f004",
+      "range": {
+        "startLine": 67,
+        "startChar": 16,
+        "endLine": 67,
+        "endChar": 26
+      },
+      "revId": "681e13d510da8217abd38314fad871dc24e98f3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9b75d81_a567d7f5",
         "filename": "telephony/java/android/telephony/SignalStrength.java",
         "patchSetId": 5
