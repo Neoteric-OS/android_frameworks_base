@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3277e856_b44cd0e3",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2017-03-13T21:26:49Z",
+      "side": 1,
+      "message": "Thought about keeping this as an unsigned, but then thought to keep the flexibility of reducing the signal strength for a particular band.",
+      "parentUuid": "d8916815_9cb71e7a",
+      "range": {
+        "startLine": 67,
+        "startChar": 16,
+        "endLine": 67,
+        "endChar": 26
+      },
+      "revId": "681e13d510da8217abd38314fad871dc24e98f3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9b75d81_a567d7f5",
         "filename": "telephony/java/android/telephony/SignalStrength.java",
         "patchSetId": 5
@@ -59,6 +83,30 @@
       "writtenOn": "2017-03-13T21:20:18Z",
       "side": 1,
       "message": "are you certain this is what\u0027s desired?\n\nIt would be nice if the offset applied throughout the range, but you\u0027re still keeping the upper and lower ends fixed which makes this more complicated.",
+      "range": {
+        "startLine": 838,
+        "startChar": 27,
+        "endLine": 838,
+        "endChar": 37
+      },
+      "revId": "681e13d510da8217abd38314fad871dc24e98f3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25002c51_9c18cb35",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2017-03-13T21:26:49Z",
+      "side": 1,
+      "message": "The requirement do not mention about the upper and lower boundary. I was not sure why we had an upper boundary, but thought not to change the logic of upper and lower due to the same.",
+      "parentUuid": "ffe8f8a6_03b144aa",
       "range": {
         "startLine": 838,
         "startChar": 27,
