@@ -573,11 +573,13 @@ public class ConnectivityManager {
      */
     public static final int TYPE_VPN = 17;
 
-    /** {@hide} */
-    public static final int MAX_RADIO_TYPE   = TYPE_VPN;
+    public static final int TYPE_MOBILE_XCAP = 18;
 
     /** {@hide} */
-    public static final int MAX_NETWORK_TYPE = TYPE_VPN;
+    public static final int MAX_RADIO_TYPE   = TYPE_MOBILE_XCAP;
+
+    /** {@hide} */
+    public static final int MAX_NETWORK_TYPE = TYPE_MOBILE_XCAP;
 
     private static final int MIN_NETWORK_TYPE = TYPE_MOBILE;
 
