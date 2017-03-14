@@ -188,4 +188,9 @@ public class ISmsImplBase extends ISms.Stub {
     public String createAppSpecificSmsToken(int subId, String callingPkg, PendingIntent intent) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public int getSmsCapacityOnIccForSubscriber(int subId) {
+        throw new UnsupportedOperationException();
+    }
 }

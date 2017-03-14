@@ -5369,6 +5369,8 @@ package android.telephony {
 
   public final class SmsManager {
     method public void sendMultipartTextMessageWithoutPersisting(java.lang.String, java.lang.String, java.util.List<java.lang.String>, java.util.List<android.app.PendingIntent>, java.util.List<android.app.PendingIntent>);
+    method public void sendTextMessageWithoutPersisting(java.lang.String, java.lang.String, java.lang.String, android.app.PendingIntent, android.app.PendingIntent);
+    method public int getSmsCapacityOnIcc();
     field public static final int RESULT_CANCELLED = 23; // 0x17
     field public static final int RESULT_ENCODING_ERROR = 18; // 0x12
     field public static final int RESULT_ERROR_FDN_CHECK_FAILURE = 6; // 0x6
