@@ -33,6 +33,7 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiConfiguration.KeyMgmt;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.net.wifi.hotspot2.PasspointConfiguration;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -95,6 +96,8 @@ public class AccessPoint implements Comparable<AccessPoint> {
     private static final String KEY_PSKTYPE = "key_psktype";
     private static final String KEY_SCANRESULTCACHE = "key_scanresultcache";
     private static final String KEY_CONFIG = "key_config";
+    private static final String KEY_FQDN = "key_fqdn";
+    private static final String KEY_PROVIDER_FRIENDLY_NAME = "key_provider_friendly_name";
 
     /**
      * These values are matched in string arrays -- changes must be kept in sync
@@ -131,6 +134,13 @@ public class AccessPoint implements Comparable<AccessPoint> {
 
     private Object mTag;
 
+    /**
+     * Information associated with the {@link PasspointConfiguration}.  Only maintaining
+     * the relevant info to preserve spaces.
+     */
+    private String mFqdn;
+    private String mProviderFriendlyName;
+
     public AccessPoint(Context context, Bundle savedState) {
         mContext = context;
         mConfig = savedState.getParcelable(KEY_CONFIG);
@@ -158,19 +168,35 @@ public class AccessPoint implements Comparable<AccessPoint> {
                 mScanResultCache.put(result.BSSID, result);
             }
         }
+        if (savedState.containsKey(KEY_FQDN)) {
+            mFqdn = savedState.getString(KEY_FQDN);
+        }
+        if (savedState.containsKey(KEY_PROVIDER_FRIENDLY_NAME)) {
+            mProviderFriendlyName = savedState.getString(KEY_PROVIDER_FRIENDLY_NAME);
+        }
         update(mConfig, mInfo, mNetworkInfo);
         mRssi = getRssi();
         mSeen = getSeen();
     }
 
+    public AccessPoint(Context context, WifiConfiguration config) {
+        mContext = context;
+        loadConfig(config);
+    }
+
+    /**
+     * Initialize an AccessPoint object for a {@link PasspointConfiguration}.  This is mainly
+     * used by "Saved Networks" page for managing the saved {@link PasspointConfiguration}.
+     */
+    public AccessPoint(Context context, PasspointConfiguration config) {
+        mContext = context;
+        mFqdn = config.getHomeSp().getFqdn();
+        mProviderFriendlyName = config.getHomeSp().getFriendlyName();
+    }
+
     AccessPoint(Context context, ScanResult result) {
         mContext = context;
         initWithScanResult(result);
-    }
-
-    AccessPoint(Context context, WifiConfiguration config) {
-        mContext = context;
-        loadConfig(config);
     }
 
     @Override
@@ -264,6 +290,10 @@ public class AccessPoint implements Comparable<AccessPoint> {
 
     public WifiConfiguration getConfig() {
         return mConfig;
+    }
+
+    public String getPasspointFqdn() {
+        return mFqdn;
     }
 
     public void clearConfig() {
@@ -367,6 +397,8 @@ public class AccessPoint implements Comparable<AccessPoint> {
     public String getConfigName() {
         if (mConfig != null && mConfig.isPasspoint()) {
             return mConfig.providerFriendlyName;
+        } else if (mFqdn != null) {
+            return mProviderFriendlyName;
         } else {
             return ssid;
         }
@@ -635,8 +667,18 @@ public class AccessPoint implements Comparable<AccessPoint> {
                 mNetworkInfo != null && mNetworkInfo.getState() != State.DISCONNECTED;
     }
 
+    /**
+     * Return true if this AccessPoint represents a Passpoint AP.
+     */
     public boolean isPasspoint() {
         return mConfig != null && mConfig.isPasspoint();
+    }
+
+    /**
+     * Return true if this AccessPoint represents a Passpoint provider configuration.
+     */
+    public boolean isPasspointConfig() {
+        return mFqdn != null;
     }
 
     /**
@@ -713,6 +755,12 @@ public class AccessPoint implements Comparable<AccessPoint> {
                 new ArrayList<ScanResult>(mScanResultCache.values()));
         if (mNetworkInfo != null) {
             savedState.putParcelable(KEY_NETWORKINFO, mNetworkInfo);
+        }
+        if (mFqdn != null) {
+            savedState.putString(KEY_FQDN, mFqdn);
+        }
+        if (mProviderFriendlyName != null) {
+            savedState.putString(KEY_PROVIDER_FRIENDLY_NAME, mProviderFriendlyName);
         }
     }
 
