@@ -244,6 +244,7 @@
         <item>"wifi_p2p,13,1,0,-1,true"</item>
         <item>"mobile_ia,14,0,2,-1,true"</item>
         <item>"mobile_emergency,15,0,2,-1,true"</item>
+        <item>"mobile_xcap,18,0,2,60000,true"</item>
     </string-array>
 
     <!-- Array of ConnectivityManager.TYPE_xxxx constants for networks that may only
