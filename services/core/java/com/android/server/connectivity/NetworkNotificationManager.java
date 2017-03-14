@@ -25,7 +25,9 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.net.NetworkCapabilities;
 import android.os.UserHandle;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Slog;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.R;
@@ -142,6 +144,23 @@ public class NetworkNotificationManager {
                     // TODO: Change this to pull from NetworkInfo once a printable
                     // name has been added to it
                     details = mTelephonyManager.getNetworkOperatorName();
+                    int subId = SubscriptionManager.getDefaultDataSubscriptionId();
+                    if (nai != null) {
+                        NetworkCapabilities nc = nai.networkCapabilities;
+                        if (nc != null) {
+                            String networkSpecifier = nc.getNetworkSpecifier();
+                            if (!TextUtils.isEmpty(networkSpecifier)) {
+                                try {
+                                    subId = Integer.parseInt(networkSpecifier);
+                                } catch (Exception e) {}
+                            }
+                        }
+                    }
+                    if (SubscriptionManager.isValidSubscriptionId(subId)) {
+                        details = mTelephonyManager.getNetworkOperatorName(subId);
+                        log("setProvNotificationVisibleIntent: getNetworkOperatorName(" + subId
+                                + ")=" + details);
+                    }
                     break;
                 default:
                     title = r.getString(R.string.network_available_sign_in, 0);
