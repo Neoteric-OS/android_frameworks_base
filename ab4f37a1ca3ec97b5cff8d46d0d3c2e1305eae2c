@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "5931ddf5_ecb59080",
+        "filename": "core/java/com/android/internal/os/WrapperInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2017-03-14T15:22:40Z",
+      "side": 1,
+      "message": "Thank you for doing this. It\u0027s incredibly important from a security point of view that we never write another line of C code again, and these are the kinds of positive changes which go a long way towards making that dream achievable.",
+      "parentUuid": "98c91b45_a1513dc2",
+      "range": {
+        "startLine": 151,
+        "startChar": 19,
+        "endLine": 151,
+        "endChar": 25
+      },
+      "revId": "ab4f37a1ca3ec97b5cff8d46d0d3c2e1305eae2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96a7a194_e9e79ab8",
         "filename": "core/jni/com_android_internal_os_WrapperInit.cpp",
         "patchSetId": 1
