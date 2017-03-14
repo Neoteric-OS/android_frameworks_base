@@ -116,6 +116,30 @@
       "revId": "ab4f37a1ca3ec97b5cff8d46d0d3c2e1305eae2c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c988cbdc_d3e1481d",
+        "filename": "core/jni/com_android_internal_os_WrapperInit.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2017-03-14T02:18:55Z",
+      "side": 1,
+      "message": "FYI, it was you who approved the change away from the simple loop: https://android-review.googlesource.com/336290 :-)",
+      "parentUuid": "833f77e4_545c32ad",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 5
+      },
+      "revId": "ab4f37a1ca3ec97b5cff8d46d0d3c2e1305eae2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
