@@ -41,7 +41,10 @@ import java.io.IOException;
  *
  * Note: this class is subclassed in the OMS unit tests, and hence not marked as final.
  */
-class IdmapManager {
+public class IdmapManager {
+    // TODO(martenkongstad): when mEnabledOverlayPaths is moved from
+    // PackageManagerService to OverlayManagerService, make this class and
+    // getIdmapPath package private again
     private final Installer mInstaller;
 
     IdmapManager(final Installer installer) {
@@ -58,11 +61,11 @@ class IdmapManager {
         final int sharedGid = UserHandle.getSharedAppGid(targetPackage.applicationInfo.uid);
         final String targetPath = targetPackage.applicationInfo.getBaseCodePath();
         final String overlayPath = overlayPackage.applicationInfo.getBaseCodePath();
+        final String idmapPath = getIdmapPath(overlayPath, userId);
         try {
-            mInstaller.idmap(targetPath, overlayPath, sharedGid);
+            mInstaller.createIdmap(targetPath, overlayPath, sharedGid, idmapPath);
         } catch (InstallerException e) {
-            Slog.w(TAG, "failed to generate idmap for " + targetPath + " and "
-                    + overlayPath + ": " + e.getMessage());
+            Slog.w(TAG, "failed to generate idmap " + idmapPath + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -71,12 +74,12 @@ class IdmapManager {
     boolean removeIdmap(@NonNull final OverlayInfo oi, final int userId) {
         // unused userId: see comment in OverlayManagerServiceImpl.removeIdmapIfPossible
         if (DEBUG) {
-            Slog.d(TAG, "remove idmap for " + oi.baseCodePath);
+            Slog.d(TAG, "remove idmap " + oi.idmapPath);
         }
         try {
-            mInstaller.removeIdmap(oi.baseCodePath);
+            mInstaller.removeIdmap(oi.idmapPath);
         } catch (InstallerException e) {
-            Slog.w(TAG, "failed to remove idmap for " + oi.baseCodePath + ": " + e.getMessage());
+            Slog.w(TAG, "failed to remove idmap " + oi.idmapPath + ": " + e.getMessage());
             return false;
         }
         return true;
@@ -84,15 +87,17 @@ class IdmapManager {
 
     boolean idmapExists(@NonNull final OverlayInfo oi) {
         // unused OverlayInfo.userId: see comment in OverlayManagerServiceImpl.removeIdmapIfPossible
-        return new File(getIdmapPath(oi.baseCodePath)).isFile();
+        return oi.idmapPath != null ? new File(oi.idmapPath).isFile() : false;
     }
 
     boolean idmapExists(@NonNull final PackageInfo overlayPackage, final int userId) {
-        // unused userId: see comment in OverlayManagerServiceImpl.removeIdmapIfPossible
-        return new File(getIdmapPath(overlayPackage.applicationInfo.getBaseCodePath())).isFile();
+        final String idmapPath =
+            getIdmapPath(overlayPackage.applicationInfo.getBaseCodePath(), userId);
+        return new File(idmapPath).isFile();
     }
 
-    private String getIdmapPath(@NonNull final String baseCodePath) {
+    public static String getIdmapPath(@NonNull final String baseCodePath, final int userId) {
+        // unused userId: see comment in OverlayManagerServiceImpl.removeIdmapIfPossible
         final StringBuilder sb = new StringBuilder("/data/resource-cache/");
         sb.append(baseCodePath.substring(1).replace('/', '@'));
         sb.append("@idmap");

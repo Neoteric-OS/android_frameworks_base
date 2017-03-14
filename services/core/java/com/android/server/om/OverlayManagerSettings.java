@@ -288,6 +288,7 @@ final class OverlayManagerSettings {
             pw.print("mUserId............: "); pw.println(item.getUserId());
             pw.print("mTargetPackageName.: "); pw.println(item.getTargetPackageName());
             pw.print("mBaseCodePath......: "); pw.println(item.getBaseCodePath());
+            pw.print("mIdmapPath.........: "); pw.println(item.getIdmapPath());
             pw.print("mState.............: "); pw.println(OverlayInfo.stateToString(item.getState()));
             pw.print("mIsEnabled.........: "); pw.println(item.isEnabled());
             pw.print("mIsStatic..........: "); pw.println(item.isStatic());
@@ -413,6 +414,7 @@ final class OverlayManagerSettings {
         private final String mPackageName;
         private final String mTargetPackageName;
         private String mBaseCodePath;
+        private String mIdmapPath;
         private int mState;
         private boolean mIsEnabled;
         private OverlayInfo mCache;
@@ -427,6 +429,7 @@ final class OverlayManagerSettings {
             mUserId = userId;
             mTargetPackageName = targetPackageName;
             mBaseCodePath = baseCodePath;
+            mIdmapPath = IdmapManager.getIdmapPath(baseCodePath, userId);
             mState = state;
             mIsEnabled = isEnabled;
             mCache = null;
@@ -456,10 +459,15 @@ final class OverlayManagerSettings {
         private boolean setBaseCodePath(@NonNull final String path) {
             if (!mBaseCodePath.equals(path)) {
                 mBaseCodePath = path;
+                mIdmapPath = IdmapManager.getIdmapPath(mBaseCodePath, mUserId);
                 invalidateCache();
                 return true;
             }
             return false;
+        }
+
+        private String getIdmapPath() {
+            return mIdmapPath;
         }
 
         private int getState() {
@@ -490,8 +498,8 @@ final class OverlayManagerSettings {
 
         private OverlayInfo getOverlayInfo() {
             if (mCache == null) {
-                mCache = new OverlayInfo(mPackageName, mTargetPackageName, mBaseCodePath, mState,
-                        mUserId);
+                mCache = new OverlayInfo(mPackageName, mTargetPackageName, mBaseCodePath, mIdmapPath,
+                        mState, mUserId);
             }
             return mCache;
         }

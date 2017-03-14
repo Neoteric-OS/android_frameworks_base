@@ -693,13 +693,14 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
     public SparseArray<int[]> splitDependencies;
 
     /**
-     * Full paths to the locations of extra resource packages (runtime overlays)
-     * this application uses. This field is only used if there are extra resource
-     * packages, otherwise it is null.
+     * Full paths to the locations of the idmap files corresponding to the
+     * extra resource packages (runtime overlays) this application uses. This
+     * field is only used if there are extra resource packages, otherwise it is
+     * null.
      *
      * {@hide}
      */
-    public String[] resourceDirs;
+    public String[] idmapPaths;
 
     /**
      * String retrieved from the seinfo tag found in selinux policy. This value
@@ -1041,8 +1042,8 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
                 && !Arrays.equals(splitSourceDirs, splitPublicSourceDirs)) {
             pw.println(prefix + "splitPublicSourceDirs=" + Arrays.toString(splitPublicSourceDirs));
         }
-        if (resourceDirs != null) {
-            pw.println(prefix + "resourceDirs=" + Arrays.toString(resourceDirs));
+        if (idmapPaths != null) {
+            pw.println(prefix + "idmapPaths=" + Arrays.toString(idmapPaths));
         }
         if ((flags&DUMP_FLAG_DETAILS) != 0 && seInfo != null) {
             pw.println(prefix + "seinfo=" + seInfo);
@@ -1156,7 +1157,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         nativeLibraryRootRequiresIsa = orig.nativeLibraryRootRequiresIsa;
         primaryCpuAbi = orig.primaryCpuAbi;
         secondaryCpuAbi = orig.secondaryCpuAbi;
-        resourceDirs = orig.resourceDirs;
+        idmapPaths = orig.idmapPaths;
         seInfo = orig.seInfo;
         seInfoUser = orig.seInfoUser;
         sharedLibraryFiles = orig.sharedLibraryFiles;
@@ -1224,7 +1225,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         dest.writeInt(nativeLibraryRootRequiresIsa ? 1 : 0);
         dest.writeString(primaryCpuAbi);
         dest.writeString(secondaryCpuAbi);
-        dest.writeStringArray(resourceDirs);
+        dest.writeStringArray(idmapPaths);
         dest.writeString(seInfo);
         dest.writeString(seInfoUser);
         dest.writeStringArray(sharedLibraryFiles);
@@ -1289,7 +1290,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         nativeLibraryRootRequiresIsa = source.readInt() != 0;
         primaryCpuAbi = source.readString();
         secondaryCpuAbi = source.readString();
-        resourceDirs = source.readStringArray();
+        idmapPaths = source.readStringArray();
         seInfo = source.readString();
         seInfoUser = source.readString();
         sharedLibraryFiles = source.readStringArray();

@@ -293,8 +293,8 @@ public class ResourcesManager {
             }
         }
 
-        if (key.mOverlayDirs != null) {
-            for (final String idmapPath : key.mOverlayDirs) {
+        if (key.mIdmapPaths != null) {
+            for (final String idmapPath : key.mIdmapPaths) {
                 assets.addOverlayPath(idmapPath);
             }
         }
@@ -510,7 +510,7 @@ public class ResourcesManager {
      * @param activityToken Represents an Activity.
      * @param resDir The base resource path. Can be null (only framework resources will be loaded).
      * @param splitResDirs An array of split resource paths. Can be null.
-     * @param overlayDirs An array of overlay paths. Can be null.
+     * @param idmapPaths An array of overlay paths. Can be null.
      * @param libDirs An array of resource library paths. Can be null.
      * @param displayId The ID of the display for which to create the resources.
      * @param overrideConfig The configuration to apply on top of the base configuration. Can be
@@ -524,7 +524,7 @@ public class ResourcesManager {
     public @Nullable Resources createBaseActivityResources(@NonNull IBinder activityToken,
             @Nullable String resDir,
             @Nullable String[] splitResDirs,
-            @Nullable String[] overlayDirs,
+            @Nullable String[] idmapPaths,
             @Nullable String[] libDirs,
             int displayId,
             @Nullable Configuration overrideConfig,
@@ -536,7 +536,7 @@ public class ResourcesManager {
             final ResourcesKey key = new ResourcesKey(
                     resDir,
                     splitResDirs,
-                    overlayDirs,
+                    idmapPaths,
                     libDirs,
                     displayId,
                     overrideConfig != null ? new Configuration(overrideConfig) : null, // Copy
@@ -675,7 +675,7 @@ public class ResourcesManager {
      * @param activityToken Represents an Activity. If null, global resources are assumed.
      * @param resDir The base resource path. Can be null (only framework resources will be loaded).
      * @param splitResDirs An array of split resource paths. Can be null.
-     * @param overlayDirs An array of overlay paths. Can be null.
+     * @param idmapPaths An array of overlay paths. Can be null.
      * @param libDirs An array of resource library paths. Can be null.
      * @param displayId The ID of the display for which to create the resources.
      * @param overrideConfig The configuration to apply on top of the base configuration. Can be
@@ -690,7 +690,7 @@ public class ResourcesManager {
     public @Nullable Resources getResources(@Nullable IBinder activityToken,
             @Nullable String resDir,
             @Nullable String[] splitResDirs,
-            @Nullable String[] overlayDirs,
+            @Nullable String[] idmapPaths,
             @Nullable String[] libDirs,
             int displayId,
             @Nullable Configuration overrideConfig,
@@ -701,7 +701,7 @@ public class ResourcesManager {
             final ResourcesKey key = new ResourcesKey(
                     resDir,
                     splitResDirs,
-                    overlayDirs,
+                    idmapPaths,
                     libDirs,
                     displayId,
                     overrideConfig != null ? new Configuration(overrideConfig) : null, // Copy
@@ -803,7 +803,7 @@ public class ResourcesManager {
                     // Create the new ResourcesKey with the rebased override config.
                     final ResourcesKey newKey = new ResourcesKey(oldKey.mResDir,
                             oldKey.mSplitResDirs,
-                            oldKey.mOverlayDirs, oldKey.mLibDirs, displayId,
+                            oldKey.mIdmapPaths, oldKey.mLibDirs, displayId,
                             rebasedOverrideConfig, oldKey.mCompatInfo);
 
                     if (DEBUG) {
@@ -946,7 +946,7 @@ public class ResourcesManager {
                         updatedResourceKeys.put(impl, new ResourcesKey(
                                 key.mResDir,
                                 key.mSplitResDirs,
-                                key.mOverlayDirs,
+                                key.mIdmapPaths,
                                 newLibAssets,
                                 key.mDisplayId,
                                 key.mOverrideConfiguration,
@@ -960,11 +960,11 @@ public class ResourcesManager {
     }
 
     // TODO(adamlesinski): Make this accept more than just overlay directories.
-    final void applyNewResourceDirsLocked(@NonNull final String baseCodePath,
-            @Nullable final String[] newResourceDirs) {
+    final void applyNewIdmapPathsLocked(@NonNull final String baseCodePath,
+            @NonNull final String[] newIdmapPaths) {
         try {
             Trace.traceBegin(Trace.TRACE_TAG_RESOURCES,
-                    "ResourcesManager#applyNewResourceDirsLocked");
+                    "ResourcesManager#applyNewIdmapPathsLocked");
 
             final ArrayMap<ResourcesImpl, ResourcesKey> updatedResourceKeys = new ArrayMap<>();
             final int implCount = mResourceImpls.size();
@@ -976,7 +976,7 @@ public class ResourcesManager {
                     updatedResourceKeys.put(impl, new ResourcesKey(
                             key.mResDir,
                             key.mSplitResDirs,
-                            newResourceDirs,
+                            newIdmapPaths,
                             key.mLibDirs,
                             key.mDisplayId,
                             key.mOverrideConfiguration,

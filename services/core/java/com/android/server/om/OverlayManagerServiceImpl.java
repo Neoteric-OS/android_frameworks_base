@@ -464,7 +464,7 @@ final class OverlayManagerServiceImpl {
         pw.println("Default overlays: " + TextUtils.join(";", mDefaultOverlays));
     }
 
-    List<String> getEnabledOverlayPackageNames(@NonNull final String targetPackageName,
+    List<String> getEnabledIdmapPaths(@NonNull final String targetPackageName,
             final int userId) {
         final List<OverlayInfo> overlays = mSettings.getOverlaysForTarget(targetPackageName, userId);
         final List<String> paths = new ArrayList<>(overlays.size());
@@ -472,7 +472,7 @@ final class OverlayManagerServiceImpl {
         for (int i = 0; i < N; i++) {
             final OverlayInfo oi = overlays.get(i);
             if (oi.isEnabled()) {
-                paths.add(oi.packageName);
+                paths.add(oi.idmapPath);
             }
         }
         return paths;

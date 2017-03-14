@@ -1994,6 +1994,7 @@ public class PackageParser {
             String[] overlayPaths = mCallback.getOverlayPaths(pkgName, apkPath);
             if (overlayPaths != null && overlayPaths.length > 0) {
                 for (String overlayPath : overlayPaths) {
+                    // FIXME: this should be idmap paths, not apk paths
                     res.getAssets().addOverlayPath(overlayPath);
                 }
             }
@@ -6856,7 +6857,7 @@ public class PackageParser {
             ai.category = FallbackCategoryProvider.getFallbackCategory(ai.packageName);
         }
         ai.seInfoUser = SELinuxUtil.assignSeinfoUser(state);
-        ai.resourceDirs = state.overlayPaths;
+        ai.idmapPaths = state.idmapPaths;
     }
 
     public static ApplicationInfo generateApplicationInfo(Package p, int flags,

@@ -76,6 +76,14 @@ public final class OverlayInfo implements Parcelable {
     public final String baseCodePath;
 
     /**
+     * Full path to the idmap file for this overlay package; depending on the
+     * current {@see #state}, this file may or may not exist
+     *
+     * @see #STATE_NO_IDMAP
+     */
+    public final String idmapPath;
+
+    /**
      * The state of this OverlayInfo as defined by the STATE_* constants in this class.
      *
      * @see #STATE_MISSING_TARGET
@@ -97,15 +105,16 @@ public final class OverlayInfo implements Parcelable {
      * @param state the new state for the source OverlayInfo
      */
     public OverlayInfo(@NonNull OverlayInfo source, int state) {
-        this(source.packageName, source.targetPackageName, source.baseCodePath, state,
-                source.userId);
+        this(source.packageName, source.targetPackageName, source.baseCodePath,
+                source.idmapPath, state, source.userId);
     }
 
     public OverlayInfo(@NonNull String packageName, @NonNull String targetPackageName,
-            @NonNull String baseCodePath, int state, int userId) {
+            @NonNull String baseCodePath, @NonNull String idmapPath, int state, int userId) {
         this.packageName = packageName;
         this.targetPackageName = targetPackageName;
         this.baseCodePath = baseCodePath;
+        this.idmapPath = idmapPath;
         this.state = state;
         this.userId = userId;
         ensureValidState();
@@ -115,6 +124,7 @@ public final class OverlayInfo implements Parcelable {
         packageName = source.readString();
         targetPackageName = source.readString();
         baseCodePath = source.readString();
+        idmapPath = source.readString();
         state = source.readInt();
         userId = source.readInt();
         ensureValidState();
@@ -152,6 +162,7 @@ public final class OverlayInfo implements Parcelable {
         dest.writeString(packageName);
         dest.writeString(targetPackageName);
         dest.writeString(baseCodePath);
+        dest.writeString(idmapPath);
         dest.writeInt(state);
         dest.writeInt(userId);
     }
@@ -222,6 +233,7 @@ public final class OverlayInfo implements Parcelable {
         result = prime * result + ((packageName == null) ? 0 : packageName.hashCode());
         result = prime * result + ((targetPackageName == null) ? 0 : targetPackageName.hashCode());
         result = prime * result + ((baseCodePath == null) ? 0 : baseCodePath.hashCode());
+        result = prime * result + ((idmapPath == null) ? 0 : idmapPath.hashCode());
         return result;
     }
 

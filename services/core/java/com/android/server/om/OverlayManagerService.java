@@ -286,7 +286,7 @@ public final class OverlayManagerService extends SystemService {
                     // never be setup in onSwitchUser(). We will switch to the system user right
                     // after this, and its state will be setup there.
                     final List<String> targets = mImpl.updateOverlaysForUser(users.get(i).id);
-                    updateOverlayPaths(users.get(i).id, targets);
+                    updateIdmapPaths(users.get(i).id, targets);
                 }
             }
         }
@@ -458,7 +458,7 @@ public final class OverlayManagerService extends SystemService {
                         synchronized (mLock) {
                             targets = mImpl.updateOverlaysForUser(userId);
                         }
-                        updateOverlayPaths(userId, targets);
+                        updateIdmapPaths(userId, targets);
                     }
                     break;
 
@@ -702,7 +702,7 @@ public final class OverlayManagerService extends SystemService {
     /**
      * Updates the target packages' set of enabled overlays in PackageManager.
      */
-    private void updateOverlayPaths(int userId, List<String> targetPackageNames) {
+    private void updateIdmapPaths(int userId, List<String> targetPackageNames) {
         if (DEBUG) {
             Slog.d(TAG, "Updating overlay assets");
         }
@@ -715,7 +715,7 @@ public final class OverlayManagerService extends SystemService {
         final Map<String, List<String>> pendingChanges = new ArrayMap<>(targetPackageNames.size());
         synchronized (mLock) {
             final List<String> frameworkOverlays =
-                mImpl.getEnabledOverlayPackageNames("android", userId);
+                mImpl.getEnabledIdmapPaths("android", userId);
             final int N = targetPackageNames.size();
             for (int i = 0; i < N; i++) {
                 final String targetPackageName = targetPackageNames.get(i);
@@ -723,7 +723,7 @@ public final class OverlayManagerService extends SystemService {
                 if (!"android".equals(targetPackageName)) {
                     list.addAll(frameworkOverlays);
                 }
-                list.addAll(mImpl.getEnabledOverlayPackageNames(targetPackageName, userId));
+                list.addAll(mImpl.getEnabledIdmapPaths(targetPackageName, userId));
                 pendingChanges.put(targetPackageName, list);
             }
         }
@@ -750,7 +750,7 @@ public final class OverlayManagerService extends SystemService {
     }
 
     private void updateAssets(final int userId, List<String> targetPackageNames) {
-        updateOverlayPaths(userId, targetPackageNames);
+        updateIdmapPaths(userId, targetPackageNames);
         final IActivityManager am = ActivityManager.getService();
         try {
             am.scheduleApplicationInfoChanged(targetPackageNames, userId);
