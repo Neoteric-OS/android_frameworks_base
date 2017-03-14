@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1427788f_286f0087",
+        "filename": "wifi/java/android/net/wifi/WifiConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2017-03-14T17:54:22Z",
+      "side": 1,
+      "message": "Can you file a bug to remove this later (like b/31041781)? Otherwise this hang around forever.",
+      "range": {
+        "startLine": 442,
+        "startChar": 19,
+        "endLine": 442,
+        "endChar": 42
+      },
+      "revId": "580a1bdfbc6a8c4ca25e796af234711184c13871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
