@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "98c91b45_a1513dc2",
+        "filename": "core/java/com/android/internal/os/WrapperInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-03-14T15:12:25Z",
+      "side": 1,
+      "message": "Examples in android/system/Struct*.java",
+      "parentUuid": "7607e5d9_daecd751",
+      "range": {
+        "startLine": 151,
+        "startChar": 19,
+        "endLine": 151,
+        "endChar": 25
+      },
+      "revId": "ab4f37a1ca3ec97b5cff8d46d0d3c2e1305eae2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96a7a194_e9e79ab8",
         "filename": "core/jni/com_android_internal_os_WrapperInit.cpp",
         "patchSetId": 1
