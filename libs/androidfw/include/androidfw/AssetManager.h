@@ -89,7 +89,7 @@ public:
      */
     bool addAssetPath(const String8& path, int32_t* cookie,
         bool appAsLib=false, bool isSystemAsset=false);
-    bool addOverlayPath(const String8& path, int32_t* cookie);
+    bool addOverlayPath(const String8& idmapPath, int32_t* cookie);
 
     /*
      * Convenience for adding the standard system assets.  Uses the

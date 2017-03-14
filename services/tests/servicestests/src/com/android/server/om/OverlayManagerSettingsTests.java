@@ -40,6 +40,7 @@ public class OverlayManagerSettingsTests {
             "com.dummy.overlay_a",
             "com.dummy.target",
             "/data/app/com.dummy.overlay_a-1/base.apk",
+            "/data/resource-cache/com.dummy.overlay_a.idmap",
             STATE_DISABLED,
             0);
 
@@ -47,6 +48,7 @@ public class OverlayManagerSettingsTests {
             "com.dummy.overlay_b",
             "com.dummy.target",
             "/data/app/com.dummy.overlay_b-1/base.apk",
+            "/data/resource-cache/com.dummy.overlay_b.idmap",
             STATE_DISABLED,
             0);
 
@@ -54,6 +56,7 @@ public class OverlayManagerSettingsTests {
             "com.dummy.overlay_c",
             "com.dummy.target",
             "/data/app/com.dummy.overlay_c-1/base.apk",
+            "/data/resource-cache/com.dummy.overlay_c.idmap",
             STATE_DISABLED,
             0);
 
@@ -61,6 +64,7 @@ public class OverlayManagerSettingsTests {
             "com.dummy.overlay_a",
             "com.dummy.target",
             "/data/app/com.dummy.overlay_a-1/base.apk",
+            "/data/resource-cache/com.dummy.overlay_a.idmap",
             STATE_DISABLED,
             1);
 
@@ -68,6 +72,7 @@ public class OverlayManagerSettingsTests {
             "com.dummy.overlay_b",
             "com.dummy.target",
             "/data/app/com.dummy.overlay_b-1/base.apk",
+            "/data/resource-cache/com.dummy.overlay_b.idmap",
             STATE_DISABLED,
             1);
 
@@ -199,6 +204,7 @@ public class OverlayManagerSettingsTests {
                 "com.dummy.overlay_other",
                 "com.dummy.some.other.target",
                 "/data/app/com.dummy.overlay_other-1/base.apk",
+                "/data/resource-cache/com.dummy.overlay_other.idmap",
                 STATE_DISABLED,
                 0);
         insert(otherTarget);

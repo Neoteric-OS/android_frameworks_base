@@ -274,6 +274,7 @@ import com.android.server.SystemConfig;
 import com.android.server.SystemServerInitThreadPool;
 import com.android.server.Watchdog;
 import com.android.server.net.NetworkPolicyManagerInternal;
+import com.android.server.om.IdmapManager;
 import com.android.server.pm.Installer.InstallerException;
 import com.android.server.pm.PermissionsState.PermissionState;
 import com.android.server.pm.Settings.DatabaseVersion;
@@ -808,9 +809,10 @@ public class PackageManagerService extends IPackageManager.Stub
                     //
                     // OverlayManagerService will update each of them with a correct gid from its
                     // target package app id.
-                    mInstaller.idmap(targetPath, overlayPackage.baseCodePath,
-                            UserHandle.getSharedAppGid(
-                                    UserHandle.getUserGid(UserHandle.USER_SYSTEM)));
+                    final int userId = UserHandle.getSharedAppGid(
+                            UserHandle.getUserGid(UserHandle.USER_SYSTEM));
+                    mInstaller.createIdmap(targetPath, overlayPackage.baseCodePath,
+                            userId, IdmapManager.getIdmapPath(overlayPackage.baseCodePath, userId));
                     if (overlayPathList == null) {
                         overlayPathList = new ArrayList<String>();
                     }
@@ -24621,29 +24623,14 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
 
         @Override
         public boolean setEnabledOverlayPackages(int userId, @NonNull String targetPackageName,
-                @Nullable List<String> overlayPackageNames) {
+                @Nullable List<String> idmapPaths) {
             synchronized (mPackages) {
                 if (targetPackageName == null || mPackages.get(targetPackageName) == null) {
                     Slog.e(TAG, "failed to find package " + targetPackageName);
                     return false;
                 }
-                ArrayList<String> overlayPaths = null;
-                if (overlayPackageNames != null && overlayPackageNames.size() > 0) {
-                    final int N = overlayPackageNames.size();
-                    overlayPaths = new ArrayList<>(N);
-                    for (int i = 0; i < N; i++) {
-                        final String packageName = overlayPackageNames.get(i);
-                        final PackageParser.Package pkg = mPackages.get(packageName);
-                        if (pkg == null) {
-                            Slog.e(TAG, "failed to find package " + packageName);
-                            return false;
-                        }
-                        overlayPaths.add(pkg.baseCodePath);
-                    }
-                }
-
                 final PackageSetting ps = mSettings.mPackages.get(targetPackageName);
-                ps.setOverlayPaths(overlayPaths, userId);
+                ps.setIdmapPaths(idmapPaths, userId);
                 return true;
             }
         }

@@ -330,13 +330,13 @@ abstract class PackageSettingBase extends SettingBase {
         modifyUserState(userId).installReason = installReason;
     }
 
-    void setOverlayPaths(List<String> overlayPaths, int userId) {
-        modifyUserState(userId).overlayPaths = overlayPaths == null ? null :
-            overlayPaths.toArray(new String[overlayPaths.size()]);
+    void setIdmapPaths(List<String> idmapPaths, int userId) {
+        modifyUserState(userId).idmapPaths = idmapPaths == null ? null :
+            idmapPaths.toArray(new String[idmapPaths.size()]);
     }
 
-    String[] getOverlayPaths(int userId) {
-        return readUserState(userId).overlayPaths;
+    String[] getIdmapPaths(int userId) {
+        return readUserState(userId).idmapPaths;
     }
 
     /** Only use for testing. Do NOT use in production code. */

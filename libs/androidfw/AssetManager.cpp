@@ -62,7 +62,9 @@ static const bool kIsDebug = false;
 static const char* kAssetsRoot = "assets";
 static const char* kAppZipName = NULL; //"classes.jar";
 static const char* kSystemAssets = "framework/framework-res.apk";
+#ifdef __ANDROID__
 static const char* kResourceCache = "resource-cache";
+#endif
 
 static const char* kExcludeExtension = ".EXCLUDE";
 
@@ -79,32 +81,6 @@ const char* AssetManager::TARGET_APK_PATH = "/system/framework/framework-res.apk
 const char* AssetManager::IDMAP_DIR = "/data/resource-cache";
 
 namespace {
-
-String8 idmapPathForPackagePath(const String8& pkgPath) {
-    const char* root = getenv("ANDROID_DATA");
-    LOG_ALWAYS_FATAL_IF(root == NULL, "ANDROID_DATA not set");
-    String8 path(root);
-    path.appendPath(kResourceCache);
-
-    char buf[256]; // 256 chars should be enough for anyone...
-    strncpy(buf, pkgPath.string(), 255);
-    buf[255] = '\0';
-    char* filename = buf;
-    while (*filename && *filename == '/') {
-        ++filename;
-    }
-    char* p = filename;
-    while (*p) {
-        if (*p == '/') {
-            *p = '@';
-        }
-        ++p;
-    }
-    path.appendPath(filename);
-    path.append("@idmap");
-
-    return path;
-}
 
 /*
  * Like strdup(), but uses C++ "new" operator instead of malloc.
@@ -217,10 +193,8 @@ bool AssetManager::addAssetPath(
     return true;
 }
 
-bool AssetManager::addOverlayPath(const String8& packagePath, int32_t* cookie)
+bool AssetManager::addOverlayPath(const String8& idmapPath, int32_t* cookie)
 {
-    const String8 idmapPath = idmapPathForPackagePath(packagePath);
-
     AutoMutex _l(mLock);
 
     for (size_t i = 0; i < mAssetPaths.size(); ++i) {
@@ -246,11 +220,6 @@ bool AssetManager::addOverlayPath(const String8& packagePath, int32_t* cookie)
     }
     delete idmap;
 
-    if (overlayPath != packagePath) {
-        ALOGW("idmap file %s inconcistent: expected path %s does not match actual path %s\n",
-                idmapPath.string(), packagePath.string(), overlayPath.string());
-        return false;
-    }
     if (access(targetPath.string(), R_OK) != 0) {
         ALOGW("failed to access file %s: %s\n", targetPath.string(), strerror(errno));
         return false;

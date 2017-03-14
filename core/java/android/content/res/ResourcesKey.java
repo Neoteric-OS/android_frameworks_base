@@ -32,7 +32,7 @@ public final class ResourcesKey {
     public final String[] mSplitResDirs;
 
     @Nullable
-    public final String[] mOverlayDirs;
+    public final String[] mIdmapPaths;
 
     @Nullable
     public final String[] mLibDirs;
@@ -49,14 +49,14 @@ public final class ResourcesKey {
 
     public ResourcesKey(@Nullable String resDir,
                         @Nullable String[] splitResDirs,
-                        @Nullable String[] overlayDirs,
+                        @Nullable String[] idmapPaths,
                         @Nullable String[] libDirs,
                         int displayId,
                         @Nullable Configuration overrideConfig,
                         @Nullable CompatibilityInfo compatInfo) {
         mResDir = resDir;
         mSplitResDirs = splitResDirs;
-        mOverlayDirs = overlayDirs;
+        mIdmapPaths = idmapPaths;
         mLibDirs = libDirs;
         mDisplayId = displayId;
         mOverrideConfiguration = new Configuration(overrideConfig != null
@@ -66,7 +66,7 @@ public final class ResourcesKey {
         int hash = 17;
         hash = 31 * hash + Objects.hashCode(mResDir);
         hash = 31 * hash + Arrays.hashCode(mSplitResDirs);
-        hash = 31 * hash + Arrays.hashCode(mOverlayDirs);
+        hash = 31 * hash + Arrays.hashCode(mIdmapPaths);
         hash = 31 * hash + Arrays.hashCode(mLibDirs);
         hash = 31 * hash + mDisplayId;
         hash = 31 * hash + Objects.hashCode(mOverrideConfiguration);
@@ -82,7 +82,7 @@ public final class ResourcesKey {
         if (mResDir != null && mResDir.startsWith(path)) {
             return true;
         } else {
-            return anyStartsWith(mSplitResDirs, path) || anyStartsWith(mOverlayDirs, path)
+            return anyStartsWith(mSplitResDirs, path) || anyStartsWith(mIdmapPaths, path)
                     || anyStartsWith(mLibDirs, path);
         }
     }
@@ -121,7 +121,7 @@ public final class ResourcesKey {
         if (!Arrays.equals(mSplitResDirs, peer.mSplitResDirs)) {
             return false;
         }
-        if (!Arrays.equals(mOverlayDirs, peer.mOverlayDirs)) {
+        if (!Arrays.equals(mIdmapPaths, peer.mIdmapPaths)) {
             return false;
         }
         if (!Arrays.equals(mLibDirs, peer.mLibDirs)) {
@@ -149,9 +149,9 @@ public final class ResourcesKey {
             builder.append(TextUtils.join(",", mSplitResDirs));
         }
         builder.append("]");
-        builder.append(" mOverlayDirs=[");
-        if (mOverlayDirs != null) {
-            builder.append(TextUtils.join(",", mOverlayDirs));
+        builder.append(" mIdmapPaths=[");
+        if (mIdmapPaths != null) {
+            builder.append(TextUtils.join(",", mIdmapPaths));
         }
         builder.append("]");
         builder.append(" mLibDirs=[");

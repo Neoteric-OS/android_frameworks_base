@@ -310,20 +310,20 @@ public class Installer extends SystemService {
         }
     }
 
-    public void idmap(String targetApkPath, String overlayApkPath, int uid)
+    public void createIdmap(String targetApkPath, String overlayApkPath, int uid, String idmapPath)
             throws InstallerException {
         if (!checkBeforeRemote()) return;
         try {
-            mInstalld.idmap(targetApkPath, overlayApkPath, uid);
+            mInstalld.createIdmap(targetApkPath, overlayApkPath, uid, idmapPath);
         } catch (Exception e) {
             throw InstallerException.from(e);
         }
     }
 
-    public void removeIdmap(String overlayApkPath) throws InstallerException {
+    public void removeIdmap(String idmapPath) throws InstallerException {
         if (!checkBeforeRemote()) return;
         try {
-            mInstalld.removeIdmap(overlayApkPath);
+            mInstalld.removeIdmap(idmapPath);
         } catch (Exception e) {
             throw InstallerException.from(e);
         }

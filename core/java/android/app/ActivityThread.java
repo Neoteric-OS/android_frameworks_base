@@ -5086,7 +5086,7 @@ public final class ActivityThread {
         }
         synchronized (mResourcesManager) {
             // Update all affected Resources objects to use new ResourcesImpl
-            mResourcesManager.applyNewResourceDirsLocked(ai.sourceDir, ai.resourceDirs);
+            mResourcesManager.applyNewIdmapPathsLocked(ai.sourceDir, ai.idmapPaths);
         }
 
         ApplicationPackageManager.configurationChanged();

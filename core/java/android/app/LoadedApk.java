@@ -96,7 +96,7 @@ public final class LoadedApk {
     private ApplicationInfo mApplicationInfo;
     private String mAppDir;
     private String mResDir;
-    private String[] mOverlayDirs;
+    private String[] mIdmapPaths;
     private String[] mSharedLibraries;
     private String mDataDir;
     private String mLibDir;
@@ -192,7 +192,7 @@ public final class LoadedApk {
         mResDir = null;
         mSplitAppDirs = null;
         mSplitResDirs = null;
-        mOverlayDirs = null;
+        mIdmapPaths = null;
         mSharedLibraries = null;
         mDataDir = null;
         mDataDirFile = null;
@@ -310,7 +310,7 @@ public final class LoadedApk {
                 }
 
                 mResources = ResourcesManager.getInstance().getResources(null, mResDir,
-                        splitPaths, mOverlayDirs, mApplicationInfo.sharedLibraryFiles,
+                        splitPaths, mIdmapPaths, mApplicationInfo.sharedLibraryFiles,
                         Display.DEFAULT_DISPLAY, null, getCompatibilityInfo(),
                         getClassLoader());
             }
@@ -323,7 +323,7 @@ public final class LoadedApk {
         mApplicationInfo = aInfo;
         mAppDir = aInfo.sourceDir;
         mResDir = aInfo.uid == myUid ? aInfo.sourceDir : aInfo.publicSourceDir;
-        mOverlayDirs = aInfo.resourceDirs;
+        mIdmapPaths = aInfo.idmapPaths;
         mSharedLibraries = aInfo.sharedLibraryFiles;
         mDataDir = aInfo.dataDir;
         mLibDir = aInfo.nativeLibraryDir;
@@ -896,8 +896,8 @@ public final class LoadedApk {
         return mSplitResDirs;
     }
 
-    public String[] getOverlayDirs() {
-        return mOverlayDirs;
+    public String[] getIdmapPaths() {
+        return mIdmapPaths;
     }
 
     public String getDataDir() {
@@ -931,7 +931,7 @@ public final class LoadedApk {
             }
 
             mResources = ResourcesManager.getInstance().getResources(null, mResDir,
-                    splitPaths, mOverlayDirs, mApplicationInfo.sharedLibraryFiles,
+                    splitPaths, mIdmapPaths, mApplicationInfo.sharedLibraryFiles,
                     Display.DEFAULT_DISPLAY, null, getCompatibilityInfo(),
                     getClassLoader());
         }
