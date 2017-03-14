@@ -55,5 +55,124 @@
  *     {@link android.telecom.ConnectionService} implementation can still function without the
  *     default phone app being set to your custom {@link android.telecom.InCallService}.</li>
  * </ul>
+ * <p>
+ * <em></em>Implementing the Self-Managed {@link android.telecom.ConnectionService} API</em>
+ * <p>
+ * The following are the high-level steps you should take if you have a calling app and you want to
+ * implement the Self-Managed {@link android.telecom.ConnectionService} API.
+ * <ol>
+ *     <li>Implement a custom extension of the {@link android.telecom.ConnectionService} class.</li>
+ *     <li>Add an entry in your {@code AndroidManifest.xml} for your
+ *     {@link android.telecom.ConnectionService} (see {@link android.telecom.ConnectionService} for
+ *     more information on how to do this).</li>
+ *     <li>Your app should create a new {@link android.telecom.PhoneAccount} with
+ *     {@link android.telecom.PhoneAccount#CAPABILITY_SELF_MANAGED} set and register it using
+ *     {@link android.telecom.TelecomManager#registerPhoneAccount(android.telecom.PhoneAccount)}.
+ *     Ensure you set the name of your app as the {@code label} when building your phone account.
+ *     This is the name Telecom will use to refer to your app.  If you do not use your app's label,
+ *     Telecom will replace it with the {@code android:label} attribute defined for your application
+ *     in its {@code AndroidManifest.xml}.
+ *     </li>
+ *     <li>Create a custom extension of the {@link android.telecom.Connection} class.</li>
+ *     <li>In your {@link android.telecom.ConnectionService} implementation, {@code @Override} the
+ *         following methods:
+ *         <ul>
+ *             <li>{@link android.telecom.ConnectionService#onCreateIncomingConnection(
+ *             PhoneAccountHandle, ConnectionRequest)} - To inform
+ *             Telecom of a new incoming call in your app, your app first calls
+ *             {@link android.telecom.TelecomManager#addNewIncomingCall(
+ *             PhoneAccountHandle, android.os.Bundle)} to inform Telecom of the
+ *             call.  Telecom will then call {@code onCreateIncomingConnection} if your new incoming
+ *             call can be added.  In your override, return a new instance of your
+ *             {@link android.telecom.Connection} class.  Set the phone number of the caller with
+ *             {@link android.telecom.Connection#setAddress(android.net.Uri, int)}.  The name of the
+ *             caller can be set with
+ *             {@link android.telecom.Connection#setCallerDisplayName(java.lang.String, int)}.</li>
+ *
+ *             <li>{@link android.telecom.ConnectionService#onCreateOutgoingConnection(
+ *             PhoneAccountHandle, ConnectionRequest)} - To inform
+ *             Telecom that your app wishes to place a new outgoing call, your app first calls
+ *             {@link android.telecom.TelecomManager#placeCall(android.net.Uri, android.os.Bundle)}.
+ *             Telecom will call {@code onCreateOutgoingConnection} if your new outgoing call can be
+ *             added.  In your override, return a new instance of your
+ *             {@link android.telecom.Connection} class to represent the outgoing
+ *             call your app is placing.  Set the address and display name of as in
+ *             {@code onCreateIncomingConnection}.  To ensure proper audio operation you should also
+ *             {@link android.telecom.Connection#setAudioModeIsVoip(boolean)} {@code true} </li>
+ *
+ *             <li>{@link android.telecom.ConnectionService#onCreateIncomingConnectionFailed(
+ *             android.telecom.PhoneAccountHandle, android.telecom.ConnectionRequest)} - When you
+ *             call {@link android.telecom.TelecomManager#addNewIncomingCall(
+ *             android.telecom.PhoneAccountHandle, android.os.Bundle)}, and conditions do not allow
+ *             your incoming call to be placed, Telecom will call this method.  Your app should
+ *             reject the new incoming call, and may decide to use a
+ *             {@link android.app.Notification} to inform the user of the missed call.  To ensure
+ *             proper audio operation you should also
+ *             {@link android.telecom.Connection#setAudioModeIsVoip(boolean)} {@code true}.</li>
+ *
+ *             <li>{@link android.telecom.ConnectionService#onCreateOutgoingConnectionFailed(
+ *             android.telecom.PhoneAccountHandle, android.telecom.ConnectionRequest)} - When you
+ *             call {@link android.telecom.TelecomManager#placeCall(android.net.Uri,
+ *             android.os.Bundle)}, and conditions do not allow your incoming call to be placed,
+ *             Telecom will call this method.  Your app should display a message to the user
+ *             indicating that the call cannot be placed at this time due to an ongoing call in
+ *             another app.</li>
+ *         </ul>
+ *     </li>
+ *     <li>
+ *         In your {@link android.telecom.Connection} implementation, {@code @Override} the
+ *         following methods:
+ *         <ul>
+ *             <li>
+ *                 {@link android.telecom.Connection#onShowIncomingCallUi()} - Telecom calls this
+ *                 method when your app should show its own incoming call UI for a new incoming
+ *                 call.  See {@link android.telecom.Connection#onShowIncomingCallUi()} for more
+ *                 information.
+ *             </li>
+ *
+ *             <li>
+ *                 {@link android.telecom.Connection#onAnswer()} - Telecom calls this when it
+ *                 displays the incoming call UI for your incoming call, and the user has chosen to
+ *                 answer the call.  You should call {@link android.telecom.Connection#setActive()}
+ *                 when the call has been answered and it active.
+ *             </li>
+ *
+ *             <li>
+ *                 {@link android.telecom.Connection#onReject()} - Telecom calls this when it
+ *                 displays the incoming call UI for your incoming call, and the user has chosen to
+ *                 reject the call.  Your app should reject the call, and then call
+ *                 {@link android.telecom.Connection#setDisconnected(
+ *                 android.telecom.DisconnectCause)} and specify the
+ *                 {@link android.telecom.DisconnectCause#REJECTED} disconnect cause to indicate
+ *                 that the call was rejected.  Ensure you call
+ *                 {@link android.telecom.Connection#destroy()}.
+ *             </li>
+ *
+ *             <li>
+ *                 {@link android.telecom.Connection#onDisconnect()} - Telecom calls this when your
+ *                 call needs to be disconnected.  This can also happen if the user has answered an
+ *                 incoming call in another app, or if another {@link android.telecom.InCallService}
+ *                 such as Android Auto is relaying a request to disconnect the call to your app.
+ *             </li>
+ *
+ *             <li>
+ *                 {@link android.telecom.Connection#onUnhold()} - Telecom calls this when your call
+ *                 should be un-held.  Call {@link android.telecom.Connection#setActive()} when your
+ *                 call has become active again.  If your call supports hold, make sure to set
+ *                 {@link android.telecom.Connection#CAPABILITY_SUPPORT_HOLD}.  If your app only
+ *                 supports a single active call at one time, you should ensure that you invoke
+ *                 {@link android.telecom.Connection#setOnHold()} for any calls which will be held
+ *                 as a result of un-holding this call.
+ *             </li>
+ *
+ *             <li>
+ *                 {@link android.telecom.Connection#onHold()} - Telecom calls this when your call
+ *                 should be held.  Call {@link android.telecom.Connection#setOnHold()} when your
+ *                 call has been held.  If your call supports hold, make sure to set
+ *                 {@link android.telecom.Connection#CAPABILITY_SUPPORT_HOLD}.
+ *             </li>
+ *         </ul>
+ *     </li>
+ * </ol>
  */
 package android.telecom;
