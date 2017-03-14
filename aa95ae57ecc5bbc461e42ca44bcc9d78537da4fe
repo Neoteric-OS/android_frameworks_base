@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "495d230e_4cde2936",
+        "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-14T01:25:27Z",
+      "side": 1,
+      "message": "Not sure of this myself: do unit tests need @hide ?",
+      "range": {
+        "startLine": 42,
+        "startChar": 3,
+        "endLine": 42,
+        "endChar": 8
+      },
+      "revId": "aa95ae57ecc5bbc461e42ca44bcc9d78537da4fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6dc1b0b1_4b98246c",
+        "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-14T01:25:27Z",
+      "side": 1,
+      "message": "EMAGICCONSTANT. Isn\u0027t there a static int in IpManager or somewhere else we could reference here ?",
+      "range": {
+        "startLine": 57,
+        "startChar": 28,
+        "endLine": 57,
+        "endChar": 29
+      },
+      "revId": "aa95ae57ecc5bbc461e42ca44bcc9d78537da4fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
