@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48982254_472dbaae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-03-15T11:45:58Z",
+      "side": 1,
+      "message": "is this really a thing ? shouldn\u0027t this be checkbuild ?",
+      "range": {
+        "startLine": 12,
+        "startChar": 8,
+        "endLine": 12,
+        "endChar": 18
+      },
+      "revId": "8416a4dfd10abacea58ed109a4c1c04ad38176b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
