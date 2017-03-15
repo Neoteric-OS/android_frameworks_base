@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35daf5d2_ebe3c30f",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1043929
+      },
+      "writtenOn": "2017-03-15T18:36:40Z",
+      "side": 1,
+      "message": "will a carrier ask for different offset for different bands?",
+      "range": {
+        "startLine": 1142,
+        "startChar": 31,
+        "endLine": 1142,
+        "endChar": 61
+      },
+      "revId": "f490699e18b81d3c24e6d5e8b46768dbcec58912",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
