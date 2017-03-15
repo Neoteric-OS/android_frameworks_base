@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "158a2578_d0758b52",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2192,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-03-15T00:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ef7cf2e_d22e1180",
+      "range": {
+        "startLine": 2192,
+        "startChar": 22,
+        "endLine": 2192,
+        "endChar": 57
+      },
+      "revId": "0e2b6702564051dd33122694515e8526694c555e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61abdcdf_24c4e80a",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-14T16:38:18Z",
       "side": 1,
       "message": "hasCellSignalStrength?",
+      "range": {
+        "startLine": 395,
+        "startChar": 20,
+        "endLine": 395,
+        "endChar": 45
+      },
+      "revId": "0e2b6702564051dd33122694515e8526694c555e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89ced08f_586c7142",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-03-15T00:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61abdcdf_24c4e80a",
       "range": {
         "startLine": 395,
         "startChar": 20,
