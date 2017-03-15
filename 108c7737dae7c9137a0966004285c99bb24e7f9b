@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a8340c0_8e450901",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9239,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2017-03-15T17:49:31Z",
+      "side": 1,
+      "message": "you can just replace this with scannedPackage.",
+      "range": {
+        "startLine": 9239,
+        "startChar": 34,
+        "endLine": 9239,
+        "endChar": 84
+      },
+      "revId": "108c7737dae7c9137a0966004285c99bb24e7f9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
