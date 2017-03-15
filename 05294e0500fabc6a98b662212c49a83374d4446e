@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ffe45f3_ffb96813",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-03-15T00:17:35Z",
+      "side": 1,
+      "message": "This should either be part of the array below or named substantially similar so the tight coupling is clear.  Gave example names in other CL.",
+      "range": {
+        "startLine": 1142,
+        "startChar": 64,
+        "endLine": 1142,
+        "endChar": 89
+      },
+      "revId": "05294e0500fabc6a98b662212c49a83374d4446e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
