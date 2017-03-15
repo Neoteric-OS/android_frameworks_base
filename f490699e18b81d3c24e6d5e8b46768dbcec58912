@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a351ccb6_4934d070",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-03-15T22:17:52Z",
+      "side": 1,
+      "message": "After lots of discussion I drop my objection to this comment",
+      "parentUuid": "1aaf1ae9_c8afd559",
+      "range": {
+        "startLine": 1139,
+        "startChar": 20,
+        "endLine": 1139,
+        "endChar": 27
+      },
+      "revId": "f490699e18b81d3c24e6d5e8b46768dbcec58912",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35daf5d2_ebe3c30f",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 10
@@ -65,6 +89,29 @@
         "startChar": 31,
         "endLine": 1142,
         "endChar": 61
+      },
+      "revId": "f490699e18b81d3c24e6d5e8b46768dbcec58912",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf8dfce4_2fc83391",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-03-15T22:17:52Z",
+      "side": 1,
+      "message": "are the endpoints considered to be in the range?",
+      "range": {
+        "startLine": 1148,
+        "startChar": 22,
+        "endLine": 1148,
+        "endChar": 33
       },
       "revId": "f490699e18b81d3c24e6d5e8b46768dbcec58912",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
