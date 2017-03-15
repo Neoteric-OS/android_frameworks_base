@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3433d1f0_39b24d8f",
+        "filename": "packages/CarrierDefaultApp/src/com/android/carrierdefaultapp/CaptivePortalLoginActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-03-15T20:38:21Z",
+      "side": 1,
+      "message": "please add a comment about what this is doing - is this attempting an empty url fetch which we assume the captive portal will redirect to a meaningful page?",
+      "range": {
+        "startLine": 271,
+        "startChar": 20,
+        "endLine": 271,
+        "endChar": 28
+      },
+      "revId": "556efbe09f2af2d24748b34f4f2c85c9036fe4c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00ac116d_19e85bed",
+        "filename": "packages/CarrierDefaultApp/src/com/android/carrierdefaultapp/CaptivePortalLoginActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-03-15T20:38:21Z",
+      "side": 1,
+      "message": "please explain this.  Why is showing the url the right thing to do when the network is unavailble.  The comment says \"reuse the network error\", but how is this doing that and what\u0027s it mean to reuse a network error?",
+      "range": {
+        "startLine": 280,
+        "startChar": 29,
+        "endLine": 280,
+        "endChar": 36
+      },
+      "revId": "556efbe09f2af2d24748b34f4f2c85c9036fe4c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
