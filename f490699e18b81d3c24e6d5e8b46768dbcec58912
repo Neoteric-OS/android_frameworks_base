@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1aaf1ae9_c8afd559",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-03-15T21:23:21Z",
+      "side": 1,
+      "message": "I think calling it a boost (correct as positive numbers lead to a higher signal level) but talking about \u0027reduced\u0027 here is confusing.\n\nHow about:\nAmount added to rsrp before comparing to thresholds to calculate signal strength level.",
+      "range": {
+        "startLine": 1139,
+        "startChar": 20,
+        "endLine": 1139,
+        "endChar": 27
+      },
+      "revId": "f490699e18b81d3c24e6d5e8b46768dbcec58912",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35daf5d2_ebe3c30f",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 10
