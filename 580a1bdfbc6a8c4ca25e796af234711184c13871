@@ -22,6 +22,30 @@
       "revId": "580a1bdfbc6a8c4ca25e796af234711184c13871",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ecc1e3ba_9f164b66",
+        "filename": "wifi/java/android/net/wifi/WifiConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-03-15T04:27:43Z",
+      "side": 1,
+      "message": "Sure, will do.",
+      "parentUuid": "1427788f_286f0087",
+      "range": {
+        "startLine": 442,
+        "startChar": 19,
+        "endLine": 442,
+        "endChar": 42
+      },
+      "revId": "580a1bdfbc6a8c4ca25e796af234711184c13871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
