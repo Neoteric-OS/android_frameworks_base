@@ -718,7 +718,7 @@ public class NotificationUsageStats {
         }
 
         void increment(int imp) {
-            imp = imp < 0 ? 0 : imp > NUM_IMPORTANCES ? NUM_IMPORTANCES : imp;
+            imp = imp < 0 ? 0 : imp > NUM_IMPORTANCES  -1 ? NUM_IMPORTANCES - 1 : imp;
             mCount[imp] ++;
         }
 
