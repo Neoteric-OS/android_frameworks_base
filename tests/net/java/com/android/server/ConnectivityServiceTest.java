@@ -1170,15 +1170,11 @@ public class ConnectivityServiceTest extends AndroidTestCase {
 
         void expectAvailableCallbacks(MockNetworkAgent agent, boolean expectSuspended, int timeoutMs) {
             expectCallback(CallbackState.AVAILABLE, agent, timeoutMs);
-
-            final boolean HAS_DATASYNC_ON_AVAILABLE = false;
-            if (HAS_DATASYNC_ON_AVAILABLE) {
-                if (expectSuspended) {
-                    expectCallback(CallbackState.SUSPENDED, agent, timeoutMs);
-                }
-                expectCallback(CallbackState.NETWORK_CAPABILITIES, agent, timeoutMs);
-                expectCallback(CallbackState.LINK_PROPERTIES, agent, timeoutMs);
+            if (expectSuspended) {
+                expectCallback(CallbackState.SUSPENDED, agent, timeoutMs);
             }
+            expectCallback(CallbackState.NETWORK_CAPABILITIES, agent, timeoutMs);
+            expectCallback(CallbackState.LINK_PROPERTIES, agent, timeoutMs);
         }
 
         void expectAvailableCallbacks(MockNetworkAgent agent) {
@@ -1190,7 +1186,7 @@ public class ConnectivityServiceTest extends AndroidTestCase {
         }
 
         void expectAvailableAndValidatedCallbacks(MockNetworkAgent agent) {
-            expectAvailableCallbacks(agent, true, TIMEOUT_MS);
+            expectAvailableCallbacks(agent, false, TIMEOUT_MS);
             expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, agent);
         }
 
@@ -1929,20 +1925,6 @@ public class ConnectivityServiceTest extends AndroidTestCase {
         // We should get onAvailable(), onCapabilitiesChanged(), onLinkPropertiesChanged(),
         // as well as onNetworkSuspended() in rapid succession.
         dfltNetworkCallback.expectAvailableAndSuspendedCallbacks(mCellNetworkAgent);
-        dfltNetworkCallback.assertNoCallback();
-
-        // Request a NetworkCapabilities update; only the requesting callback is notified.
-        // TODO: Delete this together with Connectivity{Manager,Service} code.
-        mCm.requestNetworkCapabilities(dfltNetworkCallback);
-        dfltNetworkCallback.expectCallback(CallbackState.NETWORK_CAPABILITIES, mCellNetworkAgent);
-        cellNetworkCallback.assertNoCallback();
-        dfltNetworkCallback.assertNoCallback();
-
-        // Request a LinkProperties update; only the requesting callback is notified.
-        // TODO: Delete this together with Connectivity{Manager,Service} code.
-        mCm.requestLinkProperties(dfltNetworkCallback);
-        dfltNetworkCallback.expectCallback(CallbackState.LINK_PROPERTIES, mCellNetworkAgent);
-        cellNetworkCallback.assertNoCallback();
         dfltNetworkCallback.assertNoCallback();
 
         mCm.unregisterNetworkCallback(dfltNetworkCallback);

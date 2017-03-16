@@ -23,7 +23,7 @@ import dalvik.system.DexFile;
 /**
  * Manage (retrieve) mappings from compilation reason to compilation filter.
  */
-class PackageManagerServiceCompilerMapping {
+public class PackageManagerServiceCompilerMapping {
     // Names for compilation reasons.
     static final String REASON_STRINGS[] = {
             "first-boot", "boot", "install", "bg-dexopt", "ab-ota", "nsys-library", "shared-apk",
@@ -80,9 +80,7 @@ class PackageManagerServiceCompilerMapping {
             try {
                 // Check that the system property name is legal.
                 String sysPropName = getSystemPropertyName(reason);
-                if (sysPropName == null ||
-                        sysPropName.isEmpty() ||
-                        sysPropName.length() > SystemProperties.PROP_NAME_MAX) {
+                if (sysPropName == null || sysPropName.isEmpty()) {
                     throw new IllegalStateException("Reason system property name \"" +
                             sysPropName +"\" for reason " + REASON_STRINGS[reason]);
                 }
