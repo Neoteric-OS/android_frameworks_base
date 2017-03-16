@@ -46,6 +46,30 @@
       "revId": "580a1bdfbc6a8c4ca25e796af234711184c13871",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f0f0385_cdbea98d",
+        "filename": "wifi/java/android/net/wifi/WifiConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-03-16T18:07:56Z",
+      "side": 1,
+      "message": "bug created b/36359711",
+      "parentUuid": "ecc1e3ba_9f164b66",
+      "range": {
+        "startLine": 442,
+        "startChar": 19,
+        "endLine": 442,
+        "endChar": 42
+      },
+      "revId": "580a1bdfbc6a8c4ca25e796af234711184c13871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
