@@ -22,6 +22,30 @@
       "revId": "3d726d16b6c198087dc527d9e5f51f18351a0fa9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff695ea7_1960d006",
+        "filename": "core/java/android/os/HwParcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2017-03-17T15:26:11Z",
+      "side": 1,
+      "message": "There\u0027s 3 objects in play here:\n1) HwParcel Java object\n2) JHwParcel native object\n3) ::android::hardware::Parcel native object\n\nthe release() function added only frees 3), because that is the only one we need to release immediately.\n\nthe returned freeFunction just removes the only strong reference to the JHwParcel object, which means its destructor will run, which in turn also frees the ::android::hardware::Parcel object - but only if it hasn\u0027t been freed already.\n\nSo there shouldn\u0027t be an issue with double frees.",
+      "parentUuid": "6239c00b_6c2ef4e2",
+      "range": {
+        "startLine": 222,
+        "startChar": 1,
+        "endLine": 222,
+        "endChar": 39
+      },
+      "revId": "3d726d16b6c198087dc527d9e5f51f18351a0fa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
