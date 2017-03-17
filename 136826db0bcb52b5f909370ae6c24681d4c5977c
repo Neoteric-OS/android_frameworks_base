@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "992b32f6_4f478c49",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-03-17T21:47:04Z",
+      "side": 1,
+      "message": "Should you put \"Set by the framework to indicate\" here?",
+      "range": {
+        "startLine": 399,
+        "startChar": 7,
+        "endLine": 399,
+        "endChar": 15
+      },
+      "revId": "136826db0bcb52b5f909370ae6c24681d4c5977c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8065250f_269c2755",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1606,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-03-17T21:47:04Z",
+      "side": 1,
+      "message": "Why is this necessary but setRttProperty is not above?",
+      "range": {
+        "startLine": 1606,
+        "startChar": 12,
+        "endLine": 1606,
+        "endChar": 74
+      },
+      "revId": "136826db0bcb52b5f909370ae6c24681d4c5977c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
