@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6239c00b_6c2ef4e2",
+        "filename": "core/java/android/os/HwParcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1057373
+      },
+      "writtenOn": "2017-03-17T09:27:38Z",
+      "side": 1,
+      "message": "Why add a new native function rather than re-using the Cleaner returned by the call to registerNativeAllocation?\n\nIs it okay if the NativeAllocationRegistry \"frees\" the native allocation after release has been called explicitly? Could there be problems with double frees?\n\n(I don\u0027t have a strong preference how this is done one way or the other, I just want to double check)",
+      "range": {
+        "startLine": 222,
+        "startChar": 1,
+        "endLine": 222,
+        "endChar": 39
+      },
+      "revId": "3d726d16b6c198087dc527d9e5f51f18351a0fa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
