@@ -1244,13 +1244,13 @@ public class SubscriptionManager {
      *
      * {@hide}
      */
-    public static int getSimStateForSlotIdx(int slotIndex) {
+    public static int getSimStateForSlotIndex(int slotIndex) {
         int simState = TelephonyManager.SIM_STATE_UNKNOWN;
 
         try {
             ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
             if (iSub != null) {
-                simState = iSub.getSimStateForSlotIdx(slotIndex);
+                simState = iSub.getSimStateForSlotIndex(slotIndex);
             }
         } catch (RemoteException ex) {
         }

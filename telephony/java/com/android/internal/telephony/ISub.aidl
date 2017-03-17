@@ -177,10 +177,10 @@ interface ISub {
     String getSubscriptionProperty(int subId, String propKey, String callingPackage);
 
     /**
-     * Get the SIM state for the slot idx
+     * Get the SIM state for the slot index
      * @return SIM state as the ordinal of IccCardConstants.State
      */
-    int getSimStateForSlotIdx(int slotIdx);
+    int getSimStateForSlotIndex(int slotIndex);
 
     boolean isActiveSubId(int subId);
 }
