@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5f21949_2d756c38",
+        "filename": "telecomm/java/android/telecom/package-info.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-03-17T18:22:56Z",
+      "side": 1,
+      "message": "are you planning on moving this stuff into the developer article?",
+      "revId": "e78e8e7eea44e9a80f5157b79ce08481f4538ceb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
