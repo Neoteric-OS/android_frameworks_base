@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f045f00b_ebfdfe99",
+        "filename": "core/java/com/android/internal/os/WrapperInit.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2017-03-18T00:22:00Z",
+      "side": 1,
+      "message": "Do you actually want to catch all exceptions here?",
+      "revId": "f6b05662aa066a8249f48850118de8d56218f0b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
