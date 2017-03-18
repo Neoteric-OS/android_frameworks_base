@@ -69,6 +69,24 @@
       "revId": "5742aa247f450bcc0c519be30fbc87909f74f761",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ba324ac_58a70bf0",
+        "filename": "core/java/com/android/internal/os/WrapperInit.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2017-03-18T05:58:20Z",
+      "side": 1,
+      "message": "The challenge, at least for me here, is that this is the first chunk of code which uses this new API. The code you write will end up being cut and pasted by others, who may not understand that failure is unacceptable in their use case. Being more aggressive in handling error conditions consistently in code which calls security critical APIs spreads the best practices to others.\n\nHaving said that, if you really insist, this is fine with me. It will just cause me greater code auditing difficulties later.",
+      "parentUuid": "e74c6f03_80b2bebd",
+      "revId": "5742aa247f450bcc0c519be30fbc87909f74f761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
