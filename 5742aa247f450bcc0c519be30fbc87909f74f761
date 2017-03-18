@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3778cfa4_99eaf42c",
+        "filename": "core/java/com/android/internal/os/WrapperInit.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2017-03-18T05:29:31Z",
+      "side": 1,
+      "message": "This will catch the exception and continue running, right? I always feel uncomfortable when we continue running after a failure of a security function. Can we do something more aggressive here, such as throwing a RuntimeException() or calling the java equivalent of exit(-1).",
+      "revId": "5742aa247f450bcc0c519be30fbc87909f74f761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7c59493_196dc95c",
+        "filename": "core/java/com/android/internal/os/WrapperInit.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1003966
+      },
+      "writtenOn": "2017-03-18T05:29:31Z",
+      "side": 1,
+      "message": "This will catch the exception and continue running, right? I always feel uncomfortable when we continue running after a failure of a security function. Can we do something more aggressive here, such as throwing a RuntimeException() or calling the java equivalent of exit(-1).",
+      "revId": "5742aa247f450bcc0c519be30fbc87909f74f761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
