@@ -70,7 +70,7 @@ public class RuntimeInit {
         public void uncaughtException(Thread t, Throwable e) {
             // Don't re-enter if KillApplicationHandler has already run
             if (mCrashing) return;
-            if (mApplicationObject == null) {
+            if (mApplicationObject == null && (Process.SYSTEM_UID == Process.myUid())) {
                 // The "FATAL EXCEPTION" string is still used on Android even though
                 // apps can set a custom UncaughtExceptionHandler that renders uncaught
                 // exceptions non-fatal.
