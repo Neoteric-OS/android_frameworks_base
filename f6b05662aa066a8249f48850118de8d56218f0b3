@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c51cfe44_b483002d",
+        "filename": "core/java/com/android/internal/os/WrapperInit.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2017-03-18T01:25:53Z",
+      "side": 1,
+      "message": "add CAP_TO_INDEX and CAP_TO_MASK to OsConstants, like we did S_ISDIR and friends?\n  https://cs.corp.google.com/android/libcore/luni/src/main/java/android/system/OsConstants.java?q\u003dfile:osconstants.java\u0026sq\u003dpackage:%5Eandroid$\u0026l\u003d29",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 38
+      },
+      "revId": "f6b05662aa066a8249f48850118de8d56218f0b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f045f00b_ebfdfe99",
         "filename": "core/java/com/android/internal/os/WrapperInit.java",
         "patchSetId": 4
