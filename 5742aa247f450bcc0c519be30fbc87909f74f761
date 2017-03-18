@@ -87,6 +87,24 @@
       "revId": "5742aa247f450bcc0c519be30fbc87909f74f761",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a349bcc2_69b5edaf",
+        "filename": "core/java/com/android/internal/os/WrapperInit.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2017-03-18T06:11:52Z",
+      "side": 1,
+      "message": "I really prefer this. I can\u0027t find the logs right now, but I had failures for the prctl, and that would mean that I can\u0027t run ASAN-lite on bluetooth (which really needs to be sanitized).\n\nI will add big warning around this to explain why the exceptions are only logged.",
+      "parentUuid": "4ba324ac_58a70bf0",
+      "revId": "5742aa247f450bcc0c519be30fbc87909f74f761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
