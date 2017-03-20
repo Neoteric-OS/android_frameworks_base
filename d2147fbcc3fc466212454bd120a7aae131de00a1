@@ -22,6 +22,30 @@
       "revId": "d2147fbcc3fc466212454bd120a7aae131de00a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad5e636c_5e284654",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-20T21:14:10Z",
+      "side": 1,
+      "message": "DW \u003d Discovery Window\nupdated",
+      "parentUuid": "33662652_f9844f4e",
+      "range": {
+        "startLine": 10,
+        "startChar": 46,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "d2147fbcc3fc466212454bd120a7aae131de00a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
