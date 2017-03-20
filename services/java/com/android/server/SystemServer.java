@@ -1492,15 +1492,21 @@ public final class SystemServer {
                 Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
                 Slog.i(TAG, "MakeNetworkScoreReady --- end");
 
-                Slog.i(TAG, "MakeNetworkManagementServiceReady --- begin");
-                Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeNetworkManagementServiceReady");
-                try {
-                    if (networkManagementF != null) networkManagementF.systemReady();
-                } catch (Throwable e) {
-                    reportWtf("making Network Managment Service ready", e);
-                }
-                Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
-                Slog.i(TAG, "MakeNetworkManagementServiceReady --- end");
+                Timer tr_nms = new Timer();
+                tr_nms.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Slog.i(TAG, "MakeNetworkManagementServiceReady --- begin");
+                        Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "MakeNetworkManagementServiceReady");
+                        try {
+                            if (networkManagementF != null) networkManagementF.systemReady();
+                        } catch (Throwable e) {
+                            reportWtf("making Network Managment Service ready", e);
+                        }
+                        Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+                        Slog.i(TAG, "MakeNetworkManagementServiceReady --- end");
+                    }
+                }, 0);
 
 
 
