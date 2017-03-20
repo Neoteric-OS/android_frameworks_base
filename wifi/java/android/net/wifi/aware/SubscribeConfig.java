@@ -363,6 +363,7 @@ public final class SubscribeConfig implements Parcelable {
          *
          * @return The builder to facilitate chaining
          *         {@code builder.setXXX(..).setXXX(..)}.
+         * @hide
          */
         public Builder setSubscribeCount(int subscribeCount) {
             if (subscribeCount < 0) {

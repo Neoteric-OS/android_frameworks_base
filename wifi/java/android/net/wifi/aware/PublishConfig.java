@@ -331,6 +331,7 @@ public final class PublishConfig implements Parcelable {
          *
          * @return The builder to facilitate chaining
          *         {@code builder.setXXX(..).setXXX(..)}.
+         * @hide
          */
         public Builder setPublishCount(int publishCount) {
             if (publishCount < 0) {
