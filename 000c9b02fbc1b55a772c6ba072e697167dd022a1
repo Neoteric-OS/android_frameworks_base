@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "338fc249_2dc1e2f5",
+        "filename": "core/java/android/hardware/SystemSensorManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1074523
+      },
+      "writtenOn": "2017-03-21T07:15:32Z",
+      "side": 1,
+      "message": "nit: over 100 chars. same on line 204.",
+      "range": {
+        "startLine": 134,
+        "startChar": 100,
+        "endLine": 134,
+        "endChar": 101
+      },
+      "revId": "000c9b02fbc1b55a772c6ba072e697167dd022a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cc4fc86_80370354",
+        "filename": "core/java/android/hardware/SystemSensorManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1074523
+      },
+      "writtenOn": "2017-03-21T07:15:32Z",
+      "side": 1,
+      "message": "Please make condition here and line 132 in sync. Prefer \"\u003e\" but it is up to you.",
+      "range": {
+        "startLine": 202,
+        "startChar": 37,
+        "endLine": 202,
+        "endChar": 38
+      },
+      "revId": "000c9b02fbc1b55a772c6ba072e697167dd022a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
