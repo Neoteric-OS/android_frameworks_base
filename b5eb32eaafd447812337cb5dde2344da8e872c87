@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7281379_831b3438",
+        "filename": "core/java/android/util/jar/StrictJarVerifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2017-03-21T04:13:41Z",
+      "side": 1,
+      "message": "Tangential to this change: this nullness check looks wrong. Firstly, the impl of verifyBytes cannot return null. Secondly, if it does return null, this codes makes verification continue, which looks wrong given that there\u0027s no chain and thus no trust associated. I thunk this nullness check should simply be removed in a separate commit.",
+      "revId": "b5eb32eaafd447812337cb5dde2344da8e872c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5a38021_fc2af38b",
+        "filename": "core/java/android/util/jar/StrictJarVerifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1018773
+      },
+      "writtenOn": "2017-03-21T04:13:41Z",
+      "side": 1,
+      "message": "The exception needs to mention the name of the signature block file aka certFile, just in case the issue occurs in the scenario where there are multiple signature block files for a single signature file. The easiest solution is to change this to report certFile instead of signatureFile.",
+      "revId": "b5eb32eaafd447812337cb5dde2344da8e872c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
