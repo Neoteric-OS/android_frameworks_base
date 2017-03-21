@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b490c6ee_e6415e78",
+        "filename": "core/java/android/hardware/SystemSensorManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1103638
+      },
+      "writtenOn": "2017-03-21T07:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0773125_a8ed7af6",
+      "range": {
+        "startLine": 132,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 29
+      },
+      "revId": "d68383b69765aa371b534200a0ec7f1b38b05c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57b805d9_ae94c146",
         "filename": "core/java/android/hardware/SystemSensorManager.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-21T06:39:56Z",
       "side": 1,
       "message": "Please throw a runtime exception here. IllegalStateException should be good choice. Holding 128 socket connection to server is not a state that we want to tolerate. Please be specific in error message and clearly indicate this should never happen during normal opeartion.",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 25
+      },
+      "revId": "d68383b69765aa371b534200a0ec7f1b38b05c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14812b1c_7aa93443",
+        "filename": "core/java/android/hardware/SystemSensorManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1103638
+      },
+      "writtenOn": "2017-03-21T07:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57b805d9_ae94c146",
       "range": {
         "startLine": 134,
         "startChar": 0,
