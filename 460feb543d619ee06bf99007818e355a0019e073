@@ -22,6 +22,30 @@
       "revId": "460feb543d619ee06bf99007818e355a0019e073",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb8c07b6_6e0cdc7c",
+        "filename": "core/java/android/hardware/SystemSensorManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1103638
+      },
+      "writtenOn": "2017-03-21T08:20:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce8b1a6a_1a6dd971",
+      "range": {
+        "startLine": 134,
+        "startChar": 77,
+        "endLine": 134,
+        "endChar": 78
+      },
+      "revId": "460feb543d619ee06bf99007818e355a0019e073",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
