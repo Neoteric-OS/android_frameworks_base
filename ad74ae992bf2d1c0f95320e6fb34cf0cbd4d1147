@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4312c6b2_ee3adb11",
+        "filename": "core/java/com/android/internal/os/WrapperInit.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-03-21T11:11:54Z",
+      "side": 1,
+      "message": "The problem I have with catching (Exception) is that we can\u0027t defend against future programming errors. What if somebody introduces a NullPointerException or an ArrayIndexOutOfBoundsException in a future change thanks to a typo ? There\u0027s a risk that errors will go undetected.\n\nI would prefer it if the \"catch (Exception..)\" blocks were limited in scope to the actual syscalls - capget, capset and prctl.",
+      "range": {
+        "startLine": 207,
+        "startChar": 17,
+        "endLine": 207,
+        "endChar": 28
+      },
+      "revId": "ad74ae992bf2d1c0f95320e6fb34cf0cbd4d1147",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
