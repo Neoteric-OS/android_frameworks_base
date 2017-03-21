@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d89f169_448dc8e8",
+        "filename": "core/java/android/hardware/SystemSensorManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2017-03-21T18:24:08Z",
+      "side": 1,
+      "message": "nit: you need a space either at the end of this string or the beginning of the string on the next line.\n\nCurrently this would print as \"failedthe\" because of the lack of space.",
+      "revId": "761b6993926c8c6512355560fac3ff878239dbf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a717570d_223bbdad",
+        "filename": "core/java/android/hardware/SystemSensorManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2017-03-21T18:24:08Z",
+      "side": 1,
+      "message": "Same.",
+      "revId": "761b6993926c8c6512355560fac3ff878239dbf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
