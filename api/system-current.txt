@@ -56794,6 +56794,7 @@ package java.lang.reflect {
 
   public class GenericSignatureFormatError extends java.lang.ClassFormatError {
     ctor public GenericSignatureFormatError();
+    ctor public GenericSignatureFormatError(java.lang.String);
   }
 
   public abstract interface InvocationHandler {
@@ -73816,4 +73817,3 @@ package org.xmlpull.v1.sax2 {
   }
 
 }
-
