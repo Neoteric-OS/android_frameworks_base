@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0693d613_812cf40e",
+        "filename": "core/java/android/util/jar/StrictJarVerifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-03-21T09:18:30Z",
+      "side": 1,
+      "message": "Yeah, I noticed this looks off. I\u0027ll clean this up in a followup.",
+      "parentUuid": "d7281379_831b3438",
+      "revId": "b5eb32eaafd447812337cb5dde2344da8e872c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5a38021_fc2af38b",
         "filename": "core/java/android/util/jar/StrictJarVerifier.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-03-21T04:13:41Z",
       "side": 1,
       "message": "The exception needs to mention the name of the signature block file aka certFile, just in case the issue occurs in the scenario where there are multiple signature block files for a single signature file. The easiest solution is to change this to report certFile instead of signatureFile.",
+      "revId": "b5eb32eaafd447812337cb5dde2344da8e872c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5d08f16_f4c8659a",
+        "filename": "core/java/android/util/jar/StrictJarVerifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-03-21T09:18:30Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f5a38021_fc2af38b",
       "revId": "b5eb32eaafd447812337cb5dde2344da8e872c87",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
