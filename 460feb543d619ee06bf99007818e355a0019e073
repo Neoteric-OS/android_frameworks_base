@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce8b1a6a_1a6dd971",
+        "filename": "core/java/android/hardware/SystemSensorManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1074523
+      },
+      "writtenOn": "2017-03-21T07:39:38Z",
+      "side": 1,
+      "message": "nit: no space here. Sorry, did not spot this earlier. same on line 205",
+      "range": {
+        "startLine": 134,
+        "startChar": 77,
+        "endLine": 134,
+        "endChar": 78
+      },
+      "revId": "460feb543d619ee06bf99007818e355a0019e073",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
