@@ -157,7 +157,7 @@ public final class BluetoothLeAdvertiser {
 
     AdvertisingSetCallback wrapOldCallback(AdvertiseCallback callback, AdvertiseSettings settings) {
         return new AdvertisingSetCallback() {
-            public void onAdvertisingSetStarted(AdvertisingSet advertisingSet, int status) {
+            public void onAdvertisingSetStarted(AdvertisingSet advertisingSet, int txPower, int status) {
                 if (status != AdvertisingSetCallback.ADVERTISE_SUCCESS) {
                     postStartFailure(callback, status);
                     return;
