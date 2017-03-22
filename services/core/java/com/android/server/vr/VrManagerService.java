@@ -259,6 +259,10 @@ public class VrManagerService extends SystemService implements EnabledComponentC
             // Update listeners
             ArraySet<ComponentName> enabledListeners = mComponentObserver.getEnabled(currentUser);
 
+            if (enabledListeners == null) {
+                return;
+            }
+            
             ArraySet<String> enabledPackages = new ArraySet<>();
             for (ComponentName n : enabledListeners) {
                 String pkg = n.getPackageName();
