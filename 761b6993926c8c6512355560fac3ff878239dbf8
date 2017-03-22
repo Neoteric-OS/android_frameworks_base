@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "2b8afb3b_1430a340",
+        "filename": "core/java/android/hardware/SystemSensorManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1103638
+      },
+      "writtenOn": "2017-03-22T01:35:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f65c24c_c21a44ca",
+      "revId": "761b6993926c8c6512355560fac3ff878239dbf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a717570d_223bbdad",
         "filename": "core/java/android/hardware/SystemSensorManager.java",
         "patchSetId": 11
@@ -64,6 +82,24 @@
       "writtenOn": "2017-03-21T18:38:48Z",
       "side": 1,
       "message": "Same",
+      "revId": "761b6993926c8c6512355560fac3ff878239dbf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af255636_a5f58a98",
+        "filename": "core/java/android/hardware/SystemSensorManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1103638
+      },
+      "writtenOn": "2017-03-22T01:35:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ff11102_9b654f7d",
       "revId": "761b6993926c8c6512355560fac3ff878239dbf8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
