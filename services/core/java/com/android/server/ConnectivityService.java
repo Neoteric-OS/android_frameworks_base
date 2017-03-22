@@ -36,6 +36,7 @@ import static android.net.NetworkPolicyManager.RULE_REJECT_ALL;
 import static android.net.NetworkPolicyManager.RULE_REJECT_METERED;
 import static android.net.NetworkPolicyManager.RULE_TEMPORARY_ALLOW_METERED;
 import static android.net.NetworkPolicyManager.uidRulesToString;
+import static com.android.internal.util.Preconditions.checkNotNull;
 
 import android.annotation.Nullable;
 import android.app.BroadcastOptions;
@@ -3427,13 +3428,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private static void loge(String s) {
         Slog.e(TAG, s);
-    }
-
-    private static <T> T checkNotNull(T value, String message) {
-        if (value == null) {
-            throw new NullPointerException(message);
-        }
-        return value;
     }
 
     /**
