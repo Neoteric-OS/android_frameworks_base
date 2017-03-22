@@ -2236,7 +2236,7 @@ public final class ActiveServices {
                             si.deliveryCount = 0;
                             si.doneExecutingCount++;
                             // Don't stop if killed.
-                            r.stopIfKilled = true;
+                            r.stopIfKilled = false;
                         }
                         break;
                     }
