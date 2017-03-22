@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68c883a3_885e8254",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9789,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2017-03-22T23:08:54Z",
+      "side": 1,
+      "message": "I don\u0027t understand this.  Are we wanting to wait for at most a certain amount of time?  If so, then we should express that time here, and that be the maximum time we call with wait().  Mixing a retry count with waiting with a timeout results in inconsistent behavior -- the wait may return before the timeout, so the total time you can wait here is arbitrary.",
+      "range": {
+        "startLine": 9789,
+        "startChar": 52,
+        "endLine": 9789,
+        "endChar": 85
+      },
+      "revId": "bd7fc202531c357a8f7c247f3870f4c2b97dcd15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
