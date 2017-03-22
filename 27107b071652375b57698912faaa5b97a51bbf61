@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a5c94dd_0ca612d1",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-22T03:15:42Z",
+      "side": 1,
+      "message": "Use equals(). Do not use \u003d\u003d or !\u003d with Java Strings. They are objects and therefore \u003d\u003d and !\u003d do pointer equality despite the fact that this is a value class (so basically never what you wants unless you re doing some kind of weird caching/interning things).\n\nIf ss can be null, you can use Objects.equals(a, b). If null should also cause a return, use TextUtils.isEmpty().",
+      "range": {
+        "startLine": 1042,
+        "startChar": 12,
+        "endLine": 1042,
+        "endChar": 20
+      },
+      "revId": "27107b071652375b57698912faaa5b97a51bbf61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76abd7be_3cabbd6a",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-22T03:15:42Z",
+      "side": 1,
+      "message": "If the exception cannot/should not happen, consider rethrowing it inside a RuntimeException and kill the caller.\n\nThat way if for some reason there is a regression, at least we will know about it quickly.",
+      "range": {
+        "startLine": 1054,
+        "startChar": 12,
+        "endLine": 1055,
+        "endChar": 40
+      },
+      "revId": "27107b071652375b57698912faaa5b97a51bbf61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52344150_e73dede4",
+        "filename": "services/net/java/android/net/ip/IpManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-22T03:15:42Z",
+      "side": 1,
+      "message": "Since startIPv6 will also catch, log and swallow the error, consider maybe rethrowing when errorCode is not ENOENT.\n\nConsequences are that startIPv6 would send back false, making ip provisioning fail and us not using the network.",
+      "range": {
+        "startLine": 1073,
+        "startChar": 12,
+        "endLine": 1075,
+        "endChar": 13
+      },
+      "revId": "27107b071652375b57698912faaa5b97a51bbf61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
