@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b6db43b_b79b010c",
+        "filename": "core/java/android/bluetooth/le/AdvertisingSetParameters.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1051163
+      },
+      "writtenOn": "2017-03-22T10:34:08Z",
+      "side": 1,
+      "message": "Space missing after !\u003d",
+      "revId": "a9d1a32e5e51ebc3c141370c9d5045c6c938aaf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
