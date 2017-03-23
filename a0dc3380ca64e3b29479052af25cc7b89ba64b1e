@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f4f630a_a9ad6f1c",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1121773
+      },
+      "writtenOn": "2017-03-23T06:20:14Z",
+      "side": 1,
+      "message": "did you intend to leave this comment here?",
+      "revId": "a0dc3380ca64e3b29479052af25cc7b89ba64b1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69fcd185_fe7c8e15",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1121773
+      },
+      "writtenOn": "2017-03-23T06:20:14Z",
+      "side": 1,
+      "message": "under what circumstances can sleep be replaced by waitForIdle()? Consider documenting the preconditions.",
+      "revId": "a0dc3380ca64e3b29479052af25cc7b89ba64b1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
