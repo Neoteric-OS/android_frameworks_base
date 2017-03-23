@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f885edb_0cee43b6",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-03-23T14:40:44Z",
+      "side": 1,
+      "message": "this seems kludgy : why not \"} catch (ClassNotFoundException)\" or even catch (BadParcelableException | ClassNotFoundException e) on line 270 ?",
+      "range": {
+        "startLine": 278,
+        "startChar": 16,
+        "endLine": 278,
+        "endChar": 88
+      },
+      "revId": "d0ea473ca448794a1dfa3dd3e7da5570b1cef1a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
