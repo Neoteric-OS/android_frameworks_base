@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "475f30a6_0dd66e2f",
+        "filename": "wifi/java/android/net/wifi/hotspot2/ConfigParser.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1094298
+      },
+      "writtenOn": "2017-03-23T18:09:12Z",
+      "side": 1,
+      "message": "Would it make sense to add an \u0027uninteresting header\u0027 in here? [data ignored]",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 19
+      },
+      "revId": "b4fc56520150c86ef7337337c54ba93eeabff849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
