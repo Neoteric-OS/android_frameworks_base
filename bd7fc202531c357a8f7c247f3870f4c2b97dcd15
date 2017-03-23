@@ -22,6 +22,30 @@
       "revId": "bd7fc202531c357a8f7c247f3870f4c2b97dcd15",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5392d4dc_23e2edcf",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9789,
+      "author": {
+        "id": 1061585
+      },
+      "writtenOn": "2017-03-23T14:01:50Z",
+      "side": 1,
+      "message": "I add the retry because launching app might be failed during wait().\nIn that case, cpr.launchingApp becomes null. But ActivityManagerService can\u0027t notice it without retry.\n\nOther solution is changing here to following.\n if (cpr.provider \u003d\u003d null) {\n   do {\n     :\n   } while (cpr.launchingApp \u003d\u003d null);\n }\nWhat do you think?",
+      "parentUuid": "68c883a3_885e8254",
+      "range": {
+        "startLine": 9789,
+        "startChar": 52,
+        "endLine": 9789,
+        "endChar": 85
+      },
+      "revId": "bd7fc202531c357a8f7c247f3870f4c2b97dcd15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
