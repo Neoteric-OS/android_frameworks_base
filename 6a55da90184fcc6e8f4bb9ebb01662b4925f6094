@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe76a904_a182af2e",
+        "filename": "core/java/android/bluetooth/le/AdvertisingSet.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1051163
+      },
+      "writtenOn": "2017-03-23T10:03:35Z",
+      "side": 1,
+      "message": "EnableD",
+      "revId": "6a55da90184fcc6e8f4bb9ebb01662b4925f6094",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c55831_642440c2",
+        "filename": "core/java/android/bluetooth/le/AdvertisingSetCallback.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1051163
+      },
+      "writtenOn": "2017-03-23T10:03:35Z",
+      "side": 1,
+      "message": "Capital Tx, below as well in onAdvertisingParametersUpdated",
+      "revId": "6a55da90184fcc6e8f4bb9ebb01662b4925f6094",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37caed0_cb003866",
+        "filename": "core/java/android/bluetooth/le/AdvertisingSetCallback.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1051163
+      },
+      "writtenOn": "2017-03-23T10:03:35Z",
+      "side": 1,
+      "message": "EnableD",
+      "revId": "6a55da90184fcc6e8f4bb9ebb01662b4925f6094",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
