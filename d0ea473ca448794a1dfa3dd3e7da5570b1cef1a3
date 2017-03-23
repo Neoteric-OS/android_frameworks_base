@@ -22,6 +22,30 @@
       "revId": "d0ea473ca448794a1dfa3dd3e7da5570b1cef1a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc7c216e_003c82ad",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1127303
+      },
+      "writtenOn": "2017-03-23T14:52:58Z",
+      "side": 1,
+      "message": "Hi Narayan,\n\nThanks for your review\nIt will throw a RuntimeException out instead of ClassNotFoundException in Parcel.java when sending a bad Serializable object. ClassNotFoundException cannot be catched here.\n\nhttps://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/os/Parcel.java#2656\n\n    private final Serializable readSerializable(final ClassLoader loader) {\n        String name \u003d readString();\n        if (name \u003d\u003d null) {\n            // For some reason we were unable to read the name of the Serializable (either there\n            // is nothing left in the Parcel to read, or the next value wasn\u0027t a String), so\n            // return null, which indicates that the name wasn\u0027t found in the parcel.\n            return null;\n        }\n\n        byte[] serializedData \u003d createByteArray();\n        ByteArrayInputStream bais \u003d new ByteArrayInputStream(serializedData);\n        try {\n            ObjectInputStream ois \u003d new ObjectInputStream(bais) {\n                @Override\n                protected Class\u003c?\u003e resolveClass(ObjectStreamClass osClass)\n                        throws IOException, ClassNotFoundException {\n                    // try the custom classloader if provided\n                    if (loader !\u003d null) {\n                        Class\u003c?\u003e c \u003d Class.forName(osClass.getName(), false, loader);\n                        if (c !\u003d null) {\n                            return c;\n                        }\n                    }\n                    return super.resolveClass(osClass);\n                }\n            };\n            return (Serializable) ois.readObject();\n        } catch (IOException ioe) {\n            throw new RuntimeException(\"Parcelable encountered \" +\n                \"IOException reading a Serializable object (name \u003d \" + name +\n                \")\", ioe);\n        } catch (ClassNotFoundException cnfe) {\n            throw new RuntimeException(\"Parcelable encountered \" +\n                \"ClassNotFoundException reading a Serializable object (name \u003d \"\n                + name + \")\", cnfe);\n        }\n    }",
+      "parentUuid": "8f885edb_0cee43b6",
+      "range": {
+        "startLine": 278,
+        "startChar": 16,
+        "endLine": 278,
+        "endChar": 88
+      },
+      "revId": "d0ea473ca448794a1dfa3dd3e7da5570b1cef1a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
