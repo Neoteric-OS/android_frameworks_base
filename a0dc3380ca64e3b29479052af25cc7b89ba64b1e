@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "16ef8930_b0a41357",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-23T06:45:20Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "8f4f630a_a9ad6f1c",
+      "revId": "a0dc3380ca64e3b29479052af25cc7b89ba64b1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69fcd185_fe7c8e15",
         "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-03-23T06:20:14Z",
       "side": 1,
       "message": "under what circumstances can sleep be replaced by waitForIdle()? Consider documenting the preconditions.",
+      "revId": "a0dc3380ca64e3b29479052af25cc7b89ba64b1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7db62ab0_302e2aaf",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-23T06:45:20Z",
+      "side": 1,
+      "message": "This was just because I was too lazy to write the import needed when writing the test.\n\nI switched to mockito verify with builtin timeouts, so it\u0027s gone.",
+      "parentUuid": "69fcd185_fe7c8e15",
       "revId": "a0dc3380ca64e3b29479052af25cc7b89ba64b1e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
