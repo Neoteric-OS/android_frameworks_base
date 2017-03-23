@@ -22,6 +22,30 @@
       "revId": "b4fc56520150c86ef7337337c54ba93eeabff849",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1a5764_22921921",
+        "filename": "wifi/java/android/net/wifi/hotspot2/ConfigParser.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1079868
+      },
+      "writtenOn": "2017-03-23T18:11:58Z",
+      "side": 1,
+      "message": "Impossible to include all possible headers, vendor can put any vendor specific headers in there.",
+      "parentUuid": "475f30a6_0dd66e2f",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 19
+      },
+      "revId": "b4fc56520150c86ef7337337c54ba93eeabff849",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
