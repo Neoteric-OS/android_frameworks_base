@@ -70,6 +70,30 @@
       "revId": "d0ea473ca448794a1dfa3dd3e7da5570b1cef1a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b008d12_4d646b41",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1127303
+      },
+      "writtenOn": "2017-03-24T04:51:30Z",
+      "side": 1,
+      "message": "Hi Narayan,\nhttps://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/os/Parcel.java#2657\n\nIn parcel.java, RuntimeException with its cause ClassNotFoundException is thrown. And here the cause of RuntimeException should be used to judge whether is a bad Serialize object.\n\nhttps://android.googlesource.com/platform/libcore/+/master/ojluni/src/main/java/java/lang/RuntimeException.java#79\npublic RuntimeException(String message, Throwable cause) {\n        super(message, cause);\n    }",
+      "parentUuid": "3c5c13a4_611320a6",
+      "range": {
+        "startLine": 278,
+        "startChar": 16,
+        "endLine": 278,
+        "endChar": 88
+      },
+      "revId": "d0ea473ca448794a1dfa3dd3e7da5570b1cef1a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
