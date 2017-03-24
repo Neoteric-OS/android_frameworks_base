@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49f3d6b1_51ce72aa",
+        "filename": "core/java/android/hardware/SystemSensorManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1043015
+      },
+      "writtenOn": "2017-03-24T17:00:08Z",
+      "side": 1,
+      "message": "Hi Songjinshi and Peng,\n\nI think, it is better to add this new check as a last check of all instead of first check\nbecause if non one-shot sensor listeners are full but one-shot sensor listeners are not full\nand application tries to register the listener for one-shot sensor using registerListener\napi rather the requestTrigger api then error should be \"Trigger Sensors should use the\nrequestTriggerSensor\" and not \"the sensor listeners size has exceeded the maximum limit\"\nAdditionally, if sensor is null and listener is null or delay is negative, then also\nit seems to print those errors.\n\nIf this makes sense, then please shift this check to be the last check of all.",
+      "revId": "a464d05954ab98841a298595a844ae428b927f84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32ca94c6_fa573ae0",
+        "filename": "core/java/android/hardware/SystemSensorManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1043015
+      },
+      "writtenOn": "2017-03-24T17:00:08Z",
+      "side": 1,
+      "message": "same",
+      "revId": "a464d05954ab98841a298595a844ae428b927f84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
