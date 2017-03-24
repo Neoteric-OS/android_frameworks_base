@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "42cdbccb_ea3b7644",
+        "filename": "core/java/android/hardware/SystemSensorManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1074523
+      },
+      "writtenOn": "2017-03-24T19:04:04Z",
+      "side": 1,
+      "message": "It is two different maps: mSensorListeners and mTriggerListeners. There should be no interference.",
+      "parentUuid": "49f3d6b1_51ce72aa",
+      "revId": "a464d05954ab98841a298595a844ae428b927f84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32ca94c6_fa573ae0",
         "filename": "core/java/android/hardware/SystemSensorManager.java",
         "patchSetId": 14
