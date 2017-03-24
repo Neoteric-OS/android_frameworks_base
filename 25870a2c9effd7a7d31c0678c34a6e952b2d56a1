@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0c4d71b_d0bc020b",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringInterfaceServices.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-24T19:39:38Z",
+      "side": 0,
+      "message": "Please don\u0027t revert this part.",
+      "range": {
+        "startLine": 19,
+        "startChar": 48,
+        "endLine": 19,
+        "endChar": 69
+      },
+      "revId": "25870a2c9effd7a7d31c0678c34a6e952b2d56a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2552bc28_85e8ca08",
+        "filename": "services/net/java/android/net/util/NetworkConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-24T19:39:38Z",
+      "side": 0,
+      "message": "Please don\u0027t revert this part, as other changes in flight have been rebased to use it.",
+      "range": {
+        "startLine": 100,
+        "startChar": 28,
+        "endLine": 100,
+        "endChar": 49
+      },
+      "revId": "25870a2c9effd7a7d31c0678c34a6e952b2d56a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
