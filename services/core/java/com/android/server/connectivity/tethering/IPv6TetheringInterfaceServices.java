@@ -16,8 +16,6 @@
 
 package com.android.server.connectivity.tethering;
 
-import static android.net.util.NetworkConstants.RFC7421_PREFIX_LENGTH;
-
 import android.net.INetd;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
@@ -50,6 +48,7 @@ import java.util.Objects;
 public class IPv6TetheringInterfaceServices {
     private static final String TAG = IPv6TetheringInterfaceServices.class.getSimpleName();
     private static final IpPrefix LINK_LOCAL_PREFIX = new IpPrefix("fe80::/64");
+    private static final int RFC7421_IP_PREFIX_LENGTH = 64;
 
     private final String mIfName;
     private final INetworkManagementService mNMService;
@@ -125,7 +124,7 @@ public class IPv6TetheringInterfaceServices {
             params.hasDefaultRoute = v6only.hasIPv6DefaultRoute();
 
             for (LinkAddress linkAddr : v6only.getLinkAddresses()) {
-                if (linkAddr.getPrefixLength() != RFC7421_PREFIX_LENGTH) continue;
+                if (linkAddr.getPrefixLength() != RFC7421_IP_PREFIX_LENGTH) continue;
 
                 final IpPrefix prefix = new IpPrefix(
                         linkAddr.getAddress(), linkAddr.getPrefixLength());
@@ -207,7 +206,7 @@ public class IPv6TetheringInterfaceServices {
             for (Inet6Address dns : deprecatedDnses) {
                 final String dnsString = dns.getHostAddress();
                 try {
-                    netd.interfaceDelAddress(mIfName, dnsString, RFC7421_PREFIX_LENGTH);
+                    netd.interfaceDelAddress(mIfName, dnsString, RFC7421_IP_PREFIX_LENGTH);
                 } catch (ServiceSpecificException | RemoteException e) {
                     Log.e(TAG, "Failed to remove local dns IP: " + dnsString, e);
                 }
@@ -224,7 +223,7 @@ public class IPv6TetheringInterfaceServices {
             for (Inet6Address dns : addedDnses) {
                 final String dnsString = dns.getHostAddress();
                 try {
-                    netd.interfaceAddAddress(mIfName, dnsString, RFC7421_PREFIX_LENGTH);
+                    netd.interfaceAddAddress(mIfName, dnsString, RFC7421_IP_PREFIX_LENGTH);
                 } catch (ServiceSpecificException | RemoteException e) {
                     Log.e(TAG, "Failed to add local dns IP: " + dnsString, e);
                     newDnses.remove(dns);
