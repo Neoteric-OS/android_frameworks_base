@@ -1682,7 +1682,7 @@ public class WifiManager {
      *
      * @hide
      */
-    public boolean startSoftAp(WifiConfiguration wifiConfig) {
+    public boolean startSoftAp(@Nullable WifiConfiguration wifiConfig) {
         try {
             return mService.startSoftAp(wifiConfig);
         } catch (RemoteException e) {
@@ -1700,6 +1700,55 @@ public class WifiManager {
     public boolean stopSoftAp() {
         try {
             return mService.stopSoftAp();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Starts a local only hotspot and that applications can use to share files between co-located
+     * devices connected to the created WiFi-Hotspot.  The network created by this method will not
+     * have an upstream.  The devices connected will be able to communicate amongst themselves.
+     *
+     * Each call to this method will return a WifiConfiguration with the SSID, security type and
+     * credentials needed to connect to the hotspot.  Communicating this information is up to the
+     * application.  The method will return null is the Local Only Hotspot cannot be created.  This
+     * case can happen if the user started a hotspot in the Settings App.
+     *
+     * Internally, requests will be tracked to prevent the hotspot from being torn down while apps
+     * are still using it.  The application will call stopLocalOnlyHotspot when it is finished.  If
+     * the application was the final user of the hotspot, it will be torn down completely.
+     *
+     * Applications should be aware that the user may also stop the local only hotspot through the
+     * Settings UI, it is not guaranteed to stay up as long as there is a requesting applicaiton.
+     *
+     * @return WifiConfiguration configuration with necessary information for clients to connect to
+     * the WiFi hotspot.
+     *
+     * @hide
+     */
+    public WifiConfiguration startLocalOnlyHotspot() {
+        try {
+            return mService.startLocalOnlyHotspot();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     *  Stops a local only hotspot when there no remaining applications using it.  This method
+     *  removes the internal tracking for the hotspot request.  When all requesting applications are
+     *  finished using the hotspot, it will be stopped and WiFi will return to the previous
+     *  operational mode.
+     *
+     *  @return {@code true} if the application successfully unregistered their request for the
+     *  hotspot.  {@code false} if the hotspot was already deregistered.
+     *
+     *  @hide
+     */
+    public boolean stopLocalOnlyHotspot() {
+        try {
+            return mService.stopLocalOnlyHotspot();
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
