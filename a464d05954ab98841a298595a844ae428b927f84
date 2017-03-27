@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cf10ae5e_1a6449d6",
+        "filename": "core/java/android/hardware/SystemSensorManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1103638
+      },
+      "writtenOn": "2017-03-27T02:12:50Z",
+      "side": 1,
+      "message": "Hi Aniroop and Peng,\n    I think this make sense, the new check should as a last check,later i\u0027ll update the patch, thanks a lot.",
+      "parentUuid": "42cdbccb_ea3b7644",
+      "revId": "a464d05954ab98841a298595a844ae428b927f84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32ca94c6_fa573ae0",
         "filename": "core/java/android/hardware/SystemSensorManager.java",
         "patchSetId": 14
