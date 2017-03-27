@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f71a425_a2afc307",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-27T20:53:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2616cb2_216a5248",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "af2719538df8a4d4dc91ed6848450f8a21aa05d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abacf530_c26ad2bc",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-26T19:34:27Z",
       "side": 1,
       "message": "Blank line before here?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "af2719538df8a4d4dc91ed6848450f8a21aa05d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a641fd85_222be5f2",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-27T20:53:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abacf530_c26ad2bc",
       "range": {
         "startLine": 31,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6a38f148_87b25c12",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-27T20:53:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d50a6d2c_a4f827aa",
+      "range": {
+        "startLine": 46,
+        "startChar": 18,
+        "endLine": 46,
+        "endChar": 39
+      },
+      "revId": "af2719538df8a4d4dc91ed6848450f8a21aa05d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf903e15_4b036a29",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-26T19:34:27Z",
       "side": 1,
       "message": "Don\u0027t need this either.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 68
+      },
+      "revId": "af2719538df8a4d4dc91ed6848450f8a21aa05d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f501666_e2af4dec",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-27T20:53:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf903e15_4b036a29",
       "range": {
         "startLine": 53,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c847ce33_4f5e90da",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-27T20:53:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a2d95b4_fb20393f",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 34
+      },
+      "revId": "af2719538df8a4d4dc91ed6848450f8a21aa05d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ad380cb_043cfc6e",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 5
@@ -128,6 +248,30 @@
       "writtenOn": "2017-03-26T19:34:27Z",
       "side": 1,
       "message": "Look at NetdService.java.",
+      "range": {
+        "startLine": 108,
+        "startChar": 17,
+        "endLine": 108,
+        "endChar": 41
+      },
+      "revId": "af2719538df8a4d4dc91ed6848450f8a21aa05d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08046775_59ccee40",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-27T20:53:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ad380cb_043cfc6e",
       "range": {
         "startLine": 108,
         "startChar": 17,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "5bf5c1d4_d86ca674",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-27T20:53:02Z",
+      "side": 1,
+      "message": "We need to know when NetD dies, but that can happen later. Removed.",
+      "parentUuid": "23ea2ff0_944c994d",
+      "range": {
+        "startLine": 126,
+        "startChar": 18,
+        "endLine": 126,
+        "endChar": 38
+      },
+      "revId": "af2719538df8a4d4dc91ed6848450f8a21aa05d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "293c770d_a2fcd8c5",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 5
@@ -174,6 +342,30 @@
       "writtenOn": "2017-03-26T19:34:27Z",
       "side": 1,
       "message": "Are we going to need this?",
+      "range": {
+        "startLine": 170,
+        "startChar": 24,
+        "endLine": 170,
+        "endChar": 40
+      },
+      "revId": "af2719538df8a4d4dc91ed6848450f8a21aa05d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d0cb3d6_126b9abf",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-27T20:53:02Z",
+      "side": 1,
+      "message": "Yes, but it\u0027s unused now, so I\u0027ll add it later.",
+      "parentUuid": "293c770d_a2fcd8c5",
       "range": {
         "startLine": 170,
         "startChar": 24,
