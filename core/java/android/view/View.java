@@ -111,10 +111,11 @@ import com.google.android.collect.Maps;
 import java.lang.NullPointerException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -4702,7 +4703,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         private final View mHostView;
         private final String mMethodName;
 
-        private Method mResolvedMethod;
+        private MethodHandle mResolvedMethod;
         private Context mResolvedContext;
 
         public DeclaredOnClickListener(@NonNull View hostView, @NonNull String methodName) {
@@ -4718,10 +4719,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
 
             try {
                 mResolvedMethod.invoke(mResolvedContext, v);
-            } catch (IllegalAccessException e) {
-                throw new IllegalStateException(
-                        "Could not execute non-public method for android:onClick", e);
-            } catch (InvocationTargetException e) {
+            } catch (Throwable e) {
                 throw new IllegalStateException(
                         "Could not execute method for android:onClick", e);
             }
@@ -4732,13 +4730,20 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
             while (context != null) {
                 try {
                     if (!context.isRestricted()) {
-                        final Method method = context.getClass().getMethod(mMethodName, View.class);
+                        final MethodType methodType =
+                            MethodType.methodType(void.class, View.class);
+                        final MethodHandle method =
+                            MethodHandles.publicLookup().findVirtual(context.getClass(),
+                                                                     mMethodName, methodType);
                         if (method != null) {
                             mResolvedMethod = method;
                             mResolvedContext = context;
                             return;
                         }
                     }
+                } catch (IllegalAccessException e) {
+                    throw new IllegalStateException(
+                        "Could not access non-public method for android:onClick", e);
                 } catch (NoSuchMethodException e) {
                     // Failed to find method, keep searching up the hierarchy.
                 }

@@ -57,9 +57,10 @@ import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.lang.ref.WeakReference;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -866,26 +867,24 @@ public final class LoadedApk {
             return;
         }
 
-        final Method callback;
+        final MethodHandle callback;
         try {
-            callback = rClazz.getMethod("onResourcesLoaded", int.class);
-        } catch (NoSuchMethodException e) {
+            MethodType callbackType = MethodType.methodType(void.class, int.class);
+            callback = MethodHandles.publicLookup().findStatic(rClazz, "onResourcesLoaded",
+                                                               callbackType);
+        } catch (IllegalAccessException | NoSuchMethodException e) {
             // No rewriting to be done.
             return;
         }
 
-        Throwable cause;
         try {
-            callback.invoke(null, id);
+            callback.invokeExact(id);
             return;
-        } catch (IllegalAccessException e) {
-            cause = e;
-        } catch (InvocationTargetException e) {
-            cause = e.getCause();
+        } catch (Throwable e) {
+            throw new RuntimeException("Failed to rewrite resource references for " + packageName,
+                                       e);
         }
 
-        throw new RuntimeException("Failed to rewrite resource references for " + packageName,
-                cause);
     }
 
     public void removeContextRegistrations(Context context,

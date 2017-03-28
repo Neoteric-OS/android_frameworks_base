@@ -31,8 +31,9 @@ import android.util.Slog;
 import com.android.internal.logging.AndroidConfig;
 import com.android.server.NetworkManagementSocketTagger;
 import dalvik.system.VMRuntime;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.util.TimeZone;
 import java.util.logging.LogManager;
 import org.apache.harmony.luni.internal.util.TimezoneGetter;
@@ -240,21 +241,14 @@ public class RuntimeInit {
                     ex);
         }
 
-        Method m;
+        MethodHandle main;
         try {
-            m = cl.getMethod("main", new Class[] { String[].class });
+            MethodType mainMethodType = MethodType.methodType(void.class, String[].class);
+            main = MethodHandles.lookup().findStatic(cl, "main", mainMethodType);
         } catch (NoSuchMethodException ex) {
-            throw new RuntimeException(
-                    "Missing static main on " + className, ex);
-        } catch (SecurityException ex) {
-            throw new RuntimeException(
-                    "Problem getting static main on " + className, ex);
-        }
-
-        int modifiers = m.getModifiers();
-        if (! (Modifier.isStatic(modifiers) && Modifier.isPublic(modifiers))) {
-            throw new RuntimeException(
-                    "Main method is not public and static on " + className);
+            throw new RuntimeException("Missing static main on " + className, ex);
+        } catch (IllegalAccessException ex) {
+            throw new RuntimeException("Problem getting static main on " + className, ex);
         }
 
         /*
@@ -263,7 +257,7 @@ public class RuntimeInit {
          * clears up all the stack frames that were required in setting
          * up the process.
          */
-        throw new Zygote.MethodAndArgsCaller(m, argv);
+        throw new Zygote.MethodAndArgsCaller(main, argv);
     }
 
     public static final void main(String[] argv) {

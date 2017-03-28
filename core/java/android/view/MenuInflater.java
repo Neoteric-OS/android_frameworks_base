@@ -32,8 +32,10 @@ import android.util.Log;
 import android.util.Xml;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
+
 
 /**
  * This class is used to instantiate menu XML files into Menu objects.
@@ -57,16 +59,20 @@ public class MenuInflater {
     private static final String XML_ITEM = "item";
 
     private static final int NO_ID = 0;
-    
+
+    // UNUSED
     private static final Class<?>[] ACTION_VIEW_CONSTRUCTOR_SIGNATURE = new Class[] {Context.class};
 
+    // UNUSED
     private static final Class<?>[] ACTION_PROVIDER_CONSTRUCTOR_SIGNATURE = ACTION_VIEW_CONSTRUCTOR_SIGNATURE;
 
+    // UNUSED
     private final Object[] mActionViewConstructorArguments;
 
+    // UNUSED
     private final Object[] mActionProviderConstructorArguments;
-
-    private Context mContext;
+  
+    private final Context mContext;
     private Object mRealOwner;
 
     /**
@@ -229,16 +235,17 @@ public class MenuInflater {
     private static class InflatedOnMenuItemClickListener
             implements MenuItem.OnMenuItemClickListener {
         private static final Class<?>[] PARAM_TYPES = new Class[] { MenuItem.class };
-        
+
         private Object mRealOwner;
-        private Method mMethod;
-        
+        private MethodHandle mMethod;
+
         public InflatedOnMenuItemClickListener(Object realOwner, String methodName) {
             mRealOwner = realOwner;
             Class<?> c = realOwner.getClass();
             try {
-                mMethod = c.getMethod(methodName, PARAM_TYPES);
-            } catch (Exception e) {
+                final MethodType methodType = MethodType.methodType(boolean.class, MenuItem.class);
+                mMethod = MethodHandles.publicLookup().findVirtual(c, methodName, methodType);
+            } catch (Throwable e) {
                 InflateException ex = new InflateException(
                         "Couldn't resolve menu item onClick handler " + methodName +
                         " in class " + c.getName());
@@ -246,16 +253,11 @@ public class MenuInflater {
                 throw ex;
             }
         }
-        
+
         public boolean onMenuItemClick(MenuItem item) {
             try {
-                if (mMethod.getReturnType() == Boolean.TYPE) {
-                    return (Boolean) mMethod.invoke(mRealOwner, item);
-                } else {
-                    mMethod.invoke(mRealOwner, item);
-                    return true;
-                }
-            } catch (Exception e) {
+                return (boolean) mMethod.invokeExact(mRealOwner, item);
+            } catch (Throwable e) {
                 throw new RuntimeException(e);
             }
         }
@@ -277,7 +279,7 @@ public class MenuInflater {
         }
         return owner;
     }
-    
+
     /**
      * State for the current menu.
      * <p>
@@ -413,9 +415,7 @@ public class MenuInflater {
 
             final boolean hasActionProvider = itemActionProviderClassName != null;
             if (hasActionProvider && itemActionViewLayout == 0 && itemActionViewClassName == null) {
-                itemActionProvider = newInstance(itemActionProviderClassName,
-                            ACTION_PROVIDER_CONSTRUCTOR_SIGNATURE,
-                            mActionProviderConstructorArguments);
+                itemActionProvider = newInstance(itemActionProviderClassName);
             } else {
                 if (hasActionProvider) {
                     Log.w(LOG_TAG, "Ignoring attribute 'actionProviderClass'."
@@ -469,8 +469,7 @@ public class MenuInflater {
 
             boolean actionViewSpecified = false;
             if (itemActionViewClassName != null) {
-                View actionView = (View) newInstance(itemActionViewClassName,
-                        ACTION_VIEW_CONSTRUCTOR_SIGNATURE, mActionViewConstructorArguments);
+                View actionView = (View) newInstance(itemActionViewClassName);
                 item.setActionView(actionView);
                 actionViewSpecified = true;
             }
@@ -507,14 +506,14 @@ public class MenuInflater {
         }
 
         @SuppressWarnings("unchecked")
-        private <T> T newInstance(String className, Class<?>[] constructorSignature,
-                Object[] arguments) {
+        private <T> T newInstance(String className) {
             try {
                 Class<?> clazz = mContext.getClassLoader().loadClass(className);
-                Constructor<?> constructor = clazz.getConstructor(constructorSignature);
-                constructor.setAccessible(true);
-                return (T) constructor.newInstance(arguments);
-            } catch (Exception e) {
+                MethodHandle constructor =
+                        MethodHandles.publicLookup().findConstructor(
+                            clazz, MethodType.methodType(void.class, Context.class));
+                return (T) constructor.invoke(mContext);
+            } catch (Throwable e) {
                 Log.w(LOG_TAG, "Cannot instantiate class: " + className, e);
             }
             return null;

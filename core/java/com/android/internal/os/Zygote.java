@@ -22,8 +22,9 @@ import dalvik.system.ZygoteHooks;
 import android.system.ErrnoException;
 import android.system.Os;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodType;
+import java.lang.invoke.WrongMethodTypeException;
 
 /** @hide */
 public final class Zygote {
@@ -225,22 +226,38 @@ public final class Zygote {
     public static class MethodAndArgsCaller extends Exception
             implements Runnable {
         /** method to call */
-        private final Method mMethod;
+        private final MethodHandle mMethod;
 
         /** argument array */
         private final String[] mArgs;
 
-        public MethodAndArgsCaller(Method method, String[] args) {
+        /**
+         * Constructs a new {@code MethodAndArgsCaller}.
+         *
+         * @param  method
+         *         The {@code java.lang.invoke.MethodHandle} to invoke. The MethodHandles method
+         *         type must be {@code (String[])void}.
+         * @param  args
+         *         The arguments to invoke the method with.
+         */
+        public MethodAndArgsCaller(MethodHandle method, String[] args) {
+            MethodType expectedMethodType = MethodType.methodType(void.class, String[].class);
+            if (method.type() != expectedMethodType) {
+                throw new IllegalArgumentException("method has wrong type: " +
+                                                   method.type() +
+                                                   " != " +
+                                                   expectedMethodType);
+            }
             mMethod = method;
             mArgs = args;
         }
 
         public void run() {
             try {
-                mMethod.invoke(null, new Object[] { mArgs });
-            } catch (IllegalAccessException ex) {
+                mMethod.invokeExact(mArgs);
+            } catch (WrongMethodTypeException ex) {
                 throw new RuntimeException(ex);
-            } catch (InvocationTargetException ex) {
+            } catch (Throwable ex) {
                 Throwable cause = ex.getCause();
                 if (cause instanceof RuntimeException) {
                     throw (RuntimeException) cause;

@@ -26,7 +26,9 @@ import android.util.Log;
 import android.webkit.WebViewFactory;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 
 /**
  * Startup class for the WebView zygote process.
@@ -71,12 +73,14 @@ class WebViewZygoteInit {
             try {
                 Class providerClass = Class.forName(WebViewFactory.CHROMIUM_WEBVIEW_FACTORY, true,
                                                     loader);
-                Object result = providerClass.getMethod("preloadInZygote").invoke(null);
-                if (!((Boolean)result).booleanValue()) {
+                MethodHandle preload =
+                    MethodHandles.publicLookup().findStatic(providerClass, "preloadInZygote",
+                                                            MethodType.methodType(boolean.class));
+                boolean successfulPreload = (boolean) preload.invokeExact();
+                if (!successfulPreload) {
                     Log.e(TAG, "preloadInZygote returned false");
                 }
-            } catch (ClassNotFoundException | NoSuchMethodException | SecurityException |
-                     IllegalAccessException | InvocationTargetException e) {
+            } catch (Throwable e) {
                 Log.e(TAG, "Exception while preloading package", e);
             }
             return false;

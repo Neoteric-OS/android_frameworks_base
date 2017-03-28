@@ -588,7 +588,8 @@ public final class WebViewFactory {
         }
     }
 
-    private static class RelroFileCreator {
+    /** @hide */
+    public static class RelroFileCreator {
         // Called in an unprivileged child process to create the relro file.
         public static void main(String[] args) {
             boolean result = false;
