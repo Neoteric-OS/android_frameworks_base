@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96a35c17_aa5e770f",
+        "filename": "core/java/android/bluetooth/BluetoothA2dp.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2017-03-28T23:10:05Z",
+      "side": 1,
+      "message": "there is a lot of shared code in these two functions",
+      "range": {
+        "startLine": 614,
+        "startChar": 1,
+        "endLine": 614,
+        "endChar": 35
+      },
+      "revId": "4f9a2bfb4f1a4bbcc7eba1589ef5ee31741a5a49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
