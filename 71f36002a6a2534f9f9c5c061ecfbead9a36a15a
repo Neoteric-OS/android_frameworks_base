@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4e1fcf8b_acd77cd5",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-03-28T02:20:16Z",
+      "side": 1,
+      "message": "Btw, remembered the history on this. Originally I was going to get ConnectivityManager from IpSecManager() to manage NattKeepalive Via IpSecManager (stash the instance in the IpSecTransform), but since we\u0027re going to manage that from the system server now, I think it\u0027s safe not to store the application context. If that turns out to have problems, I\u0027ll have to go back and do it the other way, in which case I will need the context.",
+      "parentUuid": "0d576ebd_3b0871a3",
+      "range": {
+        "startLine": 245,
+        "startChar": 20,
+        "endLine": 245,
+        "endChar": 58
+      },
+      "revId": "71f36002a6a2534f9f9c5c061ecfbead9a36a15a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49fce1d4_730d3f48",
         "filename": "core/java/android/app/SystemServiceRegistry.java",
         "patchSetId": 7
