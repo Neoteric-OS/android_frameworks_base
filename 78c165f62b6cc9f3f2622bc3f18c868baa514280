@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7846dd1_86b67133",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1061212
+      },
+      "writtenOn": "2017-03-28T23:56:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "404fa8a4_b5b6c313",
+      "range": {
+        "startLine": 1173,
+        "startChar": 31,
+        "endLine": 1173,
+        "endChar": 74
+      },
+      "revId": "78c165f62b6cc9f3f2622bc3f18c868baa514280",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6af4dc4_eb80ad28",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-28T23:43:53Z",
       "side": 1,
       "message": "rename key to something disable_barring_notification_bool and use default to false",
+      "range": {
+        "startLine": 1386,
+        "startChar": 74,
+        "endLine": 1386,
+        "endChar": 78
+      },
+      "revId": "78c165f62b6cc9f3f2622bc3f18c868baa514280",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8ec2281_4996dc38",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 1061212
+      },
+      "writtenOn": "2017-03-28T23:56:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6af4dc4_eb80ad28",
       "range": {
         "startLine": 1386,
         "startChar": 74,
