@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0140a89_c2404406",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2198,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-28T17:40:02Z",
+      "side": 1,
+      "message": "Actually, can we get away from this?  Does the carrier really need to kow if I\u0027m bluetooth tethering or not?\n\nIn the existing call paths this type comes back to us and we use it to tell which interfaces to start.  But in this call that\u0027s not the case, right?",
+      "range": {
+        "startLine": 2198,
+        "startChar": 12,
+        "endLine": 2198,
+        "endChar": 20
+      },
+      "revId": "8e683cbe4630ef204ce14e69713519a39f86eb77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
