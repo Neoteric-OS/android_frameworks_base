@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "298d4041_9956e407",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-29T20:46:48Z",
+      "side": 1,
+      "message": "What was the purpose of this? This wasn\u0027t there in the original (pre-NS-as-object) code?\n\nThis actually busted some existing Wi-Fi Aware code. It doesn\u0027t allow copying and modifying NetworkCapabilities. I don\u0027t see an issue with allowing an overwrite.",
+      "range": {
+        "startLine": 607,
+        "startChar": 0,
+        "endLine": 609,
+        "endChar": 9
+      },
+      "revId": "0fc58e81ede3899c0940d534a481c4187299a4d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
