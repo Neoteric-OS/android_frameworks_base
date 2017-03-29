@@ -445,6 +445,30 @@
       "revId": "8e683cbe4630ef204ce14e69713519a39f86eb77",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9c4922e_e80ddb97",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2198,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-29T20:49:47Z",
+      "side": 1,
+      "message": "Sigh.  We should deprecate that.  Maybe in future we can just ignore the passed in |type| and instead send along -1.",
+      "parentUuid": "167f1a91_3c164bef",
+      "range": {
+        "startLine": 2198,
+        "startChar": 12,
+        "endLine": 2198,
+        "endChar": 20
+      },
+      "revId": "8e683cbe4630ef204ce14e69713519a39f86eb77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
