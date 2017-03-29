@@ -259,9 +259,25 @@ public class NetworkRequest implements Parcelable {
          *                         networks.
          */
         public Builder setNetworkSpecifier(String networkSpecifier) {
-            if (NetworkCapabilities.MATCH_ALL_REQUESTS_NETWORK_SPECIFIER.equals(networkSpecifier)) {
-                throw new IllegalArgumentException("Invalid network specifier - must not be '"
-                        + NetworkCapabilities.MATCH_ALL_REQUESTS_NETWORK_SPECIFIER + "'");
+            return setNetworkSpecifier(new StringNetworkSpecifier(networkSpecifier));
+        }
+
+        /**
+         * Sets the optional bearer specific network specifier.
+         * This has no meaning if a single transport is also not specified, so calling
+         * this without a single transport set will generate an exception, as will
+         * subsequently adding or removing transports after this is set.
+         * </p>
+         *
+         * @param networkSpecifier A concrete, parcelable framework class that extends
+         *                         NetworkSpecifier.
+         *
+         * @hide
+         */
+        public Builder setNetworkSpecifier(NetworkSpecifier networkSpecifier) {
+            if (networkSpecifier instanceof MatchAllNetworkSpecifier) {
+                throw new IllegalArgumentException(
+                        "NetworkRequests must not use MatchAllNetworkSpecifier");
             }
             mNetworkCapabilities.setNetworkSpecifier(networkSpecifier);
             return this;
