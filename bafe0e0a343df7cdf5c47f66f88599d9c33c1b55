@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c26ca90_aeb57847",
+        "filename": "core/java/android/net/NetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-29T21:41:21Z",
+      "side": 1,
+      "message": "Is this kosher? (original implementation had a default version returning false).\n\nWhat happens if user (app) writes their own NetworkSpecifier and passes it to us? What code do we execute? (note: we didn\u0027t link their library so we don\u0027t actually have their code - nor do we want to run user code in the system service).",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 64
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
