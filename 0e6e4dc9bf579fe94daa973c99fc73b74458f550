@@ -45,6 +45,30 @@
       "revId": "0e6e4dc9bf579fe94daa973c99fc73b74458f550",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0168d43d_d088eea7",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-29T21:05:58Z",
+      "side": 1,
+      "message": "This is from the original code - but I agree.\n\nThe original semantics of matching were:\n- If I\u0027m (not the other) empty\n- OR, if we\u0027re the same string\n- OR if the other is a MATCH ALL (moot now).\n\nDone.",
+      "parentUuid": "c2c81deb_517a4263",
+      "range": {
+        "startLine": 38,
+        "startChar": 34,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "0e6e4dc9bf579fe94daa973c99fc73b74458f550",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
