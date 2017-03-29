@@ -274,7 +274,6 @@ public class NetworkRequest implements Parcelable {
          *
          * @param networkSpecifier A concrete, parcelable framework class that extends
          *                         NetworkSpecifier.
-         * @hide
          */
         public Builder setNetworkSpecifier(NetworkSpecifier networkSpecifier) {
             if (networkSpecifier instanceof MatchAllNetworkSpecifier) {
