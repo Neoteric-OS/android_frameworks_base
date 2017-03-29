@@ -23815,8 +23815,8 @@ package android.net {
     method public void reportNetworkConnectivity(android.net.Network, boolean);
     method public boolean requestBandwidthUpdate(android.net.Network);
     method public void requestNetwork(android.net.NetworkRequest, android.net.ConnectivityManager.NetworkCallback);
-    method public void requestNetwork(android.net.NetworkRequest, int, android.net.ConnectivityManager.NetworkCallback);
     method public void requestNetwork(android.net.NetworkRequest, android.net.ConnectivityManager.NetworkCallback, android.os.Handler);
+    method public void requestNetwork(android.net.NetworkRequest, int, android.net.ConnectivityManager.NetworkCallback);
     method public void requestNetwork(android.net.NetworkRequest, int, android.net.ConnectivityManager.NetworkCallback, android.os.Handler);
     method public void requestNetwork(android.net.NetworkRequest, android.app.PendingIntent);
     method public deprecated boolean requestRouteToHost(int, int);
@@ -24166,6 +24166,10 @@ package android.net {
     method public android.net.NetworkRequest.Builder removeCapability(int);
     method public android.net.NetworkRequest.Builder removeTransportType(int);
     method public android.net.NetworkRequest.Builder setNetworkSpecifier(java.lang.String);
+    method public android.net.NetworkRequest.Builder setNetworkSpecifier(android.net.NetworkSpecifier);
+  }
+
+  public abstract class NetworkSpecifier {
   }
 
   public class ParseException extends java.lang.RuntimeException {
