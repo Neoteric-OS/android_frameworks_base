@@ -469,6 +469,30 @@
       "revId": "8e683cbe4630ef204ce14e69713519a39f86eb77",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4418ea8c_06d70158",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2198,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-03-29T20:52:34Z",
+      "side": 1,
+      "message": "Agreed. Unfortunately, I think it will take some work chatting with carrier partners to get there, though.",
+      "parentUuid": "d9c4922e_e80ddb97",
+      "range": {
+        "startLine": 2198,
+        "startChar": 12,
+        "endLine": 2198,
+        "endChar": 20
+      },
+      "revId": "8e683cbe4630ef204ce14e69713519a39f86eb77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
