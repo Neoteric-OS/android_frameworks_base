@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65776d01_6b42f0e3",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-29T20:57:23Z",
+      "side": 1,
+      "message": "7",
+      "range": {
+        "startLine": 2,
+        "startChar": 20,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "0e6e4dc9bf579fe94daa973c99fc73b74458f550",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2c81deb_517a4263",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-29T20:57:23Z",
+      "side": 1,
+      "message": "\"false\"?",
+      "range": {
+        "startLine": 38,
+        "startChar": 34,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "0e6e4dc9bf579fe94daa973c99fc73b74458f550",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
