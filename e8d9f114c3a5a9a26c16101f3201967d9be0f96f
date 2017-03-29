@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8b59139_46ad7ed0",
+        "filename": "core/java/android/net/IIpSecService.aidl",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-29T00:08:46Z",
+      "side": 1,
+      "message": "Nit: consider removing.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 27
+      },
+      "revId": "e8d9f114c3a5a9a26c16101f3201967d9be0f96f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fa59685_55d3a429",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-29T00:08:46Z",
+      "side": 1,
+      "message": "The socket is no longer necessary, right? Can you remove it?",
+      "range": {
+        "startLine": 50,
+        "startChar": 40,
+        "endLine": 50,
+        "endChar": 55
+      },
+      "revId": "e8d9f114c3a5a9a26c16101f3201967d9be0f96f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "165a8ed5_5ce2d6c6",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-29T00:08:46Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 54,
+        "startChar": 46,
+        "endLine": 54,
+        "endChar": 61
+      },
+      "revId": "e8d9f114c3a5a9a26c16101f3201967d9be0f96f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b11991bb_b7518ef6",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-29T00:08:46Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 61,
+        "startChar": 29,
+        "endLine": 61,
+        "endChar": 48
+      },
+      "revId": "e8d9f114c3a5a9a26c16101f3201967d9be0f96f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
