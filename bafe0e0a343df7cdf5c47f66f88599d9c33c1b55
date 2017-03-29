@@ -2,6 +2,190 @@
   "comments": [
     {
       "key": {
+        "uuid": "9f1d05e9_1853ccb9",
+        "filename": "core/java/android/net/MatchAllNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T23:18:55Z",
+      "side": 1,
+      "message": "@Override",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "921ce41f_813e9fa1",
+        "filename": "core/java/android/net/MatchAllNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T23:18:55Z",
+      "side": 1,
+      "message": "instanceof already contains an implicit null guard, i.e null cannot match anything with instanceof.",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 27
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "353293f0_4d2d8780",
+        "filename": "core/java/android/net/MatchAllNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T23:18:55Z",
+      "side": 1,
+      "message": "@Override",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 10
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb95967d_6561b29d",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T23:18:55Z",
+      "side": 1,
+      "message": "implicitly in the instanceof check.",
+      "range": {
+        "startLine": 591,
+        "startChar": 12,
+        "endLine": 591,
+        "endChar": 40
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9037ae79_63c03b4a",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T23:18:55Z",
+      "side": 1,
+      "message": "This error message is weird, it contradicts the method name.",
+      "range": {
+        "startLine": 613,
+        "startChar": 45,
+        "endLine": 613,
+        "endChar": 80
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd5a9ec9_83b83c88",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T23:18:55Z",
+      "side": 1,
+      "message": "Just checking: isn\u0027t the normal java format style to put the \"||\" or \"\u0026\u0026\" at the beginning of the next line ?",
+      "range": {
+        "startLine": 619,
+        "startChar": 40,
+        "endLine": 619,
+        "endChar": 43
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af0b1bac_ddc693ee",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T23:18:55Z",
+      "side": 1,
+      "message": "pass the flags variable in.",
+      "range": {
+        "startLine": 801,
+        "startChar": 61,
+        "endLine": 801,
+        "endChar": 62
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbdda282_806816e6",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T23:18:55Z",
+      "side": 1,
+      "message": "Why the cast ?",
+      "range": {
+        "startLine": 801,
+        "startChar": 29,
+        "endLine": 801,
+        "endChar": 42
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c26ca90_aeb57847",
         "filename": "core/java/android/net/NetworkSpecifier.java",
         "patchSetId": 3
@@ -18,6 +202,168 @@
         "startChar": 4,
         "endLine": 32,
         "endChar": 64
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3128122_56933e3b",
+        "filename": "core/java/android/net/NetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T23:18:55Z",
+      "side": 1,
+      "message": "I am pretty sure that 3rd parties being able to write their own NetworkSpecifier is not WAI.\n\nI have an alternative proposal to remove this issue entirely.",
+      "parentUuid": "6c26ca90_aeb57847",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 64
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4dd5f2fb_ea224d26",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T23:18:55Z",
+      "side": 1,
+      "message": "Needs simple comment maybe ?",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e081f6f3_a48f0fa1",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T23:18:55Z",
+      "side": 1,
+      "message": "Consider using Preconditions",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 9
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "916aebd6_7369889e",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T23:18:55Z",
+      "side": 1,
+      "message": "Is there a way to reuse equals ? Besides the null check, logic looks identical.",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb630164_57f0a9e6",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T23:18:55Z",
+      "side": 1,
+      "message": "@Override",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 10
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a42f4d9_0dfc2ebd",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T23:18:55Z",
+      "side": 1,
+      "message": "@Override",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 10
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28d2b1bf_26ce1f9f",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-03-29T23:18:55Z",
+      "side": 1,
+      "message": "@Override",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 10
       },
       "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
