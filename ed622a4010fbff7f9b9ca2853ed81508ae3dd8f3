@@ -22,6 +22,30 @@
       "revId": "ed622a4010fbff7f9b9ca2853ed81508ae3dd8f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfc3a698_c30c9546",
+        "filename": "wifi/tests/src/android/net/wifi/WifiScannerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-03-29T21:27:41Z",
+      "side": 1,
+      "message": "Good catch, noticing that! Repo upload missed it, though a local checkstyle on the file did find it.",
+      "parentUuid": "a38a9ea2_26534c0c",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 22
+      },
+      "revId": "ed622a4010fbff7f9b9ca2853ed81508ae3dd8f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
