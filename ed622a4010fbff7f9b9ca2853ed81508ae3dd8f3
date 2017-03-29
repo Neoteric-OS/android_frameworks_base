@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a38a9ea2_26534c0c",
+        "filename": "wifi/tests/src/android/net/wifi/WifiScannerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-03-29T20:56:58Z",
+      "side": 1,
+      "message": "It seems that this class is going to be dummy now.\nWe might want to keep the class for future unit tests but at least we should remove unused imports.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 22
+      },
+      "revId": "ed622a4010fbff7f9b9ca2853ed81508ae3dd8f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
