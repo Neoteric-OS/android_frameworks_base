@@ -317,6 +317,8 @@ public final class AdvertisingSetParameters implements Parcelable {
          *
          * This is used only if legacy mode is not used.
          *
+         * Use {@link BluetoothAdapter#isLeCodedPhySupported} to determine if LE Coded PHY is
+         * supported on this device.
          * @param primaryPhy Primary advertising physical channel, can only be
          *            {@link AdvertisingSetParameters#PHY_LE_1M} or
          *            {@link AdvertisingSetParameters#PHY_LE_CODED}.
@@ -334,6 +336,10 @@ public final class AdvertisingSetParameters implements Parcelable {
          * Set the secondary physical channel used for this advertising set.
          *
          * This is used only if legacy mode is not used.
+         *
+         * Use {@link BluetoothAdapter#isLeCodedPhySupported} and
+         * {@link BluetoothAdapter#isLe2MPhySupported} to determine if LE Coded PHY or 2M PHY is
+         * supported on this device.
          *
          * @param secondaryPhy Secondary advertising physical channel, can only be
          *            one of {@link AdvertisingSetParameters#PHY_LE_1M},

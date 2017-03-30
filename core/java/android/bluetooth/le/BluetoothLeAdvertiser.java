@@ -50,7 +50,8 @@ public final class BluetoothLeAdvertiser {
 
     private static final String TAG = "BluetoothLeAdvertiser";
 
-    private static final int MAX_ADVERTISING_DATA_BYTES = 31;
+    private static final int MAX_ADVERTISING_DATA_BYTES = 1650;
+    private static final int MAX_LEGACY_ADVERTISING_DATA_BYTES = 31;
     // Each fields need one byte for field length and another byte for field type.
     private static final int OVERHEAD_BYTES_PER_FIELD = 2;
     // Flags field will be set by system.
@@ -117,8 +118,8 @@ public final class BluetoothLeAdvertiser {
                 throw new IllegalArgumentException("callback cannot be null");
             }
             boolean isConnectable = settings.isConnectable();
-            if (totalBytes(advertiseData, isConnectable) > MAX_ADVERTISING_DATA_BYTES ||
-                    totalBytes(scanResponse, false) > MAX_ADVERTISING_DATA_BYTES) {
+            if (totalBytes(advertiseData, isConnectable) > MAX_LEGACY_ADVERTISING_DATA_BYTES ||
+                    totalBytes(scanResponse, false) > MAX_LEGACY_ADVERTISING_DATA_BYTES) {
                 postStartFailure(callback, AdvertiseCallback.ADVERTISE_FAILED_DATA_TOO_LARGE);
                 return;
             }
@@ -272,9 +273,12 @@ public final class BluetoothLeAdvertiser {
     * {@code callback.onAdvertisingSetStarted()}.
     * <p>
     * @param parameters advertising set parameters.
-    * @param advertiseData Advertisement data to be broadcasted.
-    * @param scanResponse Scan response associated with the advertisement data.
-    * @param periodicData Periodic advertising data.
+    * @param advertiseData Advertisement data to be broadcasted. Size must not exceed
+    *                     {@link BluetoothAdapter#getLeMaximumAdvertisingDataLength}
+    * @param scanResponse Scan response associated with the advertisement data. Size must not exceed
+    *                     {@link BluetoothAdapter#getLeMaximumAdvertisingDataLength}
+    * @param periodicData Periodic advertising data. Size must not exceed
+    *                     {@link BluetoothAdapter#getLeMaximumAdvertisingDataLength}
     * @param timeoutMillis Advertising time limit. May not exceed 180000
     * @param callback Callback for advertising set.
     * @param handler thread upon which the callbacks will be invoked.
@@ -285,9 +289,68 @@ public final class BluetoothLeAdvertiser {
                                     AdvertiseData periodicData, int timeoutMillis,
                                     AdvertisingSetCallback callback, Handler handler) {
         BluetoothLeUtils.checkAdapterStateOn(mBluetoothAdapter);
-
         if (callback == null) {
           throw new IllegalArgumentException("callback cannot be null");
+        }
+
+        if (parameters.isLegacy()) {
+            if (parameters.isAnonymous()) {
+                throw new IllegalArgumentException("Legacy advertising can't be anonymous");
+            }
+
+            boolean isConnectable = parameters.isConnectable();
+            boolean isScannable = parameters.isScannable();
+            if ((isScannable && !isConnectable) ||  (!isScannable && isConnectable)) {
+                throw new IllegalArgumentException(
+                    "Bad scannable/connectable combination for legacy advertising");
+            }
+
+            if (parameters.includeTxPower()) {
+                throw new IllegalArgumentException(
+                    "Legacy advertising can't include TX power level in header");
+            }
+
+            if (totalBytes(advertiseData, isConnectable) > MAX_LEGACY_ADVERTISING_DATA_BYTES) {
+                throw new IllegalArgumentException("Legacy advertising data too big");
+            }
+
+            if (totalBytes(scanResponse, false) > MAX_LEGACY_ADVERTISING_DATA_BYTES) {
+                throw new IllegalArgumentException("Legacy scan response data too big");
+            }
+        } else {
+            boolean isConnectable = parameters.isConnectable();
+            boolean isScannable = parameters.isScannable();
+
+            if (isConnectable && isScannable) {
+                throw new IllegalArgumentException(
+                    "Advertising can't be both connectable and scannable");
+            }
+
+            boolean supportCodedPhy = mBluetoothAdapter.isLeCodedPhySupported();
+            boolean support2MPhy = mBluetoothAdapter.isLe2MPhySupported();
+            int pphy = parameters.getPrimaryPhy();
+            int sphy = parameters.getSecondaryPhy();
+            if (pphy == AdvertisingSetParameters.PHY_LE_CODED && !supportCodedPhy) {
+                throw new IllegalArgumentException("Unsupported primary PHY selected");
+            }
+
+            if ((sphy == AdvertisingSetParameters.PHY_LE_CODED && !supportCodedPhy)
+                || (sphy == AdvertisingSetParameters.PHY_LE_2M && !support2MPhy)) {
+                throw new IllegalArgumentException("Unsupported secondary PHY selected");
+            }
+
+            int maxData = mBluetoothAdapter.getLeMaximumAdvertisingDataLength();
+            if (totalBytes(advertiseData, false) > maxData) {
+                throw new IllegalArgumentException("Advertising data too big");
+            }
+
+            if (totalBytes(scanResponse, false) > maxData) {
+                throw new IllegalArgumentException("Scan response data too big");
+            }
+
+            if (totalBytes(periodicData, false) > maxData) {
+                throw new IllegalArgumentException("Periodic advertising data too big");
+            }
         }
 
         IBluetoothGatt gatt;
