@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d2d1b8b_73747fc5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-30T05:10:05Z",
+      "side": 1,
+      "message": "In general we put long, multiscreen logs (such as mValidationLogs) at the end of the output, and only include them if the dumpsys command does not include --short. Can we do the same here?",
+      "range": {
+        "startLine": 2025,
+        "startChar": 0,
+        "endLine": 2028,
+        "endChar": 28
+      },
+      "revId": "857eedf7a406894a12b73a71cacdbe5c7c5245b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "caedec1d_e7c063a3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3323,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-30T05:10:05Z",
+      "side": 1,
+      "message": "Instead of printing \"true\" or \"false\" here, can we make it more obvious what happened? Something like:\n\n    \"RELEASE %d by %s: %s\", wantSerialNumber, eventName(eventId), (release ? \"released\" : \"not released\");",
+      "range": {
+        "startLine": 3323,
+        "startChar": 35,
+        "endLine": 3323,
+        "endChar": 37
+      },
+      "revId": "857eedf7a406894a12b73a71cacdbe5c7c5245b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6534713_219e716f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3325,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-30T05:10:05Z",
+      "side": 1,
+      "message": "If we do the removeMessages() as suggested above, then this will be highly unexpected, right? If so then we could log that something bad has happened.",
+      "range": {
+        "startLine": 3325,
+        "startChar": 21,
+        "endLine": 3325,
+        "endChar": 39
+      },
+      "revId": "857eedf7a406894a12b73a71cacdbe5c7c5245b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a5460a9_6c3a65b8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4930,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-03-30T05:10:05Z",
+      "side": 1,
+      "message": "Can we call:\n  \n  mHandler.removeMessages(EVENT_EXPIRE_NET_TRANSITION_WAKELOCK);\n\nhere? That might make things easier to understand, because it will mean that we should never get an EXPIRE if the wakelock is not held.\n\nI wonder if that would allow us to get rid of the serial number, too...",
+      "range": {
+        "startLine": 4930,
+        "startChar": 20,
+        "endLine": 4930,
+        "endChar": 47
+      },
+      "revId": "857eedf7a406894a12b73a71cacdbe5c7c5245b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
