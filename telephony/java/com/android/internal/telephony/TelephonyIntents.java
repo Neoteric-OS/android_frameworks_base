@@ -16,6 +16,8 @@
 
 package com.android.internal.telephony;
 
+import android.telephony.SubscriptionManager;
+
 /**
  * The intents that the telephony services broadcast.
  *
@@ -334,9 +336,11 @@ public class TelephonyIntents {
      * <ul>
      *   <li><em>subscription</em> - A int, the current default subscription.</li>
      * </ul>
+     * @deprecated Use {@link SubscriptionManager.ACTION_DEFAULT_SUBSCRIPTION_CHANGED}
      */
+    @Deprecated
     public static final String ACTION_DEFAULT_SUBSCRIPTION_CHANGED
-            = "android.intent.action.ACTION_DEFAULT_SUBSCRIPTION_CHANGED";
+            = SubscriptionManager.ACTION_DEFAULT_SUBSCRIPTION_CHANGED;
 
     /**
      * Broadcast Action: The default data subscription has changed.  This has the following
@@ -364,9 +368,11 @@ public class TelephonyIntents {
      * <ul>
      *   <li><em>subscription</em> - A int, the current sms default subscription.</li>
      * </ul>
+     * @deprecated Use {@link SubscriptionManager.ACTION_DEFAULT_SMS_SUBSCRIPTION_CHANGED}
      */
+    @Deprecated
     public static final String ACTION_DEFAULT_SMS_SUBSCRIPTION_CHANGED
-            = "android.intent.action.ACTION_DEFAULT_SMS_SUBSCRIPTION_CHANGED";
+            = SubscriptionManager.ACTION_DEFAULT_SMS_SUBSCRIPTION_CHANGED;
 
     /*
      * Broadcast Action: An attempt to set phone radio type and access technology has changed.
