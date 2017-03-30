@@ -41317,6 +41317,8 @@ package android.telephony {
     method public static int getDefaultVoiceSubscriptionId();
     method public boolean isNetworkRoaming(int);
     method public void removeOnSubscriptionsChangedListener(android.telephony.SubscriptionManager.OnSubscriptionsChangedListener);
+    field public static final java.lang.String ACTION_DEFAULT_SMS_SUBSCRIPTION_CHANGED = "android.intent.action.ACTION_DEFAULT_SMS_SUBSCRIPTION_CHANGED";
+    field public static final java.lang.String ACTION_DEFAULT_SUBSCRIPTION_CHANGED = "android.intent.action.ACTION_DEFAULT_SUBSCRIPTION_CHANGED";
     field public static final int DATA_ROAMING_DISABLE = 0; // 0x0
     field public static final int DATA_ROAMING_ENABLE = 1; // 0x1
     field public static final int INVALID_SUBSCRIPTION_ID = -1; // 0xffffffff
