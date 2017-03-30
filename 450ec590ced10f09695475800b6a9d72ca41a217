@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44894b32_990a0751",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-30T04:04:16Z",
+      "side": 1,
+      "message": "Now the comment doesn\u0027t match the new static variable name.",
+      "range": {
+        "startLine": 86,
+        "startChar": 7,
+        "endLine": 86,
+        "endChar": 58
+      },
+      "revId": "450ec590ced10f09695475800b6a9d72ca41a217",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4e3ff4b_807e3105",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-30T04:04:16Z",
+      "side": 1,
+      "message": "Remove this line.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 54
+      },
+      "revId": "450ec590ced10f09695475800b6a9d72ca41a217",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbd5a646_647d5d48",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-30T04:04:16Z",
+      "side": 1,
+      "message": "Remove this line.",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 54
+      },
+      "revId": "450ec590ced10f09695475800b6a9d72ca41a217",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b60778b_5768f0cf",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1086611
+      },
+      "writtenOn": "2017-03-30T04:04:16Z",
+      "side": 1,
+      "message": "Remove this line.",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 54
+      },
+      "revId": "450ec590ced10f09695475800b6a9d72ca41a217",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
