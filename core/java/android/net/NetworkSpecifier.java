@@ -16,6 +16,8 @@
 
 package android.net;
 
+import android.net.wifi.aware.WifiAwareNetworkSpecifier;
+
 /**
  * Describes specific properties of a network for use in a {@link NetworkRequest}.
  *
@@ -29,7 +31,8 @@ public abstract class NetworkSpecifier {
      * @hide
      */
     public static boolean isWhitelistedNetworkSpecifier(NetworkSpecifier ns) {
-        return ns instanceof MatchAllNetworkSpecifier || ns instanceof StringNetworkSpecifier;
+        return ns instanceof MatchAllNetworkSpecifier || ns instanceof StringNetworkSpecifier
+                || ns instanceof WifiAwareNetworkSpecifier;
     }
 
     /**
