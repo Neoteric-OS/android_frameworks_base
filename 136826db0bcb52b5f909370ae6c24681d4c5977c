@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9907136a_e1e338b6",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-03-30T20:49:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "992b32f6_4f478c49",
+      "range": {
+        "startLine": 399,
+        "startChar": 7,
+        "endLine": 399,
+        "endChar": 15
+      },
+      "revId": "136826db0bcb52b5f909370ae6c24681d4c5977c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8065250f_269c2755",
         "filename": "telecomm/java/android/telecom/ConnectionService.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-17T21:47:04Z",
       "side": 1,
       "message": "Why is this necessary but setRttProperty is not above?",
+      "range": {
+        "startLine": 1606,
+        "startChar": 12,
+        "endLine": 1606,
+        "endChar": 74
+      },
+      "revId": "136826db0bcb52b5f909370ae6c24681d4c5977c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19675fed_aed4c495",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1606,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-03-30T20:49:03Z",
+      "side": 1,
+      "message": "setRttProperty isn\u0027t needed in startRtt because it only sends the RTT request. The corresponding call to setRttProperty() call is in sendRttInitiationSuccess.",
+      "parentUuid": "8065250f_269c2755",
       "range": {
         "startLine": 1606,
         "startChar": 12,
