@@ -16,13 +16,11 @@
 
 package com.android.systemui.qs.tiles;
 
-import static com.android.systemui.Prefs.Key.QS_HAS_TURNED_OFF_MOBILE_DATA;
-
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
 import android.telephony.SubscriptionManager;
@@ -36,8 +34,8 @@ import android.widget.Switch;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
+import com.android.internal.telephony.TelephonyIntents;
 import com.android.settingslib.net.DataUsageController;
-import com.android.systemui.Prefs;
 import com.android.systemui.R;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.qs.DetailAdapter;
@@ -46,7 +44,6 @@ import com.android.systemui.plugins.qs.QSTile.SignalState;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.SignalTileView;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
-import com.android.systemui.statusbar.phone.SystemUIDialog;
 import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.NetworkController.IconState;
 import com.android.systemui.statusbar.policy.NetworkController.SignalCallback;
@@ -104,39 +101,15 @@ public class CellularTile extends QSTileImpl<SignalState> {
         if (getState().state == Tile.STATE_UNAVAILABLE) {
             return;
         }
-        if (mDataController.isMobileDataEnabled()) {
-            maybeShowDisableDialog();
-        } else {
-            mDataController.setMobileDataEnabled(true);
-        }
+
+        broadcastIntentMobileDataToggle(LayoutParams.TYPE_KEYGUARD_DIALOG);
+
     }
 
-    private void maybeShowDisableDialog() {
-        if (Prefs.getBoolean(mContext, QS_HAS_TURNED_OFF_MOBILE_DATA, false)) {
-            // Directly turn off mobile data if the user has seen the dialog before.
-            mDataController.setMobileDataEnabled(false);
-            return;
-        }
-        String carrierName = mController.getMobileDataNetworkName();
-        if (TextUtils.isEmpty(carrierName)) {
-            carrierName = mContext.getString(R.string.mobile_data_disable_message_default_carrier);
-        }
-        AlertDialog dialog = new Builder(mContext)
-                .setTitle(R.string.mobile_data_disable_title)
-                .setMessage(mContext.getString(R.string.mobile_data_disable_message, carrierName))
-                .setNegativeButton(android.R.string.cancel, null)
-                .setPositiveButton(
-                        com.android.internal.R.string.alert_windows_notification_turn_off_action,
-                        (d, w) -> {
-                            mDataController.setMobileDataEnabled(false);
-                            Prefs.putBoolean(mContext, QS_HAS_TURNED_OFF_MOBILE_DATA, true);
-                        })
-                .create();
-        dialog.getWindow().setType(LayoutParams.TYPE_KEYGUARD_DIALOG);
-        SystemUIDialog.setShowForAllUsers(dialog, true);
-        SystemUIDialog.registerDismissListener(dialog);
-        SystemUIDialog.setWindowOnTop(dialog);
-        dialog.show();
+    private void broadcastIntentMobileDataToggle(int layout) {
+        Intent intent = new Intent(TelephonyIntents.ACTION_MOBILE_DATA_TOGGLE);
+        intent.putExtra(TelephonyIntents.EXTRA_LAYOUT, layout);
+        mContext.sendBroadcastAsUser(intent, new UserHandle(UserHandle.USER_CURRENT));
     }
 
     @Override
@@ -178,6 +151,8 @@ public class CellularTile extends QSTileImpl<SignalState> {
         if (cb.noSim) {
             state.state = Tile.STATE_UNAVAILABLE;
             state.secondaryLabel = r.getString(R.string.keyguard_missing_sim_message_short);
+        } else if (ActivityManager.getCurrentUser() != UserHandle.USER_SYSTEM) {
+            state.state = Tile.STATE_UNAVAILABLE;
         } else if (cb.airplaneModeEnabled) {
             state.state = Tile.STATE_UNAVAILABLE;
             state.secondaryLabel = r.getString(R.string.status_bar_airplane);

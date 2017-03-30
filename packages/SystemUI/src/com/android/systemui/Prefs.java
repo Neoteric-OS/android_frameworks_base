@@ -55,7 +55,6 @@ public final class Prefs {
             Key.OVERVIEW_OPENED_COUNT,
             Key.OVERVIEW_OPENED_FROM_HOME_COUNT,
             Key.SEEN_RINGER_GUIDANCE_COUNT,
-            Key.QS_HAS_TURNED_OFF_MOBILE_DATA,
             Key.TOUCHED_RINGER_TOGGLE,
             Key.HAS_SEEN_ODI_CAPTIONS_TOOLTIP
     })
@@ -100,7 +99,6 @@ public final class Prefs {
                 "HasDismissedRecentsQuickScrubOnboardingOnce";
         String SEEN_RINGER_GUIDANCE_COUNT = "RingerGuidanceCount";
         String QS_TILE_SPECS_REVEALED = "QsTileSpecsRevealed";
-        String QS_HAS_TURNED_OFF_MOBILE_DATA = "QsHasTurnedOffMobileData";
         String TOUCHED_RINGER_TOGGLE = "TouchedRingerToggle";
         String HAS_SEEN_ODI_CAPTIONS_TOOLTIP = "HasSeenODICaptionsTooltip";
     }

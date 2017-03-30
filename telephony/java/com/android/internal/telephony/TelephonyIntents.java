@@ -384,6 +384,21 @@ public class TelephonyIntents {
             "android.intent.action.ACTION_SET_RADIO_CAPABILITY_FAILED";
 
     /**
+     * Intent action to trigger a toggle of the mobile data setting.
+     * The intent will have the following extra value:</p>
+     * <ul>
+     *   <li>subId</li><dd>Sub Id where the mobile data setting should be toggled.</dd>
+     *   <li>layout</li><dd>Integer representing the layout that should be used for any potential
+     *                      warning dialog that might be shown before toggling mobile data.</dd>
+     * </ul>
+     * <p class="note">This is a protected intent that can only be sent by the system.</p>
+     */
+    public static final String ACTION_MOBILE_DATA_TOGGLE =
+            "com.android.internal.telephony.ACTION_MOBILE_DATA_TOGGLE";
+
+    public static final String EXTRA_LAYOUT = "layout";
+
+    /**
      * <p>Broadcast Action: when data connections get redirected with validation failure.
      * intended for sim/account status checks and only sent to the specified carrier app
      * The intent will have the following extra values:</p>
