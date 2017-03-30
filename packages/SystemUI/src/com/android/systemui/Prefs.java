@@ -100,6 +100,7 @@ public final class Prefs {
                 "HasDismissedRecentsQuickScrubOnboardingOnce";
         String SEEN_RINGER_GUIDANCE_COUNT = "RingerGuidanceCount";
         String QS_TILE_SPECS_REVEALED = "QsTileSpecsRevealed";
+        @Deprecated
         String QS_HAS_TURNED_OFF_MOBILE_DATA = "QsHasTurnedOffMobileData";
         String TOUCHED_RINGER_TOGGLE = "TouchedRingerToggle";
         String QUICK_STEP_INTERACTION_FLAGS = "QuickStepInteractionFlags";
