@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a342f995_eed9197e",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2017-03-30T19:47:25Z",
+      "side": 1,
+      "message": "where is the definition?",
+      "range": {
+        "startLine": 365,
+        "startChar": 34,
+        "endLine": 365,
+        "endChar": 73
+      },
+      "revId": "9cf93527ac7fe5be48b1d490c2da603b65f7d85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
