@@ -57,11 +57,12 @@ public final class AdvertisingSet {
 
     /**
      * Enables Advertising. This method returns immediately, the operation status is
-     * delivered
-     * through {@code callback.onAdvertisingEnabled()}.
+     * delivered through {@code callback.onAdvertisingEnabled()}.
      * <p>
      * Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN}
      *
+     * @param enable wether the advertising should be enabled (true), or disabled (false)
+     * @param timeoutMillis duration for which that advertising set is enabled.
      */
     public void enableAdvertising(boolean enable, int timeout) {
         try {
@@ -77,6 +78,12 @@ public final class AdvertisingSet {
      * delivered through {@code callback.onAdvertisingDataSet()}.
      * <p>
      * Advertising data must be empty if non-legacy scannable advertising is used.
+     *
+     * @param advertiseData Advertisement data to be broadcasted. Size must not exceed
+     *                     {@link BluetoothAdapter#getLeMaximumAdvertisingDataLength}. If the
+     *                     advertisement is connectable, three bytes will be added for flags. If the
+     *                     update takes place when the advertising set is enabled, the data can be
+     *                     maximum 251 bytes long.
      */
     public void setAdvertisingData(AdvertiseData data) {
         try {
@@ -90,6 +97,11 @@ public final class AdvertisingSet {
      * Set/update scan response data. Make sure that data doesn't exceed the size limit for
      * specified AdvertisingSetParameters. This method returns immediately, the operation status
      * is delivered through {@code callback.onScanResponseDataSet()}.
+     *
+     * @param scanResponse Scan response associated with the advertisement data. Size must not
+     *                     exceed {@link BluetoothAdapter#getLeMaximumAdvertisingDataLength}. If the
+     *                     update takes place when the advertising set is enabled, the data can be
+     *                     maximum 251 bytes long.
      */
     public void setScanResponseData(AdvertiseData data) {
         try {
@@ -103,6 +115,8 @@ public final class AdvertisingSet {
      * Update advertising parameters associated with this AdvertisingSet. Must be called when
      * advertising is not active. This method returns immediately, the operation status is delivered
      * through {@code callback.onAdvertisingParametersUpdated}.
+     *
+     * @param parameters advertising set parameters.
      */
     public void setAdvertisingParameters(AdvertisingSetParameters parameters) {
         try {
@@ -130,6 +144,11 @@ public final class AdvertisingSet {
      * or after advertising was started with periodic advertising data set. This method returns
      * immediately, the operation status is delivered through
      * {@code callback.onPeriodicAdvertisingDataSet()}.
+     *
+     * @param periodicData Periodic advertising data. Size must not exceed
+     *                     {@link BluetoothAdapter#getLeMaximumAdvertisingDataLength}. If the
+     *                     update takes place when the periodic advertising is enabled for this set,
+     *                     the data can be maximum 251 bytes long.
      */
     public void setPeriodicAdvertisingData(AdvertiseData data) {
         try {
@@ -142,6 +161,8 @@ public final class AdvertisingSet {
     /**
      * Used to enable/disable periodic advertising. This method returns immediately, the operation
      * status is delivered through {@code callback.onPeriodicAdvertisingEnable()}.
+     *
+     * @param enable wether the periodic advertising should be enabled (true), or disabled (false).
      */
     public void setPeriodicAdvertisingEnable(boolean enable) {
         try {
