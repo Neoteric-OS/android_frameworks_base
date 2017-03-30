@@ -16,6 +16,8 @@
 
 package android.net;
 
+import android.net.wifi.aware.WifiAwareNetworkSpecifier;
+
 /**
  * Describes specific properties of a network for use in a {@link NetworkRequest}.
  *
