@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "061c0a53_17a3d6b4",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1061212
+      },
+      "writtenOn": "2017-03-30T22:25:32Z",
+      "side": 1,
+      "message": "Currently the string value associated with the extra is \"subscription\" (PhoneConstants.SUBSCRIPTION_KEY). I don\u0027t like that string, but changing that would require changes in vendor apps as well, so i am not changing it.",
+      "parentUuid": "4ea2cb24_721f489b",
+      "range": {
+        "startLine": 347,
+        "startChar": 7,
+        "endLine": 347,
+        "endChar": 12
+      },
+      "revId": "90379a88fa74723ba6125c53fdbdea1f35166758",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a34b652f_cb1f0e1a",
         "filename": "telephony/java/com/android/internal/telephony/TelephonyIntents.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-30T20:41:41Z",
       "side": 1,
       "message": "deprecated, with link to SubscriptionManager definition",
+      "range": {
+        "startLine": 339,
+        "startChar": 5,
+        "endLine": 339,
+        "endChar": 7
+      },
+      "revId": "90379a88fa74723ba6125c53fdbdea1f35166758",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81cc25b9_5265d392",
+        "filename": "telephony/java/com/android/internal/telephony/TelephonyIntents.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1061212
+      },
+      "writtenOn": "2017-03-30T22:25:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a34b652f_cb1f0e1a",
       "range": {
         "startLine": 339,
         "startChar": 5,
