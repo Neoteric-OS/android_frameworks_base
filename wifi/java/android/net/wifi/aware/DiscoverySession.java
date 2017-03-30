@@ -19,6 +19,7 @@ package android.net.wifi.aware;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
+import android.net.NetworkSpecifier;
 import android.net.wifi.RttManager;
 import android.util.Log;
 
@@ -276,13 +277,14 @@ public class DiscoverySession {
      *                   request from only that peer. A RESPONDER may specify a {@code null} -
      *                   indicating that it will accept connection requests from any device.
      *
-     * @return A string to be used to construct
-     * {@link android.net.NetworkRequest.Builder#setNetworkSpecifier(String)} to pass to
+     * @return A {@link NetworkSpecifier} to be used to construct
+     * {@link android.net.NetworkRequest.Builder#setNetworkSpecifier(NetworkSpecifier)} to
+     * pass to
      * {@link android.net.ConnectivityManager#requestNetwork(android.net.NetworkRequest,
      * android.net.ConnectivityManager.NetworkCallback)}
      * [or other varieties of that API].
      */
-    public String createNetworkSpecifierOpen(@Nullable PeerHandle peerHandle) {
+    public NetworkSpecifier createNetworkSpecifierOpen(@Nullable PeerHandle peerHandle) {
         if (mTerminated) {
             Log.w(TAG, "createNetworkSpecifierOpen: called on terminated session");
             return null;
@@ -329,13 +331,14 @@ public class DiscoverySession {
      *                   {@link #createNetworkSpecifierOpen(PeerHandle)} API to
      *                   specify an open (unencrypted) link.
      *
-     * @return A string to be used to construct
-     * {@link android.net.NetworkRequest.Builder#setNetworkSpecifier(String)} to pass to
+     * @return A {@link NetworkSpecifier} to be used to construct
+     * {@link android.net.NetworkRequest.Builder#setNetworkSpecifier(NetworkSpecifier)} to
+     * pass to
      * {@link android.net.ConnectivityManager#requestNetwork(android.net.NetworkRequest,
      * android.net.ConnectivityManager.NetworkCallback)}
      * [or other varieties of that API].
      */
-    public String createNetworkSpecifierPassphrase(@Nullable PeerHandle peerHandle,
+    public NetworkSpecifier createNetworkSpecifierPassphrase(@Nullable PeerHandle peerHandle,
             @NonNull String passphrase) {
         if (passphrase == null || passphrase.length() == 0) {
             throw new IllegalArgumentException("Passphrase must not be null or empty");
@@ -389,8 +392,9 @@ public class DiscoverySession {
      *            Passphrase or {@link #createNetworkSpecifierOpen(PeerHandle)} to specify an
      *            open (unencrypted) link.
      *
-     * @return A string to be used to construct
-     * {@link android.net.NetworkRequest.Builder#setNetworkSpecifier(String)} to pass to
+     * @return A {@link NetworkSpecifier} to be used to construct
+     * {@link android.net.NetworkRequest.Builder#setNetworkSpecifier(NetworkSpecifier)} to
+     * pass to
      * {@link android.net.ConnectivityManager#requestNetwork(android.net.NetworkRequest,
      * android.net.ConnectivityManager.NetworkCallback)}
      * [or other varieties of that API].
@@ -398,7 +402,7 @@ public class DiscoverySession {
      * @hide
      */
     @SystemApi
-    public String createNetworkSpecifierPmk(@Nullable PeerHandle peerHandle,
+    public NetworkSpecifier createNetworkSpecifierPmk(@Nullable PeerHandle peerHandle,
             @NonNull byte[] pmk) {
         if (pmk == null || pmk.length == 0) {
             throw new IllegalArgumentException("PMK must not be null or empty");
