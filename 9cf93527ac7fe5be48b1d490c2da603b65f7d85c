@@ -22,6 +22,30 @@
       "revId": "9cf93527ac7fe5be48b1d490c2da603b65f7d85c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "daab597b_8f5b19a7",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1061212
+      },
+      "writtenOn": "2017-03-30T19:52:58Z",
+      "side": 1,
+      "message": "yes, i realized that. So gave -1. Will upload new patch soon.",
+      "parentUuid": "a342f995_eed9197e",
+      "range": {
+        "startLine": 365,
+        "startChar": 34,
+        "endLine": 365,
+        "endChar": 73
+      },
+      "revId": "9cf93527ac7fe5be48b1d490c2da603b65f7d85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
