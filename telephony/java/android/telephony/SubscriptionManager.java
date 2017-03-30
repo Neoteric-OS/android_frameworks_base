@@ -342,6 +342,28 @@ public class SubscriptionManager {
     public static final String SUB_DEFAULT_CHANGED_ACTION =
         "android.intent.action.SUB_DEFAULT_CHANGED";
 
+    /**
+     * Broadcast Action: The default subscription has changed.  This has the following
+     * extra values:</p>
+     * <ul>
+     *   <li><em>subscription</em> - An int, the current default subscription.</li>
+     * </ul>
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_DEFAULT_SUBSCRIPTION_CHANGED
+            = "android.intent.action.ACTION_DEFAULT_SUBSCRIPTION_CHANGED";
+
+    /**
+     * Broadcast Action: The default sms subscription has changed.  This has the following
+     * extra values:</p>
+     * <ul>
+     *   <li><em>subscription</em> - An int, the current sms default subscription.</li>
+     * </ul>
+     */
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_DEFAULT_SMS_SUBSCRIPTION_CHANGED
+            = SubscriptionManager.ACTION_DEFAULT_SMS_SUBSCRIPTION_CHANGED;
+
     private final Context mContext;
 
     /**
