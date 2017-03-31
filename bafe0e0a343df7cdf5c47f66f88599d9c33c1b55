@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0ec52ce8_cc896982",
+        "filename": "core/java/android/net/MatchAllNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T00:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f1d05e9_1853ccb9",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921ce41f_813e9fa1",
         "filename": "core/java/android/net/MatchAllNetworkSpecifier.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-29T23:18:55Z",
       "side": 1,
       "message": "instanceof already contains an implicit null guard, i.e null cannot match anything with instanceof.",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 27
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e553599b_a7ac1b65",
+        "filename": "core/java/android/net/MatchAllNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T00:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "921ce41f_813e9fa1",
       "range": {
         "startLine": 30,
         "startChar": 15,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "196a23ce_f66d2211",
+        "filename": "core/java/android/net/MatchAllNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T00:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "353293f0_4d2d8780",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 10
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb95967d_6561b29d",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-29T23:18:55Z",
       "side": 1,
       "message": "implicitly in the instanceof check.",
+      "range": {
+        "startLine": 591,
+        "startChar": 12,
+        "endLine": 591,
+        "endChar": 40
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58364210_39fe139e",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T00:16:18Z",
+      "side": 1,
+      "message": "That\u0027s not the logic.\n\nif networkSpecifier \u003d\u003d null then there\u0027s no error.",
+      "parentUuid": "fb95967d_6561b29d",
       "range": {
         "startLine": 591,
         "startChar": 12,
@@ -128,6 +224,30 @@
       "writtenOn": "2017-03-29T23:18:55Z",
       "side": 1,
       "message": "Just checking: isn\u0027t the normal java format style to put the \"||\" or \"\u0026\u0026\" at the beginning of the next line ?",
+      "range": {
+        "startLine": 619,
+        "startChar": 40,
+        "endLine": 619,
+        "endChar": 43
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1639b79d_c6234fbc",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T00:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd5a9ec9_83b83c88",
       "range": {
         "startLine": 619,
         "startChar": 40,
@@ -209,6 +329,78 @@
     },
     {
       "key": {
+        "uuid": "5f2d05af_ecc9e378",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T00:16:18Z",
+      "side": 1,
+      "message": "why isn\u0027t the virtual dispatch work? Cast to Parcelable - then call the corresponding parcelable method. Same on read - the class loader creates the \u0027right\u0027 class.",
+      "parentUuid": "24d73089_73b9c705",
+      "range": {
+        "startLine": 801,
+        "startChar": 0,
+        "endLine": 801,
+        "endChar": 64
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d855df4a_d0eb20ba",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T00:16:18Z",
+      "side": 1,
+      "message": "Since NetworkSpecifier (base) is not parcelable and function requires a Parcelable.",
+      "parentUuid": "fbdda282_806816e6",
+      "range": {
+        "startLine": 801,
+        "startChar": 29,
+        "endLine": 801,
+        "endChar": 42
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "318cea8b_f2c211bc",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T00:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af0b1bac_ddc693ee",
+      "range": {
+        "startLine": 801,
+        "startChar": 61,
+        "endLine": 801,
+        "endChar": 62
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c26ca90_aeb57847",
         "filename": "core/java/android/net/NetworkSpecifier.java",
         "patchSetId": 3
@@ -279,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "9e018bdf_63f92496",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T00:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dd5f2fb_ea224d26",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e081f6f3_a48f0fa1",
         "filename": "core/java/android/net/StringNetworkSpecifier.java",
         "patchSetId": 3
@@ -290,6 +506,30 @@
       "writtenOn": "2017-03-29T23:18:55Z",
       "side": 1,
       "message": "Consider using Preconditions",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 9
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a00ee513_0fc7319d",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T00:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e081f6f3_a48f0fa1",
       "range": {
         "startLine": 30,
         "startChar": 8,
@@ -325,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "4aa7ad75_81035b40",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T00:16:18Z",
+      "side": 1,
+      "message": "it is the same - replaced.",
+      "parentUuid": "916aebd6_7369889e",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb630164_57f0a9e6",
         "filename": "core/java/android/net/StringNetworkSpecifier.java",
         "patchSetId": 3
@@ -336,6 +600,30 @@
       "writtenOn": "2017-03-29T23:18:55Z",
       "side": 1,
       "message": "@Override",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 10
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae1e2a89_3e735bf0",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T00:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb630164_57f0a9e6",
       "range": {
         "startLine": 43,
         "startChar": 4,
@@ -371,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "1b59379a_8ae6f8f4",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T00:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a42f4d9_0dfc2ebd",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 10
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28d2b1bf_26ce1f9f",
         "filename": "core/java/android/net/StringNetworkSpecifier.java",
         "patchSetId": 3
@@ -382,6 +694,30 @@
       "writtenOn": "2017-03-29T23:18:55Z",
       "side": 1,
       "message": "@Override",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 10
+      },
+      "revId": "bafe0e0a343df7cdf5c47f66f88599d9c33c1b55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c19728d6_2b1f68ba",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T00:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28d2b1bf_26ce1f9f",
       "range": {
         "startLine": 53,
         "startChar": 4,
