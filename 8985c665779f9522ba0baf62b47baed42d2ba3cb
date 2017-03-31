@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f51682f5_b3197af3",
+        "filename": "core/java/android/bluetooth/BluetoothSocket.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-03-31T22:18:13Z",
+      "side": 1,
+      "message": "Have not looked through the whole file, but BluetoothSocket is already very spammy as is. This seems like it has huge potential to be spam-overload.\n\nIf you\u0027re only interested in the log below, maybe move it out of \"if (DBG)\" instead?",
+      "range": {
+        "startLine": 88,
+        "startChar": 39,
+        "endLine": 88,
+        "endChar": 43
+      },
+      "revId": "8985c665779f9522ba0baf62b47baed42d2ba3cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
