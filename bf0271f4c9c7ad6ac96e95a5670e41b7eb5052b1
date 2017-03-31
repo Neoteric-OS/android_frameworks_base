@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "84b2e39c_8f7000cb",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T18:16:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed3c4681_4c7eb8f4",
+      "range": {
+        "startLine": 824,
+        "startChar": 15,
+        "endLine": 824,
+        "endChar": 52
+      },
+      "revId": "bf0271f4c9c7ad6ac96e95a5670e41b7eb5052b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "685fe270_6f5765bf",
         "filename": "core/java/android/net/NetworkSpecifier.java",
         "patchSetId": 4
