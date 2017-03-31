@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2117d44_cecf25d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T16:33:14Z",
+      "side": 1,
+      "message": "Maybe add 31466854 as well",
+      "revId": "3301ce4e7d18b4dc11a50d76de382916895c29e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e36c7c7_1536ac61",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T16:33:14Z",
+      "side": 1,
+      "message": "s/and//",
+      "range": {
+        "startLine": 1717,
+        "startChar": 35,
+        "endLine": 1717,
+        "endChar": 38
+      },
+      "revId": "3301ce4e7d18b4dc11a50d76de382916895c29e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55a084d7_e4e109a1",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1718,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T16:33:14Z",
+      "side": 1,
+      "message": "s/-H/ h/",
+      "range": {
+        "startLine": 1718,
+        "startChar": 44,
+        "endLine": 1718,
+        "endChar": 46
+      },
+      "revId": "3301ce4e7d18b4dc11a50d76de382916895c29e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b5d3554_5a0f8753",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1719,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T16:33:14Z",
+      "side": 1,
+      "message": "Perhaps more clear to simply say that the network will not have Internet access.",
+      "range": {
+        "startLine": 1719,
+        "startChar": 12,
+        "endLine": 1719,
+        "endChar": 23
+      },
+      "revId": "3301ce4e7d18b4dc11a50d76de382916895c29e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb3df96b_9006261c",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1723,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T16:33:14Z",
+      "side": 1,
+      "message": "if",
+      "range": {
+        "startLine": 1723,
+        "startChar": 49,
+        "endLine": 1723,
+        "endChar": 51
+      },
+      "revId": "3301ce4e7d18b4dc11a50d76de382916895c29e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5165f562_0516ffe5",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1724,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T16:33:14Z",
+      "side": 1,
+      "message": "\"has already started WiFi tethering\" perhaps?",
+      "range": {
+        "startLine": 1724,
+        "startChar": 35,
+        "endLine": 1724,
+        "endChar": 52
+      },
+      "revId": "3301ce4e7d18b4dc11a50d76de382916895c29e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e112d96_e3324b3d",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1724,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T16:33:14Z",
+      "side": 1,
+      "message": "s/case//",
+      "range": {
+        "startLine": 1724,
+        "startChar": 7,
+        "endLine": 1724,
+        "endChar": 11
+      },
+      "revId": "3301ce4e7d18b4dc11a50d76de382916895c29e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3332e1fd_a9e48ad1",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1733,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T16:33:14Z",
+      "side": 1,
+      "message": "TLS",
+      "range": {
+        "startLine": 1733,
+        "startChar": 85,
+        "endLine": 1733,
+        "endChar": 88
+      },
+      "revId": "3301ce4e7d18b4dc11a50d76de382916895c29e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfffffad_5bd0ba82",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1749,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T16:33:14Z",
+      "side": 1,
+      "message": "\"there are no\"",
+      "range": {
+        "startLine": 1749,
+        "startChar": 40,
+        "endLine": 1749,
+        "endChar": 48
+      },
+      "revId": "3301ce4e7d18b4dc11a50d76de382916895c29e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
