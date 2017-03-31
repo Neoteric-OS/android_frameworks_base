@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "e3a8ead5_b643ccf5",
+        "filename": "wifi/java/android/net/wifi/IWifiManager.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-03-31T17:13:05Z",
+      "side": 1,
+      "message": "I wonder if we need allow folks to pass in some nit about the frequency group they want to use (0: platform chooses, 2.4, 5, 60, ...)?",
+      "range": {
+        "startLine": 132,
+        "startChar": 22,
+        "endLine": 132,
+        "endChar": 43
+      },
+      "revId": "3301ce4e7d18b4dc11a50d76de382916895c29e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e36c7c7_1536ac61",
         "filename": "wifi/java/android/net/wifi/WifiManager.java",
         "patchSetId": 3
