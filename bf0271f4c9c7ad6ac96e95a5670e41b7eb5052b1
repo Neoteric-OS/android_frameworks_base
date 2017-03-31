@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "162b176d_305f69ad",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T00:48:16Z",
+      "side": 1,
+      "message": "I wanted to catch it at a choke point. Reflection can be used to bypass the setNetworkSpecifier.\n\nThis is not surefire by any means of course - since a malicious app could (not so) simply construct the fake parcel packet to send to the service. That is caught below on the read side. But seems like a good check-point.",
+      "parentUuid": "c7058964_3cb407ea",
+      "range": {
+        "startLine": 804,
+        "startChar": 8,
+        "endLine": 807,
+        "endChar": 9
+      },
+      "revId": "bf0271f4c9c7ad6ac96e95a5670e41b7eb5052b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "894209c8_8249a69d",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8a6b6ba5_2ac7115f",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T00:48:16Z",
+      "side": 1,
+      "message": "Trying out the code this does seem to be the exception that\u0027s thrown. I don\u0027t think it can construct a class and therefore there\u0027s no cast.\n\nHowever, possibly should just catch any exceptions here to be sure. What do you think?",
+      "parentUuid": "894209c8_8249a69d",
+      "range": {
+        "startLine": 824,
+        "startChar": 15,
+        "endLine": 824,
+        "endChar": 52
+      },
+      "revId": "bf0271f4c9c7ad6ac96e95a5670e41b7eb5052b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "685fe270_6f5765bf",
         "filename": "core/java/android/net/NetworkSpecifier.java",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-03-31T00:40:09Z",
       "side": 1,
       "message": "If you want to prevent subclasses at the java level, you need to remove public and let the ctor be package private. I think @hide will not prevent reflection tricks.",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 11
+      },
+      "revId": "bf0271f4c9c7ad6ac96e95a5670e41b7eb5052b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c517eff_b0f990a7",
+        "filename": "core/java/android/net/NetworkSpecifier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-03-31T00:48:16Z",
+      "side": 1,
+      "message": "That\u0027s not what I\u0027m trying to do. I\u0027m limiting the public API surface. Even private won\u0027t prevent reflection tricks.",
+      "parentUuid": "685fe270_6f5765bf",
       "range": {
         "startLine": 40,
         "startChar": 4,
