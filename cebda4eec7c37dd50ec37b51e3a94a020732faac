@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a91b5b6c_58b64413",
+        "filename": "core/java/android/bluetooth/le/BluetoothLeAdvertiser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-03-31T23:58:18Z",
+      "side": 1,
+      "message": "I think this is unused now.",
+      "range": {
+        "startLine": 60,
+        "startChar": 29,
+        "endLine": 60,
+        "endChar": 53
+      },
+      "revId": "cebda4eec7c37dd50ec37b51e3a94a020732faac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
