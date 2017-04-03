@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "ec9d58a9_997e1b35",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-04-03T17:43:22Z",
+      "side": 1,
+      "message": "should we allow it if the two specifiers are equal?",
+      "range": {
+        "startLine": 616,
+        "startChar": 22,
+        "endLine": 616,
+        "endChar": 43
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "085e1ac6_a252fae0",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 5
