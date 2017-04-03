@@ -22,6 +22,30 @@
       "revId": "808e8cca65c2883af5632d9ecc8b12f5a73f028c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1488b7f_12910f17",
+        "filename": "core/res/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2969,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-03T07:04:43Z",
+      "side": 1,
+      "message": "I\u0027ll check in with Megan tomorrow.",
+      "parentUuid": "44e2f6c1_04444241",
+      "range": {
+        "startLine": 2969,
+        "startChar": 81,
+        "endLine": 2969,
+        "endChar": 93
+      },
+      "revId": "808e8cca65c2883af5632d9ecc8b12f5a73f028c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
