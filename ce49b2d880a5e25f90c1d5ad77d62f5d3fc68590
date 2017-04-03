@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bfb2db2_f1ac65ad",
+        "filename": "core/java/android/net/MatchAllNetworkSpecifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-03T08:54:33Z",
+      "side": 1,
+      "message": "Is there a reason we have a StringNetworkSpecifier.aidl, but not a MatchAllNetworkSpecifier.aidl?\n\nDo you need such an .aidl file to ensure that this class is actually parcelable?",
+      "range": {
+        "startLine": 23,
+        "startChar": 69,
+        "endLine": 23,
+        "endChar": 90
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d97b764_e2318cc5",
+        "filename": "core/java/android/net/MatchAllNetworkSpecifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-03T08:54:33Z",
+      "side": 1,
+      "message": "Can you add a comment here explaining why this is not allowed? Is there was a strong semantic reason for it, is this a simplifying assumption, or is it some other reason?\n\nAt the moment I can\u0027t remember whether my original CL had this restriction, and if it did, what the reason for it was. Is it because \"*\" works in the opposite direction than other specifiers?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 5
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08b4ba36_f0195ffc",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-03T08:54:33Z",
+      "side": 1,
+      "message": "Not sure if we need this exception since setting any non-Parcelable NetworkSpecifier will fail as soon as the app tries to use it.\n\nPerhaps it\u0027s good to keep this for developer convenience because it will complain when the specifier is set, not when it is used.\n\nHowever, that only works some of the time: if the passed-in specifier is Parcelable, it\u0027s still possible to for things to fail when the specifier is used (as opposed to when it is set) if the Parcelable is not a framework class because the system won\u0027t be able to unparcel it.\n\nUp to you whether you want to make one of the two cases more helpful (and keep this exception) or if you want to make the two cases consistent.",
+      "range": {
+        "startLine": 594,
+        "startChar": 0,
+        "endLine": 596,
+        "endChar": 9
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "085e1ac6_a252fae0",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-03T08:54:33Z",
+      "side": 1,
+      "message": "Nit: is this a behaviour change? Previously, a specifier of \"\" would have been treated as equal to a null specifier. What do we do now?\n\nIf this is in fact a behaviour change, can/should we avoid it by ensuring that if the user passes in \"\", then we silently set the specifier to null?\n\nI don\u0027t think that would be a change in app-visible behaviour because getNetworkSpecifier() is @hide.",
+      "range": {
+        "startLine": 627,
+        "startChar": 8,
+        "endLine": 627,
+        "endChar": 71
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4327d4ba_871e4d50",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-03T08:54:33Z",
+      "side": 1,
+      "message": "This will crash apps that do \"setNetworkSpecifier(null)\", which I believe does not crash today.",
+      "range": {
+        "startLine": 262,
+        "startChar": 39,
+        "endLine": 262,
+        "endChar": 83
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9902040d_0a541a4b",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-03T08:54:33Z",
+      "side": 1,
+      "message": "I\u0027m not sure what adding this method will do to apps that call \"setNetworkSpecifier(null)\".\n\nIt\u0027s clear to me that an app that targets O can\u0027t do that: it must write setNetworkSpecifier((String) null) or setNetworkSpecifier((NetworkSpecifier) null), or get an error at compile time.\n\nBut I\u0027m not sure what will happen at runtime to an app that targeted a previous SDK version. Perhaps the binary already contains the fully-qualified name and everything is fine. I\u0027ve asked the API council to clarify that.",
+      "range": {
+        "startLine": 277,
+        "startChar": 43,
+        "endLine": 277,
+        "endChar": 76
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba32a5e6_35844367",
+        "filename": "core/java/android/net/NetworkSpecifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-03T08:54:33Z",
+      "side": 1,
+      "message": "instances of subclasses of this class via other APIs.",
+      "range": {
+        "startLine": 22,
+        "startChar": 76,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a0f73e2_e206d75f",
+        "filename": "core/java/android/net/NetworkSpecifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-03T08:54:33Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of having to enumerate all possible classes here.\n\nIf the user passes in a non-framework Parcelable class we\u0027ll already throw an exception because the framework won\u0027t know how to unparcel it. Is that enough?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 5
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4bb9163a_ebbad0b9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1864,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-03T08:54:33Z",
+      "side": 1,
+      "message": "Nit: consider writing this on one line:\n\n    } catch(IllegalArgumentException expected) {}\n\nhere and elsewhere. Up to you.",
+      "range": {
+        "startLine": 1863,
+        "startChar": 52,
+        "endLine": 1864,
+        "endChar": 23
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

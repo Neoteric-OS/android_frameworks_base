@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c03bfa2c_f4a86ecd",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-03T08:54:33Z",
+      "side": 0,
+      "message": "I assume we\u0027re OK with the fact that is now legal to pass in a specifier of \"*\" because it is no longer special? (Or do we need to be backwards compatible and throw an exception?)",
+      "range": {
+        "startLine": 263,
+        "startChar": 52,
+        "endLine": 264,
+        "endChar": 82
+      },
+      "revId": "1fcacf7736cdf52be7b7ca558b80053c687c7edf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
