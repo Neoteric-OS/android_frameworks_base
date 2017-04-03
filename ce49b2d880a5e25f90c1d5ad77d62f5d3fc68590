@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "8a529677_62a287b8",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-04-03T23:50:31Z",
+      "side": 1,
+      "message": "Removed. Will let the parcel/unparcel handle errors.",
+      "parentUuid": "e386f873_c2f25d70",
+      "range": {
+        "startLine": 594,
+        "startChar": 0,
+        "endLine": 596,
+        "endChar": 9
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec9d58a9_997e1b35",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 5
@@ -413,6 +437,30 @@
       "side": 1,
       "message": "We won\u0027t throw an exception since that would crash the system service. We will print out an error and replace with a null. Hence this is useful for the honest developer.\n\nNote: the non-honest developer will be trying to pass us something non-valid and/or possible to crash the system service. Ignoring that entry (using a null) seems reasonable - though may choose to completely ignore that request!?",
       "parentUuid": "1a0f73e2_e206d75f",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 5
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2363dbc8_fdb7279a",
+        "filename": "core/java/android/net/NetworkSpecifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-04-03T23:50:31Z",
+      "side": 1,
+      "message": "Removed. Actually BadParcelExceptions will be caught and propagated back to caller.",
+      "parentUuid": "0fb98070_4eaaaffd",
       "range": {
         "startLine": 33,
         "startChar": 0,
