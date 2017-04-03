@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0df1a088_5c9bf487",
+        "filename": "core/java/android/net/MatchAllNetworkSpecifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-04-03T21:45:38Z",
+      "side": 1,
+      "message": "Not necessary.Removed (the other) StringNetworkSpecifier.aidl. \n\nThe file is necessary if the class is passed as part of an AIDL interface (it needs to be parcelable and have such a file). However, we\u0027re not specifying any of these classes as part of an AIDL interface.\n\nThe classes exposed as part of AIDL are NetworkRequest and NetworkCapabilities and they have a corresponding .aidl files.",
+      "parentUuid": "1bfb2db2_f1ac65ad",
+      "range": {
+        "startLine": 23,
+        "startChar": 69,
+        "endLine": 23,
+        "endChar": 90
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d97b764_e2318cc5",
         "filename": "core/java/android/net/MatchAllNetworkSpecifier.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-03T08:54:33Z",
       "side": 1,
       "message": "Can you add a comment here explaining why this is not allowed? Is there was a strong semantic reason for it, is this a simplifying assumption, or is it some other reason?\n\nAt the moment I can\u0027t remember whether my original CL had this restriction, and if it did, what the reason for it was. Is it because \"*\" works in the opposite direction than other specifiers?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 5
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31b34b17_d97e458a",
+        "filename": "core/java/android/net/MatchAllNetworkSpecifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-04-03T21:45:38Z",
+      "side": 1,
+      "message": "Added comment which also clarifies direction of usage.",
+      "parentUuid": "9d97b764_e2318cc5",
       "range": {
         "startLine": 24,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e386f873_c2f25d70",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-04-03T21:45:38Z",
+      "side": 1,
+      "message": "Agreed. The purpose is for convenience and help localize issues.\n\nFail/feedback in this context is:\n- If not parcelable will fail when attempting to send request. At that point will get a crash (due to the bad cast to Parcelable) [or the whitelist - see comment there]\n- If parcelable then failure will be completely silent (unless requested with time-out in which case will get onUnavailable eventually)",
+      "parentUuid": "08b4ba36_f0195ffc",
+      "range": {
+        "startLine": 594,
+        "startChar": 0,
+        "endLine": 596,
+        "endChar": 9
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec9d58a9_997e1b35",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-04-03T17:43:22Z",
       "side": 1,
       "message": "should we allow it if the two specifiers are equal?",
+      "range": {
+        "startLine": 616,
+        "startChar": 22,
+        "endLine": 616,
+        "endChar": 43
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "708104c0_5933f2b3",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-04-03T21:45:38Z",
+      "side": 1,
+      "message": "Done. \n\nBut the only place this is used is after the current network capabilities are cleared - so effectively a nop.",
+      "parentUuid": "ec9d58a9_997e1b35",
       "range": {
         "startLine": 616,
         "startChar": 22,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9caf97d3_c56cd257",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-04-03T21:45:38Z",
+      "side": 1,
+      "message": "I\u0027ve gotten rid throughout of the special text behavior. An empty string/null string will now correspond to a null network specifier. Comparison is thus easy (and this code is valid).",
+      "parentUuid": "085e1ac6_a252fae0",
+      "range": {
+        "startLine": 627,
+        "startChar": 8,
+        "endLine": 627,
+        "endChar": 71
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4327d4ba_871e4d50",
         "filename": "core/java/android/net/NetworkRequest.java",
         "patchSetId": 5
@@ -128,6 +248,30 @@
       "writtenOn": "2017-04-03T08:54:33Z",
       "side": 1,
       "message": "This will crash apps that do \"setNetworkSpecifier(null)\", which I believe does not crash today.",
+      "range": {
+        "startLine": 262,
+        "startChar": 39,
+        "endLine": 262,
+        "endChar": 83
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef9cdbc4_d77dad08",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-04-03T21:45:38Z",
+      "side": 1,
+      "message": "Agreed. Added code to treat Empty (null string/\"\") as a null network specifier.",
+      "parentUuid": "4327d4ba_871e4d50",
       "range": {
         "startLine": 262,
         "startChar": 39,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "45830ddd_616fe886",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-04-03T21:45:38Z",
+      "side": 1,
+      "message": "We should change the name of this API.",
+      "parentUuid": "9902040d_0a541a4b",
+      "range": {
+        "startLine": 277,
+        "startChar": 43,
+        "endLine": 277,
+        "endChar": 76
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba32a5e6_35844367",
         "filename": "core/java/android/net/NetworkSpecifier.java",
         "patchSetId": 5
@@ -174,6 +342,30 @@
       "writtenOn": "2017-04-03T08:54:33Z",
       "side": 1,
       "message": "instances of subclasses of this class via other APIs.",
+      "range": {
+        "startLine": 22,
+        "startChar": 76,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e32fc4bb_4713c0c7",
+        "filename": "core/java/android/net/NetworkSpecifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-04-03T21:45:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba32a5e6_35844367",
       "range": {
         "startLine": 22,
         "startChar": 76,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "0fb98070_4eaaaffd",
+        "filename": "core/java/android/net/NetworkSpecifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-04-03T21:45:38Z",
+      "side": 1,
+      "message": "We won\u0027t throw an exception since that would crash the system service. We will print out an error and replace with a null. Hence this is useful for the honest developer.\n\nNote: the non-honest developer will be trying to pass us something non-valid and/or possible to crash the system service. Ignoring that entry (using a null) seems reasonable - though may choose to completely ignore that request!?",
+      "parentUuid": "1a0f73e2_e206d75f",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 5
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bb9163a_ebbad0b9",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 5
@@ -220,6 +436,30 @@
       "writtenOn": "2017-04-03T08:54:33Z",
       "side": 1,
       "message": "Nit: consider writing this on one line:\n\n    } catch(IllegalArgumentException expected) {}\n\nhere and elsewhere. Up to you.",
+      "range": {
+        "startLine": 1863,
+        "startChar": 52,
+        "endLine": 1864,
+        "endChar": 23
+      },
+      "revId": "ce49b2d880a5e25f90c1d5ad77d62f5d3fc68590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9a95f5f_5e295e4b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1864,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-04-03T21:45:38Z",
+      "side": 1,
+      "message": "I like the \u0027expected\u0027 or \u0027empty\u0027 comment for empty code blocks.",
+      "parentUuid": "4bb9163a_ebbad0b9",
       "range": {
         "startLine": 1863,
         "startChar": 52,
