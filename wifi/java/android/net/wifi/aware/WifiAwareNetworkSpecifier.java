@@ -19,6 +19,7 @@ package android.net.wifi.aware;
 import android.net.NetworkSpecifier;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -32,7 +33,8 @@ import java.util.Objects;
  *
  * @hide
  */
-public final class WifiAwareNetworkSpecifier extends NetworkSpecifier implements Parcelable {
+public final class WifiAwareNetworkSpecifier extends NetworkSpecifier implements Parcelable,
+        NetworkSpecifier.UidConsumer {
     /**
      * TYPE: in band, specific peer: role, client_id, session_id, peer_id, pmk/passphrase optional
      * @hide
@@ -128,11 +130,20 @@ public final class WifiAwareNetworkSpecifier extends NetworkSpecifier implements
         this.passphrase = passphrase;
     }
 
+    /*
+     * UID of the network requestor - set by the ConnectivityService.
+     */
+    /** @hide */
+    public boolean requestorUidValid = false;
+    /** @hide */
+    public int requestorUid = 0;
+
     public static final Creator<WifiAwareNetworkSpecifier> CREATOR =
             new Creator<WifiAwareNetworkSpecifier>() {
                 @Override
                 public WifiAwareNetworkSpecifier createFromParcel(Parcel in) {
-                    return new WifiAwareNetworkSpecifier(
+                    // non-mutable
+                    WifiAwareNetworkSpecifier ns = new WifiAwareNetworkSpecifier(
                         in.readInt(), // type
                         in.readInt(), // role
                         in.readInt(), // clientId
@@ -141,6 +152,12 @@ public final class WifiAwareNetworkSpecifier extends NetworkSpecifier implements
                         in.createByteArray(), // peerMac
                         in.createByteArray(), // pmk
                         in.readString()); // passphrase
+
+                    // mutable
+                    ns.requestorUidValid = in.readInt() == 1;
+                    ns.requestorUid = in.readInt();
+
+                    return ns;
                 }
 
                 @Override
@@ -156,6 +173,7 @@ public final class WifiAwareNetworkSpecifier extends NetworkSpecifier implements
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        // non-mutable
         dest.writeInt(type);
         dest.writeInt(role);
         dest.writeInt(clientId);
@@ -164,13 +182,27 @@ public final class WifiAwareNetworkSpecifier extends NetworkSpecifier implements
         dest.writeByteArray(peerMac);
         dest.writeByteArray(pmk);
         dest.writeString(passphrase);
+
+        // mutable
+        dest.writeInt(requestorUidValid ? 1 : 0);
+        dest.writeInt(requestorUid);
     }
 
     /** @hide */
     @Override
     public boolean satisfiedBy(NetworkSpecifier other) {
         // MatchAllNetworkSpecifier is taken care in NetworkCapabilities#satisfiedBySpecifier.
-        return equals(other);
+        boolean match = equals(other);
+        if (match) {
+            WifiAwareNetworkSpecifier otherNs = (WifiAwareNetworkSpecifier) other;
+            if (!requestorUidValid || !otherNs.requestorUidValid
+                    || requestorUid != otherNs.requestorUid) {
+                Log.e("WifiAwareNetworkSpecifier",
+                        "satisfiedBy: UID mismatch: " + toString() + " -- " + other.toString());
+                return false;
+            }
+        }
+        return match;
     }
 
     /** @hide */
@@ -178,6 +210,7 @@ public final class WifiAwareNetworkSpecifier extends NetworkSpecifier implements
     public int hashCode() {
         int result = 17;
 
+        // non-mutable only
         result = 31 * result + type;
         result = 31 * result + role;
         result = 31 * result + clientId;
@@ -203,6 +236,7 @@ public final class WifiAwareNetworkSpecifier extends NetworkSpecifier implements
 
         WifiAwareNetworkSpecifier lhs = (WifiAwareNetworkSpecifier) obj;
 
+        // non-mutable only
         return type == lhs.type
                 && role == lhs.role
                 && clientId == lhs.clientId
@@ -228,7 +262,16 @@ public final class WifiAwareNetworkSpecifier extends NetworkSpecifier implements
                 .append(", pmk=").append((pmk == null) ? "<null>" : "<non-null>")
                 // masking PII
                 .append(", passphrase=").append((passphrase == null) ? "<null>" : "<non-null>")
+                .append("] [requestorUidValid=").append(requestorUidValid)
+                .append(", requestorUid=").append(requestorUid)
                 .append("]");
         return sb.toString();
+    }
+
+    /** @hide */
+    @Override
+    public void setRequestorUid(int uid) {
+        requestorUidValid = true;
+        requestorUid = uid;
     }
 }
