@@ -1987,6 +1987,43 @@ public class ConnectivityServiceTest extends AndroidTestCase {
     }
 
     @SmallTest
+    public void testUidMatchingNetworkSpecifierIsConfigured() {
+        class UidAwareNetworkSpecifier extends NetworkSpecifier implements
+                Parcelable, NetworkSpecifier.UidConsumer {
+            public boolean requestorUidWasSet = false;
+            public int requestorUid;
+
+            @Override
+            public boolean satisfiedBy(NetworkSpecifier other) {
+                return true;
+            }
+
+            @Override
+            public void setRequestorUid(int uid) {
+                requestorUidWasSet = true;
+                requestorUid = uid;
+            }
+
+            @Override
+            public int describeContents() { return 0; }
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {}
+        }
+
+        mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(false);
+
+        UidAwareNetworkSpecifier networkSpecifier = new UidAwareNetworkSpecifier();
+        NetworkRequest networkRequest = newWifiRequestBuilder().setNetworkSpecifier(
+                networkSpecifier).build();
+        TestNetworkCallback networkCallback = new TestNetworkCallback();
+        mCm.requestNetwork(networkRequest, networkCallback);
+        networkCallback.expectAvailableCallbacks(mWiFiNetworkAgent);
+
+        assertTrue("Uid was set", networkSpecifier.requestorUidWasSet);
+    }
+
+    @SmallTest
     public void testRegisterDefaultNetworkCallback() throws Exception {
         final TestNetworkCallback defaultNetworkCallback = new TestNetworkCallback();
         mCm.registerDefaultNetworkCallback(defaultNetworkCallback);

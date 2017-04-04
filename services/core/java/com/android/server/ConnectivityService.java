@@ -48,7 +48,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.PacketKeepalive;
@@ -69,6 +68,7 @@ import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkMisc;
 import android.net.NetworkQuotaInfo;
 import android.net.NetworkRequest;
+import android.net.NetworkSpecifier;
 import android.net.NetworkState;
 import android.net.NetworkUtils;
 import android.net.Proxy;
@@ -108,7 +108,6 @@ import android.util.ArraySet;
 import android.util.LocalLog;
 import android.util.LocalLog.ReadOnlyLocalLog;
 import android.util.Log;
-import android.util.Pair;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
@@ -4131,6 +4130,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         MatchAllNetworkSpecifier.checkNotMatchAllNetworkSpecifier(
                 networkCapabilities.getNetworkSpecifier());
+        if (networkCapabilities.getNetworkSpecifier() instanceof NetworkSpecifier.UidConsumer) {
+            ((NetworkSpecifier.UidConsumer) networkCapabilities.getNetworkSpecifier())
+                    .setRequestorUid(Binder.getCallingUid());
+        }
 
         NetworkRequest networkRequest = new NetworkRequest(networkCapabilities, legacyType,
                 nextNetworkRequestId(), type);
