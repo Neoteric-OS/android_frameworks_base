@@ -48,7 +48,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.PacketKeepalive;
@@ -69,6 +68,7 @@ import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkMisc;
 import android.net.NetworkQuotaInfo;
 import android.net.NetworkRequest;
+import android.net.NetworkSpecifier;
 import android.net.NetworkState;
 import android.net.NetworkUtils;
 import android.net.Proxy;
@@ -108,7 +108,6 @@ import android.util.ArraySet;
 import android.util.LocalLog;
 import android.util.LocalLog.ReadOnlyLocalLog;
 import android.util.Log;
-import android.util.Pair;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
@@ -4122,6 +4121,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 0, 0, thresholds);
     }
 
+    private void ensureValidNetworkSpecifier(NetworkSpecifier nc) {
+        MatchAllNetworkSpecifier.checkNotMatchAllNetworkSpecifier(nc);
+        if (nc != null) {
+            nc.assertValidFromUid(Binder.getCallingUid());
+        }
+    }
+
     @Override
     public NetworkRequest requestNetwork(NetworkCapabilities networkCapabilities,
             Messenger messenger, int timeoutMs, IBinder binder, int legacyType) {
@@ -4147,9 +4153,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (timeoutMs < 0) {
             throw new IllegalArgumentException("Bad timeout specified");
         }
-
-        MatchAllNetworkSpecifier.checkNotMatchAllNetworkSpecifier(
-                networkCapabilities.getNetworkSpecifier());
+        ensureValidNetworkSpecifier(networkCapabilities.getNetworkSpecifier());
 
         NetworkRequest networkRequest = new NetworkRequest(networkCapabilities, legacyType,
                 nextNetworkRequestId(), type);
@@ -4221,9 +4225,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         enforceNetworkRequestPermissions(networkCapabilities);
         enforceMeteredApnPolicy(networkCapabilities);
         ensureRequestableCapabilities(networkCapabilities);
-
-        MatchAllNetworkSpecifier.checkNotMatchAllNetworkSpecifier(
-                networkCapabilities.getNetworkSpecifier());
+        ensureValidNetworkSpecifier(networkCapabilities.getNetworkSpecifier());
 
         NetworkRequest networkRequest = new NetworkRequest(networkCapabilities, TYPE_NONE,
                 nextNetworkRequestId(), NetworkRequest.Type.REQUEST);
@@ -4285,9 +4287,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // can't request networks.
             nc.addCapability(NET_CAPABILITY_FOREGROUND);
         }
-
-        MatchAllNetworkSpecifier.checkNotMatchAllNetworkSpecifier(
-                networkCapabilities.getNetworkSpecifier());
+        ensureValidNetworkSpecifier(networkCapabilities.getNetworkSpecifier());
 
         NetworkRequest networkRequest = new NetworkRequest(nc, TYPE_NONE, nextNetworkRequestId(),
                 NetworkRequest.Type.LISTEN);
@@ -4305,9 +4305,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (!hasWifiNetworkListenPermission(networkCapabilities)) {
             enforceAccessPermission();
         }
-
-        MatchAllNetworkSpecifier.checkNotMatchAllNetworkSpecifier(
-                networkCapabilities.getNetworkSpecifier());
+        ensureValidNetworkSpecifier(networkCapabilities.getNetworkSpecifier());
 
         NetworkRequest networkRequest = new NetworkRequest(
                 new NetworkCapabilities(networkCapabilities), TYPE_NONE, nextNetworkRequestId(),
