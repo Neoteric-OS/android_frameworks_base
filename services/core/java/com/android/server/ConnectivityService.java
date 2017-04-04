@@ -69,6 +69,7 @@ import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkMisc;
 import android.net.NetworkQuotaInfo;
 import android.net.NetworkRequest;
+import android.net.NetworkSpecifier;
 import android.net.NetworkState;
 import android.net.NetworkUtils;
 import android.net.Proxy;
@@ -4131,6 +4132,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (networkCapabilities.getNetworkSpecifier() instanceof MatchAllNetworkSpecifier) {
             throw new IllegalArgumentException("NetworkRequest with MatchAllNetworkSpecifier");
+        }
+        if (networkCapabilities.getNetworkSpecifier() instanceof NetworkSpecifier.UidConsumer) {
+            ((NetworkSpecifier.UidConsumer) networkCapabilities.getNetworkSpecifier())
+                    .setUidOfCaller(Binder.getCallingUid());
         }
 
         NetworkRequest networkRequest = new NetworkRequest(networkCapabilities, legacyType,

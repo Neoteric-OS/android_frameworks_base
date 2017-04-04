@@ -19,6 +19,7 @@ package android.net.wifi.aware;
 import android.net.NetworkSpecifier;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -32,7 +33,8 @@ import java.util.Objects;
  *
  * @hide
  */
-public final class WifiAwareNetworkSpecifier extends NetworkSpecifier implements Parcelable {
+public final class WifiAwareNetworkSpecifier extends NetworkSpecifier implements Parcelable,
+        NetworkSpecifier.UidConsumer {
     /**
      * TYPE: in band, specific peer: role, client_id, session_id, peer_id, pmk/passphrase optional
      */
@@ -102,6 +104,20 @@ public final class WifiAwareNetworkSpecifier extends NetworkSpecifier implements
      */
     public String passphrase;
 
+    /*
+     * UID information set and managed by ConnectivityService (not by caller!). Indicates the real
+     * UID of the calling application.
+     */
+    public boolean uidOfCallerValid = false;
+    public int uidOfCaller;
+
+    /*
+     * UID information set and managed by WifiAwareDataPathStateManager. Indicates the UID of the
+     * client for which a data-path is being requested.
+     */
+    public boolean uidOfClientValid = false;
+    public int uidOfClient;
+
     public static final Creator<WifiAwareNetworkSpecifier> CREATOR =
             new Creator<WifiAwareNetworkSpecifier>() {
                 @Override
@@ -144,7 +160,14 @@ public final class WifiAwareNetworkSpecifier extends NetworkSpecifier implements
     @Override
     public boolean satisfiedBy(NetworkSpecifier other) {
         // MatchAllNetworkSpecifier is taken care in NetworkCapabilities#satisfiedBySpecifier.
-        return equals(other);
+        boolean match = equals(other);
+        if (match) {
+            if (!uidOfCallerValid || !uidOfClientValid || uidOfCaller != uidOfClient) {
+                Log.e("WifiAwareNetworkSpecifier", "satisfiedBy: mismatch of calling UID!?");
+                return false;
+            }
+        }
+        return match;
     }
 
     @Override
@@ -201,5 +224,11 @@ public final class WifiAwareNetworkSpecifier extends NetworkSpecifier implements
                 .append(", passphrase=").append((passphrase == null) ? "<null>" : "<non-null>")
                 .append("]");
         return sb.toString();
+    }
+
+    @Override
+    public void setUidOfCaller(int uid) {
+        uidOfCallerValid = true;
+        uidOfCaller = uid;
     }
 }
