@@ -46,6 +46,30 @@
       "revId": "4eb4769181f91cffdf508499348dbb53a543c5ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e04a2ce_4f1e3547",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1121773
+      },
+      "writtenOn": "2017-04-04T01:10:21Z",
+      "side": 1,
+      "message": "Did you intend to change the ordering here? It appears unchanged.",
+      "parentUuid": "f40a6151_41fbfc31",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 6
+      },
+      "revId": "4eb4769181f91cffdf508499348dbb53a543c5ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
