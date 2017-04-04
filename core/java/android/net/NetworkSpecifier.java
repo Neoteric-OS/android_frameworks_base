@@ -34,4 +34,11 @@ public abstract class NetworkSpecifier {
      * @hide
      */
     public abstract boolean satisfiedBy(NetworkSpecifier other);
+
+    /**
+     * @hide
+     */
+    public interface UidConsumer {
+        public void setRequestorUid(int uid);
+    }
 }
