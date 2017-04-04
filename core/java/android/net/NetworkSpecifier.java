@@ -33,4 +33,11 @@ public abstract class NetworkSpecifier {
      * @hide
      */
     public abstract boolean satisfiedBy(NetworkSpecifier other);
+
+    /**
+     * @hide
+     */
+    public interface UidContainer {
+        public int getUid();
+    }
 }
