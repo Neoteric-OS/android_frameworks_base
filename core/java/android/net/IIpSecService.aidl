@@ -32,9 +32,10 @@ interface IIpSecService
 
     void releaseSecurityParameterIndex(int resourceId);
 
-    Bundle openUdpEncapsulationSocket(int port, in IBinder binder);
+    Bundle openUdpEncapsulationSocket(
+            in ParcelFileDescriptor socket, int port, in IBinder binder);
 
-    void closeUdpEncapsulationSocket(in ParcelFileDescriptor socket);
+    void closeUdpEncapsulationSocket(int resourceId);
 
     Bundle createTransportModeTransform(in IpSecConfig c, in IBinder binder);
 

@@ -22,6 +22,9 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
+import android.system.ErrnoException;
+import android.system.Os;
+import android.system.OsConstants;
 import android.util.AndroidException;
 import dalvik.system.CloseGuard;
 import java.io.FileDescriptor;
@@ -61,6 +64,9 @@ public final class IpSecManager {
     public static final String KEY_RESOURCE_ID = "resourceId";
     /** @hide */
     public static final String KEY_SPI = "spi";
+    /** @hide */
+    public static final String KEY_SOCKET = "socket";
+
     /** @hide */
     public static final int INVALID_RESOURCE_ID = 0;
 
@@ -326,9 +332,35 @@ public final class IpSecManager {
         private UdpEncapsulationSocket(@NonNull IIpSecService service, int port)
                 throws ResourceUnavailableException {
             mService = service;
+            try {
+                FileDescriptor sockFd =
+                        Os.socket(
+                                OsConstants.AF_INET,
+                                OsConstants.SOCK_DGRAM,
+                                OsConstants.IPPROTO_UDP);
+
+                Bundle result =
+                        mService.openUdpEncapsulationSocket(
+                                new ParcelFileDescriptor(sockFd), port, new Binder());
+                int status = result.getInt(KEY_STATUS);
+                switch (status) {
+                    case Status.OK:
+                        break;
+                    case Status.RESOURCE_UNAVAILABLE:
+                        throw new ResourceUnavailableException(
+                                "No more Sockets may be allocated by this requester.");
+                    default:
+                        throw new RuntimeException(
+                                "Unknown status returned by IpSecService: " + status);
+                }
+                mFd = sockFd;
+                // TODO: get and stash bound port
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            } catch (ErrnoException e) {
+                throw new ResourceUnavailableException("UDP Socket could not be created");
+            }
             mCloseGuard.open("constructor");
-            // TODO: go down to the kernel and get a socket on the specified
-            mFd = new FileDescriptor();
         }
 
         private UdpEncapsulationSocket(IIpSecService service) throws ResourceUnavailableException {
@@ -422,8 +454,7 @@ public final class IpSecManager {
     // socket.
     public UdpEncapsulationSocket openUdpEncapsulationSocket()
             throws IOException, ResourceUnavailableException {
-        // Temporary code
-        return new UdpEncapsulationSocket(mService);
+        return new UdpEncapsulationSocket(mService, 0);
     }
 
     /**
