@@ -46,6 +46,30 @@
       "revId": "b3c61b970f87ab50afe4051056c09b001389abd9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83c06737_604bc1cf",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 23
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-04-05T00:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "845d4b86_dcf79fe4",
+      "range": {
+        "startLine": 516,
+        "startChar": 59,
+        "endLine": 516,
+        "endChar": 160
+      },
+      "revId": "b3c61b970f87ab50afe4051056c09b001389abd9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
