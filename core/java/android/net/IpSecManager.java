@@ -62,6 +62,9 @@ public final class IpSecManager {
     /** @hide */
     public static final String KEY_SPI = "spi";
     /** @hide */
+    public static final String KEY_SOCKET = "socket";
+
+    /** @hide */
     public static final int INVALID_RESOURCE_ID = 0;
 
     /**
@@ -326,9 +329,27 @@ public final class IpSecManager {
         private UdpEncapsulationSocket(@NonNull IIpSecService service, int port)
                 throws ResourceUnavailableException {
             mService = service;
+            try {
+                Bundle result = mService.openUdpEncapsulationSocket(port, new Binder());
+                int status = result.getInt(KEY_STATUS);
+                switch (status) {
+                    case Status.OK:
+                        break;
+                    case Status.RESOURCE_UNAVAILABLE:
+                        throw new ResourceUnavailableException(
+                                "No more Sockets may be allocated by this requester.");
+                    default:
+                        throw new RuntimeException(
+                                "Unknown status returned by IpSecService: " + status);
+                }
+                ParcelFileDescriptor sockPfd =
+                        (ParcelFileDescriptor) result.getParcelable(KEY_SOCKET);
+                mFd = sockPfd.getFileDescriptor();
+                // TODO: get and stash bound port
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
             mCloseGuard.open("constructor");
-            // TODO: go down to the kernel and get a socket on the specified
-            mFd = new FileDescriptor();
         }
 
         private UdpEncapsulationSocket(IIpSecService service) throws ResourceUnavailableException {
@@ -422,8 +443,7 @@ public final class IpSecManager {
     // socket.
     public UdpEncapsulationSocket openUdpEncapsulationSocket()
             throws IOException, ResourceUnavailableException {
-        // Temporary code
-        return new UdpEncapsulationSocket(mService);
+        return new UdpEncapsulationSocket(mService, 0);
     }
 
     /**

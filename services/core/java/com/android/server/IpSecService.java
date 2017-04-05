@@ -19,6 +19,7 @@ package com.android.server;
 import static android.Manifest.permission.DUMP;
 import static android.net.IpSecManager.INVALID_RESOURCE_ID;
 import static android.net.IpSecManager.KEY_RESOURCE_ID;
+import static android.net.IpSecManager.KEY_SOCKET;
 import static android.net.IpSecManager.KEY_SPI;
 import static android.net.IpSecManager.KEY_STATUS;
 
@@ -36,12 +37,19 @@ import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
+import android.system.ErrnoException;
+import android.system.Os;
+import android.system.OsConstants;
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
 import com.android.internal.annotations.GuardedBy;
 import java.io.FileDescriptor;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /** @hide */
@@ -65,10 +73,12 @@ public class IpSecService extends IIpSecService.Stub {
         final int pid;
         final int uid;
         private IBinder mBinder;
+        protected int mResourceId;
 
-        ManagedResource(IBinder binder) {
+        ManagedResource(int resourceId, IBinder binder) {
             super();
             mBinder = binder;
+            mResourceId = resourceId;
             pid = Binder.getCallingPid();
             uid = Binder.getCallingUid();
 
@@ -85,15 +95,21 @@ public class IpSecService extends IIpSecService.Stub {
          */
         public final void release() {
             //Release all the underlying system resources first
-            releaseResources();
+            if (mResourceId != INVALID_RESOURCE_ID) {
+                releaseResources();
+            }
 
             if (mBinder != null) {
                 mBinder.unlinkToDeath(this, 0);
             }
-            mBinder = null;
-
             //remove this record so that it can be cleaned up
+            nullify();
+        }
+
+        public final void nullify() {
             nullifyRecord();
+            mBinder = null;
+            mResourceId = INVALID_RESOURCE_ID;
         }
 
         /**
@@ -109,25 +125,25 @@ public class IpSecService extends IIpSecService.Stub {
          * Implement this method to release all object references contained in the subclass to allow
          * efficient garbage collection of the record. This should remove any references to the
          * record from all other locations that hold a reference as the record is no longer valid.
+         * This will automatically be called by nullify() and probably should not be called
+         * directly.
          */
         protected abstract void nullifyRecord();
 
         /**
          * Implement this method to release all system resources that are being protected by this
          * record. Once the resources are released, the record should be invalidated and no longer
-         * used by calling releaseRecord()
+         * used by calling release(). This should probably not be called directly.
          */
         protected abstract void releaseResources();
     };
 
     private final class TransformRecord extends ManagedResource {
         private IpSecConfig mConfig;
-        private int mResourceId;
 
         TransformRecord(IpSecConfig config, int resourceId, IBinder binder) {
-            super(binder);
+            super(resourceId, binder);
             mConfig = config;
-            mResourceId = resourceId;
         }
 
         public IpSecConfig getConfig() {
@@ -168,9 +184,7 @@ public class IpSecService extends IIpSecService.Stub {
         private final int mDirection;
         private final String mLocalAddress;
         private final String mRemoteAddress;
-        private final IBinder mBinder;
         private int mSpi;
-        private int mResourceId;
 
         SpiRecord(
                 int resourceId,
@@ -179,13 +193,11 @@ public class IpSecService extends IIpSecService.Stub {
                 String remoteAddress,
                 int spi,
                 IBinder binder) {
-            super(binder);
-            mResourceId = resourceId;
+            super(resourceId, binder);
             mDirection = direction;
             mLocalAddress = localAddress;
             mRemoteAddress = remoteAddress;
             mSpi = spi;
-            mBinder = binder;
         }
 
         protected void releaseResources() {
@@ -202,7 +214,26 @@ public class IpSecService extends IIpSecService.Stub {
 
         protected void nullifyRecord() {
             mSpi = IpSecManager.INVALID_SECURITY_PARAMETER_INDEX;
-            mResourceId = INVALID_RESOURCE_ID;
+        }
+    }
+
+    private final class UdpSocketRecord extends ManagedResource {
+        private FileDescriptor mSocket;
+
+        UdpSocketRecord(int resourceId, FileDescriptor socket, IBinder binder) {
+            super(resourceId, binder);
+            mSocket = socket;
+        }
+
+        protected void releaseResources() {
+            try {
+                Os.close(mSocket);
+            } catch (ErrnoException e) {
+            }
+        }
+
+        protected void nullifyRecord() {
+            mSocket = null;
         }
     }
 
@@ -211,6 +242,9 @@ public class IpSecService extends IIpSecService.Stub {
 
     @GuardedBy("mTransformRecords")
     private final SparseArray<TransformRecord> mTransformRecords = new SparseArray<>();
+
+    @GuardedBy("mUdpSocketRecords")
+    private final SparseArray<UdpSocketRecord> mUdpSocketRecords = new SparseArray<>();
 
     /**
      * Constructs a new IpSecService instance
@@ -304,7 +338,7 @@ public class IpSecService extends IIpSecService.Stub {
         } catch (ServiceSpecificException e) {
             // TODO: Add appropriate checks when other ServiceSpecificException types are supported
             retBundle.putInt(KEY_STATUS, IpSecManager.Status.SPI_UNAVAILABLE);
-            retBundle.putInt(KEY_RESOURCE_ID, resourceId);
+            retBundle.putInt(KEY_RESOURCE_ID, IpSecManager.INVALID_RESOURCE_ID);
             retBundle.putInt(KEY_SPI, spi);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
@@ -312,9 +346,49 @@ public class IpSecService extends IIpSecService.Stub {
         return retBundle;
     }
 
+    private <T extends ManagedResource> void releaseManagedResource(
+            SparseArray<T> resArray, int resourceId, String typeName) {
+        synchronized (resArray) {
+            T record;
+            // We want to non-destructively get so that we can check credentials before removing
+            // this from the records.
+            record = resArray.get(resourceId);
+
+            if (record == null) {
+                throw new IllegalArgumentException(
+                        typeName + " " + resourceId + " is not available to be deleted");
+            }
+
+            if (record.pid != Binder.getCallingPid() || record.uid != Binder.getCallingUid()) {
+                throw new SecurityException("Only the owner of a " + typeName + " may delete it!");
+            }
+
+            record.release();
+            resArray.remove(resourceId);
+        }
+    }
+
     /** Release a previously allocated SPI that has been registered with the system server */
     @Override
-    public void releaseSecurityParameterIndex(int resourceId) throws RemoteException {}
+    public void releaseSecurityParameterIndex(int resourceId) throws RemoteException {
+        releaseManagedResource(mSpiRecords, resourceId, "SecurityParameterIndex");
+    }
+
+    // TODO: read from /proc/sys/net/ipv4/ip_local_port_range
+    private static final int EPHEMERAL_PORT_RANGE_LOW = 37000;
+    private static final int EPHEMERAL_PORT_RANGE_HIGH = 50000;
+    private static final int NUM_EPHEMERAL_PORTS =
+            EPHEMERAL_PORT_RANGE_HIGH - EPHEMERAL_PORT_RANGE_LOW;
+    private static final int MAX_PORT_BIND_ATTEMPTS = 1000;
+    private static final InetAddress INADDR_ANY;
+
+    static {
+        try {
+            INADDR_ANY = InetAddress.getByAddress(new byte[] {0, 0, 0, 0});
+        } catch (UnknownHostException e) {
+            throw new RuntimeException("Unable to create INADDR_ANY! " + e);
+        }
+    }
 
     /**
      * Open a socket via the system server and bind it to the specified port (random if port=0).
@@ -324,12 +398,63 @@ public class IpSecService extends IIpSecService.Stub {
      */
     @Override
     public Bundle openUdpEncapsulationSocket(int port, IBinder binder) throws RemoteException {
-        return null;
+        Bundle retBundle = new Bundle(2);
+        int resourceId = mNextResourceId.getAndIncrement();
+        FileDescriptor sockFd = null;
+        try {
+
+            sockFd =
+                    Os.socket(OsConstants.AF_INET, OsConstants.SOCK_DGRAM, OsConstants.IPPROTO_UDP);
+
+            // TODO: Port number validation, either 0 or non-reserved
+            if (port != 0) {
+                Log.d(TAG, "Binding to port " + port);
+                Os.bind(sockFd, INADDR_ANY, port);
+            } else {
+                // TODO: real random
+                Random r = new Random();
+                for (int i = MAX_PORT_BIND_ATTEMPTS; i > 0; i--) {
+                    port = r.nextInt(NUM_EPHEMERAL_PORTS) + EPHEMERAL_PORT_RANGE_LOW;
+                    try {
+                        Log.d(TAG, "Binding to port " + port);
+                        Os.bind(sockFd, INADDR_ANY, port);
+                        /* Os.setsockoptInt(sockFd, OsConstants.IPPROTO_UDP, OsConstants.UDP_ENCAP, OsConstants.UDP_ENCAP_ESPINUDP); */
+                        break;
+                    } catch (ErrnoException e) {
+                        // A case statement would be natural but OsConstants can't be used in
+                        // cases because they aren't traditional constants
+                        if (e.errno == OsConstants.EADDRINUSE
+                                || e.errno == OsConstants.EADDRNOTAVAIL) {
+                            continue;
+                        }
+                        throw e;
+                    }
+                }
+            }
+            retBundle.putInt(KEY_STATUS, IpSecManager.Status.OK);
+            retBundle.putInt(KEY_RESOURCE_ID, resourceId);
+            retBundle.putParcelable(KEY_SOCKET, ParcelFileDescriptor.dup(sockFd));
+            return retBundle;
+
+        } catch (IOException | ErrnoException e) {
+            try {
+                if (sockFd != null) Os.close(sockFd);
+            } catch (Exception unused) {
+            }
+            Log.e(TAG, "Failed to do something native " + e);
+            retBundle.putInt(KEY_STATUS, IpSecManager.Status.RESOURCE_UNAVAILABLE);
+            retBundle.putInt(KEY_RESOURCE_ID, IpSecManager.INVALID_RESOURCE_ID);
+            retBundle.putParcelable(KEY_SOCKET, null);
+        }
+        return retBundle;
+        // TODO: Cache this as a ManagedResource
     }
 
     /** close a socket that has been been allocated by and registered with the system server */
     @Override
-    public void closeUdpEncapsulationSocket(ParcelFileDescriptor socket) {}
+    public void closeUdpEncapsulationSocket(int resourceId) {
+        releaseManagedResource(mUdpSocketRecords, resourceId, "UdpEncapsulationSocket");
+    }
 
     /**
      * Create a transport mode transform, which represent two security associations (one in each
@@ -401,27 +526,7 @@ public class IpSecService extends IIpSecService.Stub {
      */
     @Override
     public void deleteTransportModeTransform(int resourceId) throws RemoteException {
-        synchronized (mTransformRecords) {
-            TransformRecord record;
-            // We want to non-destructively get so that we can check credentials before removing
-            // this from the records.
-            record = mTransformRecords.get(resourceId);
-
-            if (record == null) {
-                throw new IllegalArgumentException(
-                        "Transform " + resourceId + " is not available to be deleted");
-            }
-
-            if (record.pid != Binder.getCallingPid() || record.uid != Binder.getCallingUid()) {
-                throw new SecurityException("Only the owner of an IpSec Transform may delete it!");
-            }
-
-            // TODO: if releaseResources() throws RemoteException, we can try again to clean up on
-            // binder death. Need to make sure that path is actually functional.
-            record.releaseResources();
-            mTransformRecords.remove(resourceId);
-            record.nullifyRecord();
-        }
+        releaseManagedResource(mTransformRecords, resourceId, "IpSecTransform");
     }
 
     /**
