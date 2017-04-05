@@ -273,6 +273,11 @@ public final class InputDevice implements Parcelable {
     public static final int SOURCE_JOYSTICK = 0x01000000 | SOURCE_CLASS_JOYSTICK;
 
     /**
+     * The input source is an accelerometer.
+     */
+    public static final int SOURCE_ACCELEROMETER = 0x02000000 | SOURCE_CLASS_JOYSTICK;
+
+    /**
      * The input source is a device connected through HDMI-based bus.
      *
      * The key comes in through HDMI-CEC or MHL signal line, and is treated as if it were
@@ -974,6 +979,7 @@ public final class InputDevice implements Parcelable {
         appendSourceDescriptionIfApplicable(description, SOURCE_TRACKBALL, "trackball");
         appendSourceDescriptionIfApplicable(description, SOURCE_TOUCHPAD, "touchpad");
         appendSourceDescriptionIfApplicable(description, SOURCE_JOYSTICK, "joystick");
+        appendSourceDescriptionIfApplicable(description, SOURCE_ACCELEROMETER, "accelerometer");
         appendSourceDescriptionIfApplicable(description, SOURCE_GAMEPAD, "gamepad");
         description.append(" )\n");
 

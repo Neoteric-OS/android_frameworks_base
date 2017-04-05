@@ -4548,7 +4548,11 @@ public final class ViewRootImpl implements ViewParent,
                     mTrackball.process(event);
                     return FINISH_HANDLED;
                 } else if ((source & InputDevice.SOURCE_CLASS_JOYSTICK) != 0) {
-                    mJoystick.process(event);
+                    // Accelerometer device does not need to be processed
+                    if ((source & InputDevice.SOURCE_ACCELEROMETER)
+                            != InputDevice.SOURCE_ACCELEROMETER) {
+                        mJoystick.process(event);
+                    }
                     return FINISH_HANDLED;
                 } else if ((source & InputDevice.SOURCE_TOUCH_NAVIGATION)
                         == InputDevice.SOURCE_TOUCH_NAVIGATION) {
