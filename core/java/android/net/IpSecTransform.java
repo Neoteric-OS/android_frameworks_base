@@ -261,7 +261,7 @@ public final class IpSecTransform implements AutoCloseable {
                             mConfig.getNattKeepaliveInterval(),
                             mKeepaliveCallback,
                             mConfig.getLocalAddress(),
-                            mConfig.getEncapLocalPort(),
+                            0x1234, // FIXME: get the real port number again
                             mConfig.getRemoteAddress());
             try {
                 // FIXME: this is still a horrible way to fudge the synchronous callback
@@ -358,7 +358,7 @@ public final class IpSecTransform implements AutoCloseable {
                 @TransformDirection int direction, IpSecManager.SecurityParameterIndex spi) {
             // TODO: convert to using the resource Id of the SPI. Then build() can validate
             // the owner in the IpSecService
-            mConfig.flow[direction].spi = spi.getSpi();
+            mConfig.flow[direction].spiResourceId = spi.getResourceId();
             return this;
         }
 
@@ -392,7 +392,8 @@ public final class IpSecTransform implements AutoCloseable {
                 IpSecManager.UdpEncapsulationSocket localSocket, int remotePort) {
             // TODO: check encap type is valid.
             mConfig.encapType = ENCAP_ESPINUDP;
-            mConfig.encapLocalPort = localSocket.getPort(); // TODO: plug in the encap socket
+            mConfig.encapLocalResourceId =
+                    localSocket.getResourceId(); // TODO: plug in the encap socket
             mConfig.encapRemotePort = remotePort;
             return this;
         }
