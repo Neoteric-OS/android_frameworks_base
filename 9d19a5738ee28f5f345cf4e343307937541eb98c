@@ -1,0 +1,262 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ebc7fe9_b4c2155e",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-05T14:12:24Z",
+      "side": 1,
+      "message": "Nit: nc.mNetworkSpecifier?",
+      "range": {
+        "startLine": 611,
+        "startChar": 67,
+        "endLine": 611,
+        "endChar": 92
+      },
+      "revId": "9d19a5738ee28f5f345cf4e343307937541eb98c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1da73c36_80b7686f",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-05T14:12:24Z",
+      "side": 1,
+      "message": "Nit: nc.mNetworkSpecifier?",
+      "range": {
+        "startLine": 614,
+        "startChar": 28,
+        "endLine": 614,
+        "endChar": 52
+      },
+      "revId": "9d19a5738ee28f5f345cf4e343307937541eb98c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fea85bd2_5aa4e3f3",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-05T14:12:24Z",
+      "side": 1,
+      "message": "Maybe add a comment that we do this because historically, an empty string was treated the same as a null specifier?",
+      "range": {
+        "startLine": 263,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 74
+      },
+      "revId": "9d19a5738ee28f5f345cf4e343307937541eb98c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a2080e8_f2a3fc6a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4206,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-05T14:12:24Z",
+      "side": 1,
+      "message": "I think you need to guard against MatchAllNetworkSpecifier here. Maybe factor the check to a new checkValidNetworkSpecifier() function, and call it here and elsewhere? Alternatively, you might be able to put the check into the NetworkRequestInfo constructor(s), assuming it doesn\u0027t change any semantics or significantly complicate error handling code.",
+      "revId": "9d19a5738ee28f5f345cf4e343307937541eb98c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3210974_3f9a5167",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4267,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-05T14:12:24Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "9d19a5738ee28f5f345cf4e343307937541eb98c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "004bd0bb_39ea1db1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4284,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-05T14:12:24Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "9d19a5738ee28f5f345cf4e343307937541eb98c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79c52be0_cffb2d3e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-05T14:12:24Z",
+      "side": 1,
+      "message": "Now that setNetworkSpecifier(String) is just a wrapper, can you make this test method take a NetworkSpecifier instead of a String? That is what real NetworkAgents will do.",
+      "range": {
+        "startLine": 354,
+        "startChar": 40,
+        "endLine": 354,
+        "endChar": 56
+      },
+      "revId": "9d19a5738ee28f5f345cf4e343307937541eb98c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c63c4fc_45f04ee5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1879,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-05T14:12:24Z",
+      "side": 1,
+      "message": "Can you use a StringNetworkSpecifier for this one, so you can test both the string setter (with \"foo\") and the NetworkSpecifier setter (here)?",
+      "range": {
+        "startLine": 1879,
+        "startChar": 74,
+        "endLine": 1879,
+        "endChar": 79
+      },
+      "revId": "9d19a5738ee28f5f345cf4e343307937541eb98c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b453d3_0b7597b7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1905,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-05T14:12:24Z",
+      "side": 1,
+      "message": "Use StringNetworkSpecifier.",
+      "range": {
+        "startLine": 1905,
+        "startChar": 46,
+        "endLine": 1905,
+        "endChar": 51
+      },
+      "revId": "9d19a5738ee28f5f345cf4e343307937541eb98c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf0f3b16_88a432ae",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1913,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-05T14:12:24Z",
+      "side": 1,
+      "message": "Use StringNetworkSpecifier.",
+      "range": {
+        "startLine": 1913,
+        "startChar": 46,
+        "endLine": 1913,
+        "endChar": 51
+      },
+      "revId": "9d19a5738ee28f5f345cf4e343307937541eb98c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8384064f_1cfe6c18",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1958,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-05T14:12:24Z",
+      "side": 1,
+      "message": "This looks unused. Either test it or delete it?",
+      "range": {
+        "startLine": 1955,
+        "startChar": 0,
+        "endLine": 1958,
+        "endChar": 9
+      },
+      "revId": "9d19a5738ee28f5f345cf4e343307937541eb98c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72d3297b_9ab79c28",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1965,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-05T14:12:24Z",
+      "side": 1,
+      "message": "What is this code testing exactly? That build() throws? That writeToParcel throws? It seems that here we should be testing that both non-Parcelable and non-framework Parcelable specifiers fail when used.",
+      "range": {
+        "startLine": 1964,
+        "startChar": 0,
+        "endLine": 1965,
+        "endChar": 54
+      },
+      "revId": "9d19a5738ee28f5f345cf4e343307937541eb98c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
