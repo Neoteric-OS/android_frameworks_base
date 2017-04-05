@@ -76,20 +76,20 @@ public final class IpSecTransform implements AutoCloseable {
     public static final int ENCAP_NONE = 0;
 
     /**
-     * IpSec traffic will be encapsulated within UDP as per <a
-     * href="https://tools.ietf.org/html/rfc3948">RFC3498</a>.
-     *
-     * @hide
-     */
-    public static final int ENCAP_ESPINUDP = 1;
-
-    /**
      * IpSec traffic will be encapsulated within a UDP header with an additional 8-byte header pad
      * (of '0'-value bytes) that prevents traffic from being interpreted as IKE or as ESP over UDP.
      *
      * @hide
      */
-    public static final int ENCAP_ESPINUDP_NONIKE = 2;
+    public static final int ENCAP_ESPINUDP_NONIKE = 1;
+
+    /**
+     * IpSec traffic will be encapsulated within UDP as per <a
+     * href="https://tools.ietf.org/html/rfc3948">RFC3498</a>.
+     *
+     * @hide
+     */
+    public static final int ENCAP_ESPINUDP = 2;
 
     /** @hide */
     @IntDef(value = {ENCAP_NONE, ENCAP_ESPINUDP, ENCAP_ESPINUDP_NONIKE})
@@ -261,7 +261,7 @@ public final class IpSecTransform implements AutoCloseable {
                             mConfig.getNattKeepaliveInterval(),
                             mKeepaliveCallback,
                             mConfig.getLocalAddress(),
-                            mConfig.getEncapLocalPort(),
+                            0x1234, // FIXME: get the real port number again
                             mConfig.getRemoteAddress());
             try {
                 // FIXME: this is still a horrible way to fudge the synchronous callback
@@ -358,7 +358,7 @@ public final class IpSecTransform implements AutoCloseable {
                 @TransformDirection int direction, IpSecManager.SecurityParameterIndex spi) {
             // TODO: convert to using the resource Id of the SPI. Then build() can validate
             // the owner in the IpSecService
-            mConfig.flow[direction].spi = spi.getSpi();
+            mConfig.flow[direction].spiResourceId = spi.getResourceId();
             return this;
         }
 
@@ -392,7 +392,8 @@ public final class IpSecTransform implements AutoCloseable {
                 IpSecManager.UdpEncapsulationSocket localSocket, int remotePort) {
             // TODO: check encap type is valid.
             mConfig.encapType = ENCAP_ESPINUDP;
-            mConfig.encapLocalPort = localSocket.getPort(); // TODO: plug in the encap socket
+            mConfig.encapLocalResourceId =
+                    localSocket.getResourceId(); // TODO: plug in the encap socket
             mConfig.encapRemotePort = remotePort;
             return this;
         }
