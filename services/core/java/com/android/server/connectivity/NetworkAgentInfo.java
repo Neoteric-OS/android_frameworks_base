@@ -133,14 +133,14 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     // Set to true after the first time this network is marked as CONNECTED. Once set, the network
     // shows up in API calls, is able to satisfy NetworkRequests and can become the default network.
     // This is a sticky bit; once set it is never cleared.
-    public boolean everConnected;
+    public volatile boolean everConnected;
     // Set to true if this Network successfully passed validation or if it did not satisfy the
     // default NetworkRequest in which case validation will not be attempted.
     // This is a sticky bit; once set it is never cleared even if future validation attempts fail.
-    public boolean everValidated;
+    public volatile boolean everValidated;
 
     // The result of the last validation attempt on this network (true if validated, false if not).
-    public boolean lastValidated;
+    public volatile boolean lastValidated;
 
     // If true, becoming unvalidated will lower the network's score. This is only meaningful if the
     // system is configured not to do this for certain networks, e.g., if the
