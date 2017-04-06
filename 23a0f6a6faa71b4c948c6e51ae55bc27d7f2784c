@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c37c6e5_6ff90e02",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-04-06T00:45:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e505af6_754871af",
+      "range": {
+        "startLine": 396,
+        "startChar": 7,
+        "endLine": 396,
+        "endChar": 15
+      },
+      "revId": "23a0f6a6faa71b4c948c6e51ae55bc27d7f2784c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb93a03d_4ef27265",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-05T15:10:00Z",
       "side": 1,
       "message": "In that case, how would the caller know which callback is which? Can it happen that the entitlement app crashes and that the callback is never called? If so, then how can the caller tell the difference between \"entitlement app crashed\" and \"callback took a long time\"?",
+      "range": {
+        "startLine": 2097,
+        "startChar": 35,
+        "endLine": 2097,
+        "endChar": 68
+      },
+      "revId": "23a0f6a6faa71b4c948c6e51ae55bc27d7f2784c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82bc226b_f04ed612",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2097,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-04-06T00:45:55Z",
+      "side": 1,
+      "message": "Added \"in order\" to clarify that requests are queued by TetherService here. The requests to the entitlement app are always just made one at a time. Entitlement app crashes aren\u0027t something we handle right now in TetherService and that\u0027s a good point. I think we should add a timeout to all TetherService requests to deal with that. I\u0027ll file a bug, but I think it\u0027s orthogonal to this CL.",
+      "parentUuid": "cb93a03d_4ef27265",
       "range": {
         "startLine": 2097,
         "startChar": 35,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f2b6ae84_d8008828",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-04-06T00:45:55Z",
+      "side": 1,
+      "message": "Hmm... That\u0027s not a bad idea for future extensibility. Right now, though, the caller doesn\u0027t really need to call this frequently because TetherService handles all the rechecks and provisioning is checked on every call to startTethering anyway. The alternative is exposing isProvisioningRequired. I guess I just don\u0027t really like that adding this other result code means that the client needs to check for 2 different \"allowed\" conditions.",
+      "parentUuid": "97d50419_44082520",
+      "range": {
+        "startLine": 347,
+        "startChar": 46,
+        "endLine": 347,
+        "endChar": 73
+      },
+      "revId": "23a0f6a6faa71b4c948c6e51ae55bc27d7f2784c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eb9ccce_c1327a44",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-04-05T15:10:00Z",
       "side": 1,
       "message": "What happens if the tethering provisioning check is already running?",
+      "range": {
+        "startLine": 368,
+        "startChar": 8,
+        "endLine": 368,
+        "endChar": 39
+      },
+      "revId": "23a0f6a6faa71b4c948c6e51ae55bc27d7f2784c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cf9929e_a0cd9103",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-04-06T00:45:55Z",
+      "side": 1,
+      "message": "If the current check is for the same tether type, it looks like the callback will be correctly triggered by the current check\u0027s results. Seems like this intent firing is handled correctly. See TetherService.java for more details.",
+      "parentUuid": "8eb9ccce_c1327a44",
       "range": {
         "startLine": 368,
         "startChar": 8,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9c61104e_a0b8d059",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-04-06T00:45:55Z",
+      "side": 1,
+      "message": "Wow, I didn\u0027t know that was the case! I just tried this on O and you\u0027re right that getDataState correctly returns CONNECTED when wifi is connected now, which wasn\u0027t the case in N. This allowed me to simplify this quite a bit. Thanks!",
+      "parentUuid": "65387f32_3ceacb7c",
+      "range": {
+        "startLine": 383,
+        "startChar": 12,
+        "endLine": 383,
+        "endChar": 77
+      },
+      "revId": "23a0f6a6faa71b4c948c6e51ae55bc27d7f2784c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4fcb20b_93113a58",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 7
@@ -128,6 +248,30 @@
       "writtenOn": "2017-04-05T15:10:00Z",
       "side": 1,
       "message": "Please don\u0027t use getNetworkInfo(int) in new code. It\u0027s deprecated, and among other things, it will lie to you when a VPN is up.\n\nAlso, why does this code look at wifi at all? Is it to save a call to telephonyManager.getDataState()? I\u0027d prefer not to have wifi-specific code here because wifi is only one of the possible connection types a device can have.",
+      "range": {
+        "startLine": 385,
+        "startChar": 40,
+        "endLine": 385,
+        "endChar": 86
+      },
+      "revId": "23a0f6a6faa71b4c948c6e51ae55bc27d7f2784c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09103810_12ef3529",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-04-06T00:45:55Z",
+      "side": 1,
+      "message": "No longer relevant in O :-D. Removed.",
+      "parentUuid": "c4fcb20b_93113a58",
       "range": {
         "startLine": 385,
         "startChar": 40,

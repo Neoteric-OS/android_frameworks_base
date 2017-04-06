@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "e21a1916_707240ac",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-04-06T00:45:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b35a738e_f13e61ac",
+      "range": {
+        "startLine": 404,
+        "startChar": 27,
+        "endLine": 404,
+        "endChar": 34
+      },
+      "revId": "8e683cbe4630ef204ce14e69713519a39f86eb77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72c3486e_b022f2f7",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 6
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "If you\u0027d like the two names to be similar, how about leaving this as is and changing doesCarrierAllowTethering to runTetherProvisioningCheck?",
       "parentUuid": "66166032_5c290742",
+      "range": {
+        "startLine": 2093,
+        "startChar": 44,
+        "endLine": 2093,
+        "endChar": 46
+      },
+      "revId": "8e683cbe4630ef204ce14e69713519a39f86eb77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62111ac5_0e032673",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2093,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-04-06T00:45:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "728fbbd7_2ada3152",
       "range": {
         "startLine": 2093,
         "startChar": 44,
