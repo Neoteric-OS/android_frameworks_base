@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b14c570d_11871fc8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2017-04-06T14:05:12Z",
+      "side": 1,
+      "message": "nit: shorten the title, e.g. \"Add set/clear inputFeatures and INPUT_FEATURE_* flags\"",
+      "revId": "f03dbfa14f1bc19446691a1071c0c17f374b605c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c46eb139_9a0e94e4",
+        "filename": "core/java/android/view/Window.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1010077
+      },
+      "writtenOn": "2017-04-06T14:05:12Z",
+      "side": 1,
+      "message": "nit: Space between operator and operands (e.g. see line 1131).",
+      "revId": "f03dbfa14f1bc19446691a1071c0c17f374b605c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
