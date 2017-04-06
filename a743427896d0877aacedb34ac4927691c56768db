@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df9029b7_887fd0a8",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-04-06T03:26:19Z",
+      "side": 1,
+      "message": "It is guaranteed. https://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.25\n\n15.25. Conditional Operator ? :\n...\nIf one of the second and third operands is of the null type and the type of the other is a reference type, then the type of the conditional expression is that reference type.\n...",
+      "parentUuid": "d9324854_18b12d7b",
+      "range": {
+        "startLine": 268,
+        "startChar": 77,
+        "endLine": 268,
+        "endChar": 81
+      },
+      "revId": "a743427896d0877aacedb34ac4927691c56768db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fc043d2_54fd295c",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-06T02:02:34Z",
       "side": 1,
       "message": "Instead of explicitly testing the parceling codepath, can we just test that calling the two versions of requestNetwork and listenForNetwork throw an exception? Doesn\u0027t need to be in this change.",
+      "range": {
+        "startLine": 1979,
+        "startChar": 0,
+        "endLine": 1983,
+        "endChar": 92
+      },
+      "revId": "a743427896d0877aacedb34ac4927691c56768db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "693e5971_a58a7dee",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1983,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-04-06T03:26:19Z",
+      "side": 1,
+      "message": "OK - TBD",
+      "parentUuid": "0fc043d2_54fd295c",
       "range": {
         "startLine": 1979,
         "startChar": 0,
