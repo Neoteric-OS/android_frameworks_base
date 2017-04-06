@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "ded6c175_a8218422",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-06T08:16:13Z",
+      "side": 1,
+      "message": "queries?",
+      "range": {
+        "startLine": 14,
+        "startChar": 65,
+        "endLine": 14,
+        "endChar": 70
+      },
+      "revId": "fd41d6d2883ae6025cddeb3fdaaefa436a390415",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d05b621f_2e8bed75",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-06T08:16:13Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 15,
+        "startChar": 49,
+        "endLine": 15,
+        "endChar": 62
+      },
+      "revId": "fd41d6d2883ae6025cddeb3fdaaefa436a390415",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ba5aaee_f324e874",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3147,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-06T08:16:13Z",
+      "side": 1,
+      "message": "Is it easier here to just do something like:\n\n    if (nai \u003d\u003d null) return;\n\n    final NetworkInfo.State state;\n    final boolean lastValidated;\n    final ...;\n\n    synchronized (nai) {\n        state \u003d nai.networkInfo.getState();\n        ...\n        networkMonitor \u003d nai.networkMonitor;\n    }\n\nand just use the local copies thereafter?",
+      "range": {
+        "startLine": 3147,
+        "startChar": 8,
+        "endLine": 3147,
+        "endChar": 9
+      },
+      "revId": "fd41d6d2883ae6025cddeb3fdaaefa436a390415",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ad7079d_025c612e",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
