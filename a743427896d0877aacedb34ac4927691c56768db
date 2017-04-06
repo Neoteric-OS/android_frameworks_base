@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9324854_18b12d7b",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-06T02:02:34Z",
+      "side": 1,
+      "message": "Is it guaranteed that when passing null, this function will not call itself? Otherwise we could end up with a stack overflow. Might be safer to explicitly pass in \"(NetworkSpecifier) null\".",
+      "range": {
+        "startLine": 268,
+        "startChar": 77,
+        "endLine": 268,
+        "endChar": 81
+      },
+      "revId": "a743427896d0877aacedb34ac4927691c56768db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0fc043d2_54fd295c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1983,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-06T02:02:34Z",
+      "side": 1,
+      "message": "Instead of explicitly testing the parceling codepath, can we just test that calling the two versions of requestNetwork and listenForNetwork throw an exception? Doesn\u0027t need to be in this change.",
+      "range": {
+        "startLine": 1979,
+        "startChar": 0,
+        "endLine": 1983,
+        "endChar": 92
+      },
+      "revId": "a743427896d0877aacedb34ac4927691c56768db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
