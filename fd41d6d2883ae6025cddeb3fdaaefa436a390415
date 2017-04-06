@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ad7079d_025c612e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3149,
+      "author": {
+        "id": 1121773
+      },
+      "writtenOn": "2017-04-06T07:48:02Z",
+      "side": 1,
+      "message": "As discussed offline, it is odd to treat nai.lastValidated specially when we access fields like nai.networkInfo in a racy way just a few lines earlier. I\u0027d suggest limiting the scope of this change to moving isNetworkWithLinkPropertiesBlocked outside of synchronized(nai) {...}",
+      "revId": "fd41d6d2883ae6025cddeb3fdaaefa436a390415",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
