@@ -4563,11 +4563,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
             ++last;
             String key = "net.dns" + last;
             String value = dns.getHostAddress();
-            mSystemProperties.set(key, value);
+            // Ignore errors setting unsupported properties.
+            try {
+                mSystemProperties.set(key, value);
+            } catch (Exception ignored) {}
         }
         for (int i = last + 1; i <= mNumDnsEntries; ++i) {
             String key = "net.dns" + i;
-            mSystemProperties.set(key, "");
+            // Ignore errors setting unsupported properties.
+            try {
+                mSystemProperties.set(key, "");
+            } catch (Exception ignored) {}
         }
         mNumDnsEntries = last;
     }
