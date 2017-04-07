@@ -212,7 +212,6 @@ public final class Log {
      * @param tag The tag to check.
      * @param level The level to check.
      * @return Whether or not that this is allowed to be logged.
-     * @throws IllegalArgumentException is thrown if the tag.length() > 23.
      */
     public static native boolean isLoggable(String tag, int level);
 
