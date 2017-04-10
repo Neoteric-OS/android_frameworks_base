@@ -22,6 +22,7 @@ import android.hardware.input.IInputDevicesChangedListener;
 import android.hardware.input.ITabletModeChangedListener;
 import android.hardware.input.TouchCalibration;
 import android.os.IBinder;
+import android.os.VibratorEvent;
 import android.view.InputDevice;
 import android.view.InputEvent;
 import android.view.PointerIcon;
@@ -76,7 +77,7 @@ interface IInputManager {
     void registerTabletModeChangedListener(ITabletModeChangedListener listener);
 
     // Input device vibrator control.
-    void vibrate(int deviceId, in long[] pattern, int repeat, IBinder token);
+    void vibrate(int deviceId, in VibratorEvent[] pattern, int repeat, IBinder token);
     void cancelVibrate(int deviceId, IBinder token);
 
     void setPointerIconType(int typeId);

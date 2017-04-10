@@ -38,6 +38,7 @@ import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.Vibrator;
+import android.os.VibratorEvent;
 import android.os.WorkSource;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
@@ -94,30 +95,30 @@ public class VibratorService extends IVibratorService.Stub
     native static void vibratorOff();
 
     private class Vibration implements IBinder.DeathRecipient {
-        private final IBinder mToken;
-        private final long    mTimeout;
-        private final long    mStartTime;
-        private final long[]  mPattern;
-        private final int     mRepeat;
-        private final int     mUsageHint;
-        private final int     mUid;
-        private final String  mOpPkg;
+        private final IBinder         mToken;
+        private final VibratorEvent   mEvent;
+        private final long            mStartTime;
+        private final VibratorEvent[] mEvents;
+        private final int             mRepeat;
+        private final int             mUsageHint;
+        private final int             mUid;
+        private final String          mOpPkg;
 
-        Vibration(IBinder token, long millis, int usageHint, int uid, String opPkg) {
-            this(token, millis, null, 0, usageHint, uid, opPkg);
+        Vibration(IBinder token, VibratorEvent event, int usageHint, int uid, String opPkg) {
+            this(token, event, null, 0, usageHint, uid, opPkg);
         }
 
-        Vibration(IBinder token, long[] pattern, int repeat, int usageHint, int uid,
+        Vibration(IBinder token, VibratorEvent[] events, int repeat, int usageHint, int uid,
                 String opPkg) {
-            this(token, 0, pattern, repeat, usageHint, uid, opPkg);
+            this(token, null, events, repeat, usageHint, uid, opPkg);
         }
 
-        private Vibration(IBinder token, long millis, long[] pattern,
+        private Vibration(IBinder token, VibratorEvent event, VibratorEvent[] events,
                 int repeat, int usageHint, int uid, String opPkg) {
             mToken = token;
-            mTimeout = millis;
             mStartTime = SystemClock.uptimeMillis();
-            mPattern = pattern;
+            mEvent = event;
+            mEvents = events;
             mRepeat = repeat;
             mUsageHint = usageHint;
             mUid = uid;
@@ -135,12 +136,12 @@ public class VibratorService extends IVibratorService.Stub
         }
 
         public boolean hasLongerTimeout(long millis) {
-            if (mTimeout == 0) {
+            if (mEvent == null) {
                 // This is a pattern, return false to play the simple
                 // vibration.
                 return false;
             }
-            if ((mStartTime + mTimeout)
+            if ((mStartTime + mEvent.duration)
                     < (SystemClock.uptimeMillis() + millis)) {
                 // If this vibration will end before the time passed in, let
                 // the new vibration play.
@@ -156,19 +157,19 @@ public class VibratorService extends IVibratorService.Stub
     }
 
     private static class VibrationInfo {
-        long timeout;
+        VibratorEvent event;
         long startTime;
-        long[] pattern;
+        VibratorEvent[] events;
         int repeat;
         int usageHint;
         int uid;
         String opPkg;
 
-        public VibrationInfo(long timeout, long startTime, long[] pattern, int repeat,
-                int usageHint, int uid, String opPkg) {
-            this.timeout = timeout;
+        public VibrationInfo(VibratorEvent event, long startTime, VibratorEvent[] events,
+                int repeat, int usageHint, int uid, String opPkg) {
             this.startTime = startTime;
-            this.pattern = pattern;
+            this.event = event;
+            this.events = events;
             this.repeat = repeat;
             this.usageHint = usageHint;
             this.uid = uid;
@@ -178,12 +179,12 @@ public class VibratorService extends IVibratorService.Stub
         @Override
         public String toString() {
             return new StringBuilder()
-                    .append("timeout: ")
-                    .append(timeout)
+                    .append("single event: ")
+                    .append(event.toString())
                     .append(", startTime: ")
                     .append(startTime)
-                    .append(", pattern: ")
-                    .append(Arrays.toString(pattern))
+                    .append(", events: ")
+                    .append(Arrays.toString(events))
                     .append(", repeat: ")
                     .append(repeat)
                     .append(", usageHint: ")
@@ -278,28 +279,28 @@ public class VibratorService extends IVibratorService.Stub
     }
 
     @Override // Binder call
-    public void vibrate(int uid, String opPkg, long milliseconds, int usageHint,
+    public void vibrate(int uid, String opPkg, VibratorEvent event, int usageHint,
             IBinder token) {
         if (mContext.checkCallingOrSelfPermission(android.Manifest.permission.VIBRATE)
                 != PackageManager.PERMISSION_GRANTED) {
             throw new SecurityException("Requires VIBRATE permission");
         }
         verifyIncomingUid(uid);
-        // We're running in the system server so we cannot crash. Check for a
-        // timeout of 0 or negative. This will ensure that a vibration has
-        // either a timeout of > 0 or a non-null pattern.
-        if (milliseconds <= 0 || (mCurrentVibration != null
-                && mCurrentVibration.hasLongerTimeout(milliseconds))) {
+        // We're running in the system server so we cannot crash. Check if event
+        // vibrates.  This will ensure that a vibration has either a timeout of
+        // > 0 or a non-null pattern.
+        if (!event.vibrates() || (mCurrentVibration != null
+                && mCurrentVibration.hasLongerTimeout(event.duration))) {
             // Ignore this vibration since the current vibration will play for
             // longer than milliseconds.
             return;
         }
 
         if (DEBUG) {
-            Slog.d(TAG, "Vibrating for " + milliseconds + " ms.");
+            Slog.d(TAG, "Vibrating for " + event.duration + " ms.");
         }
 
-        Vibration vib = new Vibration(token, milliseconds, usageHint, uid, opPkg);
+        Vibration vib = new Vibration(token, event, usageHint, uid, opPkg);
 
         final long ident = Binder.clearCallingIdentity();
         try {
@@ -314,18 +315,8 @@ public class VibratorService extends IVibratorService.Stub
         }
     }
 
-    private boolean isAll0(long[] pattern) {
-        int N = pattern.length;
-        for (int i = 0; i < N; i++) {
-            if (pattern[i] != 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     @Override // Binder call
-    public void vibratePattern(int uid, String packageName, long[] pattern, int repeat,
+    public void vibratePattern(int uid, String packageName, VibratorEvent[] events, int repeat,
             int usageHint, IBinder token) {
         if (mContext.checkCallingOrSelfPermission(android.Manifest.permission.VIBRATE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -336,22 +327,17 @@ public class VibratorService extends IVibratorService.Stub
         long identity = Binder.clearCallingIdentity();
         try {
             if (DEBUG) {
-                String s = "";
-                int N = pattern.length;
-                for (int i=0; i<N; i++) {
-                    s += " " + pattern[i];
-                }
-                Slog.d(TAG, "Vibrating with pattern:" + s);
+                Slog.d(TAG, "Vibrating with pattern:" + Arrays.toString(events));
             }
 
             // we're running in the server so we can't fail
-            if (pattern == null || pattern.length == 0
-                    || isAll0(pattern)
-                    || repeat >= pattern.length || token == null) {
+            if (!VibratorEvent.isValidPattern(events)
+                    || repeat >= events.length
+                    || token == null) {
                 return;
             }
 
-            Vibration vib = new Vibration(token, pattern, repeat, usageHint, uid, packageName);
+            Vibration vib = new Vibration(token, events, repeat, usageHint, uid, packageName);
             try {
                 token.linkToDeath(vib, 0);
             } catch (RemoteException e) {
@@ -381,8 +367,8 @@ public class VibratorService extends IVibratorService.Stub
         if (mPreviousVibrations.size() > mPreviousVibrationsLimit) {
             mPreviousVibrations.removeFirst();
         }
-        mPreviousVibrations.addLast(new VibratorService.VibrationInfo(vib.mTimeout, vib.mStartTime,
-                vib.mPattern, vib.mRepeat, vib.mUsageHint, vib.mUid, vib.mOpPkg));
+        mPreviousVibrations.addLast(new VibratorService.VibrationInfo(vib.mEvent, vib.mStartTime,
+                vib.mEvents, vib.mRepeat, vib.mUsageHint, vib.mUid, vib.mOpPkg));
     }
 
     @Override // Binder call
@@ -474,9 +460,9 @@ public class VibratorService extends IVibratorService.Stub
             }
         } catch (RemoteException e) {
         }
-        if (vib.mTimeout != 0) {
-            doVibratorOn(vib.mTimeout, vib.mUid, vib.mUsageHint);
-            mH.postDelayed(mVibrationRunnable, vib.mTimeout);
+        if (vib.mEvent != null) {
+            doVibratorEvent(vib.mEvent, vib.mUid, vib.mUsageHint);
+            mH.postDelayed(mVibrationRunnable, vib.mEvent.duration);
         } else {
             // mThread better be null here. doCancelVibrate should always be
             // called before startNextVibrationLocked or startVibrationLocked.
@@ -530,7 +516,7 @@ public class VibratorService extends IVibratorService.Stub
     }
 
     private void unlinkVibration(Vibration vib) {
-        if (vib.mPattern != null) {
+        if (vib.mEvents != null) {
             // If Vibration object has a pattern,
             // the Vibration object has also been linkedToDeath.
             vib.mToken.unlinkToDeath(vib, 0);
@@ -608,13 +594,17 @@ public class VibratorService extends IVibratorService.Stub
         return vibratorExists();
     }
 
-    private void doVibratorOn(long millis, int uid, int usageHint) {
+    private void doVibratorEvent(VibratorEvent event, int uid, int usageHint) {
+        if (!event.vibrates()) {
+            return;
+        }
+
         synchronized (mInputDeviceVibrators) {
             if (DEBUG) {
-                Slog.d(TAG, "Turning vibrator on for " + millis + " ms.");
+                Slog.d(TAG, "Turning vibrator on for " + event.duration + " ms.");
             }
             try {
-                mBatteryStatsService.noteVibratorOn(uid, millis);
+                mBatteryStatsService.noteVibratorOn(uid, event.duration);
                 mCurVibUid = uid;
             } catch (RemoteException e) {
             }
@@ -623,10 +613,11 @@ public class VibratorService extends IVibratorService.Stub
                 final AudioAttributes attributes = new AudioAttributes.Builder().setUsage(usageHint)
                         .build();
                 for (int i = 0; i < vibratorCount; i++) {
-                    mInputDeviceVibrators.get(i).vibrate(millis, attributes);
+                    mInputDeviceVibrators.get(i).vibrateEvent(event, attributes);
                 }
             } else {
-                vibratorOn(millis);
+                // until vibratorOn/Off support magnitude
+                vibratorOn(event.duration);
             }
         }
     }
@@ -685,40 +676,27 @@ public class VibratorService extends IVibratorService.Stub
         public void run() {
             Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_DISPLAY);
             synchronized (this) {
-                final long[] pattern = mVibration.mPattern;
-                final int len = pattern.length;
+                final VibratorEvent[] events = mVibration.mEvents;
+                final int len = events.length;
                 final int repeat = mVibration.mRepeat;
                 final int uid = mVibration.mUid;
                 final int usageHint = mVibration.mUsageHint;
                 int index = 0;
-                long duration = 0;
 
                 while (!mDone) {
-                    // add off-time duration to any accumulated on-time duration
-                    if (index < len) {
-                        duration += pattern[index++];
-                    }
+                    VibratorEvent event = events[index++];
+                    VibratorService.this.doVibratorEvent(event, uid, usageHint);
 
-                    // sleep until it is time to start the vibrator
-                    delay(duration);
-                    if (mDone) {
-                        break;
-                    }
-
-                    if (index < len) {
-                        // read on-time duration and start the vibrator
-                        // duration is saved for delay() at top of loop
-                        duration = pattern[index++];
-                        if (duration > 0) {
-                            VibratorService.this.doVibratorOn(duration, uid, usageHint);
-                        }
-                    } else {
+                    if (index >= len) {
                         if (repeat < 0) {
                             break;
                         } else {
                             index = repeat;
-                            duration = 0;
                         }
+                    }
+
+                    if (event.duration > 0) {
+                        delay(event.duration);
                     }
                 }
                 mWakeLock.release();

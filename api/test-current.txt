@@ -30226,6 +30226,23 @@ package android.os {
     method public void vibrate(long, android.media.AudioAttributes);
     method public void vibrate(long[], int);
     method public void vibrate(long[], int, android.media.AudioAttributes);
+    method public void vibrateEvent(android.os.VibratorEvent);
+    method public void vibrateEvent(android.os.VibratorEvent, android.media.AudioAttributes);
+    method public void vibrateEvent(android.os.VibratorEvent[], int);
+    method public void vibrateEvent(android.os.VibratorEvent[], int, android.media.AudioAttributes);
+  }
+
+  public final class VibratorEvent implements android.os.Parcelable {
+    ctor public VibratorEvent(long);
+    ctor public VibratorEvent(long, short);
+    ctor public VibratorEvent(long, short, short);
+    method public int describeContents();
+    method public static boolean isValidPattern(android.os.VibratorEvent[]);
+    method public boolean vibrates();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public long duration;
+    field public short strongMagnitude;
+    field public short weakMagnitude;
   }
 
   public class WorkSource implements android.os.Parcelable {

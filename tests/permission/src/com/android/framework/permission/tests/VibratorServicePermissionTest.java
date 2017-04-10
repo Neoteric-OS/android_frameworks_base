@@ -24,6 +24,7 @@ import android.os.IVibratorService;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.VibratorEvent;
 import android.test.suitebuilder.annotation.SmallTest;
 
 /**
@@ -48,7 +49,7 @@ public class VibratorServicePermissionTest extends TestCase {
      */
     public void testVibrate() throws RemoteException {
         try {
-            mVibratorService.vibrate(Process.myUid(), null, 2000, AudioManager.STREAM_ALARM,
+            mVibratorService.vibrate(Process.myUid(), null, new VibratorEvent(2000), AudioManager.STREAM_ALARM,
                     new Binder());
             fail("vibrate did not throw SecurityException as expected");
         } catch (SecurityException e) {
@@ -65,7 +66,7 @@ public class VibratorServicePermissionTest extends TestCase {
      */
     public void testVibratePattern() throws RemoteException {
         try {
-            mVibratorService.vibratePattern(Process.myUid(), null, new long[] {0}, 0,
+            mVibratorService.vibratePattern(Process.myUid(), null, new VibratorEvent[] {new VibratorEvent(0, (short) 0)}, 0,
                     AudioManager.STREAM_ALARM, new Binder());
             fail("vibratePattern did not throw SecurityException as expected");
         } catch (SecurityException e) {

@@ -59,13 +59,13 @@ public class SystemVibrator extends Vibrator {
      * @hide
      */
     @Override
-    public void vibrate(int uid, String opPkg, long milliseconds, AudioAttributes attributes) {
+    public void vibrateEvent(int uid, String opPkg, VibratorEvent event, AudioAttributes attributes) {
         if (mService == null) {
             Log.w(TAG, "Failed to vibrate; no vibrator service.");
             return;
         }
         try {
-            mService.vibrate(uid, opPkg, milliseconds, usageForAttributes(attributes), mToken);
+            mService.vibrate(uid, opPkg, event, usageForAttributes(attributes), mToken);
         } catch (RemoteException e) {
             Log.w(TAG, "Failed to vibrate.", e);
         }
@@ -75,7 +75,7 @@ public class SystemVibrator extends Vibrator {
      * @hide
      */
     @Override
-    public void vibrate(int uid, String opPkg, long[] pattern, int repeat,
+    public void vibrateEvent(int uid, String opPkg, VibratorEvent[] events, int repeat,
             AudioAttributes attributes) {
         if (mService == null) {
             Log.w(TAG, "Failed to vibrate; no vibrator service.");
@@ -84,9 +84,9 @@ public class SystemVibrator extends Vibrator {
         // catch this here because the server will do nothing.  pattern may
         // not be null, let that be checked, because the server will drop it
         // anyway
-        if (repeat < pattern.length) {
+        if (repeat < events.length) {
             try {
-                mService.vibratePattern(uid, opPkg, pattern, repeat, usageForAttributes(attributes),
+                mService.vibratePattern(uid, opPkg, events, repeat, usageForAttributes(attributes),
                         mToken);
             } catch (RemoteException e) {
                 Log.w(TAG, "Failed to vibrate.", e);

@@ -1385,28 +1385,36 @@ static void nativeReloadCalibration(JNIEnv* env, jclass clazz, jlong ptr) {
 }
 
 static void nativeVibrate(JNIEnv* env,
-        jclass /* clazz */, jlong ptr, jint deviceId, jlongArray patternObj,
+        jclass /* clazz */, jlong ptr, jint deviceId, jobjectArray eventsObj,
         jint repeat, jint token) {
     NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
 
-    size_t patternSize = env->GetArrayLength(patternObj);
-    if (patternSize > MAX_VIBRATE_PATTERN_SIZE) {
+    size_t eventsSize = env->GetArrayLength(eventsObj);
+    if (eventsSize > MAX_VIBRATE_PATTERN_SIZE) {
         ALOGI("Skipped requested vibration because the pattern size is %zu "
                 "which is more than the maximum supported size of %d.",
-                patternSize, MAX_VIBRATE_PATTERN_SIZE);
+                eventsSize, MAX_VIBRATE_PATTERN_SIZE);
         return; // limit to reasonable size
     }
 
-    jlong* patternMillis = static_cast<jlong*>(env->GetPrimitiveArrayCritical(
-            patternObj, NULL));
-    nsecs_t pattern[patternSize];
-    for (size_t i = 0; i < patternSize; i++) {
-        pattern[i] = max(jlong(0), min(patternMillis[i],
-                (jlong)(MAX_VIBRATE_PATTERN_DELAY_NSECS / 1000000LL))) * 1000000LL;
-    }
-    env->ReleasePrimitiveArrayCritical(patternObj, patternMillis, JNI_ABORT);
+    jclass vibratorEventClass = env->FindClass("android/os/VibratorEvent");
+    jfieldID durationFieldId = env->GetFieldID(vibratorEventClass, "duration", "J");
+    jfieldID strongMagnitudeFieldId = env->GetFieldID(vibratorEventClass, "strongMagnitude", "S");
+    jfieldID weakMagnitudeFieldId = env->GetFieldID(vibratorEventClass, "weakMagnitude", "S");
 
-    im->getInputManager()->getReader()->vibrate(deviceId, pattern, patternSize, repeat, token);
+    struct VibrationEvent events[eventsSize];
+    for (size_t i = 0; i < eventsSize; i++) {
+        jobject event = (jobject) env->GetObjectArrayElement(eventsObj, i);
+
+        jlong durationMillis = env->GetLongField(event, durationFieldId);
+        events[i].duration = max(jlong(0), min(durationMillis,
+                (jlong)(MAX_VIBRATE_PATTERN_DELAY_NSECS / 1000000LL))) * 1000000LL;
+
+        events[i].strongMagnitude = env->GetShortField(event, strongMagnitudeFieldId);
+        events[i].weakMagnitude = env->GetShortField(event, weakMagnitudeFieldId);
+    }
+
+    im->getInputManager()->getReader()->vibrate(deviceId, events, eventsSize, repeat, token);
 }
 
 static void nativeCancelVibrate(JNIEnv* /* env */,
@@ -1523,7 +1531,7 @@ static const JNINativeMethod gInputManagerMethods[] = {
             (void*) nativeSetInteractive },
     { "nativeReloadCalibration", "(J)V",
             (void*) nativeReloadCalibration },
-    { "nativeVibrate", "(JI[JII)V",
+    { "nativeVibrate", "(JI[Landroid/os/VibratorEvent;II)V",
             (void*) nativeVibrate },
     { "nativeCancelVibrate", "(JII)V",
             (void*) nativeCancelVibrate },

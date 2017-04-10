@@ -42,16 +42,16 @@ public class NullVibrator extends Vibrator {
      * @hide
      */
     @Override
-    public void vibrate(int uid, String opPkg, long milliseconds, AudioAttributes attributes) {
+    public void vibrateEvent(int uid, String opPkg, VibratorEvent event, AudioAttributes attributes) {
     }
 
     /**
      * @hide
      */
     @Override
-    public void vibrate(int uid, String opPkg, long[] pattern, int repeat,
+    public void vibrateEvent(int uid, String opPkg, VibratorEvent[] events, int repeat,
             AudioAttributes attributes) {
-        if (repeat >= pattern.length) {
+        if (repeat >= events.length) {
             throw new ArrayIndexOutOfBoundsException();
         }
     }

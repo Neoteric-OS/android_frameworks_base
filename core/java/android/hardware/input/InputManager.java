@@ -33,6 +33,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.Vibrator;
+import android.os.VibratorEvent;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
@@ -1133,21 +1134,21 @@ public final class InputManager {
          * @hide
          */
         @Override
-        public void vibrate(int uid, String opPkg, long milliseconds, AudioAttributes attributes) {
-            vibrate(new long[] { 0, milliseconds}, -1);
+        public void vibrateEvent(int uid, String opPkg, VibratorEvent event, AudioAttributes attributes) {
+            vibrateEvent(new VibratorEvent[] {event}, -1, attributes);
         }
 
         /**
          * @hide
          */
         @Override
-        public void vibrate(int uid, String opPkg, long[] pattern, int repeat,
+        public void vibrateEvent(int uid, String opPkg, VibratorEvent[] events, int repeat,
                 AudioAttributes attributes) {
-            if (repeat >= pattern.length) {
+            if (repeat >= events.length) {
                 throw new ArrayIndexOutOfBoundsException();
             }
             try {
-                mIm.vibrate(mDeviceId, pattern, repeat, mToken);
+                mIm.vibrate(mDeviceId, events, repeat, mToken);
             } catch (RemoteException ex) {
                 throw ex.rethrowFromSystemServer();
             }
