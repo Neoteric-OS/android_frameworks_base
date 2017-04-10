@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdc6d9d2_ca9195c7",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2720,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-10T09:35:15Z",
+      "side": 1,
+      "message": "Any reason you\u0027re deleting sMagicDecoderRing instead of deleting this boilerplate code?",
+      "range": {
+        "startLine": 2709,
+        "startChar": 0,
+        "endLine": 2720,
+        "endChar": 66
+      },
+      "revId": "8c7963193d664549627375cfd5273a82be912a80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
