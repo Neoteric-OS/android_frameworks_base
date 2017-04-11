@@ -45,6 +45,30 @@
       "revId": "4ea2b190f4dd46bcafd7aec78464eb077a5d353b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79224c60_b0f2d028",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/SimChangeListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-11T09:06:09Z",
+      "side": 1,
+      "message": "Yup, true, true.\n\nFixed.",
+      "parentUuid": "546fd6b6_33789737",
+      "range": {
+        "startLine": 119,
+        "startChar": 16,
+        "endLine": 119,
+        "endChar": 38
+      },
+      "revId": "4ea2b190f4dd46bcafd7aec78464eb077a5d353b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
