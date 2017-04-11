@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "c6a80d97_a00a1c25",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-11T05:07:45Z",
+      "side": 1,
+      "message": "No not at all. I just wanted to point out this andbe sure it was a known difference.",
+      "parentUuid": "405ef2ac_fdec4bd5",
+      "range": {
+        "startLine": 614,
+        "startChar": 8,
+        "endLine": 614,
+        "endChar": 49
+      },
+      "revId": "a743427896d0877aacedb34ac4927691c56768db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58c59928_66041527",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 13
@@ -130,6 +154,30 @@
       "side": 1,
       "message": "That would definitely allow us to remove the special-casing of MatchAllNetworkSpecifier. I\u0027m not sure if there are any other use cases, though. Perhaps it could be used in NetworkFactories as a filter to decide which specifiers to accept and which to reject?",
       "parentUuid": "58c59928_66041527",
+      "range": {
+        "startLine": 619,
+        "startChar": 19,
+        "endLine": 619,
+        "endChar": 76
+      },
+      "revId": "a743427896d0877aacedb34ac4927691c56768db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bb1e05d_0164611f",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-11T05:07:45Z",
+      "side": 1,
+      "message": "Since there is no implications to the public api, we can let this in and see which direction to take it to after a few follow-up patches involving specifiers.\n\nPersonally I don\u0027t like that there is a satisfiedBy function on the base class but that we still need a satisfiedBy-like function here too.",
+      "parentUuid": "023f6ffe_90c39789",
       "range": {
         "startLine": 619,
         "startChar": 19,
