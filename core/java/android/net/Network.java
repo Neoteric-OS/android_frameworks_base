@@ -41,11 +41,7 @@ import javax.net.SocketFactory;
 
 import com.android.okhttp.ConnectionPool;
 import com.android.okhttp.Dns;
-import com.android.okhttp.HttpHandler;
-import com.android.okhttp.HttpsHandler;
-import com.android.okhttp.OkHttpClient;
-import com.android.okhttp.OkUrlFactory;
-import com.android.okhttp.internal.Internal;
+import com.android.okhttp.AndroidHttpClient;
 
 /**
  * Identifies a {@code Network}.  This is supplied to applications via
@@ -66,10 +62,9 @@ public class Network implements Parcelable {
     // Objects used to perform per-network operations such as getSocketFactory
     // and openConnection, and a lock to protect access to them.
     private volatile NetworkBoundSocketFactory mNetworkBoundSocketFactory = null;
-    // mLock should be used to control write access to mConnectionPool and mDns.
-    // maybeInitHttpClient() must be called prior to reading either variable.
-    private volatile ConnectionPool mConnectionPool = null;
-    private volatile Dns mDns = null;
+    // mLock should be used to control write access to mHttpClient.
+    // maybeInitHttpClient() must be called prior to reading this field.
+    private volatile AndroidHttpClient mHttpClient;
     private final Object mLock = new Object();
 
     // Default connection pool values. These are evaluated at startup, just
@@ -223,17 +218,20 @@ public class Network implements Parcelable {
     // out) ConnectionPools.
     private void maybeInitHttpClient() {
         synchronized (mLock) {
-            if (mDns == null) {
-                mDns = new Dns() {
+            if (mHttpClient == null) {
+                Dns dns = new Dns() {
                     @Override
                     public List<InetAddress> lookup(String hostname) throws UnknownHostException {
                         return Arrays.asList(Network.this.getAllByName(hostname));
                     }
                 };
-            }
-            if (mConnectionPool == null) {
-                mConnectionPool = new ConnectionPool(httpMaxConnections,
+                ConnectionPool connectionPool = new ConnectionPool(httpMaxConnections,
                         httpKeepAliveDurationMs, TimeUnit.MILLISECONDS);
+                // Let network traffic go via mDns
+                AndroidHttpClient httpClient = new AndroidHttpClient();
+                httpClient.setDns(dns);
+                httpClient.setConnectionPool(connectionPool);
+                mHttpClient = httpClient;
             }
         }
     }
@@ -254,7 +252,7 @@ public class Network implements Parcelable {
         }
         // TODO: Should this be optimized to avoid fetching the global proxy for every request?
         final ProxyInfo proxyInfo = cm.getProxyForNetwork(this);
-        java.net.Proxy proxy = null;
+        java.net.Proxy proxy;
         if (proxyInfo != null) {
             proxy = proxyInfo.makeProxy();
         } else {
@@ -277,25 +275,9 @@ public class Network implements Parcelable {
     public URLConnection openConnection(URL url, java.net.Proxy proxy) throws IOException {
         if (proxy == null) throw new IllegalArgumentException("proxy is null");
         maybeInitHttpClient();
-        String protocol = url.getProtocol();
-        OkUrlFactory okUrlFactory;
-        // TODO: HttpHandler creates OkUrlFactory instances that share the default ResponseCache.
-        // Could this cause unexpected behavior?
-        if (protocol.equals("http")) {
-            okUrlFactory = HttpHandler.createHttpOkUrlFactory(proxy);
-        } else if (protocol.equals("https")) {
-            okUrlFactory = HttpsHandler.createHttpsOkUrlFactory(proxy);
-        } else {
-            // OkHttp only supports HTTP and HTTPS and returns a null URLStreamHandler if
-            // passed another protocol.
-            throw new MalformedURLException("Invalid URL or unrecognized protocol " + protocol);
-        }
-        OkHttpClient client = okUrlFactory.client();
-        client.setSocketFactory(getSocketFactory()).setConnectionPool(mConnectionPool);
-        // Let network traffic go via mDns
-        client.setDns(mDns);
 
-        return okUrlFactory.open(url);
+        mHttpClient.setSocketFactory(getSocketFactory());
+        return mHttpClient.openConnection(url, proxy);
     }
 
     /**
