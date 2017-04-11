@@ -117,6 +117,24 @@ public class NsdManagerTest {
         verify(listener2, timeout(mTimeoutMs).times(1)).onServiceResolved(reply);
    }
 
+    @Test
+    public void testResolveServiceTimeout() {
+        NsdManager manager = makeManager();
+
+        NsdServiceInfo request = new NsdServiceInfo("a name", "a type");
+        NsdServiceInfo reply = new NsdServiceInfo("resolved name", "resolved type");
+        NsdManager.ResolveListener listener = mock(NsdManager.ResolveListener.class);
+
+        manager.resolveService(request, listener, mTimeoutMs / 2);
+        int key = verifyRequest(NsdManager.RESOLVE_SERVICE);
+        int err = NsdManager.FAILURE_TIMEOUT;
+        verify(listener, timeout(mTimeoutMs).times(1)).onResolveFailed(request, err);
+
+        // Service eventually sends a response after timeout
+        sendResponse(NsdManager.RESOLVE_SERVICE_SUCCEEDED, 0, key, reply);
+        verify(listener, timeout(mTimeoutMs).times(0)).onServiceResolved(any());
+    }
+
     NsdManager makeManager() {
         NsdManager manager = new NsdManager(mContext, mService);
         verify(mServiceHandler, timeout(mTimeoutMs).times(2)).handleMessage(any());

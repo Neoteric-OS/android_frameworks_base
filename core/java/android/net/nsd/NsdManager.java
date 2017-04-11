@@ -34,6 +34,7 @@ import java.util.concurrent.CountDownLatch;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.Protocol;
+import com.android.internal.util.Preconditions;
 
 /**
  * The Network Service Discovery Manager class provides the API to discover services
@@ -123,6 +124,8 @@ public final class NsdManager {
     private static final String TAG = NsdManager.class.getSimpleName();
     private static final boolean DBG = false;
 
+    private static final long RESOLVE_SERVICE_TIMEOUT_MS = 3000;
+
     /**
      * Broadcast intent action to indicate whether network service discovery is
      * enabled or disabled. An extra {@link #EXTRA_NSD_STATE} provides the state
@@ -205,6 +208,9 @@ public final class NsdManager {
     /** @hide */
     public static final int NATIVE_DAEMON_EVENT                     = BASE + 26;
 
+    /** @hide */
+    public static final int RESOLVE_SERVICE_TIMEOUT                 = BASE + 27;
+
     /** Dns based service discovery protocol */
     public static final int PROTOCOL_DNS_SD = 0x0001;
 
@@ -230,6 +236,7 @@ public final class NsdManager {
         EVENT_NAMES.put(ENABLE, "ENABLE");
         EVENT_NAMES.put(DISABLE, "DISABLE");
         EVENT_NAMES.put(NATIVE_DAEMON_EVENT, "NATIVE_DAEMON_EVENT");
+        EVENT_NAMES.put(RESOLVE_SERVICE_TIMEOUT, "RESOLVE_SERVICE_TIMEOUT");
     }
 
     /** @hide */
@@ -290,6 +297,13 @@ public final class NsdManager {
      */
     public static final int FAILURE_MAX_LIMIT                   = 4;
 
+    /**
+     * Indicates that the operation failed because it could not be completed in the specified
+     * amount of time.
+     * @hide
+     */
+    public static final int FAILURE_TIMEOUT                     = 101;
+
     /** Interface for callback invocation for service discovery */
     public interface DiscoveryListener {
 
@@ -335,8 +349,9 @@ public final class NsdManager {
 
         @Override
         public void handleMessage(Message message) {
-            if (DBG) Log.d(TAG, "received " + nameOf(message.what));
-            switch (message.what) {
+            final int what = message.what;
+            final int key = message.arg2;
+            switch (what) {
                 case AsyncChannel.CMD_CHANNEL_HALF_CONNECTED:
                     mAsyncChannel.sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
                     return;
@@ -349,19 +364,26 @@ public final class NsdManager {
                 default:
                     break;
             }
-            Object listener = getListener(message.arg2);
+            final NsdServiceInfo ns = getNsdService(key);
+            final Object listener = getListener(key);
             if (listener == null) {
-                Log.d(TAG, "Stale key " + message.arg2);
+                // Expected for replies/timouts to resolveService()
+                if (what != RESOLVE_SERVICE_SUCCEEDED || what != RESOLVE_SERVICE_FAILED
+                        || what != RESOLVE_SERVICE_TIMEOUT) {
+                    Log.d(TAG, "Stale key " + key);
+                }
                 return;
             }
-            NsdServiceInfo ns = getNsdService(message.arg2);
-            switch (message.what) {
+            if (DBG) {
+                Log.d(TAG, "received " + nameOf(what) + " for key " + key + ", service " + ns);
+            }
+            switch (what) {
                 case DISCOVER_SERVICES_STARTED:
                     String s = getNsdServiceInfoType((NsdServiceInfo) message.obj);
                     ((DiscoveryListener) listener).onDiscoveryStarted(s);
                     break;
                 case DISCOVER_SERVICES_FAILED:
-                    removeListener(message.arg2);
+                    removeListener(key);
                     ((DiscoveryListener) listener).onStartDiscoveryFailed(getNsdServiceInfoType(ns),
                             message.arg1);
                     break;
@@ -372,16 +394,16 @@ public final class NsdManager {
                     ((DiscoveryListener) listener).onServiceLost((NsdServiceInfo) message.obj);
                     break;
                 case STOP_DISCOVERY_FAILED:
-                    removeListener(message.arg2);
+                    removeListener(key);
                     ((DiscoveryListener) listener).onStopDiscoveryFailed(getNsdServiceInfoType(ns),
                             message.arg1);
                     break;
                 case STOP_DISCOVERY_SUCCEEDED:
-                    removeListener(message.arg2);
+                    removeListener(key);
                     ((DiscoveryListener) listener).onDiscoveryStopped(getNsdServiceInfoType(ns));
                     break;
                 case REGISTER_SERVICE_FAILED:
-                    removeListener(message.arg2);
+                    removeListener(key);
                     ((RegistrationListener) listener).onRegistrationFailed(ns, message.arg1);
                     break;
                 case REGISTER_SERVICE_SUCCEEDED:
@@ -389,19 +411,20 @@ public final class NsdManager {
                             (NsdServiceInfo) message.obj);
                     break;
                 case UNREGISTER_SERVICE_FAILED:
-                    removeListener(message.arg2);
+                    removeListener(key);
                     ((RegistrationListener) listener).onUnregistrationFailed(ns, message.arg1);
                     break;
                 case UNREGISTER_SERVICE_SUCCEEDED:
-                    removeListener(message.arg2);
+                    removeListener(key);
                     ((RegistrationListener) listener).onServiceUnregistered(ns);
                     break;
+                case RESOLVE_SERVICE_TIMEOUT:
                 case RESOLVE_SERVICE_FAILED:
-                    removeListener(message.arg2);
+                    removeListener(key);
                     ((ResolveListener) listener).onResolveFailed(ns, message.arg1);
                     break;
                 case RESOLVE_SERVICE_SUCCEEDED:
-                    removeListener(message.arg2);
+                    removeListener(key);
                     ((ResolveListener) listener).onServiceResolved((NsdServiceInfo) message.obj);
                     break;
                 default:
@@ -461,7 +484,7 @@ public final class NsdManager {
         return INVALID_LISTENER_KEY;
     }
 
-    private String getNsdServiceInfoType(NsdServiceInfo s) {
+    private static String getNsdServiceInfoType(NsdServiceInfo s) {
         if (s == null) return "?";
         return s.getServiceType();
     }
@@ -634,6 +657,25 @@ public final class NsdManager {
      * Cannot be in use for an active service resolution.
      */
     public void resolveService(NsdServiceInfo serviceInfo, ResolveListener listener) {
+        resolveService(serviceInfo, listener, RESOLVE_SERVICE_TIMEOUT_MS);
+    }
+
+    /**
+     * Resolve a discovered service. An application can resolve a service right before
+     * establishing a connection to fetch the IP and port details on which to setup
+     * the connection.
+     *
+     * @param serviceInfo service to be resolved
+     * @param listener to receive callback upon success or failure. Cannot be null.
+     * Cannot be in use for an active service resolution.
+     * @param timeout a timeout specified in milliseconds. If the resolve operation cannot be
+     * completed in the specifier time, {@link ResolveListener#onResolveFailed} is called with the
+     * error code {@link FAILURE_TIMEOUT}. Must be positive.
+     *
+     * @hide
+     */
+    public void resolveService(NsdServiceInfo serviceInfo, ResolveListener listener, long timeout) {
+        Preconditions.checkArgumentNonnegative(timeout, "timeout must be strictly non-negative");
         if (TextUtils.isEmpty(serviceInfo.getServiceName()) ||
                 TextUtils.isEmpty(serviceInfo.getServiceType())) {
             throw new IllegalArgumentException("Service name or type cannot be empty");
@@ -641,13 +683,18 @@ public final class NsdManager {
         if (listener == null) {
             throw new IllegalArgumentException("listener cannot be null");
         }
-
         int key = putListener(listener, serviceInfo);
-
         if (key == BUSY_LISTENER_KEY) {
             throw new IllegalArgumentException("listener already in use");
         }
         mAsyncChannel.sendMessage(RESOLVE_SERVICE, 0, key, serviceInfo);
+        // Schedule a timeout message to trigger the listener onResolveFailed() callback.
+        // This message is racing with a genuine answer from the service. The first reply,
+        // timeout or genuine, activates the callback and removes it from in-flight requests.
+        Message timeoutMessage = mHandler.obtainMessage(RESOLVE_SERVICE_TIMEOUT, serviceInfo);
+        timeoutMessage.arg1 = FAILURE_TIMEOUT;
+        timeoutMessage.arg2 = key;
+        mHandler.sendMessageDelayed(timeoutMessage, timeout);
     }
 
     /** Internal use only @hide */
@@ -660,10 +707,10 @@ public final class NsdManager {
     }
 
     /**
-     * Get a reference to NetworkService handler. This is used to establish
+     * Get a reference to NsdService handler. This is used to establish
      * an AsyncChannel communication with the service
      *
-     * @return Messenger pointing to the NetworkService handler
+     * @return Messenger pointing to the NsdService handler
      */
     private Messenger getMessenger() {
         try {
