@@ -16,6 +16,24 @@
       "revId": "0a74daace8fde8e3f846c8dcc59d3ff9c49abe99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cb64825_d1789346",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-11T01:35:35Z",
+      "side": 1,
+      "message": "It is because it is tri-state: 1) validation successful (isSuccess() true) 2) portal detected (isPortal() true) 3) failed, due to timeout or IO error or something else. I was confused by that too when I first looked at the portal detection logic.\n\nI want to remove these methods and instead introduce a proper enum to abstract over the http response code logic. This would look like:\n\nenum ProbeResult{\n  SUCCESS,\n  FAILED,\n  PORTAL;\n}\n\nBut that\u0027s a bit too big a change to do yet.",
+      "parentUuid": "1bb90f80_117ad5b5",
+      "revId": "0a74daace8fde8e3f846c8dcc59d3ff9c49abe99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
