@@ -222,7 +222,7 @@ public class Network implements Parcelable {
                 // until openConnection() and passed as arguments.
                 Dns dnsLookup = hostname -> Arrays.asList(Network.this.getAllByName(hostname));
                 HttpURLConnectionFactory urlConnectionFactory = new HttpURLConnectionFactory();
-                urlConnectionFactory.setDns(dnsLookup); // Let traffic go via dnsLookup
+                urlConnectionFactory.setDns(dnsLookup);  // Let traffic go via dnsLookup
                 // A private connection pool just for this Network.
                 urlConnectionFactory.setNewConnectionPool(httpMaxConnections,
                         httpKeepAliveDurationMs, TimeUnit.MILLISECONDS);
