@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bb90f80_117ad5b5",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1121773
+      },
+      "writtenOn": "2017-04-11T01:17:15Z",
+      "side": 1,
+      "message": "It is surprising to me that isFailed() is not defined as !isSuccessful(). Is it possible to make isPortal() a subset of isFailed() instead of making all three disjoint? The following change should be legal since isFailed() has no callers yet?\n\nboolean isPortal() {\n    return isFailed() \u0026\u0026 mHttpResponseCode \u003e\u003d 200) \u0026\u0026 (mHttpResponseCode \u003c\u003d 399);\n}\n\nboolean isFailed() {\n    return !isSuccessful();\n}",
+      "revId": "0a74daace8fde8e3f846c8dcc59d3ff9c49abe99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
