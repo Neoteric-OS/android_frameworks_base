@@ -29,7 +29,8 @@ import java.util.List;
 public class MediaHTTPService extends IMediaHTTPService.Stub {
     private static final String TAG = "MediaHTTPService";
     private List<HttpCookie> mCookies;
-    private Boolean mCookieStoreInitialized = new Boolean(false);
+    private Object mCookieManagerLock = new Object();
+    private CookieManager mCookieManager;
 
     public MediaHTTPService(List<HttpCookie> cookies) {
         mCookies = cookies;
@@ -37,49 +38,35 @@ public class MediaHTTPService extends IMediaHTTPService.Stub {
     }
 
     public IMediaHTTPConnection makeHTTPConnection() {
-
-        synchronized (mCookieStoreInitialized) {
+        synchronized (mCookieManagerLock) {
             // Only need to do it once for all connections
-            if ( !mCookieStoreInitialized )  {
-                CookieHandler cookieHandler = CookieHandler.getDefault();
-                if (cookieHandler == null) {
-                    cookieHandler = new CookieManager();
-                    CookieHandler.setDefault(cookieHandler);
-                    Log.v(TAG, "makeHTTPConnection: CookieManager created: " + cookieHandler);
-                } else {
-                    Log.v(TAG, "makeHTTPConnection: CookieHandler (" + cookieHandler + ") exists.");
-                }
-
-                // Applying the bootstrapping cookies
-                if ( mCookies != null ) {
-                    if ( cookieHandler instanceof CookieManager ) {
-                        CookieManager cookieManager = (CookieManager)cookieHandler;
-                        CookieStore store = cookieManager.getCookieStore();
-                        for ( HttpCookie cookie : mCookies ) {
-                            try {
-                                store.add(null, cookie);
-                            } catch ( Exception e ) {
-                                Log.v(TAG, "makeHTTPConnection: CookieStore.add" + e);
-                            }
-                            //for extended debugging when needed
-                            //Log.v(TAG, "MediaHTTPConnection adding Cookie[" + cookie.getName() +
-                            //        "]: " + cookie);
-                        }
-                    } else {
-                        Log.w(TAG, "makeHTTPConnection: The installed CookieHandler is not a "
-                                + "CookieManager. Can’t add the provided cookies to the cookie "
-                                + "store.");
+            if ( mCookieManager == null )  {
+                mCookieManager = new CookieManager();
+                Log.v(TAG, "makeHTTPConnection: CookieManager created: " + mCookieManager);
+            } else {
+                Log.v(TAG, "makeHTTPConnection: CookieHandler (" + mCookieManager + ") exists.");
+            }
+            // Applying the bootstrapping cookies
+            if ( mCookies != null ) {
+                CookieStore store = mCookieManager.getCookieStore();
+                for ( HttpCookie cookie : mCookies ) {
+                    try {
+                        store.add(null, cookie);
+                    } catch ( Exception e ) {
+                        Log.v(TAG, "makeHTTPConnection: CookieStore.add" + e);
                     }
-                }   // mCookies
+                    //for extended debugging when needed
+                    //Log.v(TAG, "MediaHTTPConnection adding Cookie[" + cookie.getName() +
+                    //        "]: " + cookie);
+                }
+            }   // mCookies
 
-                mCookieStoreInitialized = true;
 
-                Log.v(TAG, "makeHTTPConnection(" + this + "): cookieHandler: " + cookieHandler +
-                        " Cookies: " + mCookies);
-            }   // mCookieStoreInitialized
+            Log.v(TAG, "makeHTTPConnection(" + this + "): cookieHandler: " + cookieHandler +
+                    " Cookies: " + mCookies);
         }   // synchronized
 
-        return new MediaHTTPConnection();
+        return new MediaHTTPConnection(cookieManager);
     }
 
     /* package private */static IBinder createHttpServiceBinderIfNecessary(

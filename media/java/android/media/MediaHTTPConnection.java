@@ -16,6 +16,8 @@
 
 package android.media;
 
+import com.android.okhttp.internalandroidapi.HttpURLConnectionFactory;
+
 import android.net.NetworkUtils;
 import android.os.IBinder;
 import android.os.StrictMode;
@@ -25,7 +27,6 @@ import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.io.IOException;
 import java.net.CookieHandler;
-import java.net.CookieManager;
 import java.net.Proxy;
 import java.net.URL;
 import java.net.HttpURLConnection;
@@ -49,6 +50,7 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
     private long mCurrentOffset = -1;
     private URL mURL = null;
     private Map<String, String> mHeaders = null;
+    private final HttpURLConnectionFactory mConnectionFactory;
     private HttpURLConnection mConnection = null;
     private long mTotalSize = -1;
     private InputStream mInputStream = null;
@@ -60,12 +62,9 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
     private final static int HTTP_TEMP_REDIRECT = 307;
     private final static int MAX_REDIRECTS = 20;
 
-    public MediaHTTPConnection() {
-        CookieHandler cookieHandler = CookieHandler.getDefault();
-        if (cookieHandler == null) {
-            Log.w(TAG, "MediaHTTPConnection: Unexpected. No CookieHandler found.");
-        }
-
+    public MediaHTTPConnection(CookieHandler cookieHandler) {
+        mConnectionFactory = new HttpURLConnectionFactory();
+        mConnectionFactory.setCookieHandler(cookieHandler);
         native_setup();
     }
 
@@ -188,9 +187,10 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
 
             while (true) {
                 if (noProxy) {
-                    mConnection = (HttpURLConnection)url.openConnection(Proxy.NO_PROXY);
+                    mConnection = (HttpURLConnection) mConnectionFactory
+                            .openConnection(url, Proxy.NO_PROXY);
                 } else {
-                    mConnection = (HttpURLConnection)url.openConnection();
+                    mConnection = (HttpURLConnection) mConnectionFactory.openConnection(url);
                 }
                 mConnection.setConnectTimeout(CONNECT_TIMEOUT_MS);
 
