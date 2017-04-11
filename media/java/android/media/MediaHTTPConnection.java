@@ -21,6 +21,8 @@ import android.os.IBinder;
 import android.os.StrictMode;
 import android.util.Log;
 
+import libcore.net.http.HttpURLConnectionFactory;
+
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.io.IOException;
@@ -35,6 +37,7 @@ import java.net.ProtocolException;
 import java.net.UnknownServiceException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static android.media.MediaPlayer.MEDIA_ERROR_UNSUPPORTED;
 
@@ -42,6 +45,7 @@ import static android.media.MediaPlayer.MEDIA_ERROR_UNSUPPORTED;
 public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
     private static final String TAG = "MediaHTTPConnection";
     private static final boolean VERBOSE = false;
+    private static final AtomicReference<CookieHandler> COOKIE_HANDLER = new AtomicReference<>();
 
     // connection timeout - 30 sec
     private static final int CONNECT_TIMEOUT_MS = 30 * 1000;
@@ -55,15 +59,21 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
 
     private boolean mAllowCrossDomainRedirect = true;
     private boolean mAllowCrossProtocolRedirect = true;
+    private final HttpURLConnectionFactory connectionFactory;
 
     // from com.squareup.okhttp.internal.http
     private final static int HTTP_TEMP_REDIRECT = 307;
     private final static int MAX_REDIRECTS = 20;
 
     public MediaHTTPConnection() {
-        if (CookieHandler.getDefault() == null) {
-            CookieHandler.setDefault(new CookieManager());
+        this.connectionFactory = new HttpURLConnectionFactory();
+        CookieHandler cookieHandler = COOKIE_HANDLER.get();
+        if (cookieHandler == null) {
+            // ensure that COOKIE_HANDLER is set exactly once
+            COOKIE_HANDLER.compareAndSet(null, new CookieManager());
+            cookieHandler = COOKIE_HANDLER.get();
         }
+        connectionFactory.setCookieHandler(cookieHandler);
 
         native_setup();
     }
@@ -181,9 +191,10 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
 
             while (true) {
                 if (noProxy) {
-                    mConnection = (HttpURLConnection)url.openConnection(Proxy.NO_PROXY);
+                    mConnection = (HttpURLConnection) connectionFactory
+                            .openConnection(url, Proxy.NO_PROXY);
                 } else {
-                    mConnection = (HttpURLConnection)url.openConnection();
+                    mConnection = (HttpURLConnection) connectionFactory.openConnection(url);
                 }
                 mConnection.setConnectTimeout(CONNECT_TIMEOUT_MS);
 
