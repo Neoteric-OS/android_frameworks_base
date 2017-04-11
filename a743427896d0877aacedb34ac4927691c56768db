@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "21656ddd_b9c92913",
+        "filename": "core/java/android/net/MatchAllNetworkSpecifier.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-11T00:36:08Z",
+      "side": 1,
+      "message": "I am fine with it that way, but it is strange to return such a specific error message from a function with a generic name like checkFooOrBar.",
+      "range": {
+        "startLine": 37,
+        "startChar": 47,
+        "endLine": 37,
+        "endChar": 92
+      },
+      "revId": "a743427896d0877aacedb34ac4927691c56768db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50d071db_1d060076",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-11T00:36:08Z",
+      "side": 1,
+      "message": "Not an AI in for this patch, but it would have been nice to have along side of MatchAllSpecifier a NullSpecifier or NoSpecifier playing the role of null.",
+      "range": {
+        "startLine": 574,
+        "startChar": 49,
+        "endLine": 574,
+        "endChar": 53
+      },
+      "revId": "a743427896d0877aacedb34ac4927691c56768db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca5ca260_e25d2c74",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-11T00:36:08Z",
+      "side": 1,
+      "message": "In the old version, if otherSpecifier is null, nothing happens. In this version, if  otherSpecifier is null, we always set mNetworkSpecifier to null.\n\nAm I reading this correctly ? Is this WAI ?",
+      "range": {
+        "startLine": 614,
+        "startChar": 8,
+        "endLine": 614,
+        "endChar": 49
+      },
+      "revId": "a743427896d0877aacedb34ac4927691c56768db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58c59928_66041527",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-11T00:36:08Z",
+      "side": 1,
+      "message": "Since is satisfiedBy is not symmetric and now that we have a class, we could think putting a reverse satifies(NetworkSpecifier other) method that would return true on any input for MatchAllNetworkSpecifier.",
+      "range": {
+        "startLine": 619,
+        "startChar": 19,
+        "endLine": 619,
+        "endChar": 76
+      },
+      "revId": "a743427896d0877aacedb34ac4927691c56768db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9324854_18b12d7b",
         "filename": "core/java/android/net/NetworkRequest.java",
         "patchSetId": 13
@@ -37,6 +129,30 @@
       "side": 1,
       "message": "It is guaranteed. https://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.25\n\n15.25. Conditional Operator ? :\n...\nIf one of the second and third operands is of the null type and the type of the other is a reference type, then the type of the conditional expression is that reference type.\n...",
       "parentUuid": "d9324854_18b12d7b",
+      "range": {
+        "startLine": 268,
+        "startChar": 77,
+        "endLine": 268,
+        "endChar": 81
+      },
+      "revId": "a743427896d0877aacedb34ac4927691c56768db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aaeec062_8bb2ad59",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-11T00:36:08Z",
+      "side": 1,
+      "message": "There is no recursive call here.\n\nThe ? operator necessarily has a well defined return type T, which can at worst be Object, but as Etan pointed out is StringNetworkSpecifier in this case.\n\nWhich means that the inner call to setNetworkSpecifier could be either on a well known T that is not String, or on Object.\n\nIf Object, then neither setNetworkSpecifier(String) nor setNetworkSpecifier(NetworkSpecifier) would match and the compiler would complain.",
+      "parentUuid": "df9029b7_887fd0a8",
       "range": {
         "startLine": 268,
         "startChar": 77,
