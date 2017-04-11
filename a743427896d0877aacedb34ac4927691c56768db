@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "405ef2ac_fdec4bd5",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-11T04:08:50Z",
+      "side": 1,
+      "message": "In practice I think this doesn\u0027t matter because this code has only one caller (NetworkRequest.Builder#setCapabilities) and in that codepath mNetworkSpecifier is guaranteed to be null. Given that there is no backwards-compatibility issue here, do you have strong feelings on which of the two behaviours this method should exhibit?",
+      "parentUuid": "ca5ca260_e25d2c74",
+      "range": {
+        "startLine": 614,
+        "startChar": 8,
+        "endLine": 614,
+        "endChar": 49
+      },
+      "revId": "a743427896d0877aacedb34ac4927691c56768db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58c59928_66041527",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 13
@@ -82,6 +106,30 @@
       "writtenOn": "2017-04-11T00:36:08Z",
       "side": 1,
       "message": "Since is satisfiedBy is not symmetric and now that we have a class, we could think putting a reverse satifies(NetworkSpecifier other) method that would return true on any input for MatchAllNetworkSpecifier.",
+      "range": {
+        "startLine": 619,
+        "startChar": 19,
+        "endLine": 619,
+        "endChar": 76
+      },
+      "revId": "a743427896d0877aacedb34ac4927691c56768db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "023f6ffe_90c39789",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-11T04:08:50Z",
+      "side": 1,
+      "message": "That would definitely allow us to remove the special-casing of MatchAllNetworkSpecifier. I\u0027m not sure if there are any other use cases, though. Perhaps it could be used in NetworkFactories as a filter to decide which specifiers to accept and which to reject?",
+      "parentUuid": "58c59928_66041527",
       "range": {
         "startLine": 619,
         "startChar": 19,
