@@ -54,11 +54,13 @@ import android.support.test.runner.AndroidJUnit4;
 import android.telephony.CarrierConfigManager;
 
 import com.android.internal.util.test.BroadcastInterceptingContext;
+import com.android.server.net.BaseNetworkObserver;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -90,6 +92,7 @@ public class TetheringTest {
     private Vector<Intent> mIntents;
     private BroadcastInterceptingContext mServiceContext;
     private BroadcastReceiver mBroadcastReceiver;
+    private BaseNetworkObserver mNetworkObserver;
     private Tethering mTethering;
 
     private class MockContext extends BroadcastInterceptingContext {
@@ -138,6 +141,12 @@ public class TetheringTest {
                 new IntentFilter(ConnectivityManager.ACTION_TETHER_STATE_CHANGED));
         mTethering = new Tethering(mServiceContext, mNMService, mStatsService, mPolicyManager,
                                    mLooper.getLooper(), mSystemProperties);
+        mLooper.dispatchAll();
+        final ArgumentCaptor<BaseNetworkObserver> captor =
+                ArgumentCaptor.forClass(BaseNetworkObserver.class);
+        verify(mNMService).registerObserver(captor.capture());
+        verifyNoMoreInteractions(mNMService);
+        mNetworkObserver = captor.getValue();
     }
 
     @After
@@ -229,7 +238,7 @@ public class TetheringTest {
         // Emulate externally-visible WifiManager effects, causing the
         // per-interface state machine to start up, and telling us that
         // hotspot mode is to be started.
-        mTethering.interfaceStatusChanged(mTestIfname, true);
+        mNetworkObserver.interfaceStatusChanged(mTestIfname, true);
         sendWifiApStateChanged(WifiManager.WIFI_AP_STATE_ENABLED);
         mLooper.dispatchAll();
 
@@ -252,7 +261,7 @@ public class TetheringTest {
         // Emulate externally-visible WifiManager effects, when hotspot mode
         // is being torn down.
         sendWifiApStateChanged(WifiManager.WIFI_AP_STATE_DISABLED);
-        mTethering.interfaceRemoved(mTestIfname);
+        mNetworkObserver.interfaceRemoved(mTestIfname);
         mLooper.dispatchAll();
 
         verify(mNMService, times(1)).untetherInterface(mTestIfname);
@@ -286,7 +295,7 @@ public class TetheringTest {
         // Emulate externally-visible WifiManager effects, causing the
         // per-interface state machine to start up, and telling us that
         // tethering mode is to be started.
-        mTethering.interfaceStatusChanged(mTestIfname, true);
+        mNetworkObserver.interfaceStatusChanged(mTestIfname, true);
         sendWifiApStateChanged(WifiManager.WIFI_AP_STATE_ENABLED);
         mLooper.dispatchAll();
 
@@ -330,7 +339,7 @@ public class TetheringTest {
         // Emulate externally-visible WifiManager effects, when tethering mode
         // is being torn down.
         sendWifiApStateChanged(WifiManager.WIFI_AP_STATE_DISABLED);
-        mTethering.interfaceRemoved(mTestIfname);
+        mNetworkObserver.interfaceRemoved(mTestIfname);
         mLooper.dispatchAll();
 
         verify(mNMService, times(1)).untetherInterface(mTestIfname);
