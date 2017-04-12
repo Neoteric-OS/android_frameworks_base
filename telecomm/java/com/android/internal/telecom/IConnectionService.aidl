@@ -101,6 +101,8 @@ oneway interface IConnectionService {
     void respondToRttUpgradeRequest(String callId, in ParcelFileDescriptor fromInCall,
     in ParcelFileDescriptor toInCall, in Session.Info sessionInfo);
 
+    void addParticipantWithConference(String callId, String recipients);
+
     void handoverFailed(String callId, in ConnectionRequest request,
             int error, in Session.Info sessionInfo);
 
