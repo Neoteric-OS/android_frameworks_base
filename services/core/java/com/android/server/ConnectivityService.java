@@ -815,7 +815,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 new IntentFilter(Intent.ACTION_USER_PRESENT), null, null);
 
         try {
-            mNetd.registerObserver(mTethering);
             mNetd.registerObserver(mDataActivityObserver);
         } catch (RemoteException e) {
             loge("Error registering observer :" + e);
