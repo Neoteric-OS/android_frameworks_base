@@ -1020,9 +1020,10 @@ public final class InputManager {
             throw ex.rethrowFromSystemServer();
         }
 
+        Binder token = new Binder();
         InputDeviceLight[] lights = new InputDeviceLight[lightCount];
         for (int i = 0; i < lightCount; i++) {
-            lights[i] = new InputDeviceLight(deviceId, i);
+            lights[i] = new InputDeviceLight(deviceId, i, token);
         }
         // probe order of lights is not always the same, so sort by name,
         Arrays.sort(lights);
@@ -1195,10 +1196,16 @@ public final class InputManager {
 
         private final int mDeviceId;
         private final int mLightId;
+        private final Binder mToken;
 
-        public InputDeviceLight(int deviceId, int lightId) {
+        public InputDeviceLight(int deviceId, int lightId, Binder token) {
             mDeviceId = deviceId;
             mLightId = lightId;
+            if (token == null) {
+                mToken = new Binder();
+            } else {
+                mToken = token;
+            }
             try {
                 // cache properties that remain constant for the life of the device
                 mName = mIm.getLightName(mDeviceId, mLightId);
@@ -1217,7 +1224,7 @@ public final class InputManager {
         @Override
         public void setBrightness(int brightness) {
             try {
-                mIm.setLightBrightness(mDeviceId, mLightId, brightness);
+                mIm.setLightBrightness(mDeviceId, mLightId, brightness, mToken);
             } catch (RemoteException ex) {
                 throw ex.rethrowFromSystemServer();
             }
@@ -1226,7 +1233,7 @@ public final class InputManager {
         @Override
         public int getBrightness() {
             try {
-                LightState state = mIm.getLightState(mDeviceId, mLightId);
+                LightState state = mIm.getLightState(mDeviceId, mLightId, mToken);
                 if (state != null) {
                     return state.brightness;
                 } else {
@@ -1245,7 +1252,8 @@ public final class InputManager {
         @Override
         public void startBlinking(int onInterval, int offInterval) {
             try {
-                mIm.setLightBlinking(mDeviceId, mLightId, onInterval, offInterval);
+                mIm.setLightBlinking(mDeviceId, mLightId, onInterval, offInterval,
+                        mToken);
             } catch (RemoteException ex) {
                 throw ex.rethrowFromSystemServer();
             }
@@ -1267,7 +1275,7 @@ public final class InputManager {
         @Override
         public boolean isBlinking() {
             try {
-                LightState state = mIm.getLightState(mDeviceId, mLightId);
+                LightState state = mIm.getLightState(mDeviceId, mLightId, mToken);
                 if (state != null) {
                     return state.isBlinking;
                 } else {

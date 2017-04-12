@@ -84,9 +84,11 @@ interface IInputManager {
     int getLightCount(int deviceId);
     String getLightName(int deviceId, int lightId);
     int getLightMaximumBrightness(int deviceId, int lightId);
-    LightState getLightState(int deviceId, int lightId);
-    void setLightBrightness(int deviceId, int lightId, int brightness);
-    void setLightBlinking(int deviceId, int lightId, int onInterval, int offInterval);
+    LightState getLightState(int deviceId, int lightId, IBinder token);
+    void setLightBrightness(int deviceId, int lightId, int brightness,
+            IBinder token);
+    void setLightBlinking(int deviceId, int lightId, int onInterval, int offInterval,
+            IBinder token);
 
     void setPointerIconType(int typeId);
     void setCustomPointerIcon(in PointerIcon icon);
