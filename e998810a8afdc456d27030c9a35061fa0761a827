@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc29beb3_5de4c273",
+        "filename": "core/java/android/net/DhcpResults.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-12T13:41:29Z",
+      "side": 1,
+      "message": "add captivePortal here too ?\n\n(plus equals, readFrom/writeToParcel too)",
+      "range": {
+        "startLine": 91,
+        "startChar": 18,
+        "endLine": 91,
+        "endChar": 26
+      },
+      "revId": "e998810a8afdc456d27030c9a35061fa0761a827",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a15a3fb_8bc772d8",
+        "filename": "core/java/android/net/DhcpResults.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-12T13:41:29Z",
+      "side": 1,
+      "message": "OMG, a class that overrides equals() but not hashCode().",
+      "range": {
+        "startLine": 103,
+        "startChar": 19,
+        "endLine": 103,
+        "endChar": 25
+      },
+      "revId": "e998810a8afdc456d27030c9a35061fa0761a827",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
