@@ -16,6 +16,24 @@
       "revId": "110388eb6c9cd5fb664e80d0ebf6d6df561c324a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46b20d5f_6fdbe543",
+        "filename": "core/java/android/bluetooth/le/AdvertisingSetParameters.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-04-12T17:57:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aad662a7_2b8213f2",
+      "revId": "110388eb6c9cd5fb664e80d0ebf6d6df561c324a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
