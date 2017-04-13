@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4b6b4620_eff83cfa",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-04-13T10:32:27Z",
+      "side": 1,
+      "message": "Isn\u0027t that a blanket statement about all lambdas in general ?",
+      "parentUuid": "29fa31d4_3571b569",
+      "range": {
+        "startLine": 222,
+        "startChar": 27,
+        "endLine": 227,
+        "endChar": 18
+      },
+      "revId": "fe0d97a9d8a48c9fa5a220468c7ab4f8222c2e4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45e22b4e_6454ef4d",
         "filename": "core/java/android/net/Network.java",
         "patchSetId": 3
