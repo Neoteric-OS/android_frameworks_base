@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af20e4b2_4fe20ad2",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-13T02:46:29Z",
+      "side": 1,
+      "message": "could this become a lambda expression ?",
+      "range": {
+        "startLine": 222,
+        "startChar": 27,
+        "endLine": 227,
+        "endChar": 18
+      },
+      "revId": "fe0d97a9d8a48c9fa5a220468c7ab4f8222c2e4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45e22b4e_6454ef4d",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-13T02:46:29Z",
+      "side": 1,
+      "message": "Can this be qualified with final ?",
+      "range": {
+        "startLine": 255,
+        "startChar": 8,
+        "endLine": 255,
+        "endChar": 29
+      },
+      "revId": "fe0d97a9d8a48c9fa5a220468c7ab4f8222c2e4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
