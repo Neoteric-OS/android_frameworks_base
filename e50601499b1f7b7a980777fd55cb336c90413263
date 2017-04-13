@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bf27980_85982cac",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-13T06:57:31Z",
+      "side": 1,
+      "message": "After a fair amount of thought, I think this should be something like:\n\n                // Count up tx (http://b/12249687) and rx (http:/b/33681750) traffic and subtract\n                // from root UID on the base interface. We only have one adjustment entry for all\n                // base interface traffic, because all the translated packets will have UID \u003d 0 and\n                // no tag and will thus all be in the same entry.\n                NetworkStats.Entry adjust \u003d\n                    new NetworkStats.Entry(baseIface, 0, 0, 0, 0L, 0L, 0L, 0L, 0L);\n\n                // Difference between the IPv4 and IPv6 headers, imposed by 464xlat on every\n                // packet sent and received.\n                final int IPV4V6_HEADER_DELTA \u003d 20;\n\n                for (int j \u003d 0; j \u003c stats.size(); j++) {\n                    entry \u003d stats.getValues(j, entry);\n                    if (Objects.equals(entry.iface, stackedIface)) {\n                        // Accumulate a running count of packets and bytes seen on the stacked\n                        // interface, so we can later remove the corresponding traffic on the base\n                        // interface.\n                        adjust.txBytes -\u003d entry.txBytes;\n                        adjust.txPackets -\u003d entry.txPackets;\n                        adjust.txBytes -\u003d entry.txPackets * IPV4V6_HEADER_DELTA;\n\n                        adjust.rxBytes -\u003d entry.rxBytes;\n                        adjust.rxPackets -\u003d entry.rxPackets;\n                        adjust.rxBytes -\u003d entry.rxPackets * IPV4V6_HEADER_DELTA;\n                    } else if (Objects.equals(entry.iface, baseIface)) {\n                        // Take each individual entry and add 20 bytes per packet to it. Don\u0027t use a\n                        // persistent adjust entry like we do for the stacked iface, because each\n                        // entry in this loop will in general be different (different UID, tag,\n                        // etc.)\n                        entry.rxBytes \u003d entry.rxPackets * IPV4V6_HEADER_DELTA;\n                        entry.rxPackets \u003d 0;\n                        entry.txBytes \u003d entry.txPackets * IPV4V6_HEADER_DELTA;\n                        entry.txPackets \u003d 0;\n                        stats.combineValues(entry);\n                    }\n                }\n                // Actually remove the traffic from the base interface.\n                stats.combineValues(adjust);\n\nRationale: the way 464xlat works is that if an app sends (or receives) one 100-byte packet on a stacked interface (e.g., v4-wlan0), we\u0027ll actually send (or receive) a 120-byte packet on the base interface (in this case, wlan0). In the absence of any adjustment, both packets will be counted; the larger one on wlan0 will be attributed to UID 0 (incorrectly) and the smaller one on v4-wlan0 will be attributed to the app, but will be 20 bytes too small.\n\nThe goal is to end up with billing one packet and 120 bytes to the app.\n\nAs to which interface(s) the packet and the bytes should be billed on: I\u0027m not sure it matters, but the fact that the existing code subtracts the stacked traffic from the base traffic suggests that the goal is for the bytes to be reported against v4-wlan0, not wlan0.\n\nAs for the 20-byte adjustments: all stacked interfaces used to be called \"clat4\". Because every packet on these interfaces always results in 20 additional bytes of overhead, the existing code just adds 20 bytes per packet without needing to know what the base interface was.\n\nI think the current code does not perform the 20-byte adjustment on TX, because the TX double-counting adjustment implicitly performs it already. This is because for a 100-byte packet, adjust.txBytes is 100 (since it\u0027s measured on the stacked interface), and we subtract it from 120 (which is what we measured on the base interface). As a result we measure 20 bytes on wlan0 and 100 bytes on v4-wlan0 and the total is correct. If this theory is correct, then we still have 20 bytes attributed to root instead of the app UID, but that would have been enough at the time.\n\nI don\u0027t know why the code does not apply the double-counting fix on RX. When http://ag/522524 was written and merged, the setup was similar to what it is today, except that the stacked interface was always called clat4 (at the time we only supported one). The only thing I can think of is that at the time xt_qtaguid somehow wasn\u0027t able to count the RX traffic correctly. That seems unlikely.",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 212,
+        "endChar": 44
+      },
+      "revId": "e50601499b1f7b7a980777fd55cb336c90413263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
