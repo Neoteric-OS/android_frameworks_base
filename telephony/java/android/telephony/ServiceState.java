@@ -1220,12 +1220,21 @@ public class ServiceState implements Parcelable {
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_HSPAP
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_GSM
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_TD_SCDMA
-                || radioTechnology == RIL_RADIO_TECHNOLOGY_IWLAN
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_LTE_CA;
 
     }
 
     /** @hide */
+    public static boolean isIwlan(int radioTechnology) {
+        return radioTechnology == RIL_RADIO_TECHNOLOGY_IWLAN;
+    }
+
+    /** @hide */
+    public static boolean isGsmOrIwlan(int radioTechnology) {
+        return isGsm(radioTechnology)
+                || isIwlan(radioTechnology);
+    }
+        /** @hide */
     public static boolean isCdma(int radioTechnology) {
         return radioTechnology == RIL_RADIO_TECHNOLOGY_IS95A
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_IS95B
