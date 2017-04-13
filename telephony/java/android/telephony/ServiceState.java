@@ -1243,6 +1243,22 @@ public class ServiceState implements Parcelable {
     }
 
     /** @hide */
+    public static boolean isLteUmtsGsm(int radioTechnology) {
+        return radioTechnology == RIL_RADIO_TECHNOLOGY_GPRS
+                || radioTechnology == RIL_RADIO_TECHNOLOGY_EDGE
+                || radioTechnology == RIL_RADIO_TECHNOLOGY_UMTS
+                || radioTechnology == RIL_RADIO_TECHNOLOGY_HSDPA
+                || radioTechnology == RIL_RADIO_TECHNOLOGY_HSUPA
+                || radioTechnology == RIL_RADIO_TECHNOLOGY_HSPA
+                || radioTechnology == RIL_RADIO_TECHNOLOGY_LTE
+                || radioTechnology == RIL_RADIO_TECHNOLOGY_HSPAP
+                || radioTechnology == RIL_RADIO_TECHNOLOGY_GSM
+                || radioTechnology == RIL_RADIO_TECHNOLOGY_TD_SCDMA
+                || radioTechnology == RIL_RADIO_TECHNOLOGY_LTE_CA;
+
+    }
+
+    /** @hide */
     public static boolean bearerBitmapHasCdma(int radioTechnologyBitmap) {
         return (RIL_RADIO_CDMA_TECHNOLOGY_BITMASK & radioTechnologyBitmap) != 0;
     }
