@@ -77,6 +77,9 @@ public class TetherInterfaceStateMachine extends StateMachine {
     // new IPv6 tethering parameters need to be processed
     public static final int CMD_IPV6_TETHER_UPDATE          = BASE_IFACE + 13;
 
+    private static final int CMD_SERVING_STATE_TETHERED       = 1;
+    private static final int CMD_SERVING_STATE_LOCAL_HOTSPOT  = 2;
+
     private final State mInitialState;
     private final State mServingState;
     private final State mLocalHotspotState;
@@ -198,14 +201,20 @@ public class TetherInterfaceStateMachine extends StateMachine {
                     mLastError = ConnectivityManager.TETHER_ERROR_NO_ERROR;
                     switch (message.arg1) {
                         case IControlsTethering.STATE_LOCAL_HOTSPOT:
-                            transitionTo(mLocalHotspotState);
+                            deferMessage(obtainMessage(CMD_SERVING_STATE_LOCAL_HOTSPOT));
+                            transitionTo(mServingState);
                             break;
                         case IControlsTethering.STATE_TETHERED:
-                            transitionTo(mTetheredState);
+                            deferMessage(obtainMessage(CMD_SERVING_STATE_TETHERED));
+                            transitionTo(mServingState);
                             break;
                         default:
                             Log.e(TAG, "Invalid tethering interface serving state specified.");
                     }
+                    break;
+                case CMD_SERVING_STATE_LOCAL_HOTSPOT:
+                case CMD_SERVING_STATE_TETHERED:
+                    Log.e(TAG, "Ignoring serving state requests in InitialState.");
                     break;
                 case CMD_INTERFACE_DOWN:
                     transitionTo(mUnavailableState);
@@ -266,6 +275,12 @@ public class TetherInterfaceStateMachine extends StateMachine {
         public boolean processMessage(Message message) {
             maybeLogMessage(this, message.what);
             switch (message.what) {
+                case CMD_SERVING_STATE_LOCAL_HOTSPOT:
+                    transitionTo(mLocalHotspotState);
+                    break;
+                case CMD_SERVING_STATE_TETHERED:
+                    transitionTo(mTetheredState);
+                    break;
                 case CMD_TETHER_UNREQUESTED:
                     transitionTo(mInitialState);
                     if (DBG) Log.d(TAG, "Untethered (unrequested)" + mIfaceName);
