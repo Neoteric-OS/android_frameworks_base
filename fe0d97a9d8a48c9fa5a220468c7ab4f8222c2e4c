@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "2ad21a75_d3c93db3",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2017-04-13T12:23:08Z",
+      "side": 1,
+      "message": "Not 100% convinced, but renamed to it \"dnsLookup\", since abbreviating \"function\" -\u003e \"fn\" is a very uncommon thing to do in the Java language.\n\nLet\u0027s please leave any further style tweaks to separate CLs? We\u0027ve already spent six comments and two patch sets (which required rebasing the follow-up CL) on one unimportant style issue in a part of the code that this CL did not even need to touch.",
+      "parentUuid": "b4d86830_94ea5935",
+      "range": {
+        "startLine": 222,
+        "startChar": 27,
+        "endLine": 227,
+        "endChar": 18
+      },
+      "revId": "fe0d97a9d8a48c9fa5a220468c7ab4f8222c2e4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45e22b4e_6454ef4d",
         "filename": "core/java/android/net/Network.java",
         "patchSetId": 3
