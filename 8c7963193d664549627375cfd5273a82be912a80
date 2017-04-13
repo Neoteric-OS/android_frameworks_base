@@ -22,6 +22,30 @@
       "revId": "8c7963193d664549627375cfd5273a82be912a80",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d07b3e7_88dbab0a",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2720,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-13T02:15:23Z",
+      "side": 1,
+      "message": "A couple: it is easier to parse and understand. It is easier for the vms to optimize switch bytecodes than data structure lookups (other than native arrays). It has no dependency or other imports.\n\n(imo the real superior approach is neither this nor the decoder array, but using a closed enum)",
+      "parentUuid": "fdc6d9d2_ca9195c7",
+      "range": {
+        "startLine": 2709,
+        "startChar": 0,
+        "endLine": 2720,
+        "endChar": 66
+      },
+      "revId": "8c7963193d664549627375cfd5273a82be912a80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
