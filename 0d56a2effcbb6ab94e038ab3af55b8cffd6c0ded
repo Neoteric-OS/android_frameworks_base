@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13517504_100c2e00",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-13T08:50:26Z",
+      "side": 1,
+      "message": "Are you sure this is a readability improvement?\n\nCurrently, this class is a StateMachine, which even though fairly verbose, does at least have the property that it is fairly easy to see what it will do in any given state, just by looking at the processMessage functions. By adding out-of-line code that is in this callback function but is actually executed in the state machine, we\u0027re breaking that property and I fear that it might cause us to lose track of what code runs where.\n\nFor example, in a future refactoring, will we remember to ensure that any new lambda we add is safe to call in all the states that the state machine can be in (e.g., error states, which we might not immediately think of)?",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 15
+      },
+      "revId": "0d56a2effcbb6ab94e038ab3af55b8cffd6c0ded",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3d2e0c8_713c327f",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-13T08:50:26Z",
+      "side": 1,
+      "message": "Per in-person discussion: is it possible to restructure the code such that these error conditions cannot happen? Perhaps by doing more work in the constructor, or...",
+      "range": {
+        "startLine": 316,
+        "startChar": 0,
+        "endLine": 321,
+        "endChar": 42
+      },
+      "revId": "0d56a2effcbb6ab94e038ab3af55b8cffd6c0ded",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
