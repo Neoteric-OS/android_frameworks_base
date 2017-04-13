@@ -22,6 +22,30 @@
       "revId": "d269f30d62d9ea142790736c7509bb3b5637a38c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0561f6f0_111dcdc3",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1777,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-13T04:34:40Z",
+      "side": 0,
+      "message": "I assume it was just deal with some line wrapping or something.\n\nEither, I think the proposed replacement (ever so) slightly more readable.",
+      "parentUuid": "f0bd8069_2681a94f",
+      "range": {
+        "startLine": 1776,
+        "startChar": 8,
+        "endLine": 1777,
+        "endChar": 19
+      },
+      "revId": "d269f30d62d9ea142790736c7509bb3b5637a38c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

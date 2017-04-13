@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "991a1451_fba4faf6",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-13T04:34:40Z",
+      "side": 1,
+      "message": "Ok, greater refactoring undertaken.\n\nI\u0027ve de-dup\u0027d the code little bit more too.",
+      "parentUuid": "f9ac5cfb_d99eacc7",
+      "range": {
+        "startLine": 234,
+        "startChar": 16,
+        "endLine": 234,
+        "endChar": 25
+      },
+      "revId": "fee5aecea7fb31043bc4e71c8e0e4bafa9eacd90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10f9b797_7b7d2906",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-13T04:04:52Z",
       "side": 1,
       "message": "Is this object thread safe ?",
+      "range": {
+        "startLine": 874,
+        "startChar": 8,
+        "endLine": 874,
+        "endChar": 50
+      },
+      "revId": "fee5aecea7fb31043bc4e71c8e0e4bafa9eacd90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c17c85a_e90b2da7",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-13T04:34:40Z",
+      "side": 1,
+      "message": "Yes, every member is public and final.",
+      "parentUuid": "10f9b797_7b7d2906",
       "range": {
         "startLine": 874,
         "startChar": 8,
