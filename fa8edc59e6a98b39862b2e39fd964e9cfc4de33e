@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "559b249d_dc07847a",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-04-14T22:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1781388f_a9ef9803",
+      "range": {
+        "startLine": 405,
+        "startChar": 16,
+        "endLine": 405,
+        "endChar": 24
+      },
+      "revId": "fa8edc59e6a98b39862b2e39fd964e9cfc4de33e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70a74fa3_1bbf2fd3",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-14T07:58:34Z",
       "side": 1,
       "message": "Do we guarantee that this interface will fire one callback for every call within a bounded time? Or can it happen for some reason (e.g., entitlement app crashes, network not available, etc) that a callback doesn\u0027t happen?\n\nWithout such a guarantee, I don\u0027t think it\u0027s acceptable to provide an interface of this form, because a caller will never know which of its outstanding requests triggered a given response.\n\nIf we can\u0027t provide such a guarantee, then we should return some form of error if a duplicate ResultReceiver is passed in (assuming we can tell), or find another way to avoid this confusion.",
+      "range": {
+        "startLine": 2099,
+        "startChar": 50,
+        "endLine": 2099,
+        "endChar": 77
+      },
+      "revId": "fa8edc59e6a98b39862b2e39fd964e9cfc4de33e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12699827_61d6b419",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2099,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-04-14T22:33:38Z",
+      "side": 1,
+      "message": "Like I said in the last round of comments, the only case not handled correctly right now with multiple callbacks is if the entitlement app crashes. You\u0027re right that we should add a timeout to TetherService, but I\u0027d like to keep that separate from this CL because it\u0027s an issue even for the startTethering API right now. I\u0027ve filed a bug and cc\u0027d you and I intend to get a fix for that out to you shortly. Is it ok if we don\u0027t block this CL on that, though?",
+      "parentUuid": "70a74fa3_1bbf2fd3",
       "range": {
         "startLine": 2099,
         "startChar": 50,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "60b73942_eb31719e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 3105,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-04-14T22:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9fde062_8a383ed4",
+      "range": {
+        "startLine": 3105,
+        "startChar": 8,
+        "endLine": 3105,
+        "endChar": 40
+      },
+      "revId": "fa8edc59e6a98b39862b2e39fd964e9cfc4de33e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dccc9dcf_f269a1a3",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 10
@@ -82,6 +154,30 @@
       "writtenOn": "2017-04-14T07:58:34Z",
       "side": 1,
       "message": "Does this work on O even if you turn off mobile data always on? I suspect it might not.\n\nEven if it does, this seems a bit baroque. We\u0027re being called by ConnectivityService, from where it\u0027s trivial to determine whether the device has an active cell data connection or not.\n\nA simple way to do this in ConnectivityService would be:\n\n    @Override\n    public void runTetherProvisioningCheck(int type, ResultReceiver receiver) {\n        enforceTetherChangePermission();\n        mHandler.sendMessage(mHandler.obtainMessage(EVENT_RUN_TETHER_PROVISION_CHECK, type, 0, receiver));\n    }\n\n...\n\n    private boolean hasMobileInternetConnection() {\n        for (NetworkAgentInfo nai : mNetworkAgentInfos.values()) {\n            if (nai.networkCapabilities.hasCapability(NET_CAPABILITY_INTERNET) \u0026\u0026\n                    nai.networkCapabilities.hasTransport (TRANSPORT_CELLULAR)) {\n                return true;\n            }\n        }\n        return false;\n    }\n\n...\n\n    case EVENT_RUN_TETHER_PROVISION_CHECK: {\n        \n        runTetherProvisioningCheck(msg.arg1, receiver, hasMobileInternetConnection());\n    }",
+      "range": {
+        "startLine": 371,
+        "startChar": 0,
+        "endLine": 417,
+        "endChar": 5
+      },
+      "revId": "fa8edc59e6a98b39862b2e39fd964e9cfc4de33e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba4504e8_9602c083",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-04-14T22:33:38Z",
+      "side": 1,
+      "message": "Your suggestion looks much cleaner! Is it good enough to tell whether there\u0027s sufficient connection strength to make the request? If the user is in a subway or anywhere else where there\u0027s no service at all, does this function still return true?",
+      "parentUuid": "dccc9dcf_f269a1a3",
       "range": {
         "startLine": 371,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "863a05f6_cdf979d4",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-04-14T22:33:38Z",
+      "side": 1,
+      "message": "Good point. I went ahead and just removed this test because it doesn\u0027t matter anymore.",
+      "parentUuid": "5591ff37_682d3b64",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 5
+      },
+      "revId": "fa8edc59e6a98b39862b2e39fd964e9cfc4de33e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8344992_351851fb",
         "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
         "patchSetId": 10
@@ -128,6 +248,30 @@
       "writtenOn": "2017-04-14T07:58:34Z",
       "side": 1,
       "message": "Typo? Data",
+      "range": {
+        "startLine": 266,
+        "startChar": 67,
+        "endLine": 266,
+        "endChar": 72
+      },
+      "revId": "fa8edc59e6a98b39862b2e39fd964e9cfc4de33e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5a983a2_4732baf1",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2017-04-14T22:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8344992_351851fb",
       "range": {
         "startLine": 266,
         "startChar": 67,
