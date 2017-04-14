@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1781388f_a9ef9803",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-14T07:58:34Z",
+      "side": 1,
+      "message": "tethering",
+      "range": {
+        "startLine": 405,
+        "startChar": 16,
+        "endLine": 405,
+        "endChar": 24
+      },
+      "revId": "fa8edc59e6a98b39862b2e39fd964e9cfc4de33e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70a74fa3_1bbf2fd3",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2099,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-14T07:58:34Z",
+      "side": 1,
+      "message": "Do we guarantee that this interface will fire one callback for every call within a bounded time? Or can it happen for some reason (e.g., entitlement app crashes, network not available, etc) that a callback doesn\u0027t happen?\n\nWithout such a guarantee, I don\u0027t think it\u0027s acceptable to provide an interface of this form, because a caller will never know which of its outstanding requests triggered a given response.\n\nIf we can\u0027t provide such a guarantee, then we should return some form of error if a duplicate ResultReceiver is passed in (assuming we can tell), or find another way to avoid this confusion.",
+      "range": {
+        "startLine": 2099,
+        "startChar": 50,
+        "endLine": 2099,
+        "endChar": 77
+      },
+      "revId": "fa8edc59e6a98b39862b2e39fd964e9cfc4de33e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9fde062_8a383ed4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 3105,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-14T07:58:34Z",
+      "side": 1,
+      "message": "I just realized this only checks ACCESS_NETWORK_STATE. I don\u0027t think it\u0027s appropriate, because:\n\n1. Starting tethering is a privileged information (regular\n   apps can\u0027t do it at all), and there\u0027s no point allowing\n   an app to call this method if it can\u0027t do tethering\n   anyway.\n2. If the provisioning check brings up cell data, that can\n   cause mobile data traffic at a time when the app itself\n   might not be able to cause such traffic.\n3. API guidelines require that @SystemApi methods are guarded\n   by permissions that regular apps cannot have.\n\nIs there a reason this can\u0027t use enforceTetherChangePermission?",
+      "range": {
+        "startLine": 3105,
+        "startChar": 8,
+        "endLine": 3105,
+        "endChar": 40
+      },
+      "revId": "fa8edc59e6a98b39862b2e39fd964e9cfc4de33e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dccc9dcf_f269a1a3",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-14T07:58:34Z",
+      "side": 1,
+      "message": "Does this work on O even if you turn off mobile data always on? I suspect it might not.\n\nEven if it does, this seems a bit baroque. We\u0027re being called by ConnectivityService, from where it\u0027s trivial to determine whether the device has an active cell data connection or not.\n\nA simple way to do this in ConnectivityService would be:\n\n    @Override\n    public void runTetherProvisioningCheck(int type, ResultReceiver receiver) {\n        enforceTetherChangePermission();\n        mHandler.sendMessage(mHandler.obtainMessage(EVENT_RUN_TETHER_PROVISION_CHECK, type, 0, receiver));\n    }\n\n...\n\n    private boolean hasMobileInternetConnection() {\n        for (NetworkAgentInfo nai : mNetworkAgentInfos.values()) {\n            if (nai.networkCapabilities.hasCapability(NET_CAPABILITY_INTERNET) \u0026\u0026\n                    nai.networkCapabilities.hasTransport (TRANSPORT_CELLULAR)) {\n                return true;\n            }\n        }\n        return false;\n    }\n\n...\n\n    case EVENT_RUN_TETHER_PROVISION_CHECK: {\n        \n        runTetherProvisioningCheck(msg.arg1, receiver, hasMobileInternetConnection());\n    }",
+      "range": {
+        "startLine": 371,
+        "startChar": 0,
+        "endLine": 417,
+        "endChar": 5
+      },
+      "revId": "fa8edc59e6a98b39862b2e39fd964e9cfc4de33e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5591ff37_682d3b64",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-14T07:58:34Z",
+      "side": 1,
+      "message": "These look out of date now that the code no longer checks for wifi state.",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 5
+      },
+      "revId": "fa8edc59e6a98b39862b2e39fd964e9cfc4de33e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8344992_351851fb",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-14T07:58:34Z",
+      "side": 1,
+      "message": "Typo? Data",
+      "range": {
+        "startLine": 266,
+        "startChar": 67,
+        "endLine": 266,
+        "endChar": 72
+      },
+      "revId": "fa8edc59e6a98b39862b2e39fd964e9cfc4de33e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
