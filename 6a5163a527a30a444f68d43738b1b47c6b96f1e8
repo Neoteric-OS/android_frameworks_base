@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb2b6611_15e88f0b",
+        "filename": "api/current.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 33664,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-04-16T23:41:20Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem correct. Only the 4 fields for which notify is done should be public and all others hidden, right?",
+      "range": {
+        "startLine": 33662,
+        "startChar": 4,
+        "endLine": 33664,
+        "endChar": 83
+      },
+      "revId": "6a5163a527a30a444f68d43738b1b47c6b96f1e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
