@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "556b3087_6781f0e4",
+        "filename": "core/jni/android_hardware_SensorManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1074523
+      },
+      "writtenOn": "2017-04-17T23:47:25Z",
+      "side": 1,
+      "message": "The getInternedString() is buggy in many situations and thus is not used here in Android N. We are writing an alternative way of interning strings for android O.",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 71
+      },
+      "revId": "6d0a976240137dc31604d679c62455275361642a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
