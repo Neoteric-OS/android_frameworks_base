@@ -680,7 +680,8 @@ public class ConnectivityServiceTest extends AndroidTestCase {
         @Override
         protected CaptivePortalProbeResult isCaptivePortal() {
             if (!mIsCaptivePortalCheckEnabled) { return new CaptivePortalProbeResult(204); }
-            return new CaptivePortalProbeResult(gen204ProbeResult, gen204ProbeRedirectUrl, null);
+            return new CaptivePortalProbeResult(
+                    gen204ProbeResult, gen204ProbeRedirectUrl, null, 0, 0);
         }
     }
 
