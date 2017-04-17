@@ -22,6 +22,30 @@
       "revId": "6a5163a527a30a444f68d43738b1b47c6b96f1e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce5bffee_3864e6d8",
+        "filename": "api/current.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 33664,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-04-17T17:02:43Z",
+      "side": 1,
+      "message": "I think anything exposed through the ServiceState api should be exposed through the provider.\n\nThe reasoning behind the decision to notify for only those fields was just meant so that we would wake people much less because a few lesser-needed fields change more often.",
+      "parentUuid": "eb2b6611_15e88f0b",
+      "range": {
+        "startLine": 33662,
+        "startChar": 4,
+        "endLine": 33664,
+        "endChar": 83
+      },
+      "revId": "6a5163a527a30a444f68d43738b1b47c6b96f1e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
