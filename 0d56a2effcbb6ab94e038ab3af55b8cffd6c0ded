@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "111774a0_445021dc",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-17T00:37:29Z",
+      "side": 1,
+      "message": "I am not sure I am following here: are you sure this change is about readability improvements ?\n\nI thought this was about moving the logic of this public methods accessible through the tethering aidl onto the state machine handler.\n\nRight now it is synchronous to the caller, but not to the state machine handlers.\n\nIt seems to me like this would be the first step towards changing these methods further to sendMessage(TRACK_NEW_TETHERABLE_INTERFACE) and moving the runnable into the processMessage() actually (which is what you are describing right ?).\n\nGiven the recent issues we had in ConnectivityService with reportNetworkConnectivity, I am 100% in favor for moving synchronous logic of any public method that returns void onto that service main handler.",
+      "parentUuid": "13517504_100c2e00",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 15
+      },
+      "revId": "0d56a2effcbb6ab94e038ab3af55b8cffd6c0ded",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3d2e0c8_713c327f",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 4
