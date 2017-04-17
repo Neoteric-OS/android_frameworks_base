@@ -255,7 +255,7 @@ public class WifiConfiguration implements Parcelable {
     public String BSSID;
 
     /**
-     * 2GHz band.
+     * 2.4GHz band.
      * @hide
      */
     public static final int AP_BAND_2GHZ = 0;
@@ -265,6 +265,12 @@ public class WifiConfiguration implements Parcelable {
      * @hide
      */
     public static final int AP_BAND_5GHZ = 1;
+
+    /**
+     * 60GHz band.
+     * @hide
+     */
+    public static final int AP_BAND_60GHZ = 2;
 
     /**
      * The band which AP resides on
