@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "a02b36a4_bcfe908d",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-04-18T17:48:50Z",
+      "side": 1,
+      "message": "This seems fine, from the comment on storeNameAndAddress, \n\n\"Only non-null values will be saved.\"",
+      "parentUuid": "b9ecbd6b_9ad03b16",
+      "range": {
+        "startLine": 314,
+        "startChar": 40,
+        "endLine": 314,
+        "endChar": 44
+      },
+      "revId": "2137c7ed981bedc27911dae01e6a27d1360cc2e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bf5dbe7_b8a27844",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 1
