@@ -1017,10 +1017,10 @@ public final class BluetoothAdapter {
      *         immediate error
      * @hide
      */
-    public boolean configHciSnoopLog(boolean enable) {
+    public boolean updateHciSnoopLog() {
         try {
             mServiceLock.readLock().lock();
-            if (mService != null) return mService.configHciSnoopLog(enable);
+            if (mService != null) return mService.updateHciSnoopLog();
         } catch (RemoteException e) {
             Log.e(TAG, "", e);
         } finally {
