@@ -95,6 +95,29 @@
     },
     {
       "key": {
+        "uuid": "814c3c1e_c0f86a46",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-04-18T17:54:46Z",
+      "side": 1,
+      "message": "Use either BT_ADDR or BD_ADDR, as similar to LOCAL_NAME",
+      "range": {
+        "startLine": 485,
+        "startChar": 43,
+        "endLine": 485,
+        "endChar": 53
+      },
+      "revId": "2137c7ed981bedc27911dae01e6a27d1360cc2e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "668009ea_8ceb61f4",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 1
