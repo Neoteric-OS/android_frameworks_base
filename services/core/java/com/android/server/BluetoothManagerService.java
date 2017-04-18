@@ -307,6 +307,14 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                 if (newName != null) {
                     storeNameAndAddress(newName, null);
                 }
+            } else if (BluetoothAdapter.ACTION_BLUETOOTH_ADDRESS_CHANGED.equals(action)) {
+                String newAddress = intent.getStringExtra(BluetoothAdapter.EXTRA_BLUETOOTH_ADDRESS);
+                if (newAddress != null) {
+                    if (DBG) Slog.d(TAG, "Bluetooth Adapter MAC Address changed to " + newAddress);
+                    storeNameAndAddress(null, newAddress);
+                } else {
+                    if (DBG) Slog.e(TAG, "No Bluetooth Adapter MAC Address parameter found");
+                }
             }
         }
     };
@@ -343,6 +351,9 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_LOCAL_NAME_CHANGED);
         filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
         mContext.registerReceiver(mReceiver, filter);
+        IntentFilter filter2 = new IntentFilter(BluetoothAdapter.ACTION_BLUETOOTH_ADDRESS_CHANGED);
+        filter2.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+        mContext.registerReceiver(mReceiver, filter2);
         loadStoredNameAndAddress();
         if (isBluetoothPersistedStateOn()) {
             if (DBG) Slog.d(TAG, "Startup: Bluetooth persisted state is ON.");
