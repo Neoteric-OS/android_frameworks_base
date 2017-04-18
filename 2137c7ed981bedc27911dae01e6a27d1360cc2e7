@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "4aa48139_ba7f5d67",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-04-18T17:51:51Z",
+      "side": 1,
+      "message": "If a system-wide broadcast is really needed, this broadcast should be added as a system-only broadcast in the manifest.",
+      "parentUuid": "490155fa_19ab50f2",
+      "range": {
+        "startLine": 474,
+        "startChar": 31,
+        "endLine": 474,
+        "endChar": 56
+      },
+      "revId": "2137c7ed981bedc27911dae01e6a27d1360cc2e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a3fc5ae_dd76fc96",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 1
