@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0055c1bd_e820d6ed",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-04-18T17:37:07Z",
+      "side": 1,
+      "message": "Unclear - please rewrite.",
+      "range": {
+        "startLine": 469,
+        "startChar": 24,
+        "endLine": 470,
+        "endChar": 20
+      },
+      "revId": "2137c7ed981bedc27911dae01e6a27d1360cc2e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a3fc5ae_dd76fc96",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-04-18T17:37:07Z",
+      "side": 1,
+      "message": "Bluetooth address (?)",
+      "range": {
+        "startLine": 480,
+        "startChar": 33,
+        "endLine": 480,
+        "endChar": 43
+      },
+      "revId": "2137c7ed981bedc27911dae01e6a27d1360cc2e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "668009ea_8ceb61f4",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-04-18T17:37:07Z",
+      "side": 1,
+      "message": "Is this needed as part of the log message?",
+      "range": {
+        "startLine": 313,
+        "startChar": 60,
+        "endLine": 313,
+        "endChar": 62
+      },
+      "revId": "2137c7ed981bedc27911dae01e6a27d1360cc2e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9ecbd6b_9ad03b16",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-04-18T17:37:07Z",
+      "side": 1,
+      "message": "Is this intentional: null for the name. If the name has been set already\nby the \"storeNameAndAddress(newName, ...)\" will this call preserve\nthe name that is already set?",
+      "range": {
+        "startLine": 314,
+        "startChar": 40,
+        "endLine": 314,
+        "endChar": 44
+      },
+      "revId": "2137c7ed981bedc27911dae01e6a27d1360cc2e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bf5dbe7_b8a27844",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-04-18T17:37:07Z",
+      "side": 1,
+      "message": "Same comment as above.",
+      "range": {
+        "startLine": 316,
+        "startChar": 63,
+        "endLine": 316,
+        "endChar": 65
+      },
+      "revId": "2137c7ed981bedc27911dae01e6a27d1360cc2e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
