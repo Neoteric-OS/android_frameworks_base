@@ -373,6 +373,14 @@ public final class BluetoothDevice implements Parcelable {
     public static final String ACTION_CONNECTION_ACCESS_CANCEL =
             "android.bluetooth.device.action.CONNECTION_ACCESS_CANCEL";
 
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_LE_READ_PHY_EVENT =
+            "android.bluetooth.device.action.ACTION_LE_READ_PHY_EVENT";
+
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_LE_PHY_UPDATE_EVENT =
+            "android.bluetooth.device.action.ACTION_LE_PHY_UPDATE_EVENT";
+
     /**
      * Used as an extra field in {@link #ACTION_CONNECTION_ACCESS_REQUEST} intent.
      * @hide
@@ -641,6 +649,30 @@ public final class BluetoothDevice implements Parcelable {
     /** @hide */
     public static final String EXTRA_MAS_INSTANCE =
         "android.bluetooth.device.extra.MAS_INSTANCE";
+
+    /**
+     * Used as an extra field in {@link #ACTION_LE_READ_PHY_EVENT} and
+     * {@link #ACTION_LE_PHY_UPDATE_EVENT} intents,
+     * PHY event status:
+     *     Status = 0, implies success, else it contains error code for failure
+     *     EXTRA_TX_PHY and EXTRA_RX_PHY are not sent when status is a failure
+     */
+    public static final String EXTRA_PHY_STATUS =
+        "android.bluetooth.device.extra.phy_status";
+
+    /**
+     * Used as an extra field in {@link #ACTION_LE_READ_PHY_EVENT} and
+     * {@link #ACTION_LE_PHY_UPDATE_EVENT} intents,
+     * Active Transmitter PHY. Sent only upon success (EXTRA_PHY_STATUS)
+     */
+    public static final String EXTRA_TX_PHY = "android.bluetooth.device.extra.tx_phy";
+
+    /**
+     * Used as an extra field in {@link #ACTION_LE_READ_PHY_EVENT} and
+     * {@link #ACTION_LE_PHY_UPDATE_EVENT} intents,
+     * Active Receiver PHY. Sent only upon success (EXTRA_PHY_STATUS)
+     */
+    public static final String EXTRA_RX_PHY = "android.bluetooth.device.extra.rx_phy";
 
     /**
      * Lazy initialization. Guaranteed final after first object constructed, or
@@ -1700,5 +1732,58 @@ public final class BluetoothDevice implements Parcelable {
             return gatt;
         } catch (RemoteException e) {Log.e(TAG, "", e);}
         return null;
+    }
+
+    /**
+     * Read the current transmitter PHY and receiver PHY of the connection.
+     *
+     *<p> This API is asynchronous and {@link #ACTION_LE_READ_PHY_EVENT} intent is sent, with the
+     * current transmitter PHY and receiver PHY of the connection.
+     *
+     * @return False if sending of the command fails,
+     *         True if the command has been sent successfully and the response should come
+     *              through {@link #ACTION_LE_READ_PHY_EVENT} intent.
+     */
+    public boolean leReadPhy() {
+        if (sService == null) {
+            Log.e(TAG, "BT not enabled. Cannot readPhy");
+            return false;
+        }
+        try {
+            return sService.leReadPhy(this);
+        } catch (RemoteException e) {Log.e(TAG, "", e);}
+        return false;
+    }
+
+    /**
+     * Set the preferred connection PHY for this app. Please note that this is just a
+     * recommendation, whether the PHY change will happen depends on other applications peferences,
+     * local and remote controller capabilities. Controller can override these settings.
+     *
+     *<p> This API is asynchronous and {@link #ACTION_LE_PHY_UPDATE_EVENT} intent will be sent,
+     * as a result of this call, even if no PHY change happens. It is also triggered when remote
+     * device updates the PHY.
+     *
+     * @param txPhys preferred transmitter PHY. Bitwise OR of any of
+     *             {@link BluetoothDevice#PHY_LE_1M_MASK}, {@link BluetoothDevice#PHY_LE_2M_MASK},
+     *             and {@link BluetoothDevice#PHY_LE_CODED_MASK}.
+     * @param rxPhys preferred receiver PHY. Bitwise OR of any of
+     *             {@link BluetoothDevice#PHY_LE_1M_MASK}, {@link BluetoothDevice#PHY_LE_2M_MASK},
+     *             and {@link BluetoothDevice#PHY_LE_CODED_MASK}.
+     * @param phyOptions preferred coding to use when transmitting on the LE Coded PHY. Can be one
+     *             of {@link BluetoothDevice#PHY_OPTION_NO_PREFERRED},
+     *             {@link BluetoothDevice#PHY_OPTION_S2} or {@link BluetoothDevice#PHY_OPTION_S8}
+     *
+     * @return true if read phy command sent succesfully
+     */
+    public boolean leSetPhy(int txPhys, int rxPhys, int phyOptions) {
+        if (sService == null) {
+            Log.e(TAG, "BT not enabled. Cannot setPhy");
+            return false;
+        }
+        try {
+            return sService.leSetPhy(this, txPhys, rxPhys, phyOptions);
+        } catch (RemoteException e) {Log.e(TAG, "", e);}
+        return false;
     }
 }

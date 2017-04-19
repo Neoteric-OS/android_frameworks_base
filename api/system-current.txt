@@ -7393,6 +7393,8 @@ package android.bluetooth {
     method public android.os.ParcelUuid[] getUuids();
     method public boolean isConnected();
     method public boolean isEncrypted();
+    method public boolean leReadPhy();
+    method public boolean leSetPhy(int, int, int);
     method public boolean setPairingConfirmation(boolean);
     method public boolean setPin(byte[]);
     method public void writeToParcel(android.os.Parcel, int);
@@ -7402,6 +7404,8 @@ package android.bluetooth {
     field public static final java.lang.String ACTION_BOND_STATE_CHANGED = "android.bluetooth.device.action.BOND_STATE_CHANGED";
     field public static final java.lang.String ACTION_CLASS_CHANGED = "android.bluetooth.device.action.CLASS_CHANGED";
     field public static final java.lang.String ACTION_FOUND = "android.bluetooth.device.action.FOUND";
+    field public static final java.lang.String ACTION_LE_PHY_UPDATE_EVENT = "android.bluetooth.device.action.ACTION_LE_PHY_UPDATE_EVENT";
+    field public static final java.lang.String ACTION_LE_READ_PHY_EVENT = "android.bluetooth.device.action.ACTION_LE_READ_PHY_EVENT";
     field public static final java.lang.String ACTION_NAME_CHANGED = "android.bluetooth.device.action.NAME_CHANGED";
     field public static final java.lang.String ACTION_PAIRING_REQUEST = "android.bluetooth.device.action.PAIRING_REQUEST";
     field public static final java.lang.String ACTION_UUID = "android.bluetooth.device.action.UUID";
@@ -7420,8 +7424,11 @@ package android.bluetooth {
     field public static final java.lang.String EXTRA_NAME = "android.bluetooth.device.extra.NAME";
     field public static final java.lang.String EXTRA_PAIRING_KEY = "android.bluetooth.device.extra.PAIRING_KEY";
     field public static final java.lang.String EXTRA_PAIRING_VARIANT = "android.bluetooth.device.extra.PAIRING_VARIANT";
+    field public static final java.lang.String EXTRA_PHY_STATUS = "android.bluetooth.device.extra.phy_status";
     field public static final java.lang.String EXTRA_PREVIOUS_BOND_STATE = "android.bluetooth.device.extra.PREVIOUS_BOND_STATE";
     field public static final java.lang.String EXTRA_RSSI = "android.bluetooth.device.extra.RSSI";
+    field public static final java.lang.String EXTRA_RX_PHY = "android.bluetooth.device.extra.rx_phy";
+    field public static final java.lang.String EXTRA_TX_PHY = "android.bluetooth.device.extra.tx_phy";
     field public static final java.lang.String EXTRA_UUID = "android.bluetooth.device.extra.UUID";
     field public static final int PAIRING_VARIANT_PASSKEY_CONFIRMATION = 2; // 0x2
     field public static final int PAIRING_VARIANT_PIN = 0; // 0x0

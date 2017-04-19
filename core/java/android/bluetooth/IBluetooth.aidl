@@ -87,6 +87,8 @@ interface IBluetooth
     boolean setMessageAccessPermission(in BluetoothDevice device, int value);
     int getSimAccessPermission(in BluetoothDevice device);
     boolean setSimAccessPermission(in BluetoothDevice device, int value);
+    boolean leReadPhy(in BluetoothDevice device);
+    boolean leSetPhy(in BluetoothDevice device, int txPhys, int rxPhys, int phyOptions);
 
     void sendConnectionStateChange(in BluetoothDevice device, int profile, int state, int prevState);
 
