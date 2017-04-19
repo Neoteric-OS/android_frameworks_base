@@ -234,6 +234,19 @@ public class UpstreamNetworkMonitorTest {
         assertFalse(mUNM.mobileNetworkRequested());
     }
 
+    @Test
+    public void testTimedoutUpstreamsDontUnregister() throws Exception {
+        mUNM.start();
+        mUNM.updateMobileRequiresDun(true);
+        mUNM.registerMobileNetworkRequest();
+        assertTrue(mUNM.mobileNetworkRequested());
+        assertTrue(mCM.isDunRequested());
+
+        mCM.timeoutMobileUpstreamRequest();
+        assertTrue(mUNM.mobileNetworkRequested());
+        assertTrue(mCM.isDunRequested());
+    }
+
     private void assertUpstreamTypeRequested(int upstreamType) throws Exception {
         assertEquals(1, mCM.requested.size());
         assertEquals(1, mCM.legacyTypeMap.size());
@@ -279,6 +292,15 @@ public class UpstreamNetworkMonitorTest {
                 }
             }
             return false;
+        }
+
+        void timeoutMobileUpstreamRequest() {
+            // For now, the only request has to be the mobile upstream request.
+            assertEquals(1, requested.size());
+            final NetworkCallback cb = requested.keySet().iterator().next();
+            unregisterNetworkCallback(cb);
+            assertEquals(0, requested.size());
+            cb.onUnavailable();
         }
 
         @Override
@@ -343,7 +365,7 @@ public class UpstreamNetworkMonitorTest {
                 requested.remove(cb);
                 legacyTypeMap.remove(cb);
             } else {
-                fail("Unexpected callback removed");
+                // It's safe to unregister a callback that doesn't exist.
             }
             allCallbacks.remove(cb);
 

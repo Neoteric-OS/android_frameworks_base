@@ -62,6 +62,7 @@ public class UpstreamNetworkMonitor {
     private static final String TAG = UpstreamNetworkMonitor.class.getSimpleName();
     private static final boolean DBG = false;
     private static final boolean VDBG = false;
+    private static final int UPSTREAM_REQUEST_TIMEOUT_MS = 10000;
 
     public static final int EVENT_ON_AVAILABLE      = 1;
     public static final int EVENT_ON_CAPABILITIES   = 2;
@@ -153,12 +154,10 @@ public class UpstreamNetworkMonitor {
         // Therefore, to avoid duplicate notifications, we only register a no-op.
         mMobileNetworkCallback = new UpstreamNetworkCallback(CALLBACK_MOBILE_REQUEST);
 
-        // TODO: Change the timeout from 0 (no onUnavailable callback) to some
-        // moderate callback timeout. This might be useful for updating some UI.
-        // Additionally, we log a message to aid in any subsequent debugging.
         Log.d(TAG, "requesting mobile upstream network: " + mobileUpstreamRequest);
 
-        cm().requestNetwork(mobileUpstreamRequest, mMobileNetworkCallback, 0, legacyType, mHandler);
+        cm().requestNetwork(mobileUpstreamRequest, mMobileNetworkCallback,
+                UPSTREAM_REQUEST_TIMEOUT_MS, legacyType, mHandler);
     }
 
     public void releaseMobileNetworkRequest() {
@@ -305,6 +304,17 @@ public class UpstreamNetworkMonitor {
         notifyTarget(EVENT_ON_LOST, mNetworkMap.remove(network));
     }
 
+    private void handleUnavailable(int callbackType) {
+        if (callbackType != CALLBACK_MOBILE_REQUEST) {
+            Log.wtf(TAG, "onUnavailable() for callback type: " + callbackType);
+            return;
+        }
+
+        Log.e(TAG, "Received onUnavailable() for mobile upstream request");
+        releaseMobileNetworkRequest();
+        registerMobileNetworkRequest();
+    }
+
     // Fetch (and cache) a ConnectivityManager only if and when we need one.
     private ConnectivityManager cm() {
         if (mCM == null) {
@@ -351,6 +361,11 @@ public class UpstreamNetworkMonitor {
         public void onLost(Network network) {
             checkExpectedThread();
             handleLost(mCallbackType, network);
+        }
+
+        @Override
+        public void onUnavailable() {
+            handleUnavailable(mCallbackType);
         }
 
         private void checkExpectedThread() {

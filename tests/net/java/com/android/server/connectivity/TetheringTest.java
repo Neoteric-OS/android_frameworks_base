@@ -270,7 +270,7 @@ public class TetheringTest {
         // for a mobile network is also made.
         verify(mConnectivityManager, atLeastOnce()).getNetworkInfo(anyInt());
         verify(mConnectivityManager, times(1)).requestNetwork(
-                any(NetworkRequest.class), any(NetworkCallback.class), eq(0), anyInt(),
+                any(NetworkRequest.class), any(NetworkCallback.class), anyInt(), anyInt(),
                 any(Handler.class));
         // TODO: Figure out why this isn't exactly once, for sendTetherStateChangedBroadcast().
         verify(mConnectivityManager, atLeastOnce()).isTetheringSupported();
