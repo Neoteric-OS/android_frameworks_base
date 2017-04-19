@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9982d8cd_8b466a8c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-04-19T17:03:20Z",
+      "side": 1,
+      "message": "On multi project patches I like to add (1/3) etc. to the summary line.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 51
+      },
+      "revId": "8422c7bb70c194c522fbd67f7ee7de3af8db38d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "104b5707_7dcaca5b",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 2
