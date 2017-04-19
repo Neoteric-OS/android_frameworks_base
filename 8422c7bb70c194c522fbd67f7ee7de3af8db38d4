@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "104b5707_7dcaca5b",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-04-19T16:59:10Z",
+      "side": 1,
+      "message": "Please remove trailing spaces",
+      "range": {
+        "startLine": 468,
+        "startChar": 1,
+        "endLine": 489,
+        "endChar": 52
+      },
+      "revId": "8422c7bb70c194c522fbd67f7ee7de3af8db38d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
