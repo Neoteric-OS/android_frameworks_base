@@ -354,10 +354,28 @@ public final class BluetoothSocket implements Closeable {
     public void connect() throws IOException {
         if (mDevice == null) throw new IOException("Connect is called on null device");
 
+        IBluetoothManagerCallback stateChangedCallback = new IBluetoothManagerCallback.Stub() {
+
+            public void onBluetoothServiceUp(IBluetooth bluetoothService)
+                    throws RemoteException {
+                    throw new RemoteException("Bluetooth service brought up during connect");
+            }
+
+            public void onBluetoothServiceDown()
+                throws RemoteException {
+                    throw new RemoteException("Bluetooth service shut down during connect");
+            }
+
+            public void onBrEdrDown()
+                throws RemoteException {
+                    throw new RemoteException("BrEdr shut down during connect");
+            }
+        };
+
         try {
             if (mSocketState == SocketState.CLOSED) throw new IOException("socket closed");
             IBluetooth bluetoothProxy =
-                    BluetoothAdapter.getDefaultAdapter().getBluetoothService(null);
+                    BluetoothAdapter.getDefaultAdapter().getBluetoothService(stateChangedCallback);
             if (bluetoothProxy == null) throw new IOException("Bluetooth is off");
             mPfd = bluetoothProxy.connectSocket(mDevice, mType,
                     mUuid, mPort, getSecurityFlags());
@@ -395,7 +413,27 @@ public final class BluetoothSocket implements Closeable {
     /*package*/ int bindListen() {
         int ret;
         if (mSocketState == SocketState.CLOSED) return EBADFD;
-        IBluetooth bluetoothProxy = BluetoothAdapter.getDefaultAdapter().getBluetoothService(null);
+
+        IBluetoothManagerCallback stateChangedCallback = new IBluetoothManagerCallback.Stub() {
+
+            public void onBluetoothServiceUp(IBluetooth bluetoothService)
+                    throws RemoteException {
+                    throw new RemoteException("Bluetooth service brought up during bindListen");
+            }
+
+            public void onBluetoothServiceDown()
+                throws RemoteException {
+                    throw new RemoteException("Bluetooth service shut down during bindListen");
+            }
+
+            public void onBrEdrDown()
+                throws RemoteException {
+                    throw new RemoteException("BrEdr shut down during bindListen");
+            }
+        };
+
+        IBluetooth bluetoothProxy =
+                BluetoothAdapter.getDefaultAdapter().getBluetoothService(stateChangedCallback);
         if (bluetoothProxy == null) {
             Log.e(TAG, "bindListen fail, reason: bluetooth is off");
             return -1;
