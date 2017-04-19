@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f98c3c1_3ddc2605",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1755,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-19T09:50:54Z",
+      "side": 1,
+      "message": "how about just \"communicate\", since sharing files might not be the only thing they do.",
+      "range": {
+        "startLine": 1755,
+        "startChar": 64,
+        "endLine": 1755,
+        "endChar": 75
+      },
+      "revId": "14eca69e1d66555eaf49af119aebb7a13244d42c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6d735c9_1678d7fd",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1757,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-19T09:50:54Z",
+      "side": 1,
+      "message": "Can be folded into the first sentence, I think.",
+      "range": {
+        "startLine": 1757,
+        "startChar": 98,
+        "endLine": 1757,
+        "endChar": 99
+      },
+      "revId": "14eca69e1d66555eaf49af119aebb7a13244d42c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "373ed99d_a5337a7d",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1775,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-19T09:50:54Z",
+      "side": 1,
+      "message": ";",
+      "range": {
+        "startLine": 1775,
+        "startChar": 18,
+        "endLine": 1775,
+        "endChar": 19
+      },
+      "revId": "14eca69e1d66555eaf49af119aebb7a13244d42c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d12e166_4a1635cd",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1797,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-19T09:50:54Z",
+      "side": 1,
+      "message": "\".  Instead, they should call the close() method on their LocalOnlyHotspotReservation.\"",
+      "range": {
+        "startLine": 1797,
+        "startChar": 56,
+        "endLine": 1797,
+        "endChar": 57
+      },
+      "revId": "14eca69e1d66555eaf49af119aebb7a13244d42c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
