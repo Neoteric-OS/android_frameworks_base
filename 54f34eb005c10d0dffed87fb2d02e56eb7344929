@@ -22,6 +22,30 @@
       "revId": "54f34eb005c10d0dffed87fb2d02e56eb7344929",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "708396a0_1fdcac79",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-20T14:15:17Z",
+      "side": 1,
+      "message": "I don\u0027t follow; interfaceLinkStateChanged() calls interfaceStatusChanged() already.\n\nBoth function @Override BaseNetworkObserver method, AIUI.",
+      "parentUuid": "e48af77b_453edbe6",
+      "range": {
+        "startLine": 228,
+        "startChar": 16,
+        "endLine": 228,
+        "endChar": 38
+      },
+      "revId": "54f34eb005c10d0dffed87fb2d02e56eb7344929",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
