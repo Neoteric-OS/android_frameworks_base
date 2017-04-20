@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3b9c6af_4806590c",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-04-20T00:15:22Z",
+      "side": 1,
+      "message": "My preference is to move away from the obsoleted \"BD\" acronym and replace it with, say, \"BT\" or \"BLUETOOTH\" in the names.\nSame comment applies to the rest of the changes.",
+      "range": {
+        "startLine": 479,
+        "startChar": 38,
+        "endLine": 479,
+        "endChar": 40
+      },
+      "revId": "09055986827bb9a46d4f6a4a655d63db44f786f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
