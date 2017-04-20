@@ -1284,7 +1284,7 @@
 
     <!-- Enables the TimeZoneRuleManager service. This is the master switch for the updateable time
          zone update mechanism. -->
-    <bool name="config_enableUpdateableTimeZoneRules">false</bool>
+    <bool name="config_enableUpdateableTimeZoneRules">true</bool>
 
     <!-- Enables APK-based time zone update triggering. Set this to false when updates are triggered
          via external events and not by APK updates. For example, if an updater checks with a server
