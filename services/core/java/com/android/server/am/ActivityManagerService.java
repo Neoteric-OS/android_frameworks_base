@@ -14718,6 +14718,33 @@ public class ActivityManagerService extends IActivityManager.Stub
     private volatile long mWtfClusterStart;
     private volatile int mWtfClusterCount;
 
+    private void copyDropBoxForRamdumper(String dropboxTag) {
+        final String SYSTEM_DROPBOX_DIR = "/data/system/dropbox";
+        final String CRASHDUMP_DROPBOX_DIR = "/data/crashdump/dropbox";
+        File dirSystemDropBox = new File(SYSTEM_DROPBOX_DIR);
+        File dirCrashdumpDropBox = new File(CRASHDUMP_DROPBOX_DIR);
+
+        if (!dirCrashdumpDropBox.exists() || !dirCrashdumpDropBox.isDirectory()) {
+            return;
+        }
+        if (dirSystemDropBox.exists() && dirSystemDropBox.isDirectory()) {
+            File[] dboxFiles = FileUtils.listFilesOrEmpty(dirSystemDropBox);
+            for (File dboxFile : dboxFiles) {
+                if (dboxFile.isFile() && dboxFile.getName().startsWith(dropboxTag)) {
+                    try {
+                        FileUtils.copyFileOrThrow(dboxFile, new File(dirCrashdumpDropBox,
+                                dboxFile.getName()));
+                        Log.d(TAG, "Copied dropbox file to:" + new File(dirCrashdumpDropBox,
+                            dboxFile.getName()));
+                    }
+                    catch (IOException e) {
+                        Log.w(TAG, "Failed to copy file:" + dboxFile);
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * Write a description of an error (crash, WTF, ANR) to the drop box.
      * @param eventType to include in the drop box tag ("crash", "wtf", etc.)
@@ -14874,6 +14901,11 @@ public class ActivityManagerService extends IActivityManager.Stub
 
                 mDboxText = sb.toString();
                 dbox.addText(dropboxTag, mDboxText);
+                if ("eng".equals(Build.TYPE) || "userdebug".equals(Build.TYPE)) {
+                    if (errorHandlingInfo.mSystemDump) {
+                        copyDropBoxForRamdumper(dropboxTag);
+                    }
+                }
                 if (errorHandlingInfo.mSystemDump &&
                     !(errorHandlingInfo.mEventType.equals("watchdog") &&
                       errorHandlingInfo.mProcessName.equals("system_server"))) {
