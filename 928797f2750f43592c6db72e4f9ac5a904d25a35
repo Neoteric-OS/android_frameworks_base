@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02b9319a_c999d29d",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-04-20T21:50:12Z",
+      "side": 1,
+      "message": "\"in the Bluetooth address\"",
+      "range": {
+        "startLine": 469,
+        "startChar": 46,
+        "endLine": 469,
+        "endChar": 57
+      },
+      "revId": "928797f2750f43592c6db72e4f9ac5a904d25a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2483344d_88f3c471",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-04-20T21:50:12Z",
+      "side": 1,
+      "message": "Bluetooth",
+      "range": {
+        "startLine": 472,
+        "startChar": 48,
+        "endLine": 472,
+        "endChar": 51
+      },
+      "revId": "928797f2750f43592c6db72e4f9ac5a904d25a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da4f3759_2f6ea464",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-04-20T21:50:12Z",
+      "side": 1,
+      "message": "Not needed",
+      "range": {
+        "startLine": 485,
+        "startChar": 17,
+        "endLine": 485,
+        "endChar": 20
+      },
+      "revId": "928797f2750f43592c6db72e4f9ac5a904d25a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26e90037_863f4e65",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-04-20T21:50:12Z",
+      "side": 1,
+      "message": "\"MAC\" not needed.",
+      "range": {
+        "startLine": 313,
+        "startChar": 60,
+        "endLine": 313,
+        "endChar": 71
+      },
+      "revId": "928797f2750f43592c6db72e4f9ac5a904d25a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9afadbcf_58e1a4ca",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-04-20T21:50:12Z",
+      "side": 1,
+      "message": "Same comment as above.",
+      "range": {
+        "startLine": 316,
+        "startChar": 63,
+        "endLine": 316,
+        "endChar": 74
+      },
+      "revId": "928797f2750f43592c6db72e4f9ac5a904d25a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "455872e9_0f58efa9",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-04-20T21:50:12Z",
+      "side": 1,
+      "message": "You can reuse the \"filter\" variable here:\n    filter \u003d new IntentFilter(...);\n    ...",
+      "range": {
+        "startLine": 354,
+        "startChar": 8,
+        "endLine": 354,
+        "endChar": 28
+      },
+      "revId": "928797f2750f43592c6db72e4f9ac5a904d25a35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
