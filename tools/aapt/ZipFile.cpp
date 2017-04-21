@@ -1292,3 +1292,9 @@ void ZipFile::EndOfCentralDir::dump(void) const
         mCentralDirSize, mCentralDirOffset, mCommentLen);
 }
 
+int ZipFile::SortedZipEntryVector::do_compare(const void *lhs, const void *rhs) const
+{
+	const ZipEntry* lEntry = *reinterpret_cast<ZipEntry* const *>(lhs);
+	const ZipEntry* rEntry = *reinterpret_cast<ZipEntry* const *>(rhs);
+	return compare_type(lEntry->getLFHOffset(), rEntry->getLFHOffset());
+}
