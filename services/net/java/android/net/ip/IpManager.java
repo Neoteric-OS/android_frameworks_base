@@ -611,16 +611,27 @@ public class IpManager extends StateMachine {
             return;
         }
 
+        // Thread-unsafe access to mApfFilter but just used for debugging.
+        final ApfFilter apfFilter = mApfFilter;
+        final ProvisioningConfiguration provisioningConfig = mConfiguration;
+
         IndentingPrintWriter pw = new IndentingPrintWriter(writer, "  ");
         pw.println(mTag + " APF dump:");
         pw.increaseIndent();
-        // Thread-unsafe access to mApfFilter but just used for debugging.
-        ApfFilter apfFilter = mApfFilter;
         if (apfFilter != null) {
             apfFilter.dump(pw);
         } else {
-            pw.println("No apf support");
+            pw.print("No active ApfFilter");
+            pw.println((provisioningConfig != null)
+                    ? "; provisioned capabilities: " + provisioningConfig.mApfCapabilities
+                    : "");
         }
+        pw.decreaseIndent();
+
+        pw.println();
+        pw.println(mTag + " current ProvisioningConfiguration:");
+        pw.increaseIndent();
+        pw.println(Objects.toString(provisioningConfig, "N/A"));
         pw.decreaseIndent();
 
         pw.println();
@@ -692,7 +703,9 @@ public class IpManager extends StateMachine {
             mNetworkInterface = NetworkInterface.getByName(mInterfaceName);
         } catch (SocketException | NullPointerException e) {
             // TODO: throw new IllegalStateException.
-            Log.e(mTag, "ALERT: Failed to get interface object: ", e);
+            final String msg = "ALERT: Failed to get interface object: " + e;
+            Log.e(mTag, msg);
+            logError(msg);
         }
     }
 
