@@ -1284,13 +1284,13 @@
 
     <!-- Enables the TimeZoneRuleManager service. This is the master switch for the updateable time
          zone update mechanism. -->
-    <bool name="config_enableUpdateableTimeZoneRules">false</bool>
+    <bool name="config_enableUpdateableTimeZoneRules">true</bool>
 
     <!-- Enables APK-based time zone update triggering. Set this to false when updates are triggered
          via external events and not by APK updates. For example, if an updater checks with a server
          on a regular schedule.
          [This is only used if config_enableUpdateableTimeZoneRules is true.] -->
-    <bool name="config_timeZoneRulesUpdateTrackingEnabled">false</bool>
+    <bool name="config_timeZoneRulesUpdateTrackingEnabled">true</bool>
 
     <!-- The package of the time zone rules updater application. Expected to be the same
          for all Android devices that support APK-based time zone rule updates.
@@ -1301,7 +1301,7 @@
          permission.
          [This is only used if config_enableUpdateableTimeZoneRules and
          config_timeZoneRulesUpdateTrackingEnabled are true.] -->
-    <string name="config_timeZoneRulesUpdaterPackage" translateable="false"></string>
+    <string name="config_timeZoneRulesUpdaterPackage" translateable="false">libcore.tzdata.prototype_updater</string>
 
     <!-- The package of the time zone rules data application. Expected to be configured
          by OEMs to reference their own priv-app APK package.
@@ -1310,7 +1310,7 @@
          data app packages.
          [This is only used if config_enableUpdateableTimeZoneRules and
          config_timeZoneRulesUpdateTrackingEnabled are true.] -->
-    <string name="config_timeZoneRulesDataPackage" translateable="false"></string>
+    <string name="config_timeZoneRulesDataPackage" translateable="false">libcore.tzdata.prototype_data</string>
 
     <!-- The allowed time in milliseconds between an update check intent being broadcast and the
          response being considered overdue. Reliability triggers will not fire in this time.
