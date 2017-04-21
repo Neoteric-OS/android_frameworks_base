@@ -22,6 +22,7 @@
 #define __LIBS_ZIPFILE_H
 
 #include <utils/Vector.h>
+#include <utils/SortedVector.h>
 #include <utils/Errors.h>
 #include <stdio.h>
 
@@ -165,6 +166,15 @@ public:
     ZipEntry* getEntryByIndex(int idx) const;
 
 private:
+    /**
+     * Subclass of SortedVector that has been extended to
+     * do comparisons based on the local file header offset.
+     */
+    class SortedZipEntryVector : public SortedVector<ZipEntry*> {
+    protected:
+        virtual int do_compare(const void* lhs, const void* rhs) const;
+    };
+
     /* these are private and not defined */
     ZipFile(const ZipFile& src);
     ZipFile& operator=(const ZipFile& src);
@@ -262,7 +272,7 @@ private:
      * of objects because it's easier than making operator= work for the
      * classes and sub-classes.
      */
-    Vector<ZipEntry*>   mEntries;
+    SortedZipEntryVector   mEntries;
 };
 
 }; // namespace android
