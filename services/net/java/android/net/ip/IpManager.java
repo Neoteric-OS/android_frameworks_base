@@ -524,7 +524,7 @@ public class IpManager extends StateMachine {
         try {
             mNwService.registerObserver(mNetlinkTracker);
         } catch (RemoteException e) {
-            Log.e(mTag, "Couldn't register NetlinkTracker: " + e.toString());
+            logError("Couldn't register NetlinkTracker: %s", e);
         }
 
         mMultinetworkPolicyTracker.start();
@@ -611,16 +611,27 @@ public class IpManager extends StateMachine {
             return;
         }
 
+        // Thread-unsafe access to mApfFilter but just used for debugging.
+        final ApfFilter apfFilter = mApfFilter;
+        final ProvisioningConfiguration provisioningConfig = mConfiguration;
+
         IndentingPrintWriter pw = new IndentingPrintWriter(writer, "  ");
         pw.println(mTag + " APF dump:");
         pw.increaseIndent();
-        // Thread-unsafe access to mApfFilter but just used for debugging.
-        ApfFilter apfFilter = mApfFilter;
         if (apfFilter != null) {
             apfFilter.dump(pw);
         } else {
-            pw.println("No apf support");
+            pw.print("No active ApfFilter");
+            pw.println((provisioningConfig != null)
+                    ? "; provisioned capabilities: " + provisioningConfig.mApfCapabilities
+                    : "");
         }
+        pw.decreaseIndent();
+
+        pw.println();
+        pw.println(mTag + " current ProvisioningConfiguration:");
+        pw.increaseIndent();
+        pw.println(Objects.toString(provisioningConfig, "N/A"));
         pw.decreaseIndent();
 
         pw.println();
@@ -684,7 +695,9 @@ public class IpManager extends StateMachine {
 
     // TODO: Migrate all Log.e(...) to logError(...).
     private void logError(String fmt, Object... args) {
-        mLocalLog.log("ERROR " + String.format(fmt, args));
+        final String msg = "ERROR " + String.format(fmt, args);
+        Log.e(mTag, msg);
+        mLocalLog.log(msg);
     }
 
     private void getNetworkInterface() {
@@ -692,7 +705,7 @@ public class IpManager extends StateMachine {
             mNetworkInterface = NetworkInterface.getByName(mInterfaceName);
         } catch (SocketException | NullPointerException e) {
             // TODO: throw new IllegalStateException.
-            Log.e(mTag, "ALERT: Failed to get interface object: ", e);
+            logError("ALERT: Failed to get interface object: %s", e);
         }
     }
 
@@ -948,7 +961,7 @@ public class IpManager extends StateMachine {
             ifcg.setLinkAddress(new LinkAddress("0.0.0.0/0"));
             mNwService.setInterfaceConfig(mInterfaceName, ifcg);
         } catch (IllegalStateException | RemoteException e) {
-            Log.e(mTag, "ALERT: Failed to clear IPv4 address on interface " + mInterfaceName, e);
+            logError("ALERT: Failed to clear IPv4 address on interface %s: %s", mInterfaceName, e);
         }
     }
 
@@ -1074,13 +1087,13 @@ public class IpManager extends StateMachine {
         try {
             mNwService.disableIpv6(mInterfaceName);
         } catch (Exception e) {
-            Log.e(mTag, "Failed to disable IPv6" + e);
+            logError("Failed to disable IPv6: %s", e);
         }
 
         try {
             mNwService.clearInterfaceAddresses(mInterfaceName);
         } catch (Exception e) {
-            Log.e(mTag, "Failed to clear addresses " + e);
+            logError("Failed to clear addresses: %s", e);
         }
     }
 
@@ -1404,7 +1417,7 @@ public class IpManager extends StateMachine {
                     if (setIPv4Address(ipAddress)) {
                         mDhcpClient.sendMessage(DhcpClient.EVENT_LINKADDRESS_CONFIGURED);
                     } else {
-                        Log.e(mTag, "Failed to set IPv4 address!");
+                        logError("Failed to set IPv4 address.");
                         dispatchCallback(ProvisioningChange.LOST_PROVISIONING,
                                 new LinkProperties(mLinkProperties));
                         transitionTo(mStoppingState);
