@@ -760,19 +760,19 @@ public class UsbDeviceManager {
 
                     updateUsbNotification();
                     updateAdbNotification();
-                    if (UsbManager.containsFunction(mCurrentFunctions,
-                            UsbManager.USB_FUNCTION_ACCESSORY)) {
-                        updateCurrentAccessory();
-                    }
                     if (mBootCompleted) {
+                        updateUsbStateBroadcastIfNeeded(false);
+                        updateUsbFunctions();
                         if (!mConnected) {
                             // restore defaults when USB is disconnected
                             setEnabledFunctions(null, false, false);
                         }
-                        updateUsbStateBroadcastIfNeeded(false);
-                        updateUsbFunctions();
                     } else {
                         mPendingBootBroadcast = true;
+                    }
+                    if (UsbManager.containsFunction(mCurrentFunctions,
+                            UsbManager.USB_FUNCTION_ACCESSORY)) {
+                        updateCurrentAccessory();
                     }
                     break;
                 case MSG_UPDATE_HOST_STATE:
