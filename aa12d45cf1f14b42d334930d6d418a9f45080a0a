@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abd78935_61f7aa4c",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2017-04-21T17:04:45Z",
+      "side": 1,
+      "message": "since mHttpClient is already volatile, we should probably use double-check locking here to avoid acquiring the lock unnecessarily. But that\u0027s an unrelated improvement, so I\u0027ll leave it to a potential follow-up CL.",
+      "range": {
+        "startLine": 219,
+        "startChar": 16,
+        "endLine": 219,
+        "endChar": 27
+      },
+      "revId": "aa12d45cf1f14b42d334930d6d418a9f45080a0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
