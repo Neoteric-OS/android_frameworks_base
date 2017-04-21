@@ -22,6 +22,30 @@
       "revId": "09055986827bb9a46d4f6a4a655d63db44f786f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6943a77_d14a125c",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2017-04-21T00:37:05Z",
+      "side": 1,
+      "message": "The BTSIG specs uses the BD_ADDR acronym and this is why the original BT stack code is using it. To be consistent, we should continue to use BD_ADDR.",
+      "parentUuid": "d3b9c6af_4806590c",
+      "range": {
+        "startLine": 479,
+        "startChar": 38,
+        "endLine": 479,
+        "endChar": 40
+      },
+      "revId": "09055986827bb9a46d4f6a4a655d63db44f786f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
