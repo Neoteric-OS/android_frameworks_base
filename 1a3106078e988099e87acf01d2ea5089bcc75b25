@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f938c65_3313ab67",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-04-24T20:43:49Z",
+      "side": 1,
+      "message": "that the transform could not be removed from the socket.",
+      "range": {
+        "startLine": 378,
+        "startChar": 42,
+        "endLine": 378,
+        "endChar": 53
+      },
+      "revId": "1a3106078e988099e87acf01d2ea5089bcc75b25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
