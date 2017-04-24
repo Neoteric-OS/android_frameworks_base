@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b543940e_78d82336",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-04-24T18:26:04Z",
+      "side": 1,
+      "message": "extraneous comma",
+      "range": {
+        "startLine": 72,
+        "startChar": 71,
+        "endLine": 72,
+        "endChar": 72
+      },
+      "revId": "9d46bb1c79c49ed605927edde48690cf6e33114c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b8a7c6a_a48b9994",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-04-24T18:26:04Z",
+      "side": 1,
+      "message": "choosing?",
+      "range": {
+        "startLine": 73,
+        "startChar": 7,
+        "endLine": 73,
+        "endChar": 14
+      },
+      "revId": "9d46bb1c79c49ed605927edde48690cf6e33114c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc63d908_b6341227",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-04-24T18:26:04Z",
+      "side": 1,
+      "message": "from, by calling? I don\u0027t honestly care so much about which we choose, but if we can make it consistent in each method that\u0027s the best of all the things.",
+      "range": {
+        "startLine": 116,
+        "startChar": 16,
+        "endLine": 116,
+        "endChar": 20
+      },
+      "revId": "9d46bb1c79c49ed605927edde48690cf6e33114c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
