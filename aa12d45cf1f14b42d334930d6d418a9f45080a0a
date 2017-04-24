@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "18631381_efd70ec4",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2017-04-24T16:27:39Z",
+      "side": 1,
+      "message": "I think it might be good for maybeInitHttpClient to return the AndroidHttpClient object and to use that value from the callers; otherwise it\u0027s easy to miss the detail that the synchronized block here is necessary in order to not need volatile read access on another thread after calling this method.",
+      "parentUuid": "0b164134_5fb7aa3d",
+      "range": {
+        "startLine": 219,
+        "startChar": 16,
+        "endLine": 219,
+        "endChar": 27
+      },
+      "revId": "aa12d45cf1f14b42d334930d6d418a9f45080a0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e01c7cda_94249ff4",
         "filename": "core/java/android/net/Network.java",
         "patchSetId": 7
@@ -60,6 +84,30 @@
       "writtenOn": "2017-04-24T09:58:10Z",
       "side": 1,
       "message": "Any reason you call setSocketFactory here instead of moving it to maybeInitHttpClient? ISTM that the return value of getSocketFactory will be the same no matter when it is called. Am I misreading the code?",
+      "range": {
+        "startLine": 270,
+        "startChar": 20,
+        "endLine": 270,
+        "endChar": 36
+      },
+      "revId": "aa12d45cf1f14b42d334930d6d418a9f45080a0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d71d88e_d5b32f8a",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2017-04-24T16:27:39Z",
+      "side": 1,
+      "message": "Because then getSocketFactory() would only be called once rather than each time we make a connection. If I see it right, applications can subclass Network and override getSocketFactory(), and they might depend on it being called for each connection (since this always happened, see line 294 in the old code).\n\nSee also my comment in the commit message::\n\n\u003d\u003d\u003d cut \u003d\u003d\u003d\nApplications can overwrite getSocketFactory() and might depend on\nthat method being called (and the result used) every time a\nconnection is opened; therefore, for maximum app compatibility this\ncall was kept inside openConnection().\n\u003d\u003d\u003d cut \u003d\u003d\u003d",
+      "parentUuid": "e01c7cda_94249ff4",
       "range": {
         "startLine": 270,
         "startChar": 20,
