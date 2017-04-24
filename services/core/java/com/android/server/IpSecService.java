@@ -124,17 +124,6 @@ public class IpSecService extends IIpSecService.Stub {
             }
             mCurrent--;
         }
-
-        @Override
-        public String toString() {
-            return new StringBuilder()
-                    .append("{mCurrent=")
-                    .append(mCurrent)
-                    .append(", mMax=")
-                    .append(mMax)
-                    .append("}")
-                    .toString();
-        }
     }
 
     private static final class UserQuotaTracker {
@@ -147,20 +136,7 @@ public class IpSecService extends IIpSecService.Stub {
             public final ResourceTracker socket = new ResourceTracker(MAX_NUM_SOCKETS);
             public final ResourceTracker transform = new ResourceTracker(MAX_NUM_TRANSFORMS);
             public final ResourceTracker spi = new ResourceTracker(MAX_NUM_SPIS);
-
-            @Override
-            public String toString() {
-                return new StringBuilder()
-                        .append("{socket=")
-                        .append(socket)
-                        .append(", transform=")
-                        .append(transform)
-                        .append(", spi=")
-                        .append(spi)
-                        .append("}")
-                        .toString();
-            }
-        }
+       }
 
         private final SparseArray<UserRecord> mUserRecords = new SparseArray<>();
 
@@ -172,11 +148,6 @@ public class IpSecService extends IIpSecService.Stub {
                 mUserRecords.put(uid, r);
             }
             return r;
-        }
-
-        @Override
-        public String toString() {
-            return mUserRecords.toString();
         }
     }
 
@@ -222,6 +193,7 @@ public class IpSecService extends IIpSecService.Stub {
             pid = Binder.getCallingPid();
             uid = Binder.getCallingUid();
 
+            getResourceTracker().take();
             try {
                 mBinder.linkToDeath(this, 0);
             } catch (RemoteException e) {
@@ -269,6 +241,7 @@ public class IpSecService extends IIpSecService.Stub {
                 }
 
                 releaseResources();
+                getResourceTracker().give();
                 if (mBinder != null) {
                     mBinder.unlinkToDeath(this, 0);
                 }
@@ -299,6 +272,9 @@ public class IpSecService extends IIpSecService.Stub {
          * <p>Calls to this are always guarded by IpSecService#this
          */
         protected abstract void releaseResources() throws RemoteException;
+
+        /** Get the resource tracker for this resource */
+        protected abstract ResourceTracker getResourceTracker();
     };
 
     /**
@@ -390,6 +366,11 @@ public class IpSecService extends IIpSecService.Stub {
                 mSocket.removeReference();
             }
         }
+
+        @Override
+        protected ResourceTracker getResourceTracker() {
+            return mUserQuotaTracker.getUserRecord(this.uid).transform;
+        }
     }
 
     private final class SpiRecord extends ManagedResource {
@@ -441,6 +422,11 @@ public class IpSecService extends IIpSecService.Stub {
             mSpi = IpSecManager.INVALID_SECURITY_PARAMETER_INDEX;
         }
 
+        @Override
+        protected ResourceTracker getResourceTracker() {
+            return mUserQuotaTracker.getUserRecord(this.uid).spi;
+        }
+
         public int getSpi() {
             return mSpi;
         }
@@ -471,6 +457,11 @@ public class IpSecService extends IIpSecService.Stub {
             Log.d(TAG, "Closing port " + mPort);
             IoUtils.closeQuietly(mSocket);
             mSocket = null;
+        }
+
+        @Override
+        protected ResourceTracker getResourceTracker() {
+            return mUserQuotaTracker.getUserRecord(this.uid).socket;
         }
 
         public int getPort() {
@@ -548,7 +539,14 @@ public class IpSecService extends IIpSecService.Stub {
 
         int spi = IpSecManager.INVALID_SECURITY_PARAMETER_INDEX;
         String localAddress = "";
+
         try {
+            if (!mUserQuotaTracker.getUserRecord(Binder.getCallingUid()).spi.isAvailable()) {
+                return new IpSecSpiResponse(
+                        IpSecManager.Status.RESOURCE_UNAVAILABLE,
+                        IpSecManager.INVALID_RESOURCE_ID,
+                        spi);
+            }
             spi =
                     mSrvConfig
                             .getNetdInstance()
@@ -565,7 +563,7 @@ public class IpSecService extends IIpSecService.Stub {
         } catch (ServiceSpecificException e) {
             // TODO: Add appropriate checks when other ServiceSpecificException types are supported
             return new IpSecSpiResponse(
-                    IpSecManager.Status.SPI_UNAVAILABLE, IpSecManager.INVALID_RESOURCE_ID, spi);
+                    IpSecManager.Status.SPI_UNAVAILABLE, INVALID_RESOURCE_ID, spi);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -648,6 +646,10 @@ public class IpSecService extends IIpSecService.Stub {
         int resourceId = mNextResourceId.getAndIncrement();
         FileDescriptor sockFd = null;
         try {
+            if (!mUserQuotaTracker.getUserRecord(Binder.getCallingUid()).spi.isAvailable()) {
+                return new IpSecUdpEncapResponse(IpSecManager.Status.RESOURCE_UNAVAILABLE);
+            }
+
             sockFd = Os.socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
             if (port != 0) {
@@ -692,6 +694,9 @@ public class IpSecService extends IIpSecService.Stub {
     public synchronized IpSecTransformResponse createTransportModeTransform(
             IpSecConfig c, IBinder binder) throws RemoteException {
         int resourceId = mNextResourceId.getAndIncrement();
+        if (!mUserQuotaTracker.getUserRecord(Binder.getCallingUid()).spi.isAvailable()) {
+            return new IpSecTransformResponse(IpSecManager.Status.RESOURCE_UNAVAILABLE);
+        }
         SpiRecord[] spis = new SpiRecord[DIRECTIONS.length];
         // TODO: Basic input validation here since it's coming over the Binder
         int encapType, encapLocalPort = 0, encapRemotePort = 0;
@@ -738,8 +743,7 @@ public class IpSecService extends IIpSecService.Stub {
                                         encapRemotePort);
                 if (result != spi) {
                     // TODO: cleanup the first SA if creation of second SA fails
-                    return new IpSecTransformResponse(
-                            IpSecManager.Status.SPI_UNAVAILABLE, INVALID_RESOURCE_ID);
+                    return new IpSecTransformResponse(IpSecManager.Status.SPI_UNAVAILABLE);
                 }
             } catch (ServiceSpecificException e) {
                 // FIXME: get the error code and throw is at an IOException from Errno Exception
