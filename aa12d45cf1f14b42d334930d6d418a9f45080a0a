@@ -22,6 +22,30 @@
       "revId": "aa12d45cf1f14b42d334930d6d418a9f45080a0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b164134_5fb7aa3d",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-04-24T08:51:38Z",
+      "side": 1,
+      "message": "Alternately, you could remove the volatile. I think that\u0027s the preferred course of action..",
+      "parentUuid": "abd78935_61f7aa4c",
+      "range": {
+        "startLine": 219,
+        "startChar": 16,
+        "endLine": 219,
+        "endChar": 27
+      },
+      "revId": "aa12d45cf1f14b42d334930d6d418a9f45080a0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
