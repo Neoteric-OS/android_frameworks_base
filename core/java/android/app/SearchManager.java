@@ -845,7 +845,11 @@ public class SearchManager
      */
     public SearchableInfo getSearchableInfo(ComponentName componentName) {
         try {
-            return mService.getSearchableInfo(componentName);
+              if ((mService == null) || (componentName == null)) {
+                 Log.e(TAG, "getSearchableInfo() called with invalid arg (NULL)");
+                 return null;
+              }
+              return mService.getSearchableInfo(componentName);
         } catch (RemoteException ex) {
             throw ex.rethrowFromSystemServer();
         }
