@@ -22,6 +22,30 @@
       "revId": "6d0a976240137dc31604d679c62455275361642a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db2c8048_35976226",
+        "filename": "core/jni/android_hardware_SensorManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1006114
+      },
+      "writtenOn": "2017-04-24T20:24:28Z",
+      "side": 1,
+      "message": "Will abandon this change in favor of the alternative method coming in O.",
+      "parentUuid": "556b3087_6781f0e4",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 71
+      },
+      "revId": "6d0a976240137dc31604d679c62455275361642a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
