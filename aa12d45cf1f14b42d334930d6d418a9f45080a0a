@@ -46,6 +46,29 @@
       "revId": "aa12d45cf1f14b42d334930d6d418a9f45080a0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e01c7cda_94249ff4",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-24T09:58:10Z",
+      "side": 1,
+      "message": "Any reason you call setSocketFactory here instead of moving it to maybeInitHttpClient? ISTM that the return value of getSocketFactory will be the same no matter when it is called. Am I misreading the code?",
+      "range": {
+        "startLine": 270,
+        "startChar": 20,
+        "endLine": 270,
+        "endChar": 36
+      },
+      "revId": "aa12d45cf1f14b42d334930d6d418a9f45080a0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
