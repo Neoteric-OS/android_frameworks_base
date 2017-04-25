@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e72c734_1a9943ad",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-04-25T10:29:42Z",
+      "side": 1,
+      "message": "Suggest rename.\n\nmaybeInitUrlConnectionFactory()\n\nRename httpClient below to urlConnectionFactory.",
+      "range": {
+        "startLine": 217,
+        "startChar": 17,
+        "endLine": 217,
+        "endChar": 36
+      },
+      "revId": "38791540a961f89dc5aa004f46e8607817482afd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6363f9cb_5c3a925a",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-04-25T10:29:42Z",
+      "side": 1,
+      "message": "Given none of this is synchronized and the mUrlConnectionFactory (unlike the OkHttpClient) is shared, this seems non-threadsafe.\n\nYou may want to pass the socket factory as an argument to openConnection() or find a different lifecycle model for the factory object. The former is probably easier.",
+      "range": {
+        "startLine": 270,
+        "startChar": 30,
+        "endLine": 270,
+        "endChar": 46
+      },
+      "revId": "38791540a961f89dc5aa004f46e8607817482afd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
