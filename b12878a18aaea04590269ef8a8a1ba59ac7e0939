@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4b8f8b9_4af6f4ce",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-25T05:23:14Z",
+      "side": 1,
+      "message": "I think the old code also tried to make sure key couldn\u0027t be equal to zero.  (a) is that true and if so (b) should be check that here too?\n\nIt\u0027s not immediately clear to me why zero is invalid.",
+      "range": {
+        "startLine": 428,
+        "startChar": 12,
+        "endLine": 428,
+        "endChar": 15
+      },
+      "revId": "b12878a18aaea04590269ef8a8a1ba59ac7e0939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "249f7787_7f88e1be",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-25T05:23:14Z",
+      "side": 1,
+      "message": "This wasn\u0027t fatal before...was it?",
+      "range": {
+        "startLine": 483,
+        "startChar": 12,
+        "endLine": 483,
+        "endChar": 17
+      },
+      "revId": "b12878a18aaea04590269ef8a8a1ba59ac7e0939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
