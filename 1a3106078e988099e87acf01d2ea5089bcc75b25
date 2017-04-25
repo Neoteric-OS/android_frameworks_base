@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d423790b_9891a4c3",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-04-25T17:49:00Z",
+      "side": 1,
+      "message": "agreed.",
+      "parentUuid": "6531d7ef_4f89b568",
+      "range": {
+        "startLine": 72,
+        "startChar": 72,
+        "endLine": 73,
+        "endChar": 41
+      },
+      "revId": "1a3106078e988099e87acf01d2ea5089bcc75b25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6de747f_2c8bebdb",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "94f55b18_90700ff3",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-04-25T17:49:00Z",
+      "side": 1,
+      "message": "I considered that and thought indexes worked better here.\nhttp://grammarist.com/usage/indexes-indices/\n\nMight be more of an American thing, but to me \"indices\" implies the more mathematical sense. SPIs are just IDs though.",
+      "parentUuid": "b6de747f_2c8bebdb",
+      "range": {
+        "startLine": 115,
+        "startChar": 77,
+        "endLine": 115,
+        "endChar": 84
+      },
+      "revId": "1a3106078e988099e87acf01d2ea5089bcc75b25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f3dde9a_3989b8a6",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-04-25T02:08:32Z",
       "side": 1,
       "message": "Nit: I don\u0027t see this. Where is this exception thrown?",
+      "range": {
+        "startLine": 237,
+        "startChar": 15,
+        "endLine": 237,
+        "endChar": 38
+      },
+      "revId": "1a3106078e988099e87acf01d2ea5089bcc75b25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "967ab6c9_204f93e5",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-04-25T17:49:00Z",
+      "side": 1,
+      "message": "+nharold, should we remove the @throws and the throws for this exception? (Do we still use the exception?)",
+      "parentUuid": "5f3dde9a_3989b8a6",
       "range": {
         "startLine": 237,
         "startChar": 15,
@@ -164,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "761b14f9_9f0a3c89",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-04-25T17:49:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e267eafa_e3787443",
+      "range": {
+        "startLine": 353,
+        "startChar": 0,
+        "endLine": 357,
+        "endChar": 66
+      },
+      "revId": "1a3106078e988099e87acf01d2ea5089bcc75b25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f938c65_3313ab67",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 2
@@ -175,6 +271,30 @@
       "writtenOn": "2017-04-24T20:43:49Z",
       "side": 1,
       "message": "that the transform could not be removed from the socket.",
+      "range": {
+        "startLine": 378,
+        "startChar": 42,
+        "endLine": 378,
+        "endChar": 53
+      },
+      "revId": "1a3106078e988099e87acf01d2ea5089bcc75b25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53365a81_4a1be39c",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-04-25T17:49:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f938c65_3313ab67",
       "range": {
         "startLine": 378,
         "startChar": 42,
