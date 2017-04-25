@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe44714d_539a940c",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-25T05:45:02Z",
+      "side": 1,
+      "message": "zero is not invalid per say, it was used as an error code.\n\nIn current HEAD, that error code was always used to immediately throw an exception. In this patch I am throwing the exception in the first place without the error code, so this frees up the use of zero.\n\nmListenerKey starts at 1, so there are (1 \u003c\u003c 31 - 2) possible keys before wrapping to 0. Should be way enough.",
+      "parentUuid": "a4b8f8b9_4af6f4ce",
+      "range": {
+        "startLine": 428,
+        "startChar": 12,
+        "endLine": 428,
+        "endChar": 15
+      },
+      "revId": "b12878a18aaea04590269ef8a8a1ba59ac7e0939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "249f7787_7f88e1be",
         "filename": "core/java/android/net/nsd/NsdManager.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-25T05:23:14Z",
       "side": 1,
       "message": "This wasn\u0027t fatal before...was it?",
+      "range": {
+        "startLine": 483,
+        "startChar": 12,
+        "endLine": 483,
+        "endChar": 17
+      },
+      "revId": "b12878a18aaea04590269ef8a8a1ba59ac7e0939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3dea5b1_c71bad5b",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-04-25T05:45:02Z",
+      "side": 1,
+      "message": "This wasn\u0027t fatal, and I think this was a bug: effect is that the daemon would not be assured to be connected, but the service would still be created and \"validated\". I don\u0027t think the service can recover from that actually.",
+      "parentUuid": "249f7787_7f88e1be",
       "range": {
         "startLine": 483,
         "startChar": 12,
