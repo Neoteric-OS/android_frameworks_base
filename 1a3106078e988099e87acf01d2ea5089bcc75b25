@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "6531d7ef_4f89b568",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-25T02:08:32Z",
+      "side": 1,
+      "message": "I don\u0027t think we should recommend this. Delete?",
+      "range": {
+        "startLine": 72,
+        "startChar": 72,
+        "endLine": 73,
+        "endChar": 41
+      },
+      "revId": "1a3106078e988099e87acf01d2ea5089bcc75b25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6de747f_2c8bebdb",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-25T02:08:32Z",
+      "side": 1,
+      "message": "Nit: \"indices\"",
+      "range": {
+        "startLine": 115,
+        "startChar": 77,
+        "endLine": 115,
+        "endChar": 84
+      },
+      "revId": "1a3106078e988099e87acf01d2ea5089bcc75b25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f3dde9a_3989b8a6",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-25T02:08:32Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t see this. Where is this exception thrown?",
+      "range": {
+        "startLine": 237,
+        "startChar": 15,
+        "endLine": 237,
+        "endChar": 38
+      },
+      "revId": "1a3106078e988099e87acf01d2ea5089bcc75b25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d4eceba_09260e94",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 2
@@ -49,6 +118,52 @@
     },
     {
       "key": {
+        "uuid": "d4a89b30_90894be4",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-25T02:08:32Z",
+      "side": 1,
+      "message": "Given that this is going to be @SystemApi, they won\u0027t be able to.",
+      "range": {
+        "startLine": 350,
+        "startChar": 39,
+        "endLine": 350,
+        "endChar": 64
+      },
+      "revId": "1a3106078e988099e87acf01d2ea5089bcc75b25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e267eafa_e3787443",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-25T02:08:32Z",
+      "side": 1,
+      "message": "Add a TODO to validate this once we have an implementation.",
+      "range": {
+        "startLine": 353,
+        "startChar": 0,
+        "endLine": 357,
+        "endChar": 66
+      },
+      "revId": "1a3106078e988099e87acf01d2ea5089bcc75b25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f938c65_3313ab67",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 2
@@ -65,6 +180,29 @@
         "startChar": 42,
         "endLine": 378,
         "endChar": 53
+      },
+      "revId": "1a3106078e988099e87acf01d2ea5089bcc75b25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7dd924de_d74133d9",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-25T02:08:32Z",
+      "side": 1,
+      "message": "That seems bad. If we take in the transform as a parameter, we should check that it\u0027s the one that is currently applied.",
+      "range": {
+        "startLine": 411,
+        "startChar": 7,
+        "endLine": 411,
+        "endChar": 17
       },
       "revId": "1a3106078e988099e87acf01d2ea5089bcc75b25",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
