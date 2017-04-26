@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6bb4665c_a4cc845b",
+        "filename": "services/core/java/com/android/server/pm/OtaDexoptService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2017-04-26T14:35:01Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "8f0f7775_08994a15",
+      "range": {
+        "startLine": 142,
+        "startChar": 29,
+        "endLine": 142,
+        "endChar": 43
+      },
+      "revId": "7d4a354fd572ac0dc01f9b815a9e0af2d127bc5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c535b8dc_c73c8663",
         "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-26T14:31:47Z",
       "side": 0,
       "message": "please mention this merge fix in the commit message",
+      "range": {
+        "startLine": 7367,
+        "startChar": 33,
+        "endLine": 7380,
+        "endChar": 50
+      },
+      "revId": "7d4a354fd572ac0dc01f9b815a9e0af2d127bc5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c201109b_d0a7da6c",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7380,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2017-04-26T14:35:01Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c535b8dc_c73c8663",
       "range": {
         "startLine": 7367,
         "startChar": 33,
