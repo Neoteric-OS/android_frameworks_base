@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f9eff400_e44fe987",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1098775
+      },
+      "writtenOn": "2017-04-26T21:05:44Z",
+      "side": 1,
+      "message": "Unused imports",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "64d9f8519b426f74b6101865d94175ba1e53dfc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bfe0922_6d8214a1",
         "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
         "patchSetId": 2
@@ -18,6 +41,29 @@
         "startChar": 32,
         "endLine": 57,
         "endChar": 109
+      },
+      "revId": "64d9f8519b426f74b6101865d94175ba1e53dfc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a33ac7b8_76cfd9e7",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1098775
+      },
+      "writtenOn": "2017-04-26T21:05:44Z",
+      "side": 1,
+      "message": "We already call this at HdmiCecLocalDeviceTv#notifyArcStatusToAudioService().\nThe intent will be sent when ARC is enabled. Why is it necessary to call this here?",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 43
       },
       "revId": "64d9f8519b426f74b6101865d94175ba1e53dfc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
