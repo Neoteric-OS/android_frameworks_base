@@ -33,7 +33,7 @@ import android.os.UserHandle;
 import android.telephony.TelephonyManager;
 import android.test.AndroidTestCase;
 import android.test.MoreAsserts;
-import android.test.suitebuilder.annotation.MediumTest;
+import android.test.suitebuilder.annotation.SmallTest;
 
 import com.android.frameworks.servicestests.R;
 
@@ -51,7 +51,7 @@ import libcore.io.Streams;
 /**
  * Tests for {@link NetworkStatsCollection}.
  */
-@MediumTest
+@SmallTest
 public class NetworkStatsCollectionTest extends AndroidTestCase {
 
     private static final String TEST_FILE = "test.bin";
