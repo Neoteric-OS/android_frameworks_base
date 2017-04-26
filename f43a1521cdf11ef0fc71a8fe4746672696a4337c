@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c14d7577_e2945926",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-26T23:16:44Z",
+      "side": 1,
+      "message": "I will switch these to HOTSPOT_STARTED",
+      "range": {
+        "startLine": 859,
+        "startChar": 29,
+        "endLine": 859,
+        "endChar": 45
+      },
+      "revId": "f43a1521cdf11ef0fc71a8fe4746672696a4337c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0e8e85cf_6650010d",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2148,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-26T23:16:44Z",
+      "side": 1,
+      "message": "Yep, this will go away",
+      "parentUuid": "cf80cc53_2013e434",
+      "range": {
+        "startLine": 2148,
+        "startChar": 18,
+        "endLine": 2148,
+        "endChar": 38
+      },
+      "revId": "9f38adfbefc8064db6f65c20cc648dfd1959da15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3682e37f_f19881f9",
         "filename": "wifi/java/android/net/wifi/WifiManager.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-26T02:49:38Z",
       "side": 1,
       "message": "You could make this a static class as well, and provide {} noop implementations.\n\n(That makes things more easily modifiable in the future.)",
+      "range": {
+        "startLine": 2231,
+        "startChar": 11,
+        "endLine": 2231,
+        "endChar": 20
+      },
+      "revId": "9f38adfbefc8064db6f65c20cc648dfd1959da15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "764ac99d_f185a948",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2231,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-26T23:16:44Z",
+      "side": 1,
+      "message": "will do",
+      "parentUuid": "3682e37f_f19881f9",
       "range": {
         "startLine": 2231,
         "startChar": 11,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "53877d46_f8b123b8",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2232,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-26T23:16:44Z",
+      "side": 1,
+      "message": "I think I had it this way before but checkstyle found it redundant.  will try again",
+      "parentUuid": "458a03fa_7620fe9f",
+      "range": {
+        "startLine": 2232,
+        "startChar": 8,
+        "endLine": 2232,
+        "endChar": 11
+      },
+      "revId": "9f38adfbefc8064db6f65c20cc648dfd1959da15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a0f259b_8bc33385",
         "filename": "wifi/java/android/net/wifi/WifiManager.java",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2017-04-26T02:49:38Z",
       "side": 1,
       "message": "\"UNSPECIFIED\" maybe?",
+      "range": {
+        "startLine": 2233,
+        "startChar": 18,
+        "endLine": 2233,
+        "endChar": 25
+      },
+      "revId": "9f38adfbefc8064db6f65c20cc648dfd1959da15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f2b8bdb_7ce4ea3f",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2233,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-26T23:16:44Z",
+      "side": 1,
+      "message": "are you ok with me leaving this as is?  it lines up with the errors we throw from softap and also are in our metrics",
+      "parentUuid": "1a0f259b_8bc33385",
       "range": {
         "startLine": 2233,
         "startChar": 18,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "85fa11f9_6632e73a",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2265,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-26T23:16:44Z",
+      "side": 1,
+      "message": "good call - I am going to use them for the observer as well",
+      "parentUuid": "57f84422_d8931f26",
+      "range": {
+        "startLine": 2265,
+        "startChar": 8,
+        "endLine": 2265,
+        "endChar": 15
+      },
+      "revId": "9f38adfbefc8064db6f65c20cc648dfd1959da15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "897199c1_12f610dc",
         "filename": "wifi/java/android/net/wifi/WifiManager.java",
         "patchSetId": 9
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "3362fd87_21c23492",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2358,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-26T23:16:44Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "897199c1_12f610dc",
+      "range": {
+        "startLine": 2358,
+        "startChar": 20,
+        "endLine": 2358,
+        "endChar": 25
+      },
+      "revId": "9f38adfbefc8064db6f65c20cc648dfd1959da15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "104757ea_bf88808b",
         "filename": "wifi/java/android/net/wifi/WifiManager.java",
         "patchSetId": 9
@@ -151,6 +295,30 @@
       "writtenOn": "2017-04-26T02:49:38Z",
       "side": 1,
       "message": "I findl static classes with noop implementations to a bit more future proof.",
+      "range": {
+        "startLine": 2384,
+        "startChar": 11,
+        "endLine": 2384,
+        "endChar": 20
+      },
+      "revId": "9f38adfbefc8064db6f65c20cc648dfd1959da15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01574bed_d47da338",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2384,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-26T23:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "104757ea_bf88808b",
       "range": {
         "startLine": 2384,
         "startChar": 11,
