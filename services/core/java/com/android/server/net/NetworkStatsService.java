@@ -364,8 +364,9 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             // ignored; service lives in system_server
         }
 
+        // Trigger periodic polling events. This also causes registerGlobalAlert() to be called
+        // when mPollReceiver receives ACTION_NETWORK_STATS_POLL intents.
         registerPollAlarmLocked();
-        registerGlobalAlert();
     }
 
     private NetworkStatsRecorder buildRecorder(
@@ -450,7 +451,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     /**
      * Register for a global alert that is delivered through
      * {@link INetworkManagementEventObserver} once a threshold amount of data
-     * has been transferred.
+     * has been transferred. This should not be called before {@link mAlertObserver} is
+     * registered or before mGlobalAlertBytes is set.
      */
     private void registerGlobalAlert() {
         try {
