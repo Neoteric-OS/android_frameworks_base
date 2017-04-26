@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bfe0922_6d8214a1",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1060916
+      },
+      "writtenOn": "2017-04-26T13:27:45Z",
+      "side": 1,
+      "message": "Please explain the purpose of adding this static variable when it is not used anywhere.",
+      "range": {
+        "startLine": 57,
+        "startChar": 32,
+        "endLine": 57,
+        "endChar": 109
+      },
+      "revId": "64d9f8519b426f74b6101865d94175ba1e53dfc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
