@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf80cc53_2013e434",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2148,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-26T02:49:38Z",
+      "side": 1,
+      "message": "We\u0027ll be able to delete this after the interface state changed call goes in.",
+      "range": {
+        "startLine": 2148,
+        "startChar": 18,
+        "endLine": 2148,
+        "endChar": 38
+      },
+      "revId": "9f38adfbefc8064db6f65c20cc648dfd1959da15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3682e37f_f19881f9",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2231,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-26T02:49:38Z",
+      "side": 1,
+      "message": "You could make this a static class as well, and provide {} noop implementations.\n\n(That makes things more easily modifiable in the future.)",
+      "range": {
+        "startLine": 2231,
+        "startChar": 11,
+        "endLine": 2231,
+        "endChar": 20
+      },
+      "revId": "9f38adfbefc8064db6f65c20cc648dfd1959da15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "458a03fa_7620fe9f",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2232,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-26T02:49:38Z",
+      "side": 1,
+      "message": "These can be final, maybe?",
+      "range": {
+        "startLine": 2232,
+        "startChar": 8,
+        "endLine": 2232,
+        "endChar": 11
+      },
+      "revId": "9f38adfbefc8064db6f65c20cc648dfd1959da15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a0f259b_8bc33385",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2233,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-26T02:49:38Z",
+      "side": 1,
+      "message": "\"UNSPECIFIED\" maybe?",
+      "range": {
+        "startLine": 2233,
+        "startChar": 18,
+        "endLine": 2233,
+        "endChar": 25
+      },
+      "revId": "9f38adfbefc8064db6f65c20cc648dfd1959da15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57f84422_d8931f26",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2265,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-26T02:49:38Z",
+      "side": 1,
+      "message": "You might promote these out of this class to be\n\n    @hide\n    public static final int LOHS_CALLBACK_*\n\nso that WifiServiceImpl can access them when wanting to send messages to get processed here.",
+      "range": {
+        "startLine": 2265,
+        "startChar": 8,
+        "endLine": 2265,
+        "endChar": 15
+      },
+      "revId": "9f38adfbefc8064db6f65c20cc648dfd1959da15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "897199c1_12f610dc",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2358,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-26T02:49:38Z",
+      "side": 1,
+      "message": "This will do something more in the not-too-distant future, yes?",
+      "range": {
+        "startLine": 2358,
+        "startChar": 20,
+        "endLine": 2358,
+        "endChar": 25
+      },
+      "revId": "9f38adfbefc8064db6f65c20cc648dfd1959da15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "104757ea_bf88808b",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2384,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-26T02:49:38Z",
+      "side": 1,
+      "message": "I findl static classes with noop implementations to a bit more future proof.",
+      "range": {
+        "startLine": 2384,
+        "startChar": 11,
+        "endLine": 2384,
+        "endChar": 20
+      },
+      "revId": "9f38adfbefc8064db6f65c20cc648dfd1959da15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
