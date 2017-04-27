@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6834fe41_69124845",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-27T19:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51d0f6ba_9a82151c",
+      "range": {
+        "startLine": 855,
+        "startChar": 25,
+        "endLine": 855,
+        "endChar": 30
+      },
+      "revId": "a8ebdad901a039ed9fc4bc476235378a6ac25e85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14aa8afb_8df4d74e",
         "filename": "wifi/java/android/net/wifi/WifiManager.java",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d64adb71_fd93d50f",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1867,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-27T19:33:58Z",
+      "side": 1,
+      "message": "If it is ok with you, I will leave this as \"callback\" since it will be in the documentation.",
+      "parentUuid": "14aa8afb_8df4d74e",
+      "range": {
+        "startLine": 1867,
+        "startChar": 63,
+        "endLine": 1867,
+        "endChar": 71
+      },
+      "revId": "a8ebdad901a039ed9fc4bc476235378a6ac25e85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98ad866c_df3c03af",
         "filename": "wifi/java/android/net/wifi/WifiManager.java",
         "patchSetId": 13
@@ -59,6 +107,30 @@
       "writtenOn": "2017-04-27T12:10:26Z",
       "side": 1,
       "message": "You could hide all this inside a method of the proxy so it would just be something like:\n\n    mLOHSCallbackProxy.notifyFailed();\n    mLOHSCallbackProxy \u003d null;",
+      "range": {
+        "startLine": 1878,
+        "startChar": 20,
+        "endLine": 1881,
+        "endChar": 63
+      },
+      "revId": "a8ebdad901a039ed9fc4bc476235378a6ac25e85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77f9a8e1_26aafcba",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1881,
+      "author": {
+        "id": 1081395
+      },
+      "writtenOn": "2017-04-27T19:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98ad866c_df3c03af",
       "range": {
         "startLine": 1878,
         "startChar": 20,
