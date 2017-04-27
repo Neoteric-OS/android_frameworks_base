@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcfe5c04_0b663923",
+        "filename": "core/java/android/app/timezone/DistroRulesVersion.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1099044
+      },
+      "writtenOn": "2017-04-27T14:41:05Z",
+      "side": 1,
+      "message": "Use a dl instead?\n\n\u003cdl\u003e\n  \u003cdt\u003erulesVersion\u003c/dt\u003e\n  \u003cdd\u003ethe IANA rules version. e.g. \"2017a\"\u003cdd\u003e\n\n  \u003cdt\u003e...",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 62
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2af7ee6_31a3c3b6",
+        "filename": "core/java/android/app/timezone/DistroRulesVersion.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1099044
+      },
+      "writtenOn": "2017-04-27T14:41:05Z",
+      "side": 1,
+      "message": "one would hope that it\u0027s better, but I think this should say \"newer\" ;-)",
+      "range": {
+        "startLine": 35,
+        "startChar": 53,
+        "endLine": 35,
+        "endChar": 59
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a2fb81b_b2719d98",
+        "filename": "core/java/android/app/timezone/DistroRulesVersion.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1099044
+      },
+      "writtenOn": "2017-04-27T14:41:05Z",
+      "side": 1,
+      "message": "similarly, I think isOlderThan would be better.",
+      "range": {
+        "startLine": 73,
+        "startChar": 19,
+        "endLine": 73,
+        "endChar": 30
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b60381_1cdad6e7",
+        "filename": "core/java/android/app/timezone/RulesManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1099044
+      },
+      "writtenOn": "2017-04-27T14:41:05Z",
+      "side": 1,
+      "message": "is the per-field @hide necessary when the whole class is hidden?\n\nAlso inconsistent newlines before hide.",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 12
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c600be2_a6e8ac60",
+        "filename": "core/java/android/app/timezone/RulesState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1099044
+      },
+      "writtenOn": "2017-04-27T14:41:05Z",
+      "side": 1,
+      "message": "dl/dt/dd?",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 6
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f15a336f_d3267960",
+        "filename": "core/java/android/app/timezone/Utils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1099044
+      },
+      "writtenOn": "2017-04-27T14:41:05Z",
+      "side": 1,
+      "message": "if we tolerate \" 2017a\" as a version token, shouldn\u0027t we ensure that it\u0027s treated identical to \"2017a\"?\n\nI\u0027d suggest to just not tolerate anything where .trim() returns something different from rulesVersion instead.",
+      "range": {
+        "startLine": 34,
+        "startChar": 24,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
