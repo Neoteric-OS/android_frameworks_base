@@ -22,6 +22,29 @@
       "revId": "e50601499b1f7b7a980777fd55cb336c90413263",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e6828d6_0a6d7c32",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-27T07:33:45Z",
+      "side": 1,
+      "message": "If the suggested code above is correct, then this code can be deleted since it\u0027s already handled there.",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 9
+      },
+      "revId": "e50601499b1f7b7a980777fd55cb336c90413263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e49563a8_3d79c348",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-27T07:33:45Z",
+      "side": 1,
+      "message": "packet",
+      "range": {
+        "startLine": 198,
+        "startChar": 63,
+        "endLine": 198,
+        "endChar": 70
+      },
+      "revId": "b5a56b5ed3300f1fe492f121635338ae50ef9af2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dbf3f152_4e509861",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-27T07:33:45Z",
+      "side": 1,
+      "message": "translated to",
+      "range": {
+        "startLine": 199,
+        "startChar": 63,
+        "endLine": 199,
+        "endChar": 77
+      },
+      "revId": "b5a56b5ed3300f1fe492f121635338ae50ef9af2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3edcb5ac_a75bce1d",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-27T07:33:45Z",
+      "side": 1,
+      "message": "a native IPv4 packet",
+      "range": {
+        "startLine": 198,
+        "startChar": 86,
+        "endLine": 199,
+        "endChar": 24
+      },
+      "revId": "b5a56b5ed3300f1fe492f121635338ae50ef9af2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ce47334_539f8e0a",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-27T07:33:45Z",
+      "side": 1,
+      "message": "packet",
+      "range": {
+        "startLine": 201,
+        "startChar": 15,
+        "endLine": 201,
+        "endChar": 22
+      },
+      "revId": "b5a56b5ed3300f1fe492f121635338ae50ef9af2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c660229_bad00817",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-27T07:33:45Z",
+      "side": 1,
+      "message": "from",
+      "range": {
+        "startLine": 201,
+        "startChar": 46,
+        "endLine": 201,
+        "endChar": 49
+      },
+      "revId": "b5a56b5ed3300f1fe492f121635338ae50ef9af2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b57f4649_7b1ceee8",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-27T07:33:45Z",
+      "side": 1,
+      "message": "I don\u0027t think so, no. That\u0027s an app-settable field which has nothing to do with bytes or packets. Also, IIRC it\u0027s not interface-specific.",
+      "range": {
+        "startLine": 217,
+        "startChar": 24,
+        "endLine": 217,
+        "endChar": 80
+      },
+      "revId": "b5a56b5ed3300f1fe492f121635338ae50ef9af2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c33eca85_414ca5e0",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-27T07:33:45Z",
+      "side": 1,
+      "message": "add",
+      "range": {
+        "startLine": 226,
+        "startChar": 57,
+        "endLine": 226,
+        "endChar": 61
+      },
+      "revId": "b5a56b5ed3300f1fe492f121635338ae50ef9af2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
