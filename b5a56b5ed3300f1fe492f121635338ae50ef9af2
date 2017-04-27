@@ -160,6 +160,29 @@
       "revId": "b5a56b5ed3300f1fe492f121635338ae50ef9af2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c36a2ba4_68c38cb6",
+        "filename": "tests/net/res/raw/xt_qtaguid_with_clat",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-27T07:55:27Z",
+      "side": 1,
+      "message": "I don\u0027t understand how this works.\n\nThis number is saying we received 7892 packets on wlan0. But adding together the 7th field of the lines above with v4-wlan0, we see that v4-wlan0 received 5+25+6717+1041+2870 \u003d 10658 packets. If we subtract 7892 we end up with -2766 packets, which seems wrong.\n\nSimilarly, with bytes, the stats say we received 11058671 bytes on wlan0. But if we add together all the bytes on v4-wlan0, we get 256+30312+9398432+1448660+9702 \u003d 10887362 bytes.\n\nBut the unit test says that wlan0 should count 15229 bytes, and I can\u0027t figure out how to get there. If we take 10887362 (bytes on v4-wlan0) and add 20*10658 (packets on v4-wlan0), we end up with a delta of (10887362+(20×10658))−11058671 \u003d 41851.\n\nWhat am I doing wrong?",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "b5a56b5ed3300f1fe492f121635338ae50ef9af2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
