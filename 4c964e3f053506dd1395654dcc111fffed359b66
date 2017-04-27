@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91e1707a_5d3eb662",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-04-27T15:04:12Z",
+      "side": 1,
+      "message": "Is there a reason you don\u0027t tell wifi if there\u0027s an error? Is it just that this code cannot happen? If so, it might be more readable as:\n\n                switch (mode) {\n                    case IControlsTethering.STATE_TETHERED:\n                        wifiMode \u003d WifiManager.IFACE_IP_MODE_TETHERED;\n                        break;\n                    case IControlsTethering.STATE_LOCAL_ONLY:\n                        wifiMode \u003d WifiManager.IFACE_IP_MODE_LOCAL_ONLY;\n                        break;\n                    default:\n                        Log.wtf(...);\n                        return;\n                }\n                getWifiManager().updateInterfaceIpState(who.interfaceName(), wifiMode);",
+      "range": {
+        "startLine": 1353,
+        "startChar": 16,
+        "endLine": 1353,
+        "endChar": 80
+      },
+      "revId": "4c964e3f053506dd1395654dcc111fffed359b66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
