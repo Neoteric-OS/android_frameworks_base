@@ -140,6 +140,30 @@
       "revId": "64d9f8519b426f74b6101865d94175ba1e53dfc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32595e1d_6029dfc2",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1098775
+      },
+      "writtenOn": "2017-04-27T12:36:42Z",
+      "side": 1,
+      "message": "I see. but if ARC is not enabled, I feel we should not change the state of the \"HDMI_ARC\" device to true. It\u0027s not related to ARC, right?\n\nAlso, onHotPlug() can also be called when another type of device is connected to the playback device. If the connected device is not an AVR, ACTION_HDMI_AUDIO_PLUG should not be broadcasted.",
+      "parentUuid": "860f259c_b1c2cc88",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 43
+      },
+      "revId": "64d9f8519b426f74b6101865d94175ba1e53dfc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
