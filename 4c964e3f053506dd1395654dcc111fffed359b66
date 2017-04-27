@@ -22,6 +22,30 @@
       "revId": "4c964e3f053506dd1395654dcc111fffed359b66",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7277d996_6e7a513d",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-27T16:16:16Z",
+      "side": 1,
+      "message": "Yeah, we don\u0027t enter this function if there\u0027s an error (it\u0027s not a valid \"active serving state\").  That happens over in the handle*Inactive() branch.\n\nI\u0027ll try to reorg it tomorrow.\n\nThe softAp call needs to get merged first internally, because this touches neighboring lines and git merge gets unhappy.\n\nBut all of that tomorrow...",
+      "parentUuid": "91e1707a_5d3eb662",
+      "range": {
+        "startLine": 1353,
+        "startChar": 16,
+        "endLine": 1353,
+        "endChar": 80
+      },
+      "revId": "4c964e3f053506dd1395654dcc111fffed359b66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
