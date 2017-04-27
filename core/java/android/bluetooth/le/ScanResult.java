@@ -52,6 +52,11 @@ public final class ScanResult implements Parcelable {
     public static final int SID_NOT_PRESENT = 0xFF;
 
     /**
+     * TX power is not present in the packet.
+     */
+    public static final int TX_POWER_NOT_PRESENT = 0x7F;
+
+    /**
      * Mask for checking whether event type represents legacy advertisement.
      */
     private static final int ET_LEGACY_MASK = 0x10;
@@ -265,8 +270,8 @@ public final class ScanResult implements Parcelable {
 
     /**
      * Returns the transmit power in dBm.
-     * Valid range is [-127, 126]. A value of 127 indicates that the
-     * advertisement did not indicate TX power.
+     * Valid range is [-127, 126]. A value of TX_POWER_NOT_PRESENT indicates that
+     * the TX power is not present in the packet.
      */
     public int getTxPower() { return mTxPower; }
 
