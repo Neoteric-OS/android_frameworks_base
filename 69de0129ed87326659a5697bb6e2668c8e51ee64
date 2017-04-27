@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a26ede04_7a9e3331",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-27T03:14:20Z",
+      "side": 1,
+      "message": "\"not\"",
+      "range": {
+        "startLine": 62,
+        "startChar": 33,
+        "endLine": 62,
+        "endChar": 35
+      },
+      "revId": "69de0129ed87326659a5697bb6e2668c8e51ee64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cd09d32_c643ea6f",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-27T03:14:20Z",
+      "side": 1,
+      "message": "\"tx and rx\"",
+      "range": {
+        "startLine": 195,
+        "startChar": 56,
+        "endLine": 195,
+        "endChar": 58
+      },
+      "revId": "69de0129ed87326659a5697bb6e2668c8e51ee64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4ddf317_a669994b",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-27T03:14:20Z",
+      "side": 1,
+      "message": "I see that NetworkStats.Entry has an add method (that modifies |operations| as well).  Two questions:\n\n    [1] should it have a subtract() method?\n    [2] should we be fixing up |operations| as well?",
+      "range": {
+        "startLine": 209,
+        "startChar": 39,
+        "endLine": 209,
+        "endChar": 41
+      },
+      "revId": "69de0129ed87326659a5697bb6e2668c8e51ee64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
