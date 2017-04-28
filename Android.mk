@@ -757,8 +757,6 @@ packages_to_document := \
 # Search through the base framework dirs for these packages.
 # The result will be relative to frameworks/base.
 fwbase_dirs_to_document := \
-	legacy-test/src \
-	test-runner/src \
 	$(patsubst $(LOCAL_PATH)/%,%, \
 	  $(wildcard \
 	    $(foreach dir, $(FRAMEWORKS_BASE_JAVA_SRC_DIRS), \
@@ -844,7 +842,8 @@ framework_docs_LOCAL_API_CHECK_JAVA_LIBRARIES := \
 	icu4j \
 	framework \
 	telephony-common \
-	voip-common
+	voip-common \
+	junit
 
 framework_docs_LOCAL_JAVA_LIBRARIES := \
 	$(framework_docs_LOCAL_API_CHECK_JAVA_LIBRARIES) \
