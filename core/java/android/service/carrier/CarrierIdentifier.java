@@ -44,15 +44,23 @@ public class CarrierIdentifier implements Parcelable {
     private String mImsi;
     private String mGid1;
     private String mGid2;
+    private String mIccid;
 
     public CarrierIdentifier(String mcc, String mnc, String spn, String imsi, String gid1,
             String gid2) {
+        this(mcc, mnc, spn, imsi, gid1, gid2, "");
+    }
+
+    /** @hide */
+    public CarrierIdentifier(String mcc, String mnc, String spn, String imsi, String gid1,
+            String gid2, String iccid) {
         mMcc = mcc;
         mMnc = mnc;
         mSpn = spn;
         mImsi = imsi;
         mGid1 = gid1;
         mGid2 = gid2;
+        mIccid = iccid;
     }
 
     /** @hide */
@@ -90,6 +98,11 @@ public class CarrierIdentifier implements Parcelable {
         return mGid2;
     }
 
+    /** @hide */
+    public String getIccid() {
+        return mIccid;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -103,6 +116,7 @@ public class CarrierIdentifier implements Parcelable {
         out.writeString(mImsi);
         out.writeString(mGid1);
         out.writeString(mGid2);
+        out.writeString(mIccid);
     }
 
     @Override
@@ -114,6 +128,7 @@ public class CarrierIdentifier implements Parcelable {
           + ",imsi=" + mImsi
           + ",gid1=" + mGid1
           + ",gid2=" + mGid2
+          + ",iccid=" + mIccid
           + "}";
     }
 
@@ -125,6 +140,7 @@ public class CarrierIdentifier implements Parcelable {
         mImsi = in.readString();
         mGid1 = in.readString();
         mGid2 = in.readString();
+        mIccid = in.readString();
     }
 
     /** @hide */
@@ -134,5 +150,6 @@ public class CarrierIdentifier implements Parcelable {
         int IMSI_PREFIX = 2;
         int GID1 = 3;
         int GID2 = 4;
+        int ICCID = 5;
     }
 }
