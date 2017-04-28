@@ -46,6 +46,30 @@
       "revId": "4c964e3f053506dd1395654dcc111fffed359b66",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23ec65ea_bcb1b485",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-04-28T04:47:08Z",
+      "side": 1,
+      "message": "Simplified version coming up.",
+      "parentUuid": "7277d996_6e7a513d",
+      "range": {
+        "startLine": 1353,
+        "startChar": 16,
+        "endLine": 1353,
+        "endChar": 80
+      },
+      "revId": "4c964e3f053506dd1395654dcc111fffed359b66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
