@@ -27297,6 +27297,7 @@ package android.net.wifi {
     method public int addNetwork(android.net.wifi.WifiConfiguration);
     method public void addOrUpdatePasspointConfiguration(android.net.wifi.hotspot2.PasspointConfiguration);
     method public static int calculateSignalLevel(int, int);
+    method public void cancelLocalOnlyHotspotRequest();
     method public void cancelWps(android.net.wifi.WifiManager.WpsCallback);
     method public static int compareSignalLevel(int, int);
     method public void connect(android.net.wifi.WifiConfiguration, android.net.wifi.WifiManager.ActionListener);
@@ -27342,11 +27343,14 @@ package android.net.wifi {
     method public boolean setWifiApConfiguration(android.net.wifi.WifiConfiguration);
     method public boolean setWifiApEnabled(android.net.wifi.WifiConfiguration, boolean);
     method public boolean setWifiEnabled(boolean);
+    method public void startLocalOnlyHotspot(android.net.wifi.WifiManager.LocalOnlyHotspotCallback, android.os.Handler);
     method public deprecated boolean startLocationRestrictedScan(android.os.WorkSource);
     method public boolean startScan();
     method public boolean startScan(android.os.WorkSource);
     method public void startWps(android.net.wifi.WpsInfo, android.net.wifi.WifiManager.WpsCallback);
+    method public void unregisterLocalOnlyHotspotObserver();
     method public int updateNetwork(android.net.wifi.WifiConfiguration);
+    method public void watchLocalOnlyHotspot(android.net.wifi.WifiManager.LocalOnlyHotspotObserver, android.os.Handler);
     field public static final java.lang.String ACTION_PASSPOINT_DEAUTH_IMMINENT = "android.net.wifi.action.PASSPOINT_DEAUTH_IMMINENT";
     field public static final java.lang.String ACTION_PASSPOINT_ICON = "android.net.wifi.action.PASSPOINT_ICON";
     field public static final java.lang.String ACTION_PASSPOINT_OSU_PROVIDERS_LIST = "android.net.wifi.action.PASSPOINT_OSU_PROVIDERS_LIST";
@@ -27417,6 +27421,33 @@ package android.net.wifi {
   public static abstract interface WifiManager.ActionListener {
     method public abstract void onFailure(int);
     method public abstract void onSuccess();
+  }
+
+  public static class WifiManager.LocalOnlyHotspotCallback {
+    ctor public WifiManager.LocalOnlyHotspotCallback();
+    method public void onFailed(int);
+    method public void onStarted(android.net.wifi.WifiManager.LocalOnlyHotspotReservation);
+    method public void onStopped();
+    field public static final int ERROR_GENERIC = 2; // 0x2
+    field public static final int ERROR_INCOMPATIBLE_MODE = 3; // 0x3
+    field public static final int ERROR_NO_CHANNEL = 1; // 0x1
+  }
+
+  public static class WifiManager.LocalOnlyHotspotObserver {
+    ctor public WifiManager.LocalOnlyHotspotObserver();
+    method public void onRegistered(android.net.wifi.WifiManager.LocalOnlyHotspotSubscription);
+    method public void onStarted(android.net.wifi.WifiConfiguration);
+    method public void onStopped();
+  }
+
+  public class WifiManager.LocalOnlyHotspotReservation implements java.lang.AutoCloseable {
+    ctor public WifiManager.LocalOnlyHotspotReservation(android.net.wifi.WifiConfiguration);
+    method public void close();
+    method public android.net.wifi.WifiConfiguration getConfig();
+  }
+
+  public class WifiManager.LocalOnlyHotspotSubscription implements java.lang.AutoCloseable {
+    method public void close();
   }
 
   public class WifiManager.MulticastLock {
