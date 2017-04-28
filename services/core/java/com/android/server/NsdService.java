@@ -49,7 +49,6 @@ import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.Protocol;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
-import com.android.server.NativeDaemonConnector.Command;
 
 /**
  * Network Service Discovery Service handles remote service discovery operation requests by
@@ -72,7 +71,8 @@ public class NsdService extends INsdManager.Stub {
     /**
      * Clients receiving asynchronous messages
      */
-    private final HashMap<Messenger, ClientInfo> mClients = new HashMap<>();
+    @VisibleForTesting
+    final HashMap<Messenger, ClientInfo> mClients = new HashMap<>();
 
     /* A map from unique id to client info */
     private final SparseArray<ClientInfo> mIdToClientInfoMap= new SparseArray<>();
@@ -702,19 +702,6 @@ public class NsdService extends INsdManager.Stub {
             }
             return true;
         }
-
-        public boolean execute(Command cmd) {
-            if (DBG) {
-                Slog.d(TAG, cmd.toString());
-            }
-            try {
-                mNativeConnector.execute(cmd);
-            } catch (NativeDaemonConnectorException e) {
-                Slog.e(TAG, "Failed to execute " + cmd, e);
-                return false;
-            }
-            return true;
-        }
     }
 
     private boolean startMDnsDaemon() {
@@ -734,8 +721,7 @@ public class NsdService extends INsdManager.Stub {
         int port = service.getPort();
         byte[] textRecord = service.getTxtRecord();
         String record = Base64.encodeToString(textRecord, Base64.DEFAULT).replace("\n", "");
-        Command cmd = new Command("mdnssd", "register", regId, name, type, port, record);
-        return mDaemon.execute(cmd);
+        return mDaemon.execute("register", regId, name, type, port, record);
     }
 
     private boolean unregisterService(int regId) {
