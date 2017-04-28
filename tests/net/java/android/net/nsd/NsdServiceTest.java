@@ -16,7 +16,9 @@
 
 package com.android.server;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
@@ -30,6 +32,7 @@ import android.os.test.TestLooper;
 import android.content.Context;
 import android.content.ContentResolver;
 import android.net.nsd.NsdManager;
+import android.net.nsd.NsdServiceInfo;
 import com.android.server.NsdService.DaemonConnection;
 import com.android.server.NsdService.DaemonConnectionSupplier;
 import com.android.server.NsdService.NativeCallbackReceiver;
@@ -40,14 +43,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.ArgumentCaptor;
+import java.util.Arrays;
 
 // TODOs:
 //  - test client disconnects
 //  - test client can send requests and receive replies
 //  - test NSD_ON ENABLE/DISABLED listening
+//  - test in-flight requests are clean at client disconnection
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class NsdServiceTest {
+
+    static final int PROTOCOL = NsdManager.PROTOCOL_DNS_SD;
 
     @Mock Context mContext;
     @Mock ContentResolver mResolver;
@@ -66,18 +74,71 @@ public class NsdServiceTest {
     }
 
     @Test
-    public void testClientsCanConnect() {
+    public void testClientsCanConnectAndDisconnect() {
         when(mSettings.isEnabled()).thenReturn(true);
 
         NsdService service = makeService();
 
         NsdManager client1 = connectClient(service);
-        verify(mDaemon, timeout(100).times(1)).execute("start-service");
+        verify(mDaemon, timeout(100).times(1)).start();
 
         NsdManager client2 = connectClient(service);
 
-        // TODO: disconnect client1
-        // TODO: disconnect client2
+        mLooper.startAutoDispatch();
+
+        client1.disconnect();
+        client2.disconnect();
+
+        verify(mDaemon, timeout(500).times(1)).stop();
+    }
+
+    @Test
+    public void testServiceRegistration() {
+        // client 1 register service
+        //
+        // client 2 discover service
+        //
+        // client 2 gets service info
+        //
+        // client
+    }
+
+    @Test
+    public void testClientRequestsAreGCedAtDisconnection() {
+        when(mSettings.isEnabled()).thenReturn(true);
+        when(mDaemon.execute(any(String.class))).thenReturn(true);
+
+        NsdService service = makeService();
+        NsdManager client = connectClient(service);
+
+        verify(mDaemon, timeout(100).times(1)).start();
+
+        NsdServiceInfo request = new NsdServiceInfo("a_name", "a_type");
+        request.setPort(2201);
+
+        mLooper.startAutoDispatch();
+
+        // Client registration request
+        NsdManager.RegistrationListener listener1 = mock(NsdManager.RegistrationListener.class);
+        client.registerService(request, PROTOCOL, listener1);
+
+        verifyDaemonCommand("register 2 a_name a_type 2201");
+        //verify(mDaemon, timeout(100).times(1)).execute(
+
+        // Client discovery request
+        NsdManager.DiscoveryListener listener2 = mock(NsdManager.DiscoveryListener.class);
+        client.discoverServices("a_type", PROTOCOL, listener2);
+        verify(mDaemon, timeout(100).times(1)).execute("discover 3 a_type");
+
+        // Client resolve request
+        NsdManager.ResolveListener listener3 = mock(NsdManager.ResolveListener.class);
+        client.resolveService(request, listener3);
+        verify(mDaemon, timeout(100).times(1)).execute("resolve 4 a_name a_type local.");
+
+        client.disconnect();
+
+        verify(mDaemon, timeout(500).times(1)).stop();
+        // checks that request are cleaned
     }
 
     NsdService makeService() {
@@ -95,6 +156,14 @@ public class NsdServiceTest {
         NsdManager client = new NsdManager(mContext, service);
         mLooper.stopAutoDispatch();
         return client;
+    }
+
+    void verifyDaemonCommand(String want) {
+        ArgumentCaptor<String> commandCaptor = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<Object[]> argumentsCaptor = ArgumentCaptor.forClass(Object[].class);
+        verify(mDaemon, timeout(100).times(1)).execute(commandCaptor.capture(), argumentsCaptor.capture());
+        String got = commandCaptor.getValue() + Arrays.toString(argumentsCaptor.getValue());
+        assertEquals(want, got);
     }
 
     public static class TestHandler extends Handler {
