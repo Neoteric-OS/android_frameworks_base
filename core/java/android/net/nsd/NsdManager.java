@@ -399,6 +399,8 @@ public final class NsdManager {
                     ((RegistrationListener) listener).onUnregistrationFailed(ns, message.arg1);
                     break;
                 case UNREGISTER_SERVICE_SUCCEEDED:
+                    // TODO: do not unregister listener until service is unregistered, or provide
+                    // alternative way for unregistering ?
                     removeListener(key);
                     ((RegistrationListener) listener).onServiceUnregistered(ns);
                     break;
