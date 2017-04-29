@@ -72,7 +72,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *         long totalSize = 0;
  *         for (int i = 0; i < count; i++) {
  *             totalSize += Downloader.downloadFile(urls[i]);
- *             publishProgress((int) ((i / (float) count) * 100));
+ *             publishProgress((int) (((i + 1) / (float) count) * 100));
  *             // Escape early if cancel() is called
  *             if (isCancelled()) break;
  *         }
