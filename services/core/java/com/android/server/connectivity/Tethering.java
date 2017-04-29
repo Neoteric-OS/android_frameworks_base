@@ -413,15 +413,18 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
     }
 
     private int setWifiTethering(final boolean enable) {
+        int returnValue = ConnectivityManager.TETHER_ERROR_MASTER_ERROR;
+        final long ident = Binder.clearCallingIdentity();
         synchronized (mPublicSync) {
             mWifiTetherRequested = enable;
             final WifiManager wifiManager = getWifiManager();
             if ((enable && wifiManager.startSoftAp(null /* use existing wifi config */)) ||
                 (!enable && wifiManager.stopSoftAp())) {
-                return ConnectivityManager.TETHER_ERROR_NO_ERROR;
+                returnValue = ConnectivityManager.TETHER_ERROR_NO_ERROR;
             }
-            return ConnectivityManager.TETHER_ERROR_MASTER_ERROR;
         }
+        Binder.restoreCallingIdentity(ident);
+        return returnValue;
     }
 
     private void setBluetoothTethering(final boolean enable, final ResultReceiver receiver) {
