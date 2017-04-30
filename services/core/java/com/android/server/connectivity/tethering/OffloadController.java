@@ -28,6 +28,8 @@ import android.util.Log;
 public class OffloadController {
     private static final String TAG = OffloadController.class.getSimpleName();
 
+    private static native boolean configOffload();
+
     private final Handler mHandler;
     private LinkProperties mUpstreamLinkProperties;
 
