@@ -28,26 +28,54 @@ import android.util.Log;
 public class OffloadController {
     private static final String TAG = OffloadController.class.getSimpleName();
 
+    private static native boolean configOffload();
+
+    private final OperatingState mState;
     private final Handler mHandler;
     private LinkProperties mUpstreamLinkProperties;
 
     public OffloadController(Handler h) {
+        mState = new OperatingState();
         mHandler = h;
     }
 
     public void start() {
+        if (!mState.configComplete) {
+            mState.configComplete = configOffload();
+            if (!mState.configComplete) {
+                Log.d(TAG, "tethering offload not supported");
+                return;
+            }
+        }
+
         // TODO: initOffload() and configure callbacks to be handled on our
         // preferred Handler.
-        Log.d(TAG, "tethering offload not supported");
     }
 
     public void stop() {
+        if (!mState.started()) return;
+
         // TODO: stopOffload().
         mUpstreamLinkProperties = null;
     }
 
     public void setUpstreamLinkProperties(LinkProperties lp) {
+        if (!mState.started()) return;
+
         // TODO: setUpstreamParameters().
         mUpstreamLinkProperties = lp;
+    }
+
+    // TODO: public void addDownStream(...)
+
+    // Track several pieces of related state in one place.
+    private static class OperatingState {
+        boolean configComplete;
+        // TODO: ITetheringOffloadCallback callback;
+        // TODO: boolean offloadEnabled  /* for current RAT */
+
+        boolean started() {
+            return configComplete /* && callback != null */;
+        }
     }
 }
