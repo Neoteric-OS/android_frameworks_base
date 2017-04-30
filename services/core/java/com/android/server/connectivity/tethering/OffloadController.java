@@ -16,8 +16,10 @@
 
 package com.android.server.connectivity.tethering;
 
+import android.hardware.tetheroffload.control.V1_0.IOffloadControl;
 import android.net.LinkProperties;
 import android.os.Handler;
+import android.os.RemoteException;
 import android.util.Log;
 
 /**
@@ -28,7 +30,11 @@ import android.util.Log;
 public class OffloadController {
     private static final String TAG = OffloadController.class.getSimpleName();
 
+    private static native boolean configOffload();
+
     private final Handler mHandler;
+    private boolean mConfigComplete;
+    private IOffloadControl mOffloadControl;
     private LinkProperties mUpstreamLinkProperties;
 
     public OffloadController(Handler h) {
@@ -36,18 +42,45 @@ public class OffloadController {
     }
 
     public void start() {
-        // TODO: initOffload() and configure callbacks to be handled on our
-        // preferred Handler.
-        Log.d(TAG, "tethering offload not supported");
+        if (started()) return;
+
+        if (!mConfigComplete) {
+            mConfigComplete = configOffload();
+            if (!mConfigComplete) {
+                Log.d(TAG, "tethering offload config not supported");
+                return;
+            }
+        }
+
+        if (mOffloadControl == null) {
+            try {
+                mOffloadControl = IOffloadControl.getService();
+            } catch (RemoteException e) {
+                Log.d(TAG, "tethering offload control not supported: " + e);
+                return;
+            }
+        }
+
+        // TODO: Create and register ITetheringOffloadCallback.
     }
 
     public void stop() {
+        if (!started()) return;
+
         // TODO: stopOffload().
         mUpstreamLinkProperties = null;
     }
 
     public void setUpstreamLinkProperties(LinkProperties lp) {
+        if (!started()) return;
+
         // TODO: setUpstreamParameters().
         mUpstreamLinkProperties = lp;
+    }
+
+    // TODO: public void addDownStream(...)
+
+    private boolean started() {
+        return mConfigComplete && (mOffloadControl != null);
     }
 }
