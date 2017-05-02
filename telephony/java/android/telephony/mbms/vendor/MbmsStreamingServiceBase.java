@@ -21,6 +21,7 @@ import android.os.RemoteException;
 import android.telephony.mbms.IMbmsStreamingManagerCallback;
 import android.telephony.mbms.IStreamingServiceCallback;
 import android.telephony.mbms.StreamingService;
+import android.telephony.mbms.MbmsException;
 
 import java.util.List;
 
@@ -29,16 +30,38 @@ import java.util.List;
  * TODO: future systemapi
  */
 public class MbmsStreamingServiceBase extends IMbmsStreamingService.Stub {
-
+    /**
+     * Initialize streaming service for this app and subId, registering the listener.
+     *
+     * @param listener The callback to use to communicate with the app.
+     * @param appName The package name of the calling app.
+     * @param subscriptionId The subscription ID to use.
+     * @return {@link MbmsException#ERROR_ALREADY_INITIALIZED} or {@link MbmsException#SUCCESS}.
+     */
     @Override
-    public int initialize(IMbmsStreamingManagerCallback listener, String appName, int subId)
+    public int initialize(IMbmsStreamingManagerCallback listener, String appName,
+            int subscriptionId)
             throws RemoteException {
         return 0;
     }
 
+    /**
+     * Registers serviceClasses of interest with the appName/subId key.
+     * Starts async fetching data on streaming services of matching classes to be reported
+     * later via {@link IMbmsStreamingManagerCallback#streamingServicesUpdated(List)}
+     *
+     * Note that subsequent calls with the same appName and subId will replace
+     * the service class list.
+     *
+     * @param appName The package name of the calling app.
+     * @param subscriptionId The subscription id for eMBMS
+     * @param serviceClasses The service classes that the app wishes to get info on. The strings
+     *                       may contain arbitrary data as negotiated between the app and the
+     *                       carrier.
+     */
     @Override
-    public int getStreamingServices(String appName, int subId, List<String> serviceClasses)
-            throws RemoteException {
+    public int getStreamingServices(String appName, int subscriptionId,
+            List<String> serviceClasses) throws MbmsException {
         return 0;
     }
 
