@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e76f60c_5ac30f1f",
+        "filename": "core/java/android/provider/TimeZoneRulesDataContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1015680
+      },
+      "writtenOn": "2017-05-02T10:41:53Z",
+      "side": 1,
+      "message": "s/contacts/time zone data?",
+      "range": {
+        "startLine": 39,
+        "startChar": 56,
+        "endLine": 39,
+        "endChar": 64
+      },
+      "revId": "bbd0c8aadae23d0b8d71fe398b60292c75d50168",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
