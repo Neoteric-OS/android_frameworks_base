@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f599a17a_32c637ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-05-02T23:40:38Z",
+      "side": 1,
+      "message": "Redundant - the summary line itself captures it.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 59
+      },
+      "revId": "4096fefea02b9175ca7c9bb860d73dbaac8e8b1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edd34194_069d514d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-05-02T23:40:38Z",
+      "side": 1,
+      "message": "The convention is to use just the bug number:\n\nBug: 35657817",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 22
+      },
+      "revId": "4096fefea02b9175ca7c9bb860d73dbaac8e8b1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b536599_30cd02a2",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-05-02T23:40:38Z",
+      "side": 1,
+      "message": "Line too long. Please split.",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 327,
+        "endChar": 151
+      },
+      "revId": "4096fefea02b9175ca7c9bb860d73dbaac8e8b1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18fa8c33_4b9fb805",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-05-02T23:40:38Z",
+      "side": 1,
+      "message": "Per in-person discussion: the processing of the Intent should be very fast, and calling disable() here (with potential internal locks / etc) should be avoided. You should use sendDisableMsg() instead.",
+      "range": {
+        "startLine": 334,
+        "startChar": 32,
+        "endLine": 334,
+        "endChar": 52
+      },
+      "revId": "4096fefea02b9175ca7c9bb860d73dbaac8e8b1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14457314_f3b746bf",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-05-02T23:40:38Z",
+      "side": 1,
+      "message": "Similar comment as above.",
+      "range": {
+        "startLine": 338,
+        "startChar": 32,
+        "endLine": 338,
+        "endChar": 44
+      },
+      "revId": "4096fefea02b9175ca7c9bb860d73dbaac8e8b1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6f8fe80_89567e87",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-05-02T23:40:38Z",
+      "side": 1,
+      "message": "This can fit on the previous line.",
+      "range": {
+        "startLine": 342,
+        "startChar": 36,
+        "endLine": 342,
+        "endChar": 39
+      },
+      "revId": "4096fefea02b9175ca7c9bb860d73dbaac8e8b1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
