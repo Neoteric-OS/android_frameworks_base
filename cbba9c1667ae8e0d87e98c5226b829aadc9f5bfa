@@ -94,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "82e245d1_559424b4",
+        "filename": "core/java/android/app/timezone/RulesManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1015680
+      },
+      "writtenOn": "2017-05-02T10:31:42Z",
+      "side": 1,
+      "message": "Are we 100% sure it will be called only from one thread?",
+      "range": {
+        "startLine": 121,
+        "startChar": 8,
+        "endLine": 125,
+        "endChar": 9
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c600be2_a6e8ac60",
         "filename": "core/java/android/app/timezone/RulesState.java",
         "patchSetId": 3
@@ -117,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "0cbff22b_61878ff9",
+        "filename": "core/java/android/app/timezone/RulesUpdaterContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1015680
+      },
+      "writtenOn": "2017-05-02T10:31:42Z",
+      "side": 1,
+      "message": "Or requestInstall/requestUninstall? We need to spell clearly that checkComplete is not requred after requestInstall/requestUninstall. Maybe change checkComplete to requestNothing?",
+      "range": {
+        "startLine": 62,
+        "startChar": 27,
+        "endLine": 62,
+        "endChar": 40
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f15a336f_d3267960",
         "filename": "core/java/android/app/timezone/Utils.java",
         "patchSetId": 3
@@ -137,6 +183,29 @@
       "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f2e74b_9fdf1ac4",
+        "filename": "core/tests/coretests/src/android/app/timezone/DistroFormatVersionTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1015680
+      },
+      "writtenOn": "2017-05-02T10:31:42Z",
+      "side": 1,
+      "message": "Please use two different values to test against the case where minor/major fields are not switched :)",
+      "range": {
+        "startLine": 47,
+        "startChar": 62,
+        "endLine": 47,
+        "endChar": 66
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
