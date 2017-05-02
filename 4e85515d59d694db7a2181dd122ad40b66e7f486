@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1899c941_8ee76ad3",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1121773
+      },
+      "writtenOn": "2017-05-02T05:21:00Z",
+      "side": 1,
+      "message": "If the contract of putListener has changed in a way that guarantees key is valid, should the description of putListener be updated?",
+      "revId": "4e85515d59d694db7a2181dd122ad40b66e7f486",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1156b440_8bfffe2d",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1121773
+      },
+      "writtenOn": "2017-05-02T05:21:00Z",
+      "side": 1,
+      "message": "Math.abs is surprising enough to deserve a comment?",
+      "range": {
+        "startLine": 435,
+        "startChar": 18,
+        "endLine": 435,
+        "endChar": 26
+      },
+      "revId": "4e85515d59d694db7a2181dd122ad40b66e7f486",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
