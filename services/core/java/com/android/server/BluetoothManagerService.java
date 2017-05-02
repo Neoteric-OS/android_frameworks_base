@@ -315,6 +315,43 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                 } else {
                     if (DBG) Slog.e(TAG, "No Bluetooth Adapter address parameter found");
                 }
+            } else if (Intent.ACTION_SETTING_RESTORED.equals(action)) {
+                final String name = intent.getStringExtra(Intent.EXTRA_SETTING_NAME);
+                if (Settings.Global.BLUETOOTH_ON.equals(name)) {
+                    // The Bluetooth On state may be changed during system restore.
+                    final String prevValue = intent.getStringExtra(
+                            Intent.EXTRA_SETTING_PREVIOUS_VALUE);
+                    final String newValue = intent.getStringExtra(
+                            Intent.EXTRA_SETTING_NEW_VALUE);
+
+                    if (DBG) Slog.d(TAG, "ACTION_SETTING_RESTORED with BLUETOOTH_ON, prevValue=" +
+                                    prevValue + ", newValue=" + newValue);
+
+                    if ((newValue != null) && (prevValue != null) && !prevValue.equals(newValue)) {
+                        if (newValue.equals("0")) {
+                            // Disable the Bluetooth
+                            if (DBG) Slog.d(TAG, "Restore to disable Bluetooth");
+
+                            synchronized(mReceiver) {
+                                mEnableExternal = false;
+                                sendDisableMsg(null);
+                            }
+                        } else {
+                            // Enable the Bluetooth
+                            if (isBluetoothDisallowed()) {
+                                if (DBG) Slog.d(TAG,"Not enabling - bluetooth disallowed");
+                            } else {
+                                if (DBG) Slog.d(TAG, "Restore to enable Bluetooth");
+
+                                synchronized(mReceiver) {
+                                    mQuietEnableExternal = false;
+                                    mEnableExternal = true;
+                                    sendEnableMsg(mQuietEnableExternal, null);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     };
@@ -354,6 +391,9 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         filter = new IntentFilter(BluetoothAdapter.ACTION_BLUETOOTH_ADDRESS_CHANGED);
         filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
         mContext.registerReceiver(mReceiver, filter);
+        filter = new IntentFilter(Intent.ACTION_SETTING_RESTORED);
+        mContext.registerReceiver(mReceiver, filter);
+
         loadStoredNameAndAddress();
         if (isBluetoothPersistedStateOn()) {
             if (DBG) Slog.d(TAG, "Startup: Bluetooth persisted state is ON.");
