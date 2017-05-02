@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "739359f3_ecb8f7de",
+        "filename": "core/java/android/app/timezone/DistroRulesVersion.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-05-02T12:15:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcfe5c04_0b663923",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 62
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2af7ee6_31a3c3b6",
         "filename": "core/java/android/app/timezone/DistroRulesVersion.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-27T14:41:05Z",
       "side": 1,
       "message": "one would hope that it\u0027s better, but I think this should say \"newer\" ;-)",
+      "range": {
+        "startLine": 35,
+        "startChar": 53,
+        "endLine": 35,
+        "endChar": 59
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f781a7_4103dbda",
+        "filename": "core/java/android/app/timezone/DistroRulesVersion.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-05-02T12:15:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2af7ee6_31a3c3b6",
       "range": {
         "startLine": 35,
         "startChar": 53,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "849a0cbd_74a72bff",
+        "filename": "core/java/android/app/timezone/DistroRulesVersion.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-05-02T12:15:56Z",
+      "side": 1,
+      "message": "Fair enough. I\u0027d avoided \"older\" / \"newer\" because I was worried that implied a relationship with just the IANA rules rather than revision, but I think you\u0027re right.",
+      "parentUuid": "1a2fb81b_b2719d98",
+      "range": {
+        "startLine": 73,
+        "startChar": 19,
+        "endLine": 73,
+        "endChar": 30
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93b60381_1cdad6e7",
         "filename": "core/java/android/app/timezone/RulesManager.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-04-27T14:41:05Z",
       "side": 1,
       "message": "is the per-field @hide necessary when the whole class is hidden?\n\nAlso inconsistent newlines before hide.",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 12
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6afdb6_0d4e93e9",
+        "filename": "core/java/android/app/timezone/RulesManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-05-02T12:15:56Z",
+      "side": 1,
+      "message": "I\u0027ll remove.",
+      "parentUuid": "93b60381_1cdad6e7",
       "range": {
         "startLine": 71,
         "startChar": 6,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c4c078ea_bd7622e3",
+        "filename": "core/java/android/app/timezone/RulesManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-05-02T12:15:56Z",
+      "side": 1,
+      "message": "No, I\u0027m not. Many other examples (besides the one I copied from BackupManager) do it on construction and have an instance field. I\u0027ll do the same and thereby simplify it.",
+      "parentUuid": "82e245d1_559424b4",
+      "range": {
+        "startLine": 121,
+        "startChar": 8,
+        "endLine": 125,
+        "endChar": 9
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c600be2_a6e8ac60",
         "filename": "core/java/android/app/timezone/RulesState.java",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-04-27T14:41:05Z",
       "side": 1,
       "message": "dl/dt/dd?",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 6
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb31568_e470b605",
+        "filename": "core/java/android/app/timezone/RulesState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-05-02T12:15:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c600be2_a6e8ac60",
       "range": {
         "startLine": 35,
         "startChar": 4,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "647e1155_439dbd9d",
+        "filename": "core/java/android/app/timezone/RulesUpdaterContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-05-02T12:15:56Z",
+      "side": 1,
+      "message": "Well caught. I used to require checkComplete() to be called in all cases after the request* methods, but changed it and made the token optional for the request* methods. This is just out of date. Will rename too - I think requestNothing is a better name.",
+      "parentUuid": "0cbff22b_61878ff9",
+      "range": {
+        "startLine": 62,
+        "startChar": 27,
+        "endLine": 62,
+        "endChar": 40
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f15a336f_d3267960",
         "filename": "core/java/android/app/timezone/Utils.java",
         "patchSetId": 3
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "bee431ec_fc413fc1",
+        "filename": "core/java/android/app/timezone/Utils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-05-02T12:15:56Z",
+      "side": 1,
+      "message": "I\u0027m just going to remove the trim().",
+      "parentUuid": "f15a336f_d3267960",
+      "range": {
+        "startLine": 34,
+        "startChar": 24,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3f2e74b_9fdf1ac4",
         "filename": "core/tests/coretests/src/android/app/timezone/DistroFormatVersionTest.java",
         "patchSetId": 3
@@ -197,6 +389,30 @@
       "writtenOn": "2017-05-02T10:31:42Z",
       "side": 1,
       "message": "Please use two different values to test against the case where minor/major fields are not switched :)",
+      "range": {
+        "startLine": 47,
+        "startChar": 62,
+        "endLine": 47,
+        "endChar": 66
+      },
+      "revId": "cbba9c1667ae8e0d87e98c5226b829aadc9f5bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4071dbd_4effaec3",
+        "filename": "core/tests/coretests/src/android/app/timezone/DistroFormatVersionTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-05-02T12:15:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3f2e74b_9fdf1ac4",
       "range": {
         "startLine": 47,
         "startChar": 62,
