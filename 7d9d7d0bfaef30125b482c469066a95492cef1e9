@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1d0919f_6b5b9ec1",
+        "filename": "core/java/android/app/timezone/IRulesManager.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1099044
+      },
+      "writtenOn": "2017-05-03T10:31:35Z",
+      "side": 1,
+      "message": "nit: if the name changed, maybe reword the starting sentence so it explains the naming?",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 35
+      },
+      "revId": "7d9d7d0bfaef30125b482c469066a95492cef1e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
