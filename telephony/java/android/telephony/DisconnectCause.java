@@ -253,6 +253,10 @@ public class DisconnectCause {
      */
     public static final int WIFI_LOST = 59;
 
+    /** EMERGENCY call failed with temporary fail cause */
+    public static final int EMERGENCY_TEMP_FAILURE         = 60;
+    /** EMERGENCY call failed with permanent fail cause */
+    public static final int EMERGENCY_PERM_FAILURE         = 61;
     //*********************************************************************************************
     // When adding a disconnect type:
     // 1) Update toString() with the newly added disconnect type.
@@ -385,6 +389,10 @@ public class DisconnectCause {
             return "IMEI_NOT_ACCEPTED";
         case WIFI_LOST:
             return "WIFI_LOST";
+        case EMERGENCY_TEMP_FAILURE:
+            return "EMERGENCY_TEMP_FAILURE";
+        case EMERGENCY_PERM_FAILURE:
+            return "EMERGENCY_PERM_FAILURE";
         default:
             return "INVALID: " + cause;
         }
