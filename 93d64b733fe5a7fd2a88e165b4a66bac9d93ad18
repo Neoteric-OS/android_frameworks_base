@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ae1bb44_8cc0ad1b",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-05-04T16:54:41Z",
+      "side": 1,
+      "message": "Nit: not needed - just \"Disable Bluetooth\"",
+      "range": {
+        "startLine": 332,
+        "startChar": 39,
+        "endLine": 332,
+        "endChar": 42
+      },
+      "revId": "93d64b733fe5a7fd2a88e165b4a66bac9d93ad18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b0f9944_35dbd810",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-05-04T16:54:41Z",
+      "side": 1,
+      "message": "There should be a space before \u0027(\u0027. Indeed, the code is inconsistent; however, majority of the code uses space.",
+      "range": {
+        "startLine": 335,
+        "startChar": 28,
+        "endLine": 335,
+        "endChar": 40
+      },
+      "revId": "93d64b733fe5a7fd2a88e165b4a66bac9d93ad18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb28cd22_a4bdfade",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-05-04T16:54:41Z",
+      "side": 1,
+      "message": "\"the\" is not needed here.",
+      "range": {
+        "startLine": 340,
+        "startChar": 38,
+        "endLine": 340,
+        "endChar": 41
+      },
+      "revId": "93d64b733fe5a7fd2a88e165b4a66bac9d93ad18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80d39ad2_70ce6b62",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-05-04T16:54:41Z",
+      "side": 1,
+      "message": "bluetooth -\u003e Bluetooth",
+      "range": {
+        "startLine": 342,
+        "startChar": 68,
+        "endLine": 342,
+        "endChar": 77
+      },
+      "revId": "93d64b733fe5a7fd2a88e165b4a66bac9d93ad18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1488cc36_eaaf0352",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-05-04T16:54:41Z",
+      "side": 1,
+      "message": "Missing space after \"synchronized\" - see above.",
+      "range": {
+        "startLine": 346,
+        "startChar": 32,
+        "endLine": 346,
+        "endChar": 44
+      },
+      "revId": "93d64b733fe5a7fd2a88e165b4a66bac9d93ad18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
