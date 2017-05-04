@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efcd96e9_e88ee47d",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-04T01:42:17Z",
+      "side": 1,
+      "message": "note",
+      "range": {
+        "startLine": 180,
+        "startChar": 51,
+        "endLine": 180,
+        "endChar": 70
+      },
+      "revId": "96363e6f60baa5a3f53f465ba79733671599bde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cc21baf_d6728146",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-04T01:42:17Z",
+      "side": 1,
+      "message": "switch the punctuation",
+      "range": {
+        "startLine": 182,
+        "startChar": 23,
+        "endLine": 182,
+        "endChar": 25
+      },
+      "revId": "96363e6f60baa5a3f53f465ba79733671599bde4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
