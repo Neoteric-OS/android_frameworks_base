@@ -788,6 +788,15 @@ public class TelephonyManager {
             "android.telephony.event.EVENT_HANDOVER_TO_WIFI_FAILED";
 
     /**
+     * When there is Emergency redial if phone account changed then inform InCallService
+     * with new phone account, so that InCallUI gets updated.
+     * {@link #sendConnectionEvent(String, Bundle)}.
+     * @hide
+     */
+    public static final String EVENT_PHONE_ACCOUNT_CHANGED =
+            "android.telecom.event.PHONE_ACCOUNT_CHANGED";
+
+    /**
      * {@link android.telecom.Connection} event used to indicate that a video call was downgraded to
      * audio because the data limit was reached.
      * <p>
@@ -866,6 +875,9 @@ public class TelephonyManager {
      * A flavor of OMTP protocol with a different mobile originated (MO) format
      */
     public static final String VVM_TYPE_CVVM = "vvm_type_cvvm";
+
+    /** {@hide} */
+    public static final String EMR_DIAL_ACCOUNT = "emr_dial_account";
 
     /**
      * @hide

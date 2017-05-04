@@ -227,13 +227,6 @@ public class DisconnectCause {
     public static final int DATA_LIMIT_REACHED = 55;
 
     /**
-     * The emergency call was terminated because it was dialed on the wrong SIM slot.
-     * The call needs to be redialed the other slot.
-     * {@hide}
-     */
-    public static final int DIALED_ON_WRONG_SLOT = 56;
-
-    /**
      * The call being placed was detected as a call forwarding number and was being dialed while
      * roaming on a carrier that does not allow this.
      * @hide
@@ -253,6 +246,17 @@ public class DisconnectCause {
      */
     public static final int WIFI_LOST = 59;
 
+    /**
+     * EMERGENCY call failed with temporary fail cause.
+     * {@hide}
+     */
+    public static final int EMERGENCY_TEMP_FAILURE = 60;
+
+    /**
+     * EMERGENCY call failed with permanent fail cause.
+     * {@hide}
+     */
+    public static final int EMERGENCY_PERM_FAILURE = 61;
     //*********************************************************************************************
     // When adding a disconnect type:
     // 1) Update toString() with the newly added disconnect type.
@@ -377,14 +381,16 @@ public class DisconnectCause {
             return "DATA_DISABLED";
         case DATA_LIMIT_REACHED:
             return "DATA_LIMIT_REACHED";
-        case DIALED_ON_WRONG_SLOT:
-            return "DIALED_ON_WRONG_SLOT";
         case DIALED_CALL_FORWARDING_WHILE_ROAMING:
             return "DIALED_CALL_FORWARDING_WHILE_ROAMING";
         case IMEI_NOT_ACCEPTED:
             return "IMEI_NOT_ACCEPTED";
         case WIFI_LOST:
             return "WIFI_LOST";
+        case EMERGENCY_TEMP_FAILURE:
+            return "EMERGENCY_TEMP_FAILURE";
+        case EMERGENCY_PERM_FAILURE:
+            return "EMERGENCY_PERM_FAILURE";
         default:
             return "INVALID: " + cause;
         }
