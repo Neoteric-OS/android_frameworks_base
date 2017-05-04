@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d3a7d36_346987f7",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-05-04T17:17:10Z",
+      "side": 1,
+      "message": "One comment missed: \"the\" is not needed here.",
+      "range": {
+        "startLine": 340,
+        "startChar": 38,
+        "endLine": 340,
+        "endChar": 42
+      },
+      "revId": "75cf5de6582da6cd086dde382f301199309c1059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
