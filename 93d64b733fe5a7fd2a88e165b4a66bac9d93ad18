@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "66374df6_7ab1a9c6",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2017-05-04T19:06:27Z",
+      "side": 1,
+      "message": "include a reason for disabling here for the logs.\n\nConsider using disable() instead and/or abstracting the duplicated lines here into a helper function.",
+      "range": {
+        "startLine": 337,
+        "startChar": 47,
+        "endLine": 337,
+        "endChar": 51
+      },
+      "revId": "93d64b733fe5a7fd2a88e165b4a66bac9d93ad18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb28cd22_a4bdfade",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 2
@@ -94,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "6f33c440_e81603b5",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2017-05-04T19:06:27Z",
+      "side": 1,
+      "message": "Definitely consider using enable() instead and/or abstracting this duplicated code.",
+      "range": {
+        "startLine": 341,
+        "startChar": 25,
+        "endLine": 343,
+        "endChar": 36
+      },
+      "revId": "93d64b733fe5a7fd2a88e165b4a66bac9d93ad18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1488cc36_eaaf0352",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 2
@@ -114,6 +160,52 @@
       "revId": "93d64b733fe5a7fd2a88e165b4a66bac9d93ad18",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce1b5654_e005f52c",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2017-05-04T19:06:27Z",
+      "side": 1,
+      "message": "include a reason for enabling here please for the logs.",
+      "range": {
+        "startLine": 349,
+        "startChar": 72,
+        "endLine": 349,
+        "endChar": 76
+      },
+      "revId": "93d64b733fe5a7fd2a88e165b4a66bac9d93ad18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2864a41_12df59ae",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2017-05-04T19:06:27Z",
+      "side": 1,
+      "message": "we should only register this receiver once.\nmake one filter and add all the actions to it, then register it.",
+      "range": {
+        "startLine": 395,
+        "startChar": 7,
+        "endLine": 395,
+        "endChar": 53
+      },
+      "revId": "93d64b733fe5a7fd2a88e165b4a66bac9d93ad18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
