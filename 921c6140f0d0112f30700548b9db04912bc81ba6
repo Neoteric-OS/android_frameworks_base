@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "666d41ba_bb873de5",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-05-05T21:07:10Z",
+      "side": 1,
+      "message": "Nit: there is extra empty space at the end.",
+      "range": {
+        "startLine": 334,
+        "startChar": 78,
+        "endLine": 334,
+        "endChar": 79
+      },
+      "revId": "921c6140f0d0112f30700548b9db04912bc81ba6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f5239e3_68ad5f9f",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1451,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-05-05T21:07:10Z",
+      "side": 1,
+      "message": "For clarity you should use a named constant.",
+      "range": {
+        "startLine": 1451,
+        "startChar": 41,
+        "endLine": 1451,
+        "endChar": 42
+      },
+      "revId": "921c6140f0d0112f30700548b9db04912bc81ba6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce16ab44_2cf73877",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 1071489
+      },
+      "writtenOn": "2017-05-05T21:07:10Z",
+      "side": 1,
+      "message": "Same comment as above.",
+      "range": {
+        "startLine": 1454,
+        "startChar": 48,
+        "endLine": 1454,
+        "endChar": 49
+      },
+      "revId": "921c6140f0d0112f30700548b9db04912bc81ba6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
