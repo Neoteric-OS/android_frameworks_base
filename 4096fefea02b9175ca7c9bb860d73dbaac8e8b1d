@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "884b4261_85b9aeb1",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2017-05-05T20:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b536599_30cd02a2",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 327,
+        "endChar": 151
+      },
+      "revId": "4096fefea02b9175ca7c9bb860d73dbaac8e8b1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18fa8c33_4b9fb805",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 1
@@ -82,6 +106,30 @@
       "writtenOn": "2017-05-02T23:40:38Z",
       "side": 1,
       "message": "Per in-person discussion: the processing of the Intent should be very fast, and calling disable() here (with potential internal locks / etc) should be avoided. You should use sendDisableMsg() instead.",
+      "range": {
+        "startLine": 334,
+        "startChar": 32,
+        "endLine": 334,
+        "endChar": 52
+      },
+      "revId": "4096fefea02b9175ca7c9bb860d73dbaac8e8b1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c80fecd2_1247bb64",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2017-05-05T20:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18fa8c33_4b9fb805",
       "range": {
         "startLine": 334,
         "startChar": 32,
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "996f0b19_7131cccb",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2017-05-05T20:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14457314_f3b746bf",
+      "range": {
+        "startLine": 338,
+        "startChar": 32,
+        "endLine": 338,
+        "endChar": 44
+      },
+      "revId": "4096fefea02b9175ca7c9bb860d73dbaac8e8b1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6f8fe80_89567e87",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 1
@@ -128,6 +200,30 @@
       "writtenOn": "2017-05-02T23:40:38Z",
       "side": 1,
       "message": "This can fit on the previous line.",
+      "range": {
+        "startLine": 342,
+        "startChar": 36,
+        "endLine": 342,
+        "endChar": 39
+      },
+      "revId": "4096fefea02b9175ca7c9bb860d73dbaac8e8b1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f8b5fc0_cf5e4281",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2017-05-05T20:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6f8fe80_89567e87",
       "range": {
         "startLine": 342,
         "startChar": 36,
