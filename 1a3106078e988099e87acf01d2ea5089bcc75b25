@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "44c798c1_cd932804",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-05-05T17:19:31Z",
+      "side": 1,
+      "message": "The constructor catches SpiUnavailableException and rethrows it as ResourceUnavailableException. It strikes me that SpiUnavailable could be completely replaced by ResourceUnavailable. Perhaps I can refactor that in a different CL? (trying to remain comments-only in this one.)",
+      "parentUuid": "124a7965_b0c2b99d",
+      "range": {
+        "startLine": 237,
+        "startChar": 15,
+        "endLine": 237,
+        "endChar": 38
+      },
+      "revId": "1a3106078e988099e87acf01d2ea5089bcc75b25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d4eceba_09260e94",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 2
