@@ -22,6 +22,30 @@
       "revId": "60c5fe7987d9832f2dd4c12b21faa55d627d2bc4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3317172e_0e424e80",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 15616,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2017-05-07T01:29:25Z",
+      "side": 1,
+      "message": "IIRC, this check was added to allow managedprovisioning to delete non-required apps but I\u0027m not actually sure if this requirement is valid in secondary users.",
+      "parentUuid": "25f9af45_094ab24d",
+      "range": {
+        "startLine": 15616,
+        "startChar": 17,
+        "endLine": 15616,
+        "endChar": 73
+      },
+      "revId": "60c5fe7987d9832f2dd4c12b21faa55d627d2bc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
