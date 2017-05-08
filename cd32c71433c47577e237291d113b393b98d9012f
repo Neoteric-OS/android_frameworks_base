@@ -22,6 +22,30 @@
       "revId": "cd32c71433c47577e237291d113b393b98d9012f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08556a3b_f52e7318",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 15636,
+      "author": {
+        "id": 1074763
+      },
+      "writtenOn": "2017-05-08T10:43:18Z",
+      "side": 1,
+      "message": "Thanks for your guide. I will modify it soon.",
+      "parentUuid": "d4c9f969_d87a063f",
+      "range": {
+        "startLine": 15631,
+        "startChar": 0,
+        "endLine": 15636,
+        "endChar": 9
+      },
+      "revId": "cd32c71433c47577e237291d113b393b98d9012f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
