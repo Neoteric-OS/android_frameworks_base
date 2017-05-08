@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4c9f969_d87a063f",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 15636,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2017-05-08T09:08:54Z",
+      "side": 1,
+      "message": "This check is slower and more brittle than the ones in L15609-15629. Why have you used such an approach instead of getPackageUid()?",
+      "range": {
+        "startLine": 15631,
+        "startChar": 0,
+        "endLine": 15636,
+        "endChar": 9
+      },
+      "revId": "cd32c71433c47577e237291d113b393b98d9012f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
