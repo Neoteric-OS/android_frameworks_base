@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce7de263_083f2d09",
+        "filename": "telephony/java/android/telephony/MbmsStreamingManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-05-08T18:40:10Z",
+      "side": 1,
+      "message": "these should be references to the same MbmsException error list?  I wish we had a single top-layer class where this stuff could go, but QC wanted it split out.\n\nMaybe make a java/android/telephony/MbmsService class where the error codes and any other mbms-global things go?",
+      "range": {
+        "startLine": 163,
+        "startChar": 11,
+        "endLine": 163,
+        "endChar": 45
+      },
+      "revId": "27e41d4c5b05fe0c505629b3a498f52aee0cc356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d8d6b3f_0338878e",
+        "filename": "telephony/java/android/telephony/mbms/ServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-05-08T18:40:10Z",
+      "side": 1,
+      "message": "empty line?",
+      "revId": "27e41d4c5b05fe0c505629b3a498f52aee0cc356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3497e7ef_63f16319",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsStreamingServiceBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-05-08T18:40:10Z",
+      "side": 1,
+      "message": "list what ints are allowed?",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 14
+      },
+      "revId": "27e41d4c5b05fe0c505629b3a498f52aee0cc356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f6e2521_e5be3ce9",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsStreamingServiceBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-05-08T18:40:10Z",
+      "side": 1,
+      "message": "same line?",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "27e41d4c5b05fe0c505629b3a498f52aee0cc356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37997d31_ee5963cd",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsStreamingServiceBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-05-08T18:40:10Z",
+      "side": 1,
+      "message": "and uid.\n\nAnother app should be able to get services for the same appName and that\u0027s handled separately.  We should also keep a list of tests we need to verify the impl meets expectations.",
+      "range": {
+        "startLine": 53,
+        "startChar": 48,
+        "endLine": 53,
+        "endChar": 65
+      },
+      "revId": "27e41d4c5b05fe0c505629b3a498f52aee0cc356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
