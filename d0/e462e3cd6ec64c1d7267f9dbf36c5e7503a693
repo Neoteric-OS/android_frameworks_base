@@ -1,0 +1,10 @@
+Code-Review+1: Nicolas Roard <nicolasroard@google.com>
+Code-Review+2: Alan Viverette <alanv@google.com>
+Autosubmit+1: Sergey Prigogin <sprigogin@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Verified+1: Sergey Prigogin <sprigogin@google.com>
+Submitted-by: Sergey Prigogin <sprigogin@google.com>
+Submitted-at: Mon, 08 May 2017 20:44:11 +0000
+Reviewed-on: https://android-review.googlesource.com/380735
+Project: platform/frameworks/base
+Branch: refs/heads/master
