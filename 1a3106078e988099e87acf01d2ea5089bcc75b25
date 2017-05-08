@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "581608ea_5531f6ae",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-08T22:29:26Z",
+      "side": 1,
+      "message": "They are supposed to have different meanings:\n1) SPI unavailable -\u003e that specific SPI can\u0027t be allocated\n2) ResourceUnavailable -\u003e you aren\u0027t allowed to get any more of these",
+      "parentUuid": "44c798c1_cd932804",
+      "range": {
+        "startLine": 237,
+        "startChar": 15,
+        "endLine": 237,
+        "endChar": 38
+      },
+      "revId": "1a3106078e988099e87acf01d2ea5089bcc75b25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d4eceba_09260e94",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 2
