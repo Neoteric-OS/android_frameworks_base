@@ -15627,6 +15627,15 @@ public class PackageManagerService extends IPackageManager.Stub {
                 callingUid == getPackageUid(mStorageManagerPackage, 0, callingUserId)) {
             return true;
         }
+
+        // Allow ManagedProvisioning to silently uninstall for device owner provisioning.
+        String managedProvisioning = mContext.getResources().getString(
+                R.string.config_managedProvisioningPackageName);
+        if (managedProvisioning != null &&
+                callingUid == getPackageUid(managedProvisioning, 0, callingUserId)) {
+            return true;
+        }
+
         return false;
     }
 

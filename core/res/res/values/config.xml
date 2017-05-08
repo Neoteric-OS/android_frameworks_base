@@ -2311,6 +2311,9 @@
     <!-- Flag indicating which package name can access the persistent data partition -->
     <string name="config_persistentDataPackageName" translatable="false"></string>
 
+    <!-- Flag indicating which packge name is ManagedProvisioning -->
+    <string name="config_managedProvisioningPackageName" translatable="false">com.android.managedprovisioning</string>
+
     <!-- Flag indicating apps will skip sending hold request before merge. In this case
         IMS service implementation will do both.i.e.hold followed by merge. -->
     <bool name="skipHoldBeforeMerge">true</bool>
