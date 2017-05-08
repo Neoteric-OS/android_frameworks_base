@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64aa0a57_ce966ae8",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2017-05-08T18:08:11Z",
+      "side": 1,
+      "message": "prefer this to be RESTORE_USER_SETTING to make it clear that it\u0027s coming from elsewhere",
+      "range": {
+        "startLine": 122,
+        "startChar": 45,
+        "endLine": 122,
+        "endChar": 48
+      },
+      "revId": "750b4462879ec3a275a93e4d3c6edc2829c51c4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79bf944b_775af3bd",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2017-05-08T18:08:11Z",
+      "side": 1,
+      "message": "it\u0027s more idiomatic to either:\nmHandler.obtainMessage(...).sendToTarget()\nor \nMessage msg \u003d mHandler.obtainMessage(...);\nmsg.obj \u003d ...\nmHandler.sendMessage(msg);",
+      "range": {
+        "startLine": 336,
+        "startChar": 24,
+        "endLine": 340,
+        "endChar": 55
+      },
+      "revId": "750b4462879ec3a275a93e4d3c6edc2829c51c4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab45c1b5_024acff9",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1464,
+      "author": {
+        "id": 1073753
+      },
+      "writtenOn": "2017-05-08T18:08:11Z",
+      "side": 1,
+      "message": "nit: spaces after commas",
+      "range": {
+        "startLine": 1464,
+        "startChar": 74,
+        "endLine": 1464,
+        "endChar": 77
+      },
+      "revId": "750b4462879ec3a275a93e4d3c6edc2829c51c4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
