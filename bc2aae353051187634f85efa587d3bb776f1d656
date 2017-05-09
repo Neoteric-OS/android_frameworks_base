@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "142e4279_71104694",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-05-09T06:27:56Z",
+      "side": 1,
+      "message": "For safety, can/should we also check that stackedIface.startsWith(CLATD_INTERFACE_PREFIX) ?",
+      "range": {
+        "startLine": 205,
+        "startChar": 29,
+        "endLine": 205,
+        "endChar": 41
+      },
+      "revId": "bc2aae353051187634f85efa587d3bb776f1d656",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d929775_605835a5",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-05-09T06:27:56Z",
+      "side": 1,
+      "message": "For safety, can/should we also check that sStackedIfaces.containsKey(entry.iface) ?",
+      "range": {
+        "startLine": 230,
+        "startChar": 39,
+        "endLine": 230,
+        "endChar": 85
+      },
+      "revId": "bc2aae353051187634f85efa587d3bb776f1d656",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
