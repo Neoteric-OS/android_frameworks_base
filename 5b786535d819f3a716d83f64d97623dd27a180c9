@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37eddd24_4ed6f6cb",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-09T03:19:35Z",
+      "side": 1,
+      "message": ":-)\n\nYes, except that Settings call this stuff via ConnectivityManager functions.  I need to figure out how to rework Settings in some better fashion.",
+      "parentUuid": "d54cf2b4_f3f082eb",
+      "range": {
+        "startLine": 972,
+        "startChar": 25,
+        "endLine": 972,
+        "endChar": 65
+      },
+      "revId": "5b786535d819f3a716d83f64d97623dd27a180c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb62057f_a6a509b8",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-08T12:57:51Z",
       "side": 1,
       "message": "Could this comment be improved a bit, it is a bit cryptic.",
+      "range": {
+        "startLine": 1421,
+        "startChar": 19,
+        "endLine": 1421,
+        "endChar": 40
+      },
+      "revId": "5b786535d819f3a716d83f64d97623dd27a180c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d58f9273_35cc546d",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1421,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-09T03:19:35Z",
+      "side": 1,
+      "message": "Attempted.\n\nI do not like these functions that cause state transitions far away from the visible code that\u0027s part of the state machinery.  But those are separate changes.",
+      "parentUuid": "fb62057f_a6a509b8",
       "range": {
         "startLine": 1421,
         "startChar": 19,
