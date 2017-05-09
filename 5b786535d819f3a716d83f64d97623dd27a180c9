@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "81b38f85_6a1543c6",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-09T08:26:05Z",
+      "side": 1,
+      "message": "Yup, or we serve it up from the last copy of the tether state change broadcast, which has all the same info.",
+      "parentUuid": "03d0969a_7e44db6e",
+      "range": {
+        "startLine": 972,
+        "startChar": 25,
+        "endLine": 972,
+        "endChar": 65
+      },
+      "revId": "5b786535d819f3a716d83f64d97623dd27a180c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb62057f_a6a509b8",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 3
