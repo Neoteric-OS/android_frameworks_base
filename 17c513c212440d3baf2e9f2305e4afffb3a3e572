@@ -46,6 +46,30 @@
       "revId": "17c513c212440d3baf2e9f2305e4afffb3a3e572",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26dc3161_ef736de5",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-05-09T14:40:49Z",
+      "side": 1,
+      "message": "Sorry, what I should have said is, \"should we extend the whole synchronized block to cover this code too\". But given that you\u0027re replacing this code in the next patchset, it likely doesn\u0027t matter.",
+      "parentUuid": "88e4ac77_0e20f252",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 17
+      },
+      "revId": "17c513c212440d3baf2e9f2305e4afffb3a3e572",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
