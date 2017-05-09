@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "03d0969a_7e44db6e",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-05-09T04:43:21Z",
+      "side": 1,
+      "message": "If Settings call into this synchronously, first of all it should be on a path without a lock such as mPublicSync.\n\nMaybe have a separate copy of mTetherStates for Settings to read that is organized to implement these methods better.\n\nBut probably Settings should do some kind of async calls that goes back to its handler, or something like that.",
+      "parentUuid": "37eddd24_4ed6f6cb",
+      "range": {
+        "startLine": 972,
+        "startChar": 25,
+        "endLine": 972,
+        "endChar": 65
+      },
+      "revId": "5b786535d819f3a716d83f64d97623dd27a180c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb62057f_a6a509b8",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 3
