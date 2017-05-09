@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c3e05bb_20b248e8",
+        "filename": "tests/net/java/android/net/nsd/NsdServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-09T02:36:56Z",
+      "side": 1,
+      "message": "Might be able to build up |got| via a StringJoiner or something as well.",
+      "range": {
+        "startLine": 165,
+        "startChar": 31,
+        "endLine": 165,
+        "endChar": 37
+      },
+      "revId": "ab5bdbf84e89d48ad9daa015cae436a9d27cfdd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
