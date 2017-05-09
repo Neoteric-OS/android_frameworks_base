@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e27f5a3_92b175a5",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-05-09T03:58:21Z",
+      "side": 1,
+      "message": "Does e have the whole stack trace? Do you need e.getMessage()?",
+      "range": {
+        "startLine": 1180,
+        "startChar": 45,
+        "endLine": 1180,
+        "endChar": 46
+      },
+      "revId": "3d6dd1f3a1c9b72460944a4a693609f7c3e0a1bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ca6fcfe_1686d3a0",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-05-09T03:58:21Z",
+      "side": 1,
+      "message": "If we return early here, is there a risk that the cleanup code in exit() will fail or crash because the objects that it is cleaning up are not initialized?",
+      "range": {
+        "startLine": 1424,
+        "startChar": 20,
+        "endLine": 1424,
+        "endChar": 26
+      },
+      "revId": "3d6dd1f3a1c9b72460944a4a693609f7c3e0a1bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aad9800_64f3d29c",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-05-09T03:58:21Z",
+      "side": 1,
+      "message": "Is it correct that we no longer call updateUpstreamWanted here? Does mNotifyList.isEmpty() imply that mUpstreamWanted is false?",
+      "range": {
+        "startLine": 1481,
+        "startChar": 28,
+        "endLine": 1481,
+        "endChar": 33
+      },
+      "revId": "3d6dd1f3a1c9b72460944a4a693609f7c3e0a1bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
