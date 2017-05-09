@@ -22,6 +22,30 @@
       "revId": "17c513c212440d3baf2e9f2305e4afffb3a3e572",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88e4ac77_0e20f252",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-05-09T13:40:03Z",
+      "side": 1,
+      "message": "no we can\u0027t, it is a different loop.\n\nI would rather remove it completely, this is closer to the original code.",
+      "parentUuid": "ee736c26_63a8e97f",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 17
+      },
+      "revId": "17c513c212440d3baf2e9f2305e4afffb3a3e572",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
