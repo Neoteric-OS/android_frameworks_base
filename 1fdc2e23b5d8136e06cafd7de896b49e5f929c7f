@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ec6c3e4_3c8dc53c",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-05-09T08:49:16Z",
+      "side": 1,
+      "message": "I think you might be able to call reset(mNMService) to avoid this. Not necessarily in this CL.",
+      "range": {
+        "startLine": 380,
+        "startChar": 29,
+        "endLine": 380,
+        "endChar": 62
+      },
+      "revId": "1fdc2e23b5d8136e06cafd7de896b49e5f929c7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db5276f1_2b56383c",
+        "filename": "tests/net/java/com/android/server/connectivity/TetheringTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-05-09T08:49:16Z",
+      "side": 1,
+      "message": "I think there\u0027s also a never(). Not necessarily in this CL.",
+      "range": {
+        "startLine": 394,
+        "startChar": 27,
+        "endLine": 394,
+        "endChar": 35
+      },
+      "revId": "1fdc2e23b5d8136e06cafd7de896b49e5f929c7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
