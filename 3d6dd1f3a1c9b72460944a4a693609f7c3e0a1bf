@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "c94746c0_0aae5469",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-09T08:24:01Z",
+      "side": 1,
+      "message": "Yup, all safe.  Now with a unittest to confirm it.",
+      "parentUuid": "7ca6fcfe_1686d3a0",
+      "range": {
+        "startLine": 1424,
+        "startChar": 20,
+        "endLine": 1424,
+        "endChar": 26
+      },
+      "revId": "3d6dd1f3a1c9b72460944a4a693609f7c3e0a1bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aad9800_64f3d29c",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 5
@@ -59,6 +83,30 @@
       "writtenOn": "2017-05-09T03:58:21Z",
       "side": 1,
       "message": "Is it correct that we no longer call updateUpstreamWanted here? Does mNotifyList.isEmpty() imply that mUpstreamWanted is false?",
+      "range": {
+        "startLine": 1481,
+        "startChar": 28,
+        "endLine": 1481,
+        "endChar": 33
+      },
+      "revId": "3d6dd1f3a1c9b72460944a4a693609f7c3e0a1bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1066efe1_61c53055",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-09T08:24:01Z",
+      "side": 1,
+      "message": "The latter.  We re-do the cleanup in exit() when the state machinery processes the transition.",
+      "parentUuid": "5aad9800_64f3d29c",
       "range": {
         "startLine": 1481,
         "startChar": 28,
