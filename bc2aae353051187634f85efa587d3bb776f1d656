@@ -45,6 +45,75 @@
       "revId": "bc2aae353051187634f85efa587d3bb776f1d656",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78baca40_53126d47",
+        "filename": "tests/net/java/com/android/internal/net/NetworkStatsFactoryTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-05-09T06:32:10Z",
+      "side": 1,
+      "message": "Nit: traffic",
+      "range": {
+        "startLine": 169,
+        "startChar": 26,
+        "endLine": 169,
+        "endChar": 33
+      },
+      "revId": "bc2aae353051187634f85efa587d3bb776f1d656",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aec49453_2b622992",
+        "filename": "tests/net/java/com/android/internal/net/NetworkStatsFactoryTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-05-09T06:32:10Z",
+      "side": 1,
+      "message": "Nit: UID 0",
+      "range": {
+        "startLine": 173,
+        "startChar": 22,
+        "endLine": 173,
+        "endChar": 26
+      },
+      "revId": "bc2aae353051187634f85efa587d3bb776f1d656",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cc8b530_66e6c255",
+        "filename": "tests/net/java/com/android/internal/net/NetworkStatsFactoryTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-05-09T06:32:10Z",
+      "side": 1,
+      "message": "Is it worth testing the TX path like we do above?",
+      "range": {
+        "startLine": 180,
+        "startChar": 90,
+        "endLine": 180,
+        "endChar": 98
+      },
+      "revId": "bc2aae353051187634f85efa587d3bb776f1d656",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
