@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b5b3a55_e2ecb139",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-09T08:31:04Z",
+      "side": 1,
+      "message": "I manually threw an exception in here and just logged:\n\n    05-09 08:28:37.639 - ERROR android.os.RemoteException: bogus",
+      "parentUuid": "4e27f5a3_92b175a5",
+      "range": {
+        "startLine": 1180,
+        "startChar": 45,
+        "endLine": 1180,
+        "endChar": 46
+      },
+      "revId": "3d6dd1f3a1c9b72460944a4a693609f7c3e0a1bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ca6fcfe_1686d3a0",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 5
