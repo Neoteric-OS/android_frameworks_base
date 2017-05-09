@@ -1465,9 +1465,7 @@ public class ConnectivityManager {
         // Map from type to transports.
         final int NOT_FOUND = -1;
         final int transport = sLegacyTypeToTransport.get(type, NOT_FOUND);
-        if (transport == NOT_FOUND) {
-            throw new IllegalArgumentException("unknown legacy type: " + type);
-        }
+        Preconditions.checkArgument(transport != NOT_FOUND, "unknown legacy type: " + type);
         nc.addTransportType(transport);
 
         // Map from type to capabilities.
@@ -1813,9 +1811,7 @@ public class ConnectivityManager {
      */
     public void removeDefaultNetworkActiveListener(OnNetworkActiveListener l) {
         INetworkActivityListener rl = mNetworkActivityListeners.get(l);
-        if (rl == null) {
-            throw new IllegalArgumentException("Listener not registered: " + l);
-        }
+        Preconditions.checkArgument(rl != null, "Listener was not registered.");
         try {
             getNetworkManagementService().unregisterNetworkActivityListener(rl);
         } catch (RemoteException e) {
@@ -1872,9 +1868,8 @@ public class ConnectivityManager {
 
     /** {@hide} */
     public static final void enforceTetherChangePermission(Context context, String callingPkg) {
-        if (null == context || null == callingPkg) {
-            throw new IllegalArgumentException("arguments should not be null");
-        }
+        Preconditions.checkNotNull(context, "Context cannot be null");
+        Preconditions.checkNotNull(callingPkg, "callingPkg cannot be null");
 
         if (context.getResources().getStringArray(
                 com.android.internal.R.array.config_mobile_hotspot_provision_app).length == 2) {
@@ -2750,7 +2745,7 @@ public class ConnectivityManager {
         }
 
         CallbackHandler(Handler handler) {
-            this(handler.getLooper());
+            this(Preconditions.checkNotNull(handler, "Handler cannot be null.").getLooper());
         }
 
         @Override
@@ -2867,7 +2862,7 @@ public class ConnectivityManager {
 
     private NetworkRequest sendRequestForNetwork(NetworkCapabilities need, NetworkCallback callback,
             int timeoutMs, int action, int legacyType, CallbackHandler handler) {
-        Preconditions.checkArgument(callback != null, "null NetworkCallback");
+        checkCallback(callback);
         Preconditions.checkArgument(action == REQUEST || need != null, "null NetworkCapabilities");
         final NetworkRequest request;
         try {
@@ -3024,9 +3019,7 @@ public class ConnectivityManager {
      */
     public void requestNetwork(NetworkRequest request, NetworkCallback networkCallback,
             int timeoutMs) {
-        if (timeoutMs <= 0) {
-            throw new IllegalArgumentException("Non-positive timeoutMs: " + timeoutMs);
-        }
+        checkTimeout(timeoutMs);
         int legacyType = inferLegacyTypeForNetworkCapabilities(request.networkCapabilities);
         requestNetwork(request, networkCallback, timeoutMs, legacyType, getDefaultHandler());
     }
@@ -3061,9 +3054,7 @@ public class ConnectivityManager {
      */
     public void requestNetwork(NetworkRequest request, int timeoutMs,
             NetworkCallback networkCallback) {
-        if (timeoutMs <= 0) {
-            throw new IllegalArgumentException("Non-positive timeoutMs: " + timeoutMs);
-        }
+        checkTimeout(timeoutMs);
         int legacyType = inferLegacyTypeForNetworkCapabilities(request.networkCapabilities);
         requestNetwork(request, networkCallback, timeoutMs, legacyType, getDefaultHandler());
     }
@@ -3098,9 +3089,7 @@ public class ConnectivityManager {
      */
     public void requestNetwork(NetworkRequest request, int timeoutMs,
             NetworkCallback networkCallback, Handler handler) {
-        if (timeoutMs <= 0) {
-            throw new IllegalArgumentException("Non-positive timeoutMs");
-        }
+        checkTimeout(timeoutMs);
         int legacyType = inferLegacyTypeForNetworkCapabilities(request.networkCapabilities);
         CallbackHandler cbHandler = new CallbackHandler(handler);
         requestNetwork(request, networkCallback, timeoutMs, legacyType, cbHandler);
@@ -3201,10 +3190,16 @@ public class ConnectivityManager {
         }
     }
 
-    private void checkPendingIntent(PendingIntent intent) {
-        if (intent == null) {
-            throw new IllegalArgumentException("PendingIntent cannot be null.");
-        }
+    private static void checkPendingIntent(PendingIntent intent) {
+        Preconditions.checkArgument(intent != null, "PendingIntent cannot be null.");
+    }
+
+    private static void checkCallback(NetworkCallback callback) {
+        Preconditions.checkArgument(callback != null, "null NetworkCallback");
+    }
+
+    private static void checkTimeout(int timeoutMs) {
+        Preconditions.checkArgumentPositive(timeoutMs, "timeoutMs must be strictly positive.");
     }
 
     /**
@@ -3316,8 +3311,9 @@ public class ConnectivityManager {
         // capabilities, this request is guaranteed, at all times, to be
         // satisfied by the same network, if any, that satisfies the default
         // request, i.e., the system default network.
+        NetworkCapabilities nullCapabilities = null;
         CallbackHandler cbHandler = new CallbackHandler(handler);
-        sendRequestForNetwork(null, networkCallback, 0, REQUEST, TYPE_NONE, cbHandler);
+        sendRequestForNetwork(nullCapabilities, networkCallback, 0, REQUEST, TYPE_NONE, cbHandler);
     }
 
     /**
@@ -3354,7 +3350,7 @@ public class ConnectivityManager {
      * @param networkCallback The {@link NetworkCallback} used when making the request.
      */
     public void unregisterNetworkCallback(NetworkCallback networkCallback) {
-        Preconditions.checkArgument(networkCallback != null, "null NetworkCallback");
+        checkCallback(networkCallback);
         final List<NetworkRequest> reqs = new ArrayList<>();
         // Find all requests associated to this callback and stop callback triggers immediately.
         // Callback is reusable immediately. http://b/20701525, http://b/35921499.
@@ -3390,6 +3386,7 @@ public class ConnectivityManager {
      *                  Cannot be null.
      */
     public void unregisterNetworkCallback(PendingIntent operation) {
+        checkPendingIntent(operation);
         releaseNetworkRequest(operation);
     }
 
