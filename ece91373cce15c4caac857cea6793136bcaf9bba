@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "4eea55e6_e72ad444",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2017-05-09T22:31:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "810caa3f_019b47e0",
+      "range": {
+        "startLine": 10,
+        "startChar": 38,
+        "endLine": 10,
+        "endChar": 43
+      },
+      "revId": "ece91373cce15c4caac857cea6793136bcaf9bba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fb0fa1f_fa47762e",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "727fed3d_8e333aab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2017-05-09T22:31:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fb0fa1f_fa47762e",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "ece91373cce15c4caac857cea6793136bcaf9bba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dfbbba6_dbaf4b0a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
@@ -82,6 +130,30 @@
       "writtenOn": "2017-05-09T22:15:51Z",
       "side": 1,
       "message": "Instead of this last line, explain what the code does at a high level, like \"Enable or disable Bluetooth based on this restored setting\"",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 48
+      },
+      "revId": "ece91373cce15c4caac857cea6793136bcaf9bba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fcf7d97_5340c7d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2017-05-09T22:31:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dfbbba6_dbaf4b0a",
       "range": {
         "startLine": 12,
         "startChar": 12,
