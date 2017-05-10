@@ -604,7 +604,6 @@ public class ConnectivityManager {
      */
     public static final int NETID_UNSET = 0;
 
-    private final IConnectivityManager mService;
     /**
      * A kludge to facilitate static access where a Context pointer isn't available, like in the
      * case of the static set/getProcessDefaultNetwork methods and from the Network class.
@@ -613,7 +612,10 @@ public class ConnectivityManager {
      */
     private static ConnectivityManager sInstance;
 
+    private final IConnectivityManager mService;
     private final Context mContext;
+    private final HashMap<NetworkRequest, NetworkCallback> mCallbacks;
+    private final CallbackHandler mDefaultHandler;
 
     private INetworkManagementService mNMService;
     private INetworkPolicyManager mNPManager;
@@ -1397,7 +1399,7 @@ public class ConnectivityManager {
         l.delay = delay;
         l.expireSequenceNumber = 0;
         l.networkRequest = sendRequestForNetwork(
-                netCap, l.networkCallback, 0, REQUEST, type, getDefaultHandler());
+                netCap, l.networkCallback, 0, REQUEST, type, mDefaultHandler);
         if (l.networkRequest == null) return null;
         sLegacyRequests.put(netCap, l);
         sendExpireMsgForFeature(netCap, l.expireSequenceNumber, delay);
@@ -1407,9 +1409,8 @@ public class ConnectivityManager {
     private void sendExpireMsgForFeature(NetworkCapabilities netCap, int seqNum, int delay) {
         if (delay >= 0) {
             Log.d(TAG, "sending expire msg with seqNum " + seqNum + " and delay " + delay);
-            CallbackHandler handler = getDefaultHandler();
-            Message msg = handler.obtainMessage(EXPIRE_LEGACY_REQUEST, seqNum, 0, netCap);
-            handler.sendMessageDelayed(msg, delay);
+            Message msg = mDefaultHandler.obtainMessage(EXPIRE_LEGACY_REQUEST, seqNum, 0, netCap);
+            mDefaultHandler.sendMessageDelayed(msg, delay);
         }
     }
 
@@ -1841,6 +1842,8 @@ public class ConnectivityManager {
     public ConnectivityManager(Context context, IConnectivityManager service) {
         mContext = Preconditions.checkNotNull(context, "missing context");
         mService = Preconditions.checkNotNull(service, "missing IConnectivityManager");
+        mCallbacks = new HashMap<>();
+        mDefaultHandler = new CallbackHandler(ConnectivityThread.getInstanceLooper());
         sInstance = this;
     }
 
@@ -2835,8 +2838,8 @@ public class ConnectivityManager {
         private NetworkCallback getCallback(Message msg) {
             final NetworkRequest req = getObject(msg, NetworkRequest.class);
             final NetworkCallback callback;
-            synchronized(sCallbacks) {
-                callback = sCallbacks.get(req);
+            synchronized(mCallbacks) {
+                callback = mCallbacks.get(req);
             }
             if (callback == null) {
                 Log.w(TAG, "callback not found for " + getCallbackName(msg.what) + " message");
@@ -2844,18 +2847,6 @@ public class ConnectivityManager {
             return callback;
         }
     }
-
-    private CallbackHandler getDefaultHandler() {
-        synchronized (sCallbacks) {
-            if (sCallbackHandler == null) {
-                sCallbackHandler = new CallbackHandler(ConnectivityThread.getInstanceLooper());
-            }
-            return sCallbackHandler;
-        }
-    }
-
-    private static final HashMap<NetworkRequest, NetworkCallback> sCallbacks = new HashMap<>();
-    private static CallbackHandler sCallbackHandler;
 
     private static final int LISTEN  = 1;
     private static final int REQUEST = 2;
@@ -2866,7 +2857,7 @@ public class ConnectivityManager {
         Preconditions.checkArgument(action == REQUEST || need != null, "null NetworkCapabilities");
         final NetworkRequest request;
         try {
-            synchronized(sCallbacks) {
+            synchronized(mCallbacks) {
                 if (callback.isRegistered()) {
                     // TODO: throw exception instead and enforce 1:1 mapping of callbacks
                     // and requests (http://b/20701525).
@@ -2881,7 +2872,7 @@ public class ConnectivityManager {
                             need, messenger, timeoutMs, binder, legacyType);
                 }
                 if (request != null) {
-                    sCallbacks.put(request, callback);
+                    mCallbacks.put(request, callback);
                 }
                 callback.networkRequest = request;
             }
@@ -2941,7 +2932,7 @@ public class ConnectivityManager {
      *         {@code NetworkCapabilities}.
      */
     public void requestNetwork(NetworkRequest request, NetworkCallback networkCallback) {
-        requestNetwork(request, networkCallback, getDefaultHandler());
+        requestNetwork(request, networkCallback, mDefaultHandler);
     }
 
     /**
@@ -3021,7 +3012,7 @@ public class ConnectivityManager {
             int timeoutMs) {
         checkTimeout(timeoutMs);
         int legacyType = inferLegacyTypeForNetworkCapabilities(request.networkCapabilities);
-        requestNetwork(request, networkCallback, timeoutMs, legacyType, getDefaultHandler());
+        requestNetwork(request, networkCallback, timeoutMs, legacyType, mDefaultHandler);
     }
 
     /**
@@ -3056,7 +3047,7 @@ public class ConnectivityManager {
             NetworkCallback networkCallback) {
         checkTimeout(timeoutMs);
         int legacyType = inferLegacyTypeForNetworkCapabilities(request.networkCapabilities);
-        requestNetwork(request, networkCallback, timeoutMs, legacyType, getDefaultHandler());
+        requestNetwork(request, networkCallback, timeoutMs, legacyType, mDefaultHandler);
     }
 
 
@@ -3215,7 +3206,7 @@ public class ConnectivityManager {
      *                        The callback is invoked on the default internal Handler.
      */
     public void registerNetworkCallback(NetworkRequest request, NetworkCallback networkCallback) {
-        registerNetworkCallback(request, networkCallback, getDefaultHandler());
+        registerNetworkCallback(request, networkCallback, mDefaultHandler);
     }
 
     /**
@@ -3289,7 +3280,7 @@ public class ConnectivityManager {
      *                        The callback is invoked on the default internal Handler.
      */
     public void registerDefaultNetworkCallback(NetworkCallback networkCallback) {
-        registerDefaultNetworkCallback(networkCallback, getDefaultHandler());
+        registerDefaultNetworkCallback(networkCallback, mDefaultHandler);
     }
 
     /**
@@ -3354,10 +3345,10 @@ public class ConnectivityManager {
         final List<NetworkRequest> reqs = new ArrayList<>();
         // Find all requests associated to this callback and stop callback triggers immediately.
         // Callback is reusable immediately. http://b/20701525, http://b/35921499.
-        synchronized (sCallbacks) {
+        synchronized (mCallbacks) {
             Preconditions.checkArgument(
                     networkCallback.isRegistered(), "NetworkCallback was not registered");
-            for (Map.Entry<NetworkRequest, NetworkCallback> e : sCallbacks.entrySet()) {
+            for (Map.Entry<NetworkRequest, NetworkCallback> e : mCallbacks.entrySet()) {
                 if (e.getValue() == networkCallback) {
                     reqs.add(e.getKey());
                 }
@@ -3370,7 +3361,7 @@ public class ConnectivityManager {
                     throw e.rethrowFromSystemServer();
                 }
                 // Only remove mapping if rpc was successful.
-                sCallbacks.remove(r);
+                mCallbacks.remove(r);
             }
             networkCallback.networkRequest = null;
         }
