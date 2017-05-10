@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "23d5f828_b769179a",
+        "filename": "telephony/java/android/telephony/MbmsStreamingManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-10T21:34:25Z",
+      "side": 1,
+      "message": "Added links, though I think we need to discuss these error codes with them more.\n\nShould we separate the error codes into synchronous and asynchronous ones? Not sure if there are any that could be returned as both.",
+      "parentUuid": "ce7de263_083f2d09",
+      "range": {
+        "startLine": 163,
+        "startChar": 11,
+        "endLine": 163,
+        "endChar": 45
+      },
+      "revId": "27e41d4c5b05fe0c505629b3a498f52aee0cc356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d8d6b3f_0338878e",
         "filename": "telephony/java/android/telephony/mbms/ServiceInfo.java",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "1f29ce00_b9bc850c",
+        "filename": "telephony/java/android/telephony/mbms/ServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-10T21:34:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d8d6b3f_0338878e",
+      "revId": "27e41d4c5b05fe0c505629b3a498f52aee0cc356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3497e7ef_63f16319",
         "filename": "telephony/java/android/telephony/mbms/vendor/MbmsStreamingServiceBase.java",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-05-08T18:40:10Z",
       "side": 1,
       "message": "list what ints are allowed?",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 14
+      },
+      "revId": "27e41d4c5b05fe0c505629b3a498f52aee0cc356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65ad26a2_d39a12d9",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsStreamingServiceBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-10T21:34:25Z",
+      "side": 1,
+      "message": "In javadoc\u0027s @return line above",
+      "parentUuid": "3497e7ef_63f16319",
       "range": {
         "startLine": 42,
         "startChar": 11,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "c6aa78b5_892c861a",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsStreamingServiceBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-10T21:34:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f6e2521_e5be3ce9",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "27e41d4c5b05fe0c505629b3a498f52aee0cc356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37997d31_ee5963cd",
         "filename": "telephony/java/android/telephony/mbms/vendor/MbmsStreamingServiceBase.java",
         "patchSetId": 2
@@ -99,6 +189,30 @@
       "writtenOn": "2017-05-08T18:40:10Z",
       "side": 1,
       "message": "and uid.\n\nAnother app should be able to get services for the same appName and that\u0027s handled separately.  We should also keep a list of tests we need to verify the impl meets expectations.",
+      "range": {
+        "startLine": 53,
+        "startChar": 48,
+        "endLine": 53,
+        "endChar": 65
+      },
+      "revId": "27e41d4c5b05fe0c505629b3a498f52aee0cc356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef8b354f_81057d5f",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsStreamingServiceBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-05-10T21:34:25Z",
+      "side": 1,
+      "message": "So streaming app 1 and streaming app 2 from the same developer on a shared uid should be able to get streaming services for each other? What\u0027s the use case for this? Does the app name actually matter for what streaming services get returned?",
+      "parentUuid": "37997d31_ee5963cd",
       "range": {
         "startLine": 53,
         "startChar": 48,
