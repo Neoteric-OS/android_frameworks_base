@@ -322,6 +322,14 @@ public class ConnectivityManagerTest {
         mustFail(() -> { manager.unregisterNetworkCallback(nullCallback); });
         mustFail(() -> { manager.unregisterNetworkCallback(nullIntent); });
         mustFail(() -> { manager.releaseNetworkRequest(nullIntent); });
+
+        for (int i = 0; i < ConnectivityManager.MAX_NETWORK_REQUESTS_PER_UID; i++) {
+            // Return a different object for every requestNetwork() call on the service
+            NetworkRequest ret = mock(NetworkRequest.class);
+            when(mService.requestNetwork(any(), any(), anyInt(), any(), anyInt())).thenReturn(ret);
+            manager.requestNetwork(request, mock(NetworkCallback.class));
+        }
+        mustFail(() -> { manager.requestNetwork(request, mock(NetworkCallback.class)); });
     }
 
     static void mustFail(Runnable fn) {

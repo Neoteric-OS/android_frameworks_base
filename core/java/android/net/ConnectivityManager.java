@@ -605,6 +605,12 @@ public class ConnectivityManager {
     public static final int NETID_UNSET = 0;
 
     /**
+     * The maximum number of network requests and network listens per UID.
+     * @hide
+     */
+    public static final int MAX_NETWORK_REQUESTS_PER_UID = 100;
+
+    /**
      * A kludge to facilitate static access where a Context pointer isn't available, like in the
      * case of the static set/getProcessDefaultNetwork methods and from the Network class.
      * TODO: Remove this after deprecating the static methods in favor of non-static methods or
@@ -2858,6 +2864,7 @@ public class ConnectivityManager {
         final NetworkRequest request;
         try {
             synchronized(mCallbacks) {
+                checkNumberOfRequests();
                 if (callback.isRegistered()) {
                     // TODO: throw exception instead and enforce 1:1 mapping of callbacks
                     // and requests (http://b/20701525).
@@ -3191,6 +3198,11 @@ public class ConnectivityManager {
 
     private static void checkTimeout(int timeoutMs) {
         Preconditions.checkArgumentPositive(timeoutMs, "timeoutMs must be strictly positive.");
+    }
+
+    private void checkNumberOfRequests() {
+        Preconditions.checkArgument(
+                mCallbacks.size() < MAX_NETWORK_REQUESTS_PER_UID, "Too many NetworkRequests.");
     }
 
     /**
