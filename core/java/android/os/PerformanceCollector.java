@@ -53,8 +53,6 @@ import java.util.ArrayList;
  * <p>
  * Structure of results output is up to implementor of
  * {@link PerformanceResultsWriter }.
- *
- * {@hide} Pending approval for public API.
  */
 public class PerformanceCollector {
 

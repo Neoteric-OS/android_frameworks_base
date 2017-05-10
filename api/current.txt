@@ -7927,6 +7927,7 @@ package android.content {
     ctor public ContentProvider();
     method public android.content.ContentProviderResult[] applyBatch(java.util.ArrayList<android.content.ContentProviderOperation>) throws android.content.OperationApplicationException;
     method public void attachInfo(android.content.Context, android.content.pm.ProviderInfo);
+    method public deprecated void attachInfoForTesting(android.content.Context, android.content.pm.ProviderInfo);
     method public int bulkInsert(android.net.Uri, android.content.ContentValues[]);
     method public android.os.Bundle call(java.lang.String, java.lang.String, android.os.Bundle);
     method public android.net.Uri canonicalize(android.net.Uri);
@@ -29773,6 +29774,58 @@ package android.os {
     field public static final int PATTERN_LITERAL = 0; // 0x0
     field public static final int PATTERN_PREFIX = 1; // 0x1
     field public static final int PATTERN_SIMPLE_GLOB = 2; // 0x2
+  }
+
+  public class PerformanceCollector {
+    ctor public PerformanceCollector();
+    ctor public PerformanceCollector(android.os.PerformanceCollector.PerformanceResultsWriter);
+    method public android.os.Bundle addIteration(java.lang.String);
+    method public void addMeasurement(java.lang.String, long);
+    method public void addMeasurement(java.lang.String, float);
+    method public void addMeasurement(java.lang.String, java.lang.String);
+    method public void beginSnapshot(java.lang.String);
+    method public android.os.Bundle endSnapshot();
+    method public void setPerformanceResultsWriter(android.os.PerformanceCollector.PerformanceResultsWriter);
+    method public void startTiming(java.lang.String);
+    method public android.os.Bundle stopTiming(java.lang.String);
+    field public static final java.lang.String METRIC_KEY_CPU_TIME = "cpu_time";
+    field public static final java.lang.String METRIC_KEY_EXECUTION_TIME = "execution_time";
+    field public static final java.lang.String METRIC_KEY_GC_INVOCATION_COUNT = "gc_invocation_count";
+    field public static final java.lang.String METRIC_KEY_GLOBAL_ALLOC_COUNT = "global_alloc_count";
+    field public static final java.lang.String METRIC_KEY_GLOBAL_ALLOC_SIZE = "global_alloc_size";
+    field public static final java.lang.String METRIC_KEY_GLOBAL_FREED_COUNT = "global_freed_count";
+    field public static final java.lang.String METRIC_KEY_GLOBAL_FREED_SIZE = "global_freed_size";
+    field public static final java.lang.String METRIC_KEY_ITERATIONS = "iterations";
+    field public static final java.lang.String METRIC_KEY_JAVA_ALLOCATED = "java_allocated";
+    field public static final java.lang.String METRIC_KEY_JAVA_FREE = "java_free";
+    field public static final java.lang.String METRIC_KEY_JAVA_PRIVATE_DIRTY = "java_private_dirty";
+    field public static final java.lang.String METRIC_KEY_JAVA_PSS = "java_pss";
+    field public static final java.lang.String METRIC_KEY_JAVA_SHARED_DIRTY = "java_shared_dirty";
+    field public static final java.lang.String METRIC_KEY_JAVA_SIZE = "java_size";
+    field public static final java.lang.String METRIC_KEY_LABEL = "label";
+    field public static final java.lang.String METRIC_KEY_NATIVE_ALLOCATED = "native_allocated";
+    field public static final java.lang.String METRIC_KEY_NATIVE_FREE = "native_free";
+    field public static final java.lang.String METRIC_KEY_NATIVE_PRIVATE_DIRTY = "native_private_dirty";
+    field public static final java.lang.String METRIC_KEY_NATIVE_PSS = "native_pss";
+    field public static final java.lang.String METRIC_KEY_NATIVE_SHARED_DIRTY = "native_shared_dirty";
+    field public static final java.lang.String METRIC_KEY_NATIVE_SIZE = "native_size";
+    field public static final java.lang.String METRIC_KEY_OTHER_PRIVATE_DIRTY = "other_private_dirty";
+    field public static final java.lang.String METRIC_KEY_OTHER_PSS = "other_pss";
+    field public static final java.lang.String METRIC_KEY_OTHER_SHARED_DIRTY = "other_shared_dirty";
+    field public static final java.lang.String METRIC_KEY_PRE_RECEIVED_TRANSACTIONS = "pre_received_transactions";
+    field public static final java.lang.String METRIC_KEY_PRE_SENT_TRANSACTIONS = "pre_sent_transactions";
+    field public static final java.lang.String METRIC_KEY_RECEIVED_TRANSACTIONS = "received_transactions";
+    field public static final java.lang.String METRIC_KEY_SENT_TRANSACTIONS = "sent_transactions";
+  }
+
+  public static abstract interface PerformanceCollector.PerformanceResultsWriter {
+    method public abstract void writeBeginSnapshot(java.lang.String);
+    method public abstract void writeEndSnapshot(android.os.Bundle);
+    method public abstract void writeMeasurement(java.lang.String, long);
+    method public abstract void writeMeasurement(java.lang.String, float);
+    method public abstract void writeMeasurement(java.lang.String, java.lang.String);
+    method public abstract void writeStartTiming(java.lang.String);
+    method public abstract void writeStopTiming(android.os.Bundle);
   }
 
   public final class PersistableBundle extends android.os.BaseBundle implements java.lang.Cloneable android.os.Parcelable {
