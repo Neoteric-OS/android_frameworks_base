@@ -67,6 +67,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.HashMap;
+
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class ConnectivityManagerTest {
@@ -204,7 +206,7 @@ public class ConnectivityManagerTest {
 
     @Test
     public void testCallbackRelease() throws Exception {
-        ConnectivityManager manager = new ConnectivityManager(mCtx, mService);
+        ConnectivityManager manager = makeConnectivityManager();
         NetworkRequest request = makeRequest(1);
         NetworkCallback callback = mock(ConnectivityManager.NetworkCallback.class);
         Handler handler = new Handler(Looper.getMainLooper());
@@ -230,7 +232,7 @@ public class ConnectivityManagerTest {
 
     @Test
     public void testCallbackRecycling() throws Exception {
-        ConnectivityManager manager = new ConnectivityManager(mCtx, mService);
+        ConnectivityManager manager = makeConnectivityManager();
         NetworkRequest req1 = makeRequest(1);
         NetworkRequest req2 = makeRequest(2);
         NetworkCallback callback = mock(ConnectivityManager.NetworkCallback.class);
@@ -271,7 +273,7 @@ public class ConnectivityManagerTest {
     // TODO: turn on this test when request  callback 1:1 mapping is enforced
     //@Test
     private void noDoubleCallbackRegistration() throws Exception {
-        ConnectivityManager manager = new ConnectivityManager(mCtx, mService);
+        ConnectivityManager manager = makeConnectivityManager();
         NetworkRequest request = makeRequest(1);
         NetworkCallback callback = new ConnectivityManager.NetworkCallback();
         ApplicationInfo info = new ApplicationInfo();
@@ -297,7 +299,7 @@ public class ConnectivityManagerTest {
 
     @Test
     public void testArgumentValidation() throws Exception {
-        ConnectivityManager manager = new ConnectivityManager(mCtx, mService);
+        ConnectivityManager manager = makeConnectivityManager();
 
         NetworkRequest request = mock(NetworkRequest.class);
         NetworkCallback callback = mock(NetworkCallback.class);
@@ -330,6 +332,10 @@ public class ConnectivityManagerTest {
             fail();
         } catch (Exception expected) {
         }
+    }
+
+    ConnectivityManager makeConnectivityManager() {
+        return new ConnectivityManager(mCtx, mService, new HashMap<>());
     }
 
     static Message makeMessage(NetworkRequest req, int messageType) {

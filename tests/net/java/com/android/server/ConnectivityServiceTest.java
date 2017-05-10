@@ -101,6 +101,7 @@ import org.mockito.Spy;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -143,7 +144,7 @@ public class ConnectivityServiceTest extends AndroidTestCase {
         }
 
         public WrappedConnectivityManager(Context context, ConnectivityService service) {
-            super(context, service);
+            super(context, service, new HashMap<>());
         }
     }
 
