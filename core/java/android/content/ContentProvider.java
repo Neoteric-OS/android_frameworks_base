@@ -1709,8 +1709,9 @@ public abstract class ContentProvider implements ComponentCallbacks2 {
     /**
      * Like {@link #attachInfo(Context, android.content.pm.ProviderInfo)}, but for use
      * when directly instantiating the provider for testing.
-     * @hide
+     * @deprecated for use by android.legacy.test library only
      */
+    @Deprecated
     public void attachInfoForTesting(Context context, ProviderInfo info) {
         attachInfo(context, info, true);
     }

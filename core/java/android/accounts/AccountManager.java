@@ -307,6 +307,14 @@ public class AccountManager {
     }
 
     /**
+     * @deprecated for use by android.legacy.test library only
+     */
+    @Deprecated
+    public AccountManager(Context context) {
+        this(context, null, null);
+    }
+
+    /**
      * @hide used for testing only
      */
     public AccountManager(Context context, IAccountManager service, Handler handler) {
