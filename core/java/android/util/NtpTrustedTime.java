@@ -93,7 +93,7 @@ public class NtpTrustedTime implements TrustedTime {
         }
 
         final NetworkInfo ni = mCM == null ? null : mCM.getActiveNetworkInfo();
-        if (ni == null || !ni.isConnected()) {
+        if (ni == null || (ni != null && !ni.isConnected())) {
             if (LOGD) Log.d(TAG, "forceRefresh: no connectivity");
             return false;
         }
