@@ -24,6 +24,7 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.TestApi;
 import android.app.AppOpsManager;
 import android.content.pm.PathPermission;
 import android.content.pm.ProviderInfo;
@@ -1709,8 +1710,11 @@ public abstract class ContentProvider implements ComponentCallbacks2 {
     /**
      * Like {@link #attachInfo(Context, android.content.pm.ProviderInfo)}, but for use
      * when directly instantiating the provider for testing.
+     * @deprecated for use by android.legacy.test library only
      * @hide
      */
+    @TestApi
+    @Deprecated
     public void attachInfoForTesting(Context context, ProviderInfo info) {
         attachInfo(context, info, true);
     }

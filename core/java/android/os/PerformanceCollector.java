@@ -16,6 +16,7 @@
 
 package android.os;
 
+import android.annotation.TestApi;
 
 import java.util.ArrayList;
 
@@ -53,9 +54,9 @@ import java.util.ArrayList;
  * <p>
  * Structure of results output is up to implementor of
  * {@link PerformanceResultsWriter }.
- *
- * {@hide} Pending approval for public API.
+ * @hide
  */
+@TestApi
 public class PerformanceCollector {
 
     /**
