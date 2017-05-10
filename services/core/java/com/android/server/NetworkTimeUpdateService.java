@@ -26,6 +26,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -82,6 +83,7 @@ public class NetworkTimeUpdateService extends Binder {
     private AlarmManager mAlarmManager;
     private PendingIntent mPendingPollIntent;
     private SettingsObserver mSettingsObserver;
+    private static ConnectivityManager mConnManager;
     // The last time that we successfully fetched the NTP time.
     private long mLastNtpFetchTime = NOT_SET;
     private final PowerManager.WakeLock mWakeLock;
@@ -117,6 +119,8 @@ public class NetworkTimeUpdateService extends Binder {
 
         mWakeLock = ((PowerManager) context.getSystemService(Context.POWER_SERVICE)).newWakeLock(
                 PowerManager.PARTIAL_WAKE_LOCK, TAG);
+        mConnManager = (ConnectivityManager) context
+                        .getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
     /** Initialize the receivers and initiate the first NTP request */
@@ -160,7 +164,10 @@ public class NetworkTimeUpdateService extends Binder {
 
     private void onPollNetworkTime(int event) {
         // If Automatic time is not set, don't bother.
-        if (!isAutomaticTimeRequested()) return;
+        final NetworkInfo netInfo =  mConnManager == null ? null
+                                     : mConnManager.getActiveNetworkInfo();
+        if (!isAutomaticTimeRequested() ||
+                netInfo == null || !netInfo.isConnected()) return;
         mWakeLock.acquire();
         try {
             onPollNetworkTimeUnderWakeLock(event);
