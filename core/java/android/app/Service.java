@@ -18,6 +18,7 @@ package android.app;
 
 import android.annotation.IntDef;
 import android.annotation.Nullable;
+import android.annotation.TestApi;
 import android.content.ComponentCallbacks2;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -751,6 +752,23 @@ public abstract class Service extends ContextWrapper implements ComponentCallbac
         writer.println("nothing to dump");
     }
 
+    /**
+     * @deprecated for use by android.legacy.test library only
+     * @hide
+     */
+    @TestApi
+    @Deprecated
+    public final void attach(Context context, String className, Application application) {
+        attach(
+               context,
+               null,               // ActivityThread not actually used by mock services
+               className,
+               null,               // token not needed when not talking with the activity manager
+               application,
+               null                // mocked services don't talk with the activity manager
+               );
+    }
+    
     // ------------------ Internal API ------------------
     
     /**
