@@ -16,6 +16,24 @@
       "revId": "9e31421a7819b86e50a500b2dee387a478a9ef79",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88020bf0_058b8dc4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2844,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-05-10T09:09:48Z",
+      "side": 0,
+      "message": "If I keep the callback map as static, then yes I agree we can keep this function (but in reduced form).",
+      "parentUuid": "7fba0397_027755d3",
+      "revId": "9e31421a7819b86e50a500b2dee387a478a9ef79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
