@@ -22,6 +22,7 @@ import android.annotation.NonNull;
 import android.annotation.RequiresPermission;
 import android.annotation.Size;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -304,6 +305,16 @@ public class AccountManager {
         mContext = context;
         mService = service;
         mMainHandler = new Handler(mContext.getMainLooper());
+    }
+
+    /**
+     * @hide used for testing only
+     * @deprecated for use by android.legacy.test library only
+     */
+    @TestApi
+    @Deprecated
+    public AccountManager(Context context) {
+        this(context, null, null);
     }
 
     /**
