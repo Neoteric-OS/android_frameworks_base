@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fba0397_027755d3",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2844,
+      "author": {
+        "id": 1121773
+      },
+      "writtenOn": "2017-05-10T07:06:23Z",
+      "side": 0,
+      "message": "I think it may be a mistake to get rid of this function. The name is self documenting and removing it moves complexity into handleMessage which is fairly long even after your improvements.",
+      "revId": "9e31421a7819b86e50a500b2dee387a478a9ef79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
