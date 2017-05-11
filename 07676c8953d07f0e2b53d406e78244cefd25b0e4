@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35ee33de_80e1d45a",
+        "filename": "services/core/java/com/android/server/NetworkTimeUpdateService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-11T01:51:29Z",
+      "side": 1,
+      "message": "This is kind of the old way of doing things.  I think a better way would be to have this class register a request to track the default network via CM.registerDefaultNetworkCallback(cb, mHandler).  The callback could just update a volatile boolean \"isConnected\" for now whenever the network capabilities have NET_CAPABILITY_VALIDATED.",
+      "range": {
+        "startLine": 168,
+        "startChar": 52,
+        "endLine": 168,
+        "endChar": 72
+      },
+      "revId": "07676c8953d07f0e2b53d406e78244cefd25b0e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
