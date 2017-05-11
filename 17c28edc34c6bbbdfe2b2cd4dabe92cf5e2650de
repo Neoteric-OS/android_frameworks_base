@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91e3bff9_8da1aae7",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-11T02:18:00Z",
+      "side": 1,
+      "message": "deactivate?",
+      "range": {
+        "startLine": 61,
+        "startChar": 28,
+        "endLine": 61,
+        "endChar": 39
+      },
+      "revId": "17c28edc34c6bbbdfe2b2cd4dabe92cf5e2650de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e957cfb_229c2137",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-11T02:18:00Z",
+      "side": 1,
+      "message": "Does this belong here or at the end of done()?\n\nI would seem to me, with only a cursory glance, that it might be better with:\n\n    done(...) {\n        if (!NO_AUTOCLOSE) {\n            finishAndRemoveTask();\n        }\n    }\n\nmaybe?",
+      "range": {
+        "startLine": 265,
+        "startChar": 12,
+        "endLine": 265,
+        "endChar": 24
+      },
+      "revId": "17c28edc34c6bbbdfe2b2cd4dabe92cf5e2650de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
