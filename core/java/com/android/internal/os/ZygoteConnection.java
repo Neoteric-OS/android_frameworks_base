@@ -717,17 +717,23 @@ class ZygoteConnection {
     public static void applyInvokeWithSystemProperty(Arguments args) {
         if (args.invokeWith == null && args.niceName != null) {
             String property = "wrap." + args.niceName;
-            if (property.length() > 31) {
-                // Properties with a trailing "." are illegal.
-                if (property.charAt(30) != '.') {
-                    property = property.substring(0, 31);
-                } else {
-                    property = property.substring(0, 30);
-                }
-            }
             args.invokeWith = SystemProperties.get(property);
             if (args.invokeWith != null && args.invokeWith.length() == 0) {
                 args.invokeWith = null;
+
+                // Try old length to be compatible with older tools.
+                if (property.length() > 31) {
+                    // Properties with a trailing "." are illegal.
+                    if (property.charAt(30) != '.') {
+                        property = property.substring(0, 31);
+                    } else {
+                        property = property.substring(0, 30);
+                    }
+                }
+                args.invokeWith = SystemProperties.get(property);
+                if (args.invokeWith != null && args.invokeWith.length() == 0) {
+                    args.invokeWith = null;
+                }
             }
         }
     }
