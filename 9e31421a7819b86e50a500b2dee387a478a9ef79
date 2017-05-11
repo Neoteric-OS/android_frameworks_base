@@ -34,6 +34,24 @@
       "revId": "9e31421a7819b86e50a500b2dee387a478a9ef79",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07745691_e4dba9df",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2844,
+      "author": {
+        "id": 1121773
+      },
+      "writtenOn": "2017-05-11T03:19:20Z",
+      "side": 0,
+      "message": "I didn\u0027t realize that most of the contents of getCallback() had to move. If it\u0027s just a wrapper around synchronized, then I don\u0027t mind removing it.",
+      "parentUuid": "88020bf0_058b8dc4",
+      "revId": "9e31421a7819b86e50a500b2dee387a478a9ef79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
