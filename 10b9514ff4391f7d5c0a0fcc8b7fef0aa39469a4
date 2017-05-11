@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0de0c6d_ba21497d",
+        "filename": "services/core/java/com/android/server/NetworkTimeUpdateService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-11T10:25:40Z",
+      "side": 1,
+      "message": "[nit] Okay with me to use a name like \"mCM\", if only to help avoid line length issues and line-wrapping.",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 20
+      },
+      "revId": "10b9514ff4391f7d5c0a0fcc8b7fef0aa39469a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a98caa70_87d46f01",
+        "filename": "services/core/java/com/android/server/NetworkTimeUpdateService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-11T10:25:40Z",
+      "side": 1,
+      "message": "[nit] a space before { would be nice.",
+      "range": {
+        "startLine": 306,
+        "startChar": 77,
+        "endLine": 306,
+        "endChar": 78
+      },
+      "revId": "10b9514ff4391f7d5c0a0fcc8b7fef0aa39469a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "543d226e_39a87418",
+        "filename": "services/core/java/com/android/server/NetworkTimeUpdateService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-11T10:25:40Z",
+      "side": 1,
+      "message": "Might be better to call it something like NetworkTimeCallback or TimeServiceNetworkCallback, to avoid confusion with the same name of its base class.",
+      "range": {
+        "startLine": 306,
+        "startChar": 18,
+        "endLine": 306,
+        "endChar": 33
+      },
+      "revId": "10b9514ff4391f7d5c0a0fcc8b7fef0aa39469a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c029a45b_104a9f01",
+        "filename": "services/core/java/com/android/server/NetworkTimeUpdateService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-11T10:25:40Z",
+      "side": 1,
+      "message": "Could just be:\n\n    mNetworkValidated \u003d netCap.hasCapability(NET_...VALIDATED);",
+      "range": {
+        "startLine": 314,
+        "startChar": 12,
+        "endLine": 314,
+        "endChar": 13
+      },
+      "revId": "10b9514ff4391f7d5c0a0fcc8b7fef0aa39469a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f92e1b92_2d23561b",
+        "filename": "services/core/java/com/android/server/NetworkTimeUpdateService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-11T10:25:40Z",
+      "side": 1,
+      "message": "You should also override onLost() to set mNetworkValidated to false.",
+      "range": {
+        "startLine": 316,
+        "startChar": 4,
+        "endLine": 316,
+        "endChar": 5
+      },
+      "revId": "10b9514ff4391f7d5c0a0fcc8b7fef0aa39469a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
