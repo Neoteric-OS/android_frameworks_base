@@ -20,12 +20,10 @@ import android.net.Uri;
 import android.telephony.SignalStrength;
 
 /**
- * A Callback class for use when the applicaiton is actively streaming content.
+ * A Callback class for use when the application is actively streaming content.
  * @hide
  */
 public class StreamingServiceCallback extends IStreamingServiceCallback.Stub {
-
-
     public void error(int errorCode, String message) {
         // default implementation empty
     }
@@ -36,7 +34,7 @@ public class StreamingServiceCallback extends IStreamingServiceCallback.Stub {
      * See {@link StreamingService#STATE_STOPPED}, {@link StreamingService#STATE_STARTED}
      * and {@link StreamingService#STATE_STALLED}.
      */
-    public void streamStateChanged(StreamingService service, int state) {
+    public void streamStateChanged(int state) {
         // default implementation empty
     }
 
