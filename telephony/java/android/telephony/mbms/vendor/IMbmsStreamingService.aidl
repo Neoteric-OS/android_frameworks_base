@@ -19,7 +19,6 @@ package android.telephony.mbms.vendor;
 import android.net.Uri;
 import android.telephony.mbms.IMbmsStreamingManagerCallback;
 import android.telephony.mbms.IStreamingServiceCallback;
-import android.telephony.mbms.StreamingService;
 import android.telephony.mbms.StreamingServiceInfo;
 import android.telephony.SignalStrength;
 
@@ -33,21 +32,8 @@ interface IMbmsStreamingService
 
     int getStreamingServices(String appName, int subId, in List<String> serviceClasses);
 
-    /**
-     * - Starts streaming the serviceId given.
-     * - if the uid/appName/subId don't match a previously registered callback an error will
-     *   be returned
-     * - Streaming status will be sent via the included listener, including an initial
-     *   URL-change and State-change pair.
-     */
     int startStreaming(String appName, int subId, String serviceId,
             IStreamingServiceCallback listener);
-
-    /**
-     * Asynchronously fetches all Services being streamed by this uid/appName/subId.
-     */
-    int getActiveStreamingServices(String appName, int subId);
-
 
     /**
      * Per-stream api.  Note each specifies what stream they apply to.
@@ -57,12 +43,9 @@ interface IMbmsStreamingService
 
     void switchStreams(String appName, int subId, String oldServiceId, String newServiceId);
 
-    int getState(String appName, int subId, String serviceId);
-
     void stopStreaming(String appName, int subId, String serviceId);
 
     void disposeStream(String appName, int subId, String serviceId);
-
 
     /**
      * End of life for all MbmsStreamingManager's created by this uid/appName/subId.
