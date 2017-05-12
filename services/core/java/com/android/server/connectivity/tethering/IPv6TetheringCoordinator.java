@@ -25,6 +25,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkState;
 import android.net.RouteInfo;
 import android.net.util.NetworkConstants;
+import android.net.util.SharedLog;
 import android.util.Log;
 
 import java.net.Inet6Address;
@@ -63,6 +64,7 @@ public class IPv6TetheringCoordinator {
         }
     }
 
+    private final SharedLog mLog;
     private final ArrayList<TetherInterfaceStateMachine> mNotifyList;
     // NOTE: mActiveDownstreams is a list and not a hash data structure because
     // we keep active downstreams in arrival order.  This is done so /64s can
@@ -74,7 +76,9 @@ public class IPv6TetheringCoordinator {
     private short mNextSubnetId;
     private NetworkState mUpstreamNetworkState;
 
-    public IPv6TetheringCoordinator(ArrayList<TetherInterfaceStateMachine> notifyList) {
+    public IPv6TetheringCoordinator(
+            SharedLog log, ArrayList<TetherInterfaceStateMachine> notifyList) {
+        mLog = log.forSubComponent(TAG);
         mNotifyList = notifyList;
         mActiveDownstreams = new LinkedList<>();
         mUniqueLocalPrefix = generateUniqueLocalPrefix();
@@ -115,7 +119,7 @@ public class IPv6TetheringCoordinator {
         if (VDBG) {
             Log.d(TAG, "updateUpstreamNetworkState: " + toDebugString(ns));
         }
-        if (!canTetherIPv6(ns)) {
+        if (!canTetherIPv6(ns, mLog)) {
             stopIPv6TetheringOnAllInterfaces();
             setUpstreamNetworkState(null);
             return;
@@ -150,9 +154,7 @@ public class IPv6TetheringCoordinator {
                     null);
         }
 
-        if (DBG) {
-            Log.d(TAG, "setUpstreamNetworkState: " + toDebugString(mUpstreamNetworkState));
-        }
+        mLog.log("setUpstreamNetworkState: " + toDebugString(mUpstreamNetworkState));
     }
 
     private void updateIPv6TetheringInterfaces() {
@@ -206,7 +208,7 @@ public class IPv6TetheringCoordinator {
         return null;
     }
 
-    private static boolean canTetherIPv6(NetworkState ns) {
+    private static boolean canTetherIPv6(NetworkState ns, SharedLog sharedLog) {
         // Broadly speaking:
         //
         //     [1] does the upstream have an IPv6 default route?
@@ -260,13 +262,11 @@ public class IPv6TetheringCoordinator {
 
         final boolean outcome = canTether && supportedConfiguration;
 
-        if (VDBG) {
-            if (ns == null) {
-                Log.d(TAG, "No available upstream.");
-            } else {
-                Log.d(TAG, String.format("IPv6 tethering is %s for upstream: %s",
-                        (outcome ? "available" : "not available"), toDebugString(ns)));
-            }
+        if (ns == null) {
+            sharedLog.log("No available upstream.");
+        } else {
+            sharedLog.log(String.format("IPv6 tethering is %s for upstream: %s",
+                    (outcome ? "available" : "not available"), toDebugString(ns)));
         }
 
         return outcome;
