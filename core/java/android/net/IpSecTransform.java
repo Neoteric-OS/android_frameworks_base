@@ -26,6 +26,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.util.Log;
+import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Preconditions;
 import dalvik.system.CloseGuard;
 import java.io.IOException;
@@ -102,6 +103,11 @@ public final class IpSecTransform implements AutoCloseable {
     }
 
     private IIpSecService getIpSecService() {
+        // This is for testing purposes.
+        if (sIpSecSrv != null) {
+            return sIpSecSrv;
+        }
+
         IBinder b = ServiceManager.getService(android.content.Context.IPSEC_SERVICE);
         if (b == null) {
             throw new RemoteException("Failed to connect to IpSecService")
@@ -204,6 +210,11 @@ public final class IpSecTransform implements AutoCloseable {
         return mConfig;
     }
 
+    /**
+     * Injected IpSecService
+     */
+    private static IIpSecService sIpSecSrv = null;
+
     private final IpSecConfig mConfig;
     private int mResourceId;
     private final Context mContext;
@@ -296,6 +307,17 @@ public final class IpSecTransform implements AutoCloseable {
                 }
             }
         }
+    }
+
+    /**
+     * setIpSecService injects an IIpSecService for testing purpose
+     * This function should not be exposed.
+     * @param IIpSecService Injected IIpSecService
+     * @hide
+     */
+    @VisibleForTesting
+    static void IpSecTransform setIpSecService(IIpSecService ipSecSrv) {
+        sIpSecSrv = ipSecSrv;
     }
 
     /**
@@ -477,7 +499,7 @@ public final class IpSecTransform implements AutoCloseable {
             return new IpSecTransform(mContext, mConfig);
         }
 
-        /**
+        /*
          * Create a new IpSecTransform.Builder to construct an IpSecTransform
          *
          * @param context current Context
