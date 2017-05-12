@@ -46,6 +46,7 @@ import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
 import com.android.internal.annotations.GuardedBy;
+import com.android.internal.annotations.VisibleForTesting;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -64,7 +65,7 @@ public class IpSecService extends IIpSecService.Stub {
     private static final int[] DIRECTIONS =
             new int[] {IpSecTransform.DIRECTION_OUT, IpSecTransform.DIRECTION_IN};
 
-    private static final int NETD_FETCH_TIMEOUT = 5000; //ms
+    private static final int NETD_FETCH_TIMEOUT_MS = 5000; // ms
     private static final int MAX_PORT_BIND_ATTEMPTS = 10;
     private static final InetAddress INADDR_ANY;
 
@@ -95,6 +96,24 @@ public class IpSecService extends IIpSecService.Stub {
     @GuardedBy("this")
     private final ManagedResourceArray<UdpSocketRecord> mUdpSocketRecords =
             new ManagedResourceArray<>();
+
+    interface IpSecServiceConfiguration {
+        INetd getNetdInstance() throws RemoteException;
+
+        static IpSecServiceConfiguration GETSRVINSTANCE =
+                new IpSecServiceConfiguration() {
+                    @Override
+                    public INetd getNetdInstance() throws RemoteException {
+                        final INetd netd = NetdService.getInstance();
+                        if (netd == null) {
+                            throw new RemoteException("Failed to Get Netd Instance");
+                        }
+                        return netd;
+                    }
+                };
+    }
+
+    final IpSecServiceConfiguration mSrvConfig;
 
     /**
      * The ManagedResource class provides a facility to cleanly and reliably release system
@@ -198,8 +217,7 @@ public class IpSecService extends IIpSecService.Stub {
     };
 
     /**
-     * Minimal wrapper around SparseArray that performs ownership
-     * validation on element accesses.
+     * Minimal wrapper around SparseArray that performs ownership validation on element accesses.
      */
     private class ManagedResourceArray<T extends ManagedResource> {
         SparseArray<T> mArray = new SparseArray<>();
@@ -260,7 +278,8 @@ public class IpSecService extends IIpSecService.Stub {
             for (int direction : DIRECTIONS) {
                 int spi = mSpis[direction].getSpi();
                 try {
-                    getNetdInstance()
+                    mSrvConfig
+                            .getNetdInstance()
                             .ipSecDeleteSecurityAssociation(
                                     mResourceId,
                                     direction,
@@ -324,7 +343,8 @@ public class IpSecService extends IIpSecService.Stub {
             }
 
             try {
-                getNetdInstance()
+                mSrvConfig
+                        .getNetdInstance()
                         .ipSecDeleteSecurityAssociation(
                                 mResourceId, mDirection, mLocalAddress, mRemoteAddress, mSpi);
             } catch (ServiceSpecificException e) {
@@ -383,13 +403,20 @@ public class IpSecService extends IIpSecService.Stub {
      * @param context Binder context for this service
      */
     private IpSecService(Context context) {
-        mContext = context;
+        this(context, IpSecServiceConfiguration.GETSRVINSTANCE);
     }
 
     static IpSecService create(Context context) throws InterruptedException {
         final IpSecService service = new IpSecService(context);
         service.connectNativeNetdService();
         return service;
+    }
+
+    /** @hide */
+    @VisibleForTesting
+    public IpSecService(Context context, IpSecServiceConfiguration config) {
+        mContext = context;
+        mSrvConfig = config;
     }
 
     public void systemReady() {
@@ -408,24 +435,16 @@ public class IpSecService extends IIpSecService.Stub {
                             @Override
                             public void run() {
                                 synchronized (IpSecService.this) {
-                                    NetdService.get(NETD_FETCH_TIMEOUT);
+                                    NetdService.get(NETD_FETCH_TIMEOUT_MS);
                                 }
                             }
                         });
         t.run();
     }
 
-    INetd getNetdInstance() throws RemoteException {
-        final INetd netd = NetdService.getInstance();
-        if (netd == null) {
-            throw new RemoteException("Failed to Get Netd Instance");
-        }
-        return netd;
-    }
-
     synchronized boolean isNetdAlive() {
         try {
-            final INetd netd = getNetdInstance();
+            final INetd netd = mSrvConfig.getNetdInstance();
             if (netd == null) {
                 return false;
             }
@@ -446,7 +465,8 @@ public class IpSecService extends IIpSecService.Stub {
         String localAddress = "";
         try {
             spi =
-                    getNetdInstance()
+                    mSrvConfig
+                            .getNetdInstance()
                             .ipSecAllocateSpi(
                                     resourceId,
                                     direction,
@@ -606,7 +626,8 @@ public class IpSecService extends IIpSecService.Stub {
             int spi = spis[direction].getSpi();
             try {
                 int result =
-                        getNetdInstance()
+                        mSrvConfig
+                                .getNetdInstance()
                                 .ipSecAddSecurityAssociation(
                                         resourceId,
                                         c.getMode(),
@@ -680,7 +701,8 @@ public class IpSecService extends IIpSecService.Stub {
         IpSecConfig c = info.getConfig();
         try {
             for (int direction : DIRECTIONS) {
-                getNetdInstance()
+                mSrvConfig
+                        .getNetdInstance()
                         .ipSecApplyTransportModeTransform(
                                 socket.getFileDescriptor(),
                                 resourceId,
@@ -708,7 +730,9 @@ public class IpSecService extends IIpSecService.Stub {
     public void removeTransportModeTransform(ParcelFileDescriptor socket, int resourceId)
             throws RemoteException {
         try {
-            getNetdInstance().ipSecRemoveTransportModeTransform(socket.getFileDescriptor());
+            mSrvConfig
+                    .getNetdInstance()
+                    .ipSecRemoveTransportModeTransform(socket.getFileDescriptor());
         } catch (ServiceSpecificException e) {
             // FIXME: get the error code and throw is at an IOException from Errno Exception
         }
