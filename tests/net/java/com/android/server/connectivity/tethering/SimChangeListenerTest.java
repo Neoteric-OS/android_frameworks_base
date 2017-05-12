@@ -22,10 +22,13 @@ import static com.android.internal.telephony.IccCardConstants.INTENT_KEY_ICC_STA
 import static com.android.internal.telephony.TelephonyIntents.ACTION_SIM_STATE_CHANGED;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.when;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.util.SharedLog;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.UserHandle;
@@ -51,6 +54,7 @@ public class SimChangeListenerTest {
     private static final int EVENT_UNM_UPDATE = 1;
 
     @Mock private Context mContext;
+    @Mock private SharedLog mLog;
     private BroadcastInterceptingContext mServiceContext;
     private Handler mHandler;
     private SimChangeListener mSCL;
@@ -77,7 +81,9 @@ public class SimChangeListenerTest {
         mServiceContext = new MockContext(mContext);
         mHandler = new Handler(Looper.myLooper());
         mCallbackCount = 0;
-        mSCL = new SimChangeListener(mServiceContext, mHandler, () -> doCallback());
+        reset(mLog);
+        when(mLog.forSubSystem(anyString())).thenReturn(mLog);
+        mSCL = new SimChangeListener(mServiceContext, mHandler, mLog, () -> doCallback());
     }
 
     @After public void tearDown() throws Exception {

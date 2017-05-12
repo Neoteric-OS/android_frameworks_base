@@ -24,6 +24,7 @@ import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.NetworkUtils;
+import android.net.util.SharedLog;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.StructGroupReq;
@@ -95,6 +96,7 @@ public class RouterAdvertisementDaemon {
             (byte) 0xff, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
     };
 
+    private final SharedLog mLog;
     private final String mIfName;
     private final int mIfIndex;
     private final byte[] mHwAddr;
@@ -222,7 +224,8 @@ public class RouterAdvertisementDaemon {
     }
 
 
-    public RouterAdvertisementDaemon(String ifname, int ifindex, byte[] hwaddr) {
+    public RouterAdvertisementDaemon(SharedLog log, String ifname, int ifindex, byte[] hwaddr) {
+        mLog = log;  // Reuse the existing "ifname" shared log.
         mIfName = ifname;
         mIfIndex = ifindex;
         mHwAddr = hwaddr;
@@ -321,7 +324,7 @@ public class RouterAdvertisementDaemon {
             // The packet up to mRaLength  is valid, since it has been updated
             // progressively as the RA was built. Log an error, and continue
             // on as best as possible.
-            Log.e(TAG, "Could not construct new RA: " + e);
+            mLog.error("Could not construct new RA: " + e);
         }
 
         // We have nothing worth announcing; indicate as much to maybeSendRA().
@@ -581,7 +584,7 @@ public class RouterAdvertisementDaemon {
             NetworkUtils.protectFromVpn(mSocket);
             NetworkUtils.setupRaSocket(mSocket, mIfIndex);
         } catch (ErrnoException | IOException e) {
-            Log.e(TAG, "Failed to create RA daemon socket: " + e);
+            mLog.error("Failed to create RA daemon socket: " + e);
             return false;
         }
 
@@ -626,10 +629,10 @@ public class RouterAdvertisementDaemon {
                 }
                 Os.sendto(mSocket, mRA, 0, mRaLength, 0, dest);
             }
-            Log.d(TAG, "RA sendto " + dest.getAddress().getHostAddress());
+            mLog.logAndEmit("RA sendto " + dest.getAddress().getHostAddress());
         } catch (ErrnoException | SocketException e) {
             if (isSocketValid()) {
-                Log.e(TAG, "sendto error: " + e);
+                mLog.error("sendto error: " + e);
             }
         }
     }
@@ -654,7 +657,7 @@ public class RouterAdvertisementDaemon {
                     }
                 } catch (ErrnoException | SocketException e) {
                     if (isSocketValid()) {
-                        Log.e(TAG, "recvfrom error: " + e);
+                        mLog.error("recvfrom error: " + e);
                     }
                     continue;
                 }

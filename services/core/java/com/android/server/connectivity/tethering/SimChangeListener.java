@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
+import android.net.util.SharedLog;
 import android.util.Log;
 
 import com.android.internal.telephony.TelephonyIntents;
@@ -43,13 +44,16 @@ public class SimChangeListener {
 
     private final Context mContext;
     private final Handler mTarget;
-    private final AtomicInteger mSimBcastGenerationNumber;
+    private final SharedLog mLog;
     private final Runnable mCallback;
+    private final AtomicInteger mSimBcastGenerationNumber;
     private BroadcastReceiver mBroadcastReceiver;
 
-    public SimChangeListener(Context ctx, Handler handler, Runnable onSimCardLoadedCallback) {
+    public SimChangeListener(
+            Context ctx, Handler handler, SharedLog log, Runnable onSimCardLoadedCallback) {
         mContext = ctx;
         mTarget = handler;
+        mLog = log.forSubSystem(TAG);
         mCallback = onSimCardLoadedCallback;
         mSimBcastGenerationNumber = new AtomicInteger(0);
     }
@@ -59,7 +63,7 @@ public class SimChangeListener {
     }
 
     public void startListening() {
-        if (DBG) Log.d(TAG, "startListening for SIM changes");
+        mLog.log("startListening for SIM changes");
 
         if (mBroadcastReceiver != null) return;
 
@@ -72,7 +76,7 @@ public class SimChangeListener {
     }
 
     public void stopListening() {
-        if (DBG) Log.d(TAG, "stopListening for SIM changes");
+        mLog.log("stopListening for SIM changes");
 
         if (mBroadcastReceiver == null) return;
 
@@ -107,8 +111,9 @@ public class SimChangeListener {
             if (mGenerationNumber != currentGenerationNumber) return;
 
             final String state = intent.getStringExtra(INTENT_KEY_ICC_STATE);
-            Log.d(TAG, "got Sim changed to state " + state + ", mSimNotLoadedSeen=" +
-                    mSimNotLoadedSeen);
+            mLog.logAndEmit(String.format(
+                    "got Sim changed to state %s, mSimNotLoadedSeen=%s",
+                    state, mSimNotLoadedSeen));
 
             if (!isSimCardLoaded(state)) {
                 mSimNotLoadedSeen = true;
