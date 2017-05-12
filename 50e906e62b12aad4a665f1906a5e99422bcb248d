@@ -22,6 +22,30 @@
       "revId": "50e906e62b12aad4a665f1906a5e99422bcb248d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1577c80_a5a25fc3",
+        "filename": "services/core/java/com/android/server/NetworkTimeUpdateService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-12T11:02:26Z",
+      "side": 1,
+      "message": "I think you\u0027re right.  Well spotted.",
+      "parentUuid": "9b96933f_a0ded351",
+      "range": {
+        "startLine": 139,
+        "startChar": 54,
+        "endLine": 139,
+        "endChar": 56
+      },
+      "revId": "50e906e62b12aad4a665f1906a5e99422bcb248d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
