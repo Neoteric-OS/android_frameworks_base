@@ -487,5 +487,14 @@ public final class IpSecTransform implements AutoCloseable {
             mContext = context;
             mConfig = new IpSecConfig();
         }
+
+        /**
+         * Return an {@link IpSecConfig} object for testing purposes.
+         * @hide
+         */
+        @VisibleForTesting
+        public IpSecConfig getIpSecConfig() {
+            return mConfig;
+        }
     }
 }
