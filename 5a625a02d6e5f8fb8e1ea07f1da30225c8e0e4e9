@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "694612b1_8eb6d646",
+        "filename": "services/core/java/com/android/server/NetworkTimeUpdateService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-12T04:16:26Z",
+      "side": 1,
+      "message": "import android.net.NetworkCapabilities;",
+      "range": {
+        "startLine": 308,
+        "startChar": 59,
+        "endLine": 308,
+        "endChar": 78
+      },
+      "revId": "5a625a02d6e5f8fb8e1ea07f1da30225c8e0e4e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b210ecb_db852c98",
+        "filename": "services/core/java/com/android/server/NetworkTimeUpdateService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-12T04:16:26Z",
+      "side": 1,
+      "message": "\"netCap\" makes this line shorter.",
+      "range": {
+        "startLine": 308,
+        "startChar": 79,
+        "endLine": 308,
+        "endChar": 98
+      },
+      "revId": "5a625a02d6e5f8fb8e1ea07f1da30225c8e0e4e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bc879b1_a52f5f0b",
+        "filename": "services/core/java/com/android/server/NetworkTimeUpdateService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-05-12T04:16:26Z",
+      "side": 1,
+      "message": "import android.net.Network;",
+      "range": {
+        "startLine": 308,
+        "startChar": 42,
+        "endLine": 308,
+        "endChar": 49
+      },
+      "revId": "5a625a02d6e5f8fb8e1ea07f1da30225c8e0e4e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
