@@ -503,7 +503,9 @@ class TvInputHardwareManager implements TvInputHal.Callback {
 
     private void updateVolume() {
         mCurrentMaxIndex = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        mCurrentIndex = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        mCurrentIndex = mAudioManager.isHdmiSystemAudioSupported() ?
+            mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) :
+            mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
     }
 
     private void handleVolumeChange(Context context, Intent intent) {

@@ -2186,9 +2186,13 @@ public class AudioService extends IAudioService.Stub
             if (mStreamStates[streamType].mIsMuted) {
                 index = 0;
             }
-            if (index != 0 && (mStreamVolumeAlias[streamType] == AudioSystem.STREAM_MUSIC) &&
-                    (device & mFixedVolumeDevices) != 0) {
-                index = mStreamStates[streamType].getMaxIndex();
+            if (index != 0 && (mStreamVolumeAlias[streamType] == AudioSystem.STREAM_MUSIC)) {
+                if ((device & AudioSystem.DEVICE_OUT_HDMI_ARC) != 0 &&
+                        mHdmiSystemAudioSupported) {
+                    index = mStreamStates[streamType].getMaxIndex();
+                } else if ((device & mFixedVolumeDevices) != 0) {
+                    index = mStreamStates[streamType].getMaxIndex();
+                }
             }
             return (index + 5) / 10;
         }
@@ -4402,6 +4406,9 @@ public class AudioService extends IAudioService.Stub
             int index;
             if (mIsMuted) {
                 index = 0;
+            } else if ((device & AudioSystem.DEVICE_OUT_HDMI_ARC) != 0 &&
+                    mHdmiSystemAudioSupported) {
+                index = getMaxIndex() / 10;
             } else if ((device & AudioSystem.DEVICE_OUT_ALL_A2DP) != 0 && mAvrcpAbsVolSupported) {
                 index = getAbsoluteVolumeIndex((getIndex(device) + 5)/10);
             } else if ((device & mFullVolumeDevices) != 0) {
@@ -4421,6 +4428,9 @@ public class AudioService extends IAudioService.Stub
                     if (device != AudioSystem.DEVICE_OUT_DEFAULT) {
                         if (mIsMuted) {
                             index = 0;
+                        } else if ((device & AudioSystem.DEVICE_OUT_HDMI_ARC) != 0 &&
+                                mHdmiSystemAudioSupported) {
+                            index = getMaxIndex() / 10;
                         } else if ((device & AudioSystem.DEVICE_OUT_ALL_A2DP) != 0 &&
                                 mAvrcpAbsVolSupported) {
                             index = getAbsoluteVolumeIndex((getIndex(device) + 5)/10);
