@@ -26,6 +26,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.util.Log;
+import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Preconditions;
 import dalvik.system.CloseGuard;
 import java.io.IOException;
@@ -102,6 +103,10 @@ public final class IpSecTransform implements AutoCloseable {
     }
 
     private IIpSecService getIpSecService() {
+        if (mIpSecSrv != null) {
+            return mIpSecSrv;
+        }
+
         IBinder b = ServiceManager.getService(android.content.Context.IPSEC_SERVICE);
         if (b == null) {
             throw new RemoteException("Failed to connect to IpSecService")
@@ -204,6 +209,11 @@ public final class IpSecTransform implements AutoCloseable {
         return mConfig;
     }
 
+    /**
+     * Injecting IpSecService
+     */
+    private IIpSecService mIpSecSrv;
+
     private final IpSecConfig mConfig;
     private int mResourceId;
     private final Context mContext;
@@ -296,6 +306,18 @@ public final class IpSecTransform implements AutoCloseable {
                 }
             }
         }
+    }
+
+    /**
+     * setIpSecService injects an IIpSecService for testing purpose
+     *
+     * @param IIpSecService Injected IIpSecService
+     * @hide
+     */
+    @VisibleForTesting
+    IpSecTransform setIpSecService(IIpSecService ipSecSrv) {
+        this.mIpSecSrv = ipSecSrv;
+        return this;
     }
 
     /**
@@ -475,6 +497,18 @@ public final class IpSecTransform implements AutoCloseable {
             mConfig.remoteAddress = remoteAddress;
             mConfig.mode = MODE_TUNNEL;
             return new IpSecTransform(mContext, mConfig);
+        }
+
+        /** @hide */
+        public IpSecTransform buildTransportModeTransform(InetAddress remoteAddress,
+                                                          IIpSecService ipSecSrv)
+                throws IpSecManager.ResourceUnavailableException,
+                        IpSecManager.SpiUnavailableException, IOException {
+            //FIXME: argument validation here
+            //throw new IllegalArgumentException("Natt Keepalive requires UDP Encapsulation");
+            mConfig.mode = MODE_TRANSPORT;
+            mConfig.remoteAddress = remoteAddress;
+            return new IpSecTransform(mContext, mConfig).setIpSecService(ipSecSrv).activate();
         }
 
         /**
