@@ -33,8 +33,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 
-import java.util.concurrent.CountDownLatch;
-
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.Protocol;
@@ -249,15 +247,13 @@ public final class NsdManager {
 
     private final INsdManager mService;
     private final Context mContext;
+    private final AsyncChannel mAsyncChannel;
+    private final ServiceHandler mHandler;
 
     private int mListenerKey = FIRST_LISTENER_KEY;
     private final SparseArray mListenerMap = new SparseArray();
     private final SparseArray<NsdServiceInfo> mServiceMap = new SparseArray<>();
     private final Object mMapLock = new Object();
-
-    private final AsyncChannel mAsyncChannel = new AsyncChannel();
-    private ServiceHandler mHandler;
-    private final CountDownLatch mConnected = new CountDownLatch(1);
 
     /**
      * Create a new Nsd instance. Applications use
@@ -270,7 +266,8 @@ public final class NsdManager {
     public NsdManager(Context context, INsdManager service) {
         mService = service;
         mContext = context;
-        init();
+        mHandler = makeHandler();
+        mAsyncChannel = makeConnectedChannel();
     }
 
     /**
@@ -348,19 +345,6 @@ public final class NsdManager {
         public void handleMessage(Message message) {
             final int what = message.what;
             final int key = message.arg2;
-            switch (what) {
-                case AsyncChannel.CMD_CHANNEL_HALF_CONNECTED:
-                    mAsyncChannel.sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
-                    return;
-                case AsyncChannel.CMD_CHANNEL_FULLY_CONNECTED:
-                    mConnected.countDown();
-                    return;
-                case AsyncChannel.CMD_CHANNEL_DISCONNECTED:
-                    Log.e(TAG, "Channel lost");
-                    return;
-                default:
-                    break;
-            }
             final Object listener;
             final NsdServiceInfo ns;
             synchronized (mMapLock) {
@@ -475,23 +459,31 @@ public final class NsdManager {
         return s.getServiceType();
     }
 
-    /**
-     * Initialize AsyncChannel
-     */
-    private void init() {
+
+    private ServiceHandler makeHandler() {
+        HandlerThread t = new HandlerThread("NsdManager");
+        t.start();
+        return new ServiceHandler(t.getLooper());
+    }
+
+    private AsyncChannel makeConnectedChannel() {
         final Messenger messenger = getMessenger();
         if (messenger == null) {
             fatal("Failed to obtain service Messenger");
         }
-        HandlerThread t = new HandlerThread("NsdManager");
-        t.start();
-        mHandler = new ServiceHandler(t.getLooper());
-        mAsyncChannel.connect(mContext, mHandler, messenger);
-        try {
-            mConnected.await();
-        } catch (InterruptedException e) {
-            fatal("Interrupted wait at init");
+        AsyncChannel chan = new AsyncChannel();
+
+        int status = chan.connectSync(mContext, mHandler, messenger);
+        if (status != AsyncChannel.STATUS_SUCCESSFUL) {
+            fatal("AsynChannel half connection unsuccessful");
         }
+
+        status = chan.sendMessageSynchronously(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION).arg1;
+        if (status != AsyncChannel.STATUS_SUCCESSFUL) {
+            fatal("AsynChannel full connection unsuccessful");
+        }
+
+        return chan;
     }
 
     private static void fatal(String msg) {
