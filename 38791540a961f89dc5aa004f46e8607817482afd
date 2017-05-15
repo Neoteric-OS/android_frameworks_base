@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa34f55f_b750b2f4",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2017-05-15T14:19:31Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "5e72c734_1a9943ad",
+      "range": {
+        "startLine": 217,
+        "startChar": 17,
+        "endLine": 217,
+        "endChar": 36
+      },
+      "revId": "38791540a961f89dc5aa004f46e8607817482afd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6363f9cb_5c3a925a",
         "filename": "core/java/android/net/Network.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-25T10:29:42Z",
       "side": 1,
       "message": "Given none of this is synchronized and the mUrlConnectionFactory (unlike the OkHttpClient) is shared, this seems non-threadsafe.\n\nYou may want to pass the socket factory as an argument to openConnection() or find a different lifecycle model for the factory object. The former is probably easier.",
+      "range": {
+        "startLine": 270,
+        "startChar": 30,
+        "endLine": 270,
+        "endChar": 46
+      },
+      "revId": "38791540a961f89dc5aa004f46e8607817482afd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be07bafd_f4f6cedb",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2017-05-15T14:19:31Z",
+      "side": 1,
+      "message": "Ugh, you\u0027re right - thanks for spotting! I wonder if it was a mistake for Network.getSocketFactory() to have been made overridable (public, non-hidden and referenced by documentation). May or may not be too late to change now.\n\nFixed the way you suggested. Depending on how future needs evolve, I may in a future CL extract a Builder class for HttpURLConnectionFactory so that we don\u0027t have to make the (somewhat arbitrary) choice of what parts of the configuration should be shared across requests (passed into the HUCF constructor) vs. change across requests (passed into openConnection()). This would also better align with OkHttp\u0027s approach.",
+      "parentUuid": "6363f9cb_5c3a925a",
       "range": {
         "startLine": 270,
         "startChar": 30,
