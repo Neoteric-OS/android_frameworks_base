@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3db7bf1_93ba5f69",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-05-15T15:46:30Z",
+      "side": 1,
+      "message": "Suggest we add something like this because the design isn\u0027t ideal (but improving would be not worth the effort IMO):\n\n// Set state on the HttpURLConnectionFactory that will be good for all HttpURLConnections created by this Network. State that might vary is left until openConnection() and passed as arguments.",
+      "range": {
+        "startLine": 220,
+        "startChar": 16,
+        "endLine": 220,
+        "endChar": 19
+      },
+      "revId": "dfa93b6a3b956edc690bd057338f114ef8eb8d3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec0d174f_42b8c43c",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-05-15T15:46:30Z",
+      "side": 1,
+      "message": "Not sure the comment is entirely accurate. Doesn\u0027t it just mean that the DNS server used the one associated with the network. The SocketFactory is more what determines the NIC / network the packets use, I think.",
+      "range": {
+        "startLine": 222,
+        "startChar": 63,
+        "endLine": 222,
+        "endChar": 70
+      },
+      "revId": "dfa93b6a3b956edc690bd057338f114ef8eb8d3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

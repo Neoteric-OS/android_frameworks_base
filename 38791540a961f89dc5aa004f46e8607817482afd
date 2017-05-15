@@ -117,6 +117,30 @@
       "revId": "38791540a961f89dc5aa004f46e8607817482afd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ca8e40c_1be6e98b",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-05-15T15:46:30Z",
+      "side": 1,
+      "message": "The API is already quite large for what is mostly an internal convenience so +1 for no builder for now. Because it\u0027s internal we get to change our minds without major consequences.\n\nNot sure why the class / methods were left non-final. Perhaps Lorenzo can comment.",
+      "parentUuid": "5884a10a_8e4722f5",
+      "range": {
+        "startLine": 270,
+        "startChar": 30,
+        "endLine": 270,
+        "endChar": 46
+      },
+      "revId": "38791540a961f89dc5aa004f46e8607817482afd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
