@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d86f46e5_06497962",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2017-05-15T17:42:26Z",
+      "side": 1,
+      "message": "FYI I\u0027ve filed http://b/38311512 to consider this for a potential follow-up CL, since it appears orthogonal to this CL\u0027s goal.",
+      "parentUuid": "18631381_efd70ec4",
+      "range": {
+        "startLine": 219,
+        "startChar": 16,
+        "endLine": 219,
+        "endChar": 27
+      },
+      "revId": "aa12d45cf1f14b42d334930d6d418a9f45080a0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e01c7cda_94249ff4",
         "filename": "core/java/android/net/Network.java",
         "patchSetId": 7
