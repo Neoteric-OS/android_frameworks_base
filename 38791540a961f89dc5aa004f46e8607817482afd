@@ -93,6 +93,30 @@
       "revId": "38791540a961f89dc5aa004f46e8607817482afd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5884a10a_8e4722f5",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2017-05-15T15:00:58Z",
+      "side": 1,
+      "message": "PS. I\u0027ve now got four public overloads of openConnection() for each combination of { proxy given / not given } and {socketFactory given/not given }, because I don\u0027t like using nullable arguments in APIs where a value of null may be accidental.\n\nThis does seem like an argument towards refactoring HttpURLConnectionFactory into a AndroidHttpBuilder class plus corresponding Builder class, but not sure if that\u0027s worth doing now - feels a bit like a yak chase.",
+      "parentUuid": "be07bafd_f4f6cedb",
+      "range": {
+        "startLine": 270,
+        "startChar": 30,
+        "endLine": 270,
+        "endChar": 46
+      },
+      "revId": "38791540a961f89dc5aa004f46e8607817482afd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
