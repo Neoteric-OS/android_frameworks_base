@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a73484fd_85f95dad",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2315,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2017-05-17T19:42:49Z",
+      "side": 1,
+      "message": "This is not really configurable, so don\u0027t add it here. I think just making it a constant in PackageManagerService should be fine.",
+      "range": {
+        "startLine": 2315,
+        "startChar": 4,
+        "endLine": 2315,
+        "endChar": 107
+      },
+      "revId": "09e2b32ee47b21c44cd506d16a4b9a70a67a6a15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "788430bf_182b48f0",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 15634,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2017-05-17T19:42:49Z",
+      "side": 1,
+      "message": "There\u0027s no guarantee it\u0027s installed on all devices (+Kenny to confirm). Check for feature PackageManager.FEATURE_DEVICE_ADMIN and make sure it\u0027s a system app before allowing to uninstall.",
+      "range": {
+        "startLine": 15634,
+        "startChar": 12,
+        "endLine": 15634,
+        "endChar": 31
+      },
+      "revId": "09e2b32ee47b21c44cd506d16a4b9a70a67a6a15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
