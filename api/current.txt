@@ -20496,6 +20496,9 @@ package android.media {
     field public static final java.lang.String TAG_METERING_MODE = "MeteringMode";
     field public static final java.lang.String TAG_MODEL = "Model";
     field public static final java.lang.String TAG_OECF = "OECF";
+    field public static final java.lang.String TAG_OFFSET_TIME = "OffsetTime";
+    field public static final java.lang.String TAG_OFFSET_TIME_DIGITIZED = "OffsetTimeDigitized";
+    field public static final java.lang.String TAG_OFFSET_TIME_ORIGINAL = "OffsetTimeOriginal";
     field public static final java.lang.String TAG_ORIENTATION = "Orientation";
     field public static final java.lang.String TAG_PHOTOMETRIC_INTERPRETATION = "PhotometricInterpretation";
     field public static final java.lang.String TAG_PIXEL_X_DIMENSION = "PixelXDimension";
