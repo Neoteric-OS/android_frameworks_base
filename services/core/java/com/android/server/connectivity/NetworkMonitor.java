@@ -102,6 +102,7 @@ public class NetworkMonitor extends StateMachine {
                                                       + "Chrome/60.0.3112.32 Safari/537.36";
 
     private static final int SOCKET_TIMEOUT_MS = 10000;
+    private static final int DNS_TIMEOUT_MS    = 5000;
     private static final int PROBE_TIMEOUT_MS  = 3000;
 
     static enum EvaluationResult {
@@ -806,11 +807,24 @@ public class NetworkMonitor extends StateMachine {
      * @return a CaptivePortalProbeResult inferred from the HTTP response.
      */
     private CaptivePortalProbeResult sendDnsAndHttpProbes(ProxyInfo proxy, URL url, int probeType) {
+        return sendDnsAndHttpProbes(proxy, url, probeType, null);
+    }
+
+    /**
+     * Do a DNS resolution and URL fetch on a known web server to see if we get the data we expect.
+     * @return a CaptivePortalProbeResult inferred from the HTTP response.
+     */
+  private CaptivePortalProbeResult sendDnsAndHttpProbes(
+            ProxyInfo proxy, URL url, int probeType, CountDownLatch dnsSignaling) {
         // Pre-resolve the captive portal server host so we can log it.
         // Only do this if HttpURLConnection is about to, to avoid any potentially
-        // unnecessary resolution.
+        // unnecessary resolution. If the caller passed a non-null latch, signal the completion
+        // of the DNS query by counting down 1 on the latch.
         final String host = (proxy != null) ? proxy.getHost() : url.getHost();
         sendDnsProbe(host);
+        if (dnsSignaling != null) {
+            dnsSignaling.countDown();
+        }
         return sendHttpProbe(url, probeType);
     }
 
@@ -923,7 +937,13 @@ public class NetworkMonitor extends StateMachine {
             ProxyInfo proxy, URL httpsUrl, URL httpUrl) {
         // Number of probes to wait for. If a probe completes with a conclusive answer
         // it shortcuts the latch immediately by forcing the count to 0.
-        final CountDownLatch latch = new CountDownLatch(2);
+        final CountDownLatch webLatch = new CountDownLatch(2);
+
+        // Number of DNS queries to wait for before the fallback probe main delay timer can start.
+        // The fallback probe should start no earlier than PROBE_TIMEOUT_MS after the start of http
+        // or https, whichever started the fastest. To achieve this the wait of PROBE_TIMEOUT_MS is
+        // started after both DNS queries completed and signaled the latch  (http://b/38259299).
+        final CountDownLatch dnsLatch = new CountDownLatch(2);
 
         final class ProbeThread extends Thread {
             private final boolean mIsHttps;
@@ -940,19 +960,20 @@ public class NetworkMonitor extends StateMachine {
             @Override
             public void run() {
                 if (mIsHttps) {
-                    mResult =
-                            sendDnsAndHttpProbes(proxy, httpsUrl, ValidationProbeEvent.PROBE_HTTPS);
+                    mResult = sendDnsAndHttpProbes(
+                            proxy, httpsUrl, ValidationProbeEvent.PROBE_HTTPS, dnsLatch);
                 } else {
-                    mResult = sendDnsAndHttpProbes(proxy, httpUrl, ValidationProbeEvent.PROBE_HTTP);
+                    mResult = sendDnsAndHttpProbes(
+                            proxy, httpUrl, ValidationProbeEvent.PROBE_HTTP, dnsLatch);
                 }
                 if ((mIsHttps && mResult.isSuccessful()) || (!mIsHttps && mResult.isPortal())) {
                     // Stop waiting immediately if https succeeds or if http finds a portal.
-                    while (latch.getCount() > 0) {
-                        latch.countDown();
+                    while (webLatch.getCount() > 0) {
+                        webLatch.countDown();
                     }
                 }
                 // Signal this probe has completed.
-                latch.countDown();
+                webLatch.countDown();
             }
         }
 
@@ -962,7 +983,8 @@ public class NetworkMonitor extends StateMachine {
         try {
             httpsProbe.start();
             httpProbe.start();
-            latch.await(PROBE_TIMEOUT_MS, TimeUnit.MILLISECONDS);
+            dnsLatch.await(DNS_TIMEOUT_MS, TimeUnit.MILLISECONDS);
+            webLatch.await(PROBE_TIMEOUT_MS, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             validationLog("Error: probes wait interrupted!");
             return CaptivePortalProbeResult.FAILED;
@@ -982,10 +1004,12 @@ public class NetworkMonitor extends StateMachine {
         // If a fallback url exists, use a fallback probe to try again portal detection.
         URL fallbackUrl = nextFallbackUrl();
         if (fallbackUrl != null) {
-            CaptivePortalProbeResult result =
+            // TODO: do not block on the result of the fallback probe and instead starts it on an
+            // third thread in order to take all three probes results correctly into account.
+            CaptivePortalProbeResult fallbackResult =
                     sendHttpProbe(fallbackUrl, ValidationProbeEvent.PROBE_FALLBACK);
-            if (result.isPortal()) {
-                return result;
+            if (fallbackResult.isPortal()) {
+                return fallbackResult;
             }
         }
         // Otherwise wait until http and https probes completes and use their results.
