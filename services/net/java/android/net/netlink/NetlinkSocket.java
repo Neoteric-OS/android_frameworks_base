@@ -60,6 +60,10 @@ public class NetlinkSocket implements Closeable {
                 OsConstants.SO_RCVBUF, SOCKET_RECV_BUFSIZE);
     }
 
+    public FileDescriptor getFileDescriptor() {
+        return mDescriptor;
+    }
+
     public NetlinkSocketAddress getLocalAddress() throws ErrnoException {
         return (NetlinkSocketAddress) Os.getsockname(mDescriptor);
     }

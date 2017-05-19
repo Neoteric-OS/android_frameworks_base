@@ -36,6 +36,9 @@ import android.net.netlink.StructNdMsg;
 import android.net.netlink.StructNlMsgHdr;
 import android.net.util.MultinetworkPolicyTracker;
 import android.net.util.SharedLog;
+import android.os.Looper;
+import android.os.MessageQueue;
+import android.os.MessageQueue.OnFileDescriptorEventListener;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.system.ErrnoException;
@@ -451,12 +454,15 @@ public class IpReachabilityMonitor {
 
     // TODO: simplify the number of objects by making this extend Thread.
     private final class NetlinkSocketObserver implements Runnable {
+        private MessageQueue mQueue;
         private NetlinkSocket mSocket;
 
         @Override
         public void run() {
             if (VDBG) { Log.d(TAG, "Starting observing thread."); }
             synchronized (mLock) { mRunning = true; }
+
+            initQueue();
 
             try {
                 setupNetlinkSocket();
@@ -486,8 +492,19 @@ public class IpReachabilityMonitor {
             if (VDBG) { Log.d(TAG, "Finishing observing thread."); }
         }
 
+        private void initQueue() {
+            Looper myLooper = Looper.myLooper();
+            if (myLooper == null) {
+                Looper.prepare();
+                myLooper = Looper.myLooper();
+            }
+
+            mQueue = Looper.myQueue();
+        }
+
         private void clearNetlinkSocket() {
             if (mSocket != null) {
+                mQueue.removeOnFileDescriptorEventListener(mSocket.getFileDescriptor());
                 mSocket.close();
             }
         }
@@ -508,6 +525,8 @@ public class IpReachabilityMonitor {
                         + nlAddr.getGroupsMask()
                         + "}");
             }
+
+            //mQueue.addOnFileDescriptorEventListener
         }
 
         private ByteBuffer recvKernelReply() throws ErrnoException {
