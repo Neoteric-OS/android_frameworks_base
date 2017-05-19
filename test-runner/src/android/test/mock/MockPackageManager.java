@@ -275,18 +275,6 @@ public class MockPackageManager extends PackageManager {
         throw new UnsupportedOperationException();
     }
 
-    /** @hide */
-    @Override
-    public void addOnPermissionsChangeListener(OnPermissionsChangedListener listener) {
-        throw new UnsupportedOperationException();
-    }
-
-    /** @hide */
-    @Override
-    public void removeOnPermissionsChangeListener(OnPermissionsChangedListener listener) {
-        throw new UnsupportedOperationException();
-    }
-
     @Override
     public int checkSignatures(String pkg1, String pkg2) {
         throw new UnsupportedOperationException();
@@ -628,18 +616,6 @@ public class MockPackageManager extends PackageManager {
     /** {@hide} */
     @Override
     public int getMoveStatus(int moveId) {
-        throw new UnsupportedOperationException();
-    }
-
-    /** {@hide} */
-    @Override
-    public void registerMoveCallback(MoveCallback callback, Handler handler) {
-        throw new UnsupportedOperationException();
-    }
-
-    /** {@hide} */
-    @Override
-    public void unregisterMoveCallback(MoveCallback callback) {
         throw new UnsupportedOperationException();
     }
 

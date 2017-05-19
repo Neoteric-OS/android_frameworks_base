@@ -5499,17 +5499,21 @@ public abstract class PackageManager {
      */
     @SystemApi
     @RequiresPermission(Manifest.permission.OBSERVE_GRANT_REVOKE_PERMISSIONS)
-    public abstract void addOnPermissionsChangeListener(OnPermissionsChangedListener listener);
+    public void addOnPermissionsChangeListener(OnPermissionsChangedListener listener) {
+        throw new UnsupportedOperationException();
+    }
 
     /**
-     * Remvoes a listener for permission changes for installed packages.
+     * Removes a listener for permission changes for installed packages.
      *
      * @param listener The listener to remove.
      *
      * @hide
      */
     @SystemApi
-    public abstract void removeOnPermissionsChangeListener(OnPermissionsChangedListener listener);
+    public void removeOnPermissionsChangeListener(OnPermissionsChangedListener listener) {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * Return the {@link KeySet} associated with the String alias for this
@@ -5591,9 +5595,14 @@ public abstract class PackageManager {
     public abstract int getMoveStatus(int moveId);
 
     /** {@hide} */
-    public abstract void registerMoveCallback(MoveCallback callback, Handler handler);
+    public void registerMoveCallback(MoveCallback callback, Handler handler) {
+        throw new UnsupportedOperationException();
+    }
+
     /** {@hide} */
-    public abstract void unregisterMoveCallback(MoveCallback callback);
+    public void unregisterMoveCallback(MoveCallback callback) {
+        throw new UnsupportedOperationException();
+    }
 
     /** {@hide} */
     public abstract int movePackage(String packageName, VolumeInfo vol);
