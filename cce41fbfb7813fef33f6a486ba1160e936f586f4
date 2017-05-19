@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29e0082a_48db217b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2017-05-19T07:41:22Z",
+      "side": 1,
+      "message": "Add bug id here \"Bug: 37681141\"",
+      "revId": "cce41fbfb7813fef33f6a486ba1160e936f586f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
