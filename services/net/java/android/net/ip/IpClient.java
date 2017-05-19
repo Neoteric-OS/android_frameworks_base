@@ -1237,6 +1237,7 @@ public class IpClient extends StateMachine {
             mIpReachabilityMonitor = new IpReachabilityMonitor(
                     mContext,
                     mInterfaceName,
+                    getHandler(),
                     mLog,
                     new IpReachabilityMonitor.Callback() {
                         @Override
