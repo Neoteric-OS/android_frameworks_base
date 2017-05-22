@@ -4458,7 +4458,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             networkAgent.clatd.fixupLinkProperties(oldLp);
         }
 
-        updateInterfaces(newLp, oldLp, netId);
+        updateInterfaces(newLp, oldLp, netId, networkAgent.networkCapabilities);
         updateMtu(newLp, oldLp);
         // TODO - figure out what to do for clat
 //        for (LinkProperties lp : newLp.getStackedLinks()) {
@@ -4496,7 +4496,22 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private void updateInterfaces(LinkProperties newLp, LinkProperties oldLp, int netId) {
+    private void wakeupAddInterface(String iface, NetworkCapabilities caps) throws RemoteException {
+        if (!caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+            return;
+        }
+        mNetd.getNetdService().wakeupAddInterface(iface, "iface:" + iface, 0x80000000, 0x80000000);
+    }
+
+    private void wakeupDelInterface(String iface, NetworkCapabilities caps) throws RemoteException {
+        if (!caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+            return;
+        }
+        mNetd.getNetdService().wakeupDelInterface(iface, "iface:" + iface, 0x80000000, 0x80000000);
+    }
+
+    private void updateInterfaces(LinkProperties newLp, LinkProperties oldLp, int netId,
+                                  NetworkCapabilities caps) {
         CompareResult<String> interfaceDiff = new CompareResult<String>();
         if (oldLp != null) {
             interfaceDiff = oldLp.compareAllInterfaceNames(newLp);
@@ -4507,6 +4522,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             try {
                 if (DBG) log("Adding iface " + iface + " to network " + netId);
                 mNetd.addInterfaceToNetwork(iface, netId);
+                wakeupAddInterface(iface, caps);
             } catch (Exception e) {
                 loge("Exception adding interface: " + e);
             }
@@ -4515,6 +4531,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             try {
                 if (DBG) log("Removing iface " + iface + " from network " + netId);
                 mNetd.removeInterfaceFromNetwork(iface, netId);
+                wakeupDelInterface(iface, caps);
             } catch (Exception e) {
                 loge("Exception removing interface: " + e);
             }
