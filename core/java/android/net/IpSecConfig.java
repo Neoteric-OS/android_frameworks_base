@@ -18,6 +18,7 @@ package android.net;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -164,6 +165,42 @@ public final class IpSecConfig implements Parcelable {
         encapType = in.readInt();
         encapLocalPortResourceId = in.readInt();
         encapRemotePort = in.readInt();
+    }
+
+    private String getEncapTypeString(int encapType) {
+        switch(encapType) {
+        case IpSecTransform.ENCAP_ESPINUDP: return "ESP in UDP";
+        case IpSecTransform.ENCAP_ESPINUDP_NON_IKE: return "ESP in UDP with no IKE";
+        default:
+        }
+        return "none";
+    }
+
+    public void dump(PrintWriter pw) {
+        pw.print("transform config ");
+        if (mode == 0) { // if transport mode
+            pw.print(" local address " + localAddress.toString());
+        }
+        pw.print(" remote address " + remoteAddress.toString());
+        pw.print(" port " + encapRemotePort);
+        pw.print((mode == 0 ? " tunnel " : "transport") + " mode ");
+        pw.println();
+
+        pw.print("keepalive interval " + nattKeepaliveInterval);
+        pw.print(" encap type " + getEncapTypeString(encapType));
+        pw.println();
+
+        pw.print("In-flow ");
+        pw.print("SPI resource ID " + flow[0].spiResourceId);
+        pw.print(" encryption " + flow[0].encryption.getName());
+        pw.print(" authentication " + flow[0].authentication.getName());
+        pw.println();
+
+        pw.print("Out-flow ");
+        pw.print("SPI resource ID " + flow[1].spiResourceId);
+        pw.print(" encryption " + flow[1].encryption.getName());
+        pw.print(" authentication " + flow[1].authentication.getName());
+        pw.println();
     }
 
     public static final Parcelable.Creator<IpSecConfig> CREATOR =
