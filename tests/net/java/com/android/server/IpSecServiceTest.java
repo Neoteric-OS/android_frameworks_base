@@ -82,7 +82,7 @@ public class IpSecServiceTest {
     };
 
     static final IpSecTransformResponse TSF_RESP =
-        new IpSecTransformResponse(IpSecManager.Status.OK, 0x1);
+            new IpSecTransformResponse(IpSecManager.Status.OK, 0x1);
     IpSecUdpEncapResponse mIpSecUdpEncapResp = null;
     private InetAddress mLocalAddr = null;
 
@@ -138,7 +138,7 @@ public class IpSecServiceTest {
     }
 
     @Test
-   public void testOpenUdpEncapsulationSocket() throws Exception {
+    public void testOpenUdpEncapsulationSocket() throws Exception {
         // Get an available port and store in localport
         ServerSocket s = new ServerSocket(0);
         int localport = s.getLocalPort();
@@ -278,7 +278,7 @@ public class IpSecServiceTest {
                 mMockIpSecManager.reserveSecurityParameterIndex(
                         IpSecTransform.DIRECTION_OUT, mLocalAddr);
         IpSecManager.SecurityParameterIndex inSpi =
-               mMockIpSecManager.reserveSecurityParameterIndex(
+                mMockIpSecManager.reserveSecurityParameterIndex(
                         IpSecTransform.DIRECTION_IN, mLocalAddr, DROID_SPI);
 
         IpSecConfig ipSecConfig =
@@ -355,5 +355,29 @@ public class IpSecServiceTest {
         ParcelFileDescriptor pfd =
                 ParcelFileDescriptor.dup(Os.socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP));
         mMockIpSecService.removeTransportModeTransform(pfd, 1);
+    }
+
+    @Test
+    public void testDumpMessageSanityCheck() throws Exception {
+        IpSecConfig ipSecConfig = buildIpSecConfig();
+
+        IpSecTransformResponse createTransformResp =
+                mMockIpSecService.createTransportModeTransform(
+                        ipSecConfig, new Binder());
+
+        assertEquals(createTransformResp.status, IpSecManager.Status.OK);
+
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+
+        mMockIpSecService.dump(null, pw, null);
+        String result = sw.toString();
+        assertTrue(result.contains("IpSecService dump:"));
+        assertTrue(
+                result.contains("encryption={mName=cbc(aes), mKey=000102030405060708090A0B0C0D0"));
+        assertTrue(
+                result.contains(
+                        "authentication={mName=hmac(sha256), mKey=7A00000000000000000000000000"));
+        assertTrue(result.contains("mRemoteAddress=127.0.0.1"));
     }
 }
