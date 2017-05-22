@@ -18,6 +18,7 @@ package android.net;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -164,6 +165,45 @@ public final class IpSecConfig implements Parcelable {
         encapType = in.readInt();
         encapLocalPortResourceId = in.readInt();
         encapRemotePort = in.readInt();
+    }
+
+    public void dump(PrintWriter pw) {
+        pw.print("IpSecConfig ");
+        pw.print(" localAddress=(" + localAddress + ")");
+        pw.print(" remoteAddress=(" + remoteAddress + ")");
+        pw.print(" encapRemotePort=" + encapRemotePort);
+        pw.print(" mode=" + mode);
+        pw.println();
+
+        pw.print("nattKeepaliveInterval=" + nattKeepaliveInterval);
+        pw.print(" encapType=" + encapType);
+        pw.println();
+
+        pw.println("Direction-In");
+        pw.println("spiResourceId=" + flow[0].spiResourceId);
+        pw.print("encryption=(");
+        if (flow[0].encryption != null) {
+            flow[0].encryption.dump(pw);
+        }
+        pw.println(")");
+        pw.print("authentication=(");
+        if (flow[0].authentication != null) {
+            flow[0].authentication.dump(pw);
+        }
+        pw.println(")");
+
+        pw.println("Direction-Out");
+        pw.println("spiResourceId=" + flow[1].spiResourceId);
+        pw.print("encryption=(");
+        if (flow[1].encryption != null) {
+            flow[1].encryption.dump(pw);
+        }
+        pw.println(")");
+        pw.print("authentication=(");
+        if (flow[1].authentication != null) {
+            flow[1].authentication.dump(pw);
+        }
+        pw.println(")");
     }
 
     public static final Parcelable.Creator<IpSecConfig> CREATOR =
