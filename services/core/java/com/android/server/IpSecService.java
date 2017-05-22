@@ -195,6 +195,21 @@ public class IpSecService extends IIpSecService.Stub {
          * <p>Calls to this are always guarded by IpSecService#this
          */
         protected abstract void releaseResources() throws RemoteException;
+
+        @Override
+        public synchronized String toString() {
+            return new StringBuilder()
+                    .append("{mResourceId=")
+                    .append(mResourceId)
+                    .append(", pid=")
+                    .append(pid)
+                    .append(", uid=")
+                    .append(uid)
+                    .append(", mReferenceCount=")
+                    .append(mReferenceCount.get())
+                    .append("}")
+                    .toString();
+        }
     };
 
     /**
@@ -217,6 +232,11 @@ public class IpSecService extends IIpSecService.Stub {
 
         void remove(int key) {
             mArray.remove(key);
+        }
+
+        @Override
+        public String toString() {
+            return mArray.toString();
         }
     }
 
@@ -286,6 +306,24 @@ public class IpSecService extends IIpSecService.Stub {
                 mSocket.removeReference();
             }
         }
+
+        @Override
+        public String toString() {
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder
+                    .append("{super=")
+                    .append(super.toString())
+                    .append(", mSocket=")
+                    .append(mSocket)
+                    .append(", mSpis[OUT].mResourceId=")
+                    .append(mSpis[IpSecTransform.DIRECTION_OUT].mResourceId)
+                    .append(", mSpis[IN].mResourceId=")
+                    .append(mSpis[IpSecTransform.DIRECTION_IN].mResourceId)
+                    .append(", mConfig=")
+                    .append(mConfig)
+                    .append("}");
+            return strBuilder.toString();
+        }
     }
 
     private final class SpiRecord extends ManagedResource {
@@ -348,6 +386,26 @@ public class IpSecService extends IIpSecService.Stub {
 
             mOwnedByTransform = true;
         }
+
+        @Override
+        public String toString() {
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder
+                    .append("{super=")
+                    .append(super.toString())
+                    .append(", mSpi=")
+                    .append(mSpi)
+                    .append(", mDirection=")
+                    .append(mDirection)
+                    .append(", mLocalAddress=")
+                    .append(mLocalAddress)
+                    .append(", mRemoteAddress=")
+                    .append(mRemoteAddress)
+                    .append(", mOwnedByTransform=")
+                    .append(mOwnedByTransform)
+                    .append("}");
+            return strBuilder.toString();
+        }
     }
 
     private final class UdpSocketRecord extends ManagedResource {
@@ -374,6 +432,19 @@ public class IpSecService extends IIpSecService.Stub {
 
         public FileDescriptor getSocket() {
             return mSocket;
+        }
+
+        @Override
+        public String toString() {
+            return new StringBuilder()
+                    .append("{super=")
+                    .append(super.toString())
+                    .append(", mSocket=")
+                    .append(mSocket)
+                    .append(", mPort=")
+                    .append(mPort)
+                    .append("}")
+                    .toString();
         }
     }
 
@@ -712,9 +783,16 @@ public class IpSecService extends IIpSecService.Stub {
     @Override
     protected void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         mContext.enforceCallingOrSelfPermission(DUMP, TAG);
-        // TODO: Add dump code to print out a log of all the resources being tracked
-        pw.println("IpSecService Log:");
+
+        pw.println("IpSecService dump:");
         pw.println("NetdNativeService Connection: " + (isNetdAlive() ? "alive" : "dead"));
         pw.println();
+
+        pw.println("mTransformRecords:");
+        pw.println(mTransformRecords);
+        pw.println("mUdpSocketRecords:");
+        pw.println(mUdpSocketRecords);
+        pw.println("mSpiRecords:");
+        pw.println(mSpiRecords);
     }
 }
