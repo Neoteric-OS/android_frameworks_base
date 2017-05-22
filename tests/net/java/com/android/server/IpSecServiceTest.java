@@ -1,8 +1,5 @@
 package com.android.server;
 
-import static android.system.OsConstants.AF_INET;
-import static android.system.OsConstants.IPPROTO_UDP;
-import static android.system.OsConstants.SOCK_DGRAM;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
@@ -15,6 +12,7 @@ import static org.mockito.Mockito.when;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.INetd;
+import android.net.IpSecAlgorithm;
 import android.net.IpSecConfig;
 import android.net.IpSecManager;
 import android.net.IpSecTransform;
@@ -23,9 +21,9 @@ import android.net.IpSecUdpEncapResponse;
 import android.os.Binder;
 import android.os.RemoteException;
 import android.system.ErrnoException;
-import android.system.Os;
-import java.io.FileDescriptor;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.UnknownHostException;
@@ -57,7 +55,7 @@ public class IpSecServiceTest {
     };
 
     static final IpSecTransformResponse TSF_RESP =
-        new IpSecTransformResponse(IpSecManager.Status.OK, 0x1);
+            new IpSecTransformResponse(IpSecManager.Status.OK, 0x1);
     IpSecUdpEncapResponse mIpSecUdpEncapResp = null;
     private InetAddress mLocalAddr = null;
 
@@ -94,13 +92,13 @@ public class IpSecServiceTest {
                                         IpSecTransform.DIRECTION_OUT,
                                         IPV4_LOOPBACK,
                                         DROID_SPI,
-                                        new Binder()).spi
+                                        new Binder())
+                                .spi
                         == DROID_SPI);
     }
 
     @Test
-    public void testOpenUdpEncapsulationSocket()
-            throws Exception {
+    public void testOpenUdpEncapsulationSocket() throws Exception {
         IpSecService ipSecSrv = IpSecService.create(mMockContext);
         ipSecSrv.setINetd(mMockNetd);
 
@@ -141,13 +139,13 @@ public class IpSecServiceTest {
                         anyInt(),
                         anyInt()))
                 .thenReturn(DROID_SPI);
-        when(mMockNetd.ipSecAllocateSpi(anyInt(), anyInt(), anyString(), anyString(), eq(DROID_SPI)))
+        when(mMockNetd.ipSecAllocateSpi(
+                        anyInt(), anyInt(), anyString(), anyString(), eq(DROID_SPI)))
                 .thenReturn(DROID_SPI);
     }
 
     @Test
-    public void testCreateTransportModeTransform()
-            throws Exception {
+    public void testCreateTransportModeTransform() throws Exception {
         setUpTestCreateTransportModeTransform();
 
         IpSecService ipSecSrv = IpSecService.create(mMockContext);
@@ -158,7 +156,8 @@ public class IpSecServiceTest {
         IpSecManager.SecurityParameterIndex outSpi =
                 mISM.reserveSecurityParameterIndex(IpSecTransform.DIRECTION_OUT, mLocalAddr);
         IpSecManager.SecurityParameterIndex inSpi =
-                mISM.reserveSecurityParameterIndex(IpSecTransform.DIRECTION_IN, mLocalAddr, DROID_SPI);
+                mISM.reserveSecurityParameterIndex(
+                        IpSecTransform.DIRECTION_IN, mLocalAddr, DROID_SPI);
 
         IpSecConfig ipSecConfig =
                 new IpSecTransform.Builder(mMockContext)
@@ -169,5 +168,61 @@ public class IpSecServiceTest {
         IpSecTransformResponse createTransformResp =
                 ipSecSrv.createTransportModeTransform(ipSecConfig, new Binder());
         assertTrue(createTransformResp.status == IpSecManager.Status.OK);
+    }
+
+    @Test
+    public void testDumpMessage() throws Exception {
+        setUpTestCreateTransportModeTransform();
+
+        IpSecService ipSecSrv = IpSecService.create(mMockContext);
+        ipSecSrv.setINetd(mMockNetd);
+        mISM = new IpSecManager(ipSecSrv);
+
+        IpSecManager.UdpEncapsulationSocket encapSocket =
+                mISM.openUdpEncapsulationSocket(TEST_UDP_ENCAP_PORT);
+
+        // Allocate and add SPI records in the IpSecService
+        IpSecManager.SecurityParameterIndex outSpi =
+                mISM.reserveSecurityParameterIndex(IpSecTransform.DIRECTION_OUT, mLocalAddr);
+        IpSecManager.SecurityParameterIndex inSpi =
+                mISM.reserveSecurityParameterIndex(
+                        IpSecTransform.DIRECTION_IN, mLocalAddr, DROID_SPI);
+
+        IpSecTransform.Builder builder =
+                new IpSecTransform.Builder(mMockContext)
+                        .setSpi(IpSecTransform.DIRECTION_OUT, outSpi)
+                        .setEncryption(
+                                IpSecTransform.DIRECTION_OUT,
+                                new IpSecAlgorithm(IpSecAlgorithm.CRYPT_AES_CBC, CRYPT_KEY))
+                        .setAuthentication(
+                                IpSecTransform.DIRECTION_OUT,
+                                new IpSecAlgorithm(
+                                        IpSecAlgorithm.AUTH_HMAC_SHA256,
+                                        AUTH_KEY,
+                                        AUTH_KEY.length * 8))
+                        .setSpi(IpSecTransform.DIRECTION_IN, inSpi)
+                        .setEncryption(
+                                IpSecTransform.DIRECTION_IN,
+                                new IpSecAlgorithm(IpSecAlgorithm.CRYPT_AES_CBC, CRYPT_KEY))
+                        .setAuthentication(
+                                IpSecTransform.DIRECTION_IN,
+                                new IpSecAlgorithm(
+                                        IpSecAlgorithm.AUTH_HMAC_SHA256,
+                                        AUTH_KEY,
+                                        CRYPT_KEY.length * 8))
+                        .setIpv4Encapsulation(encapSocket, encapSocket.getPort());
+        IpSecTransformResponse createTransformResp =
+                ipSecSrv.createTransportModeTransform(builder.getIpSecConfig(), new Binder());
+
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+
+        ipSecSrv.dump(null, pw, null);
+        String result = sw.toString();
+
+        assertTrue(result.contains("IpSecService dump"));
+        assertTrue(result.contains("encryption=(mName=(cbc(aes)) mKey={key length=32"));
+        assertTrue(result.contains("authentication=(mName=(hmac(sha256)) mKey={key length=32"));
+        assertTrue(result.contains("mRemoteAddress=(127.0.0.1)"));
     }
 }
