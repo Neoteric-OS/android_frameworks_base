@@ -16,8 +16,11 @@
 package android.net;
 
 import android.annotation.StringDef;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.SystemProperties;
+import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -71,6 +74,11 @@ public final class IpSecAlgorithm implements Parcelable {
      * <p>Valid truncation lengths are multiples of 8 bits from 256 to (default) 512.
      */
     public static final String AUTH_HMAC_SHA512 = "hmac(sha512)";
+
+    /**
+     * isDebuggable indicates if the build is debuggable.
+     */
+    private static final boolean isDebuggable = Build.IS_DEBUGGABLE;
 
     /** @hide */
     @StringDef({
@@ -181,5 +189,32 @@ public final class IpSecAlgorithm implements Parcelable {
             default:
                 return false;
         }
+    }
+
+    /**
+     * This function converts bytes array to a hex string.
+     */
+    public static String bytesToHexString(byte[] bytes) {
+        if (bytes == null) {
+            return null;
+        }
+
+        StringBuilder ret = new StringBuilder(2 * bytes.length);
+        for (int i = 0; i < bytes.length; i++) {
+            int b = 0x0f & (bytes[i] >> 4);
+            ret.append("0123456789abcdef".charAt(b));
+            b = 0x0f & bytes[i];
+            ret.append("0123456789abcdef".charAt(b));
+        }
+        return ret.toString();
+    }
+
+    public void dump(PrintWriter pw) {
+        pw.println("mName=(" + mName + ") mKey={key length=" +
+                    (mKey == null ? 0 : mKey.length));
+        if (isDebuggable) {
+            pw.print(bytesToHexString(mKey));
+        }
+        pw.print("}");
     }
 };
