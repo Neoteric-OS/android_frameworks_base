@@ -46,12 +46,12 @@ public class NetworkScan {
     public static final int ERROR_DEVICE_BUSY = 64;         // RadioError:DEVICE_IN_USE
 
     // Below errors are generated at the Telephony.
-    public static final int ERROR_UNKNOWN = 100;            // Nothing or only exception is
+    public static final int ERROR_RIL_ERROR = 10000;        // Nothing or only exception is
                                                             // returned from RIL.
-    public static final int ERROR_INVALID_SCANID = 101;     // The scanId is invalid. The user is
+    public static final int ERROR_INVALID_SCANID = 10001;   // The scanId is invalid. The user is
                                                             // either trying to stop a scan which
                                                             // does not exist or started by others.
-    public static final int ERROR_INTERRUPTED = 102;        // Scan was interrupted by another scan
+    public static final int ERROR_INTERRUPTED = 10002;      // Scan was interrupted by another scan
                                                             // with higher priority.
     private final int mScanId;
     private final int mSubId;
