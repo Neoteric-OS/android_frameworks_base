@@ -16,8 +16,11 @@
 package android.net;
 
 import android.annotation.StringDef;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.SystemProperties;
+import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -181,5 +184,36 @@ public final class IpSecAlgorithm implements Parcelable {
             default:
                 return false;
         }
+    }
+
+    /**
+     * This function converts bytes array to a hex string.
+     */
+    private void keyToHexString(StringBuilder strBuilder) {
+        if (mKey == null) {
+            return;
+        }
+
+        for (int i = 0; i < mKey.length; i++) {
+            int b = 0x0f & (mKey[i] >> 4);
+            strBuilder.append("0123456789abcdef".charAt(b));
+            b = 0x0f & mKey[i];
+            strBuilder.append("0123456789abcdef".charAt(b));
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder strBuilder = new StringBuilder();
+        strBuilder.append("{mName=" + mName);
+        if (Build.IS_DEBUGGABLE) {
+            strBuilder.append(" mKey=");
+            keyToHexString(strBuilder);
+        }
+        if (mName.equals(CRYPT_AES_CBC)) {
+            strBuilder.append(" mTruncLenBits=" + mTruncLenBits);
+        }
+        strBuilder.append("}");
+        return strBuilder.toString();
     }
 };

@@ -124,6 +124,11 @@ public class IpSecService extends IIpSecService.Stub {
             }
             mCurrent--;
         }
+
+        @Override
+        public String toString() {
+            return "{mCurrent=" + mCurrent + ", mMax=" + mMax + "}";
+        }
     }
 
     private static final class UserQuotaTracker {
@@ -136,6 +141,12 @@ public class IpSecService extends IIpSecService.Stub {
             public final ResourceTracker socket = new ResourceTracker(MAX_NUM_SOCKETS);
             public final ResourceTracker transform = new ResourceTracker(MAX_NUM_TRANSFORMS);
             public final ResourceTracker spi = new ResourceTracker(MAX_NUM_SPIS);
+
+            @Override
+            public String toString() {
+                return "{socket=" + socket + ", transform=" + transform
+                        + ", spi=" + spi + "}";
+            }
         }
 
         private final SparseArray<UserRecord> mUserRecords = new SparseArray<>();
@@ -148,6 +159,11 @@ public class IpSecService extends IIpSecService.Stub {
                 mUserRecords.put(uid, r);
             }
             return r;
+        }
+
+        @Override
+        public String toString() {
+            return mUserRecords.toString();
         }
     }
 
@@ -262,6 +278,13 @@ public class IpSecService extends IIpSecService.Stub {
 
         /** Get the resource tracker for this resource */
         protected abstract ResourceTracker getResourceTracker();
+
+        @Override
+        public String toString() {
+            return "{mResourceId=" + mResourceId
+                    + " pid=" + pid + " uid=" + uid
+                    + " mReferenceCount=" + mReferenceCount.get() + "}";
+        }
     };
 
     /**
@@ -284,6 +307,11 @@ public class IpSecService extends IIpSecService.Stub {
 
         void remove(int key) {
             mArray.remove(key);
+        }
+
+        @Override
+        public String toString() {
+            return mArray.toString();
         }
     }
 
@@ -358,6 +386,18 @@ public class IpSecService extends IIpSecService.Stub {
         protected ResourceTracker getResourceTracker() {
             return mUserQuotaTracker.getUserRecord(this.uid).transform;
         }
+
+        @Override
+        public String toString() {
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("{");
+            strBuilder.append(super.toString());
+            strBuilder.append("mSocket=").append(mSocket);
+            strBuilder.append(" mSpis[OUT].mResourceId=").append(mSpis[IpSecTransform.DIRECTION_OUT].mResourceId);
+            strBuilder.append(" mSpis[IN].mResourceId=").append(mSpis[IpSecTransform.DIRECTION_IN].mResourceId);
+            strBuilder.append(" mConfig=").append(mConfig).append("}");
+            return strBuilder.toString();
+        }
     }
 
     private final class SpiRecord extends ManagedResource {
@@ -425,6 +465,18 @@ public class IpSecService extends IIpSecService.Stub {
 
             mOwnedByTransform = true;
         }
+
+        @Override
+        public String toString() {
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.append("{").append(super.toString());
+            strBuilder.append(" mSpi=").append(mSpi);
+            strBuilder.append(" mDirection=").append(mDirection);
+            strBuilder.append(" mLocalAddress=").append(mLocalAddress);
+            strBuilder.append(" mRemoteAddress=").append(mRemoteAddress);
+            strBuilder.append(" mOwnedByTransform=").append(mOwnedByTransform).append("}");
+            return strBuilder.toString();
+        }
     }
 
     private final class UdpSocketRecord extends ManagedResource {
@@ -456,6 +508,12 @@ public class IpSecService extends IIpSecService.Stub {
 
         public FileDescriptor getSocket() {
             return mSocket;
+        }
+
+        @Override
+        public String toString() {
+            return "{" + super.toString() + " mSocket="
+                    + mSocket + " mPort=" + mPort + "}";
         }
     }
 
@@ -815,10 +873,19 @@ public class IpSecService extends IIpSecService.Stub {
     @Override
     protected void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         mContext.enforceCallingOrSelfPermission(DUMP, TAG);
-        // TODO: Add dump code to print out a log of all the resources being tracked
-        pw.println("IpSecService Log:");
+
+        pw.println("IpSecService dump:");
         pw.println("NetdNativeService Connection: " + (isNetdAlive() ? "alive" : "dead"));
         pw.println();
+
+        pw.println("mUserQuotaTracker:");
+        pw.println(mUserQuotaTracker);
+        pw.println("mTransformRecords:");
+        pw.println(mTransformRecords);
+        pw.println("mUdpSocketRecords:");
+        pw.println(mUdpSocketRecords);
+        pw.println("mSpiRecords:");
+        pw.println(mSpiRecords);
     }
 
     /**
