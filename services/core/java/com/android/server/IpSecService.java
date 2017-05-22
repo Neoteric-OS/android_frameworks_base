@@ -124,6 +124,17 @@ public class IpSecService extends IIpSecService.Stub {
             }
             mCurrent--;
         }
+
+        @Override
+        public String toString() {
+            return new StringBuilder()
+                    .append("{mCurrent=")
+                    .append(mCurrent)
+                    .append(", mMax=")
+                    .append(mMax)
+                    .append("}")
+                    .toString();
+        }
     }
 
     private static final class UserQuotaTracker {
@@ -136,7 +147,20 @@ public class IpSecService extends IIpSecService.Stub {
             public final ResourceTracker socket = new ResourceTracker(MAX_NUM_SOCKETS);
             public final ResourceTracker transform = new ResourceTracker(MAX_NUM_TRANSFORMS);
             public final ResourceTracker spi = new ResourceTracker(MAX_NUM_SPIS);
-       }
+
+            @Override
+            public String toString() {
+                return new StringBuilder()
+                        .append("{socket=")
+                        .append(socket)
+                        .append(", transform=")
+                        .append(transform)
+                        .append(", spi=")
+                        .append(spi)
+                        .append("}")
+                        .toString();
+            }
+        }
 
         private final SparseArray<UserRecord> mUserRecords = new SparseArray<>();
 
@@ -148,6 +172,11 @@ public class IpSecService extends IIpSecService.Stub {
                 mUserRecords.put(uid, r);
             }
             return r;
+        }
+
+        @Override
+        public String toString() {
+            return mUserRecords.toString();
         }
     }
 
@@ -275,6 +304,21 @@ public class IpSecService extends IIpSecService.Stub {
 
         /** Get the resource tracker for this resource */
         protected abstract ResourceTracker getResourceTracker();
+
+        @Override
+        public String toString() {
+            return new StringBuilder()
+                    .append("{mResourceId=")
+                    .append(mResourceId)
+                    .append(", pid=")
+                    .append(pid)
+                    .append(", uid=")
+                    .append(uid)
+                    .append(", mReferenceCount=")
+                    .append(mReferenceCount.get())
+                    .append("}")
+                    .toString();
+        }
     };
 
     /**
@@ -296,6 +340,11 @@ public class IpSecService extends IIpSecService.Stub {
 
         void remove(int key) {
             mArray.remove(key);
+        }
+
+        @Override
+        public String toString() {
+            return mArray.toString();
         }
     }
 
@@ -371,6 +420,24 @@ public class IpSecService extends IIpSecService.Stub {
         protected ResourceTracker getResourceTracker() {
             return mUserQuotaTracker.getUserRecord(this.uid).transform;
         }
+
+        @Override
+        public String toString() {
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder
+                    .append("{super=")
+                    .append(super.toString())
+                    .append(", mSocket=")
+                    .append(mSocket)
+                    .append(", mSpis[OUT].mResourceId=")
+                    .append(mSpis[IpSecTransform.DIRECTION_OUT].mResourceId)
+                    .append(", mSpis[IN].mResourceId=")
+                    .append(mSpis[IpSecTransform.DIRECTION_IN].mResourceId)
+                    .append(", mConfig=")
+                    .append(mConfig)
+                    .append("}");
+            return strBuilder.toString();
+        }
     }
 
     private final class SpiRecord extends ManagedResource {
@@ -439,6 +506,26 @@ public class IpSecService extends IIpSecService.Stub {
 
             mOwnedByTransform = true;
         }
+
+        @Override
+        public String toString() {
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder
+                    .append("{super=")
+                    .append(super.toString())
+                    .append(", mSpi=")
+                    .append(mSpi)
+                    .append(", mDirection=")
+                    .append(mDirection)
+                    .append(", mLocalAddress=")
+                    .append(mLocalAddress)
+                    .append(", mRemoteAddress=")
+                    .append(mRemoteAddress)
+                    .append(", mOwnedByTransform=")
+                    .append(mOwnedByTransform)
+                    .append("}");
+            return strBuilder.toString();
+        }
     }
 
     private final class UdpSocketRecord extends ManagedResource {
@@ -470,6 +557,19 @@ public class IpSecService extends IIpSecService.Stub {
 
         public FileDescriptor getSocket() {
             return mSocket;
+        }
+
+        @Override
+        public String toString() {
+            return new StringBuilder()
+                    .append("{super=")
+                    .append(super.toString())
+                    .append(", mSocket=")
+                    .append(mSocket)
+                    .append(", mPort=")
+                    .append(mPort)
+                    .append("}")
+                    .toString();
         }
     }
 
@@ -830,9 +930,18 @@ public class IpSecService extends IIpSecService.Stub {
     @Override
     protected void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         mContext.enforceCallingOrSelfPermission(DUMP, TAG);
-        // TODO: Add dump code to print out a log of all the resources being tracked
-        pw.println("IpSecService Log:");
+
+        pw.println("IpSecService dump:");
         pw.println("NetdNativeService Connection: " + (isNetdAlive() ? "alive" : "dead"));
         pw.println();
+
+        pw.println("mUserQuotaTracker:");
+        pw.println(mUserQuotaTracker);
+        pw.println("mTransformRecords:");
+        pw.println(mTransformRecords);
+        pw.println("mUdpSocketRecords:");
+        pw.println(mUdpSocketRecords);
+        pw.println("mSpiRecords:");
+        pw.println(mSpiRecords);
     }
 }
