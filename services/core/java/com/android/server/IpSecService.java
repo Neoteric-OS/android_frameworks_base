@@ -808,6 +808,93 @@ public class IpSecService extends IIpSecService.Stub {
         }
     }
 
+    private void dumpUserQuota(PrintWriter pw) {
+        if (mUserQuotaTracker.mUserRecords == null
+            || mUserQuotaTracker.mUserRecords.size() == 0) {
+            return;
+        }
+
+        pw.println("User Quota:");
+        for(int i = 0; i < mUserQuotaTracker.mUserRecords.size(); i++) {
+            int key = mUserQuotaTracker.mUserRecords.keyAt(i);
+
+            UserQuotaTracker.UserRecord rec = mUserQuotaTracker.mUserRecords.get(key);
+
+            pw.print("Object uid: " + key);
+            pw.print(" socket mCurrent=" + rec.socket.mCurrent + " mMax=" + rec.socket.mMax);
+            pw.print(" transform mCurrent=" + rec.transform.mCurrent
+                        + " mMax=" + rec.transform.mMax);
+            pw.print(" spi mCurrent=" + rec.spi.mCurrent + " mMax=" + rec.spi.mMax);
+            pw.println();
+        }
+        pw.println();
+    }
+
+    private void dumpTransformRecords(PrintWriter pw) {
+        if (mTransformRecords.mArray.size() == 0) {
+            return;
+        }
+
+        pw.println("mTransformRecords:");
+        for(int i = 0; i < mTransformRecords.mArray.size(); i++) {
+            int key = mTransformRecords.mArray.keyAt(i);
+
+            TransformRecord rec = mTransformRecords.mArray.get(key);
+
+            pw.print("Transform mResourceId=" + rec.mResourceId);
+            pw.print(" pid=" + rec.pid + " uid=" + rec.uid);
+            pw.print(" isReferenced=" + rec.isReferenced() + ":");
+            pw.println();
+
+            pw.println("Socket info:");
+            pw.print("mSocket=" + rec.mSocket.mSocket.hashCode());
+            pw.println(" mPort=" + rec.mSocket.mPort);
+
+            pw.println("Incoming SPI " + Integer.toHexString(rec.mSpis[0].getSpi()));
+            pw.println("mLocalAddress=\'" + rec.mSpis[0].mLocalAddress + "\'");
+            pw.println("mRemoteAddress=\'" + rec.mSpis[0].mRemoteAddress + "\'");
+            pw.println("Outgoing SPI " + Integer.toHexString(rec.mSpis[1].getSpi()));
+            pw.println("mLocalAddress=\'" + rec.mSpis[1].mLocalAddress + "\'");
+            pw.println("mRemoteAddress=\'" + rec.mSpis[1].mRemoteAddress + "\'");
+
+            rec.mConfig.dump(pw);
+        }
+        pw.println();
+    }
+
+    private void dumpUdpSocketRecords(PrintWriter pw) {
+        if (mUdpSocketRecords.mArray.size() == 0) {
+            return;
+        }
+
+        pw.println("mUdpSocketRecords:");
+        for (int i = 0; i < mUdpSocketRecords.mArray.size(); i++) {
+            int key = mUdpSocketRecords.mArray.keyAt(i);
+
+            UdpSocketRecord udpRec = mUdpSocketRecords.mArray.get(key);
+            pw.print("Socket ");
+            pw.print("mSocket=" + udpRec.mSocket.hashCode());
+            pw.println(" mPort=" + udpRec.mPort);
+        }
+    }
+
+    private void dumpSpiRecords(PrintWriter pw) {
+        if (mSpiRecords.mArray.size() == 0) {
+            return;
+        }
+
+        pw.println("mSpiRecords:");
+        for (int i = 0; i < mSpiRecords.mArray.size(); i++) {
+            int key = mSpiRecords.mArray.keyAt(i);
+
+            SpiRecord spiRec = mSpiRecords.mArray.get(key);
+            pw.println("SPI mSpi=" + spiRec.mSpi);
+            pw.println("mDirection=" + spiRec.mDirection);
+            pw.println("mLocalAddress=" + spiRec.mLocalAddress);
+            pw.println("mRemoteAddress=" + spiRec.mRemoteAddress);
+        }
+    }
+
     @Override
     protected void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         mContext.enforceCallingOrSelfPermission(DUMP, TAG);
@@ -815,6 +902,11 @@ public class IpSecService extends IIpSecService.Stub {
         pw.println("IpSecService Log:");
         pw.println("NetdNativeService Connection: " + (isNetdAlive() ? "alive" : "dead"));
         pw.println();
+
+        dumpUserQuota(pw);
+        dumpTransformRecords(pw);
+        dumpUdpSocketRecords(pw);
+        dumpSpiRecords(pw);
     }
 
     /**

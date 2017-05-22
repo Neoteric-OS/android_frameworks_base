@@ -18,6 +18,8 @@ package android.net;
 import android.annotation.StringDef;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.SystemProperties;
+import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -71,6 +73,8 @@ public final class IpSecAlgorithm implements Parcelable {
      * <p>Valid truncation lengths are multiples of 8 bits from 256 to (default) 512.
      */
     public static final String AUTH_HMAC_SHA512 = "hmac(sha512)";
+
+    private static final String SYSTEM_DEBUGGABLE = "ro.debuggable";
 
     /** @hide */
     @StringDef({
@@ -180,6 +184,25 @@ public final class IpSecAlgorithm implements Parcelable {
                 return (truncLenBits >= 256 && truncLenBits <= 512);
             default:
                 return false;
+        }
+    }
+
+    public void dump(PrintWriter pw) {
+        boolean isDebuggable = "1".equals(SystemProperties.get(SYSTEM_DEBUGGABLE, "0"));
+        int linelength = 16;
+
+        pw.print(mName + " key length " + (mKey == null ? 0 : mKey.length));
+        if (isDebuggable) {
+            int charCnt = linelength;
+            for (int i = 0; i < mKey.length; i++) {
+                if (charCnt == linelength) {
+                    pw.println();
+                    charCnt = 0;
+                }
+
+                pw.print(Integer.toHexString((int)mKey[i]) + " ");
+                charCnt++;
+            }
         }
     }
 };
