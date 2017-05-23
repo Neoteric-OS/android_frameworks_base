@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a28ab831_ab4aabb9",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-05-23T23:06:21Z",
+      "side": 1,
+      "message": "You may as well remove this if we arent going to use it.",
+      "range": {
+        "startLine": 229,
+        "startChar": 4,
+        "endLine": 234,
+        "endChar": 54
+      },
+      "revId": "cf68c6dc94ad0d590ca110de57bcf5e1e0d1ed44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "895c0991_da05d226",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-05-23T23:06:21Z",
+      "side": 1,
+      "message": "Mark each one as @hide and put a space in between them.",
+      "range": {
+        "startLine": 256,
+        "startChar": 4,
+        "endLine": 259,
+        "endChar": 64
+      },
+      "revId": "cf68c6dc94ad0d590ca110de57bcf5e1e0d1ed44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2356364f_24cfcb97",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-05-23T23:06:21Z",
+      "side": 1,
+      "message": "This should be added to the IConnectionServiceAdapter.aidl as an @hide API, instead of a ConnectionEvent. Normally ConnectionEvents propagate to the InCallService and are notifications. This is something that is consumed directly by Telecom.",
+      "range": {
+        "startLine": 770,
+        "startChar": 4,
+        "endLine": 777,
+        "endChar": 58
+      },
+      "revId": "cf68c6dc94ad0d590ca110de57bcf5e1e0d1ed44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
