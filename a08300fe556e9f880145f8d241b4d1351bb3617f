@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf51c609_568db1f6",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-05-23T00:25:51Z",
+      "side": 1,
+      "message": "alignement: by convention the case and default keywords are indented one level more with respect to switch.",
+      "range": {
+        "startLine": 171,
+        "startChar": 8,
+        "endLine": 174,
+        "endChar": 15
+      },
+      "revId": "a08300fe556e9f880145f8d241b4d1351bb3617f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39cf4da3_33a38cce",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-05-23T00:25:51Z",
+      "side": 1,
+      "message": "extra blanks (and on line 822, 841, and 843 too)",
+      "range": {
+        "startLine": 820,
+        "startChar": 0,
+        "endLine": 820,
+        "endChar": 12
+      },
+      "revId": "a08300fe556e9f880145f8d241b4d1351bb3617f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d489d0dc_475dd4a0",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-05-23T00:25:51Z",
+      "side": 1,
+      "message": "Java tip: for a literal array which is created as part of a new value definition, you can skype the \"new T[]\" and directly write:  final byte[] myArray \u003d { 0x01, 0x02, ... };",
+      "range": {
+        "startLine": 57,
+        "startChar": 12,
+        "endLine": 57,
+        "endChar": 22
+      },
+      "revId": "a08300fe556e9f880145f8d241b4d1351bb3617f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b47781a_e319ccdf",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-05-23T00:25:51Z",
+      "side": 1,
+      "message": "line too long",
+      "range": {
+        "startLine": 171,
+        "startChar": 100,
+        "endLine": 171,
+        "endChar": 111
+      },
+      "revId": "a08300fe556e9f880145f8d241b4d1351bb3617f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eea79c0e_bd06536d",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-05-23T00:25:51Z",
+      "side": 1,
+      "message": "are you sure this indenting is correct ? It looks 8 spaces too long.",
+      "range": {
+        "startLine": 181,
+        "startChar": 8,
+        "endLine": 181,
+        "endChar": 24
+      },
+      "revId": "a08300fe556e9f880145f8d241b4d1351bb3617f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
