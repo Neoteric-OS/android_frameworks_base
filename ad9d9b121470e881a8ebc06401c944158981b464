@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e65e473_8a4ac6c3",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2017-05-23T22:38:27Z",
+      "side": 1,
+      "message": "I\u0027m really not happy about this.",
+      "range": {
+        "startLine": 334,
+        "startChar": 0,
+        "endLine": 344,
+        "endChar": 30
+      },
+      "revId": "ad9d9b121470e881a8ebc06401c944158981b464",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
