@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b7ed67d_389ccf30",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-23T01:20:35Z",
+      "side": 1,
+      "message": "IpSecConfig",
+      "range": {
+        "startLine": 180,
+        "startChar": 18,
+        "endLine": 180,
+        "endChar": 34
+      },
+      "revId": "e2105a0121ed56da041c8598cea77dbdb9b64e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a85d969a_1dd0bcf0",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-23T01:20:35Z",
+      "side": 1,
+      "message": "Can we not use the enums from IpSecTransform? MODE_TRANSPORT",
+      "range": {
+        "startLine": 181,
+        "startChar": 20,
+        "endLine": 181,
+        "endChar": 21
+      },
+      "revId": "e2105a0121ed56da041c8598cea77dbdb9b64e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8376882f_3154d491",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-23T01:20:35Z",
+      "side": 1,
+      "message": "Can we print the value anyway? if it\u0027s \"null\" that\u0027s ok... linear logic is good here.",
+      "range": {
+        "startLine": 181,
+        "startChar": 8,
+        "endLine": 181,
+        "endChar": 22
+      },
+      "revId": "e2105a0121ed56da041c8598cea77dbdb9b64e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea564607_3cb39b86",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-23T01:20:35Z",
+      "side": 1,
+      "message": "it\u0027s pretty typical to just use the exact name of the variable rather than re-interpreting the string. For example this can simply be \"remoteAddress\u003d\". The close the syntax looks to JSON or the like, the better IMO.",
+      "range": {
+        "startLine": 184,
+        "startChar": 19,
+        "endLine": 184,
+        "endChar": 33
+      },
+      "revId": "e2105a0121ed56da041c8598cea77dbdb9b64e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b64559ea_10abba7a",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-23T01:20:35Z",
+      "side": 1,
+      "message": "use enum plz.",
+      "range": {
+        "startLine": 186,
+        "startChar": 26,
+        "endLine": 186,
+        "endChar": 27
+      },
+      "revId": "e2105a0121ed56da041c8598cea77dbdb9b64e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee3aea38_9258d3af",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-23T01:20:35Z",
+      "side": 1,
+      "message": "can we also print the IpSecAlgorithm? Ideally it would have its own dump() function, and based on  isDebuggable \u003d \"1\".equals(SystemProperties.get(SYSTEM_DEBUGGABLE, \"0\")), we\u0027d decide whether the keys themselves get printed.",
+      "range": {
+        "startLine": 197,
+        "startChar": 8,
+        "endLine": 197,
+        "endChar": 21
+      },
+      "revId": "e2105a0121ed56da041c8598cea77dbdb9b64e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75b87425_af4c7bcd",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-05-23T01:20:35Z",
+      "side": 1,
+      "message": "We should dump the UdpSocketRecords and SpiRecords separately since there\u0027s no requirement that they be part of a transform when the dump() happens (or ever, for that matter).",
+      "revId": "e2105a0121ed56da041c8598cea77dbdb9b64e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
