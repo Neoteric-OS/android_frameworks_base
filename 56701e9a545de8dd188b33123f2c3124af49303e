@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c13bf85c_3b562bf7",
+        "filename": "data/keyboards/Vendor_054c_Product_0268_Version_8000.kl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1017042
+      },
+      "writtenOn": "2017-05-24T20:17:39Z",
+      "side": 1,
+      "message": "this should be 2017. same for other files",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 20
+      },
+      "revId": "56701e9a545de8dd188b33123f2c3124af49303e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
