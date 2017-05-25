@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3551c9ee_788273af",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1121773
+      },
+      "writtenOn": "2017-05-25T05:55:10Z",
+      "side": 1,
+      "message": "consider:\nfinal Uri uri \u003d ...;",
+      "revId": "8279554594134573d80303ae132a347f16658845",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
