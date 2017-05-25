@@ -21,6 +21,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.ContentObserver;
+import android.net.Uri;
 import android.net.nsd.NsdServiceInfo;
 import android.net.nsd.DnsSdTxtRecord;
 import android.net.nsd.INsdManager;
@@ -103,9 +104,8 @@ public class NsdService extends INsdManager.Stub {
                 }
             };
 
-            mContext.getContentResolver().registerContentObserver(
-                    Settings.Global.getUriFor(Settings.Global.NSD_ON),
-                    false, contentObserver);
+            Uri uri = Settings.Global.getUriFor(Settings.Global.NSD_ON);
+            mNsdSettings.registerContentObserver(uri, contentObserver);
         }
 
         NsdStateMachine(String name, Handler handler) {
@@ -885,13 +885,18 @@ public class NsdService extends INsdManager.Stub {
         }
     }
 
+    /**
+     * Interface which encapsulates dependencies of NsdService that are hard to mock, hard to
+     * override, or have side effects on global state in unit tests.
+     */
     @VisibleForTesting
     public interface NsdSettings {
         boolean isEnabled();
         void putEnabledStatus(boolean isEnabled);
+        void registerContentObserver(Uri uri, ContentObserver observer);
 
         static NsdSettings makeDefault(Context context) {
-            ContentResolver resolver = context.getContentResolver();
+            final ContentResolver resolver = context.getContentResolver();
             return new NsdSettings() {
                 @Override
                 public boolean isEnabled() {
@@ -901,6 +906,11 @@ public class NsdService extends INsdManager.Stub {
                 @Override
                 public void putEnabledStatus(boolean isEnabled) {
                     Settings.Global.putInt(resolver, Settings.Global.NSD_ON, isEnabled ? 1 : 0);
+                }
+
+                @Override
+                public void registerContentObserver(Uri uri, ContentObserver observer) {
+                    resolver.registerContentObserver(uri, false, observer);
                 }
             };
         }
