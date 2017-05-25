@@ -279,10 +279,11 @@ public class DexManager {
      * @return true if all secondary dex files were processed successfully (compiled or skipped
      *         because they don't need to be compiled)..
      */
-    public boolean dexoptSecondaryDex(String packageName, int compilerReason, boolean force) {
+    public boolean dexoptSecondaryDex(String packageName, int compilerReason, boolean force,
+            boolean downgrade) {
         return dexoptSecondaryDex(packageName,
                 PackageManagerServiceCompilerMapping.getCompilerFilterForReason(compilerReason),
-                force);
+                force, downgrade);
     }
 
     /**
@@ -290,7 +291,8 @@ public class DexManager {
      * @return true if all secondary dex files were processed successfully (compiled or skipped
      *         because they don't need to be compiled)..
      */
-    public boolean dexoptSecondaryDex(String packageName, String compilerFilter, boolean force) {
+    public boolean dexoptSecondaryDex(String packageName, String compilerFilter, boolean force,
+            boolean downgrade) {
         // Select the dex optimizer based on the force parameter.
         // Forced compilation is done through ForcedUpdatePackageDexOptimizer which will adjust
         // the necessary dexopt flags to make sure that compilation is not skipped. This avoid
@@ -330,7 +332,8 @@ public class DexManager {
                 continue;
             }
             int result = pdo.dexOptSecondaryDexPath(pkg.applicationInfo, dexPath,
-                    dexUseInfo.getLoaderIsas(), compilerFilter, dexUseInfo.isUsedByOtherApps());
+                    dexUseInfo.getLoaderIsas(), compilerFilter, dexUseInfo.isUsedByOtherApps(),
+                    downgrade);
             success = success && (result != PackageDexOptimizer.DEX_OPT_FAILED);
         }
         return success;

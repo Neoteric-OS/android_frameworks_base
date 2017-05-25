@@ -18,6 +18,7 @@ package com.android.server.pm;
 
 import android.annotation.Nullable;
 import android.content.Context;
+import android.content.pm.PackageParser;
 import android.content.pm.PackageStats;
 import android.os.Build;
 import android.os.IBinder;
@@ -26,12 +27,17 @@ import android.os.IInstalld;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.util.Slog;
 
 import com.android.internal.os.BackgroundThread;
 import com.android.server.SystemService;
 
+import java.io.File;
+
 import dalvik.system.VMRuntime;
+
+import static com.android.server.pm.InstructionSets.getAppDexInstructionSets;
 
 public class Installer extends SystemService {
     private static final String TAG = "Installer";
@@ -260,13 +266,14 @@ public class Installer extends SystemService {
 
     public void dexopt(String apkPath, int uid, @Nullable String pkgName, String instructionSet,
             int dexoptNeeded, @Nullable String outputPath, int dexFlags,
-            String compilerFilter, @Nullable String volumeUuid, @Nullable String sharedLibraries)
+            String compilerFilter, @Nullable String volumeUuid, @Nullable String sharedLibraries,
+            boolean downgrade)
             throws InstallerException {
         assertValidInstructionSet(instructionSet);
         if (!checkBeforeRemote()) return;
         try {
             mInstalld.dexopt(apkPath, uid, pkgName, instructionSet, dexoptNeeded, outputPath,
-                    dexFlags, compilerFilter, volumeUuid, sharedLibraries);
+                    dexFlags, compilerFilter, volumeUuid, sharedLibraries, downgrade);
         } catch (Exception e) {
             throw InstallerException.from(e);
         }
@@ -308,6 +315,30 @@ public class Installer extends SystemService {
             mInstalld.rmdex(codePath, instructionSet);
         } catch (Exception e) {
             throw InstallerException.from(e);
+        }
+    }
+
+    private static String getOatDir(PackageParser.Package pkg) {
+        if (!pkg.canHaveOatDir()) {
+            return null;
+        }
+        File codePath = new File(pkg.codePath);
+        if (codePath.isDirectory()) {
+            return PackageDexOptimizer.getOatDir(codePath).getAbsolutePath();
+        }
+        return null;
+    }
+
+    void deleteOatArtifactsOfPackage(PackageParser.Package pkg) {
+        String[] instructionSets = getAppDexInstructionSets(pkg.applicationInfo);
+        for (String codePath : pkg.getAllCodePaths()) {
+            for (String isa : instructionSets) {
+                try {
+                    deleteOdex(codePath, isa, getOatDir(pkg));
+                } catch (InstallerException e) {
+                    Log.e(TAG, "Failed deleting oat files for " + codePath, e);
+                }
+            }
         }
     }
 
