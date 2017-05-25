@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa0a4a7e_45d8f660",
+        "filename": "data/keyboards/Vendor_054c_Product_05c4.kl",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1097600
+      },
+      "writtenOn": "2017-05-25T01:51:34Z",
+      "side": 1,
+      "message": "can it be BUTTON_PS?\nin this case you need also DEFINE/ADD KDYCODE in keycodes.h and InputEventLabels.h",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 23
+      },
+      "revId": "a4ff9b4c0f969d02f6bef5ff581f1f4c8a9f570e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d010d071_b28c782e",
+        "filename": "data/keyboards/Vendor_054c_Product_05c4.kl",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1097600
+      },
+      "writtenOn": "2017-05-25T01:51:34Z",
+      "side": 1,
+      "message": "key 0x13d BUTTON_TOUCH // when push on touch pad of DS4.",
+      "revId": "a4ff9b4c0f969d02f6bef5ff581f1f4c8a9f570e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
