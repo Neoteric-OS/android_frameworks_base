@@ -2263,7 +2263,8 @@ public class PackageManagerService extends IPackageManager.Stub {
                             int dexoptNeeded = DexFile.getDexOptNeeded(
                                     lib, dexCodeInstructionSet,
                                     getCompilerFilterForReason(REASON_SHARED_APK),
-                                    false /* newProfile */);
+                                    false /* newProfile */,
+                                    false /* strict */);
                             if (dexoptNeeded != DexFile.NO_DEXOPT_NEEDED) {
                                 mInstaller.dexopt(lib, Process.SYSTEM_UID, "*",
                                         dexCodeInstructionSet, dexoptNeeded, null,
@@ -13377,7 +13378,7 @@ public class PackageManagerService extends IPackageManager.Stub {
         }
     }
 
-    private void removeDexFiles(List<String> allCodePaths, String[] instructionSets) {
+    void removeDexFiles(List<String> allCodePaths, String[] instructionSets) {
         if (!allCodePaths.isEmpty()) {
             if (instructionSets == null) {
                 throw new IllegalStateException("instructionSet == null");
