@@ -18,7 +18,6 @@ package com.android.server.pm;
 
 import static com.android.server.pm.PackageManagerService.DEBUG_DEXOPT;
 
-import android.app.AlarmManager;
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
 import android.app.job.JobScheduler;
@@ -27,6 +26,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageParser.Package;
 import android.os.BatteryManager;
 import android.os.Environment;
 import android.os.ServiceManager;
@@ -38,6 +38,9 @@ import android.util.Log;
 import com.android.server.pm.dex.DexManager;
 
 import java.io.File;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.TimeUnit;
 
@@ -70,6 +73,8 @@ public class BackgroundDexOptService extends JobService {
     private static final int OPTIMIZE_ABORT_BY_JOB_SCHEDULER = 2;
     // Optimizations should be aborted. No space left on device.
     private static final int OPTIMIZE_ABORT_NO_SPACE_LEFT = 3;
+    // 30 days
+    private static final long QUICKEN_UNUSED_APPS_THRESHOLD_IN_MILLIS =  2592000000L;
 
     /**
      * Set of failed packages remembered across job runs.
@@ -265,6 +270,17 @@ public class BackgroundDexOptService extends JobService {
     private int optimizePackages(PackageManagerService pm, ArraySet<String> pkgs,
             long lowStorageThreshold, boolean is_for_primary_dex,
             ArraySet<String> failedPackageNames) {
+        Collection<Package> packages = pm.mPackages.values();
+        Set<String> unusedPkgSet = new HashSet<>();
+
+        // Prepare a list of packages which hasn't been used for 30 days in foreground.
+        for (Package pkg : packages) {
+            if (System.currentTimeMillis() - pkg.getLatestForegroundPackageUseTimeInMills()
+                > QUICKEN_UNUSED_APPS_THRESHOLD_IN_MILLIS) {
+                unusedPkgSet.add(pkg.packageName);
+            }
+        }
+
         for (String pkg : pkgs) {
             int abort_code = abortIdleOptimizations(lowStorageThreshold);
             if (abort_code != OPTIMIZE_CONTINUE) {
@@ -282,16 +298,27 @@ public class BackgroundDexOptService extends JobService {
                 }
             }
 
+            int reason;
+            boolean forceCompile;
+            // Force compile the unused package to quicken.
+            if (unusedPkgSet.contains(pkg)) {
+                reason = PackageManagerService.REASON_INSTALL;
+                forceCompile = true;
+            } else {
+                reason = PackageManagerService.REASON_BACKGROUND_DEXOPT;
+                forceCompile = false;
+            }
+
             // Optimize package if needed. Note that there can be no race between
             // concurrent jobs because PackageDexOptimizer.performDexOpt is synchronized.
             boolean success = is_for_primary_dex
                     ? pm.performDexOpt(pkg,
                             /* checkProfiles */ true,
-                            PackageManagerService.REASON_BACKGROUND_DEXOPT,
-                            /* force */ false)
+                            reason,
+                            forceCompile)
                     : pm.performDexOptSecondary(pkg,
-                            PackageManagerService.REASON_BACKGROUND_DEXOPT,
-                            /* force */ false);
+                            reason,
+                            forceCompile);
             if (success) {
                 // Dexopt succeeded, remove package from the list of failing ones.
                 synchronized (failedPackageNames) {
