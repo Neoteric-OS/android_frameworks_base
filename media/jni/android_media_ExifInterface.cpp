@@ -379,11 +379,13 @@ static jobject ExifInterface_getRawAttributesFromFileDescriptor(
 
     if (fgets(jpegSignature.get(), kJpegSignatureSize, file) == NULL) {
         ALOGI("Corrupted image.");
+        fclose(file)
         return NULL;
     }
 
     if (memcmp(jpegSignature.get(), kJpegSignatureChars, kJpegSignatureSize) == 0) {
         ALOGI("Should be a JPEG stream.");
+        fclose(file)
         return NULL;
     }
 
