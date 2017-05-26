@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "144da571_bf35442b",
+        "filename": "core/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-26T16:00:52Z",
+      "side": 1,
+      "message": "at symbol(@)",
+      "range": {
+        "startLine": 609,
+        "startChar": 34,
+        "endLine": 609,
+        "endChar": 40
+      },
+      "revId": "a05ce8175a9fb0eb4fb7b36a32a08eb488a4c1fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95706185_9906072d",
+        "filename": "core/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-05-26T16:00:52Z",
+      "side": 1,
+      "message": "add a space",
+      "range": {
+        "startLine": 626,
+        "startChar": 34,
+        "endLine": 626,
+        "endChar": 36
+      },
+      "revId": "a05ce8175a9fb0eb4fb7b36a32a08eb488a4c1fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
