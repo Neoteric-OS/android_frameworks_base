@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b16ff3e_c77fc631",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2017-05-26T23:19:45Z",
+      "side": 1,
+      "message": "Can you add \n\"Merged-In: I201b070f4bcf453a2ffb391600853c7e595aec5d\" without quotes? See this for reference: https://android-review.googlesource.com/#/c/402243/.",
+      "revId": "e4d88f333053f3a43cd6f58822e6474d508b2bda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
