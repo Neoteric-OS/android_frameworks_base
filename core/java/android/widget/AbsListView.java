@@ -4584,7 +4584,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
                     postDelayed(this, FLYWHEEL_TIMEOUT);
                 } else {
                     endFling();
-                    mTouchMode = TOUCH_MODE_SCROLL;
+                    mTouchMode = (mTouchMode == TOUCH_MODE_OVERFLING)? TOUCH_MODE_OVERSCROLL: TOUCH_MODE_SCROLL;
                     reportScrollStateChange(OnScrollListener.SCROLL_STATE_TOUCH_SCROLL);
                 }
             }
@@ -4688,13 +4688,23 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
             postDelayed(mCheckFlywheel, FLYWHEEL_TIMEOUT);
         }
 
+        private boolean isNeedOverScroll() {
+            final int overscrollMode = getOverScrollMode();
+            return overscrollMode == OVER_SCROLL_ALWAYS ||
+                    (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS &&
+                            !contentFits());
+        }
         @Override
         public void run() {
             switch (mTouchMode) {
             default:
                 endFling();
                 return;
-
+            case TOUCH_MODE_OVERSCROLL:
+                if (!isNeedOverScroll()) {
+                    endFling();
+                    return;
+                }
             case TOUCH_MODE_SCROLL:
                 if (mScroller.isFinished()) {
                     return;
