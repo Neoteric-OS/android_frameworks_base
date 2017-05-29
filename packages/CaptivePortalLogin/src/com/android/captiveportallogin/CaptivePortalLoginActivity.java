@@ -302,9 +302,9 @@ public class CaptivePortalLoginActivity extends Activity {
                 } finally {
                     if (urlConnection != null) urlConnection.disconnect();
                 }
-                if (httpResponseCode == 204) {
-                    done(Result.DISMISSED);
-                }
+                //if (httpResponseCode == 204) {
+                //    done(Result.DISMISSED);
+                //}
             }
         }).start();
     }
