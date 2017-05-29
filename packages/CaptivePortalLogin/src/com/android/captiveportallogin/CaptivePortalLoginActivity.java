@@ -137,7 +137,8 @@ public class CaptivePortalLoginActivity extends Activity {
         webview.setWebChromeClient(new MyWebChromeClient());
         // Start initial page load so WebView finishes loading proxy settings.
         // Actual load of mUrl is initiated by MyWebViewClient.
-        webview.loadData("", "text/html", null);
+        //webview.loadData("", "text/html", null);
+        mWebViewClient.loadSslErrorPage(webview);
     }
 
     // Find WebView's proxy BroadcastReceiver and prompt it to read proxy system properties.
@@ -303,9 +304,9 @@ public class CaptivePortalLoginActivity extends Activity {
                 } finally {
                     if (urlConnection != null) urlConnection.disconnect();
                 }
-                if (httpResponseCode == 204) {
-                    done(Result.DISMISSED);
-                }
+                //if (httpResponseCode == 204) {
+                //    done(Result.DISMISSED);
+                //}
             }
         }).start();
     }
@@ -350,6 +351,9 @@ public class CaptivePortalLoginActivity extends Activity {
         @Override
         public void onPageFinished(WebView view, String url) {
             mPagesLoaded++;
+            if (true) {
+              return;
+            }
             getProgressBar().setVisibility(View.INVISIBLE);
             if (mPagesLoaded == 1) {
                 // Now that WebView has loaded at least one page we know it has read in the proxy
@@ -443,6 +447,10 @@ public class CaptivePortalLoginActivity extends Activity {
                     "</html>");
         }
 
+        public void loadSslErrorPage(WebView view) {
+            view.loadDataWithBaseURL(INTERNAL_ASSETS, mSslErrorHtml, "text/HTML", "UTF-8", null);
+        }
+
         @Override
         public boolean shouldOverrideUrlLoading (WebView view, String url) {
             if (url.startsWith("tel:")) {
@@ -456,7 +464,7 @@ public class CaptivePortalLoginActivity extends Activity {
     private class MyWebChromeClient extends WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
-            getProgressBar().setProgress(newProgress);
+            getProgressBar().setProgress(40);
         }
     }
 
