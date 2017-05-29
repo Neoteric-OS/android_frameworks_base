@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de649f30_faa8e42f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1971,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-05-29T04:29:14Z",
+      "side": 1,
+      "message": "just checking: it is intended that dumping tethering state is exclusive of dumping connectivity state right ?\n\nhow does that work when dumping for a BG ? I remember that the BG collector runs dumpsys on all services with \u0027-a\u0027 or something like that (looked into it when I added networking metrics to BGs).",
+      "range": {
+        "startLine": 1971,
+        "startChar": 10,
+        "endLine": 1971,
+        "endChar": 17
+      },
+      "revId": "ee363c4e9b4090bb73e99b68193074fce503e5ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
