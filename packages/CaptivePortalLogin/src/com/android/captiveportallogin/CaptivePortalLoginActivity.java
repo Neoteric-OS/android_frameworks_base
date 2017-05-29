@@ -304,9 +304,9 @@ public class CaptivePortalLoginActivity extends Activity {
                 } finally {
                     if (urlConnection != null) urlConnection.disconnect();
                 }
-                if (httpResponseCode == 204) {
-                    done(Result.DISMISSED);
-                }
+                //if (httpResponseCode == 204) {
+                //    done(Result.DISMISSED);
+                //}
             }
         }).start();
     }
@@ -423,7 +423,7 @@ public class CaptivePortalLoginActivity extends Activity {
     private class MyWebChromeClient extends WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
-            getProgressBar().setProgress(newProgress);
+            getProgressBar().setProgress(40);
         }
     }
 
