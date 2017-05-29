@@ -46,6 +46,30 @@
       "revId": "ee363c4e9b4090bb73e99b68193074fce503e5ca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "743958ea_99b905e9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1971,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-05-29T09:42:30Z",
+      "side": 1,
+      "message": "I looked up what I did for IpConnectivityMetrics and apparently the dumpsys command sent for BG includes the -a:\n\nhttps://cs.corp.google.com/android/frameworks/base/services/core/java/com/android/server/connectivity/IpConnectivityMetrics.java?rcl\u003d31581eb45e13f77a4a0b633304fdce06f9a04868\u0026l\u003d242\n\nThere might be a per-service settings somewhere that\u0027s set differently for connectivity, but the default is definitely -a because I didn\u0027t touched anything for IpConnectivityMetrics service.",
+      "parentUuid": "f9aca5a6_1c2b8ab6",
+      "range": {
+        "startLine": 1971,
+        "startChar": 10,
+        "endLine": 1971,
+        "endChar": 17
+      },
+      "revId": "ee363c4e9b4090bb73e99b68193074fce503e5ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
