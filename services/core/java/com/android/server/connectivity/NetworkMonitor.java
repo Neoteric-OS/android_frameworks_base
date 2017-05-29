@@ -723,6 +723,9 @@ public class NetworkMonitor extends StateMachine {
 
     @VisibleForTesting
     protected CaptivePortalProbeResult isCaptivePortal() {
+        if (true) {
+            return new CaptivePortalProbeResult(302, "http://www.google.com", "http://www.google.com");
+        }
         if (!mIsCaptivePortalCheckEnabled) {
             validationLog("Validation disabled.");
             return CaptivePortalProbeResult.SUCCESS;
