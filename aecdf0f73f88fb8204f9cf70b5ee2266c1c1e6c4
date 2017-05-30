@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9d88f26_742ad270",
+        "filename": "packages/CaptivePortalLogin/res/values/styles.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1014288
+      },
+      "writtenOn": "2017-05-30T16:46:56Z",
+      "side": 1,
+      "message": "If you want to look like Settings, Use Theme.DeviceDefault.Settings instead",
+      "range": {
+        "startLine": 7,
+        "startChar": 59,
+        "endLine": 7,
+        "endChar": 74
+      },
+      "revId": "aecdf0f73f88fb8204f9cf70b5ee2266c1c1e6c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35186c90_9f96e672",
+        "filename": "packages/CaptivePortalLogin/res/values/styles.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1014288
+      },
+      "writtenOn": "2017-05-30T16:46:56Z",
+      "side": 1,
+      "message": "you want to use actionBarTheme, not action bar style\n\nThen again, after switching to Theme.DeviceDefault.Settings, you may not need this at all.",
+      "range": {
+        "startLine": 19,
+        "startChar": 28,
+        "endLine": 19,
+        "endChar": 42
+      },
+      "revId": "aecdf0f73f88fb8204f9cf70b5ee2266c1c1e6c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a30b7fa8_1fc8ceb2",
+        "filename": "packages/CaptivePortalLogin/res/values/styles.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1014288
+      },
+      "writtenOn": "2017-05-30T16:46:56Z",
+      "side": 1,
+      "message": "if you do need this, base it off the theme that\u0027s set as actionBarTheme for Theme.DeviceDefault.Settings",
+      "revId": "aecdf0f73f88fb8204f9cf70b5ee2266c1c1e6c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
