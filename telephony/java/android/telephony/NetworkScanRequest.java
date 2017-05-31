@@ -31,6 +31,13 @@ import java.util.Arrays;
  */
 public final class NetworkScanRequest implements Parcelable {
 
+    /** @hide */
+    public static final int MAX_RADIO_ACCESS_NETWORKS = 8;
+    /** @hide */
+    public static final int MAX_BANDS = 8;
+    /** @hide */
+    public static final int MAX_CHANNELS = 32;
+
     /** Performs the scan only once */
     public static final int SCAN_TYPE_ONE_SHOT = 0;
     /**
