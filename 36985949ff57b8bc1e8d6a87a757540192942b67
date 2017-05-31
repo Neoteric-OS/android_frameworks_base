@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8bbcee3_b33aa059",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-05-31T15:21:09Z",
+      "side": 1,
+      "message": "Optionally, you can replace this with android.os.Build.IS_DEBUGGABLE.",
+      "range": {
+        "startLine": 191,
+        "startChar": 7,
+        "endLine": 191,
+        "endChar": 88
+      },
+      "revId": "36985949ff57b8bc1e8d6a87a757540192942b67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7a3f0a5_5f12e4b6",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-05-31T15:21:09Z",
+      "side": 1,
+      "message": "this is redundant. should just say mSpi\u003d",
+      "range": {
+        "startLine": 891,
+        "startChar": 24,
+        "endLine": 891,
+        "endChar": 32
+      },
+      "revId": "36985949ff57b8bc1e8d6a87a757540192942b67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d5610ab_8120184a",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-05-31T15:21:09Z",
+      "side": 1,
+      "message": "This is done now, right?",
+      "range": {
+        "startLine": 901,
+        "startChar": 0,
+        "endLine": 901,
+        "endChar": 84
+      },
+      "revId": "36985949ff57b8bc1e8d6a87a757540192942b67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1c34635_d2b6318c",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-05-31T15:21:09Z",
+      "side": 1,
+      "message": "This is a dump, not a log. Could you change this?",
+      "range": {
+        "startLine": 902,
+        "startChar": 20,
+        "endLine": 902,
+        "endChar": 36
+      },
+      "revId": "36985949ff57b8bc1e8d6a87a757540192942b67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
