@@ -19,6 +19,7 @@ package com.android.server.connectivity.tethering;
 import android.net.LinkProperties;
 import android.os.Handler;
 import android.net.util.SharedLog;
+import com.android.server.connectivity.MockableSystemProperties;
 
 /**
  * A class to encapsulate the business logic of programming the tethering
@@ -29,21 +30,26 @@ import android.net.util.SharedLog;
 public class OffloadController {
     private static final String TAG = OffloadController.class.getSimpleName();
 
+    static final String OFFLOAD_ENABLED_SYSPROP_KEY = "net.tethering.offloadenabled";
+
     private final Handler mHandler;
     private final OffloadHardwareInterface mHwInterface;
+    private final MockableSystemProperties mSystemProperties;
     private final SharedLog mLog;
     private boolean mConfigInitialized;
     private boolean mControlInitialized;
     private LinkProperties mUpstreamLinkProperties;
 
-    public OffloadController(Handler h, OffloadHardwareInterface hwi, SharedLog log) {
+    public OffloadController(Handler h, OffloadHardwareInterface hwi,
+            MockableSystemProperties sysProp, SharedLog log) {
         mHandler = h;
         mHwInterface = hwi;
+        mSystemProperties = sysProp;
         mLog = log.forSubComponent(TAG);
     }
 
     public void start() {
-        if (started()) return;
+        if (!isOffloadEnabled() || started()) return;
 
         if (!mConfigInitialized) {
             mConfigInitialized = mHwInterface.initOffloadConfig();
@@ -90,6 +96,11 @@ public class OffloadController {
     }
 
     // TODO: public void addDownStream(...)
+
+    private boolean isOffloadEnabled() {
+        // Defaults to |true| if not present.
+        return mSystemProperties.getBoolean(OFFLOAD_ENABLED_SYSPROP_KEY, true);
+    }
 
     private boolean started() {
         return mConfigInitialized && mControlInitialized;
