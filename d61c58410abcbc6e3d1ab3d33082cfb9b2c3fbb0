@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29f9d7e1_2e37b2b7",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-05-31T10:02:13Z",
+      "side": 1,
+      "message": "This break here is tricky. It is not immediately obvious that it returns from the outer switch on curState.\n\nBut unless a new helper function is introduced (in which return can be used), I don\u0027t see any way to improve that.\n\nSo LGTM like this.",
+      "range": {
+        "startLine": 808,
+        "startChar": 32,
+        "endLine": 808,
+        "endChar": 37
+      },
+      "revId": "d61c58410abcbc6e3d1ab3d33082cfb9b2c3fbb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba6d7958_4e5d2bb3",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-05-31T10:02:13Z",
+      "side": 1,
+      "message": "I had a really good laugh reading this comment.",
+      "range": {
+        "startLine": 814,
+        "startChar": 35,
+        "endLine": 814,
+        "endChar": 79
+      },
+      "revId": "d61c58410abcbc6e3d1ab3d33082cfb9b2c3fbb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
