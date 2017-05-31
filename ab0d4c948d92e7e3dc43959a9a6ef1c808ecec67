@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec25b573_902d2bc8",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-05-31T09:33:14Z",
+      "side": 1,
+      "message": "Do you use this?",
+      "range": {
+        "startLine": 24,
+        "startChar": 24,
+        "endLine": 24,
+        "endChar": 29
+      },
+      "revId": "ab0d4c948d92e7e3dc43959a9a6ef1c808ecec67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd31a974_c28610ef",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-05-31T09:33:14Z",
+      "side": 1,
+      "message": "Do you use this?",
+      "range": {
+        "startLine": 42,
+        "startChar": 20,
+        "endLine": 42,
+        "endChar": 24
+      },
+      "revId": "ab0d4c948d92e7e3dc43959a9a6ef1c808ecec67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfe5e153_4f22de85",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-05-31T09:33:14Z",
+      "side": 1,
+      "message": "You probably don\u0027t want to use the extra info all the time. On a mobile network it\u0027s the APN name, (e.g., \"sd.iijmobile.jp\"). Maybe do it only for wifi?",
+      "range": {
+        "startLine": 443,
+        "startChar": 52,
+        "endLine": 443,
+        "endChar": 71
+      },
+      "revId": "ab0d4c948d92e7e3dc43959a9a6ef1c808ecec67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "856170e2_e7e78fec",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-05-31T09:33:14Z",
+      "side": 1,
+      "message": "Suggest matching the chrome custom tab convention of displaying \"https://www.google.com\" if it\u0027s a HTTPS URL and \"www.google.com\" if it isn\u0027t.",
+      "range": {
+        "startLine": 448,
+        "startChar": 29,
+        "endLine": 448,
+        "endChar": 42
+      },
+      "revId": "ab0d4c948d92e7e3dc43959a9a6ef1c808ecec67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
