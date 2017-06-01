@@ -25,6 +25,7 @@ import com.android.frameworks.servicestests.R;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.Locale;
 
 import org.junit.AfterClass;
@@ -46,10 +47,22 @@ public class RuntimeResourceOverlayTests {
     private static final String SOME_OTHER_APP = "com.android.rrotests.some_other_app";
     private static final String SOME_OTHER_APP_OVERLAY = "com.android.rrotests.some_other_app_overlay";
 
-    private static final String SOME_OTHER_APP_URI =
-        "android.resource://com.android.frameworks.servicestests/raw/some_other_app";
 
-    private static boolean mInitOK = false;
+    private static final String URI_PREFIX =
+        "android.resource://com.android.frameworks.servicestests/raw/";
+
+    private static final String SOME_OTHER_APP_URI = URI_PREFIX + "some_other_app";
+    private static final String APP_OVERLAY_1_V2_URI = URI_PREFIX + "app_overlay_1_v2";
+
+    private static HashMap<String, Integer> OVERLAY_PACKAGES = new HashMap<>();
+
+    static {
+        OVERLAY_PACKAGES.put(APP_OVERLAY_1, R.raw.app_overlay_1);
+        OVERLAY_PACKAGES.put(APP_OVERLAY_2, R.raw.app_overlay_2);
+        OVERLAY_PACKAGES.put(SYSTEM_OVERLAY_1, R.raw.system_overlay_1);
+        OVERLAY_PACKAGES.put(SYSTEM_OVERLAY_2, R.raw.system_overlay_2);
+        OVERLAY_PACKAGES.put(SOME_OTHER_APP_OVERLAY, R.raw.some_other_app_overlay);
+    }
 
     private Context mContext;
     private int mUserId;
@@ -60,36 +73,20 @@ public class RuntimeResourceOverlayTests {
         Context ctx = InstrumentationRegistry.getContext();
         int userId = UserHandle.myUserId();
 
-        // When support for overlays in /data is added, the checks below should
-        // be replaced with calls to PackageUtils.install.
-        try {
-            assumeTrue(PackageUtils.isInstalled(ctx, APP_OVERLAY_1));
-            assumeTrue(PackageUtils.isInstalled(ctx, APP_OVERLAY_2));
-            assumeTrue(PackageUtils.isInstalled(ctx, SYSTEM_OVERLAY_1));
-            assumeTrue(PackageUtils.isInstalled(ctx, SYSTEM_OVERLAY_2));
-            assumeTrue(PackageUtils.isInstalled(ctx, SOME_OTHER_APP_OVERLAY));
-            mInitOK = true;
-        } catch (AssumptionViolatedException e) {
-            throw new AssumptionViolatedException("Missing overlay packages: run " +
-                    "prepare-overlay-tests.sh, reboot the device and try again");
+        for (String packageName : OVERLAY_PACKAGES.keySet()) {
+            PackageUtils.install(ctx, Uri.parse(URI_PREFIX + OVERLAY_PACKAGES.get(packageName)));
+            OverlayUtils.pollUntilOverlayAppears(ctx, packageName, userId);
         }
     }
 
     @AfterClass
     public static void afterClass() throws Exception {
-        if (!mInitOK) {
-            return;
-        }
-
         Context ctx = InstrumentationRegistry.getContext();
         int userId = UserHandle.myUserId();
 
-        OverlayUtils.disable(ctx, SOME_OTHER_APP_OVERLAY, userId);
-
-        OverlayUtils.disable(ctx, SYSTEM_OVERLAY_2, userId);
-        OverlayUtils.disable(ctx, SYSTEM_OVERLAY_1, userId);
-        OverlayUtils.disable(ctx, APP_OVERLAY_2, userId);
-        OverlayUtils.disable(ctx, APP_OVERLAY_1, userId);
+        for (String packageName : OVERLAY_PACKAGES.keySet()) {
+            PackageUtils.uninstall(ctx, packageName);
+        }
     }
 
     @Before
@@ -472,6 +469,28 @@ public class RuntimeResourceOverlayTests {
 
         OverlayUtils.reorder(mContext, APP_OVERLAY_2, APP_OVERLAY_1, mUserId);
         assertResource(1, R.integer.i);
+    }
+
+    @Test
+    public void testUpgradeOverlay() throws Exception {
+        try {
+            OverlayUtils.enable(mContext, APP_OVERLAY_1, mUserId);
+            assertResource(1, R.integer.i);
+
+            PackageUtils.install(mContext, Uri.parse(APP_OVERLAY_1_V2_URI));
+            OverlayUtils.pollUntilOverlayAppears(mContext, APP_OVERLAY_1, mUserId);
+
+            // give the overlay manager time to detect the new package and
+            // inform the package manager about which overlays to use
+            SystemClock.sleep(1000);
+
+            assertResource(2, R.integer.i);
+        } finally {
+            PackageUtils.uninstall(mContext, APP_OVERLAY_1);
+            SystemClock.sleep(1000);
+            PackageUtils.install(mContext, Uri.parse(URI_PREFIX + R.raw.app_overlay_1));
+            OverlayUtils.pollUntilOverlayAppears(mContext, APP_OVERLAY_1, mUserId);
+        }
     }
 
     private void assertResource(boolean expected, int resid) throws Exception {
