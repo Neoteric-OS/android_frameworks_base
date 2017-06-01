@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "320d291d_ceaddadc",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-01T19:59:06Z",
+      "side": 1,
+      "message": "nit: purposes",
+      "range": {
+        "startLine": 312,
+        "startChar": 60,
+        "endLine": 312,
+        "endChar": 67
+      },
+      "revId": "fc18dc5f0e0a07d07a5a2640fa576aa643c16f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80732fff_c9580a19",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-01T19:59:06Z",
+      "side": 1,
+      "message": "nit, suggest: Inject an IIpsecService for testing purposes",
+      "range": {
+        "startLine": 312,
+        "startChar": 7,
+        "endLine": 312,
+        "endChar": 22
+      },
+      "revId": "fc18dc5f0e0a07d07a5a2640fa576aa643c16f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a7faf03_5d17f1d0",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-01T19:59:06Z",
+      "side": 1,
+      "message": "nit: It\u0027s @hide, remove",
+      "range": {
+        "startLine": 313,
+        "startChar": 5,
+        "endLine": 313,
+        "endChar": 43
+      },
+      "revId": "fc18dc5f0e0a07d07a5a2640fa576aa643c16f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1834365c_f71cec30",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-01T19:59:06Z",
+      "side": 1,
+      "message": "Same comments on the comment strings... please apply them as general suggestions.",
+      "range": {
+        "startLine": 325,
+        "startChar": 6,
+        "endLine": 325,
+        "endChar": 43
+      },
+      "revId": "fc18dc5f0e0a07d07a5a2640fa576aa643c16f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe852fc0_3038d629",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-01T19:59:06Z",
+      "side": 1,
+      "message": "can\u0027t the unit test call setIpSecService() from the setUp()? If the other code needs to change to make this happen, I *think* that\u0027s the better route.",
+      "range": {
+        "startLine": 518,
+        "startChar": 0,
+        "endLine": 527,
+        "endChar": 9
+      },
+      "revId": "fc18dc5f0e0a07d07a5a2640fa576aa643c16f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e38a07b5_5c071b9f",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-01T19:59:06Z",
+      "side": 1,
+      "message": "Can we mock getNetdInstance()? I think that\u0027s the cleaner solution esp given that it\u0027s a function. is that not possible here?",
+      "range": {
+        "startLine": 496,
+        "startChar": 10,
+        "endLine": 496,
+        "endChar": 25
+      },
+      "revId": "fc18dc5f0e0a07d07a5a2640fa576aa643c16f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5565a947_c59982a4",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-01T19:59:06Z",
+      "side": 1,
+      "message": "Please run a Java formatter on this file. There are a bunch of formatting issues.",
+      "revId": "fc18dc5f0e0a07d07a5a2640fa576aa643c16f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4040505_56e2623d",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-01T19:59:06Z",
+      "side": 1,
+      "message": "stuff like this should be removed.",
+      "range": {
+        "startLine": 67,
+        "startChar": 9,
+        "endLine": 67,
+        "endChar": 102
+      },
+      "revId": "fc18dc5f0e0a07d07a5a2640fa576aa643c16f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0cada09_5285c6b8",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-01T19:59:06Z",
+      "side": 1,
+      "message": "nit: whitespace",
+      "range": {
+        "startLine": 127,
+        "startChar": 47,
+        "endLine": 127,
+        "endChar": 59
+      },
+      "revId": "fc18dc5f0e0a07d07a5a2640fa576aa643c16f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
