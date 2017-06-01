@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8eba998_4db2577d",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-01T11:59:14Z",
+      "side": 1,
+      "message": "Nit: extra space here.",
+      "range": {
+        "startLine": 225,
+        "startChar": 55,
+        "endLine": 225,
+        "endChar": 56
+      },
+      "revId": "879fddd721855219d824008d7606254349b30e41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55bf2579_586a02db",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-01T11:59:14Z",
+      "side": 1,
+      "message": "Can you add a comment to explain how we ensure that the connections in this pool are not ever shared with connections from other pools? That is important for the correctness of this API.\n\nIn the previous code this was relatively clear, because of the \"mConnectionPool \u003d new ConnectionPool(...)\" statement, but now not so much.\n\nAlso, what about caching responses? Are the response caches separate from other per-Network clients and from non-Network-specific clients?",
+      "range": {
+        "startLine": 226,
+        "startChar": 37,
+        "endLine": 226,
+        "endChar": 67
+      },
+      "revId": "879fddd721855219d824008d7606254349b30e41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

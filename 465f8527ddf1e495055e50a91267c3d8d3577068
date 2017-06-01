@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1218e448_aeb81886",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-01T11:59:14Z",
+      "side": 0,
+      "message": "What happens now if we pass in something else, such as ftp:// ?",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 290,
+        "endChar": 39
+      },
+      "revId": "465f8527ddf1e495055e50a91267c3d8d3577068",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
