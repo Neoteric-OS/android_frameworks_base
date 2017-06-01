@@ -25,6 +25,76 @@
     },
     {
       "key": {
+        "uuid": "f61fcb8d_26d17350",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-01T20:45:36Z",
+      "side": 1,
+      "message": "Not optionally.",
+      "parentUuid": "b8bbcee3_b33aa059",
+      "range": {
+        "startLine": 191,
+        "startChar": 7,
+        "endLine": 191,
+        "endChar": 88
+      },
+      "revId": "36985949ff57b8bc1e8d6a87a757540192942b67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b0dfd04_e0dd7180",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-01T20:45:36Z",
+      "side": 1,
+      "message": "this doesn\u0027t look like a local variable. This looks like a constant. Please define it as such in the appropriate scope. (private static final int DUMP_LINE_LEN \u003d 16;)\n\nBut... I\u0027m not sure this is how this should be done. Can you check out some other printwriters and see whether they do forced line breaks?",
+      "range": {
+        "startLine": 192,
+        "startChar": 7,
+        "endLine": 192,
+        "endChar": 28
+      },
+      "revId": "36985949ff57b8bc1e8d6a87a757540192942b67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ea22b83_efac7ebd",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-01T20:45:36Z",
+      "side": 1,
+      "message": "line break and possible indent all the things inside the flow?\n\nDirection-In {\n}\nDirection-Out {\n}",
+      "range": {
+        "startLine": 182,
+        "startChar": 27,
+        "endLine": 182,
+        "endChar": 28
+      },
+      "revId": "36985949ff57b8bc1e8d6a87a757540192942b67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a3f0a5_5f12e4b6",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 5
