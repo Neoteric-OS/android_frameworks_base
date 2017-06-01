@@ -22,6 +22,30 @@
       "revId": "8f5cb2c54ab50afb2a6a455764896fbcbca5cb14",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b0f81bd_682b2e20",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-01T11:30:34Z",
+      "side": 1,
+      "message": "In general this will be useful only for wifi. For example, on cell data it\u0027s the APN name, which is not generally meaningful to the user (e.g., \"h2g2\", \"VZWINTERNET\", \"mopera.net\").",
+      "parentUuid": "1afec3c8_f79569d0",
+      "range": {
+        "startLine": 442,
+        "startChar": 57,
+        "endLine": 442,
+        "endChar": 69
+      },
+      "revId": "8f5cb2c54ab50afb2a6a455764896fbcbca5cb14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
