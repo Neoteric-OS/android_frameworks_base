@@ -796,7 +796,6 @@ public class PackageParser {
     public final static int PARSE_IS_SYSTEM_DIR = 1<<6;
     public final static int PARSE_IS_PRIVILEGED = 1<<7;
     public final static int PARSE_COLLECT_CERTIFICATES = 1<<8;
-    public final static int PARSE_TRUSTED_OVERLAY = 1<<9;
     public final static int PARSE_ENFORCE_CODE = 1<<10;
     /** @deprecated remove when fixing b/34761192 */
     @Deprecated
@@ -5800,7 +5799,6 @@ public class PackageParser {
         public String mOverlayTarget;
         public int mOverlayPriority;
         public boolean mIsStaticOverlay;
-        public boolean mTrustedOverlay;
 
         /**
          * Data used to feed the KeySetManagerService
@@ -6290,7 +6288,6 @@ public class PackageParser {
             mOverlayTarget = dest.readString();
             mOverlayPriority = dest.readInt();
             mIsStaticOverlay = (dest.readInt() == 1);
-            mTrustedOverlay = (dest.readInt() == 1);
             mSigningKeys = (ArraySet<PublicKey>) dest.readArraySet(boot);
             mUpgradeKeySets = (ArraySet<String>) dest.readArraySet(boot);
 
@@ -6408,7 +6405,6 @@ public class PackageParser {
             dest.writeString(mOverlayTarget);
             dest.writeInt(mOverlayPriority);
             dest.writeInt(mIsStaticOverlay ? 1 : 0);
-            dest.writeInt(mTrustedOverlay ? 1 : 0);
             dest.writeArraySet(mSigningKeys);
             dest.writeArraySet(mUpgradeKeySets);
             writeKeySetMapping(dest, mKeySetMapping);

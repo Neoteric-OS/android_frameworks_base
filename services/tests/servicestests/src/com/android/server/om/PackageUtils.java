@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageInstaller.SessionParams;
 import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -30,8 +31,9 @@ class PackageUtils {
     public static void install(@NonNull final Context ctx, @NonNull final Uri uri)
             throws Exception {
         final PackageInstaller installer = ctx.getPackageManager().getPackageInstaller();
-        final int sessionId =
-                installer.createSession(new PackageInstaller.SessionParams(MODE_FULL_INSTALL));
+        SessionParams params = new SessionParams(MODE_FULL_INSTALL);
+        params.installFlags |= PackageManager.INSTALL_REPLACE_EXISTING;
+        final int sessionId = installer.createSession(params);
         final PackageInstaller.Session session = installer.openSession(sessionId);
 
         try (

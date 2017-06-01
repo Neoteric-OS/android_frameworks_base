@@ -426,18 +426,17 @@ public class PackageManagerService extends IPackageManager.Stub
     static final int SCAN_NEW_INSTALL = 1<<4;
     static final int SCAN_UPDATE_TIME = 1<<5;
     static final int SCAN_BOOTING = 1<<6;
-    static final int SCAN_TRUSTED_OVERLAY = 1<<7;
-    static final int SCAN_DELETE_DATA_ON_FAILURES = 1<<8;
-    static final int SCAN_REPLACING = 1<<9;
-    static final int SCAN_REQUIRE_KNOWN = 1<<10;
-    static final int SCAN_MOVE = 1<<11;
-    static final int SCAN_INITIAL = 1<<12;
-    static final int SCAN_CHECK_ONLY = 1<<13;
-    static final int SCAN_DONT_KILL_APP = 1<<14;
-    static final int SCAN_IGNORE_FROZEN = 1<<15;
-    static final int SCAN_FIRST_BOOT_OR_UPGRADE = 1<<16;
-    static final int SCAN_AS_INSTANT_APP = 1<<17;
-    static final int SCAN_AS_FULL_APP = 1<<18;
+    static final int SCAN_DELETE_DATA_ON_FAILURES = 1<<7;
+    static final int SCAN_REPLACING = 1<<8;
+    static final int SCAN_REQUIRE_KNOWN = 1<<9;
+    static final int SCAN_MOVE = 1<<10;
+    static final int SCAN_INITIAL = 1<<11;
+    static final int SCAN_CHECK_ONLY = 1<<12;
+    static final int SCAN_DONT_KILL_APP = 1<<13;
+    static final int SCAN_IGNORE_FROZEN = 1<<14;
+    static final int SCAN_FIRST_BOOT_OR_UPGRADE = 1<<15;
+    static final int SCAN_AS_INSTANT_APP = 1<<16;
+    static final int SCAN_AS_FULL_APP = 1<<17;
     /** Should not be with the scan flags */
     static final int FLAGS_REMOVE_CHATTY = 1<<31;
 
@@ -2578,12 +2577,9 @@ public class PackageManagerService extends IPackageManager.Stub
             }
 
             // Collect vendor overlay packages. (Do this before scanning any apps.)
-            // For security and version matching reason, only consider
-            // overlay packages if they reside in the right directory.
             scanDirTracedLI(new File(VENDOR_OVERLAY_DIR), mDefParseFlags
                     | PackageParser.PARSE_IS_SYSTEM
-                    | PackageParser.PARSE_IS_SYSTEM_DIR
-                    | PackageParser.PARSE_TRUSTED_OVERLAY, scanFlags | SCAN_TRUSTED_OVERLAY, 0);
+                    | PackageParser.PARSE_IS_SYSTEM_DIR, scanFlags, 0);
 
             mParallelPackageParserCallback.findStaticOverlayPackages();
 
@@ -8771,10 +8767,6 @@ public class PackageManagerService extends IPackageManager.Stub
         pp.setDisplayMetrics(mMetrics);
         pp.setCallback(mPackageParserCallback);
 
-        if ((scanFlags & SCAN_TRUSTED_OVERLAY) != 0) {
-            parseFlags |= PackageParser.PARSE_TRUSTED_OVERLAY;
-        }
-
         Trace.traceBegin(TRACE_TAG_PACKAGE_MANAGER, "parsePackage");
         final PackageParser.Package pkg;
         try {
@@ -10624,7 +10616,6 @@ public class PackageManagerService extends IPackageManager.Stub
             pkg.applicationInfo.privateFlags &=
                     ~ApplicationInfo.PRIVATE_FLAG_DIRECT_BOOT_AWARE;
         }
-        pkg.mTrustedOverlay = (policyFlags&PackageParser.PARSE_TRUSTED_OVERLAY) != 0;
 
         if ((policyFlags&PackageParser.PARSE_IS_PRIVILEGED) != 0) {
             pkg.applicationInfo.privateFlags |= ApplicationInfo.PRIVATE_FLAG_PRIVILEGED;

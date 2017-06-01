@@ -15,10 +15,13 @@ import android.os.ServiceManager;
 import android.os.SystemClock;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 class OverlayUtils {
     private static final int DELAY_MS = 100;
+    private static final int MAX_WAIT_TIME = 10 * 1000;
 
     public static void enable(@NonNull final Context ctx, @NonNull final String packageName,
             final int userId) throws Exception {
@@ -65,6 +68,38 @@ class OverlayUtils {
         return info.isEnabled();
     }
 
+    public static void pollUntilOverlayAppears(@NonNull final Context ctx,
+            @NonNull final String packageName, final int userId) throws Exception {
+        Executors
+            .newSingleThreadExecutor()
+            .submit(new Poll(ctx, packageName, userId))
+            .get(MAX_WAIT_TIME, MILLISECONDS);
+    }
+
+    private static class Poll implements Callable<Void> {
+        private final Context mContext;
+        private final String mPackageName;
+        private final int mUserId;
+
+        public Poll(@NonNull final Context ctx, @NonNull final String packageName,
+                final int userId) {
+            mContext = ctx;
+            mPackageName = packageName;
+            mUserId = userId;
+        }
+
+        @Override
+        public Void call() throws Exception {
+            final IOverlayManager om = getOverlayManager(mContext);
+            OverlayInfo oi = om.getOverlayInfo(mPackageName, mUserId);
+            while (oi == null) {
+                SystemClock.sleep(DELAY_MS);
+                oi = om.getOverlayInfo(mPackageName, mUserId);
+            }
+            return null;
+        }
+    }
+
     private static IOverlayManager getOverlayManager(@NonNull final Context ctx) {
         final IBinder b = ServiceManager.getService(Context.OVERLAY_SERVICE);
         return IOverlayManager.Stub.asInterface(b);
@@ -82,8 +117,6 @@ class OverlayUtils {
     private OverlayUtils() {}
 
     private static class IntentListener extends BroadcastReceiver implements AutoCloseable {
-        private static final int MAX_WAIT_TIME = 30 * 1000;
-
         private final BlockingQueue<Integer> mResults = new LinkedBlockingQueue<Integer>(1);
         private final Context mContext;
 

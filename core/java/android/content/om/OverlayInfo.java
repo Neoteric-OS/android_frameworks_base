@@ -36,6 +36,18 @@ public final class OverlayInfo implements Parcelable {
     public static final int STATE_UNKNOWN = -1;
 
     /**
+     * The target package is currently being upgraded; the state will change
+     * once the package installation has finished.
+     */
+    public static final int STATE_TARGET_UPGRADING = 4;
+
+    /**
+     * The overlay package is currently being upgraded; the state will change
+     * once the package installation has finished.
+     */
+    public static final int STATE_OVERLAY_UPGRADING = 5;
+
+    /**
      * The target package of the overlay is not installed. The overlay cannot be enabled.
      */
     public static final int STATE_MISSING_TARGET = 0;
@@ -86,6 +98,8 @@ public final class OverlayInfo implements Parcelable {
     /**
      * The state of this OverlayInfo as defined by the STATE_* constants in this class.
      *
+     * @see #STATE_TARGET_UPGRADING
+     * @see #STATE_OVERLAY_UPGRADING
      * @see #STATE_MISSING_TARGET
      * @see #STATE_NO_IDMAP
      * @see #STATE_DISABLED
@@ -142,6 +156,8 @@ public final class OverlayInfo implements Parcelable {
         }
         switch (state) {
             case STATE_UNKNOWN:
+            case STATE_TARGET_UPGRADING:
+            case STATE_OVERLAY_UPGRADING:
             case STATE_MISSING_TARGET:
             case STATE_NO_IDMAP:
             case STATE_DISABLED:
@@ -200,6 +216,8 @@ public final class OverlayInfo implements Parcelable {
      * Translate a state to a human readable string. Only intended for
      * debugging purposes.
      *
+     * @see #STATE_TARGET_UPGRADING
+     * @see #STATE_OVERLAY_UPGRADING
      * @see #STATE_MISSING_TARGET
      * @see #STATE_NO_IDMAP
      * @see #STATE_DISABLED
@@ -211,6 +229,10 @@ public final class OverlayInfo implements Parcelable {
         switch (state) {
             case STATE_UNKNOWN:
                 return "STATE_UNKNOWN";
+            case STATE_TARGET_UPGRADING:
+                return "STATE_TARGET_UPGRADING";
+            case STATE_OVERLAY_UPGRADING:
+                return "STATE_OVERLAY_UPGRADING";
             case STATE_MISSING_TARGET:
                 return "STATE_MISSING_TARGET";
             case STATE_NO_IDMAP:

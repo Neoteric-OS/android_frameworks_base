@@ -3,6 +3,9 @@ package com.android.server.om;
 import static android.content.om.OverlayInfo.STATE_DISABLED;
 import static android.content.om.OverlayInfo.STATE_ENABLED;
 import static android.content.om.OverlayInfo.STATE_MISSING_TARGET;
+import static android.content.om.OverlayInfo.STATE_NO_IDMAP;
+import static android.content.om.OverlayInfo.STATE_OVERLAY_UPGRADING;
+import static android.content.om.OverlayInfo.STATE_TARGET_UPGRADING;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -159,7 +162,7 @@ public class OverlayManagerTests {
         assertState(STATE_ENABLED, OVERLAY, USER);
 
         beginUpgradeTargetPackage(TARGET, USER);
-        assertState(STATE_MISSING_TARGET, OVERLAY, USER);
+        assertState(STATE_TARGET_UPGRADING, OVERLAY, USER);
 
         endUpgradeTargetPackage(TARGET, USER);
         assertState(STATE_ENABLED, OVERLAY, USER);
@@ -189,6 +192,62 @@ public class OverlayManagerTests {
 
         mImpl.setEnabled(OVERLAY, true, USER);
         assertEquals(0, mListener.count);
+    }
+
+    // tests: overlay installation and removal
+
+    @Test
+    public void testUninstallOverlay() throws Exception {
+        assertNull(mImpl.getOverlayInfo(OVERLAY, USER));
+
+        installOverlayPackage(OVERLAY, TARGET, USER, false);
+        assertNotNull(mImpl.getOverlayInfo(OVERLAY, USER));
+
+        uninstallOverlayPackage(OVERLAY, USER);
+        assertNull(mImpl.getOverlayInfo(OVERLAY, USER));
+    }
+
+    @Test
+    public void testUpgradeOverlay() throws Exception {
+        installOverlayPackage(OVERLAY, TARGET, USER, true);
+        installTargetPackage(TARGET, USER);
+        mImpl.setEnabled(OVERLAY, true, USER);
+        assertState(STATE_ENABLED, OVERLAY, USER);
+
+        beginUpgradeOverlayPackage(OVERLAY, USER);
+        assertState(STATE_OVERLAY_UPGRADING, OVERLAY, USER);
+
+        endUpgradeOverlayPackage(OVERLAY, TARGET, USER, true);
+        assertState(STATE_ENABLED, OVERLAY, USER);
+
+        beginUpgradeOverlayPackage(OVERLAY, USER);
+        assertState(STATE_OVERLAY_UPGRADING, OVERLAY, USER);
+
+        endUpgradeOverlayPackage(OVERLAY, TARGET, USER, false);
+        assertState(STATE_NO_IDMAP, OVERLAY, USER);
+    }
+
+    @Test
+    public void testUpgradeSneakyOverlay() throws Exception {
+        final String otherTarget = "some.other.target";
+        installTargetPackage(otherTarget, USER);
+
+        installOverlayPackage(OVERLAY, TARGET, USER, true);
+        installTargetPackage(TARGET, USER);
+        mImpl.setEnabled(OVERLAY, true, USER);
+        assertState(STATE_ENABLED, OVERLAY, USER);
+
+        beginUpgradeOverlayPackage(OVERLAY, USER);
+        assertState(STATE_OVERLAY_UPGRADING, OVERLAY, USER);
+
+        // changing the overlay's target as part of an upgrade should be the
+        // same as uninstalling the overlay and installing the new version;
+        // especially the OverlayInfo's target should be updated and it should
+        // not be enabled
+        endUpgradeOverlayPackage(OVERLAY, otherTarget, USER, true);
+        assertState(STATE_DISABLED, OVERLAY, USER);
+        final OverlayInfo oi = mImpl.getOverlayInfo(OVERLAY, USER);
+        assertEquals(otherTarget, oi.targetPackageName);
     }
 
     // helper methods
@@ -249,15 +308,29 @@ public class OverlayManagerTests {
         mImpl.onOverlayPackageAdded(packageName, userId);
     }
 
-    private void upgradeOverlayPackage(String packageName, String targetPackageName, int userId,
+    private void beginUpgradeOverlayPackage(String packageName, int userId) {
+        if (mState.select(packageName, userId) == null) {
+            throw new IllegalStateException("package not installed");
+        }
+        mState.add(packageName, null, userId, false);
+        mImpl.onOverlayPackageUpgrading(packageName, userId);
+    }
+
+    private void endUpgradeOverlayPackage(String packageName, String targetPackageName, int userId,
             boolean canCreateIdmap) {
-        // implement this when adding support for downloadable overlays
-        throw new IllegalArgumentException("not implemented");
+        if (mState.select(packageName, userId) == null) {
+            throw new IllegalStateException("package not installed");
+        }
+        mState.add(packageName, targetPackageName, userId, canCreateIdmap);
+        mImpl.onOverlayPackageUpgraded(packageName, userId);
     }
 
     private void uninstallOverlayPackage(String packageName, int userId) {
-        // implement this when adding support for downloadable overlays
-        throw new IllegalArgumentException("not implemented");
+        if (mState.select(packageName, userId) == null) {
+            throw new IllegalStateException("package not installed");
+        }
+        mState.remove(packageName, userId);
+        mImpl.onOverlayPackageRemoved(packageName, userId);
     }
 
     private static final class DummyState {
