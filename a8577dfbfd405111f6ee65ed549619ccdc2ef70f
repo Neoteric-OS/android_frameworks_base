@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e31711a4_a2bebad7",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-01T08:11:50Z",
+      "side": 1,
+      "message": "Can you define a named constant for this?",
+      "range": {
+        "startLine": 797,
+        "startChar": 70,
+        "endLine": 797,
+        "endChar": 87
+      },
+      "revId": "a8577dfbfd405111f6ee65ed549619ccdc2ef70f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7343ebe8_c25f0051",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-01T08:11:50Z",
+      "side": 1,
+      "message": "Can you add a TODO to explain what needs to change when this behaviour is gone?",
+      "range": {
+        "startLine": 808,
+        "startChar": 70,
+        "endLine": 808,
+        "endChar": 71
+      },
+      "revId": "a8577dfbfd405111f6ee65ed549619ccdc2ef70f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0970b078_fa8200e9",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-01T08:11:50Z",
+      "side": 1,
+      "message": "It seems like it would be easier to read this code if this were an enableWifiTetheringLocked method that takes an intent.\n\nThat would unindent a lot of this code and make it much easier to follow.",
+      "range": {
+        "startLine": 805,
+        "startChar": 0,
+        "endLine": 815,
+        "endChar": 92
+      },
+      "revId": "a8577dfbfd405111f6ee65ed549619ccdc2ef70f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f78afc25_7590e55d",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-01T08:11:50Z",
+      "side": 1,
+      "message": "And this could be a disableWifiTetheringLocked function.",
+      "range": {
+        "startLine": 820,
+        "startChar": 0,
+        "endLine": 839,
+        "endChar": 26
+      },
+      "revId": "a8577dfbfd405111f6ee65ed549619ccdc2ef70f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
