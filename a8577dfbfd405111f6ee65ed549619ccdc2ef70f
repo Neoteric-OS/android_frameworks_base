@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "29b34a6c_8cad7443",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-01T11:47:24Z",
+      "side": 1,
+      "message": "Found a better alternative.",
+      "parentUuid": "e31711a4_a2bebad7",
+      "range": {
+        "startLine": 797,
+        "startChar": 70,
+        "endLine": 797,
+        "endChar": 87
+      },
+      "revId": "a8577dfbfd405111f6ee65ed549619ccdc2ef70f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7343ebe8_c25f0051",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-01T08:11:50Z",
       "side": 1,
       "message": "Can you add a TODO to explain what needs to change when this behaviour is gone?",
+      "range": {
+        "startLine": 808,
+        "startChar": 70,
+        "endLine": 808,
+        "endChar": 71
+      },
+      "revId": "a8577dfbfd405111f6ee65ed549619ccdc2ef70f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f698a8bd_b61d82cb",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-01T11:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7343ebe8_c25f0051",
       "range": {
         "startLine": 808,
         "startChar": 70,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4ac7d533_829647f3",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-01T11:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0970b078_fa8200e9",
+      "range": {
+        "startLine": 805,
+        "startChar": 0,
+        "endLine": 815,
+        "endChar": 92
+      },
+      "revId": "a8577dfbfd405111f6ee65ed549619ccdc2ef70f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f78afc25_7590e55d",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-01T08:11:50Z",
       "side": 1,
       "message": "And this could be a disableWifiTetheringLocked function.",
+      "range": {
+        "startLine": 820,
+        "startChar": 0,
+        "endLine": 839,
+        "endChar": 26
+      },
+      "revId": "a8577dfbfd405111f6ee65ed549619ccdc2ef70f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0008472_f9189a58",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-01T11:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f78afc25_7590e55d",
       "range": {
         "startLine": 820,
         "startChar": 0,
