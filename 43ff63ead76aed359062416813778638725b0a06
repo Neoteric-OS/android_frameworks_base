@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ae98faa_c9bdfc5a",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-01T13:45:02Z",
+      "side": 1,
+      "message": "Nit: While you\u0027re at it, lose this extra space?",
+      "range": {
+        "startLine": 797,
+        "startChar": 33,
+        "endLine": 797,
+        "endChar": 34
+      },
+      "revId": "43ff63ead76aed359062416813778638725b0a06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
