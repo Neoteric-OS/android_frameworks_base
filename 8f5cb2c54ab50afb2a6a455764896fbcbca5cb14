@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1afec3c8_f79569d0",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-01T11:01:38Z",
+      "side": 1,
+      "message": "Do we know what sorts of input sanitization this will have gone through?  I assume since we display ESSIDs in the Settings UI some sanitization takes place but do we know when that\u0027s done?\n\nI assume this replaceAll() is meant to remove leading and trailing quotation marks.  But still...",
+      "range": {
+        "startLine": 442,
+        "startChar": 57,
+        "endLine": 442,
+        "endChar": 69
+      },
+      "revId": "8f5cb2c54ab50afb2a6a455764896fbcbca5cb14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
