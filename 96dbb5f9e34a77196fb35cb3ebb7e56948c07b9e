@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa452e15_5bdbb238",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1121773
+      },
+      "writtenOn": "2017-06-02T05:55:59Z",
+      "side": 1,
+      "message": "s/httml/html",
+      "revId": "96dbb5f9e34a77196fb35cb3ebb7e56948c07b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7f355ef_45e8f07a",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1121773
+      },
+      "writtenOn": "2017-06-02T05:55:59Z",
+      "side": 1,
+      "message": "does this mean quantum_ic_warning_amber_96.png is not scaled according to screen size? Why 48px and not 96?",
+      "revId": "96dbb5f9e34a77196fb35cb3ebb7e56948c07b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
