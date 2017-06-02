@@ -482,7 +482,9 @@ public final class JobStatus {
 
     @Override
     public String toString() {
-        return String.valueOf(hashCode()).substring(0, 3) + ".."
+        String tempHashString = String.valueOf(hashCode());
+        String hashString = tempHashString.length() > 4 ? tempHashString.substring(0, 3) : tempHashString;
+        return hashString + ".."
                 + ":[" + job.getService()
                 + ",jId=" + job.getId()
                 + ",u" + getUserId()
