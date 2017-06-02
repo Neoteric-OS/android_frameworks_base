@@ -58,6 +58,7 @@ import java.util.Random;
 public class CaptivePortalLoginActivity extends Activity {
     private static final String TAG = CaptivePortalLoginActivity.class.getSimpleName();
     private static final boolean DBG = true;
+    private static final boolean VDBG = false;
 
     private static final int SOCKET_TIMEOUT_MS = 10000;
 
@@ -311,6 +312,7 @@ public class CaptivePortalLoginActivity extends Activity {
 
     private class MyWebViewClient extends WebViewClient {
         private static final String INTERNAL_ASSETS = "file:///android_asset/";
+
         private final String mBrowserBailOutToken = Long.toString(new Random().nextLong());
         // How many Android device-independent-pixels per scaled-pixel
         // dp/sp = (px/sp) / (px/dp) = (1/sp) / (1/dp)
@@ -319,6 +321,56 @@ public class CaptivePortalLoginActivity extends Activity {
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1,
                     getResources().getDisplayMetrics());
         private int mPagesLoaded;
+
+        private final String mSslErrorWarning = getString(R.string.ssl_error_warning);
+        private final String mSslErrorExample = getString(R.string.ssl_error_example);
+        private final String mSslErrorContinue = getString(R.string.ssl_error_continue);
+        private final String mSslErrorHtml = String.join("\n",
+                "<html>",
+                "<head>",
+                "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">",
+                "  <style>",
+                "    body {",
+                "      background-color:#fafafa;",
+                "      margin:auto;",
+                "      width:80%;",
+                "      margin-top: 96px",
+                "    }",
+                "    img {",
+                "      height:48px;",
+                "      width:48px;",
+                "    }",
+                "    div.warn {",
+                "      font-size:" + sp(16) + ";",
+                "      line-height:1.28;",
+                "      margin-top:16px;",
+                "      opacity:0.87;",
+                "    }",
+                "    div.example {",
+                "      font-size:" + sp(14) + ";",
+                "      line-height:1.21905;",
+                "      margin-top:16px;",
+                "      opacity:0.54;",
+                "    }",
+                "    a {",
+                "      color:#4285F4;",
+                "      display:inline-block;",
+                "      font-size:" + sp(14) + ";",
+                "      font-weight:bold;",
+                "      height:48px;",
+                "      margin-top:24px;",
+                "      text-decoration:none;",
+                "      text-transform:uppercase;",
+                "    }",
+                "  </style>",
+                "</head>",
+                "<body>",
+                "  <p><img src=quantum_ic_warning_amber_96.png><br>",
+                "  <div class=warn>" + mSslErrorWarning + "</div>",
+                "  <div class=example>" + mSslErrorExample + "</div>",
+                "  <a href=" + mBrowserBailOutToken + ">" + mSslErrorContinue + "</a>",
+                "</body>",
+                "</html>");
 
         // If we haven't finished cleaning up the history, don't allow going back.
         public boolean allowBack() {
@@ -363,12 +415,6 @@ public class CaptivePortalLoginActivity extends Activity {
             testForCaptivePortal();
         }
 
-        // Convert Android device-independent-pixels (dp) to HTML size.
-        private String dp(int dp) {
-            // HTML px's are scaled just like dp's, so just add "px" suffix.
-            return Integer.toString(dp) + "px";
-        }
-
         // Convert Android scaled-pixels (sp) to HTML size.
         private String sp(int sp) {
             // Convert sp to dp's.
@@ -376,25 +422,11 @@ public class CaptivePortalLoginActivity extends Activity {
             // Apply a scale factor to make things look right.
             dp *= 1.3;
             // Convert dp's to HTML size.
-            return dp((int)dp);
+            // HTML px's are scaled just like dp's, so just add "px" suffix.
+            return Integer.toString((int)dp) + "px";
         }
 
         // A web page consisting of a large broken lock icon to indicate SSL failure.
-        private final String SSL_ERROR_HTML = "<html><head><style>" +
-                "body { margin-left:" + dp(48) + "; margin-right:" + dp(48) + "; " +
-                        "margin-top:" + dp(96) + "; background-color:#fafafa; }" +
-                "img { width:" + dp(48) + "; height:" + dp(48) + "; }" +
-                "div.warn { font-size:" + sp(16) + "; margin-top:" + dp(16) + "; " +
-                "           opacity:0.87; line-height:1.28; }" +
-                "div.example { font-size:" + sp(14) + "; margin-top:" + dp(16) + "; " +
-                "              opacity:0.54; line-height:1.21905; }" +
-                "a { font-size:" + sp(14) + "; text-decoration:none; text-transform:uppercase; " +
-                "    margin-top:" + dp(24) + "; display:inline-block; color:#4285F4; " +
-                "    height:" + dp(48) + "; font-weight:bold; }" +
-                "</style></head><body><p><img src=quantum_ic_warning_amber_96.png><br>" +
-                "<div class=warn>%s</div>" +
-                "<div class=example>%s</div>" +
-                "<a href=%s>%s</a></body></html>";
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
@@ -402,10 +434,10 @@ public class CaptivePortalLoginActivity extends Activity {
                     // Only show host to avoid leaking private info.
                     Uri.parse(error.getUrl()).getHost() + " certificate: " +
                     error.getCertificate() + "); displaying SSL warning.");
-            final String html = String.format(SSL_ERROR_HTML, getString(R.string.ssl_error_warning),
-                    getString(R.string.ssl_error_example), mBrowserBailOutToken,
-                    getString(R.string.ssl_error_continue));
-            view.loadDataWithBaseURL(INTERNAL_ASSETS, html, "text/HTML", "UTF-8", null);
+            if (VDBG) {
+                Log.d(TAG, mSslErrorHtml);
+            }
+            view.loadDataWithBaseURL(INTERNAL_ASSETS, mSslErrorHtml, "text/HTML", "UTF-8", null);
         }
 
         @Override
