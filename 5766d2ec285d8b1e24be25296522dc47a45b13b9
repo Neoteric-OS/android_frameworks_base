@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d3ba508_dfd1c1e2",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-06-02T22:03:00Z",
+      "side": 1,
+      "message": "From the current API, I am afraid those \"RadioError\" codes is the only error information we can get from the modem.",
+      "parentUuid": "deb5bc78_d2731b85",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 83
+      },
+      "revId": "5766d2ec285d8b1e24be25296522dc47a45b13b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d48c7141_cddff2de",
         "filename": "telephony/java/android/telephony/NetworkScan.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b018282c_6de86d2a",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-06-02T22:03:00Z",
+      "side": 1,
+      "message": "Those errors are actually directly mapped from the RIL errors, not sure how they distinguish \"RadioError:OPERATION_NOT_ALLOWED\" from \"RadioError:REQUEST_NOT_SUPPORTED\". I guess for example if we request a scan on RAN CDMA, we may get a \"REQUEST_NOT_SUPPORTED\" instead of \"OPERATION_NOT_ALLOWED\"",
+      "parentUuid": "d48c7141_cddff2de",
+      "range": {
+        "startLine": 45,
+        "startChar": 28,
+        "endLine": 45,
+        "endChar": 45
+      },
+      "revId": "5766d2ec285d8b1e24be25296522dc47a45b13b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b33b8e65_7e057d92",
         "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
         "patchSetId": 2
@@ -59,6 +107,54 @@
       "writtenOn": "2017-06-02T18:22:22Z",
       "side": 1,
       "message": "do you intend to expose these?  It may make sense if the app needs to know the limits..",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 13
+      },
+      "revId": "5766d2ec285d8b1e24be25296522dc47a45b13b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07af8ddd_7193a8a2",
+        "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-06-02T22:03:00Z",
+      "side": 1,
+      "message": "My intention is to expose those limits to the users since the users should be aware of them, but Nathan",
+      "parentUuid": "b33b8e65_7e057d92",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 13
+      },
+      "revId": "5766d2ec285d8b1e24be25296522dc47a45b13b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64136261_16ac126e",
+        "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-06-02T22:03:00Z",
+      "side": 1,
+      "message": "my intention was to expose those since the users should be aware of those limits, but Nathan suggest to hide them since they are subject-to-change-without-notice.",
+      "parentUuid": "b33b8e65_7e057d92",
       "range": {
         "startLine": 36,
         "startChar": 9,
