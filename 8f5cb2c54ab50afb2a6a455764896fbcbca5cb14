@@ -46,6 +46,54 @@
       "revId": "8f5cb2c54ab50afb2a6a455764896fbcbca5cb14",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10837af7_446ee98d",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-02T01:11:08Z",
+      "side": 1,
+      "message": "Yeah replaceAll() is here to drop the quoting.\n\nNo in general I don\u0027t know what sanitization is done for different networks.",
+      "parentUuid": "1afec3c8_f79569d0",
+      "range": {
+        "startLine": 442,
+        "startChar": 57,
+        "endLine": 442,
+        "endChar": 69
+      },
+      "revId": "8f5cb2c54ab50afb2a6a455764896fbcbca5cb14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29b65d2c_c68016e3",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-02T01:11:08Z",
+      "side": 1,
+      "message": "I can start by showing extraInfo for wifi only.\n\nI still believe this is actually useful to show the APN name. As a user if you buy a prepaid sim it is very likely that the setup instruction with the sim will mention the apn name you have to enter for instance. Showing the APN name can be a powerful matching indicator for users.\n\nLet\u0027s bring back this point to the bug thread and consult with UX and PM.",
+      "parentUuid": "0b0f81bd_682b2e20",
+      "range": {
+        "startLine": 442,
+        "startChar": 57,
+        "endLine": 442,
+        "endChar": 69
+      },
+      "revId": "8f5cb2c54ab50afb2a6a455764896fbcbca5cb14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
