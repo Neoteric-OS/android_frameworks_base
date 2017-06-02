@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0e6d60c_7e306882",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-02T06:10:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s a good idea for this to be calculated at construction time given that it depends on things that can change at any time if the user changes language settings. The previous %s approach seemed more flexible.",
+      "range": {
+        "startLine": 328,
+        "startChar": 8,
+        "endLine": 328,
+        "endChar": 21
+      },
+      "revId": "b9669d20e626c164eb9323bcbd6803420c192320",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
