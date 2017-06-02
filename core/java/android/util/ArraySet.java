@@ -151,52 +151,39 @@ public final class ArraySet<E> implements Collection<E>, Set<E> {
         return ~end;
     }
 
+    private void buildArrays(Object[] BaseCache, int BaseCacheSize, int baseSize) {
+        if (BaseCache != null) {
+            final Object[] array = BaseCache;
+            try {
+                if (array[0] != null && array[1] != null) {
+                    mArray = array;
+                    BaseCache = (Object[]) array[0];
+                    mHashes = (int[]) array[1];
+                    array[0] = array[1] = null;
+                    BaseCacheSize--;
+                    if (DEBUG) Log.d(TAG, "Retrieving " + baseSize + "x cache " + mHashes
+                            + " now have " + BaseCacheSize + " entries");
+                    return;
+                }
+            } catch (ClassCastException e) {
+            }
+            // Whoops!  Someone trampled the array (probably due to not protecting
+            // their access with a lock).  Our cache is corrupt; report and give up.
+            Slog.wtf(TAG, "Found corrupt ArraySet cache: [0]=" + array[0]
+                    + " [1]=" + array[1]);
+            BaseCache = null;
+            BaseCacheSize = 0;
+        }
+    }
+
     private void allocArrays(final int size) {
         if (size == (BASE_SIZE*2)) {
             synchronized (ArraySet.class) {
-                if (mTwiceBaseCache != null) {
-                    final Object[] array = mTwiceBaseCache;
-                    try {
-                        mArray = array;
-                        mTwiceBaseCache = (Object[]) array[0];
-                        mHashes = (int[]) array[1];
-                        array[0] = array[1] = null;
-                        mTwiceBaseCacheSize--;
-                        if (DEBUG) Log.d(TAG, "Retrieving 2x cache " + mHashes
-                                + " now have " + mTwiceBaseCacheSize + " entries");
-                        return;
-                    } catch (ClassCastException e) {
-                    }
-                    // Whoops!  Someone trampled the array (probably due to not protecting
-                    // their access with a lock).  Our cache is corrupt; report and give up.
-                    Slog.wtf(TAG, "Found corrupt ArraySet cache: [0]=" + array[0]
-                            + " [1]=" + array[1]);
-                    mTwiceBaseCache = null;
-                    mTwiceBaseCacheSize = 0;
-                }
+                buildArrays(mTwiceBaseCache, mTwiceBaseCacheSize, 2);
             }
         } else if (size == BASE_SIZE) {
             synchronized (ArraySet.class) {
-                if (mBaseCache != null) {
-                    final Object[] array = mBaseCache;
-                    try {
-                        mArray = array;
-                        mBaseCache = (Object[]) array[0];
-                        mHashes = (int[]) array[1];
-                        array[0] = array[1] = null;
-                        mBaseCacheSize--;
-                        if (DEBUG) Log.d(TAG, "Retrieving 1x cache " + mHashes
-                                + " now have " + mBaseCacheSize + " entries");
-                        return;
-                    } catch (ClassCastException e) {
-                    }
-                    // Whoops!  Someone trampled the array (probably due to not protecting
-                    // their access with a lock).  Our cache is corrupt; report and give up.
-                    Slog.wtf(TAG, "Found corrupt ArraySet cache: [0]=" + array[0]
-                            + " [1]=" + array[1]);
-                    mBaseCache = null;
-                    mBaseCacheSize = 0;
-                }
+                buildArrays(mBaseCache, mBaseCacheSize, 1);
             }
         }
 
