@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "deb5bc78_d2731b85",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-06-02T18:22:22Z",
+      "side": 1,
+      "message": "this is pretty generic.  Can we get more detail from the modem for debugging purposes?",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 83
+      },
+      "revId": "5766d2ec285d8b1e24be25296522dc47a45b13b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d48c7141_cddff2de",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-06-02T18:22:22Z",
+      "side": 1,
+      "message": "how different from UNSUPPORTED?",
+      "range": {
+        "startLine": 45,
+        "startChar": 28,
+        "endLine": 45,
+        "endChar": 45
+      },
+      "revId": "5766d2ec285d8b1e24be25296522dc47a45b13b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33b8e65_7e057d92",
+        "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-06-02T18:22:22Z",
+      "side": 1,
+      "message": "do you intend to expose these?  It may make sense if the app needs to know the limits..",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 13
+      },
+      "revId": "5766d2ec285d8b1e24be25296522dc47a45b13b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
