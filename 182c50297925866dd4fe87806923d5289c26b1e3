@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c77520c_6c10a554",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-06-02T03:56:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74d36a13_6ea15353",
+      "range": {
+        "startLine": 37,
+        "startChar": 24,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "182c50297925866dd4fe87806923d5289c26b1e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88854930_5828cbda",
         "filename": "telephony/java/android/telephony/NetworkScan.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2367490a_edb7fa7f",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-06-02T03:56:28Z",
+      "side": 1,
+      "message": "Currently all the possible RIL errors (total 9 errors) are exposed to the user since I feel that those errors are actually quite straightforward (Like MODEM_ERR,  INVALID_SCAN), but later we can consolidate them into smaller number of errors if necessary.",
+      "parentUuid": "88854930_5828cbda",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 87
+      },
+      "revId": "182c50297925866dd4fe87806923d5289c26b1e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32b3b230_2e1e8bcd",
         "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-02T00:46:29Z",
       "side": 1,
       "message": "since these are subject-to-change-without-notice, can we ensure these are also intended as @hide?",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 46
+      },
+      "revId": "182c50297925866dd4fe87806923d5289c26b1e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "feaf28cf_86983f1a",
+        "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-06-02T03:56:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32b3b230_2e1e8bcd",
       "range": {
         "startLine": 34,
         "startChar": 4,
