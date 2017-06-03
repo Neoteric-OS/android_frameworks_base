@@ -164,6 +164,30 @@
       "revId": "5766d2ec285d8b1e24be25296522dc47a45b13b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf593bf_02d4db0e",
+        "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-03T00:05:48Z",
+      "side": 1,
+      "message": "My concern with exposing these is threefold:\n1) if we remove them then we\u0027re stuck with them \"permanently\"\n2) they actually might need to change already based on the lower-layer implementation, which points strongly to them being a modem-support-level detail. The \"min\" is a guarantee, but artificially restricting the MAX (which is what we\u0027re doing here), seems dubious in value.\n3) They only exist in the interface today because of RIL, which \"disappears\" in P, which again points strongly to them being an implementation detail.",
+      "parentUuid": "64136261_16ac126e",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 13
+      },
+      "revId": "5766d2ec285d8b1e24be25296522dc47a45b13b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
