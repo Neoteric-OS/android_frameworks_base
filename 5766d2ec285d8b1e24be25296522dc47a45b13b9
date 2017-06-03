@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1acef2bc_4aaafbbf",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-03T00:09:13Z",
+      "side": 1,
+      "message": "This ties into my question of \"which modem errors are fit for the public API and which ones are \"implementation detail\". If it\u0027s implementation detail we can\u0027t expose it, and even if it\u0027s reliable, unless it\u0027s meaningful/actionable to the user-level API, I\u0027m not in favor of information hiding, but just providing it \"because\" it\u0027s there isn\u0027t especially convincing. On the other hand, if we directly expose the modem error codes then they are now officially sanctioned Android error codes in some form or fashion. If we\u0027re doing that, then it seems like something that should be commong across telephony in this new-world-order, and that means they don\u0027t belong in the NetworkScan API.",
+      "parentUuid": "2d3ba508_dfd1c1e2",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 83
+      },
+      "revId": "5766d2ec285d8b1e24be25296522dc47a45b13b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d48c7141_cddff2de",
         "filename": "telephony/java/android/telephony/NetworkScan.java",
         "patchSetId": 2
