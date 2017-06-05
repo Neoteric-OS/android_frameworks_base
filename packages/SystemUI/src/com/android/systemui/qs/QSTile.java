@@ -84,6 +84,8 @@ public abstract class QSTile<TState extends State> {
     abstract protected void handleClick();
     abstract protected void handleUpdateState(TState state, Object arg);
 
+    private boolean mIsListening;
+
     /**
      * Declare the category of this tile.
      *
@@ -309,10 +311,16 @@ public abstract class QSTile<TState extends State> {
         handleRefreshState(null);
     }
 
+    private void setListeningInternal(boolean listening) {
+        if (mIsListening == listening) return;
+        mIsListening = listening;
+        setListening(listening);
+    }
+
     protected abstract void setListening(boolean listening);
 
     protected void handleDestroy() {
-        setListening(false);
+        setListeningInternal(false);
         mCallbacks.clear();
     }
 
@@ -403,7 +411,7 @@ public abstract class QSTile<TState extends State> {
                     handleClearState();
                 } else if (msg.what == SET_LISTENING) {
                     name = "setListening";
-                    setListening(msg.arg1 != 0);
+                    setListeningInternal(msg.arg1 != 0);
                 } else {
                     throw new IllegalArgumentException("Unknown msg: " + msg.what);
                 }
