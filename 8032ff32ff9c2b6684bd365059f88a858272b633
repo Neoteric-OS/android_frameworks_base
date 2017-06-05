@@ -22,6 +22,30 @@
       "revId": "8032ff32ff9c2b6684bd365059f88a858272b633",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "115bd1e6_70a32bd9",
+        "filename": "packages/CaptivePortalLogin/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-05T12:38:14Z",
+      "side": 1,
+      "message": "will do.",
+      "parentUuid": "804eb7f2_c81f37f5",
+      "range": {
+        "startLine": 8,
+        "startChar": 47,
+        "endLine": 8,
+        "endChar": 51
+      },
+      "revId": "8032ff32ff9c2b6684bd365059f88a858272b633",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

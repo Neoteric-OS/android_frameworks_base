@@ -118,6 +118,30 @@
       "revId": "8f5cb2c54ab50afb2a6a455764896fbcbca5cb14",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd348631_0596913c",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-05T12:38:14Z",
+      "side": 1,
+      "message": "Let\u0027s wait for Naheed\u0027s feedback on that point.",
+      "parentUuid": "c9c6d012_d53ea5b2",
+      "range": {
+        "startLine": 442,
+        "startChar": 57,
+        "endLine": 442,
+        "endChar": 69
+      },
+      "revId": "8f5cb2c54ab50afb2a6a455764896fbcbca5cb14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
