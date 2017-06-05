@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "91999df1_70b3a3a4",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-05T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f61fcb8d_26d17350",
+      "range": {
+        "startLine": 191,
+        "startChar": 7,
+        "endLine": 191,
+        "endChar": 88
+      },
+      "revId": "36985949ff57b8bc1e8d6a87a757540192942b67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b0dfd04_e0dd7180",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 5
@@ -60,6 +84,30 @@
       "writtenOn": "2017-06-01T20:45:36Z",
       "side": 1,
       "message": "this doesn\u0027t look like a local variable. This looks like a constant. Please define it as such in the appropriate scope. (private static final int DUMP_LINE_LEN \u003d 16;)\n\nBut... I\u0027m not sure this is how this should be done. Can you check out some other printwriters and see whether they do forced line breaks?",
+      "range": {
+        "startLine": 192,
+        "startChar": 7,
+        "endLine": 192,
+        "endChar": 28
+      },
+      "revId": "36985949ff57b8bc1e8d6a87a757540192942b67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8221e98_6bf2c20c",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-05T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b0dfd04_e0dd7180",
       "range": {
         "startLine": 192,
         "startChar": 7,
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "00beabe5_e3ac1c45",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-05T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7a3f0a5_5f12e4b6",
+      "range": {
+        "startLine": 891,
+        "startChar": 24,
+        "endLine": 891,
+        "endChar": 32
+      },
+      "revId": "36985949ff57b8bc1e8d6a87a757540192942b67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d5610ab_8120184a",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 5
@@ -141,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "eb413f2d_62abca3d",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-05T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d5610ab_8120184a",
+      "range": {
+        "startLine": 901,
+        "startChar": 0,
+        "endLine": 901,
+        "endChar": 84
+      },
+      "revId": "36985949ff57b8bc1e8d6a87a757540192942b67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1c34635_d2b6318c",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 5
@@ -152,6 +248,30 @@
       "writtenOn": "2017-05-31T15:21:09Z",
       "side": 1,
       "message": "This is a dump, not a log. Could you change this?",
+      "range": {
+        "startLine": 902,
+        "startChar": 20,
+        "endLine": 902,
+        "endChar": 36
+      },
+      "revId": "36985949ff57b8bc1e8d6a87a757540192942b67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78180ee7_26937a1c",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-05T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1c34635_d2b6318c",
       "range": {
         "startLine": 902,
         "startChar": 20,

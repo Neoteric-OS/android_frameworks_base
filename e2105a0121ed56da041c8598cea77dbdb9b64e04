@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "f129a361_164b981d",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-05T21:32:11Z",
+      "side": 1,
+      "message": "It\u0027s @hide?",
+      "parentUuid": "8469e8cf_e723743f",
+      "range": {
+        "startLine": 186,
+        "startChar": 26,
+        "endLine": 186,
+        "endChar": 27
+      },
+      "revId": "e2105a0121ed56da041c8598cea77dbdb9b64e04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee3aea38_9258d3af",
         "filename": "core/java/android/net/IpSecConfig.java",
         "patchSetId": 4
