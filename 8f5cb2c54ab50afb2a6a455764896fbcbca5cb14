@@ -94,6 +94,30 @@
       "revId": "8f5cb2c54ab50afb2a6a455764896fbcbca5cb14",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9c6d012_d53ea5b2",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-05T08:18:35Z",
+      "side": 1,
+      "message": "Good point about MVNOs. In that case the APN name might indeed be meaningful to the user. The content of the login page is likely going to be more meaningful though.",
+      "parentUuid": "10837af7_446ee98d",
+      "range": {
+        "startLine": 442,
+        "startChar": 57,
+        "endLine": 442,
+        "endChar": 69
+      },
+      "revId": "8f5cb2c54ab50afb2a6a455764896fbcbca5cb14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
