@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64151528_98b18c30",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-05T22:58:27Z",
+      "side": 1,
+      "message": "Once we use standard formatting, this won\u0027t be needed.",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 48
+      },
+      "revId": "f99ebf23adf5e23f26d5bf46061c5ff16a87ee7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f984d174_4a175cb6",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-05T22:58:27Z",
+      "side": 1,
+      "message": "I think this can actually be done as a static final rather than as a local.",
+      "range": {
+        "startLine": 192,
+        "startChar": 8,
+        "endLine": 192,
+        "endChar": 62
+      },
+      "revId": "f99ebf23adf5e23f26d5bf46061c5ff16a87ee7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b4294df_f38b0afd",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-05T22:58:27Z",
+      "side": 1,
+      "message": "nit: plz remove",
+      "range": {
+        "startLine": 193,
+        "startChar": 8,
+        "endLine": 193,
+        "endChar": 28
+      },
+      "revId": "f99ebf23adf5e23f26d5bf46061c5ff16a87ee7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bac0962a_96ef0ae6",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-05T22:58:27Z",
+      "side": 1,
+      "message": "println(\"nName\u003d\")",
+      "range": {
+        "startLine": 195,
+        "startChar": 17,
+        "endLine": 195,
+        "endChar": 22
+      },
+      "revId": "f99ebf23adf5e23f26d5bf46061c5ff16a87ee7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bddc72f4_0dd48735",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-05T22:58:27Z",
+      "side": 1,
+      "message": "A few things here:\n1) It looks like strings printed for the debugger are not usually spaced.\n2) When doing a dump() speed is actually important. it looks like solutions such as those in IccUtils.bytesToHexString() are faster.\n3) Let\u0027s factor this out into a little static utility function.\n4) Is this tagged with the variable name \"mKey\"?",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 13
+      },
+      "revId": "f99ebf23adf5e23f26d5bf46061c5ff16a87ee7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0583ca7_17cda502",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-05T22:58:27Z",
+      "side": 1,
+      "message": "Is this formatting convention used elsewhere?\n\u0027192.168.0.1\u0027 rather than just the raw value?",
+      "range": {
+        "startLine": 172,
+        "startChar": 32,
+        "endLine": 172,
+        "endChar": 33
+      },
+      "revId": "f99ebf23adf5e23f26d5bf46061c5ff16a87ee7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
