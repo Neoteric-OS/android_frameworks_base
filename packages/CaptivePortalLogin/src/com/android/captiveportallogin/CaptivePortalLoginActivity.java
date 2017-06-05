@@ -46,6 +46,9 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.internal.logging.MetricsLogger;
+import com.android.internal.logging.MetricsProto.MetricsEvent;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -62,7 +65,14 @@ public class CaptivePortalLoginActivity extends Activity {
 
     private static final int SOCKET_TIMEOUT_MS = 10000;
 
-    private enum Result { DISMISSED, UNWANTED, WANTED_AS_IS };
+    private enum Result {
+        DISMISSED(MetricsEvent.ACTION_CAPTIVE_PORTAL_LOGIN_RESULT_DISMISSED),
+        UNWANTED(MetricsEvent.ACTION_CAPTIVE_PORTAL_LOGIN_RESULT_UNWANTED),
+        WANTED_AS_IS(MetricsEvent.ACTION_CAPTIVE_PORTAL_LOGIN_RESULT_WANTED_AS_IS);
+
+        final int metricsConstant;
+        Result(int metricsConstant) { this.metricsConstant = metricsConstant; }
+    };
 
     private URL mUrl;
     private String mUserAgent;
@@ -76,6 +86,10 @@ public class CaptivePortalLoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        MetricsLogger.action(getApplicationContext(),
+                MetricsEvent.ACTION_CAPTIVE_PORTAL_LOGIN_ACTIVITY, "android");
+
         mCm = ConnectivityManager.from(this);
         mNetwork = getIntent().getParcelableExtra(ConnectivityManager.EXTRA_NETWORK);
         mCaptivePortal = getIntent().getParcelableExtra(ConnectivityManager.EXTRA_CAPTIVE_PORTAL);
@@ -172,6 +186,7 @@ public class CaptivePortalLoginActivity extends Activity {
             mCm.unregisterNetworkCallback(mNetworkCallback);
             mNetworkCallback = null;
         }
+        MetricsLogger.action(getApplicationContext(), result.metricsConstant, "android");
         switch (result) {
             case DISMISSED:
                 mCaptivePortal.reportCaptivePortalDismissed();
