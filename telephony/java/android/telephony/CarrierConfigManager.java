@@ -1287,6 +1287,15 @@ public class CarrierConfigManager {
             "network_notification_delay_int";
 
     /**
+     * When {@code true}, the carrier allows the user of the
+     * {@link TelephonyManager#sendUssdRequest(String, TelephonyManager.UssdResponseCallback,
+     * Handler)} API to perform USSD requests.  {@code True} by default.
+     * @hide
+     */
+    public static final String KEY_ALLOW_USSD_REQUESTS_VIA_TELEPHONY_MANAGER_BOOL =
+            "allow_ussd_requests_via_telephony_manager_bool";
+
+    /**
      * Determine whether user edited tether APN (type dun) has effect
      * {@code false} - Default. APN with dun type in telephony database has no effect.
      *
@@ -1619,6 +1628,7 @@ public class CarrierConfigManager {
         sDefaults.putStringArray(KEY_CARRIER_WIFI_STRING_ARRAY, null);
         sDefaults.putInt(KEY_PREF_NETWORK_NOTIFICATION_DELAY_INT, -1);
         sDefaults.putBoolean(KEY_EDITABLE_TETHER_APN_BOOL, false);
+        sDefaults.putBoolean(KEY_ALLOW_USSD_REQUESTS_VIA_TELEPHONY_MANAGER_BOOL, true);
         sDefaults.putBoolean(KEY_SUPPORT_3GPP_CALL_FORWARDING_WHILE_ROAMING_BOOL, true);
         sDefaults.putStringArray(KEY_CALL_FORWARDING_BLOCKS_WHILE_ROAMING_STRING_ARRAY, null);
         sDefaults.putBoolean(KEY_NOTIFY_INTERNATIONAL_CALL_ON_WFC_BOOL, false);
