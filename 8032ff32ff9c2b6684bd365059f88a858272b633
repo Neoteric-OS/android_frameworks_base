@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "804eb7f2_c81f37f5",
+        "filename": "packages/CaptivePortalLogin/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-05T08:21:13Z",
+      "side": 1,
+      "message": "Do you need to add a comment to indicate what this parameter is, and how long it can be? I\u0027ve seen comments like that in frameworks/base/core/res/res/values/strings.xml .",
+      "range": {
+        "startLine": 8,
+        "startChar": 47,
+        "endLine": 8,
+        "endChar": 51
+      },
+      "revId": "8032ff32ff9c2b6684bd365059f88a858272b633",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
