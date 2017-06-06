@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "536612d5_a87347ab",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-06T17:54:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ba6fd79_f9c6224f",
+      "revId": "1c955f9c96818f07b0d63a612c666c6419c51b06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1700b3e5_8f1cbd58",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 9
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-06T01:25:26Z",
       "side": 1,
       "message": "Please look at the dumpers for something like ConnectivityService and follow the format as much as possible.",
+      "range": {
+        "startLine": 858,
+        "startChar": 39,
+        "endLine": 858,
+        "endChar": 40
+      },
+      "revId": "1c955f9c96818f07b0d63a612c666c6419c51b06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90716a0e_f75fc5ce",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-06T17:54:09Z",
+      "side": 1,
+      "message": "Checked some other dumps. Some like Handler.toString and VolumeInfo.dump use parenthesis, and some uses raw string. Here I made a change for parenthesis.",
+      "parentUuid": "1700b3e5_8f1cbd58",
       "range": {
         "startLine": 858,
         "startChar": 39,
