@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b71e9093_519ab5b6",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-06T01:23:37Z",
+      "side": 1,
+      "message": "Done. Removed it.",
+      "parentUuid": "64151528_98b18c30",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 48
+      },
+      "revId": "f99ebf23adf5e23f26d5bf46061c5ff16a87ee7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f984d174_4a175cb6",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-05T22:58:27Z",
       "side": 1,
       "message": "I think this can actually be done as a static final rather than as a local.",
+      "range": {
+        "startLine": 192,
+        "startChar": 8,
+        "endLine": 192,
+        "endChar": 62
+      },
+      "revId": "f99ebf23adf5e23f26d5bf46061c5ff16a87ee7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c77d67b8_16c10730",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-06T01:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f984d174_4a175cb6",
       "range": {
         "startLine": 192,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9206db37_c5527199",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-06T01:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b4294df_f38b0afd",
+      "range": {
+        "startLine": 193,
+        "startChar": 8,
+        "endLine": 193,
+        "endChar": 28
+      },
+      "revId": "f99ebf23adf5e23f26d5bf46061c5ff16a87ee7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bac0962a_96ef0ae6",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 8
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-05T22:58:27Z",
       "side": 1,
       "message": "println(\"nName\u003d\")",
+      "range": {
+        "startLine": 195,
+        "startChar": 17,
+        "endLine": 195,
+        "endChar": 22
+      },
+      "revId": "f99ebf23adf5e23f26d5bf46061c5ff16a87ee7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ead18027_8370ecb3",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-06T01:23:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bac0962a_96ef0ae6",
       "range": {
         "startLine": 195,
         "startChar": 17,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c7e81966_cc2364b4",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-06T01:23:37Z",
+      "side": 1,
+      "message": "Copied the byteToHexString from IccUtils as a helper function, and added the mName, mKey in dump.",
+      "parentUuid": "bddc72f4_0dd48735",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 13
+      },
+      "revId": "f99ebf23adf5e23f26d5bf46061c5ff16a87ee7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0583ca7_17cda502",
         "filename": "core/java/android/net/IpSecConfig.java",
         "patchSetId": 8
@@ -128,6 +248,30 @@
       "writtenOn": "2017-06-05T22:58:27Z",
       "side": 1,
       "message": "Is this formatting convention used elsewhere?\n\u0027192.168.0.1\u0027 rather than just the raw value?",
+      "range": {
+        "startLine": 172,
+        "startChar": 32,
+        "endLine": 172,
+        "endChar": 33
+      },
+      "revId": "f99ebf23adf5e23f26d5bf46061c5ff16a87ee7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dbc74232_524246ff",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-06T01:23:37Z",
+      "side": 1,
+      "message": "I don\u0027t know if there is a formatting convention. I just want to provide more clarity when this is an empty string, it doesn\u0027t look like a 0 length integer array.",
+      "parentUuid": "d0583ca7_17cda502",
       "range": {
         "startLine": 172,
         "startChar": 32,
