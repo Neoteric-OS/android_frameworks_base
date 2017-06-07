@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ba6d317_23d1cc83",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-07T23:35:29Z",
+      "side": 0,
+      "message": "If I understood correctly this patch also changes the way that the upstream is selected by looking at NetworkCapabilities instead of NetworkInfo, is it right ? If so could you add this to the commit msg ?",
+      "range": {
+        "startLine": 1260,
+        "startChar": 0,
+        "endLine": 1268,
+        "endChar": 17
+      },
+      "revId": "bede96729c1e60d53119e9b83ad1b8ff68b28c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
