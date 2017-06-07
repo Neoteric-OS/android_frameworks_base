@@ -93,6 +93,30 @@
       "revId": "7a366fd019c8bb656eee636fd4c3e9615b04bfd8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "677d5cb2_876508f1",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-06-07T23:30:44Z",
+      "side": 1,
+      "message": "As discussed, the correct thing to do here is to copy-paste this code snippet all around the android codebase. I am currently sad.",
+      "parentUuid": "a2749f6e_46d1cbfa",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 5
+      },
+      "revId": "7a366fd019c8bb656eee636fd4c3e9615b04bfd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
