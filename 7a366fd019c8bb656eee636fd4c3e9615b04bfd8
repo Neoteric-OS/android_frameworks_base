@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9984a682_f442eac2",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-06-07T22:27:06Z",
+      "side": 1,
+      "message": "I don\u0027t see the point of copying this. Just use \"Build.IS_DEBUGGABLE\" below.",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 79
+      },
+      "revId": "7a366fd019c8bb656eee636fd4c3e9615b04bfd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2749f6e_46d1cbfa",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-06-07T22:27:06Z",
+      "side": 1,
+      "message": "Didn\u0027t we cover this exact thing in a previous CL? I seem to recall that we found a better way to do the same thing.",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 5
+      },
+      "revId": "7a366fd019c8bb656eee636fd4c3e9615b04bfd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
