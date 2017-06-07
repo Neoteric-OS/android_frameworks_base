@@ -121,12 +121,15 @@ public class MbmsDownloadReceiver extends BroadcastReceiver {
         }
 
         String relativePath = calculateDestinationFileRelativePath(request,
-                (FileInfo) intent.getParcelableExtra(MbmsDownloadManager.EXTRA_INFO));
+                intent.getParcelableExtra(MbmsDownloadManager.EXTRA_INFO));
 
-        if (!moveTempFile(finalTempFile, destinationUri, relativePath)) {
+        Uri finalFileLocation = moveTempFile(finalTempFile, destinationUri, relativePath);
+        if (finalFileLocation == null) {
             Log.w(LOG_TAG, "Failed to move temp file to final destination");
+            // TODO: how do we notify the app of this?
             setResultCode(1);
         }
+        intentForApp.putExtra(MbmsDownloadManager.EXTRA_COMPLETED_FILE_URI, finalFileLocation);
 
         context.sendBroadcast(intentForApp);
         setResultCode(0);
@@ -226,7 +229,6 @@ public class MbmsDownloadReceiver extends BroadcastReceiver {
         return null;
     }
 
-
     private ArrayList<UriPathPair> generateUrisForPausedFiles(Context context,
             DownloadRequest request, List<Uri> pausedFiles) {
         if (pausedFiles == null) {
@@ -259,12 +261,12 @@ public class MbmsDownloadReceiver extends BroadcastReceiver {
     private static String calculateDestinationFileRelativePath(DownloadRequest request,
             FileInfo info) {
         // TODO: determine whether this is actually the path determination scheme we want to use
-        List<String> filePathComponents = info.uri.getPathSegments();
+        List<String> filePathComponents = info.getUri().getPathSegments();
         List<String> requestPathComponents = request.getSourceUri().getPathSegments();
         Iterator<String> filePathIter = filePathComponents.iterator();
         Iterator<String> requestPathIter = requestPathComponents.iterator();
 
-        LinkedList<String> relativePathComponents = new LinkedList<>();
+        StringBuilder pathBuilder = new StringBuilder();
         while (filePathIter.hasNext()) {
             String currFilePathComponent = filePathIter.next();
             if (requestPathIter.hasNext()) {
@@ -273,28 +275,39 @@ public class MbmsDownloadReceiver extends BroadcastReceiver {
                     continue;
                 }
             }
-            relativePathComponents.add(currFilePathComponent);
+            pathBuilder.append(currFilePathComponent);
+            pathBuilder.append('/');
         }
-        return String.join("/", relativePathComponents);
+        // remove the trailing slash
+        if (pathBuilder.length() > 0) {
+            pathBuilder.deleteCharAt(pathBuilder.length() - 1);
+        }
+        return pathBuilder.toString();
     }
 
-    private static boolean moveTempFile(Uri fromPath, Uri toPath, String relativePath) {
+    private static Uri moveTempFile(Uri fromPath, Uri toPath, String relativePath) {
         if (!ContentResolver.SCHEME_FILE.equals(fromPath.getScheme())) {
             Log.w(LOG_TAG, "Moving source uri " + fromPath+ " does not have a file scheme");
-            return false;
+            return null;
         }
         if (!ContentResolver.SCHEME_FILE.equals(toPath.getScheme())) {
             Log.w(LOG_TAG, "Moving destination uri " + toPath + " does not have a file scheme");
-            return false;
+            return null;
         }
 
         File fromFile = new File(fromPath.getSchemeSpecificPart());
-        File toFile = new File(toPath.getSchemeSpecificPart(), relativePath);
+        File toFile = new File(toPath.getSchemeSpecificPart());
+        if (toFile.isDirectory()) {
+            toFile = new File(toFile, relativePath);
+        }
         toFile.getParentFile().mkdirs();
 
         // TODO: This may not work if the two files are on different filesystems. Should we
         // enforce that the temp file storage and the permanent storage are both in the same fs?
-        return fromFile.renameTo(toFile);
+        if (fromFile.renameTo(toFile)) {
+            return Uri.fromFile(toFile);
+        }
+        return null;
     }
 
     private static boolean verifyTempFilePath(Context context, DownloadRequest request,
@@ -323,8 +336,7 @@ public class MbmsDownloadReceiver extends BroadcastReceiver {
      * Returns a File linked to the directory used to store temp files for this request
      */
     private static File getEmbmsTempFileDirForRequest(Context context, DownloadRequest request) {
-        File embmsTempFileDir = MbmsTempFileProvider.getEmbmsTempFileDir(
-                context, getFileProviderAuthority(context));
+        File embmsTempFileDir = MbmsTempFileProvider.getEmbmsTempFileDir(context);
 
         // TODO: better naming scheme for temp file dirs
         String tempFileDirName = String.valueOf(request.getFileServiceInfo().getServiceId());
