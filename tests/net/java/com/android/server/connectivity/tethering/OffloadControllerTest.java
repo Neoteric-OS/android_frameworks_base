@@ -30,6 +30,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.RouteInfo;
@@ -59,6 +60,7 @@ import org.mockito.MockitoAnnotations;
 public class OffloadControllerTest {
 
     @Mock private OffloadHardwareInterface mHardware;
+    @Mock private ApplicationInfo mApplicationInfo;
     @Mock private Context mContext;
     final ArgumentCaptor<ArrayList> mStringArrayCaptor = ArgumentCaptor.forClass(ArrayList.class);
     private MockContentResolver mContentResolver;
@@ -68,6 +70,7 @@ public class OffloadControllerTest {
         mContentResolver = new MockContentResolver(mContext);
         mContentResolver.addProvider(Settings.AUTHORITY, new FakeSettingsProvider());
         when(mContext.getPackageName()).thenReturn("OffloadControllerTest");
+        when(mContext.getApplicationInfo()).thenReturn(mApplicationInfo);
         when(mContext.getContentResolver()).thenReturn(mContentResolver);
     }
 
