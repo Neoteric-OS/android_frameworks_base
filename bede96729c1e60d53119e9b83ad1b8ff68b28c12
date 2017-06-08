@@ -22,6 +22,30 @@
       "revId": "bede96729c1e60d53119e9b83ad1b8ff68b28c12",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0d3f8fd_1a98ebde",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-08T07:37:50Z",
+      "side": 0,
+      "message": "That is correct.\n\nI\u0027ve updated the comment in the commit message.\n\nThe onAvailable() method of the callbacks aren\u0027t called until the networks are in state CONNECTED, so should be functionally equivalent.",
+      "parentUuid": "5ba6d317_23d1cc83",
+      "range": {
+        "startLine": 1260,
+        "startChar": 0,
+        "endLine": 1268,
+        "endChar": 17
+      },
+      "revId": "bede96729c1e60d53119e9b83ad1b8ff68b28c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
