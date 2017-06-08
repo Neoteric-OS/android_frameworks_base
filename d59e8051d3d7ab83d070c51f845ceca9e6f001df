@@ -1,0 +1,320 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfabae33_68063ea2",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-08T22:31:42Z",
+      "side": 1,
+      "message": "Injected",
+      "range": {
+        "startLine": 101,
+        "startChar": 7,
+        "endLine": 101,
+        "endChar": 16
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bec1f44e_5159f7e7",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-08T22:31:42Z",
+      "side": 1,
+      "message": "void please",
+      "range": {
+        "startLine": 742,
+        "startChar": 4,
+        "endLine": 742,
+        "endChar": 16
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "664bb608_2cd1c0e9",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-08T22:31:42Z",
+      "side": 1,
+      "message": "You don\u0027t need to do this.",
+      "range": {
+        "startLine": 744,
+        "startChar": 8,
+        "endLine": 744,
+        "endChar": 20
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e08c6957_fc28354c",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-08T22:31:42Z",
+      "side": 1,
+      "message": "spacing is wrong in this file as well... 4 space indents.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 3
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a61cc69c_0f4b69e3",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-08T22:31:42Z",
+      "side": 1,
+      "message": "It\u0027s strange to declare these instance variables in this manner. Are they static final? Are they mutable? if they are members, they should be prefixed with \"m\" or \"s\" unless they are final, in which case they should be ALL_CAPS. Please please use the Android Java Style.\n\nhttps://source.android.com/source/code-style",
+      "range": {
+        "startLine": 47,
+        "startChar": 1,
+        "endLine": 47,
+        "endChar": 91
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b91e37b_6612996e",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-08T22:31:42Z",
+      "side": 1,
+      "message": "Again weird variable names... all throughout.",
+      "range": {
+        "startLine": 48,
+        "startChar": 24,
+        "endLine": 48,
+        "endChar": 41
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b48ebd8c_af043090",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-08T22:31:42Z",
+      "side": 1,
+      "message": "So the mocks leak from test to test?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a617e381_ae0a0e28",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-08T22:31:42Z",
+      "side": 1,
+      "message": "Any interest in testing error conditions?",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 31
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ce38727_f4b0bb01",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-08T22:31:42Z",
+      "side": 1,
+      "message": "This completely bypasses the test code. You have to mock the setsockopt call for this.",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 39
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93eefe3b_32ec5dd0",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-08T22:31:42Z",
+      "side": 1,
+      "message": "This actually looks like something you can make a static at the class level.",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 64
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d66ad7a9_fe73270f",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-08T22:31:42Z",
+      "side": 1,
+      "message": "Something weird here... with the formatting",
+      "range": {
+        "startLine": 87,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 20
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ffb4b3b_0f7a8b92",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-08T22:31:42Z",
+      "side": 1,
+      "message": "For Tests *only*, it\u0027s fine to just throw Exception",
+      "range": {
+        "startLine": 94,
+        "startChar": 13,
+        "endLine": 95,
+        "endChar": 59
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9761cea4_3a9ebcdf",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-08T22:31:42Z",
+      "side": 1,
+      "message": "This test also needs to verify the socket if not specified. https://cs.corp.google.com/android/frameworks/base/core/java/android/net/IpSecManager.java?q\u003dopenUdpEncapsul\u0026sq\u003dpackage:android\u0026l\u003d545",
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f7c7598_3321c5a9",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-08T22:31:42Z",
+      "side": 1,
+      "message": "The unit tests need to verify that the data is sent correctly to netd.\n\ndata in -\u003e data out",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 31
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
