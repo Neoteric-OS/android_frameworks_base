@@ -215,13 +215,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // See Settings.Secure.CONNECTIVITY_RELEASE_PENDING_INTENT_DELAY_MS
     private final int mReleasePendingIntentDelayMs;
 
-    // Driver specific constants used to select packets received via
-    // WiFi that caused the phone to exit sleep state. Currently there
-    // is only one kernel implementation so we can get away with
-    // constants.
-    private static final int mWakeupPacketMark = 0x80000000;
-    private static final int mWakeupPacketMask = 0x80000000;
-
     private MockableSystemProperties mSystemProperties;
 
     private Tethering mTethering;
@@ -4535,16 +4528,23 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (!caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
             return;
         }
-        mNetd.getNetdService().wakeupAddInterface(
-            iface, "iface:" + iface, mWakeupPacketMark, mWakeupPacketMask);
+
+        int mark = mContext.getResources().getInteger(
+            com.android.internal.R.integer.config_networkWakeupPacketMark);
+        int mask = mContext.getResources().getInteger(
+            com.android.internal.R.integer.config_networkWakeupPacketMask);
+        mNetd.getNetdService().wakeupAddInterface(iface, "iface:" + iface, mark, mask);
     }
 
     private void wakeupDelInterface(String iface, NetworkCapabilities caps) throws RemoteException {
         if (!caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
             return;
         }
-        mNetd.getNetdService().wakeupDelInterface(
-            iface, "iface:" + iface, mWakeupPacketMark, mWakeupPacketMask);
+        int mark = mContext.getResources().getInteger(
+            com.android.internal.R.integer.config_networkWakeupPacketMark);
+        int mask = mContext.getResources().getInteger(
+            com.android.internal.R.integer.config_networkWakeupPacketMask);
+        mNetd.getNetdService().wakeupDelInterface(iface, "iface:" + iface, mark, mask);
     }
 
     private void updateInterfaces(LinkProperties newLp, LinkProperties oldLp, int netId,
