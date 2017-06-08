@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e94f77c4_d371b683",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-06-08T18:20:03Z",
+      "side": 1,
+      "message": "should we keep UNSUPPORTED?",
+      "range": {
+        "startLine": 49,
+        "startChar": 41,
+        "endLine": 49,
+        "endChar": 50
+      },
+      "revId": "66726efc08bae0cfbb6d9b93ad60a9084006d1a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
