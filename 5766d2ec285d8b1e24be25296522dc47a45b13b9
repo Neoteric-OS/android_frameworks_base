@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "11327b8b_c994b54b",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-06-08T17:42:13Z",
+      "side": 1,
+      "message": "I agree that \"we should limit this to success/failure unless there are actions or UI the app should reasonably use to resolve them\". So now I consolidate those ril erros into \"scan errors\", which may help the users to understand what is wrong and what action should be taken next.",
+      "parentUuid": "63e59819_79dd5d81",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 83
+      },
+      "revId": "5766d2ec285d8b1e24be25296522dc47a45b13b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d48c7141_cddff2de",
         "filename": "telephony/java/android/telephony/NetworkScan.java",
         "patchSetId": 2
@@ -251,6 +275,30 @@
       "side": 1,
       "message": "OK.\n\nAdd comment about only needed to support pre-treble modems and To Be Removed.",
       "parentUuid": "3bf593bf_02d4db0e",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 13
+      },
+      "revId": "5766d2ec285d8b1e24be25296522dc47a45b13b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "769bbd06_a630bc6e",
+        "filename": "telephony/java/android/telephony/NetworkScanRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-06-08T17:42:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b0764a_130b024e",
       "range": {
         "startLine": 36,
         "startChar": 9,
