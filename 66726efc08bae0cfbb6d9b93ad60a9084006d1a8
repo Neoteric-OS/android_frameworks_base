@@ -22,6 +22,30 @@
       "revId": "66726efc08bae0cfbb6d9b93ad60a9084006d1a8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a9ed73f_e909eea0",
+        "filename": "telephony/java/android/telephony/NetworkScan.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-06-08T18:39:22Z",
+      "side": 1,
+      "message": "From the modem team \"Usually this is returned when the request is not implemented\", so maybe it can be regarded as kind of \"modem error\"?",
+      "parentUuid": "e94f77c4_d371b683",
+      "range": {
+        "startLine": 49,
+        "startChar": 41,
+        "endLine": 49,
+        "endChar": 50
+      },
+      "revId": "66726efc08bae0cfbb6d9b93ad60a9084006d1a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
