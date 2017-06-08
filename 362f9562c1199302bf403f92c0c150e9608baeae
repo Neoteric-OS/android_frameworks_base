@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f9a967d_f364a725",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 19645,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2017-06-08T14:48:40Z",
+      "side": 1,
+      "message": "i don\u0027t like this because any other flag besides FLAG_STORAGE_DE will cause this test to fail and you\u0027re back deleting DE data when you don\u0027t expect to.\n\nwhat about:\n  destroyUserDataLI(..., flags \u0026 (FLAG_STORAGE_CE|FLAG_STORAGE_DE), ..)\n\nor, just pass in \u0027flags\u0027 as-is to destroyUserDataLI()?",
+      "range": {
+        "startLine": 19645,
+        "startChar": 12,
+        "endLine": 19645,
+        "endChar": 58
+      },
+      "revId": "362f9562c1199302bf403f92c0c150e9608baeae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
