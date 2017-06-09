@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8e461c7f_bd26b5e5",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-09T17:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfabae33_68063ea2",
+      "range": {
+        "startLine": 101,
+        "startChar": 7,
+        "endLine": 101,
+        "endChar": 16
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bec1f44e_5159f7e7",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 18
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-08T22:31:42Z",
       "side": 1,
       "message": "void please",
+      "range": {
+        "startLine": 742,
+        "startChar": 4,
+        "endLine": 742,
+        "endChar": 16
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a764792a_973a00cc",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-09T17:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bec1f44e_5159f7e7",
       "range": {
         "startLine": 742,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "334d31d0_fa4dd7a6",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-09T17:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "664bb608_2cd1c0e9",
+      "range": {
+        "startLine": 744,
+        "startChar": 8,
+        "endLine": 744,
+        "endChar": 20
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e08c6957_fc28354c",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 18
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-08T22:31:42Z",
       "side": 1,
       "message": "spacing is wrong in this file as well... 4 space indents.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 3
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "730720f9_c295c24f",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-09T17:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e08c6957_fc28354c",
       "range": {
         "startLine": 42,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8c471086_fa3c9af6",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-09T17:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a61cc69c_0f4b69e3",
+      "range": {
+        "startLine": 47,
+        "startChar": 1,
+        "endLine": 47,
+        "endChar": 91
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b91e37b_6612996e",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 18
@@ -128,6 +248,30 @@
       "writtenOn": "2017-06-08T22:31:42Z",
       "side": 1,
       "message": "Again weird variable names... all throughout.",
+      "range": {
+        "startLine": 48,
+        "startChar": 24,
+        "endLine": 48,
+        "endChar": 41
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96a1f77b_7a936a20",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-09T17:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b91e37b_6612996e",
       "range": {
         "startLine": 48,
         "startChar": 24,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "5390c530_5626bca7",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-09T17:45:45Z",
+      "side": 1,
+      "message": "Just sharing the variable to avoid copying code around.",
+      "parentUuid": "b48ebd8c_af043090",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a617e381_ae0a0e28",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 18
@@ -174,6 +342,30 @@
       "writtenOn": "2017-06-08T22:31:42Z",
       "side": 1,
       "message": "Any interest in testing error conditions?",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 31
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3d6542e_f4588b00",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-09T17:45:45Z",
+      "side": 1,
+      "message": "Add a second function call which will return 0 for the same SPI.",
+      "parentUuid": "a617e381_ae0a0e28",
       "range": {
         "startLine": 61,
         "startChar": 0,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "6004816e_aa38061e",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-09T17:45:45Z",
+      "side": 1,
+      "message": "Removed this part of code",
+      "parentUuid": "1ce38727_f4b0bb01",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 39
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93eefe3b_32ec5dd0",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 18
@@ -220,6 +436,30 @@
       "writtenOn": "2017-06-08T22:31:42Z",
       "side": 1,
       "message": "This actually looks like something you can make a static at the class level.",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 64
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76a9101e_513a52fa",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-09T17:45:45Z",
+      "side": 1,
+      "message": "It needs some exception handling, changed it to a member function mLocalAddr",
+      "parentUuid": "93eefe3b_32ec5dd0",
       "range": {
         "startLine": 72,
         "startChar": 0,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "ec6d7579_6f173aa3",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-09T17:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d66ad7a9_fe73270f",
+      "range": {
+        "startLine": 87,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 20
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ffb4b3b_0f7a8b92",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 18
@@ -266,6 +530,30 @@
       "writtenOn": "2017-06-08T22:31:42Z",
       "side": 1,
       "message": "For Tests *only*, it\u0027s fine to just throw Exception",
+      "range": {
+        "startLine": 94,
+        "startChar": 13,
+        "endLine": 95,
+        "endChar": 59
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c843fdee_a0724bd1",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-09T17:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ffb4b3b_0f7a8b92",
       "range": {
         "startLine": 94,
         "startChar": 13,
@@ -295,6 +583,24 @@
     },
     {
       "key": {
+        "uuid": "ea62505c_6dad4932",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-09T17:45:45Z",
+      "side": 1,
+      "message": "I will add test in the IpSecManagerTest for this.",
+      "parentUuid": "9761cea4_3a9ebcdf",
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f7c7598_3321c5a9",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 18
@@ -306,6 +612,30 @@
       "writtenOn": "2017-06-08T22:31:42Z",
       "side": 1,
       "message": "The unit tests need to verify that the data is sent correctly to netd.\n\ndata in -\u003e data out",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 31
+      },
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86d51a9e_4333516d",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-09T17:45:45Z",
+      "side": 1,
+      "message": "Not all the information are complete. Added some comparison with the generated IpSecConfig.",
+      "parentUuid": "6f7c7598_3321c5a9",
       "range": {
         "startLine": 115,
         "startChar": 0,
