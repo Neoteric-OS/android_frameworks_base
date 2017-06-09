@@ -7532,7 +7532,8 @@ public class PackageManagerService extends IPackageManager.Stub {
     @Override
     public boolean performDexOptSecondary(String packageName, String compilerFilter,
             boolean force) {
-        return mDexManager.dexoptSecondaryDex(packageName, compilerFilter, force);
+        return mDexManager.dexoptSecondaryDex(packageName, compilerFilter, force,
+                /* compileOnlySharedDex*/ false);
     }
 
     public boolean performDexOptSecondary(String packageName, int compileReason,
