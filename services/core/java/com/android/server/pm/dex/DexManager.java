@@ -282,7 +282,7 @@ public class DexManager {
     public boolean dexoptSecondaryDex(String packageName, int compilerReason, boolean force) {
         return dexoptSecondaryDex(packageName,
                 PackageManagerServiceCompilerMapping.getCompilerFilterForReason(compilerReason),
-                force);
+                force, /* compileOnlySharedDex */ false);
     }
 
     /**
@@ -290,7 +290,8 @@ public class DexManager {
      * @return true if all secondary dex files were processed successfully (compiled or skipped
      *         because they don't need to be compiled)..
      */
-    public boolean dexoptSecondaryDex(String packageName, String compilerFilter, boolean force) {
+    public boolean dexoptSecondaryDex(String packageName, String compilerFilter, boolean force,
+            boolean compileOnlySharedDex) {
         // Select the dex optimizer based on the force parameter.
         // Forced compilation is done through ForcedUpdatePackageDexOptimizer which will adjust
         // the necessary dexopt flags to make sure that compilation is not skipped. This avoid
@@ -312,6 +313,9 @@ public class DexManager {
         for (Map.Entry<String, DexUseInfo> entry : useInfo.getDexUseInfoMap().entrySet()) {
             String dexPath = entry.getKey();
             DexUseInfo dexUseInfo = entry.getValue();
+            if (compileOnlySharedDex && !dexUseInfo.isUsedByOtherApps()) {
+                continue;
+            }
             PackageInfo pkg = null;
             try {
                 pkg = mPackageManager.getPackageInfo(packageName, /*flags*/0,

@@ -18,6 +18,7 @@ package com.android.server.pm;
 
 import static com.android.server.pm.InstructionSets.getAppDexInstructionSets;
 import static com.android.server.pm.InstructionSets.getDexCodeInstructionSets;
+import static com.android.server.pm.PackageManagerService.REASON_INSTALL;
 import static com.android.server.pm.PackageManagerServiceCompilerMapping.getCompilerFilterForReason;
 
 import android.annotation.Nullable;
@@ -318,6 +319,10 @@ public class OtaDexoptService extends IOtaDexopt.Stub {
                 mPackageManagerService.getDexManager().isUsedByOtherApps(pkg.packageName),
                 true /* bootComplete */);
 
+        mPackageManagerService.getDexManager().dexoptSecondaryDex(pkg.packageName,
+                getCompilerFilterForReason(compilationReason),
+                false /* force */,
+                false /* compileOnlySharedDex */);
         return commands;
     }
 

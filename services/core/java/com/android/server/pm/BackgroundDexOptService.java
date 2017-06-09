@@ -373,7 +373,6 @@ public class BackgroundDexOptService extends JobService {
         } else {
             return runIdleOptimization(params, pm, pkgs);
         }
-    }
 
     @Override
     public boolean onStopJob(JobParameters params) {

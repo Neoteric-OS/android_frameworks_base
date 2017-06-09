@@ -7380,24 +7380,38 @@ public class PackageManagerService extends IPackageManager.Stub {
             // Unfortunately this will also means that "pm.dexopt.boot=speed-profile" will
             // behave differently than "pm.dexopt.bg-dexopt=speed-profile" but that's a
             // trade-off worth doing to save boot time work.
-            int dexOptStatus = performDexOptTraced(pkg.packageName,
+            int primaryDexOptStaus = performDexOptTraced(pkg.packageName,
                     false /* checkProfiles */,
                     compilerFilter,
                     false /* force */,
                     bootComplete);
-            switch (dexOptStatus) {
-                case PackageDexOptimizer.DEX_OPT_PERFORMED:
-                    numberOfPackagesOptimized++;
-                    break;
-                case PackageDexOptimizer.DEX_OPT_SKIPPED:
-                    numberOfPackagesSkipped++;
-                    break;
-                case PackageDexOptimizer.DEX_OPT_FAILED:
-                    numberOfPackagesFailed++;
-                    break;
-                default:
-                    Log.e(TAG, "Unexpected dexopt return code " + dexOptStatus);
-                    break;
+
+            boolean secondaryDexOptStatus = true;
+            if (pkg.isSystemApp()) {
+                // Only dexopt shared secondary dex files belonging to system apps.
+                secondaryDexOptStatus = mDexManager.dexoptSecondaryDex(pkg.packageName,
+                        compilerFilter,
+                        false /* force */,
+                        true /* compileOnlySharedDex */);
+            }
+
+            if (secondaryDexOptStatus) {
+                switch (primaryDexOptStaus) {
+                    case PackageDexOptimizer.DEX_OPT_PERFORMED:
+                        numberOfPackagesOptimized++;
+                        break;
+                    case PackageDexOptimizer.DEX_OPT_SKIPPED:
+                        numberOfPackagesSkipped++;
+                        break;
+                    case PackageDexOptimizer.DEX_OPT_FAILED:
+                        numberOfPackagesFailed++;
+                        break;
+                    default:
+                        Log.e(TAG, "Unexpected dexopt return code " + primaryDexOptStaus);
+                        break;
+                }
+            } else {
+                numberOfPackagesFailed++;
             }
         }
 
@@ -7532,7 +7546,8 @@ public class PackageManagerService extends IPackageManager.Stub {
     @Override
     public boolean performDexOptSecondary(String packageName, String compilerFilter,
             boolean force) {
-        return mDexManager.dexoptSecondaryDex(packageName, compilerFilter, force);
+        return mDexManager.dexoptSecondaryDex(packageName, compilerFilter, force,
+                /* compileOnlySharedDex*/ false);
     }
 
     public boolean performDexOptSecondary(String packageName, int compileReason,
