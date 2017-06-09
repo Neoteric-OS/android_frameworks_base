@@ -185,7 +185,7 @@ public class UpstreamNetworkMonitor {
     // passing LinkProperties up to Tethering).
     //
     // Next TODO: return NetworkState instead of just the type.
-    public int selectPreferredUpstreamType(Iterable<Integer> preferredTypes) {
+    public NetworkState selectPreferredUpstreamType(Iterable<Integer> preferredTypes) {
         final TypeStatePair typeStatePair = findFirstAvailableUpstreamByType(
                 mNetworkMap.values(), preferredTypes);
 
@@ -210,7 +210,7 @@ public class UpstreamNetworkMonitor {
                 break;
         }
 
-        return typeStatePair.type;
+        return typeStatePair.ns;
     }
 
     private void handleAvailable(int callbackType, Network network) {
