@@ -601,6 +601,24 @@
     },
     {
       "key": {
+        "uuid": "22639cd1_229615c6",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-09T21:20:35Z",
+      "side": 1,
+      "message": "Added a new test case here for SPI 0. It looks like the return SPI in the IpSecUdpEncapResponse is the same as input SPI. Is it a bug if the input SPI is 0?",
+      "parentUuid": "ea62505c_6dad4932",
+      "revId": "d59e8051d3d7ab83d070c51f845ceca9e6f001df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f7c7598_3321c5a9",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 18
