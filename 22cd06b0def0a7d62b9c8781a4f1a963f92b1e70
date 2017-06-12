@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "903b5cd0_ce7df9d5",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 19647,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2017-06-12T17:04:46Z",
+      "side": 1,
+      "message": "flags | StorageManager.FLAG_STORAGE_CE",
+      "range": {
+        "startLine": 19647,
+        "startChar": 20,
+        "endLine": 19647,
+        "endChar": 50
+      },
+      "revId": "22cd06b0def0a7d62b9c8781a4f1a963f92b1e70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
