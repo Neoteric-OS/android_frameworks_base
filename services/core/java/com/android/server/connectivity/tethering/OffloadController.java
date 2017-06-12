@@ -19,6 +19,7 @@ package com.android.server.connectivity.tethering;
 import static android.provider.Settings.Global.TETHER_OFFLOAD_DISABLED;
 
 import android.content.ContentResolver;
+import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.RouteInfo;
 import android.net.util.SharedLog;
@@ -26,8 +27,11 @@ import android.os.Handler;
 import android.provider.Settings;
 
 import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * A class to encapsulate the business logic of programming the tethering
@@ -42,6 +46,7 @@ public class OffloadController {
     private final OffloadHardwareInterface mHwInterface;
     private final ContentResolver mContentResolver;
     private final SharedLog mLog;
+    private final HashMap<String, LinkProperties> mDownstreams;
     private boolean mConfigInitialized;
     private boolean mControlInitialized;
     private LinkProperties mUpstreamLinkProperties;
@@ -52,6 +57,7 @@ public class OffloadController {
         mHwInterface = hwi;
         mContentResolver = contentResolver;
         mLog = log.forSubComponent(TAG);
+        mDownstreams = new HashMap<>();
     }
 
     public void start() {
@@ -106,6 +112,7 @@ public class OffloadController {
         // onOffloadEvent() callback to tell us offload is available again and
         // then reapply all state).
         pushUpstreamParameters();
+        pushLocalAddresses();
     }
 
     public void notifyDownstreamLinkProperties(LinkProperties lp) {
@@ -113,13 +120,21 @@ public class OffloadController {
 
         // TODO: Cache LinkProperties on a per-ifname basis and compute the
         // deltas, calling addDownstream()/removeDownstream() accordingly.
+
+        pushLocalAddresses();
     }
 
     public void removeDownstreamInterface(String ifname) {
         if (!started()) return;
 
-        // TODO: Check cache for LinkProperties of ifname and, if present,
-        // call removeDownstream() accordingly.
+        final LinkProperties lp = mDownstreams.remove(ifname);
+        if (lp == null) return;
+
+        for (RouteInfo route : lp.getRoutes()) {
+            mHwInterface.removeDownstream(ifname, route.toString());
+        }
+
+        pushLocalAddresses();
     }
 
     private boolean isOffloadDisabled() {
@@ -165,5 +180,34 @@ public class OffloadController {
         }
 
         return mHwInterface.setUpstreamParameters(iface, v4addr, v4gateway, v6gateways);
+    }
+
+    private boolean pushLocalAddresses() {
+        final HashSet<String> localAddrs = new HashSet<>();
+
+        // Add IPv6 addresses from the upstream network (ideally, these will
+        // also be assigned to one of the downstreams, but this is not yet
+        // implemented). The upstream IPv4 address is a concern here because
+        // it's also the source address for NAT'd communications.
+        if (mUpstreamLinkProperties != null) {
+            for (LinkAddress linkAddr : mUpstreamLinkProperties.getLinkAddresses()) {
+                if (!linkAddr.isGlobalPreferred()) continue;
+                if (!(linkAddr.getAddress() instanceof Inet6Address)) continue;
+                localAddrs.add(linkAddr.toString());
+            }
+        }
+
+        // Add all downstream configured addresses.
+        for (LinkProperties lp : mDownstreams.values()) {
+            for (LinkAddress linkAddr : lp.getLinkAddresses()) {
+                if (!linkAddr.isGlobalPreferred()) continue;
+                localAddrs.add(linkAddr.toString());
+            }
+        }
+
+        // Yes, this is called "local prefixes" in the parlance of the HAL.
+        final ArrayList<String> localPrefixes = new ArrayList<>();
+        for (String s : localAddrs) localPrefixes.add(s);
+        return mHwInterface.setLocalPrefixes(localPrefixes);
     }
 }
