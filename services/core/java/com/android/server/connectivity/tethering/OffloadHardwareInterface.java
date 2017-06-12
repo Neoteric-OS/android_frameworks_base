@@ -105,6 +105,23 @@ public class OffloadHardwareInterface {
         mControlCallback = null;
     }
 
+    public boolean setLocalPrefixes(ArrayList<String> localPrefixes) {
+        final CbResults results = new CbResults();
+        try {
+            mOffloadControl.setLocalPrefixes(localPrefixes,
+                    (boolean success, String errMsg) -> {
+                        results.success = success;
+                        results.errMsg = errMsg;
+                    });
+        } catch (RemoteException e) {
+            mLog.e("failed to setLocalPrefixes: " + e);
+            return false;
+        }
+
+        if (!results.success) mLog.e("setLocalPrefixes failed: " + results.errMsg);
+        return results.success;
+    }
+
     public boolean setUpstreamParameters(
             String iface, String v4addr, String v4gateway, ArrayList<String> v6gws) {
         final CbResults results = new CbResults();
@@ -121,6 +138,40 @@ public class OffloadHardwareInterface {
         }
 
         if (!results.success) mLog.e("setUpstreamParameters failed: " + results.errMsg);
+        return results.success;
+    }
+
+    public boolean addDownstreamPrefix(String ifname, String prefix) {
+        final CbResults results = new CbResults();
+        try {
+            mOffloadControl.addDownstream(ifname, prefix,
+                    (boolean success, String errMsg) -> {
+                        results.success = success;
+                        results.errMsg = errMsg;
+                    });
+        } catch (RemoteException e) {
+            mLog.e("failed to addDownstream: " + e);
+            return false;
+        }
+
+        if (!results.success) mLog.e("addDownstream failed: " + results.errMsg);
+        return results.success;
+    }
+
+    public boolean removeDownstreamPrefix(String ifname, String prefix) {
+        final CbResults results = new CbResults();
+        try {
+            mOffloadControl.removeDownstream(ifname, prefix,
+                    (boolean success, String errMsg) -> {
+                        results.success = success;
+                        results.errMsg = errMsg;
+                    });
+        } catch (RemoteException e) {
+            mLog.e("failed to removeDownstream: " + e);
+            return false;
+        }
+
+        if (!results.success) mLog.e("removeDownstream failed: " + results.errMsg);
         return results.success;
     }
 

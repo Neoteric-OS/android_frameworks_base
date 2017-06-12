@@ -68,6 +68,7 @@ public class OffloadControllerTest {
 
     @Before public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+        reset(mHardware);
         when(mContext.getApplicationInfo()).thenReturn(mApplicationInfo);
         when(mContext.getPackageName()).thenReturn("OffloadControllerTest");
         mContentResolver = new MockContentResolver(mContext);
@@ -145,6 +146,8 @@ public class OffloadControllerTest {
         inOrder.verifyNoMoreInteractions();
 
         offload.setUpstreamLinkProperties(null);
+        // No change in local addresses means no call to setLocalPrefixes().
+        inOrder.verify(mHardware, never()).setLocalPrefixes(mStringArrayCaptor.capture());
         inOrder.verify(mHardware, times(1)).setUpstreamParameters(
                 eq(null), eq(null), eq(null), eq(null));
         inOrder.verifyNoMoreInteractions();
@@ -152,9 +155,11 @@ public class OffloadControllerTest {
 
         final LinkProperties lp = new LinkProperties();
 
-        final String testIfName = "rmnet_data17";
+        final String testIfName = "rmnet_test0";
         lp.setInterfaceName(testIfName);
         offload.setUpstreamLinkProperties(lp);
+        // No change in local addresses means no call to setLocalPrefixes().
+        inOrder.verify(mHardware, never()).setLocalPrefixes(mStringArrayCaptor.capture());
         inOrder.verify(mHardware, times(1)).setUpstreamParameters(
                 eq(testIfName), eq(null), eq(null), mStringArrayCaptor.capture());
         assertTrue(mStringArrayCaptor.getValue().isEmpty());
@@ -162,24 +167,33 @@ public class OffloadControllerTest {
 
         final String ipv4Addr = "192.0.2.5";
         final String linkAddr = ipv4Addr + "/24";
-        lp.addLinkAddress(new LinkAddress(linkAddr));
+        assertTrue(lp.addLinkAddress(new LinkAddress(linkAddr)));
         offload.setUpstreamLinkProperties(lp);
+        // Upstream IPv4 addresses are not passed to the HAL.
+        // No change in local addresses means no call to setLocalPrefixes().
+        inOrder.verify(mHardware, never()).setLocalPrefixes(mStringArrayCaptor.capture());
         inOrder.verify(mHardware, times(1)).setUpstreamParameters(
                 eq(testIfName), eq(ipv4Addr), eq(null), mStringArrayCaptor.capture());
         assertTrue(mStringArrayCaptor.getValue().isEmpty());
         inOrder.verifyNoMoreInteractions();
 
         final String ipv4Gateway = "192.0.2.1";
-        lp.addRoute(new RouteInfo(InetAddress.getByName(ipv4Gateway)));
+        assertTrue(lp.addRoute(new RouteInfo(InetAddress.getByName(ipv4Gateway))));
         offload.setUpstreamLinkProperties(lp);
+        // Upstream IPv4 addresses are not passed to the HAL.
+        // No change in local addresses means no call to setLocalPrefixes().
+        inOrder.verify(mHardware, never()).setLocalPrefixes(mStringArrayCaptor.capture());
         inOrder.verify(mHardware, times(1)).setUpstreamParameters(
                 eq(testIfName), eq(ipv4Addr), eq(ipv4Gateway), mStringArrayCaptor.capture());
         assertTrue(mStringArrayCaptor.getValue().isEmpty());
         inOrder.verifyNoMoreInteractions();
 
         final String ipv6Gw1 = "fe80::cafe";
-        lp.addRoute(new RouteInfo(InetAddress.getByName(ipv6Gw1)));
+        assertTrue(lp.addRoute(new RouteInfo(InetAddress.getByName(ipv6Gw1))));
         offload.setUpstreamLinkProperties(lp);
+        // Upstream IPv4 addresses are not passed to the HAL.
+        // No change in local addresses means no call to setLocalPrefixes().
+        inOrder.verify(mHardware, never()).setLocalPrefixes(mStringArrayCaptor.capture());
         inOrder.verify(mHardware, times(1)).setUpstreamParameters(
                 eq(testIfName), eq(ipv4Addr), eq(ipv4Gateway), mStringArrayCaptor.capture());
         ArrayList<String> v6gws = mStringArrayCaptor.getValue();
@@ -188,8 +202,11 @@ public class OffloadControllerTest {
         inOrder.verifyNoMoreInteractions();
 
         final String ipv6Gw2 = "fe80::d00d";
-        lp.addRoute(new RouteInfo(InetAddress.getByName(ipv6Gw2)));
+        assertTrue(lp.addRoute(new RouteInfo(InetAddress.getByName(ipv6Gw2))));
         offload.setUpstreamLinkProperties(lp);
+        // Upstream IPv4 addresses are not passed to the HAL.
+        // No change in local addresses means no call to setLocalPrefixes().
+        inOrder.verify(mHardware, never()).setLocalPrefixes(mStringArrayCaptor.capture());
         inOrder.verify(mHardware, times(1)).setUpstreamParameters(
                 eq(testIfName), eq(ipv4Addr), eq(ipv4Gateway), mStringArrayCaptor.capture());
         v6gws = mStringArrayCaptor.getValue();
@@ -198,6 +215,7 @@ public class OffloadControllerTest {
         assertTrue(v6gws.contains(ipv6Gw2));
         inOrder.verifyNoMoreInteractions();
 
+        // Stacked links do not factor in to offload programming.
         final LinkProperties stacked = new LinkProperties();
         stacked.setInterfaceName("stacked");
         stacked.addLinkAddress(new LinkAddress("192.0.2.129/25"));
@@ -205,6 +223,9 @@ public class OffloadControllerTest {
         stacked.addRoute(new RouteInfo(InetAddress.getByName("fe80::bad:f00")));
         assertTrue(lp.addStackedLink(stacked));
         offload.setUpstreamLinkProperties(lp);
+        // Upstream IPv4 addresses are not passed to the HAL.
+        // No change in local addresses means no call to setLocalPrefixes().
+        inOrder.verify(mHardware, never()).setLocalPrefixes(mStringArrayCaptor.capture());
         inOrder.verify(mHardware, times(1)).setUpstreamParameters(
                 eq(testIfName), eq(ipv4Addr), eq(ipv4Gateway), mStringArrayCaptor.capture());
         v6gws = mStringArrayCaptor.getValue();
@@ -212,5 +233,63 @@ public class OffloadControllerTest {
         assertTrue(v6gws.contains(ipv6Gw1));
         assertTrue(v6gws.contains(ipv6Gw2));
         inOrder.verifyNoMoreInteractions();
+
+        // Upstream IPv6 address do get passed down to the HAL.
+        final String linkAddr6 = "2001:db8::c001:ace/64";
+        assertTrue(lp.addLinkAddress(new LinkAddress(linkAddr6)));
+        offload.setUpstreamLinkProperties(lp);
+        inOrder.verify(mHardware, times(1)).setLocalPrefixes(mStringArrayCaptor.capture());
+        ArrayList<String> localAddrs = mStringArrayCaptor.getValue();
+        assertEquals(1, localAddrs.size());
+        assertEquals(linkAddr6, localAddrs.get(0));
+        inOrder.verify(mHardware, times(1)).setUpstreamParameters(
+                eq(testIfName), eq(ipv4Addr), eq(ipv4Gateway), mStringArrayCaptor.capture());
+        v6gws = mStringArrayCaptor.getValue();
+        assertEquals(2, v6gws.size());
+        assertTrue(v6gws.contains(ipv6Gw1));
+        assertTrue(v6gws.contains(ipv6Gw2));
+        inOrder.verifyNoMoreInteractions();
+    }
+
+    @Test
+    public void testWorkingWifiTetheringExample() throws Exception {
+        setupFunctioningHardwareInterface();
+        final OffloadController offload =
+                new OffloadController(null, mHardware, mContentResolver, new SharedLog("test"));
+
+        // When the WiFi interface tells Tethering it's in STATE_TETHERED, the
+        // TetherMasterSM tries to start offload.
+        offload.start();
+
+        final InOrder inOrder = inOrder(mHardware);
+        inOrder.verify(mHardware, times(1)).initOffloadConfig();
+        inOrder.verify(mHardware, times(1)).initOffloadControl(
+                any(OffloadHardwareInterface.ControlCallback.class));
+        inOrder.verifyNoMoreInteractions();
+
+        final String wlanIfname = "wlan_test0";
+        final LinkProperties wlanLp = new LinkProperties();
+        wlanLp.setInterfaceName(wlanIfname);
+
+        // [1] IPv4 link properties arrive from the IpServer instance.
+        final String wlanAddr4 = "192.168.43.1/24";
+        final LinkAddress wlanLinkAddr4 = new LinkAddress(wlanAddr4);
+        assertTrue(wlanLp.addLinkAddress(wlanLinkAddr4));
+        assertTrue(wlanLp.addRoute(new RouteInfo(wlanLinkAddr4)));
+        offload.notifyDownstreamLinkProperties(wlanLp);
+        inOrder.verify(mHardware, times(1)).setLocalPrefixes(mStringArrayCaptor.capture());
+        ArrayList<String> localAddrs = mStringArrayCaptor.getValue();
+        assertEquals(1, localAddrs.size());
+        assertEquals(wlanAddr4, localAddrs.get(0));
+//        inOrder.verify(mHardware, times(1)).addDownstreamPrefix(
+//                eq(wlanIfname), eq("192.168.43.0/24"));
+//        inOrder.verifyNoMoreInteractions();
+
+        // [2] Upstream IPv4 arrives.
+        final LinkProperties mobileLp = new LinkProperties();
+        mobileLp.setInterfaceName("rmnet_test0");
+
+        // [3] Upstream IPv6 arrives.
+        // [4] Downstream IPv6 arrives.
     }
 }
