@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94c51ef7_b741dfdf",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-13T01:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7627dfcb_a8e306cb",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 68
+      },
+      "revId": "0796cadecf83b4fa8ec91cb59f7245057b79b3d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "085e9967_1c28a725",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 22
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e33e713d_f2f56a7a",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-13T01:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "085e9967_1c28a725",
+      "range": {
+        "startLine": 197,
+        "startChar": 4,
+        "endLine": 197,
+        "endChar": 10
+      },
+      "revId": "0796cadecf83b4fa8ec91cb59f7245057b79b3d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "965fd0fa_28cd1bd5",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 22
@@ -59,6 +107,24 @@
       "writtenOn": "2017-06-12T20:55:07Z",
       "side": 1,
       "message": "I don\u0027t understand what we\u0027re checking for here.",
+      "revId": "0796cadecf83b4fa8ec91cb59f7245057b79b3d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63508154_b36532f6",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-13T01:00:04Z",
+      "side": 1,
+      "message": "Sorry, I was going to check if it\u0027s an encryption algorithm here. I presume there is only one encryption algorithm.",
+      "parentUuid": "965fd0fa_28cd1bd5",
       "revId": "0796cadecf83b4fa8ec91cb59f7245057b79b3d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "1af855bd_1ea675e8",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-13T01:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "139ebe77_f3c7b688",
+      "range": {
+        "startLine": 190,
+        "startChar": 47,
+        "endLine": 190,
+        "endChar": 48
+      },
+      "revId": "0796cadecf83b4fa8ec91cb59f7245057b79b3d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "029e3b71_23e85f25",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 22
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "5ce104b6_18c474f2",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-13T01:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "029e3b71_23e85f25",
+      "range": {
+        "startLine": 147,
+        "startChar": 42,
+        "endLine": 147,
+        "endChar": 53
+      },
+      "revId": "0796cadecf83b4fa8ec91cb59f7245057b79b3d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3dabafd_0c5e44cf",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 22
@@ -125,6 +239,24 @@
       "revId": "0796cadecf83b4fa8ec91cb59f7245057b79b3d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c372ab_912e55e3",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-13T01:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3dabafd_0c5e44cf",
+      "revId": "0796cadecf83b4fa8ec91cb59f7245057b79b3d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "856bcad6_451d76cc",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-13T01:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "416a1681_5e5a9346",
+      "range": {
+        "startLine": 470,
+        "startChar": 0,
+        "endLine": 475,
+        "endChar": 79
+      },
+      "revId": "0796cadecf83b4fa8ec91cb59f7245057b79b3d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d977b9b_cd9b62f4",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 22
@@ -165,6 +321,24 @@
       "revId": "0796cadecf83b4fa8ec91cb59f7245057b79b3d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46df2c47_0e1549a2",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-13T01:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d977b9b_cd9b62f4",
+      "revId": "0796cadecf83b4fa8ec91cb59f7245057b79b3d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
