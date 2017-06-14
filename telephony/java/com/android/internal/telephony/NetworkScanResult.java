@@ -111,7 +111,7 @@ public final class NetworkScanResult implements Parcelable {
     public int hashCode () {
         return ((scanStatus * 31)
                 + (scanError * 23)
-                + (networkInfos.hashCode() * 37));
+                + (networkInfos == null ? 0 : networkInfos.hashCode() * 37));
     }
 
     public static final Creator<NetworkScanResult> CREATOR =
