@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63ef5761_577e0001",
+        "filename": "telephony/java/com/android/internal/telephony/NetworkScanResult.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-06-14T17:38:51Z",
+      "side": 1,
+      "message": "FYI: you can use Objects.hashCode(networkInfos) instead",
+      "range": {
+        "startLine": 114,
+        "startChar": 18,
+        "endLine": 114,
+        "endChar": 69
+      },
+      "revId": "d954e09679958b9611843321932af293f42222f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
