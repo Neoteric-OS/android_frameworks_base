@@ -22,6 +22,30 @@
       "revId": "d954e09679958b9611843321932af293f42222f0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14303d26_060243cd",
+        "filename": "telephony/java/com/android/internal/telephony/NetworkScanResult.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-06-14T17:47:19Z",
+      "side": 1,
+      "message": "It seems that this won\u0027t work on aosp, since I got the compiling error \"error: package com.google.common.base does not exist\".",
+      "parentUuid": "63ef5761_577e0001",
+      "range": {
+        "startLine": 114,
+        "startChar": 18,
+        "endLine": 114,
+        "endChar": 69
+      },
+      "revId": "d954e09679958b9611843321932af293f42222f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
