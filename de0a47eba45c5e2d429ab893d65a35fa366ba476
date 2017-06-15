@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9f4b607_90ee2ff2",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-15T17:35:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "818b9a26_17d65f20",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 42
+      },
+      "revId": "de0a47eba45c5e2d429ab893d65a35fa366ba476",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab875ac6_eb45fd7f",
         "filename": "core/java/android/net/IpSecConfig.java",
         "patchSetId": 23
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-14T17:14:11Z",
       "side": 1,
       "message": "I think this will look better if ALL the append() calls are chained, not just two per line.",
+      "range": {
+        "startLine": 181,
+        "startChar": 19,
+        "endLine": 181,
+        "endChar": 25
+      },
+      "revId": "de0a47eba45c5e2d429ab893d65a35fa366ba476",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26be88e_c94a6d8a",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-15T17:35:16Z",
+      "side": 1,
+      "message": "Changed to chain all the append() together. In case there are too many lines, I still keep two append() per line.",
+      "parentUuid": "ab875ac6_eb45fd7f",
       "range": {
         "startLine": 181,
         "startChar": 19,
