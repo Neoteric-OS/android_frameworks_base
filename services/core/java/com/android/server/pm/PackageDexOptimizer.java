@@ -203,7 +203,8 @@ public class PackageDexOptimizer {
     private int dexOptPath(PackageParser.Package pkg, String path, String isa,
             String compilerFilter, boolean profileUpdated, String sharedLibrariesPath,
             int dexoptFlags, int uid, CompilerStats.PackageStats packageStats) {
-        int dexoptNeeded = getDexoptNeeded(path, isa, compilerFilter, profileUpdated);
+        int dexoptNeeded = getDexoptNeeded(path, isa, compilerFilter, sharedLibrariesPath,
+                profileUpdated);
         if (Math.abs(dexoptNeeded) == DexFile.NO_DEXOPT_NEEDED) {
             return DEX_OPT_SKIPPED;
         }
@@ -399,13 +400,14 @@ public class PackageDexOptimizer {
 
     /**
      * Assesses if there's a need to perform dexopt on {@code path} for the given
-     * configuration (isa, compiler filter, profile).
+     * configuration (isa, compiler filter, classpath, profile).
      */
     private int getDexoptNeeded(String path, String isa, String compilerFilter,
-            boolean newProfile) {
+            String classpath, boolean newProfile) {
         int dexoptNeeded;
         try {
-            dexoptNeeded = DexFile.getDexOptNeeded(path, isa, compilerFilter, newProfile);
+            dexoptNeeded = DexFile.getDexOptNeeded(path, isa, compilerFilter, classpath,
+                    newProfile);
         } catch (IOException ioe) {
             Slog.w(TAG, "IOException reading apk: " + path, ioe);
             return DEX_OPT_FAILED;
