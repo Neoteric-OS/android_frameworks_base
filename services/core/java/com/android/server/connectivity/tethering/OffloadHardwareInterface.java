@@ -16,6 +16,8 @@
 
 package com.android.server.connectivity.tethering;
 
+import static com.android.internal.util.BitUtils.uint16;
+
 import android.hardware.tetheroffload.control.V1_0.IOffloadControl;
 import android.hardware.tetheroffload.control.V1_0.ITetheringOffloadCallback;
 import android.hardware.tetheroffload.control.V1_0.NatTimeoutUpdate;
@@ -143,8 +145,8 @@ public class OffloadHardwareInterface {
             handler.post(() -> {
                     controlCb.onNatTimeoutUpdate(
                         params.proto,
-                        params.src.addr, params.src.port,
-                        params.dst.addr, params.dst.port);
+                        params.src.addr, uint16(params.src.port),
+                        params.dst.addr, uint16(params.dst.port));
             });
         }
     }

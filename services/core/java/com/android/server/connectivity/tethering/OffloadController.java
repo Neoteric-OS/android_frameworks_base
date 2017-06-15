@@ -37,6 +37,9 @@ import java.util.ArrayList;
  */
 public class OffloadController {
     private static final String TAG = OffloadController.class.getSimpleName();
+    private static final String NO_INTERFACE_NAME = "";
+    private static final String NO_IPV4_ADDRESS = "";
+    private static final String NO_IPV4_GATEWAY = "";
 
     private final Handler mHandler;
     private final OffloadHardwareInterface mHwInterface;
@@ -129,8 +132,13 @@ public class OffloadController {
     }
 
     private boolean pushUpstreamParameters() {
+        final ArrayList<String> v6gateways = new ArrayList<>();
+        String v4addr = NO_IPV4_ADDRESS;
+        String v4gateway = NO_IPV4_GATEWAY;
+
         if (mUpstreamLinkProperties == null) {
-            return mHwInterface.setUpstreamParameters(null, null, null, null);
+            return mHwInterface.setUpstreamParameters(
+                    NO_INTERFACE_NAME, v4addr, v4gateway, v6gateways);
         }
 
         // A stacked interface cannot be an upstream for hardware offload.
@@ -138,9 +146,6 @@ public class OffloadController {
         // getAddresses() rather than getAllAddresses(), and check getRoutes()
         // rather than getAllRoutes().
         final String iface = mUpstreamLinkProperties.getInterfaceName();
-        final ArrayList<String> v6gateways = new ArrayList<>();
-        String v4addr = null;
-        String v4gateway = null;
 
         for (InetAddress ip : mUpstreamLinkProperties.getAddresses()) {
             if (ip instanceof Inet4Address) {

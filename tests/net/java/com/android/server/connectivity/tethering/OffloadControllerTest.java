@@ -145,7 +145,8 @@ public class OffloadControllerTest {
 
         offload.setUpstreamLinkProperties(null);
         inOrder.verify(mHardware, times(1)).setUpstreamParameters(
-                eq(null), eq(null), eq(null), eq(null));
+                eq(""), eq(""), eq(""), mStringArrayCaptor.capture());
+        assertTrue(mStringArrayCaptor.getValue().isEmpty());
         inOrder.verifyNoMoreInteractions();
         reset(mHardware);
 
@@ -155,7 +156,7 @@ public class OffloadControllerTest {
         lp.setInterfaceName(testIfName);
         offload.setUpstreamLinkProperties(lp);
         inOrder.verify(mHardware, times(1)).setUpstreamParameters(
-                eq(testIfName), eq(null), eq(null), mStringArrayCaptor.capture());
+                eq(testIfName), eq(""), eq(""), mStringArrayCaptor.capture());
         assertTrue(mStringArrayCaptor.getValue().isEmpty());
         inOrder.verifyNoMoreInteractions();
 
@@ -164,7 +165,7 @@ public class OffloadControllerTest {
         lp.addLinkAddress(new LinkAddress(linkAddr));
         offload.setUpstreamLinkProperties(lp);
         inOrder.verify(mHardware, times(1)).setUpstreamParameters(
-                eq(testIfName), eq(ipv4Addr), eq(null), mStringArrayCaptor.capture());
+                eq(testIfName), eq(ipv4Addr), eq(""), mStringArrayCaptor.capture());
         assertTrue(mStringArrayCaptor.getValue().isEmpty());
         inOrder.verifyNoMoreInteractions();
 
