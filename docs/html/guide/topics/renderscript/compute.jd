@@ -287,6 +287,8 @@ if you use the native (<strong>{@link android.renderscript}</strong>) APIs.</li>
   <li>Android SDK Build-tools revision 18.1.0 or higher</li>
 </ul>
 
+<p>Note that starting from Android SDK Build-tools 24.0.0, Fryo is no longer supported.</p>
+
 <p>You can check and update the installed version of these tools in the
   <a href="{@docRoot}tools/help/sdk-manager.html">Android SDK Manager</a>.</p>
 
