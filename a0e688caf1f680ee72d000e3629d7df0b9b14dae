@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "319ef167_a8d7d934",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-06-15T17:48:46Z",
+      "side": 1,
+      "message": "These should be done so that we still see that the key is present-but-redacted.\n\nstrBuilder.append(\", mKey\u003d\").append(Build.IS_DEBUGGABLE ? keyToHexString(strBuilder) : \"\u003chidden\u003e\");",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 212,
+        "endChar": 9
+      },
+      "revId": "a0e688caf1f680ee72d000e3629d7df0b9b14dae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
