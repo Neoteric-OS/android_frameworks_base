@@ -23,10 +23,8 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
-import android.content.pm.ServiceInfo;
 import android.net.Uri;
 import android.os.IBinder;
-import android.os.Looper;
 import android.os.RemoteException;
 import android.telephony.mbms.IDownloadCallback;
 import android.telephony.mbms.DownloadRequest;
@@ -43,7 +41,6 @@ import android.util.Log;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
@@ -182,8 +179,6 @@ public class MbmsDownloadManager {
     public static final int RESULT_EXPIRED    = 3;
     // TODO - more results!
 
-    private static final long BIND_TIMEOUT_MS = 3000;
-
     private final Context mContext;
     private int mSubscriptionId = INVALID_SUBSCRIPTION_ID;
 
@@ -201,26 +196,24 @@ public class MbmsDownloadManager {
 
     /**
      * Create a new MbmsDownloadManager using the system default data subscription ID.
-     * See {@link #createManager(Context, IMbmsDownloadManagerCallback, String, int)}
+     * See {@link #create(Context, IMbmsDownloadManagerCallback, String, int)}
      *
      * @hide
      */
-    public static MbmsDownloadManager createManager(Context context,
+    public static MbmsDownloadManager create(Context context,
             IMbmsDownloadManagerCallback listener, String downloadAppName)
             throws MbmsException {
-        MbmsDownloadManager mdm = new MbmsDownloadManager(context, listener, downloadAppName,
+        return create(context, listener, downloadAppName,
                 SubscriptionManager.getDefaultSubscriptionId());
-        mdm.bindAndInitialize();
-        return mdm;
     }
 
     /**
      * Create a new MbmsDownloadManager using the given subscription ID.
      *
-     * Note that this call will bind a remote service and that may take a bit. Since the
-     * framework notifies us that binding is complete on the main thread, this method should
-     * never be called from the main thread of one's app, or else an
-     * {@link IllegalStateException} will be thrown.
+     * Note that this call will bind a remote service and that may take a bit. The instance of
+     * {@link MbmsDownloadManager} that is returned will not be ready for use until
+     * {@link IMbmsDownloadManagerCallback#middlewareReady()} is called on the provided callback.
+     * If you attempt to use the manager before it is ready, a {@link MbmsException} will be thrown.
      *
      * This also may throw an {@link IllegalArgumentException} or a {@link MbmsException}.
      *
@@ -230,14 +223,9 @@ public class MbmsDownloadManager {
      * @param subscriptionId The data subscription ID to use
      * @hide
      */
-    public static MbmsDownloadManager createManager(Context context,
+    public static MbmsDownloadManager create(Context context,
             IMbmsDownloadManagerCallback listener, String downloadAppName, int subscriptionId)
             throws MbmsException {
-        if (Looper.getMainLooper().isCurrentThread()) {
-            throw new IllegalStateException(
-                    "createManager must not be called from the main thread.");
-        }
-
         MbmsDownloadManager mdm = new MbmsDownloadManager(context, listener, downloadAppName,
                 subscriptionId);
         mdm.bindAndInitialize();
@@ -245,50 +233,24 @@ public class MbmsDownloadManager {
     }
 
     private void bindAndInitialize() throws MbmsException {
-        // TODO: fold binding for download and streaming into a common utils class.
-        final CountDownLatch latch = new CountDownLatch(1);
-        ServiceConnection bindListener = new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                mService = IMbmsDownloadService.Stub.asInterface(service);
-                latch.countDown();
-            }
+        MbmsUtils.bindAndInitialize(mContext, MBMS_DOWNLOAD_SERVICE_ACTION,
+                new ServiceConnection() {
+                    @Override
+                    public void onServiceConnected(ComponentName name, IBinder service) {
+                        mService = IMbmsDownloadService.Stub.asInterface(service);
+                        try {
+                            mService.initialize(mDownloadAppName, mSubscriptionId, mCallback);
+                        } catch (RemoteException e) {
+                            mService = null;
+                            Log.e(LOG_TAG, "Service died before initialization");
+                        }
+                    }
 
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-                mService = null;
-            }
-        };
-
-        Intent bindIntent = new Intent();
-        ServiceInfo mbmsServiceInfo =
-                MbmsUtils.getMiddlewareServiceInfo(mContext, MBMS_DOWNLOAD_SERVICE_ACTION);
-
-        if (mbmsServiceInfo == null) {
-            throw new MbmsException(MbmsException.ERROR_NO_SERVICE_INSTALLED);
-        }
-
-        bindIntent.setComponent(MbmsUtils.toComponentName(mbmsServiceInfo));
-
-        mContext.bindService(bindIntent, bindListener, Context.BIND_AUTO_CREATE);
-
-        // Wait until binding is complete
-        MbmsUtils.waitOnLatchWithTimeout(latch, BIND_TIMEOUT_MS);
-
-        // Call initialize after binding finishes
-        synchronized (this) {
-            if (mService == null) {
-                throw new MbmsException(MbmsException.ERROR_BIND_TIMEOUT_OR_FAILURE);
-            }
-
-            try {
-                mService.initialize(mDownloadAppName, mSubscriptionId, mCallback);
-            } catch (RemoteException e) {
-                mService = null;
-                Log.e(LOG_TAG, "Service died before initialization");
-                throw new MbmsException(MbmsException.ERROR_SERVICE_LOST);
-            }
-        }
+                    @Override
+                    public void onServiceDisconnected(ComponentName name) {
+                        mService = null;
+                    }
+                });
     }
 
     /**
