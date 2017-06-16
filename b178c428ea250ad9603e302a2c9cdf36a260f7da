@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ede6043d_04b99324",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-06-16T00:59:45Z",
+      "side": 1,
+      "message": "To be honest, I\u0027m not sure what the value of this test is. We need to answer the question: What behavior is verified with this?\n\nIn it\u0027s current form, we are only looking for some very specific substrings in the output, which tests that a few of the fields are output correctly, without checking for consistent/correct formatting.\n\nOne option would be to check the entire output against a literal string, but that would be merely a \"change detector\" test. I don\u0027t think we need or want that.\n\nAnother extreme would be to parse the output and assert its validity. I think that is a lot more complicated than it is worth.\n\nThat leaves us with the question of whether we should have a unit tests for dump()...",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 52
+      },
+      "revId": "b178c428ea250ad9603e302a2c9cdf36a260f7da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
