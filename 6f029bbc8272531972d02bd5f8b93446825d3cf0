@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3a11bda_f5f56c3c",
+        "filename": "core/java/android/app/Instrumentation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-06-16T10:07:46Z",
+      "side": 0,
+      "message": "why are all these things safe to remove ? it isn\u0027t clear to me how they\u0027re a no-op or otherwise unused",
+      "range": {
+        "startLine": 200,
+        "startChar": 8,
+        "endLine": 202,
+        "endChar": 9
+      },
+      "revId": "6f029bbc8272531972d02bd5f8b93446825d3cf0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
