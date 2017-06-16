@@ -24,7 +24,7 @@ import java.util.List;
  * The interface the clients top-level streaming listener will satisfy.
  * @hide
  */
-interface IMbmsStreamingManagerCallback
+oneway interface IMbmsStreamingManagerCallback
 {
     void error(int errorCode, String message);
 
@@ -42,7 +42,7 @@ interface IMbmsStreamingManagerCallback
 
     /**
      * Called to indicate the active Streaming Services have changed.
-     * 
+     *
      * This will be caused whenever a new service starts streaming or whenever
      * MbmsStreamServiceManager.getActiveStreamingServices is called.
      *
@@ -50,4 +50,6 @@ interface IMbmsStreamingManagerCallback
      *                 there are no active StreamingServices
      */
     void activeStreamingServicesUpdated(in List<StreamingServiceInfo> services);
+
+    void middlewareReady();
 }

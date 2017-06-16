@@ -24,7 +24,7 @@ import java.util.List;
  * The interface the clients top-level file download listener will satisfy.
  * @hide
  */
-interface IMbmsDownloadManagerCallback
+oneway interface IMbmsDownloadManagerCallback
 {
     void error(int errorCode, String message);
 
@@ -39,4 +39,6 @@ interface IMbmsDownloadManagerCallback
      * results.
      */
     void fileServicesUpdated(in List<FileServiceInfo> services);
+
+    void middlewareReady();
 }

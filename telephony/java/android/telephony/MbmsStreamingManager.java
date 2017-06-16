@@ -18,11 +18,7 @@ package android.telephony;
 
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.os.DeadObjectException;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.telephony.mbms.MbmsException;
@@ -34,56 +30,17 @@ import android.telephony.mbms.StreamingServiceInfo;
 import android.telephony.mbms.vendor.IMbmsStreamingService;
 import android.util.Log;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
 /** @hide */
 public class MbmsStreamingManager {
-    private interface ServiceListener {
-        void onServiceConnected();
-        void onServiceDisconnected();
-    }
-
     private static final String LOG_TAG = "MbmsStreamingManager";
     public static final String MBMS_STREAMING_SERVICE_ACTION =
             "android.telephony.action.EmbmsStreaming";
 
-    private static final boolean DEBUG = true;
-    private static final int BIND_TIMEOUT_MS = 3000;
-
     private IMbmsStreamingService mService;
-    private ServiceConnection mServiceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            if (service != null) {
-                Log.i(LOG_TAG, String.format("Connected to service %s", name));
-                synchronized (MbmsStreamingManager.this) {
-                    mService = IMbmsStreamingService.Stub.asInterface(service);
-                    for (ServiceListener l : mServiceListeners) {
-                        l.onServiceConnected();
-                    }
-                }
-            }
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            Log.i(LOG_TAG, String.format("Disconnected from service %s", name));
-            synchronized (MbmsStreamingManager.this) {
-                mService = null;
-                for (ServiceListener l : mServiceListeners) {
-                    l.onServiceDisconnected();
-                }
-            }
-        }
-    };
-
-    private List<ServiceListener> mServiceListeners = new LinkedList<>();
-
     private MbmsStreamingManagerCallback mCallbackToApp;
     private final String mAppName;
 
@@ -128,11 +85,8 @@ public class MbmsStreamingManager {
     public static MbmsStreamingManager create(Context context,
             MbmsStreamingManagerCallback listener, String streamingAppName)
             throws MbmsException {
-        int subId = SubscriptionManager.getDefaultSubscriptionId();
-        MbmsStreamingManager manager = new MbmsStreamingManager(context, listener,
-                streamingAppName, subId);
-        manager.bindAndInitialize();
-        return manager;
+        return create(context, listener, streamingAppName,
+                SubscriptionManager.getDefaultSubscriptionId());
     }
 
     /**
@@ -190,7 +144,7 @@ public class MbmsStreamingManager {
      * Starts streaming a requested service, reporting status to the indicated listener.
      * Returns an object used to control that stream. The stream may not be ready for consumption
      * immediately upon return from this method -- wait until the streaming state has been
-     * reported via {@link android.telephony.mbms.StreamingServiceCallback#streamStateChanged(int)}.
+     * reported via {@link android.telephony.mbms.StreamingServiceCallback#streamStateUpdated(int)}
      *
      * May throw an {@link MbmsException} containing any of the following error codes:
      * {@link MbmsException#ERROR_MIDDLEWARE_NOT_BOUND}
@@ -224,50 +178,23 @@ public class MbmsStreamingManager {
     }
 
     private void bindAndInitialize() throws MbmsException {
-        // Kick off the binding, and synchronously wait until binding is complete
-        final CountDownLatch latch = new CountDownLatch(1);
-        ServiceListener bindListener = new ServiceListener() {
-            @Override
-            public void onServiceConnected() {
-                latch.countDown();
-            }
+        MbmsUtils.bindAndInitialize(mContext, MBMS_STREAMING_SERVICE_ACTION,
+                new ServiceConnection() {
+                    @Override
+                    public void onServiceConnected(ComponentName name, IBinder service) {
+                        mService = IMbmsStreamingService.Stub.asInterface(service);
+                        try {
+                            mService.initialize(mCallbackToApp, mAppName, mSubscriptionId);
+                        } catch (RemoteException e) {
+                            mService = null;
+                            Log.e(LOG_TAG, "Service died before initialization");
+                        }
+                    }
 
-            @Override
-            public void onServiceDisconnected() {
-            }
-        };
-
-        synchronized (this) {
-            mServiceListeners.add(bindListener);
-        }
-
-        Intent bindIntent = new Intent();
-        bindIntent.setComponent(MbmsUtils.toComponentName(
-                MbmsUtils.getMiddlewareServiceInfo(mContext, MBMS_STREAMING_SERVICE_ACTION)));
-
-        mContext.bindService(bindIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
-
-        MbmsUtils.waitOnLatchWithTimeout(latch, BIND_TIMEOUT_MS);
-
-       // Remove the listener and call the initialization method through the interface.
-        synchronized (this) {
-            mServiceListeners.remove(bindListener);
-
-            if (mService == null) {
-                throw new MbmsException(MbmsException.ERROR_BIND_TIMEOUT_OR_FAILURE);
-            }
-
-            try {
-                int returnCode = mService.initialize(mCallbackToApp, mAppName, mSubscriptionId);
-                if (returnCode != MbmsException.SUCCESS) {
-                    throw new MbmsException(returnCode);
-                }
-            } catch (RemoteException e) {
-                mService = null;
-                Log.e(LOG_TAG, "Service died before initialization");
-                throw new MbmsException(MbmsException.ERROR_SERVICE_LOST);
-            }
-        }
+                    @Override
+                    public void onServiceDisconnected(ComponentName name) {
+                        mService = null;
+                    }
+                });
     }
-
 }
