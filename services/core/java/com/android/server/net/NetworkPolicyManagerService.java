@@ -892,22 +892,24 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             final boolean meteredHint = info.getMeteredHint();
 
             final NetworkTemplate template = NetworkTemplate.buildTemplateWifi(info.getSSID());
-            synchronized (mNetworkPoliciesSecondLock) {
-                NetworkPolicy policy = mNetworkPolicy.get(template);
-                if (policy == null && meteredHint) {
-                    // policy doesn't exist, and AP is hinting that it's
-                    // metered: create an inferred policy.
-                    policy = newWifiPolicy(template, meteredHint);
-                    addNetworkPolicyNL(policy);
+            synchronized (mUidRulesFirstLock) {
+                synchronized (mNetworkPoliciesSecondLock) {
+                    NetworkPolicy policy = mNetworkPolicy.get(template);
+                    if (policy == null && meteredHint) {
+                        // policy doesn't exist, and AP is hinting that it's
+                        // metered: create an inferred policy.
+                        policy = newWifiPolicy(template, meteredHint);
+                        addNetworkPolicyAL(policy);
 
-                } else if (policy != null && policy.inferred) {
-                    // policy exists, and was inferred: update its current
-                    // metered state.
-                    policy.metered = meteredHint;
+                    } else if (policy != null && policy.inferred) {
+                        // policy exists, and was inferred: update its current
+                        // metered state.
+                        policy.metered = meteredHint;
 
-                    // since this is inferred for each wifi session, just update
-                    // rules without persisting.
-                    updateNetworkRulesNL();
+                        // since this is inferred for each wifi session, just update
+                        // rules without persisting.
+                        updateNetworkRulesNL();
+                    }
                 }
             }
         }
@@ -1179,12 +1181,14 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             // permission above.
 
             maybeRefreshTrustedTime();
-            synchronized (mNetworkPoliciesSecondLock) {
-                ensureActiveMobilePolicyNL();
-                normalizePoliciesNL();
-                updateNetworkEnabledNL();
-                updateNetworkRulesNL();
-                updateNotificationsNL();
+            synchronized (mUidRulesFirstLock) {
+                synchronized (mNetworkPoliciesSecondLock) {
+                    ensureActiveMobilePolicyAL();
+                    normalizePoliciesNL();
+                    updateNetworkEnabledNL();
+                    updateNetworkRulesNL();
+                    updateNotificationsNL();
+                }
             }
         }
     };
@@ -1404,8 +1408,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
      * Once any {@link #mNetworkPolicy} are loaded from disk, ensure that we
      * have at least a default mobile policy defined.
      */
-    private void ensureActiveMobilePolicyNL() {
-        if (LOGV) Slog.v(TAG, "ensureActiveMobilePolicyNL()");
+    private void ensureActiveMobilePolicyAL() {
+        if (LOGV) Slog.v(TAG, "ensureActiveMobilePolicyAL()");
         if (mSuppressDefaultPolicy) return;
 
         final TelephonyManager tele = TelephonyManager.from(mContext);
@@ -1414,11 +1418,11 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         final int[] subIds = sub.getActiveSubscriptionIdList();
         for (int subId : subIds) {
             final String subscriberId = tele.getSubscriberId(subId);
-            ensureActiveMobilePolicyNL(subscriberId);
+            ensureActiveMobilePolicyAL(subscriberId);
         }
     }
 
-    private void ensureActiveMobilePolicyNL(String subscriberId) {
+    private void ensureActiveMobilePolicyAL(String subscriberId) {
         // Poke around to see if we already have a policy
         final NetworkIdentity probeIdent = new NetworkIdentity(TYPE_MOBILE,
                 TelephonyManager.NETWORK_TYPE_UNKNOWN, subscriberId, null, false, true);
@@ -1455,7 +1459,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         final NetworkTemplate template = buildTemplateMobileAll(subscriberId);
         final NetworkPolicy policy = new NetworkPolicy(template, cycleDay, cycleTimezone,
                 warningBytes, LIMIT_DISABLED, SNOOZE_NEVER, SNOOZE_NEVER, true, true);
-        addNetworkPolicyNL(policy);
+        addNetworkPolicyAL(policy);
     }
 
     private void readPolicyAL() {
@@ -1902,6 +1906,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
     @Override
     public void setNetworkPolicies(NetworkPolicy[] policies) {
+        // Never call with only mNetworkPoliciesSecondLock locked to avoid deadlock!
         mContext.enforceCallingOrSelfPermission(MANAGE_NETWORK_POLICY, TAG);
 
         final long token = Binder.clearCallingIdentity();
@@ -1921,7 +1926,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         }
     }
 
-    void addNetworkPolicyNL(NetworkPolicy policy) {
+    void addNetworkPolicyAL(NetworkPolicy policy) {
         NetworkPolicy[] policies = getNetworkPolicies(mContext.getOpPackageName());
         policies = ArrayUtils.appendElement(NetworkPolicy.class, policies, policy);
         setNetworkPolicies(policies);
