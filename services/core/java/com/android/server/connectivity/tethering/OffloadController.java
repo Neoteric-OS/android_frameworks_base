@@ -21,9 +21,13 @@ import static android.provider.Settings.Global.TETHER_OFFLOAD_DISABLED;
 import android.content.ContentResolver;
 import android.net.LinkProperties;
 import android.net.RouteInfo;
+import android.net.netlink.ConntrackMessage;
+import android.net.netlink.NetlinkSocket;
 import android.net.util.SharedLog;
 import android.os.Handler;
 import android.provider.Settings;
+import android.system.ErrnoException;
+import android.system.OsConstants;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -67,6 +71,9 @@ public class OffloadController {
         }
 
         mControlInitialized = mHwInterface.initOffloadControl(
+                // OffloadHardwareInterface guarantees that these callback
+                // methods are called on the handler passed to it, which is the
+                // same as mHandler, as coordinated by the setup in Tethering.
                 new OffloadHardwareInterface.ControlCallback() {
                     @Override
                     public void onOffloadEvent(int event) {
@@ -77,8 +84,7 @@ public class OffloadController {
                     public void onNatTimeoutUpdate(int proto,
                                                    String srcAddr, int srcPort,
                                                    String dstAddr, int dstPort) {
-                        mLog.log(String.format("NAT timeout update: %s (%s,%s) -> (%s,%s)",
-                                proto, srcAddr, srcPort, dstAddr, dstPort));
+                        updateNatTimeout(proto, srcAddr, srcPort, dstAddr, dstPort);
                     }
                 });
         if (!mControlInitialized) {
@@ -166,5 +172,76 @@ public class OffloadController {
 
         return mHwInterface.setUpstreamParameters(
                 iface, v4addr, v4gateway, (v6gateways.isEmpty() ? null : v6gateways));
+    }
+
+    private void updateNatTimeout(
+            int proto, String srcAddr, int srcPort, String dstAddr, int dstPort) {
+        final String protoName = protoNameFor(proto);
+        if (protoName == null) {
+            mLog.e("Unknown NAT update callback protocol: " + proto);
+            return;
+        }
+
+        final Inet4Address src = parseIPv4Address(srcAddr);
+        if (src == null) {
+            mLog.e("Failed to parse IPv4 address: " + srcAddr);
+            return;
+        }
+
+        if (!checkPort(srcPort)) {
+            mLog.e("Invalid port: " + srcPort);
+            return;
+        }
+
+        final Inet4Address dst = parseIPv4Address(dstAddr);
+        if (dst == null) {
+            mLog.e("Failed to parse IPv4 address: " + dstAddr);
+            return;
+        }
+
+        if (!checkPort(dstPort)) {
+            mLog.e("Invalid port: " + dstPort);
+            return;
+        }
+
+        mLog.log(String.format("NAT timeout update: %s (%s, %s) -> (%s, %s)",
+                 protoName, srcAddr, srcPort, dstAddr, dstPort));
+
+        final byte[] msg = ConntrackMessage.newIPv4UpdateRequest(proto, src, srcPort, dst, dstPort);
+
+        try {
+            NetlinkSocket.sendOneShotKernelMessage(OsConstants.NETLINK_NETFILTER, msg);
+        } catch (ErrnoException e) {
+            mLog.e("Error updating NAT conntrack entry: " + e);
+        }
+    }
+
+    private static Inet4Address parseIPv4Address(String addrString) {
+        final InetAddress addr;
+        try {
+            addr = InetAddress.parseNumericAddress(addrString);
+            // TODO: Consider other sanitization steps here, including perhaps:
+            //           not eql to 0.0.0.0
+            //           not within 169.254.0.0/16
+            // et cetera.
+            if (addr instanceof Inet4Address) {
+                return (Inet4Address) addr;
+            }
+        } catch (IllegalArgumentException iae) {}
+        return null;
+    }
+
+    private static boolean checkPort(int port) {
+        return (port > 0) && (port == (short) port);
+    }
+
+    private static String protoNameFor(int proto) {
+        // OsConstant values are not constant expressions so we cannot use a switch statement.
+        if (proto == OsConstants.IPPROTO_UDP) {
+            return "UDP";
+        } else if (proto == OsConstants.IPPROTO_TCP) {
+            return "TCP";
+        }
+        return null;
     }
 }
