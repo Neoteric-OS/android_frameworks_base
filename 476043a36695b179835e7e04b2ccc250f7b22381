@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57e4d87d_a6e35fe4",
+        "filename": "core/java/android/os/Process.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-19T01:25:59Z",
+      "side": 1,
+      "message": "Nitpicking now, but...I don\u0027t like any of the grammar options so far, actually.  But I think the following might be ok?\n\n\"The identifier of the thread/process for which to get the priority\"\n\n\"The identifier of the thread/process whose priority is sought\"\n\nOr something. I mean, even just \"The identifier of the thread/process\" full stop seems fine.  We don\u0027t need to keep repeating the verb of the operation on every line.",
+      "range": {
+        "startLine": 743,
+        "startChar": 74,
+        "endLine": 743,
+        "endChar": 75
+      },
+      "revId": "476043a36695b179835e7e04b2ccc250f7b22381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
