@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "35ea59a5_5b1bdc1b",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T07:52:05Z",
+      "side": 1,
+      "message": "ok sounds good.",
+      "parentUuid": "d52b4047_4c48d3c1",
+      "range": {
+        "startLine": 135,
+        "startChar": 11,
+        "endLine": 135,
+        "endChar": 29
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f146ef8_a6ffd404",
         "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 10
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Yeah, of course we could use (Hash)Sets, but I was thinking that since we\u0027re talking about 1 IPv4 route and probably just 1 IPv6 route, I\u0027m not sure there\u0027s a performance win to be had. (such was my thinking, at any rate)",
       "parentUuid": "4f146ef8_a6ffd404",
+      "range": {
+        "startLine": 137,
+        "startChar": 17,
+        "endLine": 137,
+        "endChar": 35
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20468872_3bcfae95",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T07:52:05Z",
+      "side": 1,
+      "message": "If it s just a couple routes, yes list is perfectly fine.",
+      "parentUuid": "3498e157_d230c29b",
       "range": {
         "startLine": 137,
         "startChar": 17,
@@ -166,6 +214,30 @@
       "side": 1,
       "message": "How about computeAndPush...()?",
       "parentUuid": "725c3e25_526b2365",
+      "range": {
+        "startLine": 212,
+        "startChar": 20,
+        "endLine": 212,
+        "endChar": 24
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43f6bc13_951ef9ef",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T07:52:05Z",
+      "side": 1,
+      "message": "SG.",
+      "parentUuid": "67e2c80a_5e53f326",
       "range": {
         "startLine": 212,
         "startChar": 20,
@@ -319,6 +391,30 @@
     },
     {
       "key": {
+        "uuid": "78bd4254_cd04f49e",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T07:52:05Z",
+      "side": 1,
+      "message": "Not one single callback type .... ? OK nevermind. Looks like this result handling code is doomed to be duplicated.",
+      "parentUuid": "586c3afc_1f5fae2f",
+      "range": {
+        "startLine": 117,
+        "startChar": 20,
+        "endLine": 120,
+        "endChar": 22
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30f4a77b_1008bf1d",
         "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
         "patchSetId": 10
@@ -354,6 +450,30 @@
       "side": 1,
       "message": "I\u0027ll give this a try.  We\u0027ll see if it plays nice with HIDL.",
       "parentUuid": "30f4a77b_1008bf1d",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 70
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4fdc930e_3ed702b3",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T07:52:05Z",
+      "side": 1,
+      "message": "Will probably not work so well given there is no single callback type.",
+      "parentUuid": "531c149b_2e013485",
       "range": {
         "startLine": 154,
         "startChar": 4,
