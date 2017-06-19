@@ -135,8 +135,8 @@ import java.util.Set;
  */
 public class IpReachabilityMonitor {
     private static final String TAG = "IpReachabilityMonitor";
-    private static final boolean DBG = false;
-    private static final boolean VDBG = false;
+    private static final boolean DBG = true;
+    private static final boolean VDBG = true;
 
     public interface Callback {
         // This callback function must execute as quickly as possible as it is
@@ -175,6 +175,7 @@ public class IpReachabilityMonitor {
      * @return 0 if the request was successfully passed to the kernel; otherwise return
      *         a non-zero error code.
      */
+/*
     private static int probeNeighbor(int ifIndex, InetAddress ip) {
         final String msgSnippet = "probing ip=" + ip.getHostAddress() + "%" + ifIndex;
         if (DBG) { Log.d(TAG, msgSnippet); }
@@ -220,6 +221,24 @@ public class IpReachabilityMonitor {
             errno = -OsConstants.EIO;
         }
         return errno;
+    }
+*/
+
+    private static int probeNeighbor(int ifIndex, InetAddress ip) {
+        final String msgSnippet = "probing ip=" + ip.getHostAddress() + "%" + ifIndex;
+        if (DBG) { Log.d(TAG, msgSnippet); }
+
+        final byte[] msg = RtNetlinkNeighborMessage.newNewNeighborMessage(
+                1, ip, StructNdMsg.NUD_PROBE, ifIndex, null);
+
+        try {
+            NetlinkSocket.sendOneShotKernelMessage(OsConstants.NETLINK_ROUTE, msg);
+        } catch (ErrnoException e) {
+            Log.e(TAG, "Error " + msgSnippet, e);
+            return -e.errno;
+        }
+
+        return 0;
     }
 
     public IpReachabilityMonitor(Context context, String ifName, Callback callback) {

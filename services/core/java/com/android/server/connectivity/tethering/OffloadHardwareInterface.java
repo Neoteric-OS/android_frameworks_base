@@ -23,8 +23,13 @@ import android.hardware.tetheroffload.control.V1_0.ITetheringOffloadCallback;
 import android.hardware.tetheroffload.control.V1_0.NatTimeoutUpdate;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.net.netlink.NetlinkSocket;
 import android.net.util.SharedLog;
+import android.system.ErrnoException;
+import android.system.OsConstants;
 
+import java.io.InterruptedIOException;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 
@@ -110,6 +115,53 @@ public class OffloadHardwareInterface {
         mControlCallback = null;
     }
 
+    public int updateNatTimeout() {
+        int errno = -OsConstants.EPROTO;
+        try (NetlinkSocket nlSocket = new NetlinkSocket(OsConstants.NETLINK_NETFILTER)) {
+/*
+
+            final long IO_TIMEOUT = 300L;
+            nlSocket.connectToKernel();
+            nlSocket.sendMessage(msg, 0, msg.length, IO_TIMEOUT);
+            final ByteBuffer bytes = nlSocket.recvMessage(IO_TIMEOUT);
+            // recvMessage() guaranteed to not return null if it did not throw.
+            final NetlinkMessage response = NetlinkMessage.parse(bytes);
+            if (response != null && response instanceof NetlinkErrorMessage &&
+                    (((NetlinkErrorMessage) response).getNlMsgError() != null)) {
+                errno = ((NetlinkErrorMessage) response).getNlMsgError().error;
+                if (errno != 0) {
+                    // TODO: consider ignoring EINVAL (-22), which appears to be
+                    // normal when probing a neighbor for which the kernel does
+                    // not already have / no longer has a link layer address.
+                    Log.e(TAG, "Error " + msgSnippet + ", errmsg=" + response.toString());
+                }
+            } else {
+                String errmsg;
+                if (response == null) {
+                    bytes.position(0);
+                    errmsg = "raw bytes: " + NetlinkConstants.hexify(bytes);
+                } else {
+                    errmsg = response.toString();
+                }
+                Log.e(TAG, "Error " + msgSnippet + ", errmsg=" + errmsg);
+            }
+*/
+        } catch (ErrnoException e) {
+            mLog.e("Error " + e);
+            errno = -e.errno;
+/*
+        } catch (InterruptedIOException e) {
+            mLog.e("Error " + e);
+            errno = -OsConstants.ETIMEDOUT;
+        } catch (SocketException e) {
+            mLog.e("Error " + e);
+            errno = -OsConstants.EIO;
+*/
+        }
+        return errno;
+
+    }
+
     public boolean setUpstreamParameters(
             String iface, String v4addr, String v4gateway, ArrayList<String> v6gws) {
         iface = iface != null ? iface : NO_INTERFACE_NAME;
@@ -163,4 +215,18 @@ public class OffloadHardwareInterface {
         boolean success;
         String errMsg;
     }
+
+/*
+    private static byte[] newConntrackMessage() {
+        final int length = StructNlMsgHdr.STRUCT_SIZE;
+        final byte[] bytes = new byte[length];
+        final ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
+        byteBuffer.order(ByteOrder.nativeOrder());
+
+        final StructNlMsgHdr nlmsghdr = new StructNlMsgHdr();
+        nlmsghdr.nlmsg_len = length;
+        nlmsghdr.nlmsg_type = NetlinkConstants.IPCTNL_MSG_CT_NEW;
+        nlmsghdr.nlmsg_flags = NLM_F_REQUEST | NLM_F_ACK;
+    }
+*/
 }
