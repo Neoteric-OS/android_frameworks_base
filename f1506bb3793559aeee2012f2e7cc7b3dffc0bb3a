@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1af6e9e8_07cab5af",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-19T11:56:48Z",
+      "side": 1,
+      "message": "Not for this CL, but when things go wrong we\u0027re going to want to inspect these in dumpsys. Maybe add a TODO to add a dump function that tracks the most recent values of all these variables?",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 51
+      },
+      "revId": "f1506bb3793559aeee2012f2e7cc7b3dffc0bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f5d7a56_b53bf721",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-19T11:56:48Z",
+      "side": 1,
+      "message": "Isn\u0027t there? Does this happen before or after the addresses are added to the interface?",
+      "range": {
+        "startLine": 129,
+        "startChar": 52,
+        "endLine": 129,
+        "endChar": 64
+      },
+      "revId": "f1506bb3793559aeee2012f2e7cc7b3dffc0bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e097660a_2fd3095a",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-19T11:56:48Z",
+      "side": 1,
+      "message": "Does this add an address or the entire connected subnet? Given that this is going to end up being something like \"2001:db8:1::ba/64\", I assume it\u0027s the entire subnet?",
+      "range": {
+        "startLine": 239,
+        "startChar": 41,
+        "endLine": 239,
+        "endChar": 50
+      },
+      "revId": "f1506bb3793559aeee2012f2e7cc7b3dffc0bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c531b62e_f88f0217",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-19T11:56:48Z",
+      "side": 1,
+      "message": "Do we also need to add all other addresses on other interfaces on the host as well, so that traffic to them doesn\u0027t get sent to the Internet?\n\nWhat about  directly-connected routes to other interfaces in the box (e.g., local-only hotspot, wifi p2p, ...)? Are they pushed in the \"add all downstream configured addresses\" section just above?",
+      "revId": "f1506bb3793559aeee2012f2e7cc7b3dffc0bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "257c3e28_cc8e141c",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/OffloadControllerTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-19T11:56:48Z",
+      "side": 1,
+      "message": "Nit: I think this could also be \"new IpPrefix\".",
+      "range": {
+        "startLine": 303,
+        "startChar": 51,
+        "endLine": 303,
+        "endChar": 66
+      },
+      "revId": "f1506bb3793559aeee2012f2e7cc7b3dffc0bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ccaa3936_8437e7b6",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/OffloadControllerTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-19T11:56:48Z",
+      "side": 1,
+      "message": "duplicate",
+      "range": {
+        "startLine": 321,
+        "startChar": 34,
+        "endLine": 321,
+        "endChar": 44
+      },
+      "revId": "f1506bb3793559aeee2012f2e7cc7b3dffc0bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
