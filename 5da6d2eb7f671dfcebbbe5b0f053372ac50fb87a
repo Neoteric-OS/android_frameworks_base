@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb81769f_2d1de35e",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T01:31:41Z",
+      "side": 1,
+      "message": "Just checking: should the old routes be removed before pushLocalAddresses() ?",
+      "range": {
+        "startLine": 135,
+        "startChar": 11,
+        "endLine": 135,
+        "endChar": 29
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f146ef8_a6ffd404",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T01:31:41Z",
+      "side": 1,
+      "message": "Do you think it is worthwhile to convert newRoutes to a set ? How many routes typically ?\n\nAlternatively computing the intersection of newRoutes and oldRoutes will let you do both !newRoutesContains(oldRoute) and !oldRoutes.contains(newRoute) \"efficiently\" :p",
+      "range": {
+        "startLine": 137,
+        "startChar": 17,
+        "endLine": 137,
+        "endChar": 35
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14ed54a1_5854a637",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T01:31:41Z",
+      "side": 1,
+      "message": "I noticed that in notifyDownstreamLinkProperties you have ordered things to be pushLocalAddresses first then change routes. Here it seems the order is the inverse for the removal function. Is this correct ?",
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "725c3e25_526b2365",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T01:31:41Z",
+      "side": 1,
+      "message": "Since this can have the effect of resetting mLocalAddresses, what about \"repush\", or \"recompute\", or something like this ?",
+      "range": {
+        "startLine": 212,
+        "startChar": 20,
+        "endLine": 212,
+        "endChar": 24
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c58bb1b_4e116592",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T01:31:41Z",
+      "side": 1,
+      "message": "You should be able to do new ArrayList\u003c\u003e(mLocalAddresses);",
+      "range": {
+        "startLine": 221,
+        "startChar": 8,
+        "endLine": 222,
+        "endChar": 62
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00891cb8_ca737eac",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T01:31:41Z",
+      "side": 1,
+      "message": "if this only reads the input and does not keep a reference to it, you might be able to pass in mLocalAddresses directly.",
+      "range": {
+        "startLine": 223,
+        "startChar": 28,
+        "endLine": 223,
+        "endChar": 59
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42bab474_5aa096b5",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T01:31:41Z",
+      "side": 1,
+      "message": "I see this lambda repeated again and again. Maybe there is something you could try to automate this step a bit more:\n\nOn the CbResults class, add an instance method:\n\npublic CallbackType callback() {\n  return (boolean success, String errMsg) -\u003e {\n    this.success \u003d success;\n    this.errMsg \u003d errMsg;\n  };\n}\n\nThen you can do mOffloadControl.setLocalPrefixes(localPrefixes, results.callback());\n\n\n\n\nIt might even be possible to define the function\n\npublic CallbackType setResults(boolean success, String errMsg) {\n  this.success \u003d success;\n  this.errMsg \u003d errMsg;\n}\n\nand do mOffloadControl.setLocalPrefixes(localPrefixes, results.setResults); with automatic eta-expansion (methods become objects).",
+      "range": {
+        "startLine": 117,
+        "startChar": 20,
+        "endLine": 120,
+        "endChar": 22
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30f4a77b_1008bf1d",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-19T01:31:41Z",
+      "side": 1,
+      "message": "You might be able to mostly automate the creation of these offload controller wrappers with something like this:\n\n\npublic boolean controllerWrapper(Consumer\u003cCallback\u003e fn, String errMsg) {\n  final CbResults results \u003d new CbResults();\n  try {\n    fn.accept(results.callback());\n  } catch (RemoteException e) {\n    mLog.e(errMsg + e);\n    return false;\n  }\n\n  if (!results.success) mLog.e(errMsg + results.errMsg);\n  return results.success;\n}\n\n\n\npublic boolean addDownstreamPrefix(String ifname, String prefix) {\n  controllerWrapper((callback) -\u003e  mOffloadControl.addDownstream(ifname, prefix, callback), \"failed to addDownstream\");\n}\n\n\nAlthough this starts to look pretty obscure and less readable. Not necessarily a good thing to do.",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 70
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
