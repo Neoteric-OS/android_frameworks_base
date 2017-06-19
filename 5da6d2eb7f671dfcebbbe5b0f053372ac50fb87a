@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d52b4047_4c48d3c1",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-19T06:35:49Z",
+      "side": 1,
+      "message": "The old routes can\u0027t change our addresses.  If an address associated with an old route is gone, (re)pushLocalAddresses() will rectify it (it just pushes the whole state, every time) for the hardware offload piece.",
+      "parentUuid": "cb81769f_2d1de35e",
+      "range": {
+        "startLine": 135,
+        "startChar": 11,
+        "endLine": 135,
+        "endChar": 29
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f146ef8_a6ffd404",
         "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-19T01:31:41Z",
       "side": 1,
       "message": "Do you think it is worthwhile to convert newRoutes to a set ? How many routes typically ?\n\nAlternatively computing the intersection of newRoutes and oldRoutes will let you do both !newRoutesContains(oldRoute) and !oldRoutes.contains(newRoute) \"efficiently\" :p",
+      "range": {
+        "startLine": 137,
+        "startChar": 17,
+        "endLine": 137,
+        "endChar": 35
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3498e157_d230c29b",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-19T06:35:49Z",
+      "side": 1,
+      "message": "Yeah, of course we could use (Hash)Sets, but I was thinking that since we\u0027re talking about 1 IPv4 route and probably just 1 IPv6 route, I\u0027m not sure there\u0027s a performance win to be had. (such was my thinking, at any rate)",
+      "parentUuid": "4f146ef8_a6ffd404",
       "range": {
         "startLine": 137,
         "startChar": 17,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "d2cdd7ca_dabee9d3",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-19T06:35:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14ed54a1_5854a637",
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "725c3e25_526b2365",
         "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 10
@@ -76,6 +142,30 @@
       "writtenOn": "2017-06-19T01:31:41Z",
       "side": 1,
       "message": "Since this can have the effect of resetting mLocalAddresses, what about \"repush\", or \"recompute\", or something like this ?",
+      "range": {
+        "startLine": 212,
+        "startChar": 20,
+        "endLine": 212,
+        "endChar": 24
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67e2c80a_5e53f326",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-19T06:35:49Z",
+      "side": 1,
+      "message": "How about computeAndPush...()?",
+      "parentUuid": "725c3e25_526b2365",
       "range": {
         "startLine": 212,
         "startChar": 20,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "f1216a31_ba263b55",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-19T06:35:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c58bb1b_4e116592",
+      "range": {
+        "startLine": 221,
+        "startChar": 8,
+        "endLine": 222,
+        "endChar": 62
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00891cb8_ca737eac",
         "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 10
@@ -122,6 +236,30 @@
       "writtenOn": "2017-06-19T01:31:41Z",
       "side": 1,
       "message": "if this only reads the input and does not keep a reference to it, you might be able to pass in mLocalAddresses directly.",
+      "range": {
+        "startLine": 223,
+        "startChar": 28,
+        "endLine": 223,
+        "endChar": 59
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d18200e7_8089dade",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-19T06:35:49Z",
+      "side": 1,
+      "message": "Doesn\u0027t compile, but calling it direction with new ArrayList\u003c\u003e(mLocalAddresses) seems to work.",
+      "parentUuid": "00891cb8_ca737eac",
       "range": {
         "startLine": 223,
         "startChar": 28,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "586c3afc_1f5fae2f",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-19T06:35:49Z",
+      "side": 1,
+      "message": "I\u0027m not sure how this will work, because we don\u0027t have one single \"callback type\", but instead HIDL generates a new, unique callback type per method (why!?!).  So we have setLocalPrefixesCallback and setUpstreamParametersCallback and so on.",
+      "parentUuid": "42bab474_5aa096b5",
+      "range": {
+        "startLine": 117,
+        "startChar": 20,
+        "endLine": 120,
+        "endChar": 22
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30f4a77b_1008bf1d",
         "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
         "patchSetId": 10
@@ -168,6 +330,30 @@
       "writtenOn": "2017-06-19T01:31:41Z",
       "side": 1,
       "message": "You might be able to mostly automate the creation of these offload controller wrappers with something like this:\n\n\npublic boolean controllerWrapper(Consumer\u003cCallback\u003e fn, String errMsg) {\n  final CbResults results \u003d new CbResults();\n  try {\n    fn.accept(results.callback());\n  } catch (RemoteException e) {\n    mLog.e(errMsg + e);\n    return false;\n  }\n\n  if (!results.success) mLog.e(errMsg + results.errMsg);\n  return results.success;\n}\n\n\n\npublic boolean addDownstreamPrefix(String ifname, String prefix) {\n  controllerWrapper((callback) -\u003e  mOffloadControl.addDownstream(ifname, prefix, callback), \"failed to addDownstream\");\n}\n\n\nAlthough this starts to look pretty obscure and less readable. Not necessarily a good thing to do.",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 70
+      },
+      "revId": "5da6d2eb7f671dfcebbbe5b0f053372ac50fb87a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "531c149b_2e013485",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-19T06:35:49Z",
+      "side": 1,
+      "message": "I\u0027ll give this a try.  We\u0027ll see if it plays nice with HIDL.",
+      "parentUuid": "30f4a77b_1008bf1d",
       "range": {
         "startLine": 154,
         "startChar": 4,
