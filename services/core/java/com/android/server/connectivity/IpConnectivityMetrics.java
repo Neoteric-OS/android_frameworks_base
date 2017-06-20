@@ -21,6 +21,7 @@ import android.net.ConnectivityMetricsEvent;
 import android.net.IIpConnectivityMetrics;
 import android.net.INetdEventCallback;
 import android.net.metrics.ApfProgramEvent;
+import android.net.metrics.DefaultNetworkEvent;
 import android.net.metrics.IpConnectivityLog;
 import android.os.Binder;
 import android.os.IBinder;
@@ -32,12 +33,15 @@ import android.text.format.DateUtils;
 import android.util.ArrayMap;
 import android.util.Base64;
 import android.util.Log;
+
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.RingBuffer;
 import com.android.internal.util.TokenBucket;
+import com.android.server.LocalServices;
 import com.android.server.SystemService;
 import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.IpConnectivityEvent;
+
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -112,6 +116,9 @@ final public class IpConnectivityMetrics extends SystemService {
 
     private final ToIntFunction<Context> mCapacityGetter;
 
+    @VisibleForTesting
+    final DefaultNetworkMonitor mDefaultNetworkMonitor = new DefaultNetworkMonitor();
+
     public IpConnectivityMetrics(Context ctx, ToIntFunction<Context> capacityGetter) {
         super(ctx);
         mCapacityGetter = capacityGetter;
@@ -135,6 +142,8 @@ final public class IpConnectivityMetrics extends SystemService {
 
             publishBinderService(SERVICE_NAME, impl);
             publishBinderService(mNetdListener.SERVICE_NAME, mNetdListener);
+
+            LocalServices.addService(Logger.class, new LoggerImpl());
         }
     }
 
@@ -188,6 +197,8 @@ final public class IpConnectivityMetrics extends SystemService {
 
         final List<IpConnectivityEvent> protoEvents = IpConnectivityEventBuilder.toProto(events);
 
+        mDefaultNetworkMonitor.flushEvents(protoEvents);
+
         if (mNetdListener != null) {
             mNetdListener.flushStatistics(protoEvents);
         }
@@ -228,6 +239,7 @@ final public class IpConnectivityMetrics extends SystemService {
             if (mNetdListener != null) {
                 mNetdListener.listAsProtos(pw);
             }
+            mDefaultNetworkMonitor.listEventsAsProto(pw);
             return;
         }
 
@@ -237,6 +249,7 @@ final public class IpConnectivityMetrics extends SystemService {
         if (mNetdListener != null) {
             mNetdListener.list(pw);
         }
+        mDefaultNetworkMonitor.listEvents(pw);
     }
 
     /**
@@ -254,6 +267,7 @@ final public class IpConnectivityMetrics extends SystemService {
         if (mNetdListener != null) {
             mNetdListener.list(pw);
         }
+        mDefaultNetworkMonitor.listEvents(pw);
     }
 
     private void cmdStats(FileDescriptor fd, PrintWriter pw, String[] args) {
@@ -365,5 +379,16 @@ final public class IpConnectivityMetrics extends SystemService {
         // one token every minute, 50 tokens max: burst of ~50 events every hour.
         map.put(ApfProgramEvent.class, new TokenBucket((int)DateUtils.MINUTE_IN_MILLIS, 50));
         return map;
+    }
+
+    /** Direct non-Binder interface for event producer clients within the system servers. */
+    public interface Logger {
+        DefaultNetworkMonitor defaultNetworkMonitor();
+    }
+
+    private class LoggerImpl implements Logger {
+        public DefaultNetworkMonitor defaultNetworkMonitor() {
+            return mDefaultNetworkMonitor;
+        }
     }
 }
