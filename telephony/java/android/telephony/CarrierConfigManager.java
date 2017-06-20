@@ -1347,6 +1347,14 @@ public class CarrierConfigManager {
     public static final String KEY_DISABLE_VOICE_BARRING_NOTIFICATION_BOOL =
             "disable_voice_barring_notification_bool";
 
+    /**
+     * Flag specifying whether IMS registration state menu is shown in Status Info setting,
+     * default to false.
+     * @hide
+     */
+    public static final String KEY_SHOW_IMS_REGISTRATION_STATUS_BOOL =
+            "show_ims_registration_status_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -1583,6 +1591,7 @@ public class CarrierConfigManager {
         sDefaults.putStringArray(KEY_BOOSTED_LTE_EARFCNS_STRING_ARRAY, null);
         sDefaults.putBoolean(KEY_DISABLE_VOICE_BARRING_NOTIFICATION_BOOL, false);
         sDefaults.putBoolean(KEY_ALWAYS_SHOW_DATA_RAT_ICON_BOOL, false);
+        sDefaults.putBoolean(KEY_SHOW_IMS_REGISTRATION_STATUS_BOOL, false);
     }
 
     /**
