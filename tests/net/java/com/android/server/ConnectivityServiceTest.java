@@ -98,10 +98,12 @@ import android.util.LogPrinter;
 import com.android.internal.util.WakeupMessage;
 import com.android.internal.util.test.BroadcastInterceptingContext;
 import com.android.internal.util.test.FakeSettingsProvider;
+import com.android.server.connectivity.DefaultNetworkMonitor;
+import com.android.server.connectivity.IpConnectivityMetrics;
 import com.android.server.connectivity.MockableSystemProperties;
 import com.android.server.connectivity.NetworkAgentInfo;
-import com.android.server.connectivity.NetworkMonitor;
 import com.android.server.connectivity.NetworkMonitor.CaptivePortalProbeResult;
+import com.android.server.connectivity.NetworkMonitor;
 import com.android.server.net.NetworkPinner;
 import com.android.server.net.NetworkPolicyManagerInternal;
 
@@ -142,6 +144,9 @@ public class ConnectivityServiceTest extends AndroidTestCase {
     private MockNetworkAgent mWiFiNetworkAgent;
     private MockNetworkAgent mCellNetworkAgent;
     private MockNetworkAgent mEthernetNetworkAgent;
+
+    @Mock IpConnectivityMetrics.Logger mMetricsService;
+    @Mock DefaultNetworkMonitor mDefaultNetworkMonitor;
 
     // This class exists to test bindProcessToNetwork and getBoundNetworkForProcess. These methods
     // do not go through ConnectivityService but talk to netd directly, so they don't automatically
@@ -791,6 +796,11 @@ public class ConnectivityServiceTest extends AndroidTestCase {
             return Context.ETHERNET_SERVICE.equals(name);
         }
 
+        @Override
+        protected IpConnectivityMetrics.Logger metricsLogger() {
+            return mMetricsService;
+        }
+
         public WrappedNetworkMonitor getLastCreatedWrappedNetworkMonitor() {
             return mLastCreatedNetworkMonitor;
         }
@@ -818,6 +828,9 @@ public class ConnectivityServiceTest extends AndroidTestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
+
+        MockitoAnnotations.initMocks(this);
+        when(mMetricsService.defaultNetworkMonitor()).thenReturn(mDefaultNetworkMonitor);
 
         // InstrumentationTestRunner prepares a looper, but AndroidJUnitRunner does not.
         // http://b/25897652 .
