@@ -129,6 +129,7 @@ import com.android.internal.util.XmlUtils;
 import com.android.server.LocalServices;
 import com.android.server.am.BatteryStatsService;
 import com.android.server.connectivity.DataConnectionStats;
+import com.android.server.connectivity.IpConnectivityMetrics;
 import com.android.server.connectivity.KeepaliveTracker;
 import com.android.server.connectivity.LingerMonitor;
 import com.android.server.connectivity.MockableSystemProperties;
@@ -170,6 +171,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.SortedSet;
+import java.util.StringJoiner;
 import java.util.TreeSet;
 
 /**
@@ -491,6 +493,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private final IpConnectivityLog mMetricsLog;
+    private DefaultNetworkEvent mDefaultNetworkEvent;
+    private long mLastDefaultNetworkEventLogging;
 
     @VisibleForTesting
     final MultinetworkPolicyTracker mMultinetworkPolicyTracker;
@@ -2109,9 +2113,26 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         final boolean valid =
                                 (msg.arg1 == NetworkMonitor.NETWORK_TEST_RESULT_VALID);
                         final boolean wasValidated = nai.lastValidated;
-                        if (DBG) log(nai.name() + " validation " + (valid ? "passed" : "failed") +
-                                (msg.obj == null ? "" : " with redirect to " + (String)msg.obj));
+                        final boolean wasDefault = isDefaultNetwork(nai);
+
+                        if (DBG) {
+                            StringJoiner j = new StringJoiner(" ");
+                            j.add(nai.name());
+                            if (wasDefault) {
+                                j.add("(default network)");
+                            }
+                            j.add("validation").add(valid ? "passed" : "failed");
+                            if (msg.obj != null) {
+                                j.add("with redirect to " + msg.obj);
+                            }
+                            log(j.toString());
+                        }
+
                         if (valid != nai.lastValidated) {
+                            if (wasDefault) {
+                                metricsLogger().defaultNetworkMonitor().defaultNetworkValidation(
+                                        SystemClock.elapsedRealtime(), valid);
+                            }
                             final int oldScore = nai.getCurrentScore();
                             nai.lastValidated = valid;
                             nai.everValidated |= valid;
@@ -2119,6 +2140,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             // If score has changed, rebroadcast to NetworkFactories. b/17726566
                             if (oldScore != nai.getCurrentScore()) sendUpdatedScoreToFactories(nai);
                         }
+
                         updateInetCondition(nai);
                         // Let the NetworkAgent know the state of its network
                         Bundle redirectUrlBundle = new Bundle();
@@ -2283,7 +2305,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 // Let rematchAllNetworksAndRequests() below record a new default network event
                 // if there is a fallback. Taken together, the two form a X -> 0, 0 -> Y sequence
                 // whose timestamps tell how long it takes to recover a default network.
-                logDefaultNetworkEvent(null, nai);
+                long now = SystemClock.elapsedRealtime();
+                metricsLogger().defaultNetworkMonitor().defaultNetworkTransition(now, null, nai);
             }
             notifyIfacesChangedForNetworkStats();
             // TODO - we shouldn't send CALLBACK_LOST to requests that can be satisfied
@@ -5011,8 +5034,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (isNewDefault) {
             // Notify system services that this network is up.
             makeDefault(newNetwork);
-            // Log 0 -> X and Y -> X default network transitions, where X is the new default.
-            logDefaultNetworkEvent(newNetwork, oldDefaultNetwork);
+            metricsLogger().defaultNetworkMonitor().defaultNetworkTransition(
+                    now, newNetwork, oldDefaultNetwork);
+
             // Have a new default network, release the transition wakelock in
             scheduleReleaseNetworkTransitionWakelock();
         }
@@ -5571,25 +5595,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return ServiceManager.checkService(name) != null;
     }
 
-    private void logDefaultNetworkEvent(NetworkAgentInfo newNai, NetworkAgentInfo prevNai) {
-        int newNetid = NETID_UNSET;
-        int prevNetid = NETID_UNSET;
-        int[] transports = new int[0];
-        boolean hadIPv4 = false;
-        boolean hadIPv6 = false;
-
-        if (newNai != null) {
-            newNetid = newNai.network.netId;
-            transports = newNai.networkCapabilities.getTransportTypes();
-        }
-        if (prevNai != null) {
-            prevNetid = prevNai.network.netId;
-            final LinkProperties lp = prevNai.linkProperties;
-            hadIPv4 = lp.hasIPv4Address() && lp.hasIPv4DefaultRoute();
-            hadIPv6 = lp.hasGlobalIPv6Address() && lp.hasIPv6DefaultRoute();
-        }
-
-        mMetricsLog.log(new DefaultNetworkEvent(newNetid, transports, prevNetid, hadIPv4, hadIPv6));
+    @VisibleForTesting
+    protected IpConnectivityMetrics.Logger metricsLogger() {
+        return checkNotNull(LocalServices.getService(IpConnectivityMetrics.Logger.class),
+                "no IpConnectivityMetrics service");
     }
 
     private void logNetworkEvent(NetworkAgentInfo nai, int evtype) {

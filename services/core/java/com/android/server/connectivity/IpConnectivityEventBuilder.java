@@ -25,6 +25,7 @@ import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI_AWARE;
 
+import android.net.ConnectivityManager;
 import android.net.ConnectivityMetricsEvent;
 import android.net.metrics.ApfProgramEvent;
 import android.net.metrics.ApfStats;
@@ -132,6 +133,26 @@ final public class IpConnectivityEventBuilder {
         return out;
     }
 
+    public static IpConnectivityEvent toProto(DefaultNetworkEvent in) {
+        IpConnectivityLogClass.DefaultNetworkEvent ev =
+                new IpConnectivityLogClass.DefaultNetworkEvent();
+        ev.finalScore = in.finalScore;
+        ev.initialScore = in.initialScore;
+        ev.ipSupport = ipSupportOf(in);
+        if (in.netId != ConnectivityManager.NETID_UNSET) {
+            ev.defaultNetworkDurationMs = in.durationMs;
+            ev.noDefaultNetworkDurationMs = 0;
+        } else {
+            ev.defaultNetworkDurationMs = 0;
+            ev.noDefaultNetworkDurationMs = in.durationMs;
+        }
+        ev.validationDurationMs = in.validatedMs;
+        ev.previousDefaultNetworkLinkLayer = transportsToLinkLayer(in.previousTransports);
+        final IpConnectivityEvent out = buildEvent(in.netId, in.transports, null);
+        out.setDefaultNetworkEvent(ev);
+        return out;
+    }
+
     private static IpConnectivityEvent buildEvent(int netId, long transports, String ifname) {
         final IpConnectivityEvent ev = new IpConnectivityEvent();
         ev.networkId = netId;
@@ -161,11 +182,6 @@ final public class IpConnectivityEventBuilder {
 
         if (in instanceof IpReachabilityEvent) {
             setIpReachabilityEvent(out, (IpReachabilityEvent) in);
-            return true;
-        }
-
-        if (in instanceof DefaultNetworkEvent) {
-            setDefaultNetworkEvent(out, (DefaultNetworkEvent) in);
             return true;
         }
 
@@ -223,16 +239,6 @@ final public class IpConnectivityEventBuilder {
                 new IpConnectivityLogClass.IpReachabilityEvent();
         ipReachabilityEvent.eventType = in.eventType;
         out.setIpReachabilityEvent(ipReachabilityEvent);
-    }
-
-    private static void setDefaultNetworkEvent(IpConnectivityEvent out, DefaultNetworkEvent in) {
-        IpConnectivityLogClass.DefaultNetworkEvent defaultNetworkEvent =
-                new IpConnectivityLogClass.DefaultNetworkEvent();
-        defaultNetworkEvent.networkId = netIdOf(in.netId);
-        defaultNetworkEvent.previousNetworkId = netIdOf(in.prevNetId);
-        defaultNetworkEvent.transportTypes = in.transportTypes;
-        defaultNetworkEvent.previousNetworkIpSupport = ipSupportOf(in);
-        out.setDefaultNetworkEvent(defaultNetworkEvent);
     }
 
     private static void setNetworkEvent(IpConnectivityEvent out, NetworkEvent in) {
@@ -324,13 +330,13 @@ final public class IpConnectivityEventBuilder {
     }
 
     private static int ipSupportOf(DefaultNetworkEvent in) {
-        if (in.prevIPv4 && in.prevIPv6) {
+        if (in.ipv4 && in.ipv6) {
             return IpConnectivityLogClass.DefaultNetworkEvent.DUAL;
         }
-        if (in.prevIPv6) {
+        if (in.ipv6) {
             return IpConnectivityLogClass.DefaultNetworkEvent.IPV6;
         }
-        if (in.prevIPv4) {
+        if (in.ipv4) {
             return IpConnectivityLogClass.DefaultNetworkEvent.IPV4;
         }
         return IpConnectivityLogClass.DefaultNetworkEvent.NONE;
