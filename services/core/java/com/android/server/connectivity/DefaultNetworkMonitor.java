@@ -1,0 +1,159 @@
+/*
+ * Copyright (C) 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.android.server.connectivity;
+
+import android.net.LinkProperties;
+import android.net.metrics.DefaultNetworkEvent;
+import android.util.Log;
+import android.os.SystemClock;
+
+import com.android.internal.annotations.GuardedBy;
+import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.util.BitUtils;
+import com.android.internal.util.RingBuffer;
+import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.IpConnectivityEvent;
+
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Tracks events related to the default network for the purpose of default network metrics.
+ * {@hide}
+ */
+public class DefaultNetworkMonitor {
+
+    private static final int ROLLING_LOG_SIZE = 64;
+
+    @VisibleForTesting
+    public final long creationTimeMs = SystemClock.elapsedRealtime();
+
+    // Event buffer used for metrics upload. The buffer is cleared when events are collected.
+    @GuardedBy("this")
+    private final List<DefaultNetworkEvent> mEvents = new ArrayList<>();
+
+    // Rolling event buffer used for dumpsys and bugreports.
+    @GuardedBy("this")
+    private final RingBuffer<DefaultNetworkEvent> mEventsLog =
+            new RingBuffer(DefaultNetworkEvent.class, ROLLING_LOG_SIZE);
+
+    // Information about the current status of the default network.
+    @GuardedBy("this")
+    private DefaultNetworkEvent mCurrentDefaultNetwork;
+    @GuardedBy("this")
+    private boolean mCurrentValidation;
+    @GuardedBy("this")
+    private long mLastValidationTimeMs;
+    // Transport information about the last default network.
+    @GuardedBy("this")
+    private int mLastTransports;
+
+    public DefaultNetworkMonitor() {
+        newDefaultNetwork(creationTimeMs, null);
+    }
+
+    public synchronized void listEvents(PrintWriter pw) {
+        long localTimeMs = System.currentTimeMillis();
+        long timeMs = SystemClock.elapsedRealtime();
+        for (DefaultNetworkEvent ev : mEvents) {
+            printEvent(localTimeMs, pw, ev);
+        }
+        mCurrentDefaultNetwork.updateDuration(timeMs);
+        if (mCurrentValidation) {
+            mCurrentDefaultNetwork.validatedMs += timeMs - mLastValidationTimeMs;
+            mLastValidationTimeMs = timeMs;
+        }
+        printEvent(localTimeMs, pw, mCurrentDefaultNetwork);
+    }
+
+    public synchronized void listEventsAsProto(PrintWriter pw) {
+        for (DefaultNetworkEvent ev : mEvents) {
+            pw.print(IpConnectivityEventBuilder.toProto(ev));
+        }
+    }
+
+    public synchronized void flushEvents(List<IpConnectivityEvent> out) {
+        for (DefaultNetworkEvent ev : mEvents) {
+            out.add(IpConnectivityEventBuilder.toProto(ev));
+        }
+        mEvents.clear();
+    }
+
+    public synchronized void defaultNetworkValidation(long timeMs, boolean isValid) {
+        if (!isValid && mCurrentValidation) {
+            mCurrentValidation = false;
+            mCurrentDefaultNetwork.validatedMs += timeMs - mLastValidationTimeMs;
+        }
+
+        if (isValid && !mCurrentValidation) {
+            mCurrentValidation = true;
+            mLastValidationTimeMs = timeMs;
+        }
+    }
+
+    public synchronized void defaultNetworkTransition(
+            long timeMs, NetworkAgentInfo newNai, NetworkAgentInfo oldNai) {
+        logCurrentDefaultNetwork(timeMs, oldNai);
+        newDefaultNetwork(timeMs, newNai);
+    }
+
+    private void logCurrentDefaultNetwork(long timeMs, NetworkAgentInfo oldNai) {
+        DefaultNetworkEvent ev = mCurrentDefaultNetwork;
+        ev.updateDuration(timeMs);
+        ev.previousTransports = mLastTransports;
+        // oldNai is null if the system had no default network before the transition.
+        if (oldNai != null) {
+            // The system acquired a new default network.
+            fillLinkInfo(ev, oldNai);
+            ev.finalScore = oldNai.getCurrentScore();
+            ev.validatedMs = ev.durationMs;
+        }
+        if (ev.transports != 0) {
+            mLastTransports = ev.transports;
+        }
+        mEvents.add(ev);
+        mEventsLog.append(ev);
+    }
+
+    private void newDefaultNetwork(long timeMs, NetworkAgentInfo newNai) {
+        DefaultNetworkEvent ev = new DefaultNetworkEvent(timeMs);
+        ev.durationMs = timeMs;
+        // newNai is null if the system has no default network after the transition.
+        if (newNai != null) {
+            fillLinkInfo(ev, newNai);
+            ev.initialScore = newNai.getCurrentScore();
+            if (newNai.lastValidated) {
+                mCurrentValidation = true;
+                mLastValidationTimeMs = timeMs;
+            }
+        }
+        mCurrentDefaultNetwork = ev;
+    }
+
+    private static void fillLinkInfo(DefaultNetworkEvent ev, NetworkAgentInfo nai) {
+        LinkProperties lp = nai.linkProperties;
+        ev.netId = nai.network().netId;
+        ev.transports |= BitUtils.packBits(nai.networkCapabilities.getTransportTypes());
+        ev.ipv4 |= lp.hasIPv4Address() && lp.hasIPv4DefaultRoute();
+        ev.ipv6 |= lp.hasGlobalIPv6Address() && lp.hasIPv6DefaultRoute();
+    }
+
+    private static void printEvent(long localTimeMs, PrintWriter pw, DefaultNetworkEvent ev) {
+        long localCreationTimeMs = localTimeMs - ev.durationMs;
+        pw.println(String.format("%tT.%tL: %s", localCreationTimeMs, localCreationTimeMs, ev));
+    }
+}
