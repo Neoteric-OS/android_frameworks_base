@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25c34970_252a6b74",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-06-21T18:48:04Z",
+      "side": 1,
+      "message": "These are in the wrong CL.",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 0
+      },
+      "revId": "ed783d2b1657c1be4a75799c71c410e88bc3e5c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
