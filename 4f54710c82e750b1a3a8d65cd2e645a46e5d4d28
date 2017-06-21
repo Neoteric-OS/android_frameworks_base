@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acd5e323_2df64b62",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-06-21T07:51:43Z",
+      "side": 1,
+      "message": "You can directly use mSafeAllDeviceInfos,",
+      "range": {
+        "startLine": 650,
+        "startChar": 49,
+        "endLine": 650,
+        "endChar": 74
+      },
+      "revId": "4f54710c82e750b1a3a8d65cd2e645a46e5d4d28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
