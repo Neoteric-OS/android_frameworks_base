@@ -93,6 +93,7 @@ cc_library_shared {
         "android_os_SystemProperties.cpp",
         "android_os_Trace.cpp",
         "android_os_UEventObserver.cpp",
+        "android_os_UpdateEngine.cpp",
         "android_os_VintfObject.cpp",
         "android_os_VintfRuntimeInfo.cpp",
         "android_net_LocalSocketImpl.cpp",
@@ -202,6 +203,8 @@ cc_library_shared {
         "external/skia/src/images",
         "frameworks/base/media/jni",
         "libcore/include",
+        "system/update_engine/common",
+        "system/update_engine/client_library/include/",
    ],
 
     static_libs: [
