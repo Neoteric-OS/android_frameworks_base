@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fdd141e_58a508db",
+        "filename": "services/core/java/com/android/server/timezone/RulesManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2017-06-23T16:27:35Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with this but the documentation of dup() says:\n\n\"Create a new ParcelFileDescriptor that is a dup of the existing FileDescriptor. This obeys standard POSIX semantics, where the new file descriptor shared state such as file position with the original file descriptor.\"\n\nDoesn\u0027t that mean that after one InputStream has been read to the end, future InputStreams will start from the end / be empty?\n\nAlso, won\u0027t close() close all of them?",
+      "range": {
+        "startLine": 383,
+        "startChar": 16,
+        "endLine": 385,
+        "endChar": 75
+      },
+      "revId": "a4f0158dc051e6d286dc5628b89f1d3165bb5973",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
