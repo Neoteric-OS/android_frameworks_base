@@ -1390,6 +1390,13 @@ public class CarrierConfigManager {
     public static final String IMSI_KEY_EXPIRATION_DAYS_TIME_INT =
             "imsi_key_expiration_days_time_int";
 
+    /**
+     * Default value for {@link Settings.Global#DATA_ROAMING}
+     * @hide
+     */
+    public static final String KEY_CARRIER_DEFAULT_DATA_ROAMING_ENABLED_BOOL =
+            "carrier_default_data_roaming_enabled_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -1630,6 +1637,7 @@ public class CarrierConfigManager {
         sDefaults.putStringArray(KEY_ROAMING_OPERATOR_STRING_ARRAY, null);
         sDefaults.putInt(IMSI_KEY_EXPIRATION_DAYS_TIME_INT, IMSI_ENCRYPTION_DAYS_TIME_DISABLED);
         sDefaults.putString(IMSI_KEY_DOWNLOAD_URL_STRING, null);
+        sDefaults.putBoolean(KEY_CARRIER_DEFAULT_DATA_ROAMING_ENABLED_BOOL, false);
     }
 
     /**
