@@ -16,6 +16,9 @@
 
 package android.net.util;
 
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.net.InetAddress;
 import java.nio.ByteBuffer;
 
 
@@ -148,4 +151,10 @@ public final class NetworkConstants {
 
     public static int asUint(byte b) { return (b & 0xff); }
     public static int asUint(short s) { return (s & 0xffff); }
+
+    public static int prefixLengthForAddress(InetAddress ip) {
+        if (ip instanceof Inet4Address) return IPV4_ADDR_LEN * 8;  // 32
+        if (ip instanceof Inet6Address) return IPV6_ADDR_LEN * 8;  // 128
+        return -1;
+    }
 }

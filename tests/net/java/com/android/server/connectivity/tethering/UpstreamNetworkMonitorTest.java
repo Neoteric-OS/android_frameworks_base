@@ -44,6 +44,9 @@ import android.os.Message;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.net.IConnectivityManager;
+import android.net.IpPrefix;
+import android.net.LinkAddress;
+import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
@@ -76,6 +79,7 @@ import java.util.Set;
 @SmallTest
 public class UpstreamNetworkMonitorTest {
     private static final int EVENT_UNM_UPDATE = 1;
+    private static final int EVENT_PFX_UPDATE = 2;
 
     @Mock private Context mContext;
     @Mock private IConnectivityManager mCS;
@@ -94,7 +98,8 @@ public class UpstreamNetworkMonitorTest {
 
         mCM = spy(new TestConnectivityManager(mContext, mCS));
         mSM = new TestStateMachine();
-        mUNM = new UpstreamNetworkMonitor(mSM, EVENT_UNM_UPDATE, (ConnectivityManager) mCM, mLog);
+        mUNM = new UpstreamNetworkMonitor(
+                (ConnectivityManager) mCM, mSM, mLog, EVENT_UNM_UPDATE, EVENT_PFX_UPDATE);
     }
 
     @After public void tearDown() throws Exception {
@@ -315,6 +320,44 @@ public class UpstreamNetworkMonitorTest {
         assertTrue(netReq.networkCapabilities.hasCapability(NET_CAPABILITY_DUN));
     }
 
+    @Test
+    public void testLocalPrefixes() throws Exception {
+        mUNM.start();
+
+        Set<IpPrefix> local = mUNM.getLocalPrefixes();
+        assertPrefixesContains(local, "127.0.0.1/32", "127.0.0.0/8", "::1/128", "fe80::/64");
+
+        final TestNetworkAgent wifiAgent = new TestNetworkAgent(mCM, TRANSPORT_WIFI);
+        wifiAgent.fakeConnect();
+        final LinkProperties wifiLp = new LinkProperties();
+        wifiLp.setInterfaceName("wlan0");
+
+        final String[] WIFI_ADDRS = { "fe80::827a:bfff:fe6f:374d", "100.112.103.18",
+                                      "2401:fa00:4:fd00:827a:bfff:fe6f:374d",
+                                      "2401:fa00:4:fd00:6dea:325a:fdae:4ef4" };
+        for (String addrStr : WIFI_ADDRS) {
+            final String cidr = addrStr.contains(":") ? "/64" : "/20";
+            wifiLp.addLinkAddress(new LinkAddress(addrStr + cidr));
+        }
+
+        wifiAgent.updateLinkProperties(wifiLp);
+        local = mUNM.getLocalPrefixes();
+        assertPrefixesContains(local, "127.0.0.1/32", "127.0.0.0/8", "::1/128", "fe80::/64");
+        for (String addrStr : WIFI_ADDRS) {
+            final String cidr = addrStr.contains(":") ? "/128" : "/32";
+            assertPrefixesContains(local, addrStr + cidr);
+        }
+
+        // Routes: fe80::/64 -> :: wlan0,::/0 -> fe80::fa00:4:fd00:1 wlan0,2401:fa00:4:fd00::/64 -> :: wlan0,100.112.96.0/20 -> 0.0.0.0 wlan0,0.0.0.0/0 -> 100.112.111.254 wlan0,
+
+        final TestNetworkAgent cellAgent = new TestNetworkAgent(mCM, TRANSPORT_CELLULAR);
+        cellAgent.fakeConnect();
+
+        final TestNetworkAgent dunAgent = new TestNetworkAgent(mCM, TRANSPORT_CELLULAR);
+        dunAgent.networkCapabilities.addCapability(NET_CAPABILITY_DUN);
+        dunAgent.fakeConnect();
+    }
+
     private void assertSatisfiesLegacyType(int legacyType, NetworkState ns) {
         if (legacyType == TYPE_NONE) {
             assertTrue(ns == null);
@@ -476,6 +519,12 @@ public class UpstreamNetworkMonitorTest {
                 cb.onLost(networkId);
             }
         }
+
+        public void updateLinkProperties(LinkProperties lp) {
+            for (NetworkCallback cb : cm.listening.keySet()) {
+                cb.onLinkPropertiesChanged(networkId, lp);
+            }
+        }
     }
 
     public static class TestStateMachine extends StateMachine {
@@ -503,5 +552,12 @@ public class UpstreamNetworkMonitorTest {
 
     static NetworkCapabilities copy(NetworkCapabilities nc) {
         return new NetworkCapabilities(nc);
+    }
+
+    static void assertPrefixesContains(Set<IpPrefix> prefixes, String... expected) {
+        for (String expectedPrefix : expected) {
+            assertTrue("Failed to find prefix: " + expectedPrefix,
+                       prefixes.contains(new IpPrefix(expectedPrefix)));
+        }
     }
 }
