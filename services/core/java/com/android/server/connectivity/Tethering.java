@@ -47,6 +47,7 @@ import android.hardware.usb.UsbManager;
 import android.net.ConnectivityManager;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
+import android.net.IpPrefix;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -104,6 +105,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -210,7 +212,9 @@ public class Tethering extends BaseNetworkObserver {
                 mContext.getContentResolver(),
                 mLog);
         mUpstreamNetworkMonitor = new UpstreamNetworkMonitor(
-                mContext, mTetherMasterSM, TetherMasterSM.EVENT_UPSTREAM_CALLBACK, mLog);
+                mContext, mTetherMasterSM, mLog,
+                TetherMasterSM.EVENT_UPSTREAM_CALLBACK,
+                TetherMasterSM.EVENT_EXEMPT_PREFIXES_UPDATE);
         mForwardedDownstreams = new HashSet<>();
         mSimChange = new SimChangeListener(
                 mContext, mTetherMasterSM.getHandler(), () -> reevaluateSimCardProvisioning());
@@ -1066,7 +1070,7 @@ public class Tethering extends BaseNetworkObserver {
     // Needed because the canonical source of upstream truth is just the
     // upstream interface name, |mCurrentUpstreamIface|.  This is ripe for
     // future simplification, once the upstream Network is canonical.
-    boolean pertainsToCurrentUpstream(NetworkState ns) {
+    private boolean pertainsToCurrentUpstream(NetworkState ns) {
         if (ns != null && ns.linkProperties != null && mCurrentUpstreamIface != null) {
             for (String ifname : ns.linkProperties.getAllInterfaceNames()) {
                 if (mCurrentUpstreamIface.equals(ifname)) {
@@ -1100,6 +1104,20 @@ public class Tethering extends BaseNetworkObserver {
         }
     }
 
+    private void startOffloadController() {
+        mOffloadController.start();
+        updateOffloadExemptPrefixes(null);
+    }
+
+    private void updateOffloadExemptPrefixes(Set<IpPrefix> prefixSet) {
+        if (prefixSet == null) {
+            prefixSet = new HashSet<>();
+            prefixSet.addAll(mUpstreamNetworkMonitor.getOffloadExemptPrefixes());
+        }
+
+        mOffloadController.updateExemptPrefixes(prefixSet);
+    }
+
     class TetherMasterSM extends StateMachine {
         private static final int BASE_MASTER                    = Protocol.BASE_TETHERING;
         // an interface SM has requested Tethering/Local Hotspot
@@ -1116,6 +1134,8 @@ public class Tethering extends BaseNetworkObserver {
         // we treated the error and want now to clear it
         static final int CMD_CLEAR_ERROR                        = BASE_MASTER + 6;
         static final int EVENT_IFACE_UPDATE_LINKPROPERTIES      = BASE_MASTER + 7;
+        // The list of prefixes local to the device has been updated.
+        static final int EVENT_EXEMPT_PREFIXES_UPDATE           = BASE_MASTER + 8;
 
         private State mInitialState;
         private State mTetherModeAliveState;
@@ -1397,7 +1417,7 @@ public class Tethering extends BaseNetworkObserver {
                 // TODO: De-duplicate with updateUpstreamWanted() below.
                 if (upstreamWanted()) {
                     mUpstreamWanted = true;
-                    mOffloadController.start();
+                    startOffloadController();
                     chooseUpstreamType(true);
                     mTryCell = false;
                 }
@@ -1417,7 +1437,7 @@ public class Tethering extends BaseNetworkObserver {
                 mUpstreamWanted = upstreamWanted();
                 if (mUpstreamWanted != previousUpstreamWanted) {
                     if (mUpstreamWanted) {
-                        mOffloadController.start();
+                        startOffloadController();
                     } else {
                         mOffloadController.stop();
                     }
@@ -1546,6 +1566,9 @@ public class Tethering extends BaseNetworkObserver {
                         }
                         break;
                     }
+                    case EVENT_EXEMPT_PREFIXES_UPDATE:
+                        updateOffloadExemptPrefixes((Set<IpPrefix>) message.obj);
+                        break;
                     default:
                         retValue = false;
                         break;

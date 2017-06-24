@@ -16,6 +16,9 @@
 
 package android.net.util;
 
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.net.InetAddress;
 import java.nio.ByteBuffer;
 
 
@@ -87,6 +90,7 @@ public final class NetworkConstants {
     public static final int IPV4_PROTOCOL_OFFSET = 9;
     public static final int IPV4_SRC_ADDR_OFFSET = 12;
     public static final int IPV4_DST_ADDR_OFFSET = 16;
+    public static final int IPV4_ADDR_BITS = 32;
     public static final int IPV4_ADDR_LEN = 4;
 
     /**
@@ -99,6 +103,7 @@ public final class NetworkConstants {
     public static final int IPV6_PROTOCOL_OFFSET = 6;
     public static final int IPV6_SRC_ADDR_OFFSET = 8;
     public static final int IPV6_DST_ADDR_OFFSET = 24;
+    public static final int IPV6_ADDR_BITS = 128;
     public static final int IPV6_ADDR_LEN = 16;
     public static final int IPV6_MIN_MTU = 1280;
     public static final int RFC7421_PREFIX_LENGTH = 64;
@@ -148,4 +153,10 @@ public final class NetworkConstants {
 
     public static int asUint(byte b) { return (b & 0xff); }
     public static int asUint(short s) { return (s & 0xffff); }
+
+    public static int prefixLengthForAddress(InetAddress ip) {
+        if (ip instanceof Inet4Address) return IPV4_ADDR_BITS;
+        if (ip instanceof Inet6Address) return IPV6_ADDR_BITS;
+        return -1;
+    }
 }
