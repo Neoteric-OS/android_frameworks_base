@@ -26,18 +26,26 @@ import android.os.Handler;
 import android.os.Looper;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
+import android.net.IpPrefix;
+import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.NetworkState;
+import android.net.util.NetworkConstants;
 import android.net.util.SharedLog;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.StateMachine;
 
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.net.InetAddress;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -66,6 +74,11 @@ public class UpstreamNetworkMonitor {
     private static final boolean DBG = false;
     private static final boolean VDBG = false;
 
+    private static final String[] MINIMUM_LOCAL_PREFIXES_SET = {
+            "127.0.0.0/8", "127.0.0.1/32",
+            "::1/128", "fe80::/64",
+    };
+
     public static final int EVENT_ON_AVAILABLE      = 1;
     public static final int EVENT_ON_CAPABILITIES   = 2;
     public static final int EVENT_ON_LINKPROPERTIES = 3;
@@ -79,8 +92,10 @@ public class UpstreamNetworkMonitor {
     private final SharedLog mLog;
     private final StateMachine mTarget;
     private final Handler mHandler;
-    private final int mWhat;
+    private final int mUpstreamUpdateCode;
+    private final int mPrefixesUpdateCode;
     private final HashMap<Network, NetworkState> mNetworkMap = new HashMap<>();
+    private final Set<IpPrefix> mOffloadExemptPrefixes;
     private ConnectivityManager mCM;
     private NetworkCallback mListenAllCallback;
     private NetworkCallback mDefaultNetworkCallback;
@@ -88,18 +103,22 @@ public class UpstreamNetworkMonitor {
     private boolean mDunRequired;
     private Network mCurrentDefault;
 
-    public UpstreamNetworkMonitor(Context ctx, StateMachine tgt, int what, SharedLog log) {
+    public UpstreamNetworkMonitor(Context ctx, StateMachine tgt, SharedLog log,
+            int upstreamUpdateCode, int prefixesUpdateCode) {
         mContext = ctx;
         mTarget = tgt;
         mHandler = mTarget.getHandler();
-        mWhat = what;
         mLog = log.forSubComponent(TAG);
+        mUpstreamUpdateCode = upstreamUpdateCode;
+        mPrefixesUpdateCode = prefixesUpdateCode;
+        mOffloadExemptPrefixes = allOffloadExemptPrefixes(mNetworkMap.values());
     }
 
     @VisibleForTesting
     public UpstreamNetworkMonitor(
-            StateMachine tgt, int what, ConnectivityManager cm, SharedLog log) {
-        this(null, tgt, what, log);
+            ConnectivityManager cm, StateMachine tgt, SharedLog log,
+            int upstreamUpdateCode, int prefixesUpdateCode) {
+        this((Context) null, tgt, log, upstreamUpdateCode, prefixesUpdateCode);
         mCM = cm;
     }
 
@@ -207,6 +226,10 @@ public class UpstreamNetworkMonitor {
         }
 
         return typeStatePair.ns;
+    }
+
+    public Set<IpPrefix> getOffloadExemptPrefixes() {
+        return mOffloadExemptPrefixes;
     }
 
     private void handleAvailable(int callbackType, Network network) {
@@ -342,6 +365,15 @@ public class UpstreamNetworkMonitor {
         notifyTarget(EVENT_ON_LOST, mNetworkMap.remove(network));
     }
 
+    private void recomputeOffloadExemptPrefixes() {
+        final Set<IpPrefix> exemptPrefixes = allOffloadExemptPrefixes(mNetworkMap.values());
+        if (!mOffloadExemptPrefixes.equals(exemptPrefixes)) {
+            mOffloadExemptPrefixes.clear();
+            mOffloadExemptPrefixes.addAll(exemptPrefixes);
+            mTarget.sendMessage(mPrefixesUpdateCode, 0, 0, exemptPrefixes);
+        }
+    }
+
     // Fetch (and cache) a ConnectivityManager only if and when we need one.
     private ConnectivityManager cm() {
         if (mCM == null) {
@@ -376,6 +408,7 @@ public class UpstreamNetworkMonitor {
         @Override
         public void onLinkPropertiesChanged(Network network, LinkProperties newLp) {
             handleLinkProp(network, newLp);
+            recomputeOffloadExemptPrefixes();
         }
 
         // TODO: Handle onNetworkSuspended();
@@ -384,6 +417,7 @@ public class UpstreamNetworkMonitor {
         @Override
         public void onLost(Network network) {
             handleLost(mCallbackType, network);
+            recomputeOffloadExemptPrefixes();
         }
     }
 
@@ -396,7 +430,7 @@ public class UpstreamNetworkMonitor {
     }
 
     private void notifyTarget(int which, NetworkState netstate) {
-        mTarget.sendMessage(mWhat, which, 0, netstate);
+        mTarget.sendMessage(mUpstreamUpdateCode, which, 0, netstate);
     }
 
     static private class TypeStatePair {
@@ -430,5 +464,58 @@ public class UpstreamNetworkMonitor {
         }
 
         return result;
+    }
+
+    static private Set<IpPrefix> allOffloadExemptPrefixes(Iterable<NetworkState> networkStates) {
+        final HashSet<IpPrefix> prefixSet = new HashSet<>();
+
+        addDefaultLocalPrefixes(prefixSet);
+
+        for (NetworkState ns : networkStates) {
+            addOffloadExemptPrefixes(prefixSet, ns);
+        }
+
+        return prefixSet;
+    }
+
+    static private void addDefaultLocalPrefixes(Set<IpPrefix> prefixSet) {
+        for (String prefix : MINIMUM_LOCAL_PREFIXES_SET) {
+            prefixSet.add(new IpPrefix(prefix));
+        }
+    }
+
+    static private void addOffloadExemptPrefixes(Set<IpPrefix> prefixSet, NetworkState ns) {
+        if (ns.linkProperties == null) return;
+
+        for (LinkAddress linkAddr : ns.linkProperties.getAllLinkAddresses()) {
+            // Add a prefix for each IP address (i.e. a /32 or a /128).
+            prefixSet.add(makeIpAddressPrefix(linkAddr));
+
+            // Also add any dedicated prefixes as all destinations within
+            // with these prefixes are local to the node (device).
+            final IpPrefix dedicatedPrefix = maybeGetDedicatedPrefix(linkAddr, ns.networkCapabilities);
+            if (dedicatedPrefix != null) prefixSet.add(dedicatedPrefix);
+        }
+    }
+
+    static private IpPrefix makeIpAddressPrefix(LinkAddress linkAddr) {
+        final InetAddress ip = linkAddr.getAddress();
+        return new IpPrefix(ip, NetworkConstants.prefixLengthForAddress(ip));
+    }
+
+    static private IpPrefix maybeGetDedicatedPrefix(LinkAddress linkAddr, NetworkCapabilities nc) {
+        // See if the LinkAddress is formed from prefixes exclusive to the node
+        // (routed to it by the network). In lieu of Prefix Delegation or other
+        // evaluation of whether a prefix may or may not be dedicated to this
+        // node, for now just check whether the upstream is TRANSPORT_CELLULAR.
+        // This works because "[t]he 3GPP network allocates each default bearer
+        // a unique /64 prefix", per RFC 6459, Section 5.2.
+        final InetAddress ip = linkAddr.getAddress();
+        if (nc == null || (!nc.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
+                || !(ip instanceof Inet6Address)
+                || linkAddr.getPrefixLength() != NetworkConstants.RFC7421_PREFIX_LENGTH) {
+            return null;
+        }
+        return new IpPrefix(ip, NetworkConstants.RFC7421_PREFIX_LENGTH);
     }
 }
