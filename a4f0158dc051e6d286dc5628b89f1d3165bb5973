@@ -22,6 +22,30 @@
       "revId": "a4f0158dc051e6d286dc5628b89f1d3165bb5973",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb3fa2b_4a1c3f42",
+        "filename": "services/core/java/com/android/server/timezone/RulesManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2017-06-26T12:49:49Z",
+      "side": 1,
+      "message": "You\u0027re right about the position. The dup() is unnecessary because the position in the underlying file is shared.\n\nHowever, close() is independent.\n\nI\u0027ll remove the dup() as it\u0027s doing nothing for me.",
+      "parentUuid": "6fdd141e_58a508db",
+      "range": {
+        "startLine": 383,
+        "startChar": 16,
+        "endLine": 385,
+        "endChar": 75
+      },
+      "revId": "a4f0158dc051e6d286dc5628b89f1d3165bb5973",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
