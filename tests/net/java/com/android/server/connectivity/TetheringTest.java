@@ -22,8 +22,10 @@ import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_INTERFACE_NAME;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_MODE;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_STATE;
 import static android.net.wifi.WifiManager.WIFI_AP_STATE_ENABLED;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
@@ -35,6 +37,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.anyInt;
 
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -54,12 +61,16 @@ import android.net.NetworkRequest;
 import android.net.util.SharedLog;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.INetworkManagementService;
 import android.os.PersistableBundle;
 import android.os.RemoteException;
 import android.os.test.TestLooper;
 import android.os.UserHandle;
+import android.os.UserManager;
+import android.os.UserManagerInternal;
+import android.os.UserManagerInternal.UserRestrictionsListener;
 import android.provider.Settings;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
@@ -81,6 +92,11 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import com.android.server.LocalServices;
+
+import android.util.Log;
+
+
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class TetheringTest {
@@ -99,6 +115,7 @@ public class TetheringTest {
     @Mock private UsbManager mUsbManager;
     @Mock private WifiManager mWifiManager;
     @Mock private CarrierConfigManager mCarrierConfigManager;
+    @Mock private UserManagerInternal mUserManager;
 
     // Like so many Android system APIs, these cannot be mocked because it is marked final.
     // We have to use the real versions.
@@ -111,6 +128,8 @@ public class TetheringTest {
     private MockContentResolver mContentResolver;
     private BroadcastReceiver mBroadcastReceiver;
     private Tethering mTethering;
+
+    private static final String TAG = "TetheringTesting";
 
     private class MockContext extends BroadcastInterceptingContext {
         MockContext(Context base) {
@@ -169,9 +188,15 @@ public class TetheringTest {
                 new IntentFilter(ConnectivityManager.ACTION_TETHER_STATE_CHANGED));
         when(mTetheringDependencies.getOffloadHardwareInterface(
                 any(Handler.class), any(SharedLog.class))).thenReturn(mOffloadHardwareInterface);
+
+        LocalServices.removeServiceForTest(UserManagerInternal.class);
+        mUserManager = mock(UserManagerInternal.class);
+        LocalServices.addService(UserManagerInternal.class, mUserManager);
+
         mTethering = new Tethering(mServiceContext, mNMService, mStatsService, mPolicyManager,
                                    mLooper.getLooper(), mSystemProperties,
                                    mTetheringDependencies);
+
     }
 
     @After
@@ -386,7 +411,7 @@ public class TetheringTest {
         /////
         // We do not currently emulate any upstream being found.
         //
-        // This is why there are no calls to verify mNMService.enableNat() or
+        // This is why there are no calls to verify mNMService.enableNat() or`
         // mNMService.startInterfaceForwarding().
         /////
 
@@ -477,6 +502,71 @@ public class TetheringTest {
         verifyNoMoreInteractions(mWifiManager);
         verifyNoMoreInteractions(mConnectivityManager);
         verifyNoMoreInteractions(mNMService);
+    }
+
+
+    @Test
+    public void userRestrictionListenerUntethersAll() throws Exception {
+        int userId = 0;
+        Tethering tethering = mock(Tethering.class);
+
+        Tethering.TetheringUserRestrictionListener url = new Tethering.TetheringUserRestrictionListener(tethering);
+
+        when(tethering.getTetheredIfaces()).thenReturn(new String[] {mTestIfname});
+
+        doNothing().when(tethering).clearTetheredNotification();
+        doNothing().when(tethering).showTetheredNotification(anyInt(), eq(false));
+        doNothing().when(tethering).postToMasterSMHandler(any(Runnable.class));
+        doNothing().when(tethering).untetherAll();
+
+        Bundle currRestrictions = new Bundle();
+        Bundle newRestrictions = new Bundle();
+
+        currRestrictions.putBoolean(UserManager.DISALLOW_CONFIG_TETHERING, false);
+        newRestrictions.putBoolean(UserManager.DISALLOW_CONFIG_TETHERING, true);
+
+        url.onUserRestrictionsChanged(userId, newRestrictions, currRestrictions);
+
+        verify(tethering, times(1)).getTetheredIfaces();
+        verify(tethering, times(1)).showTetheredNotification(anyInt(), eq(false));
+
+    }
+
+    @Test
+    public void userRestrictionListenerUnchanged() throws Exception {
+        int userId = 0;
+        Tethering tethering = mock(Tethering.class);
+        Tethering.TetheringUserRestrictionListener url = new Tethering.TetheringUserRestrictionListener(tethering);
+        Bundle currRestrictions = new Bundle();
+        Bundle newRestrictions = new Bundle();
+
+        when(tethering.getTetheredIfaces()).thenReturn(new String[] {mTestIfname});
+        doNothing().when(tethering).clearTetheredNotification();
+        doNothing().when(tethering).showTetheredNotification(anyInt(), eq(false));
+        doNothing().when(tethering).postToMasterSMHandler(any(Runnable.class));
+        doNothing().when(tethering).untetherAll();
+
+        //test the case in which the listener is called but the disallow_config didn't change
+        currRestrictions.putBoolean(UserManager.DISALLOW_CONFIG_TETHERING, true);
+        newRestrictions.putBoolean(UserManager.DISALLOW_CONFIG_TETHERING, true);
+
+        url.onUserRestrictionsChanged(userId, newRestrictions, currRestrictions);
+
+        verify(tethering, times(0)).getTetheredIfaces();
+        verify(tethering, times(0)).showTetheredNotification(anyInt(), eq(false));
+
+
+        // test the case in which the disallow_config changed but there was no active interface
+        currRestrictions.putBoolean(UserManager.DISALLOW_CONFIG_TETHERING, false);
+        newRestrictions.putBoolean(UserManager.DISALLOW_CONFIG_TETHERING, true);
+
+        when(tethering.getTetheredIfaces()).thenReturn(new String[] {});
+
+        url.onUserRestrictionsChanged(userId, newRestrictions, currRestrictions);
+
+        verify(tethering, times(1)).getTetheredIfaces();
+        verify(tethering, times(0)).showTetheredNotification(anyInt(), eq(false));
+
     }
 
     // TODO: Test that a request for hotspot mode doesn't interfere with an
