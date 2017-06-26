@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "aac8f6e2_6b002cab",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-26T02:53:10Z",
+      "side": 1,
+      "message": "is this the only call site there the prefix set can be null ? if so I would actually move line 1114, 1115 here and make updateOffloadExemptPrefixes weak against null, because I suppose it would be a bug if EVENT_EXEMPT_PREFIXES_UPDATE passes in null right ?",
+      "range": {
+        "startLine": 1109,
+        "startChar": 36,
+        "endLine": 1109,
+        "endChar": 40
+      },
+      "revId": "e8567a986bfdd7d842b2e4c783a36e7dac091c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fce99ea2_b26eb9f8",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-26T02:53:10Z",
+      "side": 1,
+      "message": "you can do: new HashSet\u003c\u003e(mUpstreamNetworkMonitor.getOffloadExemptPrefixes())",
+      "range": {
+        "startLine": 1115,
+        "startChar": 12,
+        "endLine": 1115,
+        "endChar": 28
+      },
+      "revId": "e8567a986bfdd7d842b2e4c783a36e7dac091c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87fb2022_bd938b8e",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 6
@@ -36,6 +82,30 @@
       "writtenOn": "2017-06-26T02:38:14Z",
       "side": 1,
       "message": "Isn\u0027t this empty at that point in the ctor ?",
+      "range": {
+        "startLine": 114,
+        "startChar": 58,
+        "endLine": 114,
+        "endChar": 78
+      },
+      "revId": "e8567a986bfdd7d842b2e4c783a36e7dac091c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a28e8b8_c3929e8c",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-26T02:53:10Z",
+      "side": 1,
+      "message": "nevermind, this does add the default prefixes to the exempts list.",
+      "parentUuid": "37b76fa7_04448009",
       "range": {
         "startLine": 114,
         "startChar": 58,
