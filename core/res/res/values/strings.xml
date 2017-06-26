@@ -3380,6 +3380,11 @@
     <string name="tethered_notification_title">Tethering or hotspot active</string>
     <string name="tethered_notification_message">Tap to set up.</string>
 
+    <!-- Strings for tethered notification -->
+    <!-- Shown when the device is untethered -->
+    <string name="untethered_notification_title">Tethering is off</string>
+    <string name="untethered_notification_message">Contact your admin.</string>
+
     <!--  Strings for possible PreferenceActivity Back/Next buttons -->
     <string name="back_button_label">Back</string>
     <string name="next_button_label">Next</string>
