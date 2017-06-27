@@ -106,22 +106,24 @@ public class Nat464Xlat extends BaseNetworkObserver {
      * Starts the clat daemon. Called by ConnectivityService on the handler thread.
      */
     public void start() {
-        if (isStarted()) {
-            Slog.e(TAG, "startClat: already started");
-            return;
-        }
+        synchronized (this) {
+            if (isStarted()) {
+                Slog.e(TAG, "startClat: already started");
+                return;
+            }
 
-        if (mNetwork.linkProperties == null) {
-            Slog.e(TAG, "startClat: Can't start clat with null LinkProperties");
-            return;
-        }
+            if (mNetwork.linkProperties == null) {
+                Slog.e(TAG, "startClat: Can't start clat with null LinkProperties");
+                return;
+            }
 
-        mBaseIface = mNetwork.linkProperties.getInterfaceName();
-        if (mBaseIface == null) {
-            Slog.e(TAG, "startClat: Can't start clat on null interface");
-            return;
+            mBaseIface = mNetwork.linkProperties.getInterfaceName();
+            if (mBaseIface == null) {
+                Slog.e(TAG, "startClat: Can't start clat on null interface");
+                return;
+            }
+            mIface = CLAT_PREFIX + mBaseIface;
         }
-        mIface = CLAT_PREFIX + mBaseIface;
         // From now on, isStarted() will return true.
 
         Slog.i(TAG, "Starting clatd on " + mBaseIface);
@@ -137,9 +139,11 @@ public class Nat464Xlat extends BaseNetworkObserver {
      * Stops the clat daemon. Called by ConnectivityService on the handler thread.
      */
     public void stop() {
-        if (!isStarted()) {
-            Slog.e(TAG, "stopClat: already stopped or not started");
-            return;
+        synchronized (this) {
+            if (!isStarted()) {
+                Slog.e(TAG, "stopClat: already stopped or not started");
+                return;
+            }
         }
 
         Slog.i(TAG, "Stopping clatd on " + mBaseIface);
@@ -167,12 +171,15 @@ public class Nat464Xlat extends BaseNetworkObserver {
      * has no idea that 464xlat is running on top of it.
      */
     public void fixupLinkProperties(LinkProperties oldLp) {
-        if (!mIsRunning || mNetwork.clatd == null) {
-            return;
-        }
-        LinkProperties lp = mNetwork.linkProperties;
-        if (lp == null || lp.getAllInterfaceNames().contains(mIface)) {
-            return;
+        final LinkProperties lp;
+        synchronized (this) {
+            if (!mIsRunning || mNetwork.clatd == null) {
+                return;
+            }
+            lp = mNetwork.linkProperties;
+            if (lp == null || lp.getAllInterfaceNames().contains(mIface)) {
+                return;
+            }
         }
 
         Slog.d(TAG, "clatd running, updating NAI for " + mIface);
@@ -231,20 +238,23 @@ public class Nat464Xlat extends BaseNetworkObserver {
      */
     @Override
     public void interfaceLinkStateChanged(String iface, boolean up) {
-        if (!up || !isStarted() || !mIface.equals(iface)) {
-            return;
+        final LinkAddress clatAddress;
+        synchronized (this) {
+            if (!up || !isStarted() || !mIface.equals(iface)) {
+                return;
+            }
+            if (mIsRunning) {
+                return;
+            }
+            clatAddress = getLinkAddress(iface);
+            if (clatAddress == null) {
+                return;
+            }
+            mIsRunning = true;
         }
-        if (mIsRunning) {
-            return;
-        }
-        LinkAddress clatAddress = getLinkAddress(iface);
-        if (clatAddress == null) {
-            return;
-        }
-        mIsRunning = true;
+
         Slog.i(TAG, String.format("interface %s is up, adding stacked link %s on top of %s",
                 mIface, mIface, mBaseIface));
-
         maybeSetIpv6NdOffload(mBaseIface, false);
         LinkProperties lp = new LinkProperties(mNetwork.linkProperties);
         lp.addStackedLink(makeLinkProperties(clatAddress));
@@ -253,18 +263,20 @@ public class Nat464Xlat extends BaseNetworkObserver {
 
     @Override
     public void interfaceRemoved(String iface) {
-        if (!isStarted() || !mIface.equals(iface)) {
-            return;
-        }
-        if (!mIsRunning) {
-            return;
-        }
-
         String baseIface = mBaseIface;
 
-        mIsRunning = false;
-        mBaseIface = null;
-        mIface = null;
+        synchronized (this) {
+            if (!isStarted() || !mIface.equals(iface)) {
+                return;
+            }
+            if (!mIsRunning) {
+                return;
+            }
+
+            mIsRunning = false;
+            mBaseIface = null;
+            mIface = null;
+        }
 
         Slog.i(TAG, "interface " + iface + " removed");
 
