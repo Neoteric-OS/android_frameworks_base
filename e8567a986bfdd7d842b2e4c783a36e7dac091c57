@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "82af2edd_c9958fcf",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T13:17:43Z",
+      "side": 1,
+      "message": "My comment was not very clear. I was wondering if this call was necessary with an empty input, but then I noticed it adds some default values, so yes it is necessary.",
+      "parentUuid": "55fd01ec_bfae2c07",
+      "range": {
+        "startLine": 114,
+        "startChar": 58,
+        "endLine": 114,
+        "endChar": 78
+      },
+      "revId": "e8567a986bfdd7d842b2e4c783a36e7dac091c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a275708a_cd20043a",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 6
