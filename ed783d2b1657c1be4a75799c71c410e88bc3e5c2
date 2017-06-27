@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7bc7653e_921a1e6b",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T05:27:01Z",
+      "side": 1,
+      "message": "what about com/android/internal/util/HexDump.java ?",
+      "range": {
+        "startLine": 189,
+        "startChar": 5,
+        "endLine": 205,
+        "endChar": 5
+      },
+      "revId": "ed783d2b1657c1be4a75799c71c410e88bc3e5c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25c34970_252a6b74",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 29
@@ -70,6 +93,29 @@
       "revId": "ed783d2b1657c1be4a75799c71c410e88bc3e5c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "675e747e_77e5b20f",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T05:27:01Z",
+      "side": 1,
+      "message": "same remark about assertTrue",
+      "range": {
+        "startLine": 300,
+        "startChar": 8,
+        "endLine": 300,
+        "endChar": 19
+      },
+      "revId": "ed783d2b1657c1be4a75799c71c410e88bc3e5c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
