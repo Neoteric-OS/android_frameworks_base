@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "624d9f59_a891e783",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 28
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T05:18:53Z",
+      "side": 1,
+      "message": "Should begin with \"Bug: \"",
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7333f0a1_c700c7f4",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T05:18:53Z",
+      "side": 1,
+      "message": "Can this be package private, i.e without either public or private, and be used by the test living in package android.net ?",
+      "range": {
+        "startLine": 497,
+        "startChar": 8,
+        "endLine": 497,
+        "endChar": 15
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b2d4b47_5614276e",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T05:18:53Z",
+      "side": 1,
+      "message": "I am not a fan of this. Consider instead using a \"config object\" that can be mocked easily:\n\ninterface IpSecServiceConfiguration { // or \"Dependencies\"\n  INetd getNetdInstance() throws RemoteException\n\n  static DEFAULT \u003d new IpSecServiceConfiguration() {\n    @Override\n    public INetd getNetdInstance() throws RemoteException {\n      /* the existing getNetdInstance() modified\n    }\n  }\n}\n\nthen add a local variable IpSecServiceConfiguration mConfig and in the ctor of IpSecService:\n\nprivate IpSecService(Context context) {\n    this(context, IpSecServiceConfiguration.Default);\n}\n\n@VisibleForTesting\nIpSecService(Context context, IpSecServiceConfiguration config) {\n    mContext \u003d context;\n    mConfig \u003d config\n}\n\nthen in test just @Mock the IpSecServiceConfiguration object.\n\nThat config interface can be later grown to have more stuff, which is superior to having to put extra semi-hidden setters just for tests.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 24
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27280781_6d7b6888",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T05:18:53Z",
+      "side": 1,
+      "message": "Missing license.",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 27
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da1431ba_0be0704c",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T05:18:53Z",
+      "side": 1,
+      "message": "here and for other asserts, prefer assertEqual(expected, got) style to assertTrue(expected \u003d\u003d got)\n\nassertEqual will give you usable error msgs where assertTrue will give you \"true as not false\".",
+      "range": {
+        "startLine": 119,
+        "startChar": 8,
+        "endLine": 119,
+        "endChar": 61
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6d61032_a8e446d7",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T05:18:53Z",
+      "side": 1,
+      "message": "don\u0027t break line",
+      "range": {
+        "startLine": 125,
+        "startChar": 12,
+        "endLine": 125,
+        "endChar": 30
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19ef87fd_afc37c17",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T05:18:53Z",
+      "side": 1,
+      "message": "assertNotNull",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 18
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c2a8461_0995744e",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T05:18:53Z",
+      "side": 1,
+      "message": "prefer a more specific catch:\n\n} catch (IllegalArgumentException expected) {\n}\n\nThen the uncaught exceptions will just fail the test.",
+      "range": {
+        "startLine": 153,
+        "startChar": 10,
+        "endLine": 154,
+        "endChar": 62
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a024fe4c_586e6a51",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T05:18:53Z",
+      "side": 1,
+      "message": "line too long",
+      "range": {
+        "startLine": 223,
+        "startChar": 100,
+        "endLine": 223,
+        "endChar": 103
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7561dbf_e6886897",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-27T05:18:53Z",
+      "side": 1,
+      "message": "This value is repeated multiple times, can you hoist it in a method scoped variable ?",
+      "range": {
+        "startLine": 231,
+        "startChar": 32,
+        "endLine": 231,
+        "endChar": 91
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
