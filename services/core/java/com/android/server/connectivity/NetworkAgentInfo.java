@@ -27,6 +27,7 @@ import android.net.NetworkMisc;
 import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.os.Handler;
+import android.os.INetworkManagementService;
 import android.os.Messenger;
 import android.os.SystemClock;
 import android.util.Log;
@@ -551,6 +552,33 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         for (LingerTimer timer : mLingerTimers) { pw.println(timer); }
     }
 
+    /* @return true if clat should run for this network. */
+    public boolean requiresClat() {
+        final boolean connected = networkInfo.isConnected();
+        // If LinkProperties acquire an IPv4, clat should stop if it had started.
+        // TODO: should we include linkProperties.hasIPv4DefaultRoute() ?
+        final boolean hasIPv4Address = (linkProperties != null) && linkProperties.hasIPv4Address();
+        return connected && !hasIPv4Address && Nat464Xlat.supportsClat(networkInfo.getType());
+    }
+
+    /** Ensure clat has started for this network. */
+    public void startClat(INetworkManagementService netd) {
+        if (clatd != null) {
+            return;
+        }
+        clatd = new Nat464Xlat(mContext, netd, mHandler, this);
+        clatd.start();
+    }
+
+    /** Ensure clat has stopped for this network. */
+    public void stopClat() {
+        if (clatd == null) {
+            return;
+        }
+        clatd.stop();
+        clatd = null;
+    }
+
     public String toString() {
         return "NetworkAgentInfo{ ni{" + networkInfo + "}  " +
                 "network{" + network + "}  nethandle{" + network.getNetworkHandle() + "}  " +
@@ -562,13 +590,13 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
                 "acceptUnvalidated{" + networkMisc.acceptUnvalidated + "} " +
                 "everCaptivePortalDetected{" + everCaptivePortalDetected + "} " +
                 "lastCaptivePortalDetected{" + lastCaptivePortalDetected + "} " +
+                "clat{" + clatd + "} " +
                 "}";
     }
 
     public String name() {
         return "NetworkAgentInfo [" + networkInfo.getTypeName() + " (" +
-                networkInfo.getSubtypeName() + ") - " +
-                (network == null ? "null" : network.toString()) + "]";
+                networkInfo.getSubtypeName() + ") - " + Objects.toString(network) + "]";
     }
 
     // Enables sorting in descending order of score.

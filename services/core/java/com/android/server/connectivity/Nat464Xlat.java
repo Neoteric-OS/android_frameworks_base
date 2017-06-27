@@ -85,18 +85,12 @@ public class Nat464Xlat extends BaseNetworkObserver {
     }
 
     /**
-     * Determines whether a network requires clat.
-     * @param network the NetworkAgentInfo corresponding to the network.
-     * @return true if the network requires clat, false otherwise.
+     * @return true if the network supports running clat. Only networks for which we can connect to
+     * in IPv6-only can support clat.
+     * TODO: migrate to NetworkCapabalities.TRANSPORT_*.
      */
-    public static boolean requiresClat(NetworkAgentInfo nai) {
-        final int netType = nai.networkInfo.getType();
-        final boolean connected = nai.networkInfo.isConnected();
-        final boolean hasIPv4Address =
-                (nai.linkProperties != null) ? nai.linkProperties.hasIPv4Address() : false;
-        // Only support clat on mobile and wifi for now, because these are the only IPv6-only
-        // networks we can connect to.
-        return connected && !hasIPv4Address && ArrayUtils.contains(NETWORK_TYPES, netType);
+    public static boolean supportsClat(int networkType) {
+        return ArrayUtils.contains(NETWORK_TYPES, networkType);
     }
 
     /**
@@ -227,6 +221,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
     }
 
     private void maybeSetIpv6NdOffload(String iface, boolean on) {
+        // TODO: migrate to NetworkCapabalities.TRANSPORT_*.
         if (mNetwork.networkInfo.getType() != ConnectivityManager.TYPE_WIFI) {
             return;
         }
@@ -285,5 +280,10 @@ public class Nat464Xlat extends BaseNetworkObserver {
                 updateConnectivityService(lp);
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "mBaseIface: " + mBaseIface + ", mIface: " + mIface + ", mIsRunning: " + mIsRunning;
     }
 }
