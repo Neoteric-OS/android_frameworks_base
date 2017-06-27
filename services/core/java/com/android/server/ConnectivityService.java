@@ -2412,7 +2412,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     ConnectivityManager.PacketKeepalive.ERROR_INVALID_NETWORK);
             nai.networkMonitor.sendMessage(NetworkMonitor.CMD_NETWORK_DISCONNECTED);
             mNetworkAgentInfos.remove(msg.replyTo);
-            updateClat(null, nai.linkProperties, nai);
+            nai.stopClat();
             synchronized (mNetworkForNetId) {
                 // Remove the NetworkAgent, but don't mark the netId as
                 // available until we've told netd to delete it below.
@@ -4502,7 +4502,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateRoutes(newLp, oldLp, netId);
         updateDnses(newLp, oldLp, netId);
 
-        updateClat(newLp, oldLp, networkAgent);
+        if (Nat464Xlat.requiresClat(networkAgent)) {
+            networkAgent.startClat(mNetd, mTrackerHandler);
+        }
         if (isDefaultNetwork(networkAgent)) {
             handleApplyDefaultProxy(newLp.getHttpProxy());
         } else {
@@ -4515,18 +4517,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         mKeepaliveTracker.handleCheckKeepalivesStillValid(networkAgent);
-    }
-
-    private void updateClat(LinkProperties newLp, LinkProperties oldLp, NetworkAgentInfo nai) {
-        final boolean wasRunningClat = nai.clatd != null && nai.clatd.isStarted();
-        final boolean shouldRunClat = Nat464Xlat.requiresClat(nai);
-
-        if (!wasRunningClat && shouldRunClat) {
-            nai.clatd = new Nat464Xlat(mContext, mNetd, mTrackerHandler, nai);
-            nai.clatd.start();
-        } else if (wasRunningClat && !shouldRunClat) {
-            nai.clatd.stop();
-        }
     }
 
     private void wakeupAddInterface(String iface, NetworkCapabilities caps) throws RemoteException {

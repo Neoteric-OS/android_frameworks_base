@@ -27,6 +27,7 @@ import android.net.NetworkMisc;
 import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.os.Handler;
+import android.os.INetworkManagementService;
 import android.os.Messenger;
 import android.os.SystemClock;
 import android.util.Log;
@@ -534,6 +535,22 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
 
     public boolean isLingering() {
         return mLingering;
+    }
+
+    public void startClat(INetworkManagementService netd, Handler handler) {
+        if (clatd != null) {
+            return;
+        }
+        clatd = new Nat464Xlat(mContext, netd, handler, this);
+        clatd.start();
+    }
+
+    public void stopClat() {
+        if (clatd == null) {
+            return;
+        }
+        clatd.stop();
+        clatd = null;
     }
 
     public void clearLingerState() {
