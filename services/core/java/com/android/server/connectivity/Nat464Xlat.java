@@ -119,7 +119,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
     /**
      * Starts the clat daemon. Called by ConnectivityService on the handler thread.
      */
-    public void start() {
+    public synchronized void start() {
         if (isStarted()) {
             Slog.e(TAG, "startClat: already started");
             return;
@@ -156,7 +156,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
     /**
      * Stops the clat daemon. Called by ConnectivityService on the handler thread.
      */
-    public void stop() {
+    public synchronized void stop() {
         if (isStarted()) {
             Slog.i(TAG, "Stopping clatd");
             try {
@@ -183,16 +183,15 @@ public class Nat464Xlat extends BaseNetworkObserver {
      * This is necessary because the LinkProperties in mNetwork come from the transport layer, which
      * has no idea that 464xlat is running on top of it.
      */
-    public void fixupLinkProperties(LinkProperties oldLp) {
-        if (mNetwork.clatd != null &&
-                mIsRunning &&
-                mNetwork.linkProperties != null &&
-                !mNetwork.linkProperties.getAllInterfaceNames().contains(mIface)) {
+    public synchronized void fixupLinkProperties(LinkProperties oldLp) {
+        LinkProperties lp = mNetwork.linkProperties;
+        if ((mNetwork.clatd != null) && mIsRunning && (lp != null)
+                && !lp.getAllInterfaceNames().contains(mIface)) {
             Slog.d(TAG, "clatd running, updating NAI for " + mIface);
             for (LinkProperties stacked: oldLp.getStackedLinks()) {
                 if (mIface.equals(stacked.getInterfaceName())) {
-                    mNetwork.linkProperties.addStackedLink(stacked);
-                    break;
+                    lp.addStackedLink(stacked);
+                    return;
                 }
             }
         }
@@ -239,7 +238,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
     }
 
     @Override
-    public void interfaceLinkStateChanged(String iface, boolean up) {
+    public synchronized void interfaceLinkStateChanged(String iface, boolean up) {
         // Called by the InterfaceObserver on its own thread, so can race with stop().
         if (isStarted() && up && mIface.equals(iface)) {
             Slog.i(TAG, "interface " + iface + " is up, mIsRunning " + mIsRunning + "->true");
@@ -260,7 +259,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
     }
 
     @Override
-    public void interfaceRemoved(String iface) {
+    public synchronized void interfaceRemoved(String iface) {
         if (isStarted() && mIface.equals(iface)) {
             Slog.i(TAG, "interface " + iface + " removed, mIsRunning " + mIsRunning + "->false");
 
