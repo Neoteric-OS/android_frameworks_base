@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "847f5df1_e10972a3",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-27T11:20:07Z",
+      "side": 1,
+      "message": "Correct.\n\nDone.",
+      "parentUuid": "aac8f6e2_6b002cab",
+      "range": {
+        "startLine": 1109,
+        "startChar": 36,
+        "endLine": 1109,
+        "endChar": 40
+      },
+      "revId": "e8567a986bfdd7d842b2e4c783a36e7dac091c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fce99ea2_b26eb9f8",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "74367719_10654a6b",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-27T11:20:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fce99ea2_b26eb9f8",
+      "range": {
+        "startLine": 1115,
+        "startChar": 12,
+        "endLine": 1115,
+        "endChar": 28
+      },
+      "revId": "e8567a986bfdd7d842b2e4c783a36e7dac091c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87fb2022_bd938b8e",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-26T02:38:14Z",
       "side": 1,
       "message": "what are these code variables ?",
+      "range": {
+        "startLine": 95,
+        "startChar": 37,
+        "endLine": 95,
+        "endChar": 41
+      },
+      "revId": "e8567a986bfdd7d842b2e4c783a36e7dac091c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70ee4938_e010335b",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-27T11:20:07Z",
+      "side": 1,
+      "message": "They are the \"what\"s to send when sending these messages to the master tether statemachine.\n\nI\u0027ve reorged the code to go back to just using a single \"what\" value for all messages.",
+      "parentUuid": "87fb2022_bd938b8e",
       "range": {
         "startLine": 95,
         "startChar": 37,
@@ -118,6 +190,54 @@
     },
     {
       "key": {
+        "uuid": "55fd01ec_bfae2c07",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-27T11:20:07Z",
+      "side": 1,
+      "message": "Sure, but...",
+      "parentUuid": "37b76fa7_04448009",
+      "range": {
+        "startLine": 114,
+        "startChar": 58,
+        "endLine": 114,
+        "endChar": 78
+      },
+      "revId": "e8567a986bfdd7d842b2e4c783a36e7dac091c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e171b93_86af0049",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-27T11:20:07Z",
+      "side": 1,
+      "message": "Yup.",
+      "parentUuid": "1a28e8b8_c3929e8c",
+      "range": {
+        "startLine": 114,
+        "startChar": 58,
+        "endLine": 114,
+        "endChar": 78
+      },
+      "revId": "e8567a986bfdd7d842b2e4c783a36e7dac091c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a275708a_cd20043a",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 6
@@ -129,6 +249,30 @@
       "writtenOn": "2017-06-26T02:38:14Z",
       "side": 1,
       "message": "just checking: it is fine to not copy this set ?",
+      "range": {
+        "startLine": 232,
+        "startChar": 15,
+        "endLine": 232,
+        "endChar": 37
+      },
+      "revId": "e8567a986bfdd7d842b2e4c783a36e7dac091c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fabad2e_9fba73d7",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-27T11:20:07Z",
+      "side": 1,
+      "message": "Given that I copy it in the code that calls this, I\u0027ll just return a copy here.",
+      "parentUuid": "a275708a_cd20043a",
       "range": {
         "startLine": 232,
         "startChar": 15,
@@ -164,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "4775dafa_5f0c4c97",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-27T11:20:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "454bbf87_b305752e",
+      "range": {
+        "startLine": 469,
+        "startChar": 4,
+        "endLine": 469,
+        "endChar": 18
+      },
+      "revId": "e8567a986bfdd7d842b2e4c783a36e7dac091c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e1dd306_be1b69a7",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 6
@@ -175,6 +343,30 @@
       "writtenOn": "2017-06-26T02:38:14Z",
       "side": 1,
       "message": "Why not making MINIMUM_LOCAL_PREFIXES_SET an array of IpPrefix directly ? This lets you use addAll().",
+      "range": {
+        "startLine": 483,
+        "startChar": 26,
+        "endLine": 483,
+        "endChar": 46
+      },
+      "revId": "e8567a986bfdd7d842b2e4c783a36e7dac091c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8886c4ae_1471de74",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-27T11:20:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e1dd306_be1b69a7",
       "range": {
         "startLine": 483,
         "startChar": 26,
@@ -210,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "90d27705_5e6460d2",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-27T11:20:07Z",
+      "side": 1,
+      "message": "That\u0027s a good point.  An earlier iteration of the code was also looking at some NetworkCapabilities for various reasons, but that\u0027s not relevant anymore.\n\nDone.",
+      "parentUuid": "8a2bdbd1_eeaff7cf",
+      "range": {
+        "startLine": 487,
+        "startChar": 74,
+        "endLine": 487,
+        "endChar": 89
+      },
+      "revId": "e8567a986bfdd7d842b2e4c783a36e7dac091c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39c8505e_b26db5ac",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 6
@@ -221,6 +437,30 @@
       "writtenOn": "2017-06-26T02:38:14Z",
       "side": 1,
       "message": "looks almost like a method we would like to have on LinkAddress: linkAddr.toPrefix()",
+      "range": {
+        "startLine": 495,
+        "startChar": 26,
+        "endLine": 495,
+        "endChar": 71
+      },
+      "revId": "e8567a986bfdd7d842b2e4c783a36e7dac091c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aef35cab_f661c25c",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-27T11:20:07Z",
+      "side": 1,
+      "message": "Or a constructor on IpPrefix...\n\nAlternatively, something to add to a utils class somewhere.",
+      "parentUuid": "39c8505e_b26db5ac",
       "range": {
         "startLine": 495,
         "startChar": 26,
