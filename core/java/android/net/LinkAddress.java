@@ -101,11 +101,25 @@ public class LinkAddress implements Parcelable {
      * Per RFC 4193 section 8, fc00::/7 identifies these addresses.
      */
     private boolean isIPv6ULA() {
-        if (address instanceof Inet6Address) {
+        if (isIPv6()) {
             byte[] bytes = address.getAddress();
             return ((bytes[0] & (byte)0xfe) == (byte)0xfc);
         }
         return false;
+    }
+
+    /**
+     * @hide
+     */
+    public boolean isIPv6() {
+        return address instanceof Inet6Address;
+    }
+
+    /**
+     * @hide
+     */
+    public boolean isIPv4() {
+        return address instanceof Inet4Address;
     }
 
     /**
@@ -115,7 +129,7 @@ public class LinkAddress implements Parcelable {
         if (address == null ||
                 address.isMulticastAddress() ||
                 prefixLength < 0 ||
-                ((address instanceof Inet4Address) && prefixLength > 32) ||
+                (isIPv4() && prefixLength > 32) ||
                 (prefixLength > 128)) {
             throw new IllegalArgumentException("Bad LinkAddress params " + address +
                     "/" + prefixLength);
