@@ -67,6 +67,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.StringJoiner;
@@ -324,6 +325,14 @@ public class IpManager extends StateMachine {
             }
 
             public Builder withStaticConfiguration(StaticIpConfiguration staticConfig) {
+                if (mConfig.initialConfig == null) {
+                    mConfig.initialConfig = new InitialConfiguration();
+                    mConfig.initialConfig.ipAddresses.add(staticConfig.ipAddress);
+                    mConfig.initialConfig.gateway = staticConfig.gateway;
+                    mConfig.initialConfig.dnsServers.addAll(staticConfig.dnsServers);
+                    // TODO: add the route !!
+                }
+                mConfig
                 mConfig.mStaticIpConfig = staticConfig;
                 return this;
             }
@@ -391,10 +400,34 @@ public class IpManager extends StateMachine {
                     .toString();
         }
 
-        public boolean isValid() {
-            return mInitialConfig.isValid();
+        boolean validate() {
+            if (mInitialConfig == null) {
+                return true;
+            }
+            if (!mInitialConfig.isValid()) {
+                return false;
+            }
+            // TODO: migrate withStaticConfiguration to instead 
+            StaticIpConfiguration ipv4Config = mInitialConfig.splitByIPfamily();
+            if (ipv4Config.ipAddress != null) {
+                mStaticIpConfig = ipv4Config;
+            }
+            return true;
         }
     }
+
+/* TODOs:
+ *  - add address manually
+ *  - add routes into LP and push down
+ *
+ *
+ *  Questions:
+ *    for static v4 config, do I need the gateway, what to do with the routes
+ *    for static v6 config, should I don't do autoconf
+ *
+ *    should I support a mixed InitialConfiguration + dhcp/autoconf thing
+ */
+
 
     public static class InitialConfiguration {
         public final Set<LinkAddress> ipAddresses = new HashSet<>();
@@ -419,6 +452,23 @@ public class IpManager extends StateMachine {
                     "InitialConfiguration(IPs: {%s}, prefixes: {%s}, DNS: {%s}, v4 gateway: %s)",
                     join(", ", ipAddresses), join(", ", directlyConnectedRoutes),
                     join(", ", dnsServers), gateway);
+        }
+
+        /**
+         * Extract IPv4 information into a newly created StaticIpConfiguration and removes it from
+         * this InitialConfiguration so that only IPv6 information remains.
+         */
+        public DhcpResults getIPv4Configuration() {
+            InetAddress addr = find(ipAddresses, LinkAddress::isIPv4);
+            if (addr == null) {
+                return null;
+            }
+
+            DhcpResults dhcp = new DhcpResults();
+            dhcp.ipAddress = addr;
+            dhcp.gateway = gateway
+            dhcp.dnsServers.addAll(findAll(dnsServers, Inet4Address.class::isInstance));
+            return dhcp;
         }
 
         public boolean isValid() {
@@ -451,7 +501,7 @@ public class IpManager extends StateMachine {
                 return false;
             }
             // There no more than one IPv4 address
-            if (ipAddresses.stream().filter(Inet4Address.class::isInstance).count() > 1) {
+            if (ipAddresses.stream().filter(LinkAddress::isIPv4).count() > 1) {
                 return false;
             }
 
@@ -459,13 +509,11 @@ public class IpManager extends StateMachine {
         }
 
         private static boolean isPrefixLengthCompliant(LinkAddress addr) {
-            return (addr.getAddress() instanceof Inet4Address)
-                    || isCompliantIPv6PrefixLength(addr.getPrefixLength());
+            return addr.isIPv4() || isCompliantIPv6PrefixLength(addr.getPrefixLength());
         }
 
         private static boolean isPrefixLengthCompliant(IpPrefix prefix) {
-            return (prefix.getAddress() instanceof Inet4Address)
-                    || isCompliantIPv6PrefixLength(prefix.getPrefixLength());
+            return prefix.isIPv4() || isCompliantIPv6PrefixLength(prefix.getPrefixLength());
         }
 
         private static boolean isCompliantIPv6PrefixLength(int prefixLength) {
@@ -478,7 +526,7 @@ public class IpManager extends StateMachine {
         }
 
         private static boolean isIPv6GUA(LinkAddress addr) {
-            return (addr.getAddress() instanceof Inet6Address) && addr.isGlobalPreferred();
+            return addr.isIPv6() && addr.isGlobalPreferred();
         }
 
         private static <T> boolean any(Iterable<T> coll, Predicate<T> fn) {
@@ -500,6 +548,19 @@ public class IpManager extends StateMachine {
 
         private static <T> String join(String delimiter, Collection<T> coll) {
             return coll.stream().map(Object::toString).collect(Collectors.joining(delimiter));
+        }
+
+        private static <T> T find(Iterable<T> coll, Predicate<T> fn) {
+            for (T t: coll) {
+                if (fn.test(t)) {
+                    return t;
+                }
+            }
+            return null;
+        }
+
+        private static <T> List<T> findAll(Collection<T> coll, Predicate<T> fn) {
+            return coll.stream().filter(fn).collect(Collectors.toList());
         }
     }
 
@@ -692,7 +753,7 @@ public class IpManager extends StateMachine {
     }
 
     public boolean startProvisioning(ProvisioningConfiguration req) {
-        if (!req.isValid()) {
+        if (!req.validate()) {
             doImmediateProvisioningFailure(IpManagerEvent.ERROR_INVALID_PROVISIONING);
             return false;
         }
@@ -1179,19 +1240,21 @@ public class IpManager extends StateMachine {
     private boolean startIPv4() {
         // If we have a StaticIpConfiguration attempt to apply it and
         // handle the result accordingly.
-        if (mConfiguration.mStaticIpConfig != null) {
-            if (setIPv4Address(mConfiguration.mStaticIpConfig.ipAddress)) {
-                handleIPv4Success(new DhcpResults(mConfiguration.mStaticIpConfig));
-            } else {
-                return false;
+        if (mConfiguration.initialConfig != null) {
+            DhcpResults dhcp = mConfiguration.initialConfig.getIPv4Configuration();
+            if (dhcp != null) {
+                if (setIPv4Address(dhcp.ipAddress)) {
+                    handleIPv4Success(new DhcpResults(mConfiguration.mStaticIpConfig));
+                    return true;
+                }
             }
-        } else {
-            // Start DHCPv4.
-            mDhcpClient = DhcpClient.makeDhcpClient(mContext, IpManager.this, mInterfaceName);
-            mDhcpClient.registerForPreDhcpNotification();
-            mDhcpClient.sendMessage(DhcpClient.CMD_START_DHCP);
+            return false;
         }
 
+        // Start DHCPv4.
+        mDhcpClient = DhcpClient.makeDhcpClient(mContext, IpManager.this, mInterfaceName);
+        mDhcpClient.registerForPreDhcpNotification();
+        mDhcpClient.sendMessage(DhcpClient.CMD_START_DHCP);
         return true;
     }
 
@@ -1211,6 +1274,7 @@ public class IpManager extends StateMachine {
             mNwService.setInterfaceIpv6PrivacyExtensions(mInterfaceName, true);
 
             setIPv6AddrGenModeIfSupported();
+
             mNwService.enableIpv6(mInterfaceName);
         } catch (IllegalStateException | RemoteException | ServiceSpecificException e) {
             logError("Unable to change interface settings: %s", e);
@@ -1410,8 +1474,7 @@ public class IpManager extends StateMachine {
         }
 
         boolean readyToProceed() {
-            return (!mLinkProperties.hasIPv4Address() &&
-                    !mLinkProperties.hasGlobalIPv6Address());
+            return !mLinkProperties.hasIPv4Address() && !mLinkProperties.hasGlobalIPv6Address();
         }
     }
 
