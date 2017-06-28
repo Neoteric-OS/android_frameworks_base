@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7426f3a3_89b5b8be",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 28
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-28T06:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "624d9f59_a891e783",
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7333f0a1_c700c7f4",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 28
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-27T05:18:53Z",
       "side": 1,
       "message": "Can this be package private, i.e without either public or private, and be used by the test living in package android.net ?",
+      "range": {
+        "startLine": 497,
+        "startChar": 8,
+        "endLine": 497,
+        "endChar": 15
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a03bdd25_324d3039",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-28T06:44:28Z",
+      "side": 1,
+      "message": "We had a discussion with Jeff. It looks like for frameworks-net, we can only use the public interface.",
+      "parentUuid": "7333f0a1_c700c7f4",
       "range": {
         "startLine": 497,
         "startChar": 8,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "d69ef002_241a186d",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-28T06:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b2d4b47_5614276e",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 24
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27280781_6d7b6888",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 28
@@ -76,6 +142,30 @@
       "writtenOn": "2017-06-27T05:18:53Z",
       "side": 1,
       "message": "Missing license.",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 27
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d40f1c05_e247a549",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-28T06:44:28Z",
+      "side": 1,
+      "message": "Added a license.",
+      "parentUuid": "27280781_6d7b6888",
       "range": {
         "startLine": 1,
         "startChar": 1,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "98c69d26_9ea3e46d",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-28T06:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da1431ba_0be0704c",
+      "range": {
+        "startLine": 119,
+        "startChar": 8,
+        "endLine": 119,
+        "endChar": 61
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6d61032_a8e446d7",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 28
@@ -122,6 +236,30 @@
       "writtenOn": "2017-06-27T05:18:53Z",
       "side": 1,
       "message": "don\u0027t break line",
+      "range": {
+        "startLine": 125,
+        "startChar": 12,
+        "endLine": 125,
+        "endChar": 30
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ca7728b_9eeb9713",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-28T06:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6d61032_a8e446d7",
       "range": {
         "startLine": 125,
         "startChar": 12,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "d762c670_5f2c1537",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-28T06:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19ef87fd_afc37c17",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 18
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c2a8461_0995744e",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 28
@@ -168,6 +330,30 @@
       "writtenOn": "2017-06-27T05:18:53Z",
       "side": 1,
       "message": "prefer a more specific catch:\n\n} catch (IllegalArgumentException expected) {\n}\n\nThen the uncaught exceptions will just fail the test.",
+      "range": {
+        "startLine": 153,
+        "startChar": 10,
+        "endLine": 154,
+        "endChar": 62
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "821836d7_8d82fca7",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-28T06:44:28Z",
+      "side": 1,
+      "message": "Catch IllegalArgumentException specifically, and add a general exception catch for error case.",
+      "parentUuid": "3c2a8461_0995744e",
       "range": {
         "startLine": 153,
         "startChar": 10,
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "dbd3945b_50bf8542",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-28T06:44:28Z",
+      "side": 1,
+      "message": "Adjusted with the formatter",
+      "parentUuid": "a024fe4c_586e6a51",
+      "range": {
+        "startLine": 223,
+        "startChar": 100,
+        "endLine": 223,
+        "endChar": 103
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7561dbf_e6886897",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 28
@@ -214,6 +424,30 @@
       "writtenOn": "2017-06-27T05:18:53Z",
       "side": 1,
       "message": "This value is repeated multiple times, can you hoist it in a method scoped variable ?",
+      "range": {
+        "startLine": 231,
+        "startChar": 32,
+        "endLine": 231,
+        "endChar": 91
+      },
+      "revId": "299454eead3b8bf17113c10388ccd8ae9855c894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0db8f225_62c77577",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-06-28T06:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7561dbf_e6886897",
       "range": {
         "startLine": 231,
         "startChar": 32,
