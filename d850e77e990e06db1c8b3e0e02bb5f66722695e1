@@ -46,6 +46,30 @@
       "revId": "d850e77e990e06db1c8b3e0e02bb5f66722695e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a189b899_6c087d12",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-06-29T00:09:34Z",
+      "side": 1,
+      "message": "Actually it shouldn\u0027t be UUIDs but just assigned numbers as defined in:\n\nhttps://www.bluetooth.com/specifications/assigned-numbers/hands-free-profile\n\nThe comments are corrected in latest patch set.",
+      "parentUuid": "3685237a_614757cf",
+      "range": {
+        "startLine": 247,
+        "startChar": 9,
+        "endLine": 248,
+        "endChar": 63
+      },
+      "revId": "d850e77e990e06db1c8b3e0e02bb5f66722695e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
