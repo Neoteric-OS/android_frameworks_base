@@ -22,6 +22,30 @@
       "revId": "d850e77e990e06db1c8b3e0e02bb5f66722695e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e5a7e09_b03a8833",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-06-29T00:04:33Z",
+      "side": 1,
+      "message": "And (responding to my own comments), since UUIDs in Java are always 128-bit and there is a \"fromString\" option, are we sure that even if they are 16-bit, we should not handle UUIDs consistently?",
+      "parentUuid": "3685237a_614757cf",
+      "range": {
+        "startLine": 247,
+        "startChar": 9,
+        "endLine": 248,
+        "endChar": 63
+      },
+      "revId": "d850e77e990e06db1c8b3e0e02bb5f66722695e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
