@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3685237a_614757cf",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1058798
+      },
+      "writtenOn": "2017-06-29T00:03:16Z",
+      "side": 1,
+      "message": "We\u0027re assuming 16-bit UUIDs then?",
+      "range": {
+        "startLine": 247,
+        "startChar": 9,
+        "endLine": 248,
+        "endChar": 63
+      },
+      "revId": "d850e77e990e06db1c8b3e0e02bb5f66722695e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
