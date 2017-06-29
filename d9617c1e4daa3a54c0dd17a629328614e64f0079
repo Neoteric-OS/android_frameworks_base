@@ -22,6 +22,30 @@
       "revId": "d9617c1e4daa3a54c0dd17a629328614e64f0079",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "434eaf74_8cca3879",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-06-29T07:01:52Z",
+      "side": 1,
+      "message": "Probably. I think the whole class needs to be updated.",
+      "parentUuid": "2b285bce_cbf57981",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 63
+      },
+      "revId": "d9617c1e4daa3a54c0dd17a629328614e64f0079",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
