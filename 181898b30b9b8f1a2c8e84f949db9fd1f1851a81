@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c87bed54_3c15c579",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-29T09:03:24Z",
+      "side": 1,
+      "message": "Don\u0027t you need to make a copy of mBaseIface under the lock?\n\nIn fact, I think the locking requirements would be more clear if there were an inner class like this:\n\n    private static class InternalState {\n        public String baseIface;\n        public String iface;\n        public boolean isRunning;\n\n        public InternalState(InternalState other) {\n            ...copy constructor...\n        }\n\n        public void setBaseInterface(String baseIface) {\n            this.baseIface \u003d baseIface;\n            this.iface \u003d CLAT_PREFIX + this.baseIface;\n        }\n\n        public boolean isStarted() {\n            return (iface !\u003d null);\n        }\n\n        public void clear() {\n            baseIface \u003d null;\n            iface \u003d null;\n            isRunning \u003d false;\n        }\n    }\n\nThen it should be clear that any time the (now final!) mInternalState variable gets accessed we lock on it, if only long enough to create a copy to work after exiting the locked section.\n\nToo much?",
+      "range": {
+        "startLine": 157,
+        "startChar": 33,
+        "endLine": 157,
+        "endChar": 43
+      },
+      "revId": "181898b30b9b8f1a2c8e84f949db9fd1f1851a81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
