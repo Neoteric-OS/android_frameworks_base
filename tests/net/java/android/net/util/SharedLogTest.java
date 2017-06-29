@@ -33,7 +33,7 @@ import java.util.Vector;
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class SharedLogTest {
-    private static final String TIMESTAMP_PATTERN = "\\d{2}:\\d{2}:\\d{2}\\.\\d{3}";
+    private static final String TIMESTAMP_PATTERN = "\\d{2}:\\d{2}:\\d{2}\\.\\d{1,3}";
     private static final String TIMESTAMP = "HH:MM:SS.xxx";
 
     @Test
