@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "933881ae_259c9b78",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-30T07:02:50Z",
+      "side": 1,
+      "message": "The test pattern looks like it says 1-3.  Frankly, if all the subsecond accuracy is dropped I\u0027m beginning to think we should push back on that formatting change because it\u0027s increasingly useless.",
+      "range": {
+        "startLine": 10,
+        "startChar": 22,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "dfdb72eece563540f53e28bbf375c4e056a21911",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "341b1a8e_7e09b3ea",
+        "filename": "tests/net/java/com/android/internal/util/TestUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-06-30T07:02:50Z",
+      "side": 1,
+      "message": "getThreadHandler()?",
+      "range": {
+        "startLine": 33,
+        "startChar": 40,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "dfdb72eece563540f53e28bbf375c4e056a21911",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
