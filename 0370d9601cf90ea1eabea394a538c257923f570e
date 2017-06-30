@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "159ceaef_1246456f",
+        "filename": "telephony/java/android/telephony/MbmsDownloadManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-06-30T15:07:11Z",
+      "side": 1,
+      "message": "fileServicesUpdated callbacks about",
+      "range": {
+        "startLine": 299,
+        "startChar": 82,
+        "endLine": 299,
+        "endChar": 91
+      },
+      "revId": "0370d9601cf90ea1eabea394a538c257923f570e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27991f4f_a4c617ed",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsDownloadServiceBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-06-30T15:07:11Z",
+      "side": 1,
+      "message": "should?  I think the public API says it will/must..  I\u0027m not sure which way to go - if the MW is confident it can switch temp dirs without issue (no DL activity happening now and no paused files) it could not error here, but it makes the behavior more mysterious..",
+      "range": {
+        "startLine": 78,
+        "startChar": 60,
+        "endLine": 78,
+        "endChar": 66
+      },
+      "revId": "0370d9601cf90ea1eabea394a538c257923f570e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
