@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaac8873_e989c9db",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-30T05:16:34Z",
+      "side": 1,
+      "message": "Is it safe to assign this? Also Consider:\n\n    mExemptPrefixes \u003d Collections.unmodifiableCollection(exemptPrefixes);",
+      "range": {
+        "startLine": 117,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 41
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c00de0c_458cc233",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-30T05:16:34Z",
+      "side": 1,
+      "message": "Is this redundant with the previous entry because it\u0027s a sub-prefix of it?",
+      "range": {
+        "startLine": 79,
+        "startChar": 35,
+        "endLine": 79,
+        "endChar": 57
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fb2f90f_68c1d014",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-30T05:16:34Z",
+      "side": 1,
+      "message": "prefix(\"::/3\") ?",
+      "range": {
+        "startLine": 80,
+        "startChar": 50,
+        "endLine": 80,
+        "endChar": 51
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b012c0f_81313e1b",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-30T05:16:34Z",
+      "side": 1,
+      "message": "Could you use clone()? IpPrefix is immutable.",
+      "range": {
+        "startLine": 230,
+        "startChar": 8,
+        "endLine": 230,
+        "endChar": 53
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5db03c72_05160d17",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-30T05:16:34Z",
+      "side": 1,
+      "message": "Could you simplify this to just:\n\n    if (!mOffloadExemptPrefixes.equals(exemptPrefixes)) {\n        mOffloadExemptPrefixes \u003d exemptPrefixes;\n    }\n\nIt seems to me that this is safe, since allOffloadExemptPrefixes always creates a new object.",
+      "range": {
+        "startLine": 369,
+        "startChar": 0,
+        "endLine": 370,
+        "endChar": 58
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1379a009_7879babe",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-30T05:16:34Z",
+      "side": 1,
+      "message": "Why add both of these? The latter always covers the former.",
+      "range": {
+        "startLine": 490,
+        "startChar": 0,
+        "endLine": 491,
+        "endChar": 72
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "485638b9_1a6eee7d",
+        "filename": "services/net/java/android/net/util/NetworkConstants.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-30T05:16:34Z",
+      "side": 1,
+      "message": "Nit: consider expressing _BITS and _LEN as a function of each other.",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 47
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19c57bf6_8a85bc09",
+        "filename": "services/net/java/android/net/util/NetworkConstants.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-30T05:16:34Z",
+      "side": 1,
+      "message": "Consider throwing.",
+      "range": {
+        "startLine": 160,
+        "startChar": 8,
+        "endLine": 160,
+        "endChar": 18
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "557f199d_d995cf65",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitorTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-06-30T05:16:34Z",
+      "side": 1,
+      "message": "Nit: do you even need this cast at all? Can you fit all of this on one line?",
+      "range": {
+        "startLine": 105,
+        "startChar": 16,
+        "endLine": 105,
+        "endChar": 41
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
