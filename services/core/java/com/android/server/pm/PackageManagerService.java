@@ -2348,6 +2348,7 @@ public class PackageManagerService extends IPackageManager.Stub
     private static void requestCopyPreoptedFiles() {
         final int WAIT_TIME_MS = 100;
         final String CP_PREOPT_PROPERTY = "sys.cppreopt";
+        final String CP_PREOPT_PROPERTY_OEM = "sys.cppreopt_oem";
         if (SystemProperties.getInt("ro.cp_system_other_odex", 0) == 1) {
             SystemProperties.set(CP_PREOPT_PROPERTY, "requested");
             // We will wait for up to 100 seconds.
@@ -2370,6 +2371,24 @@ public class PackageManagerService extends IPackageManager.Stub
 
             Slog.i(TAG, "cppreopts took " + (timeNow - timeStart) + " ms");
         }
+        if (SystemProperties.getInt("ro.cp_oem_other_odex", 0) == 1) {
+            SystemProperties.set(CP_PREOPT_PROPERTY_OEM, "requested");
+            // We will wait for up to 100 seconds.
+            final long timeEnd = SystemClock.uptimeMillis() + 100 * 1000;
+            while (!SystemProperties.get(CP_PREOPT_PROPERTY_OEM).equals("finished")) {
+                try {
+                    Thread.sleep(WAIT_TIME_MS);
+                } catch (InterruptedException e) {
+                    // Do nothing
+                }
+                if (SystemClock.uptimeMillis() > timeEnd) {
+                    SystemProperties.set(CP_PREOPT_PROPERTY_OEM, "timed-out");
+                    Slog.wtf(TAG, "cppreopt oem did not finish!");
+                    break;
+                }
+            }
+        }
+
     }
 
     public PackageManagerService(Context context, Installer installer,
