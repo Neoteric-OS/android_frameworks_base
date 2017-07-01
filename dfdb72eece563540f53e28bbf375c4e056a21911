@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a722eb26_f9c791de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-01T04:40:21Z",
+      "side": 1,
+      "message": "Sorry I didn\u0027t upload the right patch set. This is fix now.",
+      "parentUuid": "933881ae_259c9b78",
+      "range": {
+        "startLine": 10,
+        "startChar": 22,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "dfdb72eece563540f53e28bbf375c4e056a21911",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "341b1a8e_7e09b3ea",
         "filename": "tests/net/java/com/android/internal/util/TestUtils.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-30T07:02:50Z",
       "side": 1,
       "message": "getThreadHandler()?",
+      "range": {
+        "startLine": 33,
+        "startChar": 40,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "dfdb72eece563540f53e28bbf375c4e056a21911",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d463ab91_14f16da1",
+        "filename": "tests/net/java/com/android/internal/util/TestUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-01T04:40:21Z",
+      "side": 1,
+      "message": "Done. Didn\u0027t know about this method. Thanks.",
+      "parentUuid": "341b1a8e_7e09b3ea",
       "range": {
         "startLine": 33,
         "startChar": 40,
