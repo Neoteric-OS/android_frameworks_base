@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "923338aa_16db44c2",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-01T12:39:50Z",
+      "side": 1,
+      "message": "It\u0027s safe.  This is all happening on the same thread and the object that\u0027s given here is a copy of the source that lives in UpstreamNetworkMonitor.",
+      "parentUuid": "eaac8873_e989c9db",
+      "range": {
+        "startLine": 117,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 41
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c00de0c_458cc233",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-30T05:16:34Z",
       "side": 1,
       "message": "Is this redundant with the previous entry because it\u0027s a sub-prefix of it?",
+      "range": {
+        "startLine": 79,
+        "startChar": 35,
+        "endLine": 79,
+        "endChar": 57
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce86b5b8_102d8a0d",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-01T12:39:50Z",
+      "side": 1,
+      "message": "I was thinking they should be forced to deal with both, but...removed.",
+      "parentUuid": "1c00de0c_458cc233",
       "range": {
         "startLine": 79,
         "startChar": 35,
@@ -118,6 +166,78 @@
     },
     {
       "key": {
+        "uuid": "2ab2f136_fc31d80c",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-01T12:39:50Z",
+      "side": 1,
+      "message": "That would include 64:ff9b::/96, but I guess that can never be a local prefix so...done.",
+      "parentUuid": "6fb2f90f_68c1d014",
+      "range": {
+        "startLine": 80,
+        "startChar": 50,
+        "endLine": 80,
+        "endChar": 51
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd3b36a7_5ecf6284",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-01T12:39:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3c68143_ca7120c7",
+      "range": {
+        "startLine": 80,
+        "startChar": 50,
+        "endLine": 80,
+        "endChar": 51
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ff7e4e3_c26c681f",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-01T12:39:50Z",
+      "side": 1,
+      "message": "https://tools.ietf.org/html/rfc4291#section-2.5.6 says there are 54 bits of 0 after the first 10 bits.",
+      "parentUuid": "3e7b8f0e_ccda83ce",
+      "range": {
+        "startLine": 80,
+        "startChar": 45,
+        "endLine": 80,
+        "endChar": 48
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b012c0f_81313e1b",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 8
@@ -129,6 +249,30 @@
       "writtenOn": "2017-06-30T05:16:34Z",
       "side": 1,
       "message": "Could you use clone()? IpPrefix is immutable.",
+      "range": {
+        "startLine": 230,
+        "startChar": 8,
+        "endLine": 230,
+        "endChar": 53
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "492d8098_5449a9f8",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-01T12:39:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b012c0f_81313e1b",
       "range": {
         "startLine": 230,
         "startChar": 8,
@@ -164,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "02f5f5a4_37ef05d8",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-01T12:39:50Z",
+      "side": 1,
+      "message": "Quasi-done.  I use this if !\u003d block to dedup notifications as well.",
+      "parentUuid": "5db03c72_05160d17",
+      "range": {
+        "startLine": 369,
+        "startChar": 0,
+        "endLine": 370,
+        "endChar": 58
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1379a009_7879babe",
         "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 8
@@ -175,6 +343,30 @@
       "writtenOn": "2017-06-30T05:16:34Z",
       "side": 1,
       "message": "Why add both of these? The latter always covers the former.",
+      "range": {
+        "startLine": 490,
+        "startChar": 0,
+        "endLine": 491,
+        "endChar": 72
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e5b64bc_482e5fca",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-01T12:39:50Z",
+      "side": 1,
+      "message": "Because one of them is going to get removed (the 64share prefix) and I wanted to be sure to leave the /128 behind.\n\nBut that\u0027s probably better taken care of inside OffloadController because it also knows the upstreams and downstream LinkProperites.",
+      "parentUuid": "1379a009_7879babe",
       "range": {
         "startLine": 490,
         "startChar": 0,
@@ -210,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "2d51c3e9_fe38b0ea",
+        "filename": "services/net/java/android/net/util/NetworkConstants.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-01T12:39:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "485638b9_1a6eee7d",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 47
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19c57bf6_8a85bc09",
         "filename": "services/net/java/android/net/util/NetworkConstants.java",
         "patchSetId": 8
@@ -221,6 +437,30 @@
       "writtenOn": "2017-06-30T05:16:34Z",
       "side": 1,
       "message": "Consider throwing.",
+      "range": {
+        "startLine": 160,
+        "startChar": 8,
+        "endLine": 160,
+        "endChar": 18
+      },
+      "revId": "d73e7eaf39efe26f690bd6d1ca4299b429eb6e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87d6f484_7e558b40",
+        "filename": "services/net/java/android/net/util/NetworkConstants.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-01T12:39:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19c57bf6_8a85bc09",
       "range": {
         "startLine": 160,
         "startChar": 8,
