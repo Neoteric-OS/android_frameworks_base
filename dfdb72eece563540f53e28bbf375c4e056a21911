@@ -93,6 +93,30 @@
       "revId": "dfdb72eece563540f53e28bbf375c4e056a21911",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64e1e8c0_a715c058",
+        "filename": "tests/net/java/com/android/internal/util/TestUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-03T07:29:44Z",
+      "side": 1,
+      "message": "getThreadHandler not available on aosp. Added a TODO.",
+      "parentUuid": "d463ab91_14f16da1",
+      "range": {
+        "startLine": 33,
+        "startChar": 40,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "dfdb72eece563540f53e28bbf375c4e056a21911",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
