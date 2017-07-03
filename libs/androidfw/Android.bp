@@ -46,7 +46,6 @@ cc_library {
                 "DisplayEventDispatcher.cpp",
             ],
             shared_libs: [
-                "libziparchive",
                 "libbase",
                 "libbinder",
                 "liblog",
@@ -64,10 +63,15 @@ cc_library {
             shared: {
                 enabled: false,
             },
-            shared_libs: ["libz-host"],
+            shared_libs: [
+                "libz-host",
+            ],
         },
         windows: {
             enabled: true,
         },
     },
+    shared_libs: [
+        "libziparchive",
+    ],
 }
