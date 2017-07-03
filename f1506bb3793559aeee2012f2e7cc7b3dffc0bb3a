@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "199c860a_e69e3a92",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-03T15:31:32Z",
+      "side": 1,
+      "message": "There is a window, yes.  I\u0027m not to have to add a 2-phase link address assignment process where we add the prefix to the exempt this and then assign the address.\n\n:-/\n\nI\u0027ll update the comment in the CL on the internal branch.",
+      "parentUuid": "5f5d7a56_b53bf721",
+      "range": {
+        "startLine": 129,
+        "startChar": 52,
+        "endLine": 129,
+        "endChar": 64
+      },
+      "revId": "f1506bb3793559aeee2012f2e7cc7b3dffc0bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e097660a_2fd3095a",
         "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 12
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "e23e0431_f8e9a0de",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-03T15:31:32Z",
+      "side": 1,
+      "message": "The latest version, on another branch, adds /128s and /32s to the exempt set and will set the /64 or /2x in the \"set downstreams\" call.",
+      "parentUuid": "e097660a_2fd3095a",
+      "range": {
+        "startLine": 239,
+        "startChar": 41,
+        "endLine": 239,
+        "endChar": 50
+      },
+      "revId": "f1506bb3793559aeee2012f2e7cc7b3dffc0bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c531b62e_f88f0217",
         "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 12
@@ -82,6 +130,24 @@
       "writtenOn": "2017-06-19T11:56:48Z",
       "side": 1,
       "message": "Do we also need to add all other addresses on other interfaces on the host as well, so that traffic to them doesn\u0027t get sent to the Internet?\n\nWhat about  directly-connected routes to other interfaces in the box (e.g., local-only hotspot, wifi p2p, ...)? Are they pushed in the \"add all downstream configured addresses\" section just above?",
+      "revId": "f1506bb3793559aeee2012f2e7cc7b3dffc0bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "233be162_0cac80f2",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-03T15:31:32Z",
+      "side": 1,
+      "message": "All directly connected link prefixes are added in the \"exempt prefixes\" CL that preceded this one.\n\nI didn\u0027t know what to do about the local routes.  I guess if I don\u0027t want the offload to touch them I should have added them as well?",
+      "parentUuid": "c531b62e_f88f0217",
       "revId": "f1506bb3793559aeee2012f2e7cc7b3dffc0bb3a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
