@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27dedafc_33b47d56",
+        "filename": "libs/androidfw/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2017-07-03T20:03:22Z",
+      "side": 1,
+      "message": "This is set for both now, move it up to the top level?",
+      "revId": "522ec57469d4d0af6a64760e643fb93108432103",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
