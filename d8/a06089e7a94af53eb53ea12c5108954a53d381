@@ -1,0 +1,8 @@
+Code-Review+2: Hugo Benichi <hugobenichi@google.com>
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Verified+1: Lorenzo Colitti <lorenzo@google.com>
+Submitted-by: Lorenzo Colitti <lorenzo@google.com>
+Submitted-at: Mon, 03 Jul 2017 01:39:26 +0000
+Reviewed-on: https://android-review.googlesource.com/425119
+Project: platform/frameworks/base
+Branch: refs/heads/master
