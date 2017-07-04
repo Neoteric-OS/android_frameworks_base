@@ -461,20 +461,33 @@ public class Process {
     }
 
     /**
-     * Returns elapsed milliseconds of the time this process has run.
-     * @return  Returns the number of milliseconds this process has return.
+     * Retrieve the time, in milliseconds, consumed by the calling process.
+     * This value is obtained by the per-process CPU-time clock and represents
+     * the sum of the CPU times spent by all the threads in the process.
+     *
+     * @return Returns the CPU-time spent by the calling process, in
+     * milliseconds.
      */
     public static final native long getElapsedCpuTime();
 
     /**
-     * Return the {@link SystemClock#elapsedRealtime()} at which this process was started.
+     * Retrieve the time at which the calling process was started, relatively
+     * to the boot time. The value is expressed in milliseconds.
+     * This function is equivalent to {@link SystemClock#elapsedRealtime}.
+     *
+     * @return Returns process creation time, in milliseconds, relatively to
+     * the boot time.
      */
     public static final long getStartElapsedRealtime() {
         return sStartElapsedRealtime;
     }
 
     /**
-     * Return the {@link SystemClock#uptimeMillis()} at which this process was started.
+     * Retrieve the time elapsed since boot time, without counting the time
+     * spent in deep sleep. The value is expressed in milliseconds.
+     * This function is equivalent to {@link SystemClock#uptimeMillis}.
+     *
+     * @return Returns the non-sleep time since boot, in milliseconds.
      */
     public static final long getStartUptimeMillis() {
         return sStartUptimeMillis;
@@ -487,22 +500,30 @@ public class Process {
     }
 
     /**
-     * Returns true if the current process is a 64-bit runtime.
+     * Check if the calling process is a 64-bit runtime.
+     *
+     * @return Returns true if the current process is a 64-bit runtime, false
+     * otherwise.
      */
     public static final boolean is64Bit() {
         return VMRuntime.getRuntime().is64Bit();
     }
 
     /**
-     * Returns the identifier of this process, which can be used with
-     * {@link #killProcess} and {@link #sendSignal}.
+     * Retrieve the process ID of the calling process. Such PID can be used
+     * with {@link #killProcess} and {@link #sendSignal}.
+     *
+     * @return Returns the PID of the calling process.
      */
     public static final int myPid() {
         return Os.getpid();
     }
 
     /**
-     * Returns the identifier of this process' parent.
+     * Returns the process ID of the parent of the calling process.
+     *
+     * @return Returns the PID of the parent of the calling process.
+     *
      * @hide
      */
     public static final int myPpid() {
@@ -510,38 +531,47 @@ public class Process {
     }
 
     /**
-     * Returns the identifier of the calling thread, which be used with
-     * {@link #setThreadPriority(int, int)}.
+     * Retrieve the thread ID of the calling thread. Such TID can be used
+     * with {@link #setThreadPriority}.
+     *
+     * @return Returns the TID of the calling thread.
      */
     public static final int myTid() {
         return Os.gettid();
     }
 
     /**
-     * Returns the identifier of this process's uid.  This is the kernel uid
-     * that the process is running under, which is the identity of its
-     * app-specific sandbox.  It is different from {@link #myUserHandle} in that
-     * a uid identifies a specific app sandbox in a specific user.
+     * Retrieve the user ID of the calling process.
+     * This is the kernel UID that the process is running under, which is the
+     * identity of its app-specific sandbox. This value differs from
+     * {@link #myUserHandle} in that a UID identifies a specific app sandbox in
+     * a specific user.
+     *
+     * @return Returns the user ID belonging to the calling process.
      */
     public static final int myUid() {
         return Os.getuid();
     }
 
     /**
-     * Returns this process's user handle.  This is the
-     * user the process is running under.  It is distinct from
-     * {@link #myUid()} in that a particular user will have multiple
-     * distinct apps running under it each with their own uid.
+     * Retrieve the user handle of the calling process. This value corresponds
+     * to the user the process is running under. It differs from
+     * {@link #myUid} in that a particular user may have multiple distinct
+     * apps running under it, each one with its own UID.
+     *
+     * @return Returns the user handle belonging to the calling process.
      */
     public static UserHandle myUserHandle() {
         return UserHandle.of(UserHandle.getUserId(myUid()));
     }
 
     /**
-     * Returns whether the given uid belongs to an application.
-     * @param uid A kernel uid.
-     * @return Whether the uid corresponds to an application sandbox running in
-     *     a specific user.
+     * Check if the given user ID belongs to an application.
+     *
+     * @param uid The kernel UID to check.
+     *
+     * @return Returns true if the given <var>uid</var> corresponds to an
+     * application sandbox running in a specific user, false otherwise.
      */
     public static boolean isApplicationUid(int uid) {
         return UserHandle.isApp(uid);
@@ -562,23 +592,37 @@ public class Process {
     }
 
     /**
-     * Returns the UID assigned to a particular user name, or -1 if there is
-     * none.  If the given string consists of only numbers, it is converted
-     * directly to a uid.
+     * Retrieve the user ID assigned to the given user name, or -1 if there is
+     * none. If <var>name</var> consists only of numbers, it is directly
+     * converted to a UID.
+     *
+     * @param name The user name of which to get the UID.
+     *
+     * @return Returns the UID associated to the given user name, -1 if not
+     * found.
      */
     public static final native int getUidForName(String name);
     
     /**
-     * Returns the GID assigned to a particular user name, or -1 if there is
-     * none.  If the given string consists of only numbers, it is converted
-     * directly to a gid.
+     * Returns the group ID assigned to the given user name, or -1 if there is
+     * none. If <var>name</var> consists only of numbers, it is directly
+     * converted to a GID.
+     *
+     * @param name The user name of which to get the GID.
+     *
+     * @return Returns the GID associated to the given user name, -1 if not
+     * found.
      */
     public static final native int getGidForName(String name);
 
     /**
-     * Returns a uid for a currently running process.
-     * @param pid the process id
-     * @return the uid of the process, or -1 if the process is not running.
+     * Returns the user ID associated to the given process.
+     *
+     * @param pid The process ID of which to get the UID.
+     *
+     * @return The UID associated to the process, or -1 if the process does not
+     * exist.
+     *
      * @hide pending API council review
      */
     public static final int getUidForPid(int pid) {
@@ -590,9 +634,13 @@ public class Process {
     }
 
     /**
-     * Returns the parent process id for a currently running process.
-     * @param pid the process id
-     * @return the parent process id of the process, or -1 if the process is not running.
+     * Returns the process ID associated to the parent of the given process.
+     *
+     * @param pid The process ID of which to get the PID of the parent.
+     *
+     * @return The PID of the parent of the given process, or -1 if the process
+     * does not exist.
+     *
      * @hide
      */
     public static final int getParentPid(int pid) {
@@ -695,6 +743,7 @@ public class Process {
             throws IllegalArgumentException, SecurityException;
 
     /**
+     * Retrieve the cores exclusively reserved to the calling process.
      * On some devices, the foreground process may have one or more CPU
      * cores exclusively reserved for it. This method can be used to
      * retrieve which cores that are (if any), so the calling process
@@ -712,10 +761,8 @@ public class Process {
      * set it to use a reserved core); the OS will automatically take care
      * of resetting the affinity at that point.
      *
-     * @return an array of integers, indicating the CPU cores exclusively
-     * reserved for this process. The array will have length zero if no
-     * CPU cores are exclusively reserved for this process at this point
-     * in time.
+     * @return Returns an array of integers, containing the CPU cores
+     * exclusively reserved for the calling process.
      */
     public static final native int[] getExclusiveCores();
 
@@ -739,14 +786,14 @@ public class Process {
     
     /**
      * Return the current priority of a thread, based on Linux priorities.
-     * 
-     * @param tid The identifier of the thread/process. If tid equals zero, the priority of the
-     * calling process/thread will be returned.
-     * 
+     *
+     * @param tid The identifier of the thread/process. If <var>tid</var> equals
+     * zero, the priority of the calling process/thread will be returned.
+     *
      * @return Returns the current priority, as a Linux priority level,
      * from -20 for highest scheduling priority to 19 for lowest scheduling
      * priority.
-     * 
+     *
      * @throws IllegalArgumentException Throws IllegalArgumentException if
      * <var>tid</var> does not exist.
      */
@@ -836,6 +883,11 @@ public class Process {
      * and any additional processes created by that app; packages
      * sharing a common UID will also be able to kill each
      * other's processes.
+     *
+     * This function is equivalent to {@link #sendSignal}, specifying
+     * {@link #SIGNAL_KILL} as <var>signal</var>.
+     *
+     * @param pid The PID of the process to be killed.
      */
     public static final void killProcess(int pid) {
         sendSignal(pid, SIGNAL_KILL);
