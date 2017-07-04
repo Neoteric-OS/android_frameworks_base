@@ -42,6 +42,7 @@ import org.xmlpull.v1.XmlPullParser;
 public class RuntimeResourceOverlayTests {
     private static final String APP_OVERLAY_1 = "com.android.rrotests.app_overlay_1";
     private static final String APP_OVERLAY_2 = "com.android.rrotests.app_overlay_2";
+    private static final String APP_OVERLAY_OTHER_SIG = "com.android.rrotests.app_overlay_other_sig";
     private static final String SYSTEM_OVERLAY_1 = "com.android.rrotests.system_overlay_1";
     private static final String SYSTEM_OVERLAY_2 = "com.android.rrotests.system_overlay_2";
     private static final String SOME_OTHER_APP = "com.android.rrotests.some_other_app";
@@ -59,6 +60,7 @@ public class RuntimeResourceOverlayTests {
     static {
         OVERLAY_PACKAGES.put(APP_OVERLAY_1, R.raw.app_overlay_1);
         OVERLAY_PACKAGES.put(APP_OVERLAY_2, R.raw.app_overlay_2);
+        OVERLAY_PACKAGES.put(APP_OVERLAY_OTHER_SIG, R.raw.app_overlay_other_sig);
         OVERLAY_PACKAGES.put(SYSTEM_OVERLAY_1, R.raw.system_overlay_1);
         OVERLAY_PACKAGES.put(SYSTEM_OVERLAY_2, R.raw.system_overlay_2);
         OVERLAY_PACKAGES.put(SOME_OTHER_APP_OVERLAY, R.raw.some_other_app_overlay);
@@ -99,10 +101,12 @@ public class RuntimeResourceOverlayTests {
 
         OverlayUtils.disable(mContext, SYSTEM_OVERLAY_2, mUserId);
         OverlayUtils.disable(mContext, SYSTEM_OVERLAY_1, mUserId);
+        OverlayUtils.disable(mContext, APP_OVERLAY_OTHER_SIG, mUserId);
         OverlayUtils.disable(mContext, APP_OVERLAY_2, mUserId);
         OverlayUtils.disable(mContext, APP_OVERLAY_1, mUserId);
 
         OverlayUtils.reorder(mContext, APP_OVERLAY_1, APP_OVERLAY_2, mUserId);
+        OverlayUtils.reorder(mContext, APP_OVERLAY_2, APP_OVERLAY_OTHER_SIG, mUserId);
         OverlayUtils.reorder(mContext, SYSTEM_OVERLAY_1, SYSTEM_OVERLAY_2, mUserId);
     }
 
@@ -491,6 +495,13 @@ public class RuntimeResourceOverlayTests {
             PackageUtils.install(mContext, Uri.parse(URI_PREFIX + R.raw.app_overlay_1));
             OverlayUtils.pollUntilOverlayAppears(mContext, APP_OVERLAY_1, mUserId);
         }
+    }
+
+    @Test
+    public void testSecurityDoNotAllowOtherSignature() throws Exception {
+        assertResource(0, R.integer.i);
+        OverlayUtils.enable(mContext, APP_OVERLAY_OTHER_SIG, mUserId);
+        assertResource(0, R.integer.i); // resource should be unmodified
     }
 
     private void assertResource(boolean expected, int resid) throws Exception {
