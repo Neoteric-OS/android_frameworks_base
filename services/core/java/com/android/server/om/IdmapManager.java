@@ -21,7 +21,6 @@ import static com.android.server.om.OverlayManagerService.TAG;
 
 import android.annotation.NonNull;
 import android.content.om.OverlayInfo;
-import android.content.pm.PackageInfo;
 import android.os.UserHandle;
 import android.util.Slog;
 
@@ -51,16 +50,16 @@ public class IdmapManager {
         mInstaller = installer;
     }
 
-    boolean createIdmap(@NonNull final PackageInfo targetPackage,
-            @NonNull final PackageInfo overlayPackage, int userId) {
+    boolean createIdmap(@NonNull final PackageInfoLite targetPackage,
+            @NonNull final PackageInfoLite overlayPackage, int userId) {
         // unused userId: see comment in OverlayManagerServiceImpl.removeIdmapIfPossible
         if (DEBUG) {
             Slog.d(TAG, "create idmap for " + targetPackage.packageName + " and "
                     + overlayPackage.packageName);
         }
-        final int sharedGid = UserHandle.getSharedAppGid(targetPackage.applicationInfo.uid);
-        final String targetPath = targetPackage.applicationInfo.getBaseCodePath();
-        final String overlayPath = overlayPackage.applicationInfo.getBaseCodePath();
+        final int sharedGid = UserHandle.getSharedAppGid(targetPackage.uid);
+        final String targetPath = targetPackage.codePath;
+        final String overlayPath = overlayPackage.codePath;
         final String idmapPath = getIdmapPath(overlayPath, userId);
         try {
             mInstaller.createIdmap(targetPath, overlayPath, sharedGid, idmapPath);
@@ -90,9 +89,9 @@ public class IdmapManager {
         return oi.idmapPath != null ? new File(oi.idmapPath).isFile() : false;
     }
 
-    boolean idmapExists(@NonNull final PackageInfo overlayPackage, final int userId) {
+    boolean idmapExists(@NonNull final PackageInfoLite overlayPackage, final int userId) {
         final String idmapPath =
-            getIdmapPath(overlayPackage.applicationInfo.getBaseCodePath(), userId);
+            getIdmapPath(overlayPackage.codePath, userId);
         return new File(idmapPath).isFile();
     }
 

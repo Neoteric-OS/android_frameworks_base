@@ -14,8 +14,6 @@ import static org.junit.Assert.assertTrue;
 
 import android.annotation.NonNull;
 import android.content.om.OverlayInfo;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.ArraySet;
 
@@ -398,20 +396,17 @@ public class OverlayManagerTests {
         }
 
         @Override
-        public PackageInfo getPackageInfo(@NonNull String packageName, int userId) {
+        public PackageInfoLite getPackageInfoLite(@NonNull String packageName, int userId) {
             final DummyState.Package pkg = mState.select(packageName, userId);
             if (pkg == null) {
                 return null;
             }
-            ApplicationInfo ai = new ApplicationInfo();
-            ai.sourceDir = String.format("%s/%s/base.apk",
+            String codePath = String.format("%s/%s/base.apk",
                     pkg.targetPackageName == null ? "/system/app/" : "/vendor/overlay/",
                     pkg.packageName);
-            PackageInfo pi = new PackageInfo();
-            pi.applicationInfo = ai;
-            pi.packageName = pkg.packageName;
-            pi.overlayTarget = pkg.targetPackageName;
-            return pi;
+            PackageInfoLite pil = new PackageInfoLite(pkg.packageName, pkg.targetPackageName,
+                    USER, false, 0, codePath);
+            return pil;
         }
 
         @Override
@@ -421,14 +416,14 @@ public class OverlayManagerTests {
         }
 
         @Override
-        public List<PackageInfo> getOverlayPackages(int userId) {
-            List<PackageInfo> out = new ArrayList<>();
+        public List<PackageInfoLite> getOverlayPackages(int userId) {
+            List<PackageInfoLite> out = new ArrayList<>();
             final List<DummyState.Package> pkgs = mState.select(userId);
             final int N = pkgs.size();
             for (int i = 0; i < N; i++) {
                 final DummyState.Package pkg = pkgs.get(i);
                 if (pkg.targetPackageName != null) {
-                    out.add(getPackageInfo(pkg.packageName, pkg.userId));
+                    out.add(getPackageInfoLite(pkg.packageName, pkg.userId));
                 }
             }
             return out;
@@ -445,8 +440,8 @@ public class OverlayManagerTests {
         }
 
         @Override
-        boolean createIdmap(@NonNull final PackageInfo targetPackage,
-                @NonNull final PackageInfo overlayPackage, int userId) {
+        boolean createIdmap(@NonNull final PackageInfoLite targetPackage,
+                @NonNull final PackageInfoLite overlayPackage, int userId) {
             final DummyState.Package t = mState.select(targetPackage.packageName, userId);
             if (t == null) {
                 return false;
@@ -480,7 +475,7 @@ public class OverlayManagerTests {
         }
 
         @Override
-        boolean idmapExists(@NonNull final PackageInfo overlayPackage, final int userId) {
+        boolean idmapExists(@NonNull final PackageInfoLite overlayPackage, final int userId) {
             final String key = createKey(overlayPackage.packageName, userId);
             return mIdmapFiles.contains(key);
         }
