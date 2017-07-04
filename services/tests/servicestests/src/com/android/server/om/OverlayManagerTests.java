@@ -417,7 +417,7 @@ public class OverlayManagerTests {
         @Override
         public boolean signaturesMatching(@NonNull String packageName1,
                 @NonNull String packageName2, int userId) {
-            return false;
+            return true;
         }
 
         @Override

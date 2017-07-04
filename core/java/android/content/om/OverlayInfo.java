@@ -59,6 +59,13 @@ public final class OverlayInfo implements Parcelable {
     public static final int STATE_NO_IDMAP = 1;
 
     /**
+     * Technically, the overlay could be used (i.e. the target is installed,
+     * there is an idmap file, etc) but for security reasons the overlay should
+     * not be used.
+     */
+    public static final int STATE_NOT_TRUSTED = 6;
+
+    /**
      * The overlay is currently disabled. It can be enabled.
      *
      * @see IOverlayManager.setEnabled
@@ -102,6 +109,7 @@ public final class OverlayInfo implements Parcelable {
      * @see #STATE_OVERLAY_UPGRADING
      * @see #STATE_MISSING_TARGET
      * @see #STATE_NO_IDMAP
+     * @see #STATE_NOT_TRUSTED
      * @see #STATE_DISABLED
      * @see #STATE_ENABLED
      */
@@ -160,6 +168,7 @@ public final class OverlayInfo implements Parcelable {
             case STATE_OVERLAY_UPGRADING:
             case STATE_MISSING_TARGET:
             case STATE_NO_IDMAP:
+            case STATE_NOT_TRUSTED:
             case STATE_DISABLED:
             case STATE_ENABLED:
                 break;
@@ -220,6 +229,7 @@ public final class OverlayInfo implements Parcelable {
      * @see #STATE_OVERLAY_UPGRADING
      * @see #STATE_MISSING_TARGET
      * @see #STATE_NO_IDMAP
+     * @see #STATE_NOT_TRUSTED
      * @see #STATE_DISABLED
      * @see #STATE_ENABLED
      *
@@ -237,6 +247,8 @@ public final class OverlayInfo implements Parcelable {
                 return "STATE_MISSING_TARGET";
             case STATE_NO_IDMAP:
                 return "STATE_NO_IDMAP";
+            case STATE_NOT_TRUSTED:
+                return "STATE_NOT_TRUSTED";
             case STATE_DISABLED:
                 return "STATE_DISABLED";
             case STATE_ENABLED:

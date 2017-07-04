@@ -19,6 +19,7 @@ package com.android.server.om;
 import static android.content.om.OverlayInfo.STATE_DISABLED;
 import static android.content.om.OverlayInfo.STATE_ENABLED;
 import static android.content.om.OverlayInfo.STATE_MISSING_TARGET;
+import static android.content.om.OverlayInfo.STATE_NOT_TRUSTED;
 import static android.content.om.OverlayInfo.STATE_NO_IDMAP;
 import static android.content.om.OverlayInfo.STATE_OVERLAY_UPGRADING;
 import static android.content.om.OverlayInfo.STATE_TARGET_UPGRADING;
@@ -573,6 +574,8 @@ final class OverlayManagerServiceImpl {
     private int calculateNewState(@Nullable final PackageInfo targetPackage,
             @Nullable final PackageInfo overlayPackage, final int userId, final int flags)
         throws OverlayManagerSettings.BadKeyException {
+
+        // upgrade scenarios
         if ((flags & FLAG_TARGET_IS_UPGRADING) != 0) {
             return STATE_TARGET_UPGRADING;
         }
@@ -586,6 +589,7 @@ final class OverlayManagerServiceImpl {
             throw new IllegalArgumentException("null overlay package not compatible with no flags");
         }
 
+        // technical checks
         if (targetPackage == null) {
             return STATE_MISSING_TARGET;
         }
@@ -594,6 +598,13 @@ final class OverlayManagerServiceImpl {
             return STATE_NO_IDMAP;
         }
 
+        // security checks
+        if (!mPackageManager.signaturesMatching(targetPackage.packageName,
+                    overlayPackage.packageName, userId)) {
+            return STATE_NOT_TRUSTED;
+        }
+
+        // overlay is ok to use
         final boolean enabled = mSettings.getEnabled(overlayPackage.packageName, userId);
         return enabled ? STATE_ENABLED : STATE_DISABLED;
     }
