@@ -397,10 +397,12 @@
     <!-- Activity name to enable wifi tethering after provisioning app succeeds -->
     <string translatable="false" name="config_wifi_tether_enable">com.android.settings/.TetherService</string>
 
-    <!-- Array of ConnectivityManager.TYPE_xxxx values allowable for tethering -->
-    <!-- Common options are [1, 4] for TYPE_WIFI and TYPE_MOBILE_DUN or
-    <!== [0,1,5,7] for TYPE_MOBILE, TYPE_WIFI, TYPE_MOBILE_HIPRI and TYPE_BLUETOOTH -->
-    <!-- This list is also modified by code within the framework, including:
+    <!-- Array of ConnectivityManager.TYPE_xxxx values allowable for tethering.
+
+         Common options are [1, 4] for TYPE_WIFI and TYPE_MOBILE_DUN or
+         [1,7,0] for TYPE_WIFI, TYPE_BLUETOOTH, and TYPE_MOBILE.
+
+         This list is also modified by code within the framework, including:
 
              - TYPE_ETHERNET (9) is prepended to this list, and
              - the output of TelephonyManager.getTetherApnRequired()
@@ -409,12 +411,14 @@
 
          For other changes applied to this list, now and in the future, see
          com.android.server.connectivity.tethering.TetheringConfiguration.
+
+         Note also: the order of this is important. The first upstream type
+         for which a satisfying network exists is used.
       -->
     <integer-array translatable="false" name="config_tether_upstream_types">
-        <item>0</item>
         <item>1</item>
-        <item>5</item>
         <item>7</item>
+        <item>0</item>
     </integer-array>
 
     <!-- If the DUN connection for this CDMA device supports more than just DUN -->
