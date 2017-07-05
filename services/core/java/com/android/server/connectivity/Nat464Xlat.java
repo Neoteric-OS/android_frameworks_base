@@ -22,15 +22,12 @@ import android.net.InterfaceConfiguration;
 import android.net.ConnectivityManager;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
-import android.net.NetworkAgent;
 import android.net.RouteInfo;
 import android.os.Handler;
-import android.os.Message;
 import android.os.INetworkManagementService;
 import android.os.RemoteException;
 import android.util.Slog;
 
-import com.android.server.net.BaseNetworkObserver;
 import com.android.internal.util.ArrayUtils;
 
 /**
@@ -38,7 +35,7 @@ import com.android.internal.util.ArrayUtils;
  *
  * @hide
  */
-public class Nat464Xlat extends BaseNetworkObserver {
+public class Nat464Xlat {
     private static final String TAG = Nat464Xlat.class.getSimpleName();
 
     // This must match the interface prefix in clatd.c.
@@ -52,9 +49,6 @@ public class Nat464Xlat extends BaseNetworkObserver {
     };
 
     private final INetworkManagementService mNMService;
-
-    // ConnectivityService Handler for LinkProperties updates.
-    private final Handler mHandler;
 
     // The network we're running on, and its type.
     private final NetworkAgentInfo mNetwork;
@@ -79,9 +73,8 @@ public class Nat464Xlat extends BaseNetworkObserver {
     private String mIface;
     private State mState = State.IDLE;
 
-    public Nat464Xlat(INetworkManagementService nmService, Handler handler, NetworkAgentInfo nai) {
+    public Nat464Xlat(INetworkManagementService nmService, NetworkAgentInfo nai) {
         mNMService = nmService;
-        mHandler = handler;
         mNetwork = nai;
     }
 
@@ -118,7 +111,6 @@ public class Nat464Xlat extends BaseNetworkObserver {
 
         Slog.i(TAG, "Starting clatd on " + mBaseIface);
         try {
-            mNMService.registerObserver(this);
             mNMService.startClatd(mBaseIface);
         } catch(RemoteException|IllegalStateException e) {
             Slog.e(TAG, "Error starting clatd on " + mBaseIface, e);
@@ -142,13 +134,6 @@ public class Nat464Xlat extends BaseNetworkObserver {
         }
         // When clatd stops and its interface is deleted, interfaceRemoved() will notify
         // ConnectivityService and call clear().
-    }
-
-    private void updateConnectivityService(LinkProperties lp) {
-        Message msg = mHandler.obtainMessage(NetworkAgent.EVENT_NETWORK_PROPERTIES_CHANGED, lp);
-        msg.replyTo = mNetwork.messenger;
-        Slog.i(TAG, "sending message to ConnectivityService: " + msg);
-        msg.sendToTarget();
     }
 
     /**
@@ -219,17 +204,16 @@ public class Nat464Xlat extends BaseNetworkObserver {
      * Adds stacked link on base link and transitions to Running state
      * This is called by the InterfaceObserver on its own thread, so can race with stop().
      */
-    @Override
-    public void interfaceLinkStateChanged(String iface, boolean up) {
+    public LinkProperties interfaceLinkStateChanged(String iface, boolean up) {
         if (!up || !mState.isStarted() || !mIface.equals(iface)) {
-            return;
+            return null;
         }
         if (mState.isRunning()) {
-            return;
+            return null;
         }
         LinkAddress clatAddress = getLinkAddress(iface);
         if (clatAddress == null) {
-            return;
+            return null;
         }
         mState = State.RUNNING;
         Slog.i(TAG, String.format("interface %s is up, adding stacked link %s on top of %s",
@@ -238,16 +222,15 @@ public class Nat464Xlat extends BaseNetworkObserver {
         maybeSetIpv6NdOffload(mBaseIface, false);
         LinkProperties lp = new LinkProperties(mNetwork.linkProperties);
         lp.addStackedLink(makeLinkProperties(clatAddress));
-        updateConnectivityService(lp);
+        return lp;
     }
 
-    @Override
-    public void interfaceRemoved(String iface) {
+    public LinkProperties interfaceRemoved(String iface) {
         if (!mState.isStarted() || !mIface.equals(iface)) {
-            return;
+            return null;
         }
         if (!mState.isRunning()) {
-            return;
+            return null;
         }
 
         String baseIface = mBaseIface;
@@ -265,8 +248,8 @@ public class Nat464Xlat extends BaseNetworkObserver {
         // Note that this method can be called by the interface observer at the same time
         // that ConnectivityService calls stop(). In this case, the second call to
         // stopClatd() will just throw IllegalStateException, which we'll ignore.
+// FIXME: update this comment and try to dedupe the stopClatd command
         try {
-            mNMService.unregisterObserver(this);
             mNMService.stopClatd(baseIface);
         } catch (RemoteException|IllegalStateException e) {
             // Well, we tried.
@@ -274,7 +257,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
         maybeSetIpv6NdOffload(baseIface, true);
         LinkProperties lp = new LinkProperties(mNetwork.linkProperties);
         lp.removeStackedLink(iface);
-        updateConnectivityService(lp);
+        return lp;
     }
 
     @Override
