@@ -130,7 +130,6 @@ import com.android.server.connectivity.DataConnectionStats;
 import com.android.server.connectivity.KeepaliveTracker;
 import com.android.server.connectivity.MockableSystemProperties;
 import com.android.server.connectivity.LingerMonitor;
-import com.android.server.connectivity.Nat464Xlat;
 import com.android.server.connectivity.NetworkAgentInfo;
 import com.android.server.connectivity.NetworkDiagnostics;
 import com.android.server.connectivity.NetworkMonitor;
@@ -861,6 +860,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
             netCap.addTransportType(transportType);
         }
         return new NetworkRequest(netCap, TYPE_NONE, nextNetworkRequestId(), type);
+    }
+
+    public INetworkManagementService getNetd() {
+        return mNetd;
     }
 
     // Used only for testing.
@@ -2281,7 +2284,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
             nai.networkMonitor.sendMessage(NetworkMonitor.CMD_NETWORK_DISCONNECTED);
             mNetworkAgentInfos.remove(msg.replyTo);
-            maybeStopClat(nai);
+            nai.maybeStopClat();
             synchronized (mNetworkForNetId) {
                 // Remove the NetworkAgent, but don't mark the netId as
                 // available until we've told netd to delete it below.
@@ -4375,7 +4378,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateDnses(newLp, oldLp, netId);
 
         // Start or stop clat accordingly to network state.
-        updateClat(networkAgent);
+        networkAgent.updateClat();
         if (isDefaultNetwork(networkAgent)) {
             handleApplyDefaultProxy(newLp.getHttpProxy());
         } else {
@@ -4388,32 +4391,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         mKeepaliveTracker.handleCheckKeepalivesStillValid(networkAgent);
-    }
-
-    private void updateClat(NetworkAgentInfo nai) {
-        if (Nat464Xlat.requiresClat(nai)) {
-            maybeStartClat(nai);
-        } else {
-            maybeStopClat(nai);
-        }
-    }
-
-    /** Ensure clat has started for this network. */
-    private void maybeStartClat(NetworkAgentInfo nai) {
-        if (nai.clatd != null) {
-            return;
-        }
-        nai.clatd = new Nat464Xlat(mNetd, mTrackerHandler, nai);
-        nai.clatd.start();
-    }
-
-    /** Ensure clat has stopped for this network. */
-    private void maybeStopClat(NetworkAgentInfo nai) {
-        if (nai.clatd == null) {
-            return;
-        }
-        nai.clatd.stop();
-        nai.clatd = null;
     }
 
     private void wakeupModifyInterface(String iface, NetworkCapabilities caps, boolean add) {
