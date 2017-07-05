@@ -2023,16 +2023,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
                 case NetworkAgent.EVENT_NETWORK_PROPERTIES_CHANGED: {
-                    if (VDBG) {
-                        log("Update of LinkProperties for " + nai.name() +
-                                "; created=" + nai.created +
-                                "; everConnected=" + nai.everConnected);
-                    }
-                    LinkProperties oldLp = nai.linkProperties;
-                    synchronized (nai) {
-                        nai.linkProperties = (LinkProperties)msg.obj;
-                    }
-                    if (nai.everConnected) updateLinkProperties(nai, oldLp);
+                    handleLinkPropertiesChanged(nai, (LinkProperties) msg.obj);
                     break;
                 }
                 case NetworkAgent.EVENT_NETWORK_INFO_CHANGED: {
@@ -4403,8 +4394,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (nai.clatd != null) {
             return;
         }
-        nai.clatd = new Nat464Xlat(mNetd, mTrackerHandler, nai);
+        nai.clatd = new Nat464Xlat(mNetd, nai);
         nai.clatd.start();
+        registerClatInterfaceListener(nai);
     }
 
     /** Ensure clat has stopped for this network. */
@@ -4414,6 +4406,40 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         nai.clatd.stop();
         nai.clatd = null;
+    }
+
+    private void registerClatInterfaceListener(NetworkAgentInfo nai) {
+        BaseNetworkObserver observer = new BaseNetworkObserver() {
+            @Override
+            public void interfaceLinkStateChanged(String iface, boolean up) {
+                mHandler.post(() -> {
+                    if (nai.clatd == null) {
+                        return;
+                    }
+                    LinkProperties newLp = nai.clatd.interfaceLinkStateChanged(iface, up);
+                    handleLinkPropertiesChanged(nai, newLp);
+                });
+            }
+
+            @Override
+            public void interfaceRemoved(String iface) {
+                try {
+                    mNetd.unregisterObserver(this);
+                } catch(RemoteException cannotHappen) {
+                }
+                mHandler.post(() -> {
+                    if (nai.clatd == null) {
+                        return;
+                    }
+                    LinkProperties newLp = nai.clatd.interfaceRemoved(iface);
+                    handleLinkPropertiesChanged(nai, newLp);
+                });
+            }
+        };
+        try {
+            mNetd.registerObserver(observer);
+        } catch(RemoteException cannotHappen) {
+        }
     }
 
     private void wakeupModifyInterface(String iface, NetworkCapabilities caps, boolean add) {
@@ -5146,6 +5172,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
             } else {
                 mLockdownTracker.onNetworkInfoChanged();
             }
+        }
+    }
+
+    private void handleLinkPropertiesChanged(NetworkAgentInfo nai, LinkProperties newLp) {
+        if (VDBG) {
+            log("Update of LinkProperties for " + nai.name() +
+                    "; created=" + nai.created +
+                    "; everConnected=" + nai.everConnected);
+        }
+        LinkProperties oldLp = nai.linkProperties;
+        synchronized (nai) {
+            nai.linkProperties = newLp;
+        }
+        if (nai.everConnected) {
+            updateLinkProperties(nai, oldLp);
         }
     }
 
