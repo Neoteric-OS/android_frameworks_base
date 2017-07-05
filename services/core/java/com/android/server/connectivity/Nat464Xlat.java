@@ -59,21 +59,25 @@ public class Nat464Xlat extends BaseNetworkObserver {
     // The network we're running on, and its type.
     private final NetworkAgentInfo mNetwork;
 
-    // Internal state variables.
-    //
-    // The possible states are:
-    //  - Idle: start() not called. Everything is null.
-    //  - Starting: start() called. Interfaces are non-null. isStarted() returns true.
-    //    mIsRunning is false.
-    //  - Running: start() called, and interfaceLinkStateChanged() told us that mIface is up.
-    //    mIsRunning is true.
-    //
+    enum State {
+        IDLE,       // start() not called. Base iface and stacked iface names are null.
+        STARTING,   // start() called. Base iface and stacked iface names are known.
+        RUNNING;    // start() called, and the stacked iface is known to be up.
+        public boolean isStarted() {
+            return this != IDLE;
+        }
+        public boolean isRunning() {
+            return this == RUNNING;
+        }
+    }
+
+    // TODO: move all state interaction to ConnectivityService handler thread
     // Once mIface is non-null and isStarted() is true, methods called by ConnectivityService on
     // its handler thread must not modify any internal state variables; they are only updated by the
     // interface observers, called on the notification threads.
     private String mBaseIface;
     private String mIface;
-    private boolean mIsRunning;
+    private State mState = State.IDLE;
 
     public Nat464Xlat(INetworkManagementService nmService, Handler handler, NetworkAgentInfo nai) {
         mNMService = nmService;
@@ -91,18 +95,10 @@ public class Nat464Xlat extends BaseNetworkObserver {
     }
 
     /**
-     * Determines whether clatd is started. Always true, except a) if start has not yet been called,
-     * or b) if our interface was removed.
-     */
-    private boolean isStarted() {
-        return mIface != null;
-    }
-
-    /**
      * Starts the clat daemon. Called by ConnectivityService on the handler thread.
      */
     public void start() {
-        if (isStarted()) {
+        if (mState.isStarted()) {
             Slog.e(TAG, "startClat: already started");
             return;
         }
@@ -118,7 +114,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
             return;
         }
         mIface = CLAT_PREFIX + mBaseIface;
-        // From now on, isStarted() will return true.
+        mState = State.STARTING;
 
         Slog.i(TAG, "Starting clatd on " + mBaseIface);
         try {
@@ -133,7 +129,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
      * Stops the clat daemon. Called by ConnectivityService on the handler thread.
      */
     public void stop() {
-        if (!isStarted()) {
+        if (!mState.isStarted()) {
             Slog.e(TAG, "stopClat: already stopped or not started");
             return;
         }
@@ -161,7 +157,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
      * has no idea that 464xlat is running on top of it.
      */
     public void fixupLinkProperties(LinkProperties oldLp) {
-        if (!mIsRunning || mNetwork.clatd == null) {
+        if (!mState.isRunning() || mNetwork.clatd == null) {
             return;
         }
         LinkProperties lp = mNetwork.linkProperties;
@@ -225,17 +221,17 @@ public class Nat464Xlat extends BaseNetworkObserver {
      */
     @Override
     public void interfaceLinkStateChanged(String iface, boolean up) {
-        if (!up || !isStarted() || !mIface.equals(iface)) {
+        if (!up || !mState.isStarted() || !mIface.equals(iface)) {
             return;
         }
-        if (mIsRunning) {
+        if (mState.isRunning()) {
             return;
         }
         LinkAddress clatAddress = getLinkAddress(iface);
         if (clatAddress == null) {
             return;
         }
-        mIsRunning = true;
+        mState = State.RUNNING;
         Slog.i(TAG, String.format("interface %s is up, adding stacked link %s on top of %s",
                 mIface, mIface, mBaseIface));
 
@@ -247,16 +243,16 @@ public class Nat464Xlat extends BaseNetworkObserver {
 
     @Override
     public void interfaceRemoved(String iface) {
-        if (!isStarted() || !mIface.equals(iface)) {
+        if (!mState.isStarted() || !mIface.equals(iface)) {
             return;
         }
-        if (!mIsRunning) {
+        if (!mState.isRunning()) {
             return;
         }
 
         String baseIface = mBaseIface;
 
-        mIsRunning = false;
+        mState = State.IDLE;
         mBaseIface = null;
         mIface = null;
 
@@ -283,6 +279,6 @@ public class Nat464Xlat extends BaseNetworkObserver {
 
     @Override
     public String toString() {
-        return "mBaseIface: " + mBaseIface + ", mIface: " + mIface + ", mIsRunning: " + mIsRunning;
+        return "mBaseIface: " + mBaseIface + ", mIface: " + mIface + ", mState: " + mState;
     }
 }
