@@ -17,6 +17,7 @@
 package com.android.server.connectivity;
 
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
+import static android.net.NetworkAgent.EVENT_NETWORK_PROPERTIES_CHANGED;
 
 import android.content.Context;
 import android.net.LinkProperties;
@@ -27,7 +28,9 @@ import android.net.NetworkMisc;
 import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.os.Handler;
+import android.os.INetworkManagementService;
 import android.os.Messenger;
+import android.os.RemoteException;
 import android.os.SystemClock;
 import android.util.Log;
 import android.util.SparseArray;
@@ -249,7 +252,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     private static final boolean VDBG = false;
     private final ConnectivityService mConnService;
     private final Context mContext;
-    private final Handler mHandler;
+    final Handler handler;
 
     public NetworkAgentInfo(Messenger messenger, AsyncChannel ac, Network net, NetworkInfo info,
             LinkProperties lp, NetworkCapabilities nc, int score, Context context, Handler handler,
@@ -263,7 +266,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         currentScore = score;
         mConnService = connService;
         mContext = context;
-        mHandler = handler;
+        this.handler = handler;
         networkMonitor = mConnService.createNetworkMonitor(context, handler, this, defaultRequest);
         networkMisc = misc;
     }
@@ -515,7 +518,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
 
         if (newExpiry > 0) {
             mLingerMessage = mConnService.makeWakeupMessage(
-                    mContext, mHandler,
+                    mContext, handler,
                     "NETWORK_LINGER_COMPLETE." + network.netId,
                     EVENT_NETWORK_LINGER_COMPLETE, this);
             mLingerMessage.schedule(newExpiry);
@@ -549,6 +552,39 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
 
     public void dumpLingerTimers(PrintWriter pw) {
         for (LingerTimer timer : mLingerTimers) { pw.println(timer); }
+    }
+
+    public void updateClat(INetworkManagementService netd) {
+        if (Nat464Xlat.requiresClat(this)) {
+            maybeStartClat(netd);
+        } else {
+            maybeStopClat();
+        }
+    }
+
+    /** Ensure clat has started for this network. */
+    public void maybeStartClat(INetworkManagementService netd) {
+        if (clatd != null) {
+            return;
+        }
+        clatd = new Nat464Xlat(netd, this);
+        clatd.start();
+    }
+
+    /** Ensure clat has stopped for this network. */
+    public void maybeStopClat() {
+        if (clatd == null) {
+            return;
+        }
+        clatd.stop();
+        clatd = null;
+    }
+
+    void sendLinkPropertiesUpdate(LinkProperties lp) {
+        try {
+            messenger.send(mHandler.obtainMessage(EVENT_NETWORK_PROPERTIES_CHANGED, lp));
+        } catch(RemoteException cannotHappen) {
+        }
     }
 
     public String toString() {
