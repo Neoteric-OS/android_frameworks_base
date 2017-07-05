@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da108382_ecc74b9e",
+        "filename": "core/java/android/database/ContentObserver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1059418
+      },
+      "writtenOn": "2017-07-05T15:50:36Z",
+      "side": 1,
+      "message": "Can you replace it with a different check?:\nsynchronized (mLock) {\n                if (mTransport \u003d\u003d null) {\n                    return\n                }\n}\nonChange(selfChange, uri, userId);\n\nIt should still fix the issue with ContentObserver#onChange method being called after\nContentResolver#unregisterContentObserver, but without a risk of introducing a deadlock.",
+      "range": {
+        "startLine": 196,
+        "startChar": 12,
+        "endLine": 200,
+        "endChar": 13
+      },
+      "revId": "64c8df900a665fc3443bbfad19fa60f3d5a2a516",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db7217f3_a683f2a8",
+        "filename": "core/java/android/database/ContentObserver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1059418
+      },
+      "writtenOn": "2017-07-05T15:50:36Z",
+      "side": 1,
+      "message": "same here. Move onChange outside of syncrhonized and return here if mTransport is null.",
+      "range": {
+        "startLine": 222,
+        "startChar": 20,
+        "endLine": 222,
+        "endChar": 78
+      },
+      "revId": "64c8df900a665fc3443bbfad19fa60f3d5a2a516",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
