@@ -22,6 +22,30 @@
       "revId": "0dd0fc52444bf4fe3f9e8d71fc7a9505a57c3fa0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d42c390d_ad730171",
+        "filename": "services/core/java/com/android/server/hdmi/OneTouchPlayAction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1170164
+      },
+      "writtenOn": "2017-07-05T12:48:59Z",
+      "side": 1,
+      "message": "This is called by an Nvidia APK which will finally calls this function when the device is booting or resumes from standby(after receive the SCREEN ON event broadcast).",
+      "parentUuid": "c26d5c1e_bab1664b",
+      "range": {
+        "startLine": 91,
+        "startChar": 17,
+        "endLine": 91,
+        "endChar": 27
+      },
+      "revId": "0dd0fc52444bf4fe3f9e8d71fc7a9505a57c3fa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
