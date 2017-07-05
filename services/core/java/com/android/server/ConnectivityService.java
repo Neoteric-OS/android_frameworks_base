@@ -129,7 +129,6 @@ import com.android.server.am.BatteryStatsService;
 import com.android.server.connectivity.DataConnectionStats;
 import com.android.server.connectivity.KeepaliveTracker;
 import com.android.server.connectivity.MockableSystemProperties;
-import com.android.server.connectivity.Nat464Xlat;
 import com.android.server.connectivity.LingerMonitor;
 import com.android.server.connectivity.NetworkAgentInfo;
 import com.android.server.connectivity.NetworkDiagnostics;
@@ -2023,16 +2022,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
                 case NetworkAgent.EVENT_NETWORK_PROPERTIES_CHANGED: {
-                    if (VDBG) {
-                        log("Update of LinkProperties for " + nai.name() +
-                                "; created=" + nai.created +
-                                "; everConnected=" + nai.everConnected);
-                    }
-                    LinkProperties oldLp = nai.linkProperties;
-                    synchronized (nai) {
-                        nai.linkProperties = (LinkProperties)msg.obj;
-                    }
-                    if (nai.everConnected) updateLinkProperties(nai, oldLp);
+                    handleUpdateLinkProperties(nai, (LinkProperties) msg.obj);
                     break;
                 }
                 case NetworkAgent.EVENT_NETWORK_INFO_CHANGED: {
@@ -2281,7 +2271,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
             nai.networkMonitor.sendMessage(NetworkMonitor.CMD_NETWORK_DISCONNECTED);
             mNetworkAgentInfos.remove(msg.replyTo);
-            maybeStopClat(nai);
+            nai.maybeStopClat();
             synchronized (mNetworkForNetId) {
                 // Remove the NetworkAgent, but don't mark the netId as
                 // available until we've told netd to delete it below.
@@ -4375,7 +4365,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateDnses(newLp, oldLp, netId);
 
         // Start or stop clat accordingly to network state.
-        updateClat(networkAgent);
+        networkAgent.updateClat(mNetd);
         if (isDefaultNetwork(networkAgent)) {
             handleApplyDefaultProxy(newLp.getHttpProxy());
         } else {
@@ -4388,32 +4378,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         mKeepaliveTracker.handleCheckKeepalivesStillValid(networkAgent);
-    }
-
-    private void updateClat(NetworkAgentInfo nai) {
-        if (Nat464Xlat.requiresClat(nai)) {
-            maybeStartClat(nai);
-        } else {
-            maybeStopClat(nai);
-        }
-    }
-
-    /** Ensure clat has started for this network. */
-    private void maybeStartClat(NetworkAgentInfo nai) {
-        if (nai.clatd != null || !nai.clatd.isStarted()) {
-            return;
-        }
-        nai.clatd = new Nat464Xlat(mNetd, mTrackerHandler, nai);
-        nai.clatd.start();
-    }
-
-    /** Ensure clat has stopped for this network. */
-    private void maybeStopClat(NetworkAgentInfo nai) {
-        if (nai.clatd == null) {
-            return;
-        }
-        nai.clatd.stop();
-        nai.clatd = null;
     }
 
     private void wakeupModifyInterface(String iface, NetworkCapabilities caps, boolean add) {
@@ -4647,6 +4611,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // called by rematchNetworkAndRequests, so it's safe to start a rematch.
             rematchAllNetworksAndRequests(nai, oldScore);
             notifyNetworkCallbacks(nai, ConnectivityManager.CALLBACK_CAP_CHANGED);
+        }
+    }
+
+    public void handleUpdateLinkProperties(NetworkAgentInfo nai, LinkProperties newLp) {
+        if (VDBG) {
+            log("Update of LinkProperties for " + nai.name() +
+                    "; created=" + nai.created +
+                    "; everConnected=" + nai.everConnected);
+        }
+        LinkProperties oldLp = nai.linkProperties;
+        synchronized (nai) {
+            nai.linkProperties = newLp;
+        }
+        if (nai.everConnected) {
+            updateLinkProperties(nai, oldLp);
         }
     }
 
