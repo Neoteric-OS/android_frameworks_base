@@ -76,6 +76,9 @@ import org.mockito.MockitoAnnotations;
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class OffloadControllerTest {
+    private static final String RNDIS0 = "test_rndis0";
+    private static final String RMNET0 = "test_rmnet_data0";
+    private static final String WLAN0 = "test_wlan0";
 
     @Mock private OffloadHardwareInterface mHardware;
     @Mock private ApplicationInfo mApplicationInfo;
@@ -231,10 +234,8 @@ public class OffloadControllerTest {
         inOrder.verify(mHardware, times(1)).setLocalPrefixes(mStringArrayCaptor.capture());
         ArrayList<String> localPrefixes = mStringArrayCaptor.getValue();
         assertEquals(4, localPrefixes.size());
-        assertTrue(localPrefixes.contains("127.0.0.0/8"));
-        assertTrue(localPrefixes.contains("192.0.2.0/24"));
-        assertTrue(localPrefixes.contains("fe80::/64"));
-        assertTrue(localPrefixes.contains("2001:db8::/64"));
+        assertArrayListContains(localPrefixes,
+                "127.0.0.0/8", "192.0.2.0/24", "fe80::/64", "2001:db8::/64");
         inOrder.verifyNoMoreInteractions();
 
         offload.setUpstreamLinkProperties(null);
@@ -343,12 +344,9 @@ public class OffloadControllerTest {
         inOrder.verify(mHardware, times(1)).setLocalPrefixes(mStringArrayCaptor.capture());
         localPrefixes = mStringArrayCaptor.getValue();
         assertEquals(6, localPrefixes.size());
-        assertTrue(localPrefixes.contains("127.0.0.0/8"));
-        assertTrue(localPrefixes.contains("192.0.2.0/24"));
-        assertTrue(localPrefixes.contains("fe80::/64"));
-        assertTrue(localPrefixes.contains("2001:db8::/64"));
-        assertTrue(localPrefixes.contains("2001:db8::6173:7369:676e:6564/128"));
-        assertTrue(localPrefixes.contains("2001:db8::7261:6e64:6f6d/128"));
+        assertArrayListContains(localPrefixes,
+                "127.0.0.0/8", "192.0.2.0/24", "fe80::/64", "2001:db8::/64",
+                "2001:db8::6173:7369:676e:6564/128", "2001:db8::7261:6e64:6f6d/128");
         // The relevant parts of the LinkProperties have not changed, but at the
         // moment we do not de-dup upstream LinkProperties this carefully.
         inOrder.verify(mHardware, times(1)).setUpstreamParameters(
@@ -492,5 +490,109 @@ public class OffloadControllerTest {
         provider.setInterfaceQuota(mobileIface, mobileLimit);
         waitForIdle();
         inOrder.verify(mHardware).stopOffloadControl();
+    }
+
+    @Test
+    public void testAddRemoveDownstreams() throws Exception {
+        setupFunctioningHardwareInterface();
+        enableOffload();
+
+        final OffloadController offload = makeOffloadController();
+        offload.start();
+
+        final InOrder inOrder = inOrder(mHardware);
+        inOrder.verify(mHardware, times(1)).initOffloadConfig();
+        inOrder.verify(mHardware, times(1)).initOffloadControl(
+                any(OffloadHardwareInterface.ControlCallback.class));
+        inOrder.verifyNoMoreInteractions();
+
+        // [1] The UpstreamNetworkMonitor sends a basic set of local prefixes.
+        final Set<IpPrefix> exemptPrefixes = new HashSet<>();
+        for (String s : new String[]{
+                "127.0.0.0/8", "169.254.0.0/16", "::/3", "fc00::/7", "fe80::/64", "ff00::/8"}) {
+            exemptPrefixes.add(new IpPrefix(s));
+        }
+        offload.setLocalPrefixes(exemptPrefixes);
+        inOrder.verify(mHardware, times(1)).setLocalPrefixes(mStringArrayCaptor.capture());
+        ArrayList<String> localPrefixes = mStringArrayCaptor.getValue();
+        assertEquals(6, localPrefixes.size());
+        assertArrayListContains(localPrefixes,
+                "127.0.0.0/8", "169.254.0.0/16", "::/3", "fe80::/64", "fc00::/7", "ff00::/8");
+        inOrder.verifyNoMoreInteractions();
+
+        // [2] Pretend we're coming directly out of aeroplane mode going into
+        // USB tethering with mobile upstream. Here we assume USB downstream
+        // arrives first -- it doesn't really matter.
+        exemptPrefixes.add(new IpPrefix("192.168.42.0/24"));
+        offload.setLocalPrefixes(exemptPrefixes);
+        inOrder.verify(mHardware, times(1)).setLocalPrefixes(mStringArrayCaptor.capture());
+        localPrefixes = mStringArrayCaptor.getValue();
+        assertEquals(7, localPrefixes.size());
+        assertTrue(localPrefixes.contains("192.168.42.0/24"));
+        final LinkProperties usbLinkProperties = new LinkProperties();
+        usbLinkProperties.setInterfaceName(RNDIS0);
+        usbLinkProperties.addLinkAddress(new LinkAddress("192.168.42.1/24"));
+        usbLinkProperties.addRoute(new RouteInfo(new IpPrefix("192.168.42.0/24")));
+        offload.notifyDownstreamLinkProperties(usbLinkProperties);
+        inOrder.verify(mHardware, times(1)).addDownstreamPrefix(RNDIS0, "192.168.42.0/24");
+        // inOrder.verify(mHardware, times(1)).setLocalPrefixes([ff00::/8,2001:240:2402:1c5e:6672:8c86:1298:1a2d/128,127.0.0.0/8,169.254.0.0/16,fe80::/64,fc00::/7,::/3])
+        // inOrder.verify(mHardware, times(1)).setUpstreamParameters(rmnet_data0, 100.103.135.93, 100.103.135.94, [fe80::91d7:bbc7:7825:d4dd])
+        // inOrder.verify(mHardware, times(1)).setLocalPrefixes([ff00::/8,2001:240:2402:1c5e::/64,2001:240:2402:1c5e:6672:8c86:1298:1a2d/128,100.103.135.92/30,127.0.0.0/8,169.254.0.0/16,fe80::/64,fc00::/7,::/3])
+        // inOrder.verify(mHardware, times(1)).addDownstreamPrefix(rndis0, 2001:240:2402:1c5e::/64)
+        inOrder.verifyNoMoreInteractions();
+
+        // [3] Wi-Fi tethering is enabled and USB disabled then re-enabled.
+        // XXX
+        // inOrder.verify(mHardware, times(1)).addDownstreamPrefix(WLAN0, 192.168.43.0/24)
+        // inOrder.verify(mHardware, times(1)).removeDownstreamPrefix(RNDIS0, 192.168.42.0/24)
+        // inOrder.verify(mHardware, times(1)).removeDownstreamPrefix(RNDIS0, 2001:240:2402:1c5e::/64)
+        // inOrder.verify(mHardware, times(1)).addDownstreamPrefix(WLAN0, 2001:240:2402:1c5e::/64)
+        // inOrder.verify(mHardware, times(1)).addDownstreamPrefix(RNDIS0, 192.168.42.0/24)
+        inOrder.verifyNoMoreInteractions();
+
+        // [4] Wi-Fi tethering disabled, USB still active.
+        // XXX
+        // inOrder.verify(mHardware, times(1)).removeDownstreamPrefix(WLAN0, 192.168.43.0/24)
+        // inOrder.verify(mHardware, times(1)).removeDownstreamPrefix(WLAN0, 2001:240:2402:1c5e::/64)
+        // inOrder.verify(mHardware, times(1)).addDownstreamPrefix(RNDIS0, 2001:240:2402:1c5e::/64)
+        // inOrder.verify(mHardware, times(1)).setLocalPrefixes([ff00::/8,2001:240:2402:1c5e::/64,100.112.96.0/20,2001:240:2402:1c5e:6672:8c86:1298:1a2d/128,100.103.135.92/30,127.0.0.0/8,169.254.0.0/16,fe80::/64,fc00::/7,::/3])
+        inOrder.verifyNoMoreInteractions();
+
+        // [5] Wi-Fi comes up in station mode and becomes the upstream.
+        // XXX
+        // inOrder.verify(mHardware, times(1)).setLocalPrefixes([ff00::/8,2001:240:2402:1c5e::/64,100.112.96.0/20,100.103.135.92/30,127.0.0.0/8,169.254.0.0/16,fe80::/64,fc00::/7,::/3])
+        // inOrder.verify(mHardware, times(1)).setUpstreamParameters(WLAN0, 100.112.97.74, 100.112.111.254, [fe80::fa00:4:fd00:1])
+        // inOrder.verify(mHardware, times(1)).removeDownstreamPrefix(RNDIS0, 2001:240:2402:1c5e::/64)
+        // inOrder.verify(mHardware, times(1)).setLocalPrefixes([2401:fa00:4:fd00:c121:7b9a:3cc6:521c/128,ff00::/8,2001:240:2402:1c5e::/64,100.112.96.0/20,100.103.135.92/30,127.0.0.0/8,169.254.0.0/16,fe80::/64,fc00::/7,::/3])
+        // inOrder.verify(mHardware, times(1)).setUpstreamParameters(WLAN0, 100.112.97.74, 100.112.111.254, [fe80::fa00:4:fd00:1])
+        // inOrder.verify(mHardware, times(1)).setLocalPrefixes([2401:fa00:4:fd00:c121:7b9a:3cc6:521c/128,ff00::/8,2001:240:2402:1c5e::/64,2401:fa00:4:fd00::/64,100.112.96.0/20,100.103.135.92/30,127.0.0.0/8,169.254.0.0/16,fe80::/64,fc00::/7,::/3])
+        // inOrder.verify(mHardware, times(1)).setLocalPrefixes([2401:fa00:4:fd00:c121:7b9a:3cc6:521c/128,ff00::/8,2001:240:2402:1c5e::/64,2401:fa00:4:fd00::/64,100.112.96.0/20,2401:fa00:4:fd00:b6ce:f6ff:fe39:c665/128,100.103.135.92/30,127.0.0.0/8,169.254.0.0/16,fe80::/64,fc00::/7,::/3])
+        // inOrder.verify(mHardware, times(1)).setUpstreamParameters(WLAN0, 100.112.97.74, 100.112.111.254, [fe80::fa00:4:fd00:1])
+        inOrder.verifyNoMoreInteractions();
+
+        // [6] Wi-Fi station mode disabled, mobile becomes the upstream.
+        // XXX
+        // inOrder.verify(mHardware, times(1)).setLocalPrefixes([ff00::/8,2001:240:2402:1c5e::/64,2401:fa00:4:fd00::/64,100.112.96.0/20,100.103.135.92/30,127.0.0.0/8,169.254.0.0/16,fe80::/64,fc00::/7,::/3])
+        // inOrder.verify(mHardware, times(1)).setUpstreamParameters(, , , [])
+        // inOrder.verify(mHardware, times(1)).setLocalPrefixes([ff00::/8,2001:240:2402:1c5e::/64,100.103.135.92/30,127.0.0.0/8,169.254.0.0/16,fe80::/64,fc00::/7,::/3])
+        // inOrder.verify(mHardware, times(1)).setLocalPrefixes([ff00::/8,2001:240:2402:1c5e::/64,2001:240:2402:1c5e:6672:8c86:1298:1a2d/128,100.103.135.92/30,127.0.0.0/8,169.254.0.0/16,fe80::/64,fc00::/7,::/3])
+        // inOrder.verify(mHardware, times(1)).setUpstreamParameters(RMNET0, 100.103.135.93, 100.103.135.94, [fe80::91d7:bbc7:7825:d4dd])
+        // inOrder.verify(mHardware, times(1)).addDownstreamPrefix(RNDIS0, 2001:240:2402:1c5e::/64)
+        inOrder.verifyNoMoreInteractions();
+
+        // [7] USB tethering disabled.
+        // XXX
+        // offload.removeDownstreamInterface("rndis0");
+        // inOrder.verify(mHardware, times(1)).removeDownstreamPrefix(RNDIS0, 192.168.42.0/24)
+        // inOrder.verify(mHardware, times(1)).removeDownstreamPrefix(RNDIS0, 2001:240:2402:1c5e::/64)
+        offload.stop();
+        inOrder.verify(mHardware, times(1)).stopOffloadControl();
+        inOrder.verifyNoMoreInteractions();
+    }
+
+    private static void assertArrayListContains(ArrayList<String> list, String... elems) {
+        for (String element : elems) {
+            assertTrue(list.contains(element));
+        }
     }
 }

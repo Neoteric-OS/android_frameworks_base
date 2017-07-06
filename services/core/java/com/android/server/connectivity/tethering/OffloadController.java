@@ -44,6 +44,8 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -61,6 +63,7 @@ public class OffloadController {
     private final OffloadHardwareInterface mHwInterface;
     private final ContentResolver mContentResolver;
     private final SharedLog mLog;
+    private final HashMap<String, LinkProperties> mDownstreams;
     private boolean mConfigInitialized;
     private boolean mControlInitialized;
     private LinkProperties mUpstreamLinkProperties;
@@ -90,6 +93,7 @@ public class OffloadController {
         mHwInterface = hwi;
         mContentResolver = contentResolver;
         mLog = log.forSubComponent(TAG);
+        mDownstreams = new HashMap<>();
         mExemptPrefixes = new HashSet<>();
         mLastLocalPrefixStrs = new HashSet<>();
 
@@ -276,17 +280,44 @@ public class OffloadController {
     }
 
     public void notifyDownstreamLinkProperties(LinkProperties lp) {
-        if (!started()) return;
+        final String ifname = lp.getInterfaceName();
+        final LinkProperties oldLp = mDownstreams.put(ifname, new LinkProperties(lp));
+        if (Objects.equals(oldLp, lp)) return;
 
-        // TODO: Cache LinkProperties on a per-ifname basis and compute the
-        // deltas, calling addDownstream()/removeDownstream() accordingly.
+        if (!started()) return;
+        computeAndPushLocalPrefixes();
+
+        final List<RouteInfo> oldRoutes = (oldLp != null) ? oldLp.getRoutes() : new ArrayList<>();
+        final List<RouteInfo> newRoutes = lp.getRoutes();
+
+        // For each old route, if not in new routes: remove.
+        for (RouteInfo oldRoute : oldRoutes) {
+            if (!newRoutes.contains(oldRoute)) {
+                mHwInterface.removeDownstreamPrefix(ifname, oldRoute.getDestination().toString());
+            }
+        }
+
+        // For each new route, if not in old routes: add.
+        for (RouteInfo newRoute : newRoutes) {
+            // Ignore any link-local routes.
+            if (!newRoute.getDestinationLinkAddress().isGlobalPreferred()) continue;
+            if (!oldRoutes.contains(newRoute)) {
+                mHwInterface.addDownstreamPrefix(ifname, newRoute.getDestination().toString());
+            }
+        }
     }
 
     public void removeDownstreamInterface(String ifname) {
-        if (!started()) return;
+        final LinkProperties lp = mDownstreams.remove(ifname);
+        if (lp == null) return;
 
-        // TODO: Check cache for LinkProperties of ifname and, if present,
-        // call removeDownstream() accordingly.
+        if (!started()) return;
+        computeAndPushLocalPrefixes();
+        for (RouteInfo route : lp.getRoutes()) {
+            // Ignore any link-local routes.
+            if (!route.getDestinationLinkAddress().isGlobalPreferred()) continue;
+            mHwInterface.removeDownstreamPrefix(ifname, route.getDestination().toString());
+        }
     }
 
     private boolean isOffloadDisabled() {
