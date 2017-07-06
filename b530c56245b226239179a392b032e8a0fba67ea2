@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6b6fd0ba_bb100982",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-07-06T17:31:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "729c93d2_b35cb6e3",
+      "range": {
+        "startLine": 257,
+        "startChar": 24,
+        "endLine": 257,
+        "endChar": 59
+      },
+      "revId": "b530c56245b226239179a392b032e8a0fba67ea2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ea6ed5_6595675a",
         "filename": "core/java/android/nfc/cardemulation/CardEmulation.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-05T21:12:27Z",
       "side": 1,
       "message": "add a space",
+      "range": {
+        "startLine": 620,
+        "startChar": 50,
+        "endLine": 620,
+        "endChar": 52
+      },
+      "revId": "b530c56245b226239179a392b032e8a0fba67ea2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7682cbc_f0e2525a",
+        "filename": "core/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1041663
+      },
+      "writtenOn": "2017-07-06T17:31:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67ea6ed5_6595675a",
       "range": {
         "startLine": 620,
         "startChar": 50,
