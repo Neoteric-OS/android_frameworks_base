@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f090491_fd07350b",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1608,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-07-06T19:42:27Z",
+      "side": 1,
+      "message": "This sounds a bit strange; perhaps:\nPROVIDES_EMBMS_MIDDLEWARE",
+      "range": {
+        "startLine": 1608,
+        "startChar": 49,
+        "endLine": 1608,
+        "endChar": 72
+      },
+      "revId": "db94a1866d36ddb2ca336f82e171c470d9551db2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
