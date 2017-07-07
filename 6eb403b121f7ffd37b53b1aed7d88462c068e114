@@ -22,6 +22,30 @@
       "revId": "6eb403b121f7ffd37b53b1aed7d88462c068e114",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f52cae5_f99a0a24",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-07T02:26:51Z",
+      "side": 1,
+      "message": "If I understand correctly this only happens for out-of-index keys right ? Because put() below looks like it will reject null values for any key. Might be worthwhile to add a comment about it.",
+      "parentUuid": "7d0c417a_86c5fd22",
+      "range": {
+        "startLine": 209,
+        "startChar": 12,
+        "endLine": 209,
+        "endChar": 30
+      },
+      "revId": "6eb403b121f7ffd37b53b1aed7d88462c068e114",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
