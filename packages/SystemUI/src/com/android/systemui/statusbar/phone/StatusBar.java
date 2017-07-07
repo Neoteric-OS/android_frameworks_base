@@ -3001,8 +3001,9 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         if (subPanel != null) {
             mQSPanel.openDetails(subPanel);
+        } else {
+            mNotificationPanel.expandWithQs();
         }
-        mNotificationPanel.expandWithQs();
 
         if (false) postStartTracing();
     }

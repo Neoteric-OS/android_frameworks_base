@@ -287,7 +287,7 @@ public class DndTile extends QSTileImpl<BooleanState> {
 
         @Override
         public Boolean getToggleState() {
-            return mState.value;
+            return mController.getZen() != ZEN_MODE_OFF;
         }
 
         @Override
