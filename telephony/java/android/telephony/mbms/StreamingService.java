@@ -18,7 +18,6 @@ package android.telephony.mbms;
 
 import android.annotation.IntDef;
 import android.net.Uri;
-import android.os.DeadObjectException;
 import android.os.RemoteException;
 import android.telephony.mbms.vendor.IMbmsStreamingService;
 import android.util.Log;
@@ -52,10 +51,27 @@ public class StreamingService {
     @IntDef({REASON_BY_USER_REQUEST, REASON_END_OF_SESSION, REASON_FREQUENCY_CONFLICT,
             REASON_OUT_OF_MEMORY, REASON_NOT_CONNECTED_TO_HOMECARRIER_LTE})
     public @interface StreamingStateChangeReason {}
+
+    /**
+     * State changed due to a call to {@link #stopStreaming()} or
+     * {@link android.telephony.MbmsStreamingManager#startStreaming(StreamingServiceInfo, StreamingServiceCallback)}
+     */
     public static final int REASON_BY_USER_REQUEST = 1;
+    /**
+     * State changed due to the streaming session ending at the tower.
+     */
     public static final int REASON_END_OF_SESSION = 2;
+    /**
+     * State changed due to a frequency conflict with anoter requested stream.
+     */
     public static final int REASON_FREQUENCY_CONFLICT = 3;
+    /**
+     * State changed due to the middleware running out of memory
+     */
     public static final int REASON_OUT_OF_MEMORY = 4;
+    /**
+     * State changed due to the device leaving the service area for MBMS.
+     */
     public static final int REASON_NOT_CONNECTED_TO_HOMECARRIER_LTE = 5;
 
     /**
@@ -87,7 +103,9 @@ public class StreamingService {
      * Retreive the Uri used to play this stream.
      *
      * This may throw a {@link MbmsException} with the error code
-     * {@link MbmsException#ERROR_SERVICE_LOST}
+     * {@link MbmsException#ERROR_MIDDLEWARE_LOST}
+     *
+     * May also throw an {@link IllegalArgumentException} or an {@link IllegalStateException}
      *
      * @return The {@link Uri} to pass to the streaming client.
      */
@@ -101,7 +119,7 @@ public class StreamingService {
         } catch (RemoteException e) {
             Log.w(LOG_TAG, "Remote process died");
             mService = null;
-            throw new MbmsException(MbmsException.ERROR_SERVICE_LOST);
+            throw new MbmsException(MbmsException.ERROR_MIDDLEWARE_LOST);
         }
     }
 
@@ -115,7 +133,9 @@ public class StreamingService {
     /**
      * Stop streaming this service.
      * This may throw a {@link MbmsException} with the error code
-     * {@link MbmsException#ERROR_SERVICE_LOST}
+     * {@link MbmsException#ERROR_MIDDLEWARE_LOST}
+     *
+     * May also throw an {@link IllegalArgumentException} or an {@link IllegalStateException}
      */
     public void stopStreaming() throws MbmsException {
         if (mService == null) {
@@ -127,10 +147,18 @@ public class StreamingService {
         } catch (RemoteException e) {
             Log.w(LOG_TAG, "Remote process died");
             mService = null;
-            throw new MbmsException(MbmsException.ERROR_SERVICE_LOST);
+            throw new MbmsException(MbmsException.ERROR_MIDDLEWARE_LOST);
         }
     }
 
+    /**
+     * Disposes of this stream. Further operations on this object will fail with an
+     * {@link IllegalStateException}.
+     *
+     * This may throw a {@link MbmsException} with the error code
+     * {@link MbmsException#ERROR_MIDDLEWARE_LOST}
+     * May also throw an {@link IllegalArgumentException} or an {@link IllegalStateException}
+     */
     public void dispose() throws MbmsException {
         if (mService == null) {
             throw new IllegalStateException("No streaming service attached");
@@ -140,8 +168,9 @@ public class StreamingService {
             mService.disposeStream(mSubscriptionId, mServiceInfo.getServiceId());
         } catch (RemoteException e) {
             Log.w(LOG_TAG, "Remote process died");
+            throw new MbmsException(MbmsException.ERROR_MIDDLEWARE_LOST);
+        } finally {
             mService = null;
-            throw new MbmsException(MbmsException.ERROR_SERVICE_LOST);
         }
     }
 }
