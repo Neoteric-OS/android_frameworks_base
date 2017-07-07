@@ -46,6 +46,30 @@
       "revId": "6eb403b121f7ffd37b53b1aed7d88462c068e114",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7819fcd1_f30f37d9",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-07-07T03:10:48Z",
+      "side": 1,
+      "message": "a null \"put()\" is a programming error within IpSecService since all of the resources are created within the IpSecService (not by the user). A null \"get()\" can be the result of bad user input (possibly malicious). There might also be some race windows where a process dies during the middle of a transaction with IpSecService, such that BinderDeath is triggered and cleanup occurs at a weird time. They would be very hard to hit though. In those instances we simply need to ensure that one cleanup path can work and we don\u0027t care about the other (except that the system server doesn\u0027t crash): hence not auto-throwing on a null return. Instead the caller should be careful to check whether it won the race for the object (by getting an non-null pointer).",
+      "parentUuid": "6f52cae5_f99a0a24",
+      "range": {
+        "startLine": 209,
+        "startChar": 12,
+        "endLine": 209,
+        "endChar": 30
+      },
+      "revId": "6eb403b121f7ffd37b53b1aed7d88462c068e114",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
