@@ -128,9 +128,9 @@ import com.android.server.LocalServices;
 import com.android.server.am.BatteryStatsService;
 import com.android.server.connectivity.DataConnectionStats;
 import com.android.server.connectivity.KeepaliveTracker;
+import com.android.server.connectivity.LingerMonitor;
 import com.android.server.connectivity.MockableSystemProperties;
 import com.android.server.connectivity.Nat464Xlat;
-import com.android.server.connectivity.LingerMonitor;
 import com.android.server.connectivity.NetworkAgentInfo;
 import com.android.server.connectivity.NetworkDiagnostics;
 import com.android.server.connectivity.NetworkMonitor;
@@ -412,12 +412,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private int mNetTransitionWakeLockTimeout;
     private final PowerManager.WakeLock mPendingIntentWakeLock;
 
+    private final Object mProxyLock = new Object();
+
     // track the current default http proxy - tell the world if we get a new one (real change)
     private volatile ProxyInfo mDefaultProxy = null;
-    private Object mProxyLock = new Object();
     private boolean mDefaultProxyDisabled = false;
 
     // track the global proxy.
+    @GuardedBy("mProxyLock")
     private ProxyInfo mGlobalProxy = null;
 
     private PacManager mPacManager = null;
@@ -3243,6 +3245,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
             synchronized (mProxyLock) {
                 mGlobalProxy = proxyProperties;
+                sendProxyBroadcast(mGlobalProxy);
             }
         }
     }
