@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d0c417a_86c5fd22",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-07-07T00:08:10Z",
+      "side": 1,
+      "message": "We want this to mimic the semantics of SparseArray, so a null return is OK here.",
+      "range": {
+        "startLine": 209,
+        "startChar": 12,
+        "endLine": 209,
+        "endChar": 30
+      },
+      "revId": "6eb403b121f7ffd37b53b1aed7d88462c068e114",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
