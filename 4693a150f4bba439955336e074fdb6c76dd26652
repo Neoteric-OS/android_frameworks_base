@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "331f1e8c_a4e72366",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-07-07T04:36:55Z",
+      "side": 1,
+      "message": "@Hugo, what\u0027s the wisdom of putting this here rather than in the outer class?\n\nShould this be private?",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 103,
+        "endChar": 55
+      },
+      "revId": "4693a150f4bba439955336e074fdb6c76dd26652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06466816_7e4b11af",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-07-07T04:36:55Z",
+      "side": 1,
+      "message": "private?",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 9
+      },
+      "revId": "4693a150f4bba439955336e074fdb6c76dd26652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d719c413_ea39e9e3",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-07-07T04:36:55Z",
+      "side": 1,
+      "message": "Suggestion: you can statically construct this.",
+      "range": {
+        "startLine": 98,
+        "startChar": 21,
+        "endLine": 98,
+        "endChar": 72
+      },
+      "revId": "4693a150f4bba439955336e074fdb6c76dd26652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdd6f726_d9ddff12",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 36
@@ -96,6 +165,52 @@
     },
     {
       "key": {
+        "uuid": "15b560bb_e2df62b9",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-07-07T04:36:55Z",
+      "side": 1,
+      "message": "IpSecAlgorithm. CRYPT_AES_CBC. You\u0027re not checking the value of the constant... you\u0027re checking that it\u0027s constant.",
+      "range": {
+        "startLine": 301,
+        "startChar": 22,
+        "endLine": 301,
+        "endChar": 30
+      },
+      "revId": "4693a150f4bba439955336e074fdb6c76dd26652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99f1df46_1318a474",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-07-07T04:36:55Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like these tests are actually validating anything inside IpSecService. Just because the interface doesn\u0027t crash is not verifying the internals of the IpSecService. You have a mock netd. Are you verifying that calls are made to the mock netd? The tests need to actually assert that *something* happened.",
+      "range": {
+        "startLine": 318,
+        "startChar": 4,
+        "endLine": 318,
+        "endChar": 5
+      },
+      "revId": "4693a150f4bba439955336e074fdb6c76dd26652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69522b1f_e1b43bbb",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 36
@@ -136,6 +251,52 @@
         "startChar": 17,
         "endLine": 325,
         "endChar": 26
+      },
+      "revId": "4693a150f4bba439955336e074fdb6c76dd26652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec086e7b_8a1ae0eb",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-07-07T04:36:55Z",
+      "side": 1,
+      "message": "You don\u0027t need to dup() here because you\u0027re not returning the FD to the caller.\n\nWhat does this test actually validate?",
+      "range": {
+        "startLine": 338,
+        "startChar": 54,
+        "endLine": 338,
+        "endChar": 78
+      },
+      "revId": "4693a150f4bba439955336e074fdb6c76dd26652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51ce581c_4f5fd984",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-07-07T04:36:55Z",
+      "side": 1,
+      "message": "What possibly hit-able case is this testing? Are you asserting somehow that the IpSecService should clean up (or not) when the remove fails from netd?",
+      "range": {
+        "startLine": 350,
+        "startChar": 8,
+        "endLine": 352,
+        "endChar": 64
       },
       "revId": "4693a150f4bba439955336e074fdb6c76dd26652",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
