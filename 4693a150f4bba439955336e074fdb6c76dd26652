@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "439d2ae9_f90c987f",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-10T07:26:06Z",
+      "side": 1,
+      "message": "The discussion was that if there is other function like getNetdInstance(), we can wrap it into the same configuration interface which makes it easier to mock in the future.\n\nThis property cannot be private, since it\u0027s in an interface. The interface cannot be changed to class because inner class does not allow static. Please let me know if I\u0027m wrong. :)",
+      "parentUuid": "331f1e8c_a4e72366",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 103,
+        "endChar": 55
+      },
+      "revId": "4693a150f4bba439955336e074fdb6c76dd26652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06466816_7e4b11af",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 36
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "343365b3_4a6dbb5a",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-10T07:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06466816_7e4b11af",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 9
+      },
+      "revId": "4693a150f4bba439955336e074fdb6c76dd26652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d719c413_ea39e9e3",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 36
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-07T04:36:55Z",
       "side": 1,
       "message": "Suggestion: you can statically construct this.",
+      "range": {
+        "startLine": 98,
+        "startChar": 21,
+        "endLine": 98,
+        "endChar": 72
+      },
+      "revId": "4693a150f4bba439955336e074fdb6c76dd26652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb0f537b_ca72073d",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-10T07:26:06Z",
+      "side": 1,
+      "message": "Moved this variable to the function uses it.",
+      "parentUuid": "d719c413_ea39e9e3",
       "range": {
         "startLine": 98,
         "startChar": 21,
@@ -188,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "031b11cc_6751a609",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-10T07:26:06Z",
+      "side": 1,
+      "message": "Removed these ipSecConfig assert. I supposed to verify if it can successfully create transform.",
+      "parentUuid": "15b560bb_e2df62b9",
+      "range": {
+        "startLine": 301,
+        "startChar": 22,
+        "endLine": 301,
+        "endChar": 30
+      },
+      "revId": "4693a150f4bba439955336e074fdb6c76dd26652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99f1df46_1318a474",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 36
@@ -199,6 +295,30 @@
       "writtenOn": "2017-07-07T04:36:55Z",
       "side": 1,
       "message": "It doesn\u0027t look like these tests are actually validating anything inside IpSecService. Just because the interface doesn\u0027t crash is not verifying the internals of the IpSecService. You have a mock netd. Are you verifying that calls are made to the mock netd? The tests need to actually assert that *something* happened.",
+      "range": {
+        "startLine": 318,
+        "startChar": 4,
+        "endLine": 318,
+        "endChar": 5
+      },
+      "revId": "4693a150f4bba439955336e074fdb6c76dd26652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39549331_fc30e362",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-10T07:26:06Z",
+      "side": 1,
+      "message": "@nharold You are right. I am not verifying the calls to mock netd, because these delete calls don\u0027t go through netd. Maybe I should check the record counts of the sparse arrays before and after the delete calls? e.g. Check the dump output?",
+      "parentUuid": "99f1df46_1318a474",
       "range": {
         "startLine": 318,
         "startChar": 4,
@@ -281,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "3e9b5d8d_e6ed5f07",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-10T07:26:06Z",
+      "side": 1,
+      "message": "Sure. Made change to the parameter and the validation. Added the verification of the call to netd function, and assert the parameter resourceId.",
+      "parentUuid": "ec086e7b_8a1ae0eb",
+      "range": {
+        "startLine": 338,
+        "startChar": 54,
+        "endLine": 338,
+        "endChar": 78
+      },
+      "revId": "4693a150f4bba439955336e074fdb6c76dd26652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51ce581c_4f5fd984",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 36
@@ -292,6 +436,30 @@
       "writtenOn": "2017-07-07T04:36:55Z",
       "side": 1,
       "message": "What possibly hit-able case is this testing? Are you asserting somehow that the IpSecService should clean up (or not) when the remove fails from netd?",
+      "range": {
+        "startLine": 350,
+        "startChar": 8,
+        "endLine": 352,
+        "endChar": 64
+      },
+      "revId": "4693a150f4bba439955336e074fdb6c76dd26652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b421f1_d03f6145",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-10T07:26:06Z",
+      "side": 1,
+      "message": "Removed this test as well, since the error handling of this interface is not complete.",
+      "parentUuid": "51ce581c_4f5fd984",
       "range": {
         "startLine": 350,
         "startChar": 8,
