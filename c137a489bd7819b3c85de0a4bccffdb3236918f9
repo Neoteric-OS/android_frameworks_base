@@ -22,6 +22,167 @@
       "revId": "c137a489bd7819b3c85de0a4bccffdb3236918f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcd9bcf9_3792ed46",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2154,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-10T03:52:20Z",
+      "side": 1,
+      "message": "Convention in this file is to call this sort of method handleLinkPropertiesChanged.",
+      "range": {
+        "startLine": 2154,
+        "startChar": 20,
+        "endLine": 2154,
+        "endChar": 41
+      },
+      "revId": "c137a489bd7819b3c85de0a4bccffdb3236918f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc162c50_7eb0af9b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4540,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-10T03:52:20Z",
+      "side": 1,
+      "message": "When is this object garbage collected? Is it guaranteed that it is never garbage collected for as long as nai exists, and can be garbage collected after it stops existing?",
+      "range": {
+        "startLine": 4540,
+        "startChar": 39,
+        "endLine": 4540,
+        "endChar": 64
+      },
+      "revId": "c137a489bd7819b3c85de0a4bccffdb3236918f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e472618d_67b5191d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4569,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-10T03:52:20Z",
+      "side": 1,
+      "message": "Can we move this code to Nat464Xlat.java?\n\nEvery Nat464Xlat object already has access to the ConnectivityService handler and NetworkManagementService reference.\n\nPersonally I don\u0027t think this belongs in ConnectivityService, and even if it does, CS is so large that it\u0027s a good idea to move code to other files instead of keeping it all here. Existing examples are PacketKeepaliveTracker and NetworkAgentInfo, both of which contain code that runs inline on the ConnectivityService handler thread.\n\nPutting it in Nat464Xlat also has the advantage that it will be able to access instance fields such as mIface and mBaseIface, if it needs to.\n\nI think it could also simplify this code by removing some null guards.\n\nAlso, I think it would improve readability because it would encapsulate most of the 464xlat state management and lifecycle in one file.",
+      "range": {
+        "startLine": 4539,
+        "startChar": 0,
+        "endLine": 4569,
+        "endChar": 5
+      },
+      "revId": "c137a489bd7819b3c85de0a4bccffdb3236918f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "279d2654_9dd8cc7b",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-10T03:52:20Z",
+      "side": 1,
+      "message": "For now you could also just say \"must be called on the ConnectivityService handler thread\".",
+      "range": {
+        "startLine": 34,
+        "startChar": 76,
+        "endLine": 35,
+        "endChar": 47
+      },
+      "revId": "c137a489bd7819b3c85de0a4bccffdb3236918f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "142e7cf0_b760f486",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-10T03:52:20Z",
+      "side": 1,
+      "message": "Is it safe to clear all our local state before our interface is actually gone? The previous code would wait for the interface removed callback before it would clear local state.",
+      "range": {
+        "startLine": 174,
+        "startChar": 8,
+        "endLine": 174,
+        "endChar": 23
+      },
+      "revId": "c137a489bd7819b3c85de0a4bccffdb3236918f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3abcc32d_06daaf26",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-10T03:52:20Z",
+      "side": 1,
+      "message": "While we\u0027re at it, we should probably log an error here. I don\u0027t think this can happen in normal operation, because clatd adds the IP address before it sets the interface up.",
+      "range": {
+        "startLine": 251,
+        "startChar": 12,
+        "endLine": 251,
+        "endChar": 24
+      },
+      "revId": "c137a489bd7819b3c85de0a4bccffdb3236918f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e570a1bd_fdb0e4c1",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-10T03:52:20Z",
+      "side": 1,
+      "message": "Now that we\u0027re running on the right thread, can we just update mNetwork.linkProperties?",
+      "range": {
+        "startLine": 258,
+        "startChar": 1,
+        "endLine": 260,
+        "endChar": 18
+      },
+      "revId": "c137a489bd7819b3c85de0a4bccffdb3236918f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
