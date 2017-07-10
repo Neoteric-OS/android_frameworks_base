@@ -1,0 +1,481 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "109d78bf_d7c4bb2b",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "Could you add a brief comment to this interface explaining why it exists? e.g. \"IpSecService dependencies are injected through this interface.\"",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 41
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a2732d4_9b9c15ca",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "It doesn\u0027t make sense to put \"GET\" in a variable name like this. A common pattern throughout Android is to call this \"sDefault\" or \"sInstance\". I think all-caps is generally used for values such as NETD_FETCH_TIMEOUT_MS.",
+      "range": {
+        "startLine": 103,
+        "startChar": 41,
+        "endLine": 103,
+        "endChar": 55
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb525870_784b9a79",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "This isn\u0027t a mock object, it\u0027s the object under test. I think \"mIpSecService\" would be fine.",
+      "range": {
+        "startLine": 83,
+        "startChar": 17,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca286b86_36c7f0d0",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "This isn\u0027t a mock object either - it\u0027s a real IpSecManager with an injected (real) service.\n\nHowever, why do we need this at all? The only place I see this being used could be replaced by direct calls into mIpSecService.",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 73
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88db9a41_7fbb0c61",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "These variables are all initialized in the class constructor, which means state can leak between tests. Initialization should occur in setUp. In particular, it looks like you are leaking UdpEncapSockets in several tests.",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 73
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f839f57b_304ba228",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "This is no longer used since you added the new config pattern to IpSecService.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 74
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e4a7909_32ccb053",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "These are two different behaviors that belong in two different tests.",
+      "range": {
+        "startLine": 101,
+        "startChar": 5,
+        "endLine": 114,
+        "endChar": 31
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f2356a_07642d4b",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "I was pretty surprised to see IpSecService return an \"OK\" status with an invalid SPI. It looks like IpSecManager checks for this possibility, but as I look close at netd, I don\u0027t think this is a scenario that needs a test.\n\nIn particular, the INetd interface should never return a 0 value, but should return a binder error/exception instead. We can assume that our mock netd interface behaves correctly according to its interface, and then add netd (XfrmController) tests which ensure it also behaves correctly. (I will grant that the INetd.aidl comments are a bit misleading on this topic.)",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 37
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b92d3ba_fcaecd24",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "minor nit: grammar \u0026 punctuation\n\nGet an available port and store it in localport.\n                                ^              ^",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 55
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9226065_9abdd54b",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "This could be wrapped in a helper method called \"FindUnusedPort\".",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 18
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9650fcbd_8306a2b0",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "We need to think about how to test all the behaviors of this method, which currently isn\u0027t using injected mocks. I think it can be done in a follow-up CL.",
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24872cb6_dab2415d",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "We need to assert something after this. The expected behavior is that we (the test and/or client) can\u0027t close the socket because IpSecService is holding a dup of the file descriptor, so after calling Os.close, the expected state is,\n- our FD is closed\n- the port is still being held open (Os.socket should fail to open that port)\n- IpSecService\u0027s resource tracking shows 1 socket still open\n\nThen we can call close() on the UdpSocket and confirm that everything is cleaned up.",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 66
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03c9b30_ac0b449a",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "grammar nit: Should say \"IllegalArgumentException not thrown\"",
+      "range": {
+        "startLine": 160,
+        "startChar": 18,
+        "endLine": 160,
+        "endChar": 52
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "171a5d70_e860702d",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "If your intention is to clean up this resource, you need to also call closeUdpEncapsulationSocket.",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 66
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53abd21_e61d2093",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "Why not just use the expected values as the matchers in your argument list? Same with below.",
+      "range": {
+        "startLine": 209,
+        "startChar": 7,
+        "endLine": 210,
+        "endChar": 62
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acff1feb_d7479c9e",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "Let\u0027s verify that it closed successfully by trying to open a socket on the same port.",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 229,
+        "endChar": 66
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c75d1f_87000046",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "This line feels like it belongs in setUp. This is injecting a mock and not setting a test behavior.",
+      "range": {
+        "startLine": 242,
+        "startChar": 7,
+        "endLine": 243,
+        "endChar": 54
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed135b8_f9fcae45",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "Why are we returning the same SPI twice?",
+      "range": {
+        "startLine": 264,
+        "startChar": 5,
+        "endLine": 268,
+        "endChar": 39
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49229dc4_d2e8a4ae",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "To echo Nathan\u0027s comment, it doesn\u0027t seem like this test is testing anything. We should be validating what happens with our mMockNetd.",
+      "range": {
+        "startLine": 296,
+        "startChar": 2,
+        "endLine": 302,
+        "endChar": 5
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e956b13b_d5b078b6",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "we probably should verify that it is called with different arguments, matching the two SAs. Same with below.",
+      "range": {
+        "startLine": 314,
+        "startChar": 17,
+        "endLine": 319,
+        "endChar": 34
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd607313_e27abae8",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "As mentioned above, it would be good to verify the arguments of the two SAs.",
+      "range": {
+        "startLine": 343,
+        "startChar": 0,
+        "endLine": 343,
+        "endChar": 69
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

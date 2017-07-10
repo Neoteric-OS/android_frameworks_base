@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "735f5a24_9f06eb73",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-10T22:48:47Z",
+      "side": 1,
+      "message": "Di, you\u0027re right, but I don\u0027t think that prevents Nathan\u0027s suggestion. It is possible to move this static member up into the IpSecService class, and new methods can still be added to the interface.\n\nNathan\u0027s suggestion to move this initialization into the IpSecService constructor seems like a good move. Then there\u0027s no need for a static.",
+      "parentUuid": "439d2ae9_f90c987f",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 103,
+        "endChar": 55
+      },
+      "revId": "4693a150f4bba439955336e074fdb6c76dd26652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06466816_7e4b11af",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 36
