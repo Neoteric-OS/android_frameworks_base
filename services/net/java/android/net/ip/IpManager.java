@@ -660,7 +660,6 @@ public class IpManager extends StateMachine {
                 }) {
             @Override
             public void interfaceAdded(String iface) {
-                super.interfaceAdded(iface);
                 if (mClatInterfaceName.equals(iface)) {
                     mCallback.setNeighborDiscoveryOffload(false);
                 } else if (!mInterfaceName.equals(iface)) {
@@ -1281,6 +1280,13 @@ public class IpManager extends StateMachine {
             return false;
         }
 
+        if (mConfiguration.initialConfig != null) {
+            // add all ipv6 addresses
+            // add all ipv6 dns servers
+            // add routes to LP
+        }
+
+
         return true;
     }
 
@@ -1416,6 +1422,11 @@ public class IpManager extends StateMachine {
         }
     }
 
+    /**
+     * StartedState implements a waiting stage before going into RunningState and doing any actual
+     * IP provisioning. This waiting stage is here to ensure that any remaining IP state has beeen
+     * cleared and that the interface is ready to start a new "IP session".
+     */
     class StartedState extends State {
         @Override
         public void enter() {
