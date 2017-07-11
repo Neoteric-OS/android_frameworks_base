@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "912f16e9_aba8e257",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3001,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-07-11T22:31:32Z",
+      "side": 1,
+      "message": "Use the emergency redial as an example instead:\n\nNotifies listeners when phone account is changed. For example, when the PhoneAccount is changed due to an emergency call being redialed.",
+      "range": {
+        "startLine": 3000,
+        "startChar": 7,
+        "endLine": 3001,
+        "endChar": 15
+      },
+      "revId": "d702b69b60f16ecd0628867541b562ffae55c030",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0b6d9d0_58af67cd",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3002,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-07-11T22:31:32Z",
+      "side": 1,
+      "message": "Change to \"The new PhoneAccountHandle for this connection\" or something similar",
+      "range": {
+        "startLine": 3002,
+        "startChar": 22,
+        "endLine": 3002,
+        "endChar": 79
+      },
+      "revId": "d702b69b60f16ecd0628867541b562ffae55c030",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a057180_bdc81373",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3005,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-07-11T22:31:32Z",
+      "side": 1,
+      "message": "This is better described as \"notifyPhoneAccountChanged\"",
+      "range": {
+        "startLine": 3005,
+        "startChar": 16,
+        "endLine": 3005,
+        "endChar": 31
+      },
+      "revId": "d702b69b60f16ecd0628867541b562ffae55c030",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cecb8a2c_df43835c",
+        "filename": "telecomm/java/android/telecom/ConnectionServiceAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-07-11T22:31:32Z",
+      "side": 1,
+      "message": "Update this comment to reflect the method\u0027s intent, such as \" Notifies Telecom that a call\u0027s PhoneAccountHandle has changed.\"",
+      "range": {
+        "startLine": 614,
+        "startChar": 7,
+        "endLine": 614,
+        "endChar": 64
+      },
+      "revId": "d702b69b60f16ecd0628867541b562ffae55c030",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44c5763f_b158dc97",
+        "filename": "telecomm/java/android/telecom/ConnectionServiceAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-07-11T22:31:32Z",
+      "side": 1,
+      "message": "\"The new PhoneAccountHandle associated with the Call.\"",
+      "range": {
+        "startLine": 617,
+        "startChar": 22,
+        "endLine": 617,
+        "endChar": 79
+      },
+      "revId": "d702b69b60f16ecd0628867541b562ffae55c030",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39ed4698_cc48c64f",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-07-11T22:31:32Z",
+      "side": 1,
+      "message": "This should also outline what the ConnectionService should do in this case, such as \"Emergency call failed with a temporary fail cause and can be redialed on this slot.\"",
+      "range": {
+        "startLine": 250,
+        "startChar": 7,
+        "endLine": 250,
+        "endChar": 55
+      },
+      "revId": "d702b69b60f16ecd0628867541b562ffae55c030",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8b2ab20_6c5c5380",
+        "filename": "telephony/java/android/telephony/DisconnectCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2017-07-11T22:31:32Z",
+      "side": 1,
+      "message": "This should also outline what the ConnectionService should do in this case, such as \"Emergency call failed with a permanent fail cause and should not be redialed on the this slot.\"",
+      "range": {
+        "startLine": 256,
+        "startChar": 7,
+        "endLine": 256,
+        "endChar": 55
+      },
+      "revId": "d702b69b60f16ecd0628867541b562ffae55c030",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
