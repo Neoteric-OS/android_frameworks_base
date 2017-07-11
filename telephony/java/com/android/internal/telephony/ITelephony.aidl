@@ -681,13 +681,13 @@ interface ITelephony {
     int getPreferredNetworkType(int subId);
 
     /**
-     * Check TETHER_DUN_REQUIRED and TETHER_DUN_APN settings, net.tethering.noprovisioning
-     * SystemProperty to decide whether DUN APN is required for
-     * tethering.
+     * Check TETHER_DUN_APN setting, net.tethering.noprovisioning SystemProperty
+     * to decide whether DUN APN is required for tethering.
      *
-     * @return 0: Not required. 1: required. 2: Not set.
+     * @return true: required. false: not required.
+     * @hide
      */
-    int getTetherApnRequired();
+    boolean getTetherApnRequired();
 
     /**
     * Enables framework IMS and triggers IMS Registration.
