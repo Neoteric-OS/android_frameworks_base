@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd7991af_cc774a21",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1400,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-11T18:15:42Z",
+      "side": 0,
+      "message": "I\u0027ll check about this with Android audio team.",
+      "range": {
+        "startLine": 1381,
+        "startChar": 0,
+        "endLine": 1400,
+        "endChar": 13
+      },
+      "revId": "18c3201986b12ab67b90efbe74aff8025688bec8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
