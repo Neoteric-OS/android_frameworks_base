@@ -1618,6 +1618,13 @@
     <permission android:name="android.permission.BIND_IMS_SERVICE"
         android:protectionLevel="signature|privileged" />
 
+    <!--
+        Allows an app to check whether certain carrier features are authorized.
+        @SystemApi
+        @hide
+     -->
+    <permission android:name="android.permission.CHECK_CARRIER_FEATURES"
+        android:protectionLevel="signature|privileged" />
 
     <!-- ================================== -->
     <!-- Permissions for sdcard interaction -->

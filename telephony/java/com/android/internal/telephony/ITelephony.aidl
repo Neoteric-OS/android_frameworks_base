@@ -42,6 +42,7 @@ import com.android.ims.internal.IImsServiceController;
 import com.android.ims.internal.IImsServiceFeatureListener;
 import com.android.internal.telephony.CellNetworkScanResult;
 import com.android.internal.telephony.OperatorInfo;
+import com.android.internal.telephony.ICarrierFeatureCallback;
 
 import java.util.List;
 
@@ -1125,6 +1126,8 @@ interface ITelephony {
      */
     String getMeidForSlot(int slotIndex, String callingPackage);
 
+    void checkCarrierFeatureAuthorization(int subscriptionId, int appUid, int feature,
+            in ICarrierFeatureCallback callback, long timeoutMillis);
     /**
      * Returns the device software version.
      *

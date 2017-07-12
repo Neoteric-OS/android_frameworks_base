@@ -85,6 +85,7 @@ package android {
     field public static final java.lang.String CHANGE_NETWORK_STATE = "android.permission.CHANGE_NETWORK_STATE";
     field public static final java.lang.String CHANGE_WIFI_MULTICAST_STATE = "android.permission.CHANGE_WIFI_MULTICAST_STATE";
     field public static final java.lang.String CHANGE_WIFI_STATE = "android.permission.CHANGE_WIFI_STATE";
+    field public static final java.lang.String CHECK_CARRIER_FEATURES = "android.permission.CHECK_CARRIER_FEATURES";
     field public static final java.lang.String CLEAR_APP_CACHE = "android.permission.CLEAR_APP_CACHE";
     field public static final java.lang.String CLEAR_APP_USER_DATA = "android.permission.CLEAR_APP_USER_DATA";
     field public static final java.lang.String CONNECTIVITY_INTERNAL = "android.permission.CONNECTIVITY_INTERNAL";
@@ -40818,6 +40819,16 @@ package android.telephony {
     field public static final java.lang.String KEY_WORLD_PHONE_BOOL = "world_phone_bool";
   }
 
+  public abstract class CarrierFeatureAuthCheck extends android.os.Binder {
+    ctor public CarrierFeatureAuthCheck();
+    method public void checkFeatureAuthorized(int, int, android.telephony.CarrierFeatureCallback);
+  }
+
+  public abstract class CarrierFeatureCallback extends android.os.Binder {
+    ctor public CarrierFeatureCallback();
+    method public void onFeatureAuthorizationCheckComplete(int, int, boolean);
+  }
+
   public final class CellIdentityCdma implements android.os.Parcelable {
     method public int describeContents();
     method public int getBasestationId();
@@ -41330,6 +41341,7 @@ package android.telephony {
     method public void answerRingingCall();
     method public void call(java.lang.String, java.lang.String);
     method public boolean canChangeDtmfToneLength();
+    method public void checkCarrierFeatureAuthorization(int, int, android.telephony.CarrierFeatureCallback, long);
     method public int checkCarrierPrivilegesForPackage(java.lang.String);
     method public int checkCarrierPrivilegesForPackageAnyPhone(java.lang.String);
     method public android.telephony.TelephonyManager createForPhoneAccountHandle(android.telecom.PhoneAccountHandle);
@@ -41439,6 +41451,7 @@ package android.telephony {
     method public int[] supplyPukReportResult(java.lang.String, java.lang.String);
     method public void toggleRadioOnOff();
     method public void updateServiceLocation();
+    field public static final java.lang.String ACTION_CARRIER_FEATURE_AUTHORIZATION_SERVICE = "android.intent.action.CARRIER_FEATURE_SERVICE";
     field public static final java.lang.String ACTION_CONFIGURE_VOICEMAIL = "android.telephony.action.CONFIGURE_VOICEMAIL";
     field public static final java.lang.String ACTION_PHONE_STATE_CHANGED = "android.intent.action.PHONE_STATE";
     field public static final java.lang.String ACTION_RESPOND_VIA_MESSAGE = "android.intent.action.RESPOND_VIA_MESSAGE";
@@ -41453,6 +41466,8 @@ package android.telephony {
     field public static final int CALL_STATE_IDLE = 0; // 0x0
     field public static final int CALL_STATE_OFFHOOK = 2; // 0x2
     field public static final int CALL_STATE_RINGING = 1; // 0x1
+    field public static final int CARRIER_FEATURE_EMBMS_DOWNLOAD = 2; // 0x2
+    field public static final int CARRIER_FEATURE_EMBMS_STREAMING = 1; // 0x1
     field public static final int CARRIER_PRIVILEGE_STATUS_ERROR_LOADING_RULES = -2; // 0xfffffffe
     field public static final int CARRIER_PRIVILEGE_STATUS_HAS_ACCESS = 1; // 0x1
     field public static final int CARRIER_PRIVILEGE_STATUS_NO_ACCESS = 0; // 0x0

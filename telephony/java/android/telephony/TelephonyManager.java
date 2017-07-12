@@ -25,7 +25,6 @@ import android.annotation.SystemApi;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.WorkerThread;
-import android.annotation.SystemApi;
 import android.app.ActivityThread;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
@@ -35,7 +34,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkStats;
 import android.net.Uri;
 import android.os.BatteryStats;
-import android.os.Binder;
+import android.os.HandlerThread;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.os.Bundle;
@@ -48,8 +47,6 @@ import android.os.SystemProperties;
 import android.service.carrier.CarrierIdentifier;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
-import android.telephony.ClientRequestStats;
-import android.telephony.TelephonyHistogram;
 import android.telephony.ims.feature.ImsFeature;
 import android.util.Log;
 
@@ -70,7 +67,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -392,6 +388,16 @@ public class TelephonyManager {
     @SdkConstant(SdkConstantType.SERVICE_ACTION)
     public static final String ACTION_RESPOND_VIA_MESSAGE =
             "android.intent.action.RESPOND_VIA_MESSAGE";
+
+    /**
+     * Service action for binding to a carrier app in order to determine whether a given app is
+     * authorized by the carrier to use a certain feature.
+     * @hide
+     */
+    @SystemApi
+    @SdkConstant(SdkConstantType.SERVICE_ACTION)
+    public static final String ACTION_CARRIER_FEATURE_AUTHORIZATION_SERVICE =
+            "android.intent.action.CARRIER_FEATURE_SERVICE";
 
     /**
      * The emergency dialer may choose to present activities with intent filters for this
@@ -891,6 +897,20 @@ public class TelephonyManager {
      * @hide
      */
     public static final int USSD_ERROR_SERVICE_UNAVAIL = -2;
+
+    /** @hide */
+    // TODO: define "prefix" in the intdef annotation.
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({CARRIER_FEATURE_EMBMS_STREAMING, CARRIER_FEATURE_EMBMS_DOWNLOAD})
+    public @interface CarrierFeatureCode {}
+
+    /** @hide */
+    @SystemApi
+    public static final int CARRIER_FEATURE_EMBMS_STREAMING = 1;
+
+    /** @hide */
+    @SystemApi
+    public static final int CARRIER_FEATURE_EMBMS_DOWNLOAD = 2;
 
     //
     //
@@ -2018,6 +2038,42 @@ public class TelephonyManager {
         } catch (NullPointerException ex) {
             // This could happen before phone restarts due to crashing
             return false;
+        }
+    }
+
+    /**
+     * Initiates a request to the carrier app residing on the device to check whether an app is
+     * authorized to use a certain feature. The caller of this method may assume that the
+     * supplied {@code callback} will always be called within the supplied timeout.
+     *
+     * @param appUid The uid of the app to check for.
+     * @param feature The feature to check for.
+     * @param callback A callback on which to receive the results of the authorization check.
+     * @param timeoutMillis Length of time to wait for the carrier app to respond, in milliseconds.
+     * @hide
+     */
+    @SystemApi
+    public void checkCarrierFeatureAuthorization(int appUid, @CarrierFeatureCode int feature,
+            final CarrierFeatureCallback callback, long timeoutMillis) {
+        ITelephony telephony = getITelephony();
+        if (telephony == null) {
+            return;
+        }
+        try {
+            telephony.checkCarrierFeatureAuthorization(
+                    mSubId, appUid, feature, callback, timeoutMillis);
+        } catch (RemoteException e) {
+            HandlerThread featureCheckHelperThread = new HandlerThread(
+                    "carrierFeatureHelper");
+            featureCheckHelperThread.start();
+            Handler featureCheckHelperHandler = new Handler(featureCheckHelperThread.getLooper());
+            featureCheckHelperHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    featureCheckHelperHandler.getLooper().quit();
+                    callback.onFeatureAuthorizationCheckComplete(appUid, feature, false);
+                }
+            });
         }
     }
 
@@ -4531,7 +4587,7 @@ public class TelephonyManager {
     /** @hide */
     @IntDef({ImsFeature.EMERGENCY_MMTEL, ImsFeature.MMTEL, ImsFeature.RCS})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface Feature {}
+    public @interface ImsFeatureCode {}
 
     /**
      * Returns the {@link IImsServiceController} that corresponds to the given slot Id and IMS
@@ -4546,8 +4602,8 @@ public class TelephonyManager {
      * it is unavailable.
      * @hide
      */
-    public IImsServiceController getImsServiceControllerAndListen(int slotIndex, @Feature int feature,
-            IImsServiceFeatureListener callback) {
+    public IImsServiceController getImsServiceControllerAndListen(int slotIndex,
+            @ImsFeatureCode int feature, IImsServiceFeatureListener callback) {
         try {
             ITelephony telephony = getITelephony();
             if (telephony != null) {
