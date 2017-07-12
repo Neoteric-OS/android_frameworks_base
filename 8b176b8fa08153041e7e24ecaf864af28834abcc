@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd280c59_b40b5c2e",
+        "filename": "telephony/java/android/telephony/mbms/StreamingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-07-12T19:41:43Z",
+      "side": 1,
+      "message": "put a gap between.  It\u0027s hard to tell if these symmetric comment blocks apply to what\u0027s above or below.",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 6
+      },
+      "revId": "8b176b8fa08153041e7e24ecaf864af28834abcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7fd1585_9612fa6e",
+        "filename": "telephony/java/android/telephony/mbms/StreamingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-07-12T19:41:43Z",
+      "side": 1,
+      "message": "carrier",
+      "range": {
+        "startLine": 61,
+        "startChar": 64,
+        "endLine": 61,
+        "endChar": 69
+      },
+      "revId": "8b176b8fa08153041e7e24ecaf864af28834abcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6507c2f_9b384c28",
+        "filename": "telephony/java/android/telephony/mbms/StreamingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-07-12T19:41:43Z",
+      "side": 1,
+      "message": "another",
+      "range": {
+        "startLine": 65,
+        "startChar": 54,
+        "endLine": 65,
+        "endChar": 60
+      },
+      "revId": "8b176b8fa08153041e7e24ecaf864af28834abcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f8c16d3_a169298b",
+        "filename": "telephony/java/android/telephony/mbms/StreamingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-07-12T19:41:43Z",
+      "side": 1,
+      "message": "There are two potentials - you leave your carrier (what this reason label sounds like) or you leave the limited geography for the stream (leave the stadium).  Your comment sounds like the latter, but the const name sounds like the former.  Probably need 2.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 73
+      },
+      "revId": "8b176b8fa08153041e7e24ecaf864af28834abcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e15a98f_237871b0",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsDownloadServiceBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-07-12T19:41:43Z",
+      "side": 1,
+      "message": "is there really a reason to segment the error codes?  what\u0027s the value?",
+      "range": {
+        "startLine": 86,
+        "startChar": 36,
+        "endLine": 86,
+        "endChar": 49
+      },
+      "revId": "8b176b8fa08153041e7e24ecaf864af28834abcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
