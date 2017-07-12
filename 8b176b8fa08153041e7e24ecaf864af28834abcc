@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "18a10c25_d9a1ed3b",
+        "filename": "telephony/java/android/telephony/mbms/StreamingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-07-12T22:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd280c59_b40b5c2e",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 6
+      },
+      "revId": "8b176b8fa08153041e7e24ecaf864af28834abcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7fd1585_9612fa6e",
         "filename": "telephony/java/android/telephony/mbms/StreamingService.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-12T19:41:43Z",
       "side": 1,
       "message": "carrier",
+      "range": {
+        "startLine": 61,
+        "startChar": 64,
+        "endLine": 61,
+        "endChar": 69
+      },
+      "revId": "8b176b8fa08153041e7e24ecaf864af28834abcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ad9ece_4d44b5be",
+        "filename": "telephony/java/android/telephony/mbms/StreamingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-07-12T22:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7fd1585_9612fa6e",
       "range": {
         "startLine": 61,
         "startChar": 64,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8924d3a5_609947e4",
+        "filename": "telephony/java/android/telephony/mbms/StreamingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-07-12T22:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6507c2f_9b384c28",
+      "range": {
+        "startLine": 65,
+        "startChar": 54,
+        "endLine": 65,
+        "endChar": 60
+      },
+      "revId": "8b176b8fa08153041e7e24ecaf864af28834abcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f8c16d3_a169298b",
         "filename": "telephony/java/android/telephony/mbms/StreamingService.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-12T19:41:43Z",
       "side": 1,
       "message": "There are two potentials - you leave your carrier (what this reason label sounds like) or you leave the limited geography for the stream (leave the stadium).  Your comment sounds like the latter, but the const name sounds like the former.  Probably need 2.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 73
+      },
+      "revId": "8b176b8fa08153041e7e24ecaf864af28834abcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "517a2668_9d3ab4f0",
+        "filename": "telephony/java/android/telephony/mbms/StreamingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-07-12T22:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f8c16d3_a169298b",
       "range": {
         "startLine": 73,
         "startChar": 0,
