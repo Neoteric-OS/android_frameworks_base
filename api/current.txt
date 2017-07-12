@@ -36682,14 +36682,17 @@ package android.system {
   public final class StructStat {
     ctor public StructStat(long, long, int, long, int, int, long, long, long, long, long, long, long);
     field public final long st_atime;
+    field public final long st_atime_nsec;
     field public final long st_blksize;
     field public final long st_blocks;
     field public final long st_ctime;
+    field public final long st_ctime_nsec;
     field public final long st_dev;
     field public final int st_gid;
     field public final long st_ino;
     field public final int st_mode;
     field public final long st_mtime;
+    field public final long st_mtime_nsec;
     field public final long st_nlink;
     field public final long st_rdev;
     field public final long st_size;
