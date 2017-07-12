@@ -954,6 +954,40 @@ public class CarrierConfigManager {
      public static final String KEY_CARRIER_SETUP_APP_STRING = "carrier_setup_app_string";
 
     /**
+     * Carriers may specify a service that will check for whether a given app is authorized to
+     * use certain carrier features.
+     * The contents are a package name and the name of a service, provided in the same format as
+     * for {@link #KEY_CARRIER_SETUP_APP_STRING}. The service must be configured to be bound to
+     * with the intent {@link TelephonyManager#ACTION_CARRIER_FEATURE_AUTHORIZATION_SERVICE}.
+     * @hide
+     */
+    public static final String KEY_CARRIER_FEATURE_AUTHORIZATION_APP_STRING =
+            "carrier_feature_authorization_app_string";
+
+    /**
+     * The value of this configuration specifies the default behavior in the case where
+     * {@link #KEY_CARRIER_FEATURE_AUTHORIZATION_APP_STRING} is empty. If true, then all apps
+     * will be authorized to use all features, and false otherwise, in the case where the app is
+     * not specified.
+     * Defaults to true.
+     * @hide
+     */
+    public static final String KEY_CARRIER_FEATURE_AUTHORIZATION_UNCONFIGURED_DEFAULT_BOOLEAN =
+            "carrier_feature_authorization_unconfigured_default_boolean";
+
+    /**
+     * The value of this configuration specifies the default behavior in the case where
+     * {@link #KEY_CARRIER_FEATURE_AUTHORIZATION_APP_STRING} specifies an app that is either
+     * missing or unable to perform the authorization check within some timeout. If true, then all
+     * apps will be authorized to use all features, and false otherwise, in the case where the
+     * app misbehaves.
+     * Defaults to false.
+     * @hide
+     */
+    public static final String KEY_CARRIER_FEATURE_AUTHORIZATION_MISCONFIGURED_DEFAULT_BOOLEAN =
+            "carrier_feature_authorization_unconfigured_default_boolean";
+
+    /**
      * Defines carrier-specific actions which act upon
      * com.android.internal.telephony.CARRIER_SIGNAL_REDIRECTED, used for customization of the
      * default carrier app
@@ -1578,6 +1612,10 @@ public class CarrierConfigManager {
 
         // Carrier Signalling Receivers
         sDefaults.putString(KEY_CARRIER_SETUP_APP_STRING, "");
+        sDefaults.putString(KEY_CARRIER_FEATURE_AUTHORIZATION_APP_STRING, "");
+        sDefaults.putBoolean(KEY_CARRIER_FEATURE_AUTHORIZATION_UNCONFIGURED_DEFAULT_BOOLEAN, true);
+        sDefaults.putBoolean(KEY_CARRIER_FEATURE_AUTHORIZATION_MISCONFIGURED_DEFAULT_BOOLEAN,
+                false);
         sDefaults.putStringArray(KEY_CARRIER_APP_WAKE_SIGNAL_CONFIG_STRING_ARRAY,
                 new String[]{
                         "com.android.carrierdefaultapp/.CarrierDefaultBroadcastReceiver:" +
