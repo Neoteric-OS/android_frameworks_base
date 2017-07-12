@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0806a965_dad18381",
+        "filename": "telephony/java/android/telephony/MbmsDownloadManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-07-12T22:19:33Z",
+      "side": 1,
+      "message": "There\u0027s not much point for these results -- they\u0027re only ever used as values for intent extras, and there\u0027s no way to annotate those yet.",
+      "parentUuid": "43c4490b_ece2a107",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 195,
+        "endChar": 50
+      },
+      "revId": "55f557dc7c1622ec757f7f47d469f742148814a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cada57b5_a1a7ef61",
         "filename": "telephony/java/android/telephony/mbms/vendor/MbmsDownloadServiceBase.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-12T18:53:51Z",
       "side": 1,
       "message": "comments for this function?",
+      "range": {
+        "startLine": 136,
+        "startChar": 15,
+        "endLine": 136,
+        "endChar": 32
+      },
+      "revId": "55f557dc7c1622ec757f7f47d469f742148814a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf795db3_69c2e29b",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsDownloadServiceBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2017-07-12T22:19:33Z",
+      "side": 1,
+      "message": "It\u0027s in the next CL",
+      "parentUuid": "cada57b5_a1a7ef61",
       "range": {
         "startLine": 136,
         "startChar": 15,
