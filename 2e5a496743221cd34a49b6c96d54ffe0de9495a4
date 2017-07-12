@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "6d270cc3_92ca6241",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-12T17:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb525870_784b9a79",
+      "range": {
+        "startLine": 83,
+        "startChar": 17,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca286b86_36c7f0d0",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 40
@@ -117,6 +141,54 @@
     },
     {
       "key": {
+        "uuid": "0c6e62e5_6bf22c7a",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-12T17:20:17Z",
+      "side": 1,
+      "message": "Moved the code to setUp",
+      "parentUuid": "88db9a41_7fbb0c61",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 73
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b319c1_6b975b54",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-12T17:20:17Z",
+      "side": 1,
+      "message": "I need this is because I want to test the createTransportModeTransform which requires an IpSecConfig, which have an interface for setting SPI. The SPI class can be created from the IpSecManager interface. Of course I can remove the spi input and the IpSecManager, I just want to keep it for now.",
+      "parentUuid": "ca286b86_36c7f0d0",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 73
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f839f57b_304ba228",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 40
@@ -137,6 +209,30 @@
       "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1149eddf_50863e4d",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-12T17:20:17Z",
+      "side": 1,
+      "message": "With ip sec service configuration, we need this to inject mocked netd.",
+      "parentUuid": "f839f57b_304ba228",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 74
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "03b0db97_633ea1c3",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-12T17:20:17Z",
+      "side": 1,
+      "message": "Removed the second mock.",
+      "parentUuid": "6e4a7909_32ccb053",
+      "range": {
+        "startLine": 101,
+        "startChar": 5,
+        "endLine": 114,
+        "endChar": 31
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90f2356a_07642d4b",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 40
@@ -183,6 +303,30 @@
       "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3286a1e6_21167785",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-12T17:20:17Z",
+      "side": 1,
+      "message": "This check is only in IpSecManager. This test doesn\u0027t make sense. I should not add this test here, will remove it.",
+      "parentUuid": "90f2356a_07642d4b",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 37
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "8545f34c_243fba22",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-12T17:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b92d3ba_fcaecd24",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 55
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9226065_9abdd54b",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 40
@@ -232,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "3bb76a6b_fe1d0d37",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-12T17:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9226065_9abdd54b",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 18
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9650fcbd_8306a2b0",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 40
@@ -249,6 +441,24 @@
     },
     {
       "key": {
+        "uuid": "e81bce1c_68ccc1db",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-12T17:20:17Z",
+      "side": 1,
+      "message": "OK.",
+      "parentUuid": "9650fcbd_8306a2b0",
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24872cb6_dab2415d",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 40
@@ -260,6 +470,30 @@
       "writtenOn": "2017-07-10T22:48:47Z",
       "side": 1,
       "message": "We need to assert something after this. The expected behavior is that we (the test and/or client) can\u0027t close the socket because IpSecService is holding a dup of the file descriptor, so after calling Os.close, the expected state is,\n- our FD is closed\n- the port is still being held open (Os.socket should fail to open that port)\n- IpSecService\u0027s resource tracking shows 1 socket still open\n\nThen we can call close() on the UdpSocket and confirm that everything is cleaned up.",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 66
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "293ff91f_9a533f41",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-12T17:20:17Z",
+      "side": 1,
+      "message": "I don\u0027t have a way to track the resource yet, and the closeUdpEncapsulationSocket() - IoUtils.closeQuietly() doesn\u0027t seem to release the port. I would delay this test for now.",
+      "parentUuid": "24872cb6_dab2415d",
       "range": {
         "startLine": 141,
         "startChar": 0,
@@ -295,6 +529,30 @@
     },
     {
       "key": {
+        "uuid": "6f1b7013_6988296e",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-12T17:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b03c9b30_ac0b449a",
+      "range": {
+        "startLine": 160,
+        "startChar": 18,
+        "endLine": 160,
+        "endChar": 52
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "171a5d70_e860702d",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 40
@@ -315,6 +573,30 @@
       "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe82a99_4a8b6d60",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-12T17:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "171a5d70_e860702d",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 66
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -341,6 +623,30 @@
     },
     {
       "key": {
+        "uuid": "11fd01c0_d5de514b",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-12T17:20:17Z",
+      "side": 1,
+      "message": "Changed the spi to expect values, for resourceId, I don\u0027t think it\u0027s appropriate to set to expect values.",
+      "parentUuid": "a53abd21_e61d2093",
+      "range": {
+        "startLine": 209,
+        "startChar": 7,
+        "endLine": 210,
+        "endChar": 62
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acff1feb_d7479c9e",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 40
@@ -361,6 +667,30 @@
       "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f328c823_27650505",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-12T17:20:17Z",
+      "side": 1,
+      "message": "Added a test case testOpenUdpEncapsulationSocketAfterClose.",
+      "parentUuid": "acff1feb_d7479c9e",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 229,
+        "endChar": 66
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -387,6 +717,30 @@
     },
     {
       "key": {
+        "uuid": "5e94a26a_c766e5a9",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-12T17:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87c75d1f_87000046",
+      "range": {
+        "startLine": 242,
+        "startChar": 7,
+        "endLine": 243,
+        "endChar": 54
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ed135b8_f9fcae45",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 40
@@ -410,6 +764,30 @@
     },
     {
       "key": {
+        "uuid": "164d1bb6_d9a3d474",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-12T17:20:17Z",
+      "side": 1,
+      "message": "Removed the second mock.",
+      "parentUuid": "2ed135b8_f9fcae45",
+      "range": {
+        "startLine": 264,
+        "startChar": 5,
+        "endLine": 268,
+        "endChar": 39
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49229dc4_d2e8a4ae",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 40
@@ -430,6 +808,30 @@
       "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee824cf6_2dfb8bf3",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-12T17:20:17Z",
+      "side": 1,
+      "message": "Added some argument verifications.",
+      "parentUuid": "49229dc4_d2e8a4ae",
+      "range": {
+        "startLine": 296,
+        "startChar": 2,
+        "endLine": 302,
+        "endChar": 5
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
