@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43c4490b_ece2a107",
+        "filename": "telephony/java/android/telephony/MbmsDownloadManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-07-12T18:53:51Z",
+      "side": 1,
+      "message": "should the other ranges be enum-ified too for consistency?",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 195,
+        "endChar": 50
+      },
+      "revId": "55f557dc7c1622ec757f7f47d469f742148814a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cada57b5_a1a7ef61",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsDownloadServiceBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-07-12T18:53:51Z",
+      "side": 1,
+      "message": "comments for this function?",
+      "range": {
+        "startLine": 136,
+        "startChar": 15,
+        "endLine": 136,
+        "endChar": 32
+      },
+      "revId": "55f557dc7c1622ec757f7f47d469f742148814a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
