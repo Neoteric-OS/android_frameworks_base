@@ -954,6 +954,17 @@ public class CarrierConfigManager {
      public static final String KEY_CARRIER_SETUP_APP_STRING = "carrier_setup_app_string";
 
     /**
+     * Carriers may specify a service that will check for whether a given app is authorized to
+     * use certain carrier features.
+     * The contents are a package name and the name of a service, provided in the same format as
+     * for {@link #KEY_CARRIER_SETUP_APP_STRING}. The service must be configured to be bound to
+     * with the intent {@link TelephonyManager#ACTION_CARRIER_FEATURE_SERVICE}.
+     * @hide
+     */
+    public static final String KEY_CARRIER_FEATURE_AUTHORIZATION_APP_STRING =
+            "carrier_feature_authorization_app_string";
+
+    /**
      * Defines carrier-specific actions which act upon
      * com.android.internal.telephony.CARRIER_SIGNAL_REDIRECTED, used for customization of the
      * default carrier app
@@ -1578,6 +1589,7 @@ public class CarrierConfigManager {
 
         // Carrier Signalling Receivers
         sDefaults.putString(KEY_CARRIER_SETUP_APP_STRING, "");
+        sDefaults.putString(KEY_CARRIER_FEATURE_AUTHORIZATION_APP_STRING, "");
         sDefaults.putStringArray(KEY_CARRIER_APP_WAKE_SIGNAL_CONFIG_STRING_ARRAY,
                 new String[]{
                         "com.android.carrierdefaultapp/.CarrierDefaultBroadcastReceiver:" +
