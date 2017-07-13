@@ -3180,11 +3180,20 @@ public class TelephonyManager {
      * @hide
      */
     public String getIsimImpi() {
+        return getIsimImpi(getSubId());
+    }
+
+    /**
+     * Returns the IMS private user identity (IMPI) that was loaded from the ISIM.
+     * @return the IMPI, or null if not present or not loaded
+     * @hide
+     */
+    public String getIsimImpi(int subId) {
         try {
             IPhoneSubInfo info = getSubscriberInfo();
             if (info == null)
                 return null;
-            return info.getIsimImpi();
+            return info.getIsimImpi(subId);
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
@@ -3199,11 +3208,20 @@ public class TelephonyManager {
      * @hide
      */
     public String getIsimDomain() {
+        return getIsimDomain(getSubId());
+    }
+
+    /**
+     * Returns the IMS home network domain name that was loaded from the ISIM.
+     * @return the IMS domain name, or null if not present or not loaded
+     * @hide
+     */
+    public String getIsimDomain(int subId) {
         try {
             IPhoneSubInfo info = getSubscriberInfo();
             if (info == null)
                 return null;
-            return info.getIsimDomain();
+            return info.getIsimDomain(subId);
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
@@ -3219,11 +3237,21 @@ public class TelephonyManager {
      * @hide
      */
     public String[] getIsimImpu() {
+        return getIsimImpu(getSubId());
+    }
+
+    /**
+     * Returns the IMS public user identities (IMPU) that were loaded from the ISIM.
+     * @return an array of IMPU strings, with one IMPU per string, or null if
+     *      not present or not loaded
+     * @hide
+     */
+    public String[] getIsimImpu(int subId) {
         try {
             IPhoneSubInfo info = getSubscriberInfo();
             if (info == null)
                 return null;
-            return info.getIsimImpu();
+            return info.getIsimImpu(subId);
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
@@ -4348,11 +4376,20 @@ public class TelephonyManager {
      * @hide
      */
     public String getIsimIst() {
+        return getIsimIst(getSubId());
+    }
+
+    /**
+     * Returns the IMS Service Table (IST) that was loaded from the ISIM.
+     * @return IMS Service Table or null if not present or not loaded
+     * @hide
+     */
+    public String getIsimIst(int subId) {
         try {
             IPhoneSubInfo info = getSubscriberInfo();
             if (info == null)
                 return null;
-            return info.getIsimIst();
+            return info.getIsimIst(subId);
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
@@ -4368,11 +4405,21 @@ public class TelephonyManager {
      * @hide
      */
     public String[] getIsimPcscf() {
+        return getIsimPcscf(getSubId());
+    }
+
+    /**
+     * Returns the IMS Proxy Call Session Control Function(PCSCF) that were loaded from the ISIM.
+     * @return an array of PCSCF strings with one PCSCF per string, or null if
+     *         not present or not loaded
+     * @hide
+     */
+    public String[] getIsimPcscf(int subId) {
         try {
             IPhoneSubInfo info = getSubscriberInfo();
             if (info == null)
                 return null;
-            return info.getIsimPcscf();
+            return info.getIsimPcscf(subId);
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
