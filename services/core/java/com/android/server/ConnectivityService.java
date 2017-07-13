@@ -57,6 +57,7 @@ import android.net.INetworkManagementEventObserver;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
+import android.net.IpPrefix;
 import android.net.LinkProperties;
 import android.net.LinkProperties.CompareResult;
 import android.net.Network;
@@ -4637,12 +4638,50 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return !routeDiff.added.isEmpty() || !routeDiff.removed.isEmpty();
     }
 
+    private void syncPrivateDns(Collection<InetAddress> newDnses, Collection<InetAddress> oldDnses) {
+        ContentResolver res = mContext.getContentResolver();
+        int setting = Settings.Global.getInt(res, Settings.Global.DNS_TLS_ENABLED, 0);
+        // Ensure all the new servers are either TLS-enabled or TLS-disabled, in accordance
+        // with the setting.
+        for (InetAddress dns : newDnses) {
+            String address = dns.getHostName();
+            try {
+                if (setting > 0) {
+                    final int DNS_OVER_TLS_PORT = 853;
+                    mNetd.getNetdService().addPrivateDnsServer(
+                            address, DNS_OVER_TLS_PORT, "", new String[0]);
+                } else if (setting < 0) {
+                    mNetd.getNetdService().removePrivateDnsServer(address);
+                }
+            } catch (Exception e) {
+                loge("Exception while syncing private DNS server" + address + ": " + e);
+            }
+        }
+
+        // Disable TLS on all retired servers, to avoid keeping them in Netd's memory.
+        // Note: If two networks are using the same DNS server, and one of them changes,
+        // this will disable TLS for that server on both networks.
+        HashSet<InetAddress> retired = new HashSet(oldDnses);
+        retired.removeAll(newDnses);
+        for (InetAddress dns : retired) {
+            String address = dns.getHostName();
+            try {
+                mNetd.getNetdService().removePrivateDnsServer(address);
+            } catch (Exception e) {
+                loge("Exception while syncing private DNS server" + address + ": " + e);
+            }
+        }
+    }
+
     private void updateDnses(LinkProperties newLp, LinkProperties oldLp, int netId) {
         if (oldLp != null && newLp.isIdenticalDnses(oldLp)) {
             return;  // no updating necessary
         }
 
         Collection<InetAddress> dnses = newLp.getDnsServers();
+        Collection<InetAddress> oldDnses = oldLp == null ? new ArrayList() :
+                oldLp.getDnsServers();
+        syncPrivateDns(dnses, oldDnses);
         if (DBG) log("Setting DNS servers for network " + netId + " to " + dnses);
         try {
             mNetd.setDnsConfigurationForNetwork(

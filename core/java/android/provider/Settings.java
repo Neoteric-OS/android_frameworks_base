@@ -8309,6 +8309,14 @@ public final class Settings {
          */
         public static final String DEFAULT_DNS_SERVER = "default_dns_server";
 
+        /**
+         * Whether to enable DNS over TLS.
+         * The value is an int: 0 for default behavior, -1 to disable, +1 to enable.
+         *
+         * @hide
+         */
+        public static final String DNS_TLS_ENABLED = "dns_tls_enabled";
+
         /** {@hide} */
         public static final String
                 BLUETOOTH_HEADSET_PRIORITY_PREFIX = "bluetooth_headset_priority_";
