@@ -23,10 +23,9 @@ import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SystemApi;
 import android.content.Context;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Parcel;
-import android.os.Parcelable;
 import android.os.ParcelUuid;
+import android.os.Parcelable;
 import android.os.Process;
 import android.os.RemoteException;
 import android.util.Log;
@@ -76,7 +75,8 @@ public final class BluetoothDevice implements Parcelable {
     private static final boolean DBG = false;
 
     /**
-     * Connection state bitmask as returned by getConnectionState.
+     * Connection state bitmask as returned by
+     * {@link IBluetooth#getConnectionState(BluetoothDevice)}.
      */
     private static final int CONNECTION_STATE_DISCONNECTED = 0;
     private static final int CONNECTION_STATE_CONNECTED = 1;
@@ -1116,6 +1116,29 @@ public final class BluetoothDevice implements Parcelable {
         }
         try {
             return sService.getConnectionState(this) != CONNECTION_STATE_DISCONNECTED;
+        } catch (RemoteException e) {
+            Log.e(TAG, "", e);
+            return false;
+        }
+    }
+
+    /**
+     * Returns whether there is an LE connection to this device
+     * <p>Requires {@link android.Manifest.permission#BLUETOOTH}.
+     *
+     * @return True if there is at least one open LE connection to this device.
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public boolean isLeConnected() {
+        if (sService == null) {
+            // BT is not enabled, we cannot be connected.
+            return false;
+        }
+        try {
+            int targetState = BluetoothDevice.CONNECTION_STATE_CONNECTED
+                    | BluetoothDevice.CONNECTION_STATE_ENCRYPTED_LE;
+            return (sService.getConnectionState(this) & targetState) == targetState;
         } catch (RemoteException e) {
             Log.e(TAG, "", e);
             return false;
