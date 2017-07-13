@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3bdc2b4_ef6670df",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2017-07-13T22:57:16Z",
+      "side": 1,
+      "message": "nit: no need of this, or add \u003c\u003c \"Binder threadpool must have a minimum of one thread.\"\n\nProcessState::setThreadPoolConfiguration already LOG_ALWAYS_FATAL_IF(maxThreads \u003c 1); adding this strips the log message.",
+      "range": {
+        "startLine": 399,
+        "startChar": 4,
+        "endLine": 399,
+        "endChar": 26
+      },
+      "revId": "b6a6283ce48af09bf833f0622988d464ecc5104c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c86129fd_84fab7bd",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2017-07-13T22:57:16Z",
+      "side": 1,
+      "message": "BTW: https://paste.googleplex.com/5791686139576320\n:)",
+      "range": {
+        "startLine": 421,
+        "startChar": 0,
+        "endLine": 421,
+        "endChar": 40
+      },
+      "revId": "b6a6283ce48af09bf833f0622988d464ecc5104c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
