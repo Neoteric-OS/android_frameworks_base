@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b97dc9fb_c639c71e",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-13T02:16:36Z",
+      "side": 1,
+      "message": "according to the style guide, this should be resPort, or we can pick a better name. (just \"port\" would be fine.)",
+      "range": {
+        "startLine": 133,
+        "startChar": 12,
+        "endLine": 133,
+        "endChar": 19
+      },
+      "revId": "ee83e4c2d66ccdd38e64f3299045be6d5b9f706e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eede967_d6d3843b",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-13T02:16:36Z",
+      "side": 1,
+      "message": "I suggest that this comment can go in the helper method and isn\u0027t needed in each test.",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 59
+      },
+      "revId": "ee83e4c2d66ccdd38e64f3299045be6d5b9f706e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd01b8f8_f726b8d5",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-13T02:16:36Z",
+      "side": 1,
+      "message": "This test covers the case where the socket is cleaned up correctly, but we also need tests that verify what happens when the socket is not cleaned up correctly.\n\nWe should have a test where the user only calls Os.close(), then tries to Os.socket() and Os.bind() to the same port. That will verify that IpSecService is holding the socket open until we clean up correctly.",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 66
+      },
+      "revId": "ee83e4c2d66ccdd38e64f3299045be6d5b9f706e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

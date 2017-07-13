@@ -236,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "014fcef3_46b5ff0a",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-13T02:16:36Z",
+      "side": 1,
+      "message": "I misread the variable name - didn\u0027t realize this was the mock service config.",
+      "parentUuid": "1149eddf_50863e4d",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 74
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e4a7909_32ccb053",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 40
@@ -506,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "dfa232d3_b520d22f",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-13T02:16:36Z",
+      "side": 1,
+      "message": "The port is not released because it is not being closed correctly. You need to also call closeUdpEncapsulationSocket like in my other comment. We can put a TODO about checking the resource count after UserQuotaTracker is merged.\n\nWithout assertions after the socket is closed, this test isn\u0027t meaningful.",
+      "parentUuid": "293ff91f_9a533f41",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 66
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b03c9b30_ac0b449a",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 40
@@ -644,6 +692,30 @@
       "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed9a982e_c88a1cd0",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-13T02:16:36Z",
+      "side": 1,
+      "message": "Could you explain your reasoning? This test is asserting that specific values are being passed as arguments. I think if you use verify() with the expected arguments, you are asserting the exact same thing, but with less code.",
+      "parentUuid": "11fd01c0_d5de514b",
+      "range": {
+        "startLine": 209,
+        "startChar": 7,
+        "endLine": 210,
+        "endChar": 62
+      },
+      "revId": "2e5a496743221cd34a49b6c96d54ffe0de9495a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
