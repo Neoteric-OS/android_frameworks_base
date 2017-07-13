@@ -57,6 +57,7 @@ import android.net.INetworkManagementEventObserver;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
+import android.net.IpPrefix;
 import android.net.LinkProperties;
 import android.net.LinkProperties.CompareResult;
 import android.net.Network;
@@ -4637,12 +4638,57 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return !routeDiff.added.isEmpty() || !routeDiff.removed.isEmpty();
     }
 
+
+    private void syncPrivateDns(Collection<InetAddress> dnses) {
+        ContentResolver res = mContext.getContentResolver();
+        String setting = Settings.Global.getString(res, Settings.Global.DNS_TLS_ENABLED);
+        log("syncPrivateDns sees dns_tls_enabled=" + setting);
+        if (setting == null) {
+            return;
+        }
+        String[] elements = setting.split(",");
+        List<IpPrefix> prefixes = new ArrayList<IpPrefix>(elements.length);
+        for (String element : elements) {
+            try {
+                prefixes.add(new IpPrefix(element));
+            } catch (Exception e) {
+                loge("Exception while parsing \"" + element + "\": " + e);
+            }
+        }
+        for (InetAddress dns : dnses) {
+            String address = dns.getHostAddress();
+            boolean matched = false;
+            for (IpPrefix prefix : prefixes) {
+                if (prefix.contains(dns)) {
+                    final int DNS_OVER_TLS_PORT = 853;
+                    try {
+                        log("Adding private DNS server: " + address);
+                        mNetd.getNetdService().addPrivateDnsServer(
+                                address, DNS_OVER_TLS_PORT, "", new String[0]);
+                    } catch (RemoteException e) {
+                        loge("Exception while adding private DNS server: " + e);
+                    }
+                    matched = true;
+                    break;
+                }
+            }
+            if (!matched) {
+                try {
+                    log("Removing private DNS server: " + address);
+                    mNetd.getNetdService().removePrivateDnsServer(address);
+                } catch (RemoteException e) {
+                    loge("Exception while removing private DNS server: " + e);
+                }
+            }
+        }
+    }
     private void updateDnses(LinkProperties newLp, LinkProperties oldLp, int netId) {
         if (oldLp != null && newLp.isIdenticalDnses(oldLp)) {
             return;  // no updating necessary
         }
 
         Collection<InetAddress> dnses = newLp.getDnsServers();
+        syncPrivateDns(dnses);
         if (DBG) log("Setting DNS servers for network " + netId + " to " + dnses);
         try {
             mNetd.setDnsConfigurationForNetwork(

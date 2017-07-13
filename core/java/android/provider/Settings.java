@@ -8309,6 +8309,14 @@ public final class Settings {
          */
         public static final String DEFAULT_DNS_SERVER = "default_dns_server";
 
+        /**
+         * DNS servers on which to attempt DNS-over-TLS on the default port.
+         * This is a comma-separated list of subnets in CIDR notation.
+         *
+         * @hide
+         */
+        public static final String DNS_TLS_ENABLED = "dns_tls_enabled";
+
         /** {@hide} */
         public static final String
                 BLUETOOTH_HEADSET_PRIORITY_PREFIX = "bluetooth_headset_priority_";
