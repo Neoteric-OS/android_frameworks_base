@@ -141,6 +141,30 @@
       "revId": "9123644d915e145f55df72e19528c59dc3f18592",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15864bc_683b0e59",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-14T17:50:32Z",
+      "side": 1,
+      "message": "Added the keyword synchronized to managedresource toString()",
+      "parentUuid": "9b2b2781_52ce42db",
+      "range": {
+        "startLine": 128,
+        "startChar": 34,
+        "endLine": 128,
+        "endChar": 0
+      },
+      "revId": "9123644d915e145f55df72e19528c59dc3f18592",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
