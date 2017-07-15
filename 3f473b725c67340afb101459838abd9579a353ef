@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8733107_3914740f",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-15T02:00:41Z",
+      "side": 1,
+      "message": "I don\u0027t think this is being used anywhere. Looking at IpSecTransform.java, we only try to interact with CM when activating an IpSecTransform object, and you don\u0027t activate any transforms in these tests.",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 49
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11dee06f_5487e2d7",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-15T02:00:41Z",
+      "side": 1,
+      "message": "This isn\u0027t testing anything interesting. Maybe remove it?",
+      "range": {
+        "startLine": 109,
+        "startChar": 1,
+        "endLine": 113,
+        "endChar": 5
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc581dc_6ee71591",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-15T02:00:41Z",
+      "side": 1,
+      "message": "Please move this down with the rest of the SPI tests.",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 5
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3862e5_848c4de9",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-15T02:00:41Z",
+      "side": 1,
+      "message": "formatting error",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 9
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1afeb073_90c5dd93",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-15T02:00:41Z",
+      "side": 1,
+      "message": "return type on a separate line? Did the auto-formatter do this?",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 7
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0896b919_fbeda49e",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-15T02:00:41Z",
+      "side": 1,
+      "message": "minor nit: \"localport\" is not a thing in this scope.",
+      "range": {
+        "startLine": 137,
+        "startChar": 49,
+        "endLine": 137,
+        "endChar": 58
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8778787_50510e30",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-15T02:00:41Z",
+      "side": 1,
+      "message": "As per nharold\u0027s instructions, use ParcelFileDescriptor#close instead of Os#close.",
+      "range": {
+        "startLine": 154,
+        "startChar": 8,
+        "endLine": 154,
+        "endChar": 16
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b1bf7ad_ba740c46",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-15T02:00:41Z",
+      "side": 1,
+      "message": "Optional: This second half could be replaced by Os.socket, Os.bind, Os.close.\n\nWhat we are actually testing is that the port becomes free when it is correctly closed.",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 66
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5bedbbc2_34c428aa",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-15T02:00:41Z",
+      "side": 1,
+      "message": "I can\u0027t tell what \"PortRsr\" means in this method name. It\u0027s ok to add a comment explaining what a test covers when the method name isn\u0027t descriptive enough.",
+      "range": {
+        "startLine": 180,
+        "startChar": 16,
+        "endLine": 180,
+        "endChar": 49
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "325d77cc_5f658ea9",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-15T02:00:41Z",
+      "side": 1,
+      "message": "assert EADDRINUSE?",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 36
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e451557_f35ead97",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-15T02:00:41Z",
+      "side": 1,
+      "message": "Also test the high end of the range?",
+      "range": {
+        "startLine": 211,
+        "startChar": 16,
+        "endLine": 211,
+        "endChar": 55
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93df784_f978e066",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-15T02:00:41Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t match this line of code.",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 37
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e59446_30ac34e4",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-15T02:00:41Z",
+      "side": 1,
+      "message": "You reserve one random SPI and one specific SPI, but your mock returns the same SPI for both. I think the tests would be better if there was a different SPI for each direction.",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 298,
+        "endChar": 75
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17efe2fc_8bcbba69",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-15T02:00:41Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem valid that both objects would have the same resource ID. IpSecService tracks all resource IDs, and shouldn\u0027t be creating duplicate ones. Either this is an IpSecService bug or the mock objects are misconfigured.",
+      "range": {
+        "startLine": 353,
+        "startChar": 0,
+        "endLine": 353,
+        "endChar": 59
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
