@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10882033_a0622247",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4642,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-16T09:57:36Z",
+      "side": 1,
+      "message": "When we change DNS servers, we should also remove any previously-programmed private DNS servers. We may just be able to do this in this function by making it take, in addition to the new DNS servers, the previous DNS servers as well.\n\nWe should likely also do this when a network disconnects. This may be done either by explicitly removing them in handleAsyncChannelDisconnected, or in netd when we destroy the network. Which one is easier might depend on where the data lives inside netd.",
+      "range": {
+        "startLine": 4642,
+        "startChar": 56,
+        "endLine": 4642,
+        "endChar": 61
+      },
+      "revId": "29419a52356f2d96aeb6fa3da32a61b874b93ce9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
