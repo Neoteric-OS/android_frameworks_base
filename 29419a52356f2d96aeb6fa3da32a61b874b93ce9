@@ -22,6 +22,30 @@
       "revId": "29419a52356f2d96aeb6fa3da32a61b874b93ce9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9809381_94bfaf85",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4642,
+      "author": {
+        "id": 1161323
+      },
+      "writtenOn": "2017-07-16T21:50:34Z",
+      "side": 1,
+      "message": "OK, I\u0027ve done the first part.\n\nFor the second part ... this is beginning to seem like the hard way.  This code is trying to wrap a giant on-off switch around a fine-grained whitelist management API, and it\u0027s not a great fit.  If we really want a giant on-off switch, we can just write it into Netd and plumb it up through Binder (INetd.aidl, NetdNativeService, etc.).",
+      "parentUuid": "10882033_a0622247",
+      "range": {
+        "startLine": 4642,
+        "startChar": 56,
+        "endLine": 4642,
+        "endChar": 61
+      },
+      "revId": "29419a52356f2d96aeb6fa3da32a61b874b93ce9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
