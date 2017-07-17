@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "06f341ec_0ea97c1d",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-17T12:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8733107_3914740f",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 49
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11dee06f_5487e2d7",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 43
@@ -45,6 +69,30 @@
       "revId": "3f473b725c67340afb101459838abd9579a353ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6f16bb_8fe2b2d4",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-17T12:43:03Z",
+      "side": 1,
+      "message": "It\u0027s just a sanity check of this create interface.",
+      "parentUuid": "11dee06f_5487e2d7",
+      "range": {
+        "startLine": 109,
+        "startChar": 1,
+        "endLine": 113,
+        "endChar": 5
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "851d8824_9c2719d3",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-17T12:43:03Z",
+      "side": 1,
+      "message": "Moved up the other two test cases.",
+      "parentUuid": "8bc581dc_6ee71591",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 5
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc3862e5_848c4de9",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 43
@@ -91,6 +163,30 @@
       "revId": "3f473b725c67340afb101459838abd9579a353ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ff7223_0ad98848",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-17T12:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc3862e5_848c4de9",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 9
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "96e65650_496e5c50",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-17T12:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1afeb073_90c5dd93",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 7
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0896b919_fbeda49e",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 43
@@ -137,6 +257,30 @@
       "revId": "3f473b725c67340afb101459838abd9579a353ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4383d89_d719c6e2",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-17T12:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0896b919_fbeda49e",
+      "range": {
+        "startLine": 137,
+        "startChar": 49,
+        "endLine": 137,
+        "endChar": 58
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "c1f00832_14f9b0b1",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-17T12:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8778787_50510e30",
+      "range": {
+        "startLine": 154,
+        "startChar": 8,
+        "endLine": 154,
+        "endChar": 16
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b1bf7ad_ba740c46",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 43
@@ -174,6 +342,30 @@
       "writtenOn": "2017-07-15T02:00:41Z",
       "side": 1,
       "message": "Optional: This second half could be replaced by Os.socket, Os.bind, Os.close.\n\nWhat we are actually testing is that the port becomes free when it is correctly closed.",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 66
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36b74d13_45513ce5",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-17T12:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b1bf7ad_ba740c46",
       "range": {
         "startLine": 170,
         "startChar": 0,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "04008fdb_773677ef",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-17T12:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bedbbc2_34c428aa",
+      "range": {
+        "startLine": 180,
+        "startChar": 16,
+        "endLine": 180,
+        "endChar": 49
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "325d77cc_5f658ea9",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 43
@@ -229,6 +445,30 @@
       "revId": "3f473b725c67340afb101459838abd9579a353ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef6a56ae_9ffd79ee",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-17T12:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "325d77cc_5f658ea9",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 36
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "f3f6b1c5_76c94352",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-17T12:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e451557_f35ead97",
+      "range": {
+        "startLine": 211,
+        "startChar": 16,
+        "endLine": 211,
+        "endChar": 55
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d93df784_f978e066",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 43
@@ -275,6 +539,30 @@
       "revId": "3f473b725c67340afb101459838abd9579a353ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d21d5b_86c80742",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-17T12:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d93df784_f978e066",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 37
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "a8da8fe4_91aa01c2",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-17T12:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0e59446_30ac34e4",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 298,
+        "endChar": 75
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17efe2fc_8bcbba69",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 43
@@ -312,6 +624,30 @@
       "writtenOn": "2017-07-15T02:00:41Z",
       "side": 1,
       "message": "It doesn\u0027t seem valid that both objects would have the same resource ID. IpSecService tracks all resource IDs, and shouldn\u0027t be creating duplicate ones. Either this is an IpSecService bug or the mock objects are misconfigured.",
+      "range": {
+        "startLine": 353,
+        "startChar": 0,
+        "endLine": 353,
+        "endChar": 59
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ec848f_ec460f3e",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-07-17T12:43:03Z",
+      "side": 1,
+      "message": "From createTransportModeTransform(), it seems to me both directions use the same resource id. Because the we would have identical transform for inbound and outbound, I don\u0027t see there is problem using the same resource id.",
+      "parentUuid": "17efe2fc_8bcbba69",
       "range": {
         "startLine": 353,
         "startChar": 0,
