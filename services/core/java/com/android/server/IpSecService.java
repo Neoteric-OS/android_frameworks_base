@@ -412,7 +412,7 @@ public class IpSecService extends IIpSecService.Stub {
                                 }
                             }
                         });
-        t.run();
+        t.start();
     }
 
     INetd getNetdInstance() throws RemoteException {
