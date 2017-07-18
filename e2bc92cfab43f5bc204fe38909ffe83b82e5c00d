@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f32ee3ed_efceef8a",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-18T18:05:13Z",
+      "side": 1,
+      "message": "It seems like you are acquiring the wrong lock here. The only synchronization I see in this whole file is using IpSecService.this as the lock object.\n\nTalking to Nathan about this, however, the pattern in this file is to synchronize at the top level and not at this level.",
+      "range": {
+        "startLine": 200,
+        "startChar": 15,
+        "endLine": 200,
+        "endChar": 27
+      },
+      "revId": "e2bc92cfab43f5bc204fe38909ffe83b82e5c00d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec549c83_803c78ac",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-18T18:05:13Z",
+      "side": 1,
+      "message": "If you look at every other method on this class, you will see they are synchronized.",
+      "range": {
+        "startLine": 784,
+        "startChar": 0,
+        "endLine": 784,
+        "endChar": 75
+      },
+      "revId": "e2bc92cfab43f5bc204fe38909ffe83b82e5c00d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
