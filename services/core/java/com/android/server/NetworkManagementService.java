@@ -552,7 +552,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         boolean nativeServiceAvailable = false;
         try {
             mNetdService = INetd.Stub.asInterface(ServiceManager.getService(NETD_SERVICE_NAME));
-            nativeServiceAvailable = mNetdService.isAlive();
+            nativeServiceAvailable = mNetdService != null && mNetdService.isAlive();
         } catch (RemoteException e) {}
         if (!nativeServiceAvailable) {
             Slog.wtf(TAG, "Can't connect to NativeNetdService " + NETD_SERVICE_NAME);
@@ -569,36 +569,30 @@ public class NetworkManagementService extends INetworkManagementService.Stub
 
         // only enable bandwidth control when support exists
         final boolean hasKernelSupport = new File("/proc/net/xt_qtaguid/ctrl").exists();
-        if (hasKernelSupport) {
-            Slog.d(TAG, "enabling bandwidth control");
-            try {
-                mConnector.execute("bandwidth", "enable");
-                mBandwidthControlEnabled = true;
-            } catch (NativeDaemonConnectorException e) {
-                Log.wtf(TAG, "problem enabling bandwidth controls", e);
-            }
-        } else {
-            Slog.i(TAG, "not enabling bandwidth control");
-        }
-
-        SystemProperties.set(PROP_QTAGUID_ENABLED, mBandwidthControlEnabled ? "1" : "0");
-
-        if (mBandwidthControlEnabled) {
-            try {
-                getBatteryStats().noteNetworkStatsEnabled();
-            } catch (RemoteException e) {
-            }
-        }
-
-        try {
-            mConnector.execute("strict", "enable");
-            mStrictEnabled = true;
-        } catch (NativeDaemonConnectorException e) {
-            Log.wtf(TAG, "Failed strict enable", e);
-        }
 
         // push any existing quota or UID rules
         synchronized (mQuotaLock) {
+
+            if (hasKernelSupport) {
+                Slog.d(TAG, "enabling bandwidth control");
+                try {
+                    mConnector.execute("bandwidth", "enable");
+                    mBandwidthControlEnabled = true;
+                } catch (NativeDaemonConnectorException e) {
+                    Log.wtf(TAG, "problem enabling bandwidth controls", e);
+                }
+            } else {
+                Slog.i(TAG, "not enabling bandwidth control");
+            }
+
+            SystemProperties.set(PROP_QTAGUID_ENABLED, mBandwidthControlEnabled ? "1" : "0");
+
+            try {
+                mConnector.execute("strict", "enable");
+                mStrictEnabled = true;
+            } catch (NativeDaemonConnectorException e) {
+                Log.wtf(TAG, "Failed strict enable", e);
+            }
 
             setDataSaverModeEnabled(mDataSaverMode);
 
@@ -672,6 +666,14 @@ public class NetworkManagementService extends INetworkManagementService.Stub
                 setFirewallChainEnabled(FIREWALL_CHAIN_POWERSAVE, true);
             }
         }
+
+        if (mBandwidthControlEnabled) {
+            try {
+                getBatteryStats().noteNetworkStatsEnabled();
+            } catch (RemoteException e) {
+            }
+        }
+
     }
 
     /**
@@ -1716,6 +1718,30 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         }
     }
 
+    private void applyUidCleartextNetworkPolicy(int uid, int policy) {
+        final String policyString;
+        switch (policy) {
+            case StrictMode.NETWORK_POLICY_ACCEPT:
+                policyString = "accept";
+                break;
+            case StrictMode.NETWORK_POLICY_LOG:
+                policyString = "log";
+                break;
+            case StrictMode.NETWORK_POLICY_REJECT:
+                policyString = "reject";
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown policy " + policy);
+        }
+
+        try {
+            mConnector.execute("strict", "set_uid_cleartext_policy", uid, policyString);
+            mUidCleartextPolicy.put(uid, policy);
+        } catch (NativeDaemonConnectorException e) {
+            throw e.rethrowAsParcelableException();
+        }
+    }
+
     @Override
     public void setUidCleartextNetworkPolicy(int uid, int policy) {
         if (Binder.getCallingUid() != uid) {
@@ -1725,6 +1751,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         synchronized (mQuotaLock) {
             final int oldPolicy = mUidCleartextPolicy.get(uid, StrictMode.NETWORK_POLICY_ACCEPT);
             if (oldPolicy == policy) {
+                // This also ensures we won't needlessly apply an ACCEPT policy if we've just
+                // enabled strict and the underlying iptables rules are empty.
                 return;
             }
 
@@ -1735,28 +1763,15 @@ public class NetworkManagementService extends INetworkManagementService.Stub
                 return;
             }
 
-            final String policyString;
-            switch (policy) {
-                case StrictMode.NETWORK_POLICY_ACCEPT:
-                    policyString = "accept";
-                    break;
-                case StrictMode.NETWORK_POLICY_LOG:
-                    policyString = "log";
-                    break;
-                case StrictMode.NETWORK_POLICY_REJECT:
-                    policyString = "reject";
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown policy " + policy);
-            }
-
-            try {
-                mConnector.execute("strict", "set_uid_cleartext_policy", uid, policyString);
-                mUidCleartextPolicy.put(uid, policy);
-            } catch (NativeDaemonConnectorException e) {
-                throw e.rethrowAsParcelableException();
+            // netd does not keep state on strict mode policies, and cannot replace a non-accept
+            // policy without deleting it first. Rather than add state to netd, just always send
+            // it an accept policy when switching between two non-accept policies.
+            if (oldPolicy != StrictMode.NETWORK_POLICY_ACCEPT &&
+                    policy != StrictMode.NETWORK_POLICY_ACCEPT) {
+                applyUidCleartextNetworkPolicy(uid, policy);
             }
         }
+        applyUidCleartextNetworkPolicy(uid, policy);
     }
 
     @Override
