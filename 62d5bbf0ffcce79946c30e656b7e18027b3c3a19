@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cff0f2ab_2473278e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-18T08:20:13Z",
+      "side": 1,
+      "message": "\"done\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 54,
+        "endLine": 9,
+        "endChar": 59
+      },
+      "revId": "62d5bbf0ffcce79946c30e656b7e18027b3c3a19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4469ef78_81086051",
+        "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-07-18T08:20:13Z",
+      "side": 1,
+      "message": "You could move this up to after the \"new IpManager\u0027, to make it clear that these calls happen during IpManager setup, and not as a consequence of calling startProvisioning().",
+      "range": {
+        "startLine": 115,
+        "startChar": 80,
+        "endLine": 115,
+        "endChar": 81
+      },
+      "revId": "62d5bbf0ffcce79946c30e656b7e18027b3c3a19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
