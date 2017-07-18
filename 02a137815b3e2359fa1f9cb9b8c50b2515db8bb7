@@ -22,6 +22,30 @@
       "revId": "02a137815b3e2359fa1f9cb9b8c50b2515db8bb7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f03f345_04c35a6b",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-07-18T03:23:51Z",
+      "side": 1,
+      "message": "I also removed the runnable. I always *see* the runnable pattern, but it really isn\u0027t needed here. Good opportunity to simplify. Thx, done.",
+      "parentUuid": "4ff80ddd_7a7f34d9",
+      "range": {
+        "startLine": 415,
+        "startChar": 8,
+        "endLine": 415,
+        "endChar": 18
+      },
+      "revId": "02a137815b3e2359fa1f9cb9b8c50b2515db8bb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
