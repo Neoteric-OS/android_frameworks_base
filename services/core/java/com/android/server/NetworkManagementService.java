@@ -552,7 +552,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         boolean nativeServiceAvailable = false;
         try {
             mNetdService = INetd.Stub.asInterface(ServiceManager.getService(NETD_SERVICE_NAME));
-            nativeServiceAvailable = mNetdService.isAlive();
+            nativeServiceAvailable = mNetdService != null && mNetdService.isAlive();
         } catch (RemoteException e) {}
         if (!nativeServiceAvailable) {
             Slog.wtf(TAG, "Can't connect to NativeNetdService " + NETD_SERVICE_NAME);
@@ -569,36 +569,30 @@ public class NetworkManagementService extends INetworkManagementService.Stub
 
         // only enable bandwidth control when support exists
         final boolean hasKernelSupport = new File("/proc/net/xt_qtaguid/ctrl").exists();
-        if (hasKernelSupport) {
-            Slog.d(TAG, "enabling bandwidth control");
-            try {
-                mConnector.execute("bandwidth", "enable");
-                mBandwidthControlEnabled = true;
-            } catch (NativeDaemonConnectorException e) {
-                Log.wtf(TAG, "problem enabling bandwidth controls", e);
-            }
-        } else {
-            Slog.i(TAG, "not enabling bandwidth control");
-        }
-
-        SystemProperties.set(PROP_QTAGUID_ENABLED, mBandwidthControlEnabled ? "1" : "0");
-
-        if (mBandwidthControlEnabled) {
-            try {
-                getBatteryStats().noteNetworkStatsEnabled();
-            } catch (RemoteException e) {
-            }
-        }
-
-        try {
-            mConnector.execute("strict", "enable");
-            mStrictEnabled = true;
-        } catch (NativeDaemonConnectorException e) {
-            Log.wtf(TAG, "Failed strict enable", e);
-        }
 
         // push any existing quota or UID rules
         synchronized (mQuotaLock) {
+
+            if (hasKernelSupport) {
+                Slog.d(TAG, "enabling bandwidth control");
+                try {
+                    mConnector.execute("bandwidth", "enable");
+                    mBandwidthControlEnabled = true;
+                } catch (NativeDaemonConnectorException e) {
+                    Log.wtf(TAG, "problem enabling bandwidth controls", e);
+                }
+            } else {
+                Slog.i(TAG, "not enabling bandwidth control");
+            }
+
+            SystemProperties.set(PROP_QTAGUID_ENABLED, mBandwidthControlEnabled ? "1" : "0");
+
+            try {
+                mConnector.execute("strict", "enable");
+                mStrictEnabled = true;
+            } catch (NativeDaemonConnectorException e) {
+                Log.wtf(TAG, "Failed strict enable", e);
+            }
 
             setDataSaverModeEnabled(mDataSaverMode);
 
@@ -650,7 +644,14 @@ public class NetworkManagementService extends INetworkManagementService.Stub
                 final SparseIntArray local = mUidCleartextPolicy;
                 mUidCleartextPolicy = new SparseIntArray();
                 for (int i = 0; i < local.size(); i++) {
-                    setUidCleartextNetworkPolicy(local.keyAt(i), local.valueAt(i));
+                    // We just enabled strict, so there are no currently active policies.
+                    // Don't program allow policies, since they would just attempt to delete rules
+                    // that don't exist.
+                    int uid = local.keyAt(i);
+                    int policy = local.valueAt(i);
+                    if (policy != StrictMode.NETWORK_POLICY_ACCEPT) {
+                        setUidCleartextNetworkPolicy(local.keyAt(i), local.valueAt(i));
+                    }
                 }
             }
 
@@ -672,6 +673,14 @@ public class NetworkManagementService extends INetworkManagementService.Stub
                 setFirewallChainEnabled(FIREWALL_CHAIN_POWERSAVE, true);
             }
         }
+
+        if (mBandwidthControlEnabled) {
+            try {
+                getBatteryStats().noteNetworkStatsEnabled();
+            } catch (RemoteException e) {
+            }
+        }
+
     }
 
     /**
