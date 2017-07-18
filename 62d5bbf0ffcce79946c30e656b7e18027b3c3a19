@@ -45,6 +45,30 @@
       "revId": "62d5bbf0ffcce79946c30e656b7e18027b3c3a19",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3a8369d_bc4e7eec",
+        "filename": "tests/net/java/android/net/ip/IpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-18T12:32:36Z",
+      "side": 1,
+      "message": "Done. I made a function to create IpManagers that also has these assertions.",
+      "parentUuid": "4469ef78_81086051",
+      "range": {
+        "startLine": 115,
+        "startChar": 80,
+        "endLine": 115,
+        "endChar": 81
+      },
+      "revId": "62d5bbf0ffcce79946c30e656b7e18027b3c3a19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
