@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1ba856e_f0e81003",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2017-07-18T06:32:52Z",
+      "side": 1,
+      "message": "There can be just one LE connection between device and phone.\n\nWe internally represent it as \"multiple\" connected apps, but saying we can do \u0027multiple\u0027 connections might be misleading to API users.",
+      "range": {
+        "startLine": 1129,
+        "startChar": 41,
+        "endLine": 1129,
+        "endChar": 44
+      },
+      "revId": "291c88179790a6b3a13e9fbba814a91914c2d225",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
