@@ -22,6 +22,30 @@
       "revId": "69708ea270eea6b82ebfb72e673de281d0c80fba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "872fd9f8_24b6c629",
+        "filename": "core/jni/android_view_MotionEvent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1096946
+      },
+      "writtenOn": "2017-07-18T15:59:36Z",
+      "side": 1,
+      "message": "\u003e which is kind of annoying since we\u0027re working around a static analyzer bug here\n\nAgreed. :/\n\n\u003e Can you rewrite this\n\nDone",
+      "parentUuid": "aecf7502_0e0781ab",
+      "range": {
+        "startLine": 349,
+        "startChar": 9,
+        "endLine": 349,
+        "endChar": 18
+      },
+      "revId": "69708ea270eea6b82ebfb72e673de281d0c80fba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
