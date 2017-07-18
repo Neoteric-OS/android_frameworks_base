@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f40308b_39b222ff",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 45
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-18T01:17:20Z",
+      "side": 1,
+      "message": "assert status \u003d\u003d OK here",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 36
+      },
+      "revId": "03fbad0b8cd360628899ec273f56e2b493c09558",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "580d8fc3_706c6490",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 45
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-18T01:17:20Z",
+      "side": 1,
+      "message": "I think it\u0027s worth adding a comment here explaining that we are checking whether the port is available. (If we did this more than once, it would be worth wrapping it in a helper function.)",
+      "revId": "03fbad0b8cd360628899ec273f56e2b493c09558",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95729204_3e4beb94",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 45
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-18T01:17:20Z",
+      "side": 1,
+      "message": "Optional: make this a static constant.",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 77
+      },
+      "revId": "03fbad0b8cd360628899ec273f56e2b493c09558",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f104d4a7_41dd67b0",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 45
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-18T01:17:20Z",
+      "side": 1,
+      "message": "Comment should clarify that we are talking about the case where a user has not cleaned up their resources correctly.",
+      "revId": "03fbad0b8cd360628899ec273f56e2b493c09558",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f0958e_f3bf9d1c",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 45
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-18T01:17:20Z",
+      "side": 1,
+      "message": "assert status \u003d\u003d OK here.",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 51
+      },
+      "revId": "03fbad0b8cd360628899ec273f56e2b493c09558",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150907ab_ccdf5497",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 45
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-18T01:17:20Z",
+      "side": 1,
+      "message": "If the argument matchers are the same for two calls, then you can chain calls to thenReturn().",
+      "range": {
+        "startLine": 275,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 40
+      },
+      "revId": "03fbad0b8cd360628899ec273f56e2b493c09558",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d828fed_aa6addc0",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 45
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-18T01:17:20Z",
+      "side": 1,
+      "message": "Did you forget to auto-format this comment? Looks like it should fit on one line. Also, end complete sentences with a period in comments.",
+      "range": {
+        "startLine": 286,
+        "startChar": 0,
+        "endLine": 287,
+        "endChar": 41
+      },
+      "revId": "03fbad0b8cd360628899ec273f56e2b493c09558",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef95a614_4f73f6dd",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 45
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-18T01:17:20Z",
+      "side": 1,
+      "message": "Where is the other direction?",
+      "range": {
+        "startLine": 395,
+        "startChar": 1,
+        "endLine": 402,
+        "endChar": 39
+      },
+      "revId": "03fbad0b8cd360628899ec273f56e2b493c09558",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ee9290_261ebc0f",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 45
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-18T01:17:20Z",
+      "side": 1,
+      "message": "why do you use a real PFD here and a mock(PFD) in the previous test? It looks like using a real one is simpler.",
+      "range": {
+        "startLine": 408,
+        "startChar": 51,
+        "endLine": 408,
+        "endChar": 54
+      },
+      "revId": "03fbad0b8cd360628899ec273f56e2b493c09558",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

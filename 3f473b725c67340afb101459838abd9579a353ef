@@ -425,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "25771d25_73292758",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-18T01:17:20Z",
+      "side": 1,
+      "message": "Thanks for adding the comment, but can we fix the method name too? How about testUdpEncapPortNotReleased?\n\n(Note: I think the name is weird to me because we are extremely verbose with no abbreviations until the last word. Since these are tests and not APIs, I think we have the choice of going with \"Encapsulation\" -\u003e \"Encap\" and \"Socket Port\" -\u003e \"Port\")",
+      "parentUuid": "04008fdb_773677ef",
+      "range": {
+        "startLine": 180,
+        "startChar": 16,
+        "endLine": 180,
+        "endChar": 49
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "325d77cc_5f658ea9",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 43
@@ -613,6 +637,30 @@
     },
     {
       "key": {
+        "uuid": "13cda657_555a0a6f",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-18T01:17:20Z",
+      "side": 1,
+      "message": "You are still using one random + one specific SPI. Any reason for that?",
+      "parentUuid": "a8da8fe4_91aa01c2",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 298,
+        "endChar": 75
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17efe2fc_8bcbba69",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 43
@@ -657,6 +705,30 @@
       "revId": "3f473b725c67340afb101459838abd9579a353ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b4d3248_14d22de6",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-07-18T01:17:20Z",
+      "side": 1,
+      "message": "I see now.",
+      "parentUuid": "b2ec848f_ec460f3e",
+      "range": {
+        "startLine": 353,
+        "startChar": 0,
+        "endLine": 353,
+        "endChar": 59
+      },
+      "revId": "3f473b725c67340afb101459838abd9579a353ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
