@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aecf7502_0e0781ab",
+        "filename": "core/jni/android_view_MotionEvent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2017-07-18T08:52:52Z",
+      "side": 1,
+      "message": "I find this more confusing to read than the old code, which is kind of annoying since we\u0027re working around a static analyzer bug here.\n\nCan you rewrite this to something like\nif (nativePtr) {\n    event \u003d reinterpret_cast\u003cMotionEvent*\u003e(nativePtr);\n} else {\n    event \u003d new MotionEvent();\n}",
+      "range": {
+        "startLine": 349,
+        "startChar": 9,
+        "endLine": 349,
+        "endChar": 18
+      },
+      "revId": "69708ea270eea6b82ebfb72e673de281d0c80fba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
