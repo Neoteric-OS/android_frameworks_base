@@ -835,6 +835,7 @@ public class ConnectivityServiceTest extends AndroidTestCase {
             mEthernetNetworkAgent.disconnect();
             mEthernetNetworkAgent = null;
         }
+        waitForIdle();
         super.tearDown();
     }
 
@@ -3272,12 +3273,20 @@ public class ConnectivityServiceTest extends AndroidTestCase {
         }
     }
 
+    public void testMany() throws Exception {
+        for (int i = 0; i < 50; i++) {
+            testNetworkInfoOfTypeNone();
+            tearDown();
+            setUp();
+        }
+    }
+
     @SmallTest
     public void testNetworkInfoOfTypeNone() {
         ConditionVariable broadcastCV = waitForConnectivityBroadcasts(1);
 
         verifyNoNetwork();
-        MockNetworkAgent lowpanNetwork = new MockNetworkAgent(TRANSPORT_WIFI_AWARE);
+        MockNetworkAgent wifiAware = new MockNetworkAgent(TRANSPORT_WIFI_AWARE);
         assertNull(mCm.getActiveNetworkInfo());
 
         Network[] allNetworks = mCm.getAllNetworks();
@@ -3291,19 +3300,19 @@ public class ConnectivityServiceTest extends AndroidTestCase {
         final TestNetworkCallback callback = new TestNetworkCallback();
         mCm.registerNetworkCallback(request, callback);
 
-        // Bring up lowpan.
-        lowpanNetwork.connect(false, false);
-        callback.expectAvailableCallbacks(lowpanNetwork);
+        // Bring up wifi aware network.
+        wifiAware.connect(false, false);
+        callback.expectAvailableCallbacks(wifiAware);
 
         assertNull(mCm.getActiveNetworkInfo());
         assertNull(mCm.getActiveNetwork());
-        // TODO: getAllNetworkInfo is dirty and returns a non-empty array rght from the start
+        // TODO: getAllNetworkInfo is dirty and returns a non-empty array right from the start
         // of this test. Fix it and uncomment the assert below.
         //assertEmpty(mCm.getAllNetworkInfo());
 
-        // Disconnect lowpan.
-        lowpanNetwork.disconnect();
-        callback.expectCallback(CallbackState.LOST, lowpanNetwork);
+        // Disconnect wifi aware network.
+        wifiAware.disconnect();
+        callback.expectCallback(CallbackState.LOST, wifiAware);
         mCm.unregisterNetworkCallback(callback);
 
         verifyNoNetwork();
