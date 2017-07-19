@@ -24,14 +24,18 @@ import static com.android.settingslib.mobile.MobileMappings.toDisplayIconKey;
 import static com.android.settingslib.mobile.MobileMappings.toIconKey;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.net.NetworkCapabilities;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.telephony.CellSignalStrength;
 import android.telephony.CellSignalStrengthCdma;
@@ -93,6 +97,10 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     boolean mInflateSignalStrengths = false;
     @VisibleForTesting
     final MobileStatusTracker mMobileStatusTracker;
+
+    private final ContentResolver mResolver;
+    private final Handler mHandler;
+    private final SettingsObserver mSettingsObserver;
 
     // Save the previous STATUS_HISTORY_SIZE states for logging.
     private final String[] mMobileStatusHistory = new String[STATUS_HISTORY_SIZE];
@@ -186,6 +194,10 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
             }
         };
         mMobileStatusTracker = mobileStatusTrackerFactory.createTracker(mMobileCallback);
+
+        mResolver = context.getContentResolver();
+        mHandler = new Handler();
+        mSettingsObserver = new SettingsObserver(mHandler);
     }
 
     void setConfiguration(Config config) {
@@ -225,6 +237,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
      */
     public void registerListener() {
         mMobileStatusTracker.setListening(true);
+        mSettingsObserver.register();
         mContext.getContentResolver().registerContentObserver(Global.getUriFor(Global.MOBILE_DATA),
                 true, mObserver);
         mContext.getContentResolver().registerContentObserver(Global.getUriFor(
@@ -243,6 +256,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
      * Stop listening for phone state changes.
      */
     public void unregisterListener() {
+        mSettingsObserver.unregister();
         mMobileStatusTracker.setListening(false);
         mContext.getContentResolver().unregisterContentObserver(mObserver);
         mContext.unregisterReceiver(mVolteSwitchObserver);
@@ -931,6 +945,39 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         public String toString() {
             return "SbInfo: showTriangle=" + showTriangle + " ratTypeIcon=" + ratTypeIcon
                     + " icon=" + icon;
+        }
+    }
+
+    private final class SettingsObserver extends ContentObserver {
+
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void register() {
+            mResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SHOW_FOURG_ICON),
+                    false, this, UserHandle.USER_ALL);
+            updateSettings();
+        }
+
+        void unregister() {
+            mResolver.unregisterContentObserver(this);
+        }
+
+        void updateSettings() {
+            notifyUpdate();
+        }
+
+        void notifyUpdate() {
+            mConfig = Config.readConfig(mContext);
+            setConfiguration(mConfig);
+            notifyListeners();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            notifyUpdate();
         }
     }
 }

@@ -19,6 +19,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.PersistableBundle;
 import android.os.SystemProperties;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.telephony.Annotation;
 import android.telephony.CarrierConfigManager;
 import android.telephony.SubscriptionManager;
@@ -240,6 +242,12 @@ public class MobileMappings {
             config.hspaDataDistinguishable =
                     res.getBoolean(R.bool.config_hspa_data_distinguishable);
 
+            final boolean show4gForLte = Settings.System.getIntForUser(
+                    context.getContentResolver(),
+                    Settings.System.SHOW_FOURG_ICON, 0,
+                    UserHandle.USER_CURRENT) == 1;
+            config.show4gForLte = show4gForLte;
+
             CarrierConfigManager configMgr = (CarrierConfigManager)
                     context.getSystemService(Context.CARRIER_CONFIG_SERVICE);
             // Handle specific carrier config values for the default data SIM
@@ -249,10 +257,8 @@ public class MobileMappings {
             if (b != null) {
                 config.alwaysShowDataRatIcon = b.getBoolean(
                         CarrierConfigManager.KEY_ALWAYS_SHOW_DATA_RAT_ICON_BOOL);
-                config.show4gForLte = b.getBoolean(
-                        CarrierConfigManager.KEY_SHOW_4G_FOR_LTE_DATA_ICON_BOOL);
                 config.show4glteForLte = b.getBoolean(
-                        CarrierConfigManager.KEY_SHOW_4GLTE_FOR_LTE_DATA_ICON_BOOL);
+                        CarrierConfigManager.KEY_SHOW_4GLTE_FOR_LTE_DATA_ICON_BOOL) && !show4gForLte;
                 config.show4gFor3g = b.getBoolean(
                         CarrierConfigManager.KEY_SHOW_4G_FOR_3G_DATA_ICON_BOOL);
                 config.hideLtePlus = b.getBoolean(

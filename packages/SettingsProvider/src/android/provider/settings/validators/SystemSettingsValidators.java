@@ -231,5 +231,6 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.STATUSBAR_CLOCK_DATE_DISPLAY, new InclusiveIntegerRangeValidator(0, 2));
         VALIDATORS.put(System.STATUSBAR_CLOCK_DATE_STYLE, new InclusiveIntegerRangeValidator(0, 2));
         VALIDATORS.put(System.STATUSBAR_CLOCK_DATE_POSITION, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.SHOW_FOURG_ICON, BOOLEAN_VALIDATOR);
     }
 }
