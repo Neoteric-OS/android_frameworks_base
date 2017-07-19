@@ -24,7 +24,7 @@
 #include "src/piex.h"
 
 #include <jni.h>
-#include <JNIHelp.h>
+#include <nativehelper/JNIHelp.h>
 #include <androidfw/Asset.h>
 #include <android_runtime/AndroidRuntime.h>
 #include <android/graphics/Utils.h>

@@ -18,10 +18,10 @@
 
 //#define LOG_NDEBUG 0
 
-#include "JNIHelp.h"
+#include <nativehelper/JNIHelp.h>
 #include "jni.h"
 
-#include <ScopedUtfChars.h>
+#include <nativehelper/ScopedUtfChars.h>
 
 #include <limits.h>
 

@@ -17,7 +17,7 @@
 #define LOG_TAG "AssetAtlasService"
 
 #include "jni.h"
-#include "JNIHelp.h"
+#include <nativehelper/JNIHelp.h>
 #include "android/graphics/GraphicsJNI.h"
 
 #include <android_view_GraphicBuffer.h>

@@ -32,7 +32,7 @@
 #include <utils/misc.h>
 
 #include "jni.h"
-#include "JNIHelp.h"
+#include <nativehelper/JNIHelp.h>
 
 // ----------------------------------------------------------------------------
 

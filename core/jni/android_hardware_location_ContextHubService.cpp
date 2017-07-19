@@ -36,7 +36,7 @@
 #include <android-base/macros.h>
 #include <cutils/log.h>
 
-#include "JNIHelp.h"
+#include <nativehelper/JNIHelp.h>
 #include "core_jni_helpers.h"
 
 static constexpr jint OS_APP_ID = -1;

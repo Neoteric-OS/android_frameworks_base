@@ -21,7 +21,7 @@
 #define LOCATION_CLASS_NAME "android/location/Location"
 
 #include "jni.h"
-#include "JNIHelp.h"
+#include <nativehelper/JNIHelp.h>
 #include "android_runtime/AndroidRuntime.h"
 #include "android_runtime/Log.h"
 #include "hardware/fused_location.h"
