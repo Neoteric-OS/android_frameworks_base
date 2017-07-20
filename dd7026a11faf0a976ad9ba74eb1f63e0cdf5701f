@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "091ccfd8_618f7787",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-20T17:40:48Z",
+      "side": 1,
+      "message": "Please define constants for MediaRequestType.\nMENU_REQUEST_TYPE_ACTIVATED \u003d 0\nMENU_REQUEST_TYPE_DEACTIVATED \u003d 1\nMENU_REQUEST_TYPE_QUERY \u003d 2",
+      "range": {
+        "startLine": 180,
+        "startChar": 95,
+        "endLine": 180,
+        "endChar": 115
+      },
+      "revId": "dd7026a11faf0a976ad9ba74eb1f63e0cdf5701f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ead0fd33_5bdc4cf2",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-20T17:40:48Z",
+      "side": 1,
+      "message": "What about using HdmiControlManager instead of Intent?",
+      "range": {
+        "startLine": 437,
+        "startChar": 12,
+        "endLine": 437,
+        "endChar": 58
+      },
+      "revId": "dd7026a11faf0a976ad9ba74eb1f63e0cdf5701f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d9db55c_d2879021",
+        "filename": "services/core/java/com/android/server/hdmi/MenuRequestAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-20T17:40:48Z",
+      "side": 1,
+      "message": "Please use AOSP copyright.\nAnd Please follow AOSP code style guide for others.\nhttps://source.android.com/source/code-style",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "dd7026a11faf0a976ad9ba74eb1f63e0cdf5701f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c13a2a68_23d5f138",
+        "filename": "services/core/java/com/android/server/hdmi/MenuRequestAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-20T17:40:48Z",
+      "side": 1,
+      "message": "Remove an empty line.",
+      "revId": "dd7026a11faf0a976ad9ba74eb1f63e0cdf5701f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ef273eb_cb8f15cc",
+        "filename": "services/core/java/com/android/server/hdmi/MenuRequestAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-20T17:40:48Z",
+      "side": 1,
+      "message": "add a space before and after operation",
+      "range": {
+        "startLine": 124,
+        "startChar": 47,
+        "endLine": 124,
+        "endChar": 48
+      },
+      "revId": "dd7026a11faf0a976ad9ba74eb1f63e0cdf5701f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1dc87584_d1a552c1",
+        "filename": "services/core/java/com/android/server/hdmi/MenuRequestAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-20T17:40:48Z",
+      "side": 1,
+      "message": "more than 100 chars",
+      "range": {
+        "startLine": 124,
+        "startChar": 99,
+        "endLine": 124,
+        "endChar": 102
+      },
+      "revId": "dd7026a11faf0a976ad9ba74eb1f63e0cdf5701f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ca93a4c_256d9964",
+        "filename": "services/core/java/com/android/server/hdmi/MenuRequestAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-07-20T17:40:48Z",
+      "side": 1,
+      "message": "Where is the value of mState changed?",
+      "range": {
+        "startLine": 148,
+        "startChar": 12,
+        "endLine": 148,
+        "endChar": 18
+      },
+      "revId": "dd7026a11faf0a976ad9ba74eb1f63e0cdf5701f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
