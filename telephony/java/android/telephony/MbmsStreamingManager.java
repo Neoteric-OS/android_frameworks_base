@@ -53,8 +53,16 @@ public class MbmsStreamingManager {
     public static final String MBMS_STREAMING_SERVICE_ACTION =
             "android.telephony.action.EmbmsStreaming";
 
+    private static boolean sIsInitialized = false;
+
     private AtomicReference<IMbmsStreamingService> mService = new AtomicReference<>(null);
-    private MbmsStreamingManagerCallback mCallbackToApp;
+    private final MbmsStreamingManagerCallback mCallbackToApp;
+    private IBinder.DeathRecipient mDeathRecipient = new IBinder.DeathRecipient() {
+        @Override
+        public void binderDied() {
+            sendErrorToApp(MbmsException.ERROR_MIDDLEWARE_LOST, "Received death notification");
+        }
+    };
 
     private final Context mContext;
     private int mSubscriptionId = INVALID_SUBSCRIPTION_ID;
@@ -74,6 +82,18 @@ public class MbmsStreamingManager {
      * main thread. This may throw an {@link MbmsException}, indicating errors that may happen
      * during the initialization or binding process.
      *
+     *
+     * You may only have one instance of {@link MbmsStreamingManager} per UID. If you call this
+     * method while there is an active instance of {@link MbmsStreamingManager} in your process
+     * (in other words, one that has not had {@link #dispose()} called on it), this method will
+     * throw an {@link MbmsException}. If you call this method in a different process
+     * running under the same UID, an error will be indicated via
+     * {@link MbmsStreamingManagerCallback#error(int, String)}.
+     *
+     * Note that initialization may fail asynchronously. If you wish to try again after you
+     * receive such an asynchronous error, you must call dispose() on the instance of
+     * {@link MbmsStreamingManager} that you received before calling this method again.
+     *
      * @param context The {@link Context} to use.
      * @param callback A callback object on which you wish to receive results of asynchronous
      *                 operations.
@@ -82,8 +102,12 @@ public class MbmsStreamingManager {
     public static MbmsStreamingManager create(Context context,
             MbmsStreamingManagerCallback callback, int subscriptionId)
             throws MbmsException {
+        if (sIsInitialized) {
+            throw new MbmsException(MbmsException.InitializationErrors.ERROR_DUPLICATE_INITIALIZE);
+        }
         MbmsStreamingManager manager = new MbmsStreamingManager(context, callback, subscriptionId);
         manager.bindAndInitialize();
+        sIsInitialized = true;
         return manager;
     }
 
@@ -104,17 +128,19 @@ public class MbmsStreamingManager {
      * May throw an {@link IllegalStateException}
      */
     public void dispose() {
-        IMbmsStreamingService streamingService = mService.get();
-        if (streamingService == null) {
-            // Ignore and return, assume already disposed.
-            return;
-        }
         try {
+            IMbmsStreamingService streamingService = mService.get();
+            if (streamingService == null) {
+                // Ignore and return, assume already disposed.
+                return;
+            }
             streamingService.dispose(mSubscriptionId);
         } catch (RemoteException e) {
             // Ignore for now
+        } finally {
+            mService.set(null);
+            sIsInitialized = false;
         }
-        mService.set(null);
     }
 
     /**
@@ -209,26 +235,30 @@ public class MbmsStreamingManager {
                             result = streamingService.initialize(mCallbackToApp, mSubscriptionId);
                         } catch (RemoteException e) {
                             Log.e(LOG_TAG, "Service died before initialization");
+                            sendErrorToApp(
+                                    MbmsException.InitializationErrors.ERROR_UNABLE_TO_INITIALIZE,
+                                    e.toString());
+                            sIsInitialized = false;
                             return;
                         } catch (RuntimeException e) {
                             Log.e(LOG_TAG, "Runtime exception during initialization");
-                            try {
-                                mCallbackToApp.error(
-                                        MbmsException.InitializationErrors
-                                                .ERROR_UNABLE_TO_INITIALIZE,
-                                        e.toString());
-                            } catch (RemoteException e1) {
-                                // ignore
-                            }
+                            sendErrorToApp(
+                                    MbmsException.InitializationErrors.ERROR_UNABLE_TO_INITIALIZE,
+                                    e.toString());
+                            sIsInitialized = false;
                             return;
                         }
                         if (result != MbmsException.SUCCESS) {
-                            try {
-                                mCallbackToApp.error(
-                                        result, "Error returned during initialization");
-                            } catch (RemoteException e) {
-                                // ignore
-                            }
+                            sendErrorToApp(result, "Error returned during initialization");
+                            sIsInitialized = false;
+                            return;
+                        }
+                        try {
+                            streamingService.asBinder().linkToDeath(mDeathRecipient, 0);
+                        } catch (RemoteException e) {
+                            sendErrorToApp(MbmsException.ERROR_MIDDLEWARE_LOST,
+                                    "Middleware lost during initialization");
+                            sIsInitialized = false;
                             return;
                         }
                         mService.set(streamingService);
@@ -236,8 +266,17 @@ public class MbmsStreamingManager {
 
                     @Override
                     public void onServiceDisconnected(ComponentName name) {
+                        sIsInitialized = false;
                         mService.set(null);
                     }
                 });
+    }
+
+    private void sendErrorToApp(int errorCode, String message) {
+        try {
+            mCallbackToApp.error(errorCode, message);
+        } catch (RemoteException e) {
+            // Ignore, should not happen locally.
+        }
     }
 }
