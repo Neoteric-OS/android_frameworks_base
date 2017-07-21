@@ -10776,7 +10776,8 @@ public final class ActivityManagerService extends ActivityManagerNative
                 cpr = mProviderMap.getProviderByName(name, UserHandle.USER_SYSTEM);
                 if (cpr != null) {
                     cpi = cpr.info;
-                    if (isSingleton(cpi.processName, cpi.applicationInfo,
+                    if (r != null &&
+                        isSingleton(cpi.processName, cpi.applicationInfo,
                             cpi.name, cpi.flags)
                             && isValidSingletonCall(r.uid, cpi.applicationInfo.uid)) {
                         userId = UserHandle.USER_SYSTEM;
@@ -10889,7 +10890,8 @@ public final class ActivityManagerService extends ActivityManagerNative
                 // (it's a call within the same user || the provider is a
                 // privileged app)
                 // Then allow connecting to the singleton provider
-                boolean singleton = isSingleton(cpi.processName, cpi.applicationInfo,
+                boolean singleton = r != null &&
+                    isSingleton(cpi.processName, cpi.applicationInfo,
                         cpi.name, cpi.flags)
                         && isValidSingletonCall(r.uid, cpi.applicationInfo.uid);
                 if (singleton) {
