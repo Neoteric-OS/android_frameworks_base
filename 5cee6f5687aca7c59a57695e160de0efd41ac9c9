@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aea98b8_cb97aa9d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 43
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-21T00:34:59Z",
+      "side": 1,
+      "message": "does this cover your IpSec unit tests ?",
+      "range": {
+        "startLine": 11,
+        "startChar": 14,
+        "endLine": 11,
+        "endChar": 28
+      },
+      "revId": "5cee6f5687aca7c59a57695e160de0efd41ac9c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28fdb41f_4d9bc188",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-21T00:34:59Z",
+      "side": 1,
+      "message": "you don\u0027t need to import anything in java.lang. It is always in scope.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "5cee6f5687aca7c59a57695e160de0efd41ac9c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ffdb8d2_4aa6b342",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-21T00:34:59Z",
+      "side": 1,
+      "message": "btw this flow variable should probably be final (which does not prevent from mutating the array or stuff inside the array).\n\nyou can fix this in a different patch.",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 54
+      },
+      "revId": "5cee6f5687aca7c59a57695e160de0efd41ac9c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
