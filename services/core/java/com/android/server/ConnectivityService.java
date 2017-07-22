@@ -130,7 +130,6 @@ import com.android.server.connectivity.DataConnectionStats;
 import com.android.server.connectivity.KeepaliveTracker;
 import com.android.server.connectivity.MockableSystemProperties;
 import com.android.server.connectivity.LingerMonitor;
-import com.android.server.connectivity.Nat464Xlat;
 import com.android.server.connectivity.NetworkAgentInfo;
 import com.android.server.connectivity.NetworkDiagnostics;
 import com.android.server.connectivity.NetworkMonitor;
@@ -234,7 +233,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private boolean mTestMode;
     private static ConnectivityService sServiceInstance;
 
-    private INetworkManagementService mNetd;
+    public INetworkManagementService netd;
     private INetworkStatsService mStatsService;
     private INetworkPolicyManager mPolicyManager;
     private NetworkPolicyManagerInternal mPolicyManagerInternal;
@@ -711,7 +710,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mLingerDelayMs = mSystemProperties.getInt(LINGER_DELAY_PROPERTY, DEFAULT_LINGER_DELAY_MS);
 
         mContext = checkNotNull(context, "missing Context");
-        mNetd = checkNotNull(netManager, "missing INetworkManagementService");
+        netd = checkNotNull(netManager, "missing INetworkManagementService");
         mStatsService = checkNotNull(statsService, "missing INetworkStatsService");
         mPolicyManager = checkNotNull(policyManager, "missing INetworkPolicyManager");
         mPolicyManagerInternal = checkNotNull(
@@ -796,7 +795,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         mTethering = makeTethering();
 
-        mPermissionMonitor = new PermissionMonitor(mContext, mNetd);
+        mPermissionMonitor = new PermissionMonitor(mContext, netd);
 
         //set up the listener for user state for creating user VPNs
         IntentFilter intentFilter = new IntentFilter();
@@ -811,8 +810,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 new IntentFilter(Intent.ACTION_USER_PRESENT), null, null);
 
         try {
-            mNetd.registerObserver(mTethering);
-            mNetd.registerObserver(mDataActivityObserver);
+            netd.registerObserver(mTethering);
+            netd.registerObserver(mDataActivityObserver);
         } catch (RemoteException e) {
             loge("Error registering observer :" + e);
         }
@@ -847,7 +846,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private Tethering makeTethering() {
         // TODO: Move other elements into @Overridden getters.
         final TetheringDependencies deps = new TetheringDependencies();
-        return new Tethering(mContext, mNetd, mStatsService, mPolicyManager,
+        return new Tethering(mContext, netd, mStatsService, mPolicyManager,
                 IoThread.get().getLooper(), new MockableSystemProperties(),
                 deps);
     }
@@ -1448,7 +1447,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (DBG) log("Adding legacy route " + bestRoute +
                 " for UID/PID " + uid + "/" + Binder.getCallingPid());
         try {
-            mNetd.addLegacyRouteForNetId(netId, bestRoute, uid);
+            netd.addLegacyRouteForNetId(netId, bestRoute, uid);
         } catch (Exception e) {
             // never crash - catch them all
             if (DBG) loge("Exception trying to add a route: " + e);
@@ -1683,7 +1682,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (timeout > 0 && iface != null && type != ConnectivityManager.TYPE_NONE) {
             try {
-                mNetd.addIdleTimer(iface, timeout, type);
+                netd.addIdleTimer(iface, timeout, type);
             } catch (Exception e) {
                 // You shall not crash!
                 loge("Exception in setupDataActivityTracking " + e);
@@ -1702,7 +1701,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                               caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI))) {
             try {
                 // the call fails silently if no idletimer setup for this interface
-                mNetd.removeIdleTimer(iface);
+                netd.removeIdleTimer(iface);
             } catch (Exception e) {
                 loge("Exception in removeDataActivityTracking " + e);
             }
@@ -1737,7 +1736,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         try {
             if (VDBG) log("Setting MTU size: " + iface + ", " + mtu);
-            mNetd.setMtu(iface, mtu);
+            netd.setMtu(iface, mtu);
         } catch (Exception e) {
             Slog.e(TAG, "exception in setMtu()" + e);
         }
@@ -2038,7 +2037,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
                 case NetworkAgent.EVENT_UID_RANGES_ADDED: {
                     try {
-                        mNetd.addVpnUidRanges(nai.network.netId, (UidRange[])msg.obj);
+                        netd.addVpnUidRanges(nai.network.netId, (UidRange[])msg.obj);
                     } catch (Exception e) {
                         // Never crash!
                         loge("Exception in addVpnUidRanges: " + e);
@@ -2047,7 +2046,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
                 case NetworkAgent.EVENT_UID_RANGES_REMOVED: {
                     try {
-                        mNetd.removeVpnUidRanges(nai.network.netId, (UidRange[])msg.obj);
+                        netd.removeVpnUidRanges(nai.network.netId, (UidRange[])msg.obj);
                     } catch (Exception e) {
                         // Never crash!
                         loge("Exception in removeVpnUidRanges: " + e);
@@ -2272,7 +2271,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
             nai.networkMonitor.sendMessage(NetworkMonitor.CMD_NETWORK_DISCONNECTED);
             mNetworkAgentInfos.remove(msg.replyTo);
-            maybeStopClat(nai);
+            nai.maybeStopClat();
             synchronized (mNetworkForNetId) {
                 // Remove the NetworkAgent, but don't mark the netId as
                 // available until we've told netd to delete it below.
@@ -2306,7 +2305,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 // NetworkFactories, so network traffic isn't interrupted for an unnecessarily
                 // long time.
                 try {
-                    mNetd.removeNetwork(nai.network.netId);
+                    netd.removeNetwork(nai.network.netId);
                 } catch (Exception e) {
                     loge("Exception removing network: " + e);
                 }
@@ -3572,7 +3571,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     Slog.w(TAG, "VPN for user " + user + " not ready yet. Skipping lockdown");
                     return false;
                 }
-                setLockdownTracker(new LockdownVpnTracker(mContext, mNetd, this, vpn, profile));
+                setLockdownTracker(new LockdownVpnTracker(mContext, netd, this, vpn, profile));
             }
         } else {
             setLockdownTracker(null);
@@ -3810,7 +3809,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 loge("Starting user already has a VPN");
                 return;
             }
-            userVpn = new Vpn(mHandler.getLooper(), mContext, mNetd, userId);
+            userVpn = new Vpn(mHandler.getLooper(), mContext, netd, userId);
             mVpns.put(userId, userVpn);
         }
         if (mUserManager.getUserInfo(userId).isPrimary() && LockdownVpnTracker.isEnabled()) {
@@ -4366,7 +4365,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateDnses(newLp, oldLp, netId);
 
         // Start or stop clat accordingly to network state.
-        updateClat(networkAgent);
+        networkAgent.updateClat();
         if (isDefaultNetwork(networkAgent)) {
             handleApplyDefaultProxy(newLp.getHttpProxy());
         } else {
@@ -4379,67 +4378,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         mKeepaliveTracker.handleCheckKeepalivesStillValid(networkAgent);
-    }
-
-    private void updateClat(NetworkAgentInfo nai) {
-        if (Nat464Xlat.requiresClat(nai)) {
-            maybeStartClat(nai);
-        } else {
-            maybeStopClat(nai);
-        }
-    }
-
-    /** Ensure clat has started for this network. */
-    private void maybeStartClat(NetworkAgentInfo nai) {
-        if (nai.clatd != null) {
-            return;
-        }
-        nai.clatd = new Nat464Xlat(mNetd, nai);
-        nai.clatd.start();
-        registerClatInterfaceListener(nai);
-    }
-
-    /** Ensure clat has stopped for this network. */
-    private void maybeStopClat(NetworkAgentInfo nai) {
-        if (nai.clatd == null) {
-            return;
-        }
-        nai.clatd.stop();
-        nai.clatd = null;
-    }
-
-    private void registerClatInterfaceListener(NetworkAgentInfo nai) {
-        BaseNetworkObserver observer = new BaseNetworkObserver() {
-            @Override
-            public void interfaceLinkStateChanged(String iface, boolean up) {
-                mHandler.post(() -> {
-                    if (nai.clatd == null) {
-                        return;
-                    }
-                    LinkProperties newLp = nai.clatd.interfaceLinkStateChanged(iface, up);
-                    handleLinkPropertiesChanged(nai, newLp);
-                });
-            }
-
-            @Override
-            public void interfaceRemoved(String iface) {
-                try {
-                    mNetd.unregisterObserver(this);
-                } catch(RemoteException cannotHappen) {
-                }
-                mHandler.post(() -> {
-                    if (nai.clatd == null) {
-                        return;
-                    }
-                    LinkProperties newLp = nai.clatd.interfaceRemoved(iface);
-                    handleLinkPropertiesChanged(nai, newLp);
-                });
-            }
-        };
-        try {
-            mNetd.registerObserver(observer);
-        } catch(RemoteException cannotHappen) {
-        }
     }
 
     private void wakeupModifyInterface(String iface, NetworkCapabilities caps, boolean add) {
@@ -4463,9 +4401,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final String prefix = "iface:" + iface;
         try {
             if (add) {
-                mNetd.getNetdService().wakeupAddInterface(iface, prefix, mark, mask);
+                netd.getNetdService().wakeupAddInterface(iface, prefix, mark, mask);
             } else {
-                mNetd.getNetdService().wakeupDelInterface(iface, prefix, mark, mask);
+                netd.getNetdService().wakeupDelInterface(iface, prefix, mark, mask);
             }
         } catch (Exception e) {
             loge("Exception modifying wakeup packet monitoring: " + e);
@@ -4484,7 +4422,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         for (String iface : interfaceDiff.added) {
             try {
                 if (DBG) log("Adding iface " + iface + " to network " + netId);
-                mNetd.addInterfaceToNetwork(iface, netId);
+                netd.addInterfaceToNetwork(iface, netId);
                 wakeupModifyInterface(iface, caps, true);
             } catch (Exception e) {
                 loge("Exception adding interface: " + e);
@@ -4494,7 +4432,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             try {
                 if (DBG) log("Removing iface " + iface + " from network " + netId);
                 wakeupModifyInterface(iface, caps, false);
-                mNetd.removeInterfaceFromNetwork(iface, netId);
+                netd.removeInterfaceFromNetwork(iface, netId);
             } catch (Exception e) {
                 loge("Exception removing interface: " + e);
             }
@@ -4520,7 +4458,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (route.hasGateway()) continue;
             if (VDBG) log("Adding Route [" + route + "] to network " + netId);
             try {
-                mNetd.addRoute(netId, route);
+                netd.addRoute(netId, route);
             } catch (Exception e) {
                 if ((route.getDestination().getAddress() instanceof Inet4Address) || VDBG) {
                     loge("Exception in addRoute for non-gateway: " + e);
@@ -4531,7 +4469,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (route.hasGateway() == false) continue;
             if (VDBG) log("Adding Route [" + route + "] to network " + netId);
             try {
-                mNetd.addRoute(netId, route);
+                netd.addRoute(netId, route);
             } catch (Exception e) {
                 if ((route.getGateway() instanceof Inet4Address) || VDBG) {
                     loge("Exception in addRoute for gateway: " + e);
@@ -4542,7 +4480,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         for (RouteInfo route : routeDiff.removed) {
             if (VDBG) log("Removing Route [" + route + "] from network " + netId);
             try {
-                mNetd.removeRoute(netId, route);
+                netd.removeRoute(netId, route);
             } catch (Exception e) {
                 loge("Exception in removeRoute: " + e);
             }
@@ -4558,7 +4496,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         Collection<InetAddress> dnses = newLp.getDnsServers();
         if (DBG) log("Setting DNS servers for network " + netId + " to " + dnses);
         try {
-            mNetd.setDnsConfigurationForNetwork(
+            netd.setDnsConfigurationForNetwork(
                     netId, NetworkUtils.makeStrings(dnses), newLp.getDomains());
         } catch (Exception e) {
             loge("Exception in setDnsConfigurationForNetwork: " + e);
@@ -4651,7 +4589,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final String newPermission = getNetworkPermission(networkCapabilities);
         if (!Objects.equals(oldPermission, newPermission) && nai.created && !nai.isVPN()) {
             try {
-                mNetd.setNetworkPermission(nai.network.netId, newPermission);
+                netd.setNetworkPermission(nai.network.netId, newPermission);
             } catch (RemoteException e) {
                 loge("Exception in setNetworkPermission: " + e);
             }
@@ -4810,7 +4748,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (DBG) log("Switching to new default network: " + newNetwork);
         setupDataActivityTracking(newNetwork);
         try {
-            mNetd.setDefaultNetId(newNetwork.network.netId);
+            netd.setDefaultNetId(newNetwork.network.netId);
         } catch (Exception e) {
             loge("Exception setting default network :" + e);
         }
@@ -5175,7 +5113,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private void handleLinkPropertiesChanged(NetworkAgentInfo nai, LinkProperties newLp) {
+    public void handleLinkPropertiesChanged(NetworkAgentInfo nai, LinkProperties newLp) {
         if (VDBG) {
             log("Update of LinkProperties for " + nai.name() +
                     "; created=" + nai.created +
@@ -5224,12 +5162,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
             try {
                 // This should never fail.  Specifying an already in use NetID will cause failure.
                 if (networkAgent.isVPN()) {
-                    mNetd.createVirtualNetwork(networkAgent.network.netId,
+                    netd.createVirtualNetwork(networkAgent.network.netId,
                             !networkAgent.linkProperties.getDnsServers().isEmpty(),
                             (networkAgent.networkMisc == null ||
                                 !networkAgent.networkMisc.allowBypass));
                 } else {
-                    mNetd.createPhysicalNetwork(networkAgent.network.netId,
+                    netd.createPhysicalNetwork(networkAgent.network.netId,
                             getNetworkPermission(networkAgent.networkCapabilities));
                 }
             } catch (Exception e) {

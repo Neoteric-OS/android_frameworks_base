@@ -28,6 +28,7 @@ import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.os.Handler;
 import android.os.Messenger;
+import android.os.RemoteException;
 import android.os.SystemClock;
 import android.util.Log;
 import android.util.SparseArray;
@@ -36,6 +37,7 @@ import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.WakeupMessage;
 import com.android.server.ConnectivityService;
 import com.android.server.connectivity.NetworkMonitor;
+import com.android.server.net.BaseNetworkObserver;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -549,6 +551,67 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
 
     public void dumpLingerTimers(PrintWriter pw) {
         for (LingerTimer timer : mLingerTimers) { pw.println(timer); }
+    }
+
+    public void updateClat() {
+        if (Nat464Xlat.requiresClat(this)) {
+            ensureClatIsStarted();
+        } else {
+            ensureClatIsStopped();
+        }
+    }
+
+    /** Ensure clat has started for this network. */
+    public void ensureClatIsStarted() {
+        if (clatd != null) {
+            return;
+        }
+        clatd = new Nat464Xlat(mConnService.netd, this);
+        clatd.start();
+        registerClatInterfaceListener();
+    }
+
+    /** Ensure clat has stopped for this network. */
+    public void ensureClatIsStopped() {
+        if (clatd == null) {
+            return;
+        }
+        clatd.stop();
+        clatd = null;
+    }
+
+    private void registerClatInterfaceListener() {
+        BaseNetworkObserver observer = new BaseNetworkObserver() {
+            @Override
+            public void interfaceLinkStateChanged(String iface, boolean up) {
+                mHandler.post(() -> {
+                    if (clatd == null) {
+                        return;
+                    }
+                    LinkProperties newLp = clatd.interfaceLinkStateChanged(iface, up);
+                    mConnService.handleLinkPropertiesChanged(NetworkAgentInfo.this, newLp);
+                });
+            }
+
+            @Override
+            public void interfaceRemoved(String iface) {
+                try {
+                    mConnService.netd.unregisterObserver(this);
+                } catch(RemoteException cannotHappen) {
+                }
+                mHandler.post(() -> {
+                    if (clatd == null) {
+                        return;
+                    }
+                    LinkProperties newLp = clatd.interfaceRemoved(iface);
+                    mConnService.handleLinkPropertiesChanged(NetworkAgentInfo.this, newLp);
+                });
+            }
+        };
+        try {
+            mConnService.netd.registerObserver(observer);
+        } catch(RemoteException cannotHappen) {
+        }
     }
 
     public String toString() {
