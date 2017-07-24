@@ -25,8 +25,6 @@ LOCAL_CFLAGS += -include bionic/libc/kernel/uapi/linux/types.h
 
 LOCAL_SHARED_LIBRARIES := libcutils
 
-LOCAL_CLANG := true
-
 LOCAL_CPPFLAGS := -Werror
 
 include $(BUILD_SHARED_LIBRARY)
