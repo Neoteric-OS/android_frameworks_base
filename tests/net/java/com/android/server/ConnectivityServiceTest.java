@@ -3334,6 +3334,22 @@ public class ConnectivityServiceTest extends AndroidTestCase {
         assertException(() -> { mCm.requestRouteToHostAddress(TYPE_NONE, null); }, unsupported);
     }
 
+    @SmallTest
+    public void testNat464Xlat() {
+        // pass
+        //
+        // create a wifi nai with ipv6 and no ipv4
+        // check that netd gets the startClat command
+        // send the notification for interface up
+        //  - ipv4 arrives
+        //    check that stop is called
+        //  - nai disconnect
+        //    check that stop is called
+
+        mWiFiNetworkAgent = new MockNetworkAgent(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(false);
+    }
+
     private static <T> void assertEmpty(T[] ts) {
         int length = ts.length;
         assertEquals("expected empty array, but length was " + length, 0, length);
