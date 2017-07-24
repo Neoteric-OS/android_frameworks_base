@@ -240,7 +240,9 @@ public class AppOpsManager {
     /** @hide Control whether an application is allowed to run in the background. */
     public static final int OP_RUN_IN_BACKGROUND = 63;
     /** @hide */
-    public static final int _NUM_OP = 64;
+    public static final int OP_AUTO_START = 64;
+    /** @hide */
+    public static final int _NUM_OP = 65;
 
     /** Access to coarse location information. */
     public static final String OPSTR_COARSE_LOCATION = "android:coarse_location";
@@ -338,7 +340,8 @@ public class AppOpsManager {
     /** @hide Get device accounts. */
     public static final String OPSTR_GET_ACCOUNTS
             = "android:get_accounts";
-
+    /** @hide */
+    public static final String OPSTR_AUTO_START = "android:auto_start";
     private static final int[] RUNTIME_PERMISSIONS_OPS = {
             // Contacts
             OP_READ_CONTACTS,
@@ -449,6 +452,7 @@ public class AppOpsManager {
             OP_TURN_SCREEN_ON,
             OP_GET_ACCOUNTS,
             OP_RUN_IN_BACKGROUND,
+            OP_AUTO_START,
     };
 
     /**
@@ -520,6 +524,7 @@ public class AppOpsManager {
             null,
             OPSTR_GET_ACCOUNTS,
             null,
+            OPSTR_AUTO_START,
     };
 
     /**
@@ -591,6 +596,7 @@ public class AppOpsManager {
             "TURN_ON_SCREEN",
             "GET_ACCOUNTS",
             "RUN_IN_BACKGROUND",
+            "AUTO_START",
     };
 
     /**
@@ -662,6 +668,7 @@ public class AppOpsManager {
             null, // no permission for turning the screen on
             Manifest.permission.GET_ACCOUNTS,
             null, // no permission for running in background
+            null, // no permission for auto start
     };
 
     /**
@@ -734,6 +741,7 @@ public class AppOpsManager {
             null, // TURN_ON_SCREEN
             null, // GET_ACCOUNTS
             null, // RUN_IN_BACKGROUND
+            null, // OP_AUTO_START
     };
 
     /**
@@ -805,6 +813,7 @@ public class AppOpsManager {
             false, // TURN_ON_SCREEN
             false, // GET_ACCOUNTS
             false, // RUN_IN_BACKGROUND
+            false, // OP_AUTO_START
     };
 
     /**
@@ -875,6 +884,7 @@ public class AppOpsManager {
             AppOpsManager.MODE_ALLOWED,  // OP_TURN_ON_SCREEN
             AppOpsManager.MODE_ALLOWED,
             AppOpsManager.MODE_ALLOWED,  // OP_RUN_IN_BACKGROUND
+            AppOpsManager.MODE_ALLOWED,  //OP_AUTO_START
     };
 
     /**
@@ -949,6 +959,7 @@ public class AppOpsManager {
             false,
             false,
             false,
+            false, //OP_AUTO_START
     };
 
     /**
