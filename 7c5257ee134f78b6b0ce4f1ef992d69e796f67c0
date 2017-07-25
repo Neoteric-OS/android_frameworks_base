@@ -52,6 +52,24 @@
       "revId": "7c5257ee134f78b6b0ce4f1ef992d69e796f67c0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b40155a9_82955cae",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-25T12:09:11Z",
+      "side": 1,
+      "message": "That\u0027s the true $1M question :p\n\nTo be honest I don\u0027t know for sure. I asked feedback about this specific point in the bug. I talked about this with Lorenzo and Erik, and this is certainly a real concern and happened in the past for rssi changing.\n\nAfter discussing with Erik we came to the conclusion that a request would not bring up a WiFi connection. WiFi would either be off (airplane), on with no know networks in sight, or on and connected to something. NOT_METERED is now changing only for WiFi as far as know, after dhcp hints about it.\n\nFor cell, NOT_METERED is expected to be effectively immutable and not set at all (except for special apn types).\n\nWhether we go forward with this change, we are stuck on one side with supporting apps that request NOT_METERED, and on the other side with network agents changing NOT_METERED and hitting the wtf log in updateCapabilities() (the cause of the bug).",
+      "parentUuid": "5164f91a_40bb1fed",
+      "revId": "7c5257ee134f78b6b0ce4f1ef992d69e796f67c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
