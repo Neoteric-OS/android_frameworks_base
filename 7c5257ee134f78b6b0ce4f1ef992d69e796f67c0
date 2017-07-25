@@ -34,6 +34,24 @@
       "revId": "7c5257ee134f78b6b0ce4f1ef992d69e796f67c0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5164f91a_40bb1fed",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2017-07-25T12:00:41Z",
+      "side": 1,
+      "message": "Oops, ya, you\u0027re right.  The question is then will this break any NetworkFactory by putting it into a loop where it doesn\u0027t know ahead of time whether a network can satisfy a request, so it brings it up only to find it can\u0027t satisfy the requests and is unneeded, then brings it down and loops.",
+      "parentUuid": "1da1e7fa_9d73efec",
+      "revId": "7c5257ee134f78b6b0ce4f1ef992d69e796f67c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
