@@ -91,6 +91,18 @@ public class HeapTest extends TestCase {
         }
     }
 
+    /* Force releasing SoftReferences */
+    private static void releaseSoftReferences() {
+        try {
+            final LinkedList<long[]> memhog = new LinkedList<>();
+            while(true) {
+                memhog.add(new long[102400]);
+            }
+        } catch (final OutOfMemoryError e) {
+            /* At this point all SoftReferences have been released - GUARANTEED. */
+        }
+    }
+
     @MediumTest
     public void testGcSoftRefs() throws Exception {
         final int NUM_REFS = 128;
@@ -111,8 +123,7 @@ public class HeapTest extends TestCase {
 
         /* Collect all softly-reachable objects.
          */
-        VMRuntime.getRuntime().gcSoftReferences();
-        Runtime.getRuntime().runFinalization();
+        releaseSoftReferences();
 
         /* Make sure that the objects were collected.
          */
@@ -121,8 +132,7 @@ public class HeapTest extends TestCase {
         /* Remove more hard references and re-check.
          */
         clearRefs(objects, 2);
-        VMRuntime.getRuntime().gcSoftReferences();
-        Runtime.getRuntime().runFinalization();
+        releaseSoftReferences();
         checkRefs(objects, refs);
 
         /* Remove the rest of the references and re-check.
@@ -130,8 +140,7 @@ public class HeapTest extends TestCase {
         /* Remove more hard references and re-check.
          */
         clearRefs(objects);
-        VMRuntime.getRuntime().gcSoftReferences();
-        Runtime.getRuntime().runFinalization();
+        releaseSoftReferences();
         checkRefs(objects, refs);
     }
 
