@@ -4704,7 +4704,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             int oldScore, NetworkAgentInfo nai, NetworkCapabilities networkCapabilities) {
         if (nai.everConnected && !nai.networkCapabilities.equalImmutableCapabilities(
                 networkCapabilities)) {
-            Slog.wtf(TAG, "BUG: " + nai + " changed immutable capabilities: "
+            Slog.e(TAG, "BUG: " + nai + " changed immutable capabilities: "
                     + nai.networkCapabilities + " -> " + networkCapabilities);
         }
 
