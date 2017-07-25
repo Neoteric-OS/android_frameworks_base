@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d15c3077_6989ee81",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2017-07-25T16:22:24Z",
+      "side": 1,
+      "message": "Can\u0027t find such a rule, but done. The examples in the style guide seem to use a single space; on the other hand, code in Effective Java seems to be using mostly two spaces. This is more your code than mine, so I\u0027ll follow your preference.",
+      "parentUuid": "e12be1db_085db770",
+      "range": {
+        "startLine": 225,
+        "startChar": 55,
+        "endLine": 225,
+        "endChar": 56
+      },
+      "revId": "879fddd721855219d824008d7606254349b30e41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55bf2579_586a02db",
         "filename": "core/java/android/net/Network.java",
         "patchSetId": 10
