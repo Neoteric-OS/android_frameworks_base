@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d002498_bdd56b04",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1016583
+      },
+      "writtenOn": "2017-07-25T11:15:24Z",
+      "side": 1,
+      "message": "Does this break existing apps that request NON_METERED?",
+      "revId": "7c5257ee134f78b6b0ce4f1ef992d69e796f67c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
