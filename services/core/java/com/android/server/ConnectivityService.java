@@ -29,6 +29,8 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
+import static android.net.NetworkCapabilities.capabilityNamesOf;
+import static android.net.NetworkCapabilities.transportNamesOf;
 import static android.net.NetworkPolicyManager.RULE_ALLOW_ALL;
 import static android.net.NetworkPolicyManager.RULE_ALLOW_METERED;
 import static android.net.NetworkPolicyManager.RULE_NONE;
@@ -4702,10 +4704,31 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     private void updateCapabilities(
             int oldScore, NetworkAgentInfo nai, NetworkCapabilities networkCapabilities) {
-        if (nai.everConnected && !nai.networkCapabilities.equalImmutableCapabilities(
-                networkCapabilities)) {
-            Slog.wtf(TAG, "BUG: " + nai + " changed immutable capabilities: "
-                    + nai.networkCapabilities + " -> " + networkCapabilities);
+        // Sanity check: a NetworkAgent should not change its static capabilities or parameters.
+        if (nai.everConnected) {
+            NetworkCapabilities oldCapabilities = nai.networkCapabilities;
+            NetworkCapabilities newCapabilities = networkCapabilities;
+            // TODO: consider only enforcing that capabilities are not removed, allowing addition.
+            if (!oldCapabilities.equalsNetCapabilitiesImmutable(newCapabilities)) {
+                String before = capabilityNamesOf(oldCapabilities.getImmutableCapabilities());
+                String after = capabilityNamesOf(newCapabilities.getImmutableCapabilities());
+                Slog.wtf(TAG, String.format("%s changed immutable network capabilities: %s -> %s",
+                        nai, before, after));
+            }
+
+            if (!oldCapabilities.equalsTransportTypes(newCapabilities)) {
+                String before = transportNamesOf(oldCapabilities.getTransportTypes());
+                String after = transportNamesOf(newCapabilities.getTransportTypes());
+                Slog.wtf(TAG, String.format("%s changed transports: %s -> %s",
+                        nai, before, after));
+            }
+
+            if (!oldCapabilities.equalsSpecifier(newCapabilities)) {
+                NetworkSpecifier before = oldCapabilities.getNetworkSpecifier();
+                NetworkSpecifier after = newCapabilities.getNetworkSpecifier();
+                Slog.wtf(TAG, String.format("%s changed specifiers: %s -> %s",
+                        nai, before, after));
+            }
         }
 
         // Don't modify caller's NetworkCapabilities.

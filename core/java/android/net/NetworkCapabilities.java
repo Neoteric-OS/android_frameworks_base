@@ -203,12 +203,23 @@ public final class NetworkCapabilities implements Parcelable {
      * network is connected.
      */
     private static final long MUTABLE_CAPABILITIES =
-            // TRUSTED can change when user explicitly connects to an untrusted network in Settings.
-            // http://b/18206275
+            // NET_CAPABILITY_TRUSTED can change when user explicitly connects to an untrusted
+            // network in Settings. http://b/18206275
             (1 << NET_CAPABILITY_TRUSTED) |
             (1 << NET_CAPABILITY_VALIDATED) |
             (1 << NET_CAPABILITY_CAPTIVE_PORTAL) |
-            (1 << NET_CAPABILITY_FOREGROUND);
+            (1 << NET_CAPABILITY_FOREGROUND) |
+            // NET_CAPABILITY_NOT_METERED can change for WiFi based on dhcp hints received after
+            // the WiFi NetworkAgent declares itself connected. http://b/63326103.
+            (1 << NET_CAPABILITY_NOT_METERED);
+
+    /**
+     * Exemptions for mutable capabilities that should be requestable by applications and are
+     * supported as such.
+     */
+    private static final long NON_REQUESTABLE_EXEMPTIONS =
+            (1 << NET_CAPABILITY_TRUSTED) |
+            (1 << NET_CAPABILITY_NOT_METERED);
 
     /**
      * Network capabilities that are not allowed in NetworkRequests. This exists because the
@@ -216,9 +227,12 @@ public final class NetworkCapabilities implements Parcelable {
      * capability's presence cannot be known in advance. If such a capability is requested, then we
      * can get into a cycle where the NetworkFactory endlessly churns out NetworkAgents that then
      * get immediately torn down because they do not have the requested capability.
+     * TODO: NetworkFactories should be stateful enough to ensure this cannot happen and remember
+     * from the previous round that they trully cannot satisfy a request, instead of bringing up
+     * a network whose capabilities will soon not satisfy the request.
      */
     private static final long NON_REQUESTABLE_CAPABILITIES =
-            MUTABLE_CAPABILITIES & ~(1 << NET_CAPABILITY_TRUSTED);
+            MUTABLE_CAPABILITIES & ~NON_REQUESTABLE_EXEMPTIONS;
 
     /**
      * Capabilities that are set by default when the object is constructed.
@@ -298,6 +312,17 @@ public final class NetworkCapabilities implements Parcelable {
     }
 
     /**
+     * Gets all the immutable capabilities set on this {@code NetworkCapability} instance.
+     *
+     * @return an array of {@code NetworkCapabilities.NET_CAPABILITY_*} values
+     *         for this instance.
+     * @hide
+     */
+    public int[] getImmutableCapabilities() {
+        return BitUtils.unpackBits(mNetworkCapabilities & ~MUTABLE_CAPABILITIES);
+    }
+
+    /**
      * Tests for the presence of a capabilitity on this instance.
      *
      * @param capability the {@code NetworkCapabilities.NET_CAPABILITY_*} to be tested for.
@@ -347,7 +372,8 @@ public final class NetworkCapabilities implements Parcelable {
         return (nc.mNetworkCapabilities == this.mNetworkCapabilities);
     }
 
-    private boolean equalsNetCapabilitiesImmutable(NetworkCapabilities that) {
+    /** @hide */
+    public boolean equalsNetCapabilitiesImmutable(NetworkCapabilities that) {
         return ((this.mNetworkCapabilities & ~MUTABLE_CAPABILITIES) ==
                 (that.mNetworkCapabilities & ~MUTABLE_CAPABILITIES));
     }
@@ -502,10 +528,12 @@ public final class NetworkCapabilities implements Parcelable {
     private void combineTransportTypes(NetworkCapabilities nc) {
         this.mTransportTypes |= nc.mTransportTypes;
     }
+
     private boolean satisfiedByTransportTypes(NetworkCapabilities nc) {
         return ((this.mTransportTypes == 0) ||
                 ((this.mTransportTypes & nc.mTransportTypes) != 0));
     }
+
     /** @hide */
     public boolean equalsTransportTypes(NetworkCapabilities nc) {
         return (nc.mTransportTypes == this.mTransportTypes);
@@ -640,7 +668,8 @@ public final class NetworkCapabilities implements Parcelable {
                 || nc.mNetworkSpecifier instanceof MatchAllNetworkSpecifier;
     }
 
-    private boolean equalsSpecifier(NetworkCapabilities nc) {
+    /** @hide */
+    public boolean equalsSpecifier(NetworkCapabilities nc) {
         return Objects.equals(mNetworkSpecifier, nc.mNetworkSpecifier);
     }
 
@@ -843,33 +872,15 @@ public final class NetworkCapabilities implements Parcelable {
 
     @Override
     public String toString() {
+        // TODO: enumerate bits for transports and capabilities instead of creating arrays.
+        // TODO: use a StringBuilder instead of string concatenation.
         int[] types = getTransportTypes();
         String transports = (types.length > 0) ? " Transports: " + transportNamesOf(types) : "";
 
         types = getCapabilities();
         String capabilities = (types.length > 0 ? " Capabilities: " : "");
         for (int i = 0; i < types.length; ) {
-            switch (types[i]) {
-                case NET_CAPABILITY_MMS:            capabilities += "MMS"; break;
-                case NET_CAPABILITY_SUPL:           capabilities += "SUPL"; break;
-                case NET_CAPABILITY_DUN:            capabilities += "DUN"; break;
-                case NET_CAPABILITY_FOTA:           capabilities += "FOTA"; break;
-                case NET_CAPABILITY_IMS:            capabilities += "IMS"; break;
-                case NET_CAPABILITY_CBS:            capabilities += "CBS"; break;
-                case NET_CAPABILITY_WIFI_P2P:       capabilities += "WIFI_P2P"; break;
-                case NET_CAPABILITY_IA:             capabilities += "IA"; break;
-                case NET_CAPABILITY_RCS:            capabilities += "RCS"; break;
-                case NET_CAPABILITY_XCAP:           capabilities += "XCAP"; break;
-                case NET_CAPABILITY_EIMS:           capabilities += "EIMS"; break;
-                case NET_CAPABILITY_NOT_METERED:    capabilities += "NOT_METERED"; break;
-                case NET_CAPABILITY_INTERNET:       capabilities += "INTERNET"; break;
-                case NET_CAPABILITY_NOT_RESTRICTED: capabilities += "NOT_RESTRICTED"; break;
-                case NET_CAPABILITY_TRUSTED:        capabilities += "TRUSTED"; break;
-                case NET_CAPABILITY_NOT_VPN:        capabilities += "NOT_VPN"; break;
-                case NET_CAPABILITY_VALIDATED:      capabilities += "VALIDATED"; break;
-                case NET_CAPABILITY_CAPTIVE_PORTAL: capabilities += "CAPTIVE_PORTAL"; break;
-                case NET_CAPABILITY_FOREGROUND:     capabilities += "FOREGROUND"; break;
-            }
+            capabilities += capabilityNameOf(types[i]);
             if (++i < types.length) capabilities += "&";
         }
 
@@ -884,6 +895,48 @@ public final class NetworkCapabilities implements Parcelable {
         String signalStrength = (hasSignalStrength() ? " SignalStrength: " + mSignalStrength : "");
 
         return "[" + transports + capabilities + upBand + dnBand + specifier + signalStrength + "]";
+    }
+
+    /**
+     * @hide
+     */
+    public static String capabilityNamesOf(int[] capabilities) {
+        if (capabilities == null || capabilities.length == 0) {
+            return "";
+        }
+        StringBuilder names = new StringBuilder();
+        for (int c : capabilities) {
+            names.append("|").append(capabilityNameOf(c));
+        }
+        return names.substring(1);
+    }
+
+    /**
+     * @hide
+     */
+    public static String capabilityNameOf(int capability) {
+        switch (capability) {
+            case NET_CAPABILITY_MMS:            return "MMS";
+            case NET_CAPABILITY_SUPL:           return "SUPL";
+            case NET_CAPABILITY_DUN:            return "DUN";
+            case NET_CAPABILITY_FOTA:           return "FOTA";
+            case NET_CAPABILITY_IMS:            return "IMS";
+            case NET_CAPABILITY_CBS:            return "CBS";
+            case NET_CAPABILITY_WIFI_P2P:       return "WIFI_P2P";
+            case NET_CAPABILITY_IA:             return "IA";
+            case NET_CAPABILITY_RCS:            return "RCS";
+            case NET_CAPABILITY_XCAP:           return "XCAP";
+            case NET_CAPABILITY_EIMS:           return "EIMS";
+            case NET_CAPABILITY_NOT_METERED:    return "NOT_METERED";
+            case NET_CAPABILITY_INTERNET:       return "INTERNET";
+            case NET_CAPABILITY_NOT_RESTRICTED: return "NOT_RESTRICTED";
+            case NET_CAPABILITY_TRUSTED:        return "TRUSTED";
+            case NET_CAPABILITY_NOT_VPN:        return "NOT_VPN";
+            case NET_CAPABILITY_VALIDATED:      return "VALIDATED";
+            case NET_CAPABILITY_CAPTIVE_PORTAL: return "CAPTIVE_PORTAL";
+            case NET_CAPABILITY_FOREGROUND:     return "FOREGROUND";
+            default:                            return "UNKNOWN";
+        }
     }
 
     /**
