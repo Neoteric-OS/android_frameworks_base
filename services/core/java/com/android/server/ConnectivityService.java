@@ -4704,7 +4704,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
             int oldScore, NetworkAgentInfo nai, NetworkCapabilities networkCapabilities) {
         if (nai.everConnected && !nai.networkCapabilities.equalImmutableCapabilities(
                 networkCapabilities)) {
-            Slog.wtf(TAG, "BUG: " + nai + " changed immutable capabilities: "
+            // TODO: Starting from oc-dr1-dev, WiFi can now add/remove NET_CAPABILITY_NOT_METERED
+            // based on dhcp hints obtained after everConnected becomes true. Since this capability
+            // is requestable by apps in NetworkRequest, this can potentially push the system into a
+            // request / rematch loop where a NetworkAgent thinks it can satisfy a request, but
+            // eventually discover it can't. NetworkFactories should be stateful enough to ensure
+            // this cannot happen. http://b/63326103.
+            Slog.e(TAG, "BUG: " + nai + " changed immutable capabilities: "
                     + nai.networkCapabilities + " -> " + networkCapabilities);
         }
 
