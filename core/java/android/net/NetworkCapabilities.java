@@ -208,7 +208,8 @@ public final class NetworkCapabilities implements Parcelable {
             (1 << NET_CAPABILITY_TRUSTED) |
             (1 << NET_CAPABILITY_VALIDATED) |
             (1 << NET_CAPABILITY_CAPTIVE_PORTAL) |
-            (1 << NET_CAPABILITY_FOREGROUND);
+            (1 << NET_CAPABILITY_FOREGROUND) |
+            (1 << NET_CAPABILITY_NOT_METERED);
 
     /**
      * Network capabilities that are not allowed in NetworkRequests. This exists because the
