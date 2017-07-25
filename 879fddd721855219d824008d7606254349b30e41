@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f4b51d90_06421148",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2017-07-25T10:04:34Z",
+      "side": 1,
+      "message": "I don\u0027t know what you mean: do you mean there should be no space, or that there should be two spaces?\n\nAs far as I\u0027m aware,\n  a) the style guide requires exactly one space between \u0027;\u0027 and \"//\".\n  b) this is what my code is doing.\n\nWhich of these is wrong?",
+      "parentUuid": "e8eba998_4db2577d",
+      "range": {
+        "startLine": 225,
+        "startChar": 55,
+        "endLine": 225,
+        "endChar": 56
+      },
+      "revId": "879fddd721855219d824008d7606254349b30e41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55bf2579_586a02db",
         "filename": "core/java/android/net/Network.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-01T11:59:14Z",
       "side": 1,
       "message": "Can you add a comment to explain how we ensure that the connections in this pool are not ever shared with connections from other pools? That is important for the correctness of this API.\n\nIn the previous code this was relatively clear, because of the \"mConnectionPool \u003d new ConnectionPool(...)\" statement, but now not so much.\n\nAlso, what about caching responses? Are the response caches separate from other per-Network clients and from non-Network-specific clients?",
+      "range": {
+        "startLine": 226,
+        "startChar": 37,
+        "endLine": 226,
+        "endChar": 67
+      },
+      "revId": "879fddd721855219d824008d7606254349b30e41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a15af5f_ab22dc6a",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2017-07-25T10:04:34Z",
+      "side": 1,
+      "message": "Renamed the method to setNewConnectionPool() and added the comment:\n// A private connection pool just for this Network.\n\nIs that sufficient? I could add a ConnectionPool abstraction that is not OkHttp\u0027s, in order to keep the \"new\" here, but that adds boilerplate.\n\nRe. ResponseCache: No, there are never separate response caches for each Network.\n\na) As far as I can see, there is no ResponseCache at all unless one is configured.\nb) If ResponseCache is configured via ResponseCache.setDefault(ResponseCache), then that singleton cache is used for / shared between all connections, including the ones created by HttpURLConnectionFactory.\n\nThe corresponding logic in HttpHandler.java is:\n\n        ResponseCache responseCache \u003d ResponseCache.getDefault();\n        if (responseCache !\u003d null) {\n            AndroidInternal.setResponseCache(okUrlFactory, responseCache);\n        }\n\n\nAlso see the corresponding comment that used to be in line 282 in this file and is now in HttpURLConnectionFactory.java:\n\n  // TODO: HttpHandler creates OkUrlFactory instances that share the default ResponseCache.\n  // Could this cause unexpected behavior?\n\nDo you think that this behavior is wrong/unexpected? (This question appears orthogonal to this CL since this CL does not intend to change any behavior - it\u0027s only a refactoring).",
+      "parentUuid": "55bf2579_586a02db",
       "range": {
         "startLine": 226,
         "startChar": 37,

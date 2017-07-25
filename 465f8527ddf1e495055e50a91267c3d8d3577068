@@ -22,6 +22,30 @@
       "revId": "465f8527ddf1e495055e50a91267c3d8d3577068",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7461ac0e_0f375865",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2017-07-25T10:04:34Z",
+      "side": 0,
+      "message": "The MalformedURLException from immediately below your question gets thrown. The comment about \"returns a null URLStreamHandler\" seems to be misleading/obsolete, so I\u0027m dropping everything from \"and returns...\" onwards.\n\nNote that I only refactored this logic rather than changed behavior. The logic just moved into HttpURLConnectionFactory.java in the external/okhttp CL in the same CL topic.",
+      "parentUuid": "1218e448_aeb81886",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 290,
+        "endChar": 39
+      },
+      "revId": "465f8527ddf1e495055e50a91267c3d8d3577068",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
