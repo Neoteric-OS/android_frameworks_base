@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e12be1db_085db770",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-07-25T13:02:24Z",
+      "side": 1,
+      "message": "I thought the style guide said that there should be exactly two spaces before end-of-line comments.",
+      "parentUuid": "f4b51d90_06421148",
+      "range": {
+        "startLine": 225,
+        "startChar": 55,
+        "endLine": 225,
+        "endChar": 56
+      },
+      "revId": "879fddd721855219d824008d7606254349b30e41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55bf2579_586a02db",
         "filename": "core/java/android/net/Network.java",
         "patchSetId": 10
