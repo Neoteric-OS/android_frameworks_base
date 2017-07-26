@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db0a0456_518c45e6",
+        "filename": "core/java/android/view/ViewGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2338,
+      "author": {
+        "id": 1143878
+      },
+      "writtenOn": "2017-07-26T08:44:57Z",
+      "side": 1,
+      "message": "You\u0027d better use \"Log.e\"",
+      "range": {
+        "startLine": 2338,
+        "startChar": 32,
+        "endLine": 2338,
+        "endChar": 33
+      },
+      "revId": "793ca20d182c196270bafb587b125792eba86a50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
