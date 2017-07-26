@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b953caed_347fdcdb",
+        "filename": "services/usage/java/com/android/server/usage/UsageStatsXmlV1.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1043034
+      },
+      "writtenOn": "2017-07-26T20:37:53Z",
+      "side": 1,
+      "message": "I\u0027d rather not put this logic here and instead Skip processing the XML tag (and its children) below.",
+      "range": {
+        "startLine": 224,
+        "startChar": 12,
+        "endLine": 238,
+        "endChar": 17
+      },
+      "revId": "f35b40fa5cd1bd4874e48c28d3931e301d91dc58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f10c08d_9315530d",
+        "filename": "services/usage/java/com/android/server/usage/UsageStatsXmlV1.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1043034
+      },
+      "writtenOn": "2017-07-26T20:37:53Z",
+      "side": 1,
+      "message": "Here you can put an else clause that skips processing the rest of the tag:\n\ncom.android.internal.util.XmlUtils#skipCurrentTag(XmlPullParser)",
+      "range": {
+        "startLine": 247,
+        "startChar": 20,
+        "endLine": 247,
+        "endChar": 21
+      },
+      "revId": "f35b40fa5cd1bd4874e48c28d3931e301d91dc58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
