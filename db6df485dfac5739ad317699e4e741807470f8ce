@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce0f62a6_65742f29",
+        "filename": "tests/CoreTests/android/core/HeapTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-26T01:44:07Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 97,
+        "startChar": 61,
+        "endLine": 97,
+        "endChar": 67
+      },
+      "revId": "db6df485dfac5739ad317699e4e741807470f8ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "838a3e6b_30abb8e8",
+        "filename": "tests/CoreTests/android/core/HeapTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-26T01:44:07Z",
+      "side": 1,
+      "message": "space",
+      "revId": "db6df485dfac5739ad317699e4e741807470f8ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6c2436a_8af3771b",
+        "filename": "tests/CoreTests/android/core/HeapTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-26T01:44:07Z",
+      "side": 1,
+      "message": "should be on the same line",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 102,
+        "endChar": 13
+      },
+      "revId": "db6df485dfac5739ad317699e4e741807470f8ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
