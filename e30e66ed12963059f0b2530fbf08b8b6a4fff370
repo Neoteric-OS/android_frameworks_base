@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bfa9566_de0da237",
+        "filename": "cmds/svc/src/com/android/commands/svc/WifiCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1081508
+      },
+      "writtenOn": "2017-07-26T17:06:03Z",
+      "side": 1,
+      "message": "Do we have a reason to put this into try block ?",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 21
+      },
+      "revId": "e30e66ed12963059f0b2530fbf08b8b6a4fff370",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
