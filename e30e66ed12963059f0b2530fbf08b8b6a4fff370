@@ -22,6 +22,30 @@
       "revId": "e30e66ed12963059f0b2530fbf08b8b6a4fff370",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "771acce2_87f13064",
+        "filename": "cmds/svc/src/com/android/commands/svc/WifiCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116403
+      },
+      "writtenOn": "2017-07-27T01:01:06Z",
+      "side": 1,
+      "message": "No special reason. Will move to outside try block.",
+      "parentUuid": "6bfa9566_de0da237",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 21
+      },
+      "revId": "e30e66ed12963059f0b2530fbf08b8b6a4fff370",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
