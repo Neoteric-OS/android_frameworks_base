@@ -186,6 +186,8 @@ public class ConfigUpdateInstallReceiver extends BroadcastReceiver {
             if (!parent.exists()) {
                 throw new IOException("Failed to create directory " + parent.getCanonicalPath());
             }
+            // mark parent -rwx--x--x
+            parent.setExecutable(true, false);
             // create the temporary file
             tmp = File.createTempFile("journal", "", dir);
             // mark tmp -rw-r--r--
