@@ -181,7 +181,10 @@ public class ConfigUpdateInstallReceiver extends BroadcastReceiver {
         try {
             // create the parents for the destination file
             File parent = file.getParentFile();
-            parent.mkdirs();
+            if (parent.mkdirs()) {
+                // if new parent dir is created, mark it -rwx--x--x
+                parent.setExecutable(true, false);
+            }
             // check that they were created correctly
             if (!parent.exists()) {
                 throw new IOException("Failed to create directory " + parent.getCanonicalPath());

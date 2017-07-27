@@ -20,8 +20,10 @@ import com.android.internal.util.HexDump;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.test.AndroidTestCase;
 import android.provider.Settings;
+import android.support.v4.content.FileProvider;
 import android.util.Base64;
 import android.util.Log;
 
@@ -38,7 +40,6 @@ import java.security.cert.X509Certificate;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
-import java.security.Signature;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.KeyFactory;
 import java.util.HashSet;
@@ -53,18 +54,17 @@ public class CertPinInstallReceiverTest extends AndroidTestCase {
     private static final String TAG = "CertPinInstallReceiverTest";
 
     private static final String PINLIST_ROOT = System.getenv("ANDROID_DATA") + "/misc/keychain/";
+    // If we can't find current metadata, assuming first update,
+    // see ConfigUpdateInstallReceiver.java
+    private static final String DEFAULT_VERSION = "0";
+    // If we failed to read current content, assuming first update,
+    // see ConfigUpdateInstallReceiver.java
+    private static final String DEFAULT_CONTENT = "0";
 
     public static final String PINLIST_CONTENT_PATH = PINLIST_ROOT + "pins";
-    public static final String PINLIST_METADATA_PATH = PINLIST_CONTENT_PATH + "metadata";
-
-    public static final String PINLIST_CONTENT_URL_KEY = "pinlist_content_url";
-    public static final String PINLIST_METADATA_URL_KEY = "pinlist_metadata_url";
     public static final String PINLIST_CERTIFICATE_KEY = "config_update_certificate";
-    public static final String PINLIST_VERSION_KEY = "pinlist_version";
 
-    private static final String EXTRA_CONTENT_PATH = "CONTENT_PATH";
     private static final String EXTRA_REQUIRED_HASH = "REQUIRED_HASH";
-    private static final String EXTRA_SIGNATURE = "SIGNATURE";
     private static final String EXTRA_VERSION_NUMBER = "VERSION";
 
     public static final String TEST_CERT = "" +
@@ -115,7 +115,11 @@ public class CertPinInstallReceiverTest extends AndroidTestCase {
     }
 
     private String readCurrentVersion() throws Exception {
-        return IoUtils.readFileAsString("/data/misc/keychain/metadata/version");
+        try {
+            return IoUtils.readFileAsString("/data/misc/keychain/metadata/version");
+        } catch (FileNotFoundException e) {
+            return DEFAULT_VERSION;
+        }
     }
 
     private String getNextVersion() throws Exception {
@@ -125,7 +129,7 @@ public class CertPinInstallReceiverTest extends AndroidTestCase {
 
     private static String getCurrentHash(String content) throws Exception {
         if (content == null) {
-            return "0";
+            return DEFAULT_CONTENT;
         }
         MessageDigest dgst = MessageDigest.getInstance("SHA512");
         byte[] encoded = content.getBytes();
@@ -134,8 +138,12 @@ public class CertPinInstallReceiverTest extends AndroidTestCase {
     }
 
     private static String getHashOfCurrentContent() throws Exception {
-        String content = IoUtils.readFileAsString("/data/misc/keychain/pins");
-        return getCurrentHash(content);
+        try {
+            String content = IoUtils.readFileAsString("/data/misc/keychain/pins");
+            return getCurrentHash(content);
+        } catch (FileNotFoundException e) {
+            return DEFAULT_CONTENT;
+        }
     }
 
     private PrivateKey createKey() throws Exception {
@@ -153,92 +161,59 @@ public class CertPinInstallReceiverTest extends AndroidTestCase {
     }
 
     private String makeTemporaryContentFile(String content) throws Exception {
-        FileOutputStream fw = mContext.openFileOutput("content.txt", mContext.MODE_WORLD_READABLE);
+        FileOutputStream fw = mContext.openFileOutput("content.txt", 0);
         fw.write(content.getBytes(), 0, content.length());
         fw.close();
         return mContext.getFilesDir() + "/content.txt";
     }
 
-    private String createSignature(String content, String version, String requiredHash)
-                                   throws Exception {
-        Signature signer = Signature.getInstance("SHA512withRSA");
-        signer.initSign(createKey());
-        signer.update(content.trim().getBytes());
-        signer.update(version.trim().getBytes());
-        signer.update(requiredHash.getBytes());
-        String sig = new String(Base64.encode(signer.sign(), Base64.DEFAULT));
-        assertEquals(true,
-                     verifySignature(content, version, requiredHash, sig, createCertificate()));
-        return sig;
-    }
-
-    public boolean verifySignature(String content, String version, String requiredPrevious,
-                                   String signature, X509Certificate cert) throws Exception {
-        Signature signer = Signature.getInstance("SHA512withRSA");
-        signer.initVerify(cert);
-        signer.update(content.trim().getBytes());
-        signer.update(version.trim().getBytes());
-        signer.update(requiredPrevious.trim().getBytes());
-        return signer.verify(Base64.decode(signature.getBytes(), Base64.DEFAULT));
-    }
-
-    private void sendIntent(String contentPath, String version, String required, String sig) {
+    private void sendIntent(String contentPath, String version, String required) {
         Intent i = new Intent();
+        i.setClassName("android", "com.android.server.updates.CertPinInstallReceiver");
         i.setAction("android.intent.action.UPDATE_PINS");
-        i.putExtra(EXTRA_CONTENT_PATH, contentPath);
+        final File contentFile = new File(contentPath);
+        final Uri contentUri = FileProvider.getUriForFile(getContext(),
+                "com.android.frameworks.servicetests.fileprovider", contentFile);
+        i.setData(contentUri);
         i.putExtra(EXTRA_VERSION_NUMBER, version);
         i.putExtra(EXTRA_REQUIRED_HASH, required);
-        i.putExtra(EXTRA_SIGNATURE, sig);
         mContext.sendBroadcast(i);
     }
 
-    private String runTest(String cert, String content, String version, String required, String sig)
+    private String runTest(String cert, String content, String version, String required)
                            throws Exception {
         Log.e(TAG, "started test");
         overrideCert(cert);
         String contentPath = makeTemporaryContentFile(content);
-        sendIntent(contentPath, version, required, sig);
+        sendIntent(contentPath, version, required);
         Thread.sleep(1000);
         return readPins();
     }
 
-    private String runTestWithoutSig(String cert, String content, String version, String required)
-                                     throws Exception {
-        String sig = createSignature(content, version, required);
-        return runTest(cert, content, version, required, sig);
-    }
-
     public void testOverwritePinlist() throws Exception {
         Log.e(TAG, "started testOverwritePinList");
-        assertEquals("abcde", runTestWithoutSig(TEST_CERT, "abcde", getNextVersion(), getHashOfCurrentContent()));
-        Log.e(TAG, "started testOverwritePinList");
-    }
-
-   public void testBadSignatureFails() throws Exception {
-        Log.e(TAG, "started testOverwritePinList");
-        String text = "blahblah";
-        runTestWithoutSig(TEST_CERT, text, getNextVersion(), getHashOfCurrentContent());
-        assertEquals(text, runTest(TEST_CERT, "bcdef", getNextVersion(), getCurrentHash(text), ""));
+        assertEquals("abcde", runTest(TEST_CERT, "abcde", getNextVersion(),
+                getHashOfCurrentContent()));
         Log.e(TAG, "started testOverwritePinList");
     }
 
     public void testBadRequiredHashFails() throws Exception {
-        runTestWithoutSig(TEST_CERT, "blahblahblah", getNextVersion(), getHashOfCurrentContent());
-        assertEquals("blahblahblah", runTestWithoutSig(TEST_CERT, "cdefg", getNextVersion(), "0"));
+        runTest(TEST_CERT, "blahblahblah", getNextVersion(), getHashOfCurrentContent());
+        assertEquals("blahblahblah", runTest(TEST_CERT, "cdefg", getNextVersion(), "0"));
         Log.e(TAG, "started testOverwritePinList");
     }
 
     public void testBadVersionFails() throws Exception {
         String text = "blahblahblahblah";
         String version = getNextVersion();
-        runTestWithoutSig(TEST_CERT, text, version, getHashOfCurrentContent());
-        assertEquals(text, runTestWithoutSig(TEST_CERT, "defgh", version, getCurrentHash(text)));
+        runTest(TEST_CERT, text, version, getHashOfCurrentContent());
+        assertEquals(text, runTest(TEST_CERT, "defgh", version, getCurrentHash(text)));
         Log.e(TAG, "started testOverwritePinList");
     }
 
     public void testOverrideRequiredHash() throws Exception {
-        runTestWithoutSig(TEST_CERT, "blahblahblah", getNextVersion(), getHashOfCurrentContent());
-        assertEquals("blahblahblah", runTestWithoutSig(TEST_CERT, "cdefg", "NONE", "0"));
+        runTest(TEST_CERT, "blahblahblah", getNextVersion(), getHashOfCurrentContent());
+        assertEquals("blahblahblah", runTest(TEST_CERT, "cdefg", "NONE", "0"));
         Log.e(TAG, "started testOverwritePinList");
     }
 
