@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7e707ba_c73874b7",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-27T12:42:23Z",
+      "side": 1,
+      "message": "Gone in ag/2606952.",
+      "parentUuid": "44fbad95_1a89425d",
+      "range": {
+        "startLine": 212,
+        "startChar": 71,
+        "endLine": 212,
+        "endChar": 75
+      },
+      "revId": "a56c219a093bc4d7256544021e9a17497542a03c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6426dbd7_18ac39e9",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-27T06:49:22Z",
       "side": 1,
       "message": "Perhaps \"could\", since we might try an alternative matching mechanism as we discussed on the whiteboard.",
+      "range": {
+        "startLine": 230,
+        "startChar": 30,
+        "endLine": 230,
+        "endChar": 36
+      },
+      "revId": "a56c219a093bc4d7256544021e9a17497542a03c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fdadde18_7eb50baa",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-27T12:42:23Z",
+      "side": 1,
+      "message": "Gone in ag/2606952.",
+      "parentUuid": "6426dbd7_18ac39e9",
       "range": {
         "startLine": 230,
         "startChar": 30,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1e17765b_1c988c33",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-27T12:42:23Z",
+      "side": 1,
+      "message": "Gone in ag/2606952.",
+      "parentUuid": "989c81c5_e68d029a",
+      "range": {
+        "startLine": 231,
+        "startChar": 41,
+        "endLine": 231,
+        "endChar": 47
+      },
+      "revId": "a56c219a093bc4d7256544021e9a17497542a03c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e51f9a63_bf5ae12b",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-27T06:49:22Z",
       "side": 1,
       "message": "Can StringJoiner be used, thereby removing the need for this?",
+      "range": {
+        "startLine": 911,
+        "startChar": 21,
+        "endLine": 911,
+        "endChar": 30
+      },
+      "revId": "a56c219a093bc4d7256544021e9a17497542a03c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d197330_d41ddcb0",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-27T12:42:23Z",
+      "side": 1,
+      "message": "Yes. Done in ag/2606952.",
+      "parentUuid": "e51f9a63_bf5ae12b",
       "range": {
         "startLine": 911,
         "startChar": 21,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "cb76912f_cc0dd146",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-27T12:42:23Z",
+      "side": 1,
+      "message": "Changed to print the int in ag/2606952.",
+      "parentUuid": "644fdd73_6ad5e7d7",
+      "range": {
+        "startLine": 938,
+        "startChar": 64,
+        "endLine": 938,
+        "endChar": 65
+      },
+      "revId": "a56c219a093bc4d7256544021e9a17497542a03c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba316f43_06fa05ca",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-27T06:49:22Z",
       "side": 1,
       "message": "I sincerely pray to $DIETIES that we never ever see this.",
+      "range": {
+        "startLine": 4719,
+        "startChar": 72,
+        "endLine": 4719,
+        "endChar": 73
+      },
+      "revId": "a56c219a093bc4d7256544021e9a17497542a03c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd5d8952_e67e0b94",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4719,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-07-27T12:42:23Z",
+      "side": 1,
+      "message": "It is just a matter of time before it happens.",
+      "parentUuid": "ba316f43_06fa05ca",
       "range": {
         "startLine": 4719,
         "startChar": 72,
