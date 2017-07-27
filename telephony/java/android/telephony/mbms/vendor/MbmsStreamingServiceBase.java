@@ -46,10 +46,10 @@ public class MbmsStreamingServiceBase extends IMbmsStreamingService.Stub {
      * or {@link MbmsException#SUCCESS}. Non-successful error codes will be passed to the app via
      * {@link IMbmsStreamingManagerCallback#error(int, String)}.
      *
-     * @param listener The callback to use to communicate with the app.
+     * @param callback The callback to use to communicate with the app.
      * @param subscriptionId The subscription ID to use.
      */
-    public int initialize(MbmsStreamingManagerCallback listener, int subscriptionId)
+    public int initialize(MbmsStreamingManagerCallback callback, int subscriptionId)
             throws RemoteException {
         return 0;
     }
@@ -59,23 +59,23 @@ public class MbmsStreamingServiceBase extends IMbmsStreamingService.Stub {
      * @hide
      */
     @Override
-    public final int initialize(IMbmsStreamingManagerCallback listener, int subscriptionId)
+    public final int initialize(final IMbmsStreamingManagerCallback callback, int subscriptionId)
             throws RemoteException {
         return initialize(new MbmsStreamingManagerCallback() {
             @Override
             public void error(int errorCode, String message) throws RemoteException {
-                listener.error(errorCode, message);
+                callback.error(errorCode, message);
             }
 
             @Override
             public void streamingServicesUpdated(List<StreamingServiceInfo> services) throws
                     RemoteException {
-                listener.streamingServicesUpdated(services);
+                callback.streamingServicesUpdated(services);
             }
 
             @Override
             public void middlewareReady() throws RemoteException {
-                listener.middlewareReady();
+                callback.middlewareReady();
             }
         }, subscriptionId);
     }
@@ -113,11 +113,11 @@ public class MbmsStreamingServiceBase extends IMbmsStreamingService.Stub {
      *
      * @param subscriptionId The subscription id to use.
      * @param serviceId The ID of the streaming service that the app has requested.
-     * @param listener The listener object on which the app wishes to receive updates.
+     * @param callback The callback object on which the app wishes to receive updates.
      * @return Any error in {@link android.telephony.mbms.MbmsException.GeneralErrors}
      */
     public int startStreaming(int subscriptionId, String serviceId,
-            StreamingServiceCallback listener) throws RemoteException {
+            StreamingServiceCallback callback) throws RemoteException {
         return 0;
     }
 
@@ -127,34 +127,34 @@ public class MbmsStreamingServiceBase extends IMbmsStreamingService.Stub {
      * @hide
      */
     @Override
-    public int startStreaming(int subscriptionId, String serviceId,
-            IStreamingServiceCallback listener) throws RemoteException {
+    public final int startStreaming(int subscriptionId, String serviceId,
+            final IStreamingServiceCallback callback) throws RemoteException {
         return startStreaming(subscriptionId, serviceId, new StreamingServiceCallback() {
             @Override
             public void error(int errorCode, String message) throws RemoteException {
-                listener.error(errorCode, message);
+                callback.error(errorCode, message);
             }
 
             @Override
             public void streamStateUpdated(@StreamingService.StreamingState int state,
                     @StreamingService.StreamingStateChangeReason int reason)
                     throws RemoteException {
-                listener.streamStateUpdated(state, reason);
+                callback.streamStateUpdated(state, reason);
             }
 
             @Override
             public void mediaDescriptionUpdated() throws RemoteException {
-                listener.mediaDescriptionUpdated();
+                callback.mediaDescriptionUpdated();
             }
 
             @Override
             public void broadcastSignalStrengthUpdated(int signalStrength) throws RemoteException {
-                listener.broadcastSignalStrengthUpdated(signalStrength);
+                callback.broadcastSignalStrengthUpdated(signalStrength);
             }
 
             @Override
             public void streamMethodUpdated(int methodType) throws RemoteException {
-                listener.streamMethodUpdated(methodType);
+                callback.streamMethodUpdated(methodType);
             }
         });
     }
