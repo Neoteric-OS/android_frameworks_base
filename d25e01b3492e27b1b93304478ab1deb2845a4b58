@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f30c25d_a24e83e9",
+        "filename": "media/jni/android_media_ExifInterface.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1022510
+      },
+      "writtenOn": "2017-07-27T03:35:39Z",
+      "side": 1,
+      "message": "Lack of semicolon?",
+      "revId": "d25e01b3492e27b1b93304478ab1deb2845a4b58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
