@@ -22,7 +22,8 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-test \
     mockito-target \
     ShortcutManagerTestUtils \
-    truth-prebuilt
+    truth-prebuilt \
+    android-support-v4
 
 LOCAL_JAVA_LIBRARIES := android.test.runner
 
@@ -47,9 +48,7 @@ LOCAL_JNI_SHARED_LIBRARIES := \
 
 LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/Android.mk
 
-# Code coverage puts us over the dex limit, so enable multi-dex for coverage-enabled builds
-ifeq (true,$(EMMA_INSTRUMENT))
+# We are over the dex limit, so enable multi-dex
 LOCAL_JACK_FLAGS := --multi-dex native
-endif # EMMA_INSTRUMENT_STATIC
 
 include $(BUILD_PACKAGE)
