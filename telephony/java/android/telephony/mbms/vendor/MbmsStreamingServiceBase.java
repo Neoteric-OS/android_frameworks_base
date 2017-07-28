@@ -18,6 +18,7 @@ package android.telephony.mbms.vendor;
 
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.telephony.mbms.IMbmsStreamingManagerCallback;
@@ -31,6 +32,8 @@ import android.telephony.mbms.StreamingServiceInfo;
 import java.util.List;
 
 /**
+ * Base class for MBMS streaming services. The middleware should return an instance of this
+ * object from its {@link android.app.Service#onBind(Intent)} method.
  * @hide
  */
 @SystemApi
