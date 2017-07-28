@@ -16,6 +16,7 @@
 
 package android.telephony.mbms;
 
+import android.annotation.SystemApi;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -42,16 +43,28 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * @hide
+ * The {@link BroadcastReceiver} responsible for handling intents sent from the middleware. Apps
+ * that wish to download using MBMS APIs should declare this class in their AndroidManifest.xml as
+ * follows:
+<pre>{@code
+<receiver
+    android:name="android.telephony.mbms.MbmsDownloadReceiver"
+    android:permission="android.permission.SEND_EMBMS_INTENTS"
+    android:enabled="true"
+    android:exported="true">
+</receiver>}</pre>
  */
 public class MbmsDownloadReceiver extends BroadcastReceiver {
+    /** @hide */
     public static final String DOWNLOAD_TOKEN_SUFFIX = ".download_token";
+    /** @hide */
     public static final String MBMS_FILE_PROVIDER_META_DATA_KEY = "mbms-file-provider-authority";
 
     /**
-     * TODO: @SystemApi all these result codes
      * Indicates that the requested operation completed without error.
+     * @hide
      */
+    @SystemApi
     public static final int RESULT_OK = 0;
 
     /**
@@ -61,26 +74,34 @@ public class MbmsDownloadReceiver extends BroadcastReceiver {
      * {@link VendorIntents#ACTION_FILE_DESCRIPTOR_REQUEST}, or
      * {@link VendorIntents#ACTION_CLEANUP}.
      * This is a fatal result code and no result extras should be expected.
+     * @hide
      */
+    @SystemApi
     public static final int RESULT_INVALID_ACTION = 1;
 
     /**
      * Indicates that the intent was missing some required extras.
      * This is a fatal result code and no result extras should be expected.
+     * @hide
      */
+    @SystemApi
     public static final int RESULT_MALFORMED_INTENT = 2;
 
     /**
      * Indicates that the supplied value for {@link VendorIntents#EXTRA_TEMP_FILE_ROOT}
      * does not match what the app has stored.
      * This is a fatal result code and no result extras should be expected.
+     * @hide
      */
+    @SystemApi
     public static final int RESULT_BAD_TEMP_FILE_ROOT = 3;
 
     /**
      * Indicates that the manager was unable to move the completed download to its final location.
      * This is a fatal result code and no result extras should be expected.
+     * @hide
      */
+    @SystemApi
     public static final int RESULT_DOWNLOAD_FINALIZATION_ERROR = 4;
 
     /**
@@ -88,17 +109,19 @@ public class MbmsDownloadReceiver extends BroadcastReceiver {
      * descriptors.
      * This is a non-fatal result code -- some file descriptors may still be generated, but there
      * is no guarantee that they will be the same number as requested.
+     * @hide
      */
+    @SystemApi
     public static final int RESULT_TEMP_FILE_GENERATION_ERROR = 5;
 
     private static final String LOG_TAG = "MbmsDownloadReceiver";
     private static final String TEMP_FILE_SUFFIX = ".embms.temp";
     private static final int MAX_TEMP_FILE_RETRIES = 5;
 
-
     private String mFileProviderAuthorityCache = null;
     private String mMiddlewarePackageNameCache = null;
 
+    /** @hide */
     @Override
     public void onReceive(Context context, Intent intent) {
         if (!verifyIntentContents(context, intent)) {

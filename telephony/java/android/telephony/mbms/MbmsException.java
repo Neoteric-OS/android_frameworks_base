@@ -30,7 +30,7 @@ public class MbmsException extends Exception {
 
     /**
      * Indicates that the app attempted to perform an operation on an instance of
-     * TODO: link android.telephony.MbmsDownloadManager or
+     * {@link android.telephony.MbmsDownloadManager} or
      * {@link android.telephony.MbmsStreamingManager} without being bound to the middleware.
      */
     public static final int ERROR_MIDDLEWARE_NOT_BOUND = 2;
@@ -43,10 +43,11 @@ public class MbmsException extends Exception {
      * middleware. They are applicable to both streaming and file-download use-cases.
      */
     public static class InitializationErrors {
+        private InitializationErrors() { }
         /**
          * Indicates that the app tried to create more than one instance each of
          * {@link android.telephony.MbmsStreamingManager} or
-         * TODO: link android.telephony.MbmsDownloadManager
+         * {@link android.telephony.MbmsDownloadManager}
          */
         public static final int ERROR_DUPLICATE_INITIALIZE = 101;
         /** Indicates that the app is not authorized to access media via MBMS.*/
@@ -60,10 +61,11 @@ public class MbmsException extends Exception {
      * streaming and file-download.
      */
     public static class GeneralErrors {
+        private GeneralErrors() { }
         /**
          * Indicates that the app attempted to perform an operation before receiving notification
          * that the middleware is ready via {@link MbmsStreamingManagerCallback#middlewareReady()}
-         * or TODO: link MbmsDownloadManagerCallback#middlewareReady
+         * or {@link MbmsDownloadManagerCallback#middlewareReady()}
          */
         public static final int ERROR_MIDDLEWARE_NOT_YET_READY = 201;
         /**
@@ -96,6 +98,7 @@ public class MbmsException extends Exception {
      * Indicates the errors that are applicable only to the streaming use-case
      */
     public static class StreamingErrors {
+        private StreamingErrors() { }
         /** Indicates that the middleware cannot start a stream due to too many ongoing streams */
         public static final int ERROR_CONCURRENT_SERVICE_LIMIT_REACHED = 301;
 
@@ -112,10 +115,9 @@ public class MbmsException extends Exception {
 
     /**
      * Indicates the errors that are applicable only to the file-download use-case
-     * TODO: unhide
-     * @hide
      */
     public static class DownloadErrors {
+        private DownloadErrors() { }
         /**
          * Indicates that the app is not allowed to change the temp file root at this time due to
          * outstanding download requests.
