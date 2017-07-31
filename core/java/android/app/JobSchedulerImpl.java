@@ -87,4 +87,13 @@ public class JobSchedulerImpl extends JobScheduler {
             return null;
         }
     }
+
+    @Override
+    public int getMaxActiveJobs() {
+        try {
+            return mBinder.getMaxActiveJobs();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 }

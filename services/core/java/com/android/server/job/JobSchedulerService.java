@@ -1716,6 +1716,11 @@ public final class JobSchedulerService extends com.android.server.SystemService
             }
         }
 
+        @Override
+        public int getMaxActiveJobs() {
+            return mMaxActiveJobs;
+        }
+
         /**
          * "dumpsys" infrastructure
          */
