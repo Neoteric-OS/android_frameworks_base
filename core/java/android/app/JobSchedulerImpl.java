@@ -17,11 +17,10 @@
 // in android.app so ContextImpl has package access
 package android.app;
 
+import android.app.job.IJobScheduler;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
-import android.app.job.IJobScheduler;
 import android.app.job.JobWorkItem;
-import android.content.Intent;
 import android.os.RemoteException;
 
 import java.util.List;
@@ -96,6 +95,15 @@ public class JobSchedulerImpl extends JobScheduler {
             return mBinder.getPendingJob(jobId);
         } catch (RemoteException e) {
             return null;
+        }
+    }
+
+    @Override
+    public int getMaxActiveJobs() {
+        try {
+            return mBinder.getMaxActiveJobs();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
         }
     }
 }

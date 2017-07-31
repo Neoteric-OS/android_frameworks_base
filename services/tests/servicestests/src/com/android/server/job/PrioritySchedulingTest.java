@@ -34,6 +34,8 @@ public class PrioritySchedulingTest extends AndroidTestCase {
     /** Handle for the service which receives the execution callbacks from the JobScheduler. */
     static ComponentName kJobServiceComponent;
     JobScheduler mJobScheduler;
+    /** The maximum number of concurrent jobs that JobSchedulerService runs at one time. */
+    int mMaxActiveJobs = 1;
 
     @Override
     public void setUp() throws Exception {
@@ -42,6 +44,7 @@ public class PrioritySchedulingTest extends AndroidTestCase {
         kJobServiceComponent = new ComponentName(getContext(), MockPriorityJobService.class);
         mJobScheduler = (JobScheduler) getContext().getSystemService(Context.JOB_SCHEDULER_SERVICE);
         mJobScheduler.cancelAll();
+        mMaxActiveJobs = mJobScheduler.getMaxActiveJobs();
     }
 
     @Override
@@ -51,32 +54,25 @@ public class PrioritySchedulingTest extends AndroidTestCase {
     }
 
     public void testLowerPriorityJobPreempted() throws Exception {
-        JobInfo job1 = new JobInfo.Builder(111, kJobServiceComponent)
-                .setPriority(1)
-                .setOverrideDeadline(7000L)
-                .build();
-        JobInfo job2 = new JobInfo.Builder(222, kJobServiceComponent)
-                .setPriority(1)
-                .setOverrideDeadline(7000L)
-                .build();
-        JobInfo job3 = new JobInfo.Builder(333, kJobServiceComponent)
-                .setPriority(1)
-                .setOverrideDeadline(7000L)
-                .build();
-        JobInfo job4 = new JobInfo.Builder(444, kJobServiceComponent)
-                .setPriority(2)
+        JobInfo jobsArray[] = new JobInfo[mMaxActiveJobs];
+        for (int i = 0 ; i < mMaxActiveJobs ; i++) {
+            jobsArray[i] = new JobInfo.Builder(i, kJobServiceComponent)
+                    .setPriority(JobInfo.PRIORITY_FOREGROUND_APP + 1)
+                    .setOverrideDeadline(7000L)
+                    .build();
+            mJobScheduler.schedule(jobsArray[i]);
+        }
+        JobInfo highPrioJob = new JobInfo.Builder(mMaxActiveJobs, kJobServiceComponent)
+                .setPriority(JobInfo.PRIORITY_FOREGROUND_APP + 2)
                 .setMinimumLatency(2000L)
                 .setOverrideDeadline(7000L)
                 .build();
-        mJobScheduler.schedule(job1);
-        mJobScheduler.schedule(job2);
-        mJobScheduler.schedule(job3);
-        mJobScheduler.schedule(job4);
-        Thread.sleep(10000);  // Wait for job 4 to preempt one of the lower priority jobs
+        mJobScheduler.schedule(highPrioJob);
+        Thread.sleep(10000);  // Wait for high prio job to preempt one of the lower priority jobs
 
-        Event job4Execution = new Event(TestEnvironment.EVENT_START_JOB, 444);
+        Event highPrioJobExecution = new Event(TestEnvironment.EVENT_START_JOB, mMaxActiveJobs);
         ArrayList<Event> executedEvents = kTestEnvironment.getExecutedEvents();
-        boolean wasJob4Executed = executedEvents.contains(job4Execution);
+        boolean wasHighPrioJobExecuted = executedEvents.contains(highPrioJobExecution);
         boolean wasSomeJobPreempted = false;
         for (Event event: executedEvents) {
             if (event.event == TestEnvironment.EVENT_PREEMPT_JOB) {
@@ -85,35 +81,28 @@ public class PrioritySchedulingTest extends AndroidTestCase {
             }
         }
         assertTrue("No job was preempted.", wasSomeJobPreempted);
-        assertTrue("Lower priority jobs were not preempted.",  wasJob4Executed);
+        assertTrue("Lower priority jobs were not preempted.",  wasHighPrioJobExecuted);
     }
 
     public void testHigherPriorityJobNotPreempted() throws Exception {
-        JobInfo job1 = new JobInfo.Builder(111, kJobServiceComponent)
-                .setPriority(2)
-                .setOverrideDeadline(7000L)
-                .build();
-        JobInfo job2 = new JobInfo.Builder(222, kJobServiceComponent)
-                .setPriority(2)
-                .setOverrideDeadline(7000L)
-                .build();
-        JobInfo job3 = new JobInfo.Builder(333, kJobServiceComponent)
-                .setPriority(2)
-                .setOverrideDeadline(7000L)
-                .build();
-        JobInfo job4 = new JobInfo.Builder(444, kJobServiceComponent)
-                .setPriority(1)
+        JobInfo jobsArray[] = new JobInfo[mMaxActiveJobs];
+        for (int i = 0 ; i < mMaxActiveJobs ; i++) {
+            jobsArray[i] = new JobInfo.Builder(i, kJobServiceComponent)
+                    .setPriority(JobInfo.PRIORITY_FOREGROUND_APP + 2)
+                    .setOverrideDeadline(7000L)
+                    .build();
+            mJobScheduler.schedule(jobsArray[i]);
+        }
+        JobInfo lowPrioJob = new JobInfo.Builder(mMaxActiveJobs, kJobServiceComponent)
+                .setPriority(JobInfo.PRIORITY_FOREGROUND_APP + 1)
                 .setMinimumLatency(2000L)
                 .setOverrideDeadline(7000L)
                 .build();
-        mJobScheduler.schedule(job1);
-        mJobScheduler.schedule(job2);
-        mJobScheduler.schedule(job3);
-        mJobScheduler.schedule(job4);
-        Thread.sleep(10000);  // Wait for job 4 to preempt one of the higher priority jobs
+        mJobScheduler.schedule(lowPrioJob);
+        Thread.sleep(10000);  // Wait for low prio job to preempt one of the higher priority jobs
 
-        Event job4Execution = new Event(TestEnvironment.EVENT_START_JOB, 444);
-        boolean wasJob4Executed = kTestEnvironment.getExecutedEvents().contains(job4Execution);
-        assertFalse("Higher priority job was preempted.", wasJob4Executed);
+        Event lowPrioJobExecution = new Event(TestEnvironment.EVENT_START_JOB, mMaxActiveJobs);
+        boolean wasLowPrioJobExecuted = kTestEnvironment.getExecutedEvents().contains(lowPrioJobExecution);
+        assertFalse("Higher priority job was preempted.", wasLowPrioJobExecuted);
     }
 }

@@ -24,7 +24,6 @@ import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.content.ClipData;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 
@@ -167,4 +166,10 @@ public abstract class JobScheduler {
      * @return job registered by this package that has not yet been executed.
      */
     public abstract @Nullable JobInfo getPendingJob(int jobId);
+
+    /**
+     * @return the maximum number of concurrent jobs that JobSchedulerService runs at one time
+     * @hide
+     */
+    public abstract int getMaxActiveJobs();
 }

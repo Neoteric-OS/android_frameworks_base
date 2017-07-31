@@ -31,4 +31,5 @@ interface IJobScheduler {
     void cancelAll();
     List<JobInfo> getAllPendingJobs();
     JobInfo getPendingJob(int jobId);
+    int getMaxActiveJobs();
 }
