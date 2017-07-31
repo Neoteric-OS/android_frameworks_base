@@ -402,6 +402,11 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN);
     }
 
+    // TODO: replace all uses of network by network() to allow mocking this object
+    public Network network() {
+        return network;
+    }
+
     private int getCurrentScore(boolean pretendValidated) {
         // TODO: We may want to refactor this into a NetworkScore class that takes a base score from
         // the NetworkAgent and signals from the NetworkAgent and uses those signals to modify the
