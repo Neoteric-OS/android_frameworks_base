@@ -27,8 +27,8 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
-import android.os.RemoteException;
 import android.os.Messenger;
+import android.os.RemoteException;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
@@ -245,7 +245,7 @@ public final class NsdManager {
         return name;
     }
 
-    private static int FIRST_LISTENER_KEY = 1;
+    private final static int FIRST_LISTENER_KEY = 1;
 
     private final INsdManager mService;
     private final Context mContext;
@@ -279,6 +279,7 @@ public final class NsdManager {
     @VisibleForTesting
     public void disconnect() {
         mAsyncChannel.disconnect();
+        mHandler.getLooper().quitSafely();
     }
 
     /**
@@ -651,7 +652,7 @@ public final class NsdManager {
 
     private static void checkServiceInfo(NsdServiceInfo serviceInfo) {
         checkNotNull(serviceInfo, "NsdServiceInfo cannot be null");
-        checkStringNotEmpty(serviceInfo.getServiceName(),"Service name cannot be empty");
+        checkStringNotEmpty(serviceInfo.getServiceName(), "Service name cannot be empty");
         checkStringNotEmpty(serviceInfo.getServiceType(), "Service type cannot be empty");
     }
 }
