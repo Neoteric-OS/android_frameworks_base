@@ -155,6 +155,15 @@
             </intent-filter>
         </activity-alias>
 
+        <activity android:name="com.android.server.search.SEARCH_ACTIVITY">
+            <intent-filter>
+                    <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable" />
+        </activity>
+
+        <activity android:name="com.android.server.search.NO_SEARCH_ACTIVITY" />
+
     </application>
 
     <instrumentation

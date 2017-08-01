@@ -21,4 +21,5 @@
     <string name="shortcut_title2"></string>
     <string name="shortcut_text2"></string>
     <string name="shortcut_disabled_message2"></string>
+    <string name="search_label">Android Frameworks Service Tests</string>
 </resources>

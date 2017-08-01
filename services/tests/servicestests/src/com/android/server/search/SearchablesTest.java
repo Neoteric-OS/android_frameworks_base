@@ -20,6 +20,7 @@ import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.app.SearchableInfo.ActionKeyInfo;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -30,6 +31,7 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.os.RemoteException;
+import android.os.UserHandle;
 import com.android.server.search.Searchables;
 import android.test.AndroidTestCase;
 import android.test.MoreAsserts;
@@ -76,8 +78,8 @@ public class SearchablesTest extends AndroidTestCase {
 
         // confirm that we return null for non-searchy activities
         ComponentName nonActivity = new ComponentName(
-                            "com.android.frameworks.coretests",
-                            "com.android.frameworks.coretests.activity.NO_SEARCH_ACTIVITY");
+                            "com.android.frameworks.servicestests",
+                            "com.android.server.search.NO_SEARCH_ACTIVITY");
         SearchableInfo si = searchables.getSearchableInfo(nonActivity);
         assertNull(si);
     }
@@ -272,6 +274,23 @@ public class SearchablesTest extends AndroidTestCase {
         public void sendBroadcast(Intent intent) {
             mRealContext.sendBroadcast(intent);
         }
+
+        /**
+         * Content resolver.  Pass through for now.
+         */
+        @Override
+        public ContentResolver getContentResolver() {
+            return mRealContext.getContentResolver();
+        }
+
+        /**
+         * Create package context as user.  Return the mock context.
+         */
+        @Override
+        public Context createPackageContextAsUser(String packageName, int flags, UserHandle user)
+                throws PackageManager.NameNotFoundException {
+            return this;
+        }
     }
 
 /**
@@ -380,6 +399,7 @@ public class SearchablesTest extends AndroidTestCase {
             case SEARCHABLES_PASSTHROUGH:
                 return mRealPackageManager.getXml(packageName, resid, appInfo);
             case SEARCHABLES_MOCK_ZERO:
+                return null;
             default:
                 throw new UnsupportedOperationException();
             }
