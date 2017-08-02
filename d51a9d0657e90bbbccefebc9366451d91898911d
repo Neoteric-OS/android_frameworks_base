@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "699ccc38_f633769d",
+        "filename": "services/tests/servicestests/src/com/android/server/pm/PackageManagerSettingsTests.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1059418
+      },
+      "writtenOn": "2017-08-02T16:00:35Z",
+      "side": 1,
+      "message": "Reflection is not needed here. A more simple fix:\n                // unregister the user manager from the local service\n                LocalServices.removeServiceForTest(UserManagerInternal.class);\n                new UserManagerService(InstrumentationRegistry.getContext());",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 62
+      },
+      "revId": "d51a9d0657e90bbbccefebc9366451d91898911d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
