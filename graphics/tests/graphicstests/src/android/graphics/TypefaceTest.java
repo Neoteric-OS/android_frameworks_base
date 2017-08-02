@@ -77,7 +77,7 @@ public class TypefaceTest extends TestCase {
             for (int j = 0; j < n; j++) {
                 p.setTypeface(mFaces[j]);
                 Paint.FontMetrics fm = p.getFontMetrics();
-                if (j == 0) {
+                if (mFaces[j].getStyle() == 0) {
                     ascent = fm.ascent;
                     descent = fm.descent;
                 } else {
