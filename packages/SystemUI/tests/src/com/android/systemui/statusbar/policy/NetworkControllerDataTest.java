@@ -86,6 +86,17 @@ public class NetworkControllerDataTest extends NetworkControllerBaseTest {
 
     @Test
     @Ignore("Flaky")
+    public void testHspaPlusDataIcon() {
+        setupDefaultSignal();
+        updateDataConnectionState(TelephonyManager.DATA_CONNECTED,
+                TelephonyManager.NETWORK_TYPE_HSPAP);
+
+        verifyDataIndicators(TelephonyIcons.ICON_H_PLUS,
+                TelephonyIcons.QS_DATA_H_PLUS);
+    }
+
+    @Test
+    @Ignore("Flaky")
     public void testWfcNoDataIcon() {
         setupDefaultSignal();
         updateDataConnectionState(TelephonyManager.DATA_CONNECTED,
