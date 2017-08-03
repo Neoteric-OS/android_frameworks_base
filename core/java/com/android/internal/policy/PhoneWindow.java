@@ -3127,6 +3127,11 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
      * @return true if search window opened
      */
     private boolean launchDefaultSearch(KeyEvent event) {
+        if (ServiceManager.checkService(Context.SEARCH_SERVICE) == null) {
+            Log.e(TAG, "Can't get SearchManagerService, is it running ?",
+                    new IllegalStateException("Stack Trace:"));
+            return false;
+        }
         boolean result;
         final Callback cb = getCallback();
         if (cb == null || isDestroyed()) {
