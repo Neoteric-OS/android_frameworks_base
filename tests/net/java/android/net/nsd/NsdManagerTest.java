@@ -50,7 +50,7 @@ import java.util.function.Consumer;
 @SmallTest
 public class NsdManagerTest {
 
-    static final int PROTOCOL = NsdManager.PROTOCOL_DNS_SD;
+    static final int PROTOCOL = new Random().nextInt(); // Ignored by NsdManager.
 
     @Mock Context mContext;
     @Mock INsdManager mService;
@@ -264,7 +264,6 @@ public class NsdManagerTest {
         mustFail(() -> { manager.registerService(null, -1, null); });
         mustFail(() -> { manager.registerService(null, PROTOCOL, listener1); });
         mustFail(() -> { manager.registerService(invalidService, PROTOCOL, listener1); });
-        mustFail(() -> { manager.registerService(validService, -1, listener1); });
         mustFail(() -> { manager.registerService(validService, PROTOCOL, null); });
         manager.registerService(validService, PROTOCOL, listener1);
         //  - listener already registered
@@ -279,7 +278,6 @@ public class NsdManagerTest {
         mustFail(() -> { manager.stopServiceDiscovery(null); });
         mustFail(() -> { manager.discoverServices(null, -1, null); });
         mustFail(() -> { manager.discoverServices(null, PROTOCOL, listener2); });
-        mustFail(() -> { manager.discoverServices("a_service", -1, listener2); });
         mustFail(() -> { manager.discoverServices("a_service", PROTOCOL, null); });
         manager.discoverServices("a_service", PROTOCOL, listener2);
         //  - listener already registered

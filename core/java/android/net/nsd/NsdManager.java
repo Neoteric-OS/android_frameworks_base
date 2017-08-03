@@ -208,7 +208,10 @@ public final class NsdManager {
     /** @hide */
     public static final int NATIVE_DAEMON_EVENT                     = BASE + 26;
 
-    /** Dns based service discovery protocol */
+    /**
+     * Dns based service discovery protocol. This value is unused and ignored by
+     * {@link registerService} abd {@link discoverService}.
+     */
     public static final int PROTOCOL_DNS_SD = 0x0001;
 
     private static final SparseArray<String> EVENT_NAMES = new SparseArray<>();
@@ -510,7 +513,8 @@ public final class NsdManager {
      * registration is no longer required, and/or whenever the application is stopped.
      *
      * @param serviceInfo The service being registered
-     * @param protocolType The service discovery protocol
+     * @param protocolType The service discovery protocol. This argument is not used anymore and
+     * ignored.
      * @param listener The listener notifies of a successful registration and is used to
      * unregister this service through a call on {@link #unregisterService}. Cannot be null.
      * Cannot be in use for an active service registration.
@@ -519,7 +523,6 @@ public final class NsdManager {
             RegistrationListener listener) {
         checkArgument(serviceInfo.getPort() > 0, "Invalid port number");
         checkServiceInfo(serviceInfo);
-        checkProtocol(protocolType);
         int key = putListener(listener, serviceInfo);
         mAsyncChannel.sendMessage(REGISTER_SERVICE, 0, key, serviceInfo);
     }
@@ -565,14 +568,14 @@ public final class NsdManager {
      *
      * @param serviceType The service type being discovered. Examples include "_http._tcp" for
      * http services or "_ipp._tcp" for printers
-     * @param protocolType The service discovery protocol
+     * @param protocolType The service discovery protocol. This argument is not used anymore and
+     * ignored.
      * @param listener  The listener notifies of a successful discovery and is used
      * to stop discovery on this serviceType through a call on {@link #stopServiceDiscovery}.
      * Cannot be null. Cannot be in use for an active service discovery.
      */
     public void discoverServices(String serviceType, int protocolType, DiscoveryListener listener) {
         checkStringNotEmpty(serviceType, "Service type cannot be empty");
-        checkProtocol(protocolType);
 
         NsdServiceInfo s = new NsdServiceInfo();
         s.setServiceType(serviceType);
@@ -642,10 +645,6 @@ public final class NsdManager {
 
     private static void checkListener(Object listener) {
         checkNotNull(listener, "listener cannot be null");
-    }
-
-    private static void checkProtocol(int protocolType) {
-        checkArgument(protocolType == PROTOCOL_DNS_SD, "Unsupported protocol");
     }
 
     private static void checkServiceInfo(NsdServiceInfo serviceInfo) {
