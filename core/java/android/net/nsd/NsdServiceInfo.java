@@ -17,12 +17,13 @@
 package android.net.nsd;
 
 import android.annotation.NonNull;
-import android.os.Parcelable;
+import android.os.Handler;
 import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.TextUtils;
+import android.util.ArrayMap;
 import android.util.Base64;
 import android.util.Log;
-import android.util.ArrayMap;
 
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
@@ -38,15 +39,16 @@ public final class NsdServiceInfo implements Parcelable {
 
     private static final String TAG = "NsdServiceInfo";
 
+    // User managed fields, part of Parcelable
     private String mServiceName;
-
     private String mServiceType;
-
     private final ArrayMap<String, byte[]> mTxtRecord = new ArrayMap<>();
-
     private InetAddress mHost;
-
     private int mPort;
+
+    // Framework managed fields, ignored by Parcelable
+    /** @hide */
+    Handler userHandler;
 
     public NsdServiceInfo() {
     }

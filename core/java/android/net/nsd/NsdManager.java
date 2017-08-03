@@ -376,7 +376,17 @@ public final class NsdManager {
             if (DBG) {
                 Log.d(TAG, "received " + nameOf(what) + " for key " + key + ", service " + ns);
             }
-            switch (what) {
+            Handler userHandler = ns.userHandler;
+            if (userHandler != null) {
+                userHandler.post(() -> { processCallback(message, listener, ns); });
+            } else {
+                processCallback(message, listener, ns);
+            }
+        }
+
+        private void processCallback(Message message, Object listener, NsdServiceInfo ns) {
+            final int key = message.arg2;
+            switch (message.what) {
                 case DISCOVER_SERVICES_STARTED:
                     String s = getNsdServiceInfoType((NsdServiceInfo) message.obj);
                     ((DiscoveryListener) listener).onDiscoveryStarted(s);
@@ -485,6 +495,7 @@ public final class NsdManager {
         if (messenger == null) {
             fatal("Failed to obtain service Messenger");
         }
+        // TODO: consider using ConnectivityThread
         HandlerThread t = new HandlerThread("NsdManager");
         t.start();
         mHandler = new ServiceHandler(t.getLooper());
@@ -512,6 +523,8 @@ public final class NsdManager {
      * <p> The application should call {@link #unregisterService} when the service
      * registration is no longer required, and/or whenever the application is stopped.
      *
+     * WRITEME: listener is run on a background thread that is not the main thread
+     *
      * @param serviceInfo The service being registered
      * @param protocolType The service discovery protocol. This argument is not used anymore and
      * ignored.
@@ -525,6 +538,31 @@ public final class NsdManager {
         checkServiceInfo(serviceInfo);
         int key = putListener(listener, serviceInfo);
         mAsyncChannel.sendMessage(REGISTER_SERVICE, 0, key, serviceInfo);
+    }
+
+    /**
+     * Register a service to be discovered by other services.
+     *
+     * <p> The function call immediately returns after sending a request to register service
+     * to the framework. The application is notified of a successful registration
+     * through the callback {@link RegistrationListener#onServiceRegistered} or a failure
+     * through {@link RegistrationListener#onRegistrationFailed}.
+     *
+     * <p> The application should call {@link #unregisterService} when the service
+     * registration is no longer required, and/or whenever the application is stopped.
+     *
+     * @param serviceInfo The service being registered
+     * @param listener The listener notifies of a successful registration and is used to
+     * unregister this service through a call on {@link #unregisterService}. Cannot be null.
+     * Cannot be in use for an active service registration.
+     * @param handler WRITEME
+     *
+     * @hide
+     */
+    public void registerService(
+            NsdServiceInfo serviceInfo, RegistrationListener listener, Handler handler) {
+        serviceInfo.userHandler = handler;
+        registerService(serviceInfo, 0, listener);
     }
 
     /**
@@ -566,6 +604,8 @@ public final class NsdManager {
      * service type is no longer required, and/or whenever the application is paused or
      * stopped.
      *
+     * WRITEME: listener is run on a background thread that is not the main thread
+     *
      * @param serviceType The service type being discovered. Examples include "_http._tcp" for
      * http services or "_ipp._tcp" for printers
      * @param protocolType The service discovery protocol. This argument is not used anymore and
@@ -579,9 +619,50 @@ public final class NsdManager {
 
         NsdServiceInfo s = new NsdServiceInfo();
         s.setServiceType(serviceType);
+        discoverServices(s, listener);
+    }
 
-        int key = putListener(listener, s);
-        mAsyncChannel.sendMessage(DISCOVER_SERVICES, 0, key, s);
+    /**
+     * Initiate service discovery to browse for instances of a service type. Service discovery
+     * consumes network bandwidth and will continue until the application calls
+     * {@link #stopServiceDiscovery}.
+     *
+     * <p> The function call immediately returns after sending a request to start service
+     * discovery to the framework. The application is notified of a success to initiate
+     * discovery through the callback {@link DiscoveryListener#onDiscoveryStarted} or a failure
+     * through {@link DiscoveryListener#onStartDiscoveryFailed}.
+     *
+     * <p> Upon successful start, application is notified when a service is found with
+     * {@link DiscoveryListener#onServiceFound} or when a service is lost with
+     * {@link DiscoveryListener#onServiceLost}.
+     *
+     * <p> Upon failure to start, service discovery is not active and application does
+     * not need to invoke {@link #stopServiceDiscovery}
+     *
+     * <p> The application should call {@link #stopServiceDiscovery} when discovery of this
+     * service type is no longer required, and/or whenever the application is paused or
+     * stopped.
+     *
+     * @param serviceType The service type being discovered. Examples include "_http._tcp" for
+     * http services or "_ipp._tcp" for printers
+     * @param listener  The listener notifies of a successful discovery and is used
+     * to stop discovery on this serviceType through a call on {@link #stopServiceDiscovery}.
+     * Cannot be null. Cannot be in use for an active service discovery.
+     * @param handler WRITEME
+     *
+     * @hide
+     */
+    public void discoverServices(String serviceType, DiscoveryListener listener, Handler handler) {
+        checkStringNotEmpty(serviceType, "Service type cannot be empty");
+        NsdServiceInfo s = new NsdServiceInfo();
+        s.setServiceType(serviceType);
+        s.userHandler = handler;
+        discoverServices(s, listener);
+    }
+
+    private void discoverServices(NsdServiceInfo serviceInfo, DiscoveryListener listener) {
+        int key = putListener(listener, serviceInfo);
+        mAsyncChannel.sendMessage(DISCOVER_SERVICES, 0, key, serviceInfo);
     }
 
     /**
@@ -610,6 +691,8 @@ public final class NsdManager {
      * establishing a connection to fetch the IP and port details on which to setup
      * the connection.
      *
+     * WRITEME: listener is run on a background thread that is not the main thread
+     *
      * @param serviceInfo service to be resolved
      * @param listener to receive callback upon success or failure. Cannot be null.
      * Cannot be in use for an active service resolution.
@@ -618,6 +701,24 @@ public final class NsdManager {
         checkServiceInfo(serviceInfo);
         int key = putListener(listener, serviceInfo);
         mAsyncChannel.sendMessage(RESOLVE_SERVICE, 0, key, serviceInfo);
+    }
+
+    /**
+     * Resolve a discovered service. An application can resolve a service right before
+     * establishing a connection to fetch the IP and port details on which to setup
+     * the connection.
+     *
+     * @param serviceInfo service to be resolved
+     * @param listener to receive callback upon success or failure. Cannot be null.
+     * Cannot be in use for an active service resolution.
+     * @param handler WRITEME
+     *
+     * @hide
+     */
+    public void resolveService(
+            NsdServiceInfo serviceInfo, ResolveListener listener, Handler handler) {
+        serviceInfo.userHandler = handler;
+        resolveService(serviceInfo, listener);
     }
 
     /** Internal use only @hide */
