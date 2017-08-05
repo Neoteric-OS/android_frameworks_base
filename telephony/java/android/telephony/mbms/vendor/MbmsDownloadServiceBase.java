@@ -20,7 +20,7 @@ import android.annotation.NonNull;
 import android.annotation.SystemApi;
 import android.content.Intent;
 import android.os.RemoteException;
-import android.telephony.mbms.DownloadProgressListener;
+import android.telephony.mbms.DownloadStateCallback;
 import android.telephony.mbms.DownloadRequest;
 import android.telephony.mbms.FileInfo;
 import android.telephony.mbms.FileServiceInfo;
@@ -134,12 +134,12 @@ public class MbmsDownloadServiceBase extends IMbmsDownloadService.Stub {
      * this is not the case, an {@link IllegalStateException} may be thrown.
      *
      * @param downloadRequest An object describing the set of files to be downloaded.
-     * @param listener A listener through which the middleware can provide progress updates to
+     * @param callback A callback through which the middleware can provide progress updates to
      *                 the app while both are still running.
      * @return Any error from {@link android.telephony.mbms.MbmsException.GeneralErrors}
      *         or {@link MbmsException#SUCCESS}
      */
-    public int download(DownloadRequest downloadRequest, DownloadProgressListener listener) {
+    public int download(DownloadRequest downloadRequest, DownloadStateCallback callback) {
         return 0;
     }
 
@@ -148,9 +148,9 @@ public class MbmsDownloadServiceBase extends IMbmsDownloadService.Stub {
      * @hide
      */
     @Override
-    public final int download(DownloadRequest downloadRequest, IDownloadProgressListener listener)
+    public final int download(DownloadRequest downloadRequest, IDownloadProgressCallback callback)
             throws RemoteException {
-        return download(downloadRequest, new DownloadProgressListener() {
+        return download(downloadRequest, new DownloadStateCallback() {
             @Override
             public void progress(DownloadRequest request, FileInfo fileInfo, int
                     currentDownloadSize, int fullDownloadSize, int currentDecodedSize, int
