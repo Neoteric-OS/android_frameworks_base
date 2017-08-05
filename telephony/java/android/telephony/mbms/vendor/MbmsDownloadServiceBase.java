@@ -24,7 +24,7 @@ import android.telephony.mbms.DownloadStateCallback;
 import android.telephony.mbms.DownloadRequest;
 import android.telephony.mbms.FileInfo;
 import android.telephony.mbms.FileServiceInfo;
-import android.telephony.mbms.IDownloadProgressListener;
+import android.telephony.mbms.IDownloadStateCallback;
 import android.telephony.mbms.IMbmsDownloadManagerCallback;
 import android.telephony.mbms.MbmsDownloadManagerCallback;
 import android.telephony.mbms.MbmsException;
@@ -148,14 +148,14 @@ public class MbmsDownloadServiceBase extends IMbmsDownloadService.Stub {
      * @hide
      */
     @Override
-    public final int download(DownloadRequest downloadRequest, IDownloadProgressCallback callback)
+    public final int download(DownloadRequest downloadRequest, IDownloadStateCallback callback)
             throws RemoteException {
         return download(downloadRequest, new DownloadStateCallback() {
             @Override
             public void progress(DownloadRequest request, FileInfo fileInfo, int
                     currentDownloadSize, int fullDownloadSize, int currentDecodedSize, int
                     fullDecodedSize) throws RemoteException {
-                listener.progress(request, fileInfo, currentDownloadSize, fullDownloadSize,
+                callback.progress(request, fileInfo, currentDownloadSize, fullDownloadSize,
                         currentDecodedSize, fullDecodedSize);
             }
         });
@@ -165,7 +165,7 @@ public class MbmsDownloadServiceBase extends IMbmsDownloadService.Stub {
     /**
      * Returns a list of pending {@link DownloadRequest}s that originated from the calling
      * application, identified by its uid. A pending request is one that was issued via
-     * {@link #download(DownloadRequest, IDownloadProgressListener)} but not cancelled through
+     * {@link #download(DownloadRequest, DownloadStateCallback)} but not cancelled through
      * {@link #cancelDownload(DownloadRequest)}.
      * The middleware must return a non-null result synchronously or throw an exception
      * inheriting from {@link RuntimeException}.

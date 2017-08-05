@@ -31,4 +31,6 @@ interface IDownloadStateCallback
      */
     void progress(in DownloadRequest request, in FileInfo fileInfo, int currentDownloadSize,
             int fullDownloadSize, int currentDecodedSize, int fullDecodedSize);
+
+    void state(in DownloadRequest request, in FileInfo fileInfo, int state);
 }
