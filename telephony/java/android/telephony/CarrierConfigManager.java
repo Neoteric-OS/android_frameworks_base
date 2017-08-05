@@ -1381,14 +1381,15 @@ public class CarrierConfigManager {
     public static final String IMSI_KEY_DOWNLOAD_URL_STRING = "imsi_key_download_url_string";
 
     /**
-     * Time in days, after which the key will expire, and a new key will need to be downloaded.
-     * default value is {@link IMSI_ENCRYPTION_DAYS_TIME_DISABLED}, and indicates that IMSI
-     * encryption is not enabled by default for a carrier. Value of 0 indicates that the key
-     * does not expire.
+     * Identifies if the key is available for WLAN or EPDG or both.
+     * 0 indicates that neither EPDG or WLAN is enabled.
+     * 1 indicates that key type {@link TelephonyManager#KEY_TYPE_EPDDG} is enabled.
+     * 2 indicates that key type {@link TelephonyManager#KEY_TYPE_WLAN} is enabled.
+     * 3 indicates that both are enabled.
      * @hide
      */
-    public static final String IMSI_KEY_EXPIRATION_DAYS_TIME_INT =
-            "imsi_key_expiration_days_time_int";
+    public static final String IMSI_KEY_AVAILABILITY_INT = "imsi_key_availability_int";
+
 
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
