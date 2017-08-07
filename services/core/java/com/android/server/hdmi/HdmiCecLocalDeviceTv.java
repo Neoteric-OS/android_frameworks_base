@@ -50,6 +50,7 @@ import android.util.SparseBooleanArray;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.hdmi.DeviceDiscoveryAction.DeviceDiscoveryCallback;
+import com.android.server.hdmi.RequestShortAudioDescriptorAction.RequestSADCallback;
 import com.android.server.hdmi.HdmiAnnotations.ServiceThreadOnly;
 import com.android.server.hdmi.HdmiControlService.SendMessageCallback;
 import java.io.UnsupportedEncodingException;
@@ -125,6 +126,9 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     // If true, do not do routing control/send active source for internal source.
     // Set to true when the device was woken up by <Text/Image View On>.
     private boolean mSkipRoutingControl;
+
+    // Set of Short Audio Descriptor reported by AVR.
+    private byte[] mParamsBackup = null;
 
     // Set of physical addresses of CEC switches on the CEC bus. Managed independently from
     // other CEC devices since they might not have logical address.
@@ -836,6 +840,20 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
                 new SystemAudioActionFromTv(this, avr.getLogicalAddress(), enabled, callback));
     }
 
+    void setSadParams(byte[] sadParams) {
+        mParamsBackup = new byte[sadParams.length];
+        mParamsBackup = Arrays.copyOf(sadParams, sadParams.length);
+    }
+
+    byte[] getSadParams() {
+        return mParamsBackup;
+    }
+
+    void resetSadParams() {
+        HdmiLogger.debug("Remove audio format.");
+        mParamsBackup = null;
+    }
+
     // # Seq 25
     void setSystemAudioMode(boolean on) {
         if (!isSystemAudioControlFeatureEnabled() && on) {
@@ -848,6 +866,36 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         synchronized (mLock) {
             if (mSystemAudioActivated != on) {
                 mSystemAudioActivated = on;
+                if (getAvrDeviceInfo() != null) {
+                    RequestShortAudioDescriptorAction action =
+                            new RequestShortAudioDescriptorAction(this,
+                                    getAvrDeviceInfo().getLogicalAddress(),on,
+                                    new RequestSADCallback(){
+                                        @Override
+                                        public void updateSAD(byte[] sadParams,
+                                                boolean supportMultiChannels, boolean update) {
+                                            if (update) {
+                                                byte[] buf = new byte[2];
+                                                String audioParams = "set_ARC_format=";
+                                                String keyValue;
+                                                int sadParamsLen = 0;
+                                                if (sadParams != null) {
+                                                    sadParamsLen = sadParams.length;
+                                                }
+                                                buf[0] = (byte) sadParamsLen;
+                                                buf[1] = (byte) (getAvrDeviceInfo().getPortId());
+                                                keyValue = audioParams + Arrays.toString(buf);
+                                                keyValue += Arrays.toString(sadParams);
+                                                HdmiLogger.debug("keyValue:" + keyValue);
+                                                mService.getAudioManager().setParameters(keyValue);
+                                            }
+                                            mService.setCecOption(
+                                                    Constants.OPTION_CEC_SUPPORT_MULTICHANNELS,
+                                                    supportMultiChannels);
+                                        }
+                                    });
+                    addAndStartAction(action);
+                }
                 mService.announceSystemAudioModeChange(on);
             }
             startArcAction(on);
@@ -1462,6 +1510,13 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     final void removeCecDevice(int address) {
         assertRunOnServiceThread();
+
+        HdmiDeviceInfo avr = getAvrDeviceInfo();
+        if ((avr != null) && (address == avr.getLogicalAddress())) {
+            removeAction(RequestShortAudioDescriptorAction.class);
+            resetSadParams();
+        }
+
         HdmiDeviceInfo info = removeDeviceInfo(HdmiDeviceInfo.idForCecDevice(address));
 
         mCecMessageCache.flushMessagesFrom(address);
@@ -1658,6 +1713,8 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
             return;
         }
 
+        removeAction(RequestShortAudioDescriptorAction.class);
+        resetSadParams();
         // Seq #44.
         removeAction(RequestArcInitiationAction.class);
         if (!hasAction(RequestArcTerminationAction.class) && isArcEstablished()) {
