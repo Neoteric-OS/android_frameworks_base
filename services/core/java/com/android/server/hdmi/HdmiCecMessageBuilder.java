@@ -504,6 +504,28 @@ public class HdmiCecMessageBuilder {
     static HdmiCecMessage buildSetDigitalTimer(int src, int dest, byte[] params) {
         return buildCommand(src, dest, Constants.MESSAGE_SET_DIGITAL_TIMER, params);
     }
+    /**
+     * Build &lt;Request Short Audio Descriptor&gt; command.
+     *
+     * @param src source address of command
+     * @param dest destination address of command
+     * @param audioFormat1 the {@link Constants.CEA861D} to apply
+     * @param audioFormat2 the {@link Constants.CEA861D} to apply
+     * @param audioFormat3 the {@link Constants.CEA861D} to apply
+     * @param audioFormat4 the {@link Constants.CEA861D} to apply
+     * @return newly created {@link HdmiCecMessage}
+     */
+    static HdmiCecMessage buildRequestShortAudioDescriptor(int src, int dest,
+            @Constants.CEA861D int audioFormat1, @Constants.CEA861D int audioFormat2,
+            @Constants.CEA861D int audioFormat3, @Constants.CEA861D int audioFormat4) {
+        byte[] params = new byte[] {
+                (byte) (audioFormat1 & 0xFF),
+                (byte) (audioFormat2 & 0xFF),
+                (byte) (audioFormat3 & 0xFF),
+                (byte) (audioFormat4 & 0xFF),
+        };
+        return buildCommand(src, dest, Constants.MESSAGE_REQUEST_SHORT_AUDIO_DESCRIPTOR, params);
+    }
 
     /**
      * Build &lt;Set Analogue Timer&gt; command.
