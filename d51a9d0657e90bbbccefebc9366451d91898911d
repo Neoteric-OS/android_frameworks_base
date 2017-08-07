@@ -22,6 +22,30 @@
       "revId": "d51a9d0657e90bbbccefebc9366451d91898911d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "adfc1ce3_a64a73f5",
+        "filename": "services/tests/servicestests/src/com/android/server/pm/PackageManagerSettingsTests.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1071688
+      },
+      "writtenOn": "2017-08-07T10:53:07Z",
+      "side": 1,
+      "message": "indeed this works fine. I will upload a new patch with the changes.",
+      "parentUuid": "699ccc38_f633769d",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 62
+      },
+      "revId": "d51a9d0657e90bbbccefebc9366451d91898911d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
