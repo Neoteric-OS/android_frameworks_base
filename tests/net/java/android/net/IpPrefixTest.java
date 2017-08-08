@@ -16,18 +16,27 @@
 
 package android.net;
 
-import android.net.IpPrefix;
-import android.os.Parcel;
-import static android.test.MoreAsserts.assertNotEqual;
-import android.test.suitebuilder.annotation.SmallTest;
-
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import android.os.Parcel;
+import android.support.test.filters.SmallTest;
+import android.support.test.runner.AndroidJUnit4;
+
 import java.net.InetAddress;
 import java.util.Random;
-import junit.framework.TestCase;
 
+import org.junit.runner.RunWith;
+import org.junit.Test;
 
-public class IpPrefixTest extends TestCase {
+@RunWith(AndroidJUnit4.class)
+@SmallTest
+public class IpPrefixTest {
 
     private static InetAddress Address(String addr) {
         return InetAddress.parseNumericAddress(addr);
@@ -42,7 +51,7 @@ public class IpPrefixTest extends TestCase {
         (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0xa0
     };
 
-    @SmallTest
+    @Test
     public void testConstructor() {
         IpPrefix p;
         try {
@@ -103,6 +112,7 @@ public class IpPrefixTest extends TestCase {
         } catch(IllegalArgumentException expected) {}
     }
 
+    @Test
     public void testTruncation() {
         IpPrefix p;
 
@@ -170,7 +180,7 @@ public class IpPrefixTest extends TestCase {
         assertFalse(o2.equals(o1));
     }
 
-    @SmallTest
+    @Test
     public void testEquals() {
         IpPrefix p1, p2;
 
@@ -212,7 +222,7 @@ public class IpPrefixTest extends TestCase {
         assertAreNotEqual(p1, p2);
     }
 
-    @SmallTest
+    @Test
     public void testContains() {
         IpPrefix p = new IpPrefix("2001:db8:f00::ace:d00d/127");
         assertTrue(p.contains(Address("2001:db8:f00::ace:d00c")));
@@ -240,7 +250,7 @@ public class IpPrefixTest extends TestCase {
         assertFalse(ipv4Default.contains(Address("2001:db8::f00")));
     }
 
-    @SmallTest
+    @Test
     public void testHashCode() {
         IpPrefix p;
         int oldCode = -1;
@@ -251,20 +261,20 @@ public class IpPrefixTest extends TestCase {
                 byte[] b = new byte[4];
                 random.nextBytes(b);
                 p = new IpPrefix(b, random.nextInt(33));
-                assertNotEqual(oldCode, p.hashCode());
+                assertNotEquals(oldCode, p.hashCode());
                 oldCode = p.hashCode();
             } else {
                 // IPv6.
                 byte[] b = new byte[16];
                 random.nextBytes(b);
                 p = new IpPrefix(b, random.nextInt(129));
-                assertNotEqual(oldCode, p.hashCode());
+                assertNotEquals(oldCode, p.hashCode());
                 oldCode = p.hashCode();
             }
         }
     }
 
-    @SmallTest
+    @Test
     public void testMappedAddressesAreBroken() {
         // 192.0.2.0/24 != ::ffff:c000:0204/120, but because we use InetAddress,
         // we are unable to comprehend that.
@@ -301,13 +311,16 @@ public class IpPrefixTest extends TestCase {
       assertEquals(p, p2);
     }
 
+    @Test
     public void testParceling() {
         IpPrefix p;
 
         p = new IpPrefix("2001:4860:db8::/64");
         assertParcelingIsLossless(p);
+        assertTrue(p.isIPv6());
 
         p = new IpPrefix("192.0.2.0/25");
         assertParcelingIsLossless(p);
+        assertTrue(p.isIPv4());
     }
 }
