@@ -17,6 +17,8 @@
 package android.net.ip;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.eq;
@@ -32,8 +34,11 @@ import android.app.AlarmManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
+import android.net.INetd;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
+import android.net.LinkProperties;
+import android.net.RouteInfo;
 import android.net.ip.IpManager.Callback;
 import android.net.ip.IpManager.InitialConfiguration;
 import android.net.ip.IpManager.ProvisioningConfiguration;
@@ -45,16 +50,20 @@ import android.test.mock.MockContentResolver;
 
 import com.android.internal.util.test.FakeSettingsProvider;
 import com.android.internal.R;
+import com.android.server.net.BaseNetworkObserver;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.util.Arrays;
+import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -71,10 +80,13 @@ public class IpManagerTest {
 
     @Mock private Context mContext;
     @Mock private INetworkManagementService mNMService;
+    @Mock private INetd mNetd;
     @Mock private Resources mResources;
     @Mock private Callback mCb;
     @Mock private AlarmManager mAlarm;
     private MockContentResolver mContentResolver;
+
+    BaseNetworkObserver mObserver;
 
     @Before
     public void setUp() throws Exception {
@@ -91,9 +103,13 @@ public class IpManagerTest {
     }
 
     private IpManager makeIpManager(String ifname) throws Exception {
-        final IpManager ipm = new IpManager(mContext, ifname, mCb, mNMService);
+        final IpManager ipm = new IpManager(mContext, ifname, mCb, mNMService, mNetd);
         verify(mNMService, timeout(100).times(1)).disableIpv6(ifname);
         verify(mNMService, timeout(100).times(1)).clearInterfaceAddresses(ifname);
+        ArgumentCaptor<BaseNetworkObserver> arg =
+                ArgumentCaptor.forClass(BaseNetworkObserver.class);
+        verify(mNMService, times(1)).registerObserver(arg.capture());
+        mObserver = arg.getValue();
         reset(mNMService);
         return ipm;
     }
@@ -131,6 +147,93 @@ public class IpManagerTest {
     }
 
     @Test
+    public void testProvisioningWithInitialConfiguration() throws Exception {
+        final String iface = "test_wlan0";
+        final IpManager ipm = makeIpManager(iface);
+
+        String[] addresses = {
+            "fe80::a4be:f92:e1f7:22d1/64",
+            "fe80::f04a:8f6:6a32:d756/64",
+            "fd2c:4e57:8e3c:0:548d:2db2:4fcf:ef75/64"
+        };
+        String[] prefixes = { "fe80::/64", "fd2c:4e57:8e3c::/64" };
+
+        ProvisioningConfiguration config = new ProvisioningConfiguration.Builder()
+                .withoutIPv4()
+                .withoutIpReachabilityMonitor()
+                .withInitialConfiguration(conf(links(addresses), prefixes(prefixes), ips()))
+                .build();
+
+        ipm.startProvisioning(config);
+        verify(mCb, times(1)).setNeighborDiscoveryOffload(true);
+        verify(mCb, timeout(100).times(1)).setFallbackMulticastFilter(false);
+        verify(mCb, never()).onProvisioningFailure(any());
+
+        for (String addr : addresses) {
+            String[] parts = addr.split("/");
+            verify(mNetd, timeout(100).times(1))
+                    .interfaceAddAddress(iface, parts[0], Integer.parseInt(parts[1]));
+        }
+
+        for (String addr : addresses) {
+            // adds some flags for realism
+            mObserver.addressUpdated(iface, new LinkAddress(addr));
+        }
+        // why is it not working ??
+        //verify(mCb, timeout(100).times(addresses.length - 1)).onLinkPropertiesChange(any());
+
+        LinkProperties want = linkproperties(links(addresses), routes(prefixes));
+        want.setInterfaceName(iface);
+        verify(mCb, timeout(100).times(1)).onProvisioningSuccess(eq(want));
+
+        ipm.stop();
+        verify(mNMService, timeout(100).times(1)).disableIpv6(iface);
+        verify(mNMService, timeout(100).times(1)).clearInterfaceAddresses(iface);
+    }
+
+    @Test
+    public void testIsProvisioned() throws Exception {
+        IsProvisionedTestCase[] testcases = {
+            provisionedCase(links(), routes(), links(), prefixes()) // should this be false ?
+            // TODO
+        };
+
+        for (IsProvisionedTestCase testcase : testcases) {
+            if (IpManager.isProvisioned(testcase.lp, testcase.config) != testcase.isProvisioned) {
+                fail(testcase.errorMessage());
+            }
+        }
+    }
+
+    static class IsProvisionedTestCase {
+        boolean isProvisioned;
+        LinkProperties lp;
+        InitialConfiguration config;
+
+        String errorMessage() {
+            return String.format("expected %s with config %s to be %s, but was %s",
+                     lp, config, provisioned(isProvisioned), provisioned(!isProvisioned));
+        }
+    }
+
+    static IsProvisionedTestCase provisionedCase(Set<LinkAddress> lpAddrs, Set<RouteInfo> lpRoutes,
+            Set<LinkAddress> configAddrs, Set<IpPrefix> configRoutes) {
+        IsProvisionedTestCase testcase = new IsProvisionedTestCase();
+        testcase.isProvisioned = true;
+        testcase.lp = new LinkProperties();
+        testcase.lp.setLinkAddresses(lpAddrs);
+        for (RouteInfo route : lpRoutes) {
+            testcase.lp.addRoute(route);
+        }
+        testcase.config = conf(configAddrs, configRoutes, new HashSet<>());
+        return testcase;
+    }
+
+    static String provisioned(boolean isProvisioned) {
+        return isProvisioned ? "provisioned" : "not provisioned";
+    }
+
+    @Test
     public void testInitialConfigurations() throws Exception {
         InitialConfigurationTestCase[] testcases = {
             validConf("valid IPv4 configuration",
@@ -152,6 +255,7 @@ public class IpManagerTest {
                     prefixes("fd00:1234:5678::/48"),
                     dns("fd00:1234:5678::1000")),
 
+            invalidConf("empty configuration", links(), prefixes(), dns()),
             invalidConf("v4 addr and dns not in any prefix",
                     links("192.0.2.12/24"), prefixes("198.51.100.0/24"), dns("192.0.2.2")),
             invalidConf("v4 addr not in any prefix",
@@ -189,10 +293,9 @@ public class IpManagerTest {
             return String.format("%s: expected configuration %s to be %s, but was %s",
                     descr, config, validString(isValid), validString(!isValid));
         }
-    }
-
-    static String validString(boolean isValid) {
-        return isValid ? VALID : INVALID;
+        static String validString(boolean isValid) {
+            return isValid ? VALID : INVALID;
+        }
     }
 
     static InitialConfigurationTestCase validConf(String descr, Set<LinkAddress> links,
@@ -214,6 +317,15 @@ public class IpManagerTest {
         return testcase;
     }
 
+    static LinkProperties linkproperties(Set<LinkAddress> addresses, Set<RouteInfo> routes) {
+        LinkProperties lp = new LinkProperties();
+        lp.setLinkAddresses(addresses);
+        for (RouteInfo route : routes) {
+            lp.addRoute(route);
+        }
+        return lp;
+    }
+
     static InitialConfiguration conf(
             Set<LinkAddress> links, Set<IpPrefix> prefixes, Set<InetAddress> dns) {
         InitialConfiguration conf = new InitialConfiguration();
@@ -221,6 +333,10 @@ public class IpManagerTest {
         conf.directlyConnectedRoutes.addAll(prefixes);
         conf.dnsServers.addAll(dns);
         return conf;
+    }
+
+    static Set<RouteInfo> routes(String... routes) {
+        return mapIntoSet(routes, (r) -> new RouteInfo(new IpPrefix(r)));
     }
 
     static Set<IpPrefix> prefixes(String... prefixes) {
@@ -253,5 +369,73 @@ public class IpManagerTest {
 
     interface Fn<A,B> {
         B call(A a) throws Exception;
+    }
+
+    @Test
+    public void testAll() {
+        List<String> list1 = Arrays.asList();
+        List<String> list2 = Arrays.asList("foo");
+        List<String> list3 = Arrays.asList("bar", "baz");
+        List<String> list4 = Arrays.asList("foo", "bar", "baz");
+
+        assertTrue(IpManager.all(list1, (x) -> false));
+        assertFalse(IpManager.all(list2, (x) -> false));
+        assertTrue(IpManager.all(list3, (x) -> true));
+        assertTrue(IpManager.all(list2, (x) -> x.charAt(0) == 'f'));
+        assertFalse(IpManager.all(list4, (x) -> x.charAt(0) == 'f'));
+    }
+
+    @Test
+    public void testAny() {
+        List<String> list1 = Arrays.asList();
+        List<String> list2 = Arrays.asList("foo");
+        List<String> list3 = Arrays.asList("bar", "baz");
+        List<String> list4 = Arrays.asList("foo", "bar", "baz");
+
+        assertFalse(IpManager.any(list1, (x) -> true));
+        assertTrue(IpManager.any(list2, (x) -> true));
+        assertTrue(IpManager.any(list2, (x) -> x.charAt(0) == 'f'));
+        assertFalse(IpManager.any(list3, (x) -> x.charAt(0) == 'f'));
+        assertTrue(IpManager.any(list4, (x) -> x.charAt(0) == 'f'));
+    }
+
+    @Test
+    public void testFindAll() {
+        List<String> list1 = Arrays.asList();
+        List<String> list2 = Arrays.asList("foo");
+        List<String> list3 = Arrays.asList("foo", "bar", "baz");
+
+        assertEquals(list1, IpManager.findAll(list1, (x) -> true));
+        assertEquals(list1, IpManager.findAll(list3, (x) -> false));
+        assertEquals(list3, IpManager.findAll(list3, (x) -> true));
+        assertEquals(list2, IpManager.findAll(list3, (x) -> x.charAt(0) == 'f'));
+    }
+
+    @Test
+    public void testSubset() {
+        List<String> list1 = Arrays.asList();
+        List<String> list2 = Arrays.asList("foo");
+        List<String> list3 = Arrays.asList("bar", "baz");
+        List<String> list4 = Arrays.asList("foo", "bar", "baz");
+
+        assertTrue(IpManager.isSubset(list1, list1));
+        assertTrue(IpManager.isSubset(list1, list2));
+        assertTrue(IpManager.isSubset(list1, list3));
+        assertTrue(IpManager.isSubset(list1, list4));
+
+        assertFalse(IpManager.isSubset(list2, list1));
+        assertTrue(IpManager.isSubset(list2, list2));
+        assertFalse(IpManager.isSubset(list2, list3));
+        assertTrue(IpManager.isSubset(list2, list4));
+
+        assertFalse(IpManager.isSubset(list3, list1));
+        assertFalse(IpManager.isSubset(list3, list2));
+        assertTrue(IpManager.isSubset(list3, list3));
+        assertTrue(IpManager.isSubset(list3, list4));
+
+        assertFalse(IpManager.isSubset(list4, list1));
+        assertFalse(IpManager.isSubset(list4, list2));
+        assertFalse(IpManager.isSubset(list4, list3));
+        assertTrue(IpManager.isSubset(list4, list4));
     }
 }
