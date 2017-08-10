@@ -22,10 +22,10 @@ import static android.system.OsConstants.IPPROTO_UDP;
 import static android.system.OsConstants.SOCK_DGRAM;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -47,6 +47,8 @@ import android.support.test.filters.SmallTest;
 import android.system.ErrnoException;
 import android.system.Os;
 import java.io.FileDescriptor;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -431,5 +433,28 @@ public class IpSecServiceTest {
         mIpSecService.removeTransportModeTransform(pfd, 1);
 
         verify(mMockNetd).ipSecRemoveTransportModeTransform(pfd.getFileDescriptor());
+    }
+
+    @Test
+    public void testDumpMessageSanityCheck() throws Exception {
+        IpSecConfig ipSecConfig = buildIpSecConfig();
+
+        IpSecTransformResponse createTransformResp =
+                mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());
+
+        assertEquals(createTransformResp.status, IpSecManager.Status.OK);
+
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+
+        mIpSecService.dump(null, pw, null);
+        String result = sw.toString();
+        assertTrue(result.contains("IpSecService dump:"));
+        assertTrue(
+                result.contains("encryption={mName=cbc(aes), mKey=000102030405060708090A0B0C0D0"));
+        assertTrue(
+                result.contains(
+                        "authentication={mName=hmac(sha256), mKey=7A00000000000000000000000000"));
+        assertTrue(result.contains("mRemoteAddress=127.0.0.1"));
     }
 }
