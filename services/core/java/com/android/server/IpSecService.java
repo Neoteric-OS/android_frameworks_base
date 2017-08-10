@@ -142,6 +142,9 @@ public class IpSecService extends IIpSecService.Stub {
             }
             mCurrent--;
         }
+
+        public int getMax() { return mMax; }
+        public int getCurrent() { return mCurrent; }
     }
 
     private static final class UserQuotaTracker {
@@ -175,6 +178,11 @@ public class IpSecService extends IIpSecService.Stub {
     }
 
     private final UserQuotaTracker mUserQuotaTracker = new UserQuotaTracker();
+
+    /** @hide */
+    public ResourceTracker getSocketRsrTrackerByUid(int uid) {
+        return mUserQuotaTracker.getUserRecord(uid).socket;
+    }
 
     /**
      * The ManagedResource class provides a facility to cleanly and reliably release system
