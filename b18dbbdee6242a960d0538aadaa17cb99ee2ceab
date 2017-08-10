@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8311b3a4_6bfa458d",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-10T23:38:01Z",
+      "side": 1,
+      "message": "Looks fine for a test, but I would have recommended using a normal for-each loop.\n\nEspecially I wanted to point out that with an ArrayList of size N, the cost of remove(0) is O(N) I think. So this loop is effectively O(N^2) I believe.",
+      "range": {
+        "startLine": 473,
+        "startChar": 8,
+        "endLine": 473,
+        "endChar": 46
+      },
+      "revId": "b18dbbdee6242a960d0538aadaa17cb99ee2ceab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
