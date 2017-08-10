@@ -30015,6 +30015,7 @@ package android.os {
     method public android.os.StrictMode.ThreadPolicy.Builder detectCustomSlowCalls();
     method public android.os.StrictMode.ThreadPolicy.Builder detectDiskReads();
     method public android.os.StrictMode.ThreadPolicy.Builder detectDiskWrites();
+    method public android.os.StrictMode.ThreadPolicy.Builder detectExplicitGc();
     method public android.os.StrictMode.ThreadPolicy.Builder detectNetwork();
     method public android.os.StrictMode.ThreadPolicy.Builder detectResourceMismatches();
     method public android.os.StrictMode.ThreadPolicy.Builder detectUnbufferedIo();
@@ -30028,6 +30029,7 @@ package android.os {
     method public android.os.StrictMode.ThreadPolicy.Builder permitCustomSlowCalls();
     method public android.os.StrictMode.ThreadPolicy.Builder permitDiskReads();
     method public android.os.StrictMode.ThreadPolicy.Builder permitDiskWrites();
+    method public android.os.StrictMode.ThreadPolicy.Builder permitExplicitGc();
     method public android.os.StrictMode.ThreadPolicy.Builder permitNetwork();
     method public android.os.StrictMode.ThreadPolicy.Builder permitResourceMismatches();
     method public android.os.StrictMode.ThreadPolicy.Builder permitUnbufferedIo();
