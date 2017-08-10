@@ -21,14 +21,16 @@ import static android.system.OsConstants.EADDRINUSE;
 import static android.system.OsConstants.IPPROTO_UDP;
 import static android.system.OsConstants.SOCK_DGRAM;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -51,6 +53,9 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -62,13 +67,16 @@ import org.junit.runners.JUnit4;
 public class IpSecServiceTest {
 
     private static final int DROID_SPI = 0xD1201D;
-    private static final int DROID_SPI2 = DROID_SPI + 1;
+    private static final int DROID_SPI2 = DROID_SPI * 2;
     private static final int TEST_UDP_ENCAP_INVALID_PORT = 100;
     private static final int TEST_UDP_ENCAP_PORT_OUT_RANGE = 100000;
     private static final int TEST_UDP_ENCAP_PORT = 34567;
 
     private static final String IPV4_LOOPBACK = "127.0.0.1";
     private static final String IPV4_ADDR = "192.168.0.2";
+
+    private static final int MAX_NUM_ENCAP_SOCKETS = 100;
+    private static final int MAX_NUM_SPIS = 100;
 
     private static final InetAddress INADDR_ANY;
 
@@ -95,6 +103,8 @@ public class IpSecServiceTest {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F
     };
 
+    private static AtomicInteger mSpiOffset = new AtomicInteger(0);
+
     Context mMockContext;
     INetd mMockNetd;
     IpSecService.IpSecServiceConfiguration mMockIpSecSrvConfig;
@@ -109,6 +119,8 @@ public class IpSecServiceTest {
 
         // Injecting mock netd
         when(mMockIpSecSrvConfig.getNetdInstance()).thenReturn(mMockNetd);
+
+        mSpiOffset.set(0);
     }
 
     @Test
@@ -290,8 +302,8 @@ public class IpSecServiceTest {
 
         // Mocking the netd to allocate SPI
         when(mMockNetd.ipSecAllocateSpi(anyInt(), anyInt(), anyString(), anyString(), anyInt()))
-                .thenReturn(DROID_SPI)
-                .thenReturn(DROID_SPI2);
+                .thenReturn(DROID_SPI + mSpiOffset.get())
+                .thenReturn(DROID_SPI2 + mSpiOffset.getAndIncrement());
 
         IpSecAlgorithm encryptAlgo = new IpSecAlgorithm(IpSecAlgorithm.CRYPT_AES_CBC, CRYPT_KEY);
         IpSecAlgorithm authAlgo =
@@ -431,5 +443,147 @@ public class IpSecServiceTest {
         mIpSecService.removeTransportModeTransform(pfd, 1);
 
         verify(mMockNetd).ipSecRemoveTransportModeTransform(pfd.getFileDescriptor());
+    }
+
+    @Test
+    public void testCannotUseSameSpiforTwoTransform() throws Exception {
+        // ipSecConfig contains the SPIs for both in/out direction
+        IpSecConfig ipSecConfig = buildIpSecConfig();
+
+        mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());
+
+        try {
+            mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());
+            fail("IllegalStateException not thrown");
+        } catch (IllegalStateException e) {
+        }
+        verify(mMockNetd, times(2))
+                .ipSecAddSecurityAssociation(
+                        anyInt(),
+                        anyInt(),
+                        eq(IpSecTransform.DIRECTION_OUT),
+                        anyString(),
+                        anyString(),
+                        anyLong(),
+                        eq(DROID_SPI),
+                        eq(IpSecAlgorithm.AUTH_HMAC_SHA256),
+                        eq(AUTH_KEY),
+                        anyInt(),
+                        eq(IpSecAlgorithm.CRYPT_AES_CBC),
+                        eq(CRYPT_KEY),
+                        anyInt(),
+                        anyInt(),
+                        anyInt(),
+                        anyInt());
+        verify(mMockNetd, times(2))
+                .ipSecAddSecurityAssociation(
+                        anyInt(),
+                        anyInt(),
+                        eq(IpSecTransform.DIRECTION_IN),
+                        anyString(),
+                        anyString(),
+                        anyLong(),
+                        eq(DROID_SPI2),
+                        eq(IpSecAlgorithm.AUTH_HMAC_SHA256),
+                        eq(AUTH_KEY),
+                        anyInt(),
+                        eq(IpSecAlgorithm.CRYPT_AES_CBC),
+                        eq(CRYPT_KEY),
+                        anyInt(),
+                        anyInt(),
+                        anyInt(),
+                        anyInt());
+    }
+
+    @Test
+    public void testSocketResourceTrackerLimitation() throws Exception {
+        // Reserve max amounts of UDP encapsulation socket
+        List<IpSecUdpEncapResponse> openUdpEncapSockets = new ArrayList<IpSecUdpEncapResponse>();
+        for (int i = 0; i < MAX_NUM_ENCAP_SOCKETS; i++) {
+            IpSecUdpEncapResponse newUdpEncapSocket =
+                    mIpSecService.openUdpEncapsulationSocket(0, new Binder());
+            assertNotNull(newUdpEncapSocket);
+            if (IpSecManager.Status.OK != newUdpEncapSocket.status) {
+                break;
+            }
+            openUdpEncapSockets.add(newUdpEncapSocket);
+        }
+        // Assert that the total sockets quota has a reasonable limit
+        assertTrue(openUdpEncapSockets.size() < MAX_NUM_ENCAP_SOCKETS);
+
+        // Try to reserve one more UDP encapsulation socket, and should fail
+        IpSecUdpEncapResponse extraUdpEncapSocket =
+                mIpSecService.openUdpEncapsulationSocket(0, new Binder());
+        assertNotNull(extraUdpEncapSocket);
+        assertEquals(IpSecManager.Status.RESOURCE_UNAVAILABLE, extraUdpEncapSocket.status);
+
+        // Close one of the open UDP encapsulation scokets
+        mIpSecService.closeUdpEncapsulationSocket(openUdpEncapSockets.get(0).resourceId);
+        openUdpEncapSockets.get(0).fileDescriptor.close();
+        openUdpEncapSockets.remove(0);
+
+        // Try to reserve one more UDP encapsulation socket, and should be successful
+        extraUdpEncapSocket = mIpSecService.openUdpEncapsulationSocket(0, new Binder());
+        assertNotNull(extraUdpEncapSocket);
+        assertEquals(IpSecManager.Status.OK, extraUdpEncapSocket.status);
+        openUdpEncapSockets.add(extraUdpEncapSocket);
+
+        // Close open UDP sockets
+        for (IpSecUdpEncapResponse openSocket : openUdpEncapSockets) {
+            mIpSecService.closeUdpEncapsulationSocket(openSocket.resourceId);
+            openSocket.fileDescriptor.close();
+        }
+    }
+
+    @Test
+    public void testSpiResourceTrackerLimitation() throws Exception {
+        IpSecSpiResponse reservedSpi = null, newSpi = null;
+
+        // Reserve an amount of spis
+        for (int i = 0; i < MAX_NUM_SPIS; i++) {
+            when(mMockNetd.ipSecAllocateSpi(
+                            anyInt(),
+                            eq(IpSecTransform.DIRECTION_OUT),
+                            anyString(),
+                            eq(IPV4_LOOPBACK),
+                            eq(DROID_SPI + i)))
+                    .thenReturn(DROID_SPI + i);
+
+            newSpi =
+                    mIpSecService.reserveSecurityParameterIndex(
+                            0x1, "127.0.0.1", DROID_SPI + i, new Binder());
+            assertNotNull(newSpi);
+            if (IpSecManager.Status.OK != newSpi.status) {
+                break;
+            }
+            reservedSpi = newSpi;
+        }
+        // Assert that the SPI quota has a reasonable limit
+        assertNotEquals(IpSecManager.Status.OK, newSpi.status);
+
+        // Try to reserve one more spi, but should get failure
+        when(mMockNetd.ipSecAllocateSpi(
+                        anyInt(),
+                        eq(IpSecTransform.DIRECTION_OUT),
+                        anyString(),
+                        eq(IPV4_LOOPBACK),
+                        eq(DROID_SPI + MAX_NUM_SPIS)))
+                .thenReturn(DROID_SPI + MAX_NUM_SPIS);
+
+        IpSecSpiResponse extraSpi =
+                mIpSecService.reserveSecurityParameterIndex(
+                        0x1, "127.0.0.1", DROID_SPI + MAX_NUM_SPIS, new Binder());
+        assertNotNull(extraSpi);
+        assertEquals(IpSecManager.Status.RESOURCE_UNAVAILABLE, extraSpi.status);
+
+        // Release one reserved spi
+        mIpSecService.releaseSecurityParameterIndex(reservedSpi.resourceId);
+
+        // Should successfully reserve one more spi
+        extraSpi =
+                mIpSecService.reserveSecurityParameterIndex(
+                        0x1, "127.0.0.1", DROID_SPI + MAX_NUM_SPIS, new Binder());
+        assertNotNull(extraSpi);
+        assertEquals(IpSecManager.Status.OK, extraSpi.status);
     }
 }
