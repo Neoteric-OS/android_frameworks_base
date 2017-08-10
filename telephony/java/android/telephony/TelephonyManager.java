@@ -2457,6 +2457,48 @@ public class TelephonyManager {
     }
 
     /**
+     * Returns the Group Identifier Level2 for a GSM phone.
+     * Return null if it is unavailable.
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    public String getGroupIdLevel2() {
+        try {
+            IPhoneSubInfo info = getSubscriberInfo();
+            if (info == null)
+                return null;
+            return info.getGroupIdLevel2(mContext.getOpPackageName());
+        } catch (RemoteException ex) {
+            return null;
+        } catch (NullPointerException ex) {
+            // This could happen before phone restarts due to crashing
+            return null;
+        }
+    }
+
+    /**
+     * Returns the Group Identifier Level2 for a GSM phone for a particular subscription.
+     * Return null if it is unavailable.
+     *
+     * @param subId whose subscriber id is returned
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    public String getGroupIdLevel2(int subId) {
+        try {
+            IPhoneSubInfo info = getSubscriberInfo();
+            if (info == null)
+                return null;
+            return info.getGroupIdLevel2ForSubscriber(subId, mContext.getOpPackageName());
+        } catch (RemoteException ex) {
+            return null;
+        } catch (NullPointerException ex) {
+            // This could happen before phone restarts due to crashing
+            return null;
+        }
+    }
+
+    /**
      * Returns the phone number string for line 1, for example, the MSISDN
      * for a GSM phone. Return null if it is unavailable.
      * <p>

@@ -77,6 +77,16 @@ interface IPhoneSubInfo {
      */
     String getGroupIdLevel1ForSubscriber(int subId, String callingPackage);
 
+   /**
+     * Retrieves the Group Identifier Level2 for GSM phones.
+     */
+    String getGroupIdLevel2(String callingPackage);
+
+    /**
+     * Retrieves the Group Identifier Level2 for GSM phones of a subId.
+     */
+    String getGroupIdLevel2ForSubscriber(int subId, String callingPackage);
+
     /**
      * Retrieves the serial number of the ICC, if applicable.
      */
