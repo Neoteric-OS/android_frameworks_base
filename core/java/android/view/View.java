@@ -5484,7 +5484,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      * @see #setClickable(boolean)
      */
     public void setOnClickListener(@Nullable OnClickListener l) {
-        if (!isClickable()) {
+        if (l != null && !isClickable()) {
             setClickable(true);
         }
         getListenerInfo().mOnClickListener = l;
