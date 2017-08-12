@@ -16,6 +16,24 @@
       "revId": "66c1456dde0daa528ee067e1a498504c49c2ef97",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e4a64b9_94716583",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-12T13:04:43Z",
+      "side": 1,
+      "message": "Thank you so much for spotting this. Yes this is totally incorrect. I removed this to test something in the unit tests but forgot to put it back.",
+      "parentUuid": "d08f5852_4157272e",
+      "revId": "66c1456dde0daa528ee067e1a498504c49c2ef97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
