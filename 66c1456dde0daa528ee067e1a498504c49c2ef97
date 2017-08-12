@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d08f5852_4157272e",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1093143
+      },
+      "writtenOn": "2017-08-12T08:10:38Z",
+      "side": 1,
+      "message": "This seems suspicious. If you are going to remove the scope from the hash code, shouldn\u0027t you also remove it from consideration with equals() (line233)?\n\nAnd why remove the scope from the hash code in the first place?",
+      "revId": "66c1456dde0daa528ee067e1a498504c49c2ef97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
