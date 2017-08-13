@@ -1287,6 +1287,14 @@ public class CarrierConfigManager {
             "network_notification_delay_int";
 
     /**
+     * Time delay (in ms) after which we show the notification for emergency calls,
+     * while the device is registered over WFC.
+     * @hide
+     */
+    public static final String KEY_EMERGENCY_NOTIFICATION_DELAY_INT =
+            "emergency_notification_delay_int";
+
+    /**
      * Determine whether user edited tether APN (type dun) has effect
      * {@code false} - Default. APN with dun type in telephony database has no effect.
      *
@@ -1619,6 +1627,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_STK_DISABLE_LAUNCH_BROWSER_BOOL, false);
         sDefaults.putStringArray(KEY_CARRIER_WIFI_STRING_ARRAY, null);
         sDefaults.putInt(KEY_PREF_NETWORK_NOTIFICATION_DELAY_INT, -1);
+        sDefaults.putInt(KEY_EMERGENCY_NOTIFICATION_DELAY_INT, -1);
         sDefaults.putBoolean(KEY_EDITABLE_TETHER_APN_BOOL, false);
         sDefaults.putBoolean(KEY_SUPPORT_3GPP_CALL_FORWARDING_WHILE_ROAMING_BOOL, true);
         sDefaults.putStringArray(KEY_CALL_FORWARDING_BLOCKS_WHILE_ROAMING_STRING_ARRAY, null);
