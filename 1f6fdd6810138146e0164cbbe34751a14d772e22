@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16d072cc_21cee8fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-14T11:15:34Z",
+      "side": 1,
+      "message": "isn\u0027t it 1 sec ?",
+      "range": {
+        "startLine": 9,
+        "startChar": 50,
+        "endLine": 9,
+        "endChar": 55
+      },
+      "revId": "1f6fdd6810138146e0164cbbe34751a14d772e22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a6cc8df_c3a67347",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-14T11:15:34Z",
+      "side": 1,
+      "message": "too many \"will\" ?",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 24
+      },
+      "revId": "1f6fdd6810138146e0164cbbe34751a14d772e22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d09f553c_79fcf354",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-14T11:15:34Z",
+      "side": 1,
+      "message": "just checking: which thread gets blocked here ?",
+      "range": {
+        "startLine": 200,
+        "startChar": 12,
+        "endLine": 200,
+        "endChar": 22
+      },
+      "revId": "1f6fdd6810138146e0164cbbe34751a14d772e22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d72c0b8_98b20abd",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-14T11:15:34Z",
+      "side": 0,
+      "message": "The timeout appears to be 1sec. That seems like quite a bit of time. Do we know why this timeouts often ?",
+      "range": {
+        "startLine": 202,
+        "startChar": 12,
+        "endLine": 206,
+        "endChar": 13
+      },
+      "revId": "8c253ade20827e16720c4a0d58cddfe72350e677",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
