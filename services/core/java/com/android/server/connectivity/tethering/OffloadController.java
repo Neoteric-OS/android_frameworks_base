@@ -29,6 +29,7 @@ import android.net.LinkProperties;
 import android.net.NetworkStats;
 import android.net.RouteInfo;
 import android.net.util.SharedLog;
+import android.os.ConditionVariable;
 import android.os.Handler;
 import android.os.INetworkManagementService;
 import android.os.RemoteException;
@@ -46,7 +47,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -57,8 +57,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class OffloadController {
     private static final String TAG = OffloadController.class.getSimpleName();
-
-    private static final int STATS_FETCH_TIMEOUT_MS = 1000;
 
     private final Handler mHandler;
     private final OffloadHardwareInterface mHwInterface;
@@ -177,7 +175,7 @@ public class OffloadController {
         @Override
         public NetworkStats getTetherStats() {
             NetworkStats stats = new NetworkStats(SystemClock.elapsedRealtime(), 0);
-            CountDownLatch latch = new CountDownLatch(1);
+            ConditionVariable cv = new ConditionVariable();
 
             mHandler.post(() -> {
                 try {
@@ -195,15 +193,11 @@ public class OffloadController {
                         stats.addValues(entry);
                     }
                 } finally {
-                    latch.countDown();
+                    cv.open();
                 }
             });
 
-            try {
-                latch.await(STATS_FETCH_TIMEOUT_MS, TimeUnit.MILLISECONDS);
-            } catch (InterruptedException e) {
-                mLog.e("Tethering stats fetch timed out after " + STATS_FETCH_TIMEOUT_MS + "ms");
-            }
+            cv.block();
 
             return stats;
         }
