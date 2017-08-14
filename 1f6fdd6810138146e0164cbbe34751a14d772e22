@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3cd9a104_83b37065",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-14T15:22:12Z",
+      "side": 1,
+      "message": "Oops, done.",
+      "parentUuid": "16d072cc_21cee8fc",
+      "range": {
+        "startLine": 9,
+        "startChar": 50,
+        "endLine": 9,
+        "endChar": 55
+      },
+      "revId": "1f6fdd6810138146e0164cbbe34751a14d772e22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a6cc8df_c3a67347",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-14T11:15:34Z",
       "side": 1,
       "message": "too many \"will\" ?",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 24
+      },
+      "revId": "1f6fdd6810138146e0164cbbe34751a14d772e22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "879ad4e4_87183df0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-14T15:22:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a6cc8df_c3a67347",
       "range": {
         "startLine": 11,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8995bf3a_dc3190f0",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-14T15:22:12Z",
+      "side": 1,
+      "message": "This Handler is the IoThread handler. It\u0027s the one which performs other tethering operations as well.\n\n  /**\n   * Shared singleton I/O thread for the system.  This is a thread for non-background\n   * service operations that can potential block briefly on network IO operations\n   * (not waiting for data itself, but communicating with network daemons).\n   */\n\nGiven that this is now a blocking operation, there\u0027s no timeout any more.\n\nThat said - it turns out that sometimes the caller (NetworkStatsService#performPollLocked) is running on the same thread as our handler, so the code as is will deadlock. Updated accordingly.",
+      "parentUuid": "ac15e14d_ebba49c6",
+      "range": {
+        "startLine": 180,
+        "startChar": 12,
+        "endLine": 180,
+        "endChar": 20
+      },
+      "revId": "1f6fdd6810138146e0164cbbe34751a14d772e22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d09f553c_79fcf354",
         "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-14T11:15:34Z",
       "side": 1,
       "message": "just checking: which thread gets blocked here ?",
+      "range": {
+        "startLine": 200,
+        "startChar": 12,
+        "endLine": 200,
+        "endChar": 22
+      },
+      "revId": "1f6fdd6810138146e0164cbbe34751a14d772e22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1406e797_ec60d58a",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-14T15:22:12Z",
+      "side": 1,
+      "message": "I believe we get here from NetworkStatsService#performPollLocked, which runs on the NetworkStatsService handler thread.",
+      "parentUuid": "d09f553c_79fcf354",
       "range": {
         "startLine": 200,
         "startChar": 12,
