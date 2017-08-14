@@ -46,6 +46,30 @@
       "revId": "29419a52356f2d96aeb6fa3da32a61b874b93ce9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1164739c_cf716e83",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4642,
+      "author": {
+        "id": 1161323
+      },
+      "writtenOn": "2017-08-14T16:13:36Z",
+      "side": 1,
+      "message": "To clarify, I\u0027ve restructured this change as described, so that the whitelist and the Big Switch are fully separated throughout the stack, rather than trying to express one in terms of the other.",
+      "parentUuid": "e9809381_94bfaf85",
+      "range": {
+        "startLine": 4642,
+        "startChar": 56,
+        "endLine": 4642,
+        "endChar": 61
+      },
+      "revId": "29419a52356f2d96aeb6fa3da32a61b874b93ce9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
