@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "74059227_b24a9f5e",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-08-14T20:29:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "beaf8cad_8e42c640",
+      "range": {
+        "startLine": 803,
+        "startChar": 69,
+        "endLine": 803,
+        "endChar": 83
+      },
+      "revId": "0180babe377d2f07a9da643c2164f9cd71912827",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c386f869_e1ce8740",
         "filename": "telephony/java/android/telephony/ServiceState.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-14T18:03:33Z",
       "side": 1,
       "message": "how about rilRadioTechnologyToString(mRilVoiceRadioTechnology) and removing #800~#801?",
+      "range": {
+        "startLine": 813,
+        "startChar": 58,
+        "endLine": 813,
+        "endChar": 82
+      },
+      "revId": "0180babe377d2f07a9da643c2164f9cd71912827",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a88e129_e8babbc6",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-08-14T20:29:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c386f869_e1ce8740",
       "range": {
         "startLine": 813,
         "startChar": 58,
