@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "76b4569d_bd88ac77",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-15T14:02:57Z",
+      "side": 1,
+      "message": "What do these return for mapped addresses such as ::ffff:192.0.2.1?",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 5
+      },
+      "revId": "66c1456dde0daa528ee067e1a498504c49c2ef97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d08f5852_4157272e",
         "filename": "core/java/android/net/LinkAddress.java",
         "patchSetId": 2

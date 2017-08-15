@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "825e0154_2d68c31d",
+        "filename": "tests/net/java/android/net/LinkAddressTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-15T14:02:57Z",
+      "side": 0,
+      "message": "While I can see how testing exact values is brittle, we should preserve a test that checks that flags and scope affect the hash code.",
+      "range": {
+        "startLine": 299,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 44
+      },
+      "revId": "c06dbc114f839112f1132e1e0edac8533b3f4c54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
