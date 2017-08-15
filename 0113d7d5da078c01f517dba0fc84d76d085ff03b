@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c728969_51b25df9",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-08-15T18:50:55Z",
+      "side": 1,
+      "message": "The tests will fail if these values ever change in IpSecService.java. Is there a way we can avoid that?",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 46
+      },
+      "revId": "0113d7d5da078c01f517dba0fc84d76d085ff03b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d60ccf_96e37c2e",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-08-15T18:50:55Z",
+      "side": 1,
+      "message": "I don\u0027t see anywhere where you call this with a value other than 0. I _think_ I see what you were trying to do here, but Mockito almost certainly provides a better way. e.g. You can set up ipSecAllocateSpi to return an infinite sequence of ints with thenAnswer/doAnswer.",
+      "range": {
+        "startLine": 293,
+        "startChar": 16,
+        "endLine": 293,
+        "endChar": 47
+      },
+      "revId": "0113d7d5da078c01f517dba0fc84d76d085ff03b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c02f4e_51eabd21",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-08-15T18:50:55Z",
+      "side": 1,
+      "message": "sockets.",
+      "range": {
+        "startLine": 460,
+        "startChar": 51,
+        "endLine": 460,
+        "endChar": 57
+      },
+      "revId": "0113d7d5da078c01f517dba0fc84d76d085ff03b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6c94a1_88f43f5a",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-08-15T18:50:55Z",
+      "side": 1,
+      "message": "Why are we testing 2 out of 3 of the ResourceTrackers? 1 makes sense because it\u0027s just testing the same code path multiple times. 3 makes sense because it\u0027s possible to forget the resource availability check in the outer methods.",
+      "range": {
+        "startLine": 480,
+        "startChar": 16,
+        "endLine": 480,
+        "endChar": 48
+      },
+      "revId": "0113d7d5da078c01f517dba0fc84d76d085ff03b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
