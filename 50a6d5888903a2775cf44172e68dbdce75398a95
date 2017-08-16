@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d3df426e_c782d19c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4705,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T09:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7505604_eebea45a",
+      "range": {
+        "startLine": 4705,
+        "startChar": 57,
+        "endLine": 4705,
+        "endChar": 61
+      },
+      "revId": "50a6d5888903a2775cf44172e68dbdce75398a95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c97756da_dcda3a7f",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-16T07:20:36Z",
       "side": 1,
       "message": "Nit: complaining",
+      "range": {
+        "startLine": 4708,
+        "startChar": 34,
+        "endLine": 4708,
+        "endChar": 43
+      },
+      "revId": "50a6d5888903a2775cf44172e68dbdce75398a95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfce6fb3_8b0d4727",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4708,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T09:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c97756da_dcda3a7f",
       "range": {
         "startLine": 4708,
         "startChar": 34,
