@@ -22,6 +22,30 @@
       "revId": "c06dbc114f839112f1132e1e0edac8533b3f4c54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb6db574_3fb5b8d6",
+        "filename": "tests/net/java/android/net/LinkAddressTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T02:03:37Z",
+      "side": 0,
+      "message": "I added a test like this, but I would like to insist that this *is not incorrect* to ignore some fields for hashing, whether intentionally or not.\n\nNot a relevant fact consequence, but this property is an important performance optimization option sometimes.",
+      "parentUuid": "825e0154_2d68c31d",
+      "range": {
+        "startLine": 299,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 44
+      },
+      "revId": "c06dbc114f839112f1132e1e0edac8533b3f4c54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

@@ -49,6 +49,54 @@
     },
     {
       "key": {
+        "uuid": "7e77b9ac_880a4b4b",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T02:03:37Z",
+      "side": 1,
+      "message": "isIPv6() -\u003e true\nisIPv4() -\u003e false",
+      "parentUuid": "76b4569d_bd88ac77",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 5
+      },
+      "revId": "66c1456dde0daa528ee067e1a498504c49c2ef97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cace033d_82c0d762",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T02:03:37Z",
+      "side": 1,
+      "message": "\u003e I think it would be madness if `isIpv4()` returned true for `::ffff:192.0.2.1`\n\nAgreed. Inet6Address has a isIPv4CompatibleAddress() function which appears to be almost that.\n\nIn any case I can\u0027t recall seeing any check for mapped v4 addresses anywhere in the java layer. If this is a problem, it needs to be looked at a wider scope than this patch.",
+      "parentUuid": "fd30f2d2_d67848a5",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 5
+      },
+      "revId": "66c1456dde0daa528ee067e1a498504c49c2ef97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d08f5852_4157272e",
         "filename": "core/java/android/net/LinkAddress.java",
         "patchSetId": 2
@@ -78,6 +126,24 @@
       "side": 1,
       "message": "Thank you so much for spotting this. Yes this is totally incorrect. I removed this to test something in the unit tests but forgot to put it back.",
       "parentUuid": "d08f5852_4157272e",
+      "revId": "66c1456dde0daa528ee067e1a498504c49c2ef97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a74ee45_30ac15d5",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T02:03:37Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "5e4a64b9_94716583",
       "revId": "66c1456dde0daa528ee067e1a498504c49c2ef97",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
