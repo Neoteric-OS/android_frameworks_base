@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "437760fc_bc009bc7",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-16T06:47:33Z",
+      "side": 1,
+      "message": "How did you test this exactly? Using InetAddress.getByAddress?\n\nThe following code:\n\n    import java.net.Inet4Address;\n    import java.net.Inet6Address;\n    import java.net.InetAddress;\n\n    public class Mapped {\n        public static void main(String[] args) throws Exception {\n            InetAddress ia \u003d InetAddress.getByName(\"::ffff:192.0.2.1\");\n            System.out.println(\"ipv4: \" + (ia instanceof Inet4Address));\n            System.out.println(\"ipv6: \" + (ia instanceof Inet6Address));\n        }\n    }\n\nprints:\n\n    ipv4: true\n    ipv6: false\n\nAmong other things, that means that\n\n  new LinkAddress(\"::ffff:192.0.2.5/120\")\n\nwill throw, and\n\n  new LinkAddress(\"::ffff:192.0.2.5/24\")\n\nwill result in 192.0.2.5/24\n\nI agree that this is madness.\n\nWe should probably note in a comment that for IPv4-mapped addresses, isIPv4 will return true and isIPv6 will return false, say that mapped addresses are not supported, or maybe just throw if we get passed one.",
+      "parentUuid": "cace033d_82c0d762",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 5
+      },
+      "revId": "66c1456dde0daa528ee067e1a498504c49c2ef97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d08f5852_4157272e",
         "filename": "core/java/android/net/LinkAddress.java",
         "patchSetId": 2

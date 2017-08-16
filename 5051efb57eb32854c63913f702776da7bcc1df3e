@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8151f5a9_1efd00e7",
+        "filename": "tests/net/java/android/net/LinkAddressTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-16T06:47:33Z",
+      "side": 1,
+      "message": "Make this l3 and assert it\u0027s not the same as l1?",
+      "range": {
+        "startLine": 318,
+        "startChar": 8,
+        "endLine": 318,
+        "endChar": 9
+      },
+      "revId": "5051efb57eb32854c63913f702776da7bcc1df3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
