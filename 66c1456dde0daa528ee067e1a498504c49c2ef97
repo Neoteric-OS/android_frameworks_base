@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "7986b6d8_9248e362",
+        "filename": "core/java/android/net/LinkAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T07:21:43Z",
+      "side": 1,
+      "message": "Added some comments and a TODO in the ctor.\n\n\u003e How did you test this exactly? Using InetAddress.getByAddress?\n\nI didn\u0027t tested. I didn\u0027t interpreted your question thinking about getByAddress(), but based on where `::ffff:192.0.2.1` can exist. That string cannot be inside a Inet4Adress simply because there is no room for \"ffff\", so it must be Inet6Address. In which case it is clear what isIPv6() and isIPv4() return.\n\nLooking more at Inet6Address I found this official doc at https://docs.oracle.com/javase/7/docs/api/java/net/Inet6Address.html:\n\n\n\"Special IPv6 address\n\nIPv4-mapped address\tOf the form::ffff:w.x.y.z, this IPv6 address is used to represent an IPv4 address. It allows the native program to use the same address data structure and also the same socket when communicating with both IPv4 and IPv6 nodes.\nIn InetAddress and Inet6Address, it is used for internal representation; it has no functional role. Java will never return an IPv4-mapped address. These classes can take an IPv4-mapped address as input, both in byte array and text representation. However, it will be converted into an IPv4 address.\"",
+      "parentUuid": "437760fc_bc009bc7",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 5
+      },
+      "revId": "66c1456dde0daa528ee067e1a498504c49c2ef97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d08f5852_4157272e",
         "filename": "core/java/android/net/LinkAddress.java",
         "patchSetId": 2

@@ -22,6 +22,30 @@
       "revId": "5051efb57eb32854c63913f702776da7bcc1df3e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8484dcd2_7b19b826",
+        "filename": "tests/net/java/android/net/LinkAddressTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-16T07:21:43Z",
+      "side": 1,
+      "message": "There is already a similar assertion in the test just above.",
+      "parentUuid": "8151f5a9_1efd00e7",
+      "range": {
+        "startLine": 318,
+        "startChar": 8,
+        "endLine": 318,
+        "endChar": 9
+      },
+      "revId": "5051efb57eb32854c63913f702776da7bcc1df3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
