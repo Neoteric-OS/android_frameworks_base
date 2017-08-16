@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7acf28a_b442eab7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4705,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-16T06:31:05Z",
+      "side": 1,
+      "message": "Suggest also explaining that NetworkAgents are free to change capabilities however they choose as long as they have never entered the CONNECTED state.\n\nAlso, please change \"enforced\" to another word, since we don\u0027t actually enforce anything. Maybe \"Complain\"?",
+      "range": {
+        "startLine": 4705,
+        "startChar": 8,
+        "endLine": 4705,
+        "endChar": 95
+      },
+      "revId": "6f179c94b62ce223a568e1370c85694d65cd4615",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e1da4df_a60e5965",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4708,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-16T06:31:05Z",
+      "side": 1,
+      "message": "not complaining if a NetworkAgent degrades",
+      "range": {
+        "startLine": 4708,
+        "startChar": 30,
+        "endLine": 4708,
+        "endChar": 70
+      },
+      "revId": "6f179c94b62ce223a568e1370c85694d65cd4615",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c7f0eb6_7ac2ef97",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4709,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-16T06:31:05Z",
+      "side": 1,
+      "message": "listen",
+      "range": {
+        "startLine": 4709,
+        "startChar": 57,
+        "endLine": 4709,
+        "endChar": 62
+      },
+      "revId": "6f179c94b62ce223a568e1370c85694d65cd4615",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5a599f9_7b351b17",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4713,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-16T06:31:05Z",
+      "side": 1,
+      "message": "s/changed/lost/ or s/changed/removed/",
+      "range": {
+        "startLine": 4713,
+        "startChar": 48,
+        "endLine": 4713,
+        "endChar": 55
+      },
+      "revId": "6f179c94b62ce223a568e1370c85694d65cd4615",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
