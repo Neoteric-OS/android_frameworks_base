@@ -342,9 +342,7 @@ public class VolumeInfo implements Parcelable {
 
         String description = null;
         String derivedFsUuid = fsUuid;
-        long mtpReserveSize = 0;
         long maxFileSize = 0;
-        int mtpStorageId = StorageVolume.STORAGE_ID_INVALID;
 
         if (type == TYPE_EMULATED) {
             emulated = true;
@@ -354,12 +352,6 @@ public class VolumeInfo implements Parcelable {
                 description = storage.getBestVolumeDescription(privateVol);
                 derivedFsUuid = privateVol.fsUuid;
             }
-
-            if (isPrimary()) {
-                mtpStorageId = StorageVolume.STORAGE_ID_PRIMARY;
-            }
-
-            mtpReserveSize = storage.getStorageLowBytes(userPath);
 
             if (ID_EMULATED_INTERNAL.equals(id)) {
                 removable = false;
@@ -373,14 +365,6 @@ public class VolumeInfo implements Parcelable {
 
             description = storage.getBestVolumeDescription(this);
 
-            if (isPrimary()) {
-                mtpStorageId = StorageVolume.STORAGE_ID_PRIMARY;
-            } else {
-                // Since MediaProvider currently persists this value, we need a
-                // value that is stable over time.
-                mtpStorageId = buildStableMtpStorageId(fsUuid);
-            }
-
             if ("vfat".equals(fsType)) {
                 maxFileSize = 4294967295L;
             }
@@ -393,8 +377,8 @@ public class VolumeInfo implements Parcelable {
             description = context.getString(android.R.string.unknownName);
         }
 
-        return new StorageVolume(id, mtpStorageId, userPath, description, isPrimary(), removable,
-                emulated, mtpReserveSize, allowMassStorage, maxFileSize, new UserHandle(userId),
+        return new StorageVolume(id, userPath, description, isPrimary(), removable,
+                emulated, allowMassStorage, maxFileSize, new UserHandle(userId),
                 derivedFsUuid, envState);
     }
 
