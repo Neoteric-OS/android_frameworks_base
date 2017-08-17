@@ -67,7 +67,7 @@ public class BluetoothPbap {
     public static final String PBAP_STATE_CHANGED_ACTION =
         "android.bluetooth.pbap.intent.action.PBAP_STATE_CHANGED";
 
-    private IBluetoothPbap mService;
+    private volatile IBluetoothPbap mService;
     private final Context mContext;
     private ServiceListener mServiceListener;
     private BluetoothAdapter mAdapter;
@@ -212,9 +212,10 @@ public class BluetoothPbap {
      */
     public int getState() {
         if (VDBG) log("getState()");
-        if (mService != null) {
+        final IBluetoothPbap service = mService;
+        if (service != null) {
             try {
-                return mService.getState();
+                return service.getState();
             } catch (RemoteException e) {Log.e(TAG, e.toString());}
         } else {
             Log.w(TAG, "Proxy not attached to service");
@@ -231,9 +232,10 @@ public class BluetoothPbap {
      */
     public BluetoothDevice getClient() {
         if (VDBG) log("getClient()");
-        if (mService != null) {
+        final IBluetoothPbap service = mService;
+        if (service != null) {
             try {
-                return mService.getClient();
+                return service.getClient();
             } catch (RemoteException e) {Log.e(TAG, e.toString());}
         } else {
             Log.w(TAG, "Proxy not attached to service");
@@ -249,9 +251,10 @@ public class BluetoothPbap {
      */
     public boolean isConnected(BluetoothDevice device) {
         if (VDBG) log("isConnected(" + device + ")");
-        if (mService != null) {
+        final IBluetoothPbap service = mService;
+        if (service != null) {
             try {
-                return mService.isConnected(device);
+                return service.isConnected(device);
             } catch (RemoteException e) {Log.e(TAG, e.toString());}
         } else {
             Log.w(TAG, "Proxy not attached to service");
@@ -267,9 +270,10 @@ public class BluetoothPbap {
      */
     public boolean disconnect() {
         if (DBG) log("disconnect()");
-        if (mService != null) {
+        final IBluetoothPbap service = mService;
+        if (service != null) {
             try {
-                mService.disconnect();
+                service.disconnect();
                 return true;
             } catch (RemoteException e) {Log.e(TAG, e.toString());}
         } else {
