@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "95882baf_84a06d43",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-08-18T17:09:56Z",
+      "side": 1,
+      "message": "Sadly, we ran afoul of this in a previous test. frameworks/base tests use a different class loader than frameworks/base itself and so package private members are not accessible from tests using the same package name.",
+      "parentUuid": "6f7d4bf1_066ac708",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 46
+      },
+      "revId": "0113d7d5da078c01f517dba0fc84d76d085ff03b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61d60ccf_96e37c2e",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 3
