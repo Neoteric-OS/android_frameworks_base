@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f7d4bf1_066ac708",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-18T11:44:25Z",
+      "side": 1,
+      "message": "I suggest grabbing them from inside UserQuotaTracker. It should be accessible if UserQuotaTracker is set to package private (i.e no private or public qualifier).",
+      "parentUuid": "6c728969_51b25df9",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 46
+      },
+      "revId": "0113d7d5da078c01f517dba0fc84d76d085ff03b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61d60ccf_96e37c2e",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 3
