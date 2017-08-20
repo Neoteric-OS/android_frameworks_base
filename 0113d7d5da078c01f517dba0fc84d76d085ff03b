@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "df004461_ea779de9",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-20T06:12:58Z",
+      "side": 1,
+      "message": "I remember I had that issue before, but this is not systematic for the frameworks/base repo. I can show you examples of tests in tests/net that use package private access and run without error.\n\nMight it be an issue specific to some packages, and not others ?",
+      "parentUuid": "95882baf_84a06d43",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 46
+      },
+      "revId": "0113d7d5da078c01f517dba0fc84d76d085ff03b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61d60ccf_96e37c2e",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 3
