@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "6eae7dd0_41de6f8d",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-08-21T20:15:13Z",
+      "side": 1,
+      "message": "These numbers are IMO implementation details. We shouldn\u0027t be checking them explicitly. Instead we should write the test such that a limit is hit below some insane number. Then we can verify that we release a resource and are again able to re-add a resource... etc, etc.\n\nWhile I understand that it conveniently sidesteps this discussion, it\u0027s feedback I provided verbally at the outset of the test-writing.\n\ntl;dr, don\u0027t check the numbers in the first place.",
+      "parentUuid": "df004461_ea779de9",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 46
+      },
+      "revId": "0113d7d5da078c01f517dba0fc84d76d085ff03b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61d60ccf_96e37c2e",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 3
