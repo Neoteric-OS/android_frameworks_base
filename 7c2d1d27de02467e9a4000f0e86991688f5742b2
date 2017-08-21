@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "858fa76d_6036fc99",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-21T07:43:54Z",
+      "side": 1,
+      "message": "Why do this? NetworkAgentInfo has a public constructor that would allow test code to create NAI objects with arbitrary network values.",
+      "range": {
+        "startLine": 405,
+        "startChar": 4,
+        "endLine": 405,
+        "endChar": 82
+      },
+      "revId": "7c2d1d27de02467e9a4000f0e86991688f5742b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09c7dea0_7c3fe90d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-21T07:43:54Z",
+      "side": 1,
+      "message": "Would suggest using mContext here instead of having the caller pass in a Context object. Seems like it would make life simpler for callers, and avoid mistakes like passing in different context objects.\n\nNote also that one painful lesson that I learned is that the context object passed to settings is only used the first time and stashed in a static thereafter.\n\nAlso applies to the other non-static getters.",
+      "range": {
+        "startLine": 707,
+        "startChar": 40,
+        "endLine": 707,
+        "endChar": 47
+      },
+      "revId": "7c2d1d27de02467e9a4000f0e86991688f5742b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9de2f65c_6e1e9f90",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-21T07:43:54Z",
+      "side": 1,
+      "message": "If we go this route we\u0027ll eventually need to implement different versions of settings getters depending on the type of setting being read.\n\nConsider whether you need this or whether you can simply use FakeSettingsProvider instead.",
+      "range": {
+        "startLine": 1168,
+        "startChar": 15,
+        "endLine": 1168,
+        "endChar": 18
+      },
+      "revId": "7c2d1d27de02467e9a4000f0e86991688f5742b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

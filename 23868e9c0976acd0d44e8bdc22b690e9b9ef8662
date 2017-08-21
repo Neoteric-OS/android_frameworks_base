@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "076a1cd0_053aff17",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-21T07:43:54Z",
+      "side": 0,
+      "message": "Is there a strong reason to move these declarations around? We should weigh the benefit of such moves against the possibility of merge conflicts, and the cost of code reviews. Sometimes it\u0027s hard to find a small issue if it\u0027s mixed in with a large change.",
+      "range": {
+        "startLine": 272,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 51
+      },
+      "revId": "23868e9c0976acd0d44e8bdc22b690e9b9ef8662",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
