@@ -89,6 +89,8 @@ import android.media.audiopolicy.AudioMix;
 import android.media.audiopolicy.AudioPolicy;
 import android.media.audiopolicy.AudioPolicyConfig;
 import android.media.audiopolicy.IAudioPolicyCallback;
+import android.os.BatteryManager;
+import android.os.BatteryManagerInternal;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -784,6 +786,8 @@ public class AudioService extends IAudioService.Stub
         intentFilter.addAction(Intent.ACTION_USER_FOREGROUND);
         intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
         intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+        intentFilter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+        intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
 
         intentFilter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
         // TODO merge orientation and rotation
@@ -5898,6 +5902,15 @@ public class AudioService extends IAudioService.Stub
                 if (state == BluetoothAdapter.STATE_OFF ||
                         state == BluetoothAdapter.STATE_TURNING_OFF) {
                     disconnectAllBluetoothProfiles();
+                }
+            } else if (action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
+                AudioSystem.setParameters("wireless_charging=off");
+            } else if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
+                int plugged = intent.getIntExtra("plugged", 0);
+                if (plugged == BatteryManager.BATTERY_PLUGGED_WIRELESS) {
+                    AudioSystem.setParameters("wireless_charging=on");
+                } else {
+                    AudioSystem.setParameters("wireless_charging=off");
                 }
             } else if (action.equals(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION) ||
                     action.equals(AudioEffect.ACTION_CLOSE_AUDIO_EFFECT_CONTROL_SESSION)) {
