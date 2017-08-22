@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "76ccfa4e_c28092f4",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-08-22T01:02:47Z",
+      "side": 1,
+      "message": "Had a brief discussion with Nathan. I\u0027ll set a limit for 100 for now. Any attempt to reach the limit is considered failing test case. Any comment is welcome.",
+      "parentUuid": "4e078a52_c1773252",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 46
+      },
+      "revId": "0113d7d5da078c01f517dba0fc84d76d085ff03b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61d60ccf_96e37c2e",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 3
@@ -165,6 +189,30 @@
       "revId": "0113d7d5da078c01f517dba0fc84d76d085ff03b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e024b93b_8c417274",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-08-22T01:02:47Z",
+      "side": 1,
+      "message": "You are right. It does look silly. I\u0027ll use a local variable counter for now.",
+      "parentUuid": "61d60ccf_96e37c2e",
+      "range": {
+        "startLine": 293,
+        "startChar": 16,
+        "endLine": 293,
+        "endChar": 47
+      },
+      "revId": "0113d7d5da078c01f517dba0fc84d76d085ff03b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "d657b331_b2d10f34",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-08-22T01:02:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3c02f4e_51eabd21",
+      "range": {
+        "startLine": 460,
+        "startChar": 51,
+        "endLine": 460,
+        "endChar": 57
+      },
+      "revId": "0113d7d5da078c01f517dba0fc84d76d085ff03b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d6c94a1_88f43f5a",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 3
@@ -211,6 +283,30 @@
       "revId": "0113d7d5da078c01f517dba0fc84d76d085ff03b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95456ab9_b0bc17cc",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-08-22T01:02:47Z",
+      "side": 1,
+      "message": "It seems to me that test case is not going to hit because the program will hit the SPI limit before it hits the max number of transforms. I created another test case testCannotUseSameSpiforTwoTransform().",
+      "parentUuid": "6d6c94a1_88f43f5a",
+      "range": {
+        "startLine": 480,
+        "startChar": 16,
+        "endLine": 480,
+        "endChar": 48
+      },
+      "revId": "0113d7d5da078c01f517dba0fc84d76d085ff03b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
