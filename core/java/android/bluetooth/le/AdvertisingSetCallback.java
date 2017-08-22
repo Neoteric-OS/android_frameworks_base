@@ -16,8 +16,6 @@
 
 package android.bluetooth.le;
 
-import android.bluetooth.BluetoothDevice;
-
 /**
  * Bluetooth LE advertising set callbacks, used to deliver advertising operation
  * status.
@@ -62,10 +60,11 @@ public abstract class AdvertisingSetCallback {
      * null, and status will be set to proper error code.
      *
      * @param advertisingSet The advertising set that was started or null if error.
-     * @param txPower tx power that will be used for this set.
-     * @param status Status of the operation.
+     * @param txPower        tx power that will be used for this set.
+     * @param status         Status of the operation.
      */
-    public void onAdvertisingSetStarted(AdvertisingSet advertisingSet, int txPower, int status) {}
+    public void onAdvertisingSetStarted(AdvertisingSet advertisingSet, int txPower, int status) {
+    }
 
     /**
      * Callback triggered in response to {@link BluetoothLeAdvertiser#stopAdvertisingSet}
@@ -73,85 +72,96 @@ public abstract class AdvertisingSetCallback {
      *
      * @param advertisingSet The advertising set.
      */
-    public void onAdvertisingSetStopped(AdvertisingSet advertisingSet) {}
+    public void onAdvertisingSetStopped(AdvertisingSet advertisingSet) {
+    }
 
     /**
-     * Callback triggered in response to {@link BluetoothLeAdvertiser#startAdvertisingSet} indicating
-     * result of the operation. If status is ADVERTISE_SUCCESS, then advertising set is advertising.
+     * Callback triggered in response to {@link BluetoothLeAdvertiser#startAdvertisingSet}
+     * indicating
+     * result of the operation. If status is ADVERTISE_SUCCESS, then advertising set is
+     * advertising.
      *
      * @param advertisingSet The advertising set.
-     * @param status Status of the operation.
+     * @param status         Status of the operation.
      */
-    public void onAdvertisingEnabled(AdvertisingSet advertisingSet, boolean enable, int status) {}
+    public void onAdvertisingEnabled(AdvertisingSet advertisingSet, boolean enable, int status) {
+    }
 
     /**
      * Callback triggered in response to {@link AdvertisingSet#setAdvertisingData} indicating
      * result of the operation. If status is ADVERTISE_SUCCESS, then data was changed.
      *
      * @param advertisingSet The advertising set.
-     * @param status Status of the operation.
+     * @param status         Status of the operation.
      */
-    public void onAdvertisingDataSet(AdvertisingSet advertisingSet, int status) {}
+    public void onAdvertisingDataSet(AdvertisingSet advertisingSet, int status) {
+    }
 
     /**
      * Callback triggered in response to {@link AdvertisingSet#setAdvertisingData} indicating
      * result of the operation.
      *
      * @param advertisingSet The advertising set.
-     * @param status Status of the operation.
+     * @param status         Status of the operation.
      */
-    public void onScanResponseDataSet(AdvertisingSet advertisingSet, int status) {}
+    public void onScanResponseDataSet(AdvertisingSet advertisingSet, int status) {
+    }
 
     /**
      * Callback triggered in response to {@link AdvertisingSet#setAdvertisingParameters}
      * indicating result of the operation.
      *
      * @param advertisingSet The advertising set.
-     * @param txPower tx power that will be used for this set.
-     * @param status Status of the operation.
+     * @param txPower        tx power that will be used for this set.
+     * @param status         Status of the operation.
      */
     public void onAdvertisingParametersUpdated(AdvertisingSet advertisingSet,
-                                               int txPower, int status) {}
+            int txPower, int status) {
+    }
 
     /**
      * Callback triggered in response to {@link AdvertisingSet#setPeriodicAdvertisingParameters}
      * indicating result of the operation.
      *
      * @param advertisingSet The advertising set.
-     * @param status Status of the operation.
+     * @param status         Status of the operation.
      */
     public void
     onPeriodicAdvertisingParametersUpdated(AdvertisingSet advertisingSet,
-                                           int status) {}
+            int status) {
+    }
 
     /**
      * Callback triggered in response to {@link AdvertisingSet#setPeriodicAdvertisingData}
      * indicating result of the operation.
      *
      * @param advertisingSet The advertising set.
-     * @param status Status of the operation.
+     * @param status         Status of the operation.
      */
     public void onPeriodicAdvertisingDataSet(AdvertisingSet advertisingSet,
-                                             int status) {}
+            int status) {
+    }
 
     /**
      * Callback triggered in response to {@link AdvertisingSet#setPeriodicAdvertisingEnabled}
      * indicating result of the operation.
      *
      * @param advertisingSet The advertising set.
-     * @param status Status of the operation.
+     * @param status         Status of the operation.
      */
     public void onPeriodicAdvertisingEnabled(AdvertisingSet advertisingSet, boolean enable,
-                                            int status) {}
+            int status) {
+    }
 
     /**
      * Callback triggered in response to {@link AdvertisingSet#getOwnAddress()}
      * indicating result of the operation.
      *
      * @param advertisingSet The advertising set.
-     * @param addressType type of address.
-     * @param address advertising set bluetooth address.
+     * @param addressType    type of address.
+     * @param address        advertising set bluetooth address.
      * @hide
      */
-    public void onOwnAddressRead(AdvertisingSet advertisingSet, int addressType, String address) {}
+    public void onOwnAddressRead(AdvertisingSet advertisingSet, int addressType, String address) {
+    }
 }

@@ -34,15 +34,15 @@ public abstract class BluetoothHidDeviceCallback {
      * which case application is unregistered automatically.
      *
      * @param pluggedDevice {@link BluetoothDevice} object which represents host
-     *            that currently has Virtual Cable established with device. Only
-     *            valid when application is registered, can be <code>null</code>
-     *            .
-     * @param config {@link BluetoothHidDeviceAppConfiguration} object which
-     *            represents token required to unregister application using
-     *            {@link BluetoothHidDevice#unregisterApp(BluetoothHidDeviceAppConfiguration)}
-     *            .
-     * @param registered <code>true</code> if application is registered,
-     *            <code>false</code> otherwise.
+     *                      that currently has Virtual Cable established with device. Only
+     *                      valid when application is registered, can be <code>null</code>
+     *                      .
+     * @param config        {@link BluetoothHidDeviceAppConfiguration} object which
+     *                      represents token required to unregister application using
+     *                      {@link BluetoothHidDevice#unregisterApp(BluetoothHidDeviceAppConfiguration)}
+     *                      .
+     * @param registered    <code>true</code> if application is registered,
+     *                      <code>false</code> otherwise.
      */
     public void onAppStatusChanged(BluetoothDevice pluggedDevice,
             BluetoothHidDeviceAppConfiguration config, boolean registered) {
@@ -56,8 +56,8 @@ public abstract class BluetoothHidDeviceCallback {
      * {@link BluetoothProfile#STATE_CONNECTED} <code>state</code>.
      *
      * @param device {@link BluetoothDevice} object representing host device
-     *            which connection state was changed.
-     * @param state Connection state as defined in {@link BluetoothProfile}.
+     *               which connection state was changed.
+     * @param state  Connection state as defined in {@link BluetoothProfile}.
      */
     public void onConnectionStateChanged(BluetoothDevice device, int state) {
         Log.d(TAG, "onConnectionStateChanged: device=" + device + " state=" + state);
@@ -68,11 +68,11 @@ public abstract class BluetoothHidDeviceCallback {
      * replied by application using
      * {@link BluetoothHidDevice#replyReport(BluetoothDevice, byte, byte, byte[])}.
      *
-     * @param type Requested Report Type.
-     * @param id Requested Report Id, can be 0 if no Report Id are defined in
-     *            descriptor.
+     * @param type       Requested Report Type.
+     * @param id         Requested Report Id, can be 0 if no Report Id are defined in
+     *                   descriptor.
      * @param bufferSize Requested buffer size, application shall respond with
-     *            at least given number of bytes.
+     *                   at least given number of bytes.
      */
     public void onGetReport(BluetoothDevice device, byte type, byte id, int bufferSize) {
         Log.d(TAG, "onGetReport: device=" + device + " type=" + type + " id=" + id + " bufferSize="
@@ -85,7 +85,7 @@ public abstract class BluetoothHidDeviceCallback {
      * {@link BluetoothHidDevice#reportError(BluetoothDevice)}.
      *
      * @param type Report Type.
-     * @param id Report Id.
+     * @param id   Report Id.
      * @param data Report data.
      */
     public void onSetReport(BluetoothDevice device, byte type, byte id, byte[] data) {
@@ -110,7 +110,7 @@ public abstract class BluetoothHidDeviceCallback {
      * {@link BluetoothHidDevice#REPORT_TYPE_OUTPUT}.
      *
      * @param reportId Report Id.
-     * @param data Report data.
+     * @param data     Report data.
      */
     public void onIntrData(BluetoothDevice device, byte reportId, byte[] data) {
         Log.d(TAG, "onIntrData: device=" + device + " reportId=" + reportId);

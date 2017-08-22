@@ -393,7 +393,7 @@ public final class BluetoothMapClient implements BluetoothProfile {
             mService = IBluetoothMapClient.Stub.asInterface(service);
             if (mServiceListener != null) {
                 mServiceListener.onServiceConnected(BluetoothProfile.MAP_CLIENT,
-                    BluetoothMapClient.this);
+                        BluetoothMapClient.this);
             }
         }
 

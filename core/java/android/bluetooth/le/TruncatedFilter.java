@@ -17,6 +17,7 @@
 package android.bluetooth.le;
 
 import android.annotation.SystemApi;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public final class TruncatedFilter {
     /**
      * Constructor for {@link TruncatedFilter}.
      *
-     * @param filter Scan filter of the truncated filter.
+     * @param filter             Scan filter of the truncated filter.
      * @param storageDescriptors Describes how the scan should be stored.
      */
     public TruncatedFilter(ScanFilter filter, List<ResultStorageDescriptor> storageDescriptors) {
