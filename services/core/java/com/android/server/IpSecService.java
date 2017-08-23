@@ -819,11 +819,19 @@ public class IpSecService extends IIpSecService.Stub {
         for (int direction : DIRECTIONS) {
             IpSecAlgorithm auth = c.getAuthentication(direction);
             IpSecAlgorithm crypt = c.getEncryption(direction);
+            IpSecAlgorithm authCrypt = c.getAuthenticatedEncryption(direction);
+
+            if (authCrypt != null && (auth != null || crypt != null)) {
+                throw new IllegalArgumentException(
+                        "Authenticated Encryption is mutually"
+                                + " exclusive with other Authentication or Encryption algorithms");
+            }
 
             spis[direction] = mSpiRecords.get(c.getSpiResourceId(direction));
             int spi = spis[direction].getSpi();
             try {
-                mSrvConfig.getNetdInstance()
+                mSrvConfig
+                        .getNetdInstance()
                         .ipSecAddSecurityAssociation(
                                 resourceId,
                                 c.getMode(),
@@ -834,9 +842,7 @@ public class IpSecService extends IIpSecService.Stub {
                                 (c.getRemoteAddress() != null)
                                         ? c.getRemoteAddress().getHostAddress()
                                         : "",
-                                (c.getNetwork() != null)
-                                        ? c.getNetwork().getNetworkHandle()
-                                        : 0,
+                                (c.getNetwork() != null) ? c.getNetwork().getNetworkHandle() : 0,
                                 spi,
                                 (auth != null) ? auth.getName() : "",
                                 (auth != null) ? auth.getKey() : null,
@@ -844,6 +850,9 @@ public class IpSecService extends IIpSecService.Stub {
                                 (crypt != null) ? crypt.getName() : "",
                                 (crypt != null) ? crypt.getKey() : null,
                                 (crypt != null) ? crypt.getTruncationLengthBits() : 0,
+                                (authCrypt != null) ? authCrypt.getName() : "",
+                                (authCrypt != null) ? authCrypt.getKey() : null,
+                                (authCrypt != null) ? authCrypt.getTruncationLengthBits() : 0,
                                 encapType,
                                 encapLocalPort,
                                 encapRemotePort);
