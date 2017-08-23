@@ -164,6 +164,7 @@ class TaskSnapshotSurface implements StartingSurface {
             layoutParams.flags = (windowFlags & ~FLAG_INHERIT_EXCLUDES)
                     | FLAG_NOT_FOCUSABLE
                     | FLAG_NOT_TOUCHABLE;
+            layoutParams.flags &= ~FLAG_DIM_BEHIND;
             layoutParams.privateFlags = PRIVATE_FLAG_TASK_SNAPSHOT
                     | (windowPrivateFlags & PRIVATE_FLAG_INHERITS);
             layoutParams.token = token.token;
