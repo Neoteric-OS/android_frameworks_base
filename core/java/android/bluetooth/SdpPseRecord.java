@@ -27,18 +27,18 @@ public class SdpPseRecord implements Parcelable {
     private final int mSupportedRepositories;
     private final String mServiceName;
 
-    public SdpPseRecord(int l2cap_psm,
-            int rfcomm_channel_number,
-            int profile_version,
-            int supported_features,
-            int supported_repositories,
-            String service_name) {
-        this.mL2capPsm = l2cap_psm;
-        this.mRfcommChannelNumber = rfcomm_channel_number;
-        this.mProfileVersion = profile_version;
-        this.mSupportedFeatures = supported_features;
-        this.mSupportedRepositories = supported_repositories;
-        this.mServiceName = service_name;
+    public SdpPseRecord(int l2capPsm,
+            int rfcommChannelNumber,
+            int profileVersion,
+            int supportedFeatures,
+            int supportedRepositories,
+            String serviceName) {
+        this.mL2capPsm = l2capPsm;
+        this.mRfcommChannelNumber = rfcommChannelNumber;
+        this.mProfileVersion = profileVersion;
+        this.mSupportedFeatures = supportedFeatures;
+        this.mSupportedRepositories = supportedRepositories;
+        this.mServiceName = serviceName;
     }
 
     public SdpPseRecord(Parcel in) {
@@ -91,6 +91,7 @@ public class SdpPseRecord implements Parcelable {
 
     }
 
+    @Override
     public String toString() {
         String ret = "Bluetooth MNS SDP Record:\n";
 

@@ -25,12 +25,10 @@ public class SdpSapsRecord implements Parcelable {
     private final int mProfileVersion;
     private final String mServiceName;
 
-    public SdpSapsRecord(int rfcomm_channel_number,
-            int profile_version,
-            String service_name) {
-        this.mRfcommChannelNumber = rfcomm_channel_number;
-        this.mProfileVersion = profile_version;
-        this.mServiceName = service_name;
+    public SdpSapsRecord(int rfcommChannelNumber, int profileVersion, String serviceName) {
+        this.mRfcommChannelNumber = rfcommChannelNumber;
+        this.mProfileVersion = profileVersion;
+        this.mServiceName = serviceName;
     }
 
     public SdpSapsRecord(Parcel in) {

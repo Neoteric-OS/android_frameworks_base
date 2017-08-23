@@ -92,8 +92,8 @@ public class BluetoothLeUtils {
 
         // Keys are guaranteed in ascending order when indices are in ascending order.
         for (int i = 0; i < array.size(); ++i) {
-            if (array.keyAt(i) != otherArray.keyAt(i) ||
-                    !Arrays.equals(array.valueAt(i), otherArray.valueAt(i))) {
+            if (array.keyAt(i) != otherArray.keyAt(i)
+                    || !Arrays.equals(array.valueAt(i), otherArray.valueAt(i))) {
                 return false;
             }
         }

@@ -97,6 +97,7 @@ public class SdpOppOpsRecord implements Parcelable {
         }
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Bluetooth OPP Server SDP Record:\n");
         sb.append("  RFCOMM Chan Number: ").append(mRfcommChannel);

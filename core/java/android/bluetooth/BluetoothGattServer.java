@@ -356,9 +356,9 @@ public final class BluetoothGattServer implements BluetoothProfile {
                 public void onConnectionUpdated(String address, int interval, int latency,
                         int timeout, int status) {
                     if (DBG) {
-                        Log.d(TAG, "onConnectionUpdated() - Device=" + address +
-                                " interval=" + interval + " latency=" + latency +
-                                " timeout=" + timeout + " status=" + status);
+                        Log.d(TAG, "onConnectionUpdated() - Device=" + address
+                                + " interval=" + interval + " latency=" + latency
+                                + " timeout=" + timeout + " status=" + status);
                     }
                     BluetoothDevice device = mAdapter.getRemoteDevice(address);
                     if (device == null) return;
@@ -505,9 +505,9 @@ public final class BluetoothGattServer implements BluetoothProfile {
      */
     /*package*/ BluetoothGattService getService(UUID uuid, int instanceId, int type) {
         for (BluetoothGattService svc : mServices) {
-            if (svc.getType() == type &&
-                    svc.getInstanceId() == instanceId &&
-                    svc.getUuid().equals(uuid)) {
+            if (svc.getType() == type
+                    && svc.getInstanceId() == instanceId
+                    && svc.getUuid().equals(uuid)) {
                 return svc;
             }
         }
@@ -822,8 +822,8 @@ public final class BluetoothGattServer implements BluetoothProfile {
      */
     @Override
     public List<BluetoothDevice> getConnectedDevices() {
-        throw new UnsupportedOperationException
-                ("Use BluetoothManager#getConnectedDevices instead.");
+        throw new UnsupportedOperationException(
+                "Use BluetoothManager#getConnectedDevices instead.");
     }
 
     /**
@@ -835,7 +835,7 @@ public final class BluetoothGattServer implements BluetoothProfile {
      */
     @Override
     public List<BluetoothDevice> getDevicesMatchingConnectionStates(int[] states) {
-        throw new UnsupportedOperationException
-                ("Use BluetoothManager#getDevicesMatchingConnectionStates instead.");
+        throw new UnsupportedOperationException(
+                "Use BluetoothManager#getDevicesMatchingConnectionStates instead.");
     }
 }
