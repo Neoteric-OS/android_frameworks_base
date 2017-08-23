@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a859ea4_96fae07d",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-08-23T22:21:53Z",
+      "side": 1,
+      "message": "\"AEAD\" is a well defined term for this, and \"combined\" is a bit vague. Suggest to change the member name to \u0027aead\u0027 and you can expand the acronym in the comment.\n\nhttps://en.wikipedia.org/wiki/Authenticated_encryption",
+      "range": {
+        "startLine": 52,
+        "startChar": 1,
+        "endLine": 53,
+        "endChar": 32
+      },
+      "revId": "be9ee5b29ad8f46de927b6c0c2790b946ec0bc27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
