@@ -19,7 +19,9 @@ import android.annotation.StringDef;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.android.internal.util.HexDump;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -30,6 +32,12 @@ import java.lang.annotation.RetentionPolicy;
  * @hide
  */
 public final class IpSecAlgorithm implements Parcelable {
+    /**
+     * AES-GCM Authentication/Integrity + Encryption/Ciphering Algorithm.
+     *
+     * <p>Valid lengths for this key are {128, 192, 256}.
+     */
+    public static final String AUTH_CRYPT_AES_GCM = "rfc4106(gcm(aes))";
 
     /**
      * AES-CBC Encryption/Ciphering Algorithm.
@@ -76,6 +84,7 @@ public final class IpSecAlgorithm implements Parcelable {
 
     /** @hide */
     @StringDef({
+        AUTH_CRYPT_AES_GCM,
         CRYPT_AES_CBC,
         AUTH_HMAC_MD5,
         AUTH_HMAC_SHA1,
@@ -168,6 +177,8 @@ public final class IpSecAlgorithm implements Parcelable {
 
     private static boolean isTruncationLengthValid(String algo, int truncLenBits) {
         switch (algo) {
+            case AUTH_CRYPT_AES_GCM:
+                return (truncLenBits == 128 || truncLenBits == 192 || truncLenBits == 256);
             case CRYPT_AES_CBC:
                 return (truncLenBits == 128 || truncLenBits == 192 || truncLenBits == 256);
             case AUTH_HMAC_MD5:
