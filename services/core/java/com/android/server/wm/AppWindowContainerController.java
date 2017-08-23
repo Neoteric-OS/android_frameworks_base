@@ -662,7 +662,7 @@ public class AppWindowContainerController
 
     public void removeStartingWindow() {
         synchronized (mWindowMap) {
-            if (mHandler.hasCallbacks(mRemoveStartingWindow)) {
+            if (mService.mAnimationHandler.hasCallbacks(mRemoveStartingWindow)) {
                 // Already scheduled.
                 if (DEBUG_STARTING_WINDOW) Slog.v(TAG_WM, "Trying to remove starting window but "
                         + "already scheduled");
@@ -682,7 +682,7 @@ public class AppWindowContainerController
 
             if (DEBUG_STARTING_WINDOW) Slog.v(TAG_WM, "Schedule remove starting " + mContainer
                     + " startingWindow=" + mContainer.startingWindow);
-            mHandler.post(mRemoveStartingWindow);
+            mService.mAnimationHandler.post(mRemoveStartingWindow);
         }
     }
 
