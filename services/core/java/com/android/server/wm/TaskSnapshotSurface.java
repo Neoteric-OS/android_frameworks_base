@@ -20,6 +20,7 @@ import static android.graphics.Color.WHITE;
 import static android.graphics.Color.alpha;
 import static android.view.SurfaceControl.HIDDEN;
 import static android.view.WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM;
+import static android.view.WindowManager.LayoutParams.FLAG_DIM_BEHIND;
 import static android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED;
 import static android.view.WindowManager.LayoutParams.FLAG_IGNORE_CHEEK_PRESSES;
 import static android.view.WindowManager.LayoutParams.FLAG_LOCAL_FOCUS_MODE;
@@ -164,6 +165,7 @@ class TaskSnapshotSurface implements StartingSurface {
             layoutParams.flags = (windowFlags & ~FLAG_INHERIT_EXCLUDES)
                     | FLAG_NOT_FOCUSABLE
                     | FLAG_NOT_TOUCHABLE;
+            layoutParams.flags &= ~FLAG_DIM_BEHIND;
             layoutParams.privateFlags = PRIVATE_FLAG_TASK_SNAPSHOT
                     | (windowPrivateFlags & PRIVATE_FLAG_INHERITS);
             layoutParams.token = token.token;
