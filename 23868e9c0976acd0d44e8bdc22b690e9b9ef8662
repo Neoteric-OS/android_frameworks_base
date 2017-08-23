@@ -22,6 +22,30 @@
       "revId": "23868e9c0976acd0d44e8bdc22b690e9b9ef8662",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e450a3bf_e830a268",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-23T00:52:54Z",
+      "side": 0,
+      "message": "I would really like to regroup variable by final,static keywords. I think the gain in clarity is worth the risk of merge-conflicts on older release branches.\n\n(anyway the risk of merge conflicts is small if the release fixes and tasks are done in aosp and cherry picked to the release branch anyway).\n\nI can propose to cherry pick this change to oc-mr1-dev and that would solve the merge conflict risk issue.",
+      "parentUuid": "076a1cd0_053aff17",
+      "range": {
+        "startLine": 272,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 51
+      },
+      "revId": "23868e9c0976acd0d44e8bdc22b690e9b9ef8662",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
