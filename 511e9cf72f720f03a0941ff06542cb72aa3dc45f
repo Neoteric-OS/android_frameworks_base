@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7a66f84_0d295e7f",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-08-23T21:34:06Z",
+      "side": 1,
+      "message": "Odd format, but name listed as such in Linux kernel (/net/xfrm/xfrm_algo.c : aead_list).\n\nThere also is a rfc4543(gcm(aes)), so the specificity makes sense.",
+      "range": {
+        "startLine": 40,
+        "startChar": 53,
+        "endLine": 40,
+        "endChar": 70
+      },
+      "revId": "511e9cf72f720f03a0941ff06542cb72aa3dc45f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
