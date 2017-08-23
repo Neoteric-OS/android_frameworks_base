@@ -298,23 +298,22 @@ public class IpSecServiceTest {
                 new IpSecAlgorithm(IpSecAlgorithm.AUTH_HMAC_SHA256, AUTH_KEY, AUTH_KEY.length * 8);
 
         InetAddress localAddr = InetAddress.getByAddress(new byte[] {127, 0, 0, 1});
-
+        InetAddress remoteAddr = InetAddress.getByAddress(new byte[] {8, 8, 4, 4});
         /** Allocate and add SPI records in the IpSecService through IpSecManager interface. */
         IpSecManager.SecurityParameterIndex outSpi =
                 ipSecManager.reserveSecurityParameterIndex(IpSecTransform.DIRECTION_OUT, localAddr);
         IpSecManager.SecurityParameterIndex inSpi =
                 ipSecManager.reserveSecurityParameterIndex(IpSecTransform.DIRECTION_IN, localAddr);
 
-        IpSecConfig ipSecConfig =
-                new IpSecTransform.Builder(mMockContext)
-                        .setSpi(IpSecTransform.DIRECTION_OUT, outSpi)
-                        .setSpi(IpSecTransform.DIRECTION_IN, inSpi)
-                        .setEncryption(IpSecTransform.DIRECTION_OUT, encryptAlgo)
-                        .setAuthentication(IpSecTransform.DIRECTION_OUT, authAlgo)
-                        .setEncryption(IpSecTransform.DIRECTION_IN, encryptAlgo)
-                        .setAuthentication(IpSecTransform.DIRECTION_IN, authAlgo)
-                        .getIpSecConfig();
-        return ipSecConfig;
+        IpSecConfig config = new IpSecConfig();
+        config.setSpiResourceId(IpSecTransform.DIRECTION_IN, inSpi.getResourceId());
+        config.setSpiResourceId(IpSecTransform.DIRECTION_OUT, outSpi.getResourceId());
+        config.setEncryption(IpSecTransform.DIRECTION_OUT, encryptAlgo);
+        config.setAuthentication(IpSecTransform.DIRECTION_OUT, authAlgo);
+        config.setEncryption(IpSecTransform.DIRECTION_IN, encryptAlgo);
+        config.setAuthentication(IpSecTransform.DIRECTION_IN, authAlgo);
+        config.setRemoteAddress(remoteAddr);
+        return config;
     }
 
     @Test
