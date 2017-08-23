@@ -23,6 +23,7 @@ import static android.system.OsConstants.SOCK_DGRAM;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.isNull;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyObject;
@@ -316,6 +317,34 @@ public class IpSecServiceTest {
                         .getIpSecConfig();
         return ipSecConfig;
     }
+    
+    IpSecConfig buildIpSecConfigAEAD() throws Exception {
+        IpSecManager ipSecManager = new IpSecManager(mIpSecService);
+
+        // Mocking the netd to allocate SPI
+        when(mMockNetd.ipSecAllocateSpi(anyInt(), anyInt(), anyString(), anyString(), anyInt()))
+                .thenReturn(DROID_SPI)
+                .thenReturn(DROID_SPI2);
+
+        IpSecAlgorithm aeadAlgo = new IpSecAlgorithm(IpSecAlgorithm.AUTH_CRYPT_AES_GCM, CRYPT_KEY);
+
+        InetAddress localAddr = InetAddress.getByAddress(new byte[] {127, 0, 0, 1});
+
+        /** Allocate and add SPI records in the IpSecService through IpSecManager interface. */
+        IpSecManager.SecurityParameterIndex outSpi =
+                ipSecManager.reserveSecurityParameterIndex(IpSecTransform.DIRECTION_OUT, localAddr);
+        IpSecManager.SecurityParameterIndex inSpi =
+                ipSecManager.reserveSecurityParameterIndex(IpSecTransform.DIRECTION_IN, localAddr);
+
+        IpSecConfig ipSecConfig =
+                new IpSecTransform.Builder(mMockContext)
+                        .setSpi(IpSecTransform.DIRECTION_OUT, outSpi)
+                        .setSpi(IpSecTransform.DIRECTION_IN, inSpi)
+                        .setCombined(IpSecTransform.DIRECTION_OUT, aeadAlgo)
+                        .setCombined(IpSecTransform.DIRECTION_IN, aeadAlgo)
+                        .getIpSecConfig();
+        return ipSecConfig;
+    }
 
     @Test
     public void testCreateTransportModeTransform() throws Exception {
@@ -340,6 +369,9 @@ public class IpSecServiceTest {
                         eq(IpSecAlgorithm.CRYPT_AES_CBC),
                         eq(CRYPT_KEY),
                         anyInt(),
+                        anyString(),
+                        isNull(),
+                        eq(0),
                         anyInt(),
                         anyInt(),
                         anyInt());
@@ -356,6 +388,61 @@ public class IpSecServiceTest {
                         eq(AUTH_KEY),
                         anyInt(),
                         eq(IpSecAlgorithm.CRYPT_AES_CBC),
+                        eq(CRYPT_KEY),
+                        anyInt(),
+                        anyString(),
+                        isNull(),
+                        eq(0),
+                        anyInt(),
+                        anyInt(),
+                        anyInt());
+    }
+
+    @Test
+    public void testCreateTransportModeTransformAEAD() throws Exception {
+        IpSecConfig ipSecConfig = buildIpSecConfigAEAD();
+
+        IpSecTransformResponse createTransformResp =
+                mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());
+        assertEquals(IpSecManager.Status.OK, createTransformResp.status);
+
+        verify(mMockNetd)
+                .ipSecAddSecurityAssociation(
+                        eq(createTransformResp.resourceId),
+                        anyInt(),
+                        eq(IpSecTransform.DIRECTION_OUT),
+                        anyString(),
+                        anyString(),
+                        anyLong(),
+                        eq(DROID_SPI),
+                        anyString(),
+                        isNull(),
+                        eq(0),
+                        anyString(),
+                        isNull(),
+                        eq(0),
+                        eq(IpSecAlgorithm.AUTH_CRYPT_AES_GCM),
+                        eq(CRYPT_KEY),
+                        anyInt(),
+                        anyInt(),
+                        anyInt(),
+                        anyInt());
+        verify(mMockNetd)
+                .ipSecAddSecurityAssociation(
+                        eq(createTransformResp.resourceId),
+                        anyInt(),
+                        eq(IpSecTransform.DIRECTION_IN),
+                        anyString(),
+                        anyString(),
+                        anyLong(),
+                        eq(DROID_SPI2),
+                        anyString(),
+                        isNull(),
+                        eq(0),
+                        anyString(),
+                        isNull(),
+                        eq(0),
+                        eq(IpSecAlgorithm.AUTH_CRYPT_AES_GCM),
                         eq(CRYPT_KEY),
                         anyInt(),
                         anyInt(),
