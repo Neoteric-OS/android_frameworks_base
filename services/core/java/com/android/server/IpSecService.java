@@ -252,7 +252,11 @@ public class IpSecService extends IIpSecService.Stub {
             return (mReferenceCount.get() > 0);
         }
 
-        public void checkOwnerOrSystemAndThrow() {
+        /**
+         * Ensures that the caller is either the owner of this resource or has the
+         * system UID and throws a SecurityException otherwise.
+         */
+        public void checkOwnerOrSystem() {
             if (uid != Binder.getCallingUid()
                     && android.os.Process.SYSTEM_UID != Binder.getCallingUid()) {
                 throw new SecurityException("Only the owner may access managed resources!");
@@ -340,7 +344,7 @@ public class IpSecService extends IIpSecService.Stub {
             // The value should never be null unless the resource doesn't exist
             // (since we do not allow null resources to be added).
             if (val != null) {
-                val.checkOwnerOrSystemAndThrow();
+                val.checkOwnerOrSystem();
             }
             return val;
         }
@@ -638,11 +642,51 @@ public class IpSecService extends IIpSecService.Stub {
         }
     }
 
+    /**
+     * Checks that the provided InetAddress is valid for use in an IPsec SA.
+     * The address must not be a wildcard address or a multicast address, and if the
+     * provided InetAddress was a domain name, it must be routable. Note, there is no
+     * way to provide a domain name via the public API.
+     */
+    private static void checkInetAddress(String inetAddress) {
+        try {
+            InetAddress checkAddr = InetAddress.getByName(inetAddress);
+            // Calling getAddress() forces address resolution if someone passed a string address.
+            checkAddr.getAddress();
+            if (checkAddr.isAnyLocalAddress()) {
+                throw new IllegalArgumentException(
+                        "Inappropriate wildcard address: " + inetAddress);
+            } else if (checkAddr.isMulticastAddress()) {
+                throw new IllegalArgumentException("Multicast addresses cannot be used for IPsec");
+            }
+        } catch (UnknownHostException e) {
+            throw new IllegalArgumentException("Invalid InetAddress: " + inetAddress);
+        }
+    }
+
+    /**
+     * Checks the user-provided direction field and throws an
+     * IllegalArgumentException if it is not DIRECTION_IN or DIRECTION_OUT
+     */
+    private static void checkDirection(int direction) {
+        switch (direction) {
+            case IpSecTransform.DIRECTION_OUT:
+            case IpSecTransform.DIRECTION_IN:
+                return;
+        }
+        throw new IllegalArgumentException("Invalid Direction: " + direction);
+    }
+
     @Override
     /** Get a new SPI and maintain the reservation in the system server */
     public synchronized IpSecSpiResponse reserveSecurityParameterIndex(
             int direction, String remoteAddress, int requestedSpi, IBinder binder)
             throws RemoteException {
+        checkDirection(direction);
+        checkInetAddress(remoteAddress);
+        /* requestedSpi can be anything in the int range, so no check is needed. */
+        checkNotNull(binder, "Null Binder passed to reserveSecurityParameterIndex");
+
         int resourceId = mNextResourceId.getAndIncrement();
 
         int spi = IpSecManager.INVALID_SECURITY_PARAMETER_INDEX;
@@ -651,9 +695,7 @@ public class IpSecService extends IIpSecService.Stub {
         try {
             if (!mUserQuotaTracker.getUserRecord(Binder.getCallingUid()).spi.isAvailable()) {
                 return new IpSecSpiResponse(
-                        IpSecManager.Status.RESOURCE_UNAVAILABLE,
-                        INVALID_RESOURCE_ID,
-                        spi);
+                        IpSecManager.Status.RESOURCE_UNAVAILABLE, INVALID_RESOURCE_ID, spi);
             }
             spi =
                     mSrvConfig
@@ -751,6 +793,8 @@ public class IpSecService extends IIpSecService.Stub {
             throw new IllegalArgumentException(
                     "Specified port number must be a valid non-reserved UDP port");
         }
+        checkNotNull(binder, "Null Binder passed to openUdpEncapsulationSocket");
+
         int resourceId = mNextResourceId.getAndIncrement();
         FileDescriptor sockFd = null;
         try {
@@ -792,6 +836,58 @@ public class IpSecService extends IIpSecService.Stub {
     }
 
     /**
+     * Checks an IpSecConfig parcel to ensure that the contents are sane and throws an
+     * IllegalArgumentException if they are not.
+     */
+    private void checkIpSecConfig(IpSecConfig config) {
+        switch (config.getMode()) {
+            case IpSecTransform.MODE_TUNNEL:
+            case IpSecTransform.MODE_TRANSPORT:
+                break;
+            default:
+                throw new IllegalArgumentException(
+                        "Invalid IpSecTransform.mode: " + config.getMode());
+        }
+
+        // TODO: check localAddress when tunnel mode is supported
+        // TODO: check network when tunnel mode is supported
+
+        // It's possible for a non-null invalid address to become null during un-parceling.
+        checkNotNull(config.getRemoteAddress(), "Invalid Remote InetAddress");
+
+        switch (config.getEncapType()) {
+            case IpSecTransform.ENCAP_NONE:
+                break;
+            case IpSecTransform.ENCAP_ESPINUDP:
+            case IpSecTransform.ENCAP_ESPINUDP_NON_IKE:
+                checkNotNull(
+                        mUdpSocketRecords.get(config.getEncapSocketResourceId()),
+                        "No Encapsulation socket for Resource Id: " +
+                                config.getEncapSocketResourceId());
+                int port = config.getEncapRemotePort();
+                // port must be non-zero and a 16-bit number
+                if (port == 0 || (port & 0xFFFF0000) != 0) {
+                    throw new IllegalArgumentException("Invalid remote UDP port: " + port);
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid Encap Type: " + config.getEncapType());
+        }
+
+        for (int direction : DIRECTIONS) {
+            IpSecAlgorithm crypt = config.getEncryption(direction);
+            IpSecAlgorithm auth = config.getAuthentication(direction);
+            if (crypt == null && auth == null) {
+                throw new IllegalArgumentException("Encryption and Authentication are both null");
+            }
+
+            checkNotNull(
+                    mSpiRecords.get(config.getSpiResourceId(direction)),
+                    "No SPI for specified Resource Id");
+        }
+    }
+
+    /**
      * Create a transport mode transform, which represent two security associations (one in each
      * direction) in the kernel. The transform will be cached by the system server and must be freed
      * when no longer needed. It is possible to free one, deleting the SA from underneath sockets
@@ -801,17 +897,19 @@ public class IpSecService extends IIpSecService.Stub {
     @Override
     public synchronized IpSecTransformResponse createTransportModeTransform(
             IpSecConfig c, IBinder binder) throws RemoteException {
+        checkIpSecConfig(c);
+        checkNotNull(binder, "Null Binder passed to createTransportModeTransform");
         int resourceId = mNextResourceId.getAndIncrement();
         if (!mUserQuotaTracker.getUserRecord(Binder.getCallingUid()).transform.isAvailable()) {
             return new IpSecTransformResponse(IpSecManager.Status.RESOURCE_UNAVAILABLE);
         }
         SpiRecord[] spis = new SpiRecord[DIRECTIONS.length];
-        // TODO: Basic input validation here since it's coming over the Binder
+
         int encapType, encapLocalPort = 0, encapRemotePort = 0;
         UdpSocketRecord socketRecord = null;
         encapType = c.getEncapType();
         if (encapType != IpSecTransform.ENCAP_NONE) {
-            socketRecord = mUdpSocketRecords.get(c.getEncapLocalResourceId());
+            socketRecord = mUdpSocketRecords.get(c.getEncapSocketResourceId());
             encapLocalPort = socketRecord.getPort();
             encapRemotePort = c.getEncapRemotePort();
         }
@@ -823,7 +921,8 @@ public class IpSecService extends IIpSecService.Stub {
             spis[direction] = mSpiRecords.get(c.getSpiResourceId(direction));
             int spi = spis[direction].getSpi();
             try {
-                mSrvConfig.getNetdInstance()
+                mSrvConfig
+                        .getNetdInstance()
                         .ipSecAddSecurityAssociation(
                                 resourceId,
                                 c.getMode(),
@@ -834,9 +933,7 @@ public class IpSecService extends IIpSecService.Stub {
                                 (c.getRemoteAddress() != null)
                                         ? c.getRemoteAddress().getHostAddress()
                                         : "",
-                                (c.getNetwork() != null)
-                                        ? c.getNetwork().getNetworkHandle()
-                                        : 0,
+                                (c.getNetwork() != null) ? c.getNetwork().getNetworkHandle() : 0,
                                 spi,
                                 (auth != null) ? auth.getName() : "",
                                 (auth != null) ? auth.getKey() : null,
