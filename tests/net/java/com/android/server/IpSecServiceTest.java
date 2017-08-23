@@ -23,12 +23,14 @@ import static android.system.OsConstants.SOCK_DGRAM;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.isNull;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -317,6 +319,174 @@ public class IpSecServiceTest {
         return ipSecConfig;
     }
 
+    IpSecConfig buildIpSecConfigAuthenticatedEncryption() throws Exception {
+        IpSecManager ipSecManager = new IpSecManager(mIpSecService);
+
+        // Mocking the netd to allocate SPI
+        when(mMockNetd.ipSecAllocateSpi(anyInt(), anyInt(), anyString(), anyString(), anyInt()))
+                .thenReturn(DROID_SPI)
+                .thenReturn(DROID_SPI2);
+
+        IpSecAlgorithm authenticatedEncryptionAlgo = new IpSecAlgorithm(IpSecAlgorithm.AUTH_CRYPT_AES_GCM, CRYPT_KEY);
+
+        InetAddress localAddr = InetAddress.getByAddress(new byte[] {127, 0, 0, 1});
+
+        /** Allocate and add SPI records in the IpSecService through IpSecManager interface. */
+        IpSecManager.SecurityParameterIndex outSpi =
+                ipSecManager.reserveSecurityParameterIndex(IpSecTransform.DIRECTION_OUT, localAddr);
+        IpSecManager.SecurityParameterIndex inSpi =
+                ipSecManager.reserveSecurityParameterIndex(IpSecTransform.DIRECTION_IN, localAddr);
+
+        IpSecConfig ipSecConfig =
+                new IpSecTransform.Builder(mMockContext)
+                        .setSpi(IpSecTransform.DIRECTION_OUT, outSpi)
+                        .setSpi(IpSecTransform.DIRECTION_IN, inSpi)
+                        .setAuthenticatedEncryption(IpSecTransform.DIRECTION_OUT, authenticatedEncryptionAlgo)
+                        .setAuthenticatedEncryption(IpSecTransform.DIRECTION_IN, authenticatedEncryptionAlgo)
+                        .getIpSecConfig();
+        return ipSecConfig;
+    }
+    
+    @Test
+    public void buildInvalidIpSecConfigAuthenticatedEncryptionAfterEncryption() throws Exception {
+        IpSecManager ipSecManager = new IpSecManager(mIpSecService);
+
+        // Mocking the netd to allocate SPI
+        when(mMockNetd.ipSecAllocateSpi(anyInt(), anyInt(), anyString(), anyString(), anyInt()))
+                .thenReturn(DROID_SPI)
+                .thenReturn(DROID_SPI2);
+
+        IpSecAlgorithm encryptionAlgo = new IpSecAlgorithm(IpSecAlgorithm.CRYPT_AES_CBC, CRYPT_KEY);
+        IpSecAlgorithm authenticatedEncryptionAlgo = new IpSecAlgorithm(IpSecAlgorithm.AUTH_CRYPT_AES_GCM, CRYPT_KEY);
+
+        InetAddress localAddr = InetAddress.getByAddress(new byte[] {127, 0, 0, 1});
+
+        /** Allocate and add SPI records in the IpSecService through IpSecManager interface. */
+        IpSecManager.SecurityParameterIndex outSpi =
+                ipSecManager.reserveSecurityParameterIndex(IpSecTransform.DIRECTION_OUT, localAddr);
+        IpSecManager.SecurityParameterIndex inSpi =
+                ipSecManager.reserveSecurityParameterIndex(IpSecTransform.DIRECTION_IN, localAddr);
+
+        try{
+                IpSecConfig ipSecConfig =
+                        new IpSecTransform.Builder(mMockContext)
+                                .setSpi(IpSecTransform.DIRECTION_OUT, outSpi)
+                                .setSpi(IpSecTransform.DIRECTION_IN, inSpi)
+                                .setEncryption(IpSecTransform.DIRECTION_OUT, encryptionAlgo)
+                                .setAuthenticatedEncryption(IpSecTransform.DIRECTION_OUT, authenticatedEncryptionAlgo)
+                                .getIpSecConfig();
+
+                fail("Setting Authenticated Encryption after Encryption should fail");
+        } catch(IllegalStateException e){
+                // Test passes
+        }
+    }
+    
+    @Test
+    public void buildInvalidIpSecConfigEncryptionAfterAuthenticatedEncryption() throws Exception {
+        IpSecManager ipSecManager = new IpSecManager(mIpSecService);
+
+        // Mocking the netd to allocate SPI
+        when(mMockNetd.ipSecAllocateSpi(anyInt(), anyInt(), anyString(), anyString(), anyInt()))
+                .thenReturn(DROID_SPI)
+                .thenReturn(DROID_SPI2);
+
+        IpSecAlgorithm encryptionAlgo = new IpSecAlgorithm(IpSecAlgorithm.CRYPT_AES_CBC, CRYPT_KEY);
+        IpSecAlgorithm authenticatedEncryptionAlgo = new IpSecAlgorithm(IpSecAlgorithm.AUTH_CRYPT_AES_GCM, CRYPT_KEY);
+
+        InetAddress localAddr = InetAddress.getByAddress(new byte[] {127, 0, 0, 1});
+
+        /** Allocate and add SPI records in the IpSecService through IpSecManager interface. */
+        IpSecManager.SecurityParameterIndex outSpi =
+                ipSecManager.reserveSecurityParameterIndex(IpSecTransform.DIRECTION_OUT, localAddr);
+        IpSecManager.SecurityParameterIndex inSpi =
+                ipSecManager.reserveSecurityParameterIndex(IpSecTransform.DIRECTION_IN, localAddr);
+
+        try{
+                IpSecConfig ipSecConfig =
+                        new IpSecTransform.Builder(mMockContext)
+                                .setSpi(IpSecTransform.DIRECTION_OUT, outSpi)
+                                .setSpi(IpSecTransform.DIRECTION_IN, inSpi)
+                                .setAuthenticatedEncryption(IpSecTransform.DIRECTION_OUT, authenticatedEncryptionAlgo)
+                                .setEncryption(IpSecTransform.DIRECTION_OUT, encryptionAlgo)
+                                .getIpSecConfig();
+
+                fail("Setting Encryption after Authenticated Encryption should fail");
+        } catch(IllegalStateException e){
+                // Test passes
+        }
+    }
+    
+    @Test
+    public void buildInvalidIpSecConfigAuthenticatedEncryptionAfterAuthentication() throws Exception {
+        IpSecManager ipSecManager = new IpSecManager(mIpSecService);
+
+        // Mocking the netd to allocate SPI
+        when(mMockNetd.ipSecAllocateSpi(anyInt(), anyInt(), anyString(), anyString(), anyInt()))
+                .thenReturn(DROID_SPI)
+                .thenReturn(DROID_SPI2);
+
+        IpSecAlgorithm authenticationAlgo = new IpSecAlgorithm(IpSecAlgorithm.AUTH_HMAC_SHA256, CRYPT_KEY);
+        IpSecAlgorithm authenticatedEncryptionAlgo = new IpSecAlgorithm(IpSecAlgorithm.AUTH_CRYPT_AES_GCM, CRYPT_KEY);
+
+        InetAddress localAddr = InetAddress.getByAddress(new byte[] {127, 0, 0, 1});
+
+        /** Allocate and add SPI records in the IpSecService through IpSecManager interface. */
+        IpSecManager.SecurityParameterIndex outSpi =
+                ipSecManager.reserveSecurityParameterIndex(IpSecTransform.DIRECTION_OUT, localAddr);
+        IpSecManager.SecurityParameterIndex inSpi =
+                ipSecManager.reserveSecurityParameterIndex(IpSecTransform.DIRECTION_IN, localAddr);
+
+        try{
+                IpSecConfig ipSecConfig =
+                        new IpSecTransform.Builder(mMockContext)
+                                .setSpi(IpSecTransform.DIRECTION_OUT, outSpi)
+                                .setSpi(IpSecTransform.DIRECTION_IN, inSpi)
+                                .setAuthentication(IpSecTransform.DIRECTION_OUT, authenticationAlgo)
+                                .setAuthenticatedEncryption(IpSecTransform.DIRECTION_OUT, authenticatedEncryptionAlgo)
+                                .getIpSecConfig();
+
+                fail("Setting Authenticated Encryption after Authentication should fail");
+        } catch(IllegalStateException e){
+                // Test passes
+        }
+    }
+    
+    @Test
+    public void buildInvalidIpSecConfigAuthenticationAfterAuthenticatedEncryption() throws Exception {
+        IpSecManager ipSecManager = new IpSecManager(mIpSecService);
+
+        // Mocking the netd to allocate SPI
+        when(mMockNetd.ipSecAllocateSpi(anyInt(), anyInt(), anyString(), anyString(), anyInt()))
+                .thenReturn(DROID_SPI)
+                .thenReturn(DROID_SPI2);
+
+        IpSecAlgorithm authenticationAlgo = new IpSecAlgorithm(IpSecAlgorithm.AUTH_HMAC_SHA256, CRYPT_KEY);
+        IpSecAlgorithm authenticatedEncryptionAlgo = new IpSecAlgorithm(IpSecAlgorithm.AUTH_CRYPT_AES_GCM, CRYPT_KEY);
+
+        InetAddress localAddr = InetAddress.getByAddress(new byte[] {127, 0, 0, 1});
+
+        /** Allocate and add SPI records in the IpSecService through IpSecManager interface. */
+        IpSecManager.SecurityParameterIndex outSpi =
+                ipSecManager.reserveSecurityParameterIndex(IpSecTransform.DIRECTION_OUT, localAddr);
+        IpSecManager.SecurityParameterIndex inSpi =
+                ipSecManager.reserveSecurityParameterIndex(IpSecTransform.DIRECTION_IN, localAddr);
+
+        try{
+                IpSecConfig ipSecConfig =
+                        new IpSecTransform.Builder(mMockContext)
+                                .setSpi(IpSecTransform.DIRECTION_OUT, outSpi)
+                                .setSpi(IpSecTransform.DIRECTION_IN, inSpi)
+                                .setAuthenticatedEncryption(IpSecTransform.DIRECTION_OUT, authenticatedEncryptionAlgo)
+                                .setAuthentication(IpSecTransform.DIRECTION_OUT, authenticationAlgo)
+                                .getIpSecConfig();
+
+                fail("Setting Authentication after Authenticated Encryption should fail");
+        } catch(IllegalStateException e){
+                // Test passes
+        }
+    }
+
     @Test
     public void testCreateTransportModeTransform() throws Exception {
         IpSecConfig ipSecConfig = buildIpSecConfig();
@@ -340,6 +510,9 @@ public class IpSecServiceTest {
                         eq(IpSecAlgorithm.CRYPT_AES_CBC),
                         eq(CRYPT_KEY),
                         anyInt(),
+                        anyString(),
+                        isNull(),
+                        eq(0),
                         anyInt(),
                         anyInt(),
                         anyInt());
@@ -356,6 +529,61 @@ public class IpSecServiceTest {
                         eq(AUTH_KEY),
                         anyInt(),
                         eq(IpSecAlgorithm.CRYPT_AES_CBC),
+                        eq(CRYPT_KEY),
+                        anyInt(),
+                        anyString(),
+                        isNull(),
+                        eq(0),
+                        anyInt(),
+                        anyInt(),
+                        anyInt());
+    }
+
+    @Test
+    public void testCreateTransportModeTransformAuthenticatedEncryption() throws Exception {
+        IpSecConfig ipSecConfig = buildIpSecConfigAuthenticatedEncryption();
+
+        IpSecTransformResponse createTransformResp =
+                mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());
+        assertEquals(IpSecManager.Status.OK, createTransformResp.status);
+
+        verify(mMockNetd)
+                .ipSecAddSecurityAssociation(
+                        eq(createTransformResp.resourceId),
+                        anyInt(),
+                        eq(IpSecTransform.DIRECTION_OUT),
+                        anyString(),
+                        anyString(),
+                        anyLong(),
+                        eq(DROID_SPI),
+                        anyString(),
+                        isNull(),
+                        eq(0),
+                        anyString(),
+                        isNull(),
+                        eq(0),
+                        eq(IpSecAlgorithm.AUTH_CRYPT_AES_GCM),
+                        eq(CRYPT_KEY),
+                        anyInt(),
+                        anyInt(),
+                        anyInt(),
+                        anyInt());
+        verify(mMockNetd)
+                .ipSecAddSecurityAssociation(
+                        eq(createTransformResp.resourceId),
+                        anyInt(),
+                        eq(IpSecTransform.DIRECTION_IN),
+                        anyString(),
+                        anyString(),
+                        anyLong(),
+                        eq(DROID_SPI2),
+                        anyString(),
+                        isNull(),
+                        eq(0),
+                        anyString(),
+                        isNull(),
+                        eq(0),
+                        eq(IpSecAlgorithm.AUTH_CRYPT_AES_GCM),
                         eq(CRYPT_KEY),
                         anyInt(),
                         anyInt(),
