@@ -26,9 +26,12 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.util.Log;
+
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Preconditions;
+
 import dalvik.system.CloseGuard;
+
 import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -278,7 +281,8 @@ public final class IpSecTransform implements AutoCloseable {
         }
     }
 
-    /* Package */
+    /** @hide */
+    @VisibleForTesting
     int getResourceId() {
         return mResourceId;
     }
@@ -322,7 +326,7 @@ public final class IpSecTransform implements AutoCloseable {
          */
         public IpSecTransform.Builder setEncryption(
                 @TransformDirection int direction, IpSecAlgorithm algo) {
-            mConfig.flow[direction].encryption = algo;
+            mConfig.setEncryption(direction, algo);
             return this;
         }
 
@@ -337,7 +341,7 @@ public final class IpSecTransform implements AutoCloseable {
          */
         public IpSecTransform.Builder setAuthentication(
                 @TransformDirection int direction, IpSecAlgorithm algo) {
-            mConfig.flow[direction].authentication = algo;
+            mConfig.setAuthentication(direction, algo);
             return this;
         }
 
@@ -360,9 +364,7 @@ public final class IpSecTransform implements AutoCloseable {
          */
         public IpSecTransform.Builder setSpi(
                 @TransformDirection int direction, IpSecManager.SecurityParameterIndex spi) {
-            // TODO: convert to using the resource Id of the SPI. Then build() can validate
-            // the owner in the IpSecService
-            mConfig.flow[direction].spiResourceId = spi.getResourceId();
+            mConfig.setSpiResourceId(direction, spi.getResourceId());
             return this;
         }
 
@@ -377,7 +379,7 @@ public final class IpSecTransform implements AutoCloseable {
          */
         @SystemApi
         public IpSecTransform.Builder setUnderlyingNetwork(Network net) {
-            mConfig.network = net;
+            mConfig.setNetwork(net);
             return this;
         }
 
@@ -394,10 +396,9 @@ public final class IpSecTransform implements AutoCloseable {
          */
         public IpSecTransform.Builder setIpv4Encapsulation(
                 IpSecManager.UdpEncapsulationSocket localSocket, int remotePort) {
-            // TODO: check encap type is valid.
-            mConfig.encapType = ENCAP_ESPINUDP;
-            mConfig.encapLocalPortResourceId = localSocket.getResourceId();
-            mConfig.encapRemotePort = remotePort;
+            mConfig.setEncapType(ENCAP_ESPINUDP);
+            mConfig.setEncapSocketResourceId(localSocket.getResourceId());
+            mConfig.setEncapRemotePort(remotePort);
             return this;
         }
 
@@ -415,7 +416,7 @@ public final class IpSecTransform implements AutoCloseable {
          */
         @SystemApi
         public IpSecTransform.Builder setNattKeepalive(int intervalSeconds) {
-            mConfig.nattKeepaliveInterval = intervalSeconds;
+            mConfig.setNattKeepaliveInterval(intervalSeconds);
             return this;
         }
 
@@ -450,8 +451,8 @@ public final class IpSecTransform implements AutoCloseable {
                         IpSecManager.SpiUnavailableException, IOException {
             //FIXME: argument validation here
             //throw new IllegalArgumentException("Natt Keepalive requires UDP Encapsulation");
-            mConfig.mode = MODE_TRANSPORT;
-            mConfig.remoteAddress = remoteAddress;
+            mConfig.setMode(MODE_TRANSPORT);
+            mConfig.setRemoteAddress(remoteAddress);
             return new IpSecTransform(mContext, mConfig).activate();
         }
 
@@ -472,9 +473,9 @@ public final class IpSecTransform implements AutoCloseable {
                 InetAddress localAddress, InetAddress remoteAddress) {
             //FIXME: argument validation here
             //throw new IllegalArgumentException("Natt Keepalive requires UDP Encapsulation");
-            mConfig.localAddress = localAddress;
-            mConfig.remoteAddress = remoteAddress;
-            mConfig.mode = MODE_TUNNEL;
+            mConfig.setLocalAddress(localAddress);
+            mConfig.setRemoteAddress(remoteAddress);
+            mConfig.setMode(MODE_TUNNEL);
             return new IpSecTransform(mContext, mConfig);
         }
 
@@ -487,15 +488,6 @@ public final class IpSecTransform implements AutoCloseable {
             Preconditions.checkNotNull(context);
             mContext = context;
             mConfig = new IpSecConfig();
-        }
-
-        /**
-         * Return an {@link IpSecConfig} object for testing purposes.
-         * @hide
-         */
-        @VisibleForTesting
-        public IpSecConfig getIpSecConfig() {
-            return mConfig;
         }
     }
 }
