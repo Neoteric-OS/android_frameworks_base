@@ -614,7 +614,7 @@ public class AppWindowContainerController
             return STARTING_WINDOW_TYPE_SPLASH_SCREEN;
         } else if (taskSwitch && allowTaskSnapshot) {
             return snapshot == null ? STARTING_WINDOW_TYPE_NONE
-                    : snapshotOrientationSameAsDisplay(snapshot) || fromRecents
+                    : snapshotOrientationSameAsDisplay(snapshot)
                             ? STARTING_WINDOW_TYPE_SNAPSHOT : STARTING_WINDOW_TYPE_SPLASH_SCREEN;
         } else {
             return STARTING_WINDOW_TYPE_NONE;
