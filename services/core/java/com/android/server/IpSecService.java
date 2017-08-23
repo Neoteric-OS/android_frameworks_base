@@ -877,8 +877,15 @@ public class IpSecService extends IIpSecService.Stub {
         for (int direction : DIRECTIONS) {
             IpSecAlgorithm crypt = config.getEncryption(direction);
             IpSecAlgorithm auth = config.getAuthentication(direction);
-            if (crypt == null && auth == null) {
-                throw new IllegalArgumentException("Encryption and Authentication are both null");
+            IpSecAlgorithm authenticatedEncryption = config.getAuthenticatedEncryption(direction);
+            if (authenticatedEncryption == null && crypt == null && auth == null) {
+                throw new IllegalArgumentException(
+                        "Authenticated Encryption, Encryption and "
+                                + "Authentication are all null");
+            } else if (authenticatedEncryption != null && (auth != null || crypt != null)) {
+                throw new IllegalArgumentException(
+                        "Authenticated Encryption is mutually"
+                                + " exclusive with other Authentication or Encryption algorithms");
             }
 
             checkNotNull(
@@ -917,6 +924,7 @@ public class IpSecService extends IIpSecService.Stub {
         for (int direction : DIRECTIONS) {
             IpSecAlgorithm auth = c.getAuthentication(direction);
             IpSecAlgorithm crypt = c.getEncryption(direction);
+            IpSecAlgorithm authCrypt = c.getAuthenticatedEncryption(direction);
 
             spis[direction] = mSpiRecords.get(c.getSpiResourceId(direction));
             int spi = spis[direction].getSpi();
@@ -941,6 +949,9 @@ public class IpSecService extends IIpSecService.Stub {
                                 (crypt != null) ? crypt.getName() : "",
                                 (crypt != null) ? crypt.getKey() : null,
                                 (crypt != null) ? crypt.getTruncationLengthBits() : 0,
+                                (authCrypt != null) ? authCrypt.getName() : "",
+                                (authCrypt != null) ? authCrypt.getKey() : null,
+                                (authCrypt != null) ? authCrypt.getTruncationLengthBits() : 0,
                                 encapType,
                                 encapLocalPort,
                                 encapRemotePort);

@@ -25,9 +25,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -285,7 +285,7 @@ public class IpSecServiceTest {
         }
     }
 
-    IpSecConfig buildIpSecConfig() throws Exception {
+    IpSecConfig buildBasicIpSecConfig() throws Exception {
         IpSecManager ipSecManager = new IpSecManager(mIpSecService);
 
         // Mocking the netd to allocate SPI
@@ -308,11 +308,31 @@ public class IpSecServiceTest {
         IpSecConfig config = new IpSecConfig();
         config.setSpiResourceId(IpSecTransform.DIRECTION_IN, inSpi.getResourceId());
         config.setSpiResourceId(IpSecTransform.DIRECTION_OUT, outSpi.getResourceId());
+        config.setRemoteAddress(remoteAddr);
+        return config;
+    }
+
+    IpSecConfig buildIpSecConfig() throws Exception {
+        IpSecAlgorithm encryptAlgo = new IpSecAlgorithm(IpSecAlgorithm.CRYPT_AES_CBC, CRYPT_KEY);
+        IpSecAlgorithm authAlgo =
+                new IpSecAlgorithm(IpSecAlgorithm.AUTH_HMAC_SHA256, AUTH_KEY, AUTH_KEY.length * 8);
+
+        IpSecConfig config = buildBasicIpSecConfig();
         config.setEncryption(IpSecTransform.DIRECTION_OUT, encryptAlgo);
         config.setAuthentication(IpSecTransform.DIRECTION_OUT, authAlgo);
         config.setEncryption(IpSecTransform.DIRECTION_IN, encryptAlgo);
         config.setAuthentication(IpSecTransform.DIRECTION_IN, authAlgo);
-        config.setRemoteAddress(remoteAddr);
+        return config;
+    }
+
+    IpSecConfig buildIpSecConfigAuthenticatedEncryption() throws Exception {
+        IpSecAlgorithm authenticatedEncryptionAlgo =
+                new IpSecAlgorithm(IpSecAlgorithm.AUTH_CRYPT_AES_GCM, CRYPT_KEY);
+
+        IpSecConfig config = buildBasicIpSecConfig();
+        config.setAuthenticatedEncryption(
+                IpSecTransform.DIRECTION_OUT, authenticatedEncryptionAlgo);
+        config.setAuthenticatedEncryption(IpSecTransform.DIRECTION_IN, authenticatedEncryptionAlgo);
         return config;
     }
 
@@ -339,6 +359,9 @@ public class IpSecServiceTest {
                         eq(IpSecAlgorithm.CRYPT_AES_CBC),
                         eq(CRYPT_KEY),
                         anyInt(),
+                        anyString(),
+                        isNull(),
+                        eq(0),
                         anyInt(),
                         anyInt(),
                         anyInt());
@@ -357,9 +380,87 @@ public class IpSecServiceTest {
                         eq(IpSecAlgorithm.CRYPT_AES_CBC),
                         eq(CRYPT_KEY),
                         anyInt(),
+                        anyString(),
+                        isNull(),
+                        eq(0),
                         anyInt(),
                         anyInt(),
                         anyInt());
+    }
+
+    @Test
+    public void testCreateTransportModeTransformAuthenticatedEncryption() throws Exception {
+        IpSecConfig ipSecConfig = buildIpSecConfigAuthenticatedEncryption();
+
+        IpSecTransformResponse createTransformResp =
+                mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());
+        assertEquals(IpSecManager.Status.OK, createTransformResp.status);
+
+        verify(mMockNetd)
+                .ipSecAddSecurityAssociation(
+                        eq(createTransformResp.resourceId),
+                        anyInt(),
+                        eq(IpSecTransform.DIRECTION_OUT),
+                        anyString(),
+                        anyString(),
+                        anyLong(),
+                        eq(DROID_SPI),
+                        anyString(),
+                        isNull(),
+                        eq(0),
+                        anyString(),
+                        isNull(),
+                        eq(0),
+                        eq(IpSecAlgorithm.AUTH_CRYPT_AES_GCM),
+                        eq(CRYPT_KEY),
+                        anyInt(),
+                        anyInt(),
+                        anyInt(),
+                        anyInt());
+        verify(mMockNetd)
+                .ipSecAddSecurityAssociation(
+                        eq(createTransformResp.resourceId),
+                        anyInt(),
+                        eq(IpSecTransform.DIRECTION_IN),
+                        anyString(),
+                        anyString(),
+                        anyLong(),
+                        eq(DROID_SPI2),
+                        anyString(),
+                        isNull(),
+                        eq(0),
+                        anyString(),
+                        isNull(),
+                        eq(0),
+                        eq(IpSecAlgorithm.AUTH_CRYPT_AES_GCM),
+                        eq(CRYPT_KEY),
+                        anyInt(),
+                        anyInt(),
+                        anyInt(),
+                        anyInt());
+    }
+
+    @Test
+    public void testInvalidCreateTransportModeTransform() throws Exception {
+        IpSecConfig ipSecConfig = buildIpSecConfig();
+
+        IpSecAlgorithm authenticatedEncryptionAlgo =
+                new IpSecAlgorithm(IpSecAlgorithm.AUTH_CRYPT_AES_GCM, CRYPT_KEY);
+        ipSecConfig.setAuthenticatedEncryption(
+                IpSecTransform.DIRECTION_OUT, authenticatedEncryptionAlgo);
+        ipSecConfig.setAuthenticatedEncryption(
+                IpSecTransform.DIRECTION_IN, authenticatedEncryptionAlgo);
+
+        try {
+            IpSecTransformResponse createTransformResp =
+                    mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());
+            assertEquals(IpSecManager.Status.OK, createTransformResp.status);
+            fail(
+                    "IpSecService should have thrown an error on crypt/auth being"
+                            + " enabled with authenticated encryption");
+        } catch (IllegalArgumentException e) {
+
+        }
     }
 
     @Test
