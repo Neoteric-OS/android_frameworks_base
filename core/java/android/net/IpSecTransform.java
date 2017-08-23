@@ -31,7 +31,6 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Preconditions;
 
 import dalvik.system.CloseGuard;
-
 import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -325,11 +324,20 @@ public final class IpSecTransform implements AutoCloseable {
          * <p>If encryption is set for a given direction without also providing an SPI for that
          * direction, creation of an IpSecTransform will fail upon calling a build() method.
          *
+         * <p>If an authenticated encryption algorithm has already been specified, this method will
+         * throw an IllegalArgumentException.
+         *
          * @param direction either {@link #DIRECTION_IN or #DIRECTION_OUT}
          * @param algo {@link IpSecAlgorithm} specifying the encryption to be applied.
          */
         public IpSecTransform.Builder setEncryption(
                 @TransformDirection int direction, IpSecAlgorithm algo) {
+            if (mConfig.getAuthenticatedEncryption(direction) != null) {
+                throw new IllegalArgumentException(
+                        "Encryption is unsupported while "
+                                + "Authenticated Encryption algorithm is specified");
+            }
+
             mConfig.setEncryption(direction, algo);
             return this;
         }
@@ -340,12 +348,52 @@ public final class IpSecTransform implements AutoCloseable {
          * <p>If authentication is set for a given direction without also providing an SPI for that
          * direction, creation of an IpSecTransform will fail upon calling a build() method.
          *
+         * <p>If an authenticated encryption algorithm has already been specified, this method will
+         * throw an IllegalArgumentException.
+         *
          * @param direction either {@link #DIRECTION_IN or #DIRECTION_OUT}
          * @param algo {@link IpSecAlgorithm} specifying the authentication to be applied.
          */
         public IpSecTransform.Builder setAuthentication(
                 @TransformDirection int direction, IpSecAlgorithm algo) {
+            if (mConfig.getAuthenticatedEncryption(direction) != null) {
+                throw new IllegalArgumentException(
+                        "Authentication is unsupported while "
+                                + "Authenticated Encryption algorithm is specified");
+            }
+
             mConfig.setAuthentication(direction, algo);
+            return this;
+        }
+
+        /**
+         * Add an authenticated encryption algorithm to the transform for the given direction.
+         *
+         * <p>If an authenticated encryption algorithm is set for a given direction without also
+         * providing an SPI for that direction, creation of an IpSecTransform will fail upon calling
+         * a build() method.
+         *
+         * <p>The Authenticated Encryption (AE) class of algorithms are also known as Authenticated
+         * Encryption with Associated Data (AEAD) algorithms, or Combined mode algorithms (as
+         * referred to in RFC 4301)
+         *
+         * <p>If an authentication or encryption algorithm has already been specified, this method
+         * will throw an IllegalArgumentException.
+         *
+         * @param direction either {@link #DIRECTION_IN or #DIRECTION_OUT}
+         * @param algo {@link IpSecAlgorithm} specifying the authenticated encryption algorithm to
+         *     be applied.
+         */
+        public IpSecTransform.Builder setAuthenticatedEncryption(
+                @TransformDirection int direction, IpSecAlgorithm algo) {
+            if (mConfig.getAuthentication(direction) != null
+                    || mConfig.getEncryption(direction) != null) {
+                throw new IllegalArgumentException(
+                        "Authenticated Encryption is unsupported while "
+                                + "other Authentication or Encryption algorithms specified");
+            }
+
+            mConfig.setAuthenticatedEncryption(direction, algo);
             return this;
         }
 
