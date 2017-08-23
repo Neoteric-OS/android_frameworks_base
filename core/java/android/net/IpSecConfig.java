@@ -52,6 +52,9 @@ public final class IpSecConfig implements Parcelable {
         // Authentication Algorithm
         private IpSecAlgorithm mAuthentication;
 
+        // Authenticated Encryption Algorithm
+        private IpSecAlgorithm mAuthenticatedEncryption;
+
         @Override
         public String toString() {
             return new StringBuilder()
@@ -61,6 +64,8 @@ public final class IpSecConfig implements Parcelable {
                     .append(mEncryption)
                     .append(", mAuthentication=")
                     .append(mAuthentication)
+                    .append(", mAuthenticatedEncryption=")
+                    .append(mAuthenticatedEncryption)
                     .append("}")
                     .toString();
         }
@@ -86,13 +91,13 @@ public final class IpSecConfig implements Parcelable {
         mLocalAddress = localAddress;
     }
 
-    public void setRemoteAddress(InetAddress remoteAddress) {
-        mRemoteAddress = remoteAddress;
-    }
-
     /** Set the SPI for a given direction by resource ID */
     public void setSpiResourceId(int direction, int resourceId) {
         mFlow[direction].mSpiResourceId = resourceId;
+    }
+
+    public void setRemoteAddress(InetAddress remoteAddress) {
+        mRemoteAddress = remoteAddress;
     }
 
     /** Set the encryption algorithm for a given direction */
@@ -103,6 +108,11 @@ public final class IpSecConfig implements Parcelable {
     /** Set the authentication algorithm for a given direction */
     public void setAuthentication(int direction, IpSecAlgorithm authentication) {
         mFlow[direction].mAuthentication = authentication;
+    }
+    
+    /** Set the authenticatedEncryption algorithm for a given direction */
+    public void setAuthenticatedEncryption(int direction, IpSecAlgorithm authenticatedEncryption) {
+        mFlow[direction].mAuthenticatedEncryption = authenticatedEncryption;
     }
 
     public void setNetwork(Network network) {
@@ -150,6 +160,10 @@ public final class IpSecConfig implements Parcelable {
         return mFlow[direction].mAuthentication;
     }
 
+    public IpSecAlgorithm getAuthenticatedEncryption(int direction) {
+        return mFlow[direction].mAuthenticatedEncryption;
+    }
+
     public Network getNetwork() {
         return mNetwork;
     }
@@ -186,9 +200,11 @@ public final class IpSecConfig implements Parcelable {
         out.writeInt(mFlow[IpSecTransform.DIRECTION_IN].mSpiResourceId);
         out.writeParcelable(mFlow[IpSecTransform.DIRECTION_IN].mEncryption, flags);
         out.writeParcelable(mFlow[IpSecTransform.DIRECTION_IN].mAuthentication, flags);
+        out.writeParcelable(mFlow[IpSecTransform.DIRECTION_IN].mAuthenticatedEncryption, flags);
         out.writeInt(mFlow[IpSecTransform.DIRECTION_OUT].mSpiResourceId);
         out.writeParcelable(mFlow[IpSecTransform.DIRECTION_OUT].mEncryption, flags);
         out.writeParcelable(mFlow[IpSecTransform.DIRECTION_OUT].mAuthentication, flags);
+        out.writeParcelable(mFlow[IpSecTransform.DIRECTION_OUT].mAuthenticatedEncryption, flags);
         out.writeInt(mEncapType);
         out.writeInt(mEncapSocketResourceId);
         out.writeInt(mEncapRemotePort);
@@ -220,10 +236,14 @@ public final class IpSecConfig implements Parcelable {
                 (IpSecAlgorithm) in.readParcelable(IpSecAlgorithm.class.getClassLoader());
         mFlow[IpSecTransform.DIRECTION_IN].mAuthentication =
                 (IpSecAlgorithm) in.readParcelable(IpSecAlgorithm.class.getClassLoader());
+        mFlow[IpSecTransform.DIRECTION_IN].mAuthenticatedEncryption =
+                (IpSecAlgorithm) in.readParcelable(IpSecAlgorithm.class.getClassLoader());
         mFlow[IpSecTransform.DIRECTION_OUT].mSpiResourceId = in.readInt();
         mFlow[IpSecTransform.DIRECTION_OUT].mEncryption =
                 (IpSecAlgorithm) in.readParcelable(IpSecAlgorithm.class.getClassLoader());
         mFlow[IpSecTransform.DIRECTION_OUT].mAuthentication =
+                (IpSecAlgorithm) in.readParcelable(IpSecAlgorithm.class.getClassLoader());
+        mFlow[IpSecTransform.DIRECTION_OUT].mAuthenticatedEncryption =
                 (IpSecAlgorithm) in.readParcelable(IpSecAlgorithm.class.getClassLoader());
         mEncapType = in.readInt();
         mEncapSocketResourceId = in.readInt();

@@ -835,6 +835,59 @@ public class IpSecService extends IIpSecService.Stub {
         releaseManagedResource(mUdpSocketRecords, resourceId, "UdpEncapsulationSocket");
     }
 
+    private void checkIpSecConfigAndThrow(IpSecConfig config) {
+        switch (config.getMode()) {
+            case IpSecTransform.MODE_TUNNEL:
+            case IpSecTransform.MODE_TRANSPORT:
+                break;
+            default:
+                throw new IllegalArgumentException(
+                        "Invalid IpSecTransform.mode: " + config.getMode());
+        }
+
+        // TODO: check localAddress when tunnel mode is supported
+
+        // If unparceling from a string fails, the value will be null
+        checkNotNull(config.getRemoteAddress(), "Invalid Remote InetAddress");
+
+        // TODO: check network when tunnel mode is supported
+
+        switch (config.getEncapType()) {
+            case IpSecTransform.ENCAP_NONE:
+                break;
+            case IpSecTransform.ENCAP_ESPINUDP:
+            case IpSecTransform.ENCAP_ESPINUDP_NON_IKE:
+                checkNotNull(
+                        mUdpSocketRecords.get(config.getEncapSocketResourceId()),
+                        "No Encapsulation socket for specified Resource Id");
+                int port = config.getEncapRemotePort();
+                // port must be non-zero and a 16-bit number
+                if (port == 0 || (port & 0xFFFF0000) != 0) {
+                    throw new IllegalArgumentException("Invalid remote UDP port: " + port);
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid Encap Type: " + config.getEncapType());
+        }
+
+        for (int direction : DIRECTIONS) {
+            IpSecAlgorithm crypt = config.getEncryption(direction);
+            IpSecAlgorithm auth = config.getAuthentication(direction);
+            IpSecAlgorithm authenticatedEncryption = config.getAuthenticatedEncryption(direction);
+            if (authenticatedEncryption == null && crypt == null && auth == null) {
+                throw new IllegalArgumentException("Authenticated Encryption, Encryption and "
+                    + "Authentication are all null");
+            } else if (authenticatedEncryption != null && (auth != null || crypt != null)){
+                throw new IllegalArgumentException("Authenticated Encryption is mutually" 
+                    + " exclusive with other Authentication or Encryption algorithms");
+            }
+
+            checkNotNull(
+                    mSpiRecords.get(config.getSpiResourceId(direction)),
+                    "No SPI for specified Resource Id");
+        }
+    }
+
     /**
      * Checks an IpSecConfig parcel to ensure that the contents are sane and throws an
      * IllegalArgumentException if they are not.
@@ -917,6 +970,7 @@ public class IpSecService extends IIpSecService.Stub {
         for (int direction : DIRECTIONS) {
             IpSecAlgorithm auth = c.getAuthentication(direction);
             IpSecAlgorithm crypt = c.getEncryption(direction);
+            IpSecAlgorithm authCrypt = c.getAuthenticatedEncryption(direction);
 
             spis[direction] = mSpiRecords.get(c.getSpiResourceId(direction));
             int spi = spis[direction].getSpi();
@@ -941,6 +995,9 @@ public class IpSecService extends IIpSecService.Stub {
                                 (crypt != null) ? crypt.getName() : "",
                                 (crypt != null) ? crypt.getKey() : null,
                                 (crypt != null) ? crypt.getTruncationLengthBits() : 0,
+                                (authCrypt != null) ? authCrypt.getName() : "",
+                                (authCrypt != null) ? authCrypt.getKey() : null,
+                                (authCrypt != null) ? authCrypt.getTruncationLengthBits() : 0,
                                 encapType,
                                 encapLocalPort,
                                 encapRemotePort);
