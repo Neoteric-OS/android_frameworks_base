@@ -648,7 +648,7 @@ final class InputMonitor implements InputManagerService.WindowManagerCallbacks {
             final int privateFlags = w.mAttrs.privateFlags;
             final int type = w.mAttrs.type;
             final boolean hasFocus = w == mInputFocus;
-            final boolean isVisible = w.isVisibleLw();
+            final boolean isVisible = w.isWinVisibleLw();
 
             if (w.getStackId() == PINNED_STACK_ID) {
                 if (mAddPipInputConsumerHandle
