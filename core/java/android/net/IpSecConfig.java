@@ -18,6 +18,7 @@ package android.net;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -48,6 +49,9 @@ public final class IpSecConfig implements Parcelable {
         // Authentication Algorithm
         IpSecAlgorithm authentication;
 
+        // AEAD Algorithm
+        IpSecAlgorithm aead;
+
         @Override
         public String toString() {
             return new StringBuilder()
@@ -57,6 +61,8 @@ public final class IpSecConfig implements Parcelable {
                     .append(encryption)
                     .append(", authentication=")
                     .append(authentication)
+                    .append(", aead=")
+                    .append(aead)
                     .append("}")
                     .toString();
         }
@@ -98,6 +104,10 @@ public final class IpSecConfig implements Parcelable {
         return flow[direction].authentication;
     }
 
+    public IpSecAlgorithm getAead(int direction) {
+        return flow[direction].aead;
+    }
+
     public Network getNetwork() {
         return network;
     }
@@ -135,9 +145,11 @@ public final class IpSecConfig implements Parcelable {
         out.writeInt(flow[IpSecTransform.DIRECTION_IN].spiResourceId);
         out.writeParcelable(flow[IpSecTransform.DIRECTION_IN].encryption, flags);
         out.writeParcelable(flow[IpSecTransform.DIRECTION_IN].authentication, flags);
+        out.writeParcelable(flow[IpSecTransform.DIRECTION_IN].aead, flags);
         out.writeInt(flow[IpSecTransform.DIRECTION_OUT].spiResourceId);
         out.writeParcelable(flow[IpSecTransform.DIRECTION_OUT].encryption, flags);
         out.writeParcelable(flow[IpSecTransform.DIRECTION_OUT].authentication, flags);
+        out.writeParcelable(flow[IpSecTransform.DIRECTION_OUT].aead, flags);
         out.writeInt(encapType);
         out.writeInt(encapLocalPortResourceId);
         out.writeInt(encapRemotePort);
@@ -169,10 +181,14 @@ public final class IpSecConfig implements Parcelable {
                 (IpSecAlgorithm) in.readParcelable(IpSecAlgorithm.class.getClassLoader());
         flow[IpSecTransform.DIRECTION_IN].authentication =
                 (IpSecAlgorithm) in.readParcelable(IpSecAlgorithm.class.getClassLoader());
+        flow[IpSecTransform.DIRECTION_IN].aead =
+                (IpSecAlgorithm) in.readParcelable(IpSecAlgorithm.class.getClassLoader());
         flow[IpSecTransform.DIRECTION_OUT].spiResourceId = in.readInt();
         flow[IpSecTransform.DIRECTION_OUT].encryption =
                 (IpSecAlgorithm) in.readParcelable(IpSecAlgorithm.class.getClassLoader());
         flow[IpSecTransform.DIRECTION_OUT].authentication =
+                (IpSecAlgorithm) in.readParcelable(IpSecAlgorithm.class.getClassLoader());
+        flow[IpSecTransform.DIRECTION_OUT].aead =
                 (IpSecAlgorithm) in.readParcelable(IpSecAlgorithm.class.getClassLoader());
         encapType = in.readInt();
         encapLocalPortResourceId = in.readInt();

@@ -819,6 +819,12 @@ public class IpSecService extends IIpSecService.Stub {
         for (int direction : DIRECTIONS) {
             IpSecAlgorithm auth = c.getAuthentication(direction);
             IpSecAlgorithm crypt = c.getEncryption(direction);
+            IpSecAlgorithm aead = c.getAead(direction);
+
+            if (aead != null){ // TODO: Send exception up stack
+                auth = null;
+                crypt = null;
+            }
 
             spis[direction] = mSpiRecords.get(c.getSpiResourceId(direction));
             int spi = spis[direction].getSpi();
@@ -844,6 +850,9 @@ public class IpSecService extends IIpSecService.Stub {
                                 (crypt != null) ? crypt.getName() : "",
                                 (crypt != null) ? crypt.getKey() : null,
                                 (crypt != null) ? crypt.getTruncationLengthBits() : 0,
+                                (aead != null) ? aead.getName() : "",
+                                (aead != null) ? aead.getKey() : null,
+                                (aead != null) ? aead.getTruncationLengthBits() : 0,
                                 encapType,
                                 encapLocalPort,
                                 encapRemotePort);

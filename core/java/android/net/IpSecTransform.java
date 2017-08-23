@@ -26,9 +26,12 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.util.Log;
+
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Preconditions;
+
 import dalvik.system.CloseGuard;
+
 import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -338,6 +341,22 @@ public final class IpSecTransform implements AutoCloseable {
         public IpSecTransform.Builder setAuthentication(
                 @TransformDirection int direction, IpSecAlgorithm algo) {
             mConfig.flow[direction].authentication = algo;
+            return this;
+        }
+
+        /**
+         * Add an AEAD algorithm to the transform for the given direction.
+         *
+         * <p>If an AEAD algorithm is set for a given direction without also
+         * providing an SPI for that direction, creation of an IpSecTransform will
+         * fail upon calling a build() method.
+         *
+         * @param direction either {@link #DIRECTION_IN or #DIRECTION_OUT}
+         * @param algo {@link IpSecAlgorithm} specifying the aead algorithm to be applied.
+         */
+        public IpSecTransform.Builder setAead(
+                @TransformDirection int direction, IpSecAlgorithm algo) {
+            mConfig.flow[direction].aead = algo;
             return this;
         }
 
