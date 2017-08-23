@@ -2952,11 +2952,6 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
                     // case we want to include the wallpaper layer in the screenshot because
                     // the target window might have some transparent areas.
                 } else if (appToken != null) {
-                    if (w.mAppToken == null || w.mAppToken.token != appToken) {
-                        // This app window is of no interest if it is not associated with the
-                        // screenshot app.
-                        return false;
-                    }
                     mScreenshotApplicationState.appWin = w;
                 }
 
