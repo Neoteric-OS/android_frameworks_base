@@ -819,6 +819,13 @@ public class IpSecService extends IIpSecService.Stub {
         for (int direction : DIRECTIONS) {
             IpSecAlgorithm auth = c.getAuthentication(direction);
             IpSecAlgorithm crypt = c.getEncryption(direction);
+            IpSecAlgorithm authCrypt = c.getAuthenticatedEncryption(direction);
+
+            if (authCrypt != null && (auth != null || crypt != null)) {
+                throw new IllegalArgumentException(
+                        "Authenticated Encryption is mutually"
+                                + " exclusive with other Authentication or Encryption algorithms");
+            }
 
             spis[direction] = mSpiRecords.get(c.getSpiResourceId(direction));
             int spi = spis[direction].getSpi();
@@ -844,6 +851,9 @@ public class IpSecService extends IIpSecService.Stub {
                                 (crypt != null) ? crypt.getName() : "",
                                 (crypt != null) ? crypt.getKey() : null,
                                 (crypt != null) ? crypt.getTruncationLengthBits() : 0,
+                                (authCrypt != null) ? authCrypt.getName() : "",
+                                (authCrypt != null) ? authCrypt.getKey() : null,
+                                (authCrypt != null) ? authCrypt.getTruncationLengthBits() : 0,
                                 encapType,
                                 encapLocalPort,
                                 encapRemotePort);
