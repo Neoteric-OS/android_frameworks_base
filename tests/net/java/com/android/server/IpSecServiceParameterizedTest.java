@@ -17,10 +17,12 @@
 package com.android.server;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -37,7 +39,6 @@ import android.net.NetworkUtils;
 import android.os.Binder;
 import android.os.ParcelFileDescriptor;
 import android.support.test.filters.SmallTest;
-import android.system.OsConstants;
 
 import java.net.Socket;
 import java.util.Arrays;
@@ -190,6 +191,9 @@ public class IpSecServiceParameterizedTest {
                         eq(IpSecAlgorithm.CRYPT_AES_CBC),
                         eq(CRYPT_KEY),
                         anyInt(),
+                        eq(""),
+                        isNull(),
+                        eq(0),
                         anyInt(),
                         anyInt(),
                         anyInt());
@@ -208,9 +212,104 @@ public class IpSecServiceParameterizedTest {
                         eq(IpSecAlgorithm.CRYPT_AES_CBC),
                         eq(CRYPT_KEY),
                         anyInt(),
+                        eq(""),
+                        isNull(),
+                        eq(0),
                         anyInt(),
                         anyInt(),
                         anyInt());
+    }
+
+    @Test
+    public void testCreateTransportModeTransformAEAD() throws Exception {
+        IpSecConfig ipSecConfig = buildIpSecConfig();
+        IpSecAlgorithm authenticatedEncryptionAlgo =
+                new IpSecAlgorithm(IpSecAlgorithm.AUTH_CRYPT_AES_GCM, CRYPT_KEY, 128);
+
+        ipSecConfig.setEncryption(IpSecTransform.DIRECTION_OUT, null);
+        ipSecConfig.setAuthentication(IpSecTransform.DIRECTION_OUT, null);
+        ipSecConfig.setEncryption(IpSecTransform.DIRECTION_IN, null);
+        ipSecConfig.setAuthentication(IpSecTransform.DIRECTION_IN, null);
+        ipSecConfig.setAuthenticatedEncryption(
+                IpSecTransform.DIRECTION_OUT, authenticatedEncryptionAlgo);
+        ipSecConfig.setAuthenticatedEncryption(
+                IpSecTransform.DIRECTION_IN, authenticatedEncryptionAlgo);
+
+        IpSecTransformResponse createTransformResp =
+                mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());
+        assertEquals(IpSecManager.Status.OK, createTransformResp.status);
+
+        verify(mMockNetd)
+                .ipSecAddSecurityAssociation(
+                        eq(createTransformResp.resourceId),
+                        anyInt(),
+                        eq(IpSecTransform.DIRECTION_OUT),
+                        anyString(),
+                        anyString(),
+                        anyLong(),
+                        eq(DROID_SPI),
+                        eq(""),
+                        isNull(),
+                        eq(0),
+                        eq(""),
+                        isNull(),
+                        eq(0),
+                        eq(IpSecAlgorithm.AUTH_CRYPT_AES_GCM),
+                        eq(CRYPT_KEY),
+                        anyInt(),
+                        anyInt(),
+                        anyInt(),
+                        anyInt());
+        verify(mMockNetd)
+                .ipSecAddSecurityAssociation(
+                        eq(createTransformResp.resourceId),
+                        anyInt(),
+                        eq(IpSecTransform.DIRECTION_IN),
+                        anyString(),
+                        anyString(),
+                        anyLong(),
+                        eq(DROID_SPI2),
+                        eq(""),
+                        isNull(),
+                        eq(0),
+                        eq(""),
+                        isNull(),
+                        eq(0),
+                        eq(IpSecAlgorithm.AUTH_CRYPT_AES_GCM),
+                        eq(CRYPT_KEY),
+                        anyInt(),
+                        anyInt(),
+                        anyInt(),
+                        anyInt());
+    }
+
+    @Test
+    public void testCreateInvalidConfigAEADWithAuthAndCrypt() throws Exception {
+        IpSecConfig ipSecConfig = buildIpSecConfig();
+        IpSecAlgorithm authenticatedEncryptionAlgo =
+                new IpSecAlgorithm(IpSecAlgorithm.AUTH_CRYPT_AES_GCM, CRYPT_KEY, 128);
+
+        try {
+            ipSecConfig.setAuthenticatedEncryption(
+                    IpSecTransform.DIRECTION_OUT, authenticatedEncryptionAlgo);
+        } catch (IllegalArgumentException expected) {
+            /* Expected exception; do nothing */
+        }
+        try {
+            ipSecConfig.setAuthenticatedEncryption(
+                    IpSecTransform.DIRECTION_IN, authenticatedEncryptionAlgo);
+        } catch (IllegalArgumentException expected) {
+            /* Expected exception; do nothing */
+        }
+
+        try {
+            mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());
+            fail(
+                    "IpSecService should have thrown an error on crypt/auth being"
+                            + " enabled with authenticated encryption for outbound");
+        } catch (IllegalArgumentException expected) {
+            /* Expected exception; do nothing */
+        }
     }
 
     @Test
