@@ -862,10 +862,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return new NetworkRequest(netCap, TYPE_NONE, nextNetworkRequestId(), type);
     }
 
-    public INetworkManagementService getNetd() {
-        return mNetd;
-    }
-
     // Used only for testing.
     // TODO: Delete this and either:
     // 1. Give Fake SettingsProvider the ability to send settings change notifications (requires
@@ -4378,7 +4374,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateDnses(newLp, oldLp, netId);
 
         // Start or stop clat accordingly to network state.
-        networkAgent.updateClat();
+        networkAgent.updateClat(mNetd);
         if (isDefaultNetwork(networkAgent)) {
             handleApplyDefaultProxy(newLp.getHttpProxy());
         } else {

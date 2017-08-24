@@ -21,12 +21,12 @@ import android.net.ConnectivityManager;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.RouteInfo;
-import android.os.Handler;
 import android.os.INetworkManagementService;
 import android.os.RemoteException;
 import android.util.Slog;
 
 import com.android.internal.util.ArrayUtils;
+import com.android.server.net.BaseNetworkObserver;
 
 import java.net.Inet4Address;
 import java.util.Objects;
@@ -38,7 +38,7 @@ import java.util.Objects;
  *
  * @hide
  */
-public class Nat464Xlat {
+public class Nat464Xlat extends BaseNetworkObserver {
     private static final String TAG = Nat464Xlat.class.getSimpleName();
 
     // This must match the interface prefix in clatd.c.
@@ -142,6 +142,13 @@ public class Nat464Xlat {
             return;
         }
 
+        try {
+            mNMService.registerObserver(this);
+        } catch(RemoteException e) {
+            Slog.e(TAG, "startClat: Can't register interface observer for clat on " + mNetwork);
+            return;
+        }
+
         String baseIface = mNetwork.linkProperties.getInterfaceName();
         if (baseIface == null) {
             Slog.e(TAG, "startClat: Can't start clat on null interface");
@@ -169,6 +176,7 @@ public class Nat464Xlat {
 
         try {
             mNMService.stopClatd(mBaseIface);
+            mNMService.unregisterObserver(this);
         } catch(RemoteException|IllegalStateException e) {
             Slog.e(TAG, "Error stopping clatd on " + mBaseIface, e);
         }
@@ -243,14 +251,14 @@ public class Nat464Xlat {
      * Adds stacked link on base link and transitions to RUNNING state.
      * Or does nothing if the internal state is IDLE or RUNNING.
      */
-    public LinkProperties interfaceLinkStateChanged(String iface, boolean up) {
+    private void handleInterfaceLinkStateChanged(String iface, boolean up) {
         if (!isStarting() || !up || !Objects.equals(mIface, iface)) {
-            return null;
+            return;
         }
         LinkAddress clatAddress = getLinkAddress(iface);
         if (clatAddress == null) {
             Slog.e(TAG, "cladAddress was null for stacked iface " + iface);
-            return null;
+            return;
         }
         mState = State.RUNNING;
         Slog.i(TAG, String.format("interface %s is up, adding stacked link %s on top of %s",
@@ -259,16 +267,16 @@ public class Nat464Xlat {
         maybeSetIpv6NdOffload(mBaseIface, false);
         LinkProperties lp = new LinkProperties(mNetwork.linkProperties);
         lp.addStackedLink(makeLinkProperties(clatAddress));
-        return lp;
+        mNetwork.sendLinkPropertiesUpdate(lp);
     }
 
     /**
      * Removes stacked link on base link and transitions to IDLE state.
      * Or does nothing if the internal state is IDLE.
      */
-    public LinkProperties interfaceRemoved(String iface) {
+    private void handleInterfaceRemoved(String iface) {
         if (!isStarted() || !Objects.equals(mIface, iface)) {
-            return null;
+            return;
         }
 
         Slog.i(TAG, "interface " + iface + " removed");
@@ -279,7 +287,17 @@ public class Nat464Xlat {
         LinkProperties lp = new LinkProperties(mNetwork.linkProperties);
         lp.removeStackedLink(mIface);
         stop();
-        return lp;
+        mNetwork.sendLinkPropertiesUpdate(lp);
+    }
+
+    @Override
+    public void interfaceLinkStateChanged(String iface, boolean up) {
+        mNetwork.handler.post(() -> { handleInterfaceLinkStateChanged(iface, up); });
+    }
+
+    @Override
+    public void interfaceRemoved(String iface) {
+        mNetwork.handler.post(() -> { handleInterfaceRemoved(iface); });
     }
 
     @Override
