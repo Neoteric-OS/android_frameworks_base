@@ -92,6 +92,30 @@
       "revId": "511e9cf72f720f03a0941ff06542cb72aa3dc45f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e3c9d5_985ef9c4",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-08-24T00:28:30Z",
+      "side": 1,
+      "message": "AFAIK, for the purposes of AEAD, icvLen is also the truncation length. I\u0027ve left the Java side as Truncation length, since it serves the exact same purpose.\n\nThe kernel refers to this specifically as ICVLen (with no concept of truncation length), which is why that naming convention is used throughout on that end.\n\nI could add another field for the explicit use of AEAD if that\u0027s better.",
+      "parentUuid": "c798169d_72011f08",
+      "range": {
+        "startLine": 855,
+        "startChar": 0,
+        "endLine": 855,
+        "endChar": 84
+      },
+      "revId": "511e9cf72f720f03a0941ff06542cb72aa3dc45f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

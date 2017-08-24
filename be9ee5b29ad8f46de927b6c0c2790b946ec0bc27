@@ -22,6 +22,30 @@
       "revId": "be9ee5b29ad8f46de927b6c0c2790b946ec0bc27",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa0b965_495d8aec",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-08-24T00:28:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a859ea4_96fae07d",
+      "range": {
+        "startLine": 52,
+        "startChar": 1,
+        "endLine": 53,
+        "endChar": 32
+      },
+      "revId": "be9ee5b29ad8f46de927b6c0c2790b946ec0bc27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
