@@ -246,7 +246,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     public final AsyncChannel asyncChannel;
 
     // Used by ConnectivityService to keep track of 464xlat.
-    public Nat464Xlat clatd;
+    private Nat464Xlat mClatd;
 
     private static final String TAG = ConnectivityService.class.getSimpleName();
     private static final boolean VDBG = false;
@@ -377,6 +377,20 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
      */
     public int numNetworkRequests() {
         return mNetworkRequests.size();
+    }
+
+    /**
+     * 
+     */
+    public LinkProperties setLinkProperties(LinkProperties newLp) {
+        // The NetworkAgent does not know whether clatd is running on its network or not. Add clatd
+        // stacked interface if any exists
+        LinkProperties oldLp = linkProperties;
+        linkProperties = newLp;
+        if (mClatd != null) {
+            mClatd.fixupLinkProperties(oldLp);
+        }
+        return oldLp;
     }
 
     /**
@@ -564,25 +578,25 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
 
     /** Ensure clat has started for this network. */
     public void maybeStartClat(INetworkManagementService netd) {
-        if (clatd != null) {
+        if (mClatd != null) {
             return;
         }
-        clatd = new Nat464Xlat(netd, this);
-        clatd.start();
+        mClatd = new Nat464Xlat(netd, this);
+        mClatd.start();
     }
 
     /** Ensure clat has stopped for this network. */
     public void maybeStopClat() {
-        if (clatd == null) {
+        if (mClatd == null) {
             return;
         }
-        clatd.stop();
-        clatd = null;
+        mClatd.stop();
+        mClatd = null;
     }
 
     void sendLinkPropertiesUpdate(LinkProperties lp) {
         try {
-            messenger.send(mHandler.obtainMessage(EVENT_NETWORK_PROPERTIES_CHANGED, lp));
+            messenger.send(handler.obtainMessage(EVENT_NETWORK_PROPERTIES_CHANGED, lp));
         } catch(RemoteException cannotHappen) {
         }
     }
@@ -598,7 +612,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
                 "acceptUnvalidated{" + networkMisc.acceptUnvalidated + "} " +
                 "everCaptivePortalDetected{" + everCaptivePortalDetected + "} " +
                 "lastCaptivePortalDetected{" + lastCaptivePortalDetected + "} " +
-                "clat{" + clatd + "} " +
+                "clat{" + mClatd + "} " +
                 "}";
     }
 
