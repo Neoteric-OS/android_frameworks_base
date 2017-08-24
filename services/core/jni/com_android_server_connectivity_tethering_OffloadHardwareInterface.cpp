@@ -75,6 +75,7 @@ hidl_handle handleFromFileDescriptor(base::unique_fd fd) {
     hidl_handle h;
 
     NATIVE_HANDLE_DECLARE_STORAGE(storage, 0, 0);
+    memset(storage, 0, sizeof(storage));  // storage is of type char[]
     static constexpr int kNumFds = 1;
     static constexpr int kNumInts = 0;
     native_handle_t *nh = native_handle_init(storage, kNumFds, kNumInts);
