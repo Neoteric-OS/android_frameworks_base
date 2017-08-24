@@ -2028,10 +2028,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
                                 "; everConnected=" + nai.everConnected);
                     }
                     LinkProperties oldLp = nai.linkProperties;
-                    synchronized (nai) {
-                        nai.linkProperties = (LinkProperties)msg.obj;
+                    nai.setLinkProperties((LinkProperties) msg.obj);
+                    if (nai.everConnected) {
+                        updateLinkProperties(nai, oldLp);
                     }
-                    if (nai.everConnected) updateLinkProperties(nai, oldLp);
                     break;
                 }
                 case NetworkAgent.EVENT_NETWORK_INFO_CHANGED: {
@@ -4355,12 +4355,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void updateLinkProperties(NetworkAgentInfo networkAgent, LinkProperties oldLp) {
         LinkProperties newLp = networkAgent.linkProperties;
         int netId = networkAgent.network.netId;
-
-        // The NetworkAgentInfo does not know whether clatd is running on its network or not. Before
-        // we do anything else, make sure its LinkProperties are accurate.
-        if (networkAgent.clatd != null) {
-            networkAgent.clatd.fixupLinkProperties(oldLp);
-        }
 
         updateInterfaces(newLp, oldLp, netId, networkAgent.networkCapabilities);
         updateMtu(newLp, oldLp);
