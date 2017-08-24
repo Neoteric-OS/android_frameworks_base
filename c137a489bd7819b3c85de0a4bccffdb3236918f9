@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ba40ca50_c6b07499",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4540,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-24T13:47:21Z",
+      "side": 1,
+      "message": "btw this is undone in newest patch set.",
+      "parentUuid": "8e4bd4a7_430d47ed",
+      "range": {
+        "startLine": 4540,
+        "startChar": 39,
+        "endLine": 4540,
+        "endChar": 64
+      },
+      "revId": "c137a489bd7819b3c85de0a4bccffdb3236918f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e472618d_67b5191d",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
