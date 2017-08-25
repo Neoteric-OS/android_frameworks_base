@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "440e0ad1_cc23b501",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4636,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2017-08-25T13:11:38Z",
+      "side": 1,
+      "message": "Can you change this to a ternary instead?",
+      "revId": "1970979caa484480b8734790d3681e25dc256e33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
