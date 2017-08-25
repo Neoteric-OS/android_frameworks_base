@@ -52,6 +52,24 @@
       "revId": "1970979caa484480b8734790d3681e25dc256e33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b98ce0a_28397a3f",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4636,
+      "author": {
+        "id": 1050647
+      },
+      "writtenOn": "2017-08-25T14:05:50Z",
+      "side": 1,
+      "message": "Done in PS2.\n\nThank you.",
+      "parentUuid": "87a82db7_315c1766",
+      "revId": "1970979caa484480b8734790d3681e25dc256e33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
