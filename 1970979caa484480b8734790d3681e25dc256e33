@@ -16,6 +16,24 @@
       "revId": "1970979caa484480b8734790d3681e25dc256e33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11c92060_d0c328e4",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4636,
+      "author": {
+        "id": 1050647
+      },
+      "writtenOn": "2017-08-25T13:27:41Z",
+      "side": 1,
+      "message": "Would this be OK: \n\n    public NavigationBarView getNavigationBarView() {\n        return (mNavigationBar !\u003d null) ?\n               (NavigationBarView) mNavigationBar.getView() : null;\n    }",
+      "parentUuid": "440e0ad1_cc23b501",
+      "revId": "1970979caa484480b8734790d3681e25dc256e33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
