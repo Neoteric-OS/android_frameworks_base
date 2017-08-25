@@ -353,7 +353,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
         public boolean onLongPress() {
             UserManager um = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
             if (!um.hasUserRestriction(UserManager.DISALLOW_SAFE_BOOT)) {
-                mWindowManagerFuncs.reboot(true);
+                mWindowManagerFuncs.reboot(true, true);
                 return true;
             }
             return false;
@@ -385,7 +385,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
         public boolean onLongPress() {
             UserManager um = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
             if (!um.hasUserRestriction(UserManager.DISALLOW_SAFE_BOOT)) {
-                mWindowManagerFuncs.reboot(true);
+                mWindowManagerFuncs.reboot(true, true);
                 return true;
             }
             return false;
@@ -403,7 +403,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
 
         @Override
         public void onPress() {
-            mWindowManagerFuncs.reboot(false);
+            mWindowManagerFuncs.reboot(false, false);
         }
     }
 
