@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60b6feb3_d78dd2fd",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-25T05:35:15Z",
+      "side": 1,
+      "message": "It\u0027s not safe to unregister the observer until we have received interfaceRemoved and have run the cleanup code in that method.",
+      "range": {
+        "startLine": 179,
+        "startChar": 12,
+        "endLine": 179,
+        "endChar": 48
+      },
+      "revId": "b81b68bac24d9a992a750ecf6af7ef7e2bbaddd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4d5ddbc_68aa9b43",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-25T05:35:15Z",
+      "side": 1,
+      "message": "You\u0027re running on the right thread. Just do:\n\n    LinkProperties lp \u003d mNetwork.linkProperties;\n    if (lp \u003d\u003d null) {\n        // Can this happen? If the network disconnected in the meantime,\n        // ConnectivityService would have called stop() and we should never\n        // have gotten here due to the isStarting() check above.\n        return;\n    }\n\n    lp.addStackedLink(makeLinkProperties(clatAddress));",
+      "range": {
+        "startLine": 268,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 46
+      },
+      "revId": "b81b68bac24d9a992a750ecf6af7ef7e2bbaddd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04dd821c_0c1aa1da",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-25T05:35:15Z",
+      "side": 1,
+      "message": "Again, just modify mNetwork.linkProperties inline.",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 290,
+        "endChar": 46
+      },
+      "revId": "b81b68bac24d9a992a750ecf6af7ef7e2bbaddd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf48835e_2d7ebf40",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-25T05:35:15Z",
+      "side": 1,
+      "message": "I think I\u0027d be much happier and things would be easier to understand and reason about (including the review of this CL itself) if this code was in Nat464Xlat rather than NetworkAgentInfo.\n\nThe logic is strongly intertwined with other logic that\u0027s sitting in 464xlat. Also, currently NetworkAgentInfo doesn\u0027t do anything by itself, whereas if we put this code here it will start talking to NetworkManagementService, etc.",
+      "range": {
+        "startLine": 557,
+        "startChar": 0,
+        "endLine": 581,
+        "endChar": 5
+      },
+      "revId": "b81b68bac24d9a992a750ecf6af7ef7e2bbaddd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2e53032_45434377",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-25T05:35:15Z",
+      "side": 1,
+      "message": "Sending to |messenger| will send the message in the wrong direction - it will go to the transport, not to ConnectivityService. But I think this function isn\u0027t needed, anyway.",
+      "range": {
+        "startLine": 583,
+        "startChar": 0,
+        "endLine": 587,
+        "endChar": 9
+      },
+      "revId": "b81b68bac24d9a992a750ecf6af7ef7e2bbaddd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
