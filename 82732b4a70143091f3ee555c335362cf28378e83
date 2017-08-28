@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13513d4b_140d5325",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-08-28T22:45:23Z",
+      "side": 1,
+      "message": "Are you calling this from multiple threads? Why is it using AtomicInteger?\n\nActually, why are you doing this at all? Tests should not have side effects on each other, so if this is working around a test side effect, we should fix that test instead.",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 306,
+        "endChar": 71
+      },
+      "revId": "82732b4a70143091f3ee555c335362cf28378e83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d798756_82266dd3",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-08-28T22:45:23Z",
+      "side": 1,
+      "message": "In general, it is better to separate tests into something like (1) set up the mocks (2) execute the code (3) check assertions. e.g. we want mMockNetd.ipSecAllocateSpi() to just return valid SPIs forever. You can do that with Mockito\u0027s doAnswer(). Then you have a few lines of code that set up the mock, and it\u0027s not mixed in with the test code.\n\nThis test can be summarized as \"allocate SPIs until we hit the quota limit\". For such a simple test, we should try to have simple code.",
+      "range": {
+        "startLine": 542,
+        "startChar": 0,
+        "endLine": 560,
+        "endChar": 9
+      },
+      "revId": "82732b4a70143091f3ee555c335362cf28378e83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
