@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44c0b410_db864e45",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-28T08:38:21Z",
+      "side": 1,
+      "message": "Can this be isRunning() instead of isStarted()?\n\nI think that would be more correct, because the state that is torn down by this method (restarting ND offload, removing the stacked link, etc.) is created when we enter running state, not when we enter starting state.\n\nIn particular I\u0027d prefer not to re-enable IPv6 ND offload unless we have first enabled it, since that might trigger bugs in wifi HALs or wifi firmware.",
+      "range": {
+        "startLine": 279,
+        "startChar": 13,
+        "endLine": 279,
+        "endChar": 24
+      },
+      "revId": "5012808e7043c86f5989b72d8757b4cc1c6bc0a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
