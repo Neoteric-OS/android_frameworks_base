@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c54fd635_56870b4e",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-08-28T18:19:18Z",
+      "side": 1,
+      "message": "This makes me think that we should be explicit on our naming as well. The docs are good, but what if we want to support both?",
+      "parentUuid": "1b2f6b05_dd3ee174",
+      "range": {
+        "startLine": 40,
+        "startChar": 53,
+        "endLine": 40,
+        "endChar": 70
+      },
+      "revId": "511e9cf72f720f03a0941ff06542cb72aa3dc45f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d3a2466_cf10ed44",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 6
@@ -60,6 +84,30 @@
       "writtenOn": "2017-08-23T22:21:53Z",
       "side": 1,
       "message": "Suggest this should be AEAD_AES_GCM (or maybe AEAD_GCM_AES?)",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 26
+      },
+      "revId": "511e9cf72f720f03a0941ff06542cb72aa3dc45f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9409095f_8aee5240",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-08-28T18:19:18Z",
+      "side": 1,
+      "message": "I also like using the AEAD_ prefix.",
+      "parentUuid": "7d3a2466_cf10ed44",
       "range": {
         "startLine": 87,
         "startChar": 8,

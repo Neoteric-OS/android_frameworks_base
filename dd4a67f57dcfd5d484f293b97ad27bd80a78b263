@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18a50a9f_2a677545",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-08-28T18:19:18Z",
+      "side": 1,
+      "message": "This doesn\u0027t match the other methods insofar as they do NOT use abbreviations. Can this be expanded without a 200 character function name?",
+      "range": {
+        "startLine": 107,
+        "startChar": 26,
+        "endLine": 107,
+        "endChar": 33
+      },
+      "revId": "dd4a67f57dcfd5d484f293b97ad27bd80a78b263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "930d00e6_1196fda1",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-08-28T18:19:18Z",
+      "side": 1,
+      "message": "this needs a name that is more \"human\" readable. I can\u0027t see a way that the API council ever approves setAead().",
+      "range": {
+        "startLine": 357,
+        "startChar": 38,
+        "endLine": 357,
+        "endChar": 45
+      },
+      "revId": "dd4a67f57dcfd5d484f293b97ad27bd80a78b263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
