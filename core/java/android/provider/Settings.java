@@ -5606,6 +5606,13 @@ public final class Settings {
         public static final String INCALL_FEEDBACK_VIBRATE = "incall_feeedback_vibrate";
 
         /**
+         * Whether to enable advanced reboot
+         * @hide
+         */
+        @Readable
+        public static final String OMNI_ADVANCED_REBOOT = "advanced_reboot";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
