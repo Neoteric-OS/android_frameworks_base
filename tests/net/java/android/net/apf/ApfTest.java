@@ -598,12 +598,16 @@ public class ApfTest extends AndroidTestCase {
         }
 
         public byte[] getApfProgram() {
-            assertTrue(mGotApfProgram.block(TIMEOUT_MS));
+            if (!mGotApfProgram.block(TIMEOUT_MS)) {
+                fail("did not receive any program update");
+            }
             return mLastApfProgram;
         }
 
         public void assertNoProgramUpdate() {
-            assertFalse(mGotApfProgram.block(TIMEOUT_MS));
+            if (mGotApfProgram.block(TIMEOUT_MS)) {
+                fail("received unexpected program update");
+            }
         }
     }
 
@@ -673,6 +677,9 @@ public class ApfTest extends AndroidTestCase {
     private static final int IPV6_NEXT_HEADER_OFFSET = ETH_HEADER_LEN + 6;
     private static final int IPV6_HEADER_LEN = 40;
     private static final int IPV6_DEST_ADDR_OFFSET = ETH_HEADER_LEN + 24;
+    private static final int IPV6_VERSION_TRAFFIC_CLASS_FLOW_LABEL_OFFSET = ETH_HEADER_LEN;
+    // IPv6, traffic class = 0, flow label = 0x12345
+    private static final int IPV6_VERSION_TRAFFIC_CLASS_FLOW_LABEL = 0x60012345;
     // The IPv6 all nodes address ff02::1
     private static final byte[] IPV6_ALL_NODES_ADDRESS =
             { (byte) 0xff, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
@@ -1134,14 +1141,19 @@ public class ApfTest extends AndroidTestCase {
         packet.put(0, originalFirstByte);
     }
 
+    // Verify new program generated if ApfFilter witnesses RA
+    private byte[] simulateRa(TestApfFilter apfFilter, MockIpManagerCallback ipManagerCallback,
+            ByteBuffer packet) throws IOException, ErrnoException {
+        ipManagerCallback.resetApfProgramWait();
+        apfFilter.pretendPacketReceived(packet.array());
+        return ipManagerCallback.getApfProgram();
+    }
+
     // Test that when ApfFilter is shown the given packet, it generates a program to filter it
     // for the given lifetime.
     private void testRaLifetime(TestApfFilter apfFilter, MockIpManagerCallback ipManagerCallback,
             ByteBuffer packet, int lifetime) throws IOException, ErrnoException {
-        // Verify new program generated if ApfFilter witnesses RA
-        ipManagerCallback.resetApfProgramWait();
-        apfFilter.pretendPacketReceived(packet.array());
-        byte[] program = ipManagerCallback.getApfProgram();
+        byte[] program = simulateRa(apfFilter, ipManagerCallback, packet);
         verifyRaLifetime(program, packet, lifetime);
     }
 
@@ -1196,20 +1208,9 @@ public class ApfTest extends AndroidTestCase {
         final int ROUTE_LIFETIME  = 400;
         // Note that lifetime of 2000 will be ignored in favor of shorter route lifetime of 1000.
         final int DNSSL_LIFETIME  = 2000;
-        final int VERSION_TRAFFIC_CLASS_FLOW_LABEL_OFFSET = ETH_HEADER_LEN;
-        // IPv6, traffic class = 0, flow label = 0x12345
-        final int VERSION_TRAFFIC_CLASS_FLOW_LABEL = 0x60012345;
 
         // Verify RA is passed the first time
-        ByteBuffer basePacket = ByteBuffer.wrap(new byte[ICMP6_RA_OPTION_OFFSET]);
-        basePacket.putShort(ETH_ETHERTYPE_OFFSET, (short)ETH_P_IPV6);
-        basePacket.putInt(VERSION_TRAFFIC_CLASS_FLOW_LABEL_OFFSET,
-                VERSION_TRAFFIC_CLASS_FLOW_LABEL);
-        basePacket.put(IPV6_NEXT_HEADER_OFFSET, (byte)IPPROTO_ICMPV6);
-        basePacket.put(ICMP6_TYPE_OFFSET, (byte)ICMP6_ROUTER_ADVERTISEMENT);
-        basePacket.putShort(ICMP6_RA_ROUTER_LIFETIME_OFFSET, (short)ROUTER_LIFETIME);
-        basePacket.position(IPV6_DEST_ADDR_OFFSET);
-        basePacket.put(IPV6_ALL_NODES_ADDRESS);
+        ByteBuffer basePacket = baseRaPacket(ROUTER_LIFETIME);
         assertPass(program, basePacket.array());
 
         testRaLifetime(apfFilter, ipManagerCallback, basePacket, ROUTER_LIFETIME);
@@ -1219,8 +1220,8 @@ public class ApfTest extends AndroidTestCase {
         basePacket.clear();
         newFlowLabelPacket.put(basePacket);
         // Check that changes are ignored in every byte of the flow label.
-        newFlowLabelPacket.putInt(VERSION_TRAFFIC_CLASS_FLOW_LABEL_OFFSET,
-                VERSION_TRAFFIC_CLASS_FLOW_LABEL + 0x11111);
+        newFlowLabelPacket.putInt(IPV6_VERSION_TRAFFIC_CLASS_FLOW_LABEL_OFFSET,
+                IPV6_VERSION_TRAFFIC_CLASS_FLOW_LABEL + 0x11111);
 
         // Ensure zero-length options cause the packet to be silently skipped.
         // Do this before we test other packets. http://b/29586253
@@ -1292,6 +1293,87 @@ public class ApfTest extends AndroidTestCase {
         verifyRaLifetime(program, rdnssOptionPacket, RDNSS_LIFETIME);
         verifyRaLifetime(program, routeInfoOptionPacket, ROUTE_LIFETIME);
         verifyRaLifetime(program, dnsslOptionPacket, ROUTER_LIFETIME);
+
+        apfFilter.shutdown();
+    }
+
+    @SmallTest
+    public void testZeroLifetimeRaFiltering() throws Exception {
+        MockIpManagerCallback ipManagerCallback = new MockIpManagerCallback();
+        final int[] ethTypeBlackList = {};
+        TestApfFilter apfFilter = new TestApfFilter(ipManagerCallback, DROP_MULTICAST,
+                DROP_802_3_FRAMES, ethTypeBlackList, mLog);
+
+        // Prepare 3 RA packets:
+        //  - ra1 has non-zero router lifetime and no option.
+        //  - ra2 has zero router lifetime and no option.
+        //  - ra3 has non-zero router lifetime and rdnss option with zero lifetime
+        final int routerLifetime = 1000;
+        ByteBuffer ra1 = baseRaPacket(routerLifetime);
+        ByteBuffer ra2 = baseRaPacket(0);
+        ByteBuffer ra3 = ByteBuffer.allocate(ICMP6_RA_OPTION_OFFSET + ICMP6_4_BYTE_OPTION_LEN);
+        ra3.put(ra1);
+        ra3.put((byte)ICMP6_RDNSS_OPTION_TYPE);
+        ra3.put((byte)(ICMP6_4_BYTE_OPTION_LEN / 8));
+        ra3.putInt(ICMP6_RA_OPTION_OFFSET + ICMP6_4_BYTE_LIFETIME_OFFSET, 0);
+
+        // Simulate arrivals of these 3 RA packets in various orders, testing alternating between
+        // non zero lifetime RAs and zero lifetime RAs.
+        byte[] packet1 = ra1.array(), packet2 = ra2.array(), packet3 = ra3.array();
+        byte[] program;
+
+        program = simulateRa(apfFilter, ipManagerCallback, ra1);
+        verifyRaLifetime(program, ra1, routerLifetime);
+        assertDrop(program, packet1);
+        assertPass(program, packet2);
+        assertPass(program, packet3);
+
+        program = simulateRa(apfFilter, ipManagerCallback, ra2);
+        assertPass(program, packet1);
+        assertDrop(program, packet2);
+        assertPass(program, packet3);
+        // check infinite lifetimes
+        assertDrop(program, packet2, 1000);
+        assertDrop(program, packet2, 100000);
+        assertDrop(program, packet2, 10000000);
+        assertDrop(program, packet2, 1000000000);
+
+        program = simulateRa(apfFilter, ipManagerCallback, ra3);
+        verifyRaLifetime(program, ra3, routerLifetime);
+        assertPass(program, packet1);
+        assertDrop(program, packet2);
+        assertDrop(program, packet3);
+        assertDrop(program, packet2, 1000);
+        assertDrop(program, packet2, 100000);
+        assertDrop(program, packet2, 10000000);
+        assertDrop(program, packet2, 1000000000);
+
+        program = simulateRa(apfFilter, ipManagerCallback, ra1);
+        verifyRaLifetime(program, ra1, routerLifetime);
+        assertDrop(program, packet1);
+        assertPass(program, packet2);
+        assertPass(program, packet3);
+
+        program = simulateRa(apfFilter, ipManagerCallback, ra3);
+        verifyRaLifetime(program, ra3, routerLifetime);
+        assertPass(program, packet1);
+        assertPass(program, packet2);
+        assertDrop(program, packet3);
+
+        program = simulateRa(apfFilter, ipManagerCallback, ra2);
+        assertPass(program, packet1);
+        assertDrop(program, packet2);
+        assertDrop(program, packet3);
+        assertDrop(program, packet2, 1000);
+        assertDrop(program, packet2, 100000);
+        assertDrop(program, packet2, 10000000);
+        assertDrop(program, packet2, 1000000000);
+
+        program = simulateRa(apfFilter, ipManagerCallback, ra1);
+        verifyRaLifetime(program, ra1, routerLifetime);
+        assertDrop(program, packet1);
+        assertPass(program, packet2);
+        assertPass(program, packet3);
 
         apfFilter.shutdown();
     }
@@ -1399,5 +1481,19 @@ public class ApfTest extends AndroidTestCase {
     public void assertEqualsIp(String expected, int got) throws Exception {
         int want = bytesToBEInt(InetAddress.getByName(expected).getAddress());
         assertEquals(want, got);
+    }
+
+    static ByteBuffer baseRaPacket(int routerLifetime) {
+        ByteBuffer packet = ByteBuffer.wrap(new byte[ICMP6_RA_OPTION_OFFSET]);
+        packet.putShort(ETH_ETHERTYPE_OFFSET, (short)ETH_P_IPV6);
+        packet.putInt(IPV6_VERSION_TRAFFIC_CLASS_FLOW_LABEL_OFFSET,
+                IPV6_VERSION_TRAFFIC_CLASS_FLOW_LABEL);
+        packet.put(IPV6_NEXT_HEADER_OFFSET, (byte)IPPROTO_ICMPV6);
+        packet.put(ICMP6_TYPE_OFFSET, (byte)ICMP6_ROUTER_ADVERTISEMENT);
+        packet.putShort(ICMP6_RA_ROUTER_LIFETIME_OFFSET, (short)routerLifetime);
+        packet.position(IPV6_DEST_ADDR_OFFSET);
+        packet.put(IPV6_ALL_NODES_ADDRESS);
+        packet.clear();
+        return packet;
     }
 }
