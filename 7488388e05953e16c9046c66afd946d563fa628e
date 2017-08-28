@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "596cc44c_b4c92250",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-28T13:36:42Z",
+      "side": 1,
+      "message": "Nit: trigger.",
+      "range": {
+        "startLine": 183,
+        "startChar": 88,
+        "endLine": 183,
+        "endChar": 94
+      },
+      "revId": "7488388e05953e16c9046c66afd946d563fa628e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f638805_a1d211c6",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-08-28T13:36:42Z",
+      "side": 1,
+      "message": "Nit: or STARTING.",
+      "range": {
+        "startLine": 276,
+        "startChar": 52,
+        "endLine": 276,
+        "endChar": 53
+      },
+      "revId": "7488388e05953e16c9046c66afd946d563fa628e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
