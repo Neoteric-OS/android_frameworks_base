@@ -63,6 +63,7 @@ import java.nio.ByteBuffer;
 import java.nio.BufferUnderflowException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 import libcore.io.IoBridge;
 
@@ -359,6 +360,9 @@ public class ApfFilter {
         // When the packet was last captured, in seconds since Unix Epoch
         long mLastSeen;
 
+        // DOCME
+        boolean mHasZeroLifetime;
+
         // For debugging only. Offsets into the packet where PIOs are.
         private final ArrayList<Integer> mPrefixOptionOffsets = new ArrayList<>();
 
@@ -455,8 +459,22 @@ public class ApfFilter {
             return lifetimeOffset + lifetimeLength;
         }
 
-        private int addNonLifetimeU32(int lastNonLifetimeStart) {
-            return addNonLifetime(lastNonLifetimeStart,
+        // DOCME
+        private int processLifetime(int start, int lifetimeOffset, int lifetimeLength) {
+            // If the lifetime is 0, include the lifetime into the binary range to match,
+            // and tag the Ra has having a zero lifetime. This allows to purge it when processing
+            // the next Ra packet 
+            final long lifetime = getUint32(mPacket, mPacket.position() + lifetimeOffset);
+            if (lifetime == 0) {
+                lifetimeOffset += lifetimeLength;
+                lifetimeLength = 0;
+                mHasZeroLifetime = true;
+            }
+            return addNonLifetime(start, lifetimeOffset, lifetimeLength);
+        }
+
+        private int processLifetimeU32(int lastNonLifetimeStart) {
+            return processLifetime(lastNonLifetimeStart,
                     ICMP6_4_BYTE_LIFETIME_OFFSET, ICMP6_4_BYTE_LIFETIME_LEN);
         }
 
@@ -494,7 +512,7 @@ public class ApfFilter {
                     ICMP6_RA_CHECKSUM_LEN);
 
             // Parse router lifetime
-            lastNonLifetimeStart = addNonLifetime(lastNonLifetimeStart,
+            lastNonLifetimeStart = processLifetime(lastNonLifetimeStart,
                     ICMP6_RA_ROUTER_LIFETIME_OFFSET,
                     ICMP6_RA_ROUTER_LIFETIME_LEN);
             builder.updateRouterLifetime(getUint16(mPacket, ICMP6_RA_ROUTER_LIFETIME_OFFSET));
@@ -509,14 +527,14 @@ public class ApfFilter {
                 switch (optionType) {
                     case ICMP6_PREFIX_OPTION_TYPE:
                         // Parse valid lifetime
-                        lastNonLifetimeStart = addNonLifetime(lastNonLifetimeStart,
+                        lastNonLifetimeStart = processLifetime(lastNonLifetimeStart,
                                 ICMP6_PREFIX_OPTION_VALID_LIFETIME_OFFSET,
                                 ICMP6_PREFIX_OPTION_VALID_LIFETIME_LEN);
                         lifetime = getUint32(mPacket,
                                 position + ICMP6_PREFIX_OPTION_VALID_LIFETIME_OFFSET);
                         builder.updatePrefixValidLifetime(lifetime);
                         // Parse preferred lifetime
-                        lastNonLifetimeStart = addNonLifetime(lastNonLifetimeStart,
+                        lastNonLifetimeStart = processLifetime(lastNonLifetimeStart,
                                 ICMP6_PREFIX_OPTION_PREFERRED_LIFETIME_OFFSET,
                                 ICMP6_PREFIX_OPTION_PREFERRED_LIFETIME_LEN);
                         lifetime = getUint32(mPacket,
@@ -525,20 +543,20 @@ public class ApfFilter {
                         mPrefixOptionOffsets.add(position);
                         break;
                     // These three options have the same lifetime offset and size, and
-                    // are processed with the same specialized addNonLifetimeU32:
+                    // are processed with the same specialized processLifetimeU32:
                     case ICMP6_RDNSS_OPTION_TYPE:
                         mRdnssOptionOffsets.add(position);
-                        lastNonLifetimeStart = addNonLifetimeU32(lastNonLifetimeStart);
+                        lastNonLifetimeStart = processLifetimeU32(lastNonLifetimeStart);
                         lifetime = getUint32(mPacket, position + ICMP6_4_BYTE_LIFETIME_OFFSET);
                         builder.updateRdnssLifetime(lifetime);
                         break;
                     case ICMP6_ROUTE_INFO_OPTION_TYPE:
-                        lastNonLifetimeStart = addNonLifetimeU32(lastNonLifetimeStart);
+                        lastNonLifetimeStart = processLifetimeU32(lastNonLifetimeStart);
                         lifetime = getUint32(mPacket, position + ICMP6_4_BYTE_LIFETIME_OFFSET);
                         builder.updateRouteInfoLifetime(lifetime);
                         break;
                     case ICMP6_DNSSL_OPTION_TYPE:
-                        lastNonLifetimeStart = addNonLifetimeU32(lastNonLifetimeStart);
+                        lastNonLifetimeStart = processLifetimeU32(lastNonLifetimeStart);
                         lifetime = getUint32(mPacket, position + ICMP6_4_BYTE_LIFETIME_OFFSET);
                         builder.updateDnsslLifetime(lifetime);
                         break;
@@ -617,6 +635,10 @@ public class ApfFilter {
             // TODO: We may want to handle 0 lifetime RAs differently, if they are common. We'll
             // have to calculte the filter lifetime specially as a fraction of 0 is still 0.
             return currentLifetime() <= 0;
+        }
+
+        boolean hasZeroLifetime() {
+            return mHasZeroLifetime;
         }
 
         // Append a filter for this RA to {@code gen}. Jump to DROP_LABEL if it should be dropped.
@@ -1041,9 +1063,18 @@ public class ApfFilter {
 
     @GuardedBy("this")
     private void purgeExpiredRasLocked() {
+        purgeRaIf(Ra::isExpired);
+    }
+
+    @GuardedBy("this")
+    private void purgeZeroLifetimeRasLocked() {
+        purgeRaIf(Ra::hasZeroLifetime);
+    }
+
+    private void purgeRaIf(Predicate<Ra> condition) {
         for (int i = 0; i < mRas.size();) {
-            if (mRas.get(i).isExpired()) {
-                log("Expiring " + mRas.get(i));
+            if (condition.test(mRas.get(i))) {
+                log("Expiring " + mRas.get(i)); // FIXME
                 mRas.remove(i);
             } else {
                 i++;
@@ -1088,6 +1119,9 @@ public class ApfFilter {
             }
         }
         purgeExpiredRasLocked();
+        // Always purge 0 lifetime filtered RA when receiving a new RA, to ensure that the former
+        // does not overshadow the latter. http://b/62209513
+        purgeZeroLifetimeRasLocked();
         // TODO: figure out how to proceed when we've received more then MAX_RAS RAs.
         if (mRas.size() >= MAX_RAS) {
             return ProcessRaResult.DROPPED;
