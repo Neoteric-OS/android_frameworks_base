@@ -22,6 +22,30 @@
       "revId": "5012808e7043c86f5989b72d8757b4cc1c6bc0a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28d8a7b0_a9439a61",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-08-28T13:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44c0b410_db864e45",
+      "range": {
+        "startLine": 279,
+        "startChar": 13,
+        "endLine": 279,
+        "endChar": 24
+      },
+      "revId": "5012808e7043c86f5989b72d8757b4cc1c6bc0a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
