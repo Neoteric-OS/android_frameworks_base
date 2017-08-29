@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "365982e7_ae2f4b16",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-08-29T16:39:53Z",
+      "side": 1,
+      "message": "You\u0027ll need to re-run the code formatter.",
+      "range": {
+        "startLine": 374,
+        "startChar": 0,
+        "endLine": 385,
+        "endChar": 9
+      },
+      "revId": "517e1242bf11c393e1cfa91013ec21434bc0969a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34694e0c_4e55bc20",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-08-29T16:39:53Z",
+      "side": 1,
+      "message": "You are testing IpSecTransform.Builder in this test, which does not belong in IpSecServiceTest.java. Since IpSecTransform, etc. are part of the public API, this should go in IpSecManagerTest.java (or possibly we can make new *Test.java files for each of the public API classes, but today it\u0027s all in the manager test.)",
+      "revId": "517e1242bf11c393e1cfa91013ec21434bc0969a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746cd428_6610ea53",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-08-29T16:39:53Z",
+      "side": 1,
+      "message": "Test methods should start with \"test\" even if they have the @Test annotation. I read this method name and assumed it was a utility called by another test.\n\nThe name length is starting to get out of hand, and there are some tricks to shorten it.\nWhat are we testing? The builder.\ntestBuilder()\nWhat about the builder are we testing? Invalid algorithms.\ntestBuilderInvalidAlgos()\nIf you want to get more specific than that, you can make it a little longer.\ntestBuilderInvalidAlgosCryptAndAead()",
+      "range": {
+        "startLine": 379,
+        "startChar": 4,
+        "endLine": 382,
+        "endChar": 9
+      },
+      "revId": "517e1242bf11c393e1cfa91013ec21434bc0969a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
