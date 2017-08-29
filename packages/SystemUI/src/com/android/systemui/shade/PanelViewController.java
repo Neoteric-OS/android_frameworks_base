@@ -207,6 +207,7 @@ public abstract class PanelViewController {
     private final PanelExpansionStateManager mPanelExpansionStateManager;
     private final InteractionJankMonitor mInteractionJankMonitor;
     protected final SystemClock mSystemClock;
+    protected boolean mDoubleTapToSleepEnabled;
 
     protected final ShadeLogger mShadeLog;
 
@@ -1371,7 +1372,7 @@ public abstract class PanelViewController {
                         onTrackingStarted();
                     }
                     if (isFullyCollapsed() && !mHeadsUpManager.hasPinnedHeadsUp()
-                            && !mCentralSurfaces.isBouncerShowing()) {
+                            && !mCentralSurfaces.isBouncerShowing() && !mDoubleTapToSleepEnabled) {
                         startOpening(event);
                     }
                     break;
