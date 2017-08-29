@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a892458a_2e419b91",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-08-29T01:00:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18a50a9f_2a677545",
+      "range": {
+        "startLine": 107,
+        "startChar": 26,
+        "endLine": 107,
+        "endChar": 33
+      },
+      "revId": "dd4a67f57dcfd5d484f293b97ad27bd80a78b263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "930d00e6_1196fda1",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-28T18:19:18Z",
       "side": 1,
       "message": "this needs a name that is more \"human\" readable. I can\u0027t see a way that the API council ever approves setAead().",
+      "range": {
+        "startLine": 357,
+        "startChar": 38,
+        "endLine": 357,
+        "endChar": 45
+      },
+      "revId": "dd4a67f57dcfd5d484f293b97ad27bd80a78b263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aff07086_397cfb63",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-08-29T01:00:54Z",
+      "side": 1,
+      "message": "Done; Changed all references of AEAD to AuthenticatedEncryption (including AEAD_AES_GCM enum, which may be changed back based on input from API council)",
+      "parentUuid": "930d00e6_1196fda1",
       "range": {
         "startLine": 357,
         "startChar": 38,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "72d49acb_eccae894",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-08-29T01:00:54Z",
+      "side": 1,
+      "message": "Changed to throw an exception.",
+      "parentUuid": "3020b668_12952b83",
+      "range": {
+        "startLine": 824,
+        "startChar": 30,
+        "endLine": 824,
+        "endChar": 63
+      },
+      "revId": "dd4a67f57dcfd5d484f293b97ad27bd80a78b263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "014c5333_07cbb41f",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-28T18:34:46Z",
       "side": 1,
       "message": "Any other interesting outputs that need test coverage?",
+      "range": {
+        "startLine": 402,
+        "startChar": 16,
+        "endLine": 402,
+        "endChar": 52
+      },
+      "revId": "dd4a67f57dcfd5d484f293b97ad27bd80a78b263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b326ba_870aeee2",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-08-29T01:00:54Z",
+      "side": 1,
+      "message": "I\u0027ve added a few checks in the builder, and a few tests corresponding to those. Other tests are blocked on nharold\u0027s validation changes, and will be merged separately",
+      "parentUuid": "014c5333_07cbb41f",
       "range": {
         "startLine": 402,
         "startChar": 16,
