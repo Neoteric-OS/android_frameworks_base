@@ -87,15 +87,13 @@ public class IpSecService extends IIpSecService.Stub {
     private static AtomicInteger mNextResourceId = new AtomicInteger(0x00FADED0);
 
     @GuardedBy("this")
-    private final ManagedResourceArray<SpiRecord> mSpiRecords = new ManagedResourceArray<>();
+    final ManagedResourceArray<SpiRecord> mSpiRecords = new ManagedResourceArray<>();
 
     @GuardedBy("this")
-    private final ManagedResourceArray<TransformRecord> mTransformRecords =
-            new ManagedResourceArray<>();
+    final ManagedResourceArray<TransformRecord> mTransformRecords = new ManagedResourceArray<>();
 
     @GuardedBy("this")
-    private final ManagedResourceArray<UdpSocketRecord> mUdpSocketRecords =
-            new ManagedResourceArray<>();
+    final ManagedResourceArray<UdpSocketRecord> mUdpSocketRecords = new ManagedResourceArray<>();
 
     interface IpSecServiceConfiguration {
         INetd getNetdInstance() throws RemoteException;
@@ -332,7 +330,7 @@ public class IpSecService extends IIpSecService.Stub {
     /**
      * Minimal wrapper around SparseArray that performs ownership validation on element accesses.
      */
-    private class ManagedResourceArray<T extends ManagedResource> {
+    class ManagedResourceArray<T extends ManagedResource> {
         SparseArray<T> mArray = new SparseArray<>();
 
         T get(int key) {
@@ -360,7 +358,7 @@ public class IpSecService extends IIpSecService.Stub {
         }
     }
 
-    private final class TransformRecord extends ManagedResource {
+    final class TransformRecord extends ManagedResource {
         private final IpSecConfig mConfig;
         private final SpiRecord[] mSpis;
         private final UdpSocketRecord mSocket;
@@ -417,6 +415,8 @@ public class IpSecService extends IIpSecService.Stub {
                 } catch (RemoteException e) {
                     Log.e(TAG, "Failed to delete SA with ID: " + mResourceId);
                 }
+
+                mTransformRecords.remove(mResourceId);
             }
 
             for (int direction : DIRECTIONS) {
@@ -451,7 +451,7 @@ public class IpSecService extends IIpSecService.Stub {
         }
     }
 
-    private final class SpiRecord extends ManagedResource {
+    final class SpiRecord extends ManagedResource {
         private final int mDirection;
         private final String mLocalAddress;
         private final String mRemoteAddress;
@@ -498,6 +498,8 @@ public class IpSecService extends IIpSecService.Stub {
             }
 
             mSpi = IpSecManager.INVALID_SECURITY_PARAMETER_INDEX;
+
+            mSpiRecords.remove(mResourceId);
         }
 
         @Override
@@ -539,7 +541,7 @@ public class IpSecService extends IIpSecService.Stub {
         }
     }
 
-    private final class UdpSocketRecord extends ManagedResource {
+    final class UdpSocketRecord extends ManagedResource {
         private FileDescriptor mSocket;
         private final int mPort;
 
@@ -555,6 +557,8 @@ public class IpSecService extends IIpSecService.Stub {
             Log.d(TAG, "Closing port " + mPort);
             IoUtils.closeQuietly(mSocket);
             mSocket = null;
+
+            mUdpSocketRecords.remove(mResourceId);
         }
 
         @Override
@@ -694,7 +698,6 @@ public class IpSecService extends IIpSecService.Stub {
         }
 
         record.release();
-        resArray.remove(resourceId);
     }
 
     /** Release a previously allocated SPI that has been registered with the system server */

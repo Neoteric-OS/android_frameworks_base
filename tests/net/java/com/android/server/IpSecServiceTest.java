@@ -22,10 +22,10 @@ import static android.system.OsConstants.IPPROTO_UDP;
 import static android.system.OsConstants.SOCK_DGRAM;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -55,6 +55,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.ArgumentCaptor;
 
 /** Unit tests for {@link IpSecService}. */
 @SmallTest
@@ -431,5 +432,70 @@ public class IpSecServiceTest {
         mIpSecService.removeTransportModeTransform(pfd, 1);
 
         verify(mMockNetd).ipSecRemoveTransportModeTransform(pfd.getFileDescriptor());
+    }
+
+    @Test
+    public void testBinderDeathPathTransformRecord() throws Exception {
+        Binder binderMock = mock(Binder.class);
+        ArgumentCaptor<IpSecService.TransformRecord> argument =
+                ArgumentCaptor.forClass(IpSecService.TransformRecord.class);
+
+        mIpSecService.createTransportModeTransform(buildIpSecConfig(), binderMock);
+        verify(binderMock).linkToDeath(argument.capture(), anyInt());
+
+        IpSecService.TransformRecord record = argument.getValue();
+        assertEquals(
+                "Stored entry was not found in managed array",
+                record,
+                mIpSecService.mTransformRecords.get(record.mResourceId));
+
+        record.binderDied();
+        assertNull(
+                "Binder death path did not remove entry",
+                mIpSecService.mTransformRecords.get(record.mResourceId));
+    }
+
+    @Test
+    public void testBinderDeathPathSpiRecord() throws Exception {
+        Binder binderMock = mock(Binder.class);
+        ArgumentCaptor<IpSecService.SpiRecord> argument =
+                ArgumentCaptor.forClass(IpSecService.SpiRecord.class);
+
+        InetAddress localAddr = InetAddress.getByAddress(new byte[] {127, 0, 0, 1});
+        mIpSecService.reserveSecurityParameterIndex(
+                IpSecTransform.DIRECTION_OUT, IPV4_LOOPBACK, DROID_SPI, binderMock);
+        verify(binderMock).linkToDeath(argument.capture(), anyInt());
+
+        IpSecService.SpiRecord record = argument.getValue();
+        assertEquals(
+                "Stored entry was not found in managed array",
+                record,
+                mIpSecService.mSpiRecords.get(record.mResourceId));
+
+        record.binderDied();
+        assertNull(
+                "Binder death path did not remove entry",
+                mIpSecService.mSpiRecords.get(record.mResourceId));
+    }
+
+    @Test
+    public void testBinderDeathPathUdpSocketRecord() throws Exception {
+        Binder binderMock = mock(Binder.class);
+        ArgumentCaptor<IpSecService.UdpSocketRecord> argument =
+                ArgumentCaptor.forClass(IpSecService.UdpSocketRecord.class);
+
+        mIpSecService.openUdpEncapsulationSocket(0, binderMock);
+        verify(binderMock).linkToDeath(argument.capture(), anyInt());
+
+        IpSecService.UdpSocketRecord record = argument.getValue();
+        assertEquals(
+                "Stored entry was not found in managed array",
+                record,
+                mIpSecService.mUdpSocketRecords.get(record.mResourceId));
+
+        record.binderDied();
+        assertNull(
+                "Binder death path did not remove entry",
+                mIpSecService.mUdpSocketRecords.get(record.mResourceId));
     }
 }
