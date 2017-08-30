@@ -94,7 +94,6 @@ import java.util.stream.Collectors;
  */
 public class IpManager extends StateMachine {
     private static final boolean DBG = false;
-    private static final boolean VDBG = false;
 
     // For message logging.
     private static final Class[] sMessageClasses = { IpManager.class, DhcpClient.class };
@@ -571,6 +570,7 @@ public class IpManager extends StateMachine {
     private final INetd mNetd;
 
     private NetworkInterface mNetworkInterface;
+    private volatile boolean mShuttingDown = false;
 
     /**
      * Non-final member variables accessed only from within our StateMachine.
@@ -711,9 +711,9 @@ public class IpManager extends StateMachine {
 
     // Shut down this IpManager instance altogether.
     public void shutdown() {
+        mShuttingDown = true;
         stop();
         mMultinetworkPolicyTracker.shutdown();
-        quit();
     }
 
     public static ProvisioningConfiguration.Builder buildProvisioningConfiguration() {
@@ -858,7 +858,7 @@ public class IpManager extends StateMachine {
 
         final String richerLogLine = getWhatToString(msg.what) + " " + logLine;
         mLog.log(richerLogLine);
-        if (VDBG) {
+        if (DBG) {
             Log.d(mTag, richerLogLine);
         }
 
@@ -1013,19 +1013,19 @@ public class IpManager extends StateMachine {
     private void dispatchCallback(ProvisioningChange delta, LinkProperties newLp) {
         switch (delta) {
             case GAINED_PROVISIONING:
-                if (VDBG) { Log.d(mTag, "onProvisioningSuccess()"); }
+                if (DBG) { Log.d(mTag, "onProvisioningSuccess()"); }
                 recordMetric(IpManagerEvent.PROVISIONING_OK);
                 mCallback.onProvisioningSuccess(newLp);
                 break;
 
             case LOST_PROVISIONING:
-                if (VDBG) { Log.d(mTag, "onProvisioningFailure()"); }
+                if (DBG) { Log.d(mTag, "onProvisioningFailure()"); }
                 recordMetric(IpManagerEvent.PROVISIONING_FAIL);
                 mCallback.onProvisioningFailure(newLp);
                 break;
 
             default:
-                if (VDBG) { Log.d(mTag, "onLinkPropertiesChange()"); }
+                if (DBG) { Log.d(mTag, "onLinkPropertiesChange()"); }
                 mCallback.onLinkPropertiesChange(newLp);
                 break;
         }
@@ -1113,7 +1113,7 @@ public class IpManager extends StateMachine {
             addAllReachableDnsServers(newLp, config.dnsServers);
         }
         final LinkProperties oldLp = mLinkProperties;
-        if (VDBG) {
+        if (DBG) {
             Log.d(mTag, String.format("Netlink-seen LPs: %s, new LPs: %s; old LPs: %s",
                     netlinkLinkProperties, newLp, oldLp));
         }
@@ -1153,7 +1153,7 @@ public class IpManager extends StateMachine {
         ifcg.setLinkAddress(address);
         try {
             mNwService.setInterfaceConfig(mInterfaceName, ifcg);
-            if (VDBG) Log.d(mTag, "IPv4 configuration succeeded");
+            if (DBG) Log.d(mTag, "IPv4 configuration succeeded");
         } catch (IllegalStateException | RemoteException e) {
             logError("IPv4 configuration failed: %s", e);
             return false;
@@ -1176,7 +1176,7 @@ public class IpManager extends StateMachine {
         final LinkProperties newLp = assembleLinkProperties();
         final ProvisioningChange delta = setLinkProperties(newLp);
 
-        if (VDBG) {
+        if (DBG) {
             Log.d(mTag, "onNewDhcpResults(" + Objects.toString(dhcpResults) + ")");
         }
         mCallback.onNewDhcpResults(dhcpResults);
@@ -1192,7 +1192,7 @@ public class IpManager extends StateMachine {
         // any addresses upon entry to StoppedState.
         clearIPv4Address();
         mDhcpResults = null;
-        if (VDBG) { Log.d(mTag, "onNewDhcpResults(null)"); }
+        if (DBG) { Log.d(mTag, "onNewDhcpResults(null)"); }
         mCallback.onNewDhcpResults(null);
 
         handleProvisioningFailure();
@@ -1342,6 +1342,10 @@ public class IpManager extends StateMachine {
             if (mStartTimeMillis > 0) {
                 recordMetric(IpManagerEvent.COMPLETE_LIFECYCLE);
                 mStartTimeMillis = 0;
+            }
+
+            if (mShuttingDown) {
+            	quit();
             }
         }
 
