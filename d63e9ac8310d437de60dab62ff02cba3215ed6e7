@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9f582ba_4a3a631a",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3845,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2017-08-31T16:30:10Z",
+      "side": 1,
+      "message": "Should be guarded as well",
+      "range": {
+        "startLine": 3845,
+        "startChar": 8,
+        "endLine": 3845,
+        "endChar": 22
+      },
+      "revId": "d63e9ac8310d437de60dab62ff02cba3215ed6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
