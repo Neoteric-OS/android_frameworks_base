@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ed40d759_4045abdb",
+        "filename": "api/current.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 39846,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-08-31T22:06:37Z",
+      "side": 1,
+      "message": "So then these constants should be @hide if they\u0027re not able to be consumed anyways.",
+      "range": {
+        "startLine": 39841,
+        "startChar": 2,
+        "endLine": 39846,
+        "endChar": 3
+      },
+      "revId": "804607558c35076c59ed931f8700198aa21ee7d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3bbb8b3_2f4253fc",
         "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
         "patchSetId": 5
