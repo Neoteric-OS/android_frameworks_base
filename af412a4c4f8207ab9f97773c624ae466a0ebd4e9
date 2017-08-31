@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "9373ec98_13189363",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-08-31T16:29:21Z",
+      "side": 1,
+      "message": "From some searches, I found 80 files named *Builder that throw IllegalStateException and 119 files named *Builder that throw IllegalArgumentException. It\u0027s not precise, but both are precedented.\n\nI think IllegalArgumentException make more sense because, although the builder is stateful, the built config object is meant to be a data object and not a stateful object.",
+      "parentUuid": "33a2f2b4_7d9884f4",
+      "range": {
+        "startLine": 336,
+        "startChar": 26,
+        "endLine": 336,
+        "endChar": 47
+      },
+      "revId": "af412a4c4f8207ab9f97773c624ae466a0ebd4e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81dd28c9_94091e3c",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 25
@@ -366,6 +390,30 @@
       "side": 1,
       "message": "No idea. It was at the bottom of the IpSecManagerTest file, and I assumed it meant something to someone. Should I remove it?",
       "parentUuid": "4af57405_ef0afdb4",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 78
+      },
+      "revId": "af412a4c4f8207ab9f97773c624ae466a0ebd4e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a90e33_0f08929d",
+        "filename": "tests/net/java/android/net/IpSecTransformTest.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-08-31T16:29:21Z",
+      "side": 1,
+      "message": "It certainly should not be migrated to here given the lack of context. Di wrote the TODO, so we can find out from him what tests were planned and which file they belong in.",
+      "parentUuid": "92a15b15_c07133fa",
       "range": {
         "startLine": 53,
         "startChar": 0,
