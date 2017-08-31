@@ -131,6 +131,7 @@ import com.android.systemui.ActivityIntentHelper;
 import com.android.systemui.AutoReinflateContainer;
 import com.android.systemui.CoreStartable;
 import com.android.systemui.DejankUtils;
+import com.android.systemui.Dependency;
 import com.android.systemui.EventLogTags;
 import com.android.systemui.InitController;
 import com.android.systemui.Prefs;
@@ -236,6 +237,7 @@ import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController.DeviceProvisionedListener;
 import com.android.systemui.statusbar.policy.ExtensionController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
+import com.android.systemui.statusbar.policy.FlashlightController;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
 import com.android.systemui.statusbar.window.StatusBarWindowController;
@@ -636,6 +638,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
     private int mLastLoggedStateFingerprint;
     private boolean mIsLaunchingActivityOverLockscreen;
 
+    private FlashlightController mFlashlightController;
     private final UserSwitcherController mUserSwitcherController;
     private final LifecycleRegistry mLifecycle = new LifecycleRegistry(this);
     protected final BatteryController mBatteryController;
@@ -1417,6 +1420,8 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
 
         // Private API call to make the shadows look better for Recents
         ThreadedRenderer.overrideProperty("ambientRatio", String.valueOf(1.5f));
+
+        mFlashlightController = Dependency.get(FlashlightController.class);
     }
 
 
@@ -2327,6 +2332,10 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         pw.println("   Secure camera: " + CameraIntents.getSecureCameraIntent(mContext));
         pw.println("   Override package: "
                 + CameraIntents.getOverrideCameraPackage(mContext));
+
+        if (mFlashlightController != null) {
+            mFlashlightController.dump(pw, args);
+        }
     }
 
     @Override
