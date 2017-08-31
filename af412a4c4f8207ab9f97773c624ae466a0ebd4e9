@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2399a4cc_e102aca1",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-08-31T02:34:02Z",
+      "side": 1,
+      "message": "Done, along with all other instances (Declaration and switch statement)",
+      "parentUuid": "6fb50d1b_6b821a14",
+      "range": {
+        "startLine": 85,
+        "startChar": 8,
+        "endLine": 85,
+        "endChar": 26
+      },
+      "revId": "af412a4c4f8207ab9f97773c624ae466a0ebd4e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9001e86f_0be7eae1",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 25
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-30T23:15:37Z",
       "side": 1,
       "message": "interesting... if these are really the right values, you can do a fallthrough case here.",
+      "range": {
+        "startLine": 179,
+        "startChar": 16,
+        "endLine": 179,
+        "endChar": 91
+      },
+      "revId": "af412a4c4f8207ab9f97773c624ae466a0ebd4e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8eea682c_0354ad17",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-08-31T02:34:02Z",
+      "side": 1,
+      "message": "Done. They\u0027re 8, 12 or 16-octet lengths\n\nEdit: Haha, I thought they were right. Apparently i was off by a factor of 2. I can\u0027t math.",
+      "parentUuid": "9001e86f_0be7eae1",
       "range": {
         "startLine": 179,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6f564b29_4fd4e67e",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-08-31T02:34:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d7a1fdd_c3428188",
+      "range": {
+        "startLine": 113,
+        "startChar": 16,
+        "endLine": 113,
+        "endChar": 39
+      },
+      "revId": "af412a4c4f8207ab9f97773c624ae466a0ebd4e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9d0f62c_3983ab2e",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 25
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-30T23:15:37Z",
       "side": 1,
       "message": "nit: this is a public dostring in paragraph form, so... period at the end of this sentence?",
+      "range": {
+        "startLine": 328,
+        "startChar": 20,
+        "endLine": 328,
+        "endChar": 41
+      },
+      "revId": "af412a4c4f8207ab9f97773c624ae466a0ebd4e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "171db45f_3171b80b",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-08-31T02:34:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9d0f62c_3983ab2e",
       "range": {
         "startLine": 328,
         "startChar": 20,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "33a2f2b4_7d9884f4",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-08-31T02:34:02Z",
+      "side": 1,
+      "message": "It seems that there is minor precedent of the IllegalStateException:\n\nframeworks/base/core/java/android/provider/OneTimeUseBuilder.java:39",
+      "parentUuid": "fec1d1e8_81b88359",
+      "range": {
+        "startLine": 336,
+        "startChar": 26,
+        "endLine": 336,
+        "endChar": 47
+      },
+      "revId": "af412a4c4f8207ab9f97773c624ae466a0ebd4e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81dd28c9_94091e3c",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 25
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-30T23:15:37Z",
       "side": 1,
       "message": "this is a reasonable place to also mention that Authenticated Encryption is also-known-as \"AE\" and \"AEAD\".",
+      "range": {
+        "startLine": 372,
+        "startChar": 11,
+        "endLine": 374,
+        "endChar": 28
+      },
+      "revId": "af412a4c4f8207ab9f97773c624ae466a0ebd4e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e60e17d3_d2d07788",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-08-31T02:34:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81dd28c9_94091e3c",
       "range": {
         "startLine": 372,
         "startChar": 11,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f93f7969_2516c90d",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-08-31T02:34:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ae4501e_61b05c61",
+      "range": {
+        "startLine": 376,
+        "startChar": 1,
+        "endLine": 377,
+        "endChar": 41
+      },
+      "revId": "af412a4c4f8207ab9f97773c624ae466a0ebd4e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4af57405_ef0afdb4",
         "filename": "tests/net/java/android/net/IpSecTransformTest.java",
         "patchSetId": 25
@@ -174,6 +342,30 @@
       "writtenOn": "2017-08-31T00:59:19Z",
       "side": 1,
       "message": "This todo doesn\u0027t make sense in this context. If you know what tests need to be added, specify in the comment.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 78
+      },
+      "revId": "af412a4c4f8207ab9f97773c624ae466a0ebd4e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a15b15_c07133fa",
+        "filename": "tests/net/java/android/net/IpSecTransformTest.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-08-31T02:34:02Z",
+      "side": 1,
+      "message": "No idea. It was at the bottom of the IpSecManagerTest file, and I assumed it meant something to someone. Should I remove it?",
+      "parentUuid": "4af57405_ef0afdb4",
       "range": {
         "startLine": 53,
         "startChar": 0,
@@ -206,6 +398,30 @@
       "revId": "af412a4c4f8207ab9f97773c624ae466a0ebd4e9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e62386_b5ed4f99",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-08-31T02:34:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "480bf226_2ee11d1c",
+      "range": {
+        "startLine": 445,
+        "startChar": 0,
+        "endLine": 452,
+        "endChar": 74
+      },
+      "revId": "af412a4c4f8207ab9f97773c624ae466a0ebd4e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
