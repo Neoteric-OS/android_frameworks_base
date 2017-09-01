@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1395dd7c_c78f06a1",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2017-09-01T08:30:55Z",
+      "side": 1,
+      "message": "You could add see/link javadocs for the constants.  e.g.:\n\n * @see #BCD_EXTENDED_TYPE_CALLED_PARTY\n * @see #BCD_EXTENDED_TYPE_EF_ADN",
+      "revId": "ed5182f28f55c250714dceeae1105cd6ae2a8b4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
