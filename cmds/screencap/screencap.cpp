@@ -52,7 +52,8 @@ static void usage(const char* pname)
             "   -p: save the file as a png.\n"
             "   -d: specify the display id to capture, default %d.\n"
             "If FILENAME ends with .png it will be saved as a png.\n"
-            "If FILENAME is not given, the results will be printed to stdout.\n",
+            "If FILENAME is not given, the results will be printed to stdout:\n"
+            "    e.x. adb shell screencap -p > image.png\n",
             pname, DEFAULT_DISPLAY_ID
     );
 }
