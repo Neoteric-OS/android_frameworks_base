@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56ec6d94_5309ff8e",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1080813
+      },
+      "writtenOn": "2017-09-01T08:34:37Z",
+      "side": 1,
+      "message": "Add a log here.\n\nSlog.w(TAG, \"Skipping policy file \" + MAC_PERMISSIONS[i]);",
+      "range": {
+        "startLine": 100,
+        "startChar": 16,
+        "endLine": 100,
+        "endChar": 25
+      },
+      "revId": "08e13b8e0dafd498157d06cbd81cc7f7c578ae39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
