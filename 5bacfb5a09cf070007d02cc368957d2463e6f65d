@@ -16,6 +16,24 @@
       "revId": "5bacfb5a09cf070007d02cc368957d2463e6f65d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e405137c_946fda70",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1050647
+      },
+      "writtenOn": "2017-09-01T09:23:29Z",
+      "side": 1,
+      "message": "I was not sure about that. Done in PS4.",
+      "parentUuid": "e38906c7_7adfc4fb",
+      "revId": "5bacfb5a09cf070007d02cc368957d2463e6f65d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
