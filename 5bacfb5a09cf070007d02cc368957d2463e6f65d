@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e38906c7_7adfc4fb",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2017-09-01T09:14:43Z",
+      "side": 1,
+      "message": "I don\u0027t think it can be null here, unless the newly created fragment is null ( unlikely )",
+      "revId": "5bacfb5a09cf070007d02cc368957d2463e6f65d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
