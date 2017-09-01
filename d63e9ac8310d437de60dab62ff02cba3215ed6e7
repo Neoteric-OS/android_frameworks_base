@@ -22,6 +22,30 @@
       "revId": "d63e9ac8310d437de60dab62ff02cba3215ed6e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a3d4572_fe3c3237",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3845,
+      "author": {
+        "id": 1050647
+      },
+      "writtenOn": "2017-09-01T09:15:54Z",
+      "side": 1,
+      "message": "Good catch! Thanks. I think I covered all the places now in PS3",
+      "parentUuid": "e9f582ba_4a3a631a",
+      "range": {
+        "startLine": 3845,
+        "startChar": 8,
+        "endLine": 3845,
+        "endChar": 22
+      },
+      "revId": "d63e9ac8310d437de60dab62ff02cba3215ed6e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
