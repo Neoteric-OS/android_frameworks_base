@@ -606,6 +606,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
     }
 
     private final DelayableExecutor mMainExecutor;
+    private Handler mMainHandler;
 
     private int mInteractingWindows;
     private @TransitionMode int mStatusBarMode;
@@ -855,6 +856,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         mFeatureFlags = featureFlags;
         mKeyguardUnlockAnimationController = keyguardUnlockAnimationController;
         mMainExecutor = delayableExecutor;
+        mMainHandler = mainHandler;
         mMessageRouter = messageRouter;
         mWallpaperManager = wallpaperManager;
         mJankMonitor = jankMonitor;
@@ -968,6 +970,9 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         } else if (DEBUG) {
             Log.v(TAG, "start(): no wallpaper service ");
         }
+
+        mSbSettingsObserver.observe();
+        mSbSettingsObserver.update();
 
         // Set up the initial notification state. This needs to happen before CommandQueue.disable()
         setUpPresenter();
@@ -3959,6 +3964,9 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SHOW_LOCKSCREEN_MEDIA_ART),
                     false, this, UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -3970,12 +3978,16 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
             }  else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SHOW_LOCKSCREEN_MEDIA_ART))) {
                 setLockScreenMediaArt();
+            } else  if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN))) {
+                setLockscreenDoubleTapToSleep();
             }
         }
 
         public void update() {
             setLockScreenMediaBlurLevel();
             setLockScreenMediaArt();
+	    setLockscreenDoubleTapToSleep();
         }
     }
 
@@ -3988,6 +4000,14 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
     private void setLockScreenMediaArt() {
         if (mMediaManager != null) {
             mMediaManager.setLockScreenMediaArt();
+        }
+    }
+
+    private void setLockscreenDoubleTapToSleep() {
+        boolean isDoubleTapLockscreenEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN, 0, UserHandle.USER_CURRENT) == 1;
+        if (mNotificationPanelViewController != null) {
+            mNotificationPanelViewController.setLockscreenDoubleTapToSleep(isDoubleTapLockscreenEnabled);
         }
     }
 
