@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewConfiguration
 import androidx.annotation.FloatRange
 import androidx.annotation.VisibleForTesting
+import com.android.internal.util.neoteric.NeotericUtils
 import com.android.systemui.Dumpable
 import com.android.systemui.ExpandHelper
 import com.android.systemui.Gefingerpoken
@@ -773,6 +774,13 @@ class DragDownHelper(
     private var startingChild: ExpandableView? = null
     private var lastHeight = 0f
     private var isTrackpadReverseScroll = false
+
+    private var doubleTapToSleepEnabled = false
+    private var statusBarHeaderHeight = 0
+    private var lastDownEvent = -1
+    private var doubleTapTimeout = -1
+    private var goToSleep: Runnable? = null
+
     var isDraggingDown = false
         private set
 
@@ -798,6 +806,12 @@ class DragDownHelper(
         val configuration = ViewConfiguration.get(context)
         touchSlop = configuration.scaledTouchSlop.toFloat()
         slopMultiplier = configuration.scaledAmbiguousGestureMultiplier
+        doubleTapTimeout = ViewConfiguration.getDoubleTapTimeout()
+        statusBarHeaderHeight = context
+                .resources.getDimensionPixelSize(R.dimen.status_bar_header_height_keyguard)
+        goToSleep = Runnable {
+            NeotericUtils.switchScreenOff(context)
+        }
     }
 
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
@@ -813,6 +827,20 @@ class DragDownHelper(
                 isTrackpadReverseScroll =
                     !naturalScrollingSettingObserver.isNaturalScrollingEnabled &&
                         isTrackpadScroll(event)
+
+                if (doubleTapToSleepEnabled && y < statusBarHeaderHeight) {
+                    val eventTime  = event.getEventTime().toInt()
+                    if (lastDownEvent != -1) {
+                        val diff = eventTime - lastDownEvent
+
+                        if (diff < doubleTapTimeout) {
+                            goToSleep?.run()
+                        }
+                        lastDownEvent = -1
+                    } else {
+                        lastDownEvent = eventTime
+                    }
+                }
             }
             MotionEvent.ACTION_MOVE -> {
                 val h = (if (isTrackpadReverseScroll) -1 else 1) * (y - initialTouchY)
@@ -969,5 +997,9 @@ class DragDownHelper(
 
     private fun findView(x: Float, y: Float): ExpandableView? {
         return expandCallback.getChildAtRawPosition(x, y)
+    }
+
+    public fun updateDoubleTapToSleep(updateDoubleTapToSleep: Boolean) {
+        doubleTapToSleepEnabled = updateDoubleTapToSleep
     }
 }

@@ -49,10 +49,12 @@ import android.app.UiModeManager;
 import android.app.WallpaperManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.database.ContentObserver;
 import android.graphics.Point;
 import android.hardware.devicestate.DeviceStateManager;
 import android.hardware.fingerprint.FingerprintManager;
@@ -520,6 +522,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
     }
 
     private final DelayableExecutor mMainExecutor;
+    private Handler mMainHandler;
 
     private int mInteractingWindows;
 
@@ -607,6 +610,8 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
 
     private final SysUiState mSysUiState;
 
+    private final SbSettingsObserver mSbSettingsObserver;
+
     /**
      * Public constructor for CentralSurfaces.
      *
@@ -616,6 +621,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     @Inject
     public CentralSurfacesImpl(
+	    @Main Handler mainHandler,
             Context context,
             NotificationsController notificationsController,
             FragmentService fragmentService,
@@ -808,6 +814,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         mFeatureFlags = featureFlags;
         mKeyguardUnlockAnimationController = keyguardUnlockAnimationController;
         mMainExecutor = delayableExecutor;
+        mMainHandler = mainHandler;
         mMessageRouter = messageRouter;
         mWallpaperManager = wallpaperManager;
         mCameraLauncherLazy = cameraLauncherLazy;
@@ -862,6 +869,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         if (PredictiveBackSysUiFlag.isEnabled()) {
             mContext.getApplicationInfo().setEnableOnBackInvokedCallback(true);
         }
+        mSbSettingsObserver = new SbSettingsObserver(mMainHandler);
     }
 
     private void initBubbles(Bubbles bubbles) {
@@ -918,6 +926,9 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         }
 
         createAndAddWindows(result);
+
+        mSbSettingsObserver.observe();
+        mSbSettingsObserver.update();
 
         // Set up the initial notification state. This needs to happen before CommandQueue.disable()
         setUpPresenter();
@@ -2946,6 +2957,43 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
     @Override
     public boolean isDeviceInteractive() {
         return mDeviceInteractive;
+    }
+
+    private class SbSettingsObserver extends ContentObserver {
+        SbSettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_GESTURE),
+                    false, this, UserHandle.USER_ALL);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            if (uri.equals(Settings.System.getUriFor(
+		    Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN))
+                    || uri.equals(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_GESTURE))) {
+                setDoubleTapToSleepGesture();
+	    }
+        }
+
+        public void update() {
+	    setDoubleTapToSleepGesture();
+        }
+    }
+
+    private void setDoubleTapToSleepGesture() {
+        if (getNotificationShadeWindowViewController() != null) {
+            getNotificationShadeWindowViewController().setDoubleTapToSleepGesture();
+        }
     }
 
     private final BroadcastReceiver mBannerActionBroadcastReceiver = new BroadcastReceiver() {

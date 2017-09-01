@@ -75,6 +75,7 @@ import android.util.IndentingPrintWriter;
 import android.util.Log;
 import android.util.MathUtils;
 import android.view.HapticFeedbackConstants;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -251,6 +252,8 @@ import kotlinx.coroutines.CoroutineDispatcher;
 import kotlinx.coroutines.flow.Flow;
 import kotlinx.coroutines.flow.StateFlow;
 
+import com.android.internal.util.neoteric.NeotericUtils;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -410,6 +413,11 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     private TrackingStartedListener mTrackingStartedListener;
     private OpenCloseListener mOpenCloseListener;
     private GestureRecorder mGestureRecorder;
+
+    private GestureDetector mDoubleTapToSleepGesture;
+    private boolean mIsLockscreenDoubleTapEnabled;
+    private int mStatusBarHeaderHeight;
+    protected boolean mIsSbDoubleTapEnabled;
 
     private boolean mKeyguardQsUserSwitchEnabled;
     private boolean mKeyguardUserSwitcherEnabled;
@@ -980,6 +988,15 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
 
         updateUserSwitcherFlags();
         mKeyguardBottomAreaViewModel = keyguardBottomAreaViewModel;
+        mDoubleTapToSleepGesture = new GestureDetector(mView.getContext(),
+                new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                NeotericUtils.switchScreenOff(mView.getContext());
+                return true;
+            }
+        });
+
         mKeyguardBottomAreaInteractor = keyguardBottomAreaInteractor;
         mKeyguardClockInteractor = keyguardClockInteractor;
         KeyguardLongPressViewBinder.bind(
@@ -1283,6 +1300,8 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                 R.dimen.lockscreen_to_dreaming_transition_lockscreen_translation_y);
         mGoneToDreamingTransitionTranslationY = mResources.getDimensionPixelSize(
                 R.dimen.gone_to_dreaming_transition_lockscreen_translation_y);
+        mStatusBarHeaderHeight = mResources.getDimensionPixelSize(
+                R.dimen.status_bar_height);
         // TODO (b/265193930): remove this and make QsController listen to NotificationPanelViews
         mQsController.loadDimens();
     }
@@ -3324,6 +3343,14 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         }
     }
 
+    public void setLockscreenDoubleTapToSleep(boolean isDoubleTapEnabled) {
+        mIsLockscreenDoubleTapEnabled = isDoubleTapEnabled;
+    }
+
+    public void setSbDoubleTapToSleep(boolean isDoubleTapEnabled) {
+        mIsSbDoubleTapEnabled = isDoubleTapEnabled;
+    }
+
     public void dozeTimeTick() {
         mLockIconViewController.dozeTimeTick();
         if (!MigrateClocksToBlueprint.isEnabled()) {
@@ -5144,6 +5171,14 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             if (mLastEventSynthesizedDown && event.getAction() == MotionEvent.ACTION_UP) {
                 expand(true /* animate */);
             }
+
+            if ((mIsLockscreenDoubleTapEnabled && !mPulsing && !mDozing
+                    && mBarState == StatusBarState.KEYGUARD) ||
+                    (!mQsController.getExpanded() && mIsSbDoubleTapEnabled
+                    && event.getY() < mStatusBarHeaderHeight)) {
+                mDoubleTapToSleepGesture.onTouchEvent(event);
+            }
+
             initDownStates(event);
 
             // If pulse is expanding already, let's give it the touch. There are situations
@@ -5266,7 +5301,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                         onTrackingStarted();
                     }
                     if (isFullyCollapsed() && !mHeadsUpManager.hasPinnedHeadsUp()
-                            && !mCentralSurfaces.isBouncerShowing()) {
+                            && !mCentralSurfaces.isBouncerShowing() && !mIsSbDoubleTapEnabled) {
                         startOpening(event);
                     }
                     break;
