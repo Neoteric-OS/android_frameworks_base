@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d0360e21_bc701c58",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-09-01T22:03:23Z",
+      "side": 1,
+      "message": "I removed the mSpiOffset, and return the same SPI for all built IpSecConfig. It should not fail the test, since the IpSecService doesn\u0027t have the responsibility to check duplicate SPIs.",
+      "parentUuid": "13513d4b_140d5325",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 306,
+        "endChar": 71
+      },
+      "revId": "82732b4a70143091f3ee555c335362cf28378e83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d798756_82266dd3",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "82732b4a70143091f3ee555c335362cf28378e83",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac96032_37c4fcb9",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-09-01T22:03:23Z",
+      "side": 1,
+      "message": "Sure, move the when() out of the loop.",
+      "parentUuid": "2d798756_82266dd3",
+      "range": {
+        "startLine": 542,
+        "startChar": 0,
+        "endLine": 560,
+        "endChar": 9
+      },
+      "revId": "82732b4a70143091f3ee555c335362cf28378e83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
