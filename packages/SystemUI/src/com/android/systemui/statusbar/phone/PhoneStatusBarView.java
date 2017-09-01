@@ -21,12 +21,19 @@ import static com.android.systemui.Flags.edtNotAllowedOnStatusBar;
 import android.annotation.Nullable;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.database.ContentObserver;
 import android.graphics.Insets;
 import android.graphics.Rect;
 import android.graphics.Region;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.PowerManager;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.DisplayCutout;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +80,10 @@ public class PhoneStatusBarView extends FrameLayout {
     private float mFontScale;
     private StatusBarLongPressGestureDetector mStatusBarLongPressGestureDetector;
     private final Region mTouchableRegion = Region.obtain();
+
+    private GestureDetector mDoubleTapToSleepGesture;
+    private boolean mDoubleTapToSleepEnabled;
+    private ContentObserver mDoubleTapObserver;
 
     /**
      * Draw this many pixels into the left/right side of the cutout to optimally use the space
@@ -138,12 +149,52 @@ public class PhoneStatusBarView extends FrameLayout {
             // this we directly tell expanded dark theme to ignore this view hierarchy.
             getViewRootImpl().setForceInvertAllowed(false);
         }
+        mDoubleTapObserver = new ContentObserver(new Handler(Looper.getMainLooper())) {
+            @Override
+            public void onChange(boolean selfChange) {
+                updateDoubleTapToSleep();
+            }
+        };
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.DOUBLE_TAP_SLEEP_GESTURE),
+                false, mDoubleTapObserver, UserHandle.USER_ALL);
+        updateDoubleTapToSleep();
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mDisplayCutout = null;
+        if (mDoubleTapObserver != null) {
+            mContext.getContentResolver().unregisterContentObserver(mDoubleTapObserver);
+            mDoubleTapObserver = null;
+        }
+    }
+
+    private void updateDoubleTapToSleep() {
+        mDoubleTapToSleepEnabled = Settings.System.getIntForUser(
+                mContext.getContentResolver(),
+                Settings.System.DOUBLE_TAP_SLEEP_GESTURE,
+                0, UserHandle.USER_CURRENT) == 1;
+        if (mDoubleTapToSleepEnabled && mDoubleTapToSleepGesture == null) {
+            mDoubleTapToSleepGesture = new GestureDetector(mContext,
+                    new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onDoubleTap(MotionEvent event) {
+                    PowerManager pm = mContext.getSystemService(PowerManager.class);
+                    if (pm != null) {
+                        pm.goToSleep(event.getEventTime(),
+                                PowerManager.GO_TO_SLEEP_REASON_POWER_BUTTON, 0);
+                    }
+                    return true;
+                }
+
+                @Override
+                public boolean onDoubleTapEvent(MotionEvent event) {
+                    return true;
+                }
+            });
+        }
     }
 
     // Per b/300629388, we let the PhoneStatusBarView detect onConfigurationChanged to
@@ -241,6 +292,11 @@ public class PhoneStatusBarView extends FrameLayout {
             // components, essentially making the status bar and its children completely
             // non-interactive.
             return true;
+        }
+        if (mDoubleTapToSleepEnabled && mDoubleTapToSleepGesture != null) {
+            if (mDoubleTapToSleepGesture.onTouchEvent(event)) {
+                return true;
+            }
         }
         return super.dispatchTouchEvent(event);
     }
