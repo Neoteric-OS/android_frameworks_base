@@ -60,7 +60,8 @@ public class Nat464Xlat extends BaseNetworkObserver {
     private enum State {
         IDLE,       // start() not called. Base iface and stacked iface names are null.
         STARTING,   // start() called. Base iface and stacked iface names are known.
-        RUNNING;    // start() called, and the stacked iface is known to be up.
+        RUNNING,    // start() called, and the stacked iface is known to be up.
+        STOPPING;   // start() and stop() called.
     }
 
     private String mBaseIface;
@@ -111,7 +112,14 @@ public class Nat464Xlat extends BaseNetworkObserver {
     }
 
     /**
-     * Sets internal state.
+     * @return true if clatd has been stopped, waiting for the stacked interface to be removed.
+     */
+    public boolean isStopping() {
+        return mState == State.STOPPING;
+    }
+
+    /**
+     * Sets internal state just before starting clatd.
      */
     private void enterStartingState(String baseIface) {
         mIface = CLAT_PREFIX + baseIface;
@@ -120,7 +128,21 @@ public class Nat464Xlat extends BaseNetworkObserver {
     }
 
     /**
-     * Clears internal state.
+     * Enters running state just after getting confirmation that the stacked interface is up.
+     */
+    private void enterRunningState() {
+        mState = State.RUNNING;
+    }
+
+    /**
+     * Enters stopping state just after stopping clatd.
+     */
+    private void enterStoppingState() {
+        mState = State.STOPPING;
+    }
+
+    /**
+     * Clears internal state just after getting confirmation that the stacked interface is removed.
      */
     private void enterIdleState() {
         mIface = null;
@@ -169,7 +191,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
      * Stops the clat daemon.
      */
     public void stop() {
-        if (!isStarted()) {
+        if (!isStarted() || isStopping()) {
             Slog.e(TAG, "stopClat: already stopped or not started");
             return;
         }
@@ -180,8 +202,10 @@ public class Nat464Xlat extends BaseNetworkObserver {
         } catch(RemoteException|IllegalStateException e) {
             Slog.e(TAG, "Error stopping clatd on " + mBaseIface, e);
         }
-        // When clatd stops and its interface is deleted, handleInterfaceRemoved() will trigger
-        // ConnectivityService#handleUpdateLinkProperties and call enterIdleState().
+
+        enterStoppingState();
+        // When clatd stops and its interface is deleted, handleInterfaceRemoved() will be triggered
+        // and transition to state IDLE.
     }
 
     /**
@@ -260,7 +284,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
             Slog.e(TAG, "cladAddress was null for stacked iface " + iface);
             return;
         }
-        mState = State.RUNNING;
+        enterRunningState();
         Slog.i(TAG, String.format("interface %s is up, adding stacked link %s on top of %s",
                 mIface, mIface, mBaseIface));
 
@@ -278,22 +302,27 @@ public class Nat464Xlat extends BaseNetworkObserver {
             return;
         }
 
+        boolean shouldUpdate = !isStopping();
+
         Slog.i(TAG, "interface " + iface + " removed");
         // The interface going away likely means clatd has crashed. Ask netd to stop it,
         // because otherwise when we try to start it again on the same base interface netd
         // will complain that it's already started.
         try {
             mNMService.unregisterObserver(this);
-            // TODO: add STOPPING state to avoid calling stopClatd twice.
-            mNMService.stopClatd(mBaseIface);
         } catch(RemoteException|IllegalStateException e) {
-            Slog.e(TAG, "Error stopping clatd on " + mBaseIface, e);
+            Slog.e(TAG, "Error unregistering clatd observer on " + mBaseIface, e);
         }
+        stop(); // No-op if Nat464Xlat was already in STOPPING state.
         maybeSetIpv6NdOffload(mBaseIface, true);
         LinkProperties lp = new LinkProperties(mNetwork.linkProperties);
         lp.removeStackedLink(mIface);
         enterIdleState();
-        mNetwork.connService.handleUpdateLinkProperties(mNetwork, lp);
+
+        // Do not update LinkProperties if Nat464Xlat was in STOPPING state. http://b/65225023.
+        if (shouldUpdate) {
+            mNetwork.connService.handleUpdateLinkProperties(mNetwork, lp);
+        }
     }
 
     @Override
