@@ -16,6 +16,24 @@
       "revId": "ed5182f28f55c250714dceeae1105cd6ae2a8b4b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f26a18c8_16d12888",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-01T20:37:16Z",
+      "side": 1,
+      "message": "Good point, thanks!",
+      "parentUuid": "1395dd7c_c78f06a1",
+      "revId": "ed5182f28f55c250714dceeae1105cd6ae2a8b4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
