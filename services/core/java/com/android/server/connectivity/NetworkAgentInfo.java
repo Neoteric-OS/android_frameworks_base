@@ -249,9 +249,9 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
 
     private static final String TAG = ConnectivityService.class.getSimpleName();
     private static final boolean VDBG = false;
-    public final ConnectivityService connService;
+    private final ConnectivityService mConnService;
     private final Context mContext;
-    final Handler handler;
+    final Handler mHandler;
 
     public NetworkAgentInfo(Messenger messenger, AsyncChannel ac, Network net, NetworkInfo info,
             LinkProperties lp, NetworkCapabilities nc, int score, Context context, Handler handler,
@@ -263,11 +263,19 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         linkProperties = lp;
         networkCapabilities = nc;
         currentScore = score;
-        this.connService = connService;
+        mConnService = connService;
         mContext = context;
-        this.handler = handler;
+        mHandler = handler;
         networkMonitor = connService.createNetworkMonitor(context, handler, this, defaultRequest);
         networkMisc = misc;
+    }
+
+    public ConnectivityService connService() {
+        return mConnService;
+    }
+
+    public Handler handler() {
+        return mHandler;
     }
 
     // Functions for manipulating the requests satisfied by this network.
@@ -432,7 +440,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     private boolean ignoreWifiUnvalidationPenalty() {
         boolean isWifi = networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) &&
                 networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
-        boolean avoidBadWifi = connService.avoidBadWifi() || avoidUnvalidated;
+        boolean avoidBadWifi = mConnService.avoidBadWifi() || avoidUnvalidated;
         return isWifi && !avoidBadWifi && everValidated;
     }
 
@@ -516,8 +524,8 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         }
 
         if (newExpiry > 0) {
-            mLingerMessage = connService.makeWakeupMessage(
-                    mContext, handler,
+            mLingerMessage = mConnService.makeWakeupMessage(
+                    mContext, mHandler,
                     "NETWORK_LINGER_COMPLETE." + network.netId,
                     EVENT_NETWORK_LINGER_COMPLETE, this);
             mLingerMessage.schedule(newExpiry);
