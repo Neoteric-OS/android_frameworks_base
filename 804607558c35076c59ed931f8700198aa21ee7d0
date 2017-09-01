@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6327912b_be217a7c",
+        "filename": "api/current.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 39846,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-01T00:57:10Z",
+      "side": 1,
+      "message": "So should we just remove this enum because we use two static int instead?",
+      "parentUuid": "ed40d759_4045abdb",
+      "range": {
+        "startLine": 39841,
+        "startChar": 2,
+        "endLine": 39846,
+        "endChar": 3
+      },
+      "revId": "804607558c35076c59ed931f8700198aa21ee7d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3bbb8b3_2f4253fc",
         "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-31T20:58:30Z",
       "side": 1,
       "message": "Enumerated types are not permitted in the android API.\n\nInstead, define public static final int constants:\nBCD_EXTENDED_TYPE_EF_ADN\nBCD_EXTENDED_TYPE_CALLED_PARTY",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 5
+      },
+      "revId": "804607558c35076c59ed931f8700198aa21ee7d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91635cdd_450dc19a",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-01T00:57:10Z",
+      "side": 1,
+      "message": "Good point, thanks!",
+      "parentUuid": "b3bbb8b3_2f4253fc",
       "range": {
         "startLine": 86,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "42c5e569_74b19fec",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-01T00:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f780fee5_c8cf9b44",
+      "range": {
+        "startLine": 816,
+        "startChar": 6,
+        "endLine": 817,
+        "endChar": 56
+      },
+      "revId": "804607558c35076c59ed931f8700198aa21ee7d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1b70cd2_1e090f24",
         "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-31T20:58:30Z",
       "side": 1,
       "message": "Add comment to indicate:\nThis method is equivalent to calling calledPartyBCDToString with extended type EF_ADN.",
+      "range": {
+        "startLine": 819,
+        "startChar": 90,
+        "endLine": 819,
+        "endChar": 97
+      },
+      "revId": "804607558c35076c59ed931f8700198aa21ee7d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4899ea3_39b3be4b",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-01T00:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1b70cd2_1e090f24",
       "range": {
         "startLine": 819,
         "startChar": 90,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "34b9c6ce_0acc425d",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-01T00:57:10Z",
+      "side": 1,
+      "message": "Yes, this should be public, just removed the annotation, thanks!",
+      "parentUuid": "6f7b2970_3df0aaa0",
+      "range": {
+        "startLine": 839,
+        "startChar": 7,
+        "endLine": 839,
+        "endChar": 12
+      },
+      "revId": "804607558c35076c59ed931f8700198aa21ee7d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a99be1a6_d61fee32",
         "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
         "patchSetId": 5
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-31T20:58:30Z",
       "side": 1,
       "message": "Docs should also indicate:\nCalling this method is equivalent to calling calledPartyBCDFragmentToString with EF_ADN as the extended type.",
+      "range": {
+        "startLine": 983,
+        "startChar": 7,
+        "endLine": 983,
+        "endChar": 14
+      },
+      "revId": "804607558c35076c59ed931f8700198aa21ee7d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5bdfd005_633b17fa",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-01T00:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a99be1a6_d61fee32",
       "range": {
         "startLine": 983,
         "startChar": 7,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "92d4d8e3_5246150b",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-01T00:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "876e77f8_9aa775b7",
+      "range": {
+        "startLine": 994,
+        "startChar": 8,
+        "endLine": 994,
+        "endChar": 12
+      },
+      "revId": "804607558c35076c59ed931f8700198aa21ee7d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "feef8c02_c2f7d899",
         "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
         "patchSetId": 5
@@ -174,6 +342,30 @@
       "writtenOn": "2017-08-31T20:58:30Z",
       "side": 1,
       "message": "As with other methods, please indicate what this is equivalent to with the new method",
+      "range": {
+        "startLine": 1111,
+        "startChar": 8,
+        "endLine": 1111,
+        "endChar": 39
+      },
+      "revId": "804607558c35076c59ed931f8700198aa21ee7d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e51fb4ca_a62c107a",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-01T00:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feef8c02_c2f7d899",
       "range": {
         "startLine": 1111,
         "startChar": 8,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "ae367845_1b736dfc",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-01T00:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed1906b2_b8d24183",
+      "range": {
+        "startLine": 1121,
+        "startChar": 36,
+        "endLine": 1121,
+        "endChar": 42
+      },
+      "revId": "804607558c35076c59ed931f8700198aa21ee7d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e27bb954_eac7f0a3",
         "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
         "patchSetId": 5
@@ -220,6 +436,30 @@
       "writtenOn": "2017-08-31T20:58:30Z",
       "side": 1,
       "message": "I presume this replaces the deprecated method?  If so, it should not be @hide.",
+      "range": {
+        "startLine": 1125,
+        "startChar": 6,
+        "endLine": 1126,
+        "endChar": 12
+      },
+      "revId": "804607558c35076c59ed931f8700198aa21ee7d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75ebdea6_faf8bb98",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-01T00:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e27bb954_eac7f0a3",
       "range": {
         "startLine": 1125,
         "startChar": 6,
