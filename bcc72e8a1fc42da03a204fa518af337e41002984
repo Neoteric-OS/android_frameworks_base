@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92062d50_2a619b6a",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-02T06:45:44Z",
+      "side": 1,
+      "message": "In a future CL, we might want to make this a final instance member instead of static, so it can include the interface name.",
+      "range": {
+        "startLine": 42,
+        "startChar": 38,
+        "endLine": 42,
+        "endChar": 71
+      },
+      "revId": "bcc72e8a1fc42da03a204fa518af337e41002984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5ad4916_5fc02315",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-02T06:45:44Z",
+      "side": 1,
+      "message": "This is true only if we were in RUNNING, but not if we were in STARTING. If we were in STARTING, nothing will call enterIdleState and perform cleanup (e.g. unregister the observer).\n\nMore in general I think there are four cases that can happen after start() is called.\n\nCase 1: clatd never comes up.\n\n1. The network disconnects and CS calls stop(). We stop clat and clean up\n   state (e.g., the observer, the interface name).\n\n\nCase 2: clatd comes up and is stopped when the network disconnects.\n\n1. We see the interface come up and update linkproperties.\n2. The network disconnects and CS calls stop(). We stop clat.\n3. We see the interface being removed. We must not update linkproperties\n   because the network has disconnected. We clean up state.\n\n\nCase 3: clatd comes up and is stopped when no longer needed (e.g., if an IPv4 address appears).\n\n1. We see the interface come up and update linkproperties.\n2. CS calls stop(). We stop clat. I think we must remember the interface name\n   so we can tell when it goes down. This is so that if CS calls start()\n   again we won\u0027t be too confused.\n3. We see the interface being removed. We must update link properties so that\n   CS knows that there\u0027s no stacked interface any more. We clean up state.\n4. At this point it\u0027s safe for CS to call start() on this interface name.\n\n\nCase 4: clatd crashes.\n\n1. We see the interface come up and update linkproperties.\n2. We see the interface being removed. We must stop clat so that netd knows\n   it\u0027s gone. We must update link properties so that CS knows that there\u0027s no\n   stacked interface any more. We clean up state.\n3. If CS later calls stop(), we need to behave reasonably (e.g., not crash).\n   If it later calls start() we need to behave reasonably. It would be nice\n   if we could start clat again, but not strictly required since this case\n   is hopefully rare.",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 40
+      },
+      "revId": "bcc72e8a1fc42da03a204fa518af337e41002984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9a60368_48c3517c",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-02T06:45:44Z",
+      "side": 1,
+      "message": "Move this into if (shouldUpdate) since it only needs to be run there.",
+      "range": {
+        "startLine": 318,
+        "startChar": 0,
+        "endLine": 319,
+        "endChar": 37
+      },
+      "revId": "bcc72e8a1fc42da03a204fa518af337e41002984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
