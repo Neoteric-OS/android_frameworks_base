@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b5d1894_fae1ac8d",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-03T15:31:24Z",
+      "side": 1,
+      "message": "Agreed this could be done in a later CL. Most logging msg here already have the base iface or stacked iface names.",
+      "parentUuid": "92062d50_2a619b6a",
+      "range": {
+        "startLine": 42,
+        "startChar": 38,
+        "endLine": 42,
+        "endChar": 71
+      },
+      "revId": "bcc72e8a1fc42da03a204fa518af337e41002984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5ad4916_5fc02315",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6bf8051e_8d78af19",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-03T15:31:24Z",
+      "side": 1,
+      "message": "To handle all these cases: there is something cleaner and easier to do that adding a STOPPING state. I can just factor the teardown logic in a third method and not have handleInterfaceRemove() and stop() call into each other.",
+      "parentUuid": "a5ad4916_5fc02315",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 40
+      },
+      "revId": "bcc72e8a1fc42da03a204fa518af337e41002984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9a60368_48c3517c",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-02T06:45:44Z",
       "side": 1,
       "message": "Move this into if (shouldUpdate) since it only needs to be run there.",
+      "range": {
+        "startLine": 318,
+        "startChar": 0,
+        "endLine": 319,
+        "endChar": 37
+      },
+      "revId": "bcc72e8a1fc42da03a204fa518af337e41002984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d8c6f7a_40104ad3",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-03T15:31:24Z",
+      "side": 1,
+      "message": "shouldUpdate is gone.",
+      "parentUuid": "d9a60368_48c3517c",
       "range": {
         "startLine": 318,
         "startChar": 0,
