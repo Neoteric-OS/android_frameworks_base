@@ -22,6 +22,30 @@
       "revId": "08e13b8e0dafd498157d06cbd81cc7f7c578ae39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ff83bdc_e7e51bb0",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1204359
+      },
+      "writtenOn": "2017-09-04T03:04:44Z",
+      "side": 1,
+      "message": "Done\n------\n\nsailfish:\nadb -s FA6CL0304775 shell logcat | grep SELinuxMMAC:\n09-04 10:41:42.292   856   856 D SELinuxMMAC: Using policy file /system/etc/selinux/plat_mac_permissions.xml\n09-04 10:41:42.296   856   856 W SELinuxMMAC: Skipping policy file /vendor/etc/selinux/nonplat_mac_permissions.xml\n09-04 10:41:42.300   856   856 D SELinuxMMAC: Using policy file /vendor/etc/selinux/vendor_mac_permissions.xml\n09-04 10:41:42.302   856   856 W SELinuxMMAC: Skipping policy file /odm/etc/selinux/odm_mac_permissions.xml\n\nMTK:\nadb -s 0123456789ABCDEF shell logcat | grep SELinuxMMAC:\n01-05 17:22:05.587   628   628 D SELinuxMMAC: Using policy file /system/etc/selinux/plat_mac_permissions.xml\n01-05 17:22:05.600   628   628 W SELinuxMMAC: Skipping policy file /vendor/etc/selinux/nonplat_mac_permissions.xml\n01-05 17:22:05.601   628   628 D SELinuxMMAC: Using policy file /vendor/etc/selinux/vendor_mac_permissions.xml\n01-05 17:22:05.605   628   628 D SELinuxMMAC: Using policy file /odm/etc/selinux/odm_mac_permissions.xml",
+      "parentUuid": "56ec6d94_5309ff8e",
+      "range": {
+        "startLine": 100,
+        "startChar": 16,
+        "endLine": 100,
+        "endChar": 25
+      },
+      "revId": "08e13b8e0dafd498157d06cbd81cc7f7c578ae39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
