@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d42fc030_4599eaa7",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T08:21:58Z",
+      "side": 1,
+      "message": "Typo, responsibility",
+      "range": {
+        "startLine": 36,
+        "startChar": 58,
+        "endLine": 36,
+        "endChar": 72
+      },
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f05cb86f_2fe67b6c",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T08:21:58Z",
+      "side": 1,
+      "message": "Nit: you probably want mNetwork.name(). NetworkAgentInfo#toString() is very verbose.",
+      "range": {
+        "startLine": 121,
+        "startChar": 86,
+        "endLine": 121,
+        "endChar": 94
+      },
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1477f6a6_b5b14030",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T08:21:58Z",
+      "side": 1,
+      "message": "I don\u0027t think this can throw IAE. Consider removing.",
+      "range": {
+        "startLine": 150,
+        "startChar": 32,
+        "endLine": 150,
+        "endChar": 55
+      },
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff86924a_2a7a1a83",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T08:21:58Z",
+      "side": 1,
+      "message": "I think this can\u0027t throw RemoteException. Because RemoteException is a checked exception, the compiler will tell us whether it\u0027s safe to remove.",
+      "range": {
+        "startLine": 155,
+        "startChar": 16,
+        "endLine": 155,
+        "endChar": 31
+      },
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "678ed9d9_0ee6f363",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T08:21:58Z",
+      "side": 1,
+      "message": "What do we do about the LinkProperties here?\n\nIf this stop is due to a disconnect, updating them is not necessary. But if this call to stop() is due to clatd being no longer needed (e.g., if IPv4 address appears), then CS (and netd) will still think that we have a stacked interface, even though we don\u0027t any more because clatd has been stopped. I think we handle this case correctly today (modulo the race we\u0027re trying to fix, of course).\n\nNot sure how to fix this.\n\nThe simplest thing would be to update the LinkProperties if we\u0027re in state RUNNING, but I\u0027m not sure that\u0027s safe to do if we\u0027re being called from handleAsyncChannelDisconnected. It looks like we\u0027d at least send out an onLinkPropertiesChanged after onLost, which I don\u0027t think we do at the moment.\n\nMaybe we can make handleUpdateLinkProperties call isLiveNetworkAgent as discussed previously. I think this should be safe because maybeHandleNetworkAgentMessage, which is the only caller of handleUpdateLinkProperties, already performs a very similar check.\n\nOr maybe we can make handleUpdateLinkProperties ignore updates if the network is in state DISCONNECTED. This seems like a bigger change.\n\nOr maybe CS can pass in a boolean indicating this call to stop() is due to a teardown.",
+      "range": {
+        "startLine": 198,
+        "startChar": 8,
+        "endLine": 198,
+        "endChar": 25
+      },
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21748bf2_ecac34e1",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T08:21:58Z",
+      "side": 1,
+      "message": "Typo, clatAddress",
+      "range": {
+        "startLine": 274,
+        "startChar": 25,
+        "endLine": 274,
+        "endChar": 36
+      },
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19f1b4ca_d5750097",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T08:21:58Z",
+      "side": 1,
+      "message": "With the code as it stands, I think it\u0027s impossible that clatd !\u003d null and clatd.isStarted() is false. Suggest either removing the check for isStarted() or add a comment explaining that the extra check is redundant.",
+      "range": {
+        "startLine": 574,
+        "startChar": 25,
+        "endLine": 574,
+        "endChar": 46
+      },
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a25dc0a7_25d4310f",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T08:21:58Z",
+      "side": 1,
+      "message": "29",
+      "range": {
+        "startLine": 54,
+        "startChar": 63,
+        "endLine": 54,
+        "endChar": 65
+      },
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11404afb_2a5ca901",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T08:21:58Z",
+      "side": 1,
+      "message": "Nit: passing null here is superflous and a bit confusing, since it\u0027s identical to not passing in anything.",
+      "range": {
+        "startLine": 75,
+        "startChar": 49,
+        "endLine": 75,
+        "endChar": 53
+      },
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9c9f96a_9f3135c1",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T08:21:58Z",
+      "side": 1,
+      "message": "Nit: xlat might be a clearer variable name.",
+      "range": {
+        "startLine": 88,
+        "startChar": 19,
+        "endLine": 88,
+        "endChar": 22
+      },
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a80eee6_b9db4abb",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T08:21:58Z",
+      "side": 1,
+      "message": "Nit: consider also checking that the object passed in has a stacked link of name STACKED_IFACE (like you do in testClatdCrashWhileRunning below).",
+      "range": {
+        "startLine": 102,
+        "startChar": 67,
+        "endLine": 102,
+        "endChar": 72
+      },
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3465157d_a735322d",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T08:21:58Z",
+      "side": 1,
+      "message": "Reminder: if we modify the code to properly remove the stacked link when stop() is called without a disconnect, we might want to add a check here that we update the linkproperties.",
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "607932cc_ee06b9c3",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T08:21:58Z",
+      "side": 1,
+      "message": "Can you replace this with:\n\n    getAllInterfaceNames().contains(STACKED_IFACE)\n\nor does that not work for some other reason?",
+      "range": {
+        "startLine": 136,
+        "startChar": 33,
+        "endLine": 136,
+        "endChar": 60
+      },
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
