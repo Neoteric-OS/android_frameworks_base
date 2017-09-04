@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4b45508_844c08cf",
+        "filename": "core/java/android/accounts/AbstractAccountAuthenticator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2017-09-04T08:43:37Z",
+      "side": 1,
+      "message": "Please keep the unrelated style cleanups out of this patch / put them in a separate commit so we can merge it easier.",
+      "range": {
+        "startLine": 324,
+        "startChar": 0,
+        "endLine": 324,
+        "endChar": 24
+      },
+      "revId": "91db86b7a73abf528640ae3bca6ebb6aca6616f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
