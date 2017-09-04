@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b8043b5_90e9be0b",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T02:26:27Z",
+      "side": 1,
+      "message": "Observation: conceptually, these are not necessary for *entering* stopped state. They are necessary for *exiting* either starting state (in the case of unregistering the observer and stopping clatd) or running state (in the case of ND offload).\n\nI think you might be able to get rid of STOPPED (and use IDLE for everything) if you put the unregisterObserver and the stopClatd behind an if (isStarted()), like you already put the ND offload code in an if (isRunning()).",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 9
+      },
+      "revId": "496c30364f67e7a6be8bc73c5af1e88363e4676a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2631740f_7bfcb132",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T02:26:27Z",
+      "side": 1,
+      "message": "What happens if when we get here the network has already disconnected? Will we still incorrectly change the link properties for a network that doesn\u0027t exist any more?",
+      "range": {
+        "startLine": 284,
+        "startChar": 31,
+        "endLine": 284,
+        "endChar": 57
+      },
+      "revId": "496c30364f67e7a6be8bc73c5af1e88363e4676a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e57fec1_176bf0b1",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T02:26:27Z",
+      "side": 1,
+      "message": "29",
+      "range": {
+        "startLine": 54,
+        "startChar": 63,
+        "endLine": 54,
+        "endChar": 65
+      },
+      "revId": "496c30364f67e7a6be8bc73c5af1e88363e4676a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
