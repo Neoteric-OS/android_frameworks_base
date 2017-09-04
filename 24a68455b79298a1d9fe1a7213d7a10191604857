@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "4fb5ada7_ee98b09b",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T08:28:49Z",
+      "side": 1,
+      "message": "Pre-existing, so no need to fix in this CL, but I think this should also consider the SUSPENDED state. Otherwise, if we get a linkproperties update while in SUSPENDED state, we\u0027ll tear down clatd. Can you add a TODO for this?",
+      "range": {
+        "startLine": 84,
+        "startChar": 49,
+        "endLine": 84,
+        "endChar": 64
+      },
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f05cb86f_2fe67b6c",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 5
