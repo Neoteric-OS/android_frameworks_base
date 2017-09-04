@@ -140,6 +140,30 @@
     },
     {
       "key": {
+        "uuid": "e029d21a_32dce93a",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-04T08:43:52Z",
+      "side": 1,
+      "message": "Another way that might be simpler and less risky than the above:\n\n    // Unless the network is being torn down, tell ConnectivityService that\n    // our stacked link is gone. This relies on the fact that\n    // handleAsyncChannelDisconnected sets the state to\n    / DISCONNECTED before calling stop().\n    if (isRunning() \u0026\u0026 mNetwork.networkInfo.state !\u003d NetworkInfo.State.DISCONNECTED) {\n        LinkProperties lp \u003d new LinkProperties(mNetwork.linkProperties);\n        lp.removeStackedLink(iface);\n        mNetwork.connService().handleUpdateLinkProperties(mNetwork, lp);\n    }\n\n    enterIdleState();",
+      "parentUuid": "678ed9d9_0ee6f363",
+      "range": {
+        "startLine": 198,
+        "startChar": 8,
+        "endLine": 198,
+        "endChar": 25
+      },
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21748bf2_ecac34e1",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 5
