@@ -2062,6 +2062,8 @@ public class AudioManager {
      * @see OnAudioFocusChangeListener#onAudioFocusChange(int)
      */
     public static final int AUDIOFOCUS_LOSS = -1 * AUDIOFOCUS_GAIN;
+
+    private static final int MAX_AUDIO_FOCUS_CHANGE_COUNT = 1024;
     /**
      * Used to indicate a transient loss of audio focus.
      * @see OnAudioFocusChangeListener#onAudioFocusChange(int)
@@ -2415,6 +2417,14 @@ public class AudioManager {
         if (((flags & AUDIOFOCUS_FLAG_LOCK) == AUDIOFOCUS_FLAG_LOCK) && (ap == null)) {
             throw new IllegalArgumentException(
                     "Illegal null audio policy when locking audio focus");
+        }
+
+        synchronized (mFocusListenerLock) {
+            if (mAudioFocusIdListenerMap.size() >= MAX_AUDIO_FOCUS_CHANGE_COUNT) {
+                throw new IllegalStateException("add OnAudioFocusChangeListener failed, "
+                        + "the number of listeners has exceeded the maximum "
+                        + MAX_AUDIO_FOCUS_CHANGE_COUNT);
+            }
         }
 
         int status = AUDIOFOCUS_REQUEST_FAILED;
