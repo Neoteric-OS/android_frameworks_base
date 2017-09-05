@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "058b77b8_5604c3f3",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-05T00:40:02Z",
+      "side": 1,
+      "message": "Ack. No harm in keeping it.",
+      "parentUuid": "afc8bc7d_538f9062",
+      "range": {
+        "startLine": 150,
+        "startChar": 32,
+        "endLine": 150,
+        "endChar": 55
+      },
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff86924a_2a7a1a83",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 5
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "It cannot be removed.",
       "parentUuid": "ff86924a_2a7a1a83",
+      "range": {
+        "startLine": 155,
+        "startChar": 16,
+        "endLine": 155,
+        "endChar": 31
+      },
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ca4782a_39128f45",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-05T00:40:02Z",
+      "side": 1,
+      "message": "Yes, sorry. My bad.",
+      "parentUuid": "041d5676_f9b22882",
       "range": {
         "startLine": 155,
         "startChar": 16,
@@ -390,6 +438,30 @@
       "side": 1,
       "message": "I had removed it in a previous patch set of one of the patches I already submitted, but you made me put it back.\n\nAs it is now, this is the same as the initial code before I started touching 464xlat. It is also safer like this if somebody tries to keep the same Nat464xlat instance around later on.\n\nI am going to keep it as is for the time being.",
       "parentUuid": "19f1b4ca_d5750097",
+      "range": {
+        "startLine": 574,
+        "startChar": 25,
+        "endLine": 574,
+        "endChar": 46
+      },
+      "revId": "24a68455b79298a1d9fe1a7213d7a10191604857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "098548a6_e548d4d5",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-05T00:40:02Z",
+      "side": 1,
+      "message": "I thought that when you removed it earlier, removing it would have caused a change in behaviour. But perhaps I was confused.",
+      "parentUuid": "4e8dbecc_7882f1f8",
       "range": {
         "startLine": 574,
         "startChar": 25,

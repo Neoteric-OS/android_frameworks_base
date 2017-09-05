@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04d55db0_308c65d0",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-05T00:40:02Z",
+      "side": 1,
+      "message": "Actually I don\u0027t think this is a good approach, for a couple of reasons:\n\n1. I feel that the fact that we have to post to our handler even though we\u0027re\n   already running on it is not a good sign. I can\u0027t see any obvious ordering\n   issues at the moment, but I find it hard to reason about the correctness\n   of this operation, and I suspect it might be brittle with respect to future\n   changes. Additionally, if we look at this code code again a few months or\n   years from now it could be hard to understand how it works.\n2. Conceptually, when this method is called, the interface has not yet been\n   deleted and it\u0027s not correct to remove it from the LinkProperties. To give\n   a mostly theoretical example - with this code, if mNetd.stopClat() were to\n   fail during stop(), we\u0027d still think that the interface had been removed.\n   (Again, this is a theoretical example; I\u0027m sure that if that happened lots\n   of other things would go wrong as well.)\n\nI think things would be simpler if we just say:\n - 464xlat is what knows when the interface is removed, so it should be\n   responsible for telling CS when that happens.\n - CS is responsible for ensuring that if external classes call\n   its handleUpdateLinkProperties public method, it doesn\u0027t behave incorrectly\n   (e.g., act on a network that doesn\u0027t exist any more).",
+      "range": {
+        "startLine": 207,
+        "startChar": 21,
+        "endLine": 207,
+        "endChar": 35
+      },
+      "revId": "3580e9287091a393ed1baba1863bbee1cc7ae600",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0642297d_86d24326",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-05T00:40:02Z",
+      "side": 1,
+      "message": "Since this function only performs one specific type of update, a name reflective of that update (removeStackedLink?) might result in clearer code.",
+      "range": {
+        "startLine": 212,
+        "startChar": 17,
+        "endLine": 212,
+        "endChar": 42
+      },
+      "revId": "3580e9287091a393ed1baba1863bbee1cc7ae600",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
