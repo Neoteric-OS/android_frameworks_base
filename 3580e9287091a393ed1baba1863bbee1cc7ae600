@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25cdbf8a_88c25bd8",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-05T03:38:33Z",
+      "side": 1,
+      "message": "I removed the shouldNotify boolean and went back to using a STOPPING state. This is necessary to handle the following sequence of events: start, stop, interface up. And not send a LinkProperties update in that case.\n\n\u003e - 464xlat is what knows when the interface is removed, so it should be\n   responsible for telling CS when that happens.\n\nDone: notification is always sent if the interface is removed.\n\n\u003e CS is responsible for ensuring that if external classes call\n   its handleUpdateLinkProperties public method, it doesn\u0027t behave incorrectly\n\n\nDone in ConnectivityService",
+      "parentUuid": "04d55db0_308c65d0",
+      "range": {
+        "startLine": 207,
+        "startChar": 21,
+        "endLine": 207,
+        "endChar": 35
+      },
+      "revId": "3580e9287091a393ed1baba1863bbee1cc7ae600",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0642297d_86d24326",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 6
