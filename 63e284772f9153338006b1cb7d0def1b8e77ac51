@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "badc8e63_49359ba6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4622,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-05T06:41:10Z",
+      "side": 1,
+      "message": "Done.\n\nI think it is madness to allow netid to be reused. Writing correct code that handles that is clearly out of reach.",
+      "parentUuid": "de5a0f76_7aa06b53",
+      "range": {
+        "startLine": 4619,
+        "startChar": 0,
+        "endLine": 4622,
+        "endChar": 9
+      },
+      "revId": "63e284772f9153338006b1cb7d0def1b8e77ac51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a22a8360_762724dc",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-05T04:38:21Z",
       "side": 1,
       "message": "I think it might be safe to move this to handleInterfaceRemoved now, because that method now runs in both RUNNING and STOPPING states.",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 9
+      },
+      "revId": "63e284772f9153338006b1cb7d0def1b8e77ac51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca401fc1_1155f3d7",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-05T06:41:10Z",
+      "side": 1,
+      "message": "This is here so that it is symmetric with enterRunningState().",
+      "parentUuid": "a22a8360_762724dc",
       "range": {
         "startLine": 165,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7914e80b_b8088d7c",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-05T06:41:10Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f5cbb77c_d8ca8d8c",
+      "range": {
+        "startLine": 172,
+        "startChar": 76,
+        "endLine": 173,
+        "endChar": 71
+      },
+      "revId": "63e284772f9153338006b1cb7d0def1b8e77ac51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d568a103_b6ef7d56",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-05T04:38:21Z",
       "side": 1,
       "message": "If stop() is called while we\u0027re in STARTING it doesn\u0027t look like we unregister the observer because we never enter IDLE state. If so, perhaps do:\n\n    if (isStarting()) {\n        enterStoppingState();\n        enterIdleState();\n    } else {\n        // When clatd stops and its interface is deleted, interfaceRemoved() will notify\n        // ConnectivityService and call enterIdleState().\n        enterStoppingState();\n    }\n\nOr, alternatively, in enterStoppingState, do:\n\n        if (!isRunning()) {\n            // When clatd stops and its interface is deleted, interfaceRemoved() will notify\n            // ConnectivityService and call enterIdleState().            enterIdleState();\n        }",
+      "range": {
+        "startLine": 219,
+        "startChar": 0,
+        "endLine": 221,
+        "endChar": 57
+      },
+      "revId": "63e284772f9153338006b1cb7d0def1b8e77ac51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b04adda_8554c539",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-05T06:41:10Z",
+      "side": 1,
+      "message": "The only way to prevent the registration leak is to always unregister in stop if we are not yet running.\n\nDone.",
+      "parentUuid": "d568a103_b6ef7d56",
       "range": {
         "startLine": 219,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "11916253_7de0c07d",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-05T06:41:10Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c808b3ad_0cd34643",
+      "range": {
+        "startLine": 326,
+        "startChar": 12,
+        "endLine": 326,
+        "endChar": 42
+      },
+      "revId": "63e284772f9153338006b1cb7d0def1b8e77ac51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67cabb2c_34bc5e34",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 7
@@ -128,6 +248,30 @@
       "writtenOn": "2017-09-05T04:38:21Z",
       "side": 1,
       "message": "been",
+      "range": {
+        "startLine": 331,
+        "startChar": 53,
+        "endLine": 331,
+        "endChar": 55
+      },
+      "revId": "63e284772f9153338006b1cb7d0def1b8e77ac51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e86503b8_f5de7602",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-05T06:41:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67cabb2c_34bc5e34",
       "range": {
         "startLine": 331,
         "startChar": 53,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "3ba9241b_f5c5e034",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-05T06:41:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "add3ced9_c67ac4a3",
+      "range": {
+        "startLine": 109,
+        "startChar": 62,
+        "endLine": 109,
+        "endChar": 64
+      },
+      "revId": "63e284772f9153338006b1cb7d0def1b8e77ac51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6588b38_2e51885f",
         "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
         "patchSetId": 7
@@ -174,6 +342,30 @@
       "writtenOn": "2017-09-05T04:38:21Z",
       "side": 1,
       "message": "There is a very common case where this does not happen: IPv6-only networks with a NAT64, such as the IMS PDN on many carriers. On such networks we remain in STARTING until the network disconnects and never get a link state up notification.\n\nCan we add a testcase for this as well? Based on my reading of the current patchset, in that case I believe we won\u0027t unregister the observer. Regardless of whether my reading is correct or not, a test is better.\n\nDon\u0027t remove this test, of course - it tests a harder-to-reproduce and thus harder-to-get right case.",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 31
+      },
+      "revId": "63e284772f9153338006b1cb7d0def1b8e77ac51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c086aaf9_cab9985b",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-05T06:41:10Z",
+      "side": 1,
+      "message": "This is correctly handled now.",
+      "parentUuid": "f6588b38_2e51885f",
       "range": {
         "startLine": 185,
         "startChar": 0,
