@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2e9e75b_0607a62a",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-05T08:03:31Z",
+      "side": 1,
+      "message": "Out of curiosity, why do we update LinkProperties twice? Might be worth adding a comment explaining why.",
+      "range": {
+        "startLine": 120,
+        "startChar": 30,
+        "endLine": 120,
+        "endChar": 38
+      },
+      "revId": "ef502887ec58886e9347afb841aa06cb0d13acea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
