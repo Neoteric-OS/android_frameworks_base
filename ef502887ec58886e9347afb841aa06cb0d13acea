@@ -22,6 +22,30 @@
       "revId": "ef502887ec58886e9347afb841aa06cb0d13acea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de897f47_0d7d8dd8",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-05T12:11:50Z",
+      "side": 1,
+      "message": "These is \"normal\" mockito weirdness. It does not mean we do two updates here, it means up to here handleUpdateLinkProperties was called twice. This is the second time.\n\nI could make it times(1) by resetting the mock, but I d rather not miss any other interaction with CS by resetting.",
+      "parentUuid": "a2e9e75b_0607a62a",
+      "range": {
+        "startLine": 120,
+        "startChar": 30,
+        "endLine": 120,
+        "endChar": 38
+      },
+      "revId": "ef502887ec58886e9347afb841aa06cb0d13acea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
