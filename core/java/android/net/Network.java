@@ -53,6 +53,8 @@ import javax.net.SocketFactory;
  */
 public class Network implements Parcelable {
 
+    private static final long HANDLE_MAGIC = 0xcafed00dL;
+
     /**
      * @hide
      */
@@ -361,7 +363,6 @@ public class Network implements Parcelable {
         if (netId == 0) {
             return 0L;  // make this zero condition obvious for debugging
         }
-        final long HANDLE_MAGIC = 0xfacade;
         return (((long) netId) << 32) | HANDLE_MAGIC;
     }
 
