@@ -31,6 +31,7 @@ import android.os.INetworkManagementService;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.os.SystemClock;
+import android.os.SystemProperties;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -241,6 +242,8 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
 
     private static final String TAG = ConnectivityService.class.getSimpleName();
     private static final boolean VDBG = false;
+    private static final boolean IS_USER =
+            SystemProperties.get("ro.build.type", "user").equals("user");
     private final ConnectivityService mConnService;
     private final Context mContext;
     private final Handler mHandler;
@@ -319,6 +322,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
                     networkRequest, existing, name()));
             updateRequestCounts(REMOVE, existing);
         }
+        printStackTrace("addRequest(" + String.valueOf(networkRequest) + ")");
         mNetworkRequests.put(networkRequest.requestId, networkRequest);
         updateRequestCounts(ADD, networkRequest);
         return true;
@@ -331,6 +335,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         NetworkRequest existing = mNetworkRequests.get(requestId);
         if (existing == null) return;
         updateRequestCounts(REMOVE, existing);
+        printStackTrace("removeRequest(" + requestId + ")");
         mNetworkRequests.remove(requestId);
         if (existing.isRequest()) {
             unlingerRequest(existing);
@@ -619,5 +624,26 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     @Override
     public int compareTo(NetworkAgentInfo other) {
         return other.getCurrentScore() - getCurrentScore();
+    }
+
+    private void printStackTrace(String logString) {
+        if (!IS_USER) {
+            final StackTraceElement[] callStack = Thread.currentThread().getStackTrace();
+            String stackTrace = null;
+            Log.d(TAG, logString);
+            for (int i = 2; i < callStack.length; i++) {
+                stackTrace = callStack[i].toString();
+
+                if (stackTrace == null || stackTrace.contains("android.os")) {
+                    break;
+                }
+
+                Log.d(TAG + " : Stack Log", stackTrace);
+                    // Ex) D <TAG> : Stack Log: ...connectivity.NetworkAgentInfo.printStackTrace...
+                    //     D <TAG> : Stack Log: ...connectivity.NetworkAgentInfo.removeRequest...
+                    //     D <TAG> : Stack Log: ...ConnectivityService.rematchNetworkAndRequests...
+                    //     D <TAG> : Stack Log: ...ConnectivityService.updateNetworkInfo...
+            }
+        }
     }
 }
