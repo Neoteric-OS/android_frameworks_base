@@ -16,6 +16,7 @@
 
 package android.hardware.input;
 
+import android.hardware.LightState;
 import android.hardware.input.InputDeviceIdentifier;
 import android.hardware.input.KeyboardLayout;
 import android.hardware.input.IInputDevicesChangedListener;
@@ -78,6 +79,14 @@ interface IInputManager {
     // Input device vibrator control.
     void vibrate(int deviceId, in long[] pattern, int repeat, IBinder token);
     void cancelVibrate(int deviceId, IBinder token);
+
+    // Input device light control
+    int getLightCount(int deviceId);
+    String getLightName(int deviceId, int lightId);
+    int getLightMaximumBrightness(int deviceId, int lightId);
+    LightState getLightState(int deviceId, int lightId);
+    void setLightBrightness(int deviceId, int lightId, int brightness);
+    void setLightBlinking(int deviceId, int lightId, int onInterval, int offInterval);
 
     void setPointerIconType(int typeId);
     void setCustomPointerIcon(in PointerIcon icon);

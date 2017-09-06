@@ -14773,6 +14773,18 @@ package android.hardware {
     method public float getZ();
   }
 
+  public abstract class Light {
+    method public abstract int getBrightness();
+    method public abstract int getMaximumBrightness();
+    method public abstract java.lang.String getName();
+    method public abstract boolean isBlinking();
+    method public abstract void setBrightness(int);
+    method public void setScaledBrightness(float);
+    method public abstract void startBlinking(int, int);
+    method public abstract void stopBlinking();
+    field public static final int LIGHT_OFF = 0; // 0x0
+  }
+
   public final class HardwareBuffer implements java.lang.AutoCloseable android.os.Parcelable {
     method public void close();
     method public static android.hardware.HardwareBuffer create(int, int, int, int, long);
@@ -44565,6 +44577,7 @@ package android.view {
     method public int getId();
     method public android.view.KeyCharacterMap getKeyCharacterMap();
     method public int getKeyboardType();
+    method public android.hardware.Light[] getLights();
     method public android.view.InputDevice.MotionRange getMotionRange(int);
     method public android.view.InputDevice.MotionRange getMotionRange(int, int);
     method public java.util.List<android.view.InputDevice.MotionRange> getMotionRanges();

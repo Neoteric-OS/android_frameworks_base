@@ -57,6 +57,7 @@ import android.content.res.Resources.NotFoundException;
 import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
 import android.database.ContentObserver;
+import android.hardware.LightState;
 import android.hardware.display.DisplayViewport;
 import android.hardware.input.IInputDevicesChangedListener;
 import android.hardware.input.IInputManager;
@@ -236,6 +237,14 @@ public class InputManagerService extends IInputManager.Stub
     private static native void nativeReloadPointerIcons(long ptr);
     private static native void nativeSetCustomPointerIcon(long ptr, PointerIcon icon);
     private static native void nativeSetPointerCapture(long ptr, boolean detached);
+    private static native int nativeHasLights(long ptr, int deviceId);
+    private static native String nativeGetLightName(long ptr, int deviceId, int lightId);
+    private static native int nativeGetLightMaxBrightness(long ptr, int deviceId, int lightId);
+    private static native LightState nativeGetLightState(long ptr, int deviceId, int lightId);
+    private static native int nativeSetLightBrightness(long ptr, int deviceId, int lightId,
+            int brightness);
+    private static native int nativeSetLightBlinking(long ptr, int deviceId, int lightId,
+            int onInterval, int offInterval);
 
     // Input event injection constants defined in InputDispatcher.h.
     private static final int INPUT_EVENT_INJECTION_SUCCEEDED = 0;
@@ -1742,6 +1751,43 @@ public class InputManagerService extends IInputManager.Stub
                 v.mVibrating = false;
             }
         }
+    }
+
+    // Binder call
+    @Override
+    public int getLightCount(int deviceId) {
+        return nativeHasLights(mPtr, deviceId);
+    }
+
+    // Binder call
+    @Override
+    public String getLightName(int deviceId, int lightId) {
+        return nativeGetLightName(mPtr, deviceId, lightId);
+    }
+
+    // Binder call
+    @Override
+    public int getLightMaximumBrightness(int deviceId, int lightId) {
+        return nativeGetLightMaxBrightness(mPtr, deviceId, lightId);
+    }
+
+    // Binder call
+    @Override
+    public LightState getLightState(int deviceId, int lightId) {
+        return nativeGetLightState(mPtr, deviceId, lightId);
+    }
+
+    // Binder call
+    @Override
+    public void setLightBrightness(int deviceId, int lightId, int brightness) {
+        nativeSetLightBrightness(mPtr, deviceId, lightId, brightness);
+    }
+
+    // Binder call
+    @Override
+    public void setLightBlinking(int deviceId, int lightId, int onInterval,
+            int offInterval) {
+        nativeSetLightBlinking(mPtr, deviceId, lightId, onInterval, offInterval);
     }
 
     // Binder call

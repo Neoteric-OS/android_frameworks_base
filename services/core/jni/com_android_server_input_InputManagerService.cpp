@@ -1557,6 +1557,68 @@ static void nativeSetCustomPointerIcon(JNIEnv* env, jclass /* clazz */,
     im->setCustomPointerIcon(spriteIcon);
 }
 
+static jint nativeHasLights(JNIEnv* env, jclass /* clazz */, jlong ptr,
+        jint deviceId) {
+    NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
+    return (jint) im->getInputManager()->getReader()->hasLeds(deviceId);
+}
+
+static jstring nativeGetLightName(JNIEnv* env, jclass /* clazz */, jlong ptr,
+        jint deviceId, jint lightId) {
+    NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
+    String8 name = im->getInputManager()->getReader()->getLedName(deviceId,
+            lightId);
+    return env->NewStringUTF(name.string());
+}
+
+static jint nativeGetLightMaxBrightness(JNIEnv* env, jclass /* clazz */, jlong ptr,
+        jint deviceId, jint lightId) {
+    NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
+    return (jint) im->getInputManager()->getReader()->getLedMaxBrightness(
+            deviceId, lightId);
+}
+
+static jobject nativeGetLightState(JNIEnv* env, jclass /* clazz */, jlong ptr,
+        jint deviceId, jint lightId) {
+    NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
+    int32_t onInterval;
+    int32_t offInterval;
+    int32_t isBlinking = im->getInputManager()->getReader()->getLedBlink(deviceId,
+            lightId, onInterval, offInterval);
+    int32_t brightness = im->getInputManager()->getReader()->getLedBrightness(
+            deviceId, lightId);
+
+    jclass lightStateClass = env->FindClass("android/hardware/LightState");
+    jmethodID lightStateConstructor = env->GetMethodID(lightStateClass, "<init>",
+            "()V");
+    jfieldID brightnessField = env->GetFieldID(lightStateClass, "brightness", "I");
+    jfieldID isBlinkingField = env->GetFieldID(lightStateClass, "isBlinking", "Z");
+    jfieldID onIntervalField = env->GetFieldID(lightStateClass, "onInterval", "I");
+    jfieldID offIntervalField = env->GetFieldID(lightStateClass, "offInterval", "I");
+
+    jobject state = env->NewObject(lightStateClass, lightStateConstructor);
+    env->SetIntField(state, brightnessField, brightness);
+    env->SetBooleanField(state, isBlinkingField, (isBlinking == 1) ? JNI_TRUE
+            : JNI_FALSE);
+    env->SetIntField(state, onIntervalField, onInterval);
+    env->SetIntField(state, offIntervalField, offInterval);
+    return state;
+}
+
+static jint nativeSetLightBrightness(JNIEnv* env, jclass /* clazz */, jlong ptr,
+        jint deviceId, jint lightId, jint brightness) {
+    NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
+    return im->getInputManager()->getReader()->setLedBrightness(deviceId, lightId,
+            brightness);
+}
+
+static jint nativeSetLightBlinking(JNIEnv* env, jclass /* clazz */, jlong ptr,
+        jint deviceId, jint lightId, jint blinkOnMs, jint blinkOffMs) {
+    NativeInputManager* im = reinterpret_cast<NativeInputManager*>(ptr);
+    return im->getInputManager()->getReader()->setLedBlink(deviceId, lightId,
+            blinkOnMs, blinkOffMs);
+}
+
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gInputManagerMethods[] = {
@@ -1627,6 +1689,18 @@ static const JNINativeMethod gInputManagerMethods[] = {
             (void*) nativeReloadPointerIcons },
     { "nativeSetCustomPointerIcon", "(JLandroid/view/PointerIcon;)V",
             (void*) nativeSetCustomPointerIcon },
+    { "nativeHasLights" , "(JI)I",
+            (void*) nativeHasLights },
+    { "nativeGetLightName" , "(JII)Ljava/lang/String;",
+            (void*) nativeGetLightName },
+    { "nativeGetLightMaxBrightness" , "(JII)I",
+            (void*) nativeGetLightMaxBrightness },
+    { "nativeGetLightState" , "(JII)Landroid/hardware/LightState;",
+            (void*) nativeGetLightState },
+    { "nativeSetLightBrightness" , "(JIII)I",
+            (void*) nativeSetLightBrightness },
+    { "nativeSetLightBlinking" , "(JIIII)I",
+            (void*) nativeSetLightBlinking },
 };
 
 #define FIND_CLASS(var, className) \
