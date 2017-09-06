@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e25d3d82_c21452e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2017-09-06T17:19:10Z",
+      "side": 1,
+      "message": "Does the IME in question override InputMethodService#onShowInputRequested() to return false in this scenario?  Let me know if there is any reason you cannot do that and we really need to change the framework instead.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "c7208153e852afdf06564ffcf2d70d50b543d490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48a5ffa2_834a39a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2017-09-06T17:19:10Z",
+      "side": 1,
+      "message": "Can you provide any demo APK to test this CL?  It\u0027s a bit difficult for us to verify the CL without knowing concrete steps to test this CL.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 12
+      },
+      "revId": "c7208153e852afdf06564ffcf2d70d50b543d490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
