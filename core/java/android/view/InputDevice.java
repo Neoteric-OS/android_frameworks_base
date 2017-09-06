@@ -17,6 +17,7 @@
 package android.view;
 
 import android.content.Context;
+import android.hardware.Light;
 import android.hardware.input.InputDeviceIdentifier;
 import android.hardware.input.InputManager;
 import android.os.NullVibrator;
@@ -56,11 +57,13 @@ public final class InputDevice implements Parcelable {
     private final int mKeyboardType;
     private final KeyCharacterMap mKeyCharacterMap;
     private final boolean mHasVibrator;
+    private final boolean mHasLed;
     private final boolean mHasMicrophone;
     private final boolean mHasButtonUnderPad;
     private final ArrayList<MotionRange> mMotionRanges = new ArrayList<MotionRange>();
 
     private Vibrator mVibrator; // guarded by mMotionRanges during initialization
+    private Light[] mLights; // guarded by mMotionRanges during initialization
 
     /**
      * A mask for input source classes.
@@ -405,8 +408,8 @@ public final class InputDevice implements Parcelable {
     // Called by native code.
     private InputDevice(int id, int generation, int controllerNumber, String name, int vendorId,
             int productId, String descriptor, boolean isExternal, int sources, int keyboardType,
-            KeyCharacterMap keyCharacterMap, boolean hasVibrator, boolean hasMicrophone,
-            boolean hasButtonUnderPad) {
+            KeyCharacterMap keyCharacterMap, boolean hasVibrator, boolean hasLed,
+            boolean hasMicrophone, boolean hasButtonUnderPad) {
         mId = id;
         mGeneration = generation;
         mControllerNumber = controllerNumber;
@@ -419,6 +422,7 @@ public final class InputDevice implements Parcelable {
         mKeyboardType = keyboardType;
         mKeyCharacterMap = keyCharacterMap;
         mHasVibrator = hasVibrator;
+        mHasLed = hasLed;
         mHasMicrophone = hasMicrophone;
         mHasButtonUnderPad = hasButtonUnderPad;
         mIdentifier = new InputDeviceIdentifier(descriptor, vendorId, productId);
@@ -437,6 +441,7 @@ public final class InputDevice implements Parcelable {
         mKeyboardType = in.readInt();
         mKeyCharacterMap = KeyCharacterMap.CREATOR.createFromParcel(in);
         mHasVibrator = in.readInt() != 0;
+        mHasLed = in.readInt() != 0;
         mHasMicrophone = in.readInt() != 0;
         mHasButtonUnderPad = in.readInt() != 0;
         mIdentifier = new InputDeviceIdentifier(mDescriptor, mVendorId, mProductId);
@@ -768,6 +773,22 @@ public final class InputDevice implements Parcelable {
     }
 
     /**
+     * Gets the lights associated with the device, if there are any.  Even if
+     * the device does not have any lights, the result if never null (zero
+     * length array).
+     *
+     * @return The lights associated with the device, never null.
+     */
+    public Light[] getLights() {
+        synchronized (mMotionRanges) {
+            if (mLights == null) {
+                mLights = InputManager.getInstance().getInputDeviceLights(mId);
+            }
+            return mLights;
+        }
+    }
+
+    /**
      * Reports whether the device has a built-in microphone.
      * @return Whether the device has a built-in microphone.
      */
@@ -927,6 +948,7 @@ public final class InputDevice implements Parcelable {
         out.writeInt(mKeyboardType);
         mKeyCharacterMap.writeToParcel(out, flags);
         out.writeInt(mHasVibrator ? 1 : 0);
+        out.writeInt(mHasLed ? 1 : 0);
         out.writeInt(mHasMicrophone ? 1 : 0);
         out.writeInt(mHasButtonUnderPad ? 1 : 0);
 
@@ -972,6 +994,8 @@ public final class InputDevice implements Parcelable {
         description.append("\n");
 
         description.append("  Has Vibrator: ").append(mHasVibrator).append("\n");
+
+        description.append("  Has LED: ").append(mHasLed).append("\n");
 
         description.append("  Has mic: ").append(mHasMicrophone).append("\n");
 
