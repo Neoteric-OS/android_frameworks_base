@@ -180,6 +180,16 @@ public class InputManagerService extends IInputManager.Stub
             new HashMap<IBinder, VibratorToken>();
     private int mNextVibratorTokenValue;
 
+    // State for the light states.
+    private Object mLightLock = new Object();
+    private HashMap<IBinder, LightToken> mLightTokens =
+            new HashMap<IBinder, LightToken>();
+    private int mNextLightTokenValue;
+    private SparseArray<LightState[]> mLightDefaultStates =
+            new SparseArray<LightState[]>();
+    private SparseArray<LightToken> mLightOwners =
+            new SparseArray<LightToken>();
+
     // State for the currently installed input filter.
     final Object mInputFilterLock = new Object();
     IInputFilter mInputFilter; // guarded by mInputFilterLock
@@ -726,6 +736,7 @@ public class InputManagerService extends IInputManager.Stub
         mTempFullKeyboards.clear();
         final int numListeners;
         final int[] deviceIdAndGeneration;
+        SparseArray<LightState[]> newLightDefaultStates = new SparseArray<LightState[]>();
         synchronized (mInputDevicesLock) {
             if (!mInputDevicesChangedPending) {
                 return;
@@ -753,7 +764,28 @@ public class InputManagerService extends IInputManager.Stub
                         mTempFullKeyboards.add(inputDevice);
                     }
                 }
+
+                final int lightCount = nativeHasLights(mPtr, inputDevice.getId());
+                if (lightCount > 0) {
+                    LightState[] defaultState;
+                    synchronized (mLightLock) {
+                        defaultState = mLightDefaultStates.get(inputDevice.getId());
+                    }
+                    if (defaultState == null) {
+                        defaultState = new LightState[lightCount];
+                        for (int lightId = 0; lightId < lightCount; lightId++) {
+                            defaultState[lightId] = nativeGetLightState(mPtr,
+                                    inputDevice.getId(), lightId);
+                        }
+                    }
+                    newLightDefaultStates.put(inputDevice.getId(), defaultState);
+                }
             }
+        }
+
+        // Update the default light states (prior to notifying about the new device)
+        synchronized (mLightLock) {
+            mLightDefaultStates = newLightDefaultStates;
         }
 
         // Notify listeners.
@@ -1773,21 +1805,137 @@ public class InputManagerService extends IInputManager.Stub
 
     // Binder call
     @Override
-    public LightState getLightState(int deviceId, int lightId) {
-        return nativeGetLightState(mPtr, deviceId, lightId);
+    public LightState getLightState(int deviceId, int lightId, IBinder binder) {
+        synchronized (mLightLock) {
+            LightToken token = getLightToken(deviceId, binder);
+            if (lightId >= token.mState.length) {
+                return null;
+            }
+            restoreLightToken(token);
+            return token.mState[lightId];
+        }
     }
 
     // Binder call
     @Override
-    public void setLightBrightness(int deviceId, int lightId, int brightness) {
-        nativeSetLightBrightness(mPtr, deviceId, lightId, brightness);
+    public void setLightBrightness(int deviceId, int lightId, int brightness,
+            IBinder binder) {
+        synchronized (mLightLock) {
+            LightToken token = getLightToken(deviceId, binder);
+            if (lightId >= token.mState.length) {
+                return;
+            }
+            LightState state = token.mState[lightId];
+            state.brightness = brightness;
+            // settings brightness to 0 ("LED_OFF") disables blinking
+            if (brightness == 0) {
+                state.isBlinking = false;
+                state.onInterval = 0;
+                state.offInterval = 0;
+            }
+            if (!restoreLightToken(token)) {
+                nativeSetLightBrightness(mPtr, deviceId, lightId, brightness);
+            }
+        }
     }
 
     // Binder call
     @Override
     public void setLightBlinking(int deviceId, int lightId, int onInterval,
-            int offInterval) {
-        nativeSetLightBlinking(mPtr, deviceId, lightId, onInterval, offInterval);
+            int offInterval, IBinder binder) {
+        synchronized (mLightLock) {
+            LightToken token = getLightToken(deviceId, binder);
+            if (lightId >= token.mState.length) {
+                return;
+            }
+            // enabling blinking on an off LED is a no-op
+            LightState state = token.mState[lightId];
+            if (state.brightness == 0) {
+                state.isBlinking = false;
+                state.onInterval = 0;
+                state.offInterval = 0;
+            } else {
+                state.isBlinking = true;
+                state.onInterval = onInterval;
+                state.offInterval = offInterval;
+            }
+            if (!restoreLightToken(token) && state.isBlinking) {
+                nativeSetLightBlinking(mPtr, deviceId, lightId, onInterval,
+                        offInterval);
+            }
+        }
+    }
+
+    void onLightTokenDied(LightToken token) {
+        synchronized (mLightLock) {
+            mLightTokens.remove(token.mToken);
+            if (token != mLightOwners.get(token.mDeviceId)) {
+                return;
+            }
+            LightState[] defaultState = mLightDefaultStates.get(token.mDeviceId);
+            if (defaultState != null) {
+                restoreLightState(token.mDeviceId, defaultState);
+            }
+            mLightOwners.remove(token.mDeviceId);
+        }
+    }
+
+    void restoreLightState(int deviceId, LightState[] state) {
+        for (int i = 0; i < state.length; i++) {
+            if (state[i].brightness == 0) {
+                // a brightness of 0 is simple to restore, as LED_OFF means no
+                // blinking, and the act of setting brightness to LED_OFF will
+                // disable any current blinking operation.
+                nativeSetLightBrightness(mPtr, deviceId, i, 0);
+            } else if (state[i].isBlinking) {
+                // enabling blinking only works when the light is on, and the act
+                // of setting the intervals causes to blinking cycle to reset
+                nativeSetLightBrightness(mPtr, deviceId, i, state[i].brightness);
+                nativeSetLightBlinking(mPtr, deviceId, i, state[i].onInterval,
+                        state[i].offInterval);
+            } else {
+                // if the desired state is not blinking, possible blinking from
+                // a previous state needs to be disabled by setting brightness
+                // to 0 before setting the desired brightness
+                nativeSetLightBrightness(mPtr, deviceId, i, 0);
+                nativeSetLightBrightness(mPtr, deviceId, i, state[i].brightness);
+            }
+        }
+    }
+
+    // claims ownership and restores device light state
+    boolean restoreLightToken(LightToken token) {
+        if (token == mLightOwners.get(token.mDeviceId)) {
+            return false;
+        }
+        restoreLightState(token.mDeviceId, token.mState);
+        mLightOwners.put(token.mDeviceId, token);
+        return true;
+    }
+
+    // Get the light token (state) for a particular device
+    LightToken getLightToken(int deviceId, IBinder binder) {
+        LightToken token = mLightTokens.get(binder);
+        if (token == null) {
+            int lightCount = getLightCount(deviceId);
+            LightState[] state = new LightState[lightCount];
+            LightState[] defaultState = mLightDefaultStates.get(deviceId);
+            for (int i = 0; i < lightCount; i++) {
+                if (defaultState != null && defaultState.length == lightCount) {
+                    state[i] = new LightState(defaultState[i]);
+                } else {
+                    state[i] = new LightState();
+                }
+            }
+            token = new LightToken(deviceId, state, binder, mNextLightTokenValue++);
+            try {
+                binder.linkToDeath(token, 0);
+            } catch (RemoteException ex) {
+                throw new RuntimeException(ex);
+            }
+            mLightTokens.put(binder, token);
+        }
+        return token;
     }
 
     // Binder call
@@ -2329,6 +2477,29 @@ public class InputManagerService extends IInputManager.Stub
                 Slog.d(TAG, "Vibrator token died.");
             }
             onVibratorTokenDied(this);
+        }
+    }
+
+    private final class LightToken implements DeathRecipient {
+        public final int mDeviceId;
+        public final LightState mState[];
+        public final IBinder mToken;
+        public final int mTokenValue;
+
+        public LightToken(int deviceId, LightState state[], IBinder token,
+                int tokenValue) {
+            mDeviceId = deviceId;
+            mState = state;
+            mToken = token;
+            mTokenValue = tokenValue;
+        }
+
+        @Override
+        public void binderDied() {
+            if (DEBUG) {
+                Slog.d(TAG, "Light token died.");
+            }
+            onLightTokenDied(this);
         }
     }
 
