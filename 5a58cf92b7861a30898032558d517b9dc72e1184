@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbb988b6_c42baa6e",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/tileimpl/QSTileImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2017-09-07T16:06:16Z",
+      "side": 1,
+      "message": "Could this be solved by making it returning mDrawable.mutate() instead?",
+      "revId": "5a58cf92b7861a30898032558d517b9dc72e1184",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
