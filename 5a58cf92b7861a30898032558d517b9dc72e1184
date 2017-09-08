@@ -16,6 +16,24 @@
       "revId": "5a58cf92b7861a30898032558d517b9dc72e1184",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2d1b7c1_648a0c8d",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/tileimpl/QSTileImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1077031
+      },
+      "writtenOn": "2017-09-08T07:52:47Z",
+      "side": 1,
+      "message": "I tried the solution but couldn\u0027t fix this.",
+      "parentUuid": "fbb988b6_c42baa6e",
+      "revId": "5a58cf92b7861a30898032558d517b9dc72e1184",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
