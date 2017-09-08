@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9194f906_1a5e1453",
+        "filename": "core/java/android/accounts/AbstractAccountAuthenticator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1003425
+      },
+      "writtenOn": "2017-09-08T19:16:13Z",
+      "side": 1,
+      "message": "This fix makes it less likely that an authenticator will pass null to onResult(), but a real fix should make AccountManager not crash if a null bundle is passed to onResult.\n\n        /** Handles the responses from the AccountManager */\n        private class Response extends IAccountManagerResponse.Stub {\n            @Override\n            public void onResult(Bundle bundle) {\n                Intent intent \u003d bundle.getParcelable(KEY_INTENT);\n                if (intent !\u003d null \u0026\u0026 mActivity !\u003d null) {\n                    // since the user provided an Activity we will silently start intents\n                    // that we see\n                    mActivity.startActivity(intent);\n                    // leave the Future running to wait for the real response to this request\n                } else if (bundle.getBoolean(\"retry\")) {\n                    try {\n                        doWork();\n                    } catch (RemoteException e) {\n                        throw e.rethrowFromSystemServer();\n                    }\n                } else {\n                    set(bundle);\n                }\n            }",
+      "range": {
+        "startLine": 179,
+        "startChar": 29,
+        "endLine": 179,
+        "endChar": 36
+      },
+      "revId": "319f83ff06b34194943734fd349481ea71fd34ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
