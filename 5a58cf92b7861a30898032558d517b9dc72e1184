@@ -34,6 +34,24 @@
       "revId": "5a58cf92b7861a30898032558d517b9dc72e1184",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c094c34c_d1b683c1",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/tileimpl/QSTileImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1042886
+      },
+      "writtenOn": "2017-09-08T13:03:47Z",
+      "side": 1,
+      "message": "Ok, I\u0027d prefer a different solution, but can\u0027t think of one, so lets put this in for now.",
+      "parentUuid": "e2d1b7c1_648a0c8d",
+      "revId": "5a58cf92b7861a30898032558d517b9dc72e1184",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
