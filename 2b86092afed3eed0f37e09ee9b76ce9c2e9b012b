@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fa77cf1_12fc09a8",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6745,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-09-08T19:46:58Z",
+      "side": 1,
+      "message": "Should we require the read phone state permission for this?  ServiceState is somewhat similar and does require that permission.",
+      "range": {
+        "startLine": 6745,
+        "startChar": 4,
+        "endLine": 6745,
+        "endChar": 47
+      },
+      "revId": "2b86092afed3eed0f37e09ee9b76ce9c2e9b012b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
