@@ -18,7 +18,7 @@ package android.telephony.mbms;
 
 import android.telephony.MbmsStreamingSession;
 
-public class MbmsException extends Exception {
+public class MbmsErrors {
     /** Indicates that the operation was successful. */
     public static final int SUCCESS = 0;
 
@@ -128,17 +128,5 @@ public class MbmsException extends Exception {
 
         /** Indicates that the middleware has no record of the supplied {@link DownloadRequest}. */
         public static final int ERROR_UNKNOWN_DOWNLOAD_REQUEST = 402;
-    }
-
-    private final int mErrorCode;
-
-    /** @hide */
-    public MbmsException(int errorCode) {
-        super();
-        mErrorCode = errorCode;
-    }
-
-    public int getErrorCode() {
-        return mErrorCode;
     }
 }

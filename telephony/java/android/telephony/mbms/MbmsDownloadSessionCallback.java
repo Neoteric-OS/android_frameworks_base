@@ -28,7 +28,7 @@ public class MbmsDownloadSessionCallback {
 
     /**
      * Indicates that the middleware has encountered an asynchronous error.
-     * @param errorCode Any error code listed in {@link MbmsException}
+     * @param errorCode Any error code listed in {@link MbmsErrors}
      * @param message A message, intended for debugging purposes, describing the error in further
      *                detail.
      */
@@ -55,9 +55,9 @@ public class MbmsDownloadSessionCallback {
      * Called to indicate that the middleware has been initialized and is ready.
      *
      * Before this method is called, calling any method on an instance of
-     * {@link MbmsDownloadSession} will result in an {@link MbmsException}
-     * being thrown with error code {@link MbmsException#ERROR_MIDDLEWARE_NOT_BOUND}
-     * or {@link MbmsException.GeneralErrors#ERROR_MIDDLEWARE_NOT_YET_READY}
+     * {@link MbmsDownloadSession} will result in an {@link MbmsErrors}
+     * being thrown with error code {@link MbmsErrors#ERROR_MIDDLEWARE_NOT_BOUND}
+     * or {@link MbmsErrors.GeneralErrors#ERROR_MIDDLEWARE_NOT_YET_READY}
      */
     public void onMiddlewareReady() {
         // default implementation empty

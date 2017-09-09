@@ -2011,6 +2011,10 @@
   <java-symbol type="string" name="demo_user_inactivity_timeout_left_button" />
   <java-symbol type="string" name="demo_user_inactivity_timeout_right_button" />
 
+  <java-symbol type="string" name="embms_file_move_in_progress_title" />
+  <java-symbol type="string" name="embms_file_move_in_progress_notification_chan_name" />
+  <java-symbol type="string" name="embms_file_move_in_progress_body" />
+
   <java-symbol type="layout" name="resolver_list" />
   <java-symbol type="id" name="resolver_list" />
   <java-symbol type="id" name="button_once" />

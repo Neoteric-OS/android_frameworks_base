@@ -4594,6 +4594,17 @@
     <!-- Text of button to allow user to abort countdown and immediately start another session in retail demo mode [CHAR LIMIT=40] -->
     <string name="demo_user_inactivity_timeout_right_button">Reset now</string>
 
+    <!-- Title of notification posted by the EMBMS app to notify the user that a file move is
+         in progress after a download completion. -->
+    <string name="embms_file_move_in_progress_title">Cell-Broadcast File Move</string>
+    <!-- Name of notification channel used by the EMBMS app to notify the user that a file move is
+         in progress after a download completion. -->
+    <string name="embms_file_move_in_progress_notification_chan_name">Cell-Broadcast File Move</string>
+    <!-- Text of notification posted by the EMBMS app to notify the user that a file move is
+         in progress after a download completion. -->
+    <string name="embms_file_move_in_progress_body">Moving the completed cell-broadcast file
+        into place</string>
+
     <!-- Accessibilty string added to a widget that has been suspended [CHAR LIMIT=20] -->
     <string name="suspended_widget_accessibility">Disabled <xliff:g id="label" example="Calendar">%1$s</xliff:g></string>
 
