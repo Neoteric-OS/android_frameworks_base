@@ -22,6 +22,30 @@
       "revId": "319f83ff06b34194943734fd349481ea71fd34ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87c255a3_0f816e6e",
+        "filename": "core/java/android/accounts/AbstractAccountAuthenticator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1143183
+      },
+      "writtenOn": "2017-09-09T13:49:17Z",
+      "side": 1,
+      "message": "Firstly, i agree with your opinion: \u0027a real fix should make AccountManager not crash if a null bundle is passed to onResult\u0027. My first submit just removed the judgement \u0027if (result !\u003d null)\u0027, then a null Bundle will have a chance to be passed to onResult in AccountManagerService$Session, and this result will be checked there: \nif (mExpectActivityLaunch \u0026\u0026 result !\u003d null\n    \u0026\u0026 result.containsKey(AccountManager.KEY_INTENT)) {\n    response \u003d mResponse;\n} else {\n    response \u003d getResponseAndClose();\n}\n----------------------------------------------------------------------\nif (result \u003d\u003d null) {\n    if (Log.isLoggable(TAG, Log.VERBOSE)) {\n        Log.v(TAG, getClass().getSimpleName()\n            + \" calling onError() on response \" + response);\n    }\n    response.onError(AccountManager.ERROR_CODE_INVALID_RESPONSE,\n        \"null bundle returned\");\n}\nI find that all AmsTask\u0027s doWork method in AccountManager will call AccountManagerService$Session\u0027s run to execute in the end. That makes onResult in AccountManagerService$Session called first. So if we check the result there, a null Bundle will hardly be passed to onResult in AccountManager$AmsTask.",
+      "parentUuid": "9194f906_1a5e1453",
+      "range": {
+        "startLine": 179,
+        "startChar": 29,
+        "endLine": 179,
+        "endChar": 36
+      },
+      "revId": "319f83ff06b34194943734fd349481ea71fd34ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
