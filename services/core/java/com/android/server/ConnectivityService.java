@@ -4648,11 +4648,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     "; everConnected=" + nai.everConnected);
         }
         LinkProperties oldLp = nai.linkProperties;
+        // newLp is already a defensive copy.
+        newLp.ensureDirectlyConnectedRoutes();
         synchronized (nai) {
             nai.linkProperties = newLp;
         }
-        // msg.obj is already a defensive copy.
-        nai.linkProperties.ensureDirectlyConnectedRoutes();
         if (nai.everConnected) {
             updateLinkProperties(nai, oldLp);
         }
