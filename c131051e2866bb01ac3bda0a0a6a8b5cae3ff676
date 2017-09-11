@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60a947db_04fd148a",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1081938
+      },
+      "writtenOn": "2017-09-11T19:18:06Z",
+      "side": 1,
+      "message": "Hi. If the user is using a Handler and receives notifications/indications, it introduces exactly the same race condition bug as I described in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d647673 and was observed by a user in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d686583.\n\nTo kill this bug, simply move characteristic.setValue(value) into the Runnable\u0027s run method for at least onCharacteristicRead and onCharacteristicChanged (maybe also onDescriptorRead). Doing that would also create a nice workaround for the race condition where a characteristic write is made at the same time as a notification arrives (previously: user calls setValue with the value to write, context switch to binder thread which handles an incoming notification which calls setValue, context switch to user that then calls writeCharacteristic with the wrong value), since the user can then now simply use the same Handler thread to issue the write which will then not interfere with the notifications :)\n\nSince this bug is unfortunately already out in Android 8, you may consider adding a note in the API documentation that it\u0027s not safe to use a Handler if it\u0027s expected that multiple notifications/indications arrive fast after each other.\n\nAlso, the mCallback null checks suffer from exactly the same race condition issue as in https://android-review.googlesource.com/#/c/460596/ when the BluetoothGatt object is closed concurrently, which may crash the app.",
+      "range": {
+        "startLine": 431,
+        "startChar": 16,
+        "endLine": 440,
+        "endChar": 19
+      },
+      "revId": "c131051e2866bb01ac3bda0a0a6a8b5cae3ff676",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
