@@ -109,8 +109,9 @@ public final class ConnectivityController extends StateController implements
             capabilities = mConnManager.getNetworkCapabilities(network);
         }
 
-        final boolean validated = capabilities != null
-                && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
+        final boolean validated = (capabilities != null)
+                && !(capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL)
+                && !capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED));
         final boolean connected = info != null && info.isConnected();
         final boolean connectionUsable = connected && validated;
         final boolean metered = connected && info.isMetered();
