@@ -1,0 +1,11 @@
+Verified+1: Dmitry Shmidt <dimitrysh@google.com>
+Code-Review+1: Dmitry Shmidt <dimitrysh@google.com>
+Code-Review+2: Adam Lesinski <adamlesinski@google.com>
+Code-Review+1: John Stultz <john.stultz@linaro.org>
+Autosubmit+1: Dmitry Shmidt <dimitrysh@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Mon, 11 Sep 2017 21:34:51 +0000
+Reviewed-on: https://android-review.googlesource.com/481488
+Project: platform/frameworks/base
+Branch: refs/heads/master
