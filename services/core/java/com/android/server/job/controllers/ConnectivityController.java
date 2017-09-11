@@ -99,6 +99,21 @@ public final class ConnectivityController extends StateController implements
         }
     }
 
+    private boolean isConnectionValid(NetworkCapabilities capabilities) {
+        if (capabilities == null) {
+            return false;
+        }
+        boolean isCaptive =
+                capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL);
+        boolean isValidated =
+                capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
+
+        if (isCaptive && !isValidated) {
+            return false;
+        }
+        return true;
+    }
+
     private boolean updateConstraintsSatisfied(JobStatus jobStatus,
             NetworkCapabilities capabilities) {
         final int jobUid = jobStatus.getSourceUid();
@@ -109,8 +124,7 @@ public final class ConnectivityController extends StateController implements
             capabilities = mConnManager.getNetworkCapabilities(network);
         }
 
-        final boolean validated = capabilities != null
-                && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
+        final boolean validated = isConnectionValid(capabilities);
         final boolean connected = info != null && info.isConnected();
         final boolean connectionUsable = connected && validated;
         final boolean metered = connected && info.isMetered();
