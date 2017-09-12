@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ae3d617_4df2c24e",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/NotificationData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2017-09-12T21:09:02Z",
+      "side": 1,
+      "message": "nit: add { } around and proper formatting.\nDo you have a stacktrace of a nullpointer it creates?",
+      "revId": "f00cb4f0ed0e32d683e7a4f86a23a1d31ee5e25e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
