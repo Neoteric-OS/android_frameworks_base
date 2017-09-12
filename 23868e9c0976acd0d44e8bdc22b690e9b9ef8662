@@ -46,6 +46,30 @@
       "revId": "23868e9c0976acd0d44e8bdc22b690e9b9ef8662",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8fa9b8c4_6d2eccac",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-12T12:16:21Z",
+      "side": 0,
+      "message": "Reverted. I only moved the captive portal related settings to be with the other final variables.",
+      "parentUuid": "e450a3bf_e830a268",
+      "range": {
+        "startLine": 272,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 51
+      },
+      "revId": "23868e9c0976acd0d44e8bdc22b690e9b9ef8662",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
