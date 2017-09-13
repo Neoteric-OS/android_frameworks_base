@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52c0fc0a_b218b190",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-13T04:44:10Z",
+      "side": 1,
+      "message": "You can also use appropriately named constants to eliminate the need for comments, e.g.\n\n    private static final int NUM_VALIDATION_LOG_LINES \u003d 20;\n\nI\u0027m assuming our compiler can squash this kind of pattern into the same impact as what you have here (yes? please?).",
+      "range": {
+        "startLine": 239,
+        "startChar": 57,
+        "endLine": 239,
+        "endChar": 59
+      },
+      "revId": "d3a3616e2e1db1fcaeaf7dcdf70ad7abe894c327",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "005cac47_ce346200",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-13T04:44:10Z",
+      "side": 1,
+      "message": "FYI: this is technically within the OEM range (up to 50, I think).",
+      "range": {
+        "startLine": 47,
+        "startChar": 31,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "d3a3616e2e1db1fcaeaf7dcdf70ad7abe894c327",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
