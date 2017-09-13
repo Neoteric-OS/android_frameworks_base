@@ -1,0 +1,9 @@
+Code-Review+2: Hugo Benichi <hugobenichi@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Verified+1: Rubin Xu <rubinxu@google.com>
+Autosubmit+1: Rubin Xu <rubinxu@google.com>
+Submitted-by: Rubin Xu <rubinxu@google.com>
+Submitted-at: Wed, 13 Sep 2017 09:35:02 +0000
+Reviewed-on: https://android-review.googlesource.com/477198
+Project: platform/frameworks/base
+Branch: refs/heads/master
