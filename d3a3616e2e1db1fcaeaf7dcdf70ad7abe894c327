@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90693f41_5e82bd58",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-13T07:31:26Z",
+      "side": 1,
+      "message": "Done.\n\nAbout the compiler assumption, actually this is the other way around: the literal 20 here would be given some kind of anonymous constant name and show up in the \"data\" section of the class file for that class.\n\nThe only real literal values that can be inlined in the code are ints -1, 0, 1, 2, and I think a few other doubles and longs (if you want to know them all, you can check the dedicated bytecode instructions to do so).\n\nHowever that\u0027s just the java standard, it is likely that we do some optimization pass after javac for the aotc system jar.",
+      "parentUuid": "52c0fc0a_b218b190",
+      "range": {
+        "startLine": 239,
+        "startChar": 57,
+        "endLine": 239,
+        "endChar": 59
+      },
+      "revId": "d3a3616e2e1db1fcaeaf7dcdf70ad7abe894c327",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "005cac47_ce346200",
         "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-13T04:44:10Z",
       "side": 1,
       "message": "FYI: this is technically within the OEM range (up to 50, I think).",
+      "range": {
+        "startLine": 47,
+        "startChar": 31,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "d3a3616e2e1db1fcaeaf7dcdf70ad7abe894c327",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "476cf389_1217c31f",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-13T07:31:26Z",
+      "side": 1,
+      "message": "Changed to 60.",
+      "parentUuid": "005cac47_ce346200",
       "range": {
         "startLine": 47,
         "startChar": 31,

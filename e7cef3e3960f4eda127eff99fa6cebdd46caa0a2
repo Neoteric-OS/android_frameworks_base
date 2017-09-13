@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0601d52f_1bb5c189",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-13T07:31:26Z",
+      "side": 1,
+      "message": "I think it does not need to because it is not part of core and is built into the system jar ?\n\nThat does not change the public API, otherwise I would have seen a build error.",
+      "parentUuid": "a9b08f4f_8a21bc57",
+      "range": {
+        "startLine": 283,
+        "startChar": 4,
+        "endLine": 283,
+        "endChar": 5
+      },
+      "revId": "e7cef3e3960f4eda127eff99fa6cebdd46caa0a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27727600_ba0f1b96",
         "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-13T04:44:10Z",
       "side": 1,
       "message": "Does it help (is it cleaner? ...) if we remove the Context argument?\n\nDefaultNetworkMonitorSettings could still have a constructor that takes mContext and invokes stuff on it...",
+      "range": {
+        "startLine": 1168,
+        "startChar": 23,
+        "endLine": 1168,
+        "endChar": 38
+      },
+      "revId": "e7cef3e3960f4eda127eff99fa6cebdd46caa0a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0c137c1_c4330a05",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-09-13T07:31:26Z",
+      "side": 1,
+      "message": "Lorenzo in a previous comment asked to pass down mContext explicitly.",
+      "parentUuid": "27727600_ba0f1b96",
       "range": {
         "startLine": 1168,
         "startChar": 23,
