@@ -16,6 +16,24 @@
       "revId": "f00cb4f0ed0e32d683e7a4f86a23a1d31ee5e25e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8a56a92_9df50557",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/NotificationData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1077031
+      },
+      "writtenOn": "2017-09-13T02:56:16Z",
+      "side": 1,
+      "message": "\u003e nit: add { } around and proper formatting.\n\nDone.\n\n\u003e Do you have a stacktrace of a nullpointer it creates?\n\nThe stacktrace is below. Please see b/65567562 for more details.\n---\n09-12 14:09:01.438 10039  2914  2914 E AndroidRuntime: FATAL EXCEPTION: main\n09-12 14:09:01.438 10039  2914  2914 E AndroidRuntime: Process: com.android.systemui, PID: 2914\n09-12 14:09:01.438 10039  2914  2914 E AndroidRuntime: java.lang.NullPointerException: Attempt to invoke virtual method \u0027int android.app.NotificationChannel.getImportance()\u0027 on a null object reference\n09-12 14:09:01.438 10039  2914  2914 E AndroidRuntime: \tat com.android.systemui.statusbar.phone.StatusBar.bindGuts(StatusBar.java:5952)\n09-12 14:09:01.438 10039  2914  2914 E AndroidRuntime: \tat com.android.systemui.statusbar.phone.StatusBar.-wrap1(Unknown Source:0)\n09-12 14:09:01.438 10039  2914  2914 E AndroidRuntime: \tat com.android.systemui.statusbar.phone.StatusBar$44.onLongPress(StatusBar.java:6000)\n09-12 14:09:01.438 10039  2914  2914 E AndroidRuntime: \tat com.android.systemui.SwipeHelper$1.run(SwipeHelper.java:297)\n09-12 14:09:01.438 10039  2914  2914 E AndroidRuntime: \tat android.os.Handler.handleCallback(Handler.java:789)\n---",
+      "parentUuid": "6ae3d617_4df2c24e",
+      "revId": "f00cb4f0ed0e32d683e7a4f86a23a1d31ee5e25e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
