@@ -3195,6 +3195,14 @@ public class ConnectivityServiceTest extends AndroidTestCase {
         assertPinnedToWifiWithCellDefault();
     }
 
+    public void testMany() throws Exception {
+        for (int i = 0; i < 2000; i++) {
+            testNetworkRequestMaximum();
+            tearDown();
+            setUp();
+        }
+    }
+
     @SmallTest
     public void testNetworkRequestMaximum() {
         final int MAX_REQUESTS = 100;
@@ -3257,7 +3265,7 @@ public class ConnectivityServiceTest extends AndroidTestCase {
             mCm.unregisterNetworkCallback(pendingIntent);
         }
         pendingIntents.clear();
-        waitForIdle(5000);
+        waitForIdle(5000); // THIS IS FLAKKY !! Something is blocking here
 
         // Test that the limit is not hit when MAX_REQUESTS requests are added and removed.
         for (int i = 0; i < MAX_REQUESTS; i++) {
