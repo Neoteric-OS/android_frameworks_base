@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "40df5095_49ae2f32",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-14T03:24:34Z",
+      "side": 1,
+      "message": "One more thing: please add a TODO to de-dup this with the corresponding code in ConnectivityService.wakeupModifyInterface().",
+      "range": {
+        "startLine": 66,
+        "startChar": 68,
+        "endLine": 66,
+        "endChar": 69
+      },
+      "revId": "f562ac34a51da55e4d15e34f0cd1cb597e7d926c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10f2b6f8_7f0bbb0c",
         "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
         "patchSetId": 1
