@@ -195,7 +195,7 @@ public abstract class BluetoothGattServerCallback {
      * successfully
      * @hide
      */
-    public void onConnectionUpdated(BluetoothDevice gatt, int interval, int latency, int timeout,
+    public void onConnectionUpdated(BluetoothDevice device, int interval, int latency, int timeout,
             int status) {
     }
 
