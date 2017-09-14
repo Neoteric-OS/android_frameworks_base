@@ -22,6 +22,30 @@
       "revId": "8af049eb342b3322539da79996be9e7df87e92e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9c5ad93_7ebe0e06",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-14T23:11:14Z",
+      "side": 1,
+      "message": "Nice suggestion, I moved this two comments into a comment block before the type definition, thanks!",
+      "parentUuid": "c7fe0089_080e88f6",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 7
+      },
+      "revId": "8af049eb342b3322539da79996be9e7df87e92e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
