@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10f2b6f8_7f0bbb0c",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-14T02:59:07Z",
+      "side": 1,
+      "message": "I found an already defined named constant for this: android.utils.TimeUtils.NANOS_PER_MS",
+      "range": {
+        "startLine": 157,
+        "startChar": 41,
+        "endLine": 157,
+        "endChar": 48
+      },
+      "revId": "f562ac34a51da55e4d15e34f0cd1cb597e7d926c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0f52409_b23e63bb",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-09-14T02:59:07Z",
+      "side": 1,
+      "message": "In this case, how about:\n\n    if (timestampNs \u003c\u003d 0) {\n        timestampMs \u003d ...currentTime...\n    }\n\nIn fact, can these all be combined into a single statement?\n\n    final long timestampMs \u003d (timestampNs \u003e 0)\n            ? (timestampNs / NANOS_PER_MS)\n            : System.currentTimeMillis();",
+      "range": {
+        "startLine": 158,
+        "startChar": 46,
+        "endLine": 158,
+        "endChar": 47
+      },
+      "revId": "f562ac34a51da55e4d15e34f0cd1cb597e7d926c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
