@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7fe0089_080e88f6",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-09-14T22:21:56Z",
+      "side": 1,
+      "message": "Minor: I\u0027d move this into a comment block before the BCD_EXTENDED_TYPE_CALLED_PARTY; these comments end up in the public API javadoc, so its nice to ensure they\u0027re tidy.",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 7
+      },
+      "revId": "8af049eb342b3322539da79996be9e7df87e92e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
