@@ -44,7 +44,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.ToIntFunction;
 
-/** {@hide} */
+/**
+ * Event buffering service for core networking and connectivity metrics.
+ */
 final public class IpConnectivityMetrics extends SystemService {
     private static final String TAG = IpConnectivityMetrics.class.getSimpleName();
     private static final boolean DBG = false;
