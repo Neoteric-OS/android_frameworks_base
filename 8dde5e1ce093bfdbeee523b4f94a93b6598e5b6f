@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c7d65dd_eeb5aa8d",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2017-09-15T18:52:07Z",
+      "side": 1,
+      "message": "nit. We should remove this type since it is no longer checked.",
+      "range": {
+        "startLine": 711,
+        "startChar": 42,
+        "endLine": 711,
+        "endChar": 51
+      },
+      "revId": "8dde5e1ce093bfdbeee523b4f94a93b6598e5b6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
