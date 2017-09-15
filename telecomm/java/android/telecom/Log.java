@@ -340,6 +340,7 @@ public class Log {
     }
 
     private static MessageDigest sMessageDigest;
+    private static final Object sMessageDigestLock = new Object();
 
     public static void initMd5Sum() {
         new AsyncTask<Void, Void, Void>() {
@@ -351,7 +352,9 @@ public class Log {
                 } catch (NoSuchAlgorithmException e) {
                     md = null;
                 }
-                sMessageDigest = md;
+                synchronized (sMessageDigestLock) {
+                    sMessageDigest = md;
+                }
                 return null;
             }
         }.execute();
@@ -440,13 +443,15 @@ public class Log {
             return "****";
         }
 
-        if (sMessageDigest != null) {
-            sMessageDigest.reset();
-            sMessageDigest.update(input);
-            byte[] result = sMessageDigest.digest();
-            return encodeHex(result);
-        } else {
-            return "Uninitialized SHA1";
+        synchronized (sMessageDigestLock) {
+            if (sMessageDigest != null) {
+                sMessageDigest.reset();
+                sMessageDigest.update(input);
+                byte[] result = sMessageDigest.digest();
+                return encodeHex(result);
+            } else {
+                return "Uninitialized SHA1";
+            }
         }
     }
 
