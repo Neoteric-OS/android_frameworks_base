@@ -377,4 +377,9 @@ interface IWindowManager
      * associated with that InputConsumer.
      */
     boolean destroyInputConsumer(String name);
+
+    /**
+     * Requests to notify the next user activity.
+     */
+    void requestUserActivityNotification();
 }

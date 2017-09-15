@@ -526,4 +526,8 @@ public class IWindowManagerImpl implements IWindowManager {
     @Override
     public void disableSurfaceTrace() throws RemoteException {
     }
+
+    @Override
+    public void requestUserActivityNotification() throws RemoteException {
+    }
 }
