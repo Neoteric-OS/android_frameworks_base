@@ -163,6 +163,12 @@ public interface WindowManagerPolicy {
     public final static String ACTION_HDMI_PLUGGED = "android.intent.action.HDMI_PLUGGED";
 
     /**
+     * Broadcast sent when an user activity is detected.
+     */
+    public final static String ACTION_USER_ACTIVITY_NOTIFICATION =
+            "android.intent.action.USER_ACTIVITY_NOTIFICATION";
+
+    /**
      * Extra in {@link #ACTION_HDMI_PLUGGED} indicating the state: true if
      * plugged in to HDMI, false if not.
      */
@@ -1734,4 +1740,9 @@ public interface WindowManagerPolicy {
      * @return true if ready; false otherwise.
      */
     boolean canDismissBootAnimation();
+
+    /**
+     * Requests to notify the next user activity.
+     */
+    public void requestUserActivityNotification();
 }

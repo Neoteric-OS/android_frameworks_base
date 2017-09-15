@@ -397,4 +397,9 @@ interface IWindowManager
      * Return the touch region for the current IME window, or an empty region if there is none.
      */
     Region getCurrentImeTouchRegion();
+
+    /**
+     * Requests to notify the next user activity.
+     */
+    void requestUserActivityNotification();
 }
