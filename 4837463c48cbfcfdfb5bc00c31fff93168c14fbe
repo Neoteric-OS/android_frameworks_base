@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67d5fc4e_d864e309",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-18T22:23:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b1106b8_09fe221b",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 72
+      },
+      "revId": "4837463c48cbfcfdfb5bc00c31fff93168c14fbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d1cf680_83b9b218",
         "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-18T22:02:38Z",
       "side": 1,
       "message": "/*\n     * The BCD extended type used to determine the extended char for the digit which is greater than\n     * 9.\n     *\n     * see TS 24.008 section 10.5.4.7 Called party BCD number\n     */",
+      "range": {
+        "startLine": 87,
+        "startChar": 3,
+        "endLine": 87,
+        "endChar": 61
+      },
+      "revId": "4837463c48cbfcfdfb5bc00c31fff93168c14fbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb72d012_17e5331e",
+        "filename": "telephony/java/android/telephony/PhoneNumberUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-18T22:23:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d1cf680_83b9b218",
       "range": {
         "startLine": 87,
         "startChar": 3,
