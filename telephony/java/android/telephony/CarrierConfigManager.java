@@ -196,6 +196,12 @@ public class CarrierConfigManager {
      */
     public static final String KEY_USE_OTASP_FOR_PROVISIONING_BOOL = "use_otasp_for_provisioning_bool";
 
+    /**
+     * Override operator name and service provider name for current Carrier
+     * Makes it possible for MVNOs to get their brand name instead of the network owners name.
+     */
+    public static final String KEY_CARRIER_BRAND_NAME_OVERRIDE_STRING = "carrier_brand_name_override_string";
+
     /** Display carrier settings menu if true */
     public static final String KEY_CARRIER_SETTINGS_ENABLE_BOOL = "carrier_settings_enable_bool";
 
@@ -1629,6 +1635,7 @@ public class CarrierConfigManager {
                 });
         sDefaults.putStringArray(KEY_GSM_ROAMING_NETWORKS_STRING_ARRAY, null);
         sDefaults.putStringArray(KEY_GSM_NONROAMING_NETWORKS_STRING_ARRAY, null);
+        sDefaults.putString(KEY_CARRIER_BRAND_NAME_OVERRIDE_STRING, null);
         sDefaults.putString(KEY_CONFIG_IMS_PACKAGE_OVERRIDE_STRING, null);
         sDefaults.putStringArray(KEY_CDMA_ROAMING_NETWORKS_STRING_ARRAY, null);
         sDefaults.putStringArray(KEY_CDMA_NONROAMING_NETWORKS_STRING_ARRAY, null);
