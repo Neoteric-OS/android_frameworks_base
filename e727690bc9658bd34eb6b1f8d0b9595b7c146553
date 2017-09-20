@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a663fe3e_ad51d38e",
+        "filename": "tools/aapt/Images.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2017-09-20T18:46:56Z",
+      "side": 1,
+      "message": "Why add \u0027\\0\u0027? C string literals are implicitly null-terminated anyways, so you\u0027re just adding a second null termination to them by adding this.\n\nDitto for all the rest.",
+      "range": {
+        "startLine": 1249,
+        "startChar": 47,
+        "endLine": 1249,
+        "endChar": 53
+      },
+      "revId": "e727690bc9658bd34eb6b1f8d0b9595b7c146553",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
