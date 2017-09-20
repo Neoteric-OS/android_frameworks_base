@@ -42,6 +42,14 @@ public final class CellIdentityWcdma implements Parcelable {
     private final int mPsc;
     // 16-bit UMTS Absolute RF Channel Number
     private final int mUarfcn;
+    // Mobile Country Code in string format
+    private final String mMccStr;
+    // Mobile Network Code in string format
+    private final String mMncStr;
+    // long alpha ONS or EONS
+    private final String mAlphaLong;
+    // short alpha ONS or EONS
+    private final String mAlphaShort;
 
     /**
      * @hide
@@ -53,6 +61,10 @@ public final class CellIdentityWcdma implements Parcelable {
         mCid = Integer.MAX_VALUE;
         mPsc = Integer.MAX_VALUE;
         mUarfcn = Integer.MAX_VALUE;
+        mMccStr = "";
+        mMncStr = "";
+        mAlphaLong = "";
+        mAlphaShort = "";
     }
     /**
      * public constructor
@@ -65,7 +77,7 @@ public final class CellIdentityWcdma implements Parcelable {
      * @hide
      */
     public CellIdentityWcdma (int mcc, int mnc, int lac, int cid, int psc) {
-        this(mcc, mnc, lac, cid, psc, Integer.MAX_VALUE);
+        this(mcc, mnc, lac, cid, psc, Integer.MAX_VALUE, "", "", "", "");
     }
 
     /**
@@ -80,37 +92,61 @@ public final class CellIdentityWcdma implements Parcelable {
      * @hide
      */
     public CellIdentityWcdma (int mcc, int mnc, int lac, int cid, int psc, int uarfcn) {
+        this(mcc, mnc, lac, cid, psc, uarfcn, "", "", "", "");
+    }
+
+    /**
+     * public constructor
+     * @param mcc 3-digit Mobile Country Code, 0..999
+     * @param mnc 2 or 3-digit Mobile Network Code, 0..999
+     * @param lac 16-bit Location Area Code, 0..65535
+     * @param cid 28-bit UMTS Cell Identity
+     * @param psc 9-bit UMTS Primary Scrambling Code
+     * @param uarfcn 16-bit UMTS Absolute RF Channel Number
+     * @param mccStr Mobile Country Code in string format
+     * @param mncStr Mobile Network Code in string format
+     * @param alphal long alpha ONS or EONS
+     * @param alphas short alpha ONS or EONS
+     *
+     * @hide
+     */
+    public CellIdentityWcdma (int mcc, int mnc, int lac, int cid, int psc, int uarfcn,
+                              String mccStr, String mncStr, String alphal, String alphas) {
         mMcc = mcc;
         mMnc = mnc;
         mLac = lac;
         mCid = cid;
         mPsc = psc;
         mUarfcn = uarfcn;
+        mMccStr = mccStr;
+        mMncStr = mncStr;
+        mAlphaLong = alphal;
+        mAlphaShort = alphas;
     }
 
     private CellIdentityWcdma(CellIdentityWcdma cid) {
-        mMcc = cid.mMcc;
-        mMnc = cid.mMnc;
-        mLac = cid.mLac;
-        mCid = cid.mCid;
-        mPsc = cid.mPsc;
-        mUarfcn = cid.mUarfcn;
+        this(cid.mMcc, cid.mMnc, cid.mLac, cid.mCid, cid.mPsc, cid.mUarfcn, cid.mMccStr,
+                cid.mMncStr, cid.mAlphaLong, cid.mAlphaShort);
     }
 
     CellIdentityWcdma copy() {
-       return new CellIdentityWcdma(this);
+        return new CellIdentityWcdma(this);
     }
 
     /**
      * @return 3-digit Mobile Country Code, 0..999, Integer.MAX_VALUE if unknown
+     * @deprecated Use {@link #getMcc} instead.
      */
+    @Deprecated
     public int getMcc() {
         return mMcc;
     }
 
     /**
      * @return 2 or 3-digit Mobile Network Code, 0..999, Integer.MAX_VALUE if unknown
+     * @deprecated Use {@link #getMnc} instead.
      */
+    @Deprecated
     public int getMnc() {
         return mMnc;
     }
@@ -137,6 +173,37 @@ public final class CellIdentityWcdma implements Parcelable {
     public int getPsc() {
         return mPsc;
     }
+
+    /**
+     * @return Mobile Country Code in string version, empty string if unknown
+     */
+    public String getMcc() {
+        return mMccStr;
+    }
+
+    /**
+     * @return Mobile Network Code in string version, empty string if unknown
+     */
+    public String getMnc() {
+        return mMncStr;
+    }
+
+    /**
+     * @return a 5 or 6 character string, empty string if unknown
+     */
+    public String getSimOperatorNumeric() {
+        return mMccStr + mMncStr;
+    }
+
+    /**
+     * @return Alpha long ONS or EONS, empty string if unknown
+     */
+    public String getAlphaLong() { return mAlphaLong; }
+
+    /**
+     * @return Alpha short ONS or EONS, empty string if unknown
+     */
+    public String getAlphaShort() { return mAlphaShort; }
 
     @Override
     public int hashCode() {
@@ -166,7 +233,11 @@ public final class CellIdentityWcdma implements Parcelable {
                 mLac == o.mLac &&
                 mCid == o.mCid &&
                 mPsc == o.mPsc &&
-                mUarfcn == o.mUarfcn;
+                mUarfcn == o.mUarfcn &&
+                mMccStr.equals(o.mMccStr) &&
+                mMncStr.equals(o.mMncStr) &&
+                mAlphaLong.equals(o.mAlphaLong) &&
+                mAlphaShort.equals(o.mAlphaShort);
     }
 
     @Override
@@ -178,6 +249,10 @@ public final class CellIdentityWcdma implements Parcelable {
         sb.append(" mCid=").append(mCid);
         sb.append(" mPsc=").append(mPsc);
         sb.append(" mUarfcn=").append(mUarfcn);
+        sb.append(" mMccStr=").append(mMccStr);
+        sb.append(" mMncStr=").append(mMncStr);
+        sb.append(" mAlphaLong=").append(mAlphaLong);
+        sb.append(" mAlphaShort=").append(mAlphaShort);
         sb.append("}");
 
         return sb.toString();
@@ -199,6 +274,10 @@ public final class CellIdentityWcdma implements Parcelable {
         dest.writeInt(mCid);
         dest.writeInt(mPsc);
         dest.writeInt(mUarfcn);
+        dest.writeString(mMccStr);
+        dest.writeString(mMncStr);
+        dest.writeString(mAlphaLong);
+        dest.writeString(mAlphaShort);
     }
 
     /** Construct from Parcel, type has already been processed */
@@ -209,6 +288,10 @@ public final class CellIdentityWcdma implements Parcelable {
         mCid = in.readInt();
         mPsc = in.readInt();
         mUarfcn = in.readInt();
+        mMccStr = in.readString();
+        mMncStr = in.readString();
+        mAlphaLong = in.readString();
+        mAlphaShort = in.readString();
         if (DBG) log("CellIdentityWcdma(Parcel): " + toString());
     }
 
@@ -216,16 +299,16 @@ public final class CellIdentityWcdma implements Parcelable {
     @SuppressWarnings("hiding")
     public static final Creator<CellIdentityWcdma> CREATOR =
             new Creator<CellIdentityWcdma>() {
-        @Override
-        public CellIdentityWcdma createFromParcel(Parcel in) {
-            return new CellIdentityWcdma(in);
-        }
+                @Override
+                public CellIdentityWcdma createFromParcel(Parcel in) {
+                    return new CellIdentityWcdma(in);
+                }
 
-        @Override
-        public CellIdentityWcdma[] newArray(int size) {
-            return new CellIdentityWcdma[size];
-        }
-    };
+                @Override
+                public CellIdentityWcdma[] newArray(int size) {
+                    return new CellIdentityWcdma[size];
+                }
+            };
 
     /**
      * log

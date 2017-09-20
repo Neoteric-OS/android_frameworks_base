@@ -42,6 +42,14 @@ public final class CellIdentityLte implements Parcelable {
     private final int mTac;
     // 18-bit Absolute RF Channel Number
     private final int mEarfcn;
+    // Mobile Country Code in string format
+    private final String mMccStr;
+    // Mobile Network Code in string format
+    private final String mMncStr;
+    // long alpha ONS or EONS
+    private final String mAlphaLong;
+    // short alpha ONS or EONS
+    private final String mAlphaShort;
 
     /**
      * @hide
@@ -53,6 +61,10 @@ public final class CellIdentityLte implements Parcelable {
         mPci = Integer.MAX_VALUE;
         mTac = Integer.MAX_VALUE;
         mEarfcn = Integer.MAX_VALUE;
+        mMccStr = "";
+        mMncStr = "";
+        mAlphaLong = "";
+        mAlphaShort = "";
     }
 
     /**
@@ -66,7 +78,7 @@ public final class CellIdentityLte implements Parcelable {
      * @hide
      */
     public CellIdentityLte (int mcc, int mnc, int ci, int pci, int tac) {
-        this(mcc, mnc, ci, pci, tac, Integer.MAX_VALUE);
+        this(mcc, mnc, ci, pci, tac, Integer.MAX_VALUE, "", "", "", "");
     }
 
     /**
@@ -81,12 +93,36 @@ public final class CellIdentityLte implements Parcelable {
      * @hide
      */
     public CellIdentityLte (int mcc, int mnc, int ci, int pci, int tac, int earfcn) {
+        this(mcc, mnc, ci, pci, tac, earfcn, "", "", "", "");
+    }
+
+    /**
+     *
+     * @param mcc 3-digit Mobile Country Code, 0..999
+     * @param mnc 2 or 3-digit Mobile Network Code, 0..999
+     * @param ci 28-bit Cell Identity
+     * @param pci Physical Cell Id 0..503
+     * @param tac 16-bit Tracking Area Code
+     * @param earfcn 18-bit LTE Absolute RF Channel Number
+     * @param mccStr Mobile Country Code in string format
+     * @param mncStr Mobile Network Code in string format
+     * @param alphal long alpha ONS or EONS
+     * @param alphas short alpha ONS or EONS
+     *
+     * @hide
+     */
+    public CellIdentityLte (int mcc, int mnc, int ci, int pci, int tac, int earfcn, String mccStr,
+                            String mncStr, String alphal, String alphas) {
         mMcc = mcc;
         mMnc = mnc;
         mCi = ci;
         mPci = pci;
         mTac = tac;
         mEarfcn = earfcn;
+        mMccStr = mccStr;
+        mMncStr = mncStr;
+        mAlphaLong = alphal;
+        mAlphaShort = alphas;
     }
 
     private CellIdentityLte(CellIdentityLte cid) {
@@ -96,6 +132,10 @@ public final class CellIdentityLte implements Parcelable {
         mPci = cid.mPci;
         mTac = cid.mTac;
         mEarfcn = cid.mEarfcn;
+        mMccStr = cid.mMccStr;
+        mMncStr = cid.mMncStr;
+        mAlphaLong = cid.mAlphaLong;
+        mAlphaShort = cid.mAlphaShort;
     }
 
     CellIdentityLte copy() {
@@ -104,14 +144,18 @@ public final class CellIdentityLte implements Parcelable {
 
     /**
      * @return 3-digit Mobile Country Code, 0..999, Integer.MAX_VALUE if unknown
+     * @deprecated Use {@link #getMcc} instead.
      */
+    @Deprecated
     public int getMcc() {
         return mMcc;
     }
 
     /**
      * @return 2 or 3-digit Mobile Network Code, 0..999, Integer.MAX_VALUE if unknown
+     * @deprecated Use {@link #getMnc} instead.
      */
+    @Deprecated
     public int getMnc() {
         return mMnc;
     }
@@ -144,6 +188,37 @@ public final class CellIdentityLte implements Parcelable {
         return mEarfcn;
     }
 
+    /**
+     * @return Mobile Country Code in string format, empty string if unknown
+     */
+    public String getMcc() {
+        return mMccStr;
+    }
+
+    /**
+     * @return Mobile Network Code in string format, empty string if unknown
+     */
+    public String getMnc() {
+        return mMncStr;
+    }
+
+    /**
+     * @return a 5 or 6 character string, empty string if unknown
+     */
+    public String getSimOperatorNumeric() {
+        return mMccStr + mMncStr;
+    }
+
+    /**
+     * @return Alpha long ONS or EONS, empty string if unknown
+     */
+    public String getAlphaLong() { return mAlphaLong; }
+
+    /**
+     * @return Alpha short ONS or EONS, empty string if unknown
+     */
+    public String getAlphaShort() { return mAlphaShort; }
+
     @Override
     public int hashCode() {
         return Objects.hash(mMcc, mMnc, mCi, mPci, mTac);
@@ -165,7 +240,11 @@ public final class CellIdentityLte implements Parcelable {
                 mCi == o.mCi &&
                 mPci == o.mPci &&
                 mTac == o.mTac &&
-                mEarfcn == o.mEarfcn;
+                mEarfcn == o.mEarfcn &&
+                mMccStr.equals(o.mMccStr) &&
+                mMncStr.equals(o.mMncStr) &&
+                mAlphaLong.equals(o.mAlphaLong) &&
+                mAlphaShort.equals(o.mAlphaShort);
     }
 
     @Override
@@ -177,6 +256,10 @@ public final class CellIdentityLte implements Parcelable {
         sb.append(" mPci="); sb.append(mPci);
         sb.append(" mTac="); sb.append(mTac);
         sb.append(" mEarfcn="); sb.append(mEarfcn);
+        sb.append(" mMccStr="); sb.append(mMccStr);
+        sb.append(" mMncStr="); sb.append(mMncStr);
+        sb.append(" mAlphaLong="); sb.append(mAlphaLong);
+        sb.append(" mAlphaShort="); sb.append(mAlphaShort);
         sb.append("}");
 
         return sb.toString();
@@ -198,6 +281,10 @@ public final class CellIdentityLte implements Parcelable {
         dest.writeInt(mPci);
         dest.writeInt(mTac);
         dest.writeInt(mEarfcn);
+        dest.writeString(mMccStr);
+        dest.writeString(mMncStr);
+        dest.writeString(mAlphaLong);
+        dest.writeString(mAlphaShort);
     }
 
     /** Construct from Parcel, type has already been processed */
@@ -208,6 +295,10 @@ public final class CellIdentityLte implements Parcelable {
         mPci = in.readInt();
         mTac = in.readInt();
         mEarfcn = in.readInt();
+        mMccStr = in.readString();
+        mMncStr = in.readString();
+        mAlphaLong = in.readString();
+        mAlphaShort = in.readString();
         if (DBG) log("CellIdentityLte(Parcel): " + toString());
     }
 
@@ -215,16 +306,16 @@ public final class CellIdentityLte implements Parcelable {
     @SuppressWarnings("hiding")
     public static final Creator<CellIdentityLte> CREATOR =
             new Creator<CellIdentityLte>() {
-        @Override
-        public CellIdentityLte createFromParcel(Parcel in) {
-            return new CellIdentityLte(in);
-        }
+                @Override
+                public CellIdentityLte createFromParcel(Parcel in) {
+                    return new CellIdentityLte(in);
+                }
 
-        @Override
-        public CellIdentityLte[] newArray(int size) {
-            return new CellIdentityLte[size];
-        }
-    };
+                @Override
+                public CellIdentityLte[] newArray(int size) {
+                    return new CellIdentityLte[size];
+                }
+            };
 
     /**
      * log
