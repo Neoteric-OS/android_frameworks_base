@@ -50,6 +50,10 @@ public final class CellIdentityCdma implements Parcelable {
      * to +90 degrees).
      */
     private final int mLatitude;
+    // long alpha Operator Name String or Enhanced Operator Name String
+    private final String mAlphaLong;
+    // short alpha Operator Name String or Enhanced Operator Name String
+    private final String mAlphaShort;
 
     /**
      * @hide
@@ -60,6 +64,8 @@ public final class CellIdentityCdma implements Parcelable {
         mBasestationId = Integer.MAX_VALUE;
         mLongitude = Integer.MAX_VALUE;
         mLatitude = Integer.MAX_VALUE;
+        mAlphaLong = null;
+        mAlphaShort = null;
     }
 
     /**
@@ -75,19 +81,37 @@ public final class CellIdentityCdma implements Parcelable {
      * @hide
      */
     public CellIdentityCdma (int nid, int sid, int bid, int lon, int lat) {
+        this(nid, sid, bid, lon, lat, null, null);
+    }
+
+    /**
+     * public constructor
+     * @param nid Network Id 0..65535
+     * @param sid CDMA System Id 0..32767
+     * @param bid Base Station Id 0..65535
+     * @param lon Longitude is a decimal number ranges from -2592000
+     *        to 2592000
+     * @param lat Latitude is a decimal number ranges from -1296000
+     *        to 1296000
+     * @param alphal long alpha Operator Name String or Enhanced Operator Name String
+     * @param alphas short alpha Operator Name String or Enhanced Operator Name String
+     *
+     * @hide
+     */
+    public CellIdentityCdma (int nid, int sid, int bid, int lon, int lat, String alphal,
+                             String alphas) {
         mNetworkId = nid;
         mSystemId = sid;
         mBasestationId = bid;
         mLongitude = lon;
         mLatitude = lat;
+        mAlphaLong = alphal;
+        mAlphaShort = alphas;
     }
 
     private CellIdentityCdma(CellIdentityCdma cid) {
-        mNetworkId = cid.mNetworkId;
-        mSystemId = cid.mSystemId;
-        mBasestationId = cid.mBasestationId;
-        mLongitude = cid.mLongitude;
-        mLatitude = cid.mLatitude;
+        this(cid.mNetworkId, cid.mSystemId, cid.mBasestationId, cid.mLongitude, cid.mLatitude,
+                cid.mAlphaLong, cid.mAlphaShort);
     }
 
     CellIdentityCdma copy() {
@@ -137,6 +161,22 @@ public final class CellIdentityCdma implements Parcelable {
         return mLatitude;
     }
 
+    /**
+     * @return The long alpha tag associated with the current scan result (may be the operator
+     * name string or extended operator name string). May be null if unknown.
+     */
+    public CharSequence getOperatorAlphaLong() {
+        return mAlphaLong;
+    }
+
+    /**
+     * @return The short alpha tag associated with the current scan result (may be the operator
+     * name string or extended operator name string).  May be null if unknown.
+     */
+    public CharSequence getOperatorAlphaShort() {
+        return mAlphaShort;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(mNetworkId, mSystemId, mBasestationId, mLatitude, mLongitude);
@@ -157,7 +197,9 @@ public final class CellIdentityCdma implements Parcelable {
                 mSystemId == o.mSystemId &&
                 mBasestationId == o.mBasestationId &&
                 mLatitude == o.mLatitude &&
-                mLongitude == o.mLongitude;
+                mLongitude == o.mLongitude &&
+                mAlphaLong.equals(o.mAlphaLong) &&
+                mAlphaShort.equals(o.mAlphaShort);
     }
 
     @Override
@@ -168,6 +210,8 @@ public final class CellIdentityCdma implements Parcelable {
         sb.append(" mBasestationId="); sb.append(mBasestationId);
         sb.append(" mLongitude="); sb.append(mLongitude);
         sb.append(" mLatitude="); sb.append(mLatitude);
+        sb.append(" mAlphaLong="); sb.append(mAlphaLong);
+        sb.append(" mAlphaShort="); sb.append(mAlphaShort);
         sb.append("}");
 
         return sb.toString();
@@ -188,6 +232,8 @@ public final class CellIdentityCdma implements Parcelable {
         dest.writeInt(mBasestationId);
         dest.writeInt(mLongitude);
         dest.writeInt(mLatitude);
+        dest.writeString(mAlphaLong);
+        dest.writeString(mAlphaShort);
     }
 
     /** Construct from Parcel, type has already been processed */
@@ -197,6 +243,8 @@ public final class CellIdentityCdma implements Parcelable {
         mBasestationId = in.readInt();
         mLongitude = in.readInt();
         mLatitude = in.readInt();
+        mAlphaLong = in.readString();
+        mAlphaShort = in.readString();
         if (DBG) log("CellIdentityCdma(Parcel): " + toString());
     }
 
