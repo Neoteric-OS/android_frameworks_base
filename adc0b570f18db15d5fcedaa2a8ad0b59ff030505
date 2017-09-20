@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16fee78d_87b3eb9a",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4712,
+      "author": {
+        "id": 1003425
+      },
+      "writtenOn": "2017-09-20T22:52:51Z",
+      "side": 1,
+      "message": "Why change it to require the return value be checked versus throwing an exception?",
+      "range": {
+        "startLine": 4712,
+        "startChar": 18,
+        "endLine": 4712,
+        "endChar": 25
+      },
+      "revId": "adc0b570f18db15d5fcedaa2a8ad0b59ff030505",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14f6e7c6_fb9c8d1a",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4720,
+      "author": {
+        "id": 1003425
+      },
+      "writtenOn": "2017-09-20T22:52:51Z",
+      "side": 1,
+      "message": "why not throw a SecurityException here?",
+      "range": {
+        "startLine": 4720,
+        "startChar": 27,
+        "endLine": 4720,
+        "endChar": 32
+      },
+      "revId": "adc0b570f18db15d5fcedaa2a8ad0b59ff030505",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a9ef61e_1b797312",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4735,
+      "author": {
+        "id": 1003425
+      },
+      "writtenOn": "2017-09-20T22:52:51Z",
+      "side": 1,
+      "message": "rather than catch this, just change the \"throw new SecurityException\" call to return false",
+      "range": {
+        "startLine": 4735,
+        "startChar": 21,
+        "endLine": 4735,
+        "endChar": 38
+      },
+      "revId": "adc0b570f18db15d5fcedaa2a8ad0b59ff030505",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
