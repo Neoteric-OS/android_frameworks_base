@@ -2954,9 +2954,12 @@ public class AccountManagerService
                              * have users launching arbitrary activities by tricking users to
                              * interact with malicious notifications.
                              */
-                            checkKeyIntent(
+                            if (!checkKeyIntent(
                                     Binder.getCallingUid(),
-                                    intent);
+                                    intent)) {
+                                onError(AccountManager.ERROR_CODE_INVALID_RESPONSE,
+                                        "invalid intent in bundle returned");
+                            }
                             doNotification(
                                     mAccounts,
                                     account,
@@ -3349,9 +3352,10 @@ public class AccountManagerService
             Bundle.setDefusable(result, true);
             mNumResults++;
             Intent intent = null;
+            boolean isValidIntent = false;
             if (result != null
                     && (intent = result.getParcelable(AccountManager.KEY_INTENT)) != null) {
-                checkKeyIntent(
+                isValidIntent = checkKeyIntent(
                         Binder.getCallingUid(),
                         intent);
             }
@@ -3372,6 +3376,12 @@ public class AccountManagerService
                 }
                 sendErrorResponse(response, AccountManager.ERROR_CODE_INVALID_RESPONSE,
                         "null bundle returned");
+                return;
+            }
+
+            if (!isValidIntent) {
+                sendErrorResponse(response, AccountManager.ERROR_CODE_INVALID_RESPONSE,
+                        "invalid intent in bundle returned");
                 return;
             }
 
@@ -4700,13 +4710,14 @@ public class AccountManagerService
          * into launching arbitrary intents on the device via by tricking to click authenticator
          * supplied entries in the system Settings app.
          */
-        protected void checkKeyIntent(
-                int authUid,
-                Intent intent) throws SecurityException {
+        protected boolean checkKeyIntent(int authUid, Intent intent) {
             long bid = Binder.clearCallingIdentity();
             try {
                 PackageManager pm = mContext.getPackageManager();
                 ResolveInfo resolveInfo = pm.resolveActivityAsUser(intent, 0, mAccounts.userId);
+                if (resolveInfo == null) {
+                    return false;
+                }
                 ActivityInfo targetActivityInfo = resolveInfo.activityInfo;
                 int targetUid = targetActivityInfo.applicationInfo.uid;
                 if (!isExportedSystemActivity(targetActivityInfo)
@@ -4716,9 +4727,10 @@ public class AccountManagerService
                     String activityName = targetActivityInfo.name;
                     String tmpl = "KEY_INTENT resolved to an Activity (%s) in a package (%s) that "
                             + "does not share a signature with the supplying authenticator (%s).";
-                    throw new SecurityException(
-                            String.format(tmpl, activityName, pkgName, mAccountType));
+                    Log.e(TAG, String.format(tmpl, activityName, pkgName, mAccountType));
+                    return false;
                 }
+                return true;
             } finally {
                 Binder.restoreCallingIdentity(bid);
             }
@@ -4838,6 +4850,7 @@ public class AccountManagerService
             Bundle.setDefusable(result, true);
             mNumResults++;
             Intent intent = null;
+            boolean isValidIntent = false;
             if (result != null) {
                 boolean isSuccessfulConfirmCreds = result.getBoolean(
                         AccountManager.KEY_BOOLEAN_RESULT, false);
@@ -4868,7 +4881,7 @@ public class AccountManagerService
             }
             if (result != null
                     && (intent = result.getParcelable(AccountManager.KEY_INTENT)) != null) {
-                checkKeyIntent(
+                isValidIntent = checkKeyIntent(
                         Binder.getCallingUid(),
                         intent);
             }
@@ -4899,6 +4912,10 @@ public class AccountManagerService
                         response.onError(AccountManager.ERROR_CODE_INVALID_RESPONSE,
                                 "null bundle returned");
                     } else {
+                        if (!isValidIntent) {
+                            response.onError(AccountManager.ERROR_CODE_INVALID_RESPONSE,
+                                    "invalid intent in bundle returned");
+                        }
                         if (mStripAuthTokenFromResult) {
                             result.remove(AccountManager.KEY_AUTHTOKEN);
                         }
