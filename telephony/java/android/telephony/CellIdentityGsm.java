@@ -42,6 +42,14 @@ public final class CellIdentityGsm implements Parcelable {
     private final int mArfcn;
     // 6-bit Base Station Identity Code
     private final int mBsic;
+    // Mobile Country Code in string format
+    private final String mMccStr;
+    // Mobile Network Code in string format
+    private final String mMncStr;
+    // long alpha ONS or EONS
+    private final String mAlphaLong;
+    // short alpha ONS or EONS
+    private final String mAlphaShort;
 
     /**
      * @hide
@@ -53,6 +61,10 @@ public final class CellIdentityGsm implements Parcelable {
         mCid = Integer.MAX_VALUE;
         mArfcn = Integer.MAX_VALUE;
         mBsic = Integer.MAX_VALUE;
+        mMccStr = "";
+        mMncStr = "";
+        mAlphaLong = "";
+        mAlphaShort = "";
     }
     /**
      * public constructor
@@ -64,7 +76,7 @@ public final class CellIdentityGsm implements Parcelable {
      * @hide
      */
     public CellIdentityGsm (int mcc, int mnc, int lac, int cid) {
-        this(mcc, mnc, lac, cid, Integer.MAX_VALUE, Integer.MAX_VALUE);
+        this(mcc, mnc, lac, cid, Integer.MAX_VALUE, Integer.MAX_VALUE, "", "", "", "");
     }
 
     /**
@@ -85,6 +97,39 @@ public final class CellIdentityGsm implements Parcelable {
         mCid = cid;
         mArfcn = arfcn;
         mBsic = bsic;
+        mMccStr = "";
+        mMncStr = "";
+        mAlphaLong = "";
+        mAlphaShort = "";
+    }
+
+    /**
+     * public constructor
+     * @param mcc 3-digit Mobile Country Code, 0..999
+     * @param mnc 2 or 3-digit Mobile Network Code, 0..999
+     * @param lac 16-bit Location Area Code, 0..65535
+     * @param cid 16-bit GSM Cell Identity or 28-bit UMTS Cell Identity
+     * @param arfcn 16-bit GSM Absolute RF Channel Number
+     * @param bsic 6-bit Base Station Identity Code
+     * @param mccStr Mobile Country Code in string format
+     * @param mncStr Mobile Network Code in string format
+     * @param alphal long alpha ONS or EONS
+     * @param alphas short alpha ONS or EONS
+     *
+     * @hide
+     */
+    public CellIdentityGsm (int mcc, int mnc, int lac, int cid, int arfcn, int bsic, String mccStr,
+                            String mncStr, String alphal, String alphas) {
+        mMcc = mcc;
+        mMnc = mnc;
+        mLac = lac;
+        mCid = cid;
+        mArfcn = arfcn;
+        mBsic = bsic;
+        mMccStr = mccStr;
+        mMncStr = mncStr;
+        mAlphaLong = alphal;
+        mAlphaShort = alphas;
     }
 
     private CellIdentityGsm(CellIdentityGsm cid) {
@@ -94,14 +139,19 @@ public final class CellIdentityGsm implements Parcelable {
         mCid = cid.mCid;
         mArfcn = cid.mArfcn;
         mBsic = cid.mBsic;
+        mMccStr = cid.mMccStr;
+        mMncStr = cid.mMncStr;
+        mAlphaLong = cid.mAlphaLong;
+        mAlphaShort = cid.mAlphaShort;
     }
 
     CellIdentityGsm copy() {
-       return new CellIdentityGsm(this);
+        return new CellIdentityGsm(this);
     }
 
     /**
      * @return 3-digit Mobile Country Code, 0..999, Integer.MAX_VALUE if unknown
+     * @deprecated use {@link #getMccStr()} instead
      */
     public int getMcc() {
         return mMcc;
@@ -109,6 +159,7 @@ public final class CellIdentityGsm implements Parcelable {
 
     /**
      * @return 2 or 3-digit Mobile Network Code, 0..999, Integer.MAX_VALUE if unknown
+     * @deprecated use {@link #getMncStr()} instead
      */
     public int getMnc() {
         return mMnc;
@@ -146,6 +197,31 @@ public final class CellIdentityGsm implements Parcelable {
 
 
     /**
+     * @return Mobile Country Code in string format, empty string if unknown
+     */
+    public String getMccStr() {
+        return mMccStr;
+    }
+
+    /**
+     * @return Mobile Network Code in string format, empty string if unknown
+     */
+    public String getMncStr() {
+        return mMncStr;
+    }
+
+    /**
+     * @return Alpha long ONS or EONS, empty string if unknown
+     */
+    public String getAlphaLong() { return mAlphaLong; }
+
+    /**
+     * @return Alpha short ONS or EONS, empty string if unknown
+     */
+    public String getAlphaShort() { return mAlphaShort; }
+
+
+    /**
      * @return Integer.MAX_VALUE, undefined for GSM
      */
     @Deprecated
@@ -174,7 +250,11 @@ public final class CellIdentityGsm implements Parcelable {
                 mLac == o.mLac &&
                 mCid == o.mCid &&
                 mArfcn == o.mArfcn &&
-                mBsic == o.mBsic;
+                mBsic == o.mBsic &&
+                mMccStr.equals(o.mMccStr) &&
+                mMncStr.equals(o.mMncStr) &&
+                mAlphaLong.equals(o.mAlphaLong) &&
+                mAlphaShort.equals(o.mAlphaShort);
     }
 
     @Override
@@ -186,6 +266,10 @@ public final class CellIdentityGsm implements Parcelable {
         sb.append(" mCid=").append(mCid);
         sb.append(" mArfcn=").append(mArfcn);
         sb.append(" mBsic=").append("0x").append(Integer.toHexString(mBsic));
+        sb.append(" mMccStr=").append(mMccStr);
+        sb.append(" mMncStr=").append(mMncStr);
+        sb.append(" mAlphaLong=").append(mAlphaLong);
+        sb.append(" mAlphaShort=").append(mAlphaShort);
         sb.append("}");
 
         return sb.toString();
@@ -207,6 +291,10 @@ public final class CellIdentityGsm implements Parcelable {
         dest.writeInt(mCid);
         dest.writeInt(mArfcn);
         dest.writeInt(mBsic);
+        dest.writeString(mMccStr);
+        dest.writeString(mMncStr);
+        dest.writeString(mAlphaLong);
+        dest.writeString(mAlphaShort);
     }
 
     /** Construct from Parcel, type has already been processed */
@@ -221,6 +309,10 @@ public final class CellIdentityGsm implements Parcelable {
         // for inbound parcels
         if (bsic == 0xFF) bsic = Integer.MAX_VALUE;
         mBsic = bsic;
+        mMccStr = in.readString();
+        mMncStr = in.readString();
+        mAlphaLong = in.readString();
+        mAlphaShort = in.readString();
 
         if (DBG) log("CellIdentityGsm(Parcel): " + toString());
     }
@@ -229,16 +321,16 @@ public final class CellIdentityGsm implements Parcelable {
     @SuppressWarnings("hiding")
     public static final Creator<CellIdentityGsm> CREATOR =
             new Creator<CellIdentityGsm>() {
-        @Override
-        public CellIdentityGsm createFromParcel(Parcel in) {
-            return new CellIdentityGsm(in);
-        }
+                @Override
+                public CellIdentityGsm createFromParcel(Parcel in) {
+                    return new CellIdentityGsm(in);
+                }
 
-        @Override
-        public CellIdentityGsm[] newArray(int size) {
-            return new CellIdentityGsm[size];
-        }
-    };
+                @Override
+                public CellIdentityGsm[] newArray(int size) {
+                    return new CellIdentityGsm[size];
+                }
+            };
 
     /**
      * log
