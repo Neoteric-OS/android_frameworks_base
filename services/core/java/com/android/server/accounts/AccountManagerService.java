@@ -2954,9 +2954,12 @@ public class AccountManagerService
                              * have users launching arbitrary activities by tricking users to
                              * interact with malicious notifications.
                              */
-                            checkKeyIntent(
+                            if (!checkKeyIntent(
                                     Binder.getCallingUid(),
-                                    intent);
+                                    intent)) {
+                                onError(AccountManager.ERROR_CODE_INVALID_RESPONSE,
+                                        "invalid intent in bundle returned");
+                            }
                             doNotification(
                                     mAccounts,
                                     account,
@@ -3349,9 +3352,10 @@ public class AccountManagerService
             Bundle.setDefusable(result, true);
             mNumResults++;
             Intent intent = null;
+            boolean isValidIntent = false;
             if (result != null
                     && (intent = result.getParcelable(AccountManager.KEY_INTENT)) != null) {
-                checkKeyIntent(
+                isValidIntent = checkKeyIntent(
                         Binder.getCallingUid(),
                         intent);
             }
@@ -3373,6 +3377,11 @@ public class AccountManagerService
                 sendErrorResponse(response, AccountManager.ERROR_CODE_INVALID_RESPONSE,
                         "null bundle returned");
                 return;
+            }
+
+            if (!isValidIntent) {
+                sendErrorResponse(response, AccountManager.ERROR_CODE_INVALID_RESPONSE,
+                        "invalid intent in bundle returned");
             }
 
             if ((result.getInt(AccountManager.KEY_ERROR_CODE, -1) > 0) && (intent == null)) {
@@ -4700,13 +4709,16 @@ public class AccountManagerService
          * into launching arbitrary intents on the device via by tricking to click authenticator
          * supplied entries in the system Settings app.
          */
-        protected void checkKeyIntent(
+        protected boolean checkKeyIntent(
                 int authUid,
                 Intent intent) throws SecurityException {
             long bid = Binder.clearCallingIdentity();
             try {
                 PackageManager pm = mContext.getPackageManager();
                 ResolveInfo resolveInfo = pm.resolveActivityAsUser(intent, 0, mAccounts.userId);
+                if (resolveInfo == null) {
+                    return false;
+                }
                 ActivityInfo targetActivityInfo = resolveInfo.activityInfo;
                 int targetUid = targetActivityInfo.applicationInfo.uid;
                 if (!isExportedSystemActivity(targetActivityInfo)
@@ -4719,6 +4731,9 @@ public class AccountManagerService
                     throw new SecurityException(
                             String.format(tmpl, activityName, pkgName, mAccountType));
                 }
+                return true;
+            } catch (SecurityException se) {
+                return false;
             } finally {
                 Binder.restoreCallingIdentity(bid);
             }
@@ -4838,6 +4853,7 @@ public class AccountManagerService
             Bundle.setDefusable(result, true);
             mNumResults++;
             Intent intent = null;
+            boolean isValidIntent = false;
             if (result != null) {
                 boolean isSuccessfulConfirmCreds = result.getBoolean(
                         AccountManager.KEY_BOOLEAN_RESULT, false);
@@ -4868,7 +4884,7 @@ public class AccountManagerService
             }
             if (result != null
                     && (intent = result.getParcelable(AccountManager.KEY_INTENT)) != null) {
-                checkKeyIntent(
+                isValidIntent = checkKeyIntent(
                         Binder.getCallingUid(),
                         intent);
             }
@@ -4899,6 +4915,10 @@ public class AccountManagerService
                         response.onError(AccountManager.ERROR_CODE_INVALID_RESPONSE,
                                 "null bundle returned");
                     } else {
+                        if (!isValidIntent) {
+                            response.onError(AccountManager.ERROR_CODE_INVALID_RESPONSE,
+                                    "invalid intent in bundle returned");
+                        }
                         if (mStripAuthTokenFromResult) {
                             result.remove(AccountManager.KEY_AUTHTOKEN);
                         }
