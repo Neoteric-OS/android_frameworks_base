@@ -69357,7 +69357,7 @@ package java.util {
     method public boolean hasSameRules(java.util.TimeZone);
     method public abstract boolean inDaylightTime(java.util.Date);
     method public boolean observesDaylightTime();
-    method public static synchronized void setDefault(java.util.TimeZone);
+    method public static void setDefault(java.util.TimeZone);
     method public void setID(java.lang.String);
     method public abstract void setRawOffset(int);
     method public java.time.ZoneId toZoneId();
