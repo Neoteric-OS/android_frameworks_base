@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7685fb9_f6c5f0e6",
+        "filename": "cmds/uiautomator/library/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1062406
+      },
+      "writtenOn": "2017-09-20T09:28:54Z",
+      "side": 1,
+      "message": "this will cause duplicate class error as there is also a BaseTestRunner in android.test.runner.jar",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 27
+      },
+      "revId": "ccb04450279c53eda250ac3e20b75cd07bcd1f7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
