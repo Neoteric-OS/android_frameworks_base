@@ -33,6 +33,7 @@ import android.net.IpSecSpiResponse;
 import android.net.IpSecTransform;
 import android.net.IpSecTransformResponse;
 import android.net.IpSecUdpEncapResponse;
+import android.net.TrafficStats;
 import android.net.util.NetdService;
 import android.os.Binder;
 import android.os.IBinder;
@@ -47,6 +48,7 @@ import android.util.Slog;
 import android.util.SparseArray;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import dalvik.system.SocketTagger;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -773,6 +775,9 @@ public class IpSecService extends IIpSecService.Stub {
                     OsConstants.UDP_ENCAP,
                     OsConstants.UDP_ENCAP_ESPINUDP);
 
+            // Tag socket to UID of caller for proper data attribution
+            setSockUid(sockFd, Binder.getCallingUid());
+
             mUdpSocketRecords.put(
                     resourceId, new UdpSocketRecord(resourceId, binder, sockFd, port));
             return new IpSecUdpEncapResponse(IpSecManager.Status.OK, resourceId, port, sockFd);
@@ -782,6 +787,12 @@ public class IpSecService extends IIpSecService.Stub {
         // If we make it to here, then something has gone wrong and we couldn't open a socket.
         // The only reasonable condition that would cause that is resource unavailable.
         return new IpSecUdpEncapResponse(IpSecManager.Status.RESOURCE_UNAVAILABLE);
+    }
+
+    @VisibleForTesting
+    void setSockUid(FileDescriptor fd, int uid) throws IOException {
+        TrafficStats.setThreadStatsUid(uid);
+        SocketTagger.get().tag(fd);
     }
 
     /** close a socket that has been been allocated by and registered with the system server */
