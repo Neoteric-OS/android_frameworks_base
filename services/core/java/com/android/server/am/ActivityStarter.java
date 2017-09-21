@@ -1149,6 +1149,7 @@ class ActivityStarter {
                 && top.realActivity.equals(mStartActivity.realActivity)
                 && top.userId == mStartActivity.userId
                 && top.app != null && top.app.thread != null
+                && mSourceRecord != null
                 && ((mLaunchFlags & FLAG_ACTIVITY_SINGLE_TOP) != 0
                 || mLaunchSingleTop || mLaunchSingleTask);
         if (dontStart) {
