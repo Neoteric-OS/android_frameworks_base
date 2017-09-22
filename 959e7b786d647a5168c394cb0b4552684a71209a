@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5e6e502_a86cfb9d",
+        "filename": "core/java/android/hardware/LegacySensorManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2017-09-22T23:45:04Z",
+      "side": 1,
+      "message": "nit: should be:\n\n  private float[] mValues \u003d new float[6];\n\n(note the lack of a space between \"float\" and \"[]\")",
+      "revId": "959e7b786d647a5168c394cb0b4552684a71209a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08147323_d9568cd6",
+        "filename": "core/java/android/hardware/LegacySensorManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2017-09-22T23:45:04Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "959e7b786d647a5168c394cb0b4552684a71209a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9988b123_bed9854e",
+        "filename": "core/java/android/hardware/LegacySensorManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2017-09-22T23:45:04Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 375,
+        "startChar": 0,
+        "endLine": 376,
+        "endChar": 49
+      },
+      "revId": "959e7b786d647a5168c394cb0b4552684a71209a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
