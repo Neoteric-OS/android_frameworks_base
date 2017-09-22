@@ -1094,8 +1094,11 @@ public class Tethering extends BaseNetworkObserver {
                 if (mRndisEnabled) {
                     final long ident = Binder.clearCallingIdentity();
                     try {
-                        tetherMatchingInterfaces(IControlsTethering.STATE_TETHERED,
-                                ConnectivityManager.TETHERING_USB);
+                        mTetherMasterSM.getHandler().post(() -> {
+                            tetherMatchingInterfaces(
+                                    IControlsTethering.STATE_TETHERED,
+                                    ConnectivityManager.TETHERING_USB);
+                        });
                     } finally {
                         Binder.restoreCallingIdentity(ident);
                     }
@@ -1106,8 +1109,11 @@ public class Tethering extends BaseNetworkObserver {
             } else {
                 final long ident = Binder.clearCallingIdentity();
                 try {
-                    tetherMatchingInterfaces(IControlsTethering.STATE_AVAILABLE,
-                            ConnectivityManager.TETHERING_USB);
+                    mTetherMasterSM.getHandler().post(() -> {
+                        tetherMatchingInterfaces(
+                                IControlsTethering.STATE_AVAILABLE,
+                                ConnectivityManager.TETHERING_USB);
+                    });
                 } finally {
                     Binder.restoreCallingIdentity(ident);
                 }
