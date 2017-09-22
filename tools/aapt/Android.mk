@@ -43,6 +43,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := aapt
 LOCAL_MODULE_HOST_OS := darwin linux windows
 LOCAL_CFLAGS := -DAAPT_VERSION=\"$(BUILD_NUMBER_FROM_FILE)\" $(aaptCFlags)
+LOCAL_LDLIBS_windows := -lws2_32
 LOCAL_SRC_FILES := Main.cpp
 LOCAL_STATIC_LIBRARIES := libaapt $(aaptHostStaticLibs)
 

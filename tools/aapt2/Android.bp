@@ -38,6 +38,7 @@ cc_defaults {
     target: {
         windows: {
             enabled: true,
+            host_ldlibs: ["-lws2_32"],
             cflags: ["-Wno-maybe-uninitialized"],
         },
         darwin: {

@@ -43,6 +43,7 @@ cc_defaults {
 
     target: {
         windows: {
+            host_ldlibs: ["-lws2_32"],
             enabled: true,
         },
     },
