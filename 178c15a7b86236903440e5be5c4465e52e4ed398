@@ -22,6 +22,30 @@
       "revId": "178c15a7b86236903440e5be5c4465e52e4ed398",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5009a339_d5ca471f",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-09-22T01:11:08Z",
+      "side": 1,
+      "message": "If it\u0027s not public it won\u0027t be standardized.  I think we want things public by default.  Is there a reason to not make it public?",
+      "parentUuid": "d27ae8c8_16e7210f",
+      "range": {
+        "startLine": 199,
+        "startChar": 4,
+        "endLine": 202,
+        "endChar": 7
+      },
+      "revId": "178c15a7b86236903440e5be5c4465e52e4ed398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
