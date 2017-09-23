@@ -92,6 +92,30 @@
       "revId": "959e7b786d647a5168c394cb0b4552684a71209a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21705f82_317159a6",
+        "filename": "core/java/android/hardware/LegacySensorManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1074523
+      },
+      "writtenOn": "2017-09-23T00:06:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9988b123_bed9854e",
+      "range": {
+        "startLine": 375,
+        "startChar": 0,
+        "endLine": 376,
+        "endChar": 49
+      },
+      "revId": "959e7b786d647a5168c394cb0b4552684a71209a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
