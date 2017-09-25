@@ -20,7 +20,7 @@ import android.app.PendingIntent;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
-import android.telephony.ims.feature.IMMTelFeature;
+import android.telephony.ims.ImsServiceProxy;
 import android.telephony.ims.feature.ImsFeature;
 
 import com.android.ims.ImsCallProfile;
@@ -40,16 +40,12 @@ import com.android.ims.internal.IImsUt;
  * @hide
  */
 
-public class ImsServiceProxyCompat implements IMMTelFeature {
+public class ImsServiceProxyCompat extends ImsServiceProxy {
 
     private static final int SERVICE_ID = ImsFeature.MMTEL;
 
-    protected final int mSlotId;
-    protected IBinder mBinder;
-
     public ImsServiceProxyCompat(int slotId, IBinder binder) {
-        mSlotId = slotId;
-        mBinder = binder;
+        super(slotId, binder, ImsFeature.MMTEL);
     }
 
     @Override
@@ -158,26 +154,19 @@ public class ImsServiceProxyCompat implements IMMTelFeature {
     }
 
     /**
-     * Base implementation, always returns READY for compatibility with old ImsService.
+     * Always returns READY for compatibility with old ImsService.
      */
+    @Override
     public int getFeatureStatus() {
         return ImsFeature.STATE_READY;
     }
 
-    /**
-     * @return false if the binder connection is no longer alive.
-     */
+    @Override
     public boolean isBinderAlive() {
         return mBinder != null && mBinder.isBinderAlive();
     }
 
     private IImsService getServiceInterface(IBinder b) {
         return IImsService.Stub.asInterface(b);
-    }
-
-    protected void checkBinderConnection() throws RemoteException {
-        if (!isBinderAlive()) {
-            throw new RemoteException("ImsServiceProxy is not available for that feature.");
-        }
     }
 }
