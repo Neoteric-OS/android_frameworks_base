@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "77a7f902_ed57e20a",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3358,
+      "author": {
+        "id": 1143183
+      },
+      "writtenOn": "2017-09-25T22:18:18Z",
+      "side": 1,
+      "message": "Thanks for review. Because sendErrorResponse should be called after response\u0027s initialization in line 3363,i think it is the same reason why do not call sendErrorResponse and return directly at the forefront of this method  while result equals null.",
+      "parentUuid": "ecb15ff7_02f9759c",
+      "range": {
+        "startLine": 3358,
+        "startChar": 16,
+        "endLine": 3358,
+        "endChar": 29
+      },
+      "revId": "5d9e978429f217ba490b2ff933aadb6229a5cb95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf1301cf_ffa1d570",
         "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
         "patchSetId": 3
