@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecb15ff7_02f9759c",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3358,
+      "author": {
+        "id": 1003425
+      },
+      "writtenOn": "2017-09-25T18:26:00Z",
+      "side": 1,
+      "message": "Being that this field is just used in one place, why not put the sendErrorResponse and return here?",
+      "range": {
+        "startLine": 3358,
+        "startChar": 16,
+        "endLine": 3358,
+        "endChar": 29
+      },
+      "revId": "5d9e978429f217ba490b2ff933aadb6229a5cb95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf1301cf_ffa1d570",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4917,
+      "author": {
+        "id": 1003425
+      },
+      "writtenOn": "2017-09-25T18:26:00Z",
+      "side": 1,
+      "message": "this needs a return. Even better, put it above where isValidIntent is assigned.",
+      "range": {
+        "startLine": 4917,
+        "startChar": 0,
+        "endLine": 4917,
+        "endChar": 36
+      },
+      "revId": "5d9e978429f217ba490b2ff933aadb6229a5cb95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
