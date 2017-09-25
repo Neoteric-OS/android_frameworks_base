@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24d44e41_c67c7bca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-09-25T23:05:50Z",
+      "side": 1,
+      "message": "Update the commit message.",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "eb802b0058e21a868e85e97485d6c8727a3830e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "545cedf3_72a51205",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-09-25T23:05:50Z",
+      "side": 1,
+      "message": "This statement is unnecessary for this CL",
+      "range": {
+        "startLine": 12,
+        "startChar": 15,
+        "endLine": 12,
+        "endChar": 19
+      },
+      "revId": "eb802b0058e21a868e85e97485d6c8727a3830e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d1f4fa2_6b6b778c",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-09-25T23:05:50Z",
+      "side": 1,
+      "message": "Add comments to indicate those are deprecated\nExample:\nhttps://cs.corp.google.com/android/external/apache-commons-math/src/main/java/org/apache/commons/math/stat/Frequency.java?rcl\u003d18f62fca59d387e3c1ccd8f80087d9c9af40bcc8\u0026l\u003d110",
+      "range": {
+        "startLine": 155,
+        "startChar": 15,
+        "endLine": 155,
+        "endChar": 21
+      },
+      "revId": "eb802b0058e21a868e85e97485d6c8727a3830e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
