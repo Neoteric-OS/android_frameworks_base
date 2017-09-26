@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "446ec689_e0f23b95",
+        "filename": "tests/net/java/com/android/server/NsdServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-09-26T09:15:02Z",
+      "side": 1,
+      "message": "It\u0027s probably safe because HandlerThread#quit is idempotent, but how about setting mThread to null here ?",
+      "range": {
+        "startLine": 81,
+        "startChar": 12,
+        "endLine": 81,
+        "endChar": 19
+      },
+      "revId": "6bcb0af41cc102e9d70fe03909cd648529fe5a79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
