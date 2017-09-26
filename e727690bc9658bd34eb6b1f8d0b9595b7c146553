@@ -22,6 +22,30 @@
       "revId": "e727690bc9658bd34eb6b1f8d0b9595b7c146553",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "863458be_01ea549f",
+        "filename": "tools/aapt/Images.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1087590
+      },
+      "writtenOn": "2017-09-26T22:32:47Z",
+      "side": 1,
+      "message": "I think I need to add \u0027\\n\u0027 here.\n\n#include \"stdio.h\"\n#include \"string.h\"\nint main() {\n\tchar a[20]\u003d\"aaaaaaaaaaaaaaaaa\";\n\tchar *b\u003d\"ccc\";\n\tint i;\n\tmemcpy(a, b, 3);\n\tprintf(\"%s\", a);\n}\n\ngave me \u0027cccaaaaaaaaaaaaaa\u0027\n\nWill report a clang-tidy bug later.",
+      "parentUuid": "a663fe3e_ad51d38e",
+      "range": {
+        "startLine": 1249,
+        "startChar": 47,
+        "endLine": 1249,
+        "endChar": 53
+      },
+      "revId": "e727690bc9658bd34eb6b1f8d0b9595b7c146553",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
