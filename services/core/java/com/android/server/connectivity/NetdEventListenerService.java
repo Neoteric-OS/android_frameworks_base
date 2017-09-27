@@ -43,8 +43,7 @@ import com.android.internal.util.TokenBucket;
 import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.IpConnectivityEvent;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.IntFunction;
+import java.util.Arrays;
 
 /**
  * Implementation of the INetdEventListener interface.
@@ -57,13 +56,13 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
     private static final boolean DBG = false;
     private static final boolean VDBG = false;
 
-    private static final int INITIAL_DNS_BATCH_SIZE = 100;
 
     // Rate limit connect latency logging to 1 measurement per 15 seconds (5760 / day) with maximum
     // bursts of 5000 measurements.
     private static final int CONNECT_LATENCY_BURST_LIMIT  = 5000;
     private static final int CONNECT_LATENCY_FILL_RATE    = 15 * (int) DateUtils.SECOND_IN_MILLIS;
-    private static final int CONNECT_LATENCY_MAXIMUM_RECORDS = 20000;
+
+    private static final long SNAPSHOT_DURATION_MS = 5 * DateUtils.MINUTE_IN_MILLIS;
 
     @VisibleForTesting
     static final int WAKEUP_EVENT_BUFFER_LENGTH = 1024;
@@ -72,11 +71,15 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
     @VisibleForTesting
     static final String WAKEUP_EVENT_IFACE_PREFIX = "iface:";
 
-    // Sparse arrays of DNS and connect events, grouped by net id.
+    // Array of aggregated DNS and connect events sent by netd, grouped by net id.
     @GuardedBy("this")
-    private final SparseArray<DnsEvent> mDnsEvents = new SparseArray<>();
+    private final SparseArray<NetdNetworkMetrics> mNetworkMetrics = new SparseArray<>();
+
     @GuardedBy("this")
-    private final SparseArray<ConnectStats> mConnectEvents = new SparseArray<>();
+    private final RingBuffer<NetdNetworkStatsSnapshot> mNetworkMetricsSnapshots =
+            new RingBuffer<>(NetdNetworkStatsSnapshot.class, 100 /* EMAGICCONSTANT */);
+    @GuardedBy("this")
+    private long mNextSnapshot = 0;
 
     // Array of aggregated wakeup event stats, grouped by interface name.
     @GuardedBy("this")
@@ -84,7 +87,7 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
     // Ring buffer array for storing packet wake up events sent by Netd.
     @GuardedBy("this")
     private final RingBuffer<WakeupEvent> mWakeupEvents =
-            new RingBuffer(WakeupEvent.class, WAKEUP_EVENT_BUFFER_LENGTH);
+            new RingBuffer<>(WakeupEvent.class, WAKEUP_EVENT_BUFFER_LENGTH);
 
     private final ConnectivityManager mCm;
 
@@ -116,6 +119,21 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
         mCm = cm;
     }
 
+    private NetdNetworkMetrics getMetricsForNetwork(long nowMs, int netId) {
+        if (nowMs >= mNextSnapshot) {
+            mNetworkMetricsSnapshots.append(
+                    new NetdNetworkStatsSnapshot(mNextSnapshot, mNetworkMetrics));
+            mNextSnapshot += SNAPSHOT_DURATION_MS;
+        }
+
+        NetdNetworkMetrics metrics = mNetworkMetrics.get(netId);
+        if (metrics == null) {
+            metrics = new NetdNetworkMetrics(netId, getTransports(netId), mConnectTb);
+            mNetworkMetrics.put(netId, metrics);
+        }
+        return metrics;
+    }
+
     @Override
     // Called concurrently by multiple binder threads.
     // This method must not block or perform long-running operations.
@@ -124,15 +142,10 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
             throws RemoteException {
         maybeVerboseLog("onDnsEvent(%d, %d, %d, %dms)", netId, eventType, returnCode, latencyMs);
 
-        DnsEvent dnsEvent = mDnsEvents.get(netId);
-        if (dnsEvent == null) {
-            dnsEvent = makeDnsEvent(netId);
-            mDnsEvents.put(netId, dnsEvent);
-        }
-        dnsEvent.addResult((byte) eventType, (byte) returnCode, latencyMs);
+        long timestamp = System.currentTimeMillis();
+        getMetricsForNetwork(timestamp, netId).addDnsResult(eventType, returnCode, latencyMs);
 
         if (mNetdEventCallback != null) {
-            long timestamp = System.currentTimeMillis();
             mNetdEventCallback.onDnsEvent(hostname, ipAddresses, ipAddressesCount, timestamp, uid);
         }
     }
@@ -144,15 +157,11 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
             int port, int uid) throws RemoteException {
         maybeVerboseLog("onConnectEvent(%d, %d, %dms)", netId, error, latencyMs);
 
-        ConnectStats connectStats = mConnectEvents.get(netId);
-        if (connectStats == null) {
-            connectStats = makeConnectStats(netId);
-            mConnectEvents.put(netId, connectStats);
-        }
-        connectStats.addEvent(error, latencyMs, ipAddr);
+        long timestamp = System.currentTimeMillis();
+        getMetricsForNetwork(timestamp, netId).addConnectResult(error, latencyMs, ipAddr);
 
         if (mNetdEventCallback != null) {
-            mNetdEventCallback.onConnectEvent(ipAddr, port, System.currentTimeMillis(), uid);
+            mNetdEventCallback.onConnectEvent(ipAddr, port, timestamp, uid);
         }
     }
 
@@ -189,11 +198,16 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
     }
 
     public synchronized void flushStatistics(List<IpConnectivityEvent> events) {
-        flushProtos(events, mConnectEvents, IpConnectivityEventBuilder::toProto);
-        flushProtos(events, mDnsEvents, IpConnectivityEventBuilder::toProto);
+        for (int i = 0; i < mNetworkMetrics.size(); i++) {
+            events.add(IpConnectivityEventBuilder.toProto(mNetworkMetrics.valueAt(i).connect));
+        }
+        for (int i = 0; i < mNetworkMetrics.size(); i++) {
+            events.add(IpConnectivityEventBuilder.toProto(mNetworkMetrics.valueAt(i).dns));
+        }
         for (int i = 0; i < mWakeupStats.size(); i++) {
             events.add(IpConnectivityEventBuilder.toProto(mWakeupStats.valueAt(i)));
         }
+        mNetworkMetrics.clear();
         mWakeupStats.clear();
     }
 
@@ -206,8 +220,15 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
     }
 
     public synchronized void list(PrintWriter pw) {
-        listEvents(pw, mConnectEvents, (x) -> x, "\n");
-        listEvents(pw, mDnsEvents, (x) -> x, "\n");
+        for (int i = 0; i < mNetworkMetrics.size(); i++) {
+            pw.print(mNetworkMetrics.valueAt(i).connect);
+        }
+        for (int i = 0; i < mNetworkMetrics.size(); i++) {
+            pw.print(mNetworkMetrics.valueAt(i).dns);
+        }
+        for (NetdNetworkStatsSnapshot s : mNetworkMetricsSnapshots.toArray()) {
+            pw.println(s);
+        }
         for (int i = 0; i < mWakeupStats.size(); i++) {
             pw.println(mWakeupStats.valueAt(i));
         }
@@ -217,39 +238,15 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
     }
 
     public synchronized void listAsProtos(PrintWriter pw) {
-        listEvents(pw, mConnectEvents, IpConnectivityEventBuilder::toProto, "");
-        listEvents(pw, mDnsEvents, IpConnectivityEventBuilder::toProto, "");
+        for (int i = 0; i < mNetworkMetrics.size(); i++) {
+            pw.print(IpConnectivityEventBuilder.toProto(mNetworkMetrics.valueAt(i).connect));
+        }
+        for (int i = 0; i < mNetworkMetrics.size(); i++) {
+            pw.print(IpConnectivityEventBuilder.toProto(mNetworkMetrics.valueAt(i).dns));
+        }
         for (int i = 0; i < mWakeupStats.size(); i++) {
             pw.print(IpConnectivityEventBuilder.toProto(mWakeupStats.valueAt(i)));
         }
-    }
-
-    private static <T> void flushProtos(List<IpConnectivityEvent> out, SparseArray<T> in,
-            Function<T, IpConnectivityEvent> mapper) {
-        for (int i = 0; i < in.size(); i++) {
-            out.add(mapper.apply(in.valueAt(i)));
-        }
-        in.clear();
-    }
-
-    private static <T> void listEvents(
-            PrintWriter pw, SparseArray<T> events, Function<T, Object> mapper, String separator) {
-        // Proto derived Classes have toString method that adds a \n at the end.
-        // Let the caller control that by passing in the line separator explicitly.
-        for (int i = 0; i < events.size(); i++) {
-            pw.print(mapper.apply(events.valueAt(i)));
-            pw.print(separator);
-        }
-    }
-
-    private ConnectStats makeConnectStats(int netId) {
-        long transports = getTransports(netId);
-        return new ConnectStats(netId, transports, mConnectTb, CONNECT_LATENCY_MAXIMUM_RECORDS);
-    }
-
-    private DnsEvent makeDnsEvent(int netId) {
-        long transports = getTransports(netId);
-        return new DnsEvent(netId, transports, INITIAL_DNS_BATCH_SIZE);
     }
 
     private long getTransports(int netId) {
@@ -269,3 +266,144 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
         if (VDBG) Log.d(TAG, String.format(s, args));
     }
 }
+
+class NetdNetworkStatsSnapshot {
+
+    final long timestampMs;
+    final NetdNetworkStatsSummary[] stats;
+
+    public NetdNetworkStatsSnapshot(long timeMs, SparseArray<NetdNetworkMetrics> networkMetrics) {
+        timestampMs = timeMs;
+        stats = new NetdNetworkStatsSummary[networkMetrics.size()];
+        for (int i = 0; i < stats.length; i++) {
+            stats[i] = networkMetrics.valueAt(i).pushCurrentStatsBucket();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%tT.%tL: %s", timestampMs, timestampMs, Arrays.toString(stats));
+    }
+}
+
+class NetdNetworkMetrics {
+
+    private static final int INITIAL_DNS_BATCH_SIZE = 100;
+    private static final int CONNECT_LATENCY_MAXIMUM_RECORDS = 20000;
+
+    final int netId;
+    final long transports;
+    final ConnectStats connect;
+    final DnsEvent dns;
+    // TODO: add TCP stats
+
+    final NetdNetworkStatsSummary stats = new NetdNetworkStatsSummary();
+    NetdNetworkStatsSummary currentStatsBucket = new NetdNetworkStatsSummary();
+
+    NetdNetworkMetrics(int netId, long transports, TokenBucket tb) {
+        this.netId = netId;
+        this.transports = transports;
+        this.connect = new ConnectStats(netId, transports, tb, CONNECT_LATENCY_MAXIMUM_RECORDS);
+        this.dns = new DnsEvent(netId, transports, INITIAL_DNS_BATCH_SIZE);
+    }
+
+    NetdNetworkStatsSummary pushCurrentStatsBucket() {
+        stats.mergeFrom(currentStatsBucket);
+        NetdNetworkStatsSummary x = currentStatsBucket;
+        currentStatsBucket = new NetdNetworkStatsSummary();
+        return x;
+    }
+
+    void addDnsResult(int eventType, int returnCode, int latencyMs) {
+        dns.addResult((byte) eventType, (byte) returnCode, latencyMs);
+    }
+
+    void addConnectResult(int error, int latencyMs, String ipAddr) {
+        connect.addEvent(error, latencyMs, ipAddr);
+    }
+
+    // add to currentStatsBucket
+    // copy currentStatsBucket and archive
+    //
+    @Override
+    public String toString() {
+        return "TODO";
+    }
+}
+
+class NetdNetworkStatsSummary {
+    // hmmm looks like I need a netd and transports repeated here too ,,,
+    MetricsSummary dns = new MetricsSummary();
+    MetricsSummary connect = new MetricsSummary();
+
+    void mergeFrom(NetdNetworkStatsSummary that) {
+        dns.mergeFrom(that.dns);
+        connect.mergeFrom(that.connect);
+    }
+
+    void dnsSuccess(int latency) {
+        dns.countSuccess();
+        dns.countValue(latency);
+    }
+
+    void dnsError() {
+        dns.countError();
+    }
+
+    void connectSuccess(int latency) {
+        connect.countSuccess();
+        connect.countValue(latency);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("dns: {%s}, connect: {%s}", dns, connect);
+    }
+}
+
+/**
+ * Summarizes statistics about a metrics for which every event has an associated value
+ * and an error or success return status.
+ */
+class MetricsSummary {
+    long sum;
+    int max;
+    int count;
+    int successCount;
+    int errorCount;
+
+    void mergeFrom(MetricsSummary that) {
+        this.sum += that.sum;
+        this.max += that.max;
+        this.count += that.count;
+        this.successCount += that.successCount;
+        this.errorCount += that.errorCount;
+    }
+
+    void countSuccess() {
+        successCount++;
+    }
+
+    void countError() {
+        errorCount++;
+    }
+
+    void countValue(int value) {
+        count++;
+        sum += value;
+        max = Math.max(max, value);
+    }
+
+    @Override
+    public String toString() {
+        float avg = sum / (float) count;
+        int tot = successCount + errorCount;
+        int errRate = (int) (errorCount / (float) tot);
+        return String.format("avg: %.1f, max: %d, tot: %d, err: %d", avg, max, tot, errRate);
+    }
+}
+
+// Or is it better to fine grained and distinguish between:
+//    MetricsSummary: avg, max, quantiles ...
+//    Rate: total, % rate ...
+//    DiscreateEventSummary: % of a, % of b, % of c, ...
