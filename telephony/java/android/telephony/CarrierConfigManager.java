@@ -1523,6 +1523,12 @@ public class CarrierConfigManager {
     public static final String KEY_SHOW_IMS_REGISTRATION_STATUS_BOOL =
             "show_ims_registration_status_bool";
 
+    /**
+     * List of the FAC (feature access codes) to dial as a normal call.
+     * @hide
+     */
+    public static final String KEY_ENABLE_DIAL_FAC_STRING_ARRAY = "enable_dial_fac_string_array";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -1777,6 +1783,7 @@ public class CarrierConfigManager {
         sDefaults.putInt(IMSI_KEY_EXPIRATION_DAYS_TIME_INT, IMSI_ENCRYPTION_DAYS_TIME_DISABLED);
         sDefaults.putString(IMSI_KEY_DOWNLOAD_URL_STRING, null);
         sDefaults.putBoolean(KEY_SHOW_IMS_REGISTRATION_STATUS_BOOL, false);
+        sDefaults.putStringArray(KEY_ENABLE_DIAL_FAC_STRING_ARRAY, null);
     }
 
     /**
