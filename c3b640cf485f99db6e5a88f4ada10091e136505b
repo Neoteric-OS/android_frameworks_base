@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "193a4ef7_19fdbbd4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-09-27T07:43:08Z",
+      "side": 1,
+      "message": "Not for this CL since it\u0027s a cherry-pick, but this annotation is incorrect: the actual permission being checked is CONNECTIVITY_INTERNAL. We might want to fix this.",
+      "range": {
+        "startLine": 1128,
+        "startChar": 52,
+        "endLine": 1128,
+        "endChar": 69
+      },
+      "revId": "c3b640cf485f99db6e5a88f4ada10091e136505b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
