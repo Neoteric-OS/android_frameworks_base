@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The Android Open Source Project
+ * Copyright (C) 2017 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,8 +36,7 @@ public final class BluetoothHidDeviceAppQosSettings implements Parcelable {
     public static final int MAX = (int) 0xffffffff;
 
     public BluetoothHidDeviceAppQosSettings(int serviceType, int tokenRate, int tokenBucketSize,
-            int peakBandwidth,
-            int latency, int delayVariation) {
+            int peakBandwidth, int latency, int delayVariation) {
         this.serviceType = serviceType;
         this.tokenRate = tokenRate;
         this.tokenBucketSize = tokenBucketSize;
@@ -66,10 +65,13 @@ public final class BluetoothHidDeviceAppQosSettings implements Parcelable {
                 @Override
                 public BluetoothHidDeviceAppQosSettings createFromParcel(Parcel in) {
 
-                    return new BluetoothHidDeviceAppQosSettings(in.readInt(), in.readInt(),
+                    return new BluetoothHidDeviceAppQosSettings(
                             in.readInt(),
                             in.readInt(),
-                            in.readInt(), in.readInt());
+                            in.readInt(),
+                            in.readInt(),
+                            in.readInt(),
+                            in.readInt());
                 }
 
                 @Override
@@ -90,7 +92,7 @@ public final class BluetoothHidDeviceAppQosSettings implements Parcelable {
 
     /** @return an int array representation of this instance */
     public int[] toArray() {
-        return new int[]{
+        return new int[] {
                 serviceType, tokenRate, tokenBucketSize, peakBandwidth, latency, delayVariation
         };
     }
