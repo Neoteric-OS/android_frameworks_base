@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The Android Open Source Project
+ * Copyright (C) 2017 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,17 @@ package android.bluetooth;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/** @hide */
+/**
+ * Represents the SDP settings for a Bluetooth HID Device application.
+ *
+ * The BluetoothHidDevice framework adds the SDP record during app
+ * registration, so that the Android device can be discovered as a Bluetooth
+ * HID Device.
+ *
+ * {@see BluetoothHidDevice}
+ *
+ * {@hide}
+ */
 public final class BluetoothHidDeviceAppSdpSettings implements Parcelable {
 
     public final String name;
@@ -57,8 +67,12 @@ public final class BluetoothHidDeviceAppSdpSettings implements Parcelable {
                 @Override
                 public BluetoothHidDeviceAppSdpSettings createFromParcel(Parcel in) {
 
-                    return new BluetoothHidDeviceAppSdpSettings(in.readString(), in.readString(),
-                            in.readString(), in.readByte(), in.createByteArray());
+                    return new BluetoothHidDeviceAppSdpSettings(
+                            in.readString(),
+                            in.readString(),
+                            in.readString(),
+                            in.readByte(),
+                            in.createByteArray());
                 }
 
                 @Override
