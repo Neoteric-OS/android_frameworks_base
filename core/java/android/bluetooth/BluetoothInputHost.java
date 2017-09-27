@@ -74,7 +74,7 @@ public final class BluetoothInputHost implements BluetoothProfile {
     public static final byte SUBCLASS2_GAMEPAD = (byte) 0x02;
     public static final byte SUBCLASS2_REMOTE_CONTROL = (byte) 0x03;
     public static final byte SUBCLASS2_SENSING_DEVICE = (byte) 0x04;
-    public static final byte SUBCLASS2_DIGITIZER_TABLED = (byte) 0x05;
+    public static final byte SUBCLASS2_DIGITIZER_TABLET = (byte) 0x05;
     public static final byte SUBCLASS2_CARD_READER = (byte) 0x06;
 
     /**
@@ -116,6 +116,8 @@ public final class BluetoothInputHost implements BluetoothProfile {
     private volatile IBluetoothInputHost mService;
 
     private BluetoothAdapter mAdapter;
+
+    private BluetoothHidDeviceAppConfiguration mAppConfiguration;
 
     private static class BluetoothHidDeviceCallbackWrapper extends
             IBluetoothHidDeviceCallback.Stub {
@@ -353,28 +355,30 @@ public final class BluetoothInputHost implements BluetoothProfile {
      * @param outQos {@link BluetoothHidDeviceAppQosSettings} object of Outgoing QoS Settings.
      * @param callback {@link BluetoothHidDeviceCallback} object to which callback messages will be
      * sent.
-     * @return
+     * @return the BluetoothHidDeviceAppConfiguration for the current application, or null if
+     * registration fails.
      */
-    public boolean registerApp(BluetoothHidDeviceAppSdpSettings sdp,
+    public BluetoothHidDeviceAppConfiguration registerApp(BluetoothHidDeviceAppSdpSettings sdp,
             BluetoothHidDeviceAppQosSettings inQos, BluetoothHidDeviceAppQosSettings outQos,
             BluetoothHidDeviceCallback callback) {
         Log.v(TAG, "registerApp(): sdp=" + sdp + " inQos=" + inQos + " outQos=" + outQos
                 + " callback=" + callback);
 
-        boolean result = false;
-
         if (sdp == null || callback == null) {
-            return false;
+            return null;
         }
 
         final IBluetoothInputHost service = mService;
+
         if (service != null) {
             try {
                 BluetoothHidDeviceAppConfiguration config =
                         new BluetoothHidDeviceAppConfiguration();
                 BluetoothHidDeviceCallbackWrapper cbw =
                         new BluetoothHidDeviceCallbackWrapper(callback);
-                result = service.registerApp(config, sdp, inQos, outQos, cbw);
+                mAppConfiguration = service.registerApp(config, sdp, inQos, outQos, cbw)
+                        ? config : null;
+                return mAppConfiguration;
             } catch (RemoteException e) {
                 Log.e(TAG, e.toString());
             }
@@ -382,7 +386,17 @@ public final class BluetoothInputHost implements BluetoothProfile {
             Log.w(TAG, "Proxy not attached to service");
         }
 
-        return result;
+        return null;
+    }
+
+    /**
+     * Retrieves the AppConfiguration for current application.
+     *
+     * @return the BluetoothHidDeviceAppConfiguration for the current application, or null if it is
+     * not registered.
+     */
+    public BluetoothHidDeviceAppConfiguration getAppConfiguration() {
+        return mAppConfiguration;
     }
 
     /**
