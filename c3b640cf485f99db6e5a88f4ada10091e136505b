@@ -22,6 +22,30 @@
       "revId": "c3b640cf485f99db6e5a88f4ada10091e136505b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4c45d6_d6cea5ba",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-09-27T09:50:02Z",
+      "side": 1,
+      "message": "Ack. I\u0027ll ready a fixing change.",
+      "parentUuid": "193a4ef7_19fdbbd4",
+      "range": {
+        "startLine": 1128,
+        "startChar": 52,
+        "endLine": 1128,
+        "endChar": 69
+      },
+      "revId": "c3b640cf485f99db6e5a88f4ada10091e136505b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
