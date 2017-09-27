@@ -20,8 +20,6 @@ import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
@@ -74,7 +72,7 @@ public final class BluetoothInputHost implements BluetoothProfile {
     public static final byte SUBCLASS2_GAMEPAD = (byte) 0x02;
     public static final byte SUBCLASS2_REMOTE_CONTROL = (byte) 0x03;
     public static final byte SUBCLASS2_SENSING_DEVICE = (byte) 0x04;
-    public static final byte SUBCLASS2_DIGITIZER_TABLED = (byte) 0x05;
+    public static final byte SUBCLASS2_DIGITIZER_TABLET = (byte) 0x05;
     public static final byte SUBCLASS2_CARD_READER = (byte) 0x06;
 
     /**
@@ -168,41 +166,32 @@ public final class BluetoothInputHost implements BluetoothProfile {
 
                 public void onBluetoothStateChange(boolean up) {
                     Log.d(TAG, "onBluetoothStateChange: up=" + up);
-                    synchronized (mConnection) {
-                        if (!up) {
-                            Log.d(TAG, "Unbinding service...");
-                            if (mService != null) {
-                                mService = null;
-                                try {
-                                    mContext.unbindService(mConnection);
-                                } catch (IllegalArgumentException e) {
-                                    Log.e(TAG, "onBluetoothStateChange: could not unbind service:",
-                                            e);
-                                }
-                            }
-                        } else {
+                    if (up) {
+                        synchronized (mConnection) {
                             try {
                                 if (mService == null) {
                                     Log.d(TAG, "Binding HID Device service...");
                                     doBind();
                                 }
                             } catch (IllegalStateException e) {
-                                Log.e(TAG,
-                                        "onBluetoothStateChange: could not bind to HID Dev "
-                                                + "service: ",
+                                Log.e(TAG, "onBluetoothStateChange: "
+                                        + "could not bind to HID Dev service: ",
                                         e);
                             } catch (SecurityException e) {
-                                Log.e(TAG,
-                                        "onBluetoothStateChange: could not bind to HID Dev "
-                                                + "service: ",
+                                Log.e(TAG, "onBluetoothStateChange: "
+                                        + "could not bind to HID Dev service: ",
                                         e);
                             }
                         }
+                    } else {
+                        Log.d(TAG, "Unbinding service...");
+                        doUnbind();
                     }
                 }
             };
 
-    private final ServiceConnection mConnection = new ServiceConnection() {
+    private final IBluetoothProfileServiceConnection mConnection =
+            new IBluetoothProfileServiceConnection.Stub() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             Log.d(TAG, "onServiceConnected()");
             mService = IBluetoothInputHost.Stub.asInterface(service);
@@ -240,16 +229,27 @@ public final class BluetoothInputHost implements BluetoothProfile {
     }
 
     boolean doBind() {
-        Intent intent = new Intent(IBluetoothInputHost.class.getName());
-        ComponentName comp = intent.resolveSystemService(mContext.getPackageManager(), 0);
-        intent.setComponent(comp);
-        if (comp == null || !mContext.bindServiceAsUser(intent, mConnection, 0,
-                android.os.Process.myUserHandle())) {
-            Log.e(TAG, "Could not bind to Bluetooth HID Device Service with " + intent);
-            return false;
+        Log.d(TAG, "doBind()");
+        try {
+            return mAdapter.getBluetoothManager().bindBluetoothProfileService(
+                    BluetoothProfile.INPUT_HOST, mConnection);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Unable to bind HidDevService", e);
         }
-        Log.d(TAG, "Bound to HID Device Service");
-        return true;
+        return false;
+    }
+
+    void doUnbind() {
+        synchronized (mConnection) {
+            if (mService != null) {
+                try {
+                    mAdapter.getBluetoothManager().unbindBluetoothProfileService(
+                            BluetoothProfile.INPUT_HOST, mConnection);
+                } catch (RemoteException e) {
+                    Log.e(TAG, "Unable to unbind HidDevService", e);
+                }
+            }
+        }
     }
 
     void close() {
@@ -264,18 +264,9 @@ public final class BluetoothInputHost implements BluetoothProfile {
             }
         }
 
-        synchronized (mConnection) {
-            if (mService != null) {
-                mService = null;
-                try {
-                    mContext.unbindService(mConnection);
-                } catch (IllegalArgumentException e) {
-                    Log.e(TAG, "close: could not unbind HID Dev service: ", e);
-                }
-            }
-        }
-
         mServiceListener = null;
+
+        doUnbind();
     }
 
     /**
