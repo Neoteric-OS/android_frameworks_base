@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f9d1da7_f6f73d2a",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-27T17:40:25Z",
+      "side": 1,
+      "message": "I would like to pass the arguments to another constructor, i.e this(nid, sid, bid, lon, lat, \"\" /* alphal */, \"\" /* alphas */);",
+      "range": {
+        "startLine": 84,
+        "startChar": 1,
+        "endLine": 90,
+        "endChar": 25
+      },
+      "revId": "4c6cc0927e803490db48ad1a4ef72b6415a8d5a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c05f944_aa61242b",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-27T17:40:25Z",
+      "side": 1,
+      "message": "Is this possible the mAlphaLong or mAlphaShort to be null?",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 50
+      },
+      "revId": "4c6cc0927e803490db48ad1a4ef72b6415a8d5a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a7b555b_3afd13ce",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-27T17:40:25Z",
+      "side": 1,
+      "message": "Call another constructor with this data as the parameters.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 25
+      },
+      "revId": "4c6cc0927e803490db48ad1a4ef72b6415a8d5a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8a19a74_9b4407bd",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-27T17:40:25Z",
+      "side": 1,
+      "message": "Call another constructor with this data as the parameters.",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 38
+      },
+      "revId": "4c6cc0927e803490db48ad1a4ef72b6415a8d5a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae61fe03_6da29974",
+        "filename": "telephony/java/android/telephony/CellIdentityLte.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-27T17:40:25Z",
+      "side": 1,
+      "message": "Call another constructor with this data as the parameters.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 25
+      },
+      "revId": "4c6cc0927e803490db48ad1a4ef72b6415a8d5a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f415bfa3_98d3504f",
+        "filename": "telephony/java/android/telephony/CellIdentityLte.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-27T17:40:25Z",
+      "side": 1,
+      "message": "Call another constructor with this data as the parameters.",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 25
+      },
+      "revId": "4c6cc0927e803490db48ad1a4ef72b6415a8d5a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67e5de85_706ecc46",
+        "filename": "telephony/java/android/telephony/CellIdentityWcdma.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-27T17:40:25Z",
+      "side": 1,
+      "message": "Call another constructor with this data as the parameters.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 25
+      },
+      "revId": "4c6cc0927e803490db48ad1a4ef72b6415a8d5a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9775f0_ce9d018e",
+        "filename": "telephony/java/android/telephony/CellIdentityWcdma.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-27T17:40:25Z",
+      "side": 1,
+      "message": "Call another constructor with this data as the parameters.",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 25
+      },
+      "revId": "4c6cc0927e803490db48ad1a4ef72b6415a8d5a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c87ddc8_1320f93e",
+        "filename": "telephony/java/android/telephony/CellIdentityWcdma.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-09-27T17:40:25Z",
+      "side": 1,
+      "message": "Call another constructor with this data as the parameters.",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 38
+      },
+      "revId": "4c6cc0927e803490db48ad1a4ef72b6415a8d5a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
