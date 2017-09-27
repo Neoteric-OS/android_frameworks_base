@@ -20,8 +20,6 @@ import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
@@ -62,7 +60,9 @@ public final class BluetoothInputHost implements BluetoothProfile {
     /**
      * Constants representing device subclass.
      *
-     * @see #registerApp(String, String, String, byte, byte[], BluetoothHidDeviceCallback)
+     * @see #registerApp
+     * (BluetoothHidDeviceAppQosSettings, BluetoothHidDeviceAppQosSettings,
+     * BluetoothHidDeviceAppQosSettings, BluetoothHidDeviceCallback)
      */
     public static final byte SUBCLASS1_NONE = (byte) 0x00;
     public static final byte SUBCLASS1_KEYBOARD = (byte) 0x40;
@@ -80,9 +80,9 @@ public final class BluetoothInputHost implements BluetoothProfile {
     /**
      * Constants representing report types.
      *
-     * @see BluetoothHidDeviceCallback#onGetReport(byte, byte, int)
-     * @see BluetoothHidDeviceCallback#onSetReport(byte, byte, byte[])
-     * @see BluetoothHidDeviceCallback#onIntrData(byte, byte[])
+     * @see BluetoothHidDeviceCallback#onGetReport(BluetoothDevice, byte, byte, int)
+     * @see BluetoothHidDeviceCallback#onSetReport(BluetoothDevice, byte, byte, byte[])
+     * @see BluetoothHidDeviceCallback#onIntrData(BluetoothDevice, byte, byte[])
      */
     public static final byte REPORT_TYPE_INPUT = (byte) 1;
     public static final byte REPORT_TYPE_OUTPUT = (byte) 2;
@@ -91,7 +91,7 @@ public final class BluetoothInputHost implements BluetoothProfile {
     /**
      * Constants representing error response for Set Report.
      *
-     * @see BluetoothHidDeviceCallback#onSetReport(byte, byte, byte[])
+     * @see BluetoothHidDeviceCallback#onSetReport(BluetoothDevice, byte, byte, byte[])
      */
     public static final byte ERROR_RSP_SUCCESS = (byte) 0;
     public static final byte ERROR_RSP_NOT_READY = (byte) 1;
@@ -104,7 +104,7 @@ public final class BluetoothInputHost implements BluetoothProfile {
      * Constants representing protocol mode used set by host. Default is always
      * {@link #PROTOCOL_REPORT_MODE} unless notified otherwise.
      *
-     * @see BluetoothHidDeviceCallback#onSetProtocol(byte)
+     * @see BluetoothHidDeviceCallback#onSetProtocol(BluetoothDevice, byte)
      */
     public static final byte PROTOCOL_BOOT_MODE = (byte) 0;
     public static final byte PROTOCOL_REPORT_MODE = (byte) 1;
@@ -168,19 +168,8 @@ public final class BluetoothInputHost implements BluetoothProfile {
 
                 public void onBluetoothStateChange(boolean up) {
                     Log.d(TAG, "onBluetoothStateChange: up=" + up);
-                    synchronized (mConnection) {
-                        if (!up) {
-                            Log.d(TAG, "Unbinding service...");
-                            if (mService != null) {
-                                mService = null;
-                                try {
-                                    mContext.unbindService(mConnection);
-                                } catch (IllegalArgumentException e) {
-                                    Log.e(TAG, "onBluetoothStateChange: could not unbind service:",
-                                            e);
-                                }
-                            }
-                        } else {
+                    if (up) {
+                        synchronized (mConnection) {
                             try {
                                 if (mService == null) {
                                     Log.d(TAG, "Binding HID Device service...");
@@ -198,11 +187,15 @@ public final class BluetoothInputHost implements BluetoothProfile {
                                         e);
                             }
                         }
+                    } else {
+                        Log.d(TAG, "Unbinding service...");
+                        doUnbind();
                     }
                 }
             };
 
-    private final ServiceConnection mConnection = new ServiceConnection() {
+    private final IBluetoothProfileServiceConnection mConnection =
+            new IBluetoothProfileServiceConnection.Stub() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             Log.d(TAG, "onServiceConnected()");
             mService = IBluetoothInputHost.Stub.asInterface(service);
@@ -240,16 +233,27 @@ public final class BluetoothInputHost implements BluetoothProfile {
     }
 
     boolean doBind() {
-        Intent intent = new Intent(IBluetoothInputHost.class.getName());
-        ComponentName comp = intent.resolveSystemService(mContext.getPackageManager(), 0);
-        intent.setComponent(comp);
-        if (comp == null || !mContext.bindServiceAsUser(intent, mConnection, 0,
-                android.os.Process.myUserHandle())) {
-            Log.e(TAG, "Could not bind to Bluetooth HID Device Service with " + intent);
-            return false;
+        Log.d(TAG, "doBind()");
+        try {
+            return mAdapter.getBluetoothManager().bindBluetoothProfileService(
+                    BluetoothProfile.INPUT_HOST, mConnection);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Unable to bind HidDevService", e);
         }
-        Log.d(TAG, "Bound to HID Device Service");
-        return true;
+        return false;
+    }
+
+    void doUnbind() {
+        synchronized (mConnection) {
+            if (mService != null) {
+                try {
+                    mAdapter.getBluetoothManager().unbindBluetoothProfileService(
+                            BluetoothProfile.INPUT_HOST, mConnection);
+                } catch (RemoteException e) {
+                    Log.e(TAG, "Unable to unbind HidDevService", e);
+                }
+            }
+        }
     }
 
     void close() {
@@ -264,18 +268,8 @@ public final class BluetoothInputHost implements BluetoothProfile {
             }
         }
 
-        synchronized (mConnection) {
-            if (mService != null) {
-                mService = null;
-                try {
-                    mContext.unbindService(mConnection);
-                } catch (IllegalArgumentException e) {
-                    Log.e(TAG, "close: could not unbind HID Dev service: ", e);
-                }
-            }
-        }
-
         mServiceListener = null;
+        doUnbind();
     }
 
     /**
@@ -388,7 +382,9 @@ public final class BluetoothInputHost implements BluetoothProfile {
     /**
      * Unregisters application. Active connection will be disconnected and no
      * new connections will be allowed until registered again using
-     * {@link #registerApp(String, String, String, byte, byte[], BluetoothHidDeviceCallback)}
+     * {@link #registerApp
+     * (BluetoothHidDeviceAppQosSettings, BluetoothHidDeviceAppQosSettings,
+     * BluetoothHidDeviceAppQosSettings, BluetoothHidDeviceCallback)}
      *
      * @param config {@link BluetoothHidDeviceAppConfiguration} object as obtained from {@link
      * BluetoothHidDeviceCallback#onAppStatusChanged(BluetoothDevice,

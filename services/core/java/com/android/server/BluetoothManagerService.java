@@ -25,6 +25,7 @@ import android.bluetooth.IBluetooth;
 import android.bluetooth.IBluetoothCallback;
 import android.bluetooth.IBluetoothGatt;
 import android.bluetooth.IBluetoothHeadset;
+import android.bluetooth.IBluetoothInputHost;
 import android.bluetooth.IBluetoothManager;
 import android.bluetooth.IBluetoothManagerCallback;
 import android.bluetooth.IBluetoothProfileServiceConnection;
@@ -968,11 +969,24 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                             + " profile: " + bluetoothProfile);
                 }
 
-                if (bluetoothProfile != BluetoothProfile.HEADSET) return false;
-
-                Intent intent = new Intent(IBluetoothHeadset.class.getName());
+                String profileName;
+                switch (bluetoothProfile) {
+                    case BluetoothProfile.HEADSET:
+                        profileName = IBluetoothHeadset.class.getName();
+                        break;
+                    case BluetoothProfile.INPUT_HOST:
+                        profileName = IBluetoothInputHost.class.getName();
+                        break;
+                    default:
+                        Slog.e(TAG, "This profile service is not supported: " + bluetoothProfile);
+                        return false;
+                }
+                Intent intent = new Intent(profileName);
                 psc = new ProfileServiceConnections(intent);
-                if (!psc.bindService()) return false;
+                if (!psc.bindService()) {
+                    Slog.e(TAG, "Cannot bind to profile service");
+                    return false;
+                }
 
                 mProfileServices.put(new Integer(bluetoothProfile), psc);
             }

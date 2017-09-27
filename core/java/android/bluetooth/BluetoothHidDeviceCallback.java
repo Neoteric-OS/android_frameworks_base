@@ -26,10 +26,10 @@ public abstract class BluetoothHidDeviceCallback {
     /**
      * Callback called when application registration state changes. Usually it's
      * called due to either
-     * {@link BluetoothHidDevice#registerApp(String, String, String, byte, byte[],
-     * BluetoothHidDeviceCallback)}
+     * {@link BluetoothInputHost#registerApp
+     * (String, String, String, byte, byte[], BluetoothHidDeviceCallback)}
      * or
-     * {@link BluetoothHidDevice#unregisterApp(BluetoothHidDeviceAppConfiguration)}
+     * {@link BluetoothInputHost#unregisterApp(BluetoothHidDeviceAppConfiguration)}
      * , but can be also unsolicited in case e.g. Bluetooth was turned off in
      * which case application is unregistered automatically.
      *
@@ -38,7 +38,7 @@ public abstract class BluetoothHidDeviceCallback {
      * <code>null</code>.
      * @param config {@link BluetoothHidDeviceAppConfiguration} object which represents token
      * required to unregister application using
-     * {@link BluetoothHidDevice#unregisterApp(BluetoothHidDeviceAppConfiguration)}.
+     * {@link BluetoothInputHost#unregisterApp(BluetoothHidDeviceAppConfiguration)}.
      * @param registered <code>true</code> if application is registered, <code>false</code>
      * otherwise.
      */
@@ -64,7 +64,7 @@ public abstract class BluetoothHidDeviceCallback {
     /**
      * Callback called when GET_REPORT is received from remote host. Should be
      * replied by application using
-     * {@link BluetoothHidDevice#replyReport(BluetoothDevice, byte, byte, byte[])}.
+     * {@link BluetoothInputHost#replyReport(BluetoothDevice, byte, byte, byte[])}.
      *
      * @param type Requested Report Type.
      * @param id Requested Report Id, can be 0 if no Report Id are defined in descriptor.
@@ -79,7 +79,7 @@ public abstract class BluetoothHidDeviceCallback {
     /**
      * Callback called when SET_REPORT is received from remote host. In case
      * received data are invalid, application shall respond with
-     * {@link BluetoothHidDevice#reportError(BluetoothDevice)}.
+     * {@link BluetoothInputHost#reportError(BluetoothDevice, byte)}.
      *
      * @param type Report Type.
      * @param id Report Id.
@@ -93,7 +93,7 @@ public abstract class BluetoothHidDeviceCallback {
      * Callback called when SET_PROTOCOL is received from remote host.
      * Application shall use this information to send only reports valid for
      * given protocol mode. By default,
-     * {@link BluetoothHidDevice#PROTOCOL_REPORT_MODE} shall be assumed.
+     * {@link BluetoothInputHost#PROTOCOL_REPORT_MODE} shall be assumed.
      *
      * @param protocol Protocol Mode.
      */
@@ -104,7 +104,7 @@ public abstract class BluetoothHidDeviceCallback {
     /**
      * Callback called when report data is received over interrupt channel.
      * Report Type is assumed to be
-     * {@link BluetoothHidDevice#REPORT_TYPE_OUTPUT}.
+     * {@link BluetoothInputHost#REPORT_TYPE_OUTPUT}.
      *
      * @param reportId Report Id.
      * @param data Report data.
@@ -115,7 +115,7 @@ public abstract class BluetoothHidDeviceCallback {
 
     /**
      * Callback called when Virtual Cable is removed. This can be either due to
-     * {@link BluetoothHidDevice#unplug(BluetoothDevice)} or request from remote
+     * {@link BluetoothInputHost#unplug(BluetoothDevice)} or request from remote
      * side. After this callback is received connection will be disconnected
      * automatically.
      */
