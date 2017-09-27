@@ -24,6 +24,7 @@ import android.util.ArraySet;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import com.android.internal.util.ArrayUtils;
+import com.android.server.pm.permission.BasePermission;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -406,7 +407,7 @@ public final class PermissionsState {
             ensurePermissionData(permission);
         }
 
-        PermissionData permissionData = mPermissions.get(permission.name);
+        PermissionData permissionData = mPermissions.get(permission.getName());
         if (permissionData == null) {
             if (!mayChangeFlags) {
                 return false;
@@ -545,7 +546,7 @@ public final class PermissionsState {
     }
 
     private int grantPermission(BasePermission permission, int userId) {
-        if (hasPermission(permission.name, userId)) {
+        if (hasPermission(permission.getName(), userId)) {
             return PERMISSION_OPERATION_FAILURE;
         }
 
@@ -569,21 +570,22 @@ public final class PermissionsState {
     }
 
     private int revokePermission(BasePermission permission, int userId) {
-        if (!hasPermission(permission.name, userId)) {
+        final String permName = permission.getName();
+        if (!hasPermission(permName, userId)) {
             return PERMISSION_OPERATION_FAILURE;
         }
 
         final boolean hasGids = !ArrayUtils.isEmpty(permission.computeGids(userId));
         final int[] oldGids = hasGids ? computeGids(userId) : NO_GIDS;
 
-        PermissionData permissionData = mPermissions.get(permission.name);
+        PermissionData permissionData = mPermissions.get(permName);
 
         if (!permissionData.revoke(userId)) {
             return PERMISSION_OPERATION_FAILURE;
         }
 
         if (permissionData.isDefault()) {
-            ensureNoPermissionData(permission.name);
+            ensureNoPermissionData(permName);
         }
 
         if (hasGids) {
@@ -613,13 +615,14 @@ public final class PermissionsState {
     }
 
     private PermissionData ensurePermissionData(BasePermission permission) {
+        final String permName = permission.getName();
         if (mPermissions == null) {
             mPermissions = new ArrayMap<>();
         }
-        PermissionData permissionData = mPermissions.get(permission.name);
+        PermissionData permissionData = mPermissions.get(permName);
         if (permissionData == null) {
             permissionData = new PermissionData(permission);
-            mPermissions.put(permission.name, permissionData);
+            mPermissions.put(permName, permissionData);
         }
         return permissionData;
     }
@@ -680,7 +683,7 @@ public final class PermissionsState {
 
             PermissionState userState = mUserStates.get(userId);
             if (userState == null) {
-                userState = new PermissionState(mPerm.name);
+                userState = new PermissionState(mPerm.getName());
                 mUserStates.put(userId, userState);
             }
 
@@ -748,7 +751,7 @@ public final class PermissionsState {
                 }
                 return userState.mFlags != oldFlags;
             } else if (newFlags != 0) {
-                userState = new PermissionState(mPerm.name);
+                userState = new PermissionState(mPerm.getName());
                 userState.mFlags = newFlags;
                 mUserStates.put(userId, userState);
                 return true;
