@@ -17,6 +17,7 @@
 package com.android.systemui.statusbar.notification.interruption
 
 import android.Manifest.permission.RECEIVE_EMERGENCY_BROADCAST
+import android.app.ActivityManager
 import android.app.Notification
 import android.app.Notification.BubbleMetadata
 import android.app.Notification.CATEGORY_ALARM
@@ -39,11 +40,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.PowerManager
 import android.os.SystemProperties
+import android.os.UserHandle
 import android.provider.Settings
 import android.provider.Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED
 import android.provider.Settings.Global.HEADS_UP_OFF
 import android.provider.Settings.Global.HEADS_UP_ON
 import android.service.notification.Flags
+import android.telecom.TelecomManager
 import com.android.internal.logging.UiEvent
 import com.android.internal.logging.UiEventLogger
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage
@@ -69,6 +72,7 @@ import com.android.systemui.util.time.SystemClock
 import com.android.wm.shell.bubbles.Bubbles
 import java.time.Duration
 import java.util.Optional
+import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrElse
 
 class PeekDisabledSuppressor(
@@ -126,6 +130,158 @@ class PulseDisabledSuppressor(
 class PulseBatterySaverSuppressor(private val batteryController: BatteryController) :
     VisualInterruptionCondition(types = setOf(PULSE), reason = "pulse disabled by battery saver") {
     override fun shouldSuppress() = batteryController.isAodPowerSave()
+}
+
+class PeekStoplistSuppressor(
+    private val context: Context,
+    private val systemSettings: SystemSettings,
+    private val userTracker: UserTracker,
+    @Main private val mainHandler: Handler,
+) : VisualInterruptionFilter(types = setOf(PEEK), reason = "package in stoplist") {
+    @Volatile private var stoplist: Set<String> = emptySet()
+    private val activityManager by lazy { context.getSystemService(ActivityManager::class.java) }
+    private val telecomManager by lazy { context.getSystemService(TelecomManager::class.java) }
+
+    override fun start() {
+        val observer =
+            object : ContentObserver(mainHandler) {
+                override fun onChange(selfChange: Boolean) {
+                    updateStoplist()
+                }
+            }
+
+        systemSettings.registerContentObserverForUserAsync(
+            Settings.System.HEADS_UP_STOPLIST_VALUES,
+            observer,
+            UserHandle.USER_ALL,
+        )
+
+        userTracker.addCallback(
+            object : UserTracker.Callback {
+                override fun onUserChanged(newUser: Int, userContext: Context) {
+                    updateStoplist()
+                }
+            },
+            Executor { mainHandler.post(it) },
+        )
+
+        updateStoplist()
+    }
+
+    private fun updateStoplist() {
+        val stopString =
+            systemSettings.getStringForUser(
+                Settings.System.HEADS_UP_STOPLIST_VALUES,
+                userTracker.userId,
+            )
+        stoplist =
+            if (stopString.isNullOrEmpty()) {
+                emptySet()
+            } else {
+                stopString
+                    .split("|")
+                    .map { it.trim() }
+                    .filter { it.isNotEmpty() }
+                    .toSet()
+            }
+    }
+
+    private fun isDialerApp(entry: NotificationEntry): Boolean {
+        val packageName = entry.sbn.packageName
+        if (packageName == "com.android.dialer" || packageName == "com.google.android.dialer") {
+            return true
+        }
+        val defaultDialer =
+            try {
+                telecomManager?.defaultDialerPackage
+            } catch (e: Exception) {
+                null
+            }
+        if (defaultDialer != null && packageName == defaultDialer) {
+            return true
+        }
+        if (entry.sbn.notification.isStyle(Notification.CallStyle::class.java)) {
+            return true
+        }
+        return false
+    }
+
+    override fun shouldSuppress(entry: NotificationEntry): Boolean {
+        val currentStoplist = stoplist
+        if (currentStoplist.isEmpty()) {
+            return false
+        }
+        val taskInfo =
+            try {
+                activityManager?.getRunningTasks(1)
+            } catch (e: Exception) {
+                null
+            }
+        if (!taskInfo.isNullOrEmpty()) {
+            val topActivity = taskInfo[0].topActivity
+            val topPackage = topActivity?.packageName
+            if (topPackage != null && currentStoplist.contains(topPackage) && !isDialerApp(entry)) {
+                return true
+            }
+        }
+        return false
+    }
+}
+
+class PeekBlacklistSuppressor(
+    private val systemSettings: SystemSettings,
+    private val userTracker: UserTracker,
+    @Main private val mainHandler: Handler,
+) : VisualInterruptionFilter(types = setOf(PEEK), reason = "package in blacklist") {
+    @Volatile private var blacklist: Set<String> = emptySet()
+
+    override fun start() {
+        val observer =
+            object : ContentObserver(mainHandler) {
+                override fun onChange(selfChange: Boolean) {
+                    updateBlacklist()
+                }
+            }
+
+        systemSettings.registerContentObserverForUserAsync(
+            Settings.System.HEADS_UP_BLACKLIST_VALUES,
+            observer,
+            UserHandle.USER_ALL,
+        )
+
+        userTracker.addCallback(
+            object : UserTracker.Callback {
+                override fun onUserChanged(newUser: Int, userContext: Context) {
+                    updateBlacklist()
+                }
+            },
+            Executor { mainHandler.post(it) },
+        )
+
+        updateBlacklist()
+    }
+
+    private fun updateBlacklist() {
+        val blackString =
+            systemSettings.getStringForUser(
+                Settings.System.HEADS_UP_BLACKLIST_VALUES,
+                userTracker.userId,
+            )
+        blacklist =
+            if (blackString.isNullOrEmpty()) {
+                emptySet()
+            } else {
+                blackString
+                    .split("|")
+                    .map { it.trim() }
+                    .filter { it.isNotEmpty() }
+                    .toSet()
+            }
+    }
+
+    override fun shouldSuppress(entry: NotificationEntry): Boolean {
+        return blacklist.contains(entry.sbn.packageName)
+    }
 }
 
 class PeekPackageSnoozedSuppressor(private val headsUpManager: HeadsUpManager) :

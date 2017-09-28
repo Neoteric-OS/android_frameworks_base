@@ -164,6 +164,8 @@ constructor(
         addCondition(PeekDisabledSuppressor(globalSettings, headsUpManager, logger, mainHandler))
         addCondition(PulseDisabledSuppressor(ambientDisplayConfiguration, userTracker))
         addCondition(PulseBatterySaverSuppressor(batteryController))
+        addFilter(PeekStoplistSuppressor(context, systemSettings, userTracker, mainHandler))
+        addFilter(PeekBlacklistSuppressor(systemSettings, userTracker, mainHandler))
         addFilter(PeekPackageSnoozedSuppressor(headsUpManager))
         addFilter(PeekAlreadyBubbledSuppressor(statusBarStateController, bubbles))
         addFilter(PeekDndSuppressor())
