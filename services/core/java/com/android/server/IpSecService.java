@@ -34,6 +34,7 @@ import android.net.IpSecTransform;
 import android.net.IpSecTransformResponse;
 import android.net.IpSecUdpEncapResponse;
 import android.net.NetworkUtils;
+import android.net.TrafficStats;
 import android.net.util.NetdService;
 import android.os.Binder;
 import android.os.IBinder;
@@ -47,10 +48,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
-
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
-
+import dalvik.system.SocketTagger;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -58,7 +58,6 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import libcore.io.IoUtils;
 
 /** @hide */
@@ -557,6 +556,12 @@ public class IpSecService extends IIpSecService.Stub {
         /** always guarded by IpSecService#this */
         @Override
         protected void releaseResources() {
+            try {
+                mSrvConfig.getNetdInstance().ipSecRemoveIp4UdpEncapExemption(mPort);
+            } catch (RemoteException e) {
+                Log.e(TAG, "Failed to cleanup IPtables UDP exemption for port " + mPort);
+            }
+
             Log.d(TAG, "Closing port " + mPort);
             IoUtils.closeQuietly(mSocket);
             mSocket = null;
@@ -791,13 +796,17 @@ public class IpSecService extends IIpSecService.Stub {
         checkNotNull(binder, "Null Binder passed to openUdpEncapsulationSocket");
 
         int resourceId = mNextResourceId.getAndIncrement();
+        int callerUid = Binder.getCallingUid();
         FileDescriptor sockFd = null;
         try {
-            if (!mUserQuotaTracker.getUserRecord(Binder.getCallingUid()).socket.isAvailable()) {
+            if (!mUserQuotaTracker.getUserRecord(callerUid).socket.isAvailable()) {
                 return new IpSecUdpEncapResponse(IpSecManager.Status.RESOURCE_UNAVAILABLE);
             }
 
             sockFd = Os.socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+
+            // Set owner (fchown) before binding
+            mSrvConfig.getNetdInstance().ipSecSetSocketOwner(sockFd, callerUid);
 
             if (port != 0) {
                 Log.v(TAG, "Binding to port " + port);
@@ -811,6 +820,10 @@ public class IpSecService extends IIpSecService.Stub {
                     OsConstants.IPPROTO_UDP,
                     OsConstants.UDP_ENCAP,
                     OsConstants.UDP_ENCAP_ESPINUDP);
+
+            // Only add exemptions after successfully creating and binding the socket.
+            mSrvConfig.getNetdInstance().ipSecAddIp4UdpEncapExemption(sockFd);
+            setSockStatsUid(sockFd, callerUid);
 
             mUdpSocketRecords.put(
                     resourceId, new UdpSocketRecord(resourceId, binder, sockFd, port));
@@ -826,8 +839,19 @@ public class IpSecService extends IIpSecService.Stub {
     /** close a socket that has been been allocated by and registered with the system server */
     @Override
     public void closeUdpEncapsulationSocket(int resourceId) throws RemoteException {
-
         releaseManagedResource(mUdpSocketRecords, resourceId, "UdpEncapsulationSocket");
+    }
+
+    /**
+     * Sets socket tag to assign all traffic to the provided UID.
+     *
+     * <p>Since the socket is created on behalf of a userspace application, all traffic should be
+     * accounted to the UID of the userspace application.
+     */
+    @VisibleForTesting
+    void setSockStatsUid(FileDescriptor fd, int uid) throws IOException {
+        TrafficStats.setThreadStatsUid(uid);
+        SocketTagger.get().tag(fd);
     }
 
     /**
