@@ -428,6 +428,11 @@ public final class AdvertisingSetParameters implements Parcelable {
                     throw new IllegalStateException(
                             "Advertising can't be both connectable and anonymous");
                 }
+
+                if (mIsAnonymous && mScannable) {
+                    throw new IllegalStateException(
+                            "Advertising can't be both connectable and anonymous");
+                }
             }
 
             return new AdvertisingSetParameters(mConnectable, mScannable, mIsLegacy, mIsAnonymous,
