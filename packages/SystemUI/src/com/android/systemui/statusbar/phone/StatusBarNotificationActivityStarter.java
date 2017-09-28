@@ -27,9 +27,13 @@ import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
+import android.content.res.Resources;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -74,6 +78,7 @@ import com.android.systemui.statusbar.notification.NotificationLaunchAnimatorCon
 import com.android.systemui.statusbar.notification.collection.NotificationEntry;
 import com.android.systemui.statusbar.notification.collection.provider.LaunchFullScreenIntentProvider;
 import com.android.systemui.statusbar.notification.collection.render.NotificationVisibilityProvider;
+import com.android.systemui.statusbar.notification.interruption.NotificationInterruptStateProvider;
 import com.android.systemui.statusbar.notification.row.ExpandableNotificationRow;
 import com.android.systemui.statusbar.notification.row.ExpandableNotificationRowDragController;
 import com.android.systemui.statusbar.notification.row.OnUserInteractionCallback;
@@ -131,6 +136,7 @@ public class StatusBarNotificationActivityStarter implements NotificationActivit
     private final NotificationLockscreenUserManager mLockscreenUserManager;
     private final ShadeController mShadeController;
     private final KeyguardStateController mKeyguardStateController;
+    private final NotificationInterruptStateProvider mNotificationInterruptStateProvider;
     private final LockPatternUtils mLockPatternUtils;
     private final StatusBarRemoteInputCallback mStatusBarRemoteInputCallback;
     private final ActivityIntentHelper mActivityIntentHelper;
@@ -171,6 +177,7 @@ public class StatusBarNotificationActivityStarter implements NotificationActivit
             NotificationLockscreenUserManager lockscreenUserManager,
             ShadeController shadeController,
             KeyguardStateController keyguardStateController,
+            NotificationInterruptStateProvider notificationInterruptStateProvider,
             LockPatternUtils lockPatternUtils,
             StatusBarRemoteInputCallback remoteInputCallback,
             ActivityIntentHelper activityIntentHelper,
@@ -205,6 +212,7 @@ public class StatusBarNotificationActivityStarter implements NotificationActivit
         mLockscreenUserManager = lockscreenUserManager;
         mShadeController = shadeController;
         mKeyguardStateController = keyguardStateController;
+        mNotificationInterruptStateProvider = notificationInterruptStateProvider;
         mLockPatternUtils = lockPatternUtils;
         mStatusBarRemoteInputCallback = remoteInputCallback;
         mActivityIntentHelper = activityIntentHelper;
@@ -222,6 +230,9 @@ public class StatusBarNotificationActivityStarter implements NotificationActivit
         mUserTracker = userTracker;
 
         launchFullScreenIntentProvider.registerListener(entry -> launchFullScreenIntent(entry));
+
+        mSettingsObserver.observe();
+        mSettingsObserver.update();
     }
 
     /**
@@ -699,4 +710,36 @@ public class StatusBarNotificationActivityStarter implements NotificationActivit
         return true;
     }
 
+    Handler mHandler = new Handler();
+    private SettingsObserver mSettingsObserver = new SettingsObserver(mHandler);
+    private class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+         void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADS_UP_STOPLIST_VALUES), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADS_UP_BLACKLIST_VALUES), false, this);
+        }
+         @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            update();
+        }
+         public void update() {
+            setHeadsUpStoplist();
+            setHeadsUpBlacklist();
+        }
+    }
+
+    private void setHeadsUpStoplist() {
+        if (mNotificationInterruptStateProvider != null)
+            mNotificationInterruptStateProvider.setHeadsUpStoplist();
+    }
+
+    private void setHeadsUpBlacklist() {
+        if (mNotificationInterruptStateProvider != null)
+            mNotificationInterruptStateProvider.setHeadsUpBlacklist();
+    }
 }
