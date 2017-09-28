@@ -223,6 +223,7 @@ public class MediaSessionService extends SystemService implements Monitor {
         if (isGlobalPriorityActiveLocked()
                 && (userId == UserHandle.USER_ALL
                     || userId == mGlobalPrioritySession.getUserId())) {
+            records.remove(mGlobalPrioritySession);
             records.add(0, mGlobalPrioritySession);
         }
         return records;
