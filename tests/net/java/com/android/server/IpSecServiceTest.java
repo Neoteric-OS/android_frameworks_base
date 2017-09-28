@@ -23,7 +23,10 @@ import static android.system.OsConstants.SOCK_DGRAM;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -36,20 +39,29 @@ import android.net.IpSecTransform;
 import android.net.IpSecUdpEncapResponse;
 import android.os.Binder;
 import android.os.ParcelFileDescriptor;
+import android.os.Process;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 import android.system.ErrnoException;
 import android.system.Os;
+import android.system.OsConstants;
+import android.system.StructTimeval;
 
+import java.io.BufferedReader;
 import java.io.FileDescriptor;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 
 /** Unit tests for {@link IpSecService}. */
 @SmallTest
@@ -122,7 +134,6 @@ public class IpSecServiceTest {
 
         mIpSecService.closeUdpEncapsulationSocket(udpEncapResp.resourceId);
         udpEncapResp.fileDescriptor.close();
-
         // TODO: Added check for the resource tracker
     }
 
@@ -176,6 +187,7 @@ public class IpSecServiceTest {
         assertNotNull(udpEncapResp);
         assertEquals(IpSecManager.Status.OK, udpEncapResp.status);
         assertNotEquals(0, udpEncapResp.port);
+
         mIpSecService.closeUdpEncapsulationSocket(udpEncapResp.resourceId);
         udpEncapResp.fileDescriptor.close();
     }
@@ -204,8 +216,8 @@ public class IpSecServiceTest {
         assertNotNull(udpEncapResp);
         assertEquals(IpSecManager.Status.OK, udpEncapResp.status);
         assertEquals(localport, udpEncapResp.port);
-        mIpSecService.openUdpEncapsulationSocket(localport, new Binder());
 
+        mIpSecService.openUdpEncapsulationSocket(localport, new Binder());
         IpSecUdpEncapResponse testUdpEncapResp =
                 mIpSecService.openUdpEncapsulationSocket(localport, new Binder());
         assertEquals(IpSecManager.Status.RESOURCE_UNAVAILABLE, testUdpEncapResp.status);
@@ -259,5 +271,155 @@ public class IpSecServiceTest {
                                 + e);
             }
         }
+    }
+
+    private static class QtaguidStats {
+        private static final HashMap<String, Integer> fileHeaders = new HashMap<>();
+
+        public final int uid;
+        public final int txBytes;
+        public final int rxBytes;
+        public final int txPackets;
+        public final int rxPackets;
+
+        /*
+         * Gets the data accounting stats for the given UID.
+         */
+        private static QtaguidStats getQtaguidStats(int uid) throws IOException {
+            // We have to look through the /proc/net/xt_qtaguid/stats ourselves; using trafficStats
+            // does not work since it limits us to only looking up the stats from our own UID. In
+            // these unit tests, we also need check the stats of other UIDs.
+            BufferedReader in = new BufferedReader(new FileReader("/proc/net/xt_qtaguid/stats"));
+            String line = in.readLine();
+            int lineCounter = 0;
+
+            try {
+                while (line != null) {
+                    final String[] fields = line.split(" ");
+
+                    if (fileHeaders.isEmpty()) {
+                        int i = 0;
+                        for (String key : fields) {
+                            fileHeaders.put(key, i++);
+                        }
+                    } else {
+                        if (lineCounter != 0
+                                && Integer.valueOf(fields[fileHeaders.get("uid_tag_int")]) == uid
+                                && Integer.valueOf(fields[fileHeaders.get("cnt_set")]) == 0) {
+                            return new QtaguidStats(
+                                    uid,
+                                    fields[fileHeaders.get("tx_bytes")],
+                                    fields[fileHeaders.get("rx_bytes")],
+                                    fields[fileHeaders.get("tx_packets")],
+                                    fields[fileHeaders.get("rx_packets")]);
+                        }
+                    }
+
+                    line = in.readLine();
+                    lineCounter++;
+                }
+            } finally {
+                in.close();
+            }
+
+            return new QtaguidStats(uid, "0", "0", "0", "0");
+        }
+
+        public QtaguidStats(
+                int uid, String txBytes, String rxBytes, String txPackets, String rxPackets) {
+            this.uid = uid;
+            this.txBytes = Integer.valueOf(txBytes);
+            this.rxBytes = Integer.valueOf(rxBytes);
+            this.txPackets = Integer.valueOf(txPackets);
+            this.rxPackets = Integer.valueOf(rxPackets);
+        }
+
+        public boolean isEqual(QtaguidStats other) {
+            return this.txBytes == other.txBytes
+                    && this.rxBytes == other.rxBytes
+                    && this.txPackets == other.txPackets
+                    && this.rxPackets == other.rxPackets;
+        }
+
+        public String toString() {
+            return String.format(
+                    "QtaguidStats - UID %d: TX: %d pkts, %d bytes; RX: %d pkts, %d bytes;",
+                    uid, txPackets, txBytes, rxPackets, rxBytes);
+        }
+    }
+
+    @Test
+    public void testSetSockStatsUid() throws Exception {
+        int otherUid = Process.LAST_APPLICATION_UID;
+
+        QtaguidStats myUidStatsBefore = QtaguidStats.getQtaguidStats(Os.getuid());
+        QtaguidStats otherUidStatsBefore = QtaguidStats.getQtaguidStats(otherUid);
+
+        // xt_qtaguid does not differentiate between v4, v6 sockets; test either one.
+        FileDescriptor recvSock = Os.socket(AF_INET, SOCK_DGRAM, 0);
+        Os.bind(recvSock, InetAddress.getByAddress(new byte[] {0, 0, 0, 0}), 0);
+        mIpSecService.setSockStatsUid(recvSock, otherUid);
+        StructTimeval tv = StructTimeval.fromMillis(20);
+        Os.setsockoptTimeval(recvSock, OsConstants.SOL_SOCKET, OsConstants.SO_RCVTIMEO, tv);
+
+        InetSocketAddress dest = ((InetSocketAddress) Os.getsockname(recvSock));
+        FileDescriptor sendSock = Os.socket(AF_INET, SOCK_DGRAM, 0);
+        mIpSecService.setSockStatsUid(sendSock, otherUid);
+        byte[] msg = ("Hello, I'm going to a socket address: " + dest.toString()).getBytes("UTF-8");
+        int len = msg.length;
+
+        assertEquals(len, Os.sendto(sendSock, msg, 0, len, 0, dest));
+        byte[] received = new byte[msg.length + 42];
+        InetSocketAddress from = new InetSocketAddress();
+        assertEquals(len, Os.recvfrom(recvSock, received, 0, received.length, 0, from));
+
+        // It's too fast to check qtaguid stats.
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+        }
+
+        QtaguidStats myUidStatsAfter = QtaguidStats.getQtaguidStats(Os.getuid());
+        QtaguidStats otherUidStatsAfter = QtaguidStats.getQtaguidStats(otherUid);
+
+        // Check that no packets were attributed to the test-runner UID
+        assertTrue(myUidStatsBefore.isEqual(myUidStatsAfter));
+
+        // Check that packets were attributed to my UID
+        int expectedPacketSize = 80;
+        assertEquals(otherUidStatsBefore.txBytes + expectedPacketSize, otherUidStatsAfter.txBytes);
+        assertEquals(otherUidStatsBefore.rxBytes + expectedPacketSize, otherUidStatsAfter.rxBytes);
+        assertEquals(otherUidStatsBefore.txPackets + 1, otherUidStatsAfter.txPackets);
+        assertEquals(otherUidStatsBefore.rxPackets + 1, otherUidStatsAfter.rxPackets);
+    }
+
+    @Test
+    public void testIpSecIp4UdpEncapExemptionTriggers() throws Exception {
+        int localport = findUnusedPort();
+        IpSecUdpEncapResponse udpEncapResp =
+                mIpSecService.openUdpEncapsulationSocket(localport, new Binder());
+
+        ArgumentCaptor<FileDescriptor> fdCaptor = ArgumentCaptor.forClass(FileDescriptor.class);
+
+        verify(mMockNetd).ipSecAddIp4UdpEncapExemption(fdCaptor.capture());
+
+        // Check that it's using the same socket
+        assertEquals(
+                Os.getsockname(fdCaptor.getValue()).toString(),
+                Os.getsockname(udpEncapResp.fileDescriptor.getFileDescriptor()).toString());
+
+        mIpSecService.closeUdpEncapsulationSocket(udpEncapResp.resourceId);
+        verify(mMockNetd).ipSecRemoveIp4UdpEncapExemption(eq(udpEncapResp.port));
+    }
+
+    @Test
+    public void testOpenUdpEncapsulationSocketCallsSetSocketOwner() throws Exception {
+        int localport = findUnusedPort();
+        IpSecUdpEncapResponse udpEncapResp =
+                mIpSecService.openUdpEncapsulationSocket(localport, new Binder());
+
+        verify(mMockNetd).ipSecSetSocketOwner(anyObject(), eq(Os.getuid()));
+
+        mIpSecService.closeUdpEncapsulationSocket(udpEncapResp.resourceId);
     }
 }
