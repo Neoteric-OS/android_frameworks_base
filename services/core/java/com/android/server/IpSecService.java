@@ -33,6 +33,7 @@ import android.net.IpSecSpiResponse;
 import android.net.IpSecTransform;
 import android.net.IpSecTransformResponse;
 import android.net.IpSecUdpEncapResponse;
+import android.net.TrafficStats;
 import android.net.util.NetdService;
 import android.os.Binder;
 import android.os.IBinder;
@@ -47,6 +48,7 @@ import android.util.Slog;
 import android.util.SparseArray;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import dalvik.system.SocketTagger;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -555,6 +557,12 @@ public class IpSecService extends IIpSecService.Stub {
             Log.d(TAG, "Closing port " + mPort);
             IoUtils.closeQuietly(mSocket);
             mSocket = null;
+
+            try {
+                mSrvConfig.getNetdInstance().ipSecRemoveUdpEncapExemption(mPort);
+            } catch (RemoteException e) {
+                Log.e(TAG, "Failed to cleanup IPtables UDP exemption for port " + mPort);
+            }
         }
 
         @Override
@@ -717,7 +725,7 @@ public class IpSecService extends IIpSecService.Stub {
      * and re-binding, during which the system could *technically* hand that port out to someone
      * else.
      */
-    private void bindToRandomPort(FileDescriptor sockFd) throws IOException {
+    private int bindToRandomPort(FileDescriptor sockFd) throws IOException {
         for (int i = MAX_PORT_BIND_ATTEMPTS; i > 0; i--) {
             try {
                 FileDescriptor probeSocket = Os.socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -726,7 +734,7 @@ public class IpSecService extends IIpSecService.Stub {
                 Os.close(probeSocket);
                 Log.v(TAG, "Binding to port " + port);
                 Os.bind(sockFd, INADDR_ANY, port);
-                return;
+                return port;
             } catch (ErrnoException e) {
                 // Someone miraculously claimed the port just after we closed probeSocket.
                 if (e.errno == OsConstants.EADDRINUSE) {
@@ -759,12 +767,13 @@ public class IpSecService extends IIpSecService.Stub {
             }
 
             sockFd = Os.socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+            mSrvConfig.getNetdInstance().ipSecSetSocketOwner(sockFd, Binder.getCallingUid());
 
             if (port != 0) {
                 Log.v(TAG, "Binding to port " + port);
                 Os.bind(sockFd, INADDR_ANY, port);
             } else {
-                bindToRandomPort(sockFd);
+                port = bindToRandomPort(sockFd);
             }
             // This code is common to both the unspecified and specified port cases
             Os.setsockoptInt(
@@ -772,6 +781,9 @@ public class IpSecService extends IIpSecService.Stub {
                     OsConstants.IPPROTO_UDP,
                     OsConstants.UDP_ENCAP,
                     OsConstants.UDP_ENCAP_ESPINUDP);
+
+            mSrvConfig.getNetdInstance().ipSecAddUdpEncapExemption(port);
+            setSockUid(sockFd, Binder.getCallingUid());
 
             mUdpSocketRecords.put(
                     resourceId, new UdpSocketRecord(resourceId, binder, sockFd, port));
@@ -789,6 +801,13 @@ public class IpSecService extends IIpSecService.Stub {
     public void closeUdpEncapsulationSocket(int resourceId) throws RemoteException {
 
         releaseManagedResource(mUdpSocketRecords, resourceId, "UdpEncapsulationSocket");
+    }
+
+    @VisibleForTesting
+    void setSockUid(FileDescriptor fd, int uid) throws IOException {
+        TrafficStats.setThreadStatsUid(uid);
+        TrafficStats.setThreadStatsTag(128);
+        SocketTagger.get().tag(fd);
     }
 
     /**
