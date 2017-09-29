@@ -46,6 +46,23 @@
       "revId": "178c15a7b86236903440e5be5c4465e52e4ed398",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d524ebb2_417979b9",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1045774
+      },
+      "writtenOn": "2017-09-29T12:55:00Z",
+      "side": 1,
+      "message": "let\u0027s use this instead ;)",
+      "revId": "178c15a7b86236903440e5be5c4465e52e4ed398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
