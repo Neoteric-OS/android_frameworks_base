@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c41f3a28_8224d6e5",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2017-09-29T18:24:38Z",
+      "side": 1,
+      "message": "The C++ standard says: \"A pointer can be explicitly converted to any integral type large enough to hold it.\" So I think this is OK. It shouldn\u0027t complain on any of our platforms, and otherwise exactly when we want it to complain.\n\nI\u0027m open about using reinterpret_cast. C-style casts seem to be the prevailing style here.",
+      "parentUuid": "cfe19c4a_31d60805",
+      "range": {
+        "startLine": 844,
+        "startChar": 11,
+        "endLine": 844,
+        "endChar": 23
+      },
+      "revId": "66c013c7df0bfb33dd632ad777da08a702e22cd9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5e3089b_12e6ac54",
         "filename": "core/jni/android_util_Binder.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-29T09:12:17Z",
       "side": 1,
       "message": "change to \"deleting\"?",
+      "range": {
+        "startLine": 850,
+        "startChar": 24,
+        "endLine": 850,
+        "endChar": 39
+      },
+      "revId": "66c013c7df0bfb33dd632ad777da08a702e22cd9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7770954_53436b49",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2017-09-29T18:24:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5e3089b_12e6ac54",
       "range": {
         "startLine": 850,
         "startChar": 24,
