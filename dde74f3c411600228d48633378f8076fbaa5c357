@@ -94,6 +94,30 @@
       "revId": "dde74f3c411600228d48633378f8076fbaa5c357",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c1cece2_38fb8d25",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1226158
+      },
+      "writtenOn": "2017-10-01T19:25:08Z",
+      "side": 1,
+      "message": "I didn\u0027t make and change the session.\nThis problem occurs under normal situation not in my case.\nThe session(com.android.server.telecom) is created and managed\nby telecom service of android system.\nThis telecom session is exist always since boot and becames active\nwhen phone call comes in. And it is same with 7.0 OS.\n\nYou could reproduce it with next simple step.\n- Receive call and hang on\n- Repeat it\nThe size of mCachedActiveLists[user] in MediaSessionStack is increased infinitly.\n\n// I checked it with adding next comment\npublic ArrayList\u003cMediaSessionRecord\u003e getActiveSessions(int userId) {\n    ArrayList\u003cMediaSessionRecord\u003e cachedActiveList \u003d mCachedActiveLists.get(userId);\n    if (cachedActiveList \u003d\u003d null) {\n      cachedActiveList \u003d getPriorityList(true, userId);\n      mCachedActiveLists.put(userId, cachedActiveList);\n+   } else {\n+      Log.e(TAG, \"[hmhm] cache size : \" + cachedActiveList.size());\n    }\n    return cachedActiveList;\n}\n\nResult of repeated call receiving / hanging\nsystem_process E/MediaSessionStack: [hmhm] cache size : 1\nsystem_process E/MediaSessionStack: [hmhm] cache size : 2\nsystem_process E/MediaSessionStack: [hmhm] cache size : 3\nsystem_process E/MediaSessionStack: [hmhm] cache size : 4\n....\n\nIt(cachedActiveList) affects the application which registered ActiveSessionsChangedLisnener.\nI think the reason for the increase infinitely is\nbecause records variable references mCachedActiveLists[user] in MediaSessionStack.",
+      "parentUuid": "f491073e_9429e2b0",
+      "range": {
+        "startLine": 226,
+        "startChar": 12,
+        "endLine": 226,
+        "endChar": 51
+      },
+      "revId": "dde74f3c411600228d48633378f8076fbaa5c357",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
