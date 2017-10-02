@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5cecbe7d_f84bb4f2",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1057373
+      },
+      "writtenOn": "2017-10-02T08:54:50Z",
+      "side": 1,
+      "message": "In that case, I\u0027m fine leaving the cast as is to be consist with the prevailing style.",
+      "parentUuid": "c41f3a28_8224d6e5",
+      "range": {
+        "startLine": 844,
+        "startChar": 11,
+        "endLine": 844,
+        "endChar": 23
+      },
+      "revId": "66c013c7df0bfb33dd632ad777da08a702e22cd9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5e3089b_12e6ac54",
         "filename": "core/jni/android_util_Binder.cpp",
         "patchSetId": 1
