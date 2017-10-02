@@ -142,6 +142,30 @@
       "revId": "dde74f3c411600228d48633378f8076fbaa5c357",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a038819e_8baf5365",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1226158
+      },
+      "writtenOn": "2017-10-02T10:57:02Z",
+      "side": 1,
+      "message": "I tested it on the emulator with below environment(latest code) not in samsung device\n-----------\nPLATFORM_VERSION_CODENAME\u003dP\nPLATFORM_VERSION\u003dP\nTARGET_PRODUCT\u003daosp_x86\nTARGET_BUILD_VARIANT\u003deng\nTARGET_BUILD_TYPE\u003drelease\nTARGET_ARCH\u003dx86\nTARGET_ARCH_VARIANT\u003dx86\n-----------\n\nI added comments to \u0027MediaSessionStack.java\u0027 for analyzing this problem.\nlike below..\n\n  public ArrayList\u003cMediaSessionRecord\u003e getActiveSessions(int userId) {\n    ArrayList\u003cMediaSessionRecord\u003e cachedActiveList \u003d mCachedActiveLists.get(userId);\n    if (cachedActiveList \u003d\u003d null) {\n      cachedActiveList \u003d getPriorityList(true, userId);\n      mCachedActiveLists.put(userId, cachedActiveList);\n    }\n+   Log.e(TAG, \"[hmhm] [userId:\" + userId + \"] cached size : \" + cachedActiveList.size());\n+   int size \u003d cachedActiveList.size();\n+   for (int i \u003d 0; i \u003c size; i++) {\n+     MediaSessionRecord record \u003d cachedActiveList.get(i);\n+     Log.e(TAG, \"[hmhm] record : \" + record);\n+   }   \n    return cachedActiveList;\n  }\n\nResult of repeated call receiving / hanging up (just phone call)\n//.....\nMediaSessionStack: [hmhm] [userId:0] cached size : 6 \nMediaSessionStack: [hmhm] record : com.android.server.telecom/HeadsetMediaButton (userId\u003d0) \nMediaSessionStack: [hmhm] record : com.android.server.telecom/HeadsetMediaButton (userId\u003d0) \nMediaSessionStack: [hmhm] record : com.android.server.telecom/HeadsetMediaButton (userId\u003d0) \nMediaSessionStack: [hmhm] record : com.android.server.telecom/HeadsetMediaButton (userId\u003d0) \nMediaSessionStack: [hmhm] record : com.android.server.telecom/HeadsetMediaButton (userId\u003d0) \nMediaSessionStack: [hmhm] record : com.android.server.telecom/HeadsetMediaButton (userId\u003d0) \n//.....\nTelecom session(com.android.server.telecom/HeadsetMediaButton) is added in mCachedActiveLists[0] continuosly\n\nI guess the cause of this problem is as follows.\n\noriginal code - getActiveSessionsLocked of \u0027MediaSessionService.java\u0027\n-----\n    records \u003d user.mPriorityStack.getActiveSessions(userId);\n    //\u003c------records variable references mCachedActiveLists[0] of MediaSessionStack\n}\n\nif (isGlobalPriorityActiveLocked()  //\u003c---- If in call situation, this method returns true\n        \u0026\u0026 (userId \u003d\u003d UserHandle.USER_ALL\n            || userId \u003d\u003d mGlobalPrioritySession.getUserId())) {\n    records.add(0, mGlobalPrioritySession);\n    //\u003c---- mGlobalPrioritySession is added in mCachedActiveLists[0]\n    //\u003c---- and mGlobalPrioritySession is \"com.android.server.telecom/HeadsetMediaButton\"\n-----\n\nFinally, could you check the above contents only once?\nIf it is not cause, I will analyze more. thanks.",
+      "parentUuid": "9007394e_07b219c3",
+      "range": {
+        "startLine": 226,
+        "startChar": 12,
+        "endLine": 226,
+        "endChar": 51
+      },
+      "revId": "dde74f3c411600228d48633378f8076fbaa5c357",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
