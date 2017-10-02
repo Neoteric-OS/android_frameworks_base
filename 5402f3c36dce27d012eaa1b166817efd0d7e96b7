@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45e9156b_c441ab20",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1431,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2017-10-02T18:51:24Z",
+      "side": 1,
+      "message": "can we instead add this to performDismissAllAnimations?\ni.e if the list is empty, just run the finish action.",
+      "revId": "5402f3c36dce27d012eaa1b166817efd0d7e96b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
