@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25bcc435_e560bb90",
+        "filename": "core/java/com/android/internal/util/AsyncChannel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-10-02T21:45:22Z",
+      "side": 1,
+      "message": "Since it is now a local, this should be named just srcContext.",
+      "range": {
+        "startLine": 451,
+        "startChar": 16,
+        "endLine": 451,
+        "endChar": 27
+      },
+      "revId": "cca7b826ad155b8a07f058aad9287ff7293404a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "529e7002_ceb8c5f8",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2017-10-02T21:45:22Z",
+      "side": 1,
+      "message": "I think there need to be checks for null after each of these calls.",
+      "range": {
+        "startLine": 1241,
+        "startChar": 30,
+        "endLine": 1241,
+        "endChar": 52
+      },
+      "revId": "cca7b826ad155b8a07f058aad9287ff7293404a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
