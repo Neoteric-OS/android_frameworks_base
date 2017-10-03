@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f2fa4363_cbf46aba",
+        "filename": "data/keyboards/Vendor_054c_Product_05c4.kl",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2017-10-03T12:46:08Z",
+      "side": 1,
+      "message": "We do not accept manufacturer or vendor specific buttons, sorry.\n\nBUTTON_MODE is the correct mapping here.",
+      "parentUuid": "1a9ce90b_d3eeb00d",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 23
+      },
+      "revId": "a4ff9b4c0f969d02f6bef5ff581f1f4c8a9f570e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d010d071_b28c782e",
         "filename": "data/keyboards/Vendor_054c_Product_05c4.kl",
         "patchSetId": 3
@@ -78,6 +102,23 @@
       "side": 1,
       "message": "The touch button is now only visible through the touch subdevice, as BUTTON_PRIMARY. Please see kernel 4.12.",
       "parentUuid": "d010d071_b28c782e",
+      "revId": "a4ff9b4c0f969d02f6bef5ff581f1f4c8a9f570e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3953f6e_c0aba3aa",
+        "filename": "data/keyboards/Vendor_054c_Product_05c4_Version_8000.kl",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2017-10-03T12:46:08Z",
+      "side": 1,
+      "message": "What the physical controls mapped to by RX and RY? (e.g. analog stick, rear triggers, etc).\n\nI suspect they should be mapped to LTRIGGER / RTRIGGER :)\n\nDitto for all the other controllers that have RX/RY mappings.",
       "revId": "a4ff9b4c0f969d02f6bef5ff581f1f4c8a9f570e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
