@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e51e88b_277b61a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 33
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-03T04:41:23Z",
+      "side": 1,
+      "message": "Just checking: what happens on a kernel that does not support it ? The java layer will just sent back the error from the syscal to the app caller ?\n\nAs an app or a user, how do I know or discover which algorithms I can use ?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 29
+      },
+      "revId": "d1f3b9abe861eae68ae6170699facc77370f51a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb930b4b_81acf6bb",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-03T04:41:23Z",
+      "side": 1,
+      "message": "If not all algorithms will be required per say through cts or some other mechanism, it might be helpful for users to have documentation about that and about how to discover which algorithms can be used on any random device.",
+      "range": {
+        "startLine": 32,
+        "startChar": 19,
+        "endLine": 32,
+        "endChar": 33
+      },
+      "revId": "d1f3b9abe861eae68ae6170699facc77370f51a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
