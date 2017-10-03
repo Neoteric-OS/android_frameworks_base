@@ -122,6 +122,24 @@
       "revId": "a4ff9b4c0f969d02f6bef5ff581f1f4c8a9f570e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "011f0853_b904ff17",
+        "filename": "data/keyboards/Vendor_054c_Product_05c4_Version_8000.kl",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1152828
+      },
+      "writtenOn": "2017-10-03T16:44:28Z",
+      "side": 1,
+      "message": "RX/RY is mapped to the right analog stick, as per Linux gamepad.txt specs.\n\nZ/RZ is mapped to the rear triggers.\n\nPlease note that because the same mapping files are also used for the motion sensors subdevice, which maps Z axis to accelerometer Z axis and RZ axis to gyroscope Z axis, hence preventing those axes to be mapped to LTRIGGER/RTRIGGER. As a result, Z/RZ axes (instead of LTRIGGER/RTRIGGER) are used to represent the L2/R2 triggers. Going forward, there needs to be a solution to specify independent mapping files for subdevices. Please advise what\u0027s the right approach to tackle this.",
+      "parentUuid": "d3953f6e_c0aba3aa",
+      "revId": "a4ff9b4c0f969d02f6bef5ff581f1f4c8a9f570e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
