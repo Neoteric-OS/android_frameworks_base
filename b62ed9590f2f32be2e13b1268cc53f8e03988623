@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9ee81c9_e4b4fbb5",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2017-10-03T00:03:43Z",
+      "side": 1,
+      "message": "no_framework_libs: true after https://android-review.googlesource.com/c/platform/build/soong/+/499070/1 goes in",
+      "revId": "b62ed9590f2f32be2e13b1268cc53f8e03988623",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae4247e8_41356ce9",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2017-10-03T00:03:43Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 0
+      },
+      "revId": "b62ed9590f2f32be2e13b1268cc53f8e03988623",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
