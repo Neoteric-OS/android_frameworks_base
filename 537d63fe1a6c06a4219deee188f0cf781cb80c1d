@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "381d36e6_87822841",
+        "filename": "Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2017-10-03T22:38:24Z",
+      "side": 0,
+      "message": "this part is missing in bp. Is build okay without this? (perhaps --core-library is enough?)",
+      "range": {
+        "startLine": 632,
+        "startChar": 0,
+        "endLine": 632,
+        "endChar": 43
+      },
+      "revId": "537d63fe1a6c06a4219deee188f0cf781cb80c1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
