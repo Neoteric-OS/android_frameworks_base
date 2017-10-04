@@ -22,6 +22,30 @@
       "revId": "537d63fe1a6c06a4219deee188f0cf781cb80c1d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88fab806_fc30f8e6",
+        "filename": "Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2017-10-04T03:40:03Z",
+      "side": 0,
+      "message": "see Colin\u0027s earlier comments. no_framework_libs removes frameworks.jar without removing these",
+      "parentUuid": "381d36e6_87822841",
+      "range": {
+        "startLine": 632,
+        "startChar": 0,
+        "endLine": 632,
+        "endChar": 43
+      },
+      "revId": "537d63fe1a6c06a4219deee188f0cf781cb80c1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
