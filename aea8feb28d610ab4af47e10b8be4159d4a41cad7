@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "9c21a2b5_55300495",
+        "filename": "telephony/java/android/telephony/CellIdentityLte.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-10-05T21:32:05Z",
+      "side": 1,
+      "message": "There\u0027s no technical reason to deprecate MCC. It\u0027s still perfectly valid.",
+      "range": {
+        "startLine": 149,
+        "startChar": 5,
+        "endLine": 149,
+        "endChar": 15
+      },
+      "revId": "aea8feb28d610ab4af47e10b8be4159d4a41cad7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02fa1b07_268e2efd",
+        "filename": "telephony/java/android/telephony/CellIdentityLte.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-10-05T21:32:05Z",
+      "side": 1,
+      "message": "This is not the SIM operator.",
+      "range": {
+        "startLine": 208,
+        "startChar": 18,
+        "endLine": 208,
+        "endChar": 39
+      },
+      "revId": "aea8feb28d610ab4af47e10b8be4159d4a41cad7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54befeb2_3f99f77f",
         "filename": "telephony/java/android/telephony/CellIdentityWcdma.java",
         "patchSetId": 5
