@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "533b5d52_e4a726ed",
+        "filename": "telephony/java/android/telephony/CellIdentityLte.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1148298
+      },
+      "writtenOn": "2017-10-05T21:36:44Z",
+      "side": 1,
+      "message": "It is perfectly valid, but we still recommend new users to use the public String getMcc(), so I think it is fine to deprecate the integer version for both MCC and MNC. Sometimes more choices (although they are all valid) actually make the users more confused.",
+      "parentUuid": "9c21a2b5_55300495",
+      "range": {
+        "startLine": 149,
+        "startChar": 5,
+        "endLine": 149,
+        "endChar": 15
+      },
+      "revId": "aea8feb28d610ab4af47e10b8be4159d4a41cad7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02fa1b07_268e2efd",
         "filename": "telephony/java/android/telephony/CellIdentityLte.java",
         "patchSetId": 5
