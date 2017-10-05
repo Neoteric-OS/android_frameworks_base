@@ -92,6 +92,30 @@
       "revId": "aea8feb28d610ab4af47e10b8be4159d4a41cad7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05bcd3eb_40e46bf7",
+        "filename": "telephony/java/android/telephony/CellIdentityWcdma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-05T22:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54befeb2_3f99f77f",
+      "range": {
+        "startLine": 138,
+        "startChar": 7,
+        "endLine": 138,
+        "endChar": 18
+      },
+      "revId": "aea8feb28d610ab4af47e10b8be4159d4a41cad7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
