@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4389ac76_ca9bf05c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 33
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-05T01:21:05Z",
+      "side": 1,
+      "message": "Per http://elixir.free-electrons.com/linux/v3.0.101/source/net/xfrm/xfrm_algo.c, AES-GCM has been a supported algorithm for IPSec since at least kernel 3.0; \n\nThe full list of algorithms that are supported by the android IPSec implementation is in the IPSecAlgorithm.java file. I do not believe we currently have documentation page ready yet.",
+      "parentUuid": "7e51e88b_277b61a9",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 29
+      },
+      "revId": "d1f3b9abe861eae68ae6170699facc77370f51a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb930b4b_81acf6bb",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 33
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-03T04:41:23Z",
       "side": 1,
       "message": "If not all algorithms will be required per say through cts or some other mechanism, it might be helpful for users to have documentation about that and about how to discover which algorithms can be used on any random device.",
+      "range": {
+        "startLine": 32,
+        "startChar": 19,
+        "endLine": 32,
+        "endChar": 33
+      },
+      "revId": "d1f3b9abe861eae68ae6170699facc77370f51a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "121462a5_54de35bf",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-05T01:21:05Z",
+      "side": 1,
+      "message": "It appears that all of the below algorithms are supported back to kernel 3.0 at the least. I\u0027ve created a bug b/67432160 to track this",
+      "parentUuid": "eb930b4b_81acf6bb",
       "range": {
         "startLine": 32,
         "startChar": 19,
