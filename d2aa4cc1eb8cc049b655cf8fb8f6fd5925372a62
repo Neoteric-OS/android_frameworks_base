@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "3f331a08_8e353f39",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-10-06T17:16:55Z",
+      "side": 1,
+      "message": "getOperatorNameLong and getOperatorNameShort sound reasonable.  The comments can always clarify if need be.",
+      "parentUuid": "d2cfa933_808c2780",
+      "range": {
+        "startLine": 167,
+        "startChar": 18,
+        "endLine": 167,
+        "endChar": 30
+      },
+      "revId": "d2aa4cc1eb8cc049b655cf8fb8f6fd5925372a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b74d510_b21ccf54",
         "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
         "patchSetId": 7
