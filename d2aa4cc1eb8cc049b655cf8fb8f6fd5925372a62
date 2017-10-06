@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1613acec_3495ec22",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-10-06T14:41:55Z",
+      "side": 1,
+      "message": "Can we expand these out instead of abbreviating?\nOperator Name String\nEnhanced Operator Name String",
+      "range": {
+        "startLine": 165,
+        "startChar": 26,
+        "endLine": 165,
+        "endChar": 29
+      },
+      "revId": "d2aa4cc1eb8cc049b655cf8fb8f6fd5925372a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a39f5f68_8e12df01",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-10-06T14:41:55Z",
+      "side": 1,
+      "message": "Use CharSequence since this is a string which can be displayed to the user.",
+      "range": {
+        "startLine": 167,
+        "startChar": 11,
+        "endLine": 167,
+        "endChar": 17
+      },
+      "revId": "d2aa4cc1eb8cc049b655cf8fb8f6fd5925372a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "818f1f75_34156e9b",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-10-06T14:41:55Z",
+      "side": 1,
+      "message": "Suggest the following to be consistent with how we refer to this in SubscriptionInfo.\ngetCarrierNameLong\n\nIf this really is a completely different thing, I\u0027d suggest\ngetOperatorNameLong",
+      "range": {
+        "startLine": 167,
+        "startChar": 18,
+        "endLine": 167,
+        "endChar": 30
+      },
+      "revId": "d2aa4cc1eb8cc049b655cf8fb8f6fd5925372a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b74d510_b21ccf54",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-10-06T14:41:55Z",
+      "side": 1,
+      "message": "Expand the abbreviations.\nReturn CharSequence\nSuggest the following to be consistent with how we refer to this in SubscriptionInfo.\ngetCarrierNameShort\n\nIf this really is a completely different thing, I\u0027d suggest\ngetOperatorNameShort",
+      "range": {
+        "startLine": 169,
+        "startChar": 4,
+        "endLine": 172,
+        "endChar": 57
+      },
+      "revId": "d2aa4cc1eb8cc049b655cf8fb8f6fd5925372a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
