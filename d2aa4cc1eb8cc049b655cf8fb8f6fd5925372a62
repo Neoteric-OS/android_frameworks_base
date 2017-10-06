@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "fca920b7_efc33252",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-10-06T18:00:45Z",
+      "side": 1,
+      "message": "Discussed this with Nathan; the comment would make more sense if it is something like:\n\nThe long alpha tag associated with the current scan result (may be the operator name string or extended operator name string).  May be null if unknown.",
+      "range": {
+        "startLine": 165,
+        "startChar": 15,
+        "endLine": 165,
+        "endChar": 62
+      },
+      "revId": "d2aa4cc1eb8cc049b655cf8fb8f6fd5925372a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a39f5f68_8e12df01",
         "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
         "patchSetId": 7
@@ -167,6 +190,52 @@
     },
     {
       "key": {
+        "uuid": "c984c50b_c153c699",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-10-06T18:00:45Z",
+      "side": 1,
+      "message": "To be consistent with ServiceState:\ngetOperatorAlphaLong",
+      "range": {
+        "startLine": 167,
+        "startChar": 18,
+        "endLine": 167,
+        "endChar": 30
+      },
+      "revId": "d2aa4cc1eb8cc049b655cf8fb8f6fd5925372a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "097f386f_daa18ed0",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-10-06T18:00:45Z",
+      "side": 1,
+      "message": "The short alpha tag associated with the current scan result (may be the operator name string or extended operator name string).  May be null string if unknown.",
+      "range": {
+        "startLine": 170,
+        "startChar": 15,
+        "endLine": 170,
+        "endChar": 63
+      },
+      "revId": "d2aa4cc1eb8cc049b655cf8fb8f6fd5925372a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b74d510_b21ccf54",
         "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
         "patchSetId": 7
@@ -207,6 +276,29 @@
         "startChar": 4,
         "endLine": 172,
         "endChar": 57
+      },
+      "revId": "d2aa4cc1eb8cc049b655cf8fb8f6fd5925372a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c791a85_ecd11adc",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-10-06T18:00:45Z",
+      "side": 1,
+      "message": "getOperatorAlphaShort",
+      "range": {
+        "startLine": 172,
+        "startChar": 18,
+        "endLine": 172,
+        "endChar": 31
       },
       "revId": "d2aa4cc1eb8cc049b655cf8fb8f6fd5925372a62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
