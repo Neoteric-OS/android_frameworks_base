@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "574203e6_ff5cc16b",
+        "filename": "core/java/com/android/internal/util/AsyncChannel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1045138
+      },
+      "writtenOn": "2017-10-09T01:32:01Z",
+      "side": 1,
+      "message": "Yeah, I will change it.",
+      "parentUuid": "25bcc435_e560bb90",
+      "range": {
+        "startLine": 451,
+        "startChar": 16,
+        "endLine": 451,
+        "endChar": 27
+      },
+      "revId": "cca7b826ad155b8a07f058aad9287ff7293404a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "529e7002_ceb8c5f8",
         "filename": "wifi/java/android/net/wifi/WifiManager.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-02T21:45:22Z",
       "side": 1,
       "message": "I think there need to be checks for null after each of these calls.",
+      "range": {
+        "startLine": 1241,
+        "startChar": 30,
+        "endLine": 1241,
+        "endChar": 52
+      },
+      "revId": "cca7b826ad155b8a07f058aad9287ff7293404a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "444406c0_feee71ed",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1045138
+      },
+      "writtenOn": "2017-10-09T01:32:01Z",
+      "side": 1,
+      "message": "I understand what you mean, but I think if I not change mContext to mContextWeakRef, the original mContext was not check null when use it. Will it be null?",
+      "parentUuid": "529e7002_ceb8c5f8",
       "range": {
         "startLine": 1241,
         "startChar": 30,
