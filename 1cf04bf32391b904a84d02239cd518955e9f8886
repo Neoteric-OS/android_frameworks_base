@@ -22,6 +22,30 @@
       "revId": "1cf04bf32391b904a84d02239cd518955e9f8886",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90c68c0c_1380f8e2",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 7
+      },
+      "lineNbr": 1336,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-10-09T22:03:18Z",
+      "side": 1,
+      "message": "Also include necessary permissions (read_phone_state), and that calls to these apis are blocking",
+      "parentUuid": "dc2bdd2e_033adff6",
+      "range": {
+        "startLine": 1336,
+        "startChar": 7,
+        "endLine": 1336,
+        "endChar": 69
+      },
+      "revId": "1cf04bf32391b904a84d02239cd518955e9f8886",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
