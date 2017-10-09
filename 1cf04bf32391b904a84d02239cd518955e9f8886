@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc2bdd2e_033adff6",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 7
+      },
+      "lineNbr": 1336,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-10-09T21:51:28Z",
+      "side": 1,
+      "message": "Can you add @param, @return documentation to both of these apis. Also please add some background on what Answer To Reset means so that people reading the docs don\u0027t need to search up the spec separately.",
+      "range": {
+        "startLine": 1336,
+        "startChar": 7,
+        "endLine": 1336,
+        "endChar": 69
+      },
+      "revId": "1cf04bf32391b904a84d02239cd518955e9f8886",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
