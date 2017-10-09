@@ -1904,12 +1904,36 @@ public class PhoneNumberUtils
         String emergencyNumbers = "";
         int slotId = SubscriptionManager.getSlotIndex(subId);
 
-        // retrieve the list of emergency numbers
-        // check read-write ecclist property first
-        String ecclist = (slotId <= 0) ? "ril.ecclist" : ("ril.ecclist" + slotId);
+        boolean checkCombinedEccList= false;
+        TelephonyManager tm = TelephonyManager.getDefault();
+        int phoneCnt = tm.getPhoneCount();
+        for (int phoneId = 0; phoneId < phoneCnt; phoneId++) {
+            if (tm.getSimState(phoneId) != TelephonyManager.SIM_STATE_READY) {
+                Rlog.d(LOG_TAG, "modem is in single standby mode" );
+                // Check on both subscriptions to allow emergency dial on active subscription
+                // even though the number is emergency only on subscription which is not
+                // active i.e. not received SIM_STATE_READY.
+                checkCombinedEccList = true;
+                break;
+            }
+        }
 
-        emergencyNumbers = SystemProperties.get(ecclist, "");
+        if (checkCombinedEccList) {
+            for (int phoneId = 0; phoneId < phoneCnt; phoneId++) {
+                String ecclist = (slotId <= 0) ? "ril.ecclist" : ("ril.ecclist" + slotId);
 
+                if (!TextUtils.isEmpty(emergencyNumbers)) {
+                    emergencyNumbers = emergencyNumbers + ",";
+                }
+                emergencyNumbers = emergencyNumbers + SystemProperties.get(ecclist);
+            }
+        } else {
+            // retrieve the list of emergency numbers
+            // check read-write ecclist property first
+            String ecclist = (slotId <= 0) ? "ril.ecclist" : ("ril.ecclist" + slotId);
+
+            emergencyNumbers = SystemProperties.get(ecclist, "");
+        }
         Rlog.d(LOG_TAG, "slotId:" + slotId + " subId:" + subId + " country:"
                 + defaultCountryIso + " emergencyNumbers: " +  emergencyNumbers);
 
