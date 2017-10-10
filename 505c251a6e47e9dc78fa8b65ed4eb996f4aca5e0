@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e4ee2bf_f193c804",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-10-10T17:47:53Z",
+      "side": 1,
+      "message": "I\u0027m curious, since these are specified in the int values, why do we need a string equivalent?",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 33
+      },
+      "revId": "505c251a6e47e9dc78fa8b65ed4eb996f4aca5e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3935dfc0_c9087231",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-10-10T17:47:53Z",
+      "side": 1,
+      "message": "The reason I asked about the empty string is that typically null is used as a default value rather than empty string.  Other classes (e.g. ServiceState) in this namespace use null to present unknown / not specified (see ServiceState.java), so being consistent would be good.",
+      "range": {
+        "startLine": 64,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 25
+      },
+      "revId": "505c251a6e47e9dc78fa8b65ed4eb996f4aca5e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0385ebe5_858634ef",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-10-10T17:47:53Z",
+      "side": 1,
+      "message": "Suggest:\ngetMobileNetworkOperator\n\nDocs can refer to this being mnc/mcc",
+      "range": {
+        "startLine": 186,
+        "startChar": 18,
+        "endLine": 186,
+        "endChar": 43
+      },
+      "revId": "505c251a6e47e9dc78fa8b65ed4eb996f4aca5e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1118824a_197390c2",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2017-10-10T17:47:53Z",
+      "side": 1,
+      "message": "Would we ever use these alone?  Or would it only be the getNetworkOperatorNumeric() which is used?",
+      "range": {
+        "startLine": 190,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 5
+      },
+      "revId": "505c251a6e47e9dc78fa8b65ed4eb996f4aca5e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
