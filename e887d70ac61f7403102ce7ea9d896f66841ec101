@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d19bbe1f_4d8d05f1",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-10-10T23:05:27Z",
+      "side": 1,
+      "message": "Isn\u0027t this testing the same code as your additions to IpSecTransformTest.java? i.e. error checking in IpSecConfig. These tests should assert IpSecService in the event that an invalid config is sent over binder. (It\u0027s just that IpSecConfig error checking makes that inconvenient to test...)",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 5
+      },
+      "revId": "e887d70ac61f7403102ce7ea9d896f66841ec101",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
