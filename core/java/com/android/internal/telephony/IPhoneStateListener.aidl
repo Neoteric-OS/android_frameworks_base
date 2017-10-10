@@ -76,4 +76,5 @@ oneway interface IPhoneStateListener {
     void onDataEnabledChanged(boolean enabled, int reason);
     void onAllowedNetworkTypesChanged(in int reason, in long allowedNetworkType);
     void onLinkCapacityEstimateChanged(in List<LinkCapacityEstimate> linkCapacityEstimateList);
+    void onVideoCallForwardingIndicatorChanged(boolean cfi);
 }

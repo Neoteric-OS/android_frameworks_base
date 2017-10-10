@@ -57,6 +57,7 @@ interface ITelephonyRegistry {
     @UnsupportedAppUsage(maxTargetSdk = 28)
     void notifyCallForwardingChanged(boolean cfi);
     void notifyCallForwardingChangedForSubscriber(in int subId, boolean cfi);
+    void notifyVideoCallForwardingChangedForSubscriber(in int subId, boolean cfi);
     @UnsupportedAppUsage(maxTargetSdk = 28)
     void notifyDataActivity(int state);
     void notifyDataActivityForSubscriber(in int subId, int state);

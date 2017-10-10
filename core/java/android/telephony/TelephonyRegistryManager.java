@@ -935,6 +935,21 @@ public class TelephonyRegistryManager {
         }
     }
 
+    /**
+     * Notify changes to the call-forwarding status on certain subscription.
+     *
+     * @param subId for which video call forwarding status changed.
+     * @param videoCallForwardInd {@code true} indicates there is video call forwarding,
+     * {@code false} otherwise.
+     */
+    public void notifyVideoCallForwardingChanged(int subId, boolean videoCallForwardInd) {
+        try {
+            sRegistry.notifyVideoCallForwardingChangedForSubscriber(subId, videoCallForwardInd);
+        } catch (RemoteException ex) {
+            // system process is dead
+        }
+    }
+
     public @NonNull Set<Integer> getEventsFromCallback(
             @NonNull TelephonyCallback telephonyCallback) {
         Set<Integer> eventList = new ArraySet<>();
@@ -1068,6 +1083,9 @@ public class TelephonyRegistryManager {
             eventList.add(TelephonyCallback.EVENT_LINK_CAPACITY_ESTIMATE_CHANGED);
         }
 
+        if (telephonyCallback instanceof TelephonyCallback.VideoCallForwardingIndicatorListener) {
+            eventList.add(TelephonyCallback.EVENT_VIDEO_CALL_FORWARDING_INDICATOR_CHANGED);
+        }
         return eventList;
     }
 
@@ -1200,6 +1218,7 @@ public class TelephonyRegistryManager {
         if ((eventMask & PhoneStateListener.LISTEN_BARRING_INFO) != 0) {
             eventList.add(TelephonyCallback.EVENT_BARRING_INFO_CHANGED);
         }
+
         return eventList;
 
     }

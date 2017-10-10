@@ -581,6 +581,19 @@ public class TelephonyCallback {
     @RequiresPermission(Manifest.permission.READ_PRECISE_PHONE_STATE)
     public static final int EVENT_LINK_CAPACITY_ESTIMATE_CHANGED = 37;
 
+    /**
+     * Event for changes to the video call-forwarding indicator.
+     * <p>
+     * Requires Permission: {@link android.Manifest.permission#READ_PHONE_STATE}
+     *
+     * @see VideoCallForwardingIndicatorListener#onVideoCallForwardingIndicatorChanged
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    public static final int EVENT_VIDEO_CALL_FORWARDING_INDICATOR_CHANGED = 38;
+
 
     /**
      * @hide
@@ -622,7 +635,8 @@ public class TelephonyCallback {
             EVENT_DATA_ENABLED_CHANGED,
             EVENT_ALLOWED_NETWORK_TYPE_LIST_CHANGED,
             EVENT_LEGACY_CALL_STATE_CHANGED,
-            EVENT_LINK_CAPACITY_ESTIMATE_CHANGED
+            EVENT_LINK_CAPACITY_ESTIMATE_CHANGED,
+            EVENT_VIDEO_CALL_FORWARDING_INDICATOR_CHANGED
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface TelephonyEvent {
@@ -1435,6 +1449,25 @@ public class TelephonyCallback {
     }
 
     /**
+     * Interface for video call-forwarding indicator listener.
+     */
+    public interface VideoCallForwardingIndicatorListener {
+        /**
+         * Callback invoked when the video call-forwarding indicator changes on the registered
+         * subscription.
+         * Note, the registration subscription ID comes from {@link TelephonyManager} object
+         * which registers TelephonyCallback by
+         * {@link TelephonyManager#registerTelephonyCallback(Executor, TelephonyCallback)}.
+         * If this TelephonyManager object was created with
+         * {@link TelephonyManager#createForSubscriptionId(int)}, then the callback applies to the
+         * subscription ID. Otherwise, this callback applies to
+         * {@link SubscriptionManager#getDefaultSubscriptionId()}.
+         */
+        @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+        void onVideoCallForwardingIndicatorChanged(boolean cfi);
+    }
+
+    /**
      * The callback methods need to be called on the handler thread where
      * this object was created.  If the binder did that for us it'd be nice.
      * <p>
@@ -1482,6 +1515,16 @@ public class TelephonyCallback {
 
             Binder.withCleanCallingIdentity(
                     () -> mExecutor.execute(() -> listener.onCallForwardingIndicatorChanged(cfi)));
+        }
+
+        public void onVideoCallForwardingIndicatorChanged(boolean cfi) {
+            VideoCallForwardingIndicatorListener listener =
+                    (VideoCallForwardingIndicatorListener) mTelephonyCallbackWeakRef.get();
+            if (listener == null) return;
+
+            Binder.withCleanCallingIdentity(
+                    () -> mExecutor.execute(() ->
+                            listener.onVideoCallForwardingIndicatorChanged(cfi)));
         }
 
         public void onCellLocationChanged(CellIdentity cellIdentity) {

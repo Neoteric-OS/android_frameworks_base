@@ -1628,6 +1628,10 @@ public class PhoneStateListener {
                 List<LinkCapacityEstimate> linkCapacityEstimateList) {
             // default implementation empty
         }
+
+        public void onVideoCallForwardingIndicatorChanged(boolean cfi) {
+            // default implementation empty
+        }
     }
 
     private void log(String s) {
