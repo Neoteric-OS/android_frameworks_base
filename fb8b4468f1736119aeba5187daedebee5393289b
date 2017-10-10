@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a1384d2d_6e88ce10",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-10T19:20:27Z",
+      "side": 1,
+      "message": "AFAIK, the kernel will throw an EINVAL on an invalid key length; I can file a bug to track this, and investigate further.\n\nb/67638246",
+      "parentUuid": "bdab9319_360110c7",
+      "range": {
+        "startLine": 119,
+        "startChar": 18,
+        "endLine": 119,
+        "endChar": 62
+      },
+      "revId": "fb8b4468f1736119aeba5187daedebee5393289b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79af33ee_38ee3b32",
         "filename": "core/java/android/net/IpSecConfig.java",
         "patchSetId": 35
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-10T03:43:04Z",
       "side": 1,
       "message": "EEXIST. Can this be factored out to a single function that checks that mAuthentication, mEncryption and mAuthenticatedEncryption are compatible with each other?\n\n(If you delete the checks in this file as per the comment in IpSecTransform, apply this comment to that file instead.)",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 9
+      },
+      "revId": "fb8b4468f1736119aeba5187daedebee5393289b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aab7b2a3_4265bd11",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-10T19:20:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79af33ee_38ee3b32",
       "range": {
         "startLine": 128,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "96fe8598_a9e4a0f7",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-10T19:20:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b59d0e41_a1300b7f",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 285,
+        "endChar": 45
+      },
+      "revId": "fb8b4468f1736119aeba5187daedebee5393289b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b9d6518_d6eed56d",
         "filename": "core/java/android/net/IpSecTransform.java",
         "patchSetId": 35
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-10T03:43:04Z",
       "side": 1,
       "message": "Looks like these checks duplicate the ones in IpSecConfig. Can we remove either these or those? Since IpSecConfig is not public, we probably don\u0027t need the check there.",
+      "range": {
+        "startLine": 292,
+        "startChar": 0,
+        "endLine": 296,
+        "endChar": 13
+      },
+      "revId": "fb8b4468f1736119aeba5187daedebee5393289b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bbda02b7_84488472",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-10T19:20:27Z",
+      "side": 1,
+      "message": "Done; I\u0027ve removed it from here, since it\u0027s backed by IpSecConfig anyways.",
+      "parentUuid": "7b9d6518_d6eed56d",
       "range": {
         "startLine": 292,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "802db0c9_3a070286",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-10T19:20:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bf402ba_3c94a2b2",
+      "range": {
+        "startLine": 888,
+        "startChar": 25,
+        "endLine": 889,
+        "endChar": 62
+      },
+      "revId": "fb8b4468f1736119aeba5187daedebee5393289b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eedd30d2_19eeec12",
         "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
         "patchSetId": 35
@@ -128,6 +248,30 @@
       "writtenOn": "2017-10-10T03:43:04Z",
       "side": 1,
       "message": "expected",
+      "range": {
+        "startLine": 298,
+        "startChar": 42,
+        "endLine": 298,
+        "endChar": 43
+      },
+      "revId": "fb8b4468f1736119aeba5187daedebee5393289b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a947ad1e_79a1049c",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-10T19:20:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eedd30d2_19eeec12",
       "range": {
         "startLine": 298,
         "startChar": 42,
@@ -157,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "64cb609d_48b209cc",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-10T19:20:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3194478d_1e386738",
+      "revId": "fb8b4468f1736119aeba5187daedebee5393289b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4432d3e_253c1e11",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 35
@@ -168,6 +330,30 @@
       "writtenOn": "2017-10-10T03:43:04Z",
       "side": 1,
       "message": "Trailing whitespace.",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 223,
+        "endChar": 4
+      },
+      "revId": "fb8b4468f1736119aeba5187daedebee5393289b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef27d7be_4cff22b6",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-10T19:20:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4432d3e_253c1e11",
       "range": {
         "startLine": 223,
         "startChar": 0,
