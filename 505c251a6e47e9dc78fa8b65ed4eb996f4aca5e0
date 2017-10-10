@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "576c05f2_189f34a3",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-10T18:40:45Z",
+      "side": 1,
+      "message": "With only int values, it is hard to deal with cases like \"MNC\u003d90\" and \"MNC\u003d090\", which would be identified as the same MNC in int values.",
+      "parentUuid": "0e4ee2bf_f193c804",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 33
+      },
+      "revId": "505c251a6e47e9dc78fa8b65ed4eb996f4aca5e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3935dfc0_c9087231",
         "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-10T17:47:53Z",
       "side": 1,
       "message": "The reason I asked about the empty string is that typically null is used as a default value rather than empty string.  Other classes (e.g. ServiceState) in this namespace use null to present unknown / not specified (see ServiceState.java), so being consistent would be good.",
+      "range": {
+        "startLine": 64,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 25
+      },
+      "revId": "505c251a6e47e9dc78fa8b65ed4eb996f4aca5e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae4601d5_3d6f6132",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-10T18:40:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3935dfc0_c9087231",
       "range": {
         "startLine": 64,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "963d5dd4_1d1028c5",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-10T18:40:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0385ebe5_858634ef",
+      "range": {
+        "startLine": 186,
+        "startChar": 18,
+        "endLine": 186,
+        "endChar": 43
+      },
+      "revId": "505c251a6e47e9dc78fa8b65ed4eb996f4aca5e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1118824a_197390c2",
         "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
         "patchSetId": 12
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-10T17:47:53Z",
       "side": 1,
       "message": "Would we ever use these alone?  Or would it only be the getNetworkOperatorNumeric() which is used?",
+      "range": {
+        "startLine": 190,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 5
+      },
+      "revId": "505c251a6e47e9dc78fa8b65ed4eb996f4aca5e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8bdf153_135d4e03",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-10T18:40:45Z",
+      "side": 1,
+      "message": "They\u0027re not used frequently for true, but we did see some records of using them alone in the codebase. So we think it\u0027s better to add both of them in case we need them in the future and also to keep consistent with the int values variables. But if you think there\u0027s no need to have them, I could also remove them.",
+      "parentUuid": "1118824a_197390c2",
       "range": {
         "startLine": 190,
         "startChar": 2,
