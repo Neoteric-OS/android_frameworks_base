@@ -111,6 +111,15 @@ public class CarrierConfigManager {
             "disable_supplementary_services_in_airplane_mode_bool";
 
     /**
+     * Boolean indicating support call forwarding menu per service class.
+     * {@code true}: call forwarding menu support service class.
+     * {@code false}: call forwarding menu does not support service class.
+     * The default value for this key is {@code false}
+     */
+    public static final String  KEY_CARRIER_SUPPORTS_CALLFORWARD_PER_SERVICE_CLASS_BOOL =
+            "carrier_support_cf_per_service_class_bool";
+
+    /**
      * Boolean indicating if the "Call forwarding" item is visible in the Call Settings menu.
      * true means visible. false means gone.
      * @hide
@@ -3434,6 +3443,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_CALL_BARRING_VISIBILITY_BOOL, false);
         sDefaults.putBoolean(KEY_CALL_BARRING_SUPPORTS_PASSWORD_CHANGE_BOOL, true);
         sDefaults.putBoolean(KEY_CALL_BARRING_SUPPORTS_DEACTIVATE_ALL_BOOL, true);
+        sDefaults.putBoolean(KEY_CARRIER_SUPPORTS_CALLFORWARD_PER_SERVICE_CLASS_BOOL, false);
         sDefaults.putBoolean(KEY_CALL_FORWARDING_VISIBILITY_BOOL, true);
         sDefaults.putBoolean(KEY_CALL_FORWARDING_WHEN_UNREACHABLE_SUPPORTED_BOOL, true);
         sDefaults.putBoolean(KEY_ADDITIONAL_SETTINGS_CALLER_ID_VISIBILITY_BOOL, true);
