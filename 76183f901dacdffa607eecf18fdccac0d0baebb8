@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30c4f470_da084295",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3003,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-10-10T21:24:57Z",
+      "side": 1,
+      "message": "use a descriptive name like supportedByDefault so that true/false assignment makes more sense.",
+      "range": {
+        "startLine": 3003,
+        "startChar": 12,
+        "endLine": 3003,
+        "endChar": 22
+      },
+      "revId": "76183f901dacdffa607eecf18fdccac0d0baebb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "148f06e9_85817df1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3003,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-10-10T21:24:57Z",
+      "side": 1,
+      "message": "leave this assignment how it was",
+      "range": {
+        "startLine": 3003,
+        "startChar": 25,
+        "endLine": 3003,
+        "endChar": 27
+      },
+      "revId": "76183f901dacdffa607eecf18fdccac0d0baebb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8baf6332_3c6dc326",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3012,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-10-10T21:24:57Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 3010,
+        "startChar": 8,
+        "endLine": 3012,
+        "endChar": 9
+      },
+      "revId": "76183f901dacdffa607eecf18fdccac0d0baebb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

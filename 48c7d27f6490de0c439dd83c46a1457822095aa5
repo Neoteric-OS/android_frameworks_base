@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e904923e_54d4ed37",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3001,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-10-10T21:24:57Z",
+      "side": 0,
+      "message": "get rid of ! and just compare with .equals(\"false\")",
+      "range": {
+        "startLine": 3001,
+        "startChar": 35,
+        "endLine": 3001,
+        "endChar": 94
+      },
+      "revId": "48c7d27f6490de0c439dd83c46a1457822095aa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
