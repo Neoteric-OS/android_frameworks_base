@@ -6448,6 +6448,7 @@ package android.telephony.ims.stub {
     method public int queryCallBarring(int);
     method public int queryCallBarringForServiceClass(int, int);
     method public int queryCallForward(int, java.lang.String);
+    method public int queryCallForwardingForServiceClass(int, java.lang.String, int);
     method public int queryCallWaiting();
     method public int queryClip();
     method public int queryClir();
