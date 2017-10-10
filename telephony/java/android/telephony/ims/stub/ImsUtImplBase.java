@@ -16,6 +16,7 @@
 
 package android.telephony.ims.stub;
 
+import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.os.Bundle;
@@ -51,6 +52,13 @@ public class ImsUtImplBase {
         @Override
         public int queryCallForward(int condition, String number) throws RemoteException {
             return ImsUtImplBase.this.queryCallForward(condition, number);
+        }
+
+        @Override
+        public int queryCallForwardingForServiceClass(int condition, String number,
+                int serviceClass) throws RemoteException {
+            return ImsUtImplBase.this
+            .queryCallForwardingForServiceClass(condition, number, serviceClass);
         }
 
         @Override
@@ -167,6 +175,14 @@ public class ImsUtImplBase {
      * Retrieves the configuration of the call forward.
      */
     public int queryCallForward(int condition, String number) {
+        return -1;
+    }
+
+    /**
+     * Retrieves the configuration of the call forward for specified service class.
+     */
+    public int queryCallForwardingForServiceClass(int condition, @Nullable String number,
+            int serviceClass) {
         return -1;
     }
 
