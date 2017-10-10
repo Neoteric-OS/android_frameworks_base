@@ -113,6 +113,41 @@ public class ImsUtImplBase {
             CALL_BARRING_INCOMING_ALL_SERVICES, CALL_BARRING_SPECIFIC_INCOMING_CALLS})
     public @interface CallBarringMode {}
 
+    // Call forwarding 'reason' values.
+    public static final int CF_REASON_UNCONDITIONAL    = 0;
+    public static final int CF_REASON_BUSY             = 1;
+    public static final int CF_REASON_NO_REPLY         = 2;
+    public static final int CF_REASON_NOT_REACHABLE    = 3;
+    public static final int CF_REASON_ALL              = 4;
+    public static final int CF_REASON_ALL_CONDITIONAL  = 5;
+
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(prefix = "CF_REASON_", value = {CF_REASON_UNCONDITIONAL, CF_REASON_BUSY,
+            CF_REASON_NO_REPLY, CF_REASON_NOT_REACHABLE, CF_REASON_ALL,
+            CF_REASON_ALL_CONDITIONAL})
+    public @interface CallForwardingCondition {}
+
+    // Used for various supp. services APIs.
+    // See 27.007 +CCFC or +CLCK
+    public static final int SERVICE_CLASS_NONE       = 0; // no user input
+    public static final int SERVICE_CLASS_VOICE      = (1 << 0);
+    public static final int SERVICE_CLASS_DATA       = (1 << 1); //synonym for 16+32+64+128
+    public static final int SERVICE_CLASS_FAX        = (1 << 2);
+    public static final int SERVICE_CLASS_SMS        = (1 << 3);
+    public static final int SERVICE_CLASS_DATA_SYNC  = (1 << 4);
+    public static final int SERVICE_CLASS_DATA_ASYNC = (1 << 5);
+    public static final int SERVICE_CLASS_PACKET     = (1 << 6);
+    public static final int SERVICE_CLASS_PAD        = (1 << 7);
+    public static final int SERVICE_CLASS_MAX        = (1 << 7); // Max SERVICE_CLASS value
+
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(prefix = "SERVICE_CLASS_", value = {SERVICE_CLASS_NONE, SERVICE_CLASS_VOICE,
+            SERVICE_CLASS_DATA, SERVICE_CLASS_FAX, SERVICE_CLASS_SMS, SERVICE_CLASS_DATA_SYNC,
+            SERVICE_CLASS_DATA_ASYNC, SERVICE_CLASS_PACKET, SERVICE_CLASS_PAD, SERVICE_CLASS_MAX})
+    public @interface ServiceClassType {}
+
     /**
      * Constant used to denote an invalid return value.
      * @hide
@@ -136,6 +171,13 @@ public class ImsUtImplBase {
         @Override
         public int queryCallForward(int condition, String number) throws RemoteException {
             return ImsUtImplBase.this.queryCallForward(condition, number);
+        }
+
+        @Override
+        public int queryCallForwardingForServiceClass(int condition, String number,
+                int serviceClass) throws RemoteException {
+            return ImsUtImplBase.this
+            .queryCallForwardingForServiceClass(condition, number, serviceClass);
         }
 
         @Override
@@ -282,6 +324,14 @@ public class ImsUtImplBase {
      * Retrieves the configuration of the call forward.
      */
     public int queryCallForward(int condition, String number) {
+        return -1;
+    }
+
+    /**
+     * Retrieves the configuration of the call forward for specified service class.
+     */
+    public int queryCallForwardingForServiceClass(int condition, @Nullable String number,
+            int serviceClass) {
         return -1;
     }
 

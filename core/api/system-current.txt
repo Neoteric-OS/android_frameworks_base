@@ -14154,6 +14154,7 @@ package android.telephony.ims.stub {
     method public int queryCallBarring(int);
     method public int queryCallBarringForServiceClass(int, int);
     method public int queryCallForward(int, String);
+    method public int queryCallForwardingForServiceClass(int, @Nullable String, int);
     method public int queryCallWaiting();
     method public int queryClip();
     method public int queryClir();
@@ -14169,6 +14170,22 @@ package android.telephony.ims.stub {
     method public int updateClir(int);
     method public int updateColp(boolean);
     method public int updateColr(int);
+    field public static final int CF_REASON_ALL = 4; // 0x4
+    field public static final int CF_REASON_ALL_CONDITIONAL = 5; // 0x5
+    field public static final int CF_REASON_BUSY = 1; // 0x1
+    field public static final int CF_REASON_NOT_REACHABLE = 3; // 0x3
+    field public static final int CF_REASON_NO_REPLY = 2; // 0x2
+    field public static final int CF_REASON_UNCONDITIONAL = 0; // 0x0
+    field public static final int SERVICE_CLASS_DATA = 2; // 0x2
+    field public static final int SERVICE_CLASS_DATA_ASYNC = 32; // 0x20
+    field public static final int SERVICE_CLASS_DATA_SYNC = 16; // 0x10
+    field public static final int SERVICE_CLASS_FAX = 4; // 0x4
+    field public static final int SERVICE_CLASS_MAX = 128; // 0x80
+    field public static final int SERVICE_CLASS_NONE = 0; // 0x0
+    field public static final int SERVICE_CLASS_PACKET = 64; // 0x40
+    field public static final int SERVICE_CLASS_PAD = 128; // 0x80
+    field public static final int SERVICE_CLASS_SMS = 8; // 0x8
+    field public static final int SERVICE_CLASS_VOICE = 1; // 0x1
   }
 
   public class RcsCapabilityExchangeImplBase {
