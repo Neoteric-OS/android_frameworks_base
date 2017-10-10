@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdab9319_360110c7",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-10T03:43:04Z",
+      "side": 1,
+      "message": "Not for this change, but... do we impose no limits on key lenghts? Shouldn\u0027t we? For example, it seems clearly invalid to have an empty key, or a key that\u0027s only 8 bits long...",
+      "range": {
+        "startLine": 119,
+        "startChar": 18,
+        "endLine": 119,
+        "endChar": 62
+      },
+      "revId": "fb8b4468f1736119aeba5187daedebee5393289b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79af33ee_38ee3b32",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-10T03:43:04Z",
+      "side": 1,
+      "message": "EEXIST. Can this be factored out to a single function that checks that mAuthentication, mEncryption and mAuthenticatedEncryption are compatible with each other?\n\n(If you delete the checks in this file as per the comment in IpSecTransform, apply this comment to that file instead.)",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 9
+      },
+      "revId": "fb8b4468f1736119aeba5187daedebee5393289b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b59d0e41_a1300b7f",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-10T03:43:04Z",
+      "side": 1,
+      "message": "You could also just note in all three methods:\n\n  Authenticated encryption is mutually exclusive with encryption and authentication.",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 285,
+        "endChar": 45
+      },
+      "revId": "fb8b4468f1736119aeba5187daedebee5393289b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b9d6518_d6eed56d",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-10T03:43:04Z",
+      "side": 1,
+      "message": "Looks like these checks duplicate the ones in IpSecConfig. Can we remove either these or those? Since IpSecConfig is not public, we probably don\u0027t need the check there.",
+      "range": {
+        "startLine": 292,
+        "startChar": 0,
+        "endLine": 296,
+        "endChar": 13
+      },
+      "revId": "fb8b4468f1736119aeba5187daedebee5393289b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8bf402ba_3c94a2b2",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-10T03:43:04Z",
+      "side": 1,
+      "message": "Suggest \"No encryption or authentication specified\"",
+      "range": {
+        "startLine": 888,
+        "startChar": 25,
+        "endLine": 889,
+        "endChar": 62
+      },
+      "revId": "fb8b4468f1736119aeba5187daedebee5393289b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eedd30d2_19eeec12",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-10T03:43:04Z",
+      "side": 1,
+      "message": "expected",
+      "range": {
+        "startLine": 298,
+        "startChar": 42,
+        "endLine": 298,
+        "endChar": 43
+      },
+      "revId": "fb8b4468f1736119aeba5187daedebee5393289b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3194478d_1e386738",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-10T03:43:04Z",
+      "side": 1,
+      "message": "Remove this blank line, and the one below?",
+      "revId": "fb8b4468f1736119aeba5187daedebee5393289b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4432d3e_253c1e11",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-10T03:43:04Z",
+      "side": 1,
+      "message": "Trailing whitespace.",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 223,
+        "endChar": 4
+      },
+      "revId": "fb8b4468f1736119aeba5187daedebee5393289b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
