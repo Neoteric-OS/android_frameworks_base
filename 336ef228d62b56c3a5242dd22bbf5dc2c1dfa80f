@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56def91b_c1ee9084",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-10-11T21:38:13Z",
+      "side": 1,
+      "message": "this isn\u0027t quite right.\n\nWe want to accept null (we accept unset before) as MAX_VALUE, but if it\u0027s not null it must be 0-3 digits.",
+      "range": {
+        "startLine": 114,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 9
+      },
+      "revId": "336ef228d62b56c3a5242dd22bbf5dc2c1dfa80f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
