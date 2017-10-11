@@ -22,6 +22,53 @@
       "revId": "336ef228d62b56c3a5242dd22bbf5dc2c1dfa80f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e8116d_38dfc35a",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-10-11T21:39:49Z",
+      "side": 1,
+      "message": "If it\u0027s non-null it must be *exactly* 3 digits.",
+      "parentUuid": "56def91b_c1ee9084",
+      "range": {
+        "startLine": 114,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 9
+      },
+      "revId": "336ef228d62b56c3a5242dd22bbf5dc2c1dfa80f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ef352c_9e9e562a",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-10-11T21:39:49Z",
+      "side": 1,
+      "message": "If this is non-null it must be *exactly* 2 or 3 digits.",
+      "range": {
+        "startLine": 119,
+        "startChar": 8,
+        "endLine": 123,
+        "endChar": 9
+      },
+      "revId": "336ef228d62b56c3a5242dd22bbf5dc2c1dfa80f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
