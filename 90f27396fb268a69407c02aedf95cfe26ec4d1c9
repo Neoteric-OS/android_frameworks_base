@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bde7595d_37bd7a75",
+        "filename": "tests/net/java/android/net/IpSecManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-10-11T10:00:56Z",
+      "side": 1,
+      "message": "Should this be AndroidJUnit4?  (If it\u0027s fine as is I suppose can just leave it...)",
+      "range": {
+        "startLine": 48,
+        "startChar": 9,
+        "endLine": 48,
+        "endChar": 15
+      },
+      "revId": "90f27396fb268a69407c02aedf95cfe26ec4d1c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
