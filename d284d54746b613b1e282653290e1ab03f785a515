@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acea5269_366bd123",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-10-11T17:31:31Z",
+      "side": 1,
+      "message": "remove and propagate this change through the rest of file",
+      "range": {
+        "startLine": 33,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 27
+      },
+      "revId": "d284d54746b613b1e282653290e1ab03f785a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b6d93db_b16d42d5",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-10-11T17:31:31Z",
+      "side": 1,
+      "message": "remove - we should deprecate the int forms (imprecise) but can form the getter results using the String forms",
+      "range": {
+        "startLine": 112,
+        "startChar": 28,
+        "endLine": 112,
+        "endChar": 44
+      },
+      "revId": "d284d54746b613b1e282653290e1ab03f785a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38803cd9_cb521c35",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-10-11T17:31:31Z",
+      "side": 1,
+      "message": "verify these inputs are integers (test-cast)",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 25
+      },
+      "revId": "d284d54746b613b1e282653290e1ab03f785a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a054ca8a_fbbf87f3",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-10-11T17:31:31Z",
+      "side": 1,
+      "message": "convert from mMccStr",
+      "range": {
+        "startLine": 141,
+        "startChar": 15,
+        "endLine": 141,
+        "endChar": 20
+      },
+      "revId": "d284d54746b613b1e282653290e1ab03f785a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0437896_aadf2e2b",
+        "filename": "telephony/java/android/telephony/CellIdentityLte.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-10-11T17:31:31Z",
+      "side": 1,
+      "message": "ditto from previous file.  We don\u0027t want multiple forms of Mcc/Mnc and string is preferred",
+      "range": {
+        "startLine": 34,
+        "startChar": 1,
+        "endLine": 36,
+        "endChar": 27
+      },
+      "revId": "d284d54746b613b1e282653290e1ab03f785a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b8e8dc_d1dbdc45",
+        "filename": "telephony/java/android/telephony/CellIdentityWcdma.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-10-11T17:31:31Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 27
+      },
+      "revId": "d284d54746b613b1e282653290e1ab03f785a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
