@@ -91,7 +91,6 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 import android.telephony.TelephonyManager;
-import android.test.AndroidTestCase;
 import android.util.TrustedTime;
 
 import com.android.internal.net.VpnInfo;

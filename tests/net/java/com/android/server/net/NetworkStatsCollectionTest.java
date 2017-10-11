@@ -23,6 +23,9 @@ import static android.net.NetworkStats.UID_ALL;
 import static android.net.NetworkTemplate.buildTemplateMobileAll;
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import android.content.res.Resources;
 import android.net.NetworkIdentity;
@@ -31,8 +34,9 @@ import android.net.NetworkTemplate;
 import android.os.Process;
 import android.os.UserHandle;
 import android.telephony.TelephonyManager;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
-import android.test.AndroidTestCase;
+import android.support.test.runner.AndroidJUnit4;
 import android.test.MoreAsserts;
 
 import com.android.frameworks.tests.net.R;
@@ -48,25 +52,30 @@ import java.io.OutputStream;
 import libcore.io.IoUtils;
 import libcore.io.Streams;
 
+import org.junit.runner.RunWith;
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * Tests for {@link NetworkStatsCollection}.
  */
+@RunWith(AndroidJUnit4.class)
 @SmallTest
-public class NetworkStatsCollectionTest extends AndroidTestCase {
+public class NetworkStatsCollectionTest {
 
     private static final String TEST_FILE = "test.bin";
     private static final String TEST_IMSI = "310260000000000";
 
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
-
         // ignore any device overlay while testing
         NetworkTemplate.forceAllNetworkTypes();
     }
 
+    @Test
     public void testReadLegacyNetwork() throws Exception {
-        final File testFile = new File(getContext().getFilesDir(), TEST_FILE);
+        final File testFile =
+                new File(InstrumentationRegistry.getContext().getFilesDir(), TEST_FILE);
         stageFile(R.raw.netstats_v1, testFile);
 
         final NetworkStatsCollection collection = new NetworkStatsCollection(30 * MINUTE_IN_MILLIS);
@@ -91,8 +100,10 @@ public class NetworkStatsCollectionTest extends AndroidTestCase {
                 636016770L, 709306L, 88038768L, 518836L, NetworkStatsAccess.Level.DEVICE);
     }
 
+    @Test
     public void testReadLegacyUid() throws Exception {
-        final File testFile = new File(getContext().getFilesDir(), TEST_FILE);
+        final File testFile =
+                new File(InstrumentationRegistry.getContext().getFilesDir(), TEST_FILE);
         stageFile(R.raw.netstats_uid_v4, testFile);
 
         final NetworkStatsCollection collection = new NetworkStatsCollection(30 * MINUTE_IN_MILLIS);
@@ -117,8 +128,10 @@ public class NetworkStatsCollectionTest extends AndroidTestCase {
                 637076152L, 711413L, 88343717L, 521022L, NetworkStatsAccess.Level.DEVICE);
     }
 
+    @Test
     public void testReadLegacyUidTags() throws Exception {
-        final File testFile = new File(getContext().getFilesDir(), TEST_FILE);
+        final File testFile =
+                new File(InstrumentationRegistry.getContext().getFilesDir(), TEST_FILE);
         stageFile(R.raw.netstats_uid_v4, testFile);
 
         final NetworkStatsCollection collection = new NetworkStatsCollection(30 * MINUTE_IN_MILLIS);
@@ -143,6 +156,7 @@ public class NetworkStatsCollectionTest extends AndroidTestCase {
                 77017831L, 100995L, 35436758L, 92344L);
     }
 
+    @Test
     public void testStartEndAtomicBuckets() throws Exception {
         final NetworkStatsCollection collection = new NetworkStatsCollection(HOUR_IN_MILLIS);
 
@@ -157,6 +171,7 @@ public class NetworkStatsCollectionTest extends AndroidTestCase {
         assertEquals(2 * HOUR_IN_MILLIS, collection.getEndMillis());
     }
 
+    @Test
     public void testAccessLevels() throws Exception {
         final NetworkStatsCollection collection = new NetworkStatsCollection(HOUR_IN_MILLIS);
         final NetworkStats.Entry entry = new NetworkStats.Entry();
@@ -226,7 +241,7 @@ public class NetworkStatsCollectionTest extends AndroidTestCase {
         InputStream in = null;
         OutputStream out = null;
         try {
-            in = getContext().getResources().openRawResource(rawId);
+            in = InstrumentationRegistry.getContext().getResources().openRawResource(rawId);
             out = new FileOutputStream(file);
             Streams.copy(in, out);
         } finally {

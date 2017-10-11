@@ -32,10 +32,12 @@ import static org.mockito.Mockito.when;
 
 import android.support.test.filters.SmallTest;
 import android.system.Os;
-import android.test.AndroidTestCase;
+
 import com.android.server.IpSecService;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
