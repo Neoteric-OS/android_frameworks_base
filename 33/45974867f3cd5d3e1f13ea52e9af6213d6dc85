@@ -1,0 +1,11 @@
+Code-Review+1: Igor Murashkin <iam@google.com>
+Code-Review+1: Mark Salyzyn <salyzyn@google.com>
+Code-Review+2: Andreas Gampe <agampe@google.com>
+Verified+1: Andreas Gampe <agampe@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Autosubmit+1: Andreas Gampe <agampe@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Wed, 11 Oct 2017 15:48:45 +0000
+Reviewed-on: https://android-review.googlesource.com/505546
+Project: platform/frameworks/base
+Branch: refs/heads/master
