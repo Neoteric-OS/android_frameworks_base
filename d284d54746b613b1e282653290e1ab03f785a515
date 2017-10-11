@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b1e88a2_dd7931fb",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-11T19:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acea5269_366bd123",
+      "range": {
+        "startLine": 33,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 27
+      },
+      "revId": "d284d54746b613b1e282653290e1ab03f785a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b6d93db_b16d42d5",
         "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-11T17:31:31Z",
       "side": 1,
       "message": "remove - we should deprecate the int forms (imprecise) but can form the getter results using the String forms",
+      "range": {
+        "startLine": 112,
+        "startChar": 28,
+        "endLine": 112,
+        "endChar": 44
+      },
+      "revId": "d284d54746b613b1e282653290e1ab03f785a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8439a704_01895634",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-11T19:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b6d93db_b16d42d5",
       "range": {
         "startLine": 112,
         "startChar": 28,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1596adb2_0ee6a053",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-11T19:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38803cd9_cb521c35",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 25
+      },
+      "revId": "d284d54746b613b1e282653290e1ab03f785a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a054ca8a_fbbf87f3",
         "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
         "patchSetId": 13
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-11T17:31:31Z",
       "side": 1,
       "message": "convert from mMccStr",
+      "range": {
+        "startLine": 141,
+        "startChar": 15,
+        "endLine": 141,
+        "endChar": 20
+      },
+      "revId": "d284d54746b613b1e282653290e1ab03f785a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5726279b_c2c74ff0",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-11T19:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a054ca8a_fbbf87f3",
       "range": {
         "startLine": 141,
         "startChar": 15,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "63400461_2b8d6f05",
+        "filename": "telephony/java/android/telephony/CellIdentityLte.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-11T19:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0437896_aadf2e2b",
+      "range": {
+        "startLine": 34,
+        "startChar": 1,
+        "endLine": 36,
+        "endChar": 27
+      },
+      "revId": "d284d54746b613b1e282653290e1ab03f785a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0b8e8dc_d1dbdc45",
         "filename": "telephony/java/android/telephony/CellIdentityWcdma.java",
         "patchSetId": 13
@@ -128,6 +248,30 @@
       "writtenOn": "2017-10-11T17:31:31Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 27
+      },
+      "revId": "d284d54746b613b1e282653290e1ab03f785a515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0ae4a8_362e6a6d",
+        "filename": "telephony/java/android/telephony/CellIdentityWcdma.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-11T19:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0b8e8dc_d1dbdc45",
       "range": {
         "startLine": 33,
         "startChar": 0,
