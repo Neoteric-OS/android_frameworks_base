@@ -66,4 +66,7 @@
     <java-symbol type="array" name="charging_speed_entries" />
     <java-symbol type="array" name="charging_speed_values" />
 
+    <!-- Device keyhandlers -->
+    <java-symbol type="array" name="config_deviceKeyHandlerLibs" />
+    <java-symbol type="array" name="config_deviceKeyHandlerClasses" />
 </resources>
