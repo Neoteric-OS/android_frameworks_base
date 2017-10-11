@@ -22,6 +22,30 @@
       "revId": "90f27396fb268a69407c02aedf95cfe26ec4d1c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf1de29b_d7337458",
+        "filename": "tests/net/java/android/net/IpSecManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-11T13:43:47Z",
+      "side": 1,
+      "message": "Yes it should.\n\nFixed.",
+      "parentUuid": "bde7595d_37bd7a75",
+      "range": {
+        "startLine": 48,
+        "startChar": 9,
+        "endLine": 48,
+        "endChar": 15
+      },
+      "revId": "90f27396fb268a69407c02aedf95cfe26ec4d1c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
