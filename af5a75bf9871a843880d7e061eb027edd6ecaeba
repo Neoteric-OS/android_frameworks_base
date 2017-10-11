@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b3387ed_43d85fa9",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-10-11T20:43:31Z",
+      "side": 1,
+      "message": "we shouldn\u0027t silently fail.  Null is ok, but non-int should throw an IllegalArgumentException.",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 83
+      },
+      "revId": "af5a75bf9871a843880d7e061eb027edd6ecaeba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
