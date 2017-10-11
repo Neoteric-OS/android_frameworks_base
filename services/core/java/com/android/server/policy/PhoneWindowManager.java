@@ -2295,10 +2295,28 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         initKeyCombinationRules();
         initSingleKeyGestureRules();
         mSideFpsEventHandler = new SideFpsEventHandler(mContext, mHandler, mPowerManager);
-        boolean enableKeyHandler = context.getResources().
-                getBoolean(com.android.internal.R.bool.config_enableKeyHandler);
-        if (enableKeyHandler) {
-            mKeyHandler = new KeyHandler(mContext);
+
+        final String[] deviceKeyHandlerLibs = res.getStringArray(
+                com.android.internal.R.array.config_deviceKeyHandlerLibs);
+        final String[] deviceKeyHandlerClasses = res.getStringArray(
+                com.android.internal.R.array.config_deviceKeyHandlerClasses);
+
+        for (int i = 0;
+                i < deviceKeyHandlerLibs.length && i < deviceKeyHandlerClasses.length; i++) {
+            try {
+                PathClassLoader loader = new PathClassLoader(
+                        deviceKeyHandlerLibs[i], getClass().getClassLoader());
+                Class<?> klass = loader.loadClass(deviceKeyHandlerClasses[i]);
+                Constructor<?> constructor = klass.getConstructor(Context.class);
+                mDeviceKeyHandlers.add((DeviceKeyHandler) constructor.newInstance(mContext));
+            } catch (Exception e) {
+                Slog.w(TAG, "Could not instantiate device key handler "
+                        + deviceKeyHandlerLibs[i] + " from class "
+                        + deviceKeyHandlerClasses[i], e);
+            }
+        }
+        if (DEBUG_INPUT) {
+            Slog.d(TAG, "" + mDeviceKeyHandlers.size() + " device key handlers loaded");
         }
     }
 
@@ -3269,7 +3287,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         // Specific device key handling
         if (dispatchKeyToKeyHandlers(event)) {
-            return -1;
+            return key_consumed;
         }
 
         // Reserve all the META modifier combos for system behavior
