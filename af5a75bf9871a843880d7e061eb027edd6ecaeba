@@ -22,6 +22,30 @@
       "revId": "af5a75bf9871a843880d7e061eb027edd6ecaeba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c6aa34d_4df78e08",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-11T21:03:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b3387ed_43d85fa9",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 83
+      },
+      "revId": "af5a75bf9871a843880d7e061eb027edd6ecaeba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
