@@ -1,0 +1,10 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+1: Shawn Wahi <wahi.shawn@gmail.com>
+Code-Review+2: Jason Monk <jmonk@google.com>
+Verified+1: Jason Monk <jmonk@google.com>
+Autosubmit+1: Jason Monk <jmonk@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Thu, 12 Oct 2017 18:00:04 +0000
+Reviewed-on: https://android-review.googlesource.com/509515
+Project: platform/frameworks/base
+Branch: refs/heads/master
