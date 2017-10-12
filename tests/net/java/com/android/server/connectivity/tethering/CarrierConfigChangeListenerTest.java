@@ -16,10 +16,7 @@
 
 package com.android.server.connectivity.tethering;
 
-import static com.android.internal.telephony.IccCardConstants.INTENT_VALUE_ICC_ABSENT;
-import static com.android.internal.telephony.IccCardConstants.INTENT_VALUE_ICC_LOADED;
-import static com.android.internal.telephony.IccCardConstants.INTENT_KEY_ICC_STATE;
-import static com.android.internal.telephony.TelephonyIntents.ACTION_SIM_STATE_CHANGED;
+import static android.telephony.CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.reset;
@@ -47,11 +44,11 @@ import org.mockito.MockitoAnnotations;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class SimChangeListenerTest {
+public class CarrierConfigChangeListenerTest {
     @Mock private Context mContext;
     private BroadcastInterceptingContext mServiceContext;
     private Handler mHandler;
-    private SimChangeListener mSCL;
+    private CarrierConfigChangeListener mListener;
     private int mCallbackCount;
 
     private void doCallback() { mCallbackCount++; }
@@ -75,58 +72,56 @@ public class SimChangeListenerTest {
         mServiceContext = new MockContext(mContext);
         mHandler = new Handler(Looper.myLooper());
         mCallbackCount = 0;
-        mSCL = new SimChangeListener(mServiceContext, mHandler, () -> doCallback());
+        mListener = new CarrierConfigChangeListener(
+                mServiceContext, mHandler, () -> doCallback());
     }
 
     @After public void tearDown() throws Exception {
-        if (mSCL != null) {
-            mSCL.stopListening();
-            mSCL = null;
+        if (mListener != null) {
+            mListener.stopListening();
+            mListener = null;
         }
     }
 
-    private void sendSimStateChangeIntent(String state) {
-        final Intent intent = new Intent(ACTION_SIM_STATE_CHANGED);
-        intent.putExtra(INTENT_KEY_ICC_STATE, state);
+    private void sendChangeBroadcast() {
+        final Intent intent = new Intent(ACTION_CARRIER_CONFIG_CHANGED);
         mServiceContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
     }
 
     @Test
-    public void testNotSeenFollowedBySeenCallsCallback() {
-        mSCL.startListening();
+    public void testBasicListening() {
+        assertEquals(0, mCallbackCount);
+        mListener.startListening();
+        for (int i = 0; i < 5; i++) {
+            sendChangeBroadcast();
+            assertEquals(i+1, mCallbackCount);
+        }
+        mListener.stopListening();
+    }
 
-        sendSimStateChangeIntent(INTENT_VALUE_ICC_ABSENT);
-        sendSimStateChangeIntent(INTENT_VALUE_ICC_LOADED);
+    @Test
+    public void testBroadcastsBeforeStartAreIgnored() {
+        assertEquals(0, mCallbackCount);
+        for (int i = 0; i < 5; i++) {
+            sendChangeBroadcast();
+            assertEquals(0, mCallbackCount);
+        }
+
+        mListener.startListening();
+        sendChangeBroadcast();
         assertEquals(1, mCallbackCount);
-
-        sendSimStateChangeIntent(INTENT_VALUE_ICC_ABSENT);
-        sendSimStateChangeIntent(INTENT_VALUE_ICC_LOADED);
-        assertEquals(2, mCallbackCount);
-
-        mSCL.stopListening();
     }
 
     @Test
-    public void testNotListeningDoesNotCallback() {
-        sendSimStateChangeIntent(INTENT_VALUE_ICC_ABSENT);
-        sendSimStateChangeIntent(INTENT_VALUE_ICC_LOADED);
-        assertEquals(0, mCallbackCount);
+    public void testBroadcastsAfterStopAreIgnored() {
+        mListener.startListening();
+        sendChangeBroadcast();
+        assertEquals(1, mCallbackCount);
+        mListener.stopListening();
 
-        sendSimStateChangeIntent(INTENT_VALUE_ICC_ABSENT);
-        sendSimStateChangeIntent(INTENT_VALUE_ICC_LOADED);
-        assertEquals(0, mCallbackCount);
-    }
-
-    @Test
-    public void testSeenOnlyDoesNotCallback() {
-        mSCL.startListening();
-
-        sendSimStateChangeIntent(INTENT_VALUE_ICC_LOADED);
-        assertEquals(0, mCallbackCount);
-
-        sendSimStateChangeIntent(INTENT_VALUE_ICC_LOADED);
-        assertEquals(0, mCallbackCount);
-
-        mSCL.stopListening();
+        for (int i = 0; i < 5; i++) {
+            sendChangeBroadcast();
+            assertEquals(1, mCallbackCount);
+        }
     }
 }
