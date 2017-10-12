@@ -589,6 +589,8 @@ public class AudioService extends IAudioService.Stub
     private int[] mAccessibilityServiceUids;
     private final Object mAccessibilityServiceUidsLock = new Object();
 
+    private VolumeControlPanel mVolCtrlPanel;
+
     // Intent "extra" data keys.
     public static final String CONNECT_INTENT_KEY_PORT_NAME = "portName";
     public static final String CONNECT_INTENT_KEY_STATE = "state";
@@ -1270,7 +1272,19 @@ public class AudioService extends IAudioService.Stub
             if (DEBUG_VOL) Log.d(TAG, "Volume controller suppressed adjustment");
         }
 
+        
         adjustStreamVolume(streamType, direction, flags, callingPackage, caller, uid);
+        mVolCtrlPanel = new VolumeControlPanel(mContext, null);
+        mVolCtrlPanel.setDeviceName("Test");
+        mVolCtrlPanel.setMaxVolume(10);
+        mVolCtrlPanel.setVolume(5);
+        mVolCtrlPanel.show(true);
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run(){
+                mVolCtrlPanel.dismiss();
+            }
+        }, 2000);
     }
 
     /** @see AudioManager#adjustStreamVolume(int, int, int) */
