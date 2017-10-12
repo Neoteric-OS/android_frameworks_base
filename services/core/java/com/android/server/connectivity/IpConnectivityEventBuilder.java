@@ -127,6 +127,11 @@ final public class IpConnectivityEventBuilder {
         wakeupStats.nonApplicationWakeups = in.nonApplicationWakeups;
         wakeupStats.applicationWakeups = in.applicationWakeups;
         wakeupStats.noUidWakeups = in.noUidWakeups;
+        wakeupStats.l2UnicastCounts = in.l2UnicastCounts;
+        wakeupStats.l2MulticastCounts = in.l2MulticastCounts;
+        wakeupStats.l2BroadcastCounts = in.l2BroadcastCounts;
+        wakeupStats.ethertypeCounts = toPairArray(in.ethertypes);
+        wakeupStats.ipProtocolCounts = toPairArray(in.ipProtocols);
         final IpConnectivityEvent out = buildEvent(0, 0, in.iface);
         out.setWakeupStats(wakeupStats);
         return out;

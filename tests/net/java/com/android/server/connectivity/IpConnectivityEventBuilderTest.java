@@ -513,6 +513,13 @@ public class IpConnectivityEventBuilderTest {
         stats.rootWakeups = 2;
         stats.systemWakeups = 3;
         stats.noUidWakeups = 3;
+        stats.l2UnicastCounts = 5;
+        stats.l2MulticastCounts = 1;
+        stats.l2BroadcastCounts = 2;
+        stats.ethertypes.put(0x800, 3);
+        stats.ethertypes.put(0x86dd, 3);
+        stats.ipProtocols.put(6, 5);
+
 
         IpConnectivityEvent got = IpConnectivityEventBuilder.toProto(stats);
         String want = String.join("\n",
@@ -526,6 +533,21 @@ public class IpConnectivityEventBuilderTest {
                 "  wakeup_stats <",
                 "    application_wakeups: 5",
                 "    duration_sec: 0",
+                "    ethertype_counts <",
+                "      key: 2048",
+                "      value: 3",
+                "    >",
+                "    ethertype_counts <",
+                "      key: 34525",
+                "      value: 3",
+                "    >",
+                "    ip_protocol_counts <",
+                "      key: 6",
+                "      value: 5",
+                "    >",
+                "    l2_broadcast_counts: 2",
+                "    l2_multicast_counts: 1",
+                "    l2_unicast_counts: 5",
                 "    no_uid_wakeups: 3",
                 "    non_application_wakeups: 1",
                 "    root_wakeups: 2",

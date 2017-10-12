@@ -18,6 +18,10 @@ package android.net.metrics;
 
 import android.os.Process;
 import android.os.SystemClock;
+import android.util.SparseIntArray;
+
+import java.util.Arrays;
+import java.util.StringJoiner;
 
 /**
  * An event logged per interface and that aggregates WakeupEvents for that interface.
@@ -26,6 +30,7 @@ import android.os.SystemClock;
 public class WakeupStats {
 
     private static final int NO_UID = -1;
+    private static final byte[] L2_BROADCAST = {-1, -1, -1, -1, -1, -1};
 
     public final long creationTimeMs = SystemClock.elapsedRealtime();
     public final String iface;
@@ -37,6 +42,13 @@ public class WakeupStats {
     public long applicationWakeups = 0;
     public long noUidWakeups = 0;
     public long durationSec = 0;
+
+    public long l2UnicastCounts = 0;
+    public long l2MulticastCounts = 0;
+    public long l2BroadcastCounts = 0;
+
+    public final SparseIntArray ethertypes = new SparseIntArray();
+    public final SparseIntArray ipProtocols = new SparseIntArray();
 
     public WakeupStats(String iface) {
         this.iface = iface;
@@ -68,20 +80,52 @@ public class WakeupStats {
                 }
                 break;
         }
+
+        if (ev.dstHwAddr.length == L2_BROADCAST.length) {
+            if (Arrays.equals(ev.dstHwAddr, L2_BROADCAST)) {
+                l2BroadcastCounts++;
+            } else if (ev.dstHwAddr[0] == 1) {
+                l2MulticastCounts++;
+            } else {
+                l2UnicastCounts++;
+            }
+        }
+
+        increment(ethertypes, ev.ethertype);
+        if (ev.ipProtocol >= 0) {
+            increment(ipProtocols, ev.ipProtocol);
+        }
     }
 
     @Override
     public String toString() {
         updateDuration();
-        return new StringBuilder()
-                .append("WakeupStats(").append(iface)
-                .append(", total: ").append(totalWakeups)
-                .append(", root: ").append(rootWakeups)
-                .append(", system: ").append(systemWakeups)
-                .append(", apps: ").append(applicationWakeups)
-                .append(", non-apps: ").append(nonApplicationWakeups)
-                .append(", no uid: ").append(noUidWakeups)
-                .append(", ").append(durationSec).append("s)")
-                .toString();
+        StringJoiner j = new StringJoiner(", ", "WakeupStats(", ")");
+        j.add(iface);
+        j.add("" + durationSec + "s");
+        j.add("total: " + totalWakeups);
+        j.add("root: " + rootWakeups);
+        j.add("system: " + systemWakeups);
+        j.add("apps: " + applicationWakeups);
+        j.add("non-apps: " + nonApplicationWakeups);
+        j.add("no uid: " + noUidWakeups);
+        j.add(String.format("l2 unicast/multicast/broadcast: %d/%d/%d",
+                l2UnicastCounts, l2MulticastCounts, l2BroadcastCounts));
+        for (int i = 0; i < ethertypes.size(); i++) {
+            int eth = ethertypes.keyAt(i);
+            int count = ethertypes.valueAt(i);
+            j.add(String.format("ethertype 0x%x: %d", eth, count));
+        }
+        for (int i = 0; i < ipProtocols.size(); i++) {
+            int proto = ipProtocols.keyAt(i);
+            int count = ipProtocols.valueAt(i);
+            j.add(String.format("ipproto %d: %d", proto, count));
+        }
+        return j.toString();
+    }
+
+    private static void increment(SparseIntArray counters, int key) {
+        int newcount = counters.get(key, 0) + 1;
+        counters.put(key, newcount);
     }
 }
