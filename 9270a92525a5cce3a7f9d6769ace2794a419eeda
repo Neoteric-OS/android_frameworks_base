@@ -22,6 +22,30 @@
       "revId": "9270a92525a5cce3a7f9d6769ace2794a419eeda",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8ce6151_3d493ce1",
+        "filename": "tests/net/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-12T06:56:16Z",
+      "side": 1,
+      "message": "Actually I can\u0027t get this test to fail. I think this annotation is obsolete. I removed it.",
+      "parentUuid": "14bae4fb_fd457432",
+      "range": {
+        "startLine": 588,
+        "startChar": 4,
+        "endLine": 588,
+        "endChar": 26
+      },
+      "revId": "9270a92525a5cce3a7f9d6769ace2794a419eeda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
