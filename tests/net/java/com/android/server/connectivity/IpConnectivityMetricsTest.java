@@ -69,6 +69,9 @@ public class IpConnectivityMetricsTest {
     private static final String EXAMPLE_IPV4 = "192.0.2.1";
     private static final String EXAMPLE_IPV6 = "2001:db8:1200::2:1";
 
+    private static final byte[] MAC_ADDR =
+            {(byte)0x84, (byte)0xc9, (byte)0xb2, (byte)0x6a, (byte)0xed, (byte)0x4b};
+
     @Mock Context mCtx;
     @Mock IIpConnectivityMetrics mMockService;
     @Mock ConnectivityManager mCm;
@@ -468,7 +471,7 @@ public class IpConnectivityMetricsTest {
 
     void wakeupEvent(String iface, int uid) throws Exception {
         String prefix = NetdEventListenerService.WAKEUP_EVENT_IFACE_PREFIX + iface;
-        mNetdListener.onWakeupEvent(prefix, uid, uid, 0);
+        mNetdListener.onWakeupEvent(prefix, uid, uid, 0x800, 6, MAC_ADDR, "192.168.2.23", "192.168.2.23", 23, 24, 0);
     }
 
     List<ConnectivityMetricsEvent> verifyEvents(int n, int timeoutMs) throws Exception {

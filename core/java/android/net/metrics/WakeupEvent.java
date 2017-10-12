@@ -16,6 +16,10 @@
 
 package android.net.metrics;
 
+import com.android.internal.util.BitUtils;
+
+import java.util.StringJoiner;
+
 /**
  * An event logged when NFLOG notifies userspace of a wakeup packet for
  * watched interfaces.
@@ -23,12 +27,43 @@ package android.net.metrics;
  */
 public class WakeupEvent {
     public String iface;
-    public long timestampMs;
     public int uid;
+    public int ethertype;
+    public byte[] dstHwAddr;
+    public String srcIp;
+    public String dstIp;
+    public int ipProtocol;
+    public int srcPort;
+    public int dstPort;
+    public long timestampMs;
 
     @Override
     public String toString() {
-        return String.format("WakeupEvent(%tT.%tL, %s, uid: %d)",
-                timestampMs, timestampMs, iface, uid);
+        StringJoiner j = new StringJoiner(", ", "WakeupEvent(", ")");
+        j.add(String.format("%tT.%tL", timestampMs, timestampMs));
+        j.add(iface);
+        j.add(Integer.toString(uid));
+        j.add("eth=0x" + Integer.toHexString(ethertype));
+        j.add("dstHw=" + hardwareAddrToString(dstHwAddr));
+        if (ipProtocol > 0) {
+            j.add("ip=" + ipProtocol);
+            j.add("srcIp=" + srcIp);
+            j.add("dstIp=" + dstIp);
+            if (srcPort > 0) {
+                j.add("srcPort=" + srcPort);
+            }
+            if (dstPort > 0) {
+                j.add("dstPort=" + dstPort);
+            }
+        }
+        return j.toString();
+    }
+
+    private static String hardwareAddrToString(byte[] addr) {
+        StringJoiner j = new StringJoiner(":");
+        for (byte b : addr) {
+            j.add(Integer.toHexString(BitUtils.uint8(b)));
+        }
+        return j.toString();
     }
 }
