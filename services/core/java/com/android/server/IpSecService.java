@@ -1011,7 +1011,7 @@ public class IpSecService extends IIpSecService.Stub {
                                 c.getRemoteAddress(),
                                 info.getSpiRecord(direction).getSpi());
             }
-        } catch (ServiceSpecificException e) {
+        } catch ( ServiceSpecificException e) {
             // FIXME: get the error code and throw is at an IOException from Errno Exception
         }
     }
@@ -1024,11 +1024,30 @@ public class IpSecService extends IIpSecService.Stub {
      */
     @Override
     public void removeTransportModeTransform(ParcelFileDescriptor socket, int resourceId)
-            throws RemoteException {
+            throws RemoteException, IllegalArgumentException {
+        TransformRecord info = mTransformRecords.getAndCheckOwner(resourceId);
+
+        if (info == null) {
+            throw new IllegalArgumentException("Transform " + resourceId + " is not active");
+        }
+
+        IpSecConfig c = info.getConfig();
         try {
-            mSrvConfig
-                    .getNetdInstance()
-                    .ipSecRemoveTransportModeTransform(socket.getFileDescriptor());
+            for (int direction : DIRECTIONS) {
+                mSrvConfig
+                        .getNetdInstance()
+                        .ipSecApplyTransportModeTransform(
+                                socket.getFileDescriptor(),
+                                resourceId,
+                                direction,
+                                (c.getLocalAddress() != null)
+                                        ? c.getLocalAddress()
+                                        : "",
+                                (c.getRemoteAddress() != null)
+                                        ? c.getRemoteAddress()
+                                        : "",
+                                0);
+            }
         } catch (ServiceSpecificException e) {
             // FIXME: get the error code and throw is at an IOException from Errno Exception
         }

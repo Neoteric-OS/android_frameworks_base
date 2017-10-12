@@ -386,6 +386,7 @@ public final class IpSecManager {
     private void removeTransportModeTransform(ParcelFileDescriptor pfd, IpSecTransform transform) {
         try {
             mService.removeTransportModeTransform(pfd, transform.getResourceId());
+            mService.deleteTransportModeTransform(transform.getResourceId());
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
