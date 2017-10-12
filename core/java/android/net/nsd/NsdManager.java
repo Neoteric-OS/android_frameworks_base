@@ -37,6 +37,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.Protocol;
 
+import java.lang.ref.WeakReference;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -338,18 +339,31 @@ public final class NsdManager {
     }
 
     @VisibleForTesting
-    class ServiceHandler extends Handler {
-        ServiceHandler(Looper looper) {
+    private static class ServiceHandler extends Handler {
+
+        WeakReference<NsdManager> mNsdManagerWeakRef;
+        CountDownLatch mConnected;
+
+        ServiceHandler(Looper looper, NsdManager nsdManager, CountDownLatch connected) {
             super(looper);
+            mNsdManagerWeakRef = new WeakReference<NsdManager>(nsdManager);
+            mConnected = connected;
         }
 
         @Override
         public void handleMessage(Message message) {
+            NsdManager nsdManager = mNsdManagerWeakRef.get();
+            if (nsdManager == null) {
+                if (message.what == AsyncChannel.CMD_CHANNEL_FULLY_CONNECTED) {
+                    mConnected.countDown();
+                }
+                return;
+            }
             final int what = message.what;
             final int key = message.arg2;
             switch (what) {
                 case AsyncChannel.CMD_CHANNEL_HALF_CONNECTED:
-                    mAsyncChannel.sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
+                    nsdManager.mAsyncChannel.sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
                     return;
                 case AsyncChannel.CMD_CHANNEL_FULLY_CONNECTED:
                     mConnected.countDown();
@@ -362,9 +376,9 @@ public final class NsdManager {
             }
             final Object listener;
             final NsdServiceInfo ns;
-            synchronized (mMapLock) {
-                listener = mListenerMap.get(key);
-                ns = mServiceMap.get(key);
+            synchronized (nsdManager.mMapLock) {
+                listener = nsdManager.mListenerMap.get(key);
+                ns = nsdManager.mServiceMap.get(key);
             }
             if (listener == null) {
                 Log.d(TAG, "Stale key " + message.arg2);
@@ -379,7 +393,7 @@ public final class NsdManager {
                     ((DiscoveryListener) listener).onDiscoveryStarted(s);
                     break;
                 case DISCOVER_SERVICES_FAILED:
-                    removeListener(key);
+                    nsdManager.removeListener(key);
                     ((DiscoveryListener) listener).onStartDiscoveryFailed(getNsdServiceInfoType(ns),
                             message.arg1);
                     break;
@@ -392,16 +406,16 @@ public final class NsdManager {
                 case STOP_DISCOVERY_FAILED:
                     // TODO: failure to stop discovery should be internal and retried internally, as
                     // the effect for the client is indistinguishable from STOP_DISCOVERY_SUCCEEDED
-                    removeListener(key);
+                    nsdManager.removeListener(key);
                     ((DiscoveryListener) listener).onStopDiscoveryFailed(getNsdServiceInfoType(ns),
                             message.arg1);
                     break;
                 case STOP_DISCOVERY_SUCCEEDED:
-                    removeListener(key);
+                    nsdManager.removeListener(key);
                     ((DiscoveryListener) listener).onDiscoveryStopped(getNsdServiceInfoType(ns));
                     break;
                 case REGISTER_SERVICE_FAILED:
-                    removeListener(key);
+                    nsdManager.removeListener(key);
                     ((RegistrationListener) listener).onRegistrationFailed(ns, message.arg1);
                     break;
                 case REGISTER_SERVICE_SUCCEEDED:
@@ -409,21 +423,21 @@ public final class NsdManager {
                             (NsdServiceInfo) message.obj);
                     break;
                 case UNREGISTER_SERVICE_FAILED:
-                    removeListener(key);
+                    nsdManager.removeListener(key);
                     ((RegistrationListener) listener).onUnregistrationFailed(ns, message.arg1);
                     break;
                 case UNREGISTER_SERVICE_SUCCEEDED:
                     // TODO: do not unregister listener until service is unregistered, or provide
                     // alternative way for unregistering ?
-                    removeListener(message.arg2);
+                    nsdManager.removeListener(message.arg2);
                     ((RegistrationListener) listener).onServiceUnregistered(ns);
                     break;
                 case RESOLVE_SERVICE_FAILED:
-                    removeListener(key);
+                    nsdManager.removeListener(key);
                     ((ResolveListener) listener).onResolveFailed(ns, message.arg1);
                     break;
                 case RESOLVE_SERVICE_SUCCEEDED:
-                    removeListener(key);
+                    nsdManager.removeListener(key);
                     ((ResolveListener) listener).onServiceResolved((NsdServiceInfo) message.obj);
                     break;
                 default:
@@ -484,7 +498,7 @@ public final class NsdManager {
         }
         HandlerThread t = new HandlerThread("NsdManager");
         t.start();
-        mHandler = new ServiceHandler(t.getLooper());
+        mHandler = new ServiceHandler(t.getLooper(), this, mConnected);
         mAsyncChannel.connect(mContext, mHandler, messenger);
         try {
             mConnected.await();

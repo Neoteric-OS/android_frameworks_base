@@ -2622,9 +2622,15 @@ public class WifiManager {
     // Ensure that multiple ServiceHandler threads do not interleave message dispatch.
     private static final Object sServiceHandlerDispatchLock = new Object();
 
-    private class ServiceHandler extends Handler {
-        ServiceHandler(Looper looper) {
+    private static class ServiceHandler extends Handler {
+
+        WeakReference<WifiManager> mWifiManagerWeakRef;
+        CountDownLatch mConnected;
+
+        ServiceHandler(Looper looper, WifiManager wifiManager, CountDownLatch connected) {
             super(looper);
+            mWifiManagerWeakRef = new WeakReference<WifiManager>(wifiManager);
+            mConnected = connected;
         }
 
         @Override
@@ -2635,16 +2641,23 @@ public class WifiManager {
         }
 
         private void dispatchMessageToListeners(Message message) {
-            Object listener = removeListener(message.arg2);
+            WifiManager wifiManager = mWifiManagerWeakRef.get();
+            if (wifiManager == null) {
+                if (message.what == AsyncChannel.CMD_CHANNEL_HALF_CONNECTED) {
+                    mConnected.countDown();
+                }
+                return;
+            }
+            Object listener = wifiManager.removeListener(message.arg2);
             switch (message.what) {
                 case AsyncChannel.CMD_CHANNEL_HALF_CONNECTED:
                     if (message.arg1 == AsyncChannel.STATUS_SUCCESSFUL) {
-                        mAsyncChannel.sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
+                        wifiManager.mAsyncChannel.sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
                     } else {
                         Log.e(TAG, "Failed to set up channel connection");
                         // This will cause all further async API calls on the WifiManager
                         // to fail and throw an exception
-                        mAsyncChannel = null;
+                        wifiManager.mAsyncChannel = null;
                     }
                     mConnected.countDown();
                     break;
@@ -2655,7 +2668,7 @@ public class WifiManager {
                     Log.e(TAG, "Channel connection lost");
                     // This will cause all further async API calls on the WifiManager
                     // to fail and throw an exception
-                    mAsyncChannel = null;
+                    wifiManager.mAsyncChannel = null;
                     getLooper().quit();
                     break;
                     /* ActionListeners grouped together */
@@ -2681,8 +2694,8 @@ public class WifiManager {
                         WpsResult result = (WpsResult) message.obj;
                         ((WpsCallback) listener).onStarted(result.pin);
                         //Listener needs to stay until completion or failure
-                        synchronized (mListenerMapLock) {
-                            mListenerMap.put(message.arg2, listener);
+                        synchronized (wifiManager.mListenerMapLock) {
+                            wifiManager.mListenerMap.put(message.arg2, listener);
                         }
                     }
                     break;
@@ -2759,7 +2772,7 @@ public class WifiManager {
             mAsyncChannel = new AsyncChannel();
             mConnected = new CountDownLatch(1);
 
-            Handler handler = new ServiceHandler(mLooper);
+            Handler handler = new ServiceHandler(mLooper, this, mConnected);
             mAsyncChannel.connect(mContext, handler, messenger);
             try {
                 mConnected.await();

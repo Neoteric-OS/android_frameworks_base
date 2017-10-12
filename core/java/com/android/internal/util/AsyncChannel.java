@@ -29,6 +29,7 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Slog;
 
+import java.lang.ref.WeakReference;
 import java.util.Stack;
 
 /**
@@ -859,7 +860,7 @@ public class AsyncChannel {
     private boolean linkToDeathMonitor() {
         // Link to death only when bindService isn't used and not already linked.
         if (mConnection == null && mDeathMonitor == null) {
-            mDeathMonitor = new DeathMonitor();
+            mDeathMonitor = new DeathMonitor(this);
             try {
                 mDstMessenger.getBinder().linkToDeath(mDeathMonitor, 0);
             } catch (RemoteException e) {
@@ -915,13 +916,19 @@ public class AsyncChannel {
         Slog.d(TAG, s);
     }
 
-    private final class DeathMonitor implements IBinder.DeathRecipient {
+    private static final class DeathMonitor implements IBinder.DeathRecipient {
 
-        DeathMonitor() {
+        private WeakReference<AsyncChannel> mAsyncChannelWeakRef;
+
+        DeathMonitor(AsyncChannel ac) {
+            mAsyncChannelWeakRef = new WeakReference<AsyncChannel>(ac);
         }
 
         public void binderDied() {
-            replyDisconnected(STATUS_REMOTE_DISCONNECTION);
+            AsyncChannel ac = mAsyncChannelWeakRef.get();
+            if (ac != null) {
+                ac.replyDisconnected(STATUS_REMOTE_DISCONNECTION);
+            }
         }
 
     }

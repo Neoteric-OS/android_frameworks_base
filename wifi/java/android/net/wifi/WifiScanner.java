@@ -37,6 +37,7 @@ import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.Preconditions;
 import com.android.internal.util.Protocol;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -1188,7 +1189,7 @@ public class WifiScanner {
 
         mAsyncChannel = new AsyncChannel();
 
-        mInternalHandler = new ServiceHandler(looper);
+        mInternalHandler = new ServiceHandler(looper, this);
         mAsyncChannel.connectSync(mContext, mInternalHandler, messenger);
         // We cannot use fullyConnectSync because it sends the FULL_CONNECTION message
         // synchronously, which causes WifiScanningService to receive the wrong replyTo value.
@@ -1313,12 +1314,19 @@ public class WifiScanner {
                 };
     }
 
-    private class ServiceHandler extends Handler {
-        ServiceHandler(Looper looper) {
+    private static class ServiceHandler extends Handler {
+
+        WeakReference<WifiScanner> mWifiScannerWeakRef;
+
+        ServiceHandler(Looper looper, WifiScanner wifiScanner) {
             super(looper);
+            mWifiScannerWeakRef = new WeakReference<WifiScanner>(wifiScanner);
         }
+
         @Override
         public void handleMessage(Message msg) {
+            WifiScanner wifiScanner = mWifiScannerWeakRef.get();
+            if (wifiScanner == null) return;
             switch (msg.what) {
                 case AsyncChannel.CMD_CHANNEL_FULLY_CONNECTED:
                     return;
@@ -1326,12 +1334,12 @@ public class WifiScanner {
                     Log.e(TAG, "Channel connection lost");
                     // This will cause all further async API calls on the WifiManager
                     // to fail and throw an exception
-                    mAsyncChannel = null;
+                    wifiScanner.mAsyncChannel = null;
                     getLooper().quit();
                     return;
             }
 
-            Object listener = getListener(msg.arg2);
+            Object listener = wifiScanner.getListener(msg.arg2);
 
             if (listener == null) {
                 if (DBG) Log.d(TAG, "invalid listener key = " + msg.arg2);
@@ -1348,7 +1356,7 @@ public class WifiScanner {
                 case CMD_OP_FAILED : {
                         OperationResult result = (OperationResult)msg.obj;
                         ((ActionListener) listener).onFailure(result.reason, result.description);
-                        removeListener(msg.arg2);
+                        wifiScanner.removeListener(msg.arg2);
                     }
                     break;
                 case CMD_SCAN_RESULT :
@@ -1380,7 +1388,7 @@ public class WifiScanner {
                     return;
                 case CMD_SINGLE_SCAN_COMPLETED:
                     if (DBG) Log.d(TAG, "removing listener for single scan");
-                    removeListener(msg.arg2);
+                    wifiScanner.removeListener(msg.arg2);
                     break;
                 case CMD_PNO_NETWORK_FOUND:
                     ((PnoScanListener) listener).onPnoNetworkFound(

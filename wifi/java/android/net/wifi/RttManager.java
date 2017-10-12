@@ -1,5 +1,7 @@
 package android.net.wifi;
 
+import java.lang.ref.WeakReference;
+
 import android.annotation.NonNull;
 import android.annotation.RequiresPermission;
 import android.annotation.SuppressLint;
@@ -1228,7 +1230,7 @@ public class RttManager {
 
         mAsyncChannel = new AsyncChannel();
 
-        Handler handler = new ServiceHandler(looper);
+        Handler handler = new ServiceHandler(looper, this);
         mAsyncChannel.connectSync(mContext, handler, messenger);
         // We cannot use fullyConnectSync because it sends the FULL_CONNECTION message
         // synchronously, which causes RttService to receive the wrong replyTo value.
@@ -1307,12 +1309,19 @@ public class RttManager {
         }
     }
 
-    private class ServiceHandler extends Handler {
-        ServiceHandler(Looper looper) {
+    private static class ServiceHandler extends Handler {
+
+        WeakReference<RttManager> mRttManagerWeakRef;
+
+        ServiceHandler(Looper looper, RttManager nsdManager) {
             super(looper);
+            mRttManagerWeakRef = new WeakReference<RttManager>(nsdManager);
         }
+
         @Override
         public void handleMessage(Message msg) {
+            RttManager rttManager = mRttManagerWeakRef.get();
+            if (rttManager == null) return;
             Log.i(TAG, "RTT manager get message: " + msg.what);
             switch (msg.what) {
                 case AsyncChannel.CMD_CHANNEL_FULLY_CONNECTED:
@@ -1321,12 +1330,12 @@ public class RttManager {
                     Log.e(TAG, "Channel connection lost");
                     // This will cause all further async API calls on the WifiManager
                     // to fail and throw an exception
-                    mAsyncChannel = null;
+                    rttManager.mAsyncChannel = null;
                     getLooper().quit();
                     return;
             }
 
-            Object listener = getListener(msg.arg2);
+            Object listener = rttManager.getListener(msg.arg2);
             if (listener == null) {
                 Log.e(TAG, "invalid listener key = " + msg.arg2 );
                 return;
@@ -1338,15 +1347,15 @@ public class RttManager {
                 /* ActionListeners grouped together */
                 case CMD_OP_SUCCEEDED :
                     reportSuccess(listener, msg);
-                    removeListener(msg.arg2);
+                    rttManager.removeListener(msg.arg2);
                     break;
                 case CMD_OP_FAILED :
                     reportFailure(listener, msg);
-                    removeListener(msg.arg2);
+                    rttManager.removeListener(msg.arg2);
                     break;
                 case CMD_OP_ABORTED :
                     ((RttListener) listener).onAborted();
-                    removeListener(msg.arg2);
+                    rttManager.removeListener(msg.arg2);
                     break;
                 case CMD_OP_ENALBE_RESPONDER_SUCCEEDED:
                     ResponderConfig config = (ResponderConfig) msg.obj;
@@ -1354,7 +1363,7 @@ public class RttManager {
                     break;
                 case CMD_OP_ENALBE_RESPONDER_FAILED:
                     ((ResponderCallback) (listener)).onResponderEnableFailure(msg.arg1);
-                    removeListener(msg.arg2);
+                    rttManager.removeListener(msg.arg2);
                     break;
                 default:
                     if (DBG) Log.d(TAG, "Ignoring message " + msg.what);
