@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14bae4fb_fd457432",
+        "filename": "tests/net/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-12T05:27:24Z",
+      "side": 1,
+      "message": "While you\u0027re running these, can you also note where it fails? Maybe we can fix it.",
+      "range": {
+        "startLine": 588,
+        "startChar": 4,
+        "endLine": 588,
+        "endChar": 26
+      },
+      "revId": "9270a92525a5cce3a7f9d6769ace2794a419eeda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
