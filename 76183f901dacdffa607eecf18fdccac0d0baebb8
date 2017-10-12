@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "684a8142_b1550cb4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3003,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2017-10-12T07:58:57Z",
+      "side": 1,
+      "message": "sure, will do",
+      "parentUuid": "30c4f470_da084295",
+      "range": {
+        "startLine": 3003,
+        "startChar": 12,
+        "endLine": 3003,
+        "endChar": 22
+      },
+      "revId": "76183f901dacdffa607eecf18fdccac0d0baebb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8baf6332_3c6dc326",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2017-10-10T21:24:57Z",
       "side": 1,
       "message": "remove",
+      "range": {
+        "startLine": 3010,
+        "startChar": 8,
+        "endLine": 3012,
+        "endChar": 9
+      },
+      "revId": "76183f901dacdffa607eecf18fdccac0d0baebb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac5003ee_0997c440",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3012,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2017-10-12T07:58:57Z",
+      "side": 1,
+      "message": "sure will add a statement in line 3006 instead.",
+      "parentUuid": "8baf6332_3c6dc326",
       "range": {
         "startLine": 3010,
         "startChar": 8,
