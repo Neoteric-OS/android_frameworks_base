@@ -2652,6 +2652,10 @@ public class WifiManager {
                     // Ignore
                     break;
                 case AsyncChannel.CMD_CHANNEL_DISCONNECTED:
+                    if (message.arg1 == AsyncChannel.STATUS_SUCCESSFUL) {
+                        Log.i(TAG, "Channel disconnect by normal or finalize");
+                        break;
+                    }
                     Log.e(TAG, "Channel connection lost");
                     // This will cause all further async API calls on the WifiManager
                     // to fail and throw an exception

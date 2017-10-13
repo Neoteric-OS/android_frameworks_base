@@ -21,6 +21,7 @@ import android.annotation.Nullable;
 import android.util.Log;
 import android.util.Printer;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Modifier;
 
 /**
@@ -760,15 +761,22 @@ public class Handler {
             if (mMessenger != null) {
                 return mMessenger;
             }
-            mMessenger = new MessengerImpl();
+            mMessenger = new MessengerImpl(this);
             return mMessenger;
         }
     }
 
-    private final class MessengerImpl extends IMessenger.Stub {
+    private static final class MessengerImpl extends IMessenger.Stub {
+        private WeakReference<Handler> mHandlerWeakRef;
+        public MessengerImpl(Handler handler) {
+            mHandlerWeakRef = new WeakReference<Handler>(handler);
+        }
         public void send(Message msg) {
-            msg.sendingUid = Binder.getCallingUid();
-            Handler.this.sendMessage(msg);
+            Handler hanlder = mHandlerWeakRef.get();
+            if (hanlder != null) {
+                msg.sendingUid = Binder.getCallingUid();
+                hanlder.sendMessage(msg);
+            }
         }
     }
 
