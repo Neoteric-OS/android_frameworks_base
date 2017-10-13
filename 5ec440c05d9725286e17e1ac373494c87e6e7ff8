@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea8798d8_ecbc0a7b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-10-13T00:17:57Z",
+      "side": 1,
+      "message": "Boolean indicating whether to skip the call forwarding (CF) fail-to-disable dialog. The logic used to determine whether we succeeded in disabling is carrier specific, so the dialog may not always be accurate.",
+      "range": {
+        "startLine": 1131,
+        "startChar": 7,
+        "endLine": 1132,
+        "endChar": 87
+      },
+      "revId": "5ec440c05d9725286e17e1ac373494c87e6e7ff8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
