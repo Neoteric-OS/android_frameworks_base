@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "457dcdc5_f129c082",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 37
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-10-13T00:08:14Z",
+      "side": 1,
+      "message": "nit: line length",
+      "range": {
+        "startLine": 888,
+        "startChar": 101,
+        "endLine": 888,
+        "endChar": 105
+      },
+      "revId": "dedac5252153f0b1db48c100e8f75b5e642b73dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6d43d2b_143b1bfc",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 37
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-10-13T00:08:14Z",
+      "side": 1,
+      "message": "doesn\u0027t seem especially appropriate to use this. since you go override a lot of what it\u0027s doing. The mocking code inside buildIpSecConfig() is a strange side effect, and kind of an antipattern IMO, so suggest you find a cleaner way (even if you don\u0027t want to refactor all of the uses of buildIpSecConfig() right now).",
+      "range": {
+        "startLine": 225,
+        "startChar": 34,
+        "endLine": 225,
+        "endChar": 50
+      },
+      "revId": "dedac5252153f0b1db48c100e8f75b5e642b73dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52753ecb_ddc2cbbb",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 37
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-10-13T00:08:14Z",
+      "side": 1,
+      "message": "for( int direction : directions) {\n\n}",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 74
+      },
+      "revId": "dedac5252153f0b1db48c100e8f75b5e642b73dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4c7bc42_761cd3d3",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 37
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-10-13T00:08:14Z",
+      "side": 1,
+      "message": "These names are camel-cased even when it\u0027s an abbreviation, like Aead.",
+      "range": {
+        "startLine": 287,
+        "startChar": 40,
+        "endLine": 287,
+        "endChar": 43
+      },
+      "revId": "dedac5252153f0b1db48c100e8f75b5e642b73dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eeed4d5a_4f404ece",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 37
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-10-13T00:08:14Z",
+      "side": 1,
+      "message": "Not required, but this looks like a good time to add unit tests for all these combinations of illegal arguments?",
+      "range": {
+        "startLine": 287,
+        "startChar": 16,
+        "endLine": 287,
+        "endChar": 59
+      },
+      "revId": "dedac5252153f0b1db48c100e8f75b5e642b73dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e98bba6b_3e737e17",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 37
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-10-13T00:08:14Z",
+      "side": 1,
+      "message": "More important to verify the invalid combinations of IpSecService. Can you add a TODO here?",
+      "range": {
+        "startLine": 306,
+        "startChar": 26,
+        "endLine": 306,
+        "endChar": 54
+      },
+      "revId": "dedac5252153f0b1db48c100e8f75b5e642b73dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
