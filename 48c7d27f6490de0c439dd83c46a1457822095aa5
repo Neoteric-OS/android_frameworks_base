@@ -22,6 +22,30 @@
       "revId": "48c7d27f6490de0c439dd83c46a1457822095aa5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d414668_b5499cb8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3001,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2017-10-16T15:39:32Z",
+      "side": 0,
+      "message": "ro.tether.denied is checking for true due to it being empty by default. We should keep it as is.",
+      "parentUuid": "e904923e_54d4ed37",
+      "range": {
+        "startLine": 3001,
+        "startChar": 35,
+        "endLine": 3001,
+        "endChar": 94
+      },
+      "revId": "48c7d27f6490de0c439dd83c46a1457822095aa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
