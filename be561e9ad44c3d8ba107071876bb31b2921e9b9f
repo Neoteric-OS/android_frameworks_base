@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9106d63b_89e8e84f",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 39
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-16T20:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e4914c3_25f9aee4",
+      "range": {
+        "startLine": 85,
+        "startChar": 18,
+        "endLine": 85,
+        "endChar": 19
+      },
+      "revId": "be561e9ad44c3d8ba107071876bb31b2921e9b9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e8de3cc_148ea40f",
         "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
         "patchSetId": 39
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d83a0e9e_ba0ae37b",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 39
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-16T20:34:56Z",
+      "side": 1,
+      "message": "Hmm. In this case, where we are testing the service, would it make sense to change it? Should this be a test case for a potential IpSecAlgorithmTest?",
+      "parentUuid": "6e8de3cc_148ea40f",
+      "range": {
+        "startLine": 86,
+        "startChar": 86,
+        "endLine": 86,
+        "endChar": 89
+      },
+      "revId": "be561e9ad44c3d8ba107071876bb31b2921e9b9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c98f70b_d5aaa524",
         "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
         "patchSetId": 39
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-16T18:05:41Z",
       "side": 1,
       "message": "private, static, final, caps...",
+      "range": {
+        "startLine": 90,
+        "startChar": 11,
+        "endLine": 90,
+        "endChar": 12
+      },
+      "revId": "be561e9ad44c3d8ba107071876bb31b2921e9b9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e478bf4_590915bd",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 39
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-16T20:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c98f70b_d5aaa524",
       "range": {
         "startLine": 90,
         "startChar": 11,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "373f01b6_a7e61cdb",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 39
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-16T20:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c4307be_576de98a",
+      "range": {
+        "startLine": 160,
+        "startChar": 24,
+        "endLine": 160,
+        "endChar": 45
+      },
+      "revId": "be561e9ad44c3d8ba107071876bb31b2921e9b9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69985369_2dfa4ed5",
         "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
         "patchSetId": 39
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-16T18:05:41Z",
       "side": 1,
       "message": "If we\u0027re going to have these continue to stay in this function but magically re-used for verification elsewhere, then I suggest we move to calling them more-descriptive names like \"TEST_SPI_OUT\" and \"TEST_SPI_IN\". That way, when they appear elsewhere at each call site it will be obvious which constant is being used (and why).",
+      "range": {
+        "startLine": 164,
+        "startChar": 79,
+        "endLine": 164,
+        "endChar": 88
+      },
+      "revId": "be561e9ad44c3d8ba107071876bb31b2921e9b9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81125826_d22802bb",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 39
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-16T20:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69985369_2dfa4ed5",
       "range": {
         "startLine": 164,
         "startChar": 79,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "5c56bd49_d8974d81",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 39
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-16T20:34:56Z",
+      "side": 1,
+      "message": "Since this isn\u0027t attempting to test the creation of IpSecConfig, order doesn\u0027t strictly matter here. The tests where order does matter are in IpSecTransformTest.",
+      "parentUuid": "35196c5b_dc1b5d5b",
+      "range": {
+        "startLine": 293,
+        "startChar": 16,
+        "endLine": 293,
+        "endChar": 51
+      },
+      "revId": "be561e9ad44c3d8ba107071876bb31b2921e9b9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3459aaee_60d6f36e",
         "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
         "patchSetId": 39
@@ -151,6 +295,30 @@
       "writtenOn": "2017-10-16T18:05:41Z",
       "side": 1,
       "message": "By composition, do we need this?",
+      "range": {
+        "startLine": 339,
+        "startChar": 16,
+        "endLine": 339,
+        "endChar": 59
+      },
+      "revId": "be561e9ad44c3d8ba107071876bb31b2921e9b9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aade6a0f_ebada51d",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 39
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-16T20:34:56Z",
+      "side": 1,
+      "message": "Added for completeness; Just to test every possible case where AEAD \u0026 Auth|Crypt are enabled",
+      "parentUuid": "3459aaee_60d6f36e",
       "range": {
         "startLine": 339,
         "startChar": 16,
