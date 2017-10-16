@@ -363,7 +363,7 @@ public class DividerView extends FrameLayout implements OnTouchListener,
         mMinimizedShadow.layout(minimizeLeft, minimizeTop,
                 minimizeLeft + mMinimizedShadow.getMeasuredWidth(),
                 minimizeTop + mMinimizedShadow.getMeasuredHeight());
-        if (changed) {
+        if (changed && !mRemoved) {
             mWindowManagerProxy.setTouchRegion(new Rect(mHandle.getLeft(), mHandle.getTop(),
                     mHandle.getRight(), mHandle.getBottom()));
         }
