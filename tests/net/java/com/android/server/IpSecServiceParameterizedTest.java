@@ -43,7 +43,6 @@ import android.support.test.filters.SmallTest;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.Collection;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,6 +55,8 @@ public class IpSecServiceParameterizedTest {
 
     private static final int TEST_SPI_OUT = 0xD1201D;
     private static final int TEST_SPI_IN = TEST_SPI_OUT + 1;
+    private static final int MAX_NUM_ENCAP_SOCKETS = 100;
+    private static final int MAX_NUM_SPIS = 100;
 
     private final String mRemoteAddr;
 
