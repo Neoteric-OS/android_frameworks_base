@@ -242,6 +242,12 @@ public class CarrierConfigManager {
             KEY_ONLY_SINGLE_DC_ALLOWED_INT_ARRAY = "only_single_dc_allowed_int_array";
 
     /**
+     * Disable any tethering for carrier
+     */
+    public static final String
+            KEY_DISABLE_TETHERING_BOOL = "disable_tethering_bool";
+
+    /**
      * Override the platform's notion of a network operator being considered roaming.
      * Value is string array of MCCMNCs to be considered roaming for 3GPP RATs.
      */
@@ -1569,6 +1575,7 @@ public class CarrierConfigManager {
         sDefaults.putString(KEY_CARRIER_INSTANT_LETTERING_ENCODING_STRING, "");
         sDefaults.putInt(KEY_CARRIER_INSTANT_LETTERING_LENGTH_LIMIT_INT, 64);
         sDefaults.putBoolean(KEY_DISABLE_CDMA_ACTIVATION_CODE_BOOL, false);
+        sDefaults.putBoolean(KEY_DISABLE_TETHERING_BOOL, false);
         sDefaults.putBoolean(KEY_DTMF_TYPE_ENABLED_BOOL, false);
         sDefaults.putBoolean(KEY_ENABLE_DIALER_KEY_VIBRATION_BOOL, true);
         sDefaults.putBoolean(KEY_HAS_IN_CALL_NOISE_SUPPRESSION_BOOL, false);

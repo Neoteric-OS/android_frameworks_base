@@ -88,6 +88,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.os.PowerManager;
 import android.os.Process;
 import android.os.RemoteException;
@@ -100,6 +101,7 @@ import android.os.UserManager;
 import android.provider.Settings;
 import android.security.Credentials;
 import android.security.KeyStore;
+import android.telephony.CarrierConfigManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.LocalLog;
@@ -2998,9 +3000,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // gservices could set the secure setting to 1 though to enable it on a build where it
     // had previously been turned off.
     private boolean isTetheringSupported() {
-        int defaultVal = encodeBool(!mSystemProperties.get("ro.tether.denied").equals("true"));
+        int supportedByDefault = encodeBool(!mSystemProperties.get("ro.tether.denied").equals("true"));
+        // Check if CarrierConfig disables tethering
+        PersistableBundle carrierBundle = mTelephonyManager.getCarrierConfig();
+        if (carrierBundle != null && supportedByDefault == 1) {
+            supportedByDefault = encodeBool(!carrierBundle.getBoolean(
+                    CarrierConfigManager.KEY_DISABLE_TETHERING_BOOL));
+        }
         boolean tetherSupported = toBool(Settings.Global.getInt(mContext.getContentResolver(),
-                Settings.Global.TETHER_SUPPORTED, defaultVal));
+                Settings.Global.TETHER_SUPPORTED, supportedByDefault));
         boolean tetherEnabledInSettings = tetherSupported
                 && !mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_TETHERING);
 
