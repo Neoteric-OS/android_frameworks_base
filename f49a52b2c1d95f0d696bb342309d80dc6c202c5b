@@ -22,6 +22,29 @@
       "revId": "f49a52b2c1d95f0d696bb342309d80dc6c202c5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57641186_210c983e",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-10-17T01:21:20Z",
+      "side": 1,
+      "message": "hmm - not sure I like this.\n\nwe needed a special value to indicate not-set before with only int variables.  With String, not set (or set to null) is storable.  I think I\u0027d prefer that.\n\nYou already have code in the getter to maintain the MAX_VALUE behavior for that deprecated code.\n\nif((mccStr \u003d\u003d null) || (mccStr.matches(...)) {\n    mMccStr \u003d mccStr;\n} else throw(...);",
+      "range": {
+        "startLine": 116,
+        "startChar": 12,
+        "endLine": 116,
+        "endChar": 56
+      },
+      "revId": "f49a52b2c1d95f0d696bb342309d80dc6c202c5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
