@@ -72,8 +72,8 @@ public final class PdfEditor {
 
         final long size;
         try {
-            Libcore.os.lseek(input.getFileDescriptor(), 0, OsConstants.SEEK_SET);
-            size = Libcore.os.fstat(input.getFileDescriptor()).st_size;
+            Os.lseek(input.getFileDescriptor(), 0, OsConstants.SEEK_SET);
+            size = Os.fstat(input.getFileDescriptor()).st_size;
         } catch (ErrnoException ee) {
             throw new IllegalArgumentException("file descriptor not seekable");
         }
