@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9230180a_f05ea72d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3003,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-17T00:16:42Z",
+      "side": 1,
+      "message": "line too long",
+      "range": {
+        "startLine": 3003,
+        "startChar": 100,
+        "endLine": 3003,
+        "endChar": 103
+      },
+      "revId": "b9792720da9dad629579578f2b9543b559815c09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea35e540_093df0b2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3008,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-17T00:16:42Z",
+      "side": 1,
+      "message": "should this overrides the Settings.Global.TETHER_SUPPORTED config ?",
+      "range": {
+        "startLine": 3007,
+        "startChar": 33,
+        "endLine": 3008,
+        "endChar": 70
+      },
+      "revId": "b9792720da9dad629579578f2b9543b559815c09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
