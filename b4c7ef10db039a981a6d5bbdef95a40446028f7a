@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc063f1d_e4574e25",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-10-17T23:20:52Z",
+      "side": 1,
+      "message": "My big concern is the cyclical nature of having the object remove itself from the container that contains it. We have the opportunity to hoist that logic up into UserRecord or somewhere similar.\n\nOn that note, I think the proliferation of methods named \"release\" are making this code harder to follow.\n\nUserRecord#releaseUserResources (in class UserRecord, \"User\" doesn\u0027t belong in method names)\nUserRecord#releaseResourcesInArray\nManagedResource#release\nManagedResource#releaseResources (the abstract one)",
+      "range": {
+        "startLine": 561,
+        "startChar": 0,
+        "endLine": 561,
+        "endChar": 81
+      },
+      "revId": "b4c7ef10db039a981a6d5bbdef95a40446028f7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08ce0075_0cb88027",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-10-17T23:20:52Z",
+      "side": 1,
+      "message": "What is the point of this part?",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 291,
+        "endChar": 74
+      },
+      "revId": "b4c7ef10db039a981a6d5bbdef95a40446028f7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
