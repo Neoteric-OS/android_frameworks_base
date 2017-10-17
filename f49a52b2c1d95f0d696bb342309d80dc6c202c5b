@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6944827_8cd4258c",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2017-10-17T01:16:11Z",
+      "side": 1,
+      "message": "if you modify equals you need to modify hashcode",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 90
+      },
+      "revId": "f49a52b2c1d95f0d696bb342309d80dc6c202c5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
