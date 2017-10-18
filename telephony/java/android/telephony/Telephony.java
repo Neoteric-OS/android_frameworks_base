@@ -2679,7 +2679,6 @@ public final class Telephony {
          * RAT/bearer 2 and so on.
          * Bitmask for a radio tech R is (1 << (R - 1))
          * <P>Type: INTEGER</P>
-         * @hide
          */
         public static final String BEARER_BITMASK = "bearer_bitmask";
 
@@ -2746,7 +2745,6 @@ public final class Telephony {
         /**
          * The MTU size of the mobile interface to  which the APN connected
          * <p>Type: INTEGER </p>
-         * @hide
          */
         public static final String MTU = "mtu";
 
