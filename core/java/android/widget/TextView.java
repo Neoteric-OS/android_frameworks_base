@@ -2031,7 +2031,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             // not have a predefined set of sizes or if the current sizes array is empty.
             if (!mHasPresetAutoSizeValues || mAutoSizeTextSizesInPx.length == 0) {
                 int autoSizeValuesLength = 1;
-                float currentSize = Math.round(mAutoSizeMinTextSizeInPx);
+                float currentSize = mAutoSizeMinTextSizeInPx;
                 while (Math.round(currentSize + mAutoSizeStepGranularityInPx)
                         <= Math.round(mAutoSizeMaxTextSizeInPx)) {
                     autoSizeValuesLength++;
