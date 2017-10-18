@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2885d510_1e2dd09f",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1080813
+      },
+      "writtenOn": "2017-10-18T09:43:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e261b57_6eeafd66",
+      "range": {
+        "startLine": 66,
+        "startChar": 49,
+        "endLine": 66,
+        "endChar": 93
+      },
+      "revId": "931168238c908d6630f5f9ff7e0e28fbbb4b1597",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64cf3d84_5a6f5ebb",
         "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-08T19:41:01Z",
       "side": 1,
       "message": "would prefer for this to only be the case with odm (which is the only optional one): we dealt with this before by including an empty file, but the overall odm selinux CL didn\u0027t make that the case.",
+      "range": {
+        "startLine": 99,
+        "startChar": 12,
+        "endLine": 102,
+        "endChar": 13
+      },
+      "revId": "931168238c908d6630f5f9ff7e0e28fbbb4b1597",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "002c4b2c_d2548d1a",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1080813
+      },
+      "writtenOn": "2017-10-18T09:43:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64cf3d84_5a6f5ebb",
       "range": {
         "startLine": 99,
         "startChar": 12,
