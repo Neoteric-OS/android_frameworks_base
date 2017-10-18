@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f00268b5_cf8a540b",
+        "filename": "telephony/java/android/telephony/CellIdentityWcdma.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1098848
+      },
+      "writtenOn": "2017-10-18T17:22:06Z",
+      "side": 1,
+      "message": "What if both mMccStr and mMncStr are null, this method will return \"nullnull\" which is not a null value. You also need to consider one of the string is null.\n\nPlease fix it and add a unit test to cover this case.",
+      "range": {
+        "startLine": 195,
+        "startChar": 2,
+        "endLine": 200,
+        "endChar": 5
+      },
+      "revId": "e61057e33d31a08cdc909535d7d8febbed300217",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
