@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9b03513f_bbcd0308",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 37
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-18T18:25:17Z",
+      "side": 1,
+      "message": "I guess this fits with b/67638246;",
+      "parentUuid": "dc6e4e6e_0e48d17c",
+      "range": {
+        "startLine": 81,
+        "startChar": 10,
+        "endLine": 81,
+        "endChar": 57
+      },
+      "revId": "dedac5252153f0b1db48c100e8f75b5e642b73dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f6491c6_d3ab7ec9",
         "filename": "core/java/android/net/IpSecConfig.java",
         "patchSetId": 37
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-18T05:04:50Z",
       "side": 1,
       "message": "Perhaps not for this CL, but it would be nice to check that the auth algorithms are actual auth algorithms, crypto algorithms are actual crypto algorithms, etc.\n\nWe wouldn\u0027t want to allow users to specify an encryption algorithm of AUTH_HMAC_SHA1, right?",
+      "range": {
+        "startLine": 116,
+        "startChar": 17,
+        "endLine": 116,
+        "endChar": 32
+      },
+      "revId": "dedac5252153f0b1db48c100e8f75b5e642b73dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b9ce1b9_1c812697",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 37
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-18T18:25:17Z",
+      "side": 1,
+      "message": "Yep; tracked by b/65223935",
+      "parentUuid": "1f6491c6_d3ab7ec9",
       "range": {
         "startLine": 116,
         "startChar": 17,
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9795c943_d74e545b",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 37
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-18T18:25:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73e3bf98_d81ca2a1",
+      "range": {
+        "startLine": 888,
+        "startChar": 94,
+        "endLine": 888,
+        "endChar": 103
+      },
+      "revId": "dedac5252153f0b1db48c100e8f75b5e642b73dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cfc28fc_05379afb",
         "filename": "tests/net/java/android/net/IpSecTransformTest.java",
         "patchSetId": 37
@@ -129,6 +201,30 @@
       "writtenOn": "2017-10-18T05:04:50Z",
       "side": 1,
       "message": "Nit: suggest \"expected\". Also elsewhere.",
+      "range": {
+        "startLine": 66,
+        "startChar": 42,
+        "endLine": 66,
+        "endChar": 43
+      },
+      "revId": "dedac5252153f0b1db48c100e8f75b5e642b73dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87fc5913_33099afe",
+        "filename": "tests/net/java/android/net/IpSecTransformTest.java",
+        "patchSetId": 37
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-18T18:25:17Z",
+      "side": 1,
+      "message": "These tests have been removed, along with the checks in IpSecConfig; Having checks in multiple places was making it hard to test, and implementation-reliant.",
+      "parentUuid": "1cfc28fc_05379afb",
       "range": {
         "startLine": 66,
         "startChar": 42,
@@ -340,6 +436,30 @@
       "writtenOn": "2017-10-18T05:04:50Z",
       "side": 1,
       "message": "Nit: suggest removing the comment. The name of the variable already indicates it\u0027s expected :-)",
+      "range": {
+        "startLine": 296,
+        "startChar": 12,
+        "endLine": 296,
+        "endChar": 48
+      },
+      "revId": "dedac5252153f0b1db48c100e8f75b5e642b73dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d451d190_6fcf109f",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 37
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-10-18T18:25:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03b0385a_fc756601",
       "range": {
         "startLine": 296,
         "startChar": 12,
