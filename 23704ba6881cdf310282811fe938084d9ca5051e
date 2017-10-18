@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1e8f26c_f925fa52",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1026058
+      },
+      "writtenOn": "2017-10-18T17:29:46Z",
+      "side": 1,
+      "message": "might be better to just declare a required v. non-required split in the MAC_PERMISSIONS array and only check up to the optional component rather than checking substrings (you could imagine this getting unwieldy if other files were added, for example).",
+      "range": {
+        "startLine": 99,
+        "startChar": 12,
+        "endLine": 104,
+        "endChar": 13
+      },
+      "revId": "23704ba6881cdf310282811fe938084d9ca5051e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
