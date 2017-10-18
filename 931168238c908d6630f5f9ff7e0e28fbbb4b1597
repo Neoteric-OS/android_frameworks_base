@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "93ff4fbe_b34e5087",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1080813
+      },
+      "writtenOn": "2017-10-18T10:35:27Z",
+      "side": 1,
+      "message": "My original intention is to retain the backward compatibility because it\u0027s still possible for an OEM to do system-only OTA from O -\u003e P.\n\nThat\u0027s why we still keep nonplat_* in /init and libsepol.so.\nBut there might be less cases to use nonplat_mac_permissions.xml, so we can try to remove it here (to make the code clean).",
+      "parentUuid": "2885d510_1e2dd09f",
+      "range": {
+        "startLine": 66,
+        "startChar": 49,
+        "endLine": 66,
+        "endChar": 93
+      },
+      "revId": "931168238c908d6630f5f9ff7e0e28fbbb4b1597",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64cf3d84_5a6f5ebb",
         "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
         "patchSetId": 4
