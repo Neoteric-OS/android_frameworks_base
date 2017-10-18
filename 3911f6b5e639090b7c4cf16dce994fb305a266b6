@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8664e14f_b650d198",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-18T05:17:50Z",
+      "side": 1,
+      "message": "Nit: consider * 4 since truncation length is usually half the key length.",
+      "range": {
+        "startLine": 86,
+        "startChar": 89,
+        "endLine": 86,
+        "endChar": 93
+      },
+      "revId": "3911f6b5e639090b7c4cf16dce994fb305a266b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc9ea960_791981c2",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-18T05:17:50Z",
+      "side": 1,
+      "message": "CRYPT_KEY.length * 4?",
+      "range": {
+        "startLine": 90,
+        "startChar": 77,
+        "endLine": 90,
+        "endChar": 80
+      },
+      "revId": "3911f6b5e639090b7c4cf16dce994fb305a266b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2fed7d18_3d7495e7",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-18T05:17:50Z",
+      "side": 1,
+      "message": "If an exception is expected, should we fail if the exception is not thrown?",
+      "range": {
+        "startLine": 301,
+        "startChar": 76,
+        "endLine": 301,
+        "endChar": 77
+      },
+      "revId": "3911f6b5e639090b7c4cf16dce994fb305a266b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
