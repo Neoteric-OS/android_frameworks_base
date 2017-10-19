@@ -38,79 +38,63 @@ import java.util.List;
  * @hide
  */
 
-public class MMTelFeature extends ImsFeature implements IMMTelFeature {
+public class MMTelFeature extends ImsFeature {
 
-    @Override
     public int startSession(PendingIntent incomingCallIntent, IImsRegistrationListener listener) {
         return 0;
     }
 
-    @Override
     public void endSession(int sessionId) {
     }
 
-    @Override
     public boolean isConnected(int callSessionType, int callType) {
         return false;
     }
 
-    @Override
     public boolean isOpened() {
         return false;
     }
 
-    @Override
     public void addRegistrationListener(IImsRegistrationListener listener) {
     }
 
-    @Override
     public void removeRegistrationListener(IImsRegistrationListener listener) {
     }
 
-    @Override
     public ImsCallProfile createCallProfile(int sessionId, int callSessionType, int callType) {
         return null;
     }
 
-    @Override
     public IImsCallSession createCallSession(int sessionId, ImsCallProfile profile,
             IImsCallSessionListener listener) {
         return null;
     }
 
-    @Override
     public IImsCallSession getPendingCallSession(int sessionId, String callId) {
         return null;
     }
 
-    @Override
     public IImsUt getUtInterface() {
         return null;
     }
 
-    @Override
     public IImsConfig getConfigInterface() {
         return null;
     }
 
-    @Override
     public void turnOnIms() {
     }
 
-    @Override
     public void turnOffIms() {
     }
 
-    @Override
     public IImsEcbm getEcbmInterface() {
         return null;
     }
 
-    @Override
     public void setUiTTYMode(int uiTtyMode, Message onComplete) {
     }
 
-    @Override
     public IImsMultiEndpoint getMultiEndpointInterface() {
         return null;
     }
