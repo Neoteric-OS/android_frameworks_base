@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "beda4ebb_1e1387e4",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2017-10-19T01:06:25Z",
+      "side": 1,
+      "message": "Seems strange to me this is neither static nor in an anonymous namespace - but I guess you\u0027re only keeping up the style of the file.",
+      "range": {
+        "startLine": 578,
+        "startChar": 0,
+        "endLine": 578,
+        "endChar": 21
+      },
+      "revId": "b7fe694a95a9e5b15234d4ba3b0d291d63d6dc6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
