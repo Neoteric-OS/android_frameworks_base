@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "feb9d1da_54ec5358",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-10-19T19:48:39Z",
+      "side": 1,
+      "message": "Sorry I misread the code, I thought you were throwing an exception even in case of null. This LGTM.",
+      "parentUuid": "477b0cef_3878ae75",
+      "range": {
+        "startLine": 103,
+        "startChar": 40,
+        "endLine": 104,
+        "endChar": 31
+      },
+      "revId": "f95153c5d2bdbe5551e929c4a3921b88dadd7680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "018e9857_80163c8f",
         "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
         "patchSetId": 20
