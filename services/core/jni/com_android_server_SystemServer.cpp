@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#define LOG_TAG "system_server_jni"
+
 #include <jni.h>
 #include <nativehelper/JNIHelp.h>
 
@@ -28,9 +30,51 @@
 #include <utils/misc.h>
 #include <utils/AndroidThreads.h>
 
+static struct sigaction oldTERMaction;
+
+/* Trigger System Dump from /proc/sysrq-trigger */
+static void do_system_dump() {
+  int fd = TEMP_FAILURE_RETRY(open("/proc/sysrq-trigger", O_WRONLY));
+  if (fd >= 0) {
+    int result=0;
+    if ((result = TEMP_FAILURE_RETRY(write(fd, "c", 1)) != 1)) {
+      ALOGD("Sysrq-trigger is set, crash triggerred");
+      close(fd);
+    } else {
+      ALOGE("Failed set sysrq-trigger: %d", result);
+      close(fd);
+    }
+  } else {
+    ALOGE("Failed to open sysrq-trigger");
+  }
+}
+
+static void recv_sigterm_handler(int sig, siginfo_t *info, void *v)
+{
+    if (info != NULL) {
+        ALOGE("The system_server process was killed by pid %d, code %d.\n",
+              info->si_pid, info->si_code);
+    } else {
+        ALOGE("The system_server process was killed.\n");
+    }
+
+    do_system_dump();
+
+    ALOGD("Do default behavior");
+    sigaction(sig, &oldTERMaction, NULL);
+    raise(sig);
+}
+
 namespace android {
 
 static void android_server_SystemServer_startSensorService(JNIEnv* /* env */, jobject /* clazz */) {
+    // Handle SIGTERM here to crash the phone when this process is killed.
+    struct sigaction action;
+    sigemptyset(&action.sa_mask);
+    action.sa_sigaction = recv_sigterm_handler;
+    action.sa_flags = SA_SIGINFO;
+    sigaction(SIGTERM, &action, &oldTERMaction);
+
     char propBuf[PROPERTY_VALUE_MAX];
     property_get("system_init.startsensorservice", propBuf, "1");
     if (strcmp(propBuf, "1") == 0) {
