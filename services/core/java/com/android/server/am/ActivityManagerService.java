@@ -560,6 +560,8 @@ public class ActivityManagerService extends IActivityManager.Stub
 
     private String mDboxText = null;
 
+    private static final int MAX_RDTAG_LEN = 8192;
+
     // Access modes for handleIncomingUser.
     static final int ALLOW_NON_FULL = 0;
     static final int ALLOW_NON_FULL_IN_PROFILE = 1;
@@ -14786,11 +14788,28 @@ public class ActivityManagerService extends IActivityManager.Stub
         if (Debug.isDebuggerConnected()) {
             sb.append("Debugger: Connected\n");
         }
+        BufferedReader br = null;
+        String uuid = "none";
+        try {
+            br = new BufferedReader(new FileReader("/proc/sys/kernel/random/uuid"));
+            uuid = br.readLine();
+        } catch (IOException e) {
+            Slog.w(TAG, "Couldn't read uuid");
+        } finally {
+            try {
+                if (br != null) br.close();
+            } catch (IOException ex) {}
+        }
+        sb.append("UUID: ").append(uuid).append("\n");
         Slog.d(TAG, String.format("New dropbox entry: %s, %s, %s",
             processName != null ? processName : "Unknown", dropboxTag, uuid));
 
         if (errorHandlingInfo.mDebugBuild && errorHandlingInfo.mSystemDump) {
             Slog.d(TAG, "Prepare for system dump");
+            sb.append("SystemDump: requested\n");
+            // Store dropbox uuid and tag to later be able to match dropbox entry and systemdump
+            writeRdTag("rdinfo_db_uuid", uuid);
+            writeRdTag("rdinfo_db_tag", dropboxTag + "@" + System.currentTimeMillis());
         }
         sb.append("\n");
 
@@ -14871,6 +14890,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             // application is still loaded in the memory at dump
             if (errorHandlingInfo.mSystemDump) {
                 Slog.i(TAG, "A system dump is comming => Stay in memory");
+                writeRdTag("dropbox", uuid);
             }
         } else {
             worker.start();
@@ -24416,6 +24436,36 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
     }
 
+    private void writeRdTag(String key, int value) {
+        writeRdTag(key, String.valueOf(value));
+    }
+
+    private void writeRdTag(String key, String value) {
+        FileOutputStream rdtag = null;
+        try {
+            rdtag = new FileOutputStream("/proc/rdtag");
+            StringBuilder rdTagData = new StringBuilder(key);
+            rdTagData.append(' ');
+            if (value.length() > MAX_RDTAG_LEN-rdTagData.length()) {
+                rdTagData.append(value.substring(0, MAX_RDTAG_LEN-rdTagData.length()));
+            } else {
+                rdTagData.append(value);
+            }
+
+            rdtag.write(rdTagData.toString().getBytes());
+
+        } catch (IOException e) {
+            Slog.e(TAG, "Couldn't write to rdtag: (" + key + ") : " + e);
+        } finally {
+            try {
+                if (rdtag != null) {
+                    rdtag.close();
+                    rdtag = null;
+                }
+            } catch (IOException e) {}
+        }
+    }
+
     public static class ErrorHandlingInfo {
         public ErrorHandlingInfo(final String pn, final String dbt, final String et) {
             mProcessName = pn;
@@ -24423,6 +24473,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             mEventType = et;
             mDebugBuild = Build.TYPE.equals("eng") || Build.TYPE.equals("userdebug");
             mSystemDump = false;
+            mCrashLevel = 0 ;
         }
         public final String mProcessName;
         public final String mDropboxType;
@@ -24431,6 +24482,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         public boolean mSystemDump;
         public boolean mSystemCrash;
         public boolean mSystemAppCrash;
+        public int mCrashLevel;
     }
 
     public static ErrorHandlingInfo getErrorHandlingInfo(
@@ -24441,8 +24493,11 @@ public class ActivityManagerService extends IActivityManager.Stub
         info.mSystemAppCrash = dropboxTag.startsWith("system_app");
         info.mSystemCrash = dropboxTag.startsWith("system_") && !info.mSystemAppCrash;
 
+        info.mCrashLevel = SystemProperties.getInt("persist.sys.semc.crashlevel", 0);
         if (!info.mEventType.equals("wtf") && !info.mEventType.equals("lowmem") &&
-                (!info.mDebugBuild && info.mSystemCrash)) {
+                ((!info.mDebugBuild && info.mSystemCrash) ||
+                 (info.mDebugBuild && ((info.mCrashLevel >= 2) ||
+                    (info.mCrashLevel >= 0 && info.mSystemCrash))) )) {
             /*
              * Do system dump:
              * never for wtf or lowmem crashes
@@ -24508,6 +24563,19 @@ public class ActivityManagerService extends IActivityManager.Stub
             crashType = 10;  // System crash
         } else if (errorInfo.mSystemAppCrash) {
             crashType = 17;  // System app crash
+        }
+
+        writeRdTag("rdinfo_type", crashType);
+
+        if (pn != null) {
+            writeRdTag("rdinfo_processname", pn);
+        }
+
+        if (errorInfo.mDebugBuild) {
+            if (mDboxText != null) {
+                Slog.i(TAG, "Store dropbox text to rdtag");
+                writeRdTag("rdinfo_log", mDboxText);
+            }
         }
 
         try {
