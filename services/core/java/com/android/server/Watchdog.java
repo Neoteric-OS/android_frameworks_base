@@ -530,8 +530,13 @@ public class Watchdog extends Thread {
                 };
             dropboxThread.start();
             try {
-                dropboxThread.join(2000);  // wait up to 2 seconds for it to return.
-            } catch (InterruptedException ignored) {}
+                dropboxThread.join(8000);  // wait up to 8 seconds for it to return.
+                if (dropboxThread.isAlive()) {
+                    Slog.w(TAG, "dropbox thread timeout!");
+                }
+            } catch (InterruptedException ignored) {
+                Slog.w(TAG, "dropbox thread not finished?");
+            }
 
             IActivityController controller;
             synchronized (this) {
@@ -573,6 +578,15 @@ public class Watchdog extends Thread {
                     }
                 }
                 Slog.w(TAG, "*** GOODBYE!");
+
+                // Check if we should do system dump or not
+                final ActivityManagerService.ErrorHandlingInfo errorHandlingInfo =
+                    ActivityManagerService.getErrorHandlingInfo(
+                        "system_server", "system_server_watchdog", "watchdog");
+                if (errorHandlingInfo.mSystemDump) {
+                    mActivity.forceCrashDump(errorHandlingInfo);
+                }
+
                 Process.killProcess(Process.myPid());
                 System.exit(10);
             }

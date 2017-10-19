@@ -417,11 +417,14 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -554,6 +557,8 @@ public class ActivityManagerService extends IActivityManager.Stub
     // Assumes logcat entries average around 100 bytes; that's not perfect stack traces count
     // as one line, but close enough for now.
     static final int RESERVED_BYTES_PER_LOGCAT_LINE = 100;
+
+    private String mDboxText = null;
 
     // Access modes for handleIncomingUser.
     static final int ALLOW_NON_FULL = 0;
@@ -1704,6 +1709,8 @@ public class ActivityManagerService extends IActivityManager.Stub
     UnsupportedDisplaySizeDialog mUnsupportedDisplaySizeDialog;
     long mLastMemUsageReportTime = 0;
 
+    private FileWriter mSysrqFileWriter = null;
+
     /**
      * Flag whether the current user is a "monkey", i.e. whether
      * the UI is driven by a UI automation tool.
@@ -2847,6 +2854,10 @@ public class ActivityManagerService extends IActivityManager.Stub
     private void start() {
         removeAllProcessGroups();
         mProcessCpuThread.start();
+        try {
+            mSysrqFileWriter = new FileWriter("/proc/sysrq-trigger");
+        } catch (IOException e) {
+        }
 
         mBatteryStatsService.publish();
         mAppOpsService.publish(mContext);
@@ -14716,8 +14727,8 @@ public class ActivityManagerService extends IActivityManager.Stub
      * @param dataFile text file to include in the report, null if none
      * @param crashInfo giving an application stack trace, null if absent
      */
-    public void addErrorToDropBox(String eventType,
-            ProcessRecord process, String processName, ActivityRecord activity,
+    public void addErrorToDropBox(final String eventType,
+            ProcessRecord process, final String processName, ActivityRecord activity,
             ActivityRecord parent, String subject,
             final String report, final File dataFile,
             final ApplicationErrorReport.CrashInfo crashInfo) {
@@ -14729,7 +14740,14 @@ public class ActivityManagerService extends IActivityManager.Stub
         final DropBoxManager dbox = mContext.getSystemService(DropBoxManager.class);
 
         // Exit early if the dropbox isn't configured to accept this report type.
-        final String dropboxTag = processClass(process) + "_" + eventType;
+        final String dropboxTag;
+        if (eventType.equals("crash")
+                && null == process
+                && !"system_server".equals(processName)) {
+            dropboxTag = "unknown_app" + "_" + eventType;
+        } else {
+            dropboxTag = processClass(process) + "_" + eventType;
+        }
         if (dbox == null || !dbox.isTagEnabled(dropboxTag)) return;
 
         // Rate-limit how often we're willing to do the heavy lifting below to
@@ -14741,6 +14759,9 @@ public class ActivityManagerService extends IActivityManager.Stub
         } else {
             if (mWtfClusterCount++ >= 5) return;
         }
+
+        final ErrorHandlingInfo errorHandlingInfo =
+                getErrorHandlingInfo(processName, dropboxTag, eventType);
 
         final StringBuilder sb = new StringBuilder(1024);
         appendDropBoxProcessHeaders(process, processName, sb);
@@ -14765,6 +14786,12 @@ public class ActivityManagerService extends IActivityManager.Stub
         if (Debug.isDebuggerConnected()) {
             sb.append("Debugger: Connected\n");
         }
+        Slog.d(TAG, String.format("New dropbox entry: %s, %s, %s",
+            processName != null ? processName : "Unknown", dropboxTag, uuid));
+
+        if (errorHandlingInfo.mDebugBuild && errorHandlingInfo.mSystemDump) {
+            Slog.d(TAG, "Prepare for system dump");
+        }
         sb.append("\n");
 
         // Do the rest in a worker thread to avoid blocking the caller on I/O
@@ -14783,8 +14810,15 @@ public class ActivityManagerService extends IActivityManager.Stub
 
                 if (dataFile != null && maxDataFileSize > 0) {
                     try {
-                        sb.append(FileUtils.readTextFile(dataFile, maxDataFileSize,
-                                    "\n\n[[TRUNCATED]]"));
+                        Slog.d(TAG, "Append trace to dropbox");
+                        if (dropboxTag.startsWith("system_") &&
+                            !dropboxTag.startsWith("system_app")) {
+                            sb.append(FileUtils.readTextFile(dataFile, 2 * maxDataFileSize,
+                                      "\n\n[[TRUNCATED]]"));
+                        } else {
+                            sb.append(FileUtils.readTextFile(dataFile, maxDataFileSize,
+                                      "\n\n[[TRUNCATED]]"));
+                        }
                     } catch (IOException e) {
                         Slog.e(TAG, "Error reading " + dataFile, e);
                     }
@@ -14819,14 +14853,25 @@ public class ActivityManagerService extends IActivityManager.Stub
                     }
                 }
 
-                dbox.addText(dropboxTag, sb.toString());
+                mDboxText = sb.toString();
+                dbox.addText(dropboxTag, mDboxText);
+                if (errorHandlingInfo.mSystemDump &&
+                    !(errorHandlingInfo.mEventType.equals("watchdog") &&
+                      errorHandlingInfo.mProcessName.equals("system_server"))) {
+                    // system_server_watchdog will be handled from the watchdog thread
+                    forceCrashDump(errorHandlingInfo);
+                }
             }
         };
 
-        if (process == null) {
+        if (process == null || errorHandlingInfo.mSystemDump) {
             // If process is null, we are being called from some internal code
             // and may be about to die -- run this synchronously.
-            worker.run();
+            // Or a system dump will be requested => run so the crashing
+            // application is still loaded in the memory at dump
+            if (errorHandlingInfo.mSystemDump) {
+                Slog.i(TAG, "A system dump is comming => Stay in memory");
+            }
         } else {
             worker.start();
         }
@@ -24368,6 +24413,121 @@ public class ActivityManagerService extends IActivityManager.Stub
                 return mUserController.getCurrentUserIdLocked();
             }
             return mLastResumedActivity.userId;
+        }
+    }
+
+    public static class ErrorHandlingInfo {
+        public ErrorHandlingInfo(final String pn, final String dbt, final String et) {
+            mProcessName = pn;
+            mDropboxType = dbt;
+            mEventType = et;
+            mDebugBuild = Build.TYPE.equals("eng") || Build.TYPE.equals("userdebug");
+            mSystemDump = false;
+        }
+        public final String mProcessName;
+        public final String mDropboxType;
+        public final String mEventType;
+        public final boolean mDebugBuild;
+        public boolean mSystemDump;
+        public boolean mSystemCrash;
+        public boolean mSystemAppCrash;
+    }
+
+    public static ErrorHandlingInfo getErrorHandlingInfo(
+            final String processName,
+            final String dropboxTag,
+            final String eventType) {
+        ErrorHandlingInfo info = new ErrorHandlingInfo(processName, dropboxTag, eventType);
+        info.mSystemAppCrash = dropboxTag.startsWith("system_app");
+        info.mSystemCrash = dropboxTag.startsWith("system_") && !info.mSystemAppCrash;
+
+        if (!info.mEventType.equals("wtf") && !info.mEventType.equals("lowmem") &&
+                (!info.mDebugBuild && info.mSystemCrash)) {
+            /*
+             * Do system dump:
+             * never for wtf or lowmem crashes
+             * for all application if crashlevel is >= 2
+             * for system (server) crashes if crashlevel >= 0 or for user build
+             */
+            info.mSystemDump = true;
+        }
+
+        return info;
+    }
+
+    public void forceCrashDump(ErrorHandlingInfo errorInfo) {
+        String pn;
+        if (errorInfo.mSystemCrash) {
+            pn = String.format("%s (%s)", errorInfo.mProcessName, errorInfo.mEventType);
+        } else {
+            pn = errorInfo.mProcessName;
+        }
+
+        Slog.d(TAG, "System dump requested by: " + pn);
+
+        Thread syncThread = new Thread("Sync") {
+            public void run() {
+              /* Sync file system to flash the data which is written just before the
+               * crash.
+               */
+                java.lang.Process p = null;
+                try {
+                    Slog.d(TAG, "Sync fs");
+                    p = Runtime.getRuntime().exec("sync");
+                    try { p.getOutputStream().close(); } catch (IOException e) {}
+                    try { p.getErrorStream().close(); } catch (IOException e) {}
+                    try { p.getInputStream().close(); } catch (IOException e) {}
+                    p.waitFor();
+                    Slog.d(TAG, "Sync done");
+                } catch (Exception e) {
+                    // This code is an emergency path to crash MUT. The system already
+                    // caused fatal error, and then calls this function to create a
+                    // crash dump. This function must run below code to crash, even if
+                    // failed to execute sync command.
+                    // Therefore, ignore all exception, here.
+                    Slog.e(TAG, "Failed to execute 'sync' command : " + e);
+                } finally {
+                    if (p != null) p.destroy();
+                }
+            };
+        };
+        syncThread.start();
+        try {
+            syncThread.join(4000);
+            if (syncThread.isAlive()) {
+                Slog.i(TAG, "Sync thread still alive!");
+            } else {
+                Slog.i(TAG, "Continue force dump");
+            }
+        } catch (InterruptedException ignored) {
+            Slog.w(TAG, "sync thread not finished?");
+        }
+
+        int crashType = 18;  // Java crash
+        if (errorInfo.mSystemCrash) {
+            crashType = 10;  // System crash
+        } else if (errorInfo.mSystemAppCrash) {
+            crashType = 17;  // System app crash
+        }
+
+        try {
+            Slog.i(TAG, "Do sysrq");
+            SystemClock.sleep(1000); // Just wait a second to let the dropbox file be saved
+            if (mSysrqFileWriter != null) {
+                mSysrqFileWriter.write("c");
+            }
+        } catch (IOException e) {
+            Slog.e(TAG, "Trigger crash dump failed: " + e);
+        } finally {
+            try {
+                if (mSysrqFileWriter != null) {
+                    mSysrqFileWriter.close();
+                    mSysrqFileWriter = null;
+                }
+            } catch (IOException e) {}
+            // Sit and wait for the system dump/restart
+            SystemClock.sleep(5000);
+            Slog.e(TAG, "Trigger crash dump timeout!");
         }
     }
 
