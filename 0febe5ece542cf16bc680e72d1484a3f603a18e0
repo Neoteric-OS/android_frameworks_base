@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac69f2ea_0ae607b8",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-19T04:41:11Z",
+      "side": 1,
+      "message": "This check is correct, but by itself it does not privide certainty to the reader that setting auth and aead together is invalid.  The call to createTransportModeTransform could be failing for any other reason, and in that case, this test wouldn\u0027t actually be testing the code it\u0027s supposed to be testing.\n\nSuggest adding another test case that\u0027s identical in pretty much every way that proves that when you do things right they work. Something like:\n\n    @Test\n    public void testCreateValidConfigAuthWithCrypt() throws Exception {\n        IpSecConfig ipSecConfig \u003d new IpSecConfig();\n        addDefaultSpisAndRemoteAddrToIpSecConfig(ipSecConfig);\n\n        for (int direction : DIRECTIONS) {\n            ipSecConfig.setAuthentication(direction, AUTH_ALGO);\n            ipSecConfig.setEncryption(direction, CRYPT_ALGO);\n        }\n\n        mIpSecService.createTransportModeTransform(ipSecConfig, new Binder());\n        // No exceptions? Good.\n    }",
+      "range": {
+        "startLine": 308,
+        "startChar": 17,
+        "endLine": 308,
+        "endChar": 50
+      },
+      "revId": "0febe5ece542cf16bc680e72d1484a3f603a18e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
