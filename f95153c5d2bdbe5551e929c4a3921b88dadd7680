@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3729dc1_f8e3b7ba",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-10-19T16:22:42Z",
+      "side": 1,
+      "message": "Curious why CharSequence and not String?",
+      "range": {
+        "startLine": 168,
+        "startChar": 11,
+        "endLine": 168,
+        "endChar": 23
+      },
+      "revId": "f95153c5d2bdbe5551e929c4a3921b88dadd7680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "336734f9_dcf582b8",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-10-19T16:22:42Z",
+      "side": 1,
+      "message": "You can keep the earlier check and add TextUtils.equals() for alpha long and short?",
+      "revId": "f95153c5d2bdbe5551e929c4a3921b88dadd7680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2936625f_ccd03ff8",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-10-19T16:22:42Z",
+      "side": 1,
+      "message": "or null?\napplies to other files as well.",
+      "range": {
+        "startLine": 103,
+        "startChar": 40,
+        "endLine": 104,
+        "endChar": 31
+      },
+      "revId": "f95153c5d2bdbe5551e929c4a3921b88dadd7680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "018e9857_80163c8f",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-10-19T16:22:42Z",
+      "side": 1,
+      "message": "same comment as the other file here, and I believe applies to all files.",
+      "revId": "f95153c5d2bdbe5551e929c4a3921b88dadd7680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "046cc502_9594b474",
+        "filename": "telephony/java/android/telephony/CellIdentityLte.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-10-19T16:22:42Z",
+      "side": 1,
+      "message": "nit: use add space after ,",
+      "range": {
+        "startLine": 75,
+        "startChar": 45,
+        "endLine": 75,
+        "endChar": 46
+      },
+      "revId": "f95153c5d2bdbe5551e929c4a3921b88dadd7680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ceccdd61_6f0b6717",
+        "filename": "telephony/java/android/telephony/CellIdentityWcdma.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-10-19T16:22:42Z",
+      "side": 1,
+      "message": "long line",
+      "revId": "f95153c5d2bdbe5551e929c4a3921b88dadd7680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
