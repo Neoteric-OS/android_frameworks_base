@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "250efbdf_d9adaa3e",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-19T17:33:19Z",
+      "side": 1,
+      "message": "Tyler suggested to use CharSequence since this is a string which can be displayed to the user.",
+      "parentUuid": "c3729dc1_f8e3b7ba",
+      "range": {
+        "startLine": 168,
+        "startChar": 11,
+        "endLine": 168,
+        "endChar": 23
+      },
+      "revId": "f95153c5d2bdbe5551e929c4a3921b88dadd7680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "336734f9_dcf582b8",
         "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
         "patchSetId": 20
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-19T16:22:42Z",
       "side": 1,
       "message": "You can keep the earlier check and add TextUtils.equals() for alpha long and short?",
+      "revId": "f95153c5d2bdbe5551e929c4a3921b88dadd7680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f165f9f_d35824e4",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-19T17:33:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "336734f9_dcf582b8",
       "revId": "f95153c5d2bdbe5551e929c4a3921b88dadd7680",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "477b0cef_3878ae75",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-19T17:33:19Z",
+      "side": 1,
+      "message": "Robert pointed out that we want to accept null as it did in the past. So if the input of MCC/MNC is null, it would be stored as null. But user will get Integer.MAX_VALUE if the user call getMcc()/getMnc(), and the user will get null if the user call getMccStr()/getMncStr() as we discussed in the previous comments. And I have already tested the empty MCC/MNC case in the Unit tests.",
+      "parentUuid": "2936625f_ccd03ff8",
+      "range": {
+        "startLine": 103,
+        "startChar": 40,
+        "endLine": 104,
+        "endChar": 31
+      },
+      "revId": "f95153c5d2bdbe5551e929c4a3921b88dadd7680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "018e9857_80163c8f",
         "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
         "patchSetId": 20
@@ -76,6 +142,24 @@
       "writtenOn": "2017-10-19T16:22:42Z",
       "side": 1,
       "message": "same comment as the other file here, and I believe applies to all files.",
+      "revId": "f95153c5d2bdbe5551e929c4a3921b88dadd7680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "759e093e_025eb82c",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-19T17:33:19Z",
+      "side": 1,
+      "message": "Thanks so much! I\u0027ve tried a lot to find this method.",
+      "parentUuid": "018e9857_80163c8f",
       "revId": "f95153c5d2bdbe5551e929c4a3921b88dadd7680",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "065a4da9_5db9d59d",
+        "filename": "telephony/java/android/telephony/CellIdentityLte.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-19T17:33:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "046cc502_9594b474",
+      "range": {
+        "startLine": 75,
+        "startChar": 45,
+        "endLine": 75,
+        "endChar": 46
+      },
+      "revId": "f95153c5d2bdbe5551e929c4a3921b88dadd7680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ceccdd61_6f0b6717",
         "filename": "telephony/java/android/telephony/CellIdentityWcdma.java",
         "patchSetId": 20
@@ -116,6 +224,24 @@
       "writtenOn": "2017-10-19T16:22:42Z",
       "side": 1,
       "message": "long line",
+      "revId": "f95153c5d2bdbe5551e929c4a3921b88dadd7680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e11e0a3_59406221",
+        "filename": "telephony/java/android/telephony/CellIdentityWcdma.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-19T17:33:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ceccdd61_6f0b6717",
       "revId": "f95153c5d2bdbe5551e929c4a3921b88dadd7680",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
