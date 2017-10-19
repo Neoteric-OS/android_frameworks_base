@@ -3948,8 +3948,8 @@ android.telephony.VisualVoicemailSmsFilterSettings
 android.telephony.VoLteServiceState
 android.telephony.VoLteServiceState$1
 android.telephony.gsm.GsmCellLocation
-android.telephony.ims.ImsServiceProxy$StatusCallback
-android.telephony.ims.ImsServiceProxyCompat
+com.android.ims.ImsServiceProxy$StatusCallback
+com.android.ims.ImsServiceProxyCompat
 android.telephony.ims.feature.IMMTelFeature
 android.telephony.ims.stub.ImsConfigImplBase
 android.telephony.ims.stub.ImsEcbmImplBase
@@ -5173,7 +5173,7 @@ com.android.ims.ImsConfigListener$Stub
 com.android.ims.ImsConnectionStateListener
 com.android.ims.ImsEcbm
 com.android.ims.ImsEcbm$ImsEcbmListenerProxy
-com.android.ims.ImsEcbmStateListener
+com.android.ims.ImsEcbmStateCallback
 com.android.ims.ImsException
 com.android.ims.ImsExternalCallStateListener
 com.android.ims.ImsManager

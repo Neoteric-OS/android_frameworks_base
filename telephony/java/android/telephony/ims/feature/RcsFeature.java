@@ -22,7 +22,7 @@ package android.telephony.ims.feature;
  * @hide
  */
 
-public class RcsFeature extends ImsFeature implements IRcsFeature {
+public class RcsFeature extends ImsFeature {
 
     public RcsFeature() {
         super();
