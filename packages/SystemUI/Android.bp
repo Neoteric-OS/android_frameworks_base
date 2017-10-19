@@ -527,6 +527,7 @@ android_library {
         "bcsmartspace-google",
     ],
     manifest: "AndroidManifest.xml",
+    additional_manifests: ["NeotericManifest.xml"],
     libs: [
         "android.car",
         "extphonelib",
