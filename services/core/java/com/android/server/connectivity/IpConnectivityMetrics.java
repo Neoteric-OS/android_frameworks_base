@@ -227,7 +227,7 @@ final public class IpConnectivityMetrics extends SystemService {
      * or using protobuf text format.
      */
     private void cmdList(FileDescriptor fd, PrintWriter pw, String[] args) {
-        final ArrayList<ConnectivityMetricsEvent> events;
+        ArrayList<ConnectivityMetricsEvent> events;
         synchronized (mLock) {
             events = new ArrayList(mBuffer);
         }
@@ -249,6 +249,7 @@ final public class IpConnectivityMetrics extends SystemService {
         if (mNetdListener != null) {
             mNetdListener.list(pw);
         }
+        mDefaultNetworkMetrics.listEvents(pw);
     }
 
     /**
