@@ -249,6 +249,7 @@ final public class IpConnectivityMetrics extends SystemService {
         if (mNetdListener != null) {
             mNetdListener.list(pw);
         }
+        mDefaultNetworkMonitor.listEvents(pw);
     }
 
     /**
