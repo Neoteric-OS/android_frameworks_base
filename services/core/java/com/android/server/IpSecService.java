@@ -55,6 +55,7 @@ import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.net.Inet4Address;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -418,9 +419,12 @@ public class IpSecService extends IIpSecService.Stub {
                                     mConfig.getRemoteAddress(),
                                     spi);
                 } catch (ServiceSpecificException e) {
+                    Log.e(TAG, "Failed to delete SA with ID: " + mResourceId);
                     // FIXME: get the error code and throw is at an IOException from Errno Exception
+                    //throw new Exception("Cannot delete tranform " + e.toString());
                 } catch (RemoteException e) {
                     Log.e(TAG, "Failed to delete SA with ID: " + mResourceId);
+                    //throw new Exception("Cannot delete tranform " + e.toString());
                 }
             }
 
@@ -726,7 +730,7 @@ public class IpSecService extends IIpSecService.Stub {
         T record = resArray.getAndCheckOwner(resourceId);
 
         if (record == null) {
-            throw new IllegalArgumentException(
+            throw new IllegalArgumentException("resArray size " + resArray.mArray.size() + " " +
                     typeName + " " + resourceId + " is not available to be deleted");
         }
 
@@ -944,13 +948,13 @@ public class IpSecService extends IIpSecService.Stub {
                                 (c.getNetwork() != null) ? c.getNetwork().getNetworkHandle() : 0,
                                 spi,
                                 (auth != null) ? auth.getName() : "",
-                                (auth != null) ? auth.getKey() : null,
+                                (auth != null) ? auth.getKey() : new byte[]{},
                                 (auth != null) ? auth.getTruncationLengthBits() : 0,
                                 (crypt != null) ? crypt.getName() : "",
-                                (crypt != null) ? crypt.getKey() : null,
+                                (crypt != null) ? crypt.getKey() : new byte[]{},
                                 (crypt != null) ? crypt.getTruncationLengthBits() : 0,
                                 (authCrypt != null) ? authCrypt.getName() : "",
-                                (authCrypt != null) ? authCrypt.getKey() : null,
+                                (authCrypt != null) ? authCrypt.getKey() : new byte[]{},
                                 (authCrypt != null) ? authCrypt.getTruncationLengthBits() : 0,
                                 encapType,
                                 encapLocalPort,
@@ -1025,31 +1029,38 @@ public class IpSecService extends IIpSecService.Stub {
     @Override
     public void removeTransportModeTransform(ParcelFileDescriptor socket, int resourceId)
             throws RemoteException, IllegalArgumentException {
-        TransformRecord info = mTransformRecords.getAndCheckOwner(resourceId);
+        //TransformRecord info = mTransformRecords.getAndCheckOwner(resourceId);
 
-        if (info == null) {
+        /*if (info == null) {
             throw new IllegalArgumentException("Transform " + resourceId + " is not active");
-        }
-
-        IpSecConfig c = info.getConfig();
+        }*/
+        //IpSecConfig c = info.getConfig();
+        InetAddress addr = null;
         try {
+            addr = ((InetSocketAddress) Os.getsockname(socket.getFileDescriptor())).getAddress();
             for (int direction : DIRECTIONS) {
                 mSrvConfig
                         .getNetdInstance()
                         .ipSecApplyTransportModeTransform(
                                 socket.getFileDescriptor(),
-                                resourceId,
+                                0,
                                 direction,
-                                (c.getLocalAddress() != null)
-                                        ? c.getLocalAddress()
-                                        : "",
-                                (c.getRemoteAddress() != null)
-                                        ? c.getRemoteAddress()
-                                        : "",
+                                //(c.getLocalAddress() != null)
+                                //        ? c.getLocalAddress()
+                                //        : "",
+                                (addr instanceof Inet4Address)
+                                ? "0.0.0.0" : "::",
+                                //(c.getRemoteAddress() != null)
+                                //        ? c.getRemoteAddress()
+                                //        : "",
+                                (addr instanceof Inet4Address)
+                                ? "0.0.0.0" : "::",
                                 0);
             }
         } catch (ServiceSpecificException e) {
-            // FIXME: get the error code and throw is at an IOException from Errno Exception
+            throw new IllegalArgumentException("Cannot remove transform: " + e.toString() + " sockaddr " + addr.toString());
+        } catch (ErrnoException e) {
+            throw new IllegalArgumentException("Cannot remove transform: " + e.toString() + " sockaddr " + addr.toString());
         }
     }
 
