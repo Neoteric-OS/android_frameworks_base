@@ -48,6 +48,8 @@ LOCAL_CERTIFICATE := platform
 FrameworkCoreTests_intermediates := $(call intermediates-dir-for,APPS,$(LOCAL_PACKAGE_NAME))/test_apks/res
 LOCAL_RESOURCE_DIR := $(FrameworkCoreTests_intermediates) $(LOCAL_PATH)/res
 
+LOCAL_JACOCO_EXCLUDE_FILES := tests/api/java/net/InvalidJar.jar
+
 include $(BUILD_PACKAGE)
 # Rules to copy all the test apks to the intermediate raw resource directory
 FrameworkCoreTests_all_apks_res := $(addprefix $(FrameworkCoreTests_intermediates)/raw/, \
