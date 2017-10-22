@@ -67,6 +67,7 @@ public class DefaultNetworkMonitor {
     }
 
     public synchronized void listEvents(PrintWriter pw) {
+        pw.println("default network events:");
         long localTimeMs = System.currentTimeMillis();
         long timeMs = SystemClock.elapsedRealtime();
         for (DefaultNetworkEvent ev : mEventsLog.toArray()) {
