@@ -423,7 +423,7 @@ public class NetdEventListenerServiceTest {
         final PrintWriter pw = new PrintWriter(new FileOutputStream("/dev/null"));
         new Thread(() -> {
             while (System.currentTimeMillis() < stop) {
-                mNetdEventListenerService.dump(pw);
+                mNetdEventListenerService.list(pw);
             }
         }).start();
     }
