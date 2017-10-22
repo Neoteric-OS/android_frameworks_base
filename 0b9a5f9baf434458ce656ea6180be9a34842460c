@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8071570_0c341314",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1073883
+      },
+      "writtenOn": "2017-10-22T16:24:43Z",
+      "side": 1,
+      "message": "Empty check needed?\n\nPresubmit failure could be related to \n\n--------- beginning of crash\n10-20 17:07:59.428  2331  2926 E AndroidRuntime: FATAL EXCEPTION: GoogleLocationService\n10-20 17:07:59.428  2331  2926 E AndroidRuntime: Process: com.google.android.gms.persistent, PID: 2331\n10-20 17:07:59.428  2331  2926 E AndroidRuntime: java.lang.NumberFormatException: For input string: \"\"\n10-20 17:07:59.428  2331  2926 E AndroidRuntime: \tat java.lang.Integer.parseInt(Integer.java:629)\n10-20 17:07:59.428  2331  2926 E AndroidRuntime: \tat java.lang.Integer.valueOf(Integer.java:803)\n10-20 17:07:59.428  2331  2926 E AndroidRuntime: \tat android.telephony.CellIdentityGsm.getMcc(CellIdentityGsm.java:147)\n10-20 17:07:59.428  2331  2926 E AndroidRuntime: \tat anqr.a(:com.google.android.gms@11579470:25)\n10-20 17:07:59.428  2331  2926 E AndroidRuntime: \tat anqr.a(:com.google.android.gms@11579470:73)\n10-20 17:07:59.428  2331  2926 E AndroidRuntime: \tat anqw.a(:com.google.android.gms@11579470:9)\n10-20 17:07:59.428  2331  2926 E AndroidRuntime: \tat anot.handleMessage(:com.google.android.gms@11579470:66)\n10-20 17:07:59.428  2331  2926 E AndroidRuntime: \tat android.os.Handler.dispatchMessage(Handler.java:106)\n10-20 17:07:59.428  2331  2926 E AndroidRuntime: \tat android.os.Looper.loop(Looper.java:164)\n10-20 17:07:59.428  2331  2926 E AndroidRuntime: \tat android.os.HandlerThread.run(HandlerThread.java:65)",
+      "revId": "0b9a5f9baf434458ce656ea6180be9a34842460c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
