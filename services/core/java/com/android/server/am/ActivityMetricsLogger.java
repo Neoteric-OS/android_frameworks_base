@@ -328,7 +328,7 @@ class ActivityMetricsLogger {
                 && mStackTransitionInfo.size() > 0;
     }
 
-    private void reset(boolean abort) {
+    void reset(boolean abort) {
         if (!abort && isAnyTransitionActive()) {
             logAppTransitionMultiEvents();
         }
