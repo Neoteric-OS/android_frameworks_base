@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5add38c_4441a5ff",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-10-23T18:54:37Z",
+      "side": 1,
+      "message": "nit: field.",
+      "range": {
+        "startLine": 198,
+        "startChar": 64,
+        "endLine": 198,
+        "endChar": 69
+      },
+      "revId": "008c48c72f527d610f91f114acb51129ebd89a86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e48b8ce_b06c476f",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2017-10-23T18:54:37Z",
+      "side": 1,
+      "message": "Maybe I didn\u0027t see the comments on an earlier code review, but do we return CharSequence in our APIs? I would have naively expected String",
+      "range": {
+        "startLine": 222,
+        "startChar": 11,
+        "endLine": 222,
+        "endChar": 23
+      },
+      "revId": "008c48c72f527d610f91f114acb51129ebd89a86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
