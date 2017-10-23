@@ -16,6 +16,24 @@
       "revId": "0b9a5f9baf434458ce656ea6180be9a34842460c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d6435da_c0b57bdf",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-23T18:16:59Z",
+      "side": 1,
+      "message": "This is error here is due to the fact that we have two entries for the CellIdentityGsm object, the constructor and the Parcel. We have strict rules on MCC/MNC to exclude null, empty string and not 3-digits input in our constructor. But when we convert a Parcel to CellIdentity, we didn\u0027t have corresponding rules. (reference: https://cs.corp.google.com/android/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.java?rcl\u003d4d7052fe42d19be0bf71b55d3c69196f4d8ffec7\u0026l\u003d4925)\n\nSo I made the following two changes here:\n1. handle the case that MCC/MNC could be empty string in the constructor (it could happen if read from Parcel).\n2. Use the same constructor when construct from Parcel.",
+      "parentUuid": "c8071570_0c341314",
+      "revId": "0b9a5f9baf434458ce656ea6180be9a34842460c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
