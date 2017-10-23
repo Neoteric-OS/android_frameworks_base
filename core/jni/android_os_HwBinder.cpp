@@ -303,7 +303,8 @@ static jobject JHwBinder_native_getService(
         JNIEnv *env,
         jclass /* clazzObj */,
         jstring ifaceNameObj,
-        jstring serviceNameObj) {
+        jstring serviceNameObj,
+        jboolean isTry) {
 
     using ::android::hidl::base::V1_0::IBase;
     using ::android::hidl::manager::V1_0::IServiceManager;
@@ -422,7 +423,7 @@ static JNINativeMethod gMethods[] = {
     { "registerService", "(Ljava/lang/String;)V",
         (void *)JHwBinder_native_registerService },
 
-    { "getService", "(Ljava/lang/String;Ljava/lang/String;)L" PACKAGE_PATH "/IHwBinder;",
+    { "getService", "(Ljava/lang/String;Ljava/lang/String;Z)L" PACKAGE_PATH "/IHwBinder;",
         (void *)JHwBinder_native_getService },
 
     { "configureRpcThreadpool", "(JZ)V",
