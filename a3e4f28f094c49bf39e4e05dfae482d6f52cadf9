@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5e8f2a4_5d4a032f",
+        "filename": "core/tests/coretests/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1060646
+      },
+      "writtenOn": "2017-10-23T18:18:06Z",
+      "side": 1,
+      "message": "How is this getting picked up in the first place? It\u0027s a resource file right?\n\nI don\u0027t quite see why this needs to be explicitly excluded - does this mean we try to instrument resource files?",
+      "range": {
+        "startLine": 51,
+        "startChar": 30,
+        "endLine": 51,
+        "endChar": 63
+      },
+      "revId": "a3e4f28f094c49bf39e4e05dfae482d6f52cadf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
