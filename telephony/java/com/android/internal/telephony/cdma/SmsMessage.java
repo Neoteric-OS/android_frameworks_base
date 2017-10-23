@@ -254,7 +254,8 @@ public class SmsMessage extends SmsMessageBase {
         UserData uData = new UserData();
         uData.payloadStr = message;
         uData.userDataHeader = smsHeader;
-        return privateGetSubmitPdu(destAddr, statusReportRequested, uData, priority);
+        return privateGetSubmitOrDeliverPdu(destAddr, statusReportRequested, uData, priority,
+                false /*getDeliverPdu*/);
     }
 
     /**
@@ -324,7 +325,8 @@ public class SmsMessage extends SmsMessageBase {
      */
     public static SubmitPdu getSubmitPdu(String destAddr, UserData userData,
             boolean statusReportRequested, int priority) {
-        return privateGetSubmitPdu(destAddr, statusReportRequested, userData, priority);
+        return privateGetSubmitOrDeliverPdu(destAddr, statusReportRequested, userData, priority,
+                false /*getDeliverPdu*/);
     }
 
     /**
@@ -925,15 +927,32 @@ public class SmsMessage extends SmsMessageBase {
      */
     private static SubmitPdu privateGetSubmitPdu(String destAddrStr, boolean statusReportRequested,
             UserData userData) {
-        return privateGetSubmitPdu(destAddrStr, statusReportRequested, userData, -1);
+        return privateGetSubmitOrDeliverPdu(destAddrStr, statusReportRequested, userData, -1,
+                false /*getDeliverPdu*/);
     }
 
     /**
-     * Creates BearerData and Envelope from parameters for a Submit SMS.
+     * Creates a Deliver SMS from parameters.
+     * @return byte stream for DeliverPdu.
+     */
+    public static byte[] getCdmaDeliverPdu(
+            String scAddress, String originatingAddress, String message, long date) {
+        UserData uData = new UserData();
+        uData.payloadStr = message;
+        uData.msgEncodingSet = true;
+        uData.msgEncoding = UserData.ENCODING_UNICODE_16;
+        // TODO: should be better, return type from function is submit pdu
+        SubmitPdu pdu = privateGetSubmitOrDeliverPdu(originatingAddress, false, uData, -1,
+                true /*getDeliverPdu*/);
+        return pdu.encodedMessage;
+    }
+
+    /**
+     * Creates BearerData and Envelope from parameters for a Submit or Deliver SMS.
      * @return byte stream for SubmitPdu.
      */
-    private static SubmitPdu privateGetSubmitPdu(String destAddrStr, boolean statusReportRequested,
-            UserData userData, int priority) {
+    private static SubmitPdu privateGetSubmitOrDeliverPdu(String addrStr, boolean statusReportRequested,
+            UserData userData, int priority, boolean getDeliverPdu) {
 
         /**
          * TODO(cleanup): give this function a more meaningful name.
@@ -949,14 +968,17 @@ public class SmsMessage extends SmsMessageBase {
          * North America Plus Code :
          * Convert + code to 011 and dial out for international SMS
          */
-        CdmaSmsAddress destAddr = CdmaSmsAddress.parse(
-                PhoneNumberUtils.cdmaCheckAndProcessPlusCodeForSms(destAddrStr));
-        if (destAddr == null) return null;
+        CdmaSmsAddress addr = CdmaSmsAddress.parse(
+                PhoneNumberUtils.cdmaCheckAndProcessPlusCodeForSms(addrStr));
+        if (addr == null) return null;
 
         BearerData bearerData = new BearerData();
-        bearerData.messageType = BearerData.MESSAGE_TYPE_SUBMIT;
-
-        bearerData.messageId = getNextMessageId();
+        if (!getDeliverPdu) {
+            bearerData.messageType = BearerData.MESSAGE_TYPE_SUBMIT;
+            bearerData.messageId = getNextMessageId();
+        } else {
+            bearerData.messageType = BearerData.MESSAGE_TYPE_DELIVER;
+        }
 
         bearerData.deliveryAckReq = statusReportRequested;
         bearerData.userAckReq = false;
@@ -972,8 +994,8 @@ public class SmsMessage extends SmsMessageBase {
         byte[] encodedBearerData = BearerData.encode(bearerData);
         if (encodedBearerData == null) return null;
         if (Rlog.isLoggable(LOGGABLE_TAG, Log.VERBOSE)) {
-            Rlog.d(LOG_TAG, "MO (encoded) BearerData = " + bearerData);
-            Rlog.d(LOG_TAG, "MO raw BearerData = '" + HexDump.toHexString(encodedBearerData) + "'");
+            Rlog.d(LOG_TAG, "BearerData (encoded) = " + bearerData);
+            Rlog.d(LOG_TAG, "BearerData raw = '" + HexDump.toHexString(encodedBearerData) + "'");
         }
 
         int teleservice = (bearerData.hasUserDataHeader
@@ -983,7 +1005,7 @@ public class SmsMessage extends SmsMessageBase {
         SmsEnvelope envelope = new SmsEnvelope();
         envelope.messageType = SmsEnvelope.MESSAGE_TYPE_POINT_TO_POINT;
         envelope.teleService = teleservice;
-        envelope.destAddress = destAddr;
+        envelope.destAddress = addr;
         envelope.bearerReply = RETURN_ACK;
         envelope.bearerData = encodedBearerData;
 
@@ -1002,12 +1024,12 @@ public class SmsMessage extends SmsMessageBase {
             dos.writeInt(envelope.teleService);
             dos.writeInt(0); //servicePresent
             dos.writeInt(0); //serviceCategory
-            dos.write(destAddr.digitMode);
-            dos.write(destAddr.numberMode);
-            dos.write(destAddr.ton); // number_type
-            dos.write(destAddr.numberPlan);
-            dos.write(destAddr.numberOfDigits);
-            dos.write(destAddr.origBytes, 0, destAddr.origBytes.length); // digits
+            dos.write(addr.digitMode);
+            dos.write(addr.numberMode);
+            dos.write(addr.ton); // number_type
+            dos.write(addr.numberPlan);
+            dos.write(addr.numberOfDigits);
+            dos.write(addr.origBytes, 0, addr.origBytes.length); // digits
             // Subaddress is not supported.
             dos.write(0); //subaddressType
             dos.write(0); //subaddr_odd

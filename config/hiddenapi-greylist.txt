@@ -1449,8 +1449,8 @@ Lcom/android/internal/telephony/gsm/SmsMessage;->getSubmitPdu(Ljava/lang/String;
 Lcom/android/internal/telephony/gsm/SmsMessage;->getSubmitPdu(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZI)Lcom/android/internal/telephony/gsm/SmsMessage$SubmitPdu;
 Lcom/android/internal/telephony/gsm/SmsMessage;->getSubmitPdu(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z[B)Lcom/android/internal/telephony/gsm/SmsMessage$SubmitPdu;
 Lcom/android/internal/telephony/gsm/SmsMessage;->getSubmitPdu(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z[BIII)Lcom/android/internal/telephony/gsm/SmsMessage$SubmitPdu;
-Lcom/android/internal/telephony/gsm/SmsMessage;->getSubmitPdu(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z[BIIII)Lcom/android/internal/telephony/gsm/SmsMessage$SubmitPdu;
-Lcom/android/internal/telephony/gsm/SmsMessage;->getSubmitPduHead(Ljava/lang/String;Ljava/lang/String;BZLcom/android/internal/telephony/gsm/SmsMessage$SubmitPdu;)Ljava/io/ByteArrayOutputStream;
+Lcom/android/internal/telephony/gsm/SmsMessage;->getSubmitOrDeliverPdu(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z[BIIIIJZ)Lcom/android/internal/telephony/gsm/SmsMessage$SubmitPdu;
+Lcom/android/internal/telephony/gsm/SmsMessage;->getSubmitOrDeliverPduHead(Ljava/lang/String;Ljava/lang/String;BZLcom/android/internal/telephony/gsm/SmsMessage$SubmitPdu;Z)Ljava/io/ByteArrayOutputStream;
 Lcom/android/internal/telephony/gsm/SmsMessage;->isMWIClearMessage()Z
 Lcom/android/internal/telephony/gsm/SmsMessage;->isMwiDontStore()Z
 Lcom/android/internal/telephony/gsm/SmsMessage;->isMWISetMessage()Z
