@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2252da68_49909053",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1550,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-10-23T19:31:42Z",
+      "side": 1,
+      "message": "nitpick: codes, not code",
+      "revId": "0744804dbf570565d2f4815a216b6d31b971e015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
