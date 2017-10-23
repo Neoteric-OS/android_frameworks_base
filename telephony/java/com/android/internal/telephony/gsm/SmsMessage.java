@@ -24,16 +24,19 @@ import android.text.TextUtils;
 import com.android.internal.telephony.EncodeException;
 import com.android.internal.telephony.GsmAlphabet;
 import com.android.internal.telephony.GsmAlphabet.TextEncodingDetails;
-import com.android.internal.telephony.uicc.IccUtils;
+import com.android.internal.telephony.SmsConstants;
 import com.android.internal.telephony.SmsHeader;
 import com.android.internal.telephony.SmsMessageBase;
 import com.android.internal.telephony.Sms7BitEncodingTranslator;
+import com.android.internal.telephony.uicc.IccUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Locale;
 
 import static com.android.internal.telephony.SmsConstants.MessageClass;
 import static com.android.internal.telephony.SmsConstants.ENCODING_UNKNOWN;
@@ -52,6 +55,11 @@ import static com.android.internal.telephony.SmsConstants.MAX_USER_DATA_BYTES_WI
 public class SmsMessage extends SmsMessageBase {
     static final String LOG_TAG = "SmsMessage";
     private static final boolean VDBG = false;
+
+    private static final int OFFSET_ADDRESS_LENGTH = 0;
+    private static final int OFFSET_TOA = 1;
+    private static final int OFFSET_ADDRESS_VALUE = 2;
+    private static final int TIMESTAMP_LENGTH = 7; // See TS 23.040 9.2.3.11
 
     private MessageClass messageClass;
 
@@ -1493,5 +1501,159 @@ public class SmsMessage extends SmsMessageBase {
             Rlog.v(LOG_TAG, "CPHS voice mail message");
         }
         return mVoiceMailCount;
+    }
+
+    private static ByteArrayOutputStream getDeliveryPduHeader(
+            String originatingAddress, byte mtiByte) {
+        ByteArrayOutputStream bo = new ByteArrayOutputStream(SmsConstants.MAX_USER_DATA_BYTES + 40);
+        bo.write(mtiByte);
+
+        byte[] daBytes;
+        daBytes = PhoneNumberUtils.networkPortionToCalledPartyBCD(originatingAddress);
+
+        if (daBytes == null) {
+            Rlog.d(
+                    LOG_TAG,
+                    "The number can not convert to BCD, it's an An alphanumeric address, "
+                            + "originatingAddress = "
+                            + originatingAddress);
+            // Convert address to GSM 7 bit packed bytes.
+            try {
+                byte[] numberdata = GsmAlphabet.stringToGsm7BitPacked(originatingAddress);
+                // Get the real address data
+                byte[] addressData = new byte[numberdata.length - 1];
+                System.arraycopy(numberdata, 1, addressData, 0, addressData.length);
+
+                daBytes = new byte[addressData.length + OFFSET_ADDRESS_VALUE];
+                // Get the address length
+                int addressLen = numberdata[0];
+                daBytes[OFFSET_ADDRESS_LENGTH] =
+                        (byte)
+                                ((addressLen * 7 % 4 != 0
+                                        ? addressLen * 7 / 4 + 1
+                                        : addressLen * 7 / 4));
+                // Set address type to Alphanumeric according to 3GPP TS 23.040 [9.1.2.5]
+                daBytes[OFFSET_TOA] = (byte) 0xd0;
+                System.arraycopy(addressData, 0, daBytes, OFFSET_ADDRESS_VALUE, addressData.length);
+                // originating address
+                bo.write(daBytes, 0, daBytes.length);
+            } catch (Exception e) {
+                Rlog.e(LOG_TAG, "Exception when encoding to 7 bit data.");
+            }
+        } else {
+            // originating address length in BCD digits, ignoring TON byte and padding
+            bo.write(
+                    (daBytes.length - 1) * 2
+                            - ((daBytes[daBytes.length - 1] & 0xf0) == 0xf0 ? 1 : 0));
+            // originating address
+            bo.write(daBytes, 0, daBytes.length);
+        }
+
+        // TP-Protocol-Identifier
+        bo.write(0);
+        return bo;
+    }
+
+    /** Generate a Delivery PDU byte array. see getSubmitPdu for reference. */
+    public static byte[] getGsmDeliveryPdu(
+            String scAddress, String originatingAddress, String message, long date, byte[] header,
+            int encoding) {
+
+        if (message == null || originatingAddress == null) {
+            return null;
+        }
+
+        // MTI = SMS-DELIVERY, UDHI = header != null
+        byte mtiByte = (byte) (0x00 | (header != null ? 0x40 : 0x00));
+        ByteArrayOutputStream bo = getDeliveryPduHeader(originatingAddress, mtiByte);
+        // User Data (and length)
+        byte[] userData;
+        if (encoding == ENCODING_UNKNOWN) {
+            // First, try encoding it with the GSM alphabet
+            encoding = ENCODING_7BIT;
+        }
+        try {
+            if (encoding == ENCODING_7BIT) {
+                userData = GsmAlphabet.stringToGsm7BitPackedWithHeader(message, header, 0, 0);
+            } else { // assume UCS-2
+                try {
+                    userData = encodeUCS2(message, header);
+                } catch (UnsupportedEncodingException uex) {
+                    Rlog.e(LOG_TAG, "Implausible UnsupportedEncodingException ", uex);
+                    return null;
+                }
+            }
+        } catch (EncodeException ex) {
+            // Encoding to the 7-bit alphabet failed. Let's see if we can
+            // encode it as a UCS-2 encoded message
+            try {
+                userData = encodeUCS2(message, header);
+                encoding = ENCODING_16BIT;
+            } catch (EncodeException ex1) {
+                Rlog.e(LOG_TAG, "Exceed size limitation EncodeException", ex1);
+                return null;
+            }catch (UnsupportedEncodingException uex) {
+                Rlog.e(LOG_TAG, "Implausible UnsupportedEncodingException ", uex);
+                return null;
+            }
+        }
+
+        if (encoding == ENCODING_7BIT) {
+            if ((0xff & userData[0]) > MAX_USER_DATA_SEPTETS) {
+                // Message too long
+                return null;
+            }
+            bo.write(0x00);
+        } else { // assume UCS-2
+            if ((0xff & userData[0]) > MAX_USER_DATA_BYTES) {
+                // Message too long
+                return null;
+            }
+            // TP-Data-Coding-Scheme
+            // Class 3, UCS-2 encoding, uncompressed
+            bo.write(0x0b);
+        }
+
+        byte[] timestamp = getTimestamp(date);
+        bo.write(timestamp, 0, timestamp.length);
+        bo.write(userData, 0, userData.length);
+        return bo.toByteArray();
+    }
+
+    private static byte[] getTimestamp(long time) {
+        // See TS 23.040 9.2.3.11
+        byte[] timestamp = new byte[TIMESTAMP_LENGTH];
+        SimpleDateFormat sdf = new SimpleDateFormat("yyMMddkkmmss:Z", Locale.US);
+        String[] date = sdf.format(time).split(":");
+        // generate timezone value
+        String timezone = date[date.length - 1];
+        String signMark = timezone.substring(0, 1);
+        int hour = Integer.parseInt(timezone.substring(1, 3));
+        int min = Integer.parseInt(timezone.substring(3));
+        int timezoneValue = hour * 4 + min / 15;
+        // append timezone value to date[0] (time string)
+        String timestampStr = date[0] + timezoneValue;
+
+        int digitCount = 0;
+        for (int i = 0; i < timestampStr.length(); i++) {
+            char c = timestampStr.charAt(i);
+            int shift = ((digitCount & 0x01) == 1) ? 4 : 0;
+            timestamp[(digitCount >> 1)] |= (byte) ((charToBCD(c) & 0x0F) << shift);
+            digitCount++;
+        }
+
+        if (signMark.equals("-")) {
+            timestamp[timestamp.length - 1] = (byte) (timestamp[timestamp.length - 1] | 0x08);
+        }
+
+        return timestamp;
+    }
+
+    private static int charToBCD(char c) {
+        if (c >= '0' && c <= '9') {
+            return c - '0';
+        } else {
+            throw new RuntimeException("invalid char for BCD " + c);
+        }
     }
 }

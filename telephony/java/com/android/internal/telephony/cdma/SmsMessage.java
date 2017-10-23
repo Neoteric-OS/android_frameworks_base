@@ -943,6 +943,110 @@ public class SmsMessage extends SmsMessageBase {
         return null;
     }
 
+    public static byte[] getCdmaDeliveryPdu(
+            String scAddress, String originatingAddress, String message, long date) {
+        // Perform null parameter checks.
+        if (message == null || originatingAddress == null) {
+            Log.d(LOG_TAG, "getCDMADeliveryPdu,message =null");
+            return null;
+        }
+
+        ByteArrayOutputStream byteStream =
+                new ByteArrayOutputStream(SmsConstants.MAX_USER_DATA_BYTES + 40);
+
+        DataOutputStream dos = new DataOutputStream(byteStream);
+
+        try {
+            int uTeleserviceID = 0;
+            dos.writeInt(uTeleserviceID);
+
+            byte bIsServicePresent = 0;
+            dos.writeInt(bIsServicePresent);
+
+            int uServicecategory = 0;
+            dos.writeInt(uServicecategory);
+
+            // RIL_CDMA_SMS_Address
+            // digit_mode
+            // number_mode
+            // number_type
+            // number_plan
+            // number_of_digits
+            // digits[]
+            CdmaSmsAddress origAddr =
+                    CdmaSmsAddress.parse(
+                            PhoneNumberUtils.cdmaCheckAndProcessPlusCodeForSms(originatingAddress));
+            if (origAddr == null) return null;
+            dos.writeByte(origAddr.digitMode);
+            dos.writeByte(origAddr.numberMode);
+            dos.writeByte(origAddr.ton);
+            Log.d(
+                    LOG_TAG,
+                    "message type="
+                            + origAddr.ton
+                            + "originatingAddress add="
+                            + originatingAddress
+                            + "message="
+                            + message);
+            dos.writeByte(origAddr.numberPlan);
+            dos.writeByte(origAddr.numberOfDigits);
+            dos.write(origAddr.origBytes, 0, origAddr.origBytes.length);
+
+            // RIL_CDMA_SMS_Subaddress
+            // Subaddress is not supported.
+            dos.writeByte(0); // subaddressType
+            dos.writeByte(0); // subaddr_odd
+            dos.writeByte(0); // subaddr_nbr_of_digits
+
+            UserData uData = new UserData();
+            uData.payloadStr = message;
+            uData.msgEncodingSet = true;
+            uData.msgEncoding = UserData.ENCODING_UNICODE_16;
+
+            BearerData bearerData = new BearerData();
+            bearerData.messageType = BearerData.MESSAGE_TYPE_DELIVER;
+
+            bearerData.deliveryAckReq = false;
+            bearerData.userAckReq = false;
+            bearerData.readAckReq = false;
+            bearerData.reportReq = false;
+
+            bearerData.userData = uData;
+
+            byte[] encodedBearerData = BearerData.encode(bearerData);
+            if (null != encodedBearerData) {
+                // bearer data len
+                dos.writeByte(encodedBearerData.length);
+                Log.d(LOG_TAG, "encodedBearerData length=" + encodedBearerData.length);
+
+                // bearer data
+                dos.write(encodedBearerData, 0, encodedBearerData.length);
+            } else {
+                dos.writeByte(0);
+            }
+            // TODO: should we put Message Center Time Stamp
+            // each byte in date should be converted to two 4-bit BCD numbers
+            // See 3GPP2 C.S0015-C, v1, 4.5.4
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error writing dos", e);
+        } finally {
+            try {
+                if (null != byteStream) {
+                    byteStream.close();
+                }
+
+                if (null != dos) {
+                    dos.close();
+                }
+
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Error close dos", e);
+            }
+        }
+
+        return byteStream.toByteArray();
+    }
+
     /**
      * Creates byte array (pseudo pdu) from SMS object.
      * Note: Do not call this method more than once per object!
