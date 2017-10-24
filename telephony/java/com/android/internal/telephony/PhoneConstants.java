@@ -97,6 +97,13 @@ public class PhoneConstants {
     public static final String REASON_LINK_PROPERTIES_CHANGED = "linkPropertiesChanged";
 
     /**
+     * Roaming types
+     */
+    public static final int ROAMING_OFF = 0;
+    public static final int ROAMING_ON = 1;
+    public static final int ROAMING_NATIONAL = 2;
+
+    /**
      * Return codes for supplyPinReturnResult and
      * supplyPukReturnResult APIs
      */

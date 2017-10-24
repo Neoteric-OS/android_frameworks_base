@@ -7767,7 +7767,7 @@ public final class Settings {
        public static final String DATA_ACTIVITY_TIMEOUT_WIFI = "data_activity_timeout_wifi";
 
        /**
-        * Whether or not data roaming is enabled. (0 = false, 1 = true)
+        * Whether or not data roaming is enabled. (0 = false, 1 = true, 2 = national roaming)
         */
        public static final String DATA_ROAMING = "data_roaming";
 

@@ -1128,6 +1128,17 @@ public class CarrierConfigManager {
     public static final String KEY_CARRIER_DEFAULT_DATA_ROAMING_ENABLED_BOOL =
             "carrier_default_data_roaming_enabled_bool";
 
+
+    /**
+     * Default data roaming type value for {@link Settings.Global#DATA_ROAMING}
+     * 0 = Roaming on
+     * 1 = Roaming off
+     * 2 = National roaming
+     * @hide
+     */
+    public static final String KEY_CARRIER_DEFAULT_DATA_ROAMING_TYPE_INT =
+            "carrier_default_data_roaming_type_int";
+
     /**
      * Determines whether the carrier supports making non-emergency phone calls while the phone is
      * in emergency callback mode.  Default value is {@code true}, meaning that non-emergency calls
@@ -1603,6 +1614,21 @@ public class CarrierConfigManager {
             "disable_charge_indication_bool";
 
     /**
+     * The flag to disable the popup dialog which warns the user of data charges for national
+     * roaming
+     * @hide
+     */
+    public static final String KEY_DISABLE_CHARGE_INDICATION_NATIONAL_ROAMING_BOOL =
+            "disable_charge_indication_national_roaming_bool";
+
+    /**
+     * Flag that controls if the roaming option should include a national roaming option.
+     * @hide
+     */
+    public static final String KEY_SHOW_NATIONAL_ROAMING_OPTION_BOOL =
+            "show_national_roaming_option_bool";
+
+    /**
      * Boolean indicating whether to skip the call forwarding (CF) fail-to-disable dialog.
      * The logic used to determine whether we succeeded in disabling is carrier specific,
      * so the dialog may not always be accurate.
@@ -1803,6 +1829,7 @@ public class CarrierConfigManager {
         sDefaults.putString(KEY_CARRIER_NAME_STRING, "");
         sDefaults.putBoolean(KEY_SUPPORT_DIRECT_FDN_DIALING_BOOL, false);
         sDefaults.putBoolean(KEY_CARRIER_DEFAULT_DATA_ROAMING_ENABLED_BOOL, false);
+        sDefaults.putInt(KEY_CARRIER_DEFAULT_DATA_ROAMING_TYPE_INT, 0);
         sDefaults.putBoolean(KEY_SKIP_CF_FAIL_TO_DISABLE_DIALOG_BOOL, false);
 
         // MMS defaults
@@ -1922,6 +1949,8 @@ public class CarrierConfigManager {
         sDefaults.putStringArray(KEY_ROAMING_OPERATOR_STRING_ARRAY, null);
         sDefaults.putBoolean(KEY_SHOW_IMS_REGISTRATION_STATUS_BOOL, false);
         sDefaults.putBoolean(KEY_DISABLE_CHARGE_INDICATION_BOOL, false);
+        sDefaults.putBoolean(KEY_DISABLE_CHARGE_INDICATION_NATIONAL_ROAMING_BOOL, false);
+        sDefaults.putBoolean(KEY_SHOW_NATIONAL_ROAMING_OPTION_BOOL, false);
         sDefaults.putStringArray(KEY_FEATURE_ACCESS_CODES_STRING_ARRAY, null);
         sDefaults.putBoolean(KEY_IDENTIFY_HIGH_DEFINITION_CALLS_IN_CALL_LOG_BOOL, false);
         sDefaults.putBoolean(KEY_SPN_DISPLAY_RULE_USE_ROAMING_FROM_SERVICE_STATE_BOOL, false);
