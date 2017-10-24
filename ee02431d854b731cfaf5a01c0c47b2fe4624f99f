@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "705548dc_36e84ef6",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-10-24T14:20:45Z",
+      "side": 1,
+      "message": "Although not really needed here, you can do the same here for uniformity.",
+      "revId": "ee02431d854b731cfaf5a01c0c47b2fe4624f99f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5eca3506_256cadc6",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-10-24T14:20:45Z",
+      "side": 1,
+      "message": "Since these new checks you have added are specific to when constructed using Parcel, I would rather keep the checks in the Parcel constructor.",
+      "revId": "ee02431d854b731cfaf5a01c0c47b2fe4624f99f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
