@@ -22,6 +22,30 @@
       "revId": "a3e4f28f094c49bf39e4e05dfae482d6f52cadf9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8950ca0_a5fd3e02",
+        "filename": "core/tests/coretests/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1137668
+      },
+      "writtenOn": "2017-10-24T21:12:40Z",
+      "side": 1,
+      "message": "Oh oops, this change doesn\u0027t appear to be required anymore.\n\nThanks",
+      "parentUuid": "e5e8f2a4_5d4a032f",
+      "range": {
+        "startLine": 51,
+        "startChar": 30,
+        "endLine": 51,
+        "endChar": 63
+      },
+      "revId": "a3e4f28f094c49bf39e4e05dfae482d6f52cadf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
