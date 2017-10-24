@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09ed8eac_6a2e816e",
+        "filename": "core/java/android/net/metrics/DefaultNetworkEvent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-10-24T03:26:27Z",
+      "side": 1,
+      "message": "I\u0027ve seen the code in this change where you write directly to these fields ; on their own I personally don\u0027t feel like they come anywhere close to justifying dispensing with the invaluable immutability property of the instances of this class.\n\nDo you have anything else coming later that requires this object is not immutable anymore ? Otherwise I would recommend keeping them final and keeping the constructor.",
+      "range": {
+        "startLine": 30,
+        "startChar": 11,
+        "endLine": 30,
+        "endChar": 14
+      },
+      "revId": "6a9b8871a60469c31cb0a9bc1c944717667f5dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14e919c3_d95b9a02",
+        "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-10-24T03:26:27Z",
+      "side": 1,
+      "message": "nit : long line",
+      "range": {
+        "startLine": 62,
+        "startChar": 77,
+        "endLine": 62,
+        "endChar": 93
+      },
+      "revId": "6a9b8871a60469c31cb0a9bc1c944717667f5dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
