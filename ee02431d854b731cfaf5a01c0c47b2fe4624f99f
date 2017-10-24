@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2976ed8d_c0181de1",
+        "filename": "telephony/java/android/telephony/CellIdentityCdma.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-24T16:31:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "705548dc_36e84ef6",
+      "revId": "ee02431d854b731cfaf5a01c0c47b2fe4624f99f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5eca3506_256cadc6",
         "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
         "patchSetId": 23
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-24T14:20:45Z",
       "side": 1,
       "message": "Since these new checks you have added are specific to when constructed using Parcel, I would rather keep the checks in the Parcel constructor.",
+      "revId": "ee02431d854b731cfaf5a01c0c47b2fe4624f99f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e27cdb08_d7a99255",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-24T16:31:47Z",
+      "side": 1,
+      "message": "Ying and I talked about it actually. And we both think that each checks should be compatible for both constructor and Parcel, so it makes more sense two put this check in the constructor. In this way, when constructing from the Parcel, it simply call the same constructor and apply the same rules.",
+      "parentUuid": "5eca3506_256cadc6",
       "revId": "ee02431d854b731cfaf5a01c0c47b2fe4624f99f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
