@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "642bb12a_dd44248a",
+        "filename": "proto/src/ipconnectivity.proto",
+        "patchSetId": 14
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-24T05:57:24Z",
+      "side": 1,
+      "message": "So there are two kind of queries I am trying to make possible with this rehaul.\n\nThe first kind is queries related to the % of time that the user had Internet. It is a bit of a fuzzy metrics but if we decide that having Internet means that the default network is validated, then we get to queries of the form:\n\nselect\n  sum(validation_time) / sum(duration_time)\nfrom\n  all_default_network_events\n\nNote that with the current logging scheme this requires two duration fields. Otherwise it requires a state field (validated / unvalidated / no default network) + logging additional events when the same default network gets validated or unvalidated.\n\n\n\nThe second kind of queries are related to the actual instrumentation of the default network system itself. For instance for making a distribution of how much time it takes to fallback after wifi goes away (goal is to the tune the wakelock timer):\n\nselect\n  quantiles(101, no_default_network_duration_time)\nfrom\n  all_default_network_events\nwhere\n  previous_default_network_link_layer \u003d WIFI\n\n\nIf I add a state field with values {no_default, has_default}, then I get to:\n\nselect\n  quantiles(101, duration_time)\nfrom\n  all_default_network_events\nwhere\n  previous_default_network_link_layer \u003d WIFI\n  and state \u003d no_default_network\n\n\nAdding a state field has some advantages in term of counting the number of transitions. For instance for counting the number of time without a default network:\n\n\nselect\n  count(*)\nfrom\n  all_default_network_events\nwhere\n  state \u003d no_default_network\n\nWithout the state field, it becomes:\n\nselect\n  count(*)\nfrom\n  all_default_network_events\nwhere\n  no_default_network_duration_time \u003e 0",
+      "parentUuid": "94fe03cd_f5535895",
+      "range": {
+        "startLine": 83,
+        "startChar": 44,
+        "endLine": 83,
+        "endChar": 45
+      },
+      "revId": "2cacdcfac72da06b28df78e6fb182167b3b1d109",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cb39b7a_b5952433",
         "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMonitor.java",
         "patchSetId": 14
