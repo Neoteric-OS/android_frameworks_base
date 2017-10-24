@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Point;
-import android.os.RemoteException;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.SparseArray;
@@ -374,16 +373,10 @@ public class ViewConfiguration {
 
             switch (configVal) {
                 default:
-                case HAS_PERMANENT_MENU_KEY_AUTODETECT: {
-                    IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
-                    try {
-                        sHasPermanentMenuKey = !wm.hasNavigationBar();
-                        sHasPermanentMenuKeySet = true;
-                    } catch (RemoteException ex) {
-                        sHasPermanentMenuKey = false;
-                    }
-                }
-                break;
+                case HAS_PERMANENT_MENU_KEY_AUTODETECT:
+                    sHasPermanentMenuKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_MENU);
+                    sHasPermanentMenuKeySet = true;
+                    break;
 
                 case HAS_PERMANENT_MENU_KEY_TRUE:
                     sHasPermanentMenuKey = true;
