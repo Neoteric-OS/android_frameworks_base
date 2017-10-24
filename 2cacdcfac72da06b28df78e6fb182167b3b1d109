@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94fe03cd_f5535895",
+        "filename": "proto/src/ipconnectivity.proto",
+        "patchSetId": 14
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-24T04:51:26Z",
+      "side": 1,
+      "message": "Actually we can change it, that\u0027s fine.\n\nThe main reason to enumerate duration quantities separately is to facilitate writing sql queries directly aggregating events of this type.\n\nLet me think about your proposal and see what kind of queries that would yield. I have to think about it a bit.",
+      "parentUuid": "cf18d7d1_49cb3448",
+      "range": {
+        "startLine": 83,
+        "startChar": 44,
+        "endLine": 83,
+        "endChar": 45
+      },
+      "revId": "2cacdcfac72da06b28df78e6fb182167b3b1d109",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cb39b7a_b5952433",
         "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMonitor.java",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8339631d_bfafcc86",
+        "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMonitor.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-24T04:51:26Z",
+      "side": 1,
+      "message": "oh that\u0027s a leftover from when I tried to make this field just package private, but it wasn\u0027t enough.\n\nRemoved.",
+      "parentUuid": "1cb39b7a_b5952433",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 22
+      },
+      "revId": "2cacdcfac72da06b28df78e6fb182167b3b1d109",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfc3f03c_37182281",
         "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMonitor.java",
         "patchSetId": 14
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-24T03:24:29Z",
       "side": 1,
       "message": "Do we need to reset (clear) mLastTransports here to prevent stale info from lingering?",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 9
+      },
+      "revId": "2cacdcfac72da06b28df78e6fb182167b3b1d109",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9490e34f_5c38cdb2",
+        "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMonitor.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-24T04:51:26Z",
+      "side": 1,
+      "message": "I added documentation about the intent.\n\nThe goal of this is to see what was the last transport of any default network, but this does not necessarily matches the DefaultNetworkEvent because these also now log duration when there was no default network.\n\nSo when we lose the default network and have nothing, I must not clear this field but keep the current value, so that I can put it in the next default network event when we get back a default network.\n\nThis is important for keying metrics by pairs of network types without having to do time series processing. For instance transitions from wifi -\u003e cell, or even wifi -\u003e wifi.",
+      "parentUuid": "bfc3f03c_37182281",
       "range": {
         "startLine": 127,
         "startChar": 8,
