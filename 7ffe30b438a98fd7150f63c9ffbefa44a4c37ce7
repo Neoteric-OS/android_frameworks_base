@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ef10452_c02b116b",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-10-24T21:47:29Z",
+      "side": 1,
+      "message": "My first thought when reading through this CL is, \"We\u0027re testing \"SPI reuse\" but I don\u0027t see any SPIs being allocated. It turns out that part of the test is hidden in buildIpSecConfig.\n\nEven though this is Java, abseil.io/tips/122 applies here. Clarity makes tests easier to understand and debug.",
+      "revId": "7ffe30b438a98fd7150f63c9ffbefa44a4c37ce7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "960207d3_ca57b922",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-10-24T21:47:29Z",
+      "side": 1,
+      "message": "It is incorrect to add an IPv4 only test. In particular, this whole file exists for the purpose of running each test with both v4 and v6. The injected parameter is saved to mRemoteAddr.",
+      "revId": "7ffe30b438a98fd7150f63c9ffbefa44a4c37ce7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
