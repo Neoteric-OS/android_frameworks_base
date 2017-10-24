@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "83fa2f30_2f4dca7c",
+        "filename": "core/java/android/net/metrics/DefaultNetworkEvent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-24T04:50:15Z",
+      "side": 1,
+      "message": "That\u0027s a good question and a fair point to discuss.\n\nInitially when doing the first impl of the metrics I did use final fields everywhere for exactly the reason that you mentioned. In hindsight I decided to progressively scrap the final fields and make them mutable for mostly two reasons:\n\n - this makes less boilerplate code. More specifically there is no need to write/maintain/read trivial ctors, and at the places where the events are generated, I can put the data directly into the object instead of having to introduce local variables. My experience is that for bigger event objects with more than 4 fields that\u0027s the superior approach for readability and making the intent clear.\n\n - this makes it much harder to make errors when passing arguments around when many fields in the ctor have the same type, which happens all the time with metrics objects. For instance if you look at ApfStats.java or WakeupStats everything is an int basically. Besides the risk of making an error when writing the code, reading the code pretty much forces one to check the ctor def in another file. The only way out is to use a builder helper, which generates a ton of boilerplate ...\n\n - another third and less important reason is that we eventually plan to actually remove all these classes and instead directly use the proto derived classes from ipconnectivity.proto. These are mutable and getting the current interface closer to these will make the migration easier down the line.\n\n\nOn the downside it is totally true that events can now be modified and mutated at any point. For metrics related code I found that to be acceptable as the instrumentation code typically is not feeding back into the core but instead living at the edges.\n\nIf you know of some superior pattern for dealing with all these issues, I am interested to hear about it.",
+      "parentUuid": "09ed8eac_6a2e816e",
+      "range": {
+        "startLine": 30,
+        "startChar": 11,
+        "endLine": 30,
+        "endChar": 14
+      },
+      "revId": "6a9b8871a60469c31cb0a9bc1c944717667f5dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14e919c3_d95b9a02",
         "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMonitor.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-24T03:26:27Z",
       "side": 1,
       "message": "nit : long line",
+      "range": {
+        "startLine": 62,
+        "startChar": 77,
+        "endLine": 62,
+        "endChar": 93
+      },
+      "revId": "6a9b8871a60469c31cb0a9bc1c944717667f5dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0432e9f9_b044e792",
+        "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-24T04:50:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14e919c3_d95b9a02",
       "range": {
         "startLine": 62,
         "startChar": 77,
