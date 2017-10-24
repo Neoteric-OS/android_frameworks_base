@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf18d7d1_49cb3448",
+        "filename": "proto/src/ipconnectivity.proto",
+        "patchSetId": 14
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-10-24T03:24:29Z",
+      "side": 1,
+      "message": "It\u0027s probably too late now, but I wonder if it\u0027s any more flexible to try to keep everything in two fields:\n\n    durations_ms\n    state (to which duration_ms applies)\n\nsince there\u0027s now 3 _ms times in this message.  Any time the state change we\u0027d just close off the last event and start a new one for the new state.\n\nToo late?  Too unwieldy?",
+      "range": {
+        "startLine": 83,
+        "startChar": 44,
+        "endLine": 83,
+        "endChar": 45
+      },
+      "revId": "2cacdcfac72da06b28df78e6fb182167b3b1d109",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cb39b7a_b5952433",
+        "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMonitor.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-10-24T03:24:29Z",
+      "side": 1,
+      "message": "Do we need this annotation even when things are public?",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 22
+      },
+      "revId": "2cacdcfac72da06b28df78e6fb182167b3b1d109",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfc3f03c_37182281",
+        "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMonitor.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-10-24T03:24:29Z",
+      "side": 1,
+      "message": "Do we need to reset (clear) mLastTransports here to prevent stale info from lingering?",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 9
+      },
+      "revId": "2cacdcfac72da06b28df78e6fb182167b3b1d109",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
