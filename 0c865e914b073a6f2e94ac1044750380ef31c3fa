@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "844b7be7_a7326051",
+        "filename": "core/java/android/net/metrics/DefaultNetworkEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-24T07:00:30Z",
+      "side": 0,
+      "message": "FWIW, +1 to not losing \"final\" here. Agreed that when we move to proto these will not be final, but that\u0027s going to be a bigger change.",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 16
+      },
+      "revId": "0c865e914b073a6f2e94ac1044750380ef31c3fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

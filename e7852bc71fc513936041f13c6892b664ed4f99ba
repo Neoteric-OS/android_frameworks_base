@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f348dd93_7fa18a9b",
+        "filename": "core/java/android/net/metrics/DefaultNetworkEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-24T07:00:30Z",
+      "side": 1,
+      "message": "Consider IPv4v6",
+      "range": {
+        "startLine": 55,
+        "startChar": 20,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "e7852bc71fc513936041f13c6892b664ed4f99ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
