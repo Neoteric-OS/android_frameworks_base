@@ -22,6 +22,30 @@
       "revId": "0c865e914b073a6f2e94ac1044750380ef31c3fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b4796fe_6fc8a8bd",
+        "filename": "core/java/android/net/metrics/DefaultNetworkEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-24T14:29:44Z",
+      "side": 0,
+      "message": "As discussed offline, most of the metrics events are already mutable. Let\u0027s stay consistent with that style.",
+      "parentUuid": "844b7be7_a7326051",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 16
+      },
+      "revId": "0c865e914b073a6f2e94ac1044750380ef31c3fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
