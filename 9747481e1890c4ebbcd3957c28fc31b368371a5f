@@ -177,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "1ef26410_8d8bdff7",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-10-24T22:00:24Z",
+      "side": 1,
+      "message": "I didn\u0027t mean to unroll the loop. I meant that the loop containing this call should go before \"// Reset the IpSecConfig...\"",
+      "parentUuid": "0641de15_16cb82cb",
+      "range": {
+        "startLine": 460,
+        "startChar": 0,
+        "endLine": 460,
+        "endChar": 39
+      },
+      "revId": "9747481e1890c4ebbcd3957c28fc31b368371a5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4c804bd_2646d842",
         "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
         "patchSetId": 10
