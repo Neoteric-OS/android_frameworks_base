@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ae3ff7c_7791688b",
+        "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMonitor.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-24T14:29:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c29df4a_14318243",
+      "range": {
+        "startLine": 21,
+        "startChar": 20,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "76a933e2e812d222c14714fdf03731bc8717c2da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53f88f96_1765f8af",
         "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMonitor.java",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "307668ac_24f6ee4d",
+        "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMonitor.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-24T14:29:59Z",
+      "side": 1,
+      "message": "Done. Changed mIsCurrentlyValid.",
+      "parentUuid": "53f88f96_1765f8af",
+      "range": {
+        "startLine": 56,
+        "startChar": 20,
+        "endLine": 56,
+        "endChar": 38
+      },
+      "revId": "76a933e2e812d222c14714fdf03731bc8717c2da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89707d60_05963ba0",
         "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMonitor.java",
         "patchSetId": 15
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-24T08:13:47Z",
       "side": 1,
       "message": "Just to make sure : this does mean that when the device loses a default network then hits one again, the event corresponding to the period without a default network will log the transports of the old default network as written in l.115.\n\nI think it\u0027s fine, but maybe it deserves some comment in the proto, as well as in l.59 of this file ?",
+      "range": {
+        "startLine": 125,
+        "startChar": 11,
+        "endLine": 126,
+        "endChar": 86
+      },
+      "revId": "76a933e2e812d222c14714fdf03731bc8717c2da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2fa05b74_9d61330d",
+        "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMonitor.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-24T14:29:59Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "89707d60_05963ba0",
       "range": {
         "startLine": 125,
         "startChar": 11,
