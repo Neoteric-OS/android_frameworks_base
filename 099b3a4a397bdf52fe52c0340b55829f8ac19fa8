@@ -22,6 +22,30 @@
       "revId": "099b3a4a397bdf52fe52c0340b55829f8ac19fa8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c87a44b_4291406e",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1224967
+      },
+      "writtenOn": "2017-10-25T16:24:39Z",
+      "side": 1,
+      "message": "Unfortunately Java requires to call this() as the first statement in a constructor, so we cannot call other constructor after modifying bsic. \nAnd that is actually part of the reason I move the \u0027check-bsic\u0027 part of code to the other constructor. Actually I still think that makes more sense, since it keeps Parcel entry and constructor entry compatible, considering the fact that last time we had the MCC/MNC empty line issue becuase we have different rules on the Parcel entry and constructor entry.",
+      "parentUuid": "dc9d2e31_cd925f11",
+      "range": {
+        "startLine": 316,
+        "startChar": 8,
+        "endLine": 319,
+        "endChar": 8
+      },
+      "revId": "099b3a4a397bdf52fe52c0340b55829f8ac19fa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
