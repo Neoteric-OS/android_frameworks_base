@@ -292,11 +292,12 @@ static void JHwBinder_native_registerService(
     signalExceptionForError(env, (ok ? OK : UNKNOWN_ERROR), true /* canThrowRemoteException */);
 }
 
-static jobject JHwBinder_native_getService(
+// Required because of ABI.
+static jobject javaGetServiceInternal(
         JNIEnv *env,
-        jclass /* clazzObj */,
         jstring ifaceNameObj,
-        jstring serviceNameObj) {
+        jstring serviceNameObj,
+        jboolean retry) {
 
     using ::android::hidl::base::V1_0::IBase;
     using ::android::hardware::details::getRawServiceInternal;
@@ -319,8 +320,7 @@ static jobject JHwBinder_native_getService(
         serviceName = str.c_str();
     }
 
-    // TODO(b/67981006): true /* retry */
-    sp<IBase> ret = getRawServiceInternal(ifaceName, serviceName, false /* retry */, false /* getStub */);
+    sp<IBase> ret = getRawServiceInternal(ifaceName, serviceName, retry /* retry */, false /* getStub */);
     sp<hardware::IBinder> service = hardware::toBinder<hidl::base::V1_0::IBase>(ret);
 
     if (service == NULL) {
@@ -332,6 +332,27 @@ static jobject JHwBinder_native_getService(
     ::android::hardware::ProcessState::self()->startThreadPool();
 
     return JHwRemoteBinder::NewObject(env, service);
+}
+
+static jobject JHwBinder_native_getService(
+        JNIEnv *env,
+        jclass /* clazzObj */,
+        jstring ifaceNameObj,
+        jstring serviceNameObj) {
+
+    // This is a slight departure in behavior from HIDL C++ getService behavior
+    // for legacy reasons.
+    return javaGetServiceInternal(env, ifaceNameObj, serviceNameObj, false /* retry */);
+}
+
+static jobject JHwBinder_native_getService_retry(
+        JNIEnv *env,
+        jclass /* clazzObj */,
+        jstring ifaceNameObj,
+        jstring serviceNameObj,
+        jboolean retry) {
+
+    return javaGetServiceInternal(env, ifaceNameObj, serviceNameObj, retry);
 }
 
 void JHwBinder_native_configureRpcThreadpool(JNIEnv *, jclass,
@@ -362,6 +383,9 @@ static JNINativeMethod gMethods[] = {
 
     { "getService", "(Ljava/lang/String;Ljava/lang/String;)L" PACKAGE_PATH "/IHwBinder;",
         (void *)JHwBinder_native_getService },
+
+    { "getService", "(Ljava/lang/String;Ljava/lang/String;Z)L" PACKAGE_PATH "/IHwBinder;",
+        (void *)JHwBinder_native_getService_retry },
 
     { "configureRpcThreadpool", "(JZ)V",
         (void *)JHwBinder_native_configureRpcThreadpool },

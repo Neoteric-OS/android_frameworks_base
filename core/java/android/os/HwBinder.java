@@ -16,9 +16,9 @@
 
 package android.os;
 
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
 import libcore.util.NativeAllocationRegistry;
+
+import java.util.NoSuchElementException;
 
 /** @hide */
 public abstract class HwBinder implements IHwBinder {
@@ -49,6 +49,11 @@ public abstract class HwBinder implements IHwBinder {
     public static native final IHwBinder getService(
             String iface,
             String serviceName)
+        throws RemoteException, NoSuchElementException;
+    public static native final IHwBinder getService(
+            String iface,
+            String serviceName,
+            boolean retry)
         throws RemoteException, NoSuchElementException;
 
     public static native final void configureRpcThreadpool(
