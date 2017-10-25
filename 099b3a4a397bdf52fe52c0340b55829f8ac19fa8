@@ -46,6 +46,30 @@
       "revId": "099b3a4a397bdf52fe52c0340b55829f8ac19fa8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1960c0e3_1f03dced",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-10-25T16:27:39Z",
+      "side": 1,
+      "message": "The only downside of that is we always treat bsic 0xFF as Integer.MAX_VALUE even if it is not coming from Parcel. Should generally be ok but that may actually be an error.\n\nI don\u0027t have a strong opinion here. I am ok with the previous patch set.",
+      "parentUuid": "4c87a44b_4291406e",
+      "range": {
+        "startLine": 316,
+        "startChar": 8,
+        "endLine": 319,
+        "endChar": 8
+      },
+      "revId": "099b3a4a397bdf52fe52c0340b55829f8ac19fa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
