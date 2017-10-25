@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc9d2e31_cd925f11",
+        "filename": "telephony/java/android/telephony/CellIdentityGsm.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2017-10-25T16:00:40Z",
+      "side": 1,
+      "message": "do you really need this here? This logic is being duplicated. You can just call the other constructor after you have updated bsic value if its 0xFF.\nAlternatively you can remove this logic to handle empty from the other constructor.",
+      "range": {
+        "startLine": 316,
+        "startChar": 8,
+        "endLine": 319,
+        "endChar": 8
+      },
+      "revId": "099b3a4a397bdf52fe52c0340b55829f8ac19fa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
