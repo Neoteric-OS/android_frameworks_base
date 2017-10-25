@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a6efb62c_fbf137e4",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-10-25T21:25:57Z",
+      "side": 1,
+      "message": "Sure, I\u0027ll move this test to some other cl.",
+      "parentUuid": "f95f928d_3ea995be",
+      "range": {
+        "startLine": 433,
+        "startChar": 16,
+        "endLine": 433,
+        "endChar": 33
+      },
+      "revId": "9747481e1890c4ebbcd3957c28fc31b368371a5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f58b58c_f4e616a2",
         "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
         "patchSetId": 10
@@ -224,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "6f91c53a_4559b5b4",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-10-25T21:25:57Z",
+      "side": 1,
+      "message": "I think the only thing matters is the returning status. If it\u0027s not OK, other variables should be ignored.",
+      "parentUuid": "d4c804bd_2646d842",
+      "range": {
+        "startLine": 492,
+        "startChar": 0,
+        "endLine": 492,
+        "endChar": 69
+      },
+      "revId": "9747481e1890c4ebbcd3957c28fc31b368371a5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34e5a005_7a7d22a4",
         "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
         "patchSetId": 10
@@ -244,6 +292,30 @@
       "revId": "9747481e1890c4ebbcd3957c28fc31b368371a5f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135e17a4_41c7b3f7",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1166304
+      },
+      "writtenOn": "2017-10-25T21:25:57Z",
+      "side": 1,
+      "message": "Done. Changed it to the same like the other one.",
+      "parentUuid": "34e5a005_7a7d22a4",
+      "range": {
+        "startLine": 553,
+        "startChar": 6,
+        "endLine": 572,
+        "endChar": 62
+      },
+      "revId": "9747481e1890c4ebbcd3957c28fc31b368371a5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
