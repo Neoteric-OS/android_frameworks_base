@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "33068784_1aacbc63",
+        "filename": "core/java/android/net/metrics/WakeupStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-26T14:11:56Z",
+      "side": 1,
+      "message": "Gone and replaced by EthernetAddressType.",
+      "parentUuid": "5c46fa45_c1520b1c",
+      "range": {
+        "startLine": 33,
+        "startChar": 32,
+        "endLine": 33,
+        "endChar": 44
+      },
+      "revId": "97845b1cfcb3d3174071aa548e7d3e334a74e922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d380db62_0bc86cc4",
         "filename": "core/java/android/net/metrics/WakeupStats.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-26T10:30:22Z",
       "side": 1,
       "message": "Nit: this should be l2UnicastCount singular, since it\u0027s counting the number of occurrences of a single type of event (specifically, receiving a l2 unicast packet). Also elsewhere.",
+      "range": {
+        "startLine": 46,
+        "startChar": 16,
+        "endLine": 46,
+        "endChar": 31
+      },
+      "revId": "97845b1cfcb3d3174071aa548e7d3e334a74e922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75aaf8df_9aea3760",
+        "filename": "core/java/android/net/metrics/WakeupStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-26T14:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d380db62_0bc86cc4",
       "range": {
         "startLine": 46,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3c33b4e7_04b24512",
+        "filename": "core/java/android/net/metrics/WakeupStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-26T14:11:56Z",
+      "side": 1,
+      "message": "That was not for Arrays.equals but for the two other branches.\n\nGone and replaced by EthernetAddressType.",
+      "parentUuid": "49526ad9_6c113854",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 57
+      },
+      "revId": "97845b1cfcb3d3174071aa548e7d3e334a74e922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c20bd534_5a6e0df8",
         "filename": "core/java/android/net/metrics/WakeupStats.java",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3afc71d9_ae7a99ff",
+        "filename": "core/java/android/net/metrics/WakeupStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-26T14:11:56Z",
+      "side": 1,
+      "message": "Done. But I had to put the class in core/ because otherwise I can\u0027t get access to it.\n\nAlso for the time being it is just one static function. A modest beginning.",
+      "parentUuid": "c20bd534_5a6e0df8",
+      "range": {
+        "startLine": 87,
+        "startChar": 23,
+        "endLine": 87,
+        "endChar": 38
+      },
+      "revId": "97845b1cfcb3d3174071aa548e7d3e334a74e922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f803f522_0842bc42",
         "filename": "proto/src/ipconnectivity.proto",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-26T07:49:55Z",
       "side": 1,
       "message": "One thing I failed to mention on the C++ netd CL, is that I personally lose track if the meaning here.  \"IP protocol\" to me is basically IPv4 or IPv6.  You capture that in ethertype, which is fine.\n\nBut what you mean by ip_protocol I think is really \"ip_next_header\", right? It\u0027s the transport protoco (TCP, UDP) or other higher layer protocol (ICMP, ...).\n\nMaybe \"L4 protocol\"?  Although ICMP isn\u0027t really L4, by some definitions.\n\nMaybe just ip_next_hdr.",
+      "range": {
+        "startLine": 511,
+        "startChar": 19,
+        "endLine": 511,
+        "endChar": 27
+      },
+      "revId": "97845b1cfcb3d3174071aa548e7d3e334a74e922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7b8d412_91a90c06",
+        "filename": "proto/src/ipconnectivity.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-26T14:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f803f522_0842bc42",
       "range": {
         "startLine": 511,
         "startChar": 19,
