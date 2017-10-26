@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7539567e_aa56ca9b",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-10-26T23:35:47Z",
+      "side": 1,
+      "message": "A) How does this know whether to return 127.0.0.1 vs ::1? I think this is still returning \"127.0.0.1\" 100% of the time.\nB) If you are not using mRemoteAddr, then you are not testing both IPv4 and IPv6. Either update this test to do both families, or mark it as v4 only and put it in IpSecServiceTest.java (and convince Lorenzo why this should be v4 only.)",
+      "range": {
+        "startLine": 474,
+        "startChar": 27,
+        "endLine": 474,
+        "endChar": 76
+      },
+      "revId": "c54af863a3740aefa46d34e24d730681269e696b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
