@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c46fa45_c1520b1c",
+        "filename": "core/java/android/net/metrics/WakeupStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-10-26T07:49:55Z",
+      "side": 1,
+      "message": "NetworkConstants.ETHER_ADDR_BROADCAST?",
+      "range": {
+        "startLine": 33,
+        "startChar": 32,
+        "endLine": 33,
+        "endChar": 44
+      },
+      "revId": "97845b1cfcb3d3174071aa548e7d3e334a74e922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c20bd534_5a6e0df8",
+        "filename": "core/java/android/net/metrics/WakeupStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-10-26T07:49:55Z",
+      "side": 1,
+      "message": "\"ev.dstHwAddr[0] \u0026 0x01 \u003d\u003d 1\"\n\n+1000 to an android.net.util.EthernetAddress class with isBroadcast(), isMulticast(), isUnicast() methods and unittests for them.\n\nOh, and EthernetAddress.toString() would be wonderful too.  We\u0027ve got at least 3 or 4 copies of that (ConnectivityPacketSummary, ApfFilter, ...), IIRC.",
+      "range": {
+        "startLine": 87,
+        "startChar": 23,
+        "endLine": 87,
+        "endChar": 38
+      },
+      "revId": "97845b1cfcb3d3174071aa548e7d3e334a74e922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f803f522_0842bc42",
+        "filename": "proto/src/ipconnectivity.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-10-26T07:49:55Z",
+      "side": 1,
+      "message": "One thing I failed to mention on the C++ netd CL, is that I personally lose track if the meaning here.  \"IP protocol\" to me is basically IPv4 or IPv6.  You capture that in ethertype, which is fine.\n\nBut what you mean by ip_protocol I think is really \"ip_next_header\", right? It\u0027s the transport protoco (TCP, UDP) or other higher layer protocol (ICMP, ...).\n\nMaybe \"L4 protocol\"?  Although ICMP isn\u0027t really L4, by some definitions.\n\nMaybe just ip_next_hdr.",
+      "range": {
+        "startLine": 511,
+        "startChar": 19,
+        "endLine": 511,
+        "endChar": 27
+      },
+      "revId": "97845b1cfcb3d3174071aa548e7d3e334a74e922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
