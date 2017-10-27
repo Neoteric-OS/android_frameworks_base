@@ -44703,6 +44703,7 @@ package android.telephony {
     method public android.os.Bundle getCarrierConfigValues();
     method public static android.telephony.SmsManager getDefault();
     method public static int getDefaultSmsSubscriptionId();
+    method public int getSmsCapacityInIcc();
     method public static android.telephony.SmsManager getSmsManagerForSubscriptionId(int);
     method @RequiresPermission(android.Manifest.permission.SMS_FINANCIAL_TRANSACTIONS) public void getSmsMessagesForFinancialApp(android.os.Bundle, @NonNull java.util.concurrent.Executor, @NonNull android.telephony.SmsManager.FinancialSmsCallback);
     method public int getSubscriptionId();

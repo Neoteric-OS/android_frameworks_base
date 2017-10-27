@@ -36,6 +36,13 @@ interface ISms {
     List<SmsRawData> getAllMessagesFromIccEfForSubscriber(in int subId, String callingPkg);
 
     /**
+     * Retrieves sms capacity on ICC.
+     * @param subId the subId id.
+     * @return integer value sms capacity on ICC
+     */
+    int getMessageCapacityFromIccEfForSubscriber(in int subId, String callingPkg);
+
+    /**
      * Update the specified message on the ICC.
      *
      * @param messageIndex record index of message to update

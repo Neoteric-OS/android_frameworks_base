@@ -1649,6 +1649,29 @@ public final class SmsManager {
     }
 
     /**
+     * Retrieves sms capacity in ICC. ICC (Integrated Circuit Card) is the card of the device. For
+     * example, this can be the SIM or USIM for GSM.
+     *
+     * @return sms capacity integer value
+     */
+    public int getSmsCapacityInIcc() {
+        int count = 0;
+
+        try {
+            ISms iccISms = getISmsService();
+            if (iccISms != null) {
+                count =
+                        iccISms.getMessageCapacityFromIccEfForSubscriber(
+                                getSubscriptionId(), ActivityThread.currentPackageName());
+            }
+        } catch (RemoteException ex) {
+            // ignore it
+        }
+
+        return count;
+    }
+
+    /**
      * Enable reception of cell broadcast (SMS-CB) messages with the given
      * message identifier and RAN type. The RAN type specify this message ID
      * belong to 3GPP (GSM) or 3GPP2(CDMA).Note that if two different clients

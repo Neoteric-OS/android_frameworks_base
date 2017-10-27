@@ -34,6 +34,11 @@ public class ISmsImplBase extends ISms.Stub {
     }
 
     @Override
+    public int getMessageCapacityFromIccEfForSubscriber(int subId, String callingPkg) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean updateMessageOnIccEfForSubscriber(int subId, String callingPkg, int messageIndex,
             int newStatus, byte[] pdu) {
         throw new UnsupportedOperationException();
