@@ -27,6 +27,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -183,41 +184,48 @@ public final class BluetoothPan implements BluetoothProfile {
         close();
     }
 
-    private final IBluetoothStateChangeCallback mStateChangeCallback =
-            new IBluetoothStateChangeCallback.Stub() {
+    final static class BluetoothStateChangeCallback extends IBluetoothStateChangeCallback.Stub {
+        private WeakReference<BluetoothPan> mBluetoothPan;
+        public BluetoothStateChangeCallback(BluetoothPan bluetoothPan){
+            mBluetoothPan = new WeakReference<BluetoothPan>(bluetoothPan);
+        }
 
-                @Override
-                public void onBluetoothStateChange(boolean on) {
-                    // Handle enable request to bind again.
-                    Log.d(TAG, "onBluetoothStateChange on: " + on);
-                    if (on) {
-                        try {
-                            if (mPanService == null) {
-                                if (VDBG) Log.d(TAG, "onBluetoothStateChange calling doBind()");
-                                doBind();
-                            }
-
-                        } catch (IllegalStateException e) {
-                            Log.e(TAG, "onBluetoothStateChange: could not bind to PAN service: ",
-                                    e);
-
-                        } catch (SecurityException e) {
-                            Log.e(TAG, "onBluetoothStateChange: could not bind to PAN service: ",
-                                    e);
+        @Override
+        public void onBluetoothStateChange(boolean on) {
+            BluetoothPan btp = null;
+            if(mBluetoothPan != null){
+                btp = mBluetoothPan.get();
+            }
+            if(btp != null){
+                // Handle enable request to bind again.
+                Log.d(TAG, "onBluetoothStateChange on: " + on);
+                if (on) {
+                    try {
+                        if (btp.mPanService == null) {
+                            if (VDBG) Log.d(TAG, "onBluetoothStateChange calling doBind()");
+                            btp.doBind();
                         }
-                    } else {
-                        if (VDBG) Log.d(TAG, "Unbinding service...");
-                        synchronized (mConnection) {
-                            try {
-                                mPanService = null;
-                                mContext.unbindService(mConnection);
-                            } catch (Exception re) {
-                                Log.e(TAG, "", re);
-                            }
-                        }
+                    } catch (IllegalStateException e) {
+                        Log.e(TAG,"onBluetoothStateChange: could not bind to PAN service: ", e);
+                    } catch (SecurityException e) {
+                        Log.e(TAG,"onBluetoothStateChange: could not bind to PAN service: ", e);
                     }
+                } else {
+                    if (VDBG) Log.d(TAG,"Unbinding service...");
+                    synchronized (btp.mConnection) {
+                        try {
+                            btp.mPanService = null;
+                            btp.mContext.unbindService(btp.mConnection);
+                        } catch (Exception re) {
+                            Log.e(TAG,"",re);
+                        }
+                   }
                 }
-            };
+            }
+        }
+    }
+
+    final private IBluetoothStateChangeCallback mStateChangeCallback = new BluetoothStateChangeCallback(this);
 
     /**
      * Initiate connection to a profile of the remote bluetooth device.
@@ -373,24 +381,42 @@ public final class BluetoothPan implements BluetoothProfile {
         return false;
     }
 
-    private final ServiceConnection mConnection = new ServiceConnection() {
+    final static class MyServiceConnection implements ServiceConnection {
+        private WeakReference<BluetoothPan> mBluetoothPan;
+        public MyServiceConnection(BluetoothPan bluetoothPan){
+            mBluetoothPan = new WeakReference<BluetoothPan>(bluetoothPan);
+        }
+
         public void onServiceConnected(ComponentName className, IBinder service) {
-            if (DBG) Log.d(TAG, "BluetoothPAN Proxy object connected");
-            mPanService = IBluetoothPan.Stub.asInterface(Binder.allowBlocking(service));
-            if (mServiceListener != null) {
-                mServiceListener.onServiceConnected(BluetoothProfile.PAN,
-                        BluetoothPan.this);
+            BluetoothPan btp = null;
+            if(mBluetoothPan != null){
+                btp = mBluetoothPan.get();
+            }
+            if(btp != null){
+                if (DBG) Log.d(TAG, "BluetoothPAN Proxy object connected");
+                btp.mPanService = IBluetoothPan.Stub.asInterface(Binder.allowBlocking(service));
+                if (btp.mServiceListener != null) {
+                    btp.mServiceListener.onServiceConnected(BluetoothProfile.PAN, btp);
+                }
             }
         }
 
         public void onServiceDisconnected(ComponentName className) {
-            if (DBG) Log.d(TAG, "BluetoothPAN Proxy object disconnected");
-            mPanService = null;
-            if (mServiceListener != null) {
-                mServiceListener.onServiceDisconnected(BluetoothProfile.PAN);
+            BluetoothPan btp = null;
+            if(mBluetoothPan != null){
+                btp = mBluetoothPan.get();
+            }
+            if(btp != null){
+                if (DBG) Log.d(TAG, "BluetoothPAN Proxy object disconnected");
+                btp.mPanService = null;
+                if (btp.mServiceListener != null) {
+                    btp.mServiceListener.onServiceDisconnected(BluetoothProfile.PAN);
+                }
             }
         }
-    };
+    }
+
+    private final ServiceConnection mConnection = new MyServiceConnection(this);
 
     private boolean isEnabled() {
         return mAdapter.getState() == BluetoothAdapter.STATE_ON;
