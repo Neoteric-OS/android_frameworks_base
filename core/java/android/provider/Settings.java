@@ -9158,11 +9158,11 @@ public final class Settings {
         public static final String DEFAULT_DNS_SERVER = "default_dns_server";
 
         /**
-         * Whether to disable DNS over TLS (boolean)
+         * Whether to DNS over TLS is enabled (boolean)
          *
          * @hide
          */
-        public static final String DNS_TLS_DISABLED = "dns_tls_disabled";
+        public static final String DNS_TLS_ENABLED = "dns_tls_enabled";
 
         /** {@hide} */
         public static final String
@@ -10204,7 +10204,8 @@ public final class Settings {
             DOCK_AUDIO_MEDIA_ENABLED,
             ENCODED_SURROUND_OUTPUT,
             LOW_POWER_MODE_TRIGGER_LEVEL,
-            BLUETOOTH_ON
+            BLUETOOTH_ON,
+            DNS_TLS_ENABLED
         };
 
         private static final ContentProviderHolder sProviderHolder =
