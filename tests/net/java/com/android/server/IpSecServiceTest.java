@@ -123,7 +123,39 @@ public class IpSecServiceTest {
         mIpSecService.closeUdpEncapsulationSocket(udpEncapResp.resourceId);
         udpEncapResp.fileDescriptor.close();
 
-        // TODO: Added check for the resource tracker
+        IpSecService.UserResourceRecord userRecord =
+                mIpSecService.mUserResourceTracker.getUserRecord(Os.getuid());
+        assertEquals(0, userRecord.socketQuotaTracker.current());
+        try {
+            userRecord.mEncapSocketRecords.getRefcountedResourceOrThrow(udpEncapResp.resourceId);
+            fail("Expected IllegalArgumentException on attempt to access deleted resource");
+        } catch (IllegalArgumentException expected) {
+
+        }
+    }
+
+    @Test
+    public void testUdpEncapsulationSocketBinderDeath() throws Exception {
+        int localport = findUnusedPort();
+
+        IpSecUdpEncapResponse udpEncapResp =
+                mIpSecService.openUdpEncapsulationSocket(localport, new Binder());
+
+        IpSecService.UserResourceRecord userRecord =
+                mIpSecService.mUserResourceTracker.getUserRecord(Os.getuid());
+        IpSecService.RefcountedResource refcountedRecord =
+                userRecord.mEncapSocketRecords.getRefcountedResourceOrThrow(
+                        udpEncapResp.resourceId);
+
+        refcountedRecord.binderDied();
+
+        assertEquals(0, userRecord.socketQuotaTracker.current());
+        try {
+            userRecord.mEncapSocketRecords.getRefcountedResourceOrThrow(udpEncapResp.resourceId);
+            fail("Expected IllegalArgumentException on attempt to access deleted resource");
+        } catch (IllegalArgumentException expected) {
+
+        }
     }
 
     @Test
