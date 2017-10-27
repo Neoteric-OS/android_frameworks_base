@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d99408c8_e209783b",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3169,
+      "author": {
+        "id": 1047769
+      },
+      "writtenOn": "2017-10-27T00:06:07Z",
+      "side": 1,
+      "message": "Why not have another thing like this to have a mode to startup the runtime with JVMTI instead.",
+      "range": {
+        "startLine": 3169,
+        "startChar": 0,
+        "endLine": 3169,
+        "endChar": 55
+      },
+      "revId": "65ad60a8434ed194b552cb54d34d1c6cfe82f333",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a011b3bd_23f480d7",
+        "filename": "core/java/android/os/Debug.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2064,
+      "author": {
+        "id": 1047769
+      },
+      "writtenOn": "2017-10-27T00:06:07Z",
+      "side": 1,
+      "message": "I\u0027m not sure we want to do this.\n\nagampe@ thoughts.",
+      "range": {
+        "startLine": 2064,
+        "startChar": 0,
+        "endLine": 2064,
+        "endChar": 7
+      },
+      "revId": "65ad60a8434ed194b552cb54d34d1c6cfe82f333",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
