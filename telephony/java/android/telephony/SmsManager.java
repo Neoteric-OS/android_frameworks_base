@@ -1147,6 +1147,63 @@ public final class SmsManager {
     }
 
     /**
+     * Retrieves sms capacity in ICC. ICC (Integrated Circuit Card) is the card of the device. For
+     * example, this can be the SIM or USIM for GSM.
+     *
+     * @return sms capacity integer value
+     * @hide
+     */
+    public int getSmsCapacityInIcc() {
+        int count = 0;
+        List<SmsRawData> records = null;
+
+        try {
+            ISms iccISms = getISmsService();
+            if (iccISms != null) {
+                records =
+                        iccISms.getAllMessagesFromIccEfForSubscriber(
+                                getSubscriptionId(), ActivityThread.currentPackageName());
+            }
+        } catch (RemoteException ex) {
+            // ignore it
+        }
+
+        if (records != null) {
+            count = records.size();
+        }
+        return count;
+    }
+
+    /**
+     * Retrieves Retrieves sms capacity in ICC. ICC (Integrated Circuit Card) is the card of the
+     * device. For example, this can be the SIM or USIM for GSM.
+     *
+     * @param subId is subscription id of ICC
+     * @return sms capacity integer value
+     * @hide
+     */
+    public static int getSmsCapacityInIcc(int subId) {
+        int count = 0;
+        List<SmsRawData> records = null;
+
+        try {
+            ISms iccISms = getISmsService();
+            if (iccISms != null) {
+                records =
+                        iccISms.getAllMessagesFromIccEfForSubscriber(
+                                subId, ActivityThread.currentPackageName());
+            }
+        } catch (RemoteException ex) {
+            // ignore it
+        }
+
+        if (records != null) {
+            count = records.size();
+        }
+        return count;
+    }
+
+    /**
      * Enable reception of cell broadcast (SMS-CB) messages with the given
      * message identifier and RAN type. The RAN type specify this message ID
      * belong to 3GPP (GSM) or 3GPP2(CDMA).Note that if two different clients
