@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9309d8cb_c31877a5",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-29T05:01:22Z",
+      "side": 1,
+      "message": "I don\u0027t think this could be a regression, but just for safety I would try to avoid renumbering existing capabilities even those that are @hide.",
+      "range": {
+        "startLine": 239,
+        "startChar": 56,
+        "endLine": 239,
+        "endChar": 58
+      },
+      "revId": "ddf94a3f508612e5254f998fb7c058ed5cd69ddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60c11d05_1052dc20",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-29T05:01:22Z",
+      "side": 1,
+      "message": "Isn\u0027t this case redundant with the one below ?",
+      "range": {
+        "startLine": 656,
+        "startChar": 0,
+        "endLine": 657,
+        "endChar": 46
+      },
+      "revId": "ddf94a3f508612e5254f998fb7c058ed5cd69ddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2464b1fb_7a7d8119",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-10-29T05:01:22Z",
+      "side": 1,
+      "message": "how far are we from actually deleting these functions ?",
+      "range": {
+        "startLine": 321,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 5
+      },
+      "revId": "ddf94a3f508612e5254f998fb7c058ed5cd69ddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
