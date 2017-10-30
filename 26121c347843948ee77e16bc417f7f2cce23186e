@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c7d3e5f_69d5a5e1",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-30T06:31:11Z",
+      "side": 1,
+      "message": "Note that this will ensure that a user cannot call requestNetwork with this capability (but *can* call registerNetworkCallback).\n\nThis is due to NON_REQUESTABLE_CAPABILITIES below, and the reason for this limitation is that the connectivity code by itself does not prevent looping in the presence of requests for mutable capabilities. What can happen is:\n\n 1. App calls requestNetwork with mutable capability.\n 2. ConnectivityService sends request to NetworkFactories.\n 3. Network connects, but lacks capability, or after a while loses capability\n   (which is possible because by definition mutable capabilities can change\n   while the network is connected).\n 4. ConnectivityService tears down network as it has no requests matching it.\n 5. Goto 2.\n\nIf we\u0027re OK with the fact that we cannot call requestNetwork with NET_CAPABILITY_NOT_ROAMING, that\u0027s fine, but if not, we should think about this.\n\nOne possible alternative is to say that NET_CAPABILITY_NOT_ROAMING cannot change while the network is connected (not sure if this is possible). Another possible alternative is to put safeguards against this into TelephonyNetworkFactory.\n\nHugo has also floated the idea that the connectivity code should not be responsible to preventing this sort of loop, and that that is entirely the responsibility of the network factory.",
+      "range": {
+        "startLine": 254,
+        "startChar": 18,
+        "endLine": 254,
+        "endChar": 44
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af7760c2_762c8ae7",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-30T06:31:11Z",
+      "side": 1,
+      "message": "I think this could just be \"return Math.min(a, b)\"",
+      "range": {
+        "startLine": 656,
+        "startChar": 0,
+        "endLine": 664,
+        "endChar": 9
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0cefcb6_88e2b8c1",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-30T06:31:11Z",
+      "side": 1,
+      "message": "Why not mark this @deprecated out? If the concern is not doing API changes in AOSP master, we do that quire regularly.",
+      "range": {
+        "startLine": 315,
+        "startChar": 7,
+        "endLine": 315,
+        "endChar": 20
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72876097_1de40868",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4673,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-30T06:31:11Z",
+      "side": 1,
+      "message": "Nit: actually I\u0027m not sure there is a race here since nai.networkCapabilities is only ever assigned in this function. Having it in this lock is fine though.",
+      "range": {
+        "startLine": 4673,
+        "startChar": 12,
+        "endLine": 4673,
+        "endChar": 45
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75e923cb_3bf1ad4e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4698,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-30T06:31:11Z",
+      "side": 1,
+      "message": "Seems like it should be trivial to add a code to ConnectivityServiceTest to verify that we call NetworkStatsService when we that this actually happens.\n\nIt shouldn\u0027t be hard to do since the NetworkStatsService used in ConnectivityServiceTest is just a plain mockito @Mock: something like\n\n    mWiFiNetworkAgent \u003d new MockNetworkAgent(...);\n    // expect initial callbacks...\n    mWiFiNetworkAgent.addCapability(NET_CAPABILITY_NOT_METERED);\n    // wait for idle\n    // expect that the mock NetworkStatsService is called.",
+      "range": {
+        "startLine": 4698,
+        "startChar": 16,
+        "endLine": 4698,
+        "endChar": 50
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5df0e6dc_c12cd7b6",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-10-30T06:31:11Z",
+      "side": 1,
+      "message": "Seems like this could be useful as an @hide method in NetworkCapabilities.",
+      "range": {
+        "startLine": 1162,
+        "startChar": 0,
+        "endLine": 1168,
+        "endChar": 5
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
