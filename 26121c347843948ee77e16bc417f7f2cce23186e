@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2bc151a9_98a8eaa9",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-10-30T18:07:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4c7d0d4_0370127b",
+      "range": {
+        "startLine": 36,
+        "startChar": 71,
+        "endLine": 37,
+        "endChar": 16
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c7d3e5f_69d5a5e1",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-30T06:31:11Z",
       "side": 1,
       "message": "Note that this will ensure that a user cannot call requestNetwork with this capability (but *can* call registerNetworkCallback).\n\nThis is due to NON_REQUESTABLE_CAPABILITIES below, and the reason for this limitation is that the connectivity code by itself does not prevent looping in the presence of requests for mutable capabilities. What can happen is:\n\n 1. App calls requestNetwork with mutable capability.\n 2. ConnectivityService sends request to NetworkFactories.\n 3. Network connects, but lacks capability, or after a while loses capability\n   (which is possible because by definition mutable capabilities can change\n   while the network is connected).\n 4. ConnectivityService tears down network as it has no requests matching it.\n 5. Goto 2.\n\nIf we\u0027re OK with the fact that we cannot call requestNetwork with NET_CAPABILITY_NOT_ROAMING, that\u0027s fine, but if not, we should think about this.\n\nOne possible alternative is to say that NET_CAPABILITY_NOT_ROAMING cannot change while the network is connected (not sure if this is possible). Another possible alternative is to put safeguards against this into TelephonyNetworkFactory.\n\nHugo has also floated the idea that the connectivity code should not be responsible to preventing this sort of loop, and that that is entirely the responsibility of the network factory.",
+      "range": {
+        "startLine": 254,
+        "startChar": 18,
+        "endLine": 254,
+        "endChar": 44
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90940258_78577587",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-10-30T18:07:22Z",
+      "side": 1,
+      "message": "Interesting, thanks for this background.  We *do* want NOT_ROAMING to be requestable by apps, so I\u0027ll remove it here.\n\nI think this means we\u0027re in a similar situation as NOT_METERED, where we want it to be requestable, but the underlying network currently can change the state over the lifetime of the connection.\n\nUpdating the agents to truly make these values immutable is far larger than this CL, so I\u0027ll change this CL to treat NOT_ROAMING like NOT_METERED (quietly allow mutations) until we can follow up with the underlying agents to make those flags really immutable.",
+      "parentUuid": "2c7d3e5f_69d5a5e1",
       "range": {
         "startLine": 254,
         "startChar": 18,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f1f76a92_18dfa5bf",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-10-30T18:07:22Z",
+      "side": 1,
+      "message": "I\u0027m not planning to make these methods public.  (Maybe this comment is directed at the larger networking team?  Or did you want a bug filed?)",
+      "parentUuid": "7f33cb9e_5d4c7bcb",
+      "range": {
+        "startLine": 595,
+        "startChar": 31,
+        "endLine": 595,
+        "endChar": 59
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af7760c2_762c8ae7",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-30T06:31:11Z",
       "side": 1,
       "message": "I think this could just be \"return Math.min(a, b)\"",
+      "range": {
+        "startLine": 656,
+        "startChar": 0,
+        "endLine": 664,
+        "endChar": 9
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e8af08c_d620359c",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-10-30T18:07:22Z",
+      "side": 1,
+      "message": "Nope, see the unit tests; we want to know the smallest *defined* bandwidth.  Here\u0027s the desired behavior that the tests validate:\n\n  minBandwidth(LINK_BANDWIDTH_UNSPECIFIED, 10) \u003d\u003d 10\n  maxBandwidth(LINK_BANDWIDTH_UNSPECIFIED, 10) \u003d\u003d 10\n\nSo we can use Math.max() for max, but need special treatment for min.",
+      "parentUuid": "af7760c2_762c8ae7",
       "range": {
         "startLine": 656,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ce41378d_965c5818",
+        "filename": "core/java/android/net/NetworkInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-10-30T18:07:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0cefcb6_88e2b8c1",
+      "range": {
+        "startLine": 315,
+        "startChar": 7,
+        "endLine": 315,
+        "endChar": 20
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72876097_1de40868",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-10-30T06:31:11Z",
       "side": 1,
       "message": "Nit: actually I\u0027m not sure there is a race here since nai.networkCapabilities is only ever assigned in this function. Having it in this lock is fine though.",
+      "range": {
+        "startLine": 4673,
+        "startChar": 12,
+        "endLine": 4673,
+        "endChar": 45
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ed40c6e_98d3bc8a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4673,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-10-30T18:07:22Z",
+      "side": 1,
+      "message": "Having an explicit synchronization barrier is the only way to prove that we\u0027re reading the correct value.\n\nThe only way this could have been safe before was if you were only reading/writing it from a single thread, and in that case you wouldn\u0027t need to synchronize at all.",
+      "parentUuid": "72876097_1de40868",
       "range": {
         "startLine": 4673,
         "startChar": 12,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "c9171c8d_865776dc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4698,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-10-30T18:07:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75e923cb_3bf1ad4e",
+      "range": {
+        "startLine": 4698,
+        "startChar": 16,
+        "endLine": 4698,
+        "endChar": 50
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdcfeee3_110d6ed9",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 3
@@ -174,6 +342,30 @@
       "writtenOn": "2017-10-30T08:49:03Z",
       "side": 1,
       "message": "Do you use this? If not, remove.",
+      "range": {
+        "startLine": 96,
+        "startChar": 26,
+        "endLine": 96,
+        "endChar": 45
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72463946_41009b99",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-10-30T18:07:22Z",
+      "side": 1,
+      "message": "Your existing code is using it.  :)  Your docs build was broken without this.",
+      "parentUuid": "bdcfeee3_110d6ed9",
       "range": {
         "startLine": 96,
         "startChar": 26,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "75fac619_de2d85db",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-10-30T18:07:22Z",
+      "side": 1,
+      "message": "SGTM, done.  Also filed 68499889 to follow-up on users.",
+      "parentUuid": "8a0b7d26_7a171159",
+      "range": {
+        "startLine": 316,
+        "startChar": 8,
+        "endLine": 316,
+        "endChar": 9
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5df0e6dc_c12cd7b6",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 3
@@ -220,6 +436,30 @@
       "writtenOn": "2017-10-30T06:31:11Z",
       "side": 1,
       "message": "Seems like this could be useful as an @hide method in NetworkCapabilities.",
+      "range": {
+        "startLine": 1162,
+        "startChar": 0,
+        "endLine": 1168,
+        "endChar": 5
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "923e1871_1a2ba96f",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-10-30T18:07:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5df0e6dc_c12cd7b6",
       "range": {
         "startLine": 1162,
         "startChar": 0,
