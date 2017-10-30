@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8ed1852_1b47e2b1",
+        "filename": "tests/net/java/com/android/server/IpSecServiceParameterizedTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-10-30T23:43:58Z",
+      "side": 1,
+      "message": "Actually, does this test pass? The values for mRemoteAddr are {\"8.8.4.4\"}, {\"2601::10\"}. It seems like we also need a parameterized localAddr?",
+      "range": {
+        "startLine": 473,
+        "startChar": 27,
+        "endLine": 473,
+        "endChar": 38
+      },
+      "revId": "1ce37503950118c26923756d5880b5b200b9c44f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
