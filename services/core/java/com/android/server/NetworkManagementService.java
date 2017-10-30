@@ -20,6 +20,8 @@ import static android.Manifest.permission.CONNECTIVITY_INTERNAL;
 import static android.Manifest.permission.DUMP;
 import static android.Manifest.permission.NETWORK_STACK;
 import static android.Manifest.permission.SHUTDOWN;
+import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OPPORTUNISTIC;
+import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
 import static android.net.NetworkPolicyManager.FIREWALL_CHAIN_DOZABLE;
 import static android.net.NetworkPolicyManager.FIREWALL_CHAIN_NAME_DOZABLE;
 import static android.net.NetworkPolicyManager.FIREWALL_CHAIN_NAME_NONE;
@@ -92,6 +94,7 @@ import android.telephony.DataConnectionRealTimeInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseBooleanArray;
@@ -1980,8 +1983,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
 
         final String[] domainStrs = domains == null ? new String[0] : domains.split(" ");
         final int[] params = { sampleValidity, successThreshold, minSamples, maxSamples };
-        final boolean useTls = Settings.Global.getInt(resolver,
-                Settings.Global.DNS_TLS_DISABLED, 0) == 0;
+        final boolean useTls = shouldUseTls(resolver);
         final String tlsHostname = "";
         final String[] tlsFingerprints = new String[0];
         try {
@@ -1990,6 +1992,16 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static boolean shouldUseTls(ContentResolver resolver) {
+        final String private_dns = Settings.Global.getString(
+                resolver, Settings.Global.PRIVATE_DNS_MODE);
+        if (!TextUtils.isEmpty(private_dns)) {
+            if (private_dns.equals(PRIVATE_DNS_MODE_OPPORTUNISTIC)) return true;
+            if (private_dns.startsWith(PRIVATE_DNS_MODE_PROVIDER_HOSTNAME)) return true;
+        }
+        return Settings.Global.getInt(resolver, Settings.Global.DNS_TLS_DISABLED, 0) == 0;
     }
 
     @Override
