@@ -9164,6 +9164,13 @@ public final class Settings {
          */
         public static final String DNS_TLS_DISABLED = "dns_tls_disabled";
 
+        /**
+         * The requested Private DNS mode (string)
+         *
+         * @hide
+         */
+        public static final String PRIVATE_DNS_MODE = "private_dns_mode";
+
         /** {@hide} */
         public static final String
                 BLUETOOTH_HEADSET_PRIORITY_PREFIX = "bluetooth_headset_priority_";
@@ -10204,7 +10211,8 @@ public final class Settings {
             DOCK_AUDIO_MEDIA_ENABLED,
             ENCODED_SURROUND_OUTPUT,
             LOW_POWER_MODE_TRIGGER_LEVEL,
-            BLUETOOTH_ON
+            BLUETOOTH_ON,
+            PRIVATE_DNS_MODE
         };
 
         private static final ContentProviderHolder sProviderHolder =
