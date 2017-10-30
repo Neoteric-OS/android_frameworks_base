@@ -38024,6 +38024,11 @@ package android.system {
     field public final int errno;
   }
 
+  public class IoctlIntArg {
+    ctor public IoctlIntArg(int);
+    field public int value;
+  }
+
   public final class Os {
     method public static java.io.FileDescriptor accept(java.io.FileDescriptor, java.net.InetSocketAddress) throws android.system.ErrnoException, java.net.SocketException;
     method public static boolean access(java.lang.String, int) throws android.system.ErrnoException;
@@ -38093,7 +38098,8 @@ package android.system {
     method public static void remove(java.lang.String) throws android.system.ErrnoException;
     method public static void removexattr(java.lang.String, java.lang.String) throws android.system.ErrnoException;
     method public static void rename(java.lang.String, java.lang.String) throws android.system.ErrnoException;
-    method public static long sendfile(java.io.FileDescriptor, java.io.FileDescriptor, android.util.MutableLong, long) throws android.system.ErrnoException;
+    method public static deprecated long sendfile(java.io.FileDescriptor, java.io.FileDescriptor, android.util.MutableLong, long) throws android.system.ErrnoException;
+    method public static long sendfile(java.io.FileDescriptor, java.io.FileDescriptor, android.system.SendfileOffset, long) throws android.system.ErrnoException;
     method public static int sendto(java.io.FileDescriptor, java.nio.ByteBuffer, int, java.net.InetAddress, int) throws android.system.ErrnoException, java.net.SocketException;
     method public static int sendto(java.io.FileDescriptor, byte[], int, int, int, java.net.InetAddress, int) throws android.system.ErrnoException, java.net.SocketException;
     method public static void setegid(int) throws android.system.ErrnoException;
@@ -38118,7 +38124,8 @@ package android.system {
     method public static int umask(int);
     method public static android.system.StructUtsname uname();
     method public static void unsetenv(java.lang.String) throws android.system.ErrnoException;
-    method public static int waitpid(int, android.util.MutableInt, int) throws android.system.ErrnoException;
+    method public static deprecated int waitpid(int, android.util.MutableInt, int) throws android.system.ErrnoException;
+    method public static int waitpid(int, android.system.WaitpidStatus, int) throws android.system.ErrnoException;
     method public static int write(java.io.FileDescriptor, java.nio.ByteBuffer) throws android.system.ErrnoException, java.io.InterruptedIOException;
     method public static int write(java.io.FileDescriptor, byte[], int, int) throws android.system.ErrnoException, java.io.InterruptedIOException;
     method public static int writev(java.io.FileDescriptor, java.lang.Object[], int[], int[]) throws android.system.ErrnoException, java.io.InterruptedIOException;
@@ -38617,6 +38624,11 @@ package android.system {
     field public static final int _SC_XOPEN_XCU_VERSION;
   }
 
+  public class SendfileOffset {
+    ctor public SendfileOffset(long);
+    field public long value;
+  }
+
   public final class StructPollfd {
     ctor public StructPollfd();
     field public short events;
@@ -38675,6 +38687,11 @@ package android.system {
     field public final java.lang.String release;
     field public final java.lang.String sysname;
     field public final java.lang.String version;
+  }
+
+  public class WaitpidStatus {
+    ctor public WaitpidStatus(int);
+    field public int value;
   }
 
 }
