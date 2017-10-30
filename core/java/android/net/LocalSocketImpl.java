@@ -16,18 +16,17 @@
 
 package android.net;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.InputStream;
-import java.io.FileDescriptor;
-import java.net.SocketOptions;
-
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.OsConstants;
 import android.system.StructLinger;
 import android.system.StructTimeval;
-import android.util.MutableInt;
+
+import java.io.FileDescriptor;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.SocketOptions;
 
 /**
  * Socket implementation used for android.net.LocalSocket and
@@ -62,13 +61,13 @@ class LocalSocketImpl
             FileDescriptor myFd = fd;
             if (myFd == null) throw new IOException("socket closed");
 
-            MutableInt avail = new MutableInt(0);
+            int[] avail = new int[1];
             try {
                 Os.ioctlInt(myFd, OsConstants.FIONREAD, avail);
             } catch (ErrnoException e) {
                 throw e.rethrowAsIOException();
             }
-            return avail.value;
+            return avail[0];
         }
 
         /** {@inheritDoc} */
@@ -167,7 +166,7 @@ class LocalSocketImpl
             if (myFd == null) throw new IOException("socket closed");
 
             // Loop until the output buffer is empty.
-            MutableInt pending = new MutableInt(0);
+            int[] pending = new int[1];
             while (true) {
                 try {
                     // See linux/net/unix/af_unix.c
@@ -176,7 +175,7 @@ class LocalSocketImpl
                     throw e.rethrowAsIOException();
                 }
 
-                if (pending.value <= 0) {
+                if (pending[0] <= 0) {
                     // The output buffer is empty.
                     break;
                 }
