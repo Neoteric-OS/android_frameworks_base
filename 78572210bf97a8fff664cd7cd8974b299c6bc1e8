@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "238f4542_2b260f7f",
+        "filename": "services/net/java/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-10-31T08:21:58Z",
+      "side": 1,
+      "message": "The distinction I was trying to draw was between \"telling IpClient to do something\" vs \"telling IpClient something about the environment and letting it choose what to do in response\".\n\nDoes that make sense?  Should I give up this effort, or does anything better come to mind?\n\nActually, that would argue for changing withDisplayName to usingDisplayName, I think...\n\nHmmm...",
+      "parentUuid": "d1db7f57_554a3234",
+      "range": {
+        "startLine": 313,
+        "startChar": 27,
+        "endLine": 313,
+        "endChar": 32
+      },
+      "revId": "78572210bf97a8fff664cd7cd8974b299c6bc1e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af06679c_0f02cffc",
         "filename": "services/net/java/android/net/ip/IpClient.java",
         "patchSetId": 1
