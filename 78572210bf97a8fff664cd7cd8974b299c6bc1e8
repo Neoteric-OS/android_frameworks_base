@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1db7f57_554a3234",
+        "filename": "services/net/java/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-10-31T08:16:35Z",
+      "side": 1,
+      "message": "Maybe \"with\", for consistency with the rest of the methods? If there\u0027s a distinction you\u0027re trying to draw (\"using\" vs \"with\"), it\u0027s not obvious to me.",
+      "range": {
+        "startLine": 313,
+        "startChar": 27,
+        "endLine": 313,
+        "endChar": 32
+      },
+      "revId": "78572210bf97a8fff664cd7cd8974b299c6bc1e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af06679c_0f02cffc",
+        "filename": "services/net/java/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-10-31T08:16:35Z",
+      "side": 1,
+      "message": "As at line 313.",
+      "range": {
+        "startLine": 318,
+        "startChar": 27,
+        "endLine": 318,
+        "endChar": 32
+      },
+      "revId": "78572210bf97a8fff664cd7cd8974b299c6bc1e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
