@@ -16,11 +16,12 @@
 
 package android.os;
 
+import android.util.Log;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.WeakHashMap;
 import java.util.Set;
-import android.util.Log;
+import java.util.WeakHashMap;
 
 /**
  * Helper class that helps you use IBinder objects as reference counted
@@ -59,15 +60,23 @@ public abstract class TokenWatcher
      * Record that this token has been acquired.  When acquire is called, and
      * the current count is 0, the acquired method is called on the given
      * handler.
-     * 
-     * @param token An IBinder object.  If this token has already been acquired,
-     *              no action is taken.
+     *
+     * Note that the same {@code token} can only be acquired once. If this
+     * {@code token} has already been acquired, no action is taken. The first
+     * subsequent call to {@link #release} will release this {@code token}
+     * immediately.
+     *
+     * @param token An IBinder object.
      * @param tag   A string used by the {@link #dump} method for debugging,
      *              to see who has references.
      */
     public void acquire(IBinder token, String tag)
     {
         synchronized (mTokens) {
+            if (mTokens.containsKey(token)) {
+                return;
+            }
+
             // explicitly checked to avoid bogus sendNotification calls because
             // of the WeakHashMap and the GC
             int oldSize = mTokens.size();
