@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ed6b1d0_795857e0",
+        "filename": "proto/src/ipconnectivity.proto",
+        "patchSetId": 21
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-10-31T04:13:25Z",
+      "side": 1,
+      "message": "s/last//, I think",
+      "range": {
+        "startLine": 100,
+        "startChar": 22,
+        "endLine": 100,
+        "endChar": 26
+      },
+      "revId": "243f13ff6ea61aa65a57f2440412b671ed02f2a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce45dbd5_84c75078",
+        "filename": "services/core/java/com/android/server/connectivity/DefaultNetworkMetrics.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-10-31T04:13:25Z",
+      "side": 1,
+      "message": "This math is repeated inside listEvents().  I wonder if it could be part of DefaultNetworkEvent in the future (like updateDuration() is, updateValidatedDuration() or something).",
+      "range": {
+        "startLine": 97,
+        "startChar": 12,
+        "endLine": 97,
+        "endChar": 80
+      },
+      "revId": "243f13ff6ea61aa65a57f2440412b671ed02f2a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9c32093_fec36153",
+        "filename": "tests/net/java/com/android/server/connectivity/NetdEventListenerServiceTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-10-31T04:13:25Z",
+      "side": 1,
+      "message": "What\u0027s the plan for these calls?  I can\u0027t see that they do anything right now... (probably I\u0027ve missed something)",
+      "range": {
+        "startLine": 128,
+        "startChar": 51,
+        "endLine": 128,
+        "endChar": 59
+      },
+      "revId": "243f13ff6ea61aa65a57f2440412b671ed02f2a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "596c9e81_3256ab47",
+        "filename": "services/core/java/com/android/server/connectivity/IpConnectivityMetrics.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-10-31T04:13:25Z",
+      "side": 0,
+      "message": "What method was this calling before?",
+      "range": {
+        "startLine": 249,
+        "startChar": 26,
+        "endLine": 249,
+        "endChar": 30
+      },
+      "revId": "9009eabbfefdc685f176419001bc2aeff4790089",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
