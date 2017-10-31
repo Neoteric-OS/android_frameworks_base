@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e888fcbb_f487aaa1",
+        "filename": "core/java/android/os/TokenWatcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2017-10-31T20:48:15Z",
+      "side": 1,
+      "message": "If you agree with it, would you mind pasting in the description from my previous comment, or something similar? I didn\u0027t find the current description that helpful. But if it\u0027s meaningful to others, I\u0027m happy to have both.\n\n\"A TokenWatcher watches a collection of IBinders. IBinders are added to the collection by calling acquire, and removed by calling release. IBinders are also implicitly removed when they become weakly reachable. Each IBinder may be added at most once. The acquired() method is invoked by posting to the specified handler whenever the size of the watched collection becomes nonzero. The released() method is invoked on the specified handler whenever the size of the watched collection becomes zero.\"",
+      "range": {
+        "startLine": 27,
+        "startChar": 1,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "abb1519d4eee18cdee06a4f1f6cce80c508bc46b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
