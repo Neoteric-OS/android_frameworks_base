@@ -186,6 +186,7 @@ public class Tethering extends BaseNetworkObserver {
     private final VersionedBroadcastListener mCarrierConfigChange;
     // TODO: Delete SimChangeListener; it's obsolete.
     private final SimChangeListener mSimChange;
+    public static boolean mCarrierTetheringSupported;
 
     private volatile TetheringConfiguration mConfig;
     private String mCurrentUpstreamIface;
@@ -209,6 +210,7 @@ public class Tethering extends BaseNetworkObserver {
         mPolicyManager = policyManager;
         mLooper = looper;
         mSystemProperties = systemProperties;
+        mCarrierTetheringSupported = true;
 
         mPublicSync = new Object();
 
@@ -249,6 +251,9 @@ public class Tethering extends BaseNetworkObserver {
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(WifiManager.WIFI_AP_STATE_CHANGED_ACTION);
         filter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
+        // TODO: How to merge this with the Versioned receiver above
+        // since it is only active when tethering is..
+        filter.addAction(ACTION_CARRIER_CONFIG_CHANGED);
         mContext.registerReceiver(mStateReceiver, filter, null, smHandler);
 
         filter = new IntentFilter();
@@ -273,7 +278,7 @@ public class Tethering extends BaseNetworkObserver {
 
     // NOTE: This is always invoked on the mLooper thread.
     private void updateConfiguration() {
-        mConfig = new TetheringConfiguration(mContext, mLog);
+        mConfig = new TetheringConfiguration(mContext, mLog, mCarrierTetheringSupported);
         mUpstreamNetworkMonitor.updateMobileRequiresDun(mConfig.isDunRequired);
     }
 
@@ -676,7 +681,6 @@ public class Tethering extends BaseNetworkObserver {
         final ArrayList<String> tetherList = new ArrayList<>();
         final ArrayList<String> localOnlyList = new ArrayList<>();
         final ArrayList<String> erroredList = new ArrayList<>();
-
         boolean wifiTethered = false;
         boolean usbTethered = false;
         boolean bluetoothTethered = false;
@@ -828,6 +832,8 @@ public class Tethering extends BaseNetworkObserver {
             } else if (action.equals(Intent.ACTION_CONFIGURATION_CHANGED)) {
                 mLog.log("OBSERVED configuration changed");
                 updateConfiguration();
+            } else if (action.equals(ACTION_CARRIER_CONFIG_CHANGED)) {
+                checkCarrierSupport();
             }
         }
 
@@ -1165,6 +1171,21 @@ public class Tethering extends BaseNetworkObserver {
             }
         }
         return false;
+    }
+
+    // Some carrier subscriptions have tethering disabled
+    private void checkCarrierSupport() {
+        final CarrierConfigManager configManager = (CarrierConfigManager) mContext
+             .getSystemService(Context.CARRIER_CONFIG_SERVICE);
+        PersistableBundle carrierBundle = configManager.getConfig();
+        if (carrierBundle != null) {
+            boolean carrierSupported = !carrierBundle.getBoolean(
+                    CarrierConfigManager.KEY_DISABLE_TETHERING_BOOL);
+            if (carrierSupported != mCarrierTetheringSupported) {
+                mCarrierTetheringSupported = carrierSupported;
+                updateConfiguration();
+            }
+        }
     }
 
     private void reevaluateSimCardProvisioning() {

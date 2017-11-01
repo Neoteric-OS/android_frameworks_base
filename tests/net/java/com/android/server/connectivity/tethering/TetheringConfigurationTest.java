@@ -96,7 +96,7 @@ public class TetheringConfigurationTest {
         mHasTelephonyManager = true;
         when(mTelephonyManager.getTetherApnRequired()).thenReturn(DUN_REQUIRED);
 
-        final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog);
+        final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog, true);
         assertTrue(cfg.isDunRequired);
         assertTrue(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE_DUN));
         assertFalse(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE));
@@ -112,7 +112,7 @@ public class TetheringConfigurationTest {
         mHasTelephonyManager = true;
         when(mTelephonyManager.getTetherApnRequired()).thenReturn(DUN_NOT_REQUIRED);
 
-        final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog);
+        final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog, true);
         assertFalse(cfg.isDunRequired);
         assertFalse(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE_DUN));
         assertTrue(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE));
@@ -128,7 +128,7 @@ public class TetheringConfigurationTest {
         mHasTelephonyManager = false;
         when(mTelephonyManager.getTetherApnRequired()).thenReturn(DUN_UNSPECIFIED);
 
-        final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog);
+        final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog, true);
         assertTrue(cfg.isDunRequired);
         assertTrue(cfg.preferredUpstreamIfaceTypes.contains(TYPE_MOBILE_DUN));
         // Just to prove we haven't clobbered Wi-Fi:
@@ -145,7 +145,7 @@ public class TetheringConfigurationTest {
         mHasTelephonyManager = false;
         when(mTelephonyManager.getTetherApnRequired()).thenReturn(DUN_UNSPECIFIED);
 
-        final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog);
+        final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog, true);
         final Iterator<Integer> upstreamIterator = cfg.preferredUpstreamIfaceTypes.iterator();
         assertTrue(upstreamIterator.hasNext());
         assertEquals(TYPE_ETHERNET, upstreamIterator.next().intValue());
@@ -166,7 +166,7 @@ public class TetheringConfigurationTest {
         mHasTelephonyManager = false;
         when(mTelephonyManager.getTetherApnRequired()).thenReturn(DUN_UNSPECIFIED);
 
-        final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog);
+        final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog, true);
         final Iterator<Integer> upstreamIterator = cfg.preferredUpstreamIfaceTypes.iterator();
         assertTrue(upstreamIterator.hasNext());
         assertEquals(TYPE_ETHERNET, upstreamIterator.next().intValue());
@@ -184,7 +184,7 @@ public class TetheringConfigurationTest {
         mHasTelephonyManager = false;
         when(mTelephonyManager.getTetherApnRequired()).thenReturn(DUN_UNSPECIFIED);
 
-        final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog);
+        final TetheringConfiguration cfg = new TetheringConfiguration(mMockContext, mLog, true);
         final Iterator<Integer> upstreamIterator = cfg.preferredUpstreamIfaceTypes.iterator();
         assertTrue(upstreamIterator.hasNext());
         assertEquals(TYPE_WIFI, upstreamIterator.next().intValue());
