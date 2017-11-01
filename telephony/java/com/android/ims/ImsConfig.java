@@ -17,6 +17,7 @@
 package com.android.ims;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.RemoteException;
 import android.telephony.Rlog;
 
@@ -619,6 +620,14 @@ public class ImsConfig {
             Rlog.d(TAG, "setProvisionedValue(): item = " + item +
                     " value = " + value + " ret = " + ret);
         }
+
+        if (ret == ImsConfig.OperationStatusConstants.SUCCESS) {
+            Intent configChangedIntent = new Intent(ImsConfig.ACTION_IMS_CONFIG_CHANGED);
+            configChangedIntent.putExtra(ImsConfig.EXTRA_CHANGED_ITEM, item);
+            configChangedIntent.putExtra(ImsConfig.EXTRA_NEW_VALUE, Integer.toString(value));
+            mContext.sendBroadcast(configChangedIntent);
+        }
+
         return ret;
     }
 
@@ -647,6 +656,14 @@ public class ImsConfig {
             Rlog.d(TAG, "setProvisionedStringValue(): item = " + item +
                     ", value =" + value);
         }
+
+        if (ret == ImsConfig.OperationStatusConstants.SUCCESS) {
+            Intent configChangedIntent = new Intent(ImsConfig.ACTION_IMS_CONFIG_CHANGED);
+            configChangedIntent.putExtra(ImsConfig.EXTRA_CHANGED_ITEM, item);
+            configChangedIntent.putExtra(ImsConfig.EXTRA_NEW_VALUE, value);
+            mContext.sendBroadcast(configChangedIntent);
+        }
+
         return ret;
     }
 
