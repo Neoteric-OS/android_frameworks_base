@@ -188,8 +188,13 @@ public final class BluetoothServerSocket implements Closeable {
     }
 
     /**
-     * Returns the channel on which this socket is bound.
+     * Returns the channel on which this socket is bound. When this
+     * server socket is returned by the {#link
+     * BluetoothAdapter.listenUsingL2capCoc(int)} or {#link
+     * BluetoothAdapter.listenUsingInsecureL2capCoc(int)}, then the
+     * channel is the assigned dynamic PSM value.
      *
+     * NOTE: This API is experimental and is hidden.
      * @hide
      */
     public int getChannel() {

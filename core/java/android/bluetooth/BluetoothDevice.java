@@ -1910,4 +1910,200 @@ public final class BluetoothDevice implements Parcelable {
         }
         return null;
     }
+
+    /**
+     * Create a Bluetooth L2CAP Connection Oriented Channel (CoC)
+     * {@link BluetoothSocket} ready to start a secure outgoing
+     * connection to the remote device with the same dynamic PSM
+     * value. The dynamic PSM value is read from the listening peer
+     * using the Google PSM Disclosure mechanism. When the transport
+     * type is Bluetooth LE, this PSM value is read from the GATT
+     * Service with the given CoC uuid.
+     * <p>This is designed to be used with {@link
+     * BluetoothAdapter#listenUsingL2capCoc(int, UUID)} for peer-peer
+     * Bluetooth applications.
+     * <p>Use {@link BluetoothSocket#connect} to initiate the outgoing
+     * connection. If the dynamic PSM value is not known, then the
+     * Google PSM Disclosure mechanism will be used to query this
+     * value from the listening peer.
+     * <p>The remote device will be authenticated and communication on this
+     * socket will be encrypted.
+     * <p> Use this socket only if an authenticated socket link is possible.
+     * Authentication refers to the authentication of the link key to
+     * prevent man-in-the-middle type of attacks.
+     * For example, for Bluetooth 2.1 devices, if any of the devices does not
+     * have an input and output capability or just has the ability to
+     * display a numeric key, a secure socket connection is not possible.
+     * In such a case, use {#link
+     * createInsecureLeL2capCocSocket(int, UUID)}. For more details,
+     * refer to the Security Model section 5.2 (vol 3) of Bluetooth
+     * Core Specification version 2.1 + EDR.
+     *
+     * @param transport Bluetooth Transport to connect. Can either
+     *                  be {@link #TRANSPORT_BREDR} or {@link
+     *                  #TRANSPORT_LE}. However,
+     *                  only LE is currently supported.
+     * @param cocUuid uuid for the desired L2CAP CoC
+     *                Protocol/Service.
+     * @return a COC {@link #BluetoothSocket} ready for an outgoing
+     *         connection
+     * @throws IOException on error, for example Bluetooth not available, or insufficient
+     * permissions
+     * NOTE: This API is experimental and is hidden.
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public BluetoothSocket createL2capCocSocket(int transport, UUID cocUuid) throws IOException {
+        if (!isBluetoothEnabled()) {
+            Log.e(TAG, "Bluetooth is not enabled");
+            throw new IOException();
+        }
+        Log.d(TAG, "createL2capCocSocket called. cocUuid=" + cocUuid.toString());
+        // TODO: Add code
+        return null;
+    }
+
+    /**
+     * Create an insecure Bluetooth L2CAP Connection Oriented
+     * Channel (CoC) {@link BluetoothSocket} ready to start a secure
+     * outgoing connection to the remote device with the same
+     * dynamic PSM value. The dynamic PSM value is read from the
+     * listening peer using the Google PSM Disclosure mechanism.
+     * When the transport type is Bluetooth LE, this PSM value is
+     * read from the GATT Service with the given CoC uuid.
+     * <p> The communication channel will not have an authenticated link key
+     * i.e it will be subject to man-in-the-middle attacks. For Bluetooth 2.1
+     * devices, the link key will be encrypted, as encryption is mandatory.
+     * For legacy devices (pre Bluetooth 2.1 devices) the link key will
+     * be not be encrypted. Use {@link #createLeL2capCocSocket(int,
+     * UUID)} if an encrypted and authenticated communication
+     * channel is desired.
+     * <p>This is designed to be used with {@link
+     * BluetoothAdapter#listenUsingInsecureL2capCoc(int, UUID)} for
+     * peer-peer Bluetooth applications.
+     * <p>Use {@link BluetoothSocket#connect} to initiate the outgoing
+     * connection. If the dynamic PSM value is not known, then the
+     * Google PSM Disclosure mechanism will be used to query this
+     * value from the listening peer.
+     *
+     * @param transport Bluetooth Transport to connect. Can either
+     *                  be {@link #TRANSPORT_BREDR} or {@link
+     *                  #TRANSPORT_LE}. However,
+     *                  only LE is currently supported.
+     * @param cocUuid uuid for the desired L2CAP CoC
+     *                Protocol/Service.
+     * @return a CoC {@link #BluetoothSocket} ready for an outgoing
+     *         connection
+     * @throws IOException on error, for example Bluetooth not available, or insufficient
+     * permissions.
+     * NOTE: This API is experimental and is hidden.
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public BluetoothSocket createInsecureL2capCocSocket(int transport, UUID cocUuid)
+            throws IOException {
+        if (!isBluetoothEnabled()) {
+            Log.e(TAG, "createInsecureL2capCocSocket: Bluetooth is not enabled");
+            throw new IOException();
+        }
+        Log.d(TAG, "createInsecureL2capCocSocket called. cocUuid=" + cocUuid.toString());
+        //TODO: Add code
+        return null;
+    }
+
+    /**
+     * Create a Bluetooth L2CAP Connection Oriented Channel (CoC)
+     * {@link BluetoothSocket} ready to start a secure outgoing
+     * connection to the remote device with the same dynamic PSM
+     * value.
+     * <p>This is designed to be used with {@link
+     * BluetoothAdapter#listenUsingL2capCoc(int)} for peer-peer
+     * Bluetooth applications.
+     * <p>Use {@link BluetoothSocket#connect} to initiate the outgoing
+     * connection.
+     * <p>The method of passing the assigned dynamic PSM value to
+     * the initiating peer is unspecified and done by the
+     * application.
+     * <p>The remote device will be authenticated and communication on this
+     * socket will be encrypted.
+     * <p> Use this socket only if an authenticated socket link is possible.
+     * Authentication refers to the authentication of the link key to
+     * prevent man-in-the-middle type of attacks.
+     * For example, for Bluetooth 2.1 devices, if any of the devices does not
+     * have an input and output capability or just has the ability to
+     * display a numeric key, a secure socket connection is not possible.
+     * In such a case, use {#link
+     * createInsecureLeL2capCocSocket(int, int)}. For more details,
+     * refer to the Security Model section 5.2 (vol 3) of Bluetooth
+     * Core Specification version 2.1 + EDR.
+     *
+     * @param transport Bluetooth Transport to connect. Can either
+     *                  be {@link #TRANSPORT_BREDR} or {@link
+     *                  #TRANSPORT_LE}. However,
+     *                  only LE is currently supported.
+     * @param psm The dynamic PSM value that is queried from
+     *                the listening peer device.
+     * @return a CoC {@link #BluetoothSocket} ready for an outgoing
+     *         connection
+     * @throws IOException on error, for example Bluetooth not available, or insufficient
+     * permissions.
+     * NOTE: This API is experimental and is hidden.
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public BluetoothSocket createL2capCocSocket(int transport, int psm) throws IOException {
+        if (!isBluetoothEnabled()) {
+            Log.e(TAG, "createL2capCocSocket: Bluetooth is not enabled");
+            throw new IOException();
+        }
+        // TODO: Add code.
+        Log.d(TAG, "createL2capCocSocket: transport=" + transport + ", psm=" + psm);
+        return null;
+    }
+
+    /**
+     * Create an insecure Bluetooth L2CAP Connection Oriented
+     * Channel (CoC) {@link BluetoothSocket} ready to start a secure
+     * outgoing connection to the remote device with the same
+     * dynamic PSM value.
+     * <p>This is designed to be used with {@link
+     * BluetoothAdapter#listenUsingInsecureL2capCoc(int)} for
+     * peer-peer Bluetooth applications.
+     * <p>Use {@link BluetoothSocket#connect} to initiate the outgoing
+     * connection.
+     * <p>The method of passing the assigned dynamic PSM value to
+     * the initiating peer is unspecified and done by the
+     * application.
+     * <p> The communication channel will not have an authenticated link key
+     * i.e it will be subject to man-in-the-middle attacks. For Bluetooth 2.1
+     * devices, the link key will be encrypted, as encryption is mandatory.
+     * For legacy devices (pre Bluetooth 2.1 devices) the link key will
+     * be not be encrypted. Use {@link #createLeL2capCocSocket(int,
+     * int)} if an encrypted and authenticated communication channel
+     * is desired.
+     *
+     * @param transport Bluetooth Transport to connect. Can either
+     *                  be {@link #TRANSPORT_BREDR} or {@link
+     *                  #TRANSPORT_LE}. However,
+     *                  only LE is currently supported.
+     * @param psm The dynamic PSM value that is queried from
+     *                the listening peer device.
+     * @return a CoC {@link #BluetoothSocket} ready for an outgoing
+     *         connection
+     * @throws IOException on error, for example Bluetooth not available, or insufficient
+     * permissions.
+     * NOTE: This API is experimental and is hidden.
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public BluetoothSocket createInsecureL2capCocSocket(int transport, int psm) throws IOException {
+        if (!isBluetoothEnabled()) {
+            Log.e(TAG, "createInsecureL2capCocSocket: Bluetooth is not enabled");
+            throw new IOException();
+        }
+        // TODO: Add code.
+        Log.d(TAG, "createInsecureL2capCocSocket: transport=" + transport + ", psm=" + psm);
+        return null;
+    }
+
 }

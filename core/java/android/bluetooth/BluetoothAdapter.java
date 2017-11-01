@@ -79,9 +79,14 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * {@link BluetoothDevice} objects representing all paired devices with
  * {@link #getBondedDevices()}; start device discovery with
  * {@link #startDiscovery()}; or create a {@link BluetoothServerSocket} to
- * listen for incoming connection requests with
- * {@link #listenUsingRfcommWithServiceRecord(String, UUID)}; or start a scan for
- * Bluetooth LE devices with {@link #startLeScan(LeScanCallback callback)}.
+ * listen for incoming RFComm connection requests with {@link
+ * #listenUsingRfcommWithServiceRecord(String, UUID)}; listen
+ * for incoming L2CAP Connection Oriented Channels (CoC)
+ * connection requests with {@link
+ * #listenUsingL2capCocWithServiceRecord(int, UUID)} or {@link
+ * #listenUsingL2capCoc(int)};or start a
+ * scan for Bluetooth LE devices with {@link
+ * #startLeScan(LeScanCallback callback)}.
  * </p>
  * <p>This class is thread safe.</p>
  * <p class="note"><strong>Note:</strong>
@@ -1827,8 +1832,8 @@ public final class BluetoothAdapter {
      * Create a listening, insecure RFCOMM Bluetooth socket with Service Record.
      * <p>The link key is not required to be authenticated, i.e the communication may be
      * vulnerable to Man In the Middle attacks. For Bluetooth 2.1 devices,
-     * the link will be encrypted, as encryption is mandartory.
-     * For legacy devices (pre Bluetooth 2.1 devices) the link will not
+     * the link will be encrypted, as encryption is mandatory. For
+     * legacy devices (pre Bluetooth 2.1 devices) the link will not
      * be encrypted. Use {@link #listenUsingRfcommWithServiceRecord}, if an
      * encrypted and authenticated communication channel is desired.
      * <p>Use {@link BluetoothServerSocket#accept} to retrieve incoming
@@ -2569,5 +2574,215 @@ public final class BluetoothAdapter {
             }
             scanner.stopScan(scanCallback);
         }
+    }
+
+    /**
+     * Create a listening, secure L2CAP Connection Oriented Channel
+     * (CoC) Bluetooth socket with specific UUID to identify the
+     * protocol/service channel and using the Google PSM Disclosure
+     * mechanism to pass the assigned PSM value.
+     * <p>A remote device connecting to this socket will be authenticated and
+     * communication on this socket will be encrypted.
+     * <p>Use {@link BluetoothServerSocket#accept} to retrieve incoming
+     * connections from a listening {@link BluetoothServerSocket}.
+     * <p>The system will assign an dynamic protocol/service
+     * multiplexer (PSM) channel to listen on. This PSM value can be
+     * read from the {#link BluetoothServerSocket#getChannel()}.
+     * This PSM value will be released when this server socket is
+     * closed, or if this application closes unexpectedly, or the
+     * {@link #stopL2capCoc(BluetoothServerSocket)} is called.
+     * <p>When the transport parameter is {@link
+     * #BluetoothDevice.TRANSPORT_LE}, the assigned dynamic PSM
+     * value will be available to the initiating peer via the Google
+     * PSM Disclosure mechanism. This mechanism will starts a LE
+     * GATT Service with the given UUID and the peer can read this
+     * PSM value.
+     * <p>Currently, the transport parameter of {@link
+     * #BluetoothDevice.TRANSPORT_BREDR} is unsupported.
+     * <p>Use {@link BluetoothDevice#createL2capCocSocket(int,
+     * UUID)} to connect to this server socket from another device
+     * using the same {@link UUID}.
+     *
+     * @param transport Bluetooth Transport to connect. Can either
+     *                  be {@link #BluetoothDevice.TRANSPORT_BREDR}
+     *                  or {@link #BluetoothDevice.TRANSPORT_LE}.
+     *                  However, only LE is currently supported.
+     * @param cocUuid uuid for the desired L2CAP CoC
+     *                Protocol/Service.
+     * @return a listening L2CAP CoC BluetoothServerSocket
+     * @throws IOException on error, for example Bluetooth not available, or insufficient
+     * permissions, or unable to start this CoC.
+     * NOTE: This API is experimental and is hidden.
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public BluetoothServerSocket listenUsingL2capCoc(int transport, UUID cocUuid)
+            throws IOException {
+        if (DBG) {
+            Log.d(TAG, "listenUsingL2capCoc(): transport=" + transport
+                       + "cocUuid=" + cocUuid.toString());
+        }
+        // TODO: Add code
+        return null;
+    }
+
+    /**
+     * Create a listening, insecure L2CAP Connection Oriented
+     * Channel (CoC) Bluetooth socket with specific UUID to identify
+     * the protocol/service channel and using the Google PSM Disclosure
+     * mechanism to pass the assigned PSM value.
+     * <p>The link key is not required to be authenticated, i.e the communication may be
+     * vulnerable to Man In the Middle attacks.Use {@link
+     * #listenUsingL2capCoc}, if an encrypted and authenticated
+     * communication channel is desired.
+     * <p>Use {@link BluetoothServerSocket#accept} to retrieve incoming
+     * connections from a listening {@link BluetoothServerSocket}.
+     * <p>The system will assign an dynamic protocol/service
+     * multiplexer (PSM) channel to listen on. This PSM value can be
+     * read from the {#link BluetoothServerSocket#getChannel()}.
+     * This PSM value will be released when this server socket is
+     * closed, or if this application closes unexpectedly, or the
+     * {@link #stopL2capCoc(BluetoothServerSocket)} is called.
+     * <p>When the transport parameter is {@link
+     * #BluetoothDevice.TRANSPORT_LE}, the assigned dynamic PSM
+     * value will be available to the initiating peer via the Google
+     * PSM Disclosure mechanism. This mechanism will starts a LE
+     * GATT Service with the given UUID and the peer can read this
+     * PSM value.
+     * <p>Currently, the transport parameter of {@link
+     * #BluetoothDevice.TRANSPORT_BREDR} is unsupported.
+     * <p>Use {@link
+     * BluetoothDevice#createInsecureL2capCocSocket(int, UUID)} to
+     * connect to this server socket from another device using the
+     * same {@link UUID}.
+     *
+     * @param transport Bluetooth Transport to connect. Can either
+     *                  be {@link #BluetoothDevice.TRANSPORT_BREDR}
+     *                  or {@link #BluetoothDevice.TRANSPORT_LE}.
+     *                  However, only LE is currently supported.
+     * @param cocUuid uuid for the desired L2CAP CoC
+     *                Protocol/Service.
+     * @return a listening L2CAP CoC BluetoothServerSocket
+     * @throws IOException on error, for example Bluetooth not available, or insufficient
+     * permissions, or unable to start this CoC.
+     * NOTE: This API is experimental and is hidden.
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public BluetoothServerSocket listenUsingInsecureL2capCoc(int transport, UUID cocUuid)
+            throws IOException {
+        if (DBG) {
+            Log.d(TAG, "listenUsingL2capCoc(): transport=" + transport + "cocUuid="
+                       + cocUuid.toString());
+        }
+        // TODO: Add code
+        return null;
+    }
+
+    /**
+     * Create a listening, secure L2CAP Connection Oriented Channel
+     * (CoC) Bluetooth socket with an assigned dynamic PSM value.
+     * <p>A remote device connecting to this socket will be authenticated and
+     * communication on this socket will be encrypted.
+     * <p>Use {@link BluetoothServerSocket#accept} to retrieve incoming
+     * connections from a listening {@link BluetoothServerSocket}.
+     * <p>The system will assign an dynamic protocol/service
+     * multiplexer (PSM) channel to listen on. This PSM value can be
+     * read from the {#link BluetoothServerSocket#getChannel()}.
+     * This PSM value will be released when this server socket is
+     * closed, or if this application closes unexpectedly, or the
+     * {@link #stopL2capCoc(BluetoothServerSocket)} is called.
+     * <p>The method of passing the assigned dynamic PSM value to
+     * the initiating peer is unspecified and done by the
+     * application.
+     * <p>Currently, the transport parameter of {@link
+     *   #BluetoothDevice.TRANSPORT_BREDR} is unsupported.
+     * <p>Use {@link BluetoothDevice#createL2capCocSocket(int, int)}
+     * to connect to this server socket from another device using
+     * the same {@link UUID}.
+     *
+     * @param transport Bluetooth Transport to connect. Can either
+     *                  be {@link #BluetoothDevice.TRANSPORT_BREDR}
+     *                  or {@link #BluetoothDevice.TRANSPORT_LE}.
+     *                  However, only LE is currently supported.
+     * @return a listening L2CAP CoC BluetoothServerSocket
+     * @throws IOException on error, for example Bluetooth not available, or insufficient
+     * permissions, or unable to start this CoC.
+     * NOTE: This API is experimental and is hidden.
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public BluetoothServerSocket listenUsingL2capCoc(int transport)
+            throws IOException {
+        if (DBG) Log.d(TAG, "listenUsingL2capCoc(): transport=" + transport + ", no cocUuid");
+        // TODO: Add code
+        return null;
+    }
+
+    /**
+     * Create a listening, insecure L2CAP Connection Oriented
+     * Channel (CoC) Bluetooth socket with an assigned dynamic PSM
+     * value.
+     * <p>The link key is not required to be authenticated, i.e the communication may be
+     * vulnerable to Man In the Middle attacks.Use {@link
+     * #listenUsingL2capCoc}, if an encrypted and authenticated
+     * communication channel is desired.
+     * <p>Use {@link BluetoothServerSocket#accept} to retrieve incoming
+     * connections from a listening {@link BluetoothServerSocket}.
+     * <p>The system will assign an dynamic protocol/service
+     * multiplexer (PSM) channel to listen on. This PSM value can be
+     * read from the {#link BluetoothServerSocket#getChannel()}.
+     * This PSM value will be released when this server socket is
+     * closed, or if this application closes unexpectedly, or the
+     * {@link #stopL2capCoc(BluetoothServerSocket)} is called.
+     * <p>The method of passing the assigned dynamic PSM value to
+     * the initiating peer is unspecified and done by the
+     * application.
+     * <p>Currently, the transport parameter of {@link
+     * #BluetoothDevice.TRANSPORT_BREDR} is unsupported.
+     * <p>Use {@link
+     * BluetoothDevice#createInsecureL2capCocSocket(int, int)} to
+     * connect to this server socket from another device using the
+     * same {@link UUID}.
+     *
+     * @param transport Bluetooth Transport to connect. Can either
+     *                  be {@link #BluetoothDevice.TRANSPORT_BREDR}
+     *                  or {@link #BluetoothDevice.TRANSPORT_LE}.
+     *                  However, only LE is currently supported.
+     * @return a listening L2CAP CoC BluetoothServerSocket
+     * @throws IOException on error, for example Bluetooth not available, or insufficient
+     * permissions, or unable to start this CoC.
+     * NOTE: This API is experimental and is hidden.
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public BluetoothServerSocket listenUsingInsecureL2capCoc(int transport)
+            throws IOException {
+        if (DBG) {
+            Log.d(TAG, "listenUsingInsecureL2capCoc(): transport=" + transport
+                       + ", no cocUuid");
+        }
+        // TODO: Add code
+        return null;
+    }
+
+    /**
+     * Stop a LE L2CAP Connection Oriented Channel (COC), disconnect
+     * all existing connections, free the Bluetooth server socket,
+     * and released the assigned PSM value.
+     *
+     * @param serverSocket Bluetooth server socket that was
+     * earlier returned when calling {@link
+     * #listenUsingL2capCoc(int, UUID)}, {@link
+     * #listenUsingInsecureL2capCoc(int, UUID)}, {@link
+     * #listenUsingL2capCoc(int)}, or {@link
+     * #listenUsingInsecureL2capCoc(int)}.
+     * NOTE: This API is experimental and is hidden.
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
+    public void stopL2capCoc(BluetoothServerSocket serverSocket) {
+        if (DBG) Log.d(TAG, "stopL2capCoc()");
+        // TODO: Add code
     }
 }
