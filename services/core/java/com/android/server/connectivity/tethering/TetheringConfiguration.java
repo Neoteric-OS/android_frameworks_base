@@ -217,16 +217,6 @@ public class TetheringConfiguration {
         } else if (dunCheck == DUN_NOT_REQUIRED) {
             appendIfNotPresent(upstreamIfaceTypes, TYPE_MOBILE);
             appendIfNotPresent(upstreamIfaceTypes, TYPE_MOBILE_HIPRI);
-        } else {
-            // Fix upstream interface types for case DUN_UNSPECIFIED.
-            // Do not modify if a cellular interface type is already present in the
-            // upstream interface types. Add TYPE_MOBILE and TYPE_MOBILE_HIPRI if no
-            // cellular interface types are found in the upstream interface types.
-            if (!(containsOneOf(upstreamIfaceTypes,
-                    TYPE_MOBILE_DUN, TYPE_MOBILE, TYPE_MOBILE_HIPRI))) {
-                upstreamIfaceTypes.add(TYPE_MOBILE);
-                upstreamIfaceTypes.add(TYPE_MOBILE_HIPRI);
-            }
         }
 
         // Always make sure our good friend Ethernet is present.
