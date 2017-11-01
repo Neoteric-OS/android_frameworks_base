@@ -17,6 +17,8 @@
 package com.android.server.connectivity.tethering;
 
 import static android.content.Context.TELEPHONY_SERVICE;
+import static android.net.ConnectivityManager.TYPE_WIFI;
+import static android.net.ConnectivityManager.TYPE_BLUETOOTH;
 import static android.net.ConnectivityManager.TYPE_ETHERNET;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_MOBILE_DUN;
@@ -75,8 +77,9 @@ public class TetheringConfiguration {
     public final Collection<Integer> preferredUpstreamIfaceTypes;
     public final String[] dhcpRanges;
     public final String[] defaultIPv4DNS;
+    public static boolean mCarrierTetheringSupported;
 
-    public TetheringConfiguration(Context ctx, SharedLog log) {
+    public TetheringConfiguration(Context ctx, SharedLog log, boolean carrierSupported) {
         final SharedLog configLog = log.forSubComponent("config");
 
         tetherableUsbRegexs = ctx.getResources().getStringArray(
@@ -89,6 +92,7 @@ public class TetheringConfiguration {
         tetherableBluetoothRegexs = ctx.getResources().getStringArray(
                 com.android.internal.R.array.config_tether_bluetooth_regexs);
 
+        mCarrierTetheringSupported = carrierSupported;
         dunCheck = checkDunRequired(ctx);
         configLog.log("DUN check returned: " + dunCheckString(dunCheck));
 
@@ -118,6 +122,9 @@ public class TetheringConfiguration {
         dumpStringArray(pw, "tetherableWifiRegexs", tetherableWifiRegexs);
         dumpStringArray(pw, "tetherableBluetoothRegexs", tetherableBluetoothRegexs);
 
+        pw.print("mCarrierTetheringSupported: ");
+        pw.println(mCarrierTetheringSupported);
+
         pw.print("isDunRequired: ");
         pw.println(isDunRequired);
 
@@ -134,6 +141,8 @@ public class TetheringConfiguration {
         sj.add(String.format("tetherableWifiRegexs:%s", makeString(tetherableWifiRegexs)));
         sj.add(String.format("tetherableBluetoothRegexs:%s",
                 makeString(tetherableBluetoothRegexs)));
+        sj.add(String.format("mCarrierTetheringSupported:%s", mCarrierTetheringSupported));
+
         sj.add(String.format("isDunRequired:%s", isDunRequired));
         sj.add(String.format("preferredUpstreamIfaceTypes:%s",
                 makeString(preferredUpstreamNames(preferredUpstreamIfaceTypes))));
@@ -192,8 +201,17 @@ public class TetheringConfiguration {
     }
 
     private static Collection<Integer> getUpstreamIfaceTypes(Context ctx, int dunCheck) {
-        final int ifaceTypes[] = ctx.getResources().getIntArray(
-                com.android.internal.R.array.config_tether_upstream_types);
+        final int ifaceTypes[];
+        if (mCarrierTetheringSupported) {
+            ifaceTypes = ctx.getResources().getIntArray(
+                    com.android.internal.R.array.config_tether_upstream_types);
+        } else {
+            // TODO: If we would have honoured the config_tether_upstream_types
+            // this else statement would not have been needed.
+            // @Google perhaps look at your internal Bug: 38186915
+            int carrierApprovedTypes[] = {TYPE_WIFI,TYPE_BLUETOOTH,TYPE_ETHERNET};
+            ifaceTypes = carrierApprovedTypes;
+        }
         final ArrayList<Integer> upstreamIfaceTypes = new ArrayList<>(ifaceTypes.length);
         for (int i : ifaceTypes) {
             switch (i) {
@@ -208,6 +226,10 @@ public class TetheringConfiguration {
             upstreamIfaceTypes.add(i);
         }
 
+        if (!mCarrierTetheringSupported) {
+            // We are done
+            return upstreamIfaceTypes;
+        }
         // Fix up upstream interface types for DUN or mobile. NOTE: independent
         // of the value of |dunCheck|, cell data of one form or another is
         // *always* an upstream, regardless of the upstream interface types
