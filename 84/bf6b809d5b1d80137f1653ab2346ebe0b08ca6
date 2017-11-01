@@ -1,0 +1,9 @@
+Code-Review+2: Andreas Gampe <agampe@google.com>
+Verified+1: Narayan Kamath <narayan@google.com>
+Autosubmit+1: Narayan Kamath <narayan@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Wed, 01 Nov 2017 17:23:27 +0000
+Reviewed-on: https://android-review.googlesource.com/526355
+Project: platform/frameworks/base
+Branch: refs/heads/master
