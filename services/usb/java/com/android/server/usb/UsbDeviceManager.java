@@ -105,6 +105,14 @@ public class UsbDeviceManager {
     private static final String USB_STATE_PROPERTY = "sys.usb.state";
 
     /**
+     * The property which indicates the use of /sys/class/udc/<udc>/state for
+     * determining the gadget state. <udc> is the name of the controller.
+     * The value of the property when set will hold the name of the controller.
+     * https://www.kernel.org/doc/Documentation/ABI/stable/sysfs-class-udc
+     */
+    private static final String USB_USE_UDC_EVENTS_PROPERTY = "sys.usb.udcevents";
+
+    /**
      * ro.bootmode value when phone boots into usual Android.
      */
     private static final String NORMAL_BOOT = "normal";
@@ -344,6 +352,10 @@ public class UsbDeviceManager {
         mHandler.sendEmptyMessage(MSG_SYSTEM_READY);
     }
 
+    private void usbStateUpdate(String state) {
+        mHandler.updateState(state);
+    }
+
     public void bootCompleted() {
         if (DEBUG) Slog.d(TAG, "boot completed");
         mHandler.sendEmptyMessage(MSG_BOOT_COMPLETED);
@@ -482,8 +494,23 @@ public class UsbDeviceManager {
                         Settings.Global.getUriFor(Settings.Global.ADB_ENABLED),
                         false, new AdbSettingsObserver());
 
+                String udcPath = SystemProperties.get(
+                        USB_USE_UDC_EVENTS_PROPERTY,
+                        "none");
                 // Watch for USB configuration changes
-                mUEventObserver.startObserving(USB_STATE_MATCH);
+                if (udcPath.equals("none")) {
+                    mUEventObserver.startObserving(USB_STATE_MATCH);
+                } else {
+                    Runnable runnable = new Runnable() {
+                        public void run() {
+                            nativeMonitorUsbGadget("/sys/class/udc/" + udcPath +
+                                    "/state");
+                        }
+                    };
+                    new Thread(null, runnable, "usb gadget status thread").
+                            start();
+                }
+
                 mUEventObserver.startObserving(ACCESSORY_START_MATCH);
             } catch (Exception e) {
                 Slog.e(TAG, "Error initializing UsbHandler", e);
@@ -515,13 +542,14 @@ public class UsbDeviceManager {
         public void updateState(String state) {
             int connected, configured;
 
-            if ("DISCONNECTED".equals(state)) {
+            if ("DISCONNECTED".equals(state) || "not attached".equals(state)) {
                 connected = 0;
                 configured = 0;
-            } else if ("CONNECTED".equals(state)) {
+            } else if ("CONNECTED".equals(state) || "addressed".equals(state)) {
                 connected = 1;
                 configured = 0;
-            } else if ("CONFIGURED".equals(state)) {
+            } else if ("CONFIGURED".equals(state) || "configured".equals(state))
+                    {
                 connected = 1;
                 configured = 1;
             } else {
@@ -532,6 +560,7 @@ public class UsbDeviceManager {
             Message msg = Message.obtain(this, MSG_UPDATE_STATE);
             msg.arg1 = connected;
             msg.arg2 = configured;
+            Slog.d(TAG, "connected:" + connected + " configured:" + configured);
             // debounce disconnects to avoid problems bringing up USB tethering
             sendMessageDelayed(msg, (connected == 0) ? UPDATE_DELAY : 0);
         }
@@ -1452,4 +1481,6 @@ public class UsbDeviceManager {
     private native boolean nativeIsStartRequested();
 
     private native int nativeGetAudioMode();
+
+    private native void nativeMonitorUsbGadget(String device);
 }

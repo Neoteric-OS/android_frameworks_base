@@ -24,6 +24,7 @@
 
 #include <stdio.h>
 #include <asm/byteorder.h>
+#include <sys/epoll.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -40,6 +41,8 @@ static struct parcel_file_descriptor_offsets_t
     jclass mClass;
     jmethodID mConstructor;
 } gParcelFileDescriptorOffsets;
+
+static jmethodID method_usbStateUpdate;
 
 static void set_accessory_string(JNIEnv *env, int fd, int cmd, jobjectArray strArray, int index)
 {
@@ -118,6 +121,69 @@ static jint android_server_UsbDeviceManager_getAudioMode(JNIEnv* /* env */, jobj
     return result;
 }
 
+static void  android_server_UsbDeviceManager_monitorUsbGadget(JNIEnv* env,
+                                                             jobject thiz,
+                                                             jstring path)
+{
+    int notifyfd = 0, epollfd = 0;
+    const char *devicePath = env->GetStringUTFChars(path, NULL);
+    struct epoll_event ev;
+
+    if (!devicePath) {
+        ALOGE("Device path is null");
+        goto end;
+    }
+
+    notifyfd = open(devicePath, O_RDONLY);
+    if (notifyfd < 0) {
+        ALOGE("Unable to open state path %s errno=%d", devicePath, errno);
+        goto end;
+    }
+
+    ev.events = EPOLLPRI|EPOLLERR|EPOLLET;
+    ev.data.ptr = NULL;
+
+    epollfd = epoll_create(1);
+    if (epollfd == -1) {
+        ALOGE("epoll_create failed; errno=%d", errno);
+        goto end;
+    }
+
+    if (epoll_ctl(epollfd, EPOLL_CTL_ADD, notifyfd, &ev) == -1) {
+        ALOGE("epoll_ctl failed; errno=%d", errno);
+        goto end;
+    }
+
+    while (true) {
+        struct epoll_event events[1];
+        if (epoll_wait(epollfd, events, 1, -1) == -1) {
+            if (errno == EINTR)
+                continue;
+            ALOGE("usb epoll_wait failed; errno=%d", errno);
+            break;
+        }
+        FILE *fp = fopen(devicePath, "r");
+        if (fp != NULL) {
+            char state[20];
+            if (fgets(state, sizeof(state), fp) != NULL) {
+                 size_t len = strlen(state);
+                 if (len > 0 && state[len - 1] == '\n')
+                     state[len - 1] = '\0';
+                jstring usbState = env->NewStringUTF(state);
+                env->CallVoidMethod(thiz, method_usbStateUpdate, usbState);
+                env->DeleteLocalRef(usbState);
+            }
+            fclose(fp);
+        }
+    }
+
+end:
+   close(epollfd);
+   close(notifyfd);
+   env->ReleaseStringUTFChars(path, devicePath);
+   return;
+}
+
 static const JNINativeMethod method_table[] = {
     { "nativeGetAccessoryStrings",  "()[Ljava/lang/String;",
                                     (void*)android_server_UsbDeviceManager_getAccessoryStrings },
@@ -127,6 +193,8 @@ static const JNINativeMethod method_table[] = {
                                     (void*)android_server_UsbDeviceManager_isStartRequested },
     { "nativeGetAudioMode",         "()I",
                                     (void*)android_server_UsbDeviceManager_getAudioMode },
+    { "nativeMonitorUsbGadget",      "(Ljava/lang/String;)V",
+                                    (void*)android_server_UsbDeviceManager_monitorUsbGadget },
 };
 
 int register_android_server_UsbDeviceManager(JNIEnv *env)
@@ -134,6 +202,13 @@ int register_android_server_UsbDeviceManager(JNIEnv *env)
     jclass clazz = env->FindClass("com/android/server/usb/UsbDeviceManager");
     if (clazz == NULL) {
         ALOGE("Can't find com/android/server/usb/UsbDeviceManager");
+        return -1;
+    }
+
+    method_usbStateUpdate = env->GetMethodID(clazz, "usbStateUpdate",
+            "(Ljava/lang/String;)V");
+    if (method_usbStateUpdate == NULL) {
+        ALOGE("Can't find usbStateUpdate");
         return -1;
     }
 
