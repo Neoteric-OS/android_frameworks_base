@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "542b5a05_246dc49a",
+        "filename": "services/net/java/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1081399
+      },
+      "writtenOn": "2017-11-01T01:28:01Z",
+      "side": 1,
+      "message": "The goal makes sense, but finding the right words is hard. I might have read the opposite meanings for \"with\" and \"using\". i.e., \"with\" this environment, and \"using\" something that IpClient sets up. Oy vey!\n\nI might suggest \"assuming\" for environment info, and \"configuring\" for active work on the part of IpClient. But that might be a larger change than is worthwhile.\n\nAnyway, my vote would either be \"with\" everywhere, or \"assuming\"/\"configuring\" (or perhaps some other pair, where the distinction is less ambiguous than with/using).",
+      "parentUuid": "238f4542_2b260f7f",
+      "range": {
+        "startLine": 313,
+        "startChar": 27,
+        "endLine": 313,
+        "endChar": 32
+      },
+      "revId": "78572210bf97a8fff664cd7cd8974b299c6bc1e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af06679c_0f02cffc",
         "filename": "services/net/java/android/net/ip/IpClient.java",
         "patchSetId": 1
