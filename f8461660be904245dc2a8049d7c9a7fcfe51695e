@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23e90e70_bd5c8470",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1615,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-11-02T19:43:35Z",
+      "side": 1,
+      "message": "How about:\n     * Flag specifying whether to use the {@link ServiceState} roaming status, which can be\n     * affected by other carrier configs (e.g.\n     * {@link #KEY_GSM_NONROAMING_NETWORKS_STRING_ARRAY}), when setting the SPN display.\n     * \u003cp\u003e\n     * If {@code true}, the SPN display uses {@link ServiceState#getRoaming}.\n     * If {@code false} the SPN display checks if the current MCC/MNC is different from the\n     * SIM card\u0027s MCC/MNC.",
+      "range": {
+        "startLine": 1611,
+        "startChar": 7,
+        "endLine": 1615,
+        "endChar": 31
+      },
+      "revId": "f8461660be904245dc2a8049d7c9a7fcfe51695e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
