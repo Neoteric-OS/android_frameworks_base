@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7eaf1f4c_ad255c49",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3464,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-02T04:36:46Z",
+      "side": 1,
+      "message": "Hugo, is this going to be flaky, or will waitForIdle() wait for everything it needs to wait for?\n\nIf flaky, then a simple fix is to wait for a CAP_CHANGED callback.",
+      "range": {
+        "startLine": 3464,
+        "startChar": 8,
+        "endLine": 3464,
+        "endChar": 22
+      },
+      "revId": "72f9c42b9e59761a28d6b32c42f65de57c98daed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
