@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "9e071145_1b1361bd",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-02T04:25:37Z",
+      "side": 1,
+      "message": "Minor comment about style of the api: instead of a bool param, consider doing\n\nenum Operation {\n  ADD,\n  REMOVE;\n}\n\npublic NetworkCapabilities setCapability(@NetCapability int capability, Operation op) {\n  switch (op) {\n    ...\n\nFor a @hide api I am fine with the boolean value, but my rationals for suggesting the enum based solution is that it is much harder to call it incorrectly and it much easier to immediately understand what it do at call sites. And certainly superior to setCapability(NET_CAP_FOO, true /* adding capa*/ ).",
+      "range": {
+        "startLine": 340,
+        "startChar": 76,
+        "endLine": 340,
+        "endChar": 89
+      },
+      "revId": "6ac58ab646b152cc883c9dc3563b5d4d54f6a72a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2606f114_7e3d6bfe",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-02T04:25:37Z",
+      "side": 1,
+      "message": "Just checking: should this be a OR or an overwrite ?\n\nI think \"setCapabilities\" matches overwrite, but it is inconsistent with setCapability() which does not reset other bits. In order words these two things are not equivalent for an existing NetCapa object:\n\nfor (int c : capabilities) {\n  capa.setCapability(c);\n}\n\ncapa.setCapabilities(capabitlies);\n\nNo strong opinion either way, but this should at least be clear in the comments.",
+      "range": {
+        "startLine": 365,
+        "startChar": 29,
+        "endLine": 365,
+        "endChar": 30
+      },
+      "revId": "6ac58ab646b152cc883c9dc3563b5d4d54f6a72a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00805166_0f407d3a",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 4
