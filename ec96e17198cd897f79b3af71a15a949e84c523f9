@@ -46,6 +46,64 @@
       "revId": "ec96e17198cd897f79b3af71a15a949e84c523f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f3effbb_8d71ce04",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1161323
+      },
+      "writtenOn": "2017-11-02T17:24:40Z",
+      "side": 1,
+      "message": "(It looks like that change hasn\u0027t been uploaded yet.)",
+      "parentUuid": "a0148d17_604296a4",
+      "range": {
+        "startLine": 642,
+        "startChar": 31,
+        "endLine": 642,
+        "endChar": 65
+      },
+      "revId": "ec96e17198cd897f79b3af71a15a949e84c523f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d58c026a_2656d4cf",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1987,
+      "author": {
+        "id": 1161323
+      },
+      "writtenOn": "2017-11-02T17:24:40Z",
+      "side": 1,
+      "message": "Maybe some kind of TODO here, since it\u0027s now fairly clear how tlsHostname should be populated?",
+      "revId": "ec96e17198cd897f79b3af71a15a949e84c523f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1cdecdb_5a4ef25b",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1998,
+      "author": {
+        "id": 1161323
+      },
+      "writtenOn": "2017-11-02T17:24:40Z",
+      "side": 1,
+      "message": "Nit: seems like this should be \"privateDns\".",
+      "revId": "ec96e17198cd897f79b3af71a15a949e84c523f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
