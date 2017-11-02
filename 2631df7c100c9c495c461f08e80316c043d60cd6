@@ -22,6 +22,30 @@
       "revId": "2631df7c100c9c495c461f08e80316c043d60cd6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd34a39_356c7cdf",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1014088
+      },
+      "writtenOn": "2017-11-02T17:09:23Z",
+      "side": 1,
+      "message": "Just to be consistent. macro-definitions followed by instantiations, followed by special case for bool in the rest of the file. Briefly played with special-casing bool macro instantiation if sizeof(bool) \u003d\u003d sizeof(jboolean) but that\u0027s not possible at the preprocessor level. I can undo the reordering if you care strongly.",
+      "parentUuid": "622cbb3e_df4708ea",
+      "range": {
+        "startLine": 352,
+        "startChar": 0,
+        "endLine": 358,
+        "endChar": 47
+      },
+      "revId": "2631df7c100c9c495c461f08e80316c043d60cd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
