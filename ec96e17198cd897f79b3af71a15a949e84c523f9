@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1d90487_36aa52ba",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-11-02T07:22:02Z",
+      "side": 1,
+      "message": "_PREFIX ?",
+      "range": {
+        "startLine": 642,
+        "startChar": 31,
+        "endLine": 642,
+        "endChar": 65
+      },
+      "revId": "ec96e17198cd897f79b3af71a15a949e84c523f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
