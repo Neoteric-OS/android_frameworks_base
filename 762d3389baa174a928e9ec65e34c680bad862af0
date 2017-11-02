@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "869a917d_b9dc0f37",
+        "filename": "core/java/android/view/ViewConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1014545
+      },
+      "writtenOn": "2017-11-02T21:43:37Z",
+      "side": 1,
+      "message": "This method will return if, \"any keyboard attached to the device\" has the key, not if the device has a permanent menu key. The result may change as a user plugs/unplugs a USB keyboard or connects/disconnects a Bluetooth keyboard, which isn\u0027t desired.\n\nConsider changing the resource overlay for the value `config_overrideHasPermanentMenuKey` based on the device\u0027s physical characteristics to override the autodetection behavior. From res/values/config.xml:\n\n    \u003c!-- Override the default detection behavior for the framework method\n         android.view.ViewConfiguration#hasPermanentMenuKey().\n         Valid settings are:\n         0 - No change. Use the default autodetection behavior.\n         1 - The device DOES have a permanent menu key; ignore autodetection.\n         2 - The device DOES NOT have a permanent menu key; ignore autodetection. --\u003e\n    \u003cinteger name\u003d\"config_overrideHasPermanentMenuKey\"\u003e0\u003c/integer\u003e",
+      "revId": "762d3389baa174a928e9ec65e34c680bad862af0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
