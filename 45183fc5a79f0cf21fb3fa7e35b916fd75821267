@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8be243f3_42388efc",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-11-02T18:19:49Z",
+      "side": 0,
+      "message": "Deleting these lines may case presubmit hooks to be unhappy.",
+      "revId": "45183fc5a79f0cf21fb3fa7e35b916fd75821267",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

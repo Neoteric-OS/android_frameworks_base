@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3b3014e_4ef4bc4d",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-11-02T18:19:49Z",
+      "side": 1,
+      "message": "Minor clarification: Would it be correct to say that the managedResource objects aren\u0027t cleaned up? Removing the TransportModeTransform does not clean up the SA?",
+      "range": {
+        "startLine": 1023,
+        "startChar": 16,
+        "endLine": 1023,
+        "endChar": 44
+      },
+      "revId": "c28d8119d3e8bf60a60f782d3db89402876d534a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df103a2f_c0ce2af6",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-11-02T18:19:49Z",
+      "side": 1,
+      "message": "throw an IOException\n\n\u003e Delete \"is at\"",
+      "range": {
+        "startLine": 1040,
+        "startChar": 45,
+        "endLine": 1040,
+        "endChar": 71
+      },
+      "revId": "c28d8119d3e8bf60a60f782d3db89402876d534a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cafec19d_f6a47d9a",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-11-02T18:19:49Z",
+      "side": 1,
+      "message": "You can do (ServiceSpecificException | ErrnoException e) if they are supposed to be doing exactly the same thing",
+      "range": {
+        "startLine": 1042,
+        "startChar": 17,
+        "endLine": 1042,
+        "endChar": 33
+      },
+      "revId": "c28d8119d3e8bf60a60f782d3db89402876d534a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
