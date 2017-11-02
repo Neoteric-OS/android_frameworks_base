@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00805166_0f407d3a",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2017-11-02T03:58:04Z",
+      "side": 1,
+      "message": "Mutable, not requestable.",
+      "range": {
+        "startLine": 903,
+        "startChar": 24,
+        "endLine": 903,
+        "endChar": 50
+      },
+      "revId": "6ac58ab646b152cc883c9dc3563b5d4d54f6a72a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
