@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee5b3594_77bc0300",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-02T03:28:24Z",
+      "side": 1,
+      "message": "You might want to add something like:\n\n    Merged-In: I7cec7bb91e0447e3c565d33cb7c34ccf59566639\n\nBut I see treehugger has approved, so maybe it\u0027s not necessary.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 6
+      },
+      "revId": "c1f9e80dc5faa2f9e867ed7299e486925507f778",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
