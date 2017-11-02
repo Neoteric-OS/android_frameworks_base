@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "622cbb3e_df4708ea",
+        "filename": "core/jni/android_os_HwBlob.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2017-11-02T17:07:28Z",
+      "side": 1,
+      "message": "why move these?",
+      "range": {
+        "startLine": 352,
+        "startChar": 0,
+        "endLine": 358,
+        "endChar": 47
+      },
+      "revId": "2631df7c100c9c495c461f08e80316c043d60cd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
