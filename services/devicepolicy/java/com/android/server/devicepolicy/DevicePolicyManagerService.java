@@ -437,7 +437,6 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
             } else if (DevicePolicyManager.ACTION_BUGREPORT_SHARING_DECLINED.equals(action)) {
                 onBugreportSharingDeclined();
             }
-            mContext.unregisterReceiver(mRemoteBugreportConsentReceiver);
         }
     };
 
@@ -6208,6 +6207,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                             UserHandle.ALL);
         }
         mContext.unregisterReceiver(mRemoteBugreportFinishedReceiver);
+        mContext.unregisterReceiver(mRemoteBugreportConsentReceiver);
     }
 
     private void onBugreportFailed() {
@@ -6250,6 +6250,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
             mRemoteBugreportServiceIsActive.set(false);
             mHandler.removeCallbacks(mRemoteBugreportTimeoutRunnable);
             mContext.unregisterReceiver(mRemoteBugreportFinishedReceiver);
+            mContext.unregisterReceiver(mRemoteBugreportConsentReceiver);
         }
         mRemoteBugreportSharingAccepted.set(false);
         setDeviceOwnerRemoteBugreportUriAndHash(null, null);
