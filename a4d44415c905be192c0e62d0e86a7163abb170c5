@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1cf80578_46de4485",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2017-11-03T17:14:25Z",
+      "side": 1,
+      "message": "I don\u0027t want the code to decide for me, since I may care more about pixel accuracy and need lossless compression, even if it\u0027s slower.",
+      "parentUuid": "dfacee52_b729ab7d",
+      "range": {
+        "startLine": 9,
+        "startChar": 20,
+        "endLine": 9,
+        "endChar": 78
+      },
+      "revId": "a4d44415c905be192c0e62d0e86a7163abb170c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77e0af29_567be5f9",
         "filename": "cmds/screencap/screencap.cpp",
         "patchSetId": 1
@@ -68,6 +92,23 @@
       "revId": "a4d44415c905be192c0e62d0e86a7163abb170c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "917f8ce2_81c937c5",
+        "filename": "cmds/screencap/screencap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1043625
+      },
+      "writtenOn": "2017-11-03T17:14:25Z",
+      "side": 1,
+      "message": "Might prefer to static_cast\u003c\u003e or at least SkEncodedImageFormat(-1) this because it took me a second to parse it",
+      "revId": "a4d44415c905be192c0e62d0e86a7163abb170c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
