@@ -194,6 +194,24 @@ public final class Settings {
             "android.settings.AIRPLANE_MODE_SETTINGS";
 
     /**
+     * Activity Action: Show mobile data usage list.
+     * <p>
+     * Input: {@link EXTRA_NETWORK_TEMPLATE} and {@link EXTRA_SUB_ID} should be included to specify
+     * how and what mobile data statistics should be collected.
+     * <p>
+     * Output: Nothing
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+    public static final String ACTION_MOBILE_DATA_USAGE =
+            "android.settings.MOBILE_DATA_USAGE";
+
+    /** @hide */
+    public static final String EXTRA_NETWORK_TEMPLATE = "network_template";
+    /** @hide */
+    public static final String EXTRA_SUB_ID = "sub_id";
+
+    /**
      * Activity Action: Modify Airplane mode settings using a voice command.
      * <p>
      * In some cases, a matching Activity may not exist, so ensure you safeguard against this.
@@ -9206,6 +9224,9 @@ public final class Settings {
         /** {@hide} */
         public static final String
                 BLUETOOTH_PAN_PRIORITY_PREFIX = "bluetooth_pan_priority_";
+        /** {@hide} */
+        public static final String
+                BLUETOOTH_HEARING_AID_PRIORITY_PREFIX = "bluetooth_hearing_aid_priority_";
 
         /**
          * Activity manager specific settings.
@@ -9524,6 +9545,14 @@ public final class Settings {
          */
         public static final String getBluetoothPanPriorityKey(String address) {
             return BLUETOOTH_PAN_PRIORITY_PREFIX + address.toUpperCase(Locale.ROOT);
+        }
+
+        /**
+         * Get the key that retrieves a bluetooth hearing aid priority.
+         * @hide
+         */
+        public static final String getBluetoothHearingAidPriorityKey(String address) {
+            return BLUETOOTH_HEARING_AID_PRIORITY_PREFIX + address.toUpperCase(Locale.ROOT);
         }
 
         /**
@@ -9946,7 +9975,8 @@ public final class Settings {
         public static final String REQUIRE_PASSWORD_TO_DECRYPT = "require_password_to_decrypt";
 
         /**
-         * Whether the Volte is enabled
+         * Whether the Volte is enabled. If this setting is not set then we use the Carrier Config
+         * value {@link CarrierConfigManager#KEY_ENHANCED_4G_LTE_ON_BY_DEFAULT_BOOL}.
          * <p>
          * Type: int (0 for false, 1 for true)
          * @hide

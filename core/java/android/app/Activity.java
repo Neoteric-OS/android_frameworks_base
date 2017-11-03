@@ -16,8 +16,6 @@
 
 package android.app;
 
-import static android.os.Build.VERSION_CODES.O;
-
 import static java.lang.Character.MIN_VALUE;
 
 import android.annotation.CallSuper;
@@ -976,18 +974,6 @@ public class Activity extends ContextThemeWrapper
     @CallSuper
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         if (DEBUG_LIFECYCLE) Slog.v(TAG, "onCreate " + this + ": " + savedInstanceState);
-
-        if (getApplicationInfo().targetSdkVersion > O && mActivityInfo.isFixedOrientation()) {
-            final TypedArray ta = obtainStyledAttributes(com.android.internal.R.styleable.Window);
-            final boolean isTranslucentOrFloating = ActivityInfo.isTranslucentOrFloating(ta);
-            ta.recycle();
-
-            if (isTranslucentOrFloating) {
-                throw new IllegalStateException(
-                        "Only fullscreen opaque activities can request orientation");
-            }
-        }
-
         if (mLastNonConfigurationInstances != null) {
             mFragments.restoreLoaderNonConfig(mLastNonConfigurationInstances.loaders);
         }
@@ -4358,7 +4344,7 @@ public class Activity extends ContextThemeWrapper
             throw new IllegalArgumentException("requestCode should be >= 0");
         }
         if (mHasCurrentPermissionsRequest) {
-            Log.w(TAG, "Can reqeust only one set of permissions at a time");
+            Log.w(TAG, "Can request only one set of permissions at a time");
             // Dispatch the callback with empty arrays which means a cancellation.
             onRequestPermissionsResult(requestCode, new String[0], new int[0]);
             return;

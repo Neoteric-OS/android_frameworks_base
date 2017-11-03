@@ -519,15 +519,19 @@ LOCAL_SRC_FILES += \
 	telephony/java/com/android/ims/internal/IImsEcbmListener.aidl \
         telephony/java/com/android/ims/internal/IImsExternalCallStateListener.aidl \
         telephony/java/com/android/ims/internal/IImsFeatureStatusCallback.aidl \
+        telephony/java/com/android/ims/internal/IImsMMTelFeature.aidl \
         telephony/java/com/android/ims/internal/IImsMultiEndpoint.aidl \
+	telephony/java/com/android/ims/internal/IImsRcsFeature.aidl \
 	telephony/java/com/android/ims/internal/IImsService.aidl \
 	telephony/java/com/android/ims/internal/IImsServiceController.aidl \
-	telephony/java/com/android/ims/internal/IImsServiceFeatureListener.aidl \
+	telephony/java/com/android/ims/internal/IImsServiceFeatureCallback.aidl \
+        telephony/java/com/android/ims/internal/IImsSmsFeature.aidl \
 	telephony/java/com/android/ims/internal/IImsStreamMediaSession.aidl \
 	telephony/java/com/android/ims/internal/IImsUt.aidl \
 	telephony/java/com/android/ims/internal/IImsUtListener.aidl \
 	telephony/java/com/android/ims/internal/IImsVideoCallCallback.aidl \
 	telephony/java/com/android/ims/internal/IImsVideoCallProvider.aidl \
+        telephony/java/com/android/ims/internal/ISmsListener.aidl \
         telephony/java/com/android/ims/internal/uce/uceservice/IUceService.aidl \
         telephony/java/com/android/ims/internal/uce/uceservice/IUceListener.aidl \
         telephony/java/com/android/ims/internal/uce/options/IOptionsService.aidl \
@@ -655,6 +659,7 @@ aidl_files := \
 	frameworks/base/telephony/java/android/telephony/NeighboringCellInfo.aidl \
 	frameworks/base/telephony/java/android/telephony/ModemActivityInfo.aidl \
 	frameworks/base/telephony/java/android/telephony/UiccAccessRule.aidl \
+	frameworks/base/telephony/java/android/telephony/data/DataProfile.aidl \
 	frameworks/base/telephony/java/android/telephony/euicc/DownloadableSubscription.aidl \
 	frameworks/base/telephony/java/android/telephony/euicc/EuiccInfo.aidl \
 	frameworks/base/location/java/android/location/Location.aidl \

@@ -779,6 +779,14 @@ public class CarrierConfigManager {
     public static final String KEY_IMS_CONFERENCE_SIZE_LIMIT_INT = "ims_conference_size_limit_int";
 
     /**
+     * Determines whether manage IMS conference calls is supported by a carrier.  When {@code true},
+     * manage IMS conference call is supported, {@code false otherwise}.
+     * @hide
+     */
+    public static final String KEY_SUPPORT_MANAGE_IMS_CONFERENCE_CALL_BOOL =
+            "support_manage_ims_conference_call_bool";
+
+    /**
      * Determines whether High Definition audio property is displayed in the dialer UI.
      * If {@code false}, remove the HD audio property from the connection so that HD audio related
      * UI is not displayed. If {@code true}, keep HD audio property as it is configured.
@@ -817,6 +825,14 @@ public class CarrierConfigManager {
      * carrier supports 4G LTE or not.
      */
     public static final String KEY_HIDE_ENHANCED_4G_LTE_BOOL = "hide_enhanced_4g_lte_bool";
+
+    /**
+     * Default Enhanced 4G LTE mode enabled. When this is {@code true}, Enhanced 4G LTE mode by
+     * default is on, otherwise if {@code false}, Enhanced 4G LTE mode by default is off.
+     * @hide
+     */
+    public static final String KEY_ENHANCED_4G_LTE_ON_BY_DEFAULT_BOOL =
+            "enhanced_4g_lte_on_by_default_bool";
 
     /**
      * Determine whether IMS apn can be shown.
@@ -1774,12 +1790,14 @@ public class CarrierConfigManager {
         sDefaults.putInt(KEY_CDMA_3WAYCALL_FLASH_DELAY_INT , 0);
         sDefaults.putBoolean(KEY_SUPPORT_CONFERENCE_CALL_BOOL, true);
         sDefaults.putBoolean(KEY_SUPPORT_IMS_CONFERENCE_CALL_BOOL, true);
+        sDefaults.putBoolean(KEY_SUPPORT_MANAGE_IMS_CONFERENCE_CALL_BOOL, true);
         sDefaults.putBoolean(KEY_SUPPORT_VIDEO_CONFERENCE_CALL_BOOL, false);
         sDefaults.putBoolean(KEY_IS_IMS_CONFERENCE_SIZE_ENFORCED_BOOL, false);
         sDefaults.putInt(KEY_IMS_CONFERENCE_SIZE_LIMIT_INT, 5);
         sDefaults.putBoolean(KEY_DISPLAY_HD_AUDIO_PROPERTY_BOOL, true);
         sDefaults.putBoolean(KEY_EDITABLE_ENHANCED_4G_LTE_BOOL, true);
         sDefaults.putBoolean(KEY_HIDE_ENHANCED_4G_LTE_BOOL, false);
+        sDefaults.putBoolean(KEY_ENHANCED_4G_LTE_ON_BY_DEFAULT_BOOL, true);
         sDefaults.putBoolean(KEY_HIDE_IMS_APN_BOOL, false);
         sDefaults.putBoolean(KEY_HIDE_PREFERRED_NETWORK_TYPE_BOOL, false);
         sDefaults.putBoolean(KEY_ALLOW_EMERGENCY_VIDEO_CALLS_BOOL, false);

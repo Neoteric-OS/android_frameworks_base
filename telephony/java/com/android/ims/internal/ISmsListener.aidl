@@ -17,12 +17,11 @@
 package com.android.ims.internal;
 
 /**
- *  Interface from ImsResolver to ImsServiceProxy in ImsManager.
- * Callback to ImsManager when a feature changes in the ImsServiceController.
+ * See SmsFeature for more information.
  * {@hide}
  */
-oneway interface IImsServiceFeatureListener {
-    void imsFeatureCreated(int slotId, int feature);
-    void imsFeatureRemoved(int slotId, int feature);
-    void imsStatusChanged(int slotId, int feature, int status);
+interface ISmsListener {
+    void setSentSmsResult(in int messageRef, in int result);
+    void setSentSmsStatusReport(in int format, in byte[] pdu);
+    void deliverSms(in int format, in byte[] pdu);
 }

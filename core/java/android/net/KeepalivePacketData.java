@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.server.connectivity;
+package android.net;
 
 import android.system.OsConstants;
 import android.net.ConnectivityManager;
