@@ -308,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "9c65df0d_687be82e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4673,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-11-03T19:59:08Z",
+      "side": 1,
+      "message": "Ah, if no other thread is writing, then this was fine.\n\nBut still, it\u0027s poor hygiene, and could lead to flaky behavior if thread access patterns changed in the future.  I\u0027ll leave the updated locking in place.",
+      "parentUuid": "9e9f741f_87776747",
+      "range": {
+        "startLine": 4673,
+        "startChar": 12,
+        "endLine": 4673,
+        "endChar": 45
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75e923cb_3bf1ad4e",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 3
@@ -461,6 +485,30 @@
       "side": 1,
       "message": "Ack. I suppose you could argue that this cuts both ways:\n\nThis change could create a bug: if the app wanted to talk to the actual wifi network and specified TRANSPORT_WIFI but mistakenly cleared NOT_VPN (which is on by default), the app could get gets the VPN\u0027s Network object instead and not be able to talk to wifi.\n\nThe change could also fix a bug: if the app just wanted to \"send traffic over wifi\" but did not clear NOT_VPN, the VPN network would never satisfy the request and the app would think that there is no way to send traffic over wifi, when in fact it can do so by sending traffic to the VPN.\n\nIf the above is correct, then perhaps we should go with this, fix the apps we know are incorrect, and mention in the release notes that our behaviour is now more accurate and that apps might need to adapt.",
       "parentUuid": "75fac619_de2d85db",
+      "range": {
+        "startLine": 316,
+        "startChar": 8,
+        "endLine": 316,
+        "endChar": 9
+      },
+      "revId": "26121c347843948ee77e16bc417f7f2cce23186e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a0dde54_c878e9c8",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-11-03T19:59:08Z",
+      "side": 1,
+      "message": "Good point; I\u0027ll add it to behavior notes.",
+      "parentUuid": "5c514dfb_b653d627",
       "range": {
         "startLine": 316,
         "startChar": 8,
