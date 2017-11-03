@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "67128f71_161f10dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-03T21:01:46Z",
+      "side": 1,
+      "message": "This commit message does not describe the changes you have made.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "c28d8119d3e8bf60a60f782d3db89402876d534a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3b3014e_4ef4bc4d",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 2
@@ -49,6 +72,40 @@
     },
     {
       "key": {
+        "uuid": "77c9d6f3_30b6a453",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-03T21:01:46Z",
+      "side": 1,
+      "message": "I don\u0027t see tests for this change. That should be done in this CL or at least in the topic.\n\nIn particular, I\u0027m not sure what getsockname returns for an unbound socket.",
+      "revId": "c28d8119d3e8bf60a60f782d3db89402876d534a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d84c37_5c1cd22d",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-03T21:01:46Z",
+      "side": 1,
+      "message": "Could we add a comment about how we \"remove\" policy by replacing it with dummy policy?",
+      "revId": "c28d8119d3e8bf60a60f782d3db89402876d534a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df103a2f_c0ce2af6",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 2
@@ -65,6 +122,29 @@
         "startChar": 45,
         "endLine": 1040,
         "endChar": 71
+      },
+      "revId": "c28d8119d3e8bf60a60f782d3db89402876d534a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f43f73ca_92f67668",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-03T21:01:46Z",
+      "side": 1,
+      "message": "This seems like a small addition. Can we do it in the same CL?",
+      "range": {
+        "startLine": 1040,
+        "startChar": 15,
+        "endLine": 1040,
+        "endChar": 40
       },
       "revId": "c28d8119d3e8bf60a60f782d3db89402876d534a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
