@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68711d88_e42a4003",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-11-03T19:51:37Z",
+      "side": 1,
+      "message": "Sorry, enums are strongly discouraged.\n\nAnd yes, it\u0027s designed to be @hide, so per your comment I\u0027ll leave it as boolean.",
+      "parentUuid": "9e071145_1b1361bd",
+      "range": {
+        "startLine": 340,
+        "startChar": 76,
+        "endLine": 340,
+        "endChar": 89
+      },
+      "revId": "6ac58ab646b152cc883c9dc3563b5d4d54f6a72a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2606f114_7e3d6bfe",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-02T04:25:37Z",
       "side": 1,
       "message": "Just checking: should this be a OR or an overwrite ?\n\nI think \"setCapabilities\" matches overwrite, but it is inconsistent with setCapability() which does not reset other bits. In order words these two things are not equivalent for an existing NetCapa object:\n\nfor (int c : capabilities) {\n  capa.setCapability(c);\n}\n\ncapa.setCapabilities(capabitlies);\n\nNo strong opinion either way, but this should at least be clear in the comments.",
+      "range": {
+        "startLine": 365,
+        "startChar": 29,
+        "endLine": 365,
+        "endChar": 30
+      },
+      "revId": "6ac58ab646b152cc883c9dc3563b5d4d54f6a72a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b673a463_57c75648",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2017-11-03T19:51:37Z",
+      "side": 1,
+      "message": "It\u0027s designed to be a wholesale replacement.  I\u0027ll update the comments.",
+      "parentUuid": "2606f114_7e3d6bfe",
       "range": {
         "startLine": 365,
         "startChar": 29,
