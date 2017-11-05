@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "c4d1d536_3dbbb9a9",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1987,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-05T10:10:45Z",
+      "side": 1,
+      "message": "Done, although I think we still have some work to do on the netd side.",
+      "parentUuid": "d58c026a_2656d4cf",
+      "revId": "ec96e17198cd897f79b3af71a15a949e84c523f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1cdecdb_5a4ef25b",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 6
@@ -101,6 +119,24 @@
       "writtenOn": "2017-11-02T17:24:40Z",
       "side": 1,
       "message": "Nit: seems like this should be \"privateDns\".",
+      "revId": "ec96e17198cd897f79b3af71a15a949e84c523f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "814fa748_e7189328",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1998,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-05T10:10:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1cdecdb_5a4ef25b",
       "revId": "ec96e17198cd897f79b3af71a15a949e84c523f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
