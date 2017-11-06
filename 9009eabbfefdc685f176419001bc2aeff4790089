@@ -22,6 +22,30 @@
       "revId": "9009eabbfefdc685f176419001bc2aeff4790089",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "783bc2b0_a2cdaa25",
+        "filename": "services/core/java/com/android/server/connectivity/IpConnectivityMetrics.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-06T00:04:38Z",
+      "side": 0,
+      "message": "The same basially: cmdList. The main difference is that cmdDumpsys() and cmdList() are now a single method.",
+      "parentUuid": "596c9e81_3256ab47",
+      "range": {
+        "startLine": 249,
+        "startChar": 26,
+        "endLine": 249,
+        "endChar": 30
+      },
+      "revId": "9009eabbfefdc685f176419001bc2aeff4790089",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
