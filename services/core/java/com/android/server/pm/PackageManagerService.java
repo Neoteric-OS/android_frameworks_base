@@ -10160,6 +10160,7 @@ public class PackageManagerService extends IPackageManager.Stub
         // them in the case where we're not upgrading or booting for the first time.
         String primaryCpuAbiFromSettings = null;
         String secondaryCpuAbiFromSettings = null;
+        boolean foundPkgSettings = false;
 
         // writer
         synchronized (mPackages) {
@@ -10242,6 +10243,7 @@ public class PackageManagerService extends IPackageManager.Stub
                 if (foundPs != null) {
                     primaryCpuAbiFromSettings = foundPs.primaryCpuAbiString;
                     secondaryCpuAbiFromSettings = foundPs.secondaryCpuAbiString;
+                    foundPkgSettings = true;
                 }
             }
 
@@ -10446,7 +10448,7 @@ public class PackageManagerService extends IPackageManager.Stub
         final String cpuAbiOverride = deriveAbiOverride(pkg.cpuAbiOverride, pkgSetting);
 
         if ((scanFlags & SCAN_NEW_INSTALL) == 0) {
-            if ((scanFlags & SCAN_FIRST_BOOT_OR_UPGRADE) != 0) {
+            if (!foundPkgSettings || (scanFlags & SCAN_FIRST_BOOT_OR_UPGRADE) != 0) {
                 Trace.traceBegin(TRACE_TAG_PACKAGE_MANAGER, "derivePackageAbi");
                 final boolean extractNativeLibs = !pkg.isLibrary();
                 derivePackageAbi(pkg, scanFile, cpuAbiOverride, extractNativeLibs,
