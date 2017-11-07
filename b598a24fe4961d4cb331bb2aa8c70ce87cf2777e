@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64f0fd38_261e488e",
+        "filename": "core/java/android/net/EthernetAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-07T01:54:55Z",
+      "side": 1,
+      "message": "I\u0027m all good with this, though I understand that MacAddress might be both shorter and more easily understood (it might also be more \"discoverable\" when someone is searching code for some class like this).\n\nI defer to Lorenzo and Rebecca on the naming.  If this is ever un-hidden it\u0027ll want some level of API council approval anyway.",
+      "range": {
+        "startLine": 26,
+        "startChar": 19,
+        "endLine": 26,
+        "endChar": 34
+      },
+      "revId": "b598a24fe4961d4cb331bb2aa8c70ce87cf2777e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed4637c7_214ca605",
+        "filename": "tests/net/java/android/net/EthernetAddressTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-07T01:54:55Z",
+      "side": 1,
+      "message": "Can we add an explicit test for addresses beginning with 33:33?\n\n    - https://tools.ietf.org/html/rfc2464#section-7\n\n    - https://tools.ietf.org/html/rfc3307#section-4.3",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 9
+      },
+      "revId": "b598a24fe4961d4cb331bb2aa8c70ce87cf2777e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
