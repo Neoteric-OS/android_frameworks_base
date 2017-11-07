@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fd762a1_25ebf948",
+        "filename": "services/net/java/android/net/apf/ApfFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-07T06:20:36Z",
+      "side": 1,
+      "message": "Do we also need to check for config \u003d\u003d null here?",
+      "range": {
+        "startLine": 1173,
+        "startChar": 36,
+        "endLine": 1173,
+        "endChar": 38
+      },
+      "revId": "e71797dd923720b87ce9c3adbba3ac511df4866a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
