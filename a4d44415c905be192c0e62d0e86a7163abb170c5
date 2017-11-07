@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d1ad9e1e_89c7ac51",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2017-11-07T14:49:58Z",
+      "side": 1,
+      "message": "Thanks for the details.",
+      "parentUuid": "9d3bfb21_fbf53214",
+      "range": {
+        "startLine": 9,
+        "startChar": 20,
+        "endLine": 9,
+        "endChar": 78
+      },
+      "revId": "a4d44415c905be192c0e62d0e86a7163abb170c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77e0af29_567be5f9",
         "filename": "cmds/screencap/screencap.cpp",
         "patchSetId": 1
@@ -167,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "b6f11e53_f7b1cfcf",
+        "filename": "cmds/screencap/screencap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2017-11-07T14:49:58Z",
+      "side": 1,
+      "message": "\u003e The original approach is to output raw data if -p is not specified\n \u003e and name is not .png.\n \u003e Additionally, -j and .jpeg will trigger the jpeg encoding.\n \u003e \n \u003e There is no possibility to have 2 different extensions for a\n \u003e filename. It is either test.png.jpeg (which makes it a jpeg file),\n \u003e or test.jpeg.png (which makes it a png file).\n\nNo, but there is the possibility to use -j FILENAME.png. Looks like we override -j and save a PNG file.\n\n \u003e \n \u003e If 100% backwards compatibility wants to be maintained, then .jpeg\n \u003e extensions should be encoded as raw data.\n \u003e Because old code of \"screencap test.jpeg\" would encode as raw.\n \u003e However I think is really a bad idea to encode a .jpeg extensions\n \u003e as raw.\n\nAgreed. I don\u0027t think anyone wants that behavior (encoding raw to .jpeg extension). I just think it\u0027s a weird interface to have potentially conflicting options. Most users will likely use it sensibly. If someone does give it bad input (e.g. -j FILENAME.png or -p FILENAME.jpeg\"), perhaps we should print an error message? Or we should add a sentence to the help text specifying which one takes priority?",
+      "parentUuid": "1d8e7946_df4c53f1",
+      "range": {
+        "startLine": 65,
+        "startChar": 12,
+        "endLine": 65,
+        "endChar": 81
+      },
+      "revId": "a4d44415c905be192c0e62d0e86a7163abb170c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "917f8ce2_81c937c5",
         "filename": "cmds/screencap/screencap.cpp",
         "patchSetId": 1
@@ -231,6 +279,29 @@
     },
     {
       "key": {
+        "uuid": "3ca29426_bb5b5def",
+        "filename": "cmds/screencap/screencap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2017-11-07T14:49:58Z",
+      "side": 1,
+      "message": "Should we also respect \".jpg\"?",
+      "range": {
+        "startLine": 174,
+        "startChar": 48,
+        "endLine": 174,
+        "endChar": 52
+      },
+      "revId": "a4d44415c905be192c0e62d0e86a7163abb170c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37989ba4_b0587fe2",
         "filename": "cmds/screencap/screencap.cpp",
         "patchSetId": 1
@@ -247,6 +318,29 @@
         "startChar": 30,
         "endLine": 229,
         "endChar": 32
+      },
+      "revId": "a4d44415c905be192c0e62d0e86a7163abb170c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0493dd4c_574c851e",
+        "filename": "cmds/screencap/screencap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2017-11-07T14:49:58Z",
+      "side": 1,
+      "message": "SkEncodeImage returns a boolean indicating whether it succeeded. Maybe we should handle a failure differently? (e.g. print an error message)",
+      "range": {
+        "startLine": 257,
+        "startChar": 12,
+        "endLine": 257,
+        "endChar": 18
       },
       "revId": "a4d44415c905be192c0e62d0e86a7163abb170c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
