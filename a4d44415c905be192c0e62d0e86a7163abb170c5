@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9d3bfb21_fbf53214",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1244954
+      },
+      "writtenOn": "2017-11-07T10:41:32Z",
+      "side": 1,
+      "message": "A clear example of slow PNG encoding is when image is not UI (for example, a game), and contains lots of unpredictable colors, which makes PNG encoding slow. \nTried on a Note8 (QHD+) with the game TempleRun2.\n$ time ./screencap_jpg -p test; ls -al test           \n    0m05.01s real     0m04.81s user     0m00.14s system\n-rw-rw-r-- 1 root root 5227566 2017-11-07 10:09 test\n$ time ./screencap_jpg -j test; ls -al test           \n    0m00.86s real     0m00.66s user     0m00.15s system\n-rw-rw-r-- 1 root root 510783 2017-11-07 10:09 test\n\nAnd since PNG image sizes are big, file transfers are also slow.\nGiving the option to encode at lower res, or faster encoders is very useful for some use cases.",
+      "parentUuid": "1cf80578_46de4485",
+      "range": {
+        "startLine": 9,
+        "startChar": 20,
+        "endLine": 9,
+        "endChar": 78
+      },
+      "revId": "a4d44415c905be192c0e62d0e86a7163abb170c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77e0af29_567be5f9",
         "filename": "cmds/screencap/screencap.cpp",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "aa517c68_557c3c90",
+        "filename": "cmds/screencap/screencap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1244954
+      },
+      "writtenOn": "2017-11-07T10:41:32Z",
+      "side": 1,
+      "message": "Any value positive, and smaller than the max resolution will work, as defined in the surfaceflinger capture function. It already performs the appropiate checks in there.",
+      "parentUuid": "77e0af29_567be5f9",
+      "range": {
+        "startLine": 63,
+        "startChar": 16,
+        "endLine": 63,
+        "endChar": 75
+      },
+      "revId": "a4d44415c905be192c0e62d0e86a7163abb170c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "211efee1_6fe8453f",
         "filename": "cmds/screencap/screencap.cpp",
         "patchSetId": 1
@@ -83,6 +131,30 @@
       "writtenOn": "2017-11-03T15:41:00Z",
       "side": 1,
       "message": "How is it saved if neither -p or -j is specified, and the FILENAME does not end in one of these? What if they conflict? Which takes priority? (Looks like the filename.) Do we need both ways to specify the option?",
+      "range": {
+        "startLine": 65,
+        "startChar": 12,
+        "endLine": 65,
+        "endChar": 81
+      },
+      "revId": "a4d44415c905be192c0e62d0e86a7163abb170c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d8e7946_df4c53f1",
+        "filename": "cmds/screencap/screencap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1244954
+      },
+      "writtenOn": "2017-11-07T10:41:32Z",
+      "side": 1,
+      "message": "The original approach is to output raw data if -p is not specified and name is not .png.\nAdditionally, -j and .jpeg will trigger the jpeg encoding.\n\nThere is no possibility to have 2 different extensions for a filename. It is either test.png.jpeg (which makes it a jpeg file), or test.jpeg.png (which makes it a png file).\n\nIf 100% backwards compatibility wants to be maintained, then .jpeg extensions should be encoded as raw data.\nBecause old code of \"screencap test.jpeg\" would encode as raw.\nHowever I think is really a bad idea to encode a .jpeg extensions as raw.",
+      "parentUuid": "211efee1_6fe8453f",
       "range": {
         "startLine": 65,
         "startChar": 12,
@@ -123,6 +195,30 @@
       "writtenOn": "2017-11-03T15:41:00Z",
       "side": 1,
       "message": "I\u0027m guessing this variable is no longer needed?",
+      "range": {
+        "startLine": 122,
+        "startChar": 4,
+        "endLine": 122,
+        "endChar": 21
+      },
+      "revId": "a4d44415c905be192c0e62d0e86a7163abb170c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd3433ef_6ec2e02e",
+        "filename": "cmds/screencap/screencap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1244954
+      },
+      "writtenOn": "2017-11-07T10:41:32Z",
+      "side": 1,
+      "message": "True, removing it",
+      "parentUuid": "9e63220d_081c1adf",
       "range": {
         "startLine": 122,
         "startChar": 4,
