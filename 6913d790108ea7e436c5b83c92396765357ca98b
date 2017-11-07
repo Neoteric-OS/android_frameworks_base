@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11da18e8_62f0d2fb",
+        "filename": "telephony/java/com/android/ims/ImsSsData.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-11-07T21:23:23Z",
+      "side": 1,
+      "message": "Should probably use the AOSP copyright message.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 3
+      },
+      "revId": "6913d790108ea7e436c5b83c92396765357ca98b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04ad914e_89dd6d96",
+        "filename": "telephony/java/com/android/ims/ImsSsData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-11-07T21:23:23Z",
+      "side": 1,
+      "message": "Use the AOSP copyright message",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 3
+      },
+      "revId": "6913d790108ea7e436c5b83c92396765357ca98b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab7fd4a_b1e1b153",
+        "filename": "telephony/java/com/android/ims/ImsSsData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-11-07T21:23:23Z",
+      "side": 1,
+      "message": "Can you explain what these constants mean? Are they from a spec?",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 63
+      },
+      "revId": "6913d790108ea7e436c5b83c92396765357ca98b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d179aa5_f39ee8e1",
+        "filename": "telephony/java/com/android/ims/ImsUtInterface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-11-07T21:23:23Z",
+      "side": 1,
+      "message": "handler",
+      "range": {
+        "startLine": 184,
+        "startChar": 49,
+        "endLine": 184,
+        "endChar": 55
+      },
+      "revId": "6913d790108ea7e436c5b83c92396765357ca98b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
