@@ -202,6 +202,38 @@ public final class IpSecAlgorithm implements Parcelable {
         }
     }
 
+    static boolean isAuthenticationAlgorithm(IpSecAlgorithm algorithm) {
+        switch (algorithm.getName()) {
+            // Fallthrough
+            case AUTH_HMAC_MD5:
+            case AUTH_HMAC_SHA1:
+            case AUTH_HMAC_SHA256:
+            case AUTH_HMAC_SHA384:
+            case AUTH_HMAC_SHA512:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    static boolean isEncryptionAlgorithm(IpSecAlgorithm algorithm) {
+        switch (algorithm.getName()) {
+            case CRYPT_AES_CBC:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    static boolean isAuthenticatedEncryptionAlgorithm(IpSecAlgorithm algorithm) {
+        switch (algorithm.getName()) {
+            case AUTH_CRYPT_AES_GCM:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     @Override
     public String toString() {
         return new StringBuilder()

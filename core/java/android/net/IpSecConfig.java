@@ -113,18 +113,45 @@ public final class IpSecConfig implements Parcelable {
         mFlow[direction].mSpiResourceId = resourceId;
     }
 
-    /** Set the encryption algorithm for a given direction */
+    /**
+     * Set the encryption algorithm for a given direction
+     *
+     * @throws IllegalArgumentException if provided IpSecAlgorithm is not an encryption algorithm
+     */
     public void setEncryption(int direction, IpSecAlgorithm encryption) {
+        if (!IpSecAlgorithm.isEncryptionAlgorithm(encryption)) {
+            throw new IllegalArgumentException(
+                "Invalid algorithm for Encryption: " + encryption.getName());
+        }
         mFlow[direction].mEncryption = encryption;
     }
 
-    /** Set the authentication algorithm for a given direction */
+    /**
+     * Set the authentication algorithm for a given direction
+     *
+     * @throws IllegalArgumentException if provided IpSecAlgorithm is not an authentication
+     *     algorithm
+     */
     public void setAuthentication(int direction, IpSecAlgorithm authentication) {
+        if (!IpSecAlgorithm.isAuthenticationAlgorithm(authentication)) {
+            throw new IllegalArgumentException(
+                "Invalid algorithm for Authentication: " + authentication.getName());
+        }
         mFlow[direction].mAuthentication = authentication;
     }
 
-    /** Set the authenticated encryption algorithm for a given direction */
+    /**
+     * Set the authenticated encryption algorithm for a given direction
+     *
+     * @throws IllegalArgumentException if provided IpSecAlgorithm is not an authenticated
+     *     encryption algorithm
+     */
     public void setAuthenticatedEncryption(int direction, IpSecAlgorithm authenticatedEncryption) {
+        if (!IpSecAlgorithm.isAuthenticatedEncryptionAlgorithm(authenticatedEncryption)) {
+            throw new IllegalArgumentException(
+                    "Invalid algorithm for Authenticated Encryption: "
+                            + authenticatedEncryption.getName());
+        }
         mFlow[direction].mAuthenticatedEncryption = authenticatedEncryption;
     }
 
