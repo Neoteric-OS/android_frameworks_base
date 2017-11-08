@@ -352,10 +352,16 @@ public final class BluetoothHidDevice implements BluetoothProfile {
      * {@link #unregisterApp(BluetoothHidDeviceAppConfiguration)}.
      *
      * @param sdp {@link BluetoothHidDeviceAppSdpSettings} object of HID Device SDP record.
+     * The HID Device SDP record is required.
      * @param inQos {@link BluetoothHidDeviceAppQosSettings} object of Incoming QoS Settings.
+     * The Incoming QoS Settings is not required. Use null or default
+     * BluetoothHidDeviceAppQosSettings.Builder for default values.
      * @param outQos {@link BluetoothHidDeviceAppQosSettings} object of Outgoing QoS Settings.
+     * The Outgoing QoS Settings is not required. Use null or default
+     * BluetoothHidDeviceAppQosSettings.Builder for default values.
      * @param callback {@link BluetoothHidDeviceCallback} object to which callback messages will be
      * sent.
+     * The BluetoothHidDeviceCallback object is required.
      * @return
      */
     public boolean registerApp(BluetoothHidDeviceAppSdpSettings sdp,

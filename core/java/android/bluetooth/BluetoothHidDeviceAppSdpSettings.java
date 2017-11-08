@@ -39,6 +39,18 @@ public final class BluetoothHidDeviceAppSdpSettings implements Parcelable {
     public final byte subclass;
     public final byte[] descriptors;
 
+    /**
+     * Create a BluetoothHidDeviceAppSdpSettings object for the Bluetooth SDP record.
+     * @param name Name of this Bluetooth HID device
+     * @param description Description for this Bluetooth HID device
+     * @param provider Provider of this Bluetooth HID device
+     * @param subclass Subclass of this Bluetooth HID device.
+     * See <a href="www.usb.org/developers/hidpage/HID1_11.pdf">
+     *     www.usb.org/developers/hidpage/HID1_11.pdf Section 4.2</a>
+     * @param descriptors Descriptors of this Bluetooth HID device.
+     * See <a href="www.usb.org/developers/hidpage/HID1_11.pdf">
+     *     www.usb.org/developers/hidpage/HID1_11.pdf Chapter 6</a>
+     */
     public BluetoothHidDeviceAppSdpSettings(String name, String description, String provider,
             byte subclass, byte[] descriptors) {
         this.name = name;
