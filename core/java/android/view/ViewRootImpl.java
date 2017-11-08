@@ -2201,6 +2201,12 @@ public final class ViewRootImpl implements ViewParent,
             maybeHandleWindowMove(frame);
         }
 
+        // SPRD: call this earlier to avoid SurfaceView not sync issue
+        // Remember if we must report the next draw.
+        if ((relayoutResult & WindowManagerGlobal.RELAYOUT_RES_FIRST_TIME) != 0) {
+            reportNextDraw();
+        }
+
         final boolean didLayout = layoutRequested && (!mStopped || mReportNextDraw);
         boolean triggerGlobalLayoutListener = didLayout
                 || mAttachInfo.mRecomputeGlobalAttributes;
@@ -2335,11 +2341,6 @@ public final class ViewRootImpl implements ViewParent,
                             !mHasHadWindowFocus, mWindowAttributes.flags);
                 }
             }
-        }
-
-        // Remember if we must report the next draw.
-        if ((relayoutResult & WindowManagerGlobal.RELAYOUT_RES_FIRST_TIME) != 0) {
-            reportNextDraw();
         }
 
         boolean cancelDraw = mAttachInfo.mTreeObserver.dispatchOnPreDraw() || !isViewVisible;
