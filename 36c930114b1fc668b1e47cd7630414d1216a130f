@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ac41dfc_50c3e15c",
+        "filename": "core/java/android/net/metrics/WakeupStats.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-11-08T03:51:26Z",
+      "side": 1,
+      "message": "Nit : Not sure how much data that ends up being but maybe uni/multi/broad or uni/multi/broadcast is enough here ?",
+      "range": {
+        "startLine": 115,
+        "startChar": 32,
+        "endLine": 115,
+        "endChar": 39
+      },
+      "revId": "36c930114b1fc668b1e47cd7630414d1216a130f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
