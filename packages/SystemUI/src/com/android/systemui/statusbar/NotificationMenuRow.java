@@ -211,6 +211,7 @@ public class NotificationMenuRow implements NotificationMenuRowPlugin, View.OnCl
             mMenuContainer.removeAllViews();
         } else {
             mMenuContainer = new FrameLayout(mContext);
+            mMenuContainer.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         }
         for (int i = 0; i < mMenuItems.size(); i++) {
             addMenuView(mMenuItems.get(i), mMenuContainer);
