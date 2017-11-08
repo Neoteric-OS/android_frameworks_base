@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42e431fa_768730c4",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-11-08T16:26:31Z",
+      "side": 1,
+      "message": "Is this a better representation than using a byte[6]? And elsewhere you have utility classes converting between byte[] \u0026 String so why not stick to byte[].",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "0982987f895aa80d1e11e9b4615feb979de1838d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47dbe738_eb867c47",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-11-08T16:26:31Z",
+      "side": 1,
+      "message": "wouldn\u0027t Byte.valueOf() handle this (and the error, though the exception would be different).",
+      "range": {
+        "startLine": 164,
+        "startChar": 20,
+        "endLine": 164,
+        "endChar": 35
+      },
+      "revId": "0982987f895aa80d1e11e9b4615feb979de1838d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e958427_843ac451",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-11-08T16:26:31Z",
+      "side": 1,
+      "message": "what is this?",
+      "range": {
+        "startLine": 180,
+        "startChar": 38,
+        "endLine": 180,
+        "endChar": 52
+      },
+      "revId": "0982987f895aa80d1e11e9b4615feb979de1838d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "043f4360_546525ae",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-11-08T16:26:31Z",
+      "side": 1,
+      "message": "should this always set the local bit?",
+      "range": {
+        "startLine": 243,
+        "startChar": 29,
+        "endLine": 243,
+        "endChar": 45
+      },
+      "revId": "0982987f895aa80d1e11e9b4615feb979de1838d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
