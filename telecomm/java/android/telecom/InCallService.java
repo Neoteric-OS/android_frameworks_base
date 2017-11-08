@@ -19,6 +19,7 @@ package android.telecom;
 import android.annotation.SdkConstant;
 import android.annotation.SystemApi;
 import android.app.Service;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.hardware.camera2.CameraManager;
 import android.net.Uri;
@@ -373,6 +374,24 @@ public abstract class InCallService extends Service {
     public final void setAudioRoute(int route) {
         if (mPhone != null) {
             mPhone.setAudioRoute(route);
+        }
+    }
+
+    /**
+     * Request audio routing to a specific bluetooth device. Calling this method may result in
+     * the device routing audio to a different bluetooth device than the one specified. A list of
+     * available devices can be obtained via {@link CallAudioState#getSupportedBluetoothDevices()}
+     *
+     * @param bluetoothAddress The address of the bluetooth device to connect to, as returned by
+     *                         {@link BluetoothDevice#getAddress()}, or {@code null} if the caller
+     *                         only wishes to connect to any available bluetooth device.
+     *                         Calling this with a {@code null} {@code bluetoothAddress} has the
+     *                         same effect as calling {@link #setAudioRoute(int)} with
+     *                         {@link CallAudioState#ROUTE_BLUETOOTH}.
+     */
+    public final void requestBluetoothAudio(String bluetoothAddress) {
+        if (mPhone != null) {
+            mPhone.requestBluetoothAudio(bluetoothAddress);
         }
     }
 
