@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c6ca3724_7bc31fb5",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-09T05:29:59Z",
+      "side": 1,
+      "message": "Yes equality and masking is much easier than with an array.\n\nIt is also leaner in term of memory cost and does not induce byte array copies all around the place.",
+      "parentUuid": "5da8cdf8_5176b572",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "0982987f895aa80d1e11e9b4615feb979de1838d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47dbe738_eb867c47",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 1
@@ -60,6 +84,30 @@
       "writtenOn": "2017-11-08T16:26:31Z",
       "side": 1,
       "message": "wouldn\u0027t Byte.valueOf() handle this (and the error, though the exception would be different).",
+      "range": {
+        "startLine": 164,
+        "startChar": 20,
+        "endLine": 164,
+        "endChar": 35
+      },
+      "revId": "0982987f895aa80d1e11e9b4615feb979de1838d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71d3dc18_0d222e52",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-09T05:29:59Z",
+      "side": 1,
+      "message": "I am going to try, but there could be issues with the signed/unsigned  ranges not matching.",
+      "parentUuid": "47dbe738_eb867c47",
       "range": {
         "startLine": 164,
         "startChar": 20,
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "5926f037_79973bf1",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-09T05:29:59Z",
+      "side": 1,
+      "message": "Yes, this does unsigned integral type widening. Otherwise any byte b \u003c 0 converted to an int gets stuffed with 1s due to sign expansion.",
+      "parentUuid": "047b249b_d772142b",
+      "range": {
+        "startLine": 180,
+        "startChar": 38,
+        "endLine": 180,
+        "endChar": 52
+      },
+      "revId": "0982987f895aa80d1e11e9b4615feb979de1838d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfeb7154_d46d584d",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 1
@@ -130,6 +202,30 @@
       "writtenOn": "2017-11-09T01:32:01Z",
       "side": 1,
       "message": "In l.165 we check bounds for the value ; why not here ?",
+      "range": {
+        "startLine": 221,
+        "startChar": 23,
+        "endLine": 221,
+        "endChar": 30
+      },
+      "revId": "0982987f895aa80d1e11e9b4615feb979de1838d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52ffd39f_6509e1c6",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-09T05:29:59Z",
+      "side": 1,
+      "message": "Thanks for spotting this. Fixed.",
+      "parentUuid": "bfeb7154_d46d584d",
       "range": {
         "startLine": 221,
         "startChar": 23,
@@ -189,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "90e1c72d_ae93775f",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-09T05:29:59Z",
+      "side": 1,
+      "message": "Done, for both.",
+      "parentUuid": "4a9e4303_a35043f5",
+      "range": {
+        "startLine": 243,
+        "startChar": 29,
+        "endLine": 243,
+        "endChar": 45
+      },
+      "revId": "0982987f895aa80d1e11e9b4615feb979de1838d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28f13e1f_722fb354",
         "filename": "tests/net/java/android/net/MacAddressTest.java",
         "patchSetId": 1
@@ -200,6 +320,30 @@
       "writtenOn": "2017-11-09T01:32:01Z",
       "side": 1,
       "message": "s/universally/universal/",
+      "range": {
+        "startLine": 107,
+        "startChar": 21,
+        "endLine": 107,
+        "endChar": 32
+      },
+      "revId": "0982987f895aa80d1e11e9b4615feb979de1838d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25e99990_1d18228c",
+        "filename": "tests/net/java/android/net/MacAddressTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-09T05:29:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28f13e1f_722fb354",
       "range": {
         "startLine": 107,
         "startChar": 21,
