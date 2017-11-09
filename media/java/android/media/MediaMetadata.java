@@ -34,6 +34,8 @@ import android.util.SparseArray;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Set;
+import java.util.Objects;
+import java.util.Map.Entry;
 
 /**
  * Contains metadata about an item, such as the title, artist, etc.
@@ -614,6 +616,48 @@ public final class MediaMetadata implements Parcelable {
                     return new MediaMetadata[size];
                 }
             };
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o instanceof MediaMetadata)) {
+            return false;
+        }
+
+        final MediaMetadata m = (MediaMetadata) o;
+
+        for (Entry<String, Integer> entry : METADATA_KEYS_TYPE.entrySet()) {
+            String key = entry.getKey();
+            switch (entry.getValue()) {
+                case METADATA_TYPE_TEXT:
+                    if (!Objects.equals(getString(key), m.getString(key))) {
+                        return false;
+                    }
+                    break;
+                case METADATA_TYPE_LONG:
+                    if (getLong(key) != m.getLong(key)) {
+                        return false;
+                    }
+                    break;
+                case METADATA_TYPE_BITMAP:
+                    Bitmap b1 = getBitmap(key);
+                    Bitmap b2 = m.getBitmap(key);
+                    if ((b1 == null && b2 == null)
+                            || (b1 != null && b1.sameAs(b2))) {
+                        return false;
+                    }
+                    break;
+                default:
+                    // Ignore ratings
+                    break;
+            }
+        }
+
+        return true;
+    }
 
     /**
      * Use to build MediaMetadata objects. The system defined metadata keys must
