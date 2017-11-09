@@ -34,6 +34,8 @@ import android.util.SparseArray;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Set;
+import java.util.Objects;
+import java.util.Map.Entry;
 
 /**
  * Contains metadata about an item, such as the title, artist, etc.
@@ -614,6 +616,67 @@ public final class MediaMetadata implements Parcelable {
                     return new MediaMetadata[size];
                 }
             };
+
+    /**
+     * Compares the contents of this object to another MediaMetadata object. It
+     * does not compare Bitmaps and Ratings as the media player can choose to
+     * forgo these fields depending on how you retrieve the MediaMetadata.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof MediaMetadata)) {
+            return false;
+        }
+
+        final MediaMetadata m = (MediaMetadata) o;
+
+        for (Entry<String, Integer> entry : METADATA_KEYS_TYPE.entrySet()) {
+            String key = entry.getKey();
+            switch (entry.getValue()) {
+                case METADATA_TYPE_TEXT:
+                    if (!Objects.equals(getString(key), m.getString(key))) {
+                        return false;
+                    }
+                    break;
+                case METADATA_TYPE_LONG:
+                    if (getLong(key) != m.getLong(key)) {
+                        return false;
+                    }
+                    break;
+                default:
+                    // Ignore ratings and bitmaps when comparing
+                    break;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hashCode = 17;
+
+        for (Entry<String, Integer> entry : METADATA_KEYS_TYPE.entrySet()) {
+            String key = entry.getKey();
+            switch (entry.getValue()) {
+                case METADATA_TYPE_TEXT:
+                    hashCode = 31 * hashCode + getString(key).hashCode();
+                    break;
+                case METADATA_TYPE_LONG:
+                    hashCode = 31 * hashCode + Long.hashCode(getLong(key));
+                    break;
+                default:
+                    // Ignore ratings and bitmaps when comparing
+                    break;
+            }
+        }
+
+        return hashCode;
+    }
 
     /**
      * Use to build MediaMetadata objects. The system defined metadata keys must
