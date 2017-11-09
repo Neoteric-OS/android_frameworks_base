@@ -1,0 +1,1027 @@
+From 0b8173145e037afb47b46be8c8e601a39b31dae2 Mon Sep 17 00:00:00 2001
+From: Jakub Pawlowski <jpawlowski@google.com>
+Date: Thu, 9 Nov 2017 12:03:07 -0800
+Subject: [PATCH 1/2] Hearing aid stuff
+
+Change-Id: I8210b7428e20aeef2aa7b8973dc03ec1707daf1a
+---
+ Android.mk                                         |   1 +
+ core/java/android/bluetooth/BluetoothAdapter.java  |   6 +
+ .../android/bluetooth/BluetoothHearingAid.java     | 494 +++++++++++++++++++++
+ core/java/android/bluetooth/BluetoothProfile.java  |   7 +
+ core/java/android/bluetooth/BluetoothUuid.java     |   2 +
+ core/java/android/provider/Settings.java           |  11 +
+ core/proto/android/providers/settings.proto        |   3 +-
+ core/res/AndroidManifest.xml                       |   4 +
+ packages/SettingsLib/res/values/strings.xml        |   7 +
+ .../android/settingslib/bluetooth/A2dpProfile.java |   2 +-
+ .../settingslib/bluetooth/HearingAidProfile.java   | 216 +++++++++
+ .../bluetooth/LocalBluetoothProfileManager.java    |  31 +-
+ .../com/android/settingslib/bluetooth/Utils.java   |   2 +-
+ .../providers/settings/SettingsProtoDumpUtil.java  |   3 +
+ 14 files changed, 784 insertions(+), 5 deletions(-)
+ create mode 100644 core/java/android/bluetooth/BluetoothHearingAid.java
+ create mode 100644 packages/SettingsLib/src/com/android/settingslib/bluetooth/HearingAidProfile.java
+
+diff --git a/Android.mk b/Android.mk
+index b84742501eb6a..ddac29e3d7dbd 100644
+--- a/Android.mk
++++ b/Android.mk
+@@ -128,6 +128,7 @@ LOCAL_SRC_FILES += \
+ 	../../system/bt/binder/android/bluetooth/IBluetoothHeadsetPhone.aidl \
+ 	../../system/bt/binder/android/bluetooth/IBluetoothHealth.aidl \
+ 	../../system/bt/binder/android/bluetooth/IBluetoothHealthCallback.aidl \
++	../../system/bt/binder/android/bluetooth/IBluetoothHearingAid.aidl \
+ 	../../system/bt/binder/android/bluetooth/IBluetoothHidHost.aidl \
+ 	../../system/bt/binder/android/bluetooth/IBluetoothPan.aidl \
+ 	../../system/bt/binder/android/bluetooth/IBluetoothManager.aidl \
+diff --git a/core/java/android/bluetooth/BluetoothAdapter.java b/core/java/android/bluetooth/BluetoothAdapter.java
+index 578a5b8b93e11..344b28fff06f8 100644
+--- a/core/java/android/bluetooth/BluetoothAdapter.java
++++ b/core/java/android/bluetooth/BluetoothAdapter.java
+@@ -2155,6 +2155,9 @@ public final class BluetoothAdapter {
+         } else if (profile == BluetoothProfile.HID_DEVICE) {
+             BluetoothHidDevice hidDevice = new BluetoothHidDevice(context, listener);
+             return true;
++        } else if (profile == BluetoothProfile.HEARING_AID) {
++            BluetoothHearingAid hearingAid = new BluetoothHearingAid(context, listener);
++            return true;
+         } else {
+             return false;
+         }
+@@ -2235,6 +2238,9 @@ public final class BluetoothAdapter {
+                 BluetoothHidDevice hidDevice = (BluetoothHidDevice) proxy;
+                 hidDevice.close();
+                 break;
++            case BluetoothProfile.HEARING_AID:
++                BluetoothHearingAid hearingAid = (BluetoothHearingAid) proxy;
++                hearingAid.close();
+         }
+     }
+ 
+diff --git a/core/java/android/bluetooth/BluetoothHearingAid.java b/core/java/android/bluetooth/BluetoothHearingAid.java
+new file mode 100644
+index 0000000000000..6569df4093622
+--- /dev/null
++++ b/core/java/android/bluetooth/BluetoothHearingAid.java
+@@ -0,0 +1,494 @@
++/*
++ * Copyright 2017 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package android.bluetooth;
++
++import android.Manifest;
++import android.annotation.RequiresPermission;
++import android.annotation.SdkConstant;
++import android.annotation.SdkConstant.SdkConstantType;
++import android.content.ComponentName;
++import android.content.Context;
++import android.content.Intent;
++import android.content.ServiceConnection;
++import android.os.Binder;
++import android.os.IBinder;
++import android.os.RemoteException;
++import android.util.Log;
++
++import com.android.internal.annotations.GuardedBy;
++
++import java.util.ArrayList;
++import java.util.List;
++import java.util.concurrent.locks.ReentrantReadWriteLock;
++
++
++/**
++ * This class provides the public APIs to control the Bluetooth Hearing Aid
++ * profile.
++ *
++ * <p>BluetoothHearingAid is a proxy object for controlling the Bluetooth Hearing Aid
++ * Service via IPC. Use {@link BluetoothAdapter#getProfileProxy} to get
++ * the BluetoothHearingAid proxy object.
++ *
++ * <p> Each method is protected with its appropriate permission.
++ * @hide
++ */
++public final class BluetoothHearingAid implements BluetoothProfile {
++    private static final String TAG = "BluetoothHearingAid";
++    private static final boolean DBG = true;
++    private static final boolean VDBG = false;
++
++    /**
++     * Intent used to broadcast the change in connection state of the Hearing Aid
++     * profile.
++     *
++     * <p>This intent will have 3 extras:
++     * <ul>
++     * <li> {@link #EXTRA_STATE} - The current state of the profile. </li>
++     * <li> {@link #EXTRA_PREVIOUS_STATE}- The previous state of the profile.</li>
++     * <li> {@link BluetoothDevice#EXTRA_DEVICE} - The remote device. </li>
++     * </ul>
++     *
++     * <p>{@link #EXTRA_STATE} or {@link #EXTRA_PREVIOUS_STATE} can be any of
++     * {@link #STATE_DISCONNECTED}, {@link #STATE_CONNECTING},
++     * {@link #STATE_CONNECTED}, {@link #STATE_DISCONNECTING}.
++     *
++     * <p>Requires {@link android.Manifest.permission#BLUETOOTH} permission to
++     * receive.
++     */
++    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
++    public static final String ACTION_CONNECTION_STATE_CHANGED =
++            "android.bluetooth.hearingaid.profile.action.CONNECTION_STATE_CHANGED";
++
++    /**
++     * Intent used to broadcast the change in the Playing state of the Hearing Aid
++     * profile.
++     *
++     * <p>This intent will have 3 extras:
++     * <ul>
++     * <li> {@link #EXTRA_STATE} - The current state of the profile. </li>
++     * <li> {@link #EXTRA_PREVIOUS_STATE}- The previous state of the profile. </li>
++     * <li> {@link BluetoothDevice#EXTRA_DEVICE} - The remote device. </li>
++     * </ul>
++     *
++     * <p>{@link #EXTRA_STATE} or {@link #EXTRA_PREVIOUS_STATE} can be any of
++     * {@link #STATE_PLAYING}, {@link #STATE_NOT_PLAYING},
++     *
++     * <p>Requires {@link android.Manifest.permission#BLUETOOTH} permission to
++     * receive.
++     */
++    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
++    public static final String ACTION_PLAYING_STATE_CHANGED =
++            "android.bluetooth.hearingaid.profile.action.PLAYING_STATE_CHANGED";
++
++    /**
++     * Hearing Aid device is streaming music. This state can be one of
++     * {@link #EXTRA_STATE} or {@link #EXTRA_PREVIOUS_STATE} of
++     * {@link #ACTION_PLAYING_STATE_CHANGED} intent.
++     */
++    public static final int STATE_PLAYING = 10;
++
++    /**
++     * Hearing Aid device is NOT streaming music. This state can be one of
++     * {@link #EXTRA_STATE} or {@link #EXTRA_PREVIOUS_STATE} of
++     * {@link #ACTION_PLAYING_STATE_CHANGED} intent.
++     */
++    public static final int STATE_NOT_PLAYING = 11;
++
++    private Context mContext;
++    private ServiceListener mServiceListener;
++    private final ReentrantReadWriteLock mServiceLock = new ReentrantReadWriteLock();
++    @GuardedBy("mServiceLock")
++    private IBluetoothHearingAid mService;
++    private BluetoothAdapter mAdapter;
++
++    private final IBluetoothStateChangeCallback mBluetoothStateChangeCallback =
++            new IBluetoothStateChangeCallback.Stub() {
++                public void onBluetoothStateChange(boolean up) {
++                    if (DBG) Log.d(TAG, "onBluetoothStateChange: up=" + up);
++                    if (!up) {
++                        if (VDBG) Log.d(TAG, "Unbinding service...");
++                        try {
++                            mServiceLock.writeLock().lock();
++                            mService = null;
++                            mContext.unbindService(mConnection);
++                        } catch (Exception re) {
++                            Log.e(TAG, "", re);
++                        } finally {
++                            mServiceLock.writeLock().unlock();
++                        }
++                    } else {
++                        try {
++                            mServiceLock.readLock().lock();
++                            if (mService == null) {
++                                if (VDBG) Log.d(TAG, "Binding service...");
++                                doBind();
++                            }
++                        } catch (Exception re) {
++                            Log.e(TAG, "", re);
++                        } finally {
++                            mServiceLock.readLock().unlock();
++                        }
++                    }
++                }
++            };
++
++    /**
++     * Create a BluetoothHearingAid proxy object for interacting with the local
++     * Bluetooth Hearing Aid service.
++     */
++    /*package*/ BluetoothHearingAid(Context context, ServiceListener l) {
++        mContext = context;
++        mServiceListener = l;
++        mAdapter = BluetoothAdapter.getDefaultAdapter();
++        IBluetoothManager mgr = mAdapter.getBluetoothManager();
++        if (mgr != null) {
++            try {
++                mgr.registerStateChangeCallback(mBluetoothStateChangeCallback);
++            } catch (RemoteException e) {
++                Log.e(TAG, "", e);
++            }
++        }
++
++        doBind();
++    }
++
++    boolean doBind() {
++        Intent intent = new Intent(IBluetoothHearingAid.class.getName());
++        ComponentName comp = intent.resolveSystemService(mContext.getPackageManager(), 0);
++        intent.setComponent(comp);
++        if (comp == null || !mContext.bindServiceAsUser(intent, mConnection, 0,
++                android.os.Process.myUserHandle())) {
++            Log.e(TAG, "Could not bind to Bluetooth Hearing Aid Service with " + intent);
++            return false;
++        }
++        return true;
++    }
++
++    /*package*/ void close() {
++        mServiceListener = null;
++        IBluetoothManager mgr = mAdapter.getBluetoothManager();
++        if (mgr != null) {
++            try {
++                mgr.unregisterStateChangeCallback(mBluetoothStateChangeCallback);
++            } catch (Exception e) {
++                Log.e(TAG, "", e);
++            }
++        }
++
++        try {
++            mServiceLock.writeLock().lock();
++            if (mService != null) {
++                mService = null;
++                mContext.unbindService(mConnection);
++            }
++        } catch (Exception re) {
++            Log.e(TAG, "", re);
++        } finally {
++            mServiceLock.writeLock().unlock();
++        }
++    }
++
++    @Override
++    public void finalize() {
++        // The empty finalize needs to be kept or the
++        // cts signature tests would fail.
++    }
++
++    /**
++     * Initiate connection to a profile of the remote bluetooth device.
++     *
++     * <p> Currently, the system supports only 1 connection to the
++     * Hearing Aid profile. The API will automatically disconnect connected
++     * devices before connecting.
++     *
++     * <p> This API returns false in scenarios like the profile on the
++     * device is already connected or Bluetooth is not turned on.
++     * When this API returns true, it is guaranteed that
++     * connection state intent for the profile will be broadcasted with
++     * the state. Users can get the connection state of the profile
++     * from this intent.
++     *
++     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN}
++     * permission.
++     *
++     * @param device Remote Bluetooth Device
++     * @return false on immediate error, true otherwise
++     * @hide
++     */
++    public boolean connect(BluetoothDevice device) {
++        if (DBG) log("connect(" + device + ")");
++        try {
++            mServiceLock.readLock().lock();
++            if (mService != null && isEnabled() && isValidDevice(device)) {
++                return mService.connect(device);
++            }
++            if (mService == null) Log.w(TAG, "Proxy not attached to service");
++            return false;
++        } catch (RemoteException e) {
++            Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
++            return false;
++        } finally {
++            mServiceLock.readLock().unlock();
++        }
++    }
++
++    /**
++     * Initiate disconnection from a profile
++     *
++     * <p> This API will return false in scenarios like the profile on the
++     * Bluetooth device is not in connected state etc. When this API returns,
++     * true, it is guaranteed that the connection state change
++     * intent will be broadcasted with the state. Users can get the
++     * disconnection state of the profile from this intent.
++     *
++     * <p> If the disconnection is initiated by a remote device, the state
++     * will transition from {@link #STATE_CONNECTED} to
++     * {@link #STATE_DISCONNECTED}. If the disconnect is initiated by the
++     * host (local) device the state will transition from
++     * {@link #STATE_CONNECTED} to state {@link #STATE_DISCONNECTING} to
++     * state {@link #STATE_DISCONNECTED}. The transition to
++     * {@link #STATE_DISCONNECTING} can be used to distinguish between the
++     * two scenarios.
++     *
++     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN}
++     * permission.
++     *
++     * @param device Remote Bluetooth Device
++     * @return false on immediate error, true otherwise
++     * @hide
++     */
++    public boolean disconnect(BluetoothDevice device) {
++        if (DBG) log("disconnect(" + device + ")");
++        try {
++            mServiceLock.readLock().lock();
++            if (mService != null && isEnabled() && isValidDevice(device)) {
++                return mService.disconnect(device);
++            }
++            if (mService == null) Log.w(TAG, "Proxy not attached to service");
++            return false;
++        } catch (RemoteException e) {
++            Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
++            return false;
++        } finally {
++            mServiceLock.readLock().unlock();
++        }
++    }
++
++    /**
++     * {@inheritDoc}
++     */
++    @Override
++    public List<BluetoothDevice> getConnectedDevices() {
++        if (VDBG) log("getConnectedDevices()");
++        try {
++            mServiceLock.readLock().lock();
++            if (mService != null && isEnabled()) {
++                return mService.getConnectedDevices();
++            }
++            if (mService == null) Log.w(TAG, "Proxy not attached to service");
++            return new ArrayList<BluetoothDevice>();
++        } catch (RemoteException e) {
++            Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
++            return new ArrayList<BluetoothDevice>();
++        } finally {
++            mServiceLock.readLock().unlock();
++        }
++    }
++
++    /**
++     * {@inheritDoc}
++     */
++    @Override
++    public List<BluetoothDevice> getDevicesMatchingConnectionStates(int[] states) {
++        if (VDBG) log("getDevicesMatchingStates()");
++        try {
++            mServiceLock.readLock().lock();
++            if (mService != null && isEnabled()) {
++                return mService.getDevicesMatchingConnectionStates(states);
++            }
++            if (mService == null) Log.w(TAG, "Proxy not attached to service");
++            return new ArrayList<BluetoothDevice>();
++        } catch (RemoteException e) {
++            Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
++            return new ArrayList<BluetoothDevice>();
++        } finally {
++            mServiceLock.readLock().unlock();
++        }
++    }
++
++    /**
++     * {@inheritDoc}
++     */
++    @Override
++    public int getConnectionState(BluetoothDevice device) {
++        if (VDBG) log("getState(" + device + ")");
++        try {
++            mServiceLock.readLock().lock();
++            if (mService != null && isEnabled()
++                    && isValidDevice(device)) {
++                return mService.getConnectionState(device);
++            }
++            if (mService == null) Log.w(TAG, "Proxy not attached to service");
++            return BluetoothProfile.STATE_DISCONNECTED;
++        } catch (RemoteException e) {
++            Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
++            return BluetoothProfile.STATE_DISCONNECTED;
++        } finally {
++            mServiceLock.readLock().unlock();
++        }
++    }
++
++    /**
++     * Set priority of the profile
++     *
++     * <p> The device should already be paired.
++     * Priority can be one of {@link #PRIORITY_ON} orgetBluetoothManager
++     * {@link #PRIORITY_OFF},
++     *
++     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN}
++     * permission.
++     *
++     * @param device Paired bluetooth device
++     * @param priority
++     * @return true if priority is set, false on error
++     * @hide
++     */
++    public boolean setPriority(BluetoothDevice device, int priority) {
++        if (DBG) log("setPriority(" + device + ", " + priority + ")");
++        try {
++            mServiceLock.readLock().lock();
++            if (mService != null && isEnabled()
++                    && isValidDevice(device)) {
++                if (priority != BluetoothProfile.PRIORITY_OFF
++                        && priority != BluetoothProfile.PRIORITY_ON) {
++                    return false;
++                }
++                return mService.setPriority(device, priority);
++            }
++            if (mService == null) Log.w(TAG, "Proxy not attached to service");
++            return false;
++        } catch (RemoteException e) {
++            Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
++            return false;
++        } finally {
++            mServiceLock.readLock().unlock();
++        }
++    }
++
++    /**
++     * Get the priority of the profile.
++     *
++     * <p> The priority can be any of:
++     * {@link #PRIORITY_AUTO_CONNECT}, {@link #PRIORITY_OFF},
++     * {@link #PRIORITY_ON}, {@link #PRIORITY_UNDEFINED}
++     *
++     * @param device Bluetooth device
++     * @return priority of the device
++     * @hide
++     */
++    @RequiresPermission(Manifest.permission.BLUETOOTH)
++    public int getPriority(BluetoothDevice device) {
++        if (VDBG) log("getPriority(" + device + ")");
++        try {
++            mServiceLock.readLock().lock();
++            if (mService != null && isEnabled()
++                    && isValidDevice(device)) {
++                return mService.getPriority(device);
++            }
++            if (mService == null) Log.w(TAG, "Proxy not attached to service");
++            return BluetoothProfile.PRIORITY_OFF;
++        } catch (RemoteException e) {
++            Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
++            return BluetoothProfile.PRIORITY_OFF;
++        } finally {
++            mServiceLock.readLock().unlock();
++        }
++    }
++
++    /**
++     * Helper for converting a state to a string.
++     *
++     * For debug use only - strings are not internationalized.
++     *
++     * @hide
++     */
++    public static String stateToString(int state) {
++        switch (state) {
++            case STATE_DISCONNECTED:
++                return "disconnected";
++            case STATE_CONNECTING:
++                return "connecting";
++            case STATE_CONNECTED:
++                return "connected";
++            case STATE_DISCONNECTING:
++                return "disconnecting";
++            case STATE_PLAYING:
++                return "playing";
++            case STATE_NOT_PLAYING:
++                return "not playing";
++            default:
++                return "<unknown state " + state + ">";
++        }
++    }
++
++    private final ServiceConnection mConnection = new ServiceConnection() {
++        public void onServiceConnected(ComponentName className, IBinder service) {
++            if (DBG) Log.d(TAG, "Proxy object connected");
++            try {
++                mServiceLock.writeLock().lock();
++                mService = IBluetoothHearingAid.Stub.asInterface(Binder.allowBlocking(service));
++            } finally {
++                mServiceLock.writeLock().unlock();
++            }
++
++            if (mServiceListener != null) {
++                mServiceListener.onServiceConnected(BluetoothProfile.HEARING_AID,
++                                                    BluetoothHearingAid.this);
++            }
++        }
++
++        public void onServiceDisconnected(ComponentName className) {
++            if (DBG) Log.d(TAG, "Proxy object disconnected");
++            try {
++                mServiceLock.writeLock().lock();
++                mService = null;
++            } finally {
++                mServiceLock.writeLock().unlock();
++            }
++            if (mServiceListener != null) {
++                mServiceListener.onServiceDisconnected(BluetoothProfile.HEARING_AID);
++            }
++        }
++    };
++
++    private boolean isEnabled() {
++        if (mAdapter.getState() == BluetoothAdapter.STATE_ON) return true;
++        return false;
++    }
++
++    private boolean isValidDevice(BluetoothDevice device) {
++        if (device == null) return false;
++
++        if (BluetoothAdapter.checkBluetoothAddress(device.getAddress())) return true;
++        return false;
++    }
++
++    private static void log(String msg) {
++        Log.d(TAG, msg);
++    }
++}
+diff --git a/core/java/android/bluetooth/BluetoothProfile.java b/core/java/android/bluetooth/BluetoothProfile.java
+index 46a230b50605f..9ac0c22b852f6 100644
+--- a/core/java/android/bluetooth/BluetoothProfile.java
++++ b/core/java/android/bluetooth/BluetoothProfile.java
+@@ -158,6 +158,13 @@ public interface BluetoothProfile {
+      */
+     public static final int HID_DEVICE = 19;
+ 
++    /**
++     * Hearing Aid Device
++     *
++     * @hide
++     */
++    public static final int HEARING_AID = 20;
++
+     /**
+      * Max profile ID. This value should be updated whenever a new profile is added to match
+      * the largest value assigned to a profile.
+diff --git a/core/java/android/bluetooth/BluetoothUuid.java b/core/java/android/bluetooth/BluetoothUuid.java
+index 76cb3f5b548ed..c40d270371ddd 100644
+--- a/core/java/android/bluetooth/BluetoothUuid.java
++++ b/core/java/android/bluetooth/BluetoothUuid.java
+@@ -79,6 +79,8 @@ public final class BluetoothUuid {
+             ParcelUuid.fromString("00001132-0000-1000-8000-00805F9B34FB");
+     public static final ParcelUuid SAP =
+             ParcelUuid.fromString("0000112D-0000-1000-8000-00805F9B34FB");
++    public static final ParcelUuid HearingAid =
++            ParcelUuid.fromString("7312C48F-22CC-497F-85FD-A0616A3B9E05");
+ 
+     public static final ParcelUuid BASE_UUID =
+             ParcelUuid.fromString("00000000-0000-1000-8000-00805F9B34FB");
+diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
+index 16e7f30e9c76f..841f0e0af6135 100644
+--- a/core/java/android/provider/Settings.java
++++ b/core/java/android/provider/Settings.java
+@@ -9379,6 +9379,9 @@ public final class Settings {
+         /** {@hide} */
+         public static final String
+                 BLUETOOTH_PAN_PRIORITY_PREFIX = "bluetooth_pan_priority_";
++        /** {@hide} */
++        public static final String
++                BLUETOOTH_HEARING_AID_PRIORITY_PREFIX = "bluetooth_hearing_aid_priority_";
+ 
+         /**
+          * Activity manager specific settings.
+@@ -9734,6 +9737,14 @@ public final class Settings {
+             return BLUETOOTH_PAN_PRIORITY_PREFIX + address.toUpperCase(Locale.ROOT);
+         }
+ 
++        /**
++         * Get the key that retrieves a bluetooth hearing aid priority.
++         * @hide
++         */
++        public static final String getBluetoothHearingAidPriorityKey(String address) {
++            return BLUETOOTH_HEARING_AID_PRIORITY_PREFIX + address.toUpperCase(Locale.ROOT);
++        }
++
+         /**
+          * Get the key that retrieves a bluetooth map priority.
+          * @hide
+diff --git a/core/proto/android/providers/settings.proto b/core/proto/android/providers/settings.proto
+index 764288c51b664..921743d7dc935 100644
+--- a/core/proto/android/providers/settings.proto
++++ b/core/proto/android/providers/settings.proto
+@@ -383,8 +383,9 @@ message GlobalSettingsProto {
+     optional SettingProto enable_cache_quota_calculation = 339;
+     optional SettingProto enable_deletion_helper_no_threshold_toggle = 340;
+     optional SettingProto notification_snooze_options = 341;
++    optional SettingProto bluetooth_hearing_aid_priority_prefix = 342;
+ 
+-    // Next tag = 342;
++    // Next tag = 343;
+ }
+ 
+ message SecureSettingsProto {
+diff --git a/core/res/AndroidManifest.xml b/core/res/AndroidManifest.xml
+index fef7b233b0f4c..8a1d75194a3b8 100644
+--- a/core/res/AndroidManifest.xml
++++ b/core/res/AndroidManifest.xml
+@@ -170,6 +170,10 @@
+         android:name="android.bluetooth.headsetclient.profile.action.RESULT" />
+     <protected-broadcast
+         android:name="android.bluetooth.headsetclient.profile.action.LAST_VTAG" />
++    <protected-broadcast
++        android:name="android.bluetooth.hearingaid.profile.action.CONNECTION_STATE_CHANGED" />
++    <protected-broadcast
++        android:name="android.bluetooth.hearingaid.profile.action.PLAYING_STATE_CHANGED" />
+     <protected-broadcast
+         android:name="android.bluetooth.a2dp.profile.action.CONNECTION_STATE_CHANGED" />
+     <protected-broadcast
+diff --git a/packages/SettingsLib/res/values/strings.xml b/packages/SettingsLib/res/values/strings.xml
+index 4bb16ffe597e4..67134b251208c 100644
+--- a/packages/SettingsLib/res/values/strings.xml
++++ b/packages/SettingsLib/res/values/strings.xml
+@@ -177,6 +177,9 @@
+     <!-- Bluetooth settings. Similar to bluetooth_profile_a2dp_high_quality, but used when the device supports high quality audio but we don't know which codec that will be used. -->
+     <string name="bluetooth_profile_a2dp_high_quality_unknown_codec">HD audio</string>
+ 
++    <!-- Bluetooth settings.  The user-visible string that is used whenever referring to the Hearing Aid profile. -->
++    <string name="bluetooth_profile_hearing_aid">Hearing Aid</string>
++
+     <!-- Bluetooth settings.  Connection options screen.  The summary for the A2DP checkbox preference when A2DP is connected. -->
+     <string name="bluetooth_a2dp_profile_summary_connected">Connected to media audio</string>
+     <!-- Bluetooth settings.  Connection options screen.  The summary for the headset checkbox preference when headset is connected. -->
+@@ -195,6 +198,8 @@
+     <string name="bluetooth_pan_user_profile_summary_connected">Connected to device for Internet access</string>
+     <!-- Bluetooth settings. Connection options screen. The summary for the checkbox preference when PAN is connected (NAP role). [CHAR LIMIT=25]-->
+     <string name="bluetooth_pan_nap_profile_summary_connected">Sharing local Internet connection with device</string>
++    <!-- Bluetooth settings.  Connection options screen.  The summary for the Hearing Aid checkbox preference when Hearing Aid is connected. -->
++    <string name="bluetooth_hearing_aid_profile_summary_connected">Connected to Hearing Aid</string>
+ 
+     <!-- Bluetooth settings. Connection options screen. The summary
+          for the PAN checkbox preference that describes how checking it
+@@ -214,6 +219,8 @@
+          for the HID checkbox preference that describes how checking it
+          will set the HID profile as preferred. -->
+     <string name="bluetooth_hid_profile_summary_use_for">Use for input</string>
++    <!-- Bluetooth settings.  Connection options screen.  The summary for the Hearing Aid checkbox preference that describes how checking it will set the Hearing Aid profile as preferred. -->
++    <string name="bluetooth_hearing_aid_profile_summary_use_for">Use for Hearing Aid</string>
+ 
+     <!-- Button text for accepting an incoming pairing request. [CHAR LIMIT=20] -->
+     <string name="bluetooth_pairing_accept">Pair</string>
+diff --git a/packages/SettingsLib/src/com/android/settingslib/bluetooth/A2dpProfile.java b/packages/SettingsLib/src/com/android/settingslib/bluetooth/A2dpProfile.java
+index 764c5922cc64e..92fa5fdd5e08a 100755
+--- a/packages/SettingsLib/src/com/android/settingslib/bluetooth/A2dpProfile.java
++++ b/packages/SettingsLib/src/com/android/settingslib/bluetooth/A2dpProfile.java
+@@ -38,7 +38,7 @@ import java.util.List;
+ 
+ public class A2dpProfile implements LocalBluetoothProfile {
+     private static final String TAG = "A2dpProfile";
+-    private static boolean V = false;
++    private static boolean V = true;
+ 
+     private Context mContext;
+ 
+diff --git a/packages/SettingsLib/src/com/android/settingslib/bluetooth/HearingAidProfile.java b/packages/SettingsLib/src/com/android/settingslib/bluetooth/HearingAidProfile.java
+new file mode 100644
+index 0000000000000..e57e10acdfcea
+--- /dev/null
++++ b/packages/SettingsLib/src/com/android/settingslib/bluetooth/HearingAidProfile.java
+@@ -0,0 +1,216 @@
++/*
++ * Copyright (C) 2011 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.settingslib.bluetooth;
++
++import android.bluetooth.BluetoothHearingAid;
++import android.bluetooth.BluetoothAdapter;
++import android.bluetooth.BluetoothClass;
++import android.bluetooth.BluetoothCodecConfig;
++import android.bluetooth.BluetoothCodecStatus;
++import android.bluetooth.BluetoothDevice;
++import android.bluetooth.BluetoothProfile;
++import android.bluetooth.BluetoothUuid;
++import android.content.Context;
++import android.os.ParcelUuid;
++import android.util.Log;
++
++import com.android.internal.annotations.VisibleForTesting;
++import com.android.settingslib.R;
++
++import java.util.ArrayList;
++import java.util.Arrays;
++import java.util.List;
++
++public class HearingAidProfile implements LocalBluetoothProfile {
++    private static final String TAG = "HearingAidProfile";
++    private static boolean V = true;
++
++    private Context mContext;
++
++    private BluetoothHearingAid mService;
++    private boolean mIsProfileReady;
++
++    private final LocalBluetoothAdapter mLocalAdapter;
++    private final CachedBluetoothDeviceManager mDeviceManager;
++
++    static final ParcelUuid[] SINK_UUIDS = {
++        BluetoothUuid.AudioSink,
++        BluetoothUuid.AdvAudioDist,
++    };
++
++    static final String NAME = "HearingAid";
++    private final LocalBluetoothProfileManager mProfileManager;
++
++    // Order of this profile in device profiles list
++    private static final int ORDINAL = 1;
++
++    // These callbacks run on the main thread.
++    private final class HearingAidServiceListener
++            implements BluetoothProfile.ServiceListener {
++
++        public void onServiceConnected(int profile, BluetoothProfile proxy) {
++            if (V) Log.d(TAG,"Bluetooth service connected");
++            mService = (BluetoothHearingAid) proxy;
++            // We just bound to the service, so refresh the UI for any connected HearingAid devices.
++            List<BluetoothDevice> deviceList = mService.getConnectedDevices();
++            while (!deviceList.isEmpty()) {
++                BluetoothDevice nextDevice = deviceList.remove(0);
++                CachedBluetoothDevice device = mDeviceManager.findDevice(nextDevice);
++                // we may add a new device here, but generally this should not happen
++                if (device == null) {
++                    Log.w(TAG, "HearingAidProfile found new device: " + nextDevice);
++                    device = mDeviceManager.addDevice(mLocalAdapter, mProfileManager, nextDevice);
++                }
++                device.onProfileStateChanged(HearingAidProfile.this, BluetoothProfile.STATE_CONNECTED);
++                device.refresh();
++            }
++            mIsProfileReady=true;
++        }
++
++        public void onServiceDisconnected(int profile) {
++            if (V) Log.d(TAG,"Bluetooth service disconnected");
++            mIsProfileReady=false;
++        }
++    }
++
++    public boolean isProfileReady() {
++        return mIsProfileReady;
++    }
++
++    HearingAidProfile(Context context, LocalBluetoothAdapter adapter,
++            CachedBluetoothDeviceManager deviceManager,
++            LocalBluetoothProfileManager profileManager) {
++        mContext = context;
++        mLocalAdapter = adapter;
++        mDeviceManager = deviceManager;
++        mProfileManager = profileManager;
++        mLocalAdapter.getProfileProxy(context, new HearingAidServiceListener(),
++                BluetoothProfile.HEARING_AID);
++    }
++
++    public boolean isConnectable() {
++        return true;
++    }
++
++    public boolean isAutoConnectable() {
++        return true;
++    }
++
++    public List<BluetoothDevice> getConnectedDevices() {
++        if (mService == null) return new ArrayList<BluetoothDevice>(0);
++        return mService.getDevicesMatchingConnectionStates(
++              new int[] {BluetoothProfile.STATE_CONNECTED,
++                         BluetoothProfile.STATE_CONNECTING,
++                         BluetoothProfile.STATE_DISCONNECTING});
++    }
++
++    public boolean connect(BluetoothDevice device) {
++        if (mService == null) return false;
++        List<BluetoothDevice> sinks = getConnectedDevices();
++        if (sinks != null) {
++            for (BluetoothDevice sink : sinks) {
++                if (sink.equals(device)) {
++                    Log.w(TAG, "Connecting to device " + device + " : disconnect skipped");
++                    continue;
++                }
++                mService.disconnect(sink);
++            }
++        }
++        return mService.connect(device);
++    }
++
++    public boolean disconnect(BluetoothDevice device) {
++        if (mService == null) return false;
++        // Downgrade priority as user is disconnecting the headset.
++        if (mService.getPriority(device) > BluetoothProfile.PRIORITY_ON){
++            mService.setPriority(device, BluetoothProfile.PRIORITY_ON);
++        }
++        return mService.disconnect(device);
++    }
++
++    public int getConnectionStatus(BluetoothDevice device) {
++        if (mService == null) {
++            return BluetoothProfile.STATE_DISCONNECTED;
++        }
++        return mService.getConnectionState(device);
++    }
++
++    public boolean isPreferred(BluetoothDevice device) {
++        if (mService == null) return false;
++        return mService.getPriority(device) > BluetoothProfile.PRIORITY_OFF;
++    }
++
++    public int getPreferred(BluetoothDevice device) {
++        if (mService == null) return BluetoothProfile.PRIORITY_OFF;
++        return mService.getPriority(device);
++    }
++
++    public void setPreferred(BluetoothDevice device, boolean preferred) {
++        if (mService == null) return;
++        if (preferred) {
++            if (mService.getPriority(device) < BluetoothProfile.PRIORITY_ON) {
++                mService.setPriority(device, BluetoothProfile.PRIORITY_ON);
++            }
++        } else {
++            mService.setPriority(device, BluetoothProfile.PRIORITY_OFF);
++        }
++    }
++
++    public String toString() {
++        return NAME;
++    }
++
++    public int getOrdinal() {
++        return ORDINAL;
++    }
++
++    public int getNameResource(BluetoothDevice device) {
++        return R.string.bluetooth_profile_hearing_aid;
++    }
++
++    public int getSummaryResourceForDevice(BluetoothDevice device) {
++        int state = getConnectionStatus(device);
++        switch (state) {
++            case BluetoothProfile.STATE_DISCONNECTED:
++                return R.string.bluetooth_hearing_aid_profile_summary_use_for;
++
++            case BluetoothProfile.STATE_CONNECTED:
++                return R.string.bluetooth_hearing_aid_profile_summary_connected;
++
++            default:
++                return Utils.getConnectionStateSummary(state);
++        }
++    }
++
++    public int getDrawableResource(BluetoothClass btClass) {
++        //TODO: get an icon for hearing aid. For now reuse hadphones
++        return R.drawable.ic_bt_headphones_a2dp;
++    }
++
++    protected void finalize() {
++        if (V) Log.d(TAG, "finalize()");
++        if (mService != null) {
++            try {
++                BluetoothAdapter.getDefaultAdapter().closeProfileProxy(BluetoothProfile.HEARING_AID,
++                                                                       mService);
++                mService = null;
++            }catch (Throwable t) {
++                Log.w(TAG, "Error cleaning up Hearing Aid proxy", t);
++            }
++        }
++    }
++}
+diff --git a/packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfileManager.java b/packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfileManager.java
+index 9cda669379ddc..8be5687933cf5 100755
+--- a/packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfileManager.java
++++ b/packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfileManager.java
+@@ -21,6 +21,7 @@ import android.bluetooth.BluetoothA2dpSink;
+ import android.bluetooth.BluetoothDevice;
+ import android.bluetooth.BluetoothHeadset;
+ import android.bluetooth.BluetoothHeadsetClient;
++import android.bluetooth.BluetoothHearingAid;
+ import android.bluetooth.BluetoothHidHost;
+ import android.bluetooth.BluetoothMap;
+ import android.bluetooth.BluetoothMapClient;
+@@ -90,6 +91,7 @@ public class LocalBluetoothProfileManager {
+     private final PbapServerProfile mPbapProfile;
+     private final boolean mUsePbapPce;
+     private final boolean mUseMapClient;
++    private HearingAidProfile mHearingAidProfile;
+ 
+     /**
+      * Mapping from profile name, e.g. "HEADSET" to profile object.
+@@ -140,10 +142,13 @@ public class LocalBluetoothProfileManager {
+                     BluetoothMap.ACTION_CONNECTION_STATE_CHANGED);
+         }
+ 
+-       //Create PBAP server profile, but do not add it to list of profiles
+-       // as we do not need to monitor the profile as part of profile list
++        //Create PBAP server profile, but do not add it to list of profiles
++        // as we do not need to monitor the profile as part of profile list
+         mPbapProfile = new PbapServerProfile(context);
+ 
++        mHearingAidProfile = new HearingAidProfile(mContext, mLocalAdapter, mDeviceManager, this);
++        addProfile(mHearingAidProfile, HearingAidProfile.NAME,
++                   BluetoothHearingAid.ACTION_CONNECTION_STATE_CHANGED);
+         if (DEBUG) Log.d(TAG, "LocalBluetoothProfileManager construction complete");
+     }
+ 
+@@ -251,6 +256,18 @@ public class LocalBluetoothProfileManager {
+                 "Warning: PBAP Client profile was previously added but the UUID is now missing.");
+         }
+ 
++        //Hearing Aid Client
++        if (BluetoothUuid.isUuidPresent(uuids, BluetoothUuid.HearingAid)) {
++            if (mHearingAidProfile == null) {
++                if(DEBUG) Log.d(TAG, "Adding local Hearing Aid profile");
++                mHearingAidProfile = new HearingAidProfile(mContext, mLocalAdapter, mDeviceManager, this);
++                addProfile(mHearingAidProfile, HearingAidProfile.NAME,
++                        BluetoothHearingAid.ACTION_CONNECTION_STATE_CHANGED);
++            }
++        } else if (mHearingAidProfile != null) {
++            Log.w(TAG, "Warning: Hearing Aid profile was previously added but the UUID is now missing.");
++        }
++
+         mEventManager.registerProfileIntentReceiver();
+ 
+         // There is no local SDP record for HID and Settings app doesn't control PBAP Server.
+@@ -413,6 +430,10 @@ public class LocalBluetoothProfileManager {
+         return mMapClientProfile;
+     }
+ 
++    public HearingAidProfile getHearingAidProfile() {
++        return mHearingAidProfile;
++    }
++
+     /**
+      * Fill in a list of LocalBluetoothProfile objects that are supported by
+      * the local device and the remote device.
+@@ -507,6 +528,12 @@ public class LocalBluetoothProfileManager {
+             removedProfiles.add(mPbapProfile);
+         }
+ 
++        if (BluetoothUuid.isUuidPresent(uuids, BluetoothUuid.HearingAid) &&
++            mHearingAidProfile != null) {
++            profiles.add(mHearingAidProfile);
++            removedProfiles.remove(mHearingAidProfile);
++        }
++
+         if (DEBUG) {
+             Log.d(TAG,"New Profiles" + profiles.toString());
+         }
+diff --git a/packages/SettingsLib/src/com/android/settingslib/bluetooth/Utils.java b/packages/SettingsLib/src/com/android/settingslib/bluetooth/Utils.java
+index 0ee1dad9d7447..3eca06b1d2861 100644
+--- a/packages/SettingsLib/src/com/android/settingslib/bluetooth/Utils.java
++++ b/packages/SettingsLib/src/com/android/settingslib/bluetooth/Utils.java
+@@ -14,7 +14,7 @@ import com.android.settingslib.graph.BluetoothDeviceLayerDrawable;
+ import java.util.List;
+ 
+ public class Utils {
+-    public static final boolean V = false; // verbose logging
++    public static final boolean V = true; // verbose logging
+     public static final boolean D = true;  // regular logging
+ 
+     private static ErrorListener sErrorListener;
+diff --git a/packages/SettingsProvider/src/com/android/providers/settings/SettingsProtoDumpUtil.java b/packages/SettingsProvider/src/com/android/providers/settings/SettingsProtoDumpUtil.java
+index 41b205bc5761e..e931496f78df5 100644
+--- a/packages/SettingsProvider/src/com/android/providers/settings/SettingsProtoDumpUtil.java
++++ b/packages/SettingsProvider/src/com/android/providers/settings/SettingsProtoDumpUtil.java
+@@ -800,6 +800,9 @@ class SettingsProtoDumpUtil {
+         dumpSetting(s, p,
+                 Settings.Global.BLUETOOTH_PAN_PRIORITY_PREFIX,
+                 GlobalSettingsProto.BLUETOOTH_PAN_PRIORITY_PREFIX);
++            dumpSetting(s, p,
++                Settings.Global.BLUETOOTH_HEARING_AID_PRIORITY_PREFIX,
++                GlobalSettingsProto.BLUETOOTH_HEARING_AID_PRIORITY_PREFIX);
+         dumpSetting(s, p,
+                 Settings.Global.ACTIVITY_MANAGER_CONSTANTS,
+                 GlobalSettingsProto.ACTIVITY_MANAGER_CONSTANTS);
+-- 
+2.15.0.448.gf294e3d99a-goog
+

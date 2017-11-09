@@ -129,6 +129,7 @@ LOCAL_SRC_FILES += \
 	../../system/bt/binder/android/bluetooth/IBluetoothHeadsetPhone.aidl \
 	../../system/bt/binder/android/bluetooth/IBluetoothHealth.aidl \
 	../../system/bt/binder/android/bluetooth/IBluetoothHealthCallback.aidl \
+	../../system/bt/binder/android/bluetooth/IBluetoothHearingAid.aidl \
 	../../system/bt/binder/android/bluetooth/IBluetoothHidHost.aidl \
 	../../system/bt/binder/android/bluetooth/IBluetoothPan.aidl \
 	../../system/bt/binder/android/bluetooth/IBluetoothManager.aidl \

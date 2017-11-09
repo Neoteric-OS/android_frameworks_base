@@ -1,0 +1,75 @@
+From 7e5f9cf37520e48f5089bb632dc8f76aa9d67ae5 Mon Sep 17 00:00:00 2001
+From: Jakub Pawlowski <jpawlowski@google.com>
+Date: Wed, 15 Nov 2017 14:50:43 -0800
+Subject: [PATCH 2/2] Add getProfileParentId (1/2)
+
+Bluetooth service needs to natively access id of parent profile. Add
+method exposing it.
+
+Test: cts-tradefed run cts-dev -m DevicePolicyManager --test
+com.android.cts.devicepolicy.ManagedProfileTest#testBluetooth
+Bug: 69284968
+Change-Id: I697906f2959b0736c1d3cc6af7560c27d77ce11b
+---
+ core/java/android/os/IUserManager.aidl                      |  4 ++++
+ .../android/settingslib/bluetooth/HearingAidProfile.java    |  4 ----
+ .../core/java/com/android/server/pm/UserManagerService.java | 13 +++++++++++++
+ 3 files changed, 17 insertions(+), 4 deletions(-)
+
+diff --git a/core/java/android/os/IUserManager.aidl b/core/java/android/os/IUserManager.aidl
+index 5d96fd35a62e1..0620fa3dd084e 100644
+--- a/core/java/android/os/IUserManager.aidl
++++ b/core/java/android/os/IUserManager.aidl
+@@ -35,6 +35,10 @@ interface IUserManager {
+      * DO NOT MOVE - UserManager.h depends on the ordering of this function.
+      */
+     int getCredentialOwnerProfile(int userHandle);
++    int getProfileParentId(int userHandle);
++    /*
++     * END OF DO NOT MOVE
++     */
+ 
+     UserInfo createUser(in String name, int flags);
+     UserInfo createProfileForUser(in String name, int flags, int userHandle,
+diff --git a/packages/SettingsLib/src/com/android/settingslib/bluetooth/HearingAidProfile.java b/packages/SettingsLib/src/com/android/settingslib/bluetooth/HearingAidProfile.java
+index e57e10acdfcea..48ab0bce9fb1c 100644
+--- a/packages/SettingsLib/src/com/android/settingslib/bluetooth/HearingAidProfile.java
++++ b/packages/SettingsLib/src/com/android/settingslib/bluetooth/HearingAidProfile.java
+@@ -47,10 +47,6 @@ public class HearingAidProfile implements LocalBluetoothProfile {
+     private final LocalBluetoothAdapter mLocalAdapter;
+     private final CachedBluetoothDeviceManager mDeviceManager;
+ 
+-    static final ParcelUuid[] SINK_UUIDS = {
+-        BluetoothUuid.AudioSink,
+-        BluetoothUuid.AdvAudioDist,
+-    };
+ 
+     static final String NAME = "HearingAid";
+     private final LocalBluetoothProfileManager mProfileManager;
+diff --git a/services/core/java/com/android/server/pm/UserManagerService.java b/services/core/java/com/android/server/pm/UserManagerService.java
+index 1152310116a05..dbf413f0415d9 100644
+--- a/services/core/java/com/android/server/pm/UserManagerService.java
++++ b/services/core/java/com/android/server/pm/UserManagerService.java
+@@ -717,6 +717,19 @@ public class UserManagerService extends IUserManager.Stub {
+         }
+     }
+ 
++    @Override
++    public int getProfileParentId(int userHandle) {
++        checkManageUsersPermission("get the profile parent");
++        synchronized (mUsersLock) {
++            UserInfo profileParent = getProfileParentLU(userHandle);
++            if (profileParent == null) {
++                return userHandle;
++            }
++
++            return profileParent.id;
++        }
++    }
++
+     private UserInfo getProfileParentLU(int userHandle) {
+         UserInfo profile = getUserInfoLU(userHandle);
+         if (profile == null) {
+-- 
+2.15.0.448.gf294e3d99a-goog
+

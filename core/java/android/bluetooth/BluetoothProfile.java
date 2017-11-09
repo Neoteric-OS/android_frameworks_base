@@ -159,6 +159,13 @@ public interface BluetoothProfile {
     public static final int HID_DEVICE = 19;
 
     /**
+     * Hearing Aid Device
+     *
+     * @hide
+     */
+    public static final int HEARING_AID = 20;
+
+    /**
      * Max profile ID. This value should be updated whenever a new profile is added to match
      * the largest value assigned to a profile.
      *
