@@ -1238,6 +1238,7 @@ public final class BluetoothAdapter {
      * @return true if the scan mode was set, false otherwise
      * @hide
      */
+    @SystemApi
     public boolean setScanMode(@ScanMode int mode, int duration) {
         if (getState() != STATE_ON) return false;
         try {
