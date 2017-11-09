@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7f6364d_780d334d",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-09T07:37:25Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "ea13df01_c224a465",
+      "range": {
+        "startLine": 54,
+        "startChar": 79,
+        "endLine": 54,
+        "endChar": 80
+      },
+      "revId": "1648474f9e8b689388b8412ea1ad3cd608a268de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bc39e59_805d75f9",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8ad6b13b_9acb61db",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-09T07:37:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bc39e59_805d75f9",
+      "range": {
+        "startLine": 58,
+        "startChar": 64,
+        "endLine": 58,
+        "endChar": 69
+      },
+      "revId": "1648474f9e8b689388b8412ea1ad3cd608a268de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4776a8c5_657871f9",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-09T07:18:08Z",
       "side": 1,
       "message": "Actually, because you\u0027re using shifts and \u0026s, is it not simply in \"native\" byte order?",
+      "range": {
+        "startLine": 60,
+        "startChar": 80,
+        "endLine": 60,
+        "endChar": 90
+      },
+      "revId": "1648474f9e8b689388b8412ea1ad3cd608a268de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c2430ad_e5cad644",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-09T07:37:25Z",
+      "side": 1,
+      "message": "Well actually yes. What I meant is that the first byte in the byte array is mapped to the 3rd highest logical byte in the long. I clarified the comment and removed the big endian wording which is confusing.",
+      "parentUuid": "4776a8c5_657871f9",
       "range": {
         "startLine": 60,
         "startChar": 80,
