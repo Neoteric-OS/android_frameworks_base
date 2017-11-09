@@ -615,6 +615,20 @@ public final class MediaMetadata implements Parcelable {
                 }
             };
 
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o instanceof MediaMetadata)) {
+            return false;
+        }
+
+        final MediaMetadata m = (MediaMetadata) o;
+
+        return getDescription().equals(m.getDescription);
+    }
+
     /**
      * Use to build MediaMetadata objects. The system defined metadata keys must
      * use the appropriate data type.
