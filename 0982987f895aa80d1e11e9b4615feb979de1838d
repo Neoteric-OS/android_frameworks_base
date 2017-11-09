@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5da8cdf8_5176b572",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-09T02:46:59Z",
+      "side": 1,
+      "message": "It probably makes comparison and masking much easier, though.  Seems fine to me (also it\u0027s private so can be changed).",
+      "parentUuid": "42e431fa_768730c4",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "0982987f895aa80d1e11e9b4615feb979de1838d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47dbe738_eb867c47",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 1
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "047b249b_d772142b",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-09T02:46:59Z",
+      "side": 1,
+      "message": "Takes an int8_t and converts to to a uint8_t (which is only expressable as a short or an int, in java).",
+      "parentUuid": "4e958427_843ac451",
+      "range": {
+        "startLine": 180,
+        "startChar": 38,
+        "endLine": 180,
+        "endChar": 52
+      },
+      "revId": "0982987f895aa80d1e11e9b4615feb979de1838d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfeb7154_d46d584d",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 1
@@ -105,6 +153,30 @@
       "writtenOn": "2017-11-08T16:26:31Z",
       "side": 1,
       "message": "should this always set the local bit?",
+      "range": {
+        "startLine": 243,
+        "startChar": 29,
+        "endLine": 243,
+        "endChar": 45
+      },
+      "revId": "0982987f895aa80d1e11e9b4615feb979de1838d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a9e4303_a35043f5",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-09T02:46:59Z",
+      "side": 1,
+      "message": "Yes, every random MAC should have isLocallyAssigned() be true.\n\nAlso, we are not permitted to make completely random MACs in other people\u0027s OUI space.  I recommend using the Android OUI space only, for now (\"DA-A1-19\").  (Or maybe make it take an OUI as input?)\n\n    http://standards-oui.ieee.org/cid/cid.txt\n\nDA-A1-19                      (hex)                         Google, Inc.                                 \nDAA119                        (base 16)                     Google, Inc.                                 \n                                                            1600 Amphitheatre Parkway                    \n                                                            Mountain View  CA  94043                     \n                                                            US",
+      "parentUuid": "043f4360_546525ae",
       "range": {
         "startLine": 243,
         "startChar": 29,
