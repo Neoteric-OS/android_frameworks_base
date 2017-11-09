@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea13df01_c224a465",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-09T07:18:08Z",
+      "side": 1,
+      "message": "No change required here, but I believe technically there are 24bit and 36bit OUIs.  But this is plenty fine for our purposes at this time.",
+      "range": {
+        "startLine": 54,
+        "startChar": 79,
+        "endLine": 54,
+        "endChar": 80
+      },
+      "revId": "1648474f9e8b689388b8412ea1ad3cd608a268de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bc39e59_805d75f9",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-09T07:18:08Z",
+      "side": 1,
+      "message": "just \"byte\" I think.",
+      "range": {
+        "startLine": 58,
+        "startChar": 64,
+        "endLine": 58,
+        "endChar": 69
+      },
+      "revId": "1648474f9e8b689388b8412ea1ad3cd608a268de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4776a8c5_657871f9",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-09T07:18:08Z",
+      "side": 1,
+      "message": "Actually, because you\u0027re using shifts and \u0026s, is it not simply in \"native\" byte order?",
+      "range": {
+        "startLine": 60,
+        "startChar": 80,
+        "endLine": 60,
+        "endChar": 90
+      },
+      "revId": "1648474f9e8b689388b8412ea1ad3cd608a268de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
