@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "bfeb7154_d46d584d",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-11-09T01:32:01Z",
+      "side": 1,
+      "message": "In l.165 we check bounds for the value ; why not here ?",
+      "range": {
+        "startLine": 221,
+        "startChar": 23,
+        "endLine": 221,
+        "endChar": 30
+      },
+      "revId": "0982987f895aa80d1e11e9b4615feb979de1838d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "043f4360_546525ae",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 1
@@ -87,6 +110,29 @@
         "startChar": 29,
         "endLine": 243,
         "endChar": 45
+      },
+      "revId": "0982987f895aa80d1e11e9b4615feb979de1838d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28f13e1f_722fb354",
+        "filename": "tests/net/java/android/net/MacAddressTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2017-11-09T01:32:01Z",
+      "side": 1,
+      "message": "s/universally/universal/",
+      "range": {
+        "startLine": 107,
+        "startChar": 21,
+        "endLine": 107,
+        "endChar": 32
       },
       "revId": "0982987f895aa80d1e11e9b4615feb979de1838d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
