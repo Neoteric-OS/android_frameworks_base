@@ -102,3 +102,29 @@ java_library {
     dxflags: ["--core-library"],
     installable: false,
 }
+
+python_defaults {
+    name: "base_default",
+    version: {
+        py2: {
+            enabled: true,
+            embedded_launcher: true,
+        },
+        py3: {
+            enabled: false,
+            embedded_launcher: false,
+        },
+    },
+}
+
+python_binary_host {
+    name: "fontchain_lint",
+    defaults: ["base_default"],
+    main: "tools/fonts/fontchain_lint.py",
+    srcs: [
+        "tools/fonts/fontchain_lint.py",
+    ],
+    libs: [
+        "fontTools",
+    ],
+}
