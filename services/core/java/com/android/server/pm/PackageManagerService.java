@@ -6746,19 +6746,46 @@ public class PackageManagerService extends IPackageManager.Stub
                             // was created, we need to clear it and re-ask the
                             // user their preference, if we're looking for an "always" type entry.
                             if (always && !pa.mPref.sameSet(query)) {
-                                Slog.i(TAG, "Result set changed, dropping preferred activity for "
-                                        + intent + " type " + resolvedType);
-                                if (DEBUG_PREFERRED) {
-                                    Slog.v(TAG, "Removing preferred activity since set changed "
-                                            + pa.mPref.mComponent);
+                                // prune any components belongs to un-installed packages
+                                // and check again
+                                boolean recovered = false;
+                                String[] setComponents = pa.mPref.mSetComponents;
+                                int cnCount = setComponents != null ? setComponents.length : 0;
+                                if (cnCount > N) {
+                                    ArrayList<ComponentName> validComponents = new ArrayList<>(N);
+                                    for (int cnIndex = 0; cnIndex  < cnCount; cnIndex++) {
+                                        PackageSetting pkgSetting = mSettings.getPackageLPr(pa.mPref.mSetPackages[cnIndex]);
+                                        if (pkgSetting != null && pkgSetting.getInstalled(userId)) {
+                                            validComponents.add(ComponentName.unflattenFromString(setComponents[cnIndex]));
+                                        }
+                                    }
+                                    if (validComponents.size() == N) {
+                                        ComponentName[] setComponent = validComponents.toArray(new ComponentName[0]);
+                                        PreferredActivity tmpPa = new PreferredActivity(pa, pa.mPref.mMatch,
+                                                setComponent, pa.mPref.mComponent, true);
+                                        if (tmpPa.mPref.sameSet(query)) {
+                                            pir.removeFilter(pa);
+                                            pir.addFilter(tmpPa);
+                                            changed = true;
+                                            recovered = true;
+                                        }
+                                    }
                                 }
-                                pir.removeFilter(pa);
-                                // Re-add the filter as a "last chosen" entry (!always)
-                                PreferredActivity lastChosen = new PreferredActivity(
-                                        pa, pa.mPref.mMatch, null, pa.mPref.mComponent, false);
-                                pir.addFilter(lastChosen);
-                                changed = true;
-                                return null;
+                                if(!recovered) {
+                                    Slog.i(TAG, "Result set changed, dropping preferred activity for "
+                                            + intent + " type " + resolvedType);
+                                    if (DEBUG_PREFERRED) {
+                                        Slog.v(TAG, "Removing preferred activity since set changed "
+                                                + pa.mPref.mComponent);
+                                    }
+                                    pir.removeFilter(pa);
+                                    // Re-add the filter as a "last chosen" entry (!always)
+                                    PreferredActivity lastChosen = new PreferredActivity(
+                                            pa, pa.mPref.mMatch, null, pa.mPref.mComponent, false);
+                                    pir.addFilter(lastChosen);
+                                    changed = true;
+                                    return null;
+                                }
                             }
 
                             // Yay! Either the set matched or we're looking for the last chosen
