@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "8f209c1e_80188298",
+        "filename": "telephony/java/com/android/ims/ImsSsData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1228381
+      },
+      "writtenOn": "2017-11-10T09:41:44Z",
+      "side": 1,
+      "message": "SsData.java is a simple class where as ImsSsData.java introduced here is a parcelable class which is passed as part of aidl interface.",
+      "parentUuid": "cd207203_dc31665d",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 63
+      },
+      "revId": "6913d790108ea7e436c5b83c92396765357ca98b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d179aa5_f39ee8e1",
         "filename": "telephony/java/com/android/ims/ImsUtInterface.java",
         "patchSetId": 1
