@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fa945bc_059ca618",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2017-11-10T18:30:34Z",
+      "side": 0,
+      "message": "not intentional",
+      "revId": "cd35c65b5b22313559364bed8506666b4dd9bedf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39acc953_d6601b53",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2017-11-10T18:30:34Z",
+      "side": 1,
+      "message": "see this as a discussion, there are question marks in this method. We could of course overlay ifaceTypes in combination with mCarrierTetheringSupported checks. There are some old bugfixes for verizon below (I believe) that adds the mobile types if missing from the config_tether_upstream_types.",
+      "revId": "abaac93a94dd356e53368a35d25228af83f0abce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
