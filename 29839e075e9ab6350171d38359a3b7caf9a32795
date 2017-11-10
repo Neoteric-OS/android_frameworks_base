@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b55a5b2_831638f7",
+        "filename": "media/java/android/media/MediaMetadata.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-11-10T00:25:05Z",
+      "side": 1,
+      "message": "(b1 !\u003d null || b2 !\u003d null) \u0026\u0026 (b1 \u003d\u003d null || !b1.sameAs(b2))",
+      "range": {
+        "startLine": 648,
+        "startChar": 24,
+        "endLine": 649,
+        "endChar": 60
+      },
+      "revId": "29839e075e9ab6350171d38359a3b7caf9a32795",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
