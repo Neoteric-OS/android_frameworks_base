@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27cfda4b_4839f481",
+        "filename": "media/java/android/media/MediaMetadata.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-11-10T07:01:12Z",
+      "side": 1,
+      "message": "Could you add javadoc to explain that this method doesn\u0027t compare the ratings and bitmaps?",
+      "revId": "7ba0d554e8714a2c4e2a97309c40ce9db2aee136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
