@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15a23ab5_27f4fc8c",
+        "filename": "media/java/android/media/MediaMetadata.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-11-10T05:49:46Z",
+      "side": 1,
+      "message": "Remove this.",
+      "range": {
+        "startLine": 637,
+        "startChar": 24,
+        "endLine": 637,
+        "endChar": 76
+      },
+      "revId": "da721cfad65938f7fb79f7a2cd470436d74c4711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "207587e2_c922ada2",
+        "filename": "media/java/android/media/MediaMetadata.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2017-11-10T05:49:46Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 643,
+        "startChar": 24,
+        "endLine": 643,
+        "endChar": 74
+      },
+      "revId": "da721cfad65938f7fb79f7a2cd470436d74c4711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
