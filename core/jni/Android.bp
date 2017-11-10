@@ -20,7 +20,7 @@ cc_library_shared {
 
         // necessary for Clang as the GL bindings need to turn
         // off a GCC warning that Clang doesn't know.
-        "-Wno-unknown-pragmas",
+        "-Wno-unknown-warning-option",
 
         // TODO: Linear blending should be enabled by default, but we are
         // TODO: making it an opt-in while it's a work in progress
