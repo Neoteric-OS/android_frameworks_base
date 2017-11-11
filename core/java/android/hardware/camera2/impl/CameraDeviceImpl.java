@@ -932,6 +932,11 @@ public class CameraDeviceImpl extends CameraDevice
             SubmitInfo requestInfo;
 
             CaptureRequest[] requestArray = requestList.toArray(new CaptureRequest[requestList.size()]);
+            // Convert Surface to streamIdx and surfaceIdx
+            for (CaptureRequest request : requestArray) {
+                request.convertSurfaceToStreamId(mConfiguredOutputs);
+            }
+
             requestInfo = mRemoteDevice.submitRequestList(requestArray, repeating);
             if (DEBUG) {
                 Log.v(TAG, "last frame number " + requestInfo.getLastFrameNumber());
