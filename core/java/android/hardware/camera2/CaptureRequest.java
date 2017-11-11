@@ -21,10 +21,12 @@ import android.annotation.Nullable;
 import android.hardware.camera2.impl.CameraMetadataNative;
 import android.hardware.camera2.impl.PublicKey;
 import android.hardware.camera2.impl.SyntheticKey;
+import android.hardware.camera2.params.OutputConfiguration;
 import android.hardware.camera2.utils.HashCodeHelpers;
 import android.hardware.camera2.utils.TypeReference;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.SparseArray;
 import android.view.Surface;
 
 import java.util.Collection;
@@ -199,6 +201,10 @@ public final class CaptureRequest extends CameraMetadata<CaptureRequest.Key<?>>
     }
 
     private final HashSet<Surface> mSurfaceSet;
+    // Speed up CaptureRequest across IPC
+    private int[]                  mStreamIdxArray;
+    private int[]                  mSurfaceIdxArray;
+
     private final CameraMetadataNative mSettings;
     private boolean mIsReprocess;
     // If this request is part of constrained high speed request list that was created by
@@ -505,6 +511,41 @@ public final class CaptureRequest extends CameraMetadata<CaptureRequest.Key<?>>
      */
     public Collection<Surface> getTargets() {
         return Collections.unmodifiableCollection(mSurfaceSet);
+    }
+
+    /**
+     * @hide
+     */
+    public void convertSurfaceToStreamId(final SparseArray<OutputConfiguration> configuredOutputs) {
+        mStreamIdxArray = new int[mSurfaceSet.size()];
+        mSurfaceIdxArray = new int[mSurfaceSet.size()];
+        int i = 0;
+        for (Surface s : mSurfaceSet) {
+            boolean streamFound = false;
+            for (int j = 0; j < configuredOutputs.size(); ++j) {
+                int streamId = configuredOutputs.keyAt(j);
+                OutputConfiguration outConfig = configuredOutputs.valueAt(j);
+                int surfaceId = 0;
+                for (Surface outSurface : outConfig.getSurfaces()) {
+                    if (s == outSurface) {
+                        streamFound = true;
+                        mStreamIdxArray[i] = streamId;
+                        mSurfaceIdxArray[i] = surfaceId;
+                        i++;
+                        break;
+                    }
+                    surfaceId++;
+                }
+                if (streamFound) {
+                    break;
+                }
+            }
+            if (!streamFound) {
+                throw new IllegalArgumentException(
+                        "CaptureRequest contains unconfigured Input/Output Surface!");
+            }
+        }
+        mSurfaceSet.clear(); // To save unparcel time for camera server
     }
 
     /**
