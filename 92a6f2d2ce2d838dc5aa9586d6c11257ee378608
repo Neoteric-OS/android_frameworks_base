@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48fe5d32_6a29a6fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-12T07:06:08Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 11,
+        "startChar": 214,
+        "endLine": 11,
+        "endChar": 215
+      },
+      "revId": "92a6f2d2ce2d838dc5aa9586d6c11257ee378608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "419e18c1_2e06040b",
+        "filename": "core/java/android/net/metrics/WakeupEvent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-12T07:06:08Z",
+      "side": 1,
+      "message": "-1?\n\ntechnically, someone could craft a packet that has a port number of zero (or is this excluded here because APF is supposed to drop them?).",
+      "range": {
+        "startLine": 52,
+        "startChar": 26,
+        "endLine": 52,
+        "endChar": 27
+      },
+      "revId": "92a6f2d2ce2d838dc5aa9586d6c11257ee378608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8cf7fb10_e698024e",
+        "filename": "tests/net/java/com/android/server/connectivity/NetdEventListenerServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-12T07:06:08Z",
+      "side": 1,
+      "message": "Maybe non-production IPs should be from the documentation prefix (2001:db8::/32)?",
+      "range": {
+        "startLine": 164,
+        "startChar": 31,
+        "endLine": 164,
+        "endChar": 47
+      },
+      "revId": "92a6f2d2ce2d838dc5aa9586d6c11257ee378608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
