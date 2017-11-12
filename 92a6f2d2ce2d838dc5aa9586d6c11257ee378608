@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "16fea080_0e56d999",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-12T09:53:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48fe5d32_6a29a6fe",
+      "range": {
+        "startLine": 11,
+        "startChar": 214,
+        "endLine": 11,
+        "endChar": 215
+      },
+      "revId": "92a6f2d2ce2d838dc5aa9586d6c11257ee378608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "419e18c1_2e06040b",
         "filename": "core/java/android/net/metrics/WakeupEvent.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d77f1de0_e8e34481",
+        "filename": "core/java/android/net/metrics/WakeupEvent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-12T09:53:31Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "419e18c1_2e06040b",
+      "range": {
+        "startLine": 52,
+        "startChar": 26,
+        "endLine": 52,
+        "endChar": 27
+      },
+      "revId": "92a6f2d2ce2d838dc5aa9586d6c11257ee378608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cf7fb10_e698024e",
         "filename": "tests/net/java/com/android/server/connectivity/NetdEventListenerServiceTest.java",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-12T07:06:08Z",
       "side": 1,
       "message": "Maybe non-production IPs should be from the documentation prefix (2001:db8::/32)?",
+      "range": {
+        "startLine": 164,
+        "startChar": 31,
+        "endLine": 164,
+        "endChar": 47
+      },
+      "revId": "92a6f2d2ce2d838dc5aa9586d6c11257ee378608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f47b663c_04cc26ae",
+        "filename": "tests/net/java/com/android/server/connectivity/NetdEventListenerServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-12T09:53:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cf7fb10_e698024e",
       "range": {
         "startLine": 164,
         "startChar": 31,
