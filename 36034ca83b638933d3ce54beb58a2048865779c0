@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68b0c533_8b779223",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-13T21:37:53Z",
+      "side": 1,
+      "message": "Please add a comment somewhere pointing out that the resource tracking code does not depend on IP address family, so we don\u0027t need to test both.",
+      "range": {
+        "startLine": 323,
+        "startChar": 0,
+        "endLine": 323,
+        "endChar": 78
+      },
+      "revId": "36034ca83b638933d3ce54beb58a2048865779c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
