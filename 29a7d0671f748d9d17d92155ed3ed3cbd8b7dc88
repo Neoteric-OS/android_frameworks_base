@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "945a1a41_ae00dd93",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-13T15:30:48Z",
+      "side": 1,
+      "message": "public variables don\u0027t need to start with \"m\".",
+      "range": {
+        "startLine": 80,
+        "startChar": 26,
+        "endLine": 80,
+        "endChar": 27
+      },
+      "revId": "29a7d0671f748d9d17d92155ed3ed3cbd8b7dc88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "722b641c_ccdab628",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-13T15:30:48Z",
+      "side": 1,
+      "message": "How about we filter out all mobile types, either inside getUpstreamIfaceTypes() or right here just afterwards.",
+      "range": {
+        "startLine": 99,
+        "startChar": 74,
+        "endLine": 99,
+        "endChar": 75
+      },
+      "revId": "29a7d0671f748d9d17d92155ed3ed3cbd8b7dc88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d65a465_dc23fb13",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000451
+      },
+      "writtenOn": "2017-11-13T15:30:48Z",
+      "side": 1,
+      "message": "Does this really work in a static function?",
+      "range": {
+        "startLine": 205,
+        "startChar": 12,
+        "endLine": 205,
+        "endChar": 38
+      },
+      "revId": "29a7d0671f748d9d17d92155ed3ed3cbd8b7dc88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
