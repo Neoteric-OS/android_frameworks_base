@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "346eca3e_b8feb3d0",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2017-11-13T16:03:51Z",
+      "side": 1,
+      "message": "I\u0027ll fix",
+      "parentUuid": "945a1a41_ae00dd93",
+      "range": {
+        "startLine": 80,
+        "startChar": 26,
+        "endLine": 80,
+        "endChar": 27
+      },
+      "revId": "29a7d0671f748d9d17d92155ed3ed3cbd8b7dc88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "722b641c_ccdab628",
         "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-13T15:30:48Z",
       "side": 1,
       "message": "How about we filter out all mobile types, either inside getUpstreamIfaceTypes() or right here just afterwards.",
+      "range": {
+        "startLine": 99,
+        "startChar": 74,
+        "endLine": 99,
+        "endChar": 75
+      },
+      "revId": "29a7d0671f748d9d17d92155ed3ed3cbd8b7dc88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3be2c887_7e193d9a",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2017-11-13T16:03:51Z",
+      "side": 1,
+      "message": "carrierApproved types like a global variable or the non allowed types? Makes more sense to have the approved ones. If you perhaps first can have a look at the internal Bug 38186915 mentioned below we could actually solve this feature by adding an Runtime Resource Overlay, together with removal of the code adding mobile types on lines 243-251.",
+      "parentUuid": "722b641c_ccdab628",
       "range": {
         "startLine": 99,
         "startChar": 74,
@@ -65,6 +113,47 @@
         "endLine": 205,
         "endChar": 38
       },
+      "revId": "29a7d0671f748d9d17d92155ed3ed3cbd8b7dc88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19e5a5c1_33935a80",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2017-11-13T16:03:51Z",
+      "side": 1,
+      "message": "mCarrierTetheringSupported is static and the TetheringConfiguration is re-created when there is a change for tethering in CarrierConfig or if Tethering.updateConfiguration() is called which is pretty often since it happens on receive of Intent.ACTION_CONFIGURATION_CHANGED.",
+      "parentUuid": "0d65a465_dc23fb13",
+      "range": {
+        "startLine": 205,
+        "startChar": 12,
+        "endLine": 205,
+        "endChar": 38
+      },
+      "revId": "29a7d0671f748d9d17d92155ed3ed3cbd8b7dc88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6062290a_3e5940c2",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2017-11-13T16:03:51Z",
+      "side": 1,
+      "message": "These rows are the reason for the ugly carrierApprovedTypes array above. Should not this be added in the overlay for verizon and other operators or by adding TYPE_MOBILE_HIPRI to the generic config.xml?",
       "revId": "29a7d0671f748d9d17d92155ed3ed3cbd8b7dc88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
