@@ -22,6 +22,30 @@
       "revId": "23704ba6881cdf310282811fe938084d9ca5051e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eef0489a_7e3cd830",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1080813
+      },
+      "writtenOn": "2017-11-13T10:43:48Z",
+      "side": 1,
+      "message": "We still have to support nonplat_* for backward compatibility, some device might uses Treble OTA from O -\u003e P.\n\nSo it\u0027s not easy to define required v.s. non-required for nonplat_ and vendor_. I modified this part in next PS, PTAL.",
+      "parentUuid": "d1e8f26c_f925fa52",
+      "range": {
+        "startLine": 99,
+        "startChar": 12,
+        "endLine": 104,
+        "endChar": 13
+      },
+      "revId": "23704ba6881cdf310282811fe938084d9ca5051e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
