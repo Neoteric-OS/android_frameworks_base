@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b76f570_de78a242",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1026058
+      },
+      "writtenOn": "2017-11-13T22:58:52Z",
+      "side": 1,
+      "message": "nit: go/developing-for-android prefers explicit (non-iterator) for loops (see avoid iterators).\n\nAlso helpful to enforce ordering, which could matter here (we want aosp to take precedent), although I think for ArrayList that\u0027s given. (java hand-wave/shrug)",
+      "range": {
+        "startLine": 124,
+        "startChar": 13,
+        "endLine": 124,
+        "endChar": 49
+      },
+      "revId": "76bb2075752a9b4e4af04a15073e7011494a9b9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
