@@ -1999,6 +1999,8 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
         } else if (keyguardLocked) {
             return shouldBeVisible && mStackSupervisor.mKeyguardController.canShowWhileOccluded(
                     dismissKeyguard, showWhenLocked);
+        } else if (mService.isSleepingLocked()) {
+            return false;
         } else {
             return shouldBeVisible;
         }
