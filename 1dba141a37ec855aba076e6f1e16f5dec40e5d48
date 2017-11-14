@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a5668cd_305e68ad",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-14T23:58:57Z",
+      "side": 1,
+      "message": "I think even \"IpSecService resources\" is a bit vague. From reading the two comments in this inteface, I don\u0027t understand what the two methods are doing that is different. I also don\u0027t see anything about quota tracking in this CL.",
+      "range": {
+        "startLine": 127,
+        "startChar": 22,
+        "endLine": 127,
+        "endChar": 44
+      },
+      "revId": "1dba141a37ec855aba076e6f1e16f5dec40e5d48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aacb8909_10611040",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-14T23:58:57Z",
+      "side": 1,
+      "message": "Actually, since RefcountedResource does not have access to any implementor details, why do we need generics at all? What if RefcountedResource just had a member variable of type IResource?",
+      "range": {
+        "startLine": 135,
+        "startChar": 35,
+        "endLine": 135,
+        "endChar": 56
+      },
+      "revId": "1dba141a37ec855aba076e6f1e16f5dec40e5d48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d708150_23bdd265",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-14T23:58:57Z",
+      "side": 1,
+      "message": "is the generic specifier needed here? I don\u0027t Java good.",
+      "range": {
+        "startLine": 144,
+        "startChar": 34,
+        "endLine": 144,
+        "endChar": 56
+      },
+      "revId": "1dba141a37ec855aba076e6f1e16f5dec40e5d48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ab310d_04155462",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-14T23:58:57Z",
+      "side": 1,
+      "message": "how do you enforce this? It\u0027s two lines - maybe put them in the constructor?",
+      "range": {
+        "startLine": 163,
+        "startChar": 31,
+        "endLine": 163,
+        "endChar": 71
+      },
+      "revId": "1dba141a37ec855aba076e6f1e16f5dec40e5d48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e67cd81_e3ccca84",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-14T23:58:57Z",
+      "side": 1,
+      "message": "mark @Override",
+      "range": {
+        "startLine": 176,
+        "startChar": 20,
+        "endLine": 176,
+        "endChar": 30
+      },
+      "revId": "1dba141a37ec855aba076e6f1e16f5dec40e5d48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a79d2e_6a96c8ac",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-14T23:58:57Z",
+      "side": 1,
+      "message": "comments should describe what a method does, and not how it is called.",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 76
+      },
+      "revId": "1dba141a37ec855aba076e6f1e16f5dec40e5d48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbef41ea_243290f6",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-14T23:58:57Z",
+      "side": 1,
+      "message": "Are these annotations enforced by the compiler?",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 39
+      },
+      "revId": "1dba141a37ec855aba076e6f1e16f5dec40e5d48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8de9e7c9_aa1c503d",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-14T23:58:57Z",
+      "side": 1,
+      "message": "maybe put this check in decrementRefcount so the exception is thrown closer to the mistake.",
+      "range": {
+        "startLine": 236,
+        "startChar": 19,
+        "endLine": 238,
+        "endChar": 80
+      },
+      "revId": "1dba141a37ec855aba076e6f1e16f5dec40e5d48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
