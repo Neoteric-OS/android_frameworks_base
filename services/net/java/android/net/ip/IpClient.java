@@ -616,9 +616,7 @@ public class IpClient extends StateMachine {
             @Override
             public void interfaceAdded(String iface) {
                 super.interfaceAdded(iface);
-                if (mClatInterfaceName.equals(iface)) {
-                    mCallback.setNeighborDiscoveryOffload(false);
-                } else if (!mInterfaceName.equals(iface)) {
+                if (!mClatInterfaceName.equals(iface)) {
                     return;
                 }
 
@@ -631,12 +629,7 @@ public class IpClient extends StateMachine {
                 super.interfaceRemoved(iface);
                 // TODO: Also observe mInterfaceName going down and take some
                 // kind of appropriate action.
-                if (mClatInterfaceName.equals(iface)) {
-                    // TODO: consider sending a message to the IpClient main
-                    // StateMachine thread, in case "NDO enabled" state becomes
-                    // tied to more things that 464xlat operation.
-                    mCallback.setNeighborDiscoveryOffload(true);
-                } else if (!mInterfaceName.equals(iface)) {
+                if (!mClatInterfaceName.equals(iface)) {
                     return;
                 }
 
@@ -1271,6 +1264,7 @@ public class IpClient extends StateMachine {
         @Override
         public void enter() {
             stopAllIP();
+            mCallback.setNeighborDiscoveryOffload(true);
 
             resetLinkProperties();
             if (mStartTimeMillis > 0) {
@@ -1384,6 +1378,7 @@ public class IpClient extends StateMachine {
         @Override
         public void exit() {
             mProvisioningTimeoutAlarm.cancel();
+            mCallback.setNeighborDiscoveryOffload(false);
         }
 
         @Override
