@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "937849ba_4316e059",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-15T00:08:47Z",
+      "side": 1,
+      "message": "This class could use a bit more detailed comments about the semantics of cleanup and release. For instance, are they idempotent, what it means when an exception is thrown and can the cleanup be retried.",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 30
+      },
+      "revId": "1dba141a37ec855aba076e6f1e16f5dec40e5d48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a5668cd_305e68ad",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 1
@@ -48,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "c0c32680_7b61628e",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-15T00:08:47Z",
+      "side": 1,
+      "message": "Isn\u0027t there a missing type here ? I guess that the list of dependencies of IResource will not necessarily be of the same type, which makes it impossible to do something else than List\u003cRefcountedResource\u003c? extends IResource\u003e\u003e right ?",
+      "revId": "1dba141a37ec855aba076e6f1e16f5dec40e5d48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d708150_23bdd265",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 1
@@ -91,6 +131,52 @@
       "revId": "1dba141a37ec855aba076e6f1e16f5dec40e5d48",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a278ce_dde7bce8",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-15T00:08:47Z",
+      "side": 1,
+      "message": "If this is the case, then I strongly suggest to fold it into the constructor.",
+      "range": {
+        "startLine": 163,
+        "startChar": 31,
+        "endLine": 163,
+        "endChar": 71
+      },
+      "revId": "1dba141a37ec855aba076e6f1e16f5dec40e5d48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3834fc4_b9c50445",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-15T00:08:47Z",
+      "side": 1,
+      "message": "This does not do deduplication if the same thing is added as a dependency more than once. Is this ok ? What happens an IResource gets cleanup()/released() more than once ?",
+      "range": {
+        "startLine": 167,
+        "startChar": 12,
+        "endLine": 167,
+        "endChar": 50
+      },
+      "revId": "1dba141a37ec855aba076e6f1e16f5dec40e5d48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -183,6 +269,52 @@
       "revId": "1dba141a37ec855aba076e6f1e16f5dec40e5d48",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6e6bd4_45e19beb",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-15T00:08:47Z",
+      "side": 1,
+      "message": "This is not atomic in the sense that the counter can change in between the if branch and the else branch. Should you first stash the counter into a local var ?",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 13
+      },
+      "revId": "1dba141a37ec855aba076e6f1e16f5dec40e5d48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c97afba_bc0eda74",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-15T00:08:47Z",
+      "side": 1,
+      "message": "Just FYI, there is also StringJoiner which let\u0027s you do:\n\nnew StringJoinder(\", \", \"{\", \"}\").add(\"mResource\u003d\" + mResource).add()...",
+      "range": {
+        "startLine": 258,
+        "startChar": 19,
+        "endLine": 258,
+        "endChar": 38
+      },
+      "revId": "1dba141a37ec855aba076e6f1e16f5dec40e5d48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
