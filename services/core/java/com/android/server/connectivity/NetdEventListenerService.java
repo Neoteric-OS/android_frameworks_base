@@ -198,7 +198,9 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
             String hostname, String[] ipAddresses, int ipAddressesCount, int uid)
             throws RemoteException {
         long timestamp = System.currentTimeMillis();
-        getMetricsForNetwork(timestamp, netId).addDnsResult(eventType, returnCode, latencyMs);
+        if (netId != 0) {
+            getMetricsForNetwork(timestamp, netId).addDnsResult(eventType, returnCode, latencyMs);
+        }
 
         for (INetdEventCallback callback : mNetdEventCallbackList) {
             if (callback != null) {
@@ -213,7 +215,9 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
     public synchronized void onConnectEvent(int netId, int error, int latencyMs, String ipAddr,
             int port, int uid) throws RemoteException {
         long timestamp = System.currentTimeMillis();
-        getMetricsForNetwork(timestamp, netId).addConnectResult(error, latencyMs, ipAddr);
+        if (netId != 0) {
+            getMetricsForNetwork(timestamp, netId).addConnectResult(error, latencyMs, ipAddr);
+        }
 
         for (INetdEventCallback callback : mNetdEventCallbackList) {
             if (callback != null) {
