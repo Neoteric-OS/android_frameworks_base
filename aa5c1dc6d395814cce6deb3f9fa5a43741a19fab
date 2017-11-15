@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7675d9d0_3be66c91",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:09:28Z",
+      "side": 1,
+      "message": "For future reference, I would prefer:\n\n    assertTrue(openUdpEncapSockets.size() \u003e 0);\n    assertTrue(openUdpEncapSockets.size() \u003c MAX_NUM_ENCAP_SOCKETS);\n\nbecause then if one of the two assertions fails, the stack trace will tell you which one.",
+      "range": {
+        "startLine": 290,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 79
+      },
+      "revId": "aa5c1dc6d395814cce6deb3f9fa5a43741a19fab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f415f92_6d5903ba",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:09:28Z",
+      "side": 1,
+      "message": "Nit: sockets",
+      "range": {
+        "startLine": 300,
+        "startChar": 51,
+        "endLine": 300,
+        "endChar": 58
+      },
+      "revId": "aa5c1dc6d395814cce6deb3f9fa5a43741a19fab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "953ac303_a18217ca",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:09:28Z",
+      "side": 1,
+      "message": "Thanks for putting these comment in here. They are very helpful not only in code review, but when debugging any future failures or refactoring the test in the future.",
+      "range": {
+        "startLine": 318,
+        "startChar": 0,
+        "endLine": 323,
+        "endChar": 7
+      },
+      "revId": "aa5c1dc6d395814cce6deb3f9fa5a43741a19fab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
