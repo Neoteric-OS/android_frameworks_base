@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a3459aa_4c355794",
+        "filename": "media/java/android/media/MediaMetadata.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1077498
+      },
+      "writtenOn": "2017-11-15T19:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d92d0bdc_9b1654e3",
+      "range": {
+        "startLine": 626,
+        "startChar": 4,
+        "endLine": 626,
+        "endChar": 37
+      },
+      "revId": "696bc9ca44a6720afd1c6ed2eb896ece105812f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3ad1644_91239c2d",
         "filename": "media/java/android/media/MediaMetadata.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-13T23:23:09Z",
       "side": 1,
       "message": "It\u0027s unnecessary\n\nhttps://stackoverflow.com/questions/2950319/is-null-check-needed-before-calling-instanceof",
+      "range": {
+        "startLine": 627,
+        "startChar": 0,
+        "endLine": 629,
+        "endChar": 9
+      },
+      "revId": "696bc9ca44a6720afd1c6ed2eb896ece105812f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eae021de_005b793e",
+        "filename": "media/java/android/media/MediaMetadata.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1077498
+      },
+      "writtenOn": "2017-11-15T19:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3ad1644_91239c2d",
       "range": {
         "startLine": 627,
         "startChar": 0,
