@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "488403aa_7e218bac",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-11-15T21:36:50Z",
+      "side": 1,
+      "message": "Renamed to improve distinction between Kernel Resource tracking and User (IpSecService-level) Resource/Refcount tracking",
+      "range": {
+        "startLine": 103,
+        "startChar": 67,
+        "endLine": 103,
+        "endChar": 86
+      },
+      "revId": "eac3e2b5b5af79425c6f1bc8977a5ab95d95f3e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
