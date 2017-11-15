@@ -1,0 +1,441 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a22e53b4_51d656c8",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "Nit: should this be @hide?",
+      "range": {
+        "startLine": 55,
+        "startChar": 28,
+        "endLine": 55,
+        "endChar": 60
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b9b86bc_3998a96e",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "Nit: it\u0027s not globally unique (two different devices can have the same SPI to the same server). Not sure what else to say though. \"unique across all apps on the device\", maybe?",
+      "range": {
+        "startLine": 70,
+        "startChar": 73,
+        "endLine": 70,
+        "endChar": 81
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff7e16d4_33d8d3da",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "Should have a test for this too.",
+      "range": {
+        "startLine": 300,
+        "startChar": 24,
+        "endLine": 300,
+        "endChar": 53
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89ca8984_345cb143",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "socket",
+      "range": {
+        "startLine": 474,
+        "startChar": 72,
+        "endLine": 474,
+        "endChar": 79
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55c80c34_c64012b3",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "Well, technically it can be closed - using Os.close(getSocket()) :-)\n\nPerhaps \"The provided socket cannot be re-bound by the caller. The caller should not close the filedescriptor returned by getSocket(), but should use {@link #close} instead.\"",
+      "range": {
+        "startLine": 476,
+        "startChar": 88,
+        "endLine": 476,
+        "endChar": 97
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5e3d710_74f0d2d7",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "Is there a need to restate this? It\u0027s already in the class description.",
+      "range": {
+        "startLine": 572,
+        "startChar": 0,
+        "endLine": 580,
+        "endChar": 70
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95763411_34c71954",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "Is there a need to restate this?",
+      "range": {
+        "startLine": 607,
+        "startChar": 79,
+        "endLine": 610,
+        "endChar": 34
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aaf5117_f65ae589",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "Is there a need to restate this?",
+      "range": {
+        "startLine": 615,
+        "startChar": 0,
+        "endLine": 618,
+        "endChar": 70
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0d0720e_b5c77be6",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "Nit: is this true? It\u0027s possible to create a transform that only has one direction, right?\n\nIs it possible to create a transform with no directions? If so, we should probably disallow it :-)",
+      "range": {
+        "startLine": 41,
+        "startChar": 61,
+        "endLine": 41,
+        "endChar": 70
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b07fd71b_1a8c3b4f",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "I don\u0027t think we should mention System APIs in the public documentation.",
+      "range": {
+        "startLine": 49,
+        "startChar": 78,
+        "endLine": 50,
+        "endChar": 80
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fd21282_b3a8b1b5",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "I\u0027m confused as to why we have this text given that the class implements AutoCloseable. Will external developers be confused too?",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 20
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2393a845_9f527745",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "These two sentences do not seem to add much of substance.",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 281,
+        "endChar": 95
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a187d38_862560d2",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "There is no build() method. Maybe replace with \"will fail when attempting to build the transform\"?",
+      "range": {
+        "startLine": 291,
+        "startChar": 49,
+        "endLine": 291,
+        "endChar": 88
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22d67e4d_b9a84681",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "Does the service not already check this?",
+      "range": {
+        "startLine": 300,
+        "startChar": 15,
+        "endLine": 300,
+        "endChar": 26
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af60d544_d9841b97",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 309,
+        "startChar": 83,
+        "endLine": 309,
+        "endChar": 84
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2f7d263_f3940d92",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 328,
+        "startChar": 19,
+        "endLine": 328,
+        "endChar": 20
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93aad742_2174bad0",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "Is it the case that if a user calls setEncryption without passing in an SPI, we\u0027ll silently fail to encrypt? That seems bad.",
+      "range": {
+        "startLine": 354,
+        "startChar": 37,
+        "endLine": 354,
+        "endChar": 38
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29cbf275_b58dda7c",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "s/exciting //",
+      "range": {
+        "startLine": 439,
+        "startChar": 48,
+        "endLine": 439,
+        "endChar": 56
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3004a92c_209a47c4",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-15T11:45:53Z",
+      "side": 1,
+      "message": "Ouch. Do we have a bug for this?",
+      "range": {
+        "startLine": 446,
+        "startChar": 92,
+        "endLine": 446,
+        "endChar": 93
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
