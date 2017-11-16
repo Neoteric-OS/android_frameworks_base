@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "60e3bf3d_b3975454",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-16T02:53:34Z",
+      "side": 1,
+      "message": "Actually looks like the CTS tests use it. Do they actually need it? If so, maybe make this @TestApi?\n\nISTM that:\n1. Any call that results in the service returning an SPI of 0 should\n   throw an exception instead.\n2. Any time an app passes in an SPI of 0 should throw an exception.\n\nNot sure what we do today. Perhaps we do #1. I wouldn\u0027t be surprised if currently, passing in an SPI of 0 (i.e., #2) just returns a random SPI.",
+      "parentUuid": "c5e0c006_1b358976",
+      "range": {
+        "startLine": 55,
+        "startChar": 28,
+        "endLine": 55,
+        "endChar": 60
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b9b86bc_3998a96e",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 11
@@ -413,6 +437,30 @@
       "side": 1,
       "message": "Supporting null encryption and authentication is on the roadmap. b/64981540 but I think that is not exactly the same as not applying policy to one direction.\n\nI suggest we clarify this aspect of the API when we properly support/test null encryption.",
       "parentUuid": "a0d0720e_b5c77be6",
+      "range": {
+        "startLine": 41,
+        "startChar": 61,
+        "endLine": 41,
+        "endChar": 70
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f4af03e_4cc559e7",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-16T02:53:34Z",
+      "side": 1,
+      "message": "Deferring this to a future CL is fine by me. If we do want to say something here, perhaps we could change \"comprises a pair of security associations\" to \"comprises security associations in one or both directions\".",
+      "parentUuid": "1acb4985_16c26f79",
       "range": {
         "startLine": 41,
         "startChar": 61,
