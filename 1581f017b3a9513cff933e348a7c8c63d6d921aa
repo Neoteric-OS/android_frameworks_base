@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6864c0b7_b9b8bdbd",
+        "filename": "media/java/android/media/MediaMetadata.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2017-11-16T05:46:47Z",
+      "side": 1,
+      "message": "Will this JavaDoc appear on:\nhttps://developer.android.com/reference/android/media/MediaMetadata.html\n? If so, the format may not be correct. It would need tags like @param o and @return",
+      "range": {
+        "startLine": 619,
+        "startChar": 0,
+        "endLine": 623,
+        "endChar": 7
+      },
+      "revId": "1581f017b3a9513cff933e348a7c8c63d6d921aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
