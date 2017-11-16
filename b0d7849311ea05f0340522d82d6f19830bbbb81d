@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "7fbda223_3b91e7f8",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-16T18:48:29Z",
+      "side": 1,
+      "message": "The current behavior in IpSecManager matches both #1 and #2 that you describe. Users should not have a need for this constant.",
+      "parentUuid": "60e3bf3d_b3975454",
+      "range": {
+        "startLine": 55,
+        "startChar": 28,
+        "endLine": 55,
+        "endChar": 60
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b9b86bc_3998a96e",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 11
@@ -461,6 +485,30 @@
       "side": 1,
       "message": "Deferring this to a future CL is fine by me. If we do want to say something here, perhaps we could change \"comprises a pair of security associations\" to \"comprises security associations in one or both directions\".",
       "parentUuid": "1acb4985_16c26f79",
+      "range": {
+        "startLine": 41,
+        "startChar": 61,
+        "endLine": 41,
+        "endChar": 70
+      },
+      "revId": "b0d7849311ea05f0340522d82d6f19830bbbb81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9280ac07_2b3d5210",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-16T18:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f4af03e_4cc559e7",
       "range": {
         "startLine": 41,
         "startChar": 61,
