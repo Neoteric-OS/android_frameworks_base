@@ -22,6 +22,161 @@
       "revId": "eac3e2b5b5af79425c6f1bc8977a5ab95d95f3e9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a86f4c4_f399c658",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-16T04:37:07Z",
+      "side": 1,
+      "message": "to ?",
+      "revId": "eac3e2b5b5af79425c6f1bc8977a5ab95d95f3e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "322391f7_b77357a6",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-16T04:37:07Z",
+      "side": 1,
+      "message": "If this is assigned once from the ctor, I suggest creating the collection inside the ctor where you can make it exactly the right size.",
+      "range": {
+        "startLine": 168,
+        "startChar": 58,
+        "endLine": 168,
+        "endChar": 78
+      },
+      "revId": "eac3e2b5b5af79425c6f1bc8977a5ab95d95f3e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9f92236_1c259ea4",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-16T04:37:07Z",
+      "side": 1,
+      "message": "Just for safety, should this throw if mRefCount is already 0 ?",
+      "range": {
+        "startLine": 213,
+        "startChar": 12,
+        "endLine": 213,
+        "endChar": 24
+      },
+      "revId": "eac3e2b5b5af79425c6f1bc8977a5ab95d95f3e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c12bbf3_9a0faf13",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-16T04:37:07Z",
+      "side": 1,
+      "message": "Now that you have a simple int counter, if these methods are only used inside that class, I would kill the boilerplate and inline all of them.",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 9
+      },
+      "revId": "eac3e2b5b5af79425c6f1bc8977a5ab95d95f3e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44532344_45b7a3fa",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-16T04:37:07Z",
+      "side": 1,
+      "message": "Do you think it could be useful for debugging to remember the who last released the resource ?\n\nLet\u0027s say there is a bug where only A is supposed to trigger the final cleanup of B, but instead C is cleaning up B first, then A arrives later and B is already cleaned up. If we have info that B did something unexpected in the exception msg, that will be easy to debug.\n\n\nSomething I remember doing for C malloc/free debugging was to wrap malloc/free with a print statement to some file with __LINE__ and __FILE__ and the hex addr of the pointer so I could easily find leaks and double free by processing the logs in that file afterwards.\n\nMaybe adding similar DBG logging for every edge addition and removal for helping reconstructing the resource graph after the fact could be helpful. You can also maybe only log for debuggable builds. I think the logs need to be part of the IpSecService dump and not logcat, to be sure we have everything.\n\nAnyway we can improve this later on, for now it is perfectly fine like this.",
+      "range": {
+        "startLine": 266,
+        "startChar": 45,
+        "endLine": 266,
+        "endChar": 80
+      },
+      "revId": "eac3e2b5b5af79425c6f1bc8977a5ab95d95f3e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed4f74c6_d9904804",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-16T04:37:07Z",
+      "side": 1,
+      "message": "This method seems to always be called together with releaseIfUnreferencedRecursively. It seems there is some potential for simplification if you merge decrementReferenceCount() with the getReferenceCount() validation code at the top of releaseUnreferencedRecursively().",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 48
+      },
+      "revId": "eac3e2b5b5af79425c6f1bc8977a5ab95d95f3e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de41914d_7f6e3997",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-16T04:37:07Z",
+      "side": 1,
+      "message": "Is this going to print something useful or something like List@\u003csome_hex_address\u003e ?",
+      "range": {
+        "startLine": 292,
+        "startChar": 28,
+        "endLine": 292,
+        "endChar": 37
+      },
+      "revId": "eac3e2b5b5af79425c6f1bc8977a5ab95d95f3e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
