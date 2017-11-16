@@ -27843,6 +27843,33 @@ package android.net {
     enum_constant public static final android.net.LocalSocketAddress.Namespace RESERVED;
   }
 
+  public final class MacAddress implements android.os.Parcelable {
+    method public android.net.MacAddress.MacAddressType addressType();
+    method public static byte[] byteAddrFromStringAddr(java.lang.String);
+    method public int describeContents();
+    method public static android.net.MacAddress fromBytes(byte[]);
+    method public static android.net.MacAddress fromString(java.lang.String);
+    method public boolean isLocallyAssigned();
+    method public static boolean isMacAddress(byte[]);
+    method public boolean isMulticastAddress();
+    method public static android.net.MacAddress.MacAddressType macAddressType(byte[]);
+    method public static android.net.MacAddress makeRandomAddress();
+    method public static android.net.MacAddress makeRandomAddress(android.net.MacAddress, java.util.Random);
+    method public static java.lang.String stringAddrFromByteAddr(byte[]);
+    method public byte[] toByteArray();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.net.MacAddress BROADCAST_ADDRESS;
+    field public static final android.os.Parcelable.Creator<android.net.MacAddress> CREATOR;
+  }
+
+  public static final class MacAddress.MacAddressType extends java.lang.Enum {
+    method public static android.net.MacAddress.MacAddressType valueOf(java.lang.String);
+    method public static final android.net.MacAddress.MacAddressType[] values();
+    enum_constant public static final android.net.MacAddress.MacAddressType BROADCAST;
+    enum_constant public static final android.net.MacAddress.MacAddressType MULTICAST;
+    enum_constant public static final android.net.MacAddress.MacAddressType UNICAST;
+  }
+
   public class MailTo {
     method public java.lang.String getBody();
     method public java.lang.String getCc();
