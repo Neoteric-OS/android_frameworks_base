@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ff43614_546d40e8",
+        "filename": "tests/net/java/android/net/IpSecConfigTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-17T17:44:00Z",
+      "side": 1,
+      "message": "When I read this, I assumed that it was an exhaustive list of algorithms and not a hand-picked set of three. I think this test would be clearer without the algo loop.",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 43
+      },
+      "revId": "731cbeecd768ac7d33a85c6dceb1dca408515c2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8221a4a8_f0528df9",
+        "filename": "tests/net/java/android/net/IpSecConfigTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-17T17:44:00Z",
+      "side": 1,
+      "message": "I can\u0027t tell if I feel like testing both directions is prudent or redundant...",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 46
+      },
+      "revId": "731cbeecd768ac7d33a85c6dceb1dca408515c2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
