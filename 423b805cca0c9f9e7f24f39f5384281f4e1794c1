@@ -22,6 +22,30 @@
       "revId": "423b805cca0c9f9e7f24f39f5384281f4e1794c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6036b581_b53fbac2",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-11-17T02:05:17Z",
+      "side": 1,
+      "message": "In this specific case, It\u0027s impossible for there to be a race condition, since this method requires a lock on the IpSecService instance. :)",
+      "parentUuid": "6d28f922_cc154291",
+      "range": {
+        "startLine": 267,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 24
+      },
+      "revId": "423b805cca0c9f9e7f24f39f5384281f4e1794c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
