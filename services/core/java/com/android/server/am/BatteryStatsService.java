@@ -28,6 +28,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.wifi.IWifiManager;
 import android.net.wifi.WifiActivityEnergyInfo;
+import android.net.wifi.WifiManager;
 import android.os.PowerSaveState;
 import android.os.BatteryStats;
 import android.os.Binder;
@@ -106,6 +107,8 @@ public final class BatteryStatsService extends IBatteryStats.Stub
     private Context mContext;
     private IWifiManager mWifiManager;
     private TelephonyManager mTelephony;
+    private WifiManager mWifi;
+    private Context mContext_wifi;
 
     // Lock acquired when extracting data from external sources.
     private final Object mExternalStatsLock = new Object();
@@ -256,6 +259,7 @@ public final class BatteryStatsService extends IBatteryStats.Stub
 
     public void publish(Context context) {
         mContext = context;
+        mContext_wifi = context;
         synchronized (mStats) {
             mStats.setRadioScanningTimeoutLocked(mContext.getResources().getInteger(
                     com.android.internal.R.integer.config_radioScanningTimeout)
@@ -1533,6 +1537,8 @@ public final class BatteryStatsService extends IBatteryStats.Stub
                 }
             }
 
+            mWifi = (WifiManager) mContext.getSystemService(mContext_wifi.WIFI_SERVICE);
+
             if ((updateFlags & BatteryStatsImpl.ExternalStatsSync.UPDATE_BT) != 0) {
                 final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
                 if (adapter != null) {
@@ -1600,6 +1606,10 @@ public final class BatteryStatsService extends IBatteryStats.Stub
                     mStats.updateWifiState(extractDelta(wifiInfo));
                 } else {
                     Slog.e(TAG, "wifi info is invalid: " + wifiInfo);
+                }
+            } else {
+                if (!mWifi.isEnhancedPowerReportingSupported()) {
+		    mStats.updateWifiState(null);
                 }
             }
 
