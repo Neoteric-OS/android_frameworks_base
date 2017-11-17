@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ee21ff89_1fec1037",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-11-17T01:04:11Z",
+      "side": 1,
+      "message": "Yes :) But I\u0027m referring to the mapping from MAC address bytes to array bytes. I.e. byte 0 is octet 1 (or whatever is the official terminology) of the MAC etc. Unless this is self apparent.",
+      "parentUuid": "f0b03f09_825b822c",
+      "range": {
+        "startLine": 105,
+        "startChar": 28,
+        "endLine": 105,
+        "endChar": 42
+      },
+      "revId": "2184d0452763d3a942bdc745882c2f7627bb9859",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32ba1dc5_13b32046",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 1
