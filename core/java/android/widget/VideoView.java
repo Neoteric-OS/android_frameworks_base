@@ -162,6 +162,11 @@ public class VideoView extends SurfaceView
         setFocusableInTouchMode(true);
         requestFocus();
 
+        /* Disable the default focus highlight, fix the wrong highlight issue
+         * if use usb mouse to play video.
+         */
+        setDefaultFocusHighlightEnabled(false);
+
         mCurrentState = STATE_IDLE;
         mTargetState = STATE_IDLE;
     }
