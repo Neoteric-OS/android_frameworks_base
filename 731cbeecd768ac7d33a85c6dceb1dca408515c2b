@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71f10e71_e34e8443",
+        "filename": "tests/net/java/android/net/IpSecConfigTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-11-17T22:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ff43614_546d40e8",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 43
+      },
+      "revId": "731cbeecd768ac7d33a85c6dceb1dca408515c2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8221a4a8_f0528df9",
         "filename": "tests/net/java/android/net/IpSecConfigTest.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "731cbeecd768ac7d33a85c6dceb1dca408515c2b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ea827e_c0dc56a2",
+        "filename": "tests/net/java/android/net/IpSecConfigTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-11-17T22:42:50Z",
+      "side": 1,
+      "message": "Removed it.",
+      "parentUuid": "8221a4a8_f0528df9",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 46
+      },
+      "revId": "731cbeecd768ac7d33a85c6dceb1dca408515c2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
