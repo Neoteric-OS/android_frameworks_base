@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "edade070_f8c1c317",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-17T01:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f3bd658_efc6d879",
+      "range": {
+        "startLine": 29,
+        "startChar": 23,
+        "endLine": 29,
+        "endChar": 26
+      },
+      "revId": "2184d0452763d3a942bdc745882c2f7627bb9859",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69fa986e_4e616d04",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2017-11-16T14:53:17Z",
       "side": 1,
       "message": "document byte order?",
+      "range": {
+        "startLine": 105,
+        "startChar": 28,
+        "endLine": 105,
+        "endChar": 42
+      },
+      "revId": "2184d0452763d3a942bdc745882c2f7627bb9859",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0b03f09_825b822c",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-17T01:00:08Z",
+      "side": 1,
+      "message": "Well, an array of byte does not have a byte order in the BE or LE sense since the element have a size of 1 byte. i.e on a BE system or LE system the memory representations of an array of byte is the same.",
+      "parentUuid": "69fa986e_4e616d04",
       "range": {
         "startLine": 105,
         "startChar": 28,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "647ef5df_a7d16411",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-17T01:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32ba1dc5_13b32046",
+      "range": {
+        "startLine": 148,
+        "startChar": 50,
+        "endLine": 148,
+        "endChar": 58
+      },
+      "revId": "2184d0452763d3a942bdc745882c2f7627bb9859",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf952abd_040f54dd",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 1
@@ -105,6 +177,30 @@
       "writtenOn": "2017-11-16T14:53:17Z",
       "side": 1,
       "message": "Here (and elsewhere discussing String): document the format - specifically that bytes are separated by a single colon.",
+      "range": {
+        "startLine": 172,
+        "startChar": 25,
+        "endLine": 172,
+        "endChar": 39
+      },
+      "revId": "2184d0452763d3a942bdc745882c2f7627bb9859",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f15085a1_b83a2000",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-17T01:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf952abd_040f54dd",
       "range": {
         "startLine": 172,
         "startChar": 25,
