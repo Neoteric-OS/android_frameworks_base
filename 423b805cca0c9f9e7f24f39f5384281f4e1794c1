@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d28f922_cc154291",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-17T00:23:23Z",
+      "side": 1,
+      "message": "That sounds good to me, but this assumes that mRefCount is exactly 0 here, which might not be true in a race situation.\n\nSomething like mRefCount \u003d -1000; would be effective all the time and would also distinguish multiple decrement racy operations bringing the counter below -1 from reaching this point.",
+      "range": {
+        "startLine": 267,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 24
+      },
+      "revId": "423b805cca0c9f9e7f24f39f5384281f4e1794c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
