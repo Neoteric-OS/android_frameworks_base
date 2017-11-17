@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21442c1b_879c46c8",
+        "filename": "libs/hwui/renderthread/CanvasContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2017-11-17T15:51:49Z",
+      "side": 1,
+      "message": "nit and note. do not take action.\n\nThis file uses logging, but does not include \u003clog/log.h\u003e or define a LOG_TAG (eg: \"CanvasContext\")\n\nThe header order is a mess though, so adding log/log.h may trigger clang format to reorder portions of the headers.",
+      "range": {
+        "startLine": 39,
+        "startChar": 52,
+        "endLine": 39,
+        "endChar": 53
+      },
+      "revId": "00f5e88f3802ecbdfcbce7958ac00d237712a205",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac3c6630_fef811db",
+        "filename": "libs/hwui/renderthread/CanvasContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2017-11-17T15:51:49Z",
+      "side": 1,
+      "message": "pointer addresses sometimes help, hope it does, can also turn into a security issue if logged ...",
+      "range": {
+        "startLine": 257,
+        "startChar": 31,
+        "endLine": 257,
+        "endChar": 33
+      },
+      "revId": "00f5e88f3802ecbdfcbce7958ac00d237712a205",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17cf7a02_ccd6306b",
+        "filename": "libs/hwui/renderthread/CanvasContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2017-11-17T15:51:49Z",
+      "side": 1,
+      "message": "\u003e100 characters, surprised this got through submit checks. Maybe there is some allowance for strings?\n\nIn any case, this message is longer than the statistical average, and can be shortened to improve Signal to Noise ratio.",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 102
+      },
+      "revId": "00f5e88f3802ecbdfcbce7958ac00d237712a205",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcb9d6e6_97b18f66",
+        "filename": "libs/hwui/renderthread/CanvasContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1032276
+      },
+      "writtenOn": "2017-11-17T15:51:49Z",
+      "side": 1,
+      "message": "This is a change in behavior, and will prevent a later abort when an API issue surfaces.\n\nThe M.O. to provide problem clarity and be able to triage is to abort as soon as you notice the problem and use the stack trace to resolve. I am not a \"frameworks guy\", but I expect they may prefer for example:\n\n// do not need the address, we have something more interesting, a stack trace!\nLOG_ALWAYS_FATAL(\"native surface not initialized, bufferage\u003d%d\", bufferage);\n\nand\n\nLOG_ALWAYS_FATAL(\"native surface missing\");\n\nrespectively. Please wait for a comment from someone that owns the framework before taking any action.",
+      "range": {
+        "startLine": 252,
+        "startChar": 1,
+        "endLine": 265,
+        "endChar": 5
+      },
+      "revId": "00f5e88f3802ecbdfcbce7958ac00d237712a205",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
