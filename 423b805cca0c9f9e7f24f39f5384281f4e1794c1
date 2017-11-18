@@ -2,6 +2,167 @@
   "comments": [
     {
       "key": {
+        "uuid": "5fedd1a7_f6c0a3ef",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-18T01:14:22Z",
+      "side": 1,
+      "message": "nit: @hide should go at the end of the javadoc.",
+      "range": {
+        "startLine": 67,
+        "startChar": 3,
+        "endLine": 67,
+        "endChar": 8
+      },
+      "revId": "423b805cca0c9f9e7f24f39f5384281f4e1794c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422dcfe7_a452b115",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-18T01:14:22Z",
+      "side": 1,
+      "message": "I think you are trying to say that API calls are not executed concurrently. The word \"locking\" itself doesn\u0027t necessarily imply that.",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 56
+      },
+      "revId": "423b805cca0c9f9e7f24f39f5384281f4e1794c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d44cf50_97c55ef9",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-18T01:14:22Z",
+      "side": 1,
+      "message": "Sorry to put this on you, but if we\u0027re adding a javadoc for this class, it needs a brief sentence at the beginning describing what this class is.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 36
+      },
+      "revId": "423b805cca0c9f9e7f24f39f5384281f4e1794c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "218ba488_c2b76368",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-18T01:14:22Z",
+      "side": 1,
+      "message": "I\u0027m still sad that objects are removing themselves from their own containers, so I\u0027m going to keep suggesting crazy ideas.\n\nWhat if we had an enum of resource types, and IpSecService keeps a Map\u003cResourceType, ResourceArray\u003e. Then the outer code can say \n    resourceArrays.get(resource.type()).remove(resource.id());",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 27
+      },
+      "revId": "423b805cca0c9f9e7f24f39f5384281f4e1794c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "865755a8_228dcc54",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-18T01:14:22Z",
+      "side": 1,
+      "message": "what is userRefCleanup? I don\u0027t see its definition in this file.",
+      "range": {
+        "startLine": 160,
+        "startChar": 24,
+        "endLine": 160,
+        "endChar": 38
+      },
+      "revId": "423b805cca0c9f9e7f24f39f5384281f4e1794c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00154682_70f41440",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-18T01:14:22Z",
+      "side": 1,
+      "message": "I don\u0027t think \"userRef\" is the name of any specific thing, so maybe just say \"user\u0027s reference\"?",
+      "range": {
+        "startLine": 169,
+        "startChar": 46,
+        "endLine": 169,
+        "endChar": 53
+      },
+      "revId": "423b805cca0c9f9e7f24f39f5384281f4e1794c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36753606_729caf5c",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1070023
+      },
+      "writtenOn": "2017-11-18T01:14:22Z",
+      "side": 1,
+      "message": "I don\u0027t see this called except when binder dies. Is the other entry point added in the follow up CL?",
+      "range": {
+        "startLine": 221,
+        "startChar": 20,
+        "endLine": 221,
+        "endChar": 37
+      },
+      "revId": "423b805cca0c9f9e7f24f39f5384281f4e1794c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d28f922_cc154291",
         "filename": "services/core/java/com/android/server/IpSecService.java",
         "patchSetId": 4
