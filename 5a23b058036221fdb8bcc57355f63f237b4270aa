@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc7c9fb2_795a8d90",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-20T03:05:17Z",
+      "side": 1,
+      "message": "Should these methods contain the word \"supported\" as well? In order to ensure the names aren\u0027t too long you could replace \"Authentication\" with \"Auth\" and \"Algorithm\" with \"Algo\", etc.",
+      "range": {
+        "startLine": 205,
+        "startChar": 19,
+        "endLine": 205,
+        "endChar": 44
+      },
+      "revId": "5a23b058036221fdb8bcc57355f63f237b4270aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0043d705_8a18a9f0",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2017-11-20T03:05:17Z",
+      "side": 1,
+      "message": "Unsupported\n\n(also fix the other cases)",
+      "range": {
+        "startLine": 124,
+        "startChar": 17,
+        "endLine": 124,
+        "endChar": 24
+      },
+      "revId": "5a23b058036221fdb8bcc57355f63f237b4270aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
