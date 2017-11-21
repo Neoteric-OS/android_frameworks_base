@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "801cee84_bad704b4",
+        "filename": "telephony/java/com/android/ims/ImsSsData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-11-21T22:29:55Z",
+      "side": 1,
+      "message": "should these be private? Otherwise I don\u0027t think public member variables need the m-prefix",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 84
+      },
+      "revId": "4e2086228c43b70c012a56b4f112c08c177bf6a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
