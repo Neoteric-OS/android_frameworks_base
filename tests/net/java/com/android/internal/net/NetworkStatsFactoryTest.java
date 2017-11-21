@@ -66,7 +66,7 @@ public class NetworkStatsFactoryTest {
             IoUtils.deleteContents(mTestProc);
         }
 
-        mFactory = new NetworkStatsFactory(mTestProc);
+        mFactory = new NetworkStatsFactory(mTestProc, false);
     }
 
     @After
