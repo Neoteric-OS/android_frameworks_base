@@ -266,6 +266,8 @@ cc_library_shared {
         "libhwbinder",
         "libvintf",
         "libnativewindow",
+	"libbpf",
+	"libnetdutils",
 
         "libhwui",
         "libdl",
