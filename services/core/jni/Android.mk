@@ -40,6 +40,7 @@ LOCAL_SRC_FILES += \
     $(LOCAL_REL_DIR)/com_android_server_PersistentDataBlockService.cpp \
     $(LOCAL_REL_DIR)/com_android_server_GraphicsStatsService.cpp \
     $(LOCAL_REL_DIR)/com_android_server_net_NetworkStatsService.cpp \
+    $(LOCAL_REL_DIR)/com_android_server_net_BpfNetworkStats.cpp \
     $(LOCAL_REL_DIR)/onload.cpp
 
 LOCAL_C_INCLUDES += \
@@ -89,6 +90,8 @@ LOCAL_SHARED_LIBRARIES += \
     libhwbinder \
     libutils \
     libhwui \
+    libbpf  \
+    libnetdutils  \
     android.hardware.audio.common@2.0 \
     android.hardware.broadcastradio@1.0 \
     android.hardware.broadcastradio@1.1 \
