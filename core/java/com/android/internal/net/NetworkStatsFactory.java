@@ -22,10 +22,17 @@ import static android.net.NetworkStats.TAG_NONE;
 import static android.net.NetworkStats.UID_ALL;
 import static com.android.server.NetworkManagementSocketTagger.kernelToTag;
 
+import android.content.Context;
+import android.net.INetd;
 import android.net.NetworkStats;
+import android.os.IBinder;
+import android.os.INetworkManagementService;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.util.ArrayMap;
+import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
@@ -65,6 +72,8 @@ public class NetworkStatsFactory {
     // TODO: to improve testability and avoid global state, do not use a static variable.
     @GuardedBy("sStackedIfaces")
     private static final ArrayMap<String, String> sStackedIfaces = new ArrayMap<>();
+
+    private INetd mNetdService;
 
     public static void noteStackedIface(String stackedIface, String baseIface) {
         synchronized (sStackedIfaces) {
@@ -241,6 +250,17 @@ public class NetworkStatsFactory {
         return stats;
     }
 
+    private INetd getNetdService() throws RemoteException {
+        synchronized (this) {
+            if (mNetdService != null) {
+                return mNetdService;
+            }
+            IBinder b = ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE);
+            mNetdService = INetworkManagementService.Stub.asInterface(b).getNetdService();
+            return mNetdService;
+        }
+    }
+
     private NetworkStats readNetworkStatsDetailInternal(int limitUid, String[] limitIfaces,
             int limitTag, NetworkStats lastStats) throws IOException {
         if (USE_NATIVE_PARSING) {
@@ -251,8 +271,15 @@ public class NetworkStatsFactory {
             } else {
                 stats = new NetworkStats(SystemClock.elapsedRealtime(), -1);
             }
+            boolean bpfStatsReady = false;
+            try {
+                bpfStatsReady = getNetdService().checkBpfStatsEnable();
+            } catch (Exception e) {
+                Slog.e(TAG, "check eBPF support failed" + e);
+            }
             if (nativeReadNetworkStatsDetail(stats, mStatsXtUid.getAbsolutePath(), limitUid,
-                    limitIfaces, limitTag) != 0) {
+                    limitIfaces, limitTag, bpfStatsReady)
+                != 0) {
                 throw new IOException("Failed to parse network stats");
             }
             if (SANITY_CHECK_NATIVE) {
@@ -346,6 +373,6 @@ public class NetworkStatsFactory {
      * are expected to monotonically increase since device boot.
      */
     @VisibleForTesting
-    public static native int nativeReadNetworkStatsDetail(
-            NetworkStats stats, String path, int limitUid, String[] limitIfaces, int limitTag);
+    public static native int nativeReadNetworkStatsDetail(NetworkStats stats, String path,
+        int limitUid, String[] limitIfaces, int limitTag, boolean useBpfStats);
 }
