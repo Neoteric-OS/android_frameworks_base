@@ -183,6 +183,29 @@
       "revId": "097e0dce9efa89c1ae3e555e6076c2c7166b55b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2682888_f18d4223",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-11-21T22:24:59Z",
+      "side": 1,
+      "message": "This prints 00:01:02:03:04:05 as 0:1:2:3:4:5. \n\nNeed to pad if necessary (and unit test).",
+      "range": {
+        "startLine": 216,
+        "startChar": 26,
+        "endLine": 216,
+        "endChar": 37
+      },
+      "revId": "097e0dce9efa89c1ae3e555e6076c2c7166b55b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
