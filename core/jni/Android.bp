@@ -179,6 +179,7 @@ cc_library_shared {
         "android_content_res_ObbScanner.cpp",
         "android_content_res_Configuration.cpp",
         "android_animation_PropertyValuesHolder.cpp",
+	"com_android_internal_net_BpfNetworkStats.cpp",
         "com_android_internal_net_NetworkStatsFactory.cpp",
         "com_android_internal_os_FuseAppLoop.cpp",
         "com_android_internal_os_PathClassLoaderFactory.cpp",
@@ -270,6 +271,8 @@ cc_library_shared {
 
         "libhwui",
         "libdl",
+	"libbpf",
+	"libnetdutils",
     ],
 
     local_include_dirs: ["android/graphics"],
