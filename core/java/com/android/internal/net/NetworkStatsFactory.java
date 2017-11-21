@@ -251,8 +251,10 @@ public class NetworkStatsFactory {
             } else {
                 stats = new NetworkStats(SystemClock.elapsedRealtime(), -1);
             }
+            boolean bpfStatsReady = new File("/sys/fs/bpf/traffic_uid_stats_map").exists();
             if (nativeReadNetworkStatsDetail(stats, mStatsXtUid.getAbsolutePath(), limitUid,
-                    limitIfaces, limitTag) != 0) {
+                    limitIfaces, limitTag, bpfStatsReady)
+                != 0) {
                 throw new IOException("Failed to parse network stats");
             }
             if (SANITY_CHECK_NATIVE) {
@@ -346,6 +348,6 @@ public class NetworkStatsFactory {
      * are expected to monotonically increase since device boot.
      */
     @VisibleForTesting
-    public static native int nativeReadNetworkStatsDetail(
-            NetworkStats stats, String path, int limitUid, String[] limitIfaces, int limitTag);
+    public static native int nativeReadNetworkStatsDetail(NetworkStats stats, String path,
+        int limitUid, String[] limitIfaces, int limitTag, boolean useBpfStats);
 }
