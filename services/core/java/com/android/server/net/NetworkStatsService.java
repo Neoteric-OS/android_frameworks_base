@@ -821,20 +821,28 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
     @Override
     public long getUidStats(int uid, int type) {
-        Slog.w(TAG, "calling native method from Stats Service");
-        return nativeGetUidStat(uid, type);
+        int callingUid = Binder.getCallingUid();
+        if (callingUid == android.os.Process.SYSTEM_UID || callingUid == uid) {
+            synchronized (mStatsLock) {
+                return nativeGetUidStat(uid, type);
+            }
+        } else {
+            return -1;
+        }
     }
 
     @Override
     public long getIfaceStats(String iface, int type) {
-        Slog.w(TAG, "calling native method from Stats Service");
-        return nativeGetIfaceStat(iface, type);
+        synchronized (mStatsLock) {
+            return nativeGetIfaceStat(iface, type);
+        }
     }
 
     @Override
     public long getTotalStats(int type) {
-        Slog.w(TAG, "calling native method from Stats Service");
-        return nativeGetTotalStat(type);
+        synchronized (mStatsLock) {
+            return nativeGetTotalStat(type);
+        }
     }
 
     /**
