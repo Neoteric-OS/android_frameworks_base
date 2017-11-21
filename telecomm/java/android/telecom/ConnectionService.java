@@ -1371,9 +1371,11 @@ public abstract class ConnectionService extends Service {
                 isIncoming,
                 isUnknown);
 
+        // Todo: Probably need to have an API check to decide whether to use
+        // onCreateOutgoingHandoverConnection() or onCreateOutgoingConnection().
         Connection connection = isUnknown ? onCreateUnknownConnection(callManagerAccount, request)
                 : isIncoming ? onCreateIncomingConnection(callManagerAccount, request)
-                : onCreateOutgoingConnection(callManagerAccount, request);
+                : onCreateOutgoingHandoverConnection(callManagerAccount, request);
         Log.d(this, "createConnection, connection: %s", connection);
         if (connection == null) {
             connection = Connection.createFailedConnection(
