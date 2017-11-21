@@ -79,6 +79,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.DataUsageRequest;
 import android.net.IConnectivityManager;
+import android.net.INetd;
 import android.net.INetworkManagementEventObserver;
 import android.net.INetworkStatsService;
 import android.net.INetworkStatsSession;
@@ -174,6 +175,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private final File mBaseDir;
 
     private final PowerManager.WakeLock mWakeLock;
+
+    private final boolean mHasBpfKernelSupport;
 
     private IConnectivityManager mConnManager;
 
@@ -314,6 +317,18 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         mStatsObservers = checkNotNull(statsObservers, "missing NetworkStatsObservers");
         mSystemDir = checkNotNull(systemDir, "missing systemDir");
         mBaseDir = checkNotNull(baseDir, "missing baseDir");
+        mHasBpfKernelSupport = checkBpfKernelSupport(networkManager);
+    }
+
+    private boolean checkBpfKernelSupport(INetworkManagementService networkManager) {
+        boolean bpfStatsReady = false;
+        try {
+            INetd netdService = networkManager.getNetdService();
+            bpfStatsReady = netdService.checkBpfStatsEnable();
+        } catch (Exception e) {
+            Slog.e(TAG, "check eBPF support failed" + e);
+        }
+        return bpfStatsReady;
     }
 
     @VisibleForTesting
@@ -875,17 +890,22 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
     @Override
     public long getUidStats(int uid, int type) {
-        return nativeGetUidStat(uid, type);
+        return nativeGetUidStat(uid, type, mHasBpfKernelSupport);
     }
 
     @Override
     public long getIfaceStats(String iface, int type) {
-        return nativeGetIfaceStat(iface, type);
+        return nativeGetIfaceStat(iface, type, mHasBpfKernelSupport);
     }
 
     @Override
     public long getTotalStats(int type) {
-        return nativeGetTotalStat(type);
+        return nativeGetTotalStat(type, mHasBpfKernelSupport);
+    }
+
+    @Override
+    public boolean checkBpfStatsEnable() {
+        return mHasBpfKernelSupport;
     }
 
     /**
@@ -1649,7 +1669,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private static int TYPE_TCP_RX_PACKETS;
     private static int TYPE_TCP_TX_PACKETS;
 
-    private static native long nativeGetTotalStat(int type);
-    private static native long nativeGetIfaceStat(String iface, int type);
-    private static native long nativeGetUidStat(int uid, int type);
+    private static native long nativeGetTotalStat(int type, boolean useBpfStats);
+    private static native long nativeGetIfaceStat(String iface, int type, boolean useBpfStats);
+    private static native long nativeGetUidStat(int uid, int type, boolean useBpfStats);
 }

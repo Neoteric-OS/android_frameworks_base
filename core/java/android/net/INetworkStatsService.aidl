@@ -76,4 +76,6 @@ interface INetworkStatsService {
     /** Get the total network stats information since boot */
     long getTotalStats(int type);
 
+    /** Check if bpf stats is enabled on this device */
+    boolean checkBpfStatsEnable();
 }
