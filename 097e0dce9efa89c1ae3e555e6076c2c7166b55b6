@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "a1c27034_de13b51f",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 25656,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-22T02:46:35Z",
+      "side": 1,
+      "message": "The method still exists, but it is not exposed to apps. You can still use it inside frameworks/ I guess.\n\nOnce enum are refactored into an IntDef in the next patch set, app users will have to do something like:\n\nint t \u003d mac.addressType();\nbool isMulticast \u003d (t \u003d\u003d MacAddress.TYPE_MULTICAST) || (t \u003d\u003d MacAddress.TYPE_BROADCAST);",
+      "parentUuid": "e5e214e5_7d57d45c",
+      "range": {
+        "startLine": 25656,
+        "startChar": 0,
+        "endLine": 25656,
+        "endChar": 47
+      },
+      "revId": "097e0dce9efa89c1ae3e555e6076c2c7166b55b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25b3b8db_3c34a1fe",
         "filename": "api/current.txt",
         "patchSetId": 3
