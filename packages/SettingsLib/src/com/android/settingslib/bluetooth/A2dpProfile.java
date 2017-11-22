@@ -37,7 +37,7 @@ import java.util.List;
 
 public class A2dpProfile implements LocalBluetoothProfile {
     private static final String TAG = "A2dpProfile";
-    private static boolean V = false;
+    private static boolean V = true;
 
     private Context mContext;
 
