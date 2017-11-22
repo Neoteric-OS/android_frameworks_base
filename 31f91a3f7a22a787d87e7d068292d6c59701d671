@@ -22,6 +22,30 @@
       "revId": "31f91a3f7a22a787d87e7d068292d6c59701d671",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b043b328_bc228b9d",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2017-11-22T11:56:38Z",
+      "side": 1,
+      "message": "This is a good catch.\n\nVendor apk will be able to be identified by mApplicationInfo.isVendor() when ag/3252125 lands. I will amend this part in the CL.\n\nHowever, the contains() check doesn\u0027t have a good replacement yet. This is false only when the platform is running with semi(or non)-treble-ized vendor images built with O or O-MR1. So, when we no longer support the legacy configuration (P-system + O-vendor), we can force set treatVendorApkAsBundled to true.",
+      "parentUuid": "814d78e5_2bbf9b41",
+      "range": {
+        "startLine": 640,
+        "startChar": 50,
+        "endLine": 640,
+        "endChar": 92
+      },
+      "revId": "31f91a3f7a22a787d87e7d068292d6c59701d671",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
