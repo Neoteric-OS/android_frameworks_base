@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d87082d5_ee27fb70",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 25650,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-22T02:24:24Z",
+      "side": 1,
+      "message": "Done: all conversion methods are @hide.",
+      "parentUuid": "df5b25eb_a362b1cd",
+      "range": {
+        "startLine": 25650,
+        "startChar": 0,
+        "endLine": 25650,
+        "endChar": 73
+      },
+      "revId": "097e0dce9efa89c1ae3e555e6076c2c7166b55b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf49fc7e_456eaf7e",
         "filename": "api/current.txt",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-21T15:16:52Z",
       "side": 1,
       "message": "Let them try fromBytes() and catch the exception?  Is there a reason why a user would need to test byte[] separately?",
+      "range": {
+        "startLine": 25655,
+        "startChar": 0,
+        "endLine": 25655,
+        "endChar": 54
+      },
+      "revId": "097e0dce9efa89c1ae3e555e6076c2c7166b55b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6509913c_5ee9dd4a",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 25655,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-22T02:24:24Z",
+      "side": 1,
+      "message": "Re-hidden.",
+      "parentUuid": "cf49fc7e_456eaf7e",
       "range": {
         "startLine": 25655,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7214f327_58acefbd",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 25656,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-22T02:24:24Z",
+      "side": 1,
+      "message": "isMulticastAddress is convenient as an implementation step.\n\nRe-hidden.",
+      "parentUuid": "5ad41b0c_08c8f647",
+      "range": {
+        "startLine": 25656,
+        "startChar": 0,
+        "endLine": 25656,
+        "endChar": 47
+      },
+      "revId": "097e0dce9efa89c1ae3e555e6076c2c7166b55b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25b3b8db_3c34a1fe",
         "filename": "api/current.txt",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-21T15:16:52Z",
       "side": 1,
       "message": "Just have them construct the object and then test it?  Avoid getting too fancy with all these static methods.",
+      "range": {
+        "startLine": 25657,
+        "startChar": 0,
+        "endLine": 25657,
+        "endChar": 86
+      },
+      "revId": "097e0dce9efa89c1ae3e555e6076c2c7166b55b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf168086_1b69e299",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 25657,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-22T02:24:24Z",
+      "side": 1,
+      "message": "Re-hidden.",
+      "parentUuid": "25b3b8db_3c34a1fe",
       "range": {
         "startLine": 25657,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "082737e5_1f93054d",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 25658,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-22T02:24:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b12b1c9_49d2e727",
+      "range": {
+        "startLine": 25658,
+        "startChar": 48,
+        "endLine": 25658,
+        "endChar": 65
+      },
+      "revId": "097e0dce9efa89c1ae3e555e6076c2c7166b55b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f328d44_17d1ef49",
         "filename": "api/current.txt",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-21T15:16:52Z",
       "side": 1,
       "message": "Same as above; just have them create an object.",
+      "range": {
+        "startLine": 25660,
+        "startChar": 42,
+        "endLine": 25660,
+        "endChar": 64
+      },
+      "revId": "097e0dce9efa89c1ae3e555e6076c2c7166b55b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af181fb5_da5cea3c",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 25660,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-22T02:24:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f328d44_17d1ef49",
       "range": {
         "startLine": 25660,
         "startChar": 42,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "ace05439_b2568b87",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 25661,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-22T02:24:24Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "bf98c810_d2dded2b",
+      "range": {
+        "startLine": 25661,
+        "startChar": 0,
+        "endLine": 25661,
+        "endChar": 39
+      },
+      "revId": "097e0dce9efa89c1ae3e555e6076c2c7166b55b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cab667d2_326c3da8",
         "filename": "api/current.txt",
         "patchSetId": 3
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "aaa2cef3_e015c4f5",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 25667,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-22T02:24:24Z",
+      "side": 1,
+      "message": "I saw that coming :p\nI am going to address this in the next patch set.",
+      "parentUuid": "cab667d2_326c3da8",
+      "range": {
+        "startLine": 25667,
+        "startChar": 0,
+        "endLine": 25667,
+        "endChar": 78
+      },
+      "revId": "097e0dce9efa89c1ae3e555e6076c2c7166b55b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2682888_f18d4223",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 3
@@ -197,6 +389,30 @@
       "writtenOn": "2017-11-21T22:24:59Z",
       "side": 1,
       "message": "This prints 00:01:02:03:04:05 as 0:1:2:3:4:5. \n\nNeed to pad if necessary (and unit test).",
+      "range": {
+        "startLine": 216,
+        "startChar": 26,
+        "endLine": 216,
+        "endChar": 37
+      },
+      "revId": "097e0dce9efa89c1ae3e555e6076c2c7166b55b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cad7889f_ed6e8980",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-22T02:24:24Z",
+      "side": 1,
+      "message": "Good catch. Fixed and covered in tests now.",
+      "parentUuid": "d2682888_f18d4223",
       "range": {
         "startLine": 216,
         "startChar": 26,
