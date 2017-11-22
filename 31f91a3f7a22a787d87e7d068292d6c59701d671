@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "814d78e5_2bbf9b41",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2017-11-22T11:31:20Z",
+      "side": 1,
+      "message": "This contains() check and the startsWith(\"/vendor/\") check in the line below seem like hacks to me. Is there really no canonical definition of \"is this a vendor APK\" ?",
+      "range": {
+        "startLine": 640,
+        "startChar": 50,
+        "endLine": 640,
+        "endChar": 92
+      },
+      "revId": "31f91a3f7a22a787d87e7d068292d6c59701d671",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
