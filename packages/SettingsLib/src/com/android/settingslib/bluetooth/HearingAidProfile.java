@@ -16,7 +16,7 @@
 
 package com.android.settingslib.bluetooth;
 
-import android.bluetooth.BluetoothA2dp;
+import android.bluetooth.BluetoothHearingAid;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothCodecConfig;
@@ -35,15 +35,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class A2dpProfile implements LocalBluetoothProfile {
-    private static final String TAG = "A2dpProfile";
+public class HearingAidProfile implements LocalBluetoothProfile {
+    private static final String TAG = "HearingAidProfile";
     private static boolean V = true;
 
     private Context mContext;
 
-    private BluetoothA2dp mService;
-    BluetoothA2dpWrapper.Factory mWrapperFactory;
-    private BluetoothA2dpWrapper mServiceWrapper;
+    private BluetoothHearingAid mService;
     private boolean mIsProfileReady;
 
     private final LocalBluetoothAdapter mLocalAdapter;
@@ -54,31 +52,30 @@ public class A2dpProfile implements LocalBluetoothProfile {
         BluetoothUuid.AdvAudioDist,
     };
 
-    static final String NAME = "A2DP";
+    static final String NAME = "HearingAid";
     private final LocalBluetoothProfileManager mProfileManager;
 
     // Order of this profile in device profiles list
     private static final int ORDINAL = 1;
 
     // These callbacks run on the main thread.
-    private final class A2dpServiceListener
+    private final class HearingAidServiceListener
             implements BluetoothProfile.ServiceListener {
 
         public void onServiceConnected(int profile, BluetoothProfile proxy) {
             if (V) Log.d(TAG,"Bluetooth service connected");
-            mService = (BluetoothA2dp) proxy;
-            mServiceWrapper = mWrapperFactory.getInstance(mService);
-            // We just bound to the service, so refresh the UI for any connected A2DP devices.
+            mService = (BluetoothHearingAid) proxy;
+            // We just bound to the service, so refresh the UI for any connected HearingAid devices.
             List<BluetoothDevice> deviceList = mService.getConnectedDevices();
             while (!deviceList.isEmpty()) {
                 BluetoothDevice nextDevice = deviceList.remove(0);
                 CachedBluetoothDevice device = mDeviceManager.findDevice(nextDevice);
                 // we may add a new device here, but generally this should not happen
                 if (device == null) {
-                    Log.w(TAG, "A2dpProfile found new device: " + nextDevice);
+                    Log.w(TAG, "HearingAidProfile found new device: " + nextDevice);
                     device = mDeviceManager.addDevice(mLocalAdapter, mProfileManager, nextDevice);
                 }
-                device.onProfileStateChanged(A2dpProfile.this, BluetoothProfile.STATE_CONNECTED);
+                device.onProfileStateChanged(HearingAidProfile.this, BluetoothProfile.STATE_CONNECTED);
                 device.refresh();
             }
             mIsProfileReady=true;
@@ -94,21 +91,15 @@ public class A2dpProfile implements LocalBluetoothProfile {
         return mIsProfileReady;
     }
 
-    A2dpProfile(Context context, LocalBluetoothAdapter adapter,
+    HearingAidProfile(Context context, LocalBluetoothAdapter adapter,
             CachedBluetoothDeviceManager deviceManager,
             LocalBluetoothProfileManager profileManager) {
         mContext = context;
         mLocalAdapter = adapter;
         mDeviceManager = deviceManager;
         mProfileManager = profileManager;
-        mWrapperFactory = new BluetoothA2dpWrapperImpl.Factory();
-        mLocalAdapter.getProfileProxy(context, new A2dpServiceListener(),
-                BluetoothProfile.A2DP);
-    }
-
-    @VisibleForTesting
-    void setWrapperFactory(BluetoothA2dpWrapper.Factory factory) {
-        mWrapperFactory = factory;
+        mLocalAdapter.getProfileProxy(context, new HearingAidServiceListener(),
+                BluetoothProfile.HEARING_AID);
     }
 
     public boolean isConnectable() {
@@ -178,107 +169,6 @@ public class A2dpProfile implements LocalBluetoothProfile {
             mService.setPriority(device, BluetoothProfile.PRIORITY_OFF);
         }
     }
-    boolean isA2dpPlaying() {
-        if (mService == null) return false;
-        List<BluetoothDevice> sinks = mService.getConnectedDevices();
-        if (!sinks.isEmpty()) {
-            if (mService.isA2dpPlaying(sinks.get(0))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean supportsHighQualityAudio(BluetoothDevice device) {
-        int support = mServiceWrapper.supportsOptionalCodecs(device);
-        return support == BluetoothA2dp.OPTIONAL_CODECS_SUPPORTED;
-    }
-
-    public boolean isHighQualityAudioEnabled(BluetoothDevice device) {
-        int enabled = mServiceWrapper.getOptionalCodecsEnabled(device);
-        if (enabled != BluetoothA2dp.OPTIONAL_CODECS_PREF_UNKNOWN) {
-            return enabled == BluetoothA2dp.OPTIONAL_CODECS_PREF_ENABLED;
-        } else if (getConnectionStatus(device) != BluetoothProfile.STATE_CONNECTED &&
-                supportsHighQualityAudio(device)) {
-            // Since we don't have a stored preference and the device isn't connected, just return
-            // true since the default behavior when the device gets connected in the future would be
-            // to have optional codecs enabled.
-            return true;
-        }
-        BluetoothCodecConfig codecConfig = null;
-        if (mServiceWrapper.getCodecStatus() != null) {
-            codecConfig = mServiceWrapper.getCodecStatus().getCodecConfig();
-        }
-        if (codecConfig != null)  {
-            return !codecConfig.isMandatoryCodec();
-        } else {
-            return false;
-        }
-    }
-
-    public void setHighQualityAudioEnabled(BluetoothDevice device, boolean enabled) {
-        int prefValue = enabled
-                ? BluetoothA2dp.OPTIONAL_CODECS_PREF_ENABLED
-                : BluetoothA2dp.OPTIONAL_CODECS_PREF_DISABLED;
-        mServiceWrapper.setOptionalCodecsEnabled(device, prefValue);
-        if (getConnectionStatus(device) != BluetoothProfile.STATE_CONNECTED) {
-            return;
-        }
-        if (enabled) {
-            mService.enableOptionalCodecs();
-        } else {
-            mService.disableOptionalCodecs();
-        }
-    }
-
-    public String getHighQualityAudioOptionLabel(BluetoothDevice device) {
-        int unknownCodecId = R.string.bluetooth_profile_a2dp_high_quality_unknown_codec;
-        if (!supportsHighQualityAudio(device)
-                || getConnectionStatus(device) != BluetoothProfile.STATE_CONNECTED) {
-            return mContext.getString(unknownCodecId);
-        }
-        // We want to get the highest priority codec, since that's the one that will be used with
-        // this device, and see if it is high-quality (ie non-mandatory).
-        BluetoothCodecConfig[] selectable = null;
-        if (mServiceWrapper.getCodecStatus() != null) {
-            selectable = mServiceWrapper.getCodecStatus().getCodecsSelectableCapabilities();
-            // To get the highest priority, we sort in reverse.
-            Arrays.sort(selectable,
-                    (a, b) -> {
-                        return b.getCodecPriority() - a.getCodecPriority();
-                    });
-        }
-
-        final BluetoothCodecConfig codecConfig = (selectable == null || selectable.length < 1)
-                ? null : selectable[0];
-        final int codecType = (codecConfig == null || codecConfig.isMandatoryCodec())
-                ? BluetoothCodecConfig.SOURCE_CODEC_TYPE_INVALID : codecConfig.getCodecType();
-
-        int index = -1;
-        switch (codecType) {
-           case BluetoothCodecConfig.SOURCE_CODEC_TYPE_SBC:
-               index = 1;
-               break;
-           case BluetoothCodecConfig.SOURCE_CODEC_TYPE_AAC:
-               index = 2;
-               break;
-           case BluetoothCodecConfig.SOURCE_CODEC_TYPE_APTX:
-               index = 3;
-               break;
-           case BluetoothCodecConfig.SOURCE_CODEC_TYPE_APTX_HD:
-               index = 4;
-               break;
-           case BluetoothCodecConfig.SOURCE_CODEC_TYPE_LDAC:
-               index = 5;
-               break;
-           }
-
-        if (index < 0) {
-            return mContext.getString(unknownCodecId);
-        }
-        return mContext.getString(R.string.bluetooth_profile_a2dp_high_quality,
-                mContext.getResources().getStringArray(R.array.bluetooth_a2dp_codec_titles)[index]);
-    }
 
     public String toString() {
         return NAME;
@@ -289,17 +179,17 @@ public class A2dpProfile implements LocalBluetoothProfile {
     }
 
     public int getNameResource(BluetoothDevice device) {
-        return R.string.bluetooth_profile_a2dp;
+        return R.string.bluetooth_profile_hearing_aid;
     }
 
     public int getSummaryResourceForDevice(BluetoothDevice device) {
         int state = getConnectionStatus(device);
         switch (state) {
             case BluetoothProfile.STATE_DISCONNECTED:
-                return R.string.bluetooth_a2dp_profile_summary_use_for;
+                return R.string.bluetooth_hearing_aid_profile_summary_use_for;
 
             case BluetoothProfile.STATE_CONNECTED:
-                return R.string.bluetooth_a2dp_profile_summary_connected;
+                return R.string.bluetooth_hearing_aid_profile_summary_connected;
 
             default:
                 return Utils.getConnectionStateSummary(state);
@@ -307,6 +197,7 @@ public class A2dpProfile implements LocalBluetoothProfile {
     }
 
     public int getDrawableResource(BluetoothClass btClass) {
+        //TODO: get an icon for hearing aid. For now reuse hadphones
         return R.drawable.ic_bt_headphones_a2dp;
     }
 
@@ -314,11 +205,11 @@ public class A2dpProfile implements LocalBluetoothProfile {
         if (V) Log.d(TAG, "finalize()");
         if (mService != null) {
             try {
-                BluetoothAdapter.getDefaultAdapter().closeProfileProxy(BluetoothProfile.A2DP,
+                BluetoothAdapter.getDefaultAdapter().closeProfileProxy(BluetoothProfile.HEARING_AID,
                                                                        mService);
                 mService = null;
             }catch (Throwable t) {
-                Log.w(TAG, "Error cleaning up A2DP proxy", t);
+                Log.w(TAG, "Error cleaning up Hearing Aid proxy", t);
             }
         }
     }
