@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "e5e214e5_7d57d45c",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 25656,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-11-22T02:34:34Z",
+      "side": 1,
+      "message": "Don\u0027t you now have neither method? I.e. is there any API to determine whether the MAC address is a multicast?\n\nI would have preferred the isXxxAddress() to the type method - personal pref.",
+      "parentUuid": "7214f327_58acefbd",
+      "range": {
+        "startLine": 25656,
+        "startChar": 0,
+        "endLine": 25656,
+        "endChar": 47
+      },
+      "revId": "097e0dce9efa89c1ae3e555e6076c2c7166b55b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25b3b8db_3c34a1fe",
         "filename": "api/current.txt",
         "patchSetId": 3
