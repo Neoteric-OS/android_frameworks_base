@@ -46,6 +46,30 @@
       "revId": "31f91a3f7a22a787d87e7d068292d6c59701d671",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2fc491d_e49ed15b",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2017-11-22T15:56:07Z",
+      "side": 1,
+      "message": "I was thinking maybe something in Os.Build or even just a standalone \"ro.\" property and then I saw that someone already thought about it. Is Os.Build.IS_TREBLE_ENABLED sufficient as a check? Is that a sufficient check?",
+      "parentUuid": "b043b328_bc228b9d",
+      "range": {
+        "startLine": 640,
+        "startChar": 50,
+        "endLine": 640,
+        "endChar": 92
+      },
+      "revId": "31f91a3f7a22a787d87e7d068292d6c59701d671",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
