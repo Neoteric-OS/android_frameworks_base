@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b9f58fe1_5926c17e",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-11-22T04:51:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8d386c0_3aab1c5f",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 10
+      },
+      "revId": "7c3200b3410aba3a87f0237edbf640cae94459aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dab1e45_50b9d637",
         "filename": "core/java/android/net/IpSecAlgorithm.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-21T06:52:39Z",
       "side": 1,
       "message": "Do you plan to have more than one ? If no I would say just calling equals() is clearer.",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 9
+      },
+      "revId": "7c3200b3410aba3a87f0237edbf640cae94459aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b19b856_c42140f5",
+        "filename": "core/java/android/net/IpSecAlgorithm.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-11-22T04:51:51Z",
+      "side": 1,
+      "message": "Potentially; I wanted to maintain the same structure for all the algorithm checks",
+      "parentUuid": "8dab1e45_50b9d637",
       "range": {
         "startLine": 220,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "05ddd21e_5626a25e",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-11-22T04:51:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7346e50c_45157bb3",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 9
+      },
+      "revId": "7c3200b3410aba3a87f0237edbf640cae94459aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1375112_2a2671f2",
         "filename": "tests/net/java/android/net/IpSecConfigTest.java",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-21T06:52:39Z",
       "side": 1,
       "message": "don\u0027t you need to add a fail() call just after that to check that the exception is not thrown ?",
+      "range": {
+        "startLine": 73,
+        "startChar": 16,
+        "endLine": 73,
+        "endChar": 76
+      },
+      "revId": "7c3200b3410aba3a87f0237edbf640cae94459aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4dd8194f_4f7a9faf",
+        "filename": "tests/net/java/android/net/IpSecConfigTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2017-11-22T04:51:51Z",
+      "side": 1,
+      "message": "Done; must have gotten lost in a previous refactor",
+      "parentUuid": "c1375112_2a2671f2",
       "range": {
         "startLine": 73,
         "startChar": 16,
