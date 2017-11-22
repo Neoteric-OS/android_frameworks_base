@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56e62b53_9dc5cf74",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-11-22T17:02:06Z",
+      "side": 1,
+      "message": "nit: address \"is\" of unknown type",
+      "range": {
+        "startLine": 60,
+        "startChar": 29,
+        "endLine": 60,
+        "endChar": 39
+      },
+      "revId": "4153671faf6b0376e59f1674059a6a034b6c05d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
