@@ -160,6 +160,9 @@ final class ContentProviderRecord {
         if (singleton) {
             pw.print(prefix); pw.print("singleton="); pw.println(singleton);
         }
+        if (full) {
+            pw.print(prefix); pw.print("exported="); pw.println(info.exported);
+        }
         pw.print(prefix); pw.print("authority="); pw.println(info.authority);
         if (full) {
             if (info.isSyncable || info.multiprocess || info.initOrder != 0) {

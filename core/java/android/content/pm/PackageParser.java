@@ -4886,12 +4886,6 @@ public class PackageParser {
                 com.android.internal.R.styleable.AndroidManifestProvider_singleUser,
                 false)) {
             p.info.flags |= ProviderInfo.FLAG_SINGLE_USER;
-            if (p.info.exported && (flags & PARSE_IS_PRIVILEGED) == 0) {
-                Slog.w(TAG, "Provider exported request ignored due to singleUser: "
-                        + p.className + " at " + mArchiveSourcePath + " "
-                        + parser.getPositionDescription());
-                p.info.exported = false;
-            }
         }
 
         p.info.encryptionAware = p.info.directBootAware = sa.getBoolean(

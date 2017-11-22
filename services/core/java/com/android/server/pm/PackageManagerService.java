@@ -10764,6 +10764,15 @@ public class PackageManagerService extends IPackageManager.Stub
         if ((policyFlags&PackageParser.PARSE_IS_PRIVILEGED) != 0) {
             pkg.applicationInfo.privateFlags |= ApplicationInfo.PRIVATE_FLAG_PRIVILEGED;
         }
+        if ((pkg.applicationInfo.privateFlags&ApplicationInfo.PRIVATE_FLAG_PRIVILEGED) == 0) {
+            for (PackageParser.Provider p : pkg.providers) {
+                if ((p.info.flags&ProviderInfo.FLAG_SINGLE_USER) != 0 && p.info.exported) {
+                    Slog.w(TAG, "Provider exported request ignored due to singleUser: "
+                            + p.className + " in " + pkg.packageName);
+                    p.info.exported = false;
+                }
+            }
+        }
 
         if (!isSystemApp(pkg)) {
             // Only system apps can use these features.
