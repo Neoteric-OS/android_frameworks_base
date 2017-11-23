@@ -94,6 +94,30 @@
       "revId": "31f91a3f7a22a787d87e7d068292d6c59701d671",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8cb6736_ce5df51c",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2017-11-23T06:13:38Z",
+      "side": 1,
+      "message": "Re: Calin. Thanks. I already fixed ag/3252125. :)\nRe: Todd. Strictly speaking, anything other than directly checking the existence of /vendor/lib in the default search path is incorrect or more verbose than this. We do have \u0027ro.treble.enabled\u0027 but that is not appropriate because we may or may not have vendor/lib in treble-ized devices. Specifically, vendor apk is should be treated as unbunded when following conditions are all met.\n\n1) device is treble-ized. (ro.treble.enabled \u003d\u003d true)\n2) platform is P or later (ro.build.version.release \u003e\u003d P)\n3) the device is not an upgrading device (launched in P or later) (ro.product.first_api_level \u003e\u003d ??. ?? is because we don\u0027t know the API level of P yet).",
+      "parentUuid": "36be5130_0b91879e",
+      "range": {
+        "startLine": 640,
+        "startChar": 50,
+        "endLine": 640,
+        "endChar": 92
+      },
+      "revId": "31f91a3f7a22a787d87e7d068292d6c59701d671",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
