@@ -590,6 +590,13 @@ public class StatusBar extends SystemUI implements DemoMode,
     private MediaController.Callback mMediaListener
             = new MediaController.Callback() {
         @Override
+        public void onSessionDestroyed() {
+            if (DEBUG_MEDIA) Log.v(TAG, "DEBUG_MEDIA: onSessionDestroyed");
+            clearCurrentMediaNotification();
+            updateMediaMetaData(true, true);
+        }
+
+        @Override
         public void onPlaybackStateChanged(PlaybackState state) {
             super.onPlaybackStateChanged(state);
             if (DEBUG_MEDIA) Log.v(TAG, "DEBUG_MEDIA: onPlaybackStateChanged: " + state);
