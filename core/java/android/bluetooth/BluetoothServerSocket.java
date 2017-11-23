@@ -169,6 +169,7 @@ public final class BluetoothServerSocket implements Closeable {
      * close any {@link BluetoothSocket} received from {@link #accept()}.
      */
     public void close() throws IOException {
+        Log.w(TAG, "BluetoothServerSocket:close() called. mChannel=" + mChannel);
         synchronized (this) {
             if (mHandler != null) {
                 mHandler.obtainMessage(mMessage).sendToTarget();
@@ -193,6 +194,22 @@ public final class BluetoothServerSocket implements Closeable {
      * @hide
      */
     public int getChannel() {
+        return mChannel;
+    }
+
+    /**
+     * Returns the assigned dynamic protocol/service multiplexer (PSM) value for the listening L2CAP
+     * Connection-oriented Channel (CoC) server socket. This server socket must be returned by the
+     * {#link BluetoothAdapter.listenUsingL2capCoc(int)} or {#link
+     * BluetoothAdapter.listenUsingInsecureL2capCoc(int)}. The returned value is undefined if this
+     * method is called on non-L2CAP server sockets.
+     *
+     * @return the assigned PSM or LE_PSM value depending on transport
+     * NOTE: This API is experimental and is hidden.
+     * @hide
+     */
+    public int getPsm() {
+        // TODO: Add code
         return mChannel;
     }
 
@@ -225,6 +242,10 @@ public final class BluetoothServerSocket implements Closeable {
             }
             case BluetoothSocket.TYPE_L2CAP: {
                 sb.append("TYPE_L2CAP");
+                break;
+            }
+            case BluetoothSocket.TYPE_L2CAP_LE: {
+                sb.append("TYPE_L2CAP_LE");
                 break;
             }
             case BluetoothSocket.TYPE_SCO: {
