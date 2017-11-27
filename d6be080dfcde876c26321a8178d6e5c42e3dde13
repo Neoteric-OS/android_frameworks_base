@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ef24d3e_4bd08e66",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-27T12:33:09Z",
+      "side": 1,
+      "message": "Done. For the time being, I simply truncated the description because I am not sure what to write.",
+      "parentUuid": "583246d4_11b9756a",
+      "range": {
+        "startLine": 31,
+        "startChar": 35,
+        "endLine": 31,
+        "endChar": 46
+      },
+      "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2a4fead_7803fb12",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-27T07:42:20Z",
       "side": 1,
       "message": "Since 64-bit hardware addresses are in use (e.g., EUI-64), we should say something about length here. Do we want to promise that these addresses will always be 48 bits long? Do we want to provide no guarantees? ...? API council will probably want to have a say here as well, but it seems useful to propose something in this change.",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d0f8df_56791f6b",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-27T12:33:09Z",
+      "side": 1,
+      "message": "So far the input/ouput API of this class are actually agnostic of the length of the address because conversions are only done to and from Strings and byte arrays.\n\nI think we can start by saying MacAddress only works for 48 bit longs, then consider extending it to 64 bits. At least that\u0027s compatible from an api perspective.\n\nAlternatively, we can also keep it @hide a bit longer, and also add support for 64 bit long addresses in a follow up patch.",
+      "parentUuid": "a2a4fead_7803fb12",
       "range": {
         "startLine": 33,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7b2c2e70_02a65c2a",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-27T12:33:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51b76dd2_d4e9c2cd",
+      "range": {
+        "startLine": 62,
+        "startChar": 18,
+        "endLine": 62,
+        "endChar": 22
+      },
+      "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ee172d1_e5f338ff",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a3478e_b9f4f0de",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-27T12:33:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ee172d1_e5f338ff",
+      "range": {
+        "startLine": 76,
+        "startChar": 36,
+        "endLine": 76,
+        "endChar": 52
+      },
+      "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "76e81fba_b22024ab",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-27T12:33:09Z",
+      "side": 1,
+      "message": "Jeff asked for this method with that name. It might not be the best name w.r.t to the fact it anonymizes the NIC part, but it is consistent with other toSafeString() methods.",
+      "parentUuid": "1daedaaa_d8f5b45e",
+      "range": {
+        "startLine": 135,
+        "startChar": 18,
+        "endLine": 135,
+        "endChar": 30
+      },
+      "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "643f5295_375608dd",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce2dd8c0_f2d94537",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-27T12:33:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "643f5295_375608dd",
+      "range": {
+        "startLine": 179,
+        "startChar": 26,
+        "endLine": 179,
+        "endChar": 38
+      },
+      "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "ad4a5a5a_287eb2a7",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-27T12:33:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ee683b6_5b2657fe",
+      "range": {
+        "startLine": 185,
+        "startChar": 58,
+        "endLine": 185,
+        "endChar": 60
+      },
+      "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "649ae989_3d01359f",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 7
@@ -183,6 +351,30 @@
       "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09dd57f6_28d0ed3c",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-27T12:33:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "649ae989_3d01359f",
+      "range": {
+        "startLine": 188,
+        "startChar": 32,
+        "endLine": 188,
+        "endChar": 45
+      },
+      "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "ae305c9b_589fe566",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-27T12:33:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a332869f_291347c8",
+      "range": {
+        "startLine": 203,
+        "startChar": 36,
+        "endLine": 203,
+        "endChar": 39
+      },
+      "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80fdc4e0_56f43619",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 7
@@ -229,6 +445,30 @@
       "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5389f5_fbb4870b",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-27T12:33:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80fdc4e0_56f43619",
+      "range": {
+        "startLine": 204,
+        "startChar": 14,
+        "endLine": 204,
+        "endChar": 19
+      },
+      "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "b694f366_cdd418f5",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-27T12:33:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22d342d1_09eb494a",
+      "range": {
+        "startLine": 233,
+        "startChar": 38,
+        "endLine": 233,
+        "endChar": 41
+      },
+      "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51353db6_1eacf28a",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 7
@@ -275,6 +539,30 @@
       "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364082e2_61324777",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-27T12:33:09Z",
+      "side": 1,
+      "message": "This allows to have a single well defined ctor that\u0027s not exposed, with potential additional validation around it in this static method.\n\nThat can also be very useful in certain case for implementing pooling, deduplication of immutable values, or other things that requires controlling which actual reference is returned. Think List.emptyList(), Integer.valueOf(), and similar methods.",
+      "parentUuid": "51353db6_1eacf28a",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 313,
+        "endChar": 5
+      },
+      "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "94435d4e_a88a1e5a",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-27T12:33:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a5b5e9d_d3fa4a86",
+      "range": {
+        "startLine": 328,
+        "startChar": 48,
+        "endLine": 328,
+        "endChar": 85
+      },
+      "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c514cdf9_3af9b627",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 7
@@ -312,6 +624,30 @@
       "writtenOn": "2017-11-27T07:42:20Z",
       "side": 1,
       "message": "Why do we provide this method as public API? Is it in case a developer doesn\u0027t want to trust the platform random number generator?",
+      "range": {
+        "startLine": 345,
+        "startChar": 7,
+        "endLine": 345,
+        "endChar": 85
+      },
+      "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f268a25_19218a78",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2017-11-27T12:33:09Z",
+      "side": 1,
+      "message": "That\u0027s very important for testing and debugging to be able to inject your own Random object, otherwise it is pretty much impossible to deterministically recreate the same series of output twice.",
+      "parentUuid": "c514cdf9_3af9b627",
       "range": {
         "startLine": 345,
         "startChar": 7,
