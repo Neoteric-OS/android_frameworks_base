@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "029a7929_45263ada",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 8
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-11-27T22:47:02Z",
+      "side": 1,
+      "message": "How about\n\nThe ATR is sent from the card when an electrical reset of the card\u0027s chip by the card reader occurs. It provides information about the communication parameters proposed by the card, as well as it\u0027s nature and state.",
+      "range": {
+        "startLine": 1398,
+        "startChar": 7,
+        "endLine": 1401,
+        "endChar": 24
+      },
+      "revId": "581c1e41bd8203eadc628e35aa39503c11dfa268",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c7bd653_a7dc0a5c",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 8
+      },
+      "lineNbr": 1414,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2017-11-27T22:47:02Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 1411,
+        "startChar": 7,
+        "endLine": 1414,
+        "endChar": 24
+      },
+      "revId": "581c1e41bd8203eadc628e35aa39503c11dfa268",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
