@@ -143,6 +143,31 @@ static jobject android_os_VintfObject_getVndkSnapshots(JNIEnv* env, jclass) {
     return jMap;
 }
 
+template <typename T>
+static jstring toString(JNIEnv* env, const std::shared_ptr<const T>& obj, const XmlConverter<T>& conv) {
+    if (obj == nullptr) return nullptr;
+    std::string xml = conv(*obj);
+    return env->NewStringUTF(xml.c_str());
+}
+
+static jstring android_os_VintfObject_getFrameworkMatrix(JNIEnv* env, jclass) {
+    return toString(env, VintfObject::GetFrameworkCompatibilityMatrix(),
+                    gCompatibilityMatrixConverter);
+}
+
+static jstring android_os_VintfObject_getFrameworkManifest(JNIEnv* env, jclass) {
+    return toString(env, VintfObject::GetFrameworkHalManifest(), gHalManifestConverter);
+}
+
+static jstring android_os_VintfObject_getDeviceMatrix(JNIEnv* env, jclass) {
+    return toString(env, VintfObject::GetDeviceCompatibilityMatrix(),
+                    gCompatibilityMatrixConverter);
+}
+
+static jstring android_os_VintfObject_getDeviceManifest(JNIEnv* env, jclass) {
+    return toString(env, VintfObject::GetDeviceHalManifest(), gHalManifestConverter);
+}
+
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gVintfObjectMethods[] = {
@@ -151,6 +176,11 @@ static const JNINativeMethod gVintfObjectMethods[] = {
     {"getHalNamesAndVersions", "()[Ljava/lang/String;", (void*)android_os_VintfObject_getHalNamesAndVersions},
     {"getSepolicyVersion", "()Ljava/lang/String;", (void*)android_os_VintfObject_getSepolicyVersion},
     {"getVndkSnapshots", "()Ljava/util/Map;", (void*)android_os_VintfObject_getVndkSnapshots},
+
+    {"getFrameworkManifest", "()Ljava/lang/String;", (void*)android_os_VintfObject_getFrameworkManifest},
+    {"getFrameworkMatrix", "()Ljava/lang/String;", (void*)android_os_VintfObject_getFrameworkMatrix},
+    {"getDeviceManifest", "()Ljava/lang/String;", (void*)android_os_VintfObject_getDeviceManifest},
+    {"getDeviceMatrix", "()Ljava/lang/String;", (void*)android_os_VintfObject_getDeviceMatrix},
 };
 
 const char* const kVintfObjectPathName = "android/os/VintfObject";

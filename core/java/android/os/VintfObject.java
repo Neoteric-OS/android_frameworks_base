@@ -70,4 +70,28 @@ public class VintfObject {
      *  ("25.1.3", ["libjpeg.so", "libbase.so"])]
      */
     public static native Map<String, String[]> getVndkSnapshots();
+
+    /**
+     * @return the XML string that represents framework compatibility matrix.
+     * Null if any error.
+     */
+    public static native String getFrameworkMatrix();
+
+    /**
+     * @return the XML string that represents framework manifest.
+     * Null if any error.
+     */
+    public static native String getFrameworkManifest();
+
+    /**
+     * @return the XML string that represents device compatibility matrix.
+     * Null if any error.
+     */
+    public static native String getDeviceMatrix();
+
+    /**
+     * @return the XML string that represents device manifest.
+     * Null if any error.
+     */
+    public static native String getDeviceManifest();
 }
