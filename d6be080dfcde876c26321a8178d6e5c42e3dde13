@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2b5fb583_144f4931",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2017-11-27T14:47:19Z",
+      "side": 1,
+      "message": "I would vote for unhiding asap. There are other APIs which are waiting for MacAddress (e.g. Wi-Fi RTT), I\u0027d rather pipeline than block.",
+      "parentUuid": "b2d0f8df_56791f6b",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "d6be080dfcde876c26321a8178d6e5c42e3dde13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51b76dd2_d4e9c2cd",
         "filename": "core/java/android/net/MacAddress.java",
         "patchSetId": 7
