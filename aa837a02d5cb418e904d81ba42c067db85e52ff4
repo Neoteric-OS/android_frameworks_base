@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae03cc24_df13bd34",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2098,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-11-28T19:03:47Z",
+      "side": 1,
+      "message": "Can we combine the if statements?",
+      "range": {
+        "startLine": 2086,
+        "startChar": 16,
+        "endLine": 2098,
+        "endChar": 17
+      },
+      "revId": "aa837a02d5cb418e904d81ba42c067db85e52ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
