@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e67c6e6_96c46520",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2017-11-28T18:59:55Z",
+      "side": 1,
+      "message": "Is this desired? The previous format seems easier to read.",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 136,
+        "endChar": 84
+      },
+      "revId": "b83a41ae60051a680db018ef580a4333bf163e54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
